@@ -1,153 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-63938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ADD6AFB999
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 19:07:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABAC1AFB9AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 19:09:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B4ED3B070E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 17:06:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F16B1176703
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 17:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA242E888C;
-	Mon,  7 Jul 2025 17:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1893A18035;
+	Mon,  7 Jul 2025 17:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hWCEone0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CosisA/n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549512264A0;
-	Mon,  7 Jul 2025 17:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B37245020
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 17:09:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751908006; cv=none; b=R4J6g4OSSUqDWSh+BqKgXCWzobuiA2fVbOoEzHG8dK7GOZZmhoP7UgJ1FTOmoGF8MWq0jsoG/O8vhwTm9XNr+Ol446sWe+Eb2MZSAQbTWZczUYS8fubPcQzh78ba2ScNuzfMqQck1h7k3D7X1tWXfXxrsrjA5LEnwUYJkJk6m8Q=
+	t=1751908166; cv=none; b=MlxPuU8NicIEcFJghpou+ROY+II1YBiSODe2vELg6YDA0/66hylI1AQLbVSDCKaS4PZlEwLenbpWkanGLxKcZux6iV1jstrnxeJon8oZfpI8B4HvLZSibNESulbraM2I0fVbTgLejOjOTMVyP3WgL2F3TEM8lQgB6BzPtXYvSEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751908006; c=relaxed/simple;
-	bh=RmgBMi2VW8e/N4LvJnOaj4Wgc8weyyjOi7wU4geY8+U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=prZ9M2ZfbnSRseMdGd1bNg5cas9vzMtGfq45DhHHlnCYu09X9UxL9ZV+TlcREOi/vkKH2rMrmlwlCCzhqbisTmoTenppv65OHNJdJfdmPDxbwVjob4/QDkP7rdj/3Xh1Mz8bZqoM0dUcIiRGK9nrt3gquxrC394tDsTgt3igTE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWCEone0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959F7C4CEFA;
-	Mon,  7 Jul 2025 17:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751908005;
-	bh=RmgBMi2VW8e/N4LvJnOaj4Wgc8weyyjOi7wU4geY8+U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hWCEone0nNbiHJxkCKz0vnh51AVh/vJy0rWCQrBt2WkMeze4hEgcDH97m75KDycrK
-	 mxoRh7QXG/32b7PiDrQ+kaBICHKPE5MUKDkCHh4JYxvS+vBEVAc/m2+EHg2udAjV7Q
-	 FWxxqpNYsQO+oiuFWcfesOWnOUqyhtNmM4Io5/B88l0pCaYuALyRF430bgAAKh4BXn
-	 CVZALtGxrQiNikRInRzoneEcekpnNalAZHlTvavpGdCPXjR/GM15DRfQSWfBhaqcNJ
-	 fLPvspMAoBH1fvPweStN9HzAdvp7eCj2qoxI2yKsLp06pGRxL54Y8LRH5QPhEgvMg1
-	 t0PFw9aHTc0WQ==
-Date: Mon, 7 Jul 2025 18:06:36 +0100
-From: Simon Horman <horms@kernel.org>
-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Ramona Gradinariu <ramona.gradinariu@analog.com>,
-	"Yo-Jung (Leo) Lin" <0xff07@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Petar Stoykov <pd.pstoykov@gmail.com>,
-	shuaijie wang <wangshuaijie@awinic.com>,
-	Yasin Lee <yasin.lee.x@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Yassine Oudjana <yassine.oudjana@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH 2/3] net: qrtr: Define macro to convert QMI version and
- instance to QRTR instance
-Message-ID: <20250707170636.GR89747@horms.kernel.org>
-References: <20250406140706.812425-1-y.oudjana@protonmail.com>
- <20250406140706.812425-3-y.oudjana@protonmail.com>
- <fb61323b-aabd-4661-a202-02da7da557ea@oss.qualcomm.com>
- <aMbAZigHiAN2xupOYs9DodY2mOdNtw_oVjOaweflgA8IoXRQ5ctoZ8GYJ8PNAKDgL4f9N_UD7tFmkePUy9BCE8v20Mae2x-eL1ZpyJEdLZY=@protonmail.com>
+	s=arc-20240116; t=1751908166; c=relaxed/simple;
+	bh=CAw4r4s8A3zwCVG37cGZ7evQRzMirsghvG1uh3y/t8Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NhMvhPz0vMPXtTxL7EIa9aAEdbgKCgfNztAdTfopNaz8rgDeqyPjniruYq5aTsVko1SUKGItzlu+47GtngH3G7Tqpqzm6pcXmmmBwe4fLrf9ewiBjRxyeb8XxuC2F4ch9ygwUKBo+GcE8qCKlEsAKhc+abyC6CIXJ89ojeG1MzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CosisA/n; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567DaIxB013890
+	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 17:09:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=oT1DtUsRaA/zcFPtBS//4Isnss8E6kQPFTLhfURqEU4=; b=Co
+	sisA/nNcWtS2/DV2jolq9HasCQctsMa5kfPmFIqLDrVOD1SDgP0JSJgyJ1+PFaS1
+	zjXJ1V7DJ1yyptbgELitJYpBKHrxrieEgYp5KbfPTqfnPWHCIkO+CxmK/CMNu6H+
+	1O/QSGgTmGJOo63j14IBH7EBOM97D6IUYWh61F7qbeX4l9LLcvIHZKP63SaDU8+V
+	y2ewIpWM/aj8VE13eJtZv1qU+7/RTiNKWHayoFuWlhvsV9dDPmsqeXo8rqkMPy3W
+	q6X6h0xSyp2wAs2whPMcFR7/wRHbjR6qJPAPx7yPqK8ICRqILPop9LqpjpX0QRj7
+	BPn03wJP/Zj0p6K3qCHQ==
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com [209.85.161.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47r9b0mmuv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 17:09:23 +0000 (GMT)
+Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-60f3442c58cso2645411eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 10:09:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751908162; x=1752512962;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oT1DtUsRaA/zcFPtBS//4Isnss8E6kQPFTLhfURqEU4=;
+        b=sY2Za4Fq7UjRN87RB9byhhorxzVLsSHm9wmnHTC1ta+jBCBlRxCFsGuJQSlUmDJ5R3
+         B0cCEdtbWJSeYGCGqEg1AOlBNKzDwYJdanPqrdkYTaAD/seiEuwz+jqoHUgDm5zi+R46
+         X7mtKnp7yqqXqy6awaHQ+daZJk4/fL4A2mY0mpeI+lQAyNt5fOQkj2ppZUWcREMNjFXc
+         y0DDb1RkxeY7Jr9kZ0lvzbyu3C5eUVEQ69skK5j1xo2AdLO7dZ8ZCymWQay73U7f1FDI
+         C4y+qs5avHCzQBhBIoASZUry2NcGlYRGwy+NmtJz+aVoZ+zPN+eEd+GREaywKE0rYNrB
+         ZRDw==
+X-Forwarded-Encrypted: i=1; AJvYcCXV5osART0b1frIUrcaoTchbh/NEyyXoR37BH0TDJ60Zz2BHWJiEf2zf0o8FhU0GZTR1e5Kfq97zrcr5npT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMItNmEweuxAdY8Dsnsl7hb02i4S9JM1mZaeD0oTk/hk+Yv0mI
+	rVOHH7xWwrcB3+2uT01UM3Dgy7WZAMwvII2m54MNikwr5ifzEn+S22MLMn/WyshmDq/R4BcZq3h
+	sV6osX03lAx+6aHMQRSPH6RHklMzxbI7oqUIHti5DK2pOUOp0YfT7Y82iL+4GV+QOSSvWDk+2sL
+	jZDgrgZx+Dt/kOtD5I+gY+aIP4pq+RS5oVlX4L+vfGrLg=
+X-Gm-Gg: ASbGnctAQtyTbxJ6kuE/wGg7jEXGsDQbUD0zqlqgDuQialHPYaWxf6Tb6M18Y/sYOxo
+	3aLlrJJ4iwGZn/NoPVSKW5MLdVhMXo3b8NUQoqZPLVJnAbynaF3+3VpOqyzqHVdaishBVYSdFzF
+	nQ6R31cVYzx6fjcNiuWjcrIuA0yDU1G2rh/T0=
+X-Received: by 2002:a05:6808:211f:b0:40c:5b58:c9f9 with SMTP id 5614622812f47-40d073ccd23mr8743850b6e.22.1751908162421;
+        Mon, 07 Jul 2025 10:09:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJFgTDJSExh2v7ckh3Wk01zSJ3P5QE5VWongvlxIz7t3sbZ/GbabrbWMQ+rzFK8GgUIeDgxM2pypdJm3Jto6Y=
+X-Received: by 2002:a05:6808:211f:b0:40c:5b58:c9f9 with SMTP id
+ 5614622812f47-40d073ccd23mr8743829b6e.22.1751908162097; Mon, 07 Jul 2025
+ 10:09:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aMbAZigHiAN2xupOYs9DodY2mOdNtw_oVjOaweflgA8IoXRQ5ctoZ8GYJ8PNAKDgL4f9N_UD7tFmkePUy9BCE8v20Mae2x-eL1ZpyJEdLZY=@protonmail.com>
+References: <20250705145242.781821-1-robin.clark@oss.qualcomm.com>
+ <20250705145242.781821-2-robin.clark@oss.qualcomm.com> <6579c65c-877d-44fe-aa81-5b0e602b33f5@oss.qualcomm.com>
+In-Reply-To: <6579c65c-877d-44fe-aa81-5b0e602b33f5@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Mon, 7 Jul 2025 10:09:10 -0700
+X-Gm-Features: Ac12FXxuUa5Yn05AD9M7jkS94r-Rdb6D2yJUjRtTcPRlVGpITucDmRppAplnMyc
+Message-ID: <CACSVV03U75=5LYdWkbQ-FOU6L-F50iZ+XgpT=f6+-sRNkEv6sA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm: Clean up split driver features
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=dYuA3WXe c=1 sm=1 tr=0 ts=686bff43 cx=c_pps
+ a=wURt19dY5n+H4uQbQt9s7g==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=mFyTvTkbTY4ge-DhZPYA:9 a=QEXdDO2ut3YA:10
+ a=-UhsvdU3ccFDOXFxFb4l:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDEwOCBTYWx0ZWRfX7cEPpNafh9Wm
+ 9BE9eHiiTdtdhYXcd44E9Mc3e5+VWrhsjdn3rcKOkieWwIvr2TRiIn3QRPjmW00wpDyyCs/FH7Z
+ o0rnLe6EZw4ZHZuHqLGVoi+n06RWs7sEjfmngPkMR6kStvyXRuG+C1bOMmF5pA/Z+DOqLSYpK6z
+ uE44hg2T3tRsl77rsn40LlGPezNAR+rhogbrJ2KsMvL22S1dcMP/t6Xi7ydryAXyoPTvmLVlB+l
+ LZ3lh1uf0lqF1fHbMtkoz4P5c/7/Ne91N7iFfS3px/dtq+Bvv03jxFygKVlE77WBI2sEhFtVm7H
+ whPj+avyijyScDsefKTRvxzxvbJL8zMs6mI0hpPYOXDdrj7/6T8GwNkUf5tIqWZrtNLRs4em4FK
+ Mbq68o9hU4KyxD11bDpFumGmqOKo5r5qtfQOxFOnADHoqv6bI/Li2wHTUsB3MTLK2jWnkA4J
+X-Proofpoint-GUID: rAL02_tzgudvwCb_sDATRCuzpeBMuYCC
+X-Proofpoint-ORIG-GUID: rAL02_tzgudvwCb_sDATRCuzpeBMuYCC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-07_04,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507070108
 
-On Sat, Jul 05, 2025 at 06:29:39PM +0000, Yassine Oudjana wrote:
-> On Wednesday, April 9th, 2025 at 3:54 PM, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
-> 
-> > On 4/6/25 4:07 PM, Yassine Oudjana wrote:
+On Mon, Jul 7, 2025 at 4:42=E2=80=AFAM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 7/5/25 4:52 PM, Rob Clark wrote:
+> > Avoid the possibility of missing features between the split and unified
+> > drm driver cases by defining DRIVER_FEATURES_GPU / KMS and using those
+> > in the drm_driver initializations.
+> >
+> > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/msm_drv.c | 31 ++++++++++++++++---------------
+> >  1 file changed, 16 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
+v.c
+> > index b6efc5b9933b..5695de1bbae2 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > @@ -816,14 +816,21 @@ static const struct file_operations fops =3D {
+> >       .show_fdinfo =3D drm_show_fdinfo,
+> >  };
+> >
+> > +#define DRIVER_FEATURES_GPU ( \
+> > +             DRIVER_GEM | \
+> > +             DRIVER_GEM_GPUVA | \
+> > +             DRIVER_RENDER | \
+> > +             DRIVER_SYNCOBJ_TIMELINE | \
+> > +             0 )
+> > +
+> > +#define DRIVER_FEATURES_KMS ( \
+> > +             DRIVER_GEM | \
+> > +             DRIVER_ATOMIC | \
+> > +             DRIVER_MODESET | \
+> > +             0 )
+>
+> Perhaps I'm missing some C lore, but do we need the "| 0"?
 
-...
+It is just to avoid later diffstat noise when new flags are added :-)
 
-> > > diff --git a/include/linux/soc/qcom/qrtr.h b/include/linux/soc/qcom/qrtr.h
-> > > index 4d7f25c64c56..10c89a35cbb9 100644
-> > > --- a/include/linux/soc/qcom/qrtr.h
-> > > +++ b/include/linux/soc/qcom/qrtr.h
-> > > @@ -13,6 +13,8 @@ struct qrtr_device {
-> > > 
-> > > #define to_qrtr_device(d) container_of(d, struct qrtr_device, dev)
-> > > 
-> > > +#define QRTR_INSTANCE(qmi_version, qmi_instance) (qmi_version | qmi_instance << 8)
-> > 
-> > 
-> > Please use FIELD_PREP + GENMASK to avoid potential overflows
-> > 
-> > Konrad
-> 
-> Since I'm using this macro in initializing QRTR match tables I am unable to use
-> FIELD_PREP. When I do, I get such errors:
-
-Does using FIELD_PREP_CONST, say in a QRTR_INSTANCE_CONST variant, help?
-
-> 
-> In file included from ../arch/arm64/include/asm/sysreg.h:1108,
->                  from ../arch/arm64/include/asm/memory.h:223,
->                  from ../arch/arm64/include/asm/pgtable-prot.h:8,
->                  from ../arch/arm64/include/asm/sparsemem.h:8,
->                  from ../include/linux/numa.h:23,
->                  from ../include/linux/cpumask.h:17,
->                  from ../include/linux/smp.h:13,
->                  from ../include/linux/lockdep.h:14,
->                  from ../include/linux/mutex.h:17,
->                  from ../include/linux/kernfs.h:11,
->                  from ../include/linux/sysfs.h:16,
->                  from ../include/linux/iio/buffer.h:9,
->                  from ../drivers/iio/common/qcom_smgr/qcom_smgr.c:8:
-> ../include/linux/bitfield.h:114:9: error: braced-group within expression allowed only inside a function
->   114 |         ({                                                              \
->       |         ^
-> ../include/linux/soc/qcom/qrtr.h:21:10: note: in expansion of macro 'FIELD_PREP'
->    21 |         (FIELD_PREP(GENMASK(7, 0), qmi_version) | FIELD_PREP(GENMASK(15, 8), qmi_instance))
->       |          ^~~~~~~~~~
-> ../drivers/iio/common/qcom_smgr/qcom_smgr.c:825:29: note: in expansion of macro 'QRTR_INSTANCE'
->   825 |                 .instance = QRTR_INSTANCE(SNS_SMGR_QMI_SVC_V1,
->       |                             ^~~~~~~~~~~~~
-
-...
+BR,
+-R
 
