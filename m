@@ -1,97 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-63942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37B53AFBA2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 19:55:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2618AAFBA82
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 20:18:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27E647A5CA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 17:53:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D4003B59EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 18:18:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757BC1B4F09;
-	Mon,  7 Jul 2025 17:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E1C3262FF0;
+	Mon,  7 Jul 2025 18:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="qSyu8ff6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kxg2uEnP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 003.mia.mailroute.net (003.mia.mailroute.net [199.89.3.6])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD5517A586;
-	Mon,  7 Jul 2025 17:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E74A21ABAA;
+	Mon,  7 Jul 2025 18:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751910897; cv=none; b=QDppdhr7AWGIvNVfzTYwVBNbjP/y8RlDAmlDMZkprNsbRKXHi6WTcGEjx9C/bjgHxQjzEkqIL5GCvOqr/yqxLuf9VnctMrlthWAS42mTlaoNKaIwQTFsqZN+Kiyq4ow4Exbz6/Gm/+8TgH/Xp1OJFC13KOoQ2fDuqpxbAt6ShXk=
+	t=1751912330; cv=none; b=eqQlDuwlk8VB/pKWxmD5F6iU4Hoabk7l+hNC6QX6GiGUvc7ObAwCfzVjUaySbgL6UGTfQNco4ZzWwKXlbYnLXFnGuyGma+G8/Z2lYB0BagzYi/E/CqVulK9BR1oPbtee6ShkKx61d+gslXIsZrSAxCIU325wI97vmSKGBG77oGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751910897; c=relaxed/simple;
-	bh=xNdHILS8uuNMxndmG3CePcg7M6g/2CWdtLuV2/WPBsw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U07lNAxehkKkX4Ki+J6FLl9VaDNFAecLQS3sq21aK/FDVsRzKHQGG3kBJH/z1C5N4kc3mVUZ00id/ndwGUN1h8YCVtUorSiDrfK+YUXkObqDqjevTioYwiLIiVzhatvF0Lm2TmsuKNDcZwzt6e5HFyTB8j3CBD8+tJ0fOmSTiVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=qSyu8ff6; arc=none smtp.client-ip=199.89.3.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 003.mia.mailroute.net (Postfix) with ESMTP id 4bbX2701LkzlgqV5;
-	Mon,  7 Jul 2025 17:54:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1751910892; x=1754502893; bh=xNdHILS8uuNMxndmG3CePcg7
-	M6g/2CWdtLuV2/WPBsw=; b=qSyu8ff6Cdrt0/HK+5reY9VtML3XD0w6mgvohymQ
-	HH1EeLA/a0PJ6IaI8wuwnbM/1Oq21QNcI+KvZvMtBoOpiKsTlMBQdGHWDxnOCqwA
-	E+Ddlih9zVOfqj1f0xVSPQsuuIeDU0JuFKCrc9UJIp//k7hCSS4hAtGl+zIZxO9r
-	T2A5qSm0sREurcl0JhE58dqlBMmDzggyzXi/9VS8X2ybrqvektDncK1qEQuAELGs
-	zxerIMskDXo/6uIVXB5s++mvF2Wwu5bZ7mWTS9MGqfRywyHQ7H/7Qc9QNWApK29S
-	IyUUx1e/BhvNkyXeTUf7VaPLb3z/jkMppHMlgnM9IlJGcw==
-X-Virus-Scanned: by MailRoute
-Received: from 003.mia.mailroute.net ([127.0.0.1])
- by localhost (003.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id TuuHLUpGomHe; Mon,  7 Jul 2025 17:54:52 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 003.mia.mailroute.net (Postfix) with ESMTPSA id 4bbX1v6j5ZzlgqV0;
-	Mon,  7 Jul 2025 17:54:42 +0000 (UTC)
-Message-ID: <e9c7345e-49c3-4545-871b-66e7e252d3ae@acm.org>
-Date: Mon, 7 Jul 2025 10:54:41 -0700
+	s=arc-20240116; t=1751912330; c=relaxed/simple;
+	bh=sDDdUBLO7rC2YYGWesgvXZ0daCjQh0IW352GnBaKumQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Kfw+oK7F6xhwxr8SXYPfcqg2vi95rsfFIzkqctuTZR6cqMSMyRQQwvilKbxvROYQFargnZvNXqOK5BwNdQ8mHj3WgbSxNtThqSuSUC6KztDf0VPUdylzFGmLgkxSG7lyipKAQpelCRRn0MR2PJWbdBEdWn5CtkHeuWv9g7fQs8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kxg2uEnP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2158CC4CEEF;
+	Mon,  7 Jul 2025 18:18:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751912329;
+	bh=sDDdUBLO7rC2YYGWesgvXZ0daCjQh0IW352GnBaKumQ=;
+	h=From:Subject:Date:To:Cc:From;
+	b=Kxg2uEnP+Y40kmuIEvoAJXIAhYKTJ8s5ObCavDwCoVxpJLtX1WwuFlkUG86ZBf/X9
+	 cITzUARG/Mq1yMnrb86HDKKf8g9kkq7OALroPqA4jkvIVMUidCR0GzgPmeehc/PTaf
+	 da0cYjRXaciOuM6XPl0lCAylHzhqC3lF+zo2IIjjYlSUs9VU3WaZ0IrAeWrJ6M7o9D
+	 ZlaPd9tm6pUjYCRIh57HhR3tTsoHjURXSgcdfeHFtX5+iJxdZzdcJR0FN9IIiq1gEj
+	 4xnJ8xmT4zsq0ML4HEG9WDUMHx77jXZkENRakqIp/gjSsTRrf7BdExArQfpkXkCFL8
+	 fRC38B+/dLh7w==
+From: Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH RFC 0/3] PCI/pwrctrl: Allow pwrctrl framework to control
+ PERST# GPIO if available
+Date: Mon, 07 Jul 2025 23:48:37 +0530
+Message-Id: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC/RFT 5/5] ufs: ufs-qcom: Kill ufshcd_res_info
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Asutosh Das <quic_asutoshd@quicinc.com>,
- Stanley Chu <stanley.chu@mediatek.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Can Guo <quic_cang@quicinc.com>, Nitin Rawat <quic_nitirawa@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
- <20250704-topic-qcom_ufs_mcq_cleanup-v1-5-c70d01b3d334@oss.qualcomm.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250704-topic-qcom_ufs_mcq_cleanup-v1-5-c70d01b3d334@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH0PbGgC/x3MwQpAQBCA4VfRnE0tG8pVeQBXOTAGU2KbFUre3
+ eb4Hf7/Ac8q7KGMHlA+xcu+BSRxBLT028woYzCkJs1MYQp0JOgupUNXdKz+wGGknG3eW5sRhM4
+ pT3L/zxaauoLufT8TwNUQaAAAAA==
+X-Change-ID: 20250707-pci-pwrctrl-perst-bdc6e36a335c
+To: Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Rob Herring <robh@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ Brian Norris <briannorris@chromium.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3377; i=mani@kernel.org;
+ h=from:subject:message-id; bh=sDDdUBLO7rC2YYGWesgvXZ0daCjQh0IW352GnBaKumQ=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBobA+Fs0zzgYQqTjHKf/77UAXqqwJTQ0knFXAr6
+ evoLtmbFCiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaGwPhQAKCRBVnxHm/pHO
+ 9WxbB/9Td06WHubjenC8ICseGSYxphZAZWKm6sxjclqR+wRlE3FbmXFom7O4ehOT5+NEQM/29C/
+ 987uhU6iLorn8JgcDNOXcsptkEXmqxc4S4crY0r0XUc8J1TH39WqK63UTnep6sYqFZ+LGDZtvBF
+ MR7OIn5cX6U0074hgNwagC8e44rP9UR1E8HotA2txPMGRFdIys/b147PeQd2s0w9TZyOTKwcxxA
+ oQ/UZHFsWk/VMlms24ox2cRvkpigiaCOUcCBJ4eQpJ62qHjcLaunyX8tOr9nAgHdpFzxRrEn8gr
+ UYuUk2NpOS3q7TFvr5s+XpvoSI56Z1qOW7n3+a9hmliaGzJ5
+X-Developer-Key: i=mani@kernel.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On 7/4/25 10:36 AM, Konrad Dybcio wrote:
-> This is not used by any driver and doesn't seem like it's going to be.
-> Remove it.
+Hi,
 
-The above description seems misleading to me. I think it should say that
-previous patches from this series removed all users of what is removed
-by this patch rather than suggesting that what has been removed never
-had any users.
+This series is an RFC to propose pwrctrl framework to control the PERST# GPIO
+instead of letting the controller drivers to do so (which is a mistake btw).
 
-Bart.
+Right now, the pwrctrl framework is controlling the power supplies to the
+components (endpoints and such), but it is not controlling PERST#. This was
+pointed out by Brian during a related conversation [1]. But we cannot just move
+the PERST# control from controller drivers due to the following reasons:
+
+1. Most of the controller drivers need to assert PERST# during the controller
+initialization sequence. This is mostly as per their hardware reference manual
+and should not be changed.
+
+2. Controller drivers still need to toggle PERST# when pwrctrl is not used i.e.,
+when the power supplies are not accurately described in PCI DT node. This can
+happen on unsupported platforms and also for platforms with legacy DTs.
+
+For this reason, I've kept the PERST# retrieval logic in the controller drivers
+and just passed the gpio descriptors (for each slot) to the pwrctrl framework.
+This will allow both the controller drivers and pwrctrl framework to share the
+PERST# (which is ugly but can't be avoided). But care must be taken to ensure
+that the controller drivers only assert PERST# and not deassert when pwrctrl is
+used. I've added the change for the Qcom driver as a reference. The Qcom driver
+is a slight mess because, it now has to support both new DT binding (PERST# and
+PHY in Root Port node) and legacy (both in Host Bridge node). So I've allowed
+the PERST# control only for the new binding (which is always going to use
+pwrctrl framework to control the component supplies).
+
+Testing
+=======
+
+This series is tested on Lenovo Thinkpad T14s laptop (with out-of-tree patch
+enabling PCIe WLAN card) and on RB3 Gen2 with TC9563 switch (also with the not
+yet merged series [2]). A big take away from this series is that, it is now
+possible to get rid of the controversial {start/stop}_link() callback proposed
+in the above mentioned switch pwrctrl driver [3].
+
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/Z_6kZ7x7gnoH-P7x@google.com/
+[2] https://lore.kernel.org/linux-pci/20250412-qps615_v4_1-v5-0-5b6a06132fec@oss.qualcomm.com/ 
+[3] https://lore.kernel.org/linux-pci/20250412-qps615_v4_1-v5-4-5b6a06132fec@oss.qualcomm.com/
+
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+---
+Manivannan Sadhasivam (3):
+      PCI/pwrctrl: Move pci_pwrctrl_init() before turning ON the supplies
+      PCI/pwrctrl: Allow pwrctrl core to control PERST# GPIO if available
+      PCI: qcom: Allow pwrctrl framework to control PERST#
+
+ drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
+ drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+ drivers/pci/controller/dwc/pcie-qcom.c            | 26 ++++++++++++++-
+ drivers/pci/pwrctrl/core.c                        | 39 +++++++++++++++++++++++
+ drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c          |  4 +--
+ drivers/pci/pwrctrl/slot.c                        |  4 +--
+ include/linux/pci-pwrctrl.h                       |  2 ++
+ include/linux/pci.h                               |  2 ++
+ 8 files changed, 74 insertions(+), 5 deletions(-)
+---
+base-commit: 00f0defc332be94b7f1fdc56ce7dcb6528cdf002
+change-id: 20250707-pci-pwrctrl-perst-bdc6e36a335c
+
+Best regards,
+-- 
+Manivannan Sadhasivam <mani@kernel.org>
+
 
