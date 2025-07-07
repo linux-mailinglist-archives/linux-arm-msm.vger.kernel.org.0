@@ -1,166 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-63870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79EEAFA88C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 02:15:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E85D4AFA8D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 03:22:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF97517615A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 00:15:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 272B13AFFC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 01:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE07E2A1BA;
-	Mon,  7 Jul 2025 00:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B85E1993B7;
+	Mon,  7 Jul 2025 01:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="eQNcOwYH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NjGjmhOp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B218035;
-	Mon,  7 Jul 2025 00:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751847345; cv=pass; b=r74OimeZN7UPfcFCHYIVcnDRbNVSApy12JSnh0IL+HULI29lGvhLDJK3gxMl00bBPLkM3vqRvDy2sMfrhkEP2A40TowehPwvNxOjYHQY12BIFePFf8K5G6BseFhTWFRbl1Tx7gkSRg60nGHZezWjRX1CsQmqCmc9X9HawRYaKHM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751847345; c=relaxed/simple;
-	bh=bg3UTIoYitdrE1fKKbSI9xlD3lw7ZBNyiPwF21r9hGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AcpYzlth0SGRcWt9MYlP7fqqsIp0w59xeof3sN4SNC3vIjVgE9AUWgvAdy3jlX0kEQ5+/LIIlaKuYJswTthhOry9WYZOBhaW0id01WwmMGf7t6ikcKqr/MlzmUjeybG/XpZt+WpB2dBafxJSCzEYIuB80TWwu+R4wQc3YdiTNA8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=eQNcOwYH; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1751847330; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=UTrKTZ3xXD548GT3q5KhD3JK9dOlxc1/gl993isZWCDB7ZdC6tm8r2W+Qp5UhIm84ID1a8s+c5ahoB6x1Qixq6yG8PKLajvXPq+j8xR6/c1murPnw4hi+Jh/BKNJNL28IcO/KjB8ClIaHtHoaM11OnFvvxI/O6n9cY5aBGMnr/k=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1751847330; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=bg3UTIoYitdrE1fKKbSI9xlD3lw7ZBNyiPwF21r9hGQ=; 
-	b=NxZbSbRmmq0WqYYLz2Z7EGdVQgB6LYDvNjNag+is8SPK5O4+TjkA7qbYTXXeigvvN9s3PDfbUHw/ZPBLeuUEPG6VKS4gjdIH242qHj1/3y1x7XonGD87ktU+Rrunk0oVU8New/T0jo8H4fuvyw0wsivX2AtlXlFLZh3sy6gZpFs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751847330;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=bg3UTIoYitdrE1fKKbSI9xlD3lw7ZBNyiPwF21r9hGQ=;
-	b=eQNcOwYHfMrChfzs/bOXHZAs3RO0F7clXQprNAjtlaEA974VEP17E0Au6WE8lLvH
-	KuH8iGLRDNF+uST57YHjjjfffgtxcGH/xaNQkQ2hxPxG7iFvBhN2uy6k8ZQmhax84VL
-	7H3fGzTQpLW/DVxyyIeohIUqny+wsACP0phn5ROc=
-Received: by mx.zohomail.com with SMTPS id 175184732787092.66100338687909;
-	Sun, 6 Jul 2025 17:15:27 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id 230A0180F14; Mon, 07 Jul 2025 02:15:22 +0200 (CEST)
-Date: Mon, 7 Jul 2025 02:15:22 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, David Collins <david.collins@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	kernel@oss.qualcomm.com, devicetree@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 1/8] power: supply: core: Add resistance power supply
- property
-Message-ID: <fb3ielhucosims237ikv4jfp3oq6fu5ftgt2mvenj6pjmzrpqo@vip3r6qew32p>
-References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
- <20250530-qcom_battmgr_update-v2-1-9e377193a656@oss.qualcomm.com>
- <b7m55sjc2rtvtelvez6sxnjvdostvxmfjhhsr4uxhyhh4bxrcd@xmioz2bsgis2>
- <e9160bb8-2b5c-4c30-b60f-520decde851e@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88A311187
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 01:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751851327; cv=none; b=mici+RLMNZYPZ0FgQ/Zo2bich92QD/3qxSXLvBT/9GfMbYOhEd1zBIYGbt1OUqNGovtrebbm8WjE58i9BXiYipakqGFOfhC01B7VzgoG5clhbuq8uKXnJezKNaH8koFDC8F9xm8QKGMxaJYSE3H3tmBn0JF+kN/9AWPCF43Qn0c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751851327; c=relaxed/simple;
+	bh=9NwGVncvxKMkaM44hYWhWAwxYrfgYjHJFYDWSh/PDMc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EZos+Lzlhb5gT/C0lBimw+SSeOeOBkDI+WXWT5IWxS5KmNckd+4GKHECwMRRhY2mLYuhZAo4uHjRqtoz496oTtafsVH2NdMuXZ/ucd+witHMsD7B/W50b9rRmakI4sSNLVYFiuG2AcVCm36gTUFRSBN/BzaaSyjxgHPuY0sPsSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NjGjmhOp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5670DIe5007041
+	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 01:21:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YGTEHq4IajGxUn2mf1ux8G7XL8Yixn+AipVYC3nee/o=; b=NjGjmhOpTMbWmN33
+	mO3imoHpweZEY6jBfi/omYJl/pKFRtYRJ6sMhVkOIIoaIPHQpVMJnFinvQ3in5vT
+	6AuvvOwiRY8vANIXvbF7JBu7jjDoy4+PsEqNSJe4nPolGpqmhxGQtNVZ6ZLcGV3d
+	ODRIyn+ZQpMyaw8S0r6TOjzc4Yk2tuiPxzXOtiOAvzaiRkO8bPblMqeDACid4fq0
+	+FTaL/qHv8RiCybJ3AOCC1fTzHl+FxCKI482mtbYVv1WeCnxWTQHxC0/xX/KTS7q
+	I+ngBIkmIhqV1GABdAWgJmjcpasugjNzrMiuDMFdhSE06uNxhfv6kRF3MGUxwKXA
+	ZcRsYg==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pun2813p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 01:21:58 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-408d05d8c03so700524b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Jul 2025 18:21:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751851318; x=1752456118;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YGTEHq4IajGxUn2mf1ux8G7XL8Yixn+AipVYC3nee/o=;
+        b=ByZvfhs4pWAKWOeoeJ/WxdOp6mG6FsfgA2WtdsCTry1Y3ScNsSWATbQ0Gg7LwTfNIz
+         DPJ/vbRWEmXhqnS3qQmYG8Crd0o9WVMM0YLEPHm4/PcssH3AI3zOR7EQkokmFSQa7jd+
+         0Orp5brqaUeWMVkTZrYOTiSI1RgB/yXra7A1DkEbMeBamz9ROb3YUtRoY6TVXwGhd8jQ
+         z2pUPBMlXKrqT5lns+pweLEYTjOG0DDvSz8KM5p2dImnkOilW1IMgl/40lwj50F69nvd
+         ZjV/c+IVuUu6QRFnxnXrzOiwpfiF+k6W6lAqXxcJwdJn5QMQICJLOM4rWuhP1X1oX/y5
+         XnoA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWmAS2nJLobfpef7GFRIIGmEuLSHxtkBawFnProDMWeUQKl6ZThYKEGcAR2+rTldbzOme4EXnSX9+VyJoC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUi6paDRQswkK30yZjZF1xeNuqVjxZ8+fxHE8cnNgkI9Qnz1EZ
+	GUH5fTzTgTwqatXMeZRYwHbfvL5SenNVAjGRdtZvMQdybCYTMO25XlMWLZFaBPfje7m9uyDYz6+
+	evDN/GRDXYI7btHhAStl0VlEQL+CNxXFg8X7agbE3sEQTDlg9YFZHrY6XmXHJSXzNTs5NDFruT/
+	QJZ7H/OJRYL2K2eZ14fkrkyhJChhHabSr5BaFu9vMRy8s=
+X-Gm-Gg: ASbGncv1QxoOutmP+kX+a29ehHe7cenbu3BwYxsmpPnvdzjk2FlHHscIyn4JP4kJtXI
+	7e4dp/GCK3RtQlOxt4w/3q5IKZD/RzSPwpqh6i15aT0FmzAlLfsP90Xwmq2emZ7IRfCuD8YaLWH
+	ufyaWlwvkjcO/NExCzw6k2CFocWqplS4TgGps=
+X-Received: by 2002:a05:6808:6c85:b0:40c:fc48:33b5 with SMTP id 5614622812f47-40d2b968e58mr5796406b6e.12.1751851317862;
+        Sun, 06 Jul 2025 18:21:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFs2KQvXeA8I+eNNlGJhs4a9HX4VvgO+pAA9xWcKrJk8Ka7dlkr/CtyJI2GXTeTCdlInF915oStCiYnr0X/MU=
+X-Received: by 2002:a05:6808:6c85:b0:40c:fc48:33b5 with SMTP id
+ 5614622812f47-40d2b968e58mr5796393b6e.12.1751851317490; Sun, 06 Jul 2025
+ 18:21:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="orqvdfabm65lopjd"
-Content-Disposition: inline
-In-Reply-To: <e9160bb8-2b5c-4c30-b60f-520decde851e@oss.qualcomm.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-1.4.3/251.827.75
-X-ZohoMailClient: External
-
-
---orqvdfabm65lopjd
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+References: <20250706-ubwc-no-ubwc-v1-1-e39552aa04df@oss.qualcomm.com>
+In-Reply-To: <20250706-ubwc-no-ubwc-v1-1-e39552aa04df@oss.qualcomm.com>
+From: Robin Clark <robin.clark@oss.qualcomm.com>
+Date: Sun, 6 Jul 2025 18:21:46 -0700
+X-Gm-Features: Ac12FXwpGmCmQ8_MwW7xpPT4fw4jzAuObtuXcAM1LUtEgzggh8phHjbplkb8mVU
+Message-ID: <CACSVV02AvJb_mb+Hw1aQPP+WTDTgG+f0n=kK50On1g54HnBuMA@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: ubwc: provide no-UBWC configuration
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/8] power: supply: core: Add resistance power supply
- property
-MIME-Version: 1.0
+X-Proofpoint-GUID: gnToxKpDc2IRHM6P5v1y6NGvTdxXLKM2
+X-Authority-Analysis: v=2.4 cv=GdUXnRXL c=1 sm=1 tr=0 ts=686b2136 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=1Na2Qn3s6HqEfW6eAF4A:9 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22
+X-Proofpoint-ORIG-GUID: gnToxKpDc2IRHM6P5v1y6NGvTdxXLKM2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDAwNiBTYWx0ZWRfXwDMi+VgLw8u7
+ A1bz+yOKjvAtfTDCOadsIsqLfP13/OpEdHX8lHHnmXVT/DpU/JAa2V8qsqfH9k9X+8mnwxxrGXb
+ 6XQnBthhmh5M+bgD76lN/FJS9Pt5w2CCQ1BiJ2Dhdf0g0sqoDFsjCjsC6PORehUq0iMYs0UhxK0
+ AF6E2bw9iiv1LAlhluRUe4pF+ykaYm2vRCrDPBHKbGgXanku1rYlhcAycnNH+zDeJ5c367DEnQs
+ Nheq6SdBVRCb4njJ0fYX2vt7cFtZh3Y3JSRRJ8Q4mBANqHV+VclB1XotgD/76MlRGadh28v0ogp
+ XbxNPMJKki2ZGVMZNi1q35F7BEwd/+hiuaPK+KLqC+acoscYMelSDVbd+yPVMwwzQyk1cIniSR3
+ rSZt0UO1Y5oJmhAY+1fTcy5VB8IMkFJlKa1V5ex78axp/wj3FzNEhyeJDJIRs90nehmvpVxo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_07,2025-07-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 mlxscore=0 phishscore=0 impostorscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507070006
 
-Hi,
+On Sun, Jul 6, 2025 at 4:01=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> After the commit 45a2974157d2 ("drm/msm: Use the central UBWC config
+> database") the MDSS driver errors out if UBWC database didn't provide it
+> with the UBWC configuration. Make UBWC database return zero data for
+> MSM8916 / APQ8016, MSM8974 / APQ8074, MSM8226 and MSM8939.
+>
+> Fixes: 1924272b9ce1 ("soc: qcom: Add UBWC config provider")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> Note: the driver is a part of drivers/soc, but as it got merged through
+> drm/msm tree, this fix should also go through the drm/msm tree.
 
-On Mon, Jun 30, 2025 at 04:28:14PM +0800, Fenglin Wu wrote:
-> On 6/22/2025 9:26 AM, Sebastian Reichel wrote:
-> > On Fri, May 30, 2025 at 03:35:06PM +0800, Fenglin Wu via B4 Relay wrote:
-> > > From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> > >=20
-> > > Some battery drivers provide the ability to export resistance as a
-> > > parameter. Add resistance power supply property for that purpose.
-> > This is missing some information and the naming is bad.
-> >=20
-> > Which resistance (I suppose battery internal resistance)?
-> >=20
-> > That is heavily dependent on the battery temperature. So this needs
-> > to document if this is for the current temperature or for some
-> > specific one.
-> >=20
-> > -- Sebastian
->=20
-> This is battery internal resistance calculated by battery management syst=
-em,
-> using the real-time temperature measured by the thermistor inside the
-> battery pack.
->=20
-> I can update the name to something like "rt_internal_resistance" and upda=
-te
-> the description accordingly.
+Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
 
-Your message is kind of mixed signal to me.
-
-If the BMS needs the thermistor to calculate the internal
-resistance, it means the data is either not real-time, but
-just adopting some fixed value to the current temperature,
-or the internal resistance is adopted from the current
-temperature to some fixed temperature.
-
-My expectation would be, that the BMS instead actually measures the
-internal resistance via ohm's and law and Kirchhoff's voltage law.
-So please make sure to understand what data is actually provided by
-the BMS for a proper ABI description.
-
-Depending on the description I think 'internal_resistance' is a good
-name.
-
-Greetings,
-
--- Sebastian
-
---orqvdfabm65lopjd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmhrEZYACgkQ2O7X88g7
-+poJbA//S3Qz3Ln7piw+pbGa8pohdUZjhJetS+frJHREKwEQX31E8iqMa5bbumhb
-QQHbrNvDREndfwHjJZXWsCUA0YI6kLVWlUpUKegJJzszVuR++7ihPSwPo3AYs1kA
-70dUL45RUIeqaaDfThdP0hZIkJZEiu9n72I/n4Y3R6QzlhOTAy1FwmZIdlY6Pfpa
-Zdes/Kbp6YsTpftEfyBK90lrEUE5qRXu0sCDkjtaQQACIHr/61m2/h5v9D2OlEMn
-0RgXFWi6hYAezGfGyY6+YjTkqmtcZcnHJlTdqORv5hmhbQYqqGrjP6gHzM7jwRx8
-/4/lL5ax3EMjWQk8KdAs0s9GYsby9DeNGYcgpp0Qfee58mDUepagNkVntRQFhW6v
-rCW1T5lYh4vkoY5GrOP8dLgRQEJQP66JPVq8pgppMj8WCCXyh7EbaltNvXGfm+WP
-5h8hhsg8ysi9v2FTVqrHobvSc4BJ4DrUD9Gx2j11PjFV80KDjGiZAM4ZQXj9QjgQ
-pvDozcn5C3mswYHBsT36Daan2S/16QQi9WIKwKCqUrRIW50xAJNzyWrsADh2NMe8
-a2tDVYNK4c4qMvb7rqoPql/PtNAit/G4+nw5M2IddtG5eVxW7CrgSBpq5fJpDjdx
-Bs/EzIFfg8j4K8xY9l0iRbVrze/jhO5Dsck3cbbXlUM5fCIEZGI=
-=Jeor
------END PGP SIGNATURE-----
-
---orqvdfabm65lopjd--
+> ---
+>  drivers/soc/qcom/ubwc_config.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_confi=
+g.c
+> index bd0a98aad9f3b222abcf0a7af85a318caffa9841..df074520a8cae1a202a14ca09=
+4903bb1e7389066 100644
+> --- a/drivers/soc/qcom/ubwc_config.c
+> +++ b/drivers/soc/qcom/ubwc_config.c
+> @@ -12,6 +12,10 @@
+>
+>  #include <linux/soc/qcom/ubwc.h>
+>
+> +static const struct qcom_ubwc_cfg_data no_ubwc_data =3D {
+> +       /* no UBWC, no HBB */
+> +};
+> +
+>  static const struct qcom_ubwc_cfg_data msm8937_data =3D {
+>         .ubwc_enc_version =3D UBWC_1_0,
+>         .ubwc_dec_version =3D UBWC_1_0,
+> @@ -215,11 +219,17 @@ static const struct qcom_ubwc_cfg_data x1e80100_dat=
+a =3D {
+>  };
+>
+>  static const struct of_device_id qcom_ubwc_configs[] __maybe_unused =3D =
+{
+> +       { .compatible =3D "qcom,apq8016", .data =3D &no_ubwc_data },
+> +       { .compatible =3D "qcom,apq8074", .data =3D &no_ubwc_data },
+>         { .compatible =3D "qcom,apq8096", .data =3D &msm8998_data },
+> +       { .compatible =3D "qcom,msm8226", .data =3D &no_ubwc_data },
+> +       { .compatible =3D "qcom,msm8916", .data =3D &no_ubwc_data },
+>         { .compatible =3D "qcom,msm8917", .data =3D &msm8937_data },
+>         { .compatible =3D "qcom,msm8937", .data =3D &msm8937_data },
+> +       { .compatible =3D "qcom,msm8939", .data =3D &no_ubwc_data },
+>         { .compatible =3D "qcom,msm8953", .data =3D &msm8937_data },
+>         { .compatible =3D "qcom,msm8956", .data =3D &msm8937_data },
+> +       { .compatible =3D "qcom,msm8974", .data =3D &no_ubwc_data },
+>         { .compatible =3D "qcom,msm8976", .data =3D &msm8937_data },
+>         { .compatible =3D "qcom,msm8996", .data =3D &msm8998_data },
+>         { .compatible =3D "qcom,msm8998", .data =3D &msm8998_data },
+>
+> ---
+> base-commit: 8290d37ad2b087bbcfe65fa5bcaf260e184b250a
+> change-id: 20250706-ubwc-no-ubwc-3c5919273e03
+>
+> Best regards,
+> --
+> With best wishes
+> Dmitry
+>
 
