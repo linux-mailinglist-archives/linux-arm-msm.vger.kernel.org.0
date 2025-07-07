@@ -1,151 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-63914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A595AFB086
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:58:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E42EAFB072
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:57:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1071F189A607
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:58:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02FEE7A588B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:55:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5347829552B;
-	Mon,  7 Jul 2025 09:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20032289E2A;
+	Mon,  7 Jul 2025 09:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="iyEYlPkF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ipRjMHMh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48636295D92
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 09:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5198A27B4E5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 09:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751882229; cv=none; b=gtFdV7/7h7OoObaIetIavsSRcosf1nlU29f9SQu5MrSp/GlUkGOCUv9GUbgHb1jHfk0gJ957SDJtXFg5Nmh6DrTEU5OzrxV6U0WmRC0/MX3PtXrrsDhCLRtXyDteI7fNEla2XME7PzgmIqfZleBH7l9EaT58Hd33w+OqOTHtd6Q=
+	t=1751882222; cv=none; b=kBbOPD+iZ/cUX/3hH1aMwFZRVCswJEnQoy9yiCt2joEpcRERjN2MDU+uuinUL6CkZr+MAhJHTGWjKqwZj9HxSLUFW8maWmOeI3rqLkZYnTQCWj36ThENl/LGEPwit8yVGQEKaVsaDVgwxGj7iAsFF7+LJpmRAXfSe7t44iYOuzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751882229; c=relaxed/simple;
-	bh=3Mu2inPeLurTgxYIMXmvWJLeE7eR7Fy6XDeF6vArhtI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KXyy1BHKW+xACm2TwEEqs3zDm0XVtsRFv91fay7ijTN/TlUwKbld8hVp7jte11RO+lxwc9L1tbinrNzFURrx7oGo0rkIS4gQDCo7GQ8MSBUA2VhSLV/OFBd+mgO7NjVMUNC3BHiJd58UBoul5OJHKcEmP4h64JwfyeZD9iRdTDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=iyEYlPkF; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-60cc11b34f6so6470538a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:57:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1751882225; x=1752487025; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EOnXjDsqREhCmFz88p49UNo+eXUiRZ56Bd8zYTlBpIA=;
-        b=iyEYlPkFwUyAwTcMUvc97NQ6mZcgozgZfTX0JFclFwPj0oSZtjX/JbqZJpETRaRRby
-         YEbqmfxvwPF6TCMwNxzPnsa0o3Opk1iv3fXuRV6Lwg2SwK48FnwR/XhOm22NrMb74kDQ
-         ePNR/zFNKGRzBH5fk1VVK9qVbzTielD+ESYltioF5j6DVntVug/Kexisg4mAxgcm7tCg
-         BnKWvj8Xti5XhKIRUlTZtGcg+4tsWAvOWx4ZmUG7NzsgkN+RcoNB/83BMZDMQ0LBl5Cw
-         Pxl33yNqTpsIytR8Hq5qJjxHFdvCvYBX8QknIc7euv4vsYD7P95iQFWz59GEtSC0hwR6
-         +R/w==
+	s=arc-20240116; t=1751882222; c=relaxed/simple;
+	bh=18YR99uXCyEZk77ThDFqutW4vFM4pTkYue+/FBulMLg=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Od7SQcyKTsHVEpYFnrKV5B2RFvCp1Gh0fRXSvTHe9s/Gc0aAircR/TuGk783+0BT+aBYakX2yj6jAT29HW7gVjGsRX7y/Y9oFQrO9Omp2PTqLnvAzmvyhO+6F/uGm/bm1rs9Cxk8H3hANzQRXXftTX78Vpf3WZuQ0rL5oalSBcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ipRjMHMh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5679kQRj014843
+	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 09:56:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=EOkscAPglu6pNYZf/TxA87OL
+	ergxaMCP9y55D8Mo79k=; b=ipRjMHMh7ptxXvwLj+25db+3re9z/kUJtcwn/MPk
+	aYGp3b3xrQ63+vhrZLEwf3AsBL4rj8XyPdLEwwZHrqw+Zj1Nd3ifkdt2eY5HfVwj
+	lwHSZYHMBo43JaYucfkXmYvz08yrKF3u3EHr131mXd7aiiEL74mHpsHEEO9dLs6z
+	zvQhpWIQUbuiXI8OX1/g5aV+PTkIzMrIs2j+S3pjsPX1S10Y6yyTApV7TQSLDH7u
+	YPg2CLgFalLCQN+PIhwjxS7kWScnrkmi+teHgVNKnPusKfdhnLSndUDIDCYacjuE
+	OXBa88jBSmLh76xpiLjv5kETArloapFNAVPIdEz8XpKa1A==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psrkbx5b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 09:56:58 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7ceb5b5140eso405034285a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:56:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751882225; x=1752487025;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EOnXjDsqREhCmFz88p49UNo+eXUiRZ56Bd8zYTlBpIA=;
-        b=m8mn7OsspZHQ6CvgLUFB3sDcGB+dZOBV8EoVASns7pfl6CKyZvsTeL7vFqq2DM52gz
-         IAZAIAyRF5Q92mNc3UF6q11OAbSJH3H/zxabtCK68dTH7Q8OrfYVBk671hVeaPqQ+tE/
-         C9W80dIJhgf+kAEPVdQjacP+T1xURqQQuFutKns8lKESkjAcFCli8GpDZxoIrHdrHzcC
-         zWBJY0n3b0HR+07TYBHS6Ypq0iNKb6ohthGyt1mUZZOC0xyzyCiZ/Ii9Ry6Zidf/Q/KK
-         fEyQDTd6tIz2WGQ1iruIdgqGfLLL/6LYBjRFP07x/iWN+O1IviCvLf7hoy7hliVi8GAk
-         d6Vg==
-X-Forwarded-Encrypted: i=1; AJvYcCX7FtPxviSKoXjn4WYsWoMrPjdRoqF2BNHjXekOndpYtLHCy0JLOEEHbIc8uvQKL1R6S0ThuSokcXxGhq4M@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2XF8Bc9HhLZvogxG2KHP0XHwrMc43me9fMCIHwv5yYNXHmiKZ
-	5tcFoIG26LcGMk6xyIvFA/5Zqvb2xXd6t4oJYrOcwkzzuefn6cCwC+7XHXVBD9OJOGU=
-X-Gm-Gg: ASbGncuqHJ7Q6xqz6Vj8lLoNeIZ+gvUiTxNIsMNH1Pzj2X3SPMTZMJXAso7oM4irlEs
-	qyknKX3JSxClzW9uXia7zD/8g0yOfhW2/XNVFF4JAQIug8r9Gr/cbbzA0kJrtAYSfrgHcKTyfbd
-	PA6Aevo0cfNBEclkmjZmOtrqloT10+Xe9CM9xVCW8ZEYvPFW7VxyubxdLM2COc05Gwnd8qdVZv5
-	oAUT3r9D8mhy/f/vik/Py/NFfNwt0wohqrxceTD7EjIeHuTHaOVAIdSf6DdJPDOJUmPQZ/NNgUB
-	uRif2oRAemMEjqwLW8uttUSdqgY7RlgGtNiJWpFQzu6hN/eJk+EBd2YzpmdDZc3kdaUgSyIMycQ
-	v0RSP2fpMOdkfBwWjWVTVa5aDb5pL65lG
-X-Google-Smtp-Source: AGHT+IGKhMhFSGKlsIJ79aw5G6QurSRw8NCQFcx3lleMs7147mX87cuyeRhXpjtmLkhn9V0f7LM0PQ==
-X-Received: by 2002:a17:907:e90:b0:ae3:eab4:21ed with SMTP id a640c23a62f3a-ae3f80acbf7mr1348668966b.11.1751882225465;
-        Mon, 07 Jul 2025 02:57:05 -0700 (PDT)
-Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fca6641fbsm5235815a12.3.2025.07.07.02.57.04
+        d=1e100.net; s=20230601; t=1751882217; x=1752487017;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EOkscAPglu6pNYZf/TxA87OLergxaMCP9y55D8Mo79k=;
+        b=QA+Zzth+p1f2Z6PrUBWvYkpFX7CFDp0x7UIB8Yb6FogBx9vjrAgUL6r55+AyR1ipM/
+         oIVCCpFP7EOWbdqxyYimdQfWXtnUzGDEOGoktHmTXkKxM564RRCV4KfSUCKwq3dNVfIS
+         Qo1LtiPt7yy+mpMJnaefjG1oe2WROVMx65GW9NKe73oRn1960emG/JTmG1GKM6+wzdyx
+         DxBAcW42ms00WZVlmi1P7zOYf19jy1W4IM8iB/YZCVha5axiVl89jIIX9Gig4VlrO/mK
+         UYRYpo+4F//WrpWtfPii+PiaaEMLNMs+Nu3Y7s4odlhxYWkw7XNTFCGDohJm2g5Ctfr5
+         pP8A==
+X-Forwarded-Encrypted: i=1; AJvYcCXxr7e/vU6mFcNowpIcL0Q2j5VG9L9TZCeC7MCzw0Q0BtfSglFhrwm3Z9mCt4aCaLtATbs0QnTP5n89ZRPC@vger.kernel.org
+X-Gm-Message-State: AOJu0YygpBeE8fREuXgwtbvBylyr6HiBJ3Kp4JEu4dq8EYijI4y8iJO4
+	U8IvuLCRD8jRNGA+LM2mzZALakS3m0tzr5KTOsAOOTKXrhv2oVh31xC0+pUYg0T0kFsTumKgTA4
+	oSe9lkIPhgwu+lv5sWshcRgTMHnQJw5uHRzUxZjNnt30HqCyl13j2/8BQvp1nDYr/09cP
+X-Gm-Gg: ASbGncudnQqcTddpXH8RzSj3BfPkbLmjLIgw87iEL3+nLu/d7Fn6fu/D9mDAoqffQSP
+	8rZ028S4oRR71EqMv2CmcNVqJxJhN+wr2g+uyubQAXInmrBQ3B1IyX2NjdNr8Ql96QYrJs51fZi
+	b9ETf1EFcI3irS1FtGhGwLpBC9vSh/p0seC/FIXgqp2T9r5bw4hxgjP+npbkPY01Hw3vKX15ty/
+	u94LeWx+vfU3L8QPKYR6Vkk18Wgk4usOVqJZ+GbIhG/Pa84+pTqYk6XIFHySymPf9EjHQfz0TgN
+	G/Mo5yRAhNRkYBpLL/ndI4q5bd3JdezX1zvK8VsOFDnbpEqkOiJQgmI=
+X-Received: by 2002:a05:620a:8083:b0:7d2:15e:1f9d with SMTP id af79cd13be357-7d5f20b7efamr1156797485a.53.1751882217027;
+        Mon, 07 Jul 2025 02:56:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8HJEkPslMRBZD2ONOEBO+PEUNCALtoyCPDK0CyJ4VcqyQXuJqvMV6aeF1c958pDPXhcvw3g==
+X-Received: by 2002:a05:620a:8083:b0:7d2:15e:1f9d with SMTP id af79cd13be357-7d5f20b7efamr1156794685a.53.1751882216608;
+        Mon, 07 Jul 2025 02:56:56 -0700 (PDT)
+Received: from trex (97.red-79-144-186.dynamicip.rima-tde.net. [79.144.186.97])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454b16288b5sm108476705e9.9.2025.07.07.02.56.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 02:57:04 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Mon, 07 Jul 2025 11:56:40 +0200
-Subject: [PATCH v2 4/4] clk: qcom: tcsrcc-sm8650: Add support for Milos SoC
+        Mon, 07 Jul 2025 02:56:56 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Mon, 7 Jul 2025 11:56:54 +0200
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
+        bryan.odonoghue@linaro.org, quic_vgarodia@quicinc.com,
+        mchehab@kernel.org, robh@kernel.org, conor+dt@kernel.org,
+        konradybcio@kernel.org, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 3/5] media: venus: hfi_plat_v6_lite: Populate decode
+ capabilities
+Message-ID: <aGuZ5h7LpPu5Pbnr@trex>
+References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
+ <20250626135931.700937-4-jorge.ramirez@oss.qualcomm.com>
+ <bac6a881-90b6-4f33-d9a8-61aa8daea330@quicinc.com>
+ <aGuPpzU0VCg45Plg@trex>
+ <db7fbfb8-b0fe-58e2-4564-f24d6a551232@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250707-sm7635-clocks-misc-v2-4-b49f19055768@fairphone.com>
-References: <20250707-sm7635-clocks-misc-v2-0-b49f19055768@fairphone.com>
-In-Reply-To: <20250707-sm7635-clocks-misc-v2-0-b49f19055768@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751882221; l=1444;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=3Mu2inPeLurTgxYIMXmvWJLeE7eR7Fy6XDeF6vArhtI=;
- b=Wtvm1YrlQYeQB2SHtJa+HyB8AdrvrSqn/xb3Iesq39ZhGe/BB5eqogjRlpyJs5iP8J2pzA7I9
- 3PdMXLLd6FaA9OORSwNJH0kAn/MNrc4SXMzR8zSMe8BHr8fmfVIiXy1
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <db7fbfb8-b0fe-58e2-4564-f24d6a551232@quicinc.com>
+X-Proofpoint-ORIG-GUID: Jtv5SQaaSTDj2Q7GYgLkfGgzCq15dRPk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA1NyBTYWx0ZWRfX6uzxdjsi2Az2
+ seB/ioUbIdkcGSPM72dQ/N7mMhVIPOFiOaNKySXv9iJ0S/cXG/E1qogFekknUdeyoj3qcXFEL0F
+ tE2TL/hPuXXzcSCGx/a17JoPLGhv32up+j7JvAuVXCJfvG3VActGKnjujK5DCah/Wx9X0VxszK4
+ 3iTlTh4dDaK2+jP9fG13aeDgutkWBQMwh1w6nehnhivXXe1iQaaYILNkOSa0CJ/JwtiiVmFiIwh
+ 9++tXRC0zKxUkUU8wH/6qWYjc3DaqnczlJBVRx60NRXyCVVFpMZ/4piKgZDFOdzIBDrHmFHia3G
+ g55wUqdVgBigVT+bPfwtvdrX/8xzpZFB1Q3Fqw/r0DLIqhhqt/54kRc4LKIoi5x/L5KMA8j0AIg
+ MDRrrpvdMaa8q34a81bPVImqmhi5rFZnu2xgBJFTHXqIA17JRS/x/ALWROcbTKZ4n0XO5y7O
+X-Proofpoint-GUID: Jtv5SQaaSTDj2Q7GYgLkfGgzCq15dRPk
+X-Authority-Analysis: v=2.4 cv=GtBC+l1C c=1 sm=1 tr=0 ts=686b99ea cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=oX6B8lV6/A+qF9mARCc04Q==:17
+ a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8
+ a=nYNRSA1dgNPy7Ku2h68A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-07_02,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1015 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507070057
 
-The Milos SoC has a very similar tcsrcc block, only TCSR_UFS_CLKREF_EN
-uses different regs, and both TCSR_USB2_CLKREF_EN and
-TCSR_USB3_CLKREF_EN are not present.
+On 07/07/25 14:59:05, Dikshita Agarwal wrote:
+> 
+> 
+> On 7/7/2025 2:43 PM, Jorge Ramirez wrote:
+> > On 27/06/25 19:02:13, Dikshita Agarwal wrote:
+> >>
+> >>
+> >> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
+> >>> Add hfi platform file with decoding capabilities for hfi v6_lite.
+> >>>
+> >>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> >>> ---
+> >>>  drivers/media/platform/qcom/venus/Makefile    |   2 +-
+> >>>  .../media/platform/qcom/venus/hfi_platform.c  |   2 +
+> >>>  .../media/platform/qcom/venus/hfi_platform.h  |   1 +
+> >>>  .../qcom/venus/hfi_platform_v6_lite.c         | 148 ++++++++++++++++++
+> >>>  4 files changed, 152 insertions(+), 1 deletion(-)
+> >>>  create mode 100644 drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
+> >>>
+> >>> diff --git a/drivers/media/platform/qcom/venus/Makefile b/drivers/media/platform/qcom/venus/Makefile
+> >>> index 91ee6be10292..4a6a942db58b 100644
+> >>> --- a/drivers/media/platform/qcom/venus/Makefile
+> >>> +++ b/drivers/media/platform/qcom/venus/Makefile
+> >>> @@ -5,7 +5,7 @@ venus-core-objs += core.o helpers.o firmware.o \
+> >>>  		   hfi_venus.o hfi_msgs.o hfi_cmds.o hfi.o \
+> >>>  		   hfi_parser.o pm_helpers.o dbgfs.o \
+> >>>  		   hfi_platform.o hfi_platform_v4.o \
+> >>> -		   hfi_platform_v6.o hfi_plat_bufs_v6.o \
+> >>> +		   hfi_platform_v6.o hfi_plat_bufs_v6.o hfi_platform_v6_lite.o \
+> >> s/hfi_platform_v6_lite/hfi_platform_v4_lite
+> > 
+> > will remove, will use platform_v4 instead
+> > 
+> >>>  
+> >>>  venus-dec-objs += vdec.o vdec_ctrls.o
+> >>>  venus-enc-objs += venc.o venc_ctrls.o
+> >>> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+> >>> index 643e5aa138f5..f56b8f9946d7 100644
+> >>> --- a/drivers/media/platform/qcom/venus/hfi_platform.c
+> >>> +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+> >>> @@ -13,6 +13,8 @@ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
+> >>>  		return &hfi_plat_v4;
+> >>>  	case HFI_VERSION_6XX:
+> >>>  		return &hfi_plat_v6;
+> >>> +	case HFI_VERSION_6XX_LITE:
+> >>> +		return &hfi_plat_v6_lite;
+> >> update here as well.
+> > 
+> > yes, this function wont get changed
+> > 
+> >>>  	default:
+> >>>  		break;
+> >>>  	}
+> >>> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+> >>> index ec89a90a8129..6356e4bd0de2 100644
+> >>> --- a/drivers/media/platform/qcom/venus/hfi_platform.h
+> >>> +++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+> >>> @@ -58,6 +58,7 @@ struct hfi_platform {
+> >>>  
+> >>>  extern const struct hfi_platform hfi_plat_v4;
+> >>>  extern const struct hfi_platform hfi_plat_v6;
+> >>> +extern const struct hfi_platform hfi_plat_v6_lite;
+> >> ditto
+> > 
+> > neither this one
+> > 
+> >>>  
+> >>>  const struct hfi_platform *hfi_platform_get(enum hfi_version version);
+> >>>  unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec,
+> >>> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
+> >>> new file mode 100644
+> >>> index 000000000000..41958a3e353b
+> >>> --- /dev/null
+> >>> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
+> >>> @@ -0,0 +1,148 @@
+> >>> +// SPDX-License-Identifier: GPL-2.0-only
+> >>> +/*
+> >>> + * Copyright (c) 2025, The Linux Foundation. All rights reserved.
+> >>> + */
+> >>> +#include "hfi_platform.h"
+> >>> +
+> >>> +static const struct hfi_plat_caps caps[] = {
+> >>> +{
+> >>> +	.codec = HFI_VIDEO_CODEC_H264,
+> >>> +	.domain = VIDC_SESSION_TYPE_DEC,
+> >>> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> >>> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
+> >>> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> >>> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> >>> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> >>> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> >>> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> >>> +	.num_caps = 7,
+> >>> +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_1},
+> >>> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_41},
+> >>> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
+> >>> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_41},
+> >>> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_41},
+> >> what is the reference for these values?
+> > 
+> > what do you mean? what should be the reference? I didnt see a downstream
+> > equivalente to base on so based on the 4XX settings these seem
+> > consistent.
+> > 
+> My question was regarding the profile and level mapping.
+> The profiles added are consistent with 4xx, I agree. But the value of
+> levels mapped with each profile is not matching with [1], hence the
+> question about the reference used for this mapping.
+> 
+> [1]
+> https://elixir.bootlin.com/linux/v6.16-rc4/source/drivers/media/platform/qcom/venus/hfi_platform_v4.c#L23
 
-Modify these resources at probe if we're probing for Milos.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- drivers/clk/qcom/tcsrcc-sm8650.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ah right, AR50_LITE does not support 52 (the highest is 5).
+I see your point - you are right of course.
+I was doing a quite a bit of testing with fluster and I left the wrong values. My fault.
+will fix.
 
-diff --git a/drivers/clk/qcom/tcsrcc-sm8650.c b/drivers/clk/qcom/tcsrcc-sm8650.c
-index 11c7d6df48c7b39f661cc4c2df30387836d2ca60..3685dcde9a4bd5ebc62ae9c054e6b6a44d68d0c5 100644
---- a/drivers/clk/qcom/tcsrcc-sm8650.c
-+++ b/drivers/clk/qcom/tcsrcc-sm8650.c
-@@ -148,6 +148,7 @@ static const struct qcom_cc_desc tcsr_cc_sm8650_desc = {
- };
- 
- static const struct of_device_id tcsr_cc_sm8650_match_table[] = {
-+	{ .compatible = "qcom,milos-tcsr" },
- 	{ .compatible = "qcom,sm8650-tcsr" },
- 	{ }
- };
-@@ -155,6 +156,13 @@ MODULE_DEVICE_TABLE(of, tcsr_cc_sm8650_match_table);
- 
- static int tcsr_cc_sm8650_probe(struct platform_device *pdev)
- {
-+	if (of_device_is_compatible(pdev->dev.of_node, "qcom,milos-tcsr")) {
-+		tcsr_ufs_clkref_en.halt_reg = 0x31118;
-+		tcsr_ufs_clkref_en.clkr.enable_reg = 0x31118;
-+		tcsr_cc_sm8650_clocks[TCSR_USB2_CLKREF_EN] = NULL;
-+		tcsr_cc_sm8650_clocks[TCSR_USB3_CLKREF_EN] = NULL;
-+	}
-+
- 	return qcom_cc_probe(pdev, &tcsr_cc_sm8650_desc);
- }
- 
-
--- 
-2.50.0
-
+thanks!
 
