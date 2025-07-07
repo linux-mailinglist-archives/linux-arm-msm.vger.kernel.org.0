@@ -1,100 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-63900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6B73AFAF47
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:13:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76DEFAFAF5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:15:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29ECB170460
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:13:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF50217F878
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:15:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84F7628C85B;
-	Mon,  7 Jul 2025 09:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 377F328D8FB;
+	Mon,  7 Jul 2025 09:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kuQ/ec3y"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gRn+Zj9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27801F4623
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 09:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1C28CF79
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 09:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751879598; cv=none; b=Yu+VcuVAE3nWiI/9xWlBkQldTBwy8Oz7EI9V1v+G+RsQ9ZRGAC2m1LBvY9Uqb0xuVq5F4CF4EuEX1RWUKnEMz3buveXOQ7AahvihAH5TvN6ZCW0wSooeJDulKp/mRXS+Gsqx1jdJGCxpbBLd51YW20bK/UcE8zNHrpcyis1Gm4M=
+	t=1751879726; cv=none; b=NN22M2hl0K3+fqi7cKsiw9ENnKqfMETOR8B61pD7E5lWhkdw/E2C0+/wcKoKLV+iLuqCB+1kn4/N64/jiorfsgUH08fgrWLLiY6WeCDH0wkFaXI2/qF0LE/sHCwFJKKN+TERndMk84z00FCzL5XvPAVmw/v+hL0HfLekksu5OnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751879598; c=relaxed/simple;
-	bh=9e/j/TisrlOj1sag55zujCuH8hWns0AKFl54gX2S1nI=;
+	s=arc-20240116; t=1751879726; c=relaxed/simple;
+	bh=tjjCvBxWbRxuzfcmwgt2e14BCgemhZ17sHNnbJDoRqo=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BonbCX0/EiB0WG/0lLJUiQQYIyg52tmiCxOLhhWaAMH9fV0beUoZUvRStWRudj+dKtIkYLh5mvpO39UP5A1HZCLgIB2+gKkEgwyWLcZb18cV+3Ov0HIoqTLtrJK/8N4RJ3hDtmlqhiKJgALgzyh0YsZ2Hpqo9B021UJN0VPJKuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kuQ/ec3y; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=rNyNA5u31zLce1gcQWRGgMXfA5i9BIhcup0svFgUS0u3vQWrxixT1RuC9QQXSjGFx7kOOK2G1SkRVlPAIczJZXj3xW8LAShJ/C4Qvwo37JOIwcczbHLaTk408cjCMZMy/Ggj7c/mdSWe/OcG3lWtVExrhrLj3nu5ChGQ1d/DkF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gRn+Zj9b; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566NTEoF006944
-	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 09:13:16 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5678vLmh006090
+	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 09:15:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=0ToO/s6QUGdOhjPrMVyWmlZz
-	BvPNufyts6PWBcHykjY=; b=kuQ/ec3yxvLyAJ/kMeVyzb0NQzGRo/iOFnVFIG1k
-	ArgaQIIsVWVWKyfiNA0gcbLRHvhOBZ+mT8y1S+nK6x97WoTtt9LMGrNJO0fX3sRW
-	x4WS6u4Pj+41raEhgKrUT9Cpup9cwMlmINuXEQtbc9c+SUghUzDoYD2Q0UFy4ZcJ
-	+cie/3ays9tMcF1T37nK/wTqYh1Sc+fsrQ+CBEUKSBQpQKdymmIK1nYVTSh1WXBv
-	vdNtf3RKlGv47vG2ydu+R/kFGH/+K5DAwBvh/W+Uw3XptbujXxtjLRs5ECiHvOAN
-	lqM7v7yeKK35hHZlmAm7FALiqGjsx+mblGPrRwNqmp7emg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu0w3gxv-1
+	:references:subject:to; s=qcppdkim1; bh=ngeouwKDCRN8FHS2Ov3SiLW7
+	xuB2mIEuudvyrN1Stik=; b=gRn+Zj9bPJLipbfniCQ+2soZ1LekeEo3ru9DrdYp
+	xpO1dZyRSt0kAkQoVyunkLhcb1W44MwZYyNrgEprB/4jKQa2CZ0LQqB6yR+X8xk8
+	H7LZJKC+nBNzUK4hBGAX6ISwXfkZ0xGgev0DosLyJuyHUSmwxA0ea7tCdc+dog61
+	yN0cHDZMaLf2oe0dsToMESJRStQKHAxMAGlj3NiTE4vf4fOYHgyPV2OviBI5gvcB
+	xznn3wii1j8WznOX3hNVJSpoKnR+YSk5JUVlGsE2laiPYbFS+kzVakERlaIbQeby
+	ZFNbhdF6Ksb7HVCqH7a7whGOGzfogP9IWEFZY4kIXnqENQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psrkbnqa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 09:13:15 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d40185a630so514627785a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:13:15 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 09:15:23 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7d4576e83cdso882844785a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:15:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751879594; x=1752484394;
+        d=1e100.net; s=20230601; t=1751879713; x=1752484513;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0ToO/s6QUGdOhjPrMVyWmlZzBvPNufyts6PWBcHykjY=;
-        b=nUDw22qCnc77coAB8oV8naCJgMDJ+cXhmxR3K1ZtTDLIKRNEAF9Jkgl4Nu/jQds8nf
-         domVSinBdYgrjHKeiKT5CAWaFXHp/mtEcvg/yn3CB9Q+opKcUnlk/e2P+MOaGl/jUHn/
-         BV1IAeXnF4xTKVXI+zhWy35habOwZlZc4vhzF8ne+oKbW71eVYtw8zZkTMTelTskUx2L
-         mnlHiWfrg7IrbkcVFZKyMlmNUTHWM/TgOoDHIO1Oie8AflkHW0y9eASkyjynudtkaBQV
-         3Snul6lBal0xo8efuh6BMIbyCF+owuqKgrf9qbvCvvebfGmm/6TNErQrcmb3Ctd1mpzl
-         NbgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW5qa0W47SwLXbbsORSkuIZSD5QB4bFM1bimZSBh6tZDS5OsKXCjj67iPIv2tusO43Ig8bkrm55F0lMaJ7f@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhGX4woBBRbRXaadGJz/+cO2FM1dotk6yOqbGA1XiZbEBJTVVv
-	m0BPPBmv1dL99AY6Ni6oUyguX+2VXQzMD8LJDB/jBFhMMdY7HG56HVxcXEN1EdUIkNYonNm5t2K
-	ZElY3qSduUETCquN5saNCUW8yVFuR38ZUgAGD0n9fBv8mIOh44LsYGKC4KZJX0mAqLfhQ
-X-Gm-Gg: ASbGncsI2k8AxwY2xrjWuhj1X4GdqKC27WLBVefRkIUeFlBQ/0tB3ch1mvQGaegl3gh
-	6WbjmJDiNE54RdtKG3Y6d+0koCQFBHip1bDFCi4vqmyQoDx1IZeI8J+ffcXGwX3huoagazvdeDQ
-	7bacIc7PzHcFqhsR0eOzjIL/RKV4O3sdvRaJt8OoiWMDsiW7SzF2wzI8of1SwcPBpdQxLhVz2Xi
-	kc3fzvQlq0kghYJptYCw3aYYjvZM/U9x3PSD2UDzzZMro6sIZJOw0NwlG0QJfxkbqLZLCTOsjvO
-	/zr0xyg88M7MmxTeD4z9M1le6OVuJFlVafvZmT6ZIRVI/c7XCiiHIdM=
-X-Received: by 2002:a05:620a:468c:b0:7cd:4b5b:a1fc with SMTP id af79cd13be357-7d5df0ccfe3mr1619156485a.7.1751879594427;
-        Mon, 07 Jul 2025 02:13:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAFe4T5tQYs9PjuLRj+UZEMUkkXmUbbWQsMax8XLLrVdvN7NAhevIHROXyKYcWrOl7ui+sRQ==
-X-Received: by 2002:a05:620a:468c:b0:7cd:4b5b:a1fc with SMTP id af79cd13be357-7d5df0ccfe3mr1619152285a.7.1751879593840;
-        Mon, 07 Jul 2025 02:13:13 -0700 (PDT)
+        bh=ngeouwKDCRN8FHS2Ov3SiLW7xuB2mIEuudvyrN1Stik=;
+        b=cdr6RhAXXr47iXWPy9b2wmSJmSj9OwGeG8lajNNyyViCLZQ5M3Bk1HwQN8NEU0K8BG
+         p8bUt2BlXmqMdUGPFIHpT1x8xTKGbzeosLao6I2iMBYsURSLLYFA8OJKs5GXYzYVQHRT
+         UI0fFAjgfs5akiRFLw9nCySoX78DDbwkHltqlmQ+R7goBD/Fp5+qkR3xU5fyd9xZRjom
+         ncmZCxN7HawwNhR3N2KWplgRYm9rE7joaxyQFBab9Ka5jBtfkVIYNboi9We50kYKDRni
+         ErWaZNE5wjy/nRatHw5ngIZj2TcDe0g1jbI2kcOusPnP2yt8YewETK2/Fqb7j0tX4cLX
+         uepQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUskT7hznWdPHKc5uE5D8LRD6nt9sL8YOqMV16hwwfC35UO5BLwiWWFGMna+96TZbvo5bqpQpCoqGubbgy1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKNHakyVjmcBMaqx4C5GAh97S8aS7SN9cdm5WP6yxdRtrjXBNY
+	kK/YUIxQdkPmRRMgKfgyQU5OtvtP3Bh7vo8WFqYjv846+UyP+y2NJJo6aEEtzJJJyVfuM8ycc61
+	ZsmSVr+cL0ORq1f6jX2zBQUzsjdB2eFY93+Y+HOSNqngQDjeFwF3VUbf72qwqT6y8lyF8
+X-Gm-Gg: ASbGnctMys555s+AvSRKnnTu4wNpzGgfitEQzvS7anmkg666vdkC32Ge+4/FpxE7ANw
+	6iDb8mdtUxU1CtUqUP3GlSlfpXwmacxDmwB1sZSiXhgWussrjctDzd3OdukcMd+f4X6hDVtbfjb
+	jb91tI/SsEVAUirMDcu5Su0byh+bPfpXkXE4JLLLS1nAowuxPyXb544WDZzLmFGwH593SdPA1+u
+	k2qTKXnro9NCOyqzn7LAwC4Um+VOf+baWbOJVo6yhFAh/EGits8skMJlJznC33cr3h/E6ZluHZJ
+	5+E1cUY3N9oaqtXl0Z8QOYKAk2PZVyL/zVPsM16AhywXpVGRttuw7xQ=
+X-Received: by 2002:a05:620a:1aa6:b0:7d2:26e8:e91b with SMTP id af79cd13be357-7d5f17e5c89mr925299685a.38.1751879713284;
+        Mon, 07 Jul 2025 02:15:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpbSVqCx6tFJzqSoaUTECC1w7GfStZZinCZQdif7BWXOwJSsYmKAa+1rKlwK+D1nlqL0TnFg==
+X-Received: by 2002:a05:620a:1aa6:b0:7d2:26e8:e91b with SMTP id af79cd13be357-7d5f17e5c89mr925296085a.38.1751879712780;
+        Mon, 07 Jul 2025 02:15:12 -0700 (PDT)
 Received: from trex (97.red-79-144-186.dynamicip.rima-tde.net. [79.144.186.97])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b4708d0af7sm9802520f8f.35.2025.07.07.02.13.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453a85b3e2bsm97448195e9.0.2025.07.07.02.15.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 02:13:13 -0700 (PDT)
+        Mon, 07 Jul 2025 02:15:12 -0700 (PDT)
 From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
 X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Mon, 7 Jul 2025 11:13:11 +0200
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
-        bryan.odonoghue@linaro.org, quic_vgarodia@quicinc.com,
+Date: Mon, 7 Jul 2025 11:15:10 +0200
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
+        bryan.odonoghue@linaro.org, quic_dikshita@quicinc.com,
         mchehab@kernel.org, robh@kernel.org, conor+dt@kernel.org,
         konradybcio@kernel.org, andersson@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/5] media: venus: hfi_plat_v6_lite: Populate decode
- capabilities
-Message-ID: <aGuPpzU0VCg45Plg@trex>
+Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: qcm2290: Add venus video node
+Message-ID: <aGuQHk4tpPl8kAsz@trex>
 References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
- <20250626135931.700937-4-jorge.ramirez@oss.qualcomm.com>
- <bac6a881-90b6-4f33-d9a8-61aa8daea330@quicinc.com>
+ <20250626135931.700937-6-jorge.ramirez@oss.qualcomm.com>
+ <6e330e8f-5856-ef8e-5fe3-52bd61b59e02@quicinc.com>
+ <aF6PqCY/E6H0Mc2/@trex>
+ <2722e70a-1080-c9f3-eb56-4a6e79084bdc@quicinc.com>
+ <aF6z7iaicHyNXg6w@trex>
+ <e704535c-0004-6dbd-bc81-b4ebc7747881@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,279 +106,158 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bac6a881-90b6-4f33-d9a8-61aa8daea330@quicinc.com>
-X-Proofpoint-ORIG-GUID: UMqpnG1JqBRDOq-Qb1taxhygklLA-Sgu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA1MiBTYWx0ZWRfX/kxhOuthax1k
- SQlhslVOXKp7FHLvNBIWBZl+JGbrRgP7Ul8F/o2TmE48qe0CbycqYWxAqYmv9vjZ9CdKEPP/C8W
- bShMrROhdZMDJVG/A9u8TQ6s2GvttWaPXxIYeVu3IKK4JbmDWZVrLgpBJYRH00U+Aep41h2V93g
- 1Uoxd7HPGHwcrPvQUGxt+en3rnzQhmOMHd11fbAAjqVAOgIlmOlsQKh/+nBbstVyl2sY23PLMds
- s1IlP/XWDaPCITyin3oYD0IVqI0oQV2I1WdNmThNy0gnpPephlBXOs1H8jktxLTrm8T02iSUpzk
- /sZ59g+wAfYwpQWpSyHf8tA4OL+BQGgYi3zScEVuYU2BfHdTofsupDdPJ1OufRWGi2VqGNGhW4a
- xWRBA0hach1DdhDg7aQQXYZTHl1jDoP30mvZ9PU1XxKOnwA0MaFLwiGp46DmWhEYzVc76nfM
-X-Authority-Analysis: v=2.4 cv=Rd2QC0tv c=1 sm=1 tr=0 ts=686b8fab cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=oX6B8lV6/A+qF9mARCc04Q==:17
- a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=BJ39GPuVWatAwBIpdsYA:9
- a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: UMqpnG1JqBRDOq-Qb1taxhygklLA-Sgu
+In-Reply-To: <e704535c-0004-6dbd-bc81-b4ebc7747881@quicinc.com>
+X-Proofpoint-ORIG-GUID: 3Mbpg_UBDqxOQ1fINS3q4VGBVivobu40
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA1MyBTYWx0ZWRfXxalqvh43KU1k
+ L19xhs17xT7fHcMY/KSi7BbV25yFoQB2T41UkmO2sGArxdxSsf5zzcJIg9KGwUcsr+PLGD0Igv3
+ DjiNTJs6Jn/KvHdMOC31/0OnWIj3aLJlnBdtgZugxElq4igPdXi7P89AcP5mGd19nr0goXJwNTc
+ 2aB1Wh6P/iveDYenraT4GQIRPhFqYpR2J+kPdpuDdJmBf2NQDjdPIwI86qXHN9zalznNALehHrB
+ UXnWtks7W1SWsqqsGe58bRwHp9K5zZCwPvRVyeCvRbjFZdZsuGBibWQm8DLoV0r82Ve1ps4tWwE
+ iiojrLiIvFRgAoVUKtZ01SZ6foBw3FuRGLGQIgcaAOf8kkdw3+M6nY8ZZg1VbUirq5+xgHAaXDO
+ SMjXdKrFc7NTl6ZfAayktS7IYlzRUhm9xydPm4Q+5NA5B//4ma5puijxuhA74gEZJ1lCwO66
+X-Proofpoint-GUID: 3Mbpg_UBDqxOQ1fINS3q4VGBVivobu40
+X-Authority-Analysis: v=2.4 cv=GtBC+l1C c=1 sm=1 tr=0 ts=686b902b cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=oX6B8lV6/A+qF9mARCc04Q==:17
+ a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=VQ7V1meLN1WFzF7lOz0A:9
+ a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-07_01,2025-07-07_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507070052
+ mlxscore=0 clxscore=1015 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507070053
 
-On 27/06/25 19:02:13, Dikshita Agarwal wrote:
+On 27/06/25 20:42:45, Vikash Garodia wrote:
 > 
-> 
-> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
-> > Add hfi platform file with decoding capabilities for hfi v6_lite.
+> On 6/27/2025 8:38 PM, Jorge Ramirez wrote:
+> > On 27/06/25 20:28:29, Vikash Garodia wrote:
+> >>
+> >> On 6/27/2025 6:03 PM, Jorge Ramirez wrote:
+> >>> On 27/06/25 17:40:19, Vikash Garodia wrote:
+> >>>>
+> >>>> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
+> >>>>> Add DT entries for the qcm2290 venus encoder/decoder.
+> >>>>>
+> >>>>> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> >>>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> >>>>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> >>>>> ---
+> >>>>>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 57 +++++++++++++++++++++++++++
+> >>>>>  1 file changed, 57 insertions(+)
+> >>>>>
+> >>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> >>>>> index f49ac1c1f8a3..5326c91a0ff0 100644
+> >>>>> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> >>>>> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> >>>>> @@ -1628,6 +1628,63 @@ adreno_smmu: iommu@59a0000 {
+> >>>>>  			#iommu-cells = <2>;
+> >>>>>  		};
+> >>>>>  
+> >>>>> +		venus: video-codec@5a00000 {
+> >>>>> +			compatible = "qcom,qcm2290-venus";
+> >>>>> +			reg = <0 0x5a00000 0 0xf0000>;
+> >>>>> +			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
+> >>>>> +
+> >>>>> +			power-domains = <&gcc GCC_VENUS_GDSC>,
+> >>>>> +					<&gcc GCC_VCODEC0_GDSC>,
+> >>>>> +					<&rpmpd QCM2290_VDDCX>;
+> >>>>> +			power-domain-names = "venus",
+> >>>>> +					     "vcodec0",
+> >>>>> +					     "cx";
+> >>>>> +			operating-points-v2 = <&venus_opp_table>;
+> >>>>> +
+> >>>>> +			clocks = <&gcc GCC_VIDEO_VENUS_CTL_CLK>,
+> >>>>> +				 <&gcc GCC_VIDEO_AHB_CLK>,
+> >>>>> +				 <&gcc GCC_VENUS_CTL_AXI_CLK>,
+> >>>>> +				 <&gcc GCC_VIDEO_THROTTLE_CORE_CLK>,
+> >>>>> +				 <&gcc GCC_VIDEO_VCODEC0_SYS_CLK>,
+> >>>>> +				 <&gcc GCC_VCODEC0_AXI_CLK>;
+> >>>>> +			clock-names = "core",
+> >>>>> +				      "iface",
+> >>>>> +				      "bus",
+> >>>>> +				      "throttle",
+> >>>>> +				      "vcodec0_core",
+> >>>>> +				      "vcodec0_bus";
+> >>>>> +
+> >>>>> +			memory-region = <&pil_video_mem>;
+> >>>>> +			iommus = <&apps_smmu 0x860 0x0>,
+> >>>>> +				 <&apps_smmu 0x880 0x0>,
+> >>>>> +				 <&apps_smmu 0x861 0x04>,
+> >>>>> +				 <&apps_smmu 0x863 0x0>,
+> >>>>> +				 <&apps_smmu 0x804 0xe0>;
+> >>>> keep only the non secure ones.
+> >>>
+> >>> ok
+> >>>
+> >>>>> +
+> >>>>> +			interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
+> >>>>> +					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+> >>>>> +					<&bimc MASTER_APPSS_PROC RPM_ACTIVE_TAG
+> >>>>> +					 &config_noc SLAVE_VENUS_CFG RPM_ACTIVE_TAG>;
+> >>>>> +			interconnect-names = "video-mem",
+> >>>>> +					     "cpu-cfg";
+> >>>>> +
+> >>>>> +			status = "okay";
+> >>>>> +
+> >>>>> +			venus_opp_table: opp-table {
+> >>>>> +				compatible = "operating-points-v2";
+> >>>>> +
+> >>>>> +				opp-133000000 {
+> >>>>> +					opp-hz = /bits/ 64 <133000000>;
+> >>>>> +					required-opps = <&rpmpd_opp_low_svs>;
+> >>>>> +				};
+> >>>> Fix the corner freq value
+> >>>
+> >>> can you add some reference please?
+> >>>
+> >>> I took this data from an internal document - not sure why the downstream
+> >>> driver supports different values or where those were taken from (AFAIK
+> >>> they are not supported)
+> >> Most likely you have referred incorrect downstream file. Refer scuba-vidc.dtsi.
 > > 
-> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> > ---
-> >  drivers/media/platform/qcom/venus/Makefile    |   2 +-
-> >  .../media/platform/qcom/venus/hfi_platform.c  |   2 +
-> >  .../media/platform/qcom/venus/hfi_platform.h  |   1 +
-> >  .../qcom/venus/hfi_platform_v6_lite.c         | 148 ++++++++++++++++++
-> >  4 files changed, 152 insertions(+), 1 deletion(-)
-> >  create mode 100644 drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
+> > I took them from actual documents (which might or might not be obsolete,
+> > hard to say but they were the latest version and as such, they
+> > contradict the downstream dtsi).
 > > 
-> > diff --git a/drivers/media/platform/qcom/venus/Makefile b/drivers/media/platform/qcom/venus/Makefile
-> > index 91ee6be10292..4a6a942db58b 100644
-> > --- a/drivers/media/platform/qcom/venus/Makefile
-> > +++ b/drivers/media/platform/qcom/venus/Makefile
-> > @@ -5,7 +5,7 @@ venus-core-objs += core.o helpers.o firmware.o \
-> >  		   hfi_venus.o hfi_msgs.o hfi_cmds.o hfi.o \
-> >  		   hfi_parser.o pm_helpers.o dbgfs.o \
-> >  		   hfi_platform.o hfi_platform_v4.o \
-> > -		   hfi_platform_v6.o hfi_plat_bufs_v6.o \
-> > +		   hfi_platform_v6.o hfi_plat_bufs_v6.o hfi_platform_v6_lite.o \
-> s/hfi_platform_v6_lite/hfi_platform_v4_lite
-
-will remove, will use platform_v4 instead
-
-> >  
-> >  venus-dec-objs += vdec.o vdec_ctrls.o
-> >  venus-enc-objs += venc.o venc_ctrls.o
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-> > index 643e5aa138f5..f56b8f9946d7 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_platform.c
-> > +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-> > @@ -13,6 +13,8 @@ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
-> >  		return &hfi_plat_v4;
-> >  	case HFI_VERSION_6XX:
-> >  		return &hfi_plat_v6;
-> > +	case HFI_VERSION_6XX_LITE:
-> > +		return &hfi_plat_v6_lite;
-> update here as well.
-
-yes, this function wont get changed
-
-> >  	default:
-> >  		break;
-> >  	}
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-> > index ec89a90a8129..6356e4bd0de2 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_platform.h
-> > +++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-> > @@ -58,6 +58,7 @@ struct hfi_platform {
-> >  
-> >  extern const struct hfi_platform hfi_plat_v4;
-> >  extern const struct hfi_platform hfi_plat_v6;
-> > +extern const struct hfi_platform hfi_plat_v6_lite;
-> ditto
-
-neither this one
-
-> >  
-> >  const struct hfi_platform *hfi_platform_get(enum hfi_version version);
-> >  unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec,
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
-> > new file mode 100644
-> > index 000000000000..41958a3e353b
-> > --- /dev/null
-> > +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
-> > @@ -0,0 +1,148 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2025, The Linux Foundation. All rights reserved.
-> > + */
-> > +#include "hfi_platform.h"
-> > +
-> > +static const struct hfi_plat_caps caps[] = {
-> > +{
-> > +	.codec = HFI_VIDEO_CODEC_H264,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_1},
-> > +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_41},
-> > +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> > +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_41},
-> > +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_41},
-> what is the reference for these values?
-
-what do you mean? what should be the reference? I didnt see a downstream
-equivalente to base on so based on the 4XX settings these seem
-consistent.
-
-IS there any internal document that you can point me to please?
-
-
-> > +	.num_pl = 5,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_HEVC,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_MAIN},
-> > +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_MAIN},
-> what is the reference for these values?
-
-same as above.
-
-what internal documents do you typically reference to? Havent seen these
-references in previous commits.
-
-could you clarify please?
-
-
-> > +	.num_pl = 2,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_VP9,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-> > +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-> > +	.num_pl = 2,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +} };
-> > +
-> > +static const struct hfi_plat_caps *get_capabilities(unsigned int *entries)
-> > +{
-> > +	*entries = ARRAY_SIZE(caps);
-> > +	return caps;
-> > +}
-> > +
-> > +static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-> > +{
-> > +	*enc_codecs = 0x0;
-> > +	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > +		      HFI_VIDEO_CODEC_VP9;
-> > +	*count = 3;
-> > +}
-> > +
-> > +static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
-> > +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +};
-> > +
-> > +static const struct hfi_platform_codec_freq_data *
-> > +get_codec_freq_data(u32 session_type, u32 pixfmt)
-> > +{
-> > +	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-> > +	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
-> > +	const struct hfi_platform_codec_freq_data *found = NULL;
-> > +
-> > +	for (i = 0; i < data_size; i++) {
-> > +		if (data[i].pixfmt == pixfmt &&
-> > +		    data[i].session_type == session_type) {
-> > +			found = &data[i];
-> > +			break;
-> > +		}
-> > +	}
-> > +
-> > +	return found;
-> > +}
-> > +
-> > +static unsigned long codec_vpp_freq(u32 session_type, u32 codec)
-> > +{
-> > +	const struct hfi_platform_codec_freq_data *data;
-> > +
-> > +	data = get_codec_freq_data(session_type, codec);
-> > +	if (data)
-> > +		return data->vpp_freq;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
-> > +{
-> > +	const struct hfi_platform_codec_freq_data *data;
-> > +
-> > +	data = get_codec_freq_data(session_type, codec);
-> > +	if (data)
-> > +		return data->vsp_freq;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-> > +{
-> > +	const struct hfi_platform_codec_freq_data *data;
-> > +
-> > +	data = get_codec_freq_data(session_type, codec);
-> > +	if (data)
-> > +		return data->low_power_freq;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +const struct hfi_platform hfi_plat_v6_lite = {
-> > +	.codec_vpp_freq = codec_vpp_freq,
-> > +	.codec_vsp_freq = codec_vsp_freq,
-> > +	.codec_lp_freq = codec_lp_freq,
-> > +	.codecs = get_codecs,
-> > +	.capabilities = get_capabilities,
-> > +	.bufreq = hfi_plat_bufreq_v6,
-> buffer requirement should come from firmware, pls drop.
-
-yes, this will be hfi_plat_v4 only
-
-> > +};
+> > So I'd rather not use downstream - could you point me to the reference
+> > you used please - I wonder if the fix is required downstream instead of here?
 > 
-> lot of code duplication here, pls see the possibility to commonize the
-> > code.
+> You can look for this file gcc-scuba.c and refer gcc_video_venus_clk_src which
+> is the src for different venus clocks.
 
-this file is no longer needed
+sure, but the question remains, how do I know these are correct when the
+documentation I have claims the opposite?
+
+AFAIK downstream could be wrong, no?
 
 > 
-> Thanks,
-> Dikshita
+> > 
+> >> Again, good reference for such cases would IP catalogues and if not, gcc driver
+> >> in this case which have structures defining different corners for
+> >> video.
+> > 
+> > The PM document for this chip only confirms two values - the other 4 ones
+> > claim they are not supported on 50_LT
+> > 
+> > but we can discuss offline.
+> > 
+> >>>
+> >>>
+> >>>>
+> >>>> Regards,
+> >>>> Vikash
+> >>>>> +
+> >>>>> +				opp-240000000 {
+> >>>>> +					opp-hz = /bits/ 64 <240000000>;
+> >>>>> +					required-opps = <&rpmpd_opp_svs>;
+> >>>>> +				};
+> >>>>> +			};
+> >>>>> +		};
+> >>>>> +
+> >>>>>  		mdss: display-subsystem@5e00000 {
+> >>>>>  			compatible = "qcom,qcm2290-mdss";
+> >>>>>  			reg = <0x0 0x05e00000 0x0 0x1000>;
 
