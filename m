@@ -1,88 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-63957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C79A1AFC02D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 03:44:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46E13AFC108
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 04:53:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03C543AB48E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 01:43:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5129F422C8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 02:52:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21911F4171;
-	Tue,  8 Jul 2025 01:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BED1225414;
+	Tue,  8 Jul 2025 02:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kgFVotnK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I+6eZrX2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F361F0E55
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 01:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D3A383;
+	Tue,  8 Jul 2025 02:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751939046; cv=none; b=tS+15BHBeC5yNjegyhbMeip7U9Ty81Q4Pakfj/P5WfDTHeVtTh4H8SWzNQSj6QH55cBUjJPM5DDOsExgwywl4EawFisboaDJTSVcEX1l383ZDgIL+irQ5b5E38K1Oo+1CySxKy/1+waNBEPkvTHoU7lGp72d3JU6sMcTQbp+n74=
+	t=1751943181; cv=none; b=po4AaIjldPKB2s9jdbTV3ZoCc7FCaqM1hZL+qGsxbx2Q20+/QKomD51ux6sOZ+tgyB8ADNvQeCbw3xDz4i3Lb2VM7J7q6alY4Vu46/HJAOAjsmT5e+3bBfK9qF3P8lbd7MgzkPr037/oBaytWg5103kNrlpWh+M6tbIVwkwb33A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751939046; c=relaxed/simple;
-	bh=ITnGl44Ugo75QxOk/V8xMNfq2AqSpn/y/RhZTD6rxqE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mu1fbgHxs2siQPer7P4/0fxSllaZX2U2BaaK+DXMlC0WwMdUOWXcX5XYnvZ8Uey9dMh2j/JJl2Jvym0rY+/2oIVnPLAglEeUZi+iZbfGR8Wk3JbRnewnt+sQWYJVL0u5Zy7P5pYT+joazTPbxh52dgVNWfuiHh3PbzKRZZ8x5Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kgFVotnK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567E6WXP028657
-	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 01:43:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1751943181; c=relaxed/simple;
+	bh=2YPaOuP0AKZnwJ6QA5VdtBos5n+zVrR0TqRlQjwzdAQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WCSNDDZX61b96FcilPKcsgaMRfDPudMicSDeebVGCdcG8JBgPTZmEroe2eDC0LGV7VOJg9ssPIU1pzKYqPHLR5rh2jKplbjVgnwe3W4zhLCQmrCEOxTVu+edYjRsJuuRQsWdmC84EhkquTh9fR8ov5CyT+ZW0jBhUYFNz4qtSd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I+6eZrX2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567MXP4h019666;
+	Tue, 8 Jul 2025 02:52:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yl777uk8TYoa7yrfsLRZl56fRfsxTMHbE+ZHD3LEddY=; b=kgFVotnK2ssORDpg
-	gLmjlCNYd4OFkuzOzbKRe8qqIBJLkn0j1WXGhNafywS1pWNGb5KE7DBoxfB1wnFW
-	qjJByEcVos5+h05YWtLnduwG3JTKiOt6iJd/KYDNiER5Cce2+vgMhbuEFHUAPmYH
-	Ix/kilkpPjssem6CaACpmD22o4+1ipsjZe9tjF9m61Ml7cBl2qzNsvYSu99HC6Tv
-	eHuQ40rqmsVnD8PlvlvNKircE5KhWBjsJJbgEFJsxzGracJK5JihALuIkN2XTpgm
-	69UmRXZceNIpswksCsWYk0veDSaTs8SFlouKfjgcs4yGQqXZTC8Ji1c+2y54G0UM
-	HB9MkQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47rfq2v5bd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 01:43:57 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3132c8437ffso5552969a91.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 18:43:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751939037; x=1752543837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yl777uk8TYoa7yrfsLRZl56fRfsxTMHbE+ZHD3LEddY=;
-        b=W9UrGZ3uKvxW0lrxepTHbv77nqOysKifGmOVPnphz8VGnqdeQnULUm7jBh6i8DcpYh
-         m5uvKOI263LRdNjdi6kOVrCjpAuNDdHXMB8s+78TEtqCUZ1dHMv+slpYy5ORkAsLFUnJ
-         0eTAEwfNTJ90x+lmHlCCW/D96PBWrTosdBiGIocRsViG4ufAQ4zDaRsTVDZupkcsHJv+
-         jEbyNqGW64EQlsIgavZDiozeUvi88qqdmvuHR/mDW4x9mYmUzba8o0WfOFu+CIxXmJlg
-         gst76XpaCSdpPZQr99PEqSiHiCm5YPHo149YlEDcjMWHuu3/4u/FhzG940KNeG1JrHD5
-         l9Ng==
-X-Forwarded-Encrypted: i=1; AJvYcCX+3mesgrqcipliISco4oy4/enduCt9YzOpVx7gD35IHtEECRLOxLhaqHbsO12/rK/9zcGDj03SKbHRxotU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yykn2C188RO4HrrDYSa1wsVSRy45UuvRJ9Y2lLx/fwFv/xX84PE
-	kDl8cduHxOs9mygXlFssuGbeKuAlW4NkUCdLlWb5pvLMBIjfOt9u3dQqLXq6ciPrssMa7n/b00T
-	A7hhKnOZvF3eikykFB32MFWvpopPQpzF2n2s6LaBj9FDaOrKvMrJarA4GEJEcgub7opmL
-X-Gm-Gg: ASbGncst493MKON5GxWE+P6cT+G/c/bVcMwr0zyrIwo068q/dtkj/iExhFYabjwMfC1
-	AfnTF4L5VvzGk1LqYSHRzc5hWyUknZFqBnRw1fJKogOwisqYPpWtb6tN2Qpx4mKcBNFoF0kPx8v
-	HAbdZfNuMqug+NaLD83u3wDSHxRi3Dgp+BKoIZy0yg3PNaEzK4KvOJveUzVVlM6Pdt1taSE0DDM
-	WG/h8+MSc4oIYXT00ilHVf1Bs10oO568inByLq+unJ9ePwKpj7hVejoiCO+O8PzlNMWx6JIxaTZ
-	rOF0gO0m+x5nC3d6Plr82GJsSTjU1kyCo1OQnJFHHnOfsuPGZSJ315/t6LgBbA0hE9MDqsHyzSE
-	En2CaPNZe/xW8rUw=
-X-Received: by 2002:a17:90b:1f83:b0:311:df4b:4b94 with SMTP id 98e67ed59e1d1-31aac432a89mr19916283a91.4.1751939036592;
-        Mon, 07 Jul 2025 18:43:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhKVpmGrrRXQtES7O9YfBq82/o7OuEhVZMyofryc6rLrPXsT448ckzR8EZfAtTqPI4xY9GZg==
-X-Received: by 2002:a17:90b:1f83:b0:311:df4b:4b94 with SMTP id 98e67ed59e1d1-31aac432a89mr19916248a91.4.1751939036125;
-        Mon, 07 Jul 2025 18:43:56 -0700 (PDT)
-Received: from [10.133.33.177] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c220bc5basm642199a91.42.2025.07.07.18.43.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Jul 2025 18:43:55 -0700 (PDT)
-Message-ID: <fdb9f1e7-bf8f-4018-b0ac-ac8a70d9b8ec@oss.qualcomm.com>
-Date: Tue, 8 Jul 2025 09:43:49 +0800
+	sR815mEl+sUZgpjEY6ReuyVgD3GFXXoJSV6V6GNAHLw=; b=I+6eZrX29+efemxn
+	iD1gVeUEGSmsWSrR84vXr8U01pk+aRJoNIndtKmBRFtZz1cC5QOtWnI/gIL5aRQE
+	IUCXmUweQZ+6dEMDEZGdmxl81H+bJu0aznH16MwvJcYpCwnmAFixEn2yAQaG3Mit
+	4TZNzwEx1pNRxzHhAOjcI/fI+Kl0oov1LDHp3KxhIyq0a63c/cp/m8igg69trnbk
+	JH0J3Obtnk8kBHxRglg3w5gSLAz/QkBW4Y8ZaM0gyfp+l3tnABSq3DadxSjyky+q
+	Lmi4B/lAfGFgMAmm/WHc6TQM/bLXKPCTBliRQccEmCno+twRn8zAPgKzXWxRdD8Y
+	0gyv4Q==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psdqtmbn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Jul 2025 02:52:36 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5682qZuI026457
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 8 Jul 2025 02:52:35 GMT
+Received: from [10.253.13.246] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 7 Jul
+ 2025 19:52:32 -0700
+Message-ID: <720a6969-7d30-4eb8-a970-2e06740c2780@quicinc.com>
+Date: Tue, 8 Jul 2025 10:52:30 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,114 +65,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Youssef Samir <quic_yabdulra@quicinc.com>,
-        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
-        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
-        Muna Sinada <quic_msinada@quicinc.com>,
-        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
-        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Cc: kernel@collabora.com
-References: <20250630074330.253867-1-usama.anjum@collabora.com>
- <20250630074330.253867-3-usama.anjum@collabora.com>
- <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
- <29ba0afa-9a1b-40f9-a174-d03902ea5d3f@collabora.com>
- <8b9eb6f4-6f0c-458d-b1e6-a1893c35b81d@oss.qualcomm.com>
- <a92b3d96-0c19-49c2-ad8b-ad31dec973c3@collabora.com>
- <7b8ea9ba-02ef-4676-a4d3-d088920283c3@oss.qualcomm.com>
- <9eba0149-290d-4010-8791-d4d8d8be3786@collabora.com>
+Subject: Re: [PATCH RESEND net 3/3] net: phy: qcom: qca807x: Enable WoL
+ support using shared library
+To: Jakub Kicinski <kuba@kernel.org>
+CC: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Paolo Abeni
+	<pabeni@redhat.com>,
+        Viorel Suman <viorel.suman@nxp.com>, Li Yang
+	<leoyang.li@nxp.com>,
+        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Wei Fang <wei.fang@nxp.com>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <maxime.chevallier@bootlin.com>
+References: <20250704-qcom_phy_wol_support-v1-0-053342b1538d@quicinc.com>
+ <20250704-qcom_phy_wol_support-v1-3-053342b1538d@quicinc.com>
+ <20250707164332.1a3aaece@kernel.org>
 Content-Language: en-US
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-In-Reply-To: <9eba0149-290d-4010-8791-d4d8d8be3786@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+From: Luo Jie <quic_luoj@quicinc.com>
+In-Reply-To: <20250707164332.1a3aaece@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDAxMiBTYWx0ZWRfX16CoPClxQZ22
- kl292RWqWhPAbEqTgu5YK2eQ8SXSbikq7d56Nad7yja9eoUYajVKqem2P+H+Ft7faWnltxF/B3N
- CPnH5u1u19iI4KuFxvpD2lsh06PfEAJDUvHIFbFx3zyVHMoB5y+11KvwqKLUZXk8BkcwPW1/vDf
- FIbWAEu62E+1oRpuPBIHbIJylTw6RL9poD1qnI6hVVRbZtVV2JoVVqVGENdKURoPifMGn5r1bpy
- GuSUxhQtY94MGOmqMfGlBMdT369Vt6b8/8JQ5U2rJAsIy6ozJF9dZxFa3jdCQm/T/U/4D+ZMcf+
- UrMFhgC7PqNIgtIF2e+mGWEimnyVKzAQzxP1DZ5de2QxBKHeu4bDkxCAcmfSyxl1mtU4Nj0E2rG
- 7XlAFYSLt5QLN3HVy+56R+K4wlXrL8siijzPhEYX9b1LKe/cmDteV/Ivzw4TzjQcbECJY4DC
-X-Proofpoint-ORIG-GUID: NOCjgRH5wtDrRqOCfGgDNCFB653O4CTg
-X-Proofpoint-GUID: NOCjgRH5wtDrRqOCfGgDNCFB653O4CTg
-X-Authority-Analysis: v=2.4 cv=SOBCVPvH c=1 sm=1 tr=0 ts=686c77dd cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7V90euPs39zsmW6lzs8A:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=ffSty1QF c=1 sm=1 tr=0 ts=686c87f4 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=5vVSTZcSAIpnvYd1Sv0A:9 a=QEXdDO2ut3YA:10 a=0lgtpPvCYYIA:10
+X-Proofpoint-ORIG-GUID: YH3PtwPB5M3HBfmMXCuPuMKfiWXBU18m
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDAyMiBTYWx0ZWRfXxiL6U2Luud0t
+ DqhhkBXzEEByLIcuanmT/3wA+zcWDk05ueIVtroO1U18ORkT6No3LDZVhZ85L3C/qAajY2yjZjN
+ eEVm4aE9x34c6uac7RpNtBllUQ/FhBgyZnDtSXDsahvJE4T9lRwMByftnn9rFwVS2EwKKAakmoF
+ 2Sr5sC5MkI67nHoqu818BzjEujYgq2bICTslJV7pv84KUqJjJhLrJw9HphIcP3ulHVLw3WlSU7q
+ nLE1HLwcmsW91L9Whl5o/aG1C1dbWPwpYvQuCaroKsOmLl1ItxUkjufceilbLz34BprwxmJkmDQ
+ gbmTucIiC0MqZQCnTUVdbTYDBweD/UTjOO69nHFgXbTOvGFhjrxpKmzS+iHHPIy+NcrbJxvkWdj
+ b76cwNXfTrJ1aZ9YQx0nomuTwKSuY7+XVOgPtxIfCoOG9aTJ2mFowpCvrTID+PK9Iq0TbAVr
+X-Proofpoint-GUID: YH3PtwPB5M3HBfmMXCuPuMKfiWXBU18m
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-08_01,2025-07-07_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 malwarescore=0 bulkscore=0 priorityscore=1501
- adultscore=0 mlxlogscore=999 spamscore=0 impostorscore=0 phishscore=0
- mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ malwarescore=0 mlxlogscore=893 mlxscore=0 bulkscore=0 priorityscore=1501
+ phishscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ spamscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507080012
+ definitions=main-2507080022
 
 
 
-On 7/7/2025 9:11 PM, Muhammad Usama Anjum wrote:
->>>>>>> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
->>>>>>> index 4488e4cdc5e9e..bc4930fe6a367 100644
->>>>>>> --- a/drivers/net/wireless/ath/ath11k/core.c
->>>>>>> +++ b/drivers/net/wireless/ath/ath11k/core.c
->>>>>>> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
->>>>>>>  	mutex_unlock(&ab->core_lock);
->>>>>>>  
->>>>>>>  	ath11k_dp_free(ab);
->>>>>>> -	ath11k_hal_srng_deinit(ab);
->>>>>>>  
->>>>>>>  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
->>>>>>>  
->>>>>>> -	ret = ath11k_hal_srng_init(ab);
->>>>>>> -	if (ret)
->>>>>>> -		return ret;
->>>>>>> -
->>>>>> while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
->>>>>> _deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
->>>>> Why do is it being done in the resume handler? Shouldn't those parameters be cleaned up
->>>>> in resume handler? So when device wakes up, its state is already correct.
->>>>>
->>>> Hmm... not quite understand your question. Can you elaborate?
->>> I'm trying to understand the possibility of cleanup of hal in suspend handler. For example:
->>> * The driver has been loaded and has been working fine.
->>> * The user called suspend. So all devices would be suspended.
->>> * In suspend handler of the ath11k, we should do the necessary cleanups of the states
->>>   like hal.
->>> * When the device would resume after long time, the hal would have the correct state
->>>   already. So we'll not need to deinit and init again.
->> The hal cleanup is not only needed by suspend/resume, but also a step of reset/recover
->> process. So If we are moving the cleanup to suspend handler, similar stuff needs to be
->> done for reset/recover as well.
-> It makes sense.
+On 7/8/2025 7:43 AM, Jakub Kicinski wrote:
+> On Fri, 4 Jul 2025 13:31:15 +0800 Luo Jie wrote:
+>> The Wake-on-LAN (WoL) functionality for the QCA807x series is identical
+>> to that of the AT8031. WoL support for QCA807x is enabled by utilizing
+>> the at8031_set_wol() function provided in the shared library.
 > 
-> So clearing the hal structure completely other than ab->hal.srn_config doesn't seem
-> right. I've also tested it and it crashes the whole system.
-> 
-> On contrary, with only the current patch applied, there is no abnormality.
-> 
-> num_shadow_reg_configured and avail_blk_resource are non-zero. If I make them 0,
-> driver still keeps on working.
-> 
-> 	ab->hal.num_shadow_reg_configured = 0;
-> 	ab->hal.avail_blk_resource = 0;
-> 	ab->hal.current_blk_index = 0;
-> 
-> As you have suggested setting these 3 to zero, is there any other variable in hal
-> structure which should be set to zero?
+> This needs to go to net-next in around a week (fixes go to net and
+> propagate to net-next only once a week, around Thursday/Friday).
+> I will apply the first 2 patches, please repost this later.
 
-IMO srng_config, rdp, wrp and srng_key may keep unchanged through suspend/reset, all other
-fields should be cleared/reinitialized.
+Understand. Thank you for applying the first two patches. I will repost
+the remaining patch to net-next once the first two are available there,
+as advised.
 
 
