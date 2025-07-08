@@ -1,100 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-63956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D196AFBF4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 02:43:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C79A1AFC02D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 03:44:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A9DD1AA85F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 00:43:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03C543AB48E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 01:43:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C45C71DD0EF;
-	Tue,  8 Jul 2025 00:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21911F4171;
+	Tue,  8 Jul 2025 01:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aV1t61Sr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kgFVotnK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985C51DB375;
-	Tue,  8 Jul 2025 00:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F361F0E55
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 01:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751935386; cv=none; b=Xk1RBDhzQyI4TmTrc0Jpu/yeZbGdaZBiByZAl13f2GYA8llc/GX8HeB7NMa39uuy404BY0MvXeJxJK4ArJCjAY0ZFH0oydaDLgopp3iTvSiECw6mkdRu5GmhHYKVfrFfgGxCY2vXYyV/vudDcMtV4b6VkN2bTX4WZ+MDLNrUecI=
+	t=1751939046; cv=none; b=tS+15BHBeC5yNjegyhbMeip7U9Ty81Q4Pakfj/P5WfDTHeVtTh4H8SWzNQSj6QH55cBUjJPM5DDOsExgwywl4EawFisboaDJTSVcEX1l383ZDgIL+irQ5b5E38K1Oo+1CySxKy/1+waNBEPkvTHoU7lGp72d3JU6sMcTQbp+n74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751935386; c=relaxed/simple;
-	bh=OM6DSiPA2OlOE23y/X/4gQLKmsBitK2wNjT6uRVNGtE=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=VdJZ3Axb8IKoAqy2RLrOCuCYZW8vzkYCskeA+L0kZrKCxQboi/eR7GeI958qcyXvP28nrue7FjnVdeE8JP7S+uiWvG4aFNmnnp/wKrbiXIgOosySV7AQrrOBiQ6GPDwbwjhDoN2keneykAJCOZ/Z5mqmzmLiFrOPREuTxUo7Tiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aV1t61Sr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EC0C4CEF1;
-	Tue,  8 Jul 2025 00:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751935386;
-	bh=OM6DSiPA2OlOE23y/X/4gQLKmsBitK2wNjT6uRVNGtE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=aV1t61SrWEvlq3+eeF4TbRzjQHr9n19UDQEBo5WuUjyrmxEyxTv16Qu4QEsuArIDn
-	 +qiPRz8FcQHb206V7CEDuISmazDDShsgcyHNprKxR+1xhGjgwlgwAYruzYqirM9dxs
-	 xVk1oHpw16awkz6qits3g9VZccRNWyqtE+MZd/glTEKaLoUBiZcYGLOfjrX8RR4KVF
-	 wCaF/a3rgnEKbBhKXV3B3VUo1SVTUbxbcnj8aYnj4eLviEPIa7B95sH+DSPZT1cHS8
-	 a2l3QNSS3ibRuYHXeu5VwbfEzi3GhMayuJ5y3LyOjsPQv3Rv7UCrZadfQsuLivegJI
-	 Vn8Jvcz6NV42w==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70DCA38111DD;
-	Tue,  8 Jul 2025 00:43:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1751939046; c=relaxed/simple;
+	bh=ITnGl44Ugo75QxOk/V8xMNfq2AqSpn/y/RhZTD6rxqE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Mu1fbgHxs2siQPer7P4/0fxSllaZX2U2BaaK+DXMlC0WwMdUOWXcX5XYnvZ8Uey9dMh2j/JJl2Jvym0rY+/2oIVnPLAglEeUZi+iZbfGR8Wk3JbRnewnt+sQWYJVL0u5Zy7P5pYT+joazTPbxh52dgVNWfuiHh3PbzKRZZ8x5Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kgFVotnK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567E6WXP028657
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 01:43:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yl777uk8TYoa7yrfsLRZl56fRfsxTMHbE+ZHD3LEddY=; b=kgFVotnK2ssORDpg
+	gLmjlCNYd4OFkuzOzbKRe8qqIBJLkn0j1WXGhNafywS1pWNGb5KE7DBoxfB1wnFW
+	qjJByEcVos5+h05YWtLnduwG3JTKiOt6iJd/KYDNiER5Cce2+vgMhbuEFHUAPmYH
+	Ix/kilkpPjssem6CaACpmD22o4+1ipsjZe9tjF9m61Ml7cBl2qzNsvYSu99HC6Tv
+	eHuQ40rqmsVnD8PlvlvNKircE5KhWBjsJJbgEFJsxzGracJK5JihALuIkN2XTpgm
+	69UmRXZceNIpswksCsWYk0veDSaTs8SFlouKfjgcs4yGQqXZTC8Ji1c+2y54G0UM
+	HB9MkQ==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47rfq2v5bd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 01:43:57 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3132c8437ffso5552969a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 18:43:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751939037; x=1752543837;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yl777uk8TYoa7yrfsLRZl56fRfsxTMHbE+ZHD3LEddY=;
+        b=W9UrGZ3uKvxW0lrxepTHbv77nqOysKifGmOVPnphz8VGnqdeQnULUm7jBh6i8DcpYh
+         m5uvKOI263LRdNjdi6kOVrCjpAuNDdHXMB8s+78TEtqCUZ1dHMv+slpYy5ORkAsLFUnJ
+         0eTAEwfNTJ90x+lmHlCCW/D96PBWrTosdBiGIocRsViG4ufAQ4zDaRsTVDZupkcsHJv+
+         jEbyNqGW64EQlsIgavZDiozeUvi88qqdmvuHR/mDW4x9mYmUzba8o0WfOFu+CIxXmJlg
+         gst76XpaCSdpPZQr99PEqSiHiCm5YPHo149YlEDcjMWHuu3/4u/FhzG940KNeG1JrHD5
+         l9Ng==
+X-Forwarded-Encrypted: i=1; AJvYcCX+3mesgrqcipliISco4oy4/enduCt9YzOpVx7gD35IHtEECRLOxLhaqHbsO12/rK/9zcGDj03SKbHRxotU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yykn2C188RO4HrrDYSa1wsVSRy45UuvRJ9Y2lLx/fwFv/xX84PE
+	kDl8cduHxOs9mygXlFssuGbeKuAlW4NkUCdLlWb5pvLMBIjfOt9u3dQqLXq6ciPrssMa7n/b00T
+	A7hhKnOZvF3eikykFB32MFWvpopPQpzF2n2s6LaBj9FDaOrKvMrJarA4GEJEcgub7opmL
+X-Gm-Gg: ASbGncst493MKON5GxWE+P6cT+G/c/bVcMwr0zyrIwo068q/dtkj/iExhFYabjwMfC1
+	AfnTF4L5VvzGk1LqYSHRzc5hWyUknZFqBnRw1fJKogOwisqYPpWtb6tN2Qpx4mKcBNFoF0kPx8v
+	HAbdZfNuMqug+NaLD83u3wDSHxRi3Dgp+BKoIZy0yg3PNaEzK4KvOJveUzVVlM6Pdt1taSE0DDM
+	WG/h8+MSc4oIYXT00ilHVf1Bs10oO568inByLq+unJ9ePwKpj7hVejoiCO+O8PzlNMWx6JIxaTZ
+	rOF0gO0m+x5nC3d6Plr82GJsSTjU1kyCo1OQnJFHHnOfsuPGZSJ315/t6LgBbA0hE9MDqsHyzSE
+	En2CaPNZe/xW8rUw=
+X-Received: by 2002:a17:90b:1f83:b0:311:df4b:4b94 with SMTP id 98e67ed59e1d1-31aac432a89mr19916283a91.4.1751939036592;
+        Mon, 07 Jul 2025 18:43:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhKVpmGrrRXQtES7O9YfBq82/o7OuEhVZMyofryc6rLrPXsT448ckzR8EZfAtTqPI4xY9GZg==
+X-Received: by 2002:a17:90b:1f83:b0:311:df4b:4b94 with SMTP id 98e67ed59e1d1-31aac432a89mr19916248a91.4.1751939036125;
+        Mon, 07 Jul 2025 18:43:56 -0700 (PDT)
+Received: from [10.133.33.177] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c220bc5basm642199a91.42.2025.07.07.18.43.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Jul 2025 18:43:55 -0700 (PDT)
+Message-ID: <fdb9f1e7-bf8f-4018-b0ac-ac8a70d9b8ec@oss.qualcomm.com>
+Date: Tue, 8 Jul 2025 09:43:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH RESEND net 0/3] Fix QCA808X WoL Issue and Enable WoL
- Support for QCA807X
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <175193540924.3455828.4763600284207918560.git-patchwork-notify@kernel.org>
-Date: Tue, 08 Jul 2025 00:43:29 +0000
-References: <20250704-qcom_phy_wol_support-v1-0-053342b1538d@quicinc.com>
-In-Reply-To: <20250704-qcom_phy_wol_support-v1-0-053342b1538d@quicinc.com>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- viorel.suman@nxp.com, leoyang.li@nxp.com, rmk+kernel@armlinux.org.uk,
- wei.fang@nxp.com, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, maxime.chevallier@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        Youssef Samir <quic_yabdulra@quicinc.com>,
+        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
+        Muna Sinada <quic_msinada@quicinc.com>,
+        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Cc: kernel@collabora.com
+References: <20250630074330.253867-1-usama.anjum@collabora.com>
+ <20250630074330.253867-3-usama.anjum@collabora.com>
+ <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
+ <29ba0afa-9a1b-40f9-a174-d03902ea5d3f@collabora.com>
+ <8b9eb6f4-6f0c-458d-b1e6-a1893c35b81d@oss.qualcomm.com>
+ <a92b3d96-0c19-49c2-ad8b-ad31dec973c3@collabora.com>
+ <7b8ea9ba-02ef-4676-a4d3-d088920283c3@oss.qualcomm.com>
+ <9eba0149-290d-4010-8791-d4d8d8be3786@collabora.com>
+Content-Language: en-US
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+In-Reply-To: <9eba0149-290d-4010-8791-d4d8d8be3786@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDAxMiBTYWx0ZWRfX16CoPClxQZ22
+ kl292RWqWhPAbEqTgu5YK2eQ8SXSbikq7d56Nad7yja9eoUYajVKqem2P+H+Ft7faWnltxF/B3N
+ CPnH5u1u19iI4KuFxvpD2lsh06PfEAJDUvHIFbFx3zyVHMoB5y+11KvwqKLUZXk8BkcwPW1/vDf
+ FIbWAEu62E+1oRpuPBIHbIJylTw6RL9poD1qnI6hVVRbZtVV2JoVVqVGENdKURoPifMGn5r1bpy
+ GuSUxhQtY94MGOmqMfGlBMdT369Vt6b8/8JQ5U2rJAsIy6ozJF9dZxFa3jdCQm/T/U/4D+ZMcf+
+ UrMFhgC7PqNIgtIF2e+mGWEimnyVKzAQzxP1DZ5de2QxBKHeu4bDkxCAcmfSyxl1mtU4Nj0E2rG
+ 7XlAFYSLt5QLN3HVy+56R+K4wlXrL8siijzPhEYX9b1LKe/cmDteV/Ivzw4TzjQcbECJY4DC
+X-Proofpoint-ORIG-GUID: NOCjgRH5wtDrRqOCfGgDNCFB653O4CTg
+X-Proofpoint-GUID: NOCjgRH5wtDrRqOCfGgDNCFB653O4CTg
+X-Authority-Analysis: v=2.4 cv=SOBCVPvH c=1 sm=1 tr=0 ts=686c77dd cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7V90euPs39zsmW6lzs8A:9
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-08_01,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 malwarescore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 mlxlogscore=999 spamscore=0 impostorscore=0 phishscore=0
+ mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507080012
 
-Hello:
 
-This series was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
 
-On Fri, 4 Jul 2025 13:31:12 +0800 you wrote:
-> Restore WoL (Wake-on-LAN) enablement via MMD3 register 0x8012 BIT5 for
-> the QCA808X PHY. This change resolves the issue where WoL functionality
-> was not working due to its unintended removal in a previous commit.
+On 7/7/2025 9:11 PM, Muhammad Usama Anjum wrote:
+>>>>>>> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>> index 4488e4cdc5e9e..bc4930fe6a367 100644
+>>>>>>> --- a/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>> +++ b/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+>>>>>>>  	mutex_unlock(&ab->core_lock);
+>>>>>>>  
+>>>>>>>  	ath11k_dp_free(ab);
+>>>>>>> -	ath11k_hal_srng_deinit(ab);
+>>>>>>>  
+>>>>>>>  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
+>>>>>>>  
+>>>>>>> -	ret = ath11k_hal_srng_init(ab);
+>>>>>>> -	if (ret)
+>>>>>>> -		return ret;
+>>>>>>> -
+>>>>>> while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
+>>>>>> _deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
+>>>>> Why do is it being done in the resume handler? Shouldn't those parameters be cleaned up
+>>>>> in resume handler? So when device wakes up, its state is already correct.
+>>>>>
+>>>> Hmm... not quite understand your question. Can you elaborate?
+>>> I'm trying to understand the possibility of cleanup of hal in suspend handler. For example:
+>>> * The driver has been loaded and has been working fine.
+>>> * The user called suspend. So all devices would be suspended.
+>>> * In suspend handler of the ath11k, we should do the necessary cleanups of the states
+>>>   like hal.
+>>> * When the device would resume after long time, the hal would have the correct state
+>>>   already. So we'll not need to deinit and init again.
+>> The hal cleanup is not only needed by suspend/resume, but also a step of reset/recover
+>> process. So If we are moving the cleanup to suspend handler, similar stuff needs to be
+>> done for reset/recover as well.
+> It makes sense.
 > 
-> Refactor at8031_set_wol() into a shared library to enable reuse of the
-> Wake-on-LAN (WoL) functionality by the AT8031, QCA807X and QCA808X PHY
-> drivers.
+> So clearing the hal structure completely other than ab->hal.srn_config doesn't seem
+> right. I've also tested it and it crashes the whole system.
 > 
-> [...]
+> On contrary, with only the current patch applied, there is no abnormality.
+> 
+> num_shadow_reg_configured and avail_blk_resource are non-zero. If I make them 0,
+> driver still keeps on working.
+> 
+> 	ab->hal.num_shadow_reg_configured = 0;
+> 	ab->hal.avail_blk_resource = 0;
+> 	ab->hal.current_blk_index = 0;
+> 
+> As you have suggested setting these 3 to zero, is there any other variable in hal
+> structure which should be set to zero?
 
-Here is the summary with links:
-  - [RESEND,net,1/3] net: phy: qcom: move the WoL function to shared library
-    https://git.kernel.org/netdev/net/c/e31cf3cce210
-  - [RESEND,net,2/3] net: phy: qcom: qca808x: Fix WoL issue by utilizing at8031_set_wol()
-    https://git.kernel.org/netdev/net/c/4ab9ada765b7
-  - [RESEND,net,3/3] net: phy: qcom: qca807x: Enable WoL support using shared library
-    (no matching commit)
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+IMO srng_config, rdp, wrp and srng_key may keep unchanged through suspend/reset, all other
+fields should be cleared/reinitialized.
 
 
