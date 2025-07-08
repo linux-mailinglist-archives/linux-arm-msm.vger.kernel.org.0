@@ -1,134 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-63958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46E13AFC108
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 04:53:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08AB7AFC147
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 05:19:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5129F422C8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 02:52:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DBE1C7A3653
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 03:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BED1225414;
-	Tue,  8 Jul 2025 02:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 611C623185D;
+	Tue,  8 Jul 2025 03:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I+6eZrX2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AqUFzjF3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D3A383;
-	Tue,  8 Jul 2025 02:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCA022FE15;
+	Tue,  8 Jul 2025 03:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751943181; cv=none; b=po4AaIjldPKB2s9jdbTV3ZoCc7FCaqM1hZL+qGsxbx2Q20+/QKomD51ux6sOZ+tgyB8ADNvQeCbw3xDz4i3Lb2VM7J7q6alY4Vu46/HJAOAjsmT5e+3bBfK9qF3P8lbd7MgzkPr037/oBaytWg5103kNrlpWh+M6tbIVwkwb33A=
+	t=1751944746; cv=none; b=hudP3TFTfUqnea5J7RTN20IJYwa5GLpeSVrH+RNWqWavUOzxe1YNmfEsOgXPJBF34unYY5T4oVq17L1KQvFM7EDdR5r/3IdYH2Vex9vgjFtUUc87UEGDLUhcpnd1DnzrJdjlL9RjnMSbn7vpsErjivHn4bKTq11mcrJl9MaIToU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751943181; c=relaxed/simple;
-	bh=2YPaOuP0AKZnwJ6QA5VdtBos5n+zVrR0TqRlQjwzdAQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WCSNDDZX61b96FcilPKcsgaMRfDPudMicSDeebVGCdcG8JBgPTZmEroe2eDC0LGV7VOJg9ssPIU1pzKYqPHLR5rh2jKplbjVgnwe3W4zhLCQmrCEOxTVu+edYjRsJuuRQsWdmC84EhkquTh9fR8ov5CyT+ZW0jBhUYFNz4qtSd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I+6eZrX2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567MXP4h019666;
-	Tue, 8 Jul 2025 02:52:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sR815mEl+sUZgpjEY6ReuyVgD3GFXXoJSV6V6GNAHLw=; b=I+6eZrX29+efemxn
-	iD1gVeUEGSmsWSrR84vXr8U01pk+aRJoNIndtKmBRFtZz1cC5QOtWnI/gIL5aRQE
-	IUCXmUweQZ+6dEMDEZGdmxl81H+bJu0aznH16MwvJcYpCwnmAFixEn2yAQaG3Mit
-	4TZNzwEx1pNRxzHhAOjcI/fI+Kl0oov1LDHp3KxhIyq0a63c/cp/m8igg69trnbk
-	JH0J3Obtnk8kBHxRglg3w5gSLAz/QkBW4Y8ZaM0gyfp+l3tnABSq3DadxSjyky+q
-	Lmi4B/lAfGFgMAmm/WHc6TQM/bLXKPCTBliRQccEmCno+twRn8zAPgKzXWxRdD8Y
-	0gyv4Q==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psdqtmbn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Jul 2025 02:52:36 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5682qZuI026457
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Jul 2025 02:52:35 GMT
-Received: from [10.253.13.246] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 7 Jul
- 2025 19:52:32 -0700
-Message-ID: <720a6969-7d30-4eb8-a970-2e06740c2780@quicinc.com>
-Date: Tue, 8 Jul 2025 10:52:30 +0800
+	s=arc-20240116; t=1751944746; c=relaxed/simple;
+	bh=8NDk+I1a3VSOWF9fO8M5RCaQI/zdXTl7PcjpnESkpb8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gFYVqbD2HL/DmVlVtIS4/4itYQMyXMwgjMtF5legk2C0um/btX9zkxVozscvhCRiKA7qOEUCfyrCA5NDWKRjPLvMx35EyMCFFPGoK890LzmupfKT72agnXxarCXK2gKHJYW3jRSdmbTfLudFH0LNq3uXFxj478J9MkFgOWY/mZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AqUFzjF3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A22C4CEF6;
+	Tue,  8 Jul 2025 03:19:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751944745;
+	bh=8NDk+I1a3VSOWF9fO8M5RCaQI/zdXTl7PcjpnESkpb8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=AqUFzjF3QVPJa7tu1iHs5me2odWP4ZHAcJtJvMqPM7yvkDGrXK38MEyy3JjLVe96k
+	 LrBFi1QWR4kDD4SbQ+9tHDSbHAM6tcwfTx8OYtBOL/f9llh1pUyafoiDZVAqwP66E3
+	 v5Yh7OcJfgbZtX1NjDmpMJ7M43AsjVakLrszfQsvm59nHPjnlDiNBR5mc3g/ql53T0
+	 VptQ02EKvm4fyn42hhR4WxwFwj3EP7eW7X2TfYB00t7N8PSggE91xUeBybziE+MMSh
+	 dKKMgBtqKdFxvv7Tbrcqu9eUvzcl2k4DVVPwGkMUnPerV4D4ibDPn+SeVUD61Jy81A
+	 11U1lnb4vAnLg==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-55516abe02cso3853916e87.0;
+        Mon, 07 Jul 2025 20:19:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU6DQYns/IKP7yAxyS2J+dgYksSTduDV+AGX3kOOjskw1Ba2W5o+mZK5QR6bXOOjaNQxkmggOf4RpsubwnZYA==@vger.kernel.org, AJvYcCVJp9j/mFHV2MTMBk6Qbqoxmlt4V2miy7AqYR5lpurvOaDvwfRG7mG2vQOxT9VAjlPEBp0LezlE6DAklOMA@vger.kernel.org, AJvYcCVMWDSjDGjV1CBCAgBlsn5Ry475aRi5SUpdxf/uc/CSX0MWvCMrdI8xEK0pkU5OsCptVJ/Hr37gaVV+@vger.kernel.org, AJvYcCW3xKwyxXCpt9MdFiTMmhKogoO7XQwD1TKACtPkl9HztXS9uDoVp++/VukaJMMYz0B95dYjK0MXBJRr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyX5OCZY+xJp7api+0pePPY2jRMdzLN63nTWgkPrXTelK9LLmEu
+	cZ/OgejeSPkZp6ttpJnKxIcdsH0eaEjDPLuNw5ODEPmIWOFguqyAlCNOp+WEevyE1846S5KRrcm
+	2D1kjS4iN7ha+iEFGZFpMLPuSonJUmxs=
+X-Google-Smtp-Source: AGHT+IGvbXSHFQEmu9KySW2VKjlzReLbWNXccH/jW/03YsyONy30/49vibN95ETPJPHoofk70uksd2LDdhA+mi6mm3c=
+X-Received: by 2002:a05:6512:340d:b0:553:2969:1d54 with SMTP id
+ 2adb3069b0e04-557f89b1acbmr355730e87.8.1751944743972; Mon, 07 Jul 2025
+ 20:19:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND net 3/3] net: phy: qcom: qca807x: Enable WoL
- support using shared library
-To: Jakub Kicinski <kuba@kernel.org>
-CC: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Viorel Suman <viorel.suman@nxp.com>, Li Yang
-	<leoyang.li@nxp.com>,
-        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-        Wei Fang <wei.fang@nxp.com>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maxime.chevallier@bootlin.com>
-References: <20250704-qcom_phy_wol_support-v1-0-053342b1538d@quicinc.com>
- <20250704-qcom_phy_wol_support-v1-3-053342b1538d@quicinc.com>
- <20250707164332.1a3aaece@kernel.org>
-Content-Language: en-US
-From: Luo Jie <quic_luoj@quicinc.com>
-In-Reply-To: <20250707164332.1a3aaece@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ffSty1QF c=1 sm=1 tr=0 ts=686c87f4 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=5vVSTZcSAIpnvYd1Sv0A:9 a=QEXdDO2ut3YA:10 a=0lgtpPvCYYIA:10
-X-Proofpoint-ORIG-GUID: YH3PtwPB5M3HBfmMXCuPuMKfiWXBU18m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDAyMiBTYWx0ZWRfXxiL6U2Luud0t
- DqhhkBXzEEByLIcuanmT/3wA+zcWDk05ueIVtroO1U18ORkT6No3LDZVhZ85L3C/qAajY2yjZjN
- eEVm4aE9x34c6uac7RpNtBllUQ/FhBgyZnDtSXDsahvJE4T9lRwMByftnn9rFwVS2EwKKAakmoF
- 2Sr5sC5MkI67nHoqu818BzjEujYgq2bICTslJV7pv84KUqJjJhLrJw9HphIcP3ulHVLw3WlSU7q
- nLE1HLwcmsW91L9Whl5o/aG1C1dbWPwpYvQuCaroKsOmLl1ItxUkjufceilbLz34BprwxmJkmDQ
- gbmTucIiC0MqZQCnTUVdbTYDBweD/UTjOO69nHFgXbTOvGFhjrxpKmzS+iHHPIy+NcrbJxvkWdj
- b76cwNXfTrJ1aZ9YQx0nomuTwKSuY7+XVOgPtxIfCoOG9aTJ2mFowpCvrTID+PK9Iq0TbAVr
-X-Proofpoint-GUID: YH3PtwPB5M3HBfmMXCuPuMKfiWXBU18m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-08_01,2025-07-07_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=893 mlxscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507080022
+References: <20250624-more-qseecom-v3-0-95205cd88cc2@oss.qualcomm.com> <20250624-more-qseecom-v3-1-95205cd88cc2@oss.qualcomm.com>
+In-Reply-To: <20250624-more-qseecom-v3-1-95205cd88cc2@oss.qualcomm.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Tue, 8 Jul 2025 13:18:52 +1000
+X-Gmail-Original-Message-ID: <CAMj1kXGi55_bRD_Q4n6hKO6-fCUHrWfpKD29Rc+r+gv1odHm9w@mail.gmail.com>
+X-Gm-Features: Ac12FXxCeYfV_TiBR5zCeFARm-H3LC_AZIXbKqNHVztOBDcfNmRsAK5SDEfPa-I
+Message-ID: <CAMj1kXGi55_bRD_Q4n6hKO6-fCUHrWfpKD29Rc+r+gv1odHm9w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/8] efi: efivars: don't crash in efivar_set_variable{,_locked}
+ in r/o case
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-efi@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 24 Jun 2025 at 12:14, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> If efivar implementation doesn't provide write support, then calling
+> efivar_set_variable() (e.g. when PM8xxx RTC driver tries to update the
+> RTC offset) will crash the system. Prevent that by checking that
+> set_variable callback is actually provided and fail with an
+> EFI_WRITE_PROTECTED if it is not.
+>
+> Fixes: 472831d4c4b2 ("efi: vars: Add thin wrapper around EFI get/set variable interface")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/r/aFlps9iUcD42vN4w@hovoldconsulting.com
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/firmware/efi/vars.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
 
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
 
-On 7/8/2025 7:43 AM, Jakub Kicinski wrote:
-> On Fri, 4 Jul 2025 13:31:15 +0800 Luo Jie wrote:
->> The Wake-on-LAN (WoL) functionality for the QCA807x series is identical
->> to that of the AT8031. WoL support for QCA807x is enabled by utilizing
->> the at8031_set_wol() function provided in the shared library.
-> 
-> This needs to go to net-next in around a week (fixes go to net and
-> propagate to net-next only once a week, around Thursday/Friday).
-> I will apply the first 2 patches, please repost this later.
+Feel free to merge this along with the rest of the series.
 
-Understand. Thank you for applying the first two patches. I will repost
-the remaining patch to net-next once the first two are available there,
-as advised.
-
+> diff --git a/drivers/firmware/efi/vars.c b/drivers/firmware/efi/vars.c
+> index 3700e98697676d8e6f04f061f447391503f9abba..11c5f785c09364f61642d82416822cb2e1a027fd 100644
+> --- a/drivers/firmware/efi/vars.c
+> +++ b/drivers/firmware/efi/vars.c
+> @@ -227,6 +227,8 @@ efi_status_t efivar_set_variable_locked(efi_char16_t *name, efi_guid_t *vendor,
+>         setvar = __efivars->ops->set_variable_nonblocking;
+>         if (!setvar || !nonblocking)
+>                  setvar = __efivars->ops->set_variable;
+> +       if (!setvar)
+> +               return EFI_WRITE_PROTECTED;
+>
+>         return setvar(name, vendor, attr, data_size, data);
+>  }
+>
+> --
+> 2.39.5
+>
+>
 
