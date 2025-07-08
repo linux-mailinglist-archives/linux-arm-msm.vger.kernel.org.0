@@ -1,157 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-64082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB59BAFD4FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 19:16:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 929D1AFD4F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 19:15:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D5833B957A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 17:14:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DBEF5168EBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 17:15:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF51C2E54D6;
-	Tue,  8 Jul 2025 17:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A154E2E5B29;
+	Tue,  8 Jul 2025 17:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fnPxz3QT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opKIuaAO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9BA1DC9B5;
-	Tue,  8 Jul 2025 17:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9D62E54D6;
+	Tue,  8 Jul 2025 17:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994917; cv=none; b=f8YvEPg6vti1urf2yg0mrloE1p+gg2zHDissathVDP8sEoLU5R9ST1Ixwlbsi5WuJ2Z9B+pDTHR7cslIOl5JpiB8dWFD9Nnb43/DWZ+NNtznASgmB1g0ArdeFPYGZQEMJQEb2JtASocKAWvtbWrR4V4m7qe0VIVnuIf9rPg/1Fo=
+	t=1751994938; cv=none; b=AFr2XJ0jzD034LLJmukfF7wVnyjC7Kz4gn8vDDG7EB3jvNuihaBYpu1LdBo/ByVO5FP+QJ+YbYo6Yk19yviqp8a2yjpji7A8ffXDrlvJrgKHBpeuab1rm69En5AZt/XLRY5oE6KfIcvcpx2aRvJC6zTXoi0WNPMUkeVZ6q5+SkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994917; c=relaxed/simple;
-	bh=zN56Kcanmm2CK6PlyASbW3cQE6ADHzafSCUuBxwC2dY=;
+	s=arc-20240116; t=1751994938; c=relaxed/simple;
+	bh=G4hnyLkgMkEeeDP4WcFeZOCQ5C1IlFKdxpJ/+mu5LgM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B6pewuxpc1+tpALTGiUyjVatU7k8iCrMFwvHn86eToBkohMkKLGk/z8pVmo3PKuEzcXQp98SwxIoiwDBqfx2RJbx9Gj4dEAzt7eIQcyrBjNRaIvCoyCI4Pqm9ps8MwbtJEKr8ch1V5lQbX2K4VFg9s72RUyPVaN/uLJnM17529Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fnPxz3QT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF322C4CEED;
-	Tue,  8 Jul 2025 17:15:16 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qNs5Dh8MLn/SU7d9knpuO4xWQglmLlJcdryjpfaQ8NDYebWaTAXuLH8TMSu5fGzv1JrgYKGXt2s1rm2QtOOmgSmGe1x7eBpVBLpcvC0w+b4/1ZZXdIXhhkuliVrJMXOBDJqIgrRMexA6rwg82CHOfwqHIO3VctrMZ85588Rnups=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opKIuaAO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1992BC4CEED;
+	Tue,  8 Jul 2025 17:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751994917;
-	bh=zN56Kcanmm2CK6PlyASbW3cQE6ADHzafSCUuBxwC2dY=;
+	s=k20201202; t=1751994938;
+	bh=G4hnyLkgMkEeeDP4WcFeZOCQ5C1IlFKdxpJ/+mu5LgM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fnPxz3QTmKrnPuKFneFht/NRDKDsD+03YX3V7I+FRPaggTCn1DWx+XA0g34uivyTV
-	 odRko5WyDqDPAUIRXHjw5k6wNeY7CEXWhxwczwutDGalGgsX5ipQ5PH/rWiPlyC+pn
-	 WtfWqtRxtJTLG1yWk5r2E5KfgJHNiy/YGBx+ljwsfSRsECeKZwMIdqUzUy+XD6llCm
-	 q4g2HlwDbaaBhN30eh3JOBY4Tng6F5sbeDuPZ8ydx7SZgvtm+cInudZbCWPK5YiHGl
-	 EINgcElxaLfa/KeT4B8WuGzNWiPz/+GjJjHsEHSmVUSm8PVxJps20YraFSW96YAe9M
-	 /fqFxIcYeyzjg==
-Date: Tue, 8 Jul 2025 12:15:15 -0500
-From: Rob Herring <robh@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Milos Top
- Level Mode Multiplexer
-Message-ID: <20250708171515.GA640511-robh@kernel.org>
-References: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
- <20250702-sm7635-pinctrl-v2-1-c138624b9924@fairphone.com>
- <20250703-daring-burgundy-limpet-a1c97e@krzk-bin>
- <DB293G0PC5P8.13IW22M6DDESM@fairphone.com>
- <a453bd90-b7c7-42eb-b769-b4c87b6dac12@oss.qualcomm.com>
- <424285fb-14a0-452b-8d18-6165d2a78497@kernel.org>
- <3d3g2sq4r7pruu4c2sl2itclx7xuja6inasaicm67t4sx6u5fl@xq5g7h4rabno>
+	b=opKIuaAO3BlnWsujF70bvZupBRhBGMdopxt6dvx4EIpWv7+JtK1FiOG9bC2ms/5Dl
+	 UtIFxU6eIZzcBfCQzHG9wCpg2RD1/ncADtxx5593QMZ7KWs0ZQ2zuCOC10BiG9e3dl
+	 4fIlE40BK7oDwyZTsFR+1fGDdBNxxBUz3J4njjPFEgsT5EKZlGCZQykEGXQqIM3pfd
+	 rkoV+6TKYCXt7epwhNGfWO1vmQxkX8kKF7vU0cojOXBVLCL8A4hV+eRACYuwCRPhVR
+	 ZexmNG3rUFetp196JBhzhjo5Lazi87u5HkzaW0+v/1gCZ1UcYnpLh3OvkDB74i11nZ
+	 RR2kyMm0/AK0A==
+Date: Tue, 8 Jul 2025 22:45:26 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+Message-ID: <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
+References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
+ <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3d3g2sq4r7pruu4c2sl2itclx7xuja6inasaicm67t4sx6u5fl@xq5g7h4rabno>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com>
 
-On Thu, Jul 03, 2025 at 12:31:46PM -0500, Bjorn Andersson wrote:
-> On Thu, Jul 03, 2025 at 01:26:11PM +0200, Krzysztof Kozlowski wrote:
-> > On 03/07/2025 12:04, Konrad Dybcio wrote:
-> > > 
-> > > 
-> > > On 03-Jul-25 09:44, Luca Weiss wrote:
-> > >> On Thu Jul 3, 2025 at 9:41 AM CEST, Krzysztof Kozlowski wrote:
-> > >>> On Wed, Jul 02, 2025 at 05:56:16PM +0200, Luca Weiss wrote:
-> > >>>> Document the Top Level Mode Multiplexer on the Milos Platform.
-> > >>>
-> > >>> What is Milos platform? Does it have some sort of model number how we
-> > >>> usually expect? Wasn't this SM7325 or similar?
-> > >>>
+On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru wrote:
+> ASPM states are not being enabled back with pci_enable_link_state() when
+> they are disabled by pci_disable_link_state(). This is because of the
+> aspm_disable flag is not getting cleared in pci_enable_link_state(), this
+> flag is being properly cleared when ASPM is controlled by sysfs.
 > 
-> Milos is the actual name of the SoC.
-> 
-> > >>> The problem with such new naming that it awfully sounds like family
-> > >>> names, so just expand the name and explain it.
-> > >>
-> > >> Please go argue with Bjorn/Konrad about this, wasn't my idea.
-> > >>
-> > >> https://lore.kernel.org/linux-arm-msm/aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com/
-> > >> https://lore.kernel.org/linux-arm-msm/b98d305b-247f-415b-8675-50d073452feb@oss.qualcomm.com/
-> > > 
-> > > Milos is the "real-est" name of this silicon. All the associated
-> > > S[AM]|QC[MS]s are just variations of it, with different fusing.
-> > > 
-> > > You'll stumble upon it across e.g. firmware build strings, as
-> > > well as in any documentation pieces.
-> > > 
-> > > There are various internal reasons for the switch, but the most
-> > > obvious external-facing one is not to have the user buy a devkit
-> > > and wonder whether they should use QCS9100 or QCS9075 DTB, and
-> > > why there's zero drivers code for these magic numbers (they
-> > > include SA8775P). We can simply point them to "codename" and
-> > > all C code will refer to it as well.
-> > 
-> > These are different SoCs, optionally with different firmware, so they
-> > cannot use the same top-level compatible chain. I hope you did not
-> > propose that.
-> > 
-> 
-> No they are not different SoCs, and that's the problem with the current
-> naming scheme.
-> 
-> > For me list like "qcs9100, sa8775p" is clear enough, but if you want
-> > "qcs9100, koala-bear" or "brown-bear, koala-bear" it is fine as well.
-> > You just cannot use koala-bear for all of them.
-> > 
-> 
-> It looks "clear enough", but it's wrong. The problem is that sa8775p,
-> qca9100, and qcs9075 are the "same" hardware and firmware.
-> 
-> The difference between sa8775p and qcs9100 is the reserved-memory map,
-> the difference between qcs9100 and qcs9075 is one IP block being status
-> = "okay" vs "disabled", due to fuses.
-> 
-> It's exactly the same problem we first saw in QRB5165, but we let the
-> problem explode. Now we use the names sc7280, sm7325, qcm6490, and
-> qcs6490 for the same SoC.
-> 
-> Using the SoC's actual name here will remove the need for playing games
-> with DT includes etc to try to map things to the current naming scheme.
-> 
-> 
-> The one case that isn't being taking care of such naming is when there
-> are differences in the firmware. But as can be seen in the "sc7280"
-> familiy, those software differences doesn't align with the chosen names.
-> And even within a given SoC, with a (overall) given firmware, the
-> reserved-memory map ends up differing.
-> 
-> 
-> So, the name of the SoC in this patch is "Milos". We already have ways
-> of dealing with firmware and/or hardware variations within one SoC, we
-> should use them (and refine them as necessary), rather than pretending
-> that something like SM7325 will define those properties.
 
-I for one prefer 1 compatible per die. We often don't know if that's 
-the case, but in this case we do so let's take advantage of it. 
+A comment in pcie_config_aspm_link() says:
 
-Rob
+ /* Enable only the states that were not explicitly disabled */
+
+But the function is called from both aspm_attr_store_common() and
+__pci_enable_link_state(). So I don't know if this is behavior is intentional
+or wrong. 
+
+> Clear the aspm_disable flag with the requested ASPM states requested by
+> pci_enable_link_state().
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
+Fixes tag?
+
+- Mani
+
+> ---
+>  drivers/pci/pcie/aspm.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index 94324fc0d3e650cd3ca2c0bb8c1895ca7e647b9d..0f858ef86111b43328bc7db01e6493ce67178458 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -1453,6 +1453,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
+>  		down_read(&pci_bus_sem);
+>  	mutex_lock(&aspm_lock);
+>  	link->aspm_default = pci_calc_aspm_enable_mask(state);
+> +	link->aspm_disable &= ~state;
+>  	pcie_config_aspm_link(link, policy_to_aspm_state(link));
+>  
+>  	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
