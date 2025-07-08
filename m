@@ -1,60 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-63987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCE11AFC56C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:24:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CF42AFC599
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:29:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED8C33A4B58
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:24:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C23E3162EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:28:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10592BE63F;
-	Tue,  8 Jul 2025 08:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oh3rMP0s"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59092BDC36;
+	Tue,  8 Jul 2025 08:28:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDB8259CBE;
-	Tue,  8 Jul 2025 08:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA122BCF46;
+	Tue,  8 Jul 2025 08:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751963023; cv=none; b=BgIdcb+mcmQgZ3LKFgHWiKgh9qUvdw4bqYYel64bTjQsuHIdJjM+nnCdzWwuvFWC8FVbrv1aGtiagd+6cqn6L9K05q512c2yUmxDrliSXTEB4SlfiepdwPYhLROFo9N61IsKHwVZX5WgAQDnSxjxgjxaxnmmKKHdiTLbZnvea8U=
+	t=1751963308; cv=none; b=KQ7qNPw16O7W32JfU20rKdN171VC28qt1klw4jBExQJDJgRG5QuD3tO0AJuj47Eq2hkxh9LqNJ3xR5I0559HaUUkqDiA+E4VKWKfj2XO/bCy9AwnkJb/hL5GyFU7Rrv889RkqVU8Wbot3r5qpM9dXJTlhLdTFiVBGNbud4NPEfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751963023; c=relaxed/simple;
-	bh=04fxKIPR7A/qlWWH38RuP8SatwNUghLoerN0uo/s0iQ=;
+	s=arc-20240116; t=1751963308; c=relaxed/simple;
+	bh=QZkEEX+wbrqpmTxR9/6edWPtu/5pWJyXRGQZvOJLqOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UYuRu4EiOBC8qjb3OxLksKDkCI/5T10XxYMSsH5+EHoCujOlBJ9P+P0aykU+fzUix2O2iApavI4Gk/TS0rNgZOI6sCcvvrEJ+QKkPf203SiqWw7X740p+e1SkpNym70ajl1R7W/j7NVchk0LIfumF6HWqVAuDWHMFrDgmRB5Qr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oh3rMP0s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0062BC4CEED;
-	Tue,  8 Jul 2025 08:23:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751963023;
-	bh=04fxKIPR7A/qlWWH38RuP8SatwNUghLoerN0uo/s0iQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oh3rMP0s3+3HAsTZ7OUQ0u9yqkkuo75AfyvZFwBV9NqosfYqF24aBYZMJI6h/mljv
-	 +UkXKoEjKeeBjJ9BjcvdD1lfC0fvkfiUB7VoBlwWcQf80rXGF6nAjMK4zW3afZpxFH
-	 wzMDo/EFEX1CQD3OOKGD60Z4kOa17kL6bgRB+vMQiDUyQkLfyIDys65TPj6Owp+kyn
-	 qQU5P2zScHWoeDiTkgz1bCoMblhBik5M7zepyqD1iqHOBNOhNbEoc5iUa7gxb+jX3v
-	 qF1LM+NjuQfK09E6OTOg072DA75S64r0yDqrPWXLa9pF0WT6ruA/Zr9wkmvOplODCN
-	 l5cEpQomjQ7Pg==
-Date: Tue, 8 Jul 2025 10:23:41 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=USDH3CZmUMTpwZl1HTZilMPCdo3pY8n3V5y60eGUjy2yp9G0gzmYF5isa3zqsXPH5vmDcFIEAecsbyXyRuFXdEeIA7JNIruQPsgLgTbOTjZnVDj6tS2gXDUXasV9gJOgixYkcd+XZGhaEsGNjGIWGfQR3VVlpiPcQliLkpaMPdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5655CC4CEED;
+	Tue,  8 Jul 2025 08:28:27 +0000 (UTC)
+Date: Tue, 8 Jul 2025 10:28:25 +0200
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
 	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: pinctrl: qcom,pmic-gpio: Add PMIV0104
- support
-Message-ID: <20250708-thundering-binturong-from-mars-417ba9@krzk-bin>
-References: <20250625-sm7635-pmiv0104-v1-0-68d287c4b630@fairphone.com>
- <20250625-sm7635-pmiv0104-v1-2-68d287c4b630@fairphone.com>
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] regulator: dt-bindings: qcom,rpmh: Add PM7550
+ compatible
+Message-ID: <20250708-interesting-quaint-viper-bad4da@krzk-bin>
+References: <20250625-pm7550-pmr735b-rpmh-regs-v1-0-cab8ef2e5c92@fairphone.com>
+ <20250625-pm7550-pmr735b-rpmh-regs-v1-1-cab8ef2e5c92@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,16 +50,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250625-sm7635-pmiv0104-v1-2-68d287c4b630@fairphone.com>
+In-Reply-To: <20250625-pm7550-pmr735b-rpmh-regs-v1-1-cab8ef2e5c92@fairphone.com>
 
-On Wed, Jun 25, 2025 at 11:18:03AM +0200, Luca Weiss wrote:
-> Update the Qualcomm Technologies, Inc. PMIC GPIO binding documentation
-> to include the compatible string for the PMIV0104 PMICs.
+On Wed, Jun 25, 2025 at 11:18:56AM +0200, Luca Weiss wrote:
+> Add the PM7550 compatible for the regulators in the PMIC found with the
+> SM7635 SoC.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../bindings/regulator/qcom,rpmh-regulator.yaml     | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
