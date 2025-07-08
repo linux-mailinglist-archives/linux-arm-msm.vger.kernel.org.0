@@ -1,169 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-64014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9264CAFC869
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 12:28:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E38EAFC875
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 12:29:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE83E7B3EF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:26:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F1631778BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:28:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 706B52BE7C8;
-	Tue,  8 Jul 2025 10:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3003269CE1;
+	Tue,  8 Jul 2025 10:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Xm8Sccn6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEkRfZLO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9E82853E7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 10:28:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B022322F74D;
+	Tue,  8 Jul 2025 10:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751970486; cv=none; b=ja/Q4v55FTAoTN95wuFTawRpTOEHDZwvRsRoUeYeTPwZzhAkBWDJpHoPAPSrpZYc442Nq/oth3SSu1K2QGzovRWLe6IGIYSwEoWxrqnBJ/X8j70dDTaHiRVUC3FExumN6oygln0rPGcTkYMb0zJGhKg8EJ+h+BRah9YDX5pn5h8=
+	t=1751970533; cv=none; b=GsUTcOUmi9k2SyPougg+5T1igKElvteoot07Kxq2Rdv0w3K5DxaWe4Sts/WwaixZSVpPFAy6yQbcH9KP11yfXBkXeRevvQ3g+BiNy9YkBtywCsht3uEYzQ2x+ojzlcxE0zyjbxyKWFHlAmnYT8Iz9opztGh4+BLGzJFRx1AUBiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751970486; c=relaxed/simple;
-	bh=xCTHOoLkdgQybEw/3ClPgB6sXkkKcXIzJacv5a1kNQ4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=KNCzXAYUyoGXGmQCQEas2YdAPFjPjw7BxPRV4Y9eUr1RkZ22u3Yw8Y7P9zUEZxEQjxAEsyq3Y0Mc7vc6l15l/SOwpi7/SBDueBfoN8bo1YhZ73lQiHnogKmHuOVsYDz6xGXLa3BRqEKHCNDHEIQL9n5rmB+epsPgTTr1rkPM+ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Xm8Sccn6; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae223591067so696689966b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 03:28:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1751970481; x=1752575281; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JVV21gJNFvfXkrcluM+ctHAzr5MoawVmcTeL4xITtek=;
-        b=Xm8Sccn6g+fIOw/1UgTMXMfJHRkXTxHeh7lnyug324Q2Yfixn91FM7iYrX/oWchM+o
-         uVidExvPDCJ8Gi00lB+O269f0FFAKyh/qiLJC9sLZzm5oV/5F9ev9NO6ENxsh8ghspYt
-         Zz/klc9S2ivwIDOXrOkWi3bt7k5PPcjKficHRssokf4hps3ruL5OCaBn1a7WkxcDOn7n
-         JT/4qibsfY4thAz92QSeESeRMNO0c3R+cZB380KWx2lNSeu0aP0MxQkk7LGHdj1hs+hE
-         k7G6sum77esRt1CsTIMhqc5ZVloi6dY4mdhLYzh2zWWo9SshbBj7biAqwadrUveGB5U4
-         agiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751970481; x=1752575281;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JVV21gJNFvfXkrcluM+ctHAzr5MoawVmcTeL4xITtek=;
-        b=IArgq/r+hhYN6hVALHXKz+6BOyYopUozYcRx3wUb4xMa9tFTT7sLNcp2Y8QpjjzitH
-         mSEJyGXY6OqVQOwzhLF/hSf+EmVqrmqPoMBeHemdQSw190G4JeXS3kyx5JMkVEFyyJY1
-         eAm6Pv//wyMjwGj9GNpi91JXb+CP0kG2FR5fE9swmm1FaOwFc//hzPMj3gaDRy2MFESD
-         WUl6ZnWQwUvy/7JW6bY2KFkycIQqF9sf9iMlwwzedhZbmhsg/KSUJcGHmQ1WIiRMpHQb
-         WtWOSNnQuBQGmBuLWJ5BjCQOgwO0moMeSDvlzr1fqVoQEN3Klx0MlPUwm6oFpbAXvlvq
-         MVVw==
-X-Forwarded-Encrypted: i=1; AJvYcCU9TP/EiHb/Vk4+9NxuJY0cNcBMjo9/kV+jqz2VodhqJhzWipZ7MVjjxNZsrepCmsQhTmyXQo7XlHFGE1Bx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIgDefWjp2+Jt6s6bUSft6yGHHy7jeInwGQfaosr9w8wVtftij
-	fUL6WyF2Tpk1KTO+TrGSGLWoH57zMGGUZVTnTKlgOL+I9sD2QoM9bX9+1WZ+r76PBuY=
-X-Gm-Gg: ASbGncs0dR5PboMMfomBu8edPSJHqu+iqEfKlPcTrD19++oQsVeVPYcOQHQCvaJDEV4
-	L49jUZ7XMl1p5ytj1JZ6sEQ9QvOEdX8Hu8MgL10PbhctimwXMjyr5oJllUUTwYwOxGV+OEii/wt
-	MiGEQApHQsXk3y0keCyvLEZ8KcaGKm+hiwPPTzRgZgCwbLcTH5b3vZE9N11Mzm2KgP3IZHemzdf
-	7zyjrpljl4OIg1WD/ZwqTfZA5Ql/rpURTn63R5k3v7hsdD3oW8cVV/EcN8n4jp3Vq88y985D08d
-	Qu2u0hQhFfYVgYiKH3auqdsx9lLwAYcV3G+r4w3FiAHug9T/58I0hash/1w6X9zMenJTcdPsUUB
-	KBcl4+2cuDJaFoPMxs15UOObBicFgwI4=
-X-Google-Smtp-Source: AGHT+IHaVz54M2Q9j7+0i4eoVqmwHKKm2/tqIC6pa1mIZEuAjoN4jfZ6/QMktPzCNPmSHVfF4oInMA==
-X-Received: by 2002:a17:906:751:b0:ae3:b22c:2ee8 with SMTP id a640c23a62f3a-ae3fbd8b392mr1292958866b.37.1751970481431;
-        Tue, 08 Jul 2025 03:28:01 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b6007fsm860633366b.166.2025.07.08.03.28.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 03:28:01 -0700 (PDT)
+	s=arc-20240116; t=1751970533; c=relaxed/simple;
+	bh=WAjiCvboyp+3JyFm44Np/epMYeJ/HardsZ0LS2Z1FaY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jAIbmCIJJW0nPVs2fdMrNdGvh8PEFQrmeZm/FAsU8KnGKLvl4+L0nL8j+leIJFg3dxJqEgJhuSgcRTuDOiL18X0aLa7ZHz4M8uLPg+cPGa5O8aWwGHrKIMnr2ew2KJN1eZn0lzgLr21gC1L8Cw3kl04Xf6AF7w23lI4e2zXTIx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEkRfZLO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C7CC4CEED;
+	Tue,  8 Jul 2025 10:28:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751970533;
+	bh=WAjiCvboyp+3JyFm44Np/epMYeJ/HardsZ0LS2Z1FaY=;
+	h=From:Date:Subject:To:Cc:From;
+	b=NEkRfZLOPxhCjjMTDs8ZHV3gmcJafeh2WdtkBBvzZEVT4MvSr4I9SAd/h/a+V6g37
+	 25hvhcbH4Odt9MxHh+k/vvTBXX+178i9JxYES2bpglRgkujAKoksZJnMxfuhZQ1nWQ
+	 gG333jF6dYbqivGAnjEnh/LMWgm+8N3ZpQqXbZHBcC6wwSd3+beMv+9Ba//5d8WKk7
+	 4OI/hGyTgvVizz5zkuoTNt8TYca9HkqnO4n05IuvMig5NWBTjbAkJ80wDyIMMlfpJ1
+	 RyvKvViZ++FE07Ydg4TgMS5DHb3+3VFEEpOTUXJErNCoEHTLkyKkYRNJ6lIY3pSQ/x
+	 K2PgijR6KBjOQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Tue, 08 Jul 2025 12:28:42 +0200
+Subject: [PATCH] arm64: dts: qcom: qcm2290: Disable USB SS bus instances in
+ park mode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 08 Jul 2025 12:28:00 +0200
-Message-Id: <DB6LPBOU5TDL.13B4A6U4NQQZQ@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add SM7635 interconnect
- provider driver
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Georgi Djakov"
- <djakov@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250625-sm7635-icc-v1-0-8b49200416b0@fairphone.com>
- <20250625-sm7635-icc-v1-2-8b49200416b0@fairphone.com>
- <3f8bcecb-4c5e-48b1-98be-96f3c0c8329e@oss.qualcomm.com>
-In-Reply-To: <3f8bcecb-4c5e-48b1-98be-96f3c0c8329e@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250708-topic-2290_usb-v1-1-661e70a63339@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIANnybGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwML3ZL8gsxkXSMjS4P40uIkXTMzY6M0Q6NU0+QUMyWgpoKi1LTMCrC
+ B0bG1tQDWBXmpYAAAAA==
+X-Change-ID: 20250708-topic-2290_usb-6632f12e5cd6
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, stable@vger.kernel.org, 
+ Rob Clark <robin.clark@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751970529; l=1791;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=dTNWeKPTeQhzcHl+gyzKi31A+qFWu41fN7Ysr/rjASs=;
+ b=2Dz+5LpI5nzETphYdZE0zKLuRf5X9t0/IaCe1hpevfHWf/KuCoSXrTMZAkaaTN+k857naO4TU
+ ObpB+5GrOEbA7efJQ/AqckivKm2P/72GQZoMYtKxTkmARqc/NnxvVEO
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Hi Konrad,
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On Fri Jun 27, 2025 at 2:48 PM CEST, Konrad Dybcio wrote:
-> On 6/25/25 11:13 AM, Luca Weiss wrote:
->> Add driver for the Qualcomm interconnect buses found in SM7635 based
->> platforms. The topology consists of several NoCs that are controlled by
->> a remote processor that collects the aggregated bandwidth for each
->> master-slave pairs.
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->
-> [...]
->
->> +static const struct of_device_id qnoc_of_match[] =3D {
->> +	{ .compatible =3D "qcom,sm7635-aggre1-noc",
->> +	  .data =3D &sm7635_aggre1_noc},
->> +	{ .compatible =3D "qcom,sm7635-aggre2-noc",
->> +	  .data =3D &sm7635_aggre2_noc},
->> +	{ .compatible =3D "qcom,sm7635-clk-virt",
->> +	  .data =3D &sm7635_clk_virt},
->> +	{ .compatible =3D "qcom,sm7635-cnoc-cfg",
->> +	  .data =3D &sm7635_cnoc_cfg},
->> +	{ .compatible =3D "qcom,sm7635-cnoc-main",
->> +	  .data =3D &sm7635_cnoc_main},
->> +	{ .compatible =3D "qcom,sm7635-gem-noc",
->> +	  .data =3D &sm7635_gem_noc},
->> +	{ .compatible =3D "qcom,sm7635-lpass-ag-noc",
->> +	  .data =3D &sm7635_lpass_ag_noc},
->> +	{ .compatible =3D "qcom,sm7635-mc-virt",
->> +	  .data =3D &sm7635_mc_virt},
->> +	{ .compatible =3D "qcom,sm7635-mmss-noc",
->> +	  .data =3D &sm7635_mmss_noc},
->> +	{ .compatible =3D "qcom,sm7635-nsp-noc",
->> +	  .data =3D &sm7635_nsp_noc},
->> +	{ .compatible =3D "qcom,sm7635-pcie-anoc",
->> +	  .data =3D &sm7635_pcie_anoc},
->> +	{ .compatible =3D "qcom,sm7635-system-noc",
->> +	  .data =3D &sm7635_system_noc},
->
-> One line per entry, please
->
-> In addition to what Dmitry asked for, please also look into porting
-> QoS settings - those will require additional clock references in the ICC
-> nodes and as such, the bindings will be altered (which we'd prefer to get
-> right from the getgo).
+2290 was found in the field to also require this quirk, as long &
+high-bandwidth workloads (e.g. USB ethernet) are consistently able to
+crash the controller otherwise.
 
-I've forgotten to do this for v2, which I've just sent.
+The same change has been made for a number of SoCs in [1], but QCM2290
+somehow escaped the list (even though the very closely related SM6115
+was there).
 
-But we already have the clock references in the bindings, so the
-bindings should be final, also when QoS is added, so just a driver patch
-then.
+Upon a controller crash, the log would read:
 
-I will put this on my todo list for a future patch to enable this, if
-that's fine with you.
+xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+xhci-hcd.12.auto: HC died; cleaning up
 
-> As far as testing goes, there may not be any apparent perf changes, but
-> if you get the clocks list wrong, the device will lock up at boot (unless
-> you're booting with clk_ignore_unused and friends)
+Add snps,parkmode-disable-ss-quirk to the DWC3 instance in order to
+prevent the aforementioned breakage.
 
-Ack
+[1] https://lore.kernel.org/all/20240704152848.3380602-1-quic_kriskura@quicinc.com/
 
-Regards
-Luca
+Cc: stable@vger.kernel.org
+Reported-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: a64a0192b70c ("arm64: dts: qcom: Add initial QCM2290 device tree")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
->
-> Konrad
+diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+index fa24b77a31a7504020390522fabb0b783d897366..6b7070dad3df946649660eac1d087c0e8b6fe26d 100644
+--- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+@@ -1454,6 +1454,7 @@ usb_dwc3: usb@4e00000 {
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+ 				snps,usb3_lpm_capable;
++				snps,parkmode-disable-ss-quirk;
+ 				maximum-speed = "super-speed";
+ 				dr_mode = "otg";
+ 				usb-role-switch;
+
+---
+base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
+change-id: 20250708-topic-2290_usb-6632f12e5cd6
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
