@@ -1,76 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF00AAFD9C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 23:26:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7154FAFD9CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 23:26:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 614297A810B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 21:24:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B20A3A49E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 21:26:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79FFF246326;
-	Tue,  8 Jul 2025 21:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49718248873;
+	Tue,  8 Jul 2025 21:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ng9LlbTf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nDUbCFiK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F411B2417F0;
-	Tue,  8 Jul 2025 21:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98F724397A;
+	Tue,  8 Jul 2025 21:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752009964; cv=none; b=B6zAFXr0MnwXaaYFD7Er/ogU2nTy4Qb4gEoIywQrXkSs2OghYAlcLc7XCKycCLYMiT1MJA2QNLE8oWuMayiJw8NZIiteKqWAaEZsxds2c47bcv12XaIWpyZb4rp/yU6GZJ+Re0yVVvENvNKU5z3G0LmCLuydedRFhtzRyLTux1k=
+	t=1752009965; cv=none; b=kLKAHZ9rvGb79Ukm6ni3o40qnMtiLMLCqGa0gnqgR+zma1zx3NjvWsYDnvx0B1lSDzeNbOz/FzWjO9ZzmbnazDUvIlrnyXvGl3LCIKYKU6V+JZdcsvJzPSs07reiM6GYBKpbOCr4hy13H261GWdyoTrI07fYyq+bwa4eaNmuDqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752009964; c=relaxed/simple;
-	bh=Ge2/q0dY2x4bPaf9l9HQuZj2LoD3prRY/uplpE7MIX4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dy9XkO0wsyJvwHEHP/f+ZEDyZnxLBWAEyeW1L2Gw9Q2ljBDfvv2r84r9uMfT22nV4r+lndtGP6wDlWdB9T5h7jKRIOlFZhPlTi5YUomBQDRQN5v7oxDGVvhxf3nTVGRfrr1ljUUuIHecSUbYBBp3/55FBN8yD33XCs1ixs7RlJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ng9LlbTf; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1752009965; c=relaxed/simple;
+	bh=sdK745Vj3Y70qcYzUfHFCTbIE8JLEe6lZLmNzS2Lhb4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TAVqbY2pHkZY2ZhB7uHjZ3G1/HIaQKdZ/Ir2PONd7YBYvgRkkLaeAtloOBr/QmopVP5lN0uQ7nghNzOfIgdcgG4i+ZRT/sXHO5gHrzGswyHMx1E/nB/HEjRKVIu1GKykZItYq/v2zyjdRQrpdn+9KbnvlJxkxbZyaolVJ9HkKd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nDUbCFiK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568JNOwK017086;
-	Tue, 8 Jul 2025 21:25:41 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568JFKiM012125;
+	Tue, 8 Jul 2025 21:25:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=Dg1K7w85NKq6IPBnoHn24/Vpc8sc0yNmhEo
-	/wpC8AlY=; b=Ng9LlbTfMSu0B0ME53Ji7ryUuiY26Z3+cni3UAiuEuswQmh/20N
-	YN4Wa+GMyIbOts04IdKKKRsEsVOth3srzmf7SDC/5isrxRR54pRte5obHpgSDJXF
-	5eMZMCiDBkTSjlODFneHJLOvWQ6b2uyLwbAp3mZLST2tn+0QOKN7X7p+1C3C3Xm+
-	0BCn8y2RN8cp9h+xj63vr643E2Aj6WdDsYytbANcGS65sYgfV0E5p94w1tFKFr5U
-	egMZpiUUuvayJsDNltkc/I+Vn8mJjnvSwH37BTkKWXZ1z5tBuC540CX4VoQpnmAY
-	kPsQ4zJ3WZcRLws4mg9frJKbeRszUJU1MAw==
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=Embif+b7D2T
+	39Tf+uoO+bQc+oYLdcrGbbEu3UPB0XCE=; b=nDUbCFiK/yspgBayRompDe8fCkU
+	SuqoWZzw8zch031qnCrbAaXM/Cya7g70VOiSqYSHpFhhM9TpBITn3AJHoEjSK6Yw
+	91ug3Yt+uNoZNb0f1xKZEA1wBMOXkfn6a7dfW4k9vay0/JBTyXewh7Zinb0A8G9b
+	mT4S1kxEjTNappngdTX22ZDRJ6Nfr4WgTZfdn8myWJ/+q7AF04E6p7Zt8HDz4hve
+	N7MCGLld9b42uiqk9k+S1LMlMB0Fu7X2gZrdfBrVeYvf/g8a+KyBDI/xIgQPKg8j
+	Gyicidx+ppp82rk3fJDciHDdETJvDpUxkcfBfilAl6WOqSRoua5DArxu84A==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvtksm2m-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pv97snqw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Jul 2025 21:25:40 +0000 (GMT)
+	Tue, 08 Jul 2025 21:25:42 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 568LPb9w000876;
-	Tue, 8 Jul 2025 21:25:37 GMT
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 568LPdMC000892;
+	Tue, 8 Jul 2025 21:25:39 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 47pw4kvamb-1;
-	Tue, 08 Jul 2025 21:25:37 +0000
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 47pw4kvamj-1;
+	Tue, 08 Jul 2025 21:25:39 +0000
 Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 568LPbvF000867;
-	Tue, 8 Jul 2025 21:25:37 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 568LPcKR000886;
+	Tue, 8 Jul 2025 21:25:38 GMT
 Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 568LPbha000866;
-	Tue, 08 Jul 2025 21:25:37 +0000
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 568LPc5Z000883;
+	Tue, 08 Jul 2025 21:25:38 +0000
 Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 6575557186F; Wed,  9 Jul 2025 02:55:36 +0530 (+0530)
+	id 16B0757186F; Wed,  9 Jul 2025 02:55:38 +0530 (+0530)
 From: Nitin Rawat <quic_nitirawa@quicinc.com>
 To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
         martin.petersen@oracle.com, bvanassche@acm.org, avri.altman@wdc.com,
         ebiggers@google.com, neil.armstrong@linaro.org,
         konrad.dybcio@oss.qualcomm.com
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V3 0/3] ufs: ufs-qcom: Align programming sequence as per HW spec
-Date: Wed,  9 Jul 2025 02:55:31 +0530
-Message-ID: <20250708212534.20910-1-quic_nitirawa@quicinc.com>
+        linux-scsi@vger.kernel.org, "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: [PATCH V3 1/3] ufs: ufs-qcom: Update esi_vec_mask for HW major version >= 6
+Date: Wed,  9 Jul 2025 02:55:32 +0530
+Message-ID: <20250708212534.20910-2-quic_nitirawa@quicinc.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250708212534.20910-1-quic_nitirawa@quicinc.com>
+References: <20250708212534.20910-1-quic_nitirawa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,59 +86,58 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDE4MyBTYWx0ZWRfX8QnN1fdPQZda
- tHoFJVeRB/3W8vikz2FVzru+7hrG+fC+/Lz3JL+WSRyHOfYzm3r2ozfdNIYvtDEfP+0I2ilOpeK
- a73ZDteQx+TQcgeqButVE+rE8ZeX2APhi00G6vG0JmOJvFrhWQFdVKVfSjmPLgkxQg/dJbs+vlt
- 9YW8RrY2DmlN6koorvfdR8zFOBwM7wCanzsHLgA4y/4EtppHBrqy8bYbAUZ8PMmoyrfR/etfwV0
- 5r6PYFpP3kgr2ibLDuOf8p7MfMWmeLsd3ffSVfWzy9RhY/PmOrevR0HhiqmKqtcGffDVylveDAj
- 4aFYHcLcJtBZNs2bjB03HOwJzEqjmTabtWFcOXvGo5yUNyAKLwV7DW/bTxw7dp0D1Aw1tcckRDM
- DlRaQmTIjdXOcCCioMEbSsclvMjfg0qnEyAWahO+I3HNl0ZSrkv8owfnQxz/FsqXJsjfP9xy
-X-Authority-Analysis: v=2.4 cv=Vq0jA/2n c=1 sm=1 tr=0 ts=686d8cd5 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=FrUF/3rq c=1 sm=1 tr=0 ts=686d8cd6 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Wb1JkmetP80A:10 a=iRjbf9KB49bWgsSTYZMA:9
-X-Proofpoint-ORIG-GUID: N_wlCF2DApIGwNsBdYtPD9tWnYU_aiJw
-X-Proofpoint-GUID: N_wlCF2DApIGwNsBdYtPD9tWnYU_aiJw
+ a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=QKWVBJnHy1B2er2I7z8A:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDE4MyBTYWx0ZWRfXwbnpjSXlFFPu
+ DI82hFvxzFoVVuxhwo/hJJdb0vUOgenElLbIp/V8Kk3NGbaVV6fAzDzu0CdFm7gA3xBVlCK8N4A
+ UJxS2VWeJt3VzNHdvznSf0cTYt0CIvEDKsaujKOidwAqbiWf6b2oFgvzSJsyDBMf0aJhW7A4JDo
+ QurGqeNMLHi53qthnoq0cmDnTClTkO/xyhi1mDRuI+3BXzeCo/ZFFLEMvvyLCCaTEoliQfbDXSP
+ KV0OBvX971UFkigBaxaVqnFPACwc7f+kSS8ZwGfdJBjIXXKaDleTdbPJO08MDVVZHdgTKO1ghBm
+ Cikqaa++H2oUemvGgPSeocXnx0sgII3hXVdfJ8fU38k/F4ADYK1vgUjZZXXtKi+8+4Gv9hwSQO6
+ RQ323/U/oL+hGm97ZIBk5wl+a1ZRh7EGe2ET+NrhmhBXrTLjutWAVmQU8n1PTxLBPAvufqn3
+X-Proofpoint-GUID: VyxMTO_Vi3D9Rvvu-444DikJQLeM5vvJ
+X-Proofpoint-ORIG-GUID: VyxMTO_Vi3D9Rvvu-444DikJQLeM5vvJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-08_06,2025-07-08_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1015 mlxscore=0 malwarescore=0 mlxlogscore=759 impostorscore=0
- suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507080183
+ impostorscore=0 suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507080183
 
-This patch series adds programming support for Qualcomm UFS
-to align with Hardware Specification.
+From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
 
-In this patch series below changes are taken care.
+The MCQ feature and ESI are supported by all Qualcomm UFS controller
+versions 6 and above.
 
-1. Enable QUnipro Internal Clock Gating
-2. Update esi_vec_mask for HW major version >= 6
+Therefore, update the ESI vector mask in the UFS_MEM_CFG3 register
+for platforms with major version number of 6 or higher.
 
-Changes from v2:
-1. Addressed bart's and Mani's comment to move ufshcd_dme_rmw
-   to ufshcd.c
-2. Addressed Mani's and bart's comment to avoid initialisation
-   of cfg.
-3. Addressed Mani's comment to update commit text.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+---
+ drivers/ufs/host/ufs-qcom.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Changes from v1:
-1. Moved ufshcd_dme_rmw to ufshcd.h as per avri's comment.
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 318dca7fe3d7..dfdc52333a96 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -2113,8 +2113,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
 
-Bao D. Nguyen (1):
-  ufs: ufs-qcom: Update esi_vec_mask for HW major version >= 6
+ 	retain_and_null_ptr(qi);
 
-Nitin Rawat (2):
-  scsi: ufs: core: Add ufshcd_dme_rmw to modify DME attributes
-  ufs: ufs-qcom: Enable QUnipro Internal Clock Gating
-
- drivers/ufs/core/ufshcd.c   | 24 ++++++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++--
- drivers/ufs/host/ufs-qcom.h |  9 +++++++++
- include/ufs/ufshcd.h        |  1 +
- 4 files changed, 56 insertions(+), 2 deletions(-)
-
+-	if (host->hw_ver.major == 6 && host->hw_ver.minor == 0 &&
+-	    host->hw_ver.step == 0) {
++	if (host->hw_ver.major >= 6) {
+ 		ufshcd_rmwl(hba, ESI_VEC_MASK, FIELD_PREP(ESI_VEC_MASK, MAX_ESI_VEC - 1),
+ 			    REG_UFS_CFG3);
+ 	}
 --
 2.48.1
 
