@@ -1,88 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-64070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 722B5AFD083
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 18:22:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 603DAAFD0BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 18:27:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DEE3188680A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 16:22:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 328F1580F43
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 16:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F5742E427E;
-	Tue,  8 Jul 2025 16:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C4772E0910;
+	Tue,  8 Jul 2025 16:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NA65KBJG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fwzkQmWY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56C7269CE1;
-	Tue,  8 Jul 2025 16:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92DF2D9790;
+	Tue,  8 Jul 2025 16:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751991716; cv=none; b=eVJM16r6tovo3cLIygCjOUZQNSW84+gHjt3RphuSWQklMh2vUzuepg8HWS40FEt91pp6QCjAlKriu4rUIustgAIq7erBpOzaUPTCEV46T8YuVpkOmm7srJysoyKwQPiiov0bgSua7szhyDezTRTPozThJst51fndMdiNXG/z5Jc=
+	t=1751991945; cv=none; b=Rnkm8hJ3MkKODaJzZ4nhZoFn6m3azt6B9/Nk629UTHQXLXgMvfAWtNalh81zkHjriYbOwtKbgwnGToY35Vm1/H/4ZamiTkAJSc6kM5h3/RaV2rkQphOb5GttUncPm5qsqk5sMmKceJysvHNalssbC09bsnJ9jTyfFAWyl7e8yto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751991716; c=relaxed/simple;
-	bh=TLvocITXJ+jGWEc+GbjQZJFvOjFTeZesBcRy+xMkzLQ=;
+	s=arc-20240116; t=1751991945; c=relaxed/simple;
+	bh=QmoHd8cC81xmIDIbZJg1nKxwCyWUf9E8OERsbTNGp54=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n0gopaUzuPDIEXWxZA5NoyjAcUD+y2ej0Vj0r4An5zRuKZ2CRrI6GD+di/tRLytkJGYB84nj3ZZbImvMkJ3CyM9OM0LFetnVJOvpVAY9IL66NOinJWSbz9i0u8aOrUAgU3FRYFPLlQRH77hGfeaHdEa8iSFgwcIXyVOPUsppTxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NA65KBJG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671F0C4CEED;
-	Tue,  8 Jul 2025 16:21:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=QScfuie6OdSLqrL7Imr2kydSzrL0r1MuVc7ygR7LeczM0G0pL4W0GSJ7KKpskZwssjT6zIu+h8VVBW/mTEl319G3nQb3ayBqsHHotqbQCNHotG+jjHH3Abpz1XlKvKkT0DNDs8oyRfheVXic/U3GmdyRl4vnGz/iJh3WJjfXGFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fwzkQmWY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBE8C4CEED;
+	Tue,  8 Jul 2025 16:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751991715;
-	bh=TLvocITXJ+jGWEc+GbjQZJFvOjFTeZesBcRy+xMkzLQ=;
+	s=k20201202; t=1751991944;
+	bh=QmoHd8cC81xmIDIbZJg1nKxwCyWUf9E8OERsbTNGp54=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NA65KBJGSYJYKU3lzvXmQ0NFxdXb5lepEg7SeBf67E/fMjpYOu2z7L5CfqJCT9uTi
-	 zRmKSTIq4F/JojJcii5MFuS3xwUp7pJhmj6v8+nrhWJM/t9QOB8DvKQ5Msdvl9DKcZ
-	 T3lXsuGu0YJ/y989qbcWwO3yAFEJE8/bmsgV8LFoUkCkDywwtGQCVe/s5sH9EwM+Fg
-	 ylbgVtb6AJwtdN+YNBUzoBZfBvrPN4Z0kSOAKqyQ+hfDc90m4+sY7cw/JkwzY/ibGl
-	 BwMG71qA25IConRQhwsNDyqh9KEKC69gQoPOgvHGBk7vT1cIBqRUprTqEufh53cxho
-	 tcBNEXu4wgFmw==
-Date: Tue, 8 Jul 2025 11:21:54 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Michael Turquette <mturquette@baylibre.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH 4/6] dt-bindings: clock: qcom,x1e80100-gcc: Add missing
- video resets
-Message-ID: <175199171363.537918.5935203140901577075.robh@kernel.org>
-References: <20250701-x1e-videocc-v1-0-785d393be502@linaro.org>
- <20250701-x1e-videocc-v1-4-785d393be502@linaro.org>
+	b=fwzkQmWYtKwmnrBgCnqdCq4I0KvH45mkaufs0g2zpZphsVw0UrX4WEkPeny+dVWaw
+	 M6AZK2sUINh5mh2Ry+BOP31dYkOZ+/mdz31oE6MwgCU8/kx+NLU4b9QF9QSwKguRYI
+	 FIl2/JTGLBdDbv+oquP1D1XzoJcXFefS6Zp0J/u0AA2TIyur4qjm2nIG7PdYsVGKs6
+	 reWPwpXw9y0Y/x/T4lVcbnYE/kfos1SMLIZmrqeWPEehNk5niV0pPeKHk7cAZwdgxb
+	 zBjpN9lr4h7umBdF0vmo+B/aP8G47E+Db71104HEEjjkmtNoTrlcJ1ZODG8HXjfNVQ
+	 NI2rF/+EjfqEQ==
+Date: Tue, 8 Jul 2025 21:55:33 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v4 02/11] PCI/bwctrl: Add support to scale bandwidth
+ before & after link re-training
+Message-ID: <fhi7q5mbe75xbfmff6k4qe5pe6xveya5dsfqkm6bqpz7rcn3vr@jyn4uxl2exp7>
+References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
+ <20250609-mhi_bw_up-v4-2-3faa8fe92b05@qti.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250701-x1e-videocc-v1-4-785d393be502@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250609-mhi_bw_up-v4-2-3faa8fe92b05@qti.qualcomm.com>
 
+On Mon, Jun 09, 2025 at 04:21:23PM GMT, Krishna Chaitanya Chundru wrote:
+> If the driver wants to move to higher data rate/speed than the current data
 
-On Tue, 01 Jul 2025 19:28:36 +0200, Stephan Gerhold wrote:
-> Add the missing video resets that are needed for the iris video codec.
+s/driver/PCI client driver
+
+> rate then the controller driver may need to change certain votes so that
+> link may come up at requested data rate/speed like QCOM PCIe controllers
+> need to change their RPMh (Resource Power Manager-hardened) state. Once
+> link retraining is done controller drivers needs to adjust their votes
+> based on the final data rate.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Some controllers also may need to update their bandwidth voting like
+> ICC BW votings etc.
+> 
+> So, add pre_link_speed_change() & post_link_speed_change() op to call
+> before & after the link re-train. There is no explicit locking mechanisms
+> as these are called by a single client Endpoint driver.
+> 
+
+What if client drivers of multiple endpoints connected to different RP of the
+same Host Bridge call this API? Won't you need locking?
+
+- Mani
+
+> In case of PCIe switch, if there is a request to change target speed for a
+> downstream port then no need to call these function ops as these are
+> outside the scope of the controller drivers.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
->  include/dt-bindings/clock/qcom,x1e80100-gcc.h | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/pci/pcie/bwctrl.c | 15 +++++++++++++++
+>  include/linux/pci.h       | 18 ++++++++++++++++++
+>  2 files changed, 33 insertions(+)
+> 
+> diff --git a/drivers/pci/pcie/bwctrl.c b/drivers/pci/pcie/bwctrl.c
+> index 36f939f23d34e8a3b25a2d1b9059e015f298ca94..dafb8d4f1cfba987e1ff08edfc7caba527f0c76b 100644
+> --- a/drivers/pci/pcie/bwctrl.c
+> +++ b/drivers/pci/pcie/bwctrl.c
+> @@ -140,6 +140,8 @@ static int pcie_bwctrl_change_speed(struct pci_dev *port, u16 target_speed, bool
+>  int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  			  bool use_lt)
+>  {
+> +	struct pci_host_bridge *host = pci_find_host_bridge(port->bus);
+> +	bool is_rootbus = pci_is_root_bus(port->bus);
+>  	struct pci_bus *bus = port->subordinate;
+>  	u16 target_speed;
+>  	int ret;
+> @@ -152,6 +154,16 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  
+>  	target_speed = pcie_bwctrl_select_speed(port, speed_req);
+>  
+> +	/*
+> +	 * The host bridge driver may need to be scaled for targeted speed
+> +	 * otherwise link might not come up at requested speed.
+> +	 */
+> +	if (is_rootbus && host->pre_link_speed_change) {
+> +		ret = host->pre_link_speed_change(host, port, target_speed);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	scoped_guard(rwsem_read, &pcie_bwctrl_setspeed_rwsem) {
+>  		struct pcie_bwctrl_data *data = port->link_bwctrl;
+>  
+> @@ -176,6 +188,9 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  	    !list_empty(&bus->devices))
+>  		ret = -EAGAIN;
+>  
+> +	if (bus && is_rootbus && host->post_link_speed_change)
+> +		host->post_link_speed_change(host, port, pci_bus_speed2lnkctl2(bus->cur_bus_speed));
+> +
+>  	return ret;
+>  }
+>  
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 05e68f35f39238f8b9ce08df97b384d1c1e89bbe..1740bab514b0a9a61c027463a1fb154843312a22 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -599,6 +599,24 @@ struct pci_host_bridge {
+>  	void (*release_fn)(struct pci_host_bridge *);
+>  	int (*enable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
+>  	void (*disable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
+> +	/*
+> +	 * Callback to the host bridge drivers to update ICC BW votes, clock
+> +	 * frequencies etc.. for the link re-train to come up in targeted speed.
+> +	 * These are intended to be called by devices directly attached to the
+> +	 * Root Port. These are called by a single client Endpoint driver, so
+> +	 * there is no need for explicit locking mechanisms.
+> +	 */
+> +	int (*pre_link_speed_change)(struct pci_host_bridge *bridge,
+> +				     struct pci_dev *dev, int speed);
+> +	/*
+> +	 * Callback to the host bridge drivers to adjust ICC BW votes, clock
+> +	 * frequencies etc.. to the updated speed after link re-train. These
+> +	 * are intended to be called by devices directly attached to the
+> +	 * Root Port. These are called by a single client Endpoint driver,
+> +	 * so there is no need for explicit locking mechanisms.
+> +	 */
+> +	void (*post_link_speed_change)(struct pci_host_bridge *bridge,
+> +				       struct pci_dev *dev, int speed);
+>  	void		*release_data;
+>  	unsigned int	ignore_reset_delay:1;	/* For entire hierarchy */
+>  	unsigned int	no_ext_tags:1;		/* No Extended Tags */
+> 
+> -- 
+> 2.34.1
 > 
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
