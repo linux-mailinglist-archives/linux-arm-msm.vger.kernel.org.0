@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-63999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34598AFC61F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:51:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64DC9AFC628
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:52:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8230E16FE21
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:51:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAFF217535F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:52:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8254F2BE646;
-	Tue,  8 Jul 2025 08:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47E802BE7C0;
+	Tue,  8 Jul 2025 08:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GyjkQPOt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZonJT72f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B08F221D87;
-	Tue,  8 Jul 2025 08:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA22BE04B;
+	Tue,  8 Jul 2025 08:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751964666; cv=none; b=lD0xzbSp/Iay5Vj63SAO/pBr6Lp5IVMtSXfUoBKS0NtO0epyt1taSrOKA54ljgnICqj3K6oLDUJ3A6r36mXaqBKM+SMZdseEjzAbmx1CqwdhNPuIdubeC7/1cPwa4hEL/z/994B8PM5M5YmandCXbE9zoRBmaGsW11lWiM0EVHE=
+	t=1751964726; cv=none; b=kMjZTDnAnVLKrQhFbI8Oa4jU6+aqIes1UpX3TInq1ZmRh7tglfYcZaZl5lXvyGcNOEKpPTCM12Zrb7E1DENcBrguk52FJs2ZLqFg7nsJj++DQCcVHxvbLR22qABMWJwfZz7xarXAbOISw8RnaClFNCZxVc3U4TRqXEbz7JrWz1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751964666; c=relaxed/simple;
-	bh=N/0d0mKW07wFgRFLTBIlelDE6XtrInsDavk8ZqJpx5s=;
+	s=arc-20240116; t=1751964726; c=relaxed/simple;
+	bh=no3EIa3+l7xCNHzn8X4T0WAUjmg9asbn4ZAZ6fjDVtc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=REeyhHl/ilDPqH95SICyVM7EjubbEqztugez+BY/VKDKBplVV5uuFVzeSXy/UQQck/dWfEYaxPdVfmrilNMZ4LUjjf1WDxT3dFflbpXNO8ssIWpdKqP/V6rCVfP9GNxlmfS7waS6G3xoDnIKDdUTCryhjVBDED4walXQjt/Uyr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GyjkQPOt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514BEC4CEED;
-	Tue,  8 Jul 2025 08:51:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=gdL9XbQ/g2CPH2ZvzBlfHMG3MRUYYfbs6pPhf0ebXWnICgtAjmwFuz1bgr6+ZF818/sU2alp4eB19RJwU4c36AhLTtNgVo0Gj6N0RTsELGHA33A9YwfRkn8Xk/O+PomSWr76533sjnjMDZaduTTNvIo1N+qrQH6gMd8E5wbcKcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZonJT72f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1852AC4CEED;
+	Tue,  8 Jul 2025 08:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751964665;
-	bh=N/0d0mKW07wFgRFLTBIlelDE6XtrInsDavk8ZqJpx5s=;
+	s=k20201202; t=1751964725;
+	bh=no3EIa3+l7xCNHzn8X4T0WAUjmg9asbn4ZAZ6fjDVtc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GyjkQPOtw0ym/NrawZ2Hn26MiYvjJ2VzHekm5U8LVHv0NJsyc9lIRH84NvkZYNYSt
-	 2jzCq32+gtes2SzmX52d97LISK0cnyDUXlaHbuKusCLP0E8OOq/3upy+GtCxhuPfpj
-	 DYDQXMfCGKCzbY1Mjg1zmm8sdMalepsPeX10hz93durHXub9sSO6Z0ZaNtvs3yBkvN
-	 YS2iA/04qADiFOO+Nxgu8bHtrFD4Cm4gBSXrgXYYrTDMSrL2qqkJ3QPwPS2jJkXmYP
-	 YppHeyX7Gybx357//q7sPpvRPDyVA3iy1VOQC0BvodLAzQUbHwjQcQnxSUKUqtG7wo
-	 KZy5cignph7kg==
-Date: Tue, 8 Jul 2025 10:51:03 +0200
+	b=ZonJT72fO/zsCh1F2pEs3Oo3qd/Fh7A+1omwHdHj8sh0gsHgd/2xFJ/WyMtmmX8C1
+	 7cRupQ8lxFZWjkZBBMHQ6u1+7GDzDV8O5EiBca+WRsjSZSwwckqKkOY8h+uOEqNl0V
+	 z/QLEZ2xqXljkToO5IbonkIQID00plJaeKXBdKoQb1ov5xHPhXNkCF2z6PVl8177X3
+	 sghwQoFIAQKL9cp3niEdF5EAPwcH6pqQSRe7PjMyPZ0EQK+sYSg/ar2Tx03MIb2yum
+	 FwOI5T2BUl5L/xd6Ktp3vUQSKgEnS7zDW+UAxoS3S8NBn3BeUfXhx3CEVJDo3uUYlk
+	 FYFuqMWq7U8DQ==
+Date: Tue, 8 Jul 2025 10:52:02 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -52,10 +52,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
 	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, linux-clk@vger.kernel.org, 
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: qcs615: Drop IPA interconnects
-Message-ID: <20250708-amiable-owl-of-enthusiasm-e75662@krzk-bin>
+Subject: Re: [PATCH 3/4] dt-bindings: interconnect: qcom,qcs615-rpmh: Drop
+ IPA interconnects
+Message-ID: <20250708-fortunate-agate-coyote-e3b022@krzk-bin>
 References: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
- <20250627-topic-qcs615_icc_ipa-v1-1-dc47596cde69@oss.qualcomm.com>
+ <20250627-topic-qcs615_icc_ipa-v1-3-dc47596cde69@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,27 +65,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250627-topic-qcs615_icc_ipa-v1-1-dc47596cde69@oss.qualcomm.com>
+In-Reply-To: <20250627-topic-qcs615_icc_ipa-v1-3-dc47596cde69@oss.qualcomm.com>
 
-On Fri, Jun 27, 2025 at 09:37:55PM +0200, Konrad Dybcio wrote:
+On Fri, Jun 27, 2025 at 09:37:57PM +0200, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> In the same spirit as e.g. Commit 6314184be391 ("arm64: dts: qcom:
-> sc8180x: Drop ipa-virt interconnect") drop the resources that should
-> be taken care of through the clk-rpmh driver.
+> This has been agreed to be characterized as a clock resource, not an
+> interconnect provider. Bring QCS615 in line with the expectation.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 6 ------
+> Fixes: 6c5e948f1fff ("dt-bindings: interconnect: document the RPMh Network-On-Chip interconnect in QCS615 SoC")
 
-This is non-bisectable and breaks the users. Should be the last patch,
-not the first, with explicit notice that it must wait after the next
-merge window.
-
-Plus this affects all outside users, which also should be somehow
-explained. "Spirit" of some other commit does not apply here. These are
-different products, different users. It needs its own rationale and
-justification.
+You did not explain any bug here to fix. Difference in agreements in
+characterization does not feel like a bug.
 
 Best regards,
 Krzysztof
