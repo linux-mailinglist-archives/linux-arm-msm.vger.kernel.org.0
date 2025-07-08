@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-64042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4477AFCB5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 15:05:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6400AFCB86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 15:13:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92A09188D10D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 13:05:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 915153A7A88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 13:11:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B58B32DBF5D;
-	Tue,  8 Jul 2025 13:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C30472DC342;
+	Tue,  8 Jul 2025 13:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pXwuuMym"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UJkmmfuH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A964E29E0F0;
-	Tue,  8 Jul 2025 13:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA472DCF71
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 13:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751979925; cv=none; b=MuIaMEORFPjscRsZfMgw0jM15ublfqhdWdol5UDysmA2KKYkPI38vMbVQyJtj8OPZmnRiZCj5Y0l54wBrYm4ntjkgzsnfoFpuqd6h7UCD6mK/Z6ULGj4Vfnb5StatZdYPtN6Jh7qN46Q3t6frPlmubGFQWG38nt2EKriCkyrIHc=
+	t=1751980123; cv=none; b=LnaTJ9OmYZobJOTmyPj7O4zxCCCvSbWJkt82bLTNReZiw0nEKSuxTV3ooH7SYWt9Nrra1qQZBt4fwtM3PNpR6Dcyv0BtN7GIK89GNLP7Jn3aG0ljqmYQej/PqsTh7zC1fs/aHMO5AGh1WYzOVNUUPAdrNU2unRRsjbwcG9cw6SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751979925; c=relaxed/simple;
-	bh=cGTD75Ivk8mxRXphMaZzU6yq5osGw/8b8MnaMMAhCBA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jDU4KeCq+CEf9zjoaLsJAZ7B641NreF3uYmCaXzjIQhzDiOxGD1traPcByvdKXnVdOt/Fg/aar/ppUx9I5UYSJ5KPu912xHXcJxaMRlzTDT5Xd3+xCaVHvTuEoGHJ0amG9DyewBZXFKInqdz0VN6RYISmQieVIPJClURPz8Pblw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pXwuuMym; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AATtA025473;
-	Tue, 8 Jul 2025 13:05:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1751980123; c=relaxed/simple;
+	bh=WzAnNBoWqDOEgWIAvOrUUm+cPnnAQsDqlITlF4IdpJU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tmiwhb9BOy/tqh/ukmWsBMFJ5VRLzmGOpfQI3+2Jz52bUw97NHiO0GbH2hqYzF7CwK5Ao6jwoZ3NY3WiQ7dTtfn7Sfh9dU7K3JCW4pdSU+6mc4fTG81vOoHz1u2Tzl1YXISbwsUFtyCM13hpJzovGOrypO9qyVv8BjTNmxV/N1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UJkmmfuH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AAPr0012140
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 13:08:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ruomlpVlZhIacYiD0ePUuK2du29Gndfd9nNiKKRvyyc=; b=pXwuuMymD7zR91xj
-	ppbFN2R6VfSVBGDHtU/1mJ4kzwSHHcp2g51zrbx//R1w9tYWEz7A3D6+zartWHck
-	RCua0Nqw8Nmm/4AtiiIKuUxGNq5CBrc7h5edBVujDGtStVlbuBrR+9D1ZAluSMFf
-	yVUotgWskOMaipG950eFvG2Ab2ZUzuIF/Bdyt0dS2PJg1pIoX21dx0gJ/0/lNb+J
-	/tCyisCipjZ3n5jLIe/hDcc8nIF3o40wbs6KMuercSr9NQ5LQkScQ8twuB9BxSKM
-	oD/olgZ/3tuC6mrjk2ti/Kfgz7YoJ8292DzJMKCgjFHMs6ck68ie0l+OkFQ7MpGW
-	IBPkdA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu0wdbwu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Jul 2025 13:05:16 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 568D5FnV032597
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Jul 2025 13:05:15 GMT
-Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 8 Jul
- 2025 06:05:11 -0700
-Message-ID: <94f19455-dbcc-444d-9c5f-291f06682a77@quicinc.com>
-Date: Tue, 8 Jul 2025 21:05:09 +0800
+	KmIrXBmloEveFtaKUykatLGYGI7N92PV13SbV/egCdQ=; b=UJkmmfuHN0Jr6kLA
+	ld5/JgheNu5sbMNgZkiwYUgO4GjvZ0BhglW00c59meaADsYhrZJWYQqmA1gc/OUc
+	DUrnK/NvCvH5C3ONM0GjvGKFSW0GsKNdezqCPza8ZE4tevjkJ9e1npZeNjJmh0a+
+	INZ4fgtIBBYO0j6f6etpT389hYl24vuIu2PlUOUPRwGL81B4dcop5sZWnBHRiFtS
+	shOo7dNQC/vBBtAFgTDT/48Rt3FZKyaSlMLbcUDvTnThA0dRBC3CHwWIE5u6O4Qv
+	lz8B4EKeQFe+0hY6nqY73fapqXHeHNzj+ARgwUPzAaWQ1qY+sXoEn7n7SuSC6Xxx
+	t7bbIQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pv97nbjk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 13:08:41 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d09a3b806aso38803485a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 06:08:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751980120; x=1752584920;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KmIrXBmloEveFtaKUykatLGYGI7N92PV13SbV/egCdQ=;
+        b=MpMX6dLzB+oa9qwljNO0XolYZTYqjd0xlqK0rY0MvioEPfZB20vCKhNcBaJTPU4yxV
+         +nTiA0dPAMnJK2T89yl5sIOjmpL3sTk42d2XvJOhRGld49MFUmpyye4GNBNFLTH7QoRg
+         kZnxP1luNNwDwAD3ilkMPaOM6xzOHl1cdTFEfvj+vZJIxU2KtXiR+m0ljIfj/2NSVv5K
+         Ez65s/2iN/lV/NQjLoRRSagEKN8ruz6cFKlN8gB1TxmXULoACwFVIhW8l5/AFWREejnK
+         f7ZZ80bQWw0awrA84WkxcbSSpCcRjtKcPFQfabJZ3p6miXvjUL2H0A8GNWQD+EDgBCHb
+         S0Sg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVeN3jbprp7rIZkjtB3HB52adsaQxQOzt6eqnI3rgwuMLS0CcFRZSI+cM100Y3wp6gfBXZ2hL3qiD4ZXQn@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyzcqvC25Kw6rJTBfMFGizFRrfrGoi8cgzVKsgMCfNK1iAdr+P
+	hpOPb+pGKCKe1V24bcTI4pw2VgjDFFnR0o3YURi+SmzakvDmSzcISpTomeU1TEOyidbyBsUmU8j
+	1GzVKSzivjedsk8erNCdrbLosvHorgeJ8gDfWemdpAoen+M2hH5QNKjBOnNZKkxbgUVQv
+X-Gm-Gg: ASbGnctik9OcR6Fbkju/ZFNG+Tps6AxMmkk9yQMF7c4ltUeOKuEe+vFelZT3RlyX1/X
+	IESXRX+Xlz4BSEAT1kaEbEXCo1s61GZRZqqSLnEiGYoouglJFqskmJac+kFMA3zdZth+rnL6OlV
+	AHGLQB30m8GPq+5WHH0vFWoqsFLZGVNVJZunCtzNwTEJek/zT9h3NZd/5VR27YECCkeCYEnviUP
+	Nal5wAF6JK29ZansYZH14YVNlfogmJXsrGIZleyCDQEf0pFVIVTA1jKzTggjpD8FKe6Jbb8irkZ
+	fnL43WtyPIq/qyA4s0jTHZGxWGEIKJrawm5PAF6ILmw9wERPDiud3yMnIrkap60grjGlh30IfBb
+	Oobo=
+X-Received: by 2002:a05:620a:4148:b0:7d5:c1d9:939a with SMTP id af79cd13be357-7d5ddc689bfmr784814785a.9.1751980119811;
+        Tue, 08 Jul 2025 06:08:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjMkzcx+Tq4TsX9kndjZh7wHfMuEQIojKWDO/yYN17QbawLmZlZmFuRE1iLw+w/7zUU6OuFw==
+X-Received: by 2002:a05:620a:4148:b0:7d5:c1d9:939a with SMTP id af79cd13be357-7d5ddc689bfmr784811485a.9.1751980119240;
+        Tue, 08 Jul 2025 06:08:39 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6bb1edfsm883127366b.180.2025.07.08.06.08.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Jul 2025 06:08:38 -0700 (PDT)
+Message-ID: <fd367b55-fd20-4601-ab03-b398dcb326e7@oss.qualcomm.com>
+Date: Tue, 8 Jul 2025 15:08:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,237 +90,62 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] misc: fastrpc: Refactor domain ID to enforce
- strict mapping
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>, <quic_kuiw@quicinc.com>,
-        <ekansh.gupta@oss.qualcomm.com>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Srinivas
- Kandagatla" <srinivas.kandagatla@linaro.org>
-References: <20250702025341.1473332-1-quic_lxu5@quicinc.com>
- <20250702025341.1473332-4-quic_lxu5@quicinc.com>
- <56gevv7ripovymgclebnjdkxpfg3ppoosjxphkwqplef3hpikv@u5jua6hgxa34>
+Subject: Re: [PATCH 03/10] clk: qcom: rpm: convert from round_rate() to
+ determine_rate()
+To: Brian Masney <bmasney@redhat.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+        Bjorn Andersson <andersson@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Maxime Ripard <mripard@redhat.com>
+Cc: linux-clk@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev
+References: <20250703-clk-cocci-drop-round-rate-v1-0-3a8da898367e@redhat.com>
+ <20250703-clk-cocci-drop-round-rate-v1-3-3a8da898367e@redhat.com>
 Content-Language: en-US
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <56gevv7ripovymgclebnjdkxpfg3ppoosjxphkwqplef3hpikv@u5jua6hgxa34>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 16nFtYuwCGKDV-tjsbLbbtKNOzpFz_U5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDEwOCBTYWx0ZWRfX7SfyBHpwcpQa
- bXnLiMHs7KEA4Y1xETt17qu2CDgdZLu1QqOL/hjmT59YdT9gRdqMUzR0GkWc6PZ9j+xYy2L1dwi
- yrg0Qt7ri3WsrWSCzEa0vVL5ig+PDMrYyTNdsKw6Okg58veRFRMwz2AEr+M0s1y80H8E6FEHmRv
- +XryYOlZq4RRwggHbce/2AlAb0vemuFoxanevaAGDVykn9awuRWVkY7c6Jmvn9t03R2Wrz6wVTv
- dOhJBFZHCQWpHjliJIl4lKwCcl/tPrqc+6gW6dELIYZmj1zw1mOrkvTC+E7vaviFX9nM/+03TZ8
- 7eO74TwVDxjOpwdztm2Mz2TTA1RRYpQeH0Ha3EKjEuWq1lOjuFfxnuoARtu1WIPphuwIz1ZS65o
- TZywL5KGep1+JJcji3tMHqXSAMvNaYucoTifflrkRYuvxRGgh7T/Nv77P6/49YTeiC96P9LJ
-X-Authority-Analysis: v=2.4 cv=Rd2QC0tv c=1 sm=1 tr=0 ts=686d178c cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8
- a=COk6AnOGAAAA:8 a=oBII3UxN_x4qz-Jc6RUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 16nFtYuwCGKDV-tjsbLbbtKNOzpFz_U5
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250703-clk-cocci-drop-round-rate-v1-3-3a8da898367e@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=FrUF/3rq c=1 sm=1 tr=0 ts=686d1859 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
+ a=oBXrOfH6mq4iYN50PBoA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDEwOSBTYWx0ZWRfX4c6/Y2MOwgPo
+ 86OvpiFWHV5hnm8eMRSs66PHjb2jPwRldajMmd2R+FM05/UR/XzvC51iQBB/oQ35U2UeZKYCnr5
+ yOW6yQS2c9yZoo/UeHZMCOiOdhFbvtpZIS5+k4HxzGbVvnLGA5HLbahmEY0gWvGjkcOTvlN5q0p
+ z/3dms11mwaCjuBuioPuWqCveHGXiEJnWk5trHKgdGAJ3riRCFSA/6s2UTstUgRfpYhozCnx2gh
+ MFkgCuszkBVnBFu+MFxYlbMLJddXrpjwTPBVdZcSo5ZeUaiI8gKiNk/vlFA9pgEOGaJu1aHYre8
+ wnWPGqdgvi3IIYz9B6VMdTcvKrj2z2vy48cUNT9sbKGCmdqo76Vr0H3iastlqVhWk+JO7PhP5uA
+ wg8Yb8E47KAzkCS3v2gdjBX3CbZgBHiHj90xCgyjmjpZVjPD/z1CKD8DFk+cy4NykubAxyz/
+X-Proofpoint-GUID: 92eKMUMJvmoa6M4OB7d70lpsKg8K0vLt
+X-Proofpoint-ORIG-GUID: 92eKMUMJvmoa6M4OB7d70lpsKg8K0vLt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-08_03,2025-07-07_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ impostorscore=0 suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=796 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507080108
+ definitions=main-2507080109
 
-在 7/5/2025 12:54 AM, Dmitry Baryshkov 写道:
-> On Wed, Jul 02, 2025 at 08:23:40AM +0530, Ling Xu wrote:
->> Currently, domain ids are added for each instance, which is not scalable.
->> Strict domain IDs for domain.
+On 7/4/25 1:22 AM, Brian Masney wrote:
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
 > 
-> What does this mean?
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
 
-Currently the domain ids are added for each instance of domain,
-like we defined 3 for cdsp and 4 for cdsp1, but driver doesn't care about
-the instance id.Domain ids are strictly for a domain not each instance.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-I will change the title and commit meassage as Srinis suggested in next patch.
-
-misc: fastrpc: cleanup the domain names
-
-Currently the domain ids are added for each instance of domain, this is
-totally not scalable approach.
-
-Clean this mess and create domain ids for only domains not its
-instances.
-
-> 
->>
->> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->> ---
->>  drivers/misc/fastrpc.c      | 51 ++++++++++++++++---------------------
->>  include/uapi/misc/fastrpc.h |  2 +-
->>  2 files changed, 23 insertions(+), 30 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 378923594f02..441f5851eb97 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -27,8 +27,7 @@
->>  #define MDSP_DOMAIN_ID (1)
->>  #define SDSP_DOMAIN_ID (2)
->>  #define CDSP_DOMAIN_ID (3)
->> -#define CDSP1_DOMAIN_ID (4)
->> -#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
->> +#define FASTRPC_DOMAIN_MAX    CDSP_DOMAIN_ID
-> 
-> Unused
-will delete above line.
-> 
->>  #define FASTRPC_MAX_SESSIONS	14
->>  #define FASTRPC_MAX_VMIDS	16
->>  #define FASTRPC_ALIGN		128
->> @@ -106,8 +105,6 @@
->>  
->>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->>  
->> -static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->> -						"sdsp", "cdsp", "cdsp1" };
->>  struct fastrpc_phy_page {
->>  	u64 addr;		/* physical address */
->>  	u64 size;		/* size of contiguous region */
->> @@ -1723,7 +1720,6 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
->>  	uint32_t attribute_id = cap->attribute_id;
->>  	uint32_t *dsp_attributes;
->>  	unsigned long flags;
->> -	uint32_t domain = cap->domain;
->>  	int err;
->>  
->>  	spin_lock_irqsave(&cctx->lock, flags);
->> @@ -1741,7 +1737,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
->>  	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
->>  	if (err == DSP_UNSUPPORTED_API) {
->>  		dev_info(&cctx->rpdev->dev,
->> -			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
->> +			 "Warning: DSP capabilities not supported\n");
->>  		kfree(dsp_attributes);
->>  		return -EOPNOTSUPP;
->>  	} else if (err) {
->> @@ -1769,17 +1765,6 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
->>  		return  -EFAULT;
->>  
->>  	cap.capability = 0;
->> -	if (cap.domain >= FASTRPC_DEV_MAX) {
->> -		dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
->> -			cap.domain, err);
->> -		return -ECHRNG;
->> -	}
->> -
->> -	/* Fastrpc Capablities does not support modem domain */
->> -	if (cap.domain == MDSP_DOMAIN_ID) {
->> -		dev_err(&fl->cctx->rpdev->dev, "Error: modem not supported %d\n", err);
->> -		return -ECHRNG;
->> -	}
->>  
->>  	if (cap.attribute_id >= FASTRPC_MAX_DSP_ATTRIBUTES) {
->>  		dev_err(&fl->cctx->rpdev->dev, "Error: invalid attribute: %d, err: %d\n",
->> @@ -2255,6 +2240,20 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
->>  	return err;
->>  }
->>  
->> +static int fastrpc_get_domain_id(const char *domain)
->> +{
->> +	if (!strncmp(domain, "adsp", 4))
->> +		return ADSP_DOMAIN_ID;
->> +	else if (!strncmp(domain, "cdsp", 4))
->> +		return CDSP_DOMAIN_ID;
->> +	else if (!strncmp(domain, "mdsp", 4))
->> +		return MDSP_DOMAIN_ID;
->> +	else if (!strncmp(domain, "sdsp", 4))
->> +		return SDSP_DOMAIN_ID;
->> +
->> +	return -EINVAL;
->> +}
->> +
->>  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  {
->>  	struct device *rdev = &rpdev->dev;
->> @@ -2272,15 +2271,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  		return err;
->>  	}
->>  
->> -	for (i = 0; i < FASTRPC_DEV_MAX; i++) {
->> -		if (!strcmp(domains[i], domain)) {
->> -			domain_id = i;
->> -			break;
->> -		}
->> -	}
->> +	domain_id = fastrpc_get_domain_id(domain);
->>  
->>  	if (domain_id < 0) {
->> -		dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
->> +		dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
->>  		return -EINVAL;
->>  	}
->>  
->> @@ -2330,21 +2324,20 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  	case ADSP_DOMAIN_ID:
->>  	case MDSP_DOMAIN_ID:
->>  	case SDSP_DOMAIN_ID:
->> -		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
->> +		/* Unsigned PD offloading is only supported on CDSP */
->>  		data->unsigned_support = false;
->> -		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
->> +		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
->>  		if (err)
->>  			goto err_free_data;
->>  		break;
->>  	case CDSP_DOMAIN_ID:
->> -	case CDSP1_DOMAIN_ID:
->>  		data->unsigned_support = true;
->>  		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
->> -		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
->> +		err = fastrpc_device_register(rdev, data, true, domain);
->>  		if (err)
->>  			goto err_free_data;
->>  
->> -		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
->> +		err = fastrpc_device_register(rdev, data, false, domain);
->>  		if (err)
->>  			goto err_deregister_fdev;
->>  		break;
->> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
->> index f33d914d8f46..27b892b546f6 100644
->> --- a/include/uapi/misc/fastrpc.h
->> +++ b/include/uapi/misc/fastrpc.h
->> @@ -134,7 +134,7 @@ struct fastrpc_mem_unmap {
->>  };
->>  
->>  struct fastrpc_ioctl_capability {
->> -	__u32 domain;
->> +	__u32 domain; /* deprecated, ignored by the kernel */
-> 
-> reserved1 or unused
-thanks
-will change to _u32 unused;
-> 
->>  	__u32 attribute_id;
->>  	__u32 capability;   /* dsp capability */
->>  	__u32 reserved[4];
->> -- 
->> 2.34.1
->>
-> 
-
--- 
-Thx and BRs,
-Ling Xu
-
+Konrad
 
