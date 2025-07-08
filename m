@@ -1,83 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-64036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD13EAFCAD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 14:49:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06F21AFCADC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 14:49:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED13F4814AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 12:49:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CE0F3BCF57
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 12:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 265941EEA40;
-	Tue,  8 Jul 2025 12:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A77A2DC34C;
+	Tue,  8 Jul 2025 12:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pm/uJkZc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OvHyUo0+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F026B17A2E0;
-	Tue,  8 Jul 2025 12:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874D41E5B91
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 12:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751978961; cv=none; b=Trcn5aiepCuScCAbNyFR4xqTf4xyEV8GeMrJATbyGEyJFEBEkvRBG1F8fuCU83ovsH0bv0AKtlLFbFj97ZVKelK0W/fBU17qJULfcNR6MbDDRUQaUC9/9pyhflnQREDnC2ma26/izLwTLocUEF87fxHWl8E5vDlI+uOMtIVxIkw=
+	t=1751978980; cv=none; b=FaQmezdKrxkyUhnjAKN/bg0Z0+0XgJTFVgKICrTgL3MMaZl4LnN3OPQ8vsPckYwdk+OEgBvP1NZmuITicd/JPiVBEH3gVZGtLkDvhRKDBf3Za2UDFGHQCvpV5FMwJHTZM4eTPzLA8dgVYvmMzjhfALpzsTgrFzCfex2mMAVTYik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751978961; c=relaxed/simple;
-	bh=1FTq7reRRyN9NdkmjnF7RldFQXRezF9Nfp2asq+A3JU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=RFc1Qwm9QDrWKXB4rig862dleiu8YRzaHja1ZotMsdZu+cglfPdZNajZ0nAfyj6M+tArsIybOyWsIKZCsg4buDnUEJZVuLD0nZ8dijVIM/JNkenED4dnSPeGAvX0O+3zsbtGCJpiAEOef83qRf6MypRhi/wTvIuaNsCg1x3iSQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pm/uJkZc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDBBC4CEED;
-	Tue,  8 Jul 2025 12:49:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751978960;
-	bh=1FTq7reRRyN9NdkmjnF7RldFQXRezF9Nfp2asq+A3JU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=pm/uJkZcZ83W0pt74N10IwKUABPmHqbX+BHQJghwth80YTZ5pNQbLUsCExpj0cGBh
-	 aSctck/cMPBk+5i1JVy5gpxQnSjE9MJnbNpU1JuTaED1T5xrl4nQjIJWWpGbfh7QtM
-	 9UAqpVkjt7yE7AtAiC7/WKifmsLSldm793ohxdf/E4A6zPDaPWGPkZyM3vUPE9kNXs
-	 1hMbh3BDAV2NTgKhnX6b4u7fD1/HalJV82ioiBIO09wJybczPBR6LwIqRbPcDQefKq
-	 8cgaNTKR/h6Q/cmBMJepZOwZl7esoQYhsM10awc1puOslQMoHloLBxsok5cWCPrrQE
-	 3ihrNde+XqH6Q==
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: johan+linaro@kernel.org, mhi@lists.linux.dev, 
- Manivannan Sadhasivam <mani@kernel.org>, Slark Xiao <slark_xiao@163.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250528092232.16111-1-slark_xiao@163.com>
-References: <20250528092232.16111-1-slark_xiao@163.com>
-Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Add Foxconn T99W696
-Message-Id: <175197895780.10109.7892492341064362636.b4-ty@kernel.org>
-Date: Tue, 08 Jul 2025 18:19:17 +0530
+	s=arc-20240116; t=1751978980; c=relaxed/simple;
+	bh=4AW6PFJFfUOodYzIiSEYhLXKdLBz08KZt5fa7t3j9Ls=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cahyZXCvSqmLdIZfmmX7mTECF2Wruu9jEds/xKDBvBAahjwnvqQoWoeXFtzlznFUtuWVFc2pbwiW3s7DCnf4o+WniEwYvrJ74R2qKA5BSx+KOWCULp8bOMlRuKcEh7V/wlQj6iK02pghtE2Om5tHfBL+YVVkp4uFqc+Y2yh/oB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OvHyUo0+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AAENk032758
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 12:49:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	C8qpSE5Dp43vB7gI5CagfdGXu5JUEx9y9sp3Qv7cISc=; b=OvHyUo0+o9sR/S1y
+	n88x2gBixdRl2x7IfHx8Ve2Ufm3krpi0Z9h++eP6r6aKf+cHxIo6JLAxKWVOUzHP
+	Errn+bqQ5B39wXbkCT4RrUokbuMN9ohlEMVnwvRVOB+l31DcZ0XVxvt5OeYvwWfA
+	4pif5yRvx0IJaWnRkuc6zzNhjY/1N4BNpdGAj2+4GFYWW7oiOTdSFWaQzcSWaK0b
+	HZpjv172WbP3TFwAlKrF83x29lTWj79CbAWJhbnaL/ZEj04sZq5S0C2rWZSiWC8u
+	fWUzv07sylGJZDnxviWlWhD73Uzro0KC6FIGn7n9l0viXWPNoP8K2W1rmJbjxtqs
+	M0KvIA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psrkn9mu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 12:49:37 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7cfb7ee97c5so23914385a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 05:49:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751978976; x=1752583776;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C8qpSE5Dp43vB7gI5CagfdGXu5JUEx9y9sp3Qv7cISc=;
+        b=xNFYa3nTCCooL+FDmJunQ1I3ap2AyEb0izvqpt2YqL5EIBHvvXFskUI0Dxpc4zWe25
+         NzxGnQcVyKHskDby2Lk7tb7vjcrpdz6Eu4fMcaU+kHQkWryCy5zBDdfdsihf2wEqvddN
+         BLBJaKWeoCEgkti9zfWzLj7+py5hlAlcUIyzm3fm5lRZ3ZcW4exzLNKg/U95RIjQttc9
+         Cd5aHj9KSIbxY+q+VWXB7uwb2qP11ufAboWMZgx+qAO6UYck2+wU5Sz6cKj4+cQGjc1Q
+         hC71YOuoIzBtIUyxRJGcB+JK9BErstor/OUR1LZEVIDxrqF484qctjTCQppussvhzf8j
+         BIUw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9rttapuBA6wjRXpwLN56kmIZ1zBzhQFhFxbQVhg+62RxKEuUQ6eZBzJhZtLiPWLPaPZ6mDy3j+uq/6jm6@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW6Yi8Ot7Nh7WgNCkzMXExpe2vbyN7sKcsuWPClAalM9Vamijd
+	55kwfUqLt3IX9sR7RInOU020UN9cWfnmOokJvCFKyUA5UzLpeVdXqw10tdXGXePHUg4yPp6Rjbo
+	V0NGkz90E1xnnYs9xA/OKi6063CoWXw0fYim507mhej9U9n8lyA6XX6dO5uENrkHWu67L
+X-Gm-Gg: ASbGncsuvALddvgKmhT6NByyHtIP2DEneVYlxgVRWtDzQq/aDlDJT4xhAZIXLZ1CG5N
+	c2CswV4j7ZgCnNPc8LvbEaET3PgDtVOHS0ZZvcQ3dbU9HN9C6F3kCvaxGYP9yR6f+YBXbDcGznW
+	Q4mPCC4YuDCzSzI4hbY9FA2e7gX6tXf9hG5xLgrQ9iV3uk0B9bQhwv/RPg3yB+5orpyyWe+3fKF
+	WJgTpE3gvCWbPYnxmcVnUH0N/TeKsPHAFezbAovj2RWW/wfH9rYRFTMDjtK+yOZc4mEZsDa/9DV
+	XaesTRMyj7QqwIBvOURqty9VRW3eyGx49G58Yq7i8DpVsepwE/+CjXTWr+Z27kJ3JkOFQRORp7U
+	KK78=
+X-Received: by 2002:a05:620a:1917:b0:7c5:e283:7d0f with SMTP id af79cd13be357-7d5ddb97e46mr895461285a.8.1751978976064;
+        Tue, 08 Jul 2025 05:49:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI6CfY3miyqntHnZERAiMI/kNZtHr4A2Levt+Sm8OKvM/VpGtLtGOUwmLsoioV5Au5XaqNhA==
+X-Received: by 2002:a05:620a:1917:b0:7c5:e283:7d0f with SMTP id af79cd13be357-7d5ddb97e46mr895459885a.8.1751978975628;
+        Tue, 08 Jul 2025 05:49:35 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae40eaef0a4sm684728966b.170.2025.07.08.05.49.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Jul 2025 05:49:35 -0700 (PDT)
+Message-ID: <ffaa75f3-8b24-4e36-8632-62bcc47ed568@oss.qualcomm.com>
+Date: Tue, 8 Jul 2025 14:49:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add Milos interconnect
+ provider driver
+To: Luca Weiss <luca.weiss@fairphone.com>, Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250708-sm7635-icc-v2-0-e158dbadb29c@fairphone.com>
+ <20250708-sm7635-icc-v2-2-e158dbadb29c@fairphone.com>
+ <0a09fbc8-8835-4e94-862b-0baaea5ee251@oss.qualcomm.com>
+ <DB6OK61BL9ZS.31XB5TN5YTX62@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <DB6OK61BL9ZS.31XB5TN5YTX62@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+X-Proofpoint-ORIG-GUID: kHr9akjeY_hiNmYiEJUEDdvKGXNvwEJl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDEwNiBTYWx0ZWRfXw5BrCT78zxtB
+ WHKVEZelBgUQ6gBVo/uYDx95MM6azkx6/GUjGD2qs5ft1iSzrcfG1a65vNU+HIYo/hMVteZrzH1
+ v/7ljIo9rySdmHC9Vb/RMOKktdE7U9nEcsDLWW9ZAcWHvVe7tcOs8YkSQdL2aXbYQsvY9cUJrmm
+ /d4BRkJmDpq9fQGKyKMotoTf37dRjhkw4lu6fIpa2tl/PK5a4wyExFaov29NSV62bSo96HHI4Cy
+ ZY/DP4tRvwqtPujO7Em+kJkXi+qNvQdvCxbWva/ct3+Sw63sEcoefmXhvLobl0HVKUTtHpD+EAu
+ VrlPr8CI4kkwIagH6WuXZhM9DAPCQmqGvqO8eAk14UHLh4+ev2eW4AqtLLs1xYS4wQbd58LS8nx
+ T1vu+BG6ryfCzlrx6lA9a401bA8LnuMUNI20EuvF8bOE6Ql6CZhWEZ+9Fzlt+FPnUcSZd/Vq
+X-Proofpoint-GUID: kHr9akjeY_hiNmYiEJUEDdvKGXNvwEJl
+X-Authority-Analysis: v=2.4 cv=GtBC+l1C c=1 sm=1 tr=0 ts=686d13e1 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=6H0WHjuAAAAA:8 a=mLgVev9gNyKCqetQLd4A:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-08_03,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1015 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507080106
 
-
-On Wed, 28 May 2025 17:22:32 +0800, Slark Xiao wrote:
-> T99W696 is designed based on Qualcomm SDX61 chip which is a cost
-> down chip refer to previous SDX62/SDX65. Though we have a support
-> on SDX62/SDX65, we create a new channel config for SDX61 since
-> we add a NMEA channel support from this product.
-> For new products we are allowed to customize the subVID and
-> subPID only.
+On 7/8/25 2:42 PM, Luca Weiss wrote:
+> On Tue Jul 8, 2025 at 1:30 PM CEST, Konrad Dybcio wrote:
+>> On 7/8/25 12:20 PM, Luca Weiss wrote:
+>>> Add driver for the Qualcomm interconnect buses found in Milos based
+>>> platforms. The topology consists of several NoCs that are controlled by
+>>> a remote processor that collects the aggregated bandwidth for each
+>>> master-slave pairs.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>
+>> [...]
+>>
+>>> +static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
+>>> +};
+>>
+>> You can remove the empty bcm arrays and .(num_)bcms assignments
+>> for them
 > 
-> [...]
+> Sure!
+> 
+>>
+>> [...]
+>>
+>>> +static const struct of_device_id qnoc_of_match[] = {
+>>> +	{ .compatible = "qcom,milos-aggre1-noc", .data = &milos_aggre1_noc},
+>>> +	{ .compatible = "qcom,milos-aggre2-noc", .data = &milos_aggre2_noc},
+>>> +	{ .compatible = "qcom,milos-clk-virt", .data = &milos_clk_virt},
+>>> +	{ .compatible = "qcom,milos-cnoc-cfg", .data = &milos_cnoc_cfg},
+>>> +	{ .compatible = "qcom,milos-cnoc-main", .data = &milos_cnoc_main},
+>>> +	{ .compatible = "qcom,milos-gem-noc", .data = &milos_gem_noc},
+>>> +	{ .compatible = "qcom,milos-lpass-ag-noc", .data = &milos_lpass_ag_noc},
+>>> +	{ .compatible = "qcom,milos-mc-virt", .data = &milos_mc_virt},
+>>> +	{ .compatible = "qcom,milos-mmss-noc", .data = &milos_mmss_noc},
+>>> +	{ .compatible = "qcom,milos-nsp-noc", .data = &milos_nsp_noc},
+>>> +	{ .compatible = "qcom,milos-pcie-anoc", .data = &milos_pcie_anoc},
+>>> +	{ .compatible = "qcom,milos-system-noc", .data = &milos_system_noc},
+>>> +	{ }
+>>
+>> a space before '}' would be neat
+> 
+> There is a space :)
 
-Applied, thanks!
+Alright, before all the ones that clash with a letter ;)
 
-[1/1] bus: mhi: host: pci_generic: Add Foxconn T99W696
-      commit: 7a793ba2cc4a9ef59ab290d50cd847d314514323
+> 
+>>
+>> Konrad
+>>
+>>> +};
+>>> +MODULE_DEVICE_TABLE(of, qnoc_of_match);
+>>> +
+>>> +static struct platform_driver qnoc_driver = {
+>>> +	.probe = qcom_icc_rpmh_probe,
+>>> +	.remove = qcom_icc_rpmh_remove,
+>>> +	.driver = {
+>>> +		.name = "qnoc-milos",
+>>> +		.of_match_table = qnoc_of_match,
+>>> +		.sync_state = icc_sync_state,
+>>
+>> Are there any issues with sync_state? (hopefully not)
+> 
+> Don't think so, I don't see any sync_state pending warnings in dmesg so
+> I assume it's 'synced'? Anything I should look out for in particular?
 
-Best regards,
--- 
-Manivannan Sadhasivam <mani@kernel.org>
+Boot failures.. stemming from not describing resources for peripherals
+that use them. But if you're not seeing any, that's fabulous.
 
+> 
+> Also since it looks like I'll anyways send a v3, I've already ported the
+> QoS settings, and don't think I'm seeing any issues booting up with
+> that. So I'll include it with v3.
+
+Great, thank you
+
+Konrad
 
