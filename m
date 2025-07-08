@@ -1,186 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-64074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3AE7AFD1B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 18:39:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A229AFD233
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 18:44:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28C785835F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 16:36:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 856FA54049D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 16:40:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BF0E2E339D;
-	Tue,  8 Jul 2025 16:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 432992DC34C;
+	Tue,  8 Jul 2025 16:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MbnSnm+5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wo5L3PDA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5E62DCC02;
-	Tue,  8 Jul 2025 16:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD618F9E8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 16:41:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992607; cv=none; b=D+v5fhh9td53b0UwI+IDRBrV5ZIJW8v/0BUIwllT18AyhLrDCFFRrJXrsR4j82wIsM+HhiCrEaI2S6NHOJJ0Z1i1cFdK1uNT0y3OO9/tZi5JQpAblFCvK+KorG2F/Z5bUbl8UsCEhnGuGRjLTg0TWJ5O74gUtMzo2BHoGpNmmq8=
+	t=1751992867; cv=none; b=kK8fX7MBl2T2rumK9JCTLSv7Z/7EByrFbCPJJ/TAL0Xlll73t70/ePiVcv5XwvsLy4pmSv4EI9jtSW0S+lt3cWdqhsgKho5h9lk0iiJutbbKyji5BQRrRhzKycF3FeydI1u0H9N76fVGdsiMSGWOJ49BNDnOiCoJnj2V0Hhx40E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992607; c=relaxed/simple;
-	bh=Fq16w6yigup0/1Gx4GUeS33HgO6zOpkQLfv4O0E9MSc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cRT1kuyBkWZL3+e9Gj/f6F18BhvpxMGiiBEAf6yBN1nQ0jN3Sp4aH0WQJY3G7eXsMHP/qxB2isbS1hOThVKJlyBkIj/y8zRS428T4u8MUmH2APGoUkcheMWTnxBXmHx0xJ6dyshFMPICSNkxxENOmnLffKguVOGZexnyDHfuHgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MbnSnm+5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A70C4CEF5;
-	Tue,  8 Jul 2025 16:36:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751992606;
-	bh=Fq16w6yigup0/1Gx4GUeS33HgO6zOpkQLfv4O0E9MSc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MbnSnm+5bQHKagD8W9wVWehev94ceUmcyutF8u7DJo+b8g/pCTmw1SpODtNWmPE5G
-	 yaZEld6Ul2QWowEjc5yRk9Ovg+bCv0OdkkhdRf8sj52k5j3jRDuhewufTpyKMA9ry8
-	 qRWlHY2bwlQX5y5DnYzZBhOrN/qNUUC3D+eOFyjx1yTRf4WM5r3LvkExHkVXTi64b6
-	 7iItAUAoOhYGzangISWBGRyJ6WkGgCIxESvxRVI4w2OBcmK3z+L6YF2IMcHJkJLelW
-	 LSbiHalmsVyl63slG2oupucDQPZMQicdFbSttocAR1uRhsE94clqvocOxoKKZ0Y6w8
-	 xPIE6AHSTEw9w==
-Date: Tue, 8 Jul 2025 22:06:34 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
-	ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
-	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: Re: [PATCH v4 03/11] bus: mhi: host: Add support to read MHI
- capabilities
-Message-ID: <ttjbjmixxbzatcfthaucuy3j4hosu4azpizes6ptxjnkzsawa5@5axodfdyjff2>
-References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
- <20250609-mhi_bw_up-v4-3-3faa8fe92b05@qti.qualcomm.com>
+	s=arc-20240116; t=1751992867; c=relaxed/simple;
+	bh=oUwfhuQJI3rCG3DAr+iSLjbJAl+uDXbsV+D/ZN31zks=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VJ/F/6L/rSfxp7zb6fxHGS+NF8sKEssRDhw/L/QQ5u7QywpOdtNHIP0hmQQOhxIo+xix0v8Jdd1FMUOJiyhrqn1ZwY2CDaIq1HJpOhzqzc0N+5+zsZm4+jh4/0mhAC4aEwO8rkqCqvg5bFutstCQj4GECqKbQlgdRyReUslpv3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wo5L3PDA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AAbUA017098
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 16:41:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UKf7w5qtpfoZKrAvtc6t6RnK95VeeAC8USeqACfTOu4=; b=Wo5L3PDAPgTieNfr
+	qjMi8imoAi591T9GRi3Tv2MnsSdFFDe8v2DII0Ca6WfNPfCZ/o56cKKyG1HEr/75
+	Yk9TPiE+ZmVmMu3WVRyIiDxZjBk5HHYUEajN4YaFfTX58qGJ2iutnBCIEbKj7ykh
+	qEAF5YJUadFBGvaveMYhQ2NkHNLaQQo0jFzkkcxJ4B4iBExzAm8t0gFCWsDpznEz
+	h7ckJrIhP/W4EySvyNwuxOimlBlLgTTRdskzPGXJSXt/uOYdpYKkD4Ro8ki0tRWz
+	0yX/JdwkSFJOlGx1B7Jx4btfJJwURtMiVLVdxw76Liz/R0kxCH+JTKIAU3WS+qvZ
+	+Aaz5Q==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvtkqhv0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 16:41:04 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d0979e6263so28924485a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 09:41:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751992863; x=1752597663;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UKf7w5qtpfoZKrAvtc6t6RnK95VeeAC8USeqACfTOu4=;
+        b=N5TV/tsbQ3pURaM3deLJgXMeeofeSMKti0L0swtvx2pkXTsfIfwEy/CjPOwgIoHf2V
+         3Kn5+mSPxZa8VYstnxS8utclwLbbRuEkFl/H6qVYn9YrBiMSVbErsDtbeYz56KA/0gKD
+         za+VIPgIVmFowvZyjETzqOKbqcig51dGT7VAy7EHQcaZE1iVchDhBSoqk7VvEE+eytMA
+         2yA+BpuRJDd2T0oaoEZNwCJAyNlFsNWDxVGSPJnDRPZWS+MizUZzf8TvN3t+vXPcOMBZ
+         +Du/QyLIu0tUQJwd5OUS4zcsSs8Wa6BnCJ5yRhu+yt8j++p4OrvC7K1dSxjCdYujtOms
+         QdLg==
+X-Gm-Message-State: AOJu0YxYZ992v5s3n73zPOuxXDkx2oE70LVlIvhPjc1qZFtM1UxRldxa
+	QAlQVq2TjX0IUE1uAtIF6xaU9ms/qjR97cVywidzXnbs0pz6UAmBShH3uackE/n+YT/ZNBb2ZHO
+	5XQxD0R1WM8iTwpjh0Z1+jkkzjgC+MrpIwZuy6sPH9RQaC6WEBpJD7NdD5pTlaVjEAaZioHdnh9
+	if
+X-Gm-Gg: ASbGncv2y1NhgAy5eaUdVEYdKgrnMozl0V56wsPsP9cHqMmwcggg6OdfHj32WjDVA3y
+	4tre/kPW4TDRlIe4RG7KJ0DVn0trwnw7FWmeFfBxWp+eejL579wO5pv/+NZTNQRo5UHHFX1KMgt
+	SIyfd5kTyOZJ9IoKBnCZEXHnRmPPC01ezMcILagFhe3dPGT2FScj1EVtY0gAYL6YpRQqowfkXdg
+	YlfWc5uqaXxQeZYz3MlOYDYOir98Sz/cdztsIxfuhZuG2xlmRLh6htVQXlwg7L4xO/g5nh6kbZP
+	/MZu0pA0fZcfVvVGRPfndMs8nNh2cAzQejoNsOs/0RZyx+8hoic8pYW789MkZFzEnYdnsB2fTz8
+	8U4E=
+X-Received: by 2002:a05:620a:40ca:b0:7d3:cec3:3ff with SMTP id af79cd13be357-7d5dda100eamr831389685a.0.1751992862877;
+        Tue, 08 Jul 2025 09:41:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQxRkEb/Wae9gi4E7WPavVxS7JCL4cmOBv4z6rnMmST8IxGjfLZDNtY9CT/To3psedF6/+Nw==
+X-Received: by 2002:a05:620a:40ca:b0:7d3:cec3:3ff with SMTP id af79cd13be357-7d5dda100eamr831387785a.0.1751992862462;
+        Tue, 08 Jul 2025 09:41:02 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fca6640absm7510130a12.12.2025.07.08.09.41.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Jul 2025 09:41:01 -0700 (PDT)
+Message-ID: <c8626ba1-33aa-4fe9-926c-704f0d7910d3@oss.qualcomm.com>
+Date: Tue, 8 Jul 2025 18:41:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250609-mhi_bw_up-v4-3-3faa8fe92b05@qti.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/28] interconnect: qcom: rpmh: make nodes a
+ NULL_terminated array
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250704-rework-icc-v2-0-875fac996ef5@oss.qualcomm.com>
+ <20250704-rework-icc-v2-3-875fac996ef5@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250704-rework-icc-v2-3-875fac996ef5@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDE0MSBTYWx0ZWRfXzQgqvjYp8G85
+ cv9J8lkPiOuMrPPLDxUnaTbAlj1PACQSBwfqGZjy9IGUT7rQpUJK01wyQkQKgZ3ZmPyaNDzyaYN
+ 07PhGi/WunFSHK0c82eqwGIrxI8qbPRZ3BCeBCh0jv58yMiCpmXO6+2j08xgEiyOb84Wnz5y2Ok
+ /xLzvO05ebQL+q2rxt+3e0cabHv3L96FFUhZPcMt7NvE3IKKIbmBUqkv+a2SaEF1aZKo00qMOMd
+ NXYxk1gdzyWD1HJb7UriC8oZ6fJKjVzER6/N71SwZA2KX9olOF/dYRksc79URSwuXr4og5RW9qz
+ 2RppqiFGxFuQU8vErKW/qpam28f61raJPOkSpyoSauDZn2P+gaqAMgK82ks6MsqfxbBCVKK4fr1
+ YuG5IG50mJG8bPntHSY0Y2PtG0VkDY+K0nEpLiZoU/fP2Dj4fTqUAF281kcr1dupXiazxGI4
+X-Authority-Analysis: v=2.4 cv=Vq0jA/2n c=1 sm=1 tr=0 ts=686d4a20 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=NIC3D40qKzNtBD7CQNsA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: RswNs7h8pWEo7tuol7FpQAjr5JgrMB3c
+X-Proofpoint-GUID: RswNs7h8pWEo7tuol7FpQAjr5JgrMB3c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-08_04,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ clxscore=1015 mlxscore=0 malwarescore=0 mlxlogscore=926 impostorscore=0
+ suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507080141
 
-On Mon, Jun 09, 2025 at 04:21:24PM GMT, Krishna Chaitanya Chundru wrote:
-> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+On 7/4/25 6:35 PM, Dmitry Baryshkov wrote:
+> Having the .num_nodes as a separate struct field can provoke errors as
+> it is easy to omit it or to put an incorrect value into that field. Turn
+> .nodes into a NULL-terminated array, removing a need for a separate
+> .num_nodes field.
 > 
-> As per MHI spec v1.2,sec 6.6, MHI has capability registers which are
-> located after the ERDB array. The location of this group of registers is
-> indicated by the MISCOFF register. Each capability has a capability ID to
-> determine which functionality is supported and each capability will point
-> to the next capability supported.
-> 
-> Add a basic function to read those capabilities offsets.
-> 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  drivers/bus/mhi/common.h    | 13 +++++++++++++
->  drivers/bus/mhi/host/init.c | 34 ++++++++++++++++++++++++++++++++++
->  2 files changed, 47 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> index dda340aaed95a5573a2ec776ca712e11a1ed0b52..58f27c6ba63e3e6fa28ca48d6d1065684ed6e1dd 100644
-> --- a/drivers/bus/mhi/common.h
-> +++ b/drivers/bus/mhi/common.h
-> @@ -16,6 +16,7 @@
->  #define MHICFG				0x10
->  #define CHDBOFF				0x18
->  #define ERDBOFF				0x20
-> +#define MISCOFF				0x24
->  #define BHIOFF				0x28
->  #define BHIEOFF				0x2c
->  #define DEBUGOFF			0x30
-> @@ -113,6 +114,9 @@
->  #define MHISTATUS_MHISTATE_MASK		GENMASK(15, 8)
->  #define MHISTATUS_SYSERR_MASK		BIT(2)
->  #define MHISTATUS_READY_MASK		BIT(0)
-> +#define MISC_CAP_MASK			GENMASK(31, 0)
-> +#define CAP_CAPID_MASK			GENMASK(31, 24)
-> +#define CAP_NEXT_CAP_MASK		GENMASK(23, 12)
->  
->  /* Command Ring Element macros */
->  /* No operation command */
-> @@ -204,6 +208,15 @@
->  #define MHI_RSCTRE_DATA_DWORD1		cpu_to_le32(FIELD_PREP(GENMASK(23, 16), \
->  							       MHI_PKT_TYPE_COALESCING))
->  
-> +enum mhi_capability_type {
-> +	MHI_CAP_ID_INTX = 0x1,
-> +	MHI_CAP_ID_TIME_SYNC = 0x2,
-> +	MHI_CAP_ID_BW_SCALE = 0x3,
-> +	MHI_CAP_ID_TSC_TIME_SYNC = 0x4,
-> +	MHI_CAP_ID_MAX_TRB_LEN = 0x5,
-> +	MHI_CAP_ID_MAX,
-> +};
-> +
->  enum mhi_pkt_type {
->  	MHI_PKT_TYPE_INVALID = 0x0,
->  	MHI_PKT_TYPE_NOOP_CMD = 0x1,
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 13e7a55f54ff45b83b3f18b97e2cdd83d4836fe3..9102ce13a2059f599b46d25ef631f643142642be 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -467,6 +467,40 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
->  	return ret;
->  }
->  
-> +static int mhi_find_capability(struct mhi_controller *mhi_cntrl, u32 capability, u32 *offset)
-> +{
-> +	u32 val, cur_cap, next_offset;
-> +	int ret;
-> +
-> +	/* Get the first supported capability offset */
-> +	ret = mhi_read_reg_field(mhi_cntrl, mhi_cntrl->regs, MISCOFF, MISC_CAP_MASK, offset);
-> +	if (ret)
-> +		return ret;
-> +
-> +	*offset = (__force u32)le32_to_cpu(*offset);
 
-Why do you need __force attribute? What does it suppress? Is it because the
-pointer is not le32?
+I'm not totally sure.. failing to NULL-terminate is as easy to overlook
+as failing to add .num_nodes
 
-- Mani
+At the end of the day, potayto/potato, even the memory footprint doesn't
+change.. But if you insist, please make sure that the mass-update didn't
+miss anything, so someone in 2 years doesn't decide that actually counting
+the items is a better idea instead.
 
-> +	do {
-> +		if (*offset >= mhi_cntrl->reg_len)
-> +			return -ENXIO;
-> +
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, *offset, &val);
-> +		if (ret)
-> +			return ret;
-> +
-> +		val = (__force u32)le32_to_cpu(val);
-> +		cur_cap = FIELD_GET(CAP_CAPID_MASK, val);
-> +		next_offset = FIELD_GET(CAP_NEXT_CAP_MASK, val);
-> +		if (cur_cap >= MHI_CAP_ID_MAX)
-> +			return -ENXIO;
-> +
-> +		if (cur_cap == capability)
-> +			return 0;
-> +
-> +		*offset = next_offset;
-> +	} while (next_offset);
-> +
-> +	return -ENXIO;
-> +}
-> +
->  int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  {
->  	u32 val;
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
