@@ -1,144 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-64020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB3FDAFC933
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 13:11:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F603AFC948
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 13:14:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E520956198F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 11:11:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40C0F5629DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 11:14:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E21E2D9787;
-	Tue,  8 Jul 2025 11:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E8E62D8764;
+	Tue,  8 Jul 2025 11:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Kvsk5ygc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PPsjkJaR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43EE219A6B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 11:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6231378F59;
+	Tue,  8 Jul 2025 11:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751973072; cv=none; b=J7iosYKebi5I4KLOGfyylCGSBaRaOUXG0hXcUHb1EjfSQGjH8eAwtBu8cQo6yzsv8P3lfXWBPlKgz6ZuJlnAqeipS5nz2KbDJvWmtKOSkiFx+SRPUZjuaAr8GaUjlGsj9C788hBxp5uRJhHDg/edG+vKpaAyo4j6Ut9O/FLiHNc=
+	t=1751973233; cv=none; b=TrPbMjDBQomtzWJB4tKOSzKEX3NmjZNEcshUCTRsHNfSo6U3qmFDxMlmdCzlH36fw2l0QZIis8wf3W/aoyss3l5eHpHs/AcI3IdEIDQnpB/PAw7XzpGXun77qHr8XnA0chqCBD8RID+1WaUbtWI09ku3eqSrgkPdwnkK2pFRgvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751973072; c=relaxed/simple;
-	bh=uBITef0LLUWU1/Zarh1ggIbbNfjwqfPSV4C8QCz3YwA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jB3vBYvYagXbOqjZEWIzuYFOqYHyTf2Kxf9UYmFt5ETwgQsfyOHY81lXgUC+eCp6LNX8OpuVY+ZUXbfy0TMGNjXqKFKhnm//8iItVmEkSBNFPK9GhLMVMoqVka5Mc6Oj8/VSzcRKqbU4anTCSJPIuSihyRkU4qEGUM48dTacfkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Kvsk5ygc; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AAONG003435
-	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Jul 2025 11:11:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5lROYxN8HV9QfliUbHs8x/x9pgDZeMnRqOSq4a3lsV4=; b=Kvsk5ygcnt9/akyu
-	FMofRbZVBpsZkckiqXO+c5N+mDYmwMDXAUXXppIRld+q9cuk+Y78ZnQQ1ifUzFfB
-	nx5m2n0Jw/nSFah1+9GEP5nbJGwSOLA6BQ+DTgySr89IYmde81sxZKPilGVsbCGF
-	VYXT8xraDsASOfmasSqJQnva3bHCnU71rSbQ/LCUU8X/CGr7C1kPDoqAj4Y6QjrU
-	uWom8eFBD+CJTJZyOi0NQ43paTQs/kJgwciafNjwCbEAYfxhzudXpbrFHtt6Q6YH
-	fzMiUcjuRZ9TxCKRY78uPYdu1MiJzXmyj5U9cPM60cfMKF0F5DdGA0MBIIUqZHb1
-	vlGdyw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvefcwej-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 11:11:08 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d09a3b806aso36611485a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 04:11:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751973067; x=1752577867;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5lROYxN8HV9QfliUbHs8x/x9pgDZeMnRqOSq4a3lsV4=;
-        b=l1W5o0VPylsbQBlmbO7YP5A9Ds899q4/8bbmpPaQ1lN8RXcyhGDAXLodmGAEuFIu5o
-         ZeOjpS6rnHiOE+5UyOC+FlESLB9om0aaFfBZNbyWNiG2wjZ8ogbJ/k26btHfJTpJ/Xho
-         3gURDkowc+8hHcM/ie1TfP6JCRK6o0XRk4tfZOLe90CE5UK5c3CTfslSsC9S05Yq8CoI
-         /BhhQ6/uGMgQ5ONLlKL3gWDjls+aPP4ihmny4QO/CZM9ogx5U2o4bzNaI7dIEL31o0Iu
-         pmAcH1LKq2rbIYqRXobwtk9LbTSePw1YCU2RXZFw71kII/lX2Et2GV95d3mUg0lkQFH1
-         oC9w==
-X-Forwarded-Encrypted: i=1; AJvYcCUBdelvZVM10jRzxKqiDMxgqtPIdGqSroLjxA/3fTaU1xDC2kY95i12LNAAHmjNoRAXwtMYUrQ2+AwZK3dL@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBCGee+x76GATWlbGsMJPgifrmWESb8GgyVWGNbccVVfYdKvSS
-	X942ephzVc2HLNFP7oubXFZ3fEDQ8vddeNCCR8vDjwQhHqNLcMQEeCwQ4QKcrF1cR7b8capoSLr
-	sHbTfHcxkqP7ybaGxVrsRNpt8xyPN9sqSDqailPfOZPnVgmHgWgJk0NqxfLY8I/P+ds/1
-X-Gm-Gg: ASbGncvl9aEdDN/AzQlJSm4x9uI6B5gvlv41oUVcPtzd79tBsxe0K3yh8CTKKl4Vyj2
-	WCzK+fGExQtmt45lSO91JR6jXK0gOjGNxHEDLryXKhmWzrYCsgBwSeU5Y/5JPpHhrdvieGrcsNS
-	DRNkU5We4TMojsMhPcdq9isJEPcklaznZKkJffIQfdBpig2MGJs5NntHQW535kgkLq9G9x9igkf
-	HA9rvfqzRxiDbZ8OLD/LvM4E64qVCQxx+qU9sqJ0v5cEXqaw0NIBx5XxOMBkBnOTKwzimSidPyP
-	GRuPdmYJbePWot7d8FB8xI/f4UzFZMItqLV423rf+VMhisZI+lo2HXYB1fhkSsrIpwtn6v6DLVB
-	+38s=
-X-Received: by 2002:a05:620a:2901:b0:7d0:a01f:fb88 with SMTP id af79cd13be357-7d5ddb60e8dmr794914985a.3.1751973067337;
-        Tue, 08 Jul 2025 04:11:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuD4l7AycjpL00d8RxKHZehgSiLvdJXlcj5pe/WMgV1DkSD/H3bFiAzsi8MVn+uWHE7oP1KQ==
-X-Received: by 2002:a05:620a:2901:b0:7d0:a01f:fb88 with SMTP id af79cd13be357-7d5ddb60e8dmr794913385a.3.1751973066933;
-        Tue, 08 Jul 2025 04:11:06 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fcb1fa9b8sm6943484a12.54.2025.07.08.04.11.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 04:11:06 -0700 (PDT)
-Message-ID: <c0694c1f-570e-4cf3-adee-86bddf684f53@oss.qualcomm.com>
-Date: Tue, 8 Jul 2025 13:11:04 +0200
+	s=arc-20240116; t=1751973233; c=relaxed/simple;
+	bh=0l2+kSAOtLK9DJWI/UspcnAaGXDxspqYx8T+mmX/caE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qSOkPqShqOm6mn1HoJWfLa6v8ZMvVi59LWQIL7PCVvY13uMgkgyq7T4pAfWhAmr55uLdWf7ZHVaqdrpI7PRssFWK9x6x55BbHifBNaIhz1qIFLD/OR2OkQHoBuIklaYTjxbvdV02925aqVJDLCc1wXiZk0gybIhg92kE6XSIw7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PPsjkJaR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A47AC4CEED;
+	Tue,  8 Jul 2025 11:13:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751973232;
+	bh=0l2+kSAOtLK9DJWI/UspcnAaGXDxspqYx8T+mmX/caE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PPsjkJaRTme6O0vYeb/0rQs+UprSCM9AU5zeUG64CAgWLuOtf/p8YGjJilxOHpGix
+	 PRvM5U+N/G/mlpzKRFkQhy6telClOHLrGugY8iKcTK4fzsBt0OLaTJN7dJyHyYJbWo
+	 OLyqU4iZXawm2KCwz32iEX0l2Pcn21nNdxCjz78YXnrOV9FdJlMf+chq5ZLpkoZCsV
+	 oE/7WbWEqVdO+bvz6q5Zf3C/mUY6esS5b/Ic6e0WQGnKrQdZTvN6c7TXYCMyiVDaTX
+	 /G766ucl8r6dKagc96AJ78FZaBsY0ZL7I3NLJAvxaYi45TbMpk8U2PeOiGWBI6smdr
+	 pHbyzycqACluA==
+Date: Tue, 8 Jul 2025 16:43:43 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Asutosh Das <quic_asutoshd@quicinc.com>, 
+	Bart Van Assche <bvanassche@acm.org>, Stanley Chu <stanley.chu@mediatek.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Can Guo <quic_cang@quicinc.com>, 
+	Nitin Rawat <quic_nitirawa@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH RFC/RFT 2/5] ufs: ufs-qcom: Remove inferred MCQ mappings
+Message-ID: <7cdpetp3fuxpu2eeqctc5f7kytfpvoquopfsr7ea5non6bo74z@pu45jowjzwrt>
+References: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
+ <20250704-topic-qcom_ufs_mcq_cleanup-v1-2-c70d01b3d334@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: pmic_glink: fix OF node leak
-To: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-References: <20250708085717.15922-1-johan@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250708085717.15922-1-johan@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDA5MiBTYWx0ZWRfX4GuOcgHubN7k
- ArJFyUzzqBtrUBbgcQmmBptcnxpaiBD8nPL/xNG7MLRruIUt1XYB3BSXdPrmFshZWcau3vnqaDC
- W6+qWhkE6pETa/vaUamWQMwTU16J9dfkKgZ00DKxTTM0INVhzQhdeYhX0Igt9dmNt2odG/V1dGv
- /XMmLTKNI+r7Jb7ha6FY1favggx/nkJceD1ghSi9a+6wkdDXbYRh4OJx2n320RhUzrDZeaT+k8H
- tE3f4tX78mFT8RmvAOdhFCTrCLq2yjJd7bQYY+usrvnAKvs3NSLuk6VpNtSSAvo4bZRszDjbQ/d
- rP6OeqQqXJ44f8ugPcbdwIZJTqdmzw4yM+htIGgO0yn9GgQ1sw7MPEQF/BKDzpos7rZ3ytk0mOj
- T0tQST3YHIxMwaBDg1zPhH+GUN3Hd0v//0/RODwUPvhBz3PjtZEdodDuNDIwaOhz8OrT4qV8
-X-Authority-Analysis: v=2.4 cv=dciA3WXe c=1 sm=1 tr=0 ts=686cfccc cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=KS6flrhD15DKHPIahM0A:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: wLG9RKvTXimAQVGbf-mhQpCYnZ9ltSr1
-X-Proofpoint-ORIG-GUID: wLG9RKvTXimAQVGbf-mhQpCYnZ9ltSr1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-08_03,2025-07-07_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 suspectscore=0 impostorscore=0 phishscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507080092
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250704-topic-qcom_ufs_mcq_cleanup-v1-2-c70d01b3d334@oss.qualcomm.com>
 
-On 7/8/25 10:57 AM, Johan Hovold wrote:
-> Make sure to drop the OF node reference taken when registering the
-> auxiliary devices when the devices are later released.
+On Fri, Jul 04, 2025 at 07:36:10PM GMT, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-> Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> Signed-off-by: Johan Hovold <johan@kernel.org>
+> Stop acquiring the base HCI memory region twice. Instead, because of
+> the need of getting the offset of MCQ regions from the controller base,
+> get the resource for the main region and store it separately.
+> 
+> Demand all the regions are provided in DT and don't try to make
+> guesses, circumventing the memory map provided in FDT.
+> 
+
+IIRC, during the MCQ review, Can/Asutosh justified the manual resource parsing
+due to some platforms just having a flat 'MCQ' region. So they ended up manually
+allocating the rest of the regions based on hw capabilities.
+
+So there is no such requirement to support those platforms now?
+
+- Mani
+
+> There are currently no platforms with MCQ enabled, so there is no
+> functional change.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
+>  drivers/ufs/host/ufs-qcom.c      | 58 ++++------------------------------------
+>  drivers/ufs/host/ufshcd-pltfrm.c |  4 ++-
+>  include/ufs/ufshcd.h             |  2 +-
+>  3 files changed, 9 insertions(+), 55 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 8dd9709cbdeef6ede5faa434fcb853e11950721f..67929a3e6e6242a93ed4c84cb2d2f7f10de4aa5e 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -28,12 +28,6 @@
+>  #include "ufshcd-pltfrm.h"
+>  #include "ufs-qcom.h"
+>  
+> -#define MCQ_QCFGPTR_MASK	GENMASK(7, 0)
+> -#define MCQ_QCFGPTR_UNIT	0x200
+> -#define MCQ_SQATTR_OFFSET(c) \
+> -	((((c) >> 16) & MCQ_QCFGPTR_MASK) * MCQ_QCFGPTR_UNIT)
+> -#define MCQ_QCFG_SIZE	0x40
+> -
+>  /* De-emphasis for gear-5 */
+>  #define DEEMPHASIS_3_5_dB	0x04
+>  #define NO_DEEMPHASIS		0x0
+> @@ -1899,7 +1893,6 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+>  
+>  /* Resources */
+>  static const struct ufshcd_res_info ufs_res_info[RES_MAX] = {
+> -	{.name = "std",},
+>  	{.name = "mcq",},
+>  	/* Submission Queue DAO */
+>  	{.name = "mcq_sqd",},
+> @@ -1917,7 +1910,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  {
+>  	struct platform_device *pdev = to_platform_device(hba->dev);
+>  	struct ufshcd_res_info *res;
+> -	struct resource *res_mem, *res_mcq;
+>  	int i, ret;
+>  
+>  	memcpy(hba->res, ufs_res_info, sizeof(ufs_res_info));
+> @@ -1929,12 +1921,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  							     res->name);
+>  		if (!res->resource) {
+>  			dev_info(hba->dev, "Resource %s not provided\n", res->name);
+> -			if (i == RES_UFS)
+> -				return -ENODEV;
+> -			continue;
+> -		} else if (i == RES_UFS) {
+> -			res_mem = res->resource;
+> -			res->base = hba->mmio_base;
+>  			continue;
+>  		}
+>  
+> @@ -1948,63 +1934,29 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  		}
+>  	}
+>  
+> -	/* MCQ resource provided in DT */
+>  	res = &hba->res[RES_MCQ];
+> -	/* Bail if MCQ resource is provided */
+>  	if (res->base)
+> -		goto out;
+> +		return -EINVAL;
+>  
+> -	/* Explicitly allocate MCQ resource from ufs_mem */
+> -	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
+> -	if (!res_mcq)
+> -		return -ENOMEM;
+> -
+> -	res_mcq->start = res_mem->start +
+> -			 MCQ_SQATTR_OFFSET(hba->mcq_capabilities);
+> -	res_mcq->end = res_mcq->start + hba->nr_hw_queues * MCQ_QCFG_SIZE - 1;
+> -	res_mcq->flags = res_mem->flags;
+> -	res_mcq->name = "mcq";
+> -
+> -	ret = insert_resource(&iomem_resource, res_mcq);
+> -	if (ret) {
+> -		dev_err(hba->dev, "Failed to insert MCQ resource, err=%d\n",
+> -			ret);
+> -		return ret;
+> -	}
+> -
+> -	res->base = devm_ioremap_resource(hba->dev, res_mcq);
+> -	if (IS_ERR(res->base)) {
+> -		dev_err(hba->dev, "MCQ registers mapping failed, err=%d\n",
+> -			(int)PTR_ERR(res->base));
+> -		ret = PTR_ERR(res->base);
+> -		goto ioremap_err;
+> -	}
+> -
+> -out:
+>  	hba->mcq_base = res->base;
+> +
+>  	return 0;
+> -ioremap_err:
+> -	res->base = NULL;
+> -	remove_resource(res_mcq);
+> -	return ret;
+>  }
+>  
+>  static int ufs_qcom_op_runtime_config(struct ufs_hba *hba)
+>  {
+> -	struct ufshcd_res_info *mem_res, *sqdao_res;
+> +	struct ufshcd_res_info *sqdao_res;
+>  	struct ufshcd_mcq_opr_info_t *opr;
+>  	int i;
+>  
+> -	mem_res = &hba->res[RES_UFS];
+>  	sqdao_res = &hba->res[RES_MCQ_SQD];
+> -
+> -	if (!mem_res->base || !sqdao_res->base)
+> +	if (!sqdao_res->base)
+>  		return -EINVAL;
+>  
+>  	for (i = 0; i < OPR_MAX; i++) {
+>  		opr = &hba->mcq_opr[i];
+>  		opr->offset = sqdao_res->resource->start -
+> -			      mem_res->resource->start + 0x40 * i;
+> +			      hba->hci_res->start + 0x40 * i;
+>  		opr->stride = 0x100;
+>  		opr->base = sqdao_res->base + 0x40 * i;
+>  	}
+> diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
+> index ffe5d1d2b2158882d369e4d3c902633b81378dba..0ba13ab59eafe6e5c4f8db61691628a4905eb52f 100644
+> --- a/drivers/ufs/host/ufshcd-pltfrm.c
+> +++ b/drivers/ufs/host/ufshcd-pltfrm.c
+> @@ -463,8 +463,9 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
+>  	void __iomem *mmio_base;
+>  	int irq, err;
+>  	struct device *dev = &pdev->dev;
+> +	struct resource *hci_res;
+>  
+> -	mmio_base = devm_platform_ioremap_resource(pdev, 0);
+> +	mmio_base = devm_platform_get_and_ioremap_resource(pdev, 0, &hci_res);
+>  	if (IS_ERR(mmio_base))
+>  		return PTR_ERR(mmio_base);
+>  
+> @@ -479,6 +480,7 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
+>  	}
+>  
+>  	hba->vops = vops;
+> +	hba->hci_res = hci_res;
+>  
+>  	err = ufshcd_parse_clock_info(hba);
+>  	if (err) {
+> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+> index 9b3515cee71178c96f42f757a01d975606f64c9e..28132ff759afbd3bf8977bc481da225d95fd461c 100644
+> --- a/include/ufs/ufshcd.h
+> +++ b/include/ufs/ufshcd.h
+> @@ -808,7 +808,6 @@ struct ufshcd_res_info {
+>  };
+>  
+>  enum ufshcd_res {
+> -	RES_UFS,
+>  	RES_MCQ,
+>  	RES_MCQ_SQD,
+>  	RES_MCQ_SQIS,
+> @@ -970,6 +969,7 @@ enum ufshcd_mcq_opr {
+>   */
+>  struct ufs_hba {
+>  	void __iomem *mmio_base;
+> +	struct resource *hci_res;
+>  
+>  	/* Virtual memory reference */
+>  	struct utp_transfer_cmd_desc *ucdl_base_addr;
+> 
+> -- 
+> 2.50.0
+> 
 
-Hmm.. maybe the auxdev APIs could one day do this internally
-
-in any case
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
+-- 
+மணிவண்ணன் சதாசிவம்
 
