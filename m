@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-63973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D9BFAFC46E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 09:45:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E353AAFC4A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 09:52:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3274D7A3F63
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 07:44:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 405FF174778
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 07:52:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9AB29A9D2;
-	Tue,  8 Jul 2025 07:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4D8329C323;
+	Tue,  8 Jul 2025 07:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epHZKj6f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bS0s2t8o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26C129A331;
-	Tue,  8 Jul 2025 07:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F9429B8E6;
+	Tue,  8 Jul 2025 07:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751960721; cv=none; b=D0qKtoGrTA7WBCHQrk6HfCPOPLsEEY5Dyzx9bUL4T2m3F3xZo09crUAQTTMiRnksehNImGRWd6QLuwJc29BRYTMYPZsn3lDaD63g4WAKJU163YJc8uJdXXx1SdUSFxno0cUtfJbxRhDS8jO3xBgDlIviya840dNkKdEQ5V70n/4=
+	t=1751961097; cv=none; b=KCmuAhBZkkILlFmTxQcN7grFBdhEXqM/LM9yNHk3xDqHSR4asEljXOwQToT0MdSATsAxxSRNO4YSbCfkDJtP6l6405mQhxm4eHnVlVi3O8m3je/uptYto/vlCi3wExrt6nbbl97jLM0xw91a49sdyjnC1bO1mneN5MuPrNqjWUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751960721; c=relaxed/simple;
-	bh=zZB0Wdl5LPnjvlMhwndr1kj1exZoIn1f7iY/aY14nBw=;
+	s=arc-20240116; t=1751961097; c=relaxed/simple;
+	bh=/1JtqoeEkpB6seCuYqUwyK70o3RsmdkxYde7eVx/l9E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vBIgt5a8jOcqY122e0TLBCwS5RE6tXdaXUfg+OwTKgnlqPSH3EBgI4klr3tFa1bCg1rPE8LkfimLn7LQHcl4bqFTf7e+nFn1ApFDvwfo/nc/TaaSv8J1Z/wiYw8+dKH0MSR/f7gcTmFkkmiYvIXOpNK2TAYByyVXa6UyBcDnIUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epHZKj6f; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCFBC4CEED;
-	Tue,  8 Jul 2025 07:45:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UDpy5UdQZdgaxkZfJMW3uAK/kbDw9MBeC0CKsK93SVt/wvay/mwRR1Shsfuzx/2vnFqZDpgENOsLMAyoK1QLbvXxDQC0Dwh/jKe8/JqZ8bukxtMmlWjKATXKlyjCV/TRfjpDG55FViHVTv0Zyqa94g4v9oxi5AA9N8O0UVUzFPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bS0s2t8o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCDEC4CEF7;
+	Tue,  8 Jul 2025 07:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751960721;
-	bh=zZB0Wdl5LPnjvlMhwndr1kj1exZoIn1f7iY/aY14nBw=;
+	s=k20201202; t=1751961097;
+	bh=/1JtqoeEkpB6seCuYqUwyK70o3RsmdkxYde7eVx/l9E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=epHZKj6fM2nyYfk3ynJ/En2wrEMoPQ25Wy05oYE7cDOw6+23NGXCug6msbNhY8k3U
-	 G5GS/2tZm9iADqW8aKFfIF9c2gmXBQn8uw1clmfXHBUg2lMs2/fIKhD6RGTN7pEWlj
-	 y9kFQjdB6tOoncPfJ8bAeWgxfO3rP7L4Kp4ndQlLMJKXzJU06QiVXtyH01sQ0rgPdw
-	 sh49LG5FGxrQwFfbhSigdnS9oTzlw3A7sxzNASe84zu2xypAZiSARIIX5CI/1aD2OK
-	 BHWTt6loZC5LZbUGIbMC1c4UMR3AMWgquH9iAQRforgn1UgL7w47ala6Qd+Yy8TmAW
-	 Y7BeglOel8oZg==
-Date: Tue, 8 Jul 2025 09:45:18 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] dt-bindings: arm: qcom: Split HP Omnibook X14 AI
- in SoC variants
-Message-ID: <20250708-brawny-optimal-lynx-8aab31@krzk-bin>
-References: <20250705-hp-x14-x1p-v4-0-1c351dbeaf18@oldschoolsolutions.biz>
- <20250705-hp-x14-x1p-v4-1-1c351dbeaf18@oldschoolsolutions.biz>
+	b=bS0s2t8oVX9SZ3qWJPgc0j4Vajv62nAeDN3eovHXv8GUp+MLwvy2ettYhBn5WmHyK
+	 awk5ujJzdTCIEvTbeC066VyoJJyqldpJ+ZaHZVkGc48KBpXPblQHknxj3MfiND+Z7U
+	 YwuSvX5lMcQZTg+LhfMJJo1sRRvDBiCc3d1dVKMMvLtsgok/lxl96yarhRCVZOfl9y
+	 2sth84auDyvXQzjH3YOSbWtd0kcf6DNeobbz+8E5F57Aqum4B7y8zYqtGewepcHG8P
+	 w2yQGmhV7UK8O4D9dCI1V9ZY97c8EBYfG72FgFhLpLrnRrIzo8gOdHeIPNw9oSuCd3
+	 DxDyB4iZhSEPA==
+Date: Tue, 8 Jul 2025 13:21:28 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
+	bvanassche@acm.org, avri.altman@wdc.com, ebiggers@google.com, 
+	neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+Subject: Re: [PATCH V2 1/3] scsi: ufs: ufs-qcom: Update esi_vec_mask for HW
+ major version >= 6
+Message-ID: <b7uex5sr3rr4q7bed5hh7ocriajmsiuucjrj6cuosoii4mlygn@dximocb3ao7b>
+References: <20250707210300.561-1-quic_nitirawa@quicinc.com>
+ <20250707210300.561-2-quic_nitirawa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,21 +62,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250705-hp-x14-x1p-v4-1-1c351dbeaf18@oldschoolsolutions.biz>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250707210300.561-2-quic_nitirawa@quicinc.com>
 
-On Sat, Jul 05, 2025 at 10:31:54PM +0200, Jens Glathe wrote:
-> The HP Omnibook X14 AI PC is available in fe0 (Hamoa, x1e80100) and
-> fe1 (Purwa, x1p42100) SKUs. Since they are not completely dtb-compatible,
-> split the model strings in 2 variants:
+On Tue, Jul 08, 2025 at 02:32:58AM GMT, Nitin Rawat wrote:
+> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
 > 
-> hp,omnibook-x14	compatible to qcom,x1e80100
-> hp,omnibook-x14-fe1 compatible to cqom,x1p42100
+> The MCQ feature and ESI are supported by all Qualcomm UFS controller
+> versions 6 and above.
+> 
+> Therefore, update the ESI vector mask in the UFS_MEM_CFG3 register
+> for platforms with major version number of 6 or higher.
+> 
+> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 
-I don't see split here. You are adding a new compatible for the fe1
-variant. It's fine to mention there is fe0 already, but main point of
-commit msg should express what you want to do and doing here.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-Best regards,
-Krzysztof
+- Mani
 
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 318dca7fe3d7..dfdc52333a96 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -2113,8 +2113,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+>  
+>  	retain_and_null_ptr(qi);
+>  
+> -	if (host->hw_ver.major == 6 && host->hw_ver.minor == 0 &&
+> -	    host->hw_ver.step == 0) {
+> +	if (host->hw_ver.major >= 6) {
+>  		ufshcd_rmwl(hba, ESI_VEC_MASK, FIELD_PREP(ESI_VEC_MASK, MAX_ESI_VEC - 1),
+>  			    REG_UFS_CFG3);
+>  	}
+> -- 
+> 2.48.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
