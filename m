@@ -1,79 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-64003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3AC9AFC6BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 11:09:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AF08AFC6D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 11:13:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7CF307A2105
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 09:07:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 315601BC1D68
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 09:14:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FA612BEC3B;
-	Tue,  8 Jul 2025 09:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2481E2C08B6;
+	Tue,  8 Jul 2025 09:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ycvWbITJ"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="ehqE1Nwe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB72221554
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jul 2025 09:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751965740; cv=none; b=FSCXqWgeWu0+Kq1qE28S62EZjgmuefm20Z/SX9u+VoYFfOgRg+367oMkufhClFeGNnvubVdsMeOagK2zhAoeQD1fcb8h4MmKU5JBHdqPxHr73jExLg37LNDTxtKFBPAnEcEJrjY3JrkuK0UdB2TJKuaSQVPOKhBE2axivQySOcE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751965740; c=relaxed/simple;
-	bh=Jo1RhBKvlnldDLuILOpnjCjiNkC4SVuBJ0JGqZmH2X0=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E3529B224;
+	Tue,  8 Jul 2025 09:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751966032; cv=pass; b=RtmcwNVByrWuUgaDBRRcjJwDNLTgADpngT03YdpQaImMgDJOKyDrcouX1mpoiHvZKQNH0Zr9wAcTnb5EpwNbEMS1mtQyxvOfKUEpYsadviY/WIyeqsKvrW5/tSu7W1vmucfdbv7mWlM+t67QvrOaXAwDoCXaRoTbilGYK0k6PiY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751966032; c=relaxed/simple;
+	bh=v6i8r2H7oRZrwf7IHlbE+fo33fnfHP+URyQNy3QrdU8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qa4JwEUmD3wBoe7mNCaOSeYBQvITsUze1DOKm+zpttZsXWX/KQx+nZg81aR9/KKkyClCSV3dawymQSa59B0+D+7sP05JiE6R+biazia0tkIBzMv63wlxtXiWS+W/DJbdN1ZrQxUD8xOtYavgV12K1rvaYWCgdPw4C3D9pwdy+Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ycvWbITJ; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3ab112dea41so2220002f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 02:08:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751965736; x=1752570536; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JOpMnOPGBurKned4i2lhAKJorxKo0Rv4+Jnm5nobJAA=;
-        b=ycvWbITJDhyRzV1qkQszeXiZwkYgZP5YRRWhQaVQzOjJ4PJhj23mGg5ZjyKymb7ago
-         MjGLbFcDf1p9yoaC5Ajbnr3AsKMBXMlFq0HdwWTXXBb+DUx+cSjmvo3laxtBJOGEF/Em
-         0FWNlZgAVZwbjQ2JQY7RrYtjR5ABRCPL94rbXVzu+lpksj7erPRH7/MLArojw7YCW7ax
-         RNRI9rh3bzlUl22V7vQvscv9gwrHCyHLgnQCGQzrRCnDGeDUH9e1CXiOJyjXd06SbFh2
-         kuHFDSj0gVKeLMV35xE8JPLQ9OEemxA7by2fscFkpwwC2qgDyiD7no0IKFCWujlvsZ+X
-         msbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751965736; x=1752570536;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JOpMnOPGBurKned4i2lhAKJorxKo0Rv4+Jnm5nobJAA=;
-        b=iEWw+RqNQusaa+1lzEa3CcMU8aHYy3YVKjT7oCenCmcg/Zo7RfpmSUI5OCKemSEDkq
-         eywJbM+hecvAw8DAUUcd/uyCg6bDCXQF/0PzRT5+KTkUcIp5Aw56IkzcS+OOdWgLucPR
-         tlt8D1TZMm/jSJGsVzsUD2EznlxtdRe2ta5KeXr/kYMBJ3AuAh+knVWWlcOH62Xsms36
-         KyN1ZE8ZW8hXfGyIuwh30uWTZ1do5YLubuZv+sm63Pn8MHd/46B3i5yUA8m+TB+z5lL7
-         eT94Ml2HDC2ndSD8WjNQn5/faNqbqwzO/BJp6vk6gBHQTdWAYTC4trqqThqdXDFvGKfa
-         ldyQ==
-X-Gm-Message-State: AOJu0YxCz/naPjhXoFYRO0rPl8L0rOdOxoru+rG1Juh+VCYGkrDJeLxV
-	AhWnZLI0LOADMQMBaMTu35g0X64o/nj9IpiZaITMNr0hWpc2rJ0DpXpPmQq1gzEJ9QU=
-X-Gm-Gg: ASbGncsrH2cvQxrmOXgp7y03nPNgwTbE3AGs4VPoi2U40WMQctpT40m9HzUQ804EG3k
-	kVyj+THJ+3ubTV5JQc76kOSEq+ukny6g28CQ6vedquS2Evi/y15hG2Y8IHeUZ9NmUeqbaVSplc6
-	jKgBDQn3+22m731EHA6mZAXspI0C2UnkHk2ZcQJBCBwTPNmeGINw9XhJNEZx9WiXUid3nJvA57T
-	MJn67UKGuxDCFzxOC8gvd8yK/jyAEcSzt/8VdVO5jGrlc6LhWiPA3S8LxEFOH1iIKzJe2NFC3A5
-	ibMoD/WU+p8+PKsf1SEQ68Zio3KzqHRr83TyK4ykBA+o/4o4Y1CTuYaD02BLpivuP3jazp8JTtb
-	hJllWphunI7WRvbfeWHkAqXM/LVJg
-X-Google-Smtp-Source: AGHT+IGvTL/GcwVO41AlekLodubFzqB1cL63OpGeifxbI2Eq/rm77n7oXxhL9sUJVQiFrDCDZKFekA==
-X-Received: by 2002:a5d:5888:0:b0:3a4:eecf:b8cb with SMTP id ffacd0b85a97d-3b5dde8bc33mr1924717f8f.28.1751965736267;
-        Tue, 08 Jul 2025 02:08:56 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47285c6c9sm12264025f8f.89.2025.07.08.02.08.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 02:08:55 -0700 (PDT)
-Message-ID: <bf525f1b-4365-44e8-aaa2-ccb7fd563db1@linaro.org>
-Date: Tue, 8 Jul 2025 10:08:54 +0100
+	 In-Reply-To:Content-Type; b=d4s9uQ7Z88c5uTdbXMd6VRS2itL3LEVwhxjvydyEWcQf52k4tzLL/XQz4h6h39HRyWTmh6bzF/FKyxVTstC4gzqXYHyKHLc9OM61zdLIPb2JQvz1U6fwX5O46+VT5uP6bdu04OtIbiiwk1xIWtpD8lJzgqEPwLfDs4w0h879xpw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=ehqE1Nwe; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1751965948; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=N6CJeNVkwQAUAWxjg9vjZvB9IJc2/6qSwbnYWrWja6U6NsOMQ9tVn6ZBN2XKFUEcpLzP6OAPE2VkSMEzz0Dp4WSE2PIbC08B4q5ThFCjL/LDyjwmLJ1BMl/ioU8ckiwT80c0SIpAJFY3ZRAUkpo5HTeAmd3fIbM1quP626xH8WQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1751965948; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Xr7n94OD0AhqYVDjgBhoeAD9o6h9ME6lWOaPFrEy2w0=; 
+	b=hgXQgu+VGEXmqAyeOU1kj1Oy9ff72yeYIWavXqV8R7+zlGq1EPGjHeiYlcs6bpMMVqP3A9BCoDEjfUEZsdKQDb3fthajG0MvGOpCxCPFPmOq+IeZ34fYvdO58TgjvhGmn/bNkZF7Uc2rrYk5MrW1YvdG0P4zwCBEFMUyvR09M/s=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751965948;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=Xr7n94OD0AhqYVDjgBhoeAD9o6h9ME6lWOaPFrEy2w0=;
+	b=ehqE1NweoZcvK+aTFS0SGYdfmXyBU/p/QEfGhoUwEl5J6NZiECt2l1zITAw7klQD
+	PZLGCKwF+3NBZrNTbC3wj7E5AHz1ysbRh4HGnIyOPvPhtq4r3oEGmdae2zIOUEYiYhW
+	3YzNwQdqzS986bbCVTsdVJ0HwJmhxKsqXhKXYw/o=
+Received: by mx.zohomail.com with SMTPS id 1751965945356214.43115978776154;
+	Tue, 8 Jul 2025 02:12:25 -0700 (PDT)
+Message-ID: <5c9843b5-d756-4a99-b93f-d32ed8f16e32@collabora.com>
+Date: Tue, 8 Jul 2025 14:12:11 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,379 +60,153 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/6] media: qcom: camss: Add support for TFE (Spectra
- 340)
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
- konradybcio@kernel.org, krzk+dt@kernel.org, robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
-References: <20250708083222.1020-1-loic.poulain@oss.qualcomm.com>
- <20250708083222.1020-2-loic.poulain@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
+To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+ Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Youssef Samir <quic_yabdulra@quicinc.com>,
+ Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+ Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+ Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Siddartha Mohanadoss <smohanad@codeaurora.org>,
+ Sujeev Dias <sdias@codeaurora.org>, Julia Lawall <julia.lawall@lip6.fr>,
+ John Crispin <john@phrozen.org>, Muna Sinada <quic_msinada@quicinc.com>,
+ Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+ Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Cc: kernel@collabora.com
+References: <20250630074330.253867-1-usama.anjum@collabora.com>
+ <20250630074330.253867-3-usama.anjum@collabora.com>
+ <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
+ <29ba0afa-9a1b-40f9-a174-d03902ea5d3f@collabora.com>
+ <8b9eb6f4-6f0c-458d-b1e6-a1893c35b81d@oss.qualcomm.com>
+ <a92b3d96-0c19-49c2-ad8b-ad31dec973c3@collabora.com>
+ <7b8ea9ba-02ef-4676-a4d3-d088920283c3@oss.qualcomm.com>
+ <9eba0149-290d-4010-8791-d4d8d8be3786@collabora.com>
+ <fdb9f1e7-bf8f-4018-b0ac-ac8a70d9b8ec@oss.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250708083222.1020-2-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <fdb9f1e7-bf8f-4018-b0ac-ac8a70d9b8ec@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On 08/07/2025 09:32, Loic Poulain wrote:
-> Add support for TFE (Thin Front End) found in QCM2290.
+On 7/8/25 6:43 AM, Baochen Qiang wrote:
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile    |   1 +
->   .../media/platform/qcom/camss/camss-vfe-340.c | 319 ++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
->   3 files changed, 321 insertions(+)
->   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-340.c
 > 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index d26a9c24a430..719898f5d32b 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -17,6 +17,7 @@ qcom-camss-objs += \
->   		camss-vfe-4-7.o \
->   		camss-vfe-4-8.o \
->   		camss-vfe-17x.o \
-> +		camss-vfe-340.o \
->   		camss-vfe-480.o \
->   		camss-vfe-680.o \
->   		camss-vfe-780.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-> new file mode 100644
-> index 000000000000..ab91387b7894
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-> @@ -0,0 +1,319 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module 340 (TFE)
-> + *
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/delay.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +
-> +#include "camss.h"
-> +#include "camss-vfe.h"
-> +
-> +#define TFE_GLOBAL_RESET_CMD				(0x014)
-> +#define		TFE_GLOBAL_RESET_CMD_CORE	BIT(0)
-> +
-> +#define TFE_REG_UPDATE_CMD				(0x02c)
-> +
-> +#define TFE_IRQ_CMD					(0x030)
-> +#define		TFE_IRQ_CMD_CLEAR		BIT(0)
-> +#define TFE_IRQ_MASK_0					(0x034)
-> +#define		TFE_IRQ_MASK_0_RST_DONE		BIT(0)
-> +#define		TFE_IRQ_MASK_0_BUS_WR		BIT(1)
-> +#define TFE_IRQ_MASK_1					(0x038)
-> +#define TFE_IRQ_MASK_2					(0x03c)
-> +#define TFE_IRQ_CLEAR_0					(0x040)
-> +
-> +#define TFE_IRQ_STATUS_0				(0x04c)
-> +
-> +#define BUS_REG(a)					(0xa00 + (a))
-> +
-> +#define TFE_BUS_IRQ_MASK_0				BUS_REG(0x18)
-> +#define		TFE_BUS_IRQ_MASK_RUP_DONE_MASK	GENMASK(3, 0)
-> +#define		TFE_BUS_IRQ_MASK_RUP_DONE(sc)	FIELD_PREP(TFE_BUS_IRQ_MASK_RUP_DONE_MASK, BIT(sc))
-> +#define		TFE_BUS_IRQ_MASK_BUF_DONE_MASK	GENMASK(15, 8)
-> +#define		TFE_BUS_IRQ_MASK_BUF_DONE(sg)	FIELD_PREP(TFE_BUS_IRQ_MASK_BUF_DONE_MASK, BIT(sg))
-> +#define		TFE_BUS_IRQ_MASK_0_CONS_VIOL	BIT(28)
-> +#define		TFE_BUS_IRQ_MASK_0_VIOL		BIT(30)
-> +#define		TFE_BUS_IRQ_MASK_0_IMG_VIOL	BIT(31)
-> +
-> +#define TFE_BUS_IRQ_MASK_1				BUS_REG(0x1c)
-> +#define TFE_BUS_IRQ_CLEAR_0				BUS_REG(0x20)
-> +#define TFE_BUS_IRQ_STATUS_0				BUS_REG(0x28)
-> +#define TFE_BUS_IRQ_CMD					BUS_REG(0x30)
-> +#define		TFE_BUS_IRQ_CMD_CLEAR		BIT(0)
-> +
-> +#define TFE_BUS_STATUS_CLEAR				BUS_REG(0x60)
-> +#define TFE_BUS_VIOLATION_STATUS			BUS_REG(0x64)
-> +#define TFE_BUS_OVERFLOW_STATUS				BUS_REG(0x68)
-> +#define TFE_BUS_IMAGE_SZ_VIOLATION_STATUS		BUS_REG(0x70)
-> +
-> +#define TFE_BUS_CLIENT_CFG(c)				BUS_REG(0x200 + (c) * 0x100)
-> +#define		TFE_BUS_CLIENT_CFG_EN		BIT(0)
-> +#define		TFE_BUS_CLIENT_CFG_MODE_FRAME	BIT(16)
-> +#define TFE_BUS_IMAGE_ADDR(c)				BUS_REG(0x204 + (c) * 0x100)
-> +#define TFE_BUS_FRAME_INCR(c)				BUS_REG(0x208 + (c) * 0x100)
-> +#define TFE_BUS_IMAGE_CFG_0(c)				BUS_REG(0x20c + (c) * 0x100)
-> +#define		TFE_BUS_IMAGE_CFG_0_DEFAULT	0xffff
-> +#define TFE_BUS_IMAGE_CFG_1(c)				BUS_REG(0x210 + (c) * 0x100)
-> +#define TFE_BUS_IMAGE_CFG_2(c)				BUS_REG(0x214 + (c) * 0x100)
-> +#define		TFE_BUS_IMAGE_CFG_2_DEFAULT	0xffff
-> +#define TFE_BUS_PACKER_CFG(c)				BUS_REG(0x218 + (c) * 0x100)
-> +#define		TFE_BUS_PACKER_CFG_FMT_PLAIN64	0xa
-> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_0(c)			BUS_REG(0x230 + (c) * 0x100)
-> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_1(c)			BUS_REG(0x234 + (c) * 0x100)
-> +#define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
-> +#define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
-> +
-> +/*
-> + * TODO: differentiate the port id based on requested type of RDI, BHIST etc
-> + *
-> + * TFE write master IDs (clients)
-> + *
-> + * BAYER		0
-> + * IDEAL_RAW		1
-> + * STATS_TINTLESS_BG	2
-> + * STATS_BHIST		3
-> + * STATS_AWB_BG		4
-> + * STATS_AEC_BG		5
-> + * STATS_BAF		6
-> + * RDI0			7
-> + * RDI1			8
-> + * RDI2			9
-> + */
-> +#define RDI_WM(n)		(7 + (n))
-> +#define TFE_WM_NUM		10
-> +
-> +enum tfe_iface {
-> +	TFE_IFACE_PIX,
-> +	TFE_IFACE_RDI0,
-> +	TFE_IFACE_RDI1,
-> +	TFE_IFACE_RDI2,
-> +	TFE_IFACE_NUM
-> +};
-> +
-> +enum tfe_subgroups {
-> +	TFE_SUBGROUP_BAYER,
-> +	TFE_SUBGROUP_IDEAL_RAW,
-> +	TFE_SUBGROUP_HDR,
-> +	TFE_SUBGROUP_BG,
-> +	TFE_SUBGROUP_BAF,
-> +	TFE_SUBGROUP_RDI0,
-> +	TFE_SUBGROUP_RDI1,
-> +	TFE_SUBGROUP_RDI2,
-> +	TFE_SUBGROUP_NUM
-> +};
-> +
-> +enum tfe_iface tfe_line_iface_map[VFE_LINE_NUM_MAX] = {
-> +	[VFE_LINE_RDI0] = TFE_IFACE_RDI0,
-> +	[VFE_LINE_RDI1] = TFE_IFACE_RDI1,
-> +	[VFE_LINE_RDI2] = TFE_IFACE_RDI2,
-> +	[VFE_LINE_PIX] = TFE_IFACE_PIX,
-> +};
-> +
-> +enum vfe_line_id tfe_subgroup_line_map[TFE_SUBGROUP_NUM] = {
-> +	[TFE_SUBGROUP_BAYER] = VFE_LINE_PIX,
-> +	[TFE_SUBGROUP_IDEAL_RAW] = VFE_LINE_PIX,
-> +	[TFE_SUBGROUP_HDR] = VFE_LINE_PIX,
-> +	[TFE_SUBGROUP_BG] = VFE_LINE_PIX,
-> +	[TFE_SUBGROUP_BAF] = VFE_LINE_PIX,
-> +	[TFE_SUBGROUP_RDI0] = VFE_LINE_RDI0,
-> +	[TFE_SUBGROUP_RDI1] = VFE_LINE_RDI1,
-> +	[TFE_SUBGROUP_RDI2] = VFE_LINE_RDI2,
-> +};
-> +
-> +static inline enum tfe_iface  __line_to_iface(enum vfe_line_id line_id)
-> +{
-> +	if (line_id <= VFE_LINE_NONE || line_id >= VFE_LINE_NUM_MAX) {
-> +		pr_warn("VFE: Invalid line %d\n", line_id);
-> +		return TFE_IFACE_RDI0;
-> +	}
-> +
-> +	return tfe_line_iface_map[line_id];
-> +}
-> +
-> +static inline enum vfe_line_id __iface_to_line(unsigned int iface)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < VFE_LINE_NUM_MAX; i++) {
-> +		if (tfe_line_iface_map[i] == iface)
-> +			return i;
-> +	}
-> +
-> +	return VFE_LINE_NONE;
-> +}
-> +
-> +static inline enum vfe_line_id __subgroup_to_line(enum tfe_subgroups sg)
-> +{
-> +	if (sg >= TFE_SUBGROUP_NUM)
-> +		return VFE_LINE_NONE;
-> +
-> +	return tfe_subgroup_line_map[sg];
-> +}
-> +
-> +static void vfe_global_reset(struct vfe_device *vfe)
-> +{
-> +	writel(TFE_IRQ_MASK_0_RST_DONE, vfe->base + TFE_IRQ_MASK_0);
-> +	writel(TFE_GLOBAL_RESET_CMD_CORE, vfe->base + TFE_GLOBAL_RESET_CMD);
-> +}
-> +
-> +static irqreturn_t vfe_isr(int irq, void *dev)
-> +{
-> +	struct vfe_device *vfe = dev;
-> +	u32 status;
-> +	int i;
-> +
-> +	status = readl_relaxed(vfe->base + TFE_IRQ_STATUS_0);
-> +	writel_relaxed(status, vfe->base + TFE_IRQ_CLEAR_0);
-> +	writel_relaxed(TFE_IRQ_CMD_CLEAR, vfe->base + TFE_IRQ_CMD);
-> +
-> +	if (status & TFE_IRQ_MASK_0_RST_DONE) {
-> +		dev_dbg(vfe->camss->dev, "VFE%u: Reset done!", vfe->id);
-> +		vfe_isr_reset_ack(vfe);
-> +	}
-> +
-> +	if (status & TFE_IRQ_MASK_0_BUS_WR) {
-> +		u32 bus_status = readl_relaxed(vfe->base + TFE_BUS_IRQ_STATUS_0);
-> +
-> +		writel_relaxed(bus_status, vfe->base + TFE_BUS_IRQ_CLEAR_0);
-> +		writel_relaxed(TFE_BUS_IRQ_CMD_CLEAR, vfe->base + TFE_BUS_IRQ_CMD);
-> +
-> +		for (i = 0; i < TFE_IFACE_NUM; i++) {
-> +			if (bus_status & TFE_BUS_IRQ_MASK_RUP_DONE(i))
-> +				vfe->res->hw_ops->reg_update_clear(vfe, __iface_to_line(i));
-> +		}
-> +
-> +		for (i = 0; i < TFE_SUBGROUP_NUM; i++) {
-> +			if (bus_status & TFE_BUS_IRQ_MASK_BUF_DONE(i))
-> +				vfe_buf_done(vfe, __subgroup_to_line(i));
-> +		}
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_CONS_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Bad config violation",
-> +					    vfe->id);
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Input data violation",
-> +					    vfe->id);
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_IMG_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Image size violation",
-> +					    vfe->id);
-> +	}
-> +
-> +	status = readl_relaxed(vfe->base + TFE_BUS_OVERFLOW_STATUS);
-> +	if (status) {
-> +		writel_relaxed(status, vfe->base + TFE_BUS_STATUS_CLEAR);
-> +		for (i = 0; i < TFE_WM_NUM; i++) {
-> +			if (status & BIT(i))
-> +				dev_err_ratelimited(vfe->camss->dev,
-> +						    "VFE%u: bus overflow for wm %u\n",
-> +						    vfe->id, i);
-> +		}
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int vfe_halt(struct vfe_device *vfe)
-> +{
-> +	/* rely on vfe_disable_output() to stop the VFE */
-> +	return 0;
-> +}
-> +
-> +static void vfe_enable_irq(struct vfe_device *vfe)
-> +{
-> +	writel(TFE_IRQ_MASK_0_RST_DONE | TFE_IRQ_MASK_0_BUS_WR,
-> +	       vfe->base + TFE_IRQ_MASK_0);
-> +	writel(TFE_BUS_IRQ_MASK_RUP_DONE_MASK | TFE_BUS_IRQ_MASK_BUF_DONE_MASK |
-> +	       TFE_BUS_IRQ_MASK_0_CONS_VIOL | TFE_BUS_IRQ_MASK_0_VIOL |
-> +	       TFE_BUS_IRQ_MASK_0_IMG_VIOL, vfe->base + TFE_BUS_IRQ_MASK_0);
-> +}
-> +
-> +static void vfe_wm_update(struct vfe_device *vfe, u8 rdi, u32 addr,
-> +			  struct vfe_line *line)
-> +{
-> +	u8 wm = RDI_WM(rdi);
-> +
-> +	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(wm));
-> +}
-> +
-> +static void vfe_wm_start(struct vfe_device *vfe, u8 rdi, struct vfe_line *line)
-> +{
-> +	struct v4l2_pix_format_mplane *pix = &line->video_out.active_fmt.fmt.pix_mp;
-> +	u32 stride = pix->plane_fmt[0].bytesperline;
-> +	u8 wm = RDI_WM(rdi);
-> +
-> +	/* Configuration for plain RDI frames */
-> +	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(wm));
-> +	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(wm));
-> +	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(wm));
-> +	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(wm));
-> +	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(wm));
-> +
-> +	/* No dropped frames, one irq per frame */
-> +	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(wm));
-> +	writel_relaxed(1, vfe->base + TFE_BUS_FRAMEDROP_CFG_1(wm));
-> +	writel_relaxed(0, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_0(wm));
-> +	writel_relaxed(1, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_1(wm));
-> +
-> +	vfe_enable_irq(vfe);
-> +
-> +	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
-> +	       vfe->base + TFE_BUS_CLIENT_CFG(wm));
-> +
-> +	dev_dbg(vfe->camss->dev, "VFE%u: Started RDI%u width %u height %u stride %u\n",
-> +		vfe->id, rdi, pix->width, pix->height, stride);
-> +}
-> +
-> +static void vfe_wm_stop(struct vfe_device *vfe, u8 rdi)
-> +{
-> +	u8 wm = RDI_WM(rdi);
-> +
-> +	writel(0, vfe->base + TFE_BUS_CLIENT_CFG(wm));
-> +
-> +	dev_dbg(vfe->camss->dev, "VFE%u: Stopped RDI%u\n", vfe->id, rdi);
-> +}
-> +
-> +static const struct camss_video_ops vfe_video_ops_520 = {
-> +	.queue_buffer = vfe_queue_buffer_v2,
-> +	.flush_buffers = vfe_flush_buffers,
-> +};
-> +
-> +static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
-> +{
-> +	vfe->video_ops = vfe_video_ops_520;
-> +}
-> +
-> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	vfe->reg_update |= BIT(__line_to_iface(line_id));
-> +	writel_relaxed(vfe->reg_update, vfe->base + TFE_REG_UPDATE_CMD);
-> +}
-> +
-> +static void vfe_reg_update_clear(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	vfe->reg_update &= ~BIT(__line_to_iface(line_id));
-> +}
-> +
-> +const struct vfe_hw_ops vfe_ops_340 = {
-> +	.global_reset = vfe_global_reset,
-> +	.hw_version = vfe_hw_version,
-> +	.isr = vfe_isr,
-> +	.pm_domain_off = vfe_pm_domain_off,
-> +	.pm_domain_on = vfe_pm_domain_on,
-> +	.subdev_init = vfe_subdev_init,
-> +	.vfe_disable = vfe_disable,
-> +	.vfe_enable = vfe_enable_v2,
-> +	.vfe_halt = vfe_halt,
-> +	.vfe_wm_start = vfe_wm_start,
-> +	.vfe_wm_stop = vfe_wm_stop,
-> +	.vfe_buf_done = vfe_buf_done,
-> +	.vfe_wm_update = vfe_wm_update,
-> +	.reg_update = vfe_reg_update,
-> +	.reg_update_clear = vfe_reg_update_clear,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index a23f666be753..9b138849caca 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -242,6 +242,7 @@ extern const struct vfe_hw_ops vfe_ops_4_1;
->   extern const struct vfe_hw_ops vfe_ops_4_7;
->   extern const struct vfe_hw_ops vfe_ops_4_8;
->   extern const struct vfe_hw_ops vfe_ops_170;
-> +extern const struct vfe_hw_ops vfe_ops_340;
->   extern const struct vfe_hw_ops vfe_ops_480;
->   extern const struct vfe_hw_ops vfe_ops_680;
->   extern const struct vfe_hw_ops vfe_ops_780;
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> On 7/7/2025 9:11 PM, Muhammad Usama Anjum wrote:
+>>>>>>>> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>>> index 4488e4cdc5e9e..bc4930fe6a367 100644
+>>>>>>>> --- a/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>>> +++ b/drivers/net/wireless/ath/ath11k/core.c
+>>>>>>>> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+>>>>>>>>  	mutex_unlock(&ab->core_lock);
+>>>>>>>>  
+>>>>>>>>  	ath11k_dp_free(ab);
+>>>>>>>> -	ath11k_hal_srng_deinit(ab);
+>>>>>>>>  
+>>>>>>>>  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
+>>>>>>>>  
+>>>>>>>> -	ret = ath11k_hal_srng_init(ab);
+>>>>>>>> -	if (ret)
+>>>>>>>> -		return ret;
+>>>>>>>> -
+>>>>>>> while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
+>>>>>>> _deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
+>>>>>> Why do is it being done in the resume handler? Shouldn't those parameters be cleaned up
+>>>>>> in resume handler? So when device wakes up, its state is already correct.
+>>>>>>
+>>>>> Hmm... not quite understand your question. Can you elaborate?
+>>>> I'm trying to understand the possibility of cleanup of hal in suspend handler. For example:
+>>>> * The driver has been loaded and has been working fine.
+>>>> * The user called suspend. So all devices would be suspended.
+>>>> * In suspend handler of the ath11k, we should do the necessary cleanups of the states
+>>>>   like hal.
+>>>> * When the device would resume after long time, the hal would have the correct state
+>>>>   already. So we'll not need to deinit and init again.
+>>> The hal cleanup is not only needed by suspend/resume, but also a step of reset/recover
+>>> process. So If we are moving the cleanup to suspend handler, similar stuff needs to be
+>>> done for reset/recover as well.
+>> It makes sense.
+>>
+>> So clearing the hal structure completely other than ab->hal.srn_config doesn't seem
+>> right. I've also tested it and it crashes the whole system.
+>>
+>> On contrary, with only the current patch applied, there is no abnormality.
+>>
+>> num_shadow_reg_configured and avail_blk_resource are non-zero. If I make them 0,
+>> driver still keeps on working.
+>>
+>> 	ab->hal.num_shadow_reg_configured = 0;
+>> 	ab->hal.avail_blk_resource = 0;
+>> 	ab->hal.current_blk_index = 0;
+>>
+>> As you have suggested setting these 3 to zero, is there any other variable in hal
+>> structure which should be set to zero?
+> 
+> IMO srng_config, rdp, wrp and srng_key may keep unchanged through suspend/reset, all other
+> fields should be cleared/reinitialized.
+
+memseting srng_list and shadow_reg_addr causes crashes. Please can you confirm why do you
+think those should be memset. Here is WIP patch:
+
+
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -2213,14 +2213,10 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ 	mutex_unlock(&ab->core_lock);
+ 
+ 	ath11k_dp_free(ab);
+-	ath11k_hal_srng_deinit(ab);
++	ath11k_hal_srng_clear(ab);
+ 
+ 	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
+ 
+-	ret = ath11k_hal_srng_init(ab);
+-	if (ret)
+-		return ret;
+-
+ 	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
+ 
+ 	ret = ath11k_core_qmi_firmware_ready(ab);
+diff --git a/drivers/net/wireless/ath/ath11k/hal.c b/drivers/net/wireless/ath/ath11k/hal.c
+index b32de563d453a..d4be040acf2c8 100644
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1359,6 +1359,19 @@ void ath11k_hal_srng_deinit(struct ath11k_base *ab)
+ }
+ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
+ 
++void ath11k_hal_srng_clear(struct ath11k_base *ab)
++{
++// --> both of these memset causes crashes
++//	memset(ab->hal.srng_list, 0,
++//	       sizeof(ab->hal.srng_list) * HAL_SRNG_RING_ID_MAX);
++//	memset(ab->hal.shadow_reg_addr, 0,
++//	       sizeof(ab->hal.shadow_reg_addr) * HAL_SHADOW_NUM_REGS);
++	ab->hal.avail_blk_resource = 0;
++	ab->hal.current_blk_index = 0;
++	ab->hal.num_shadow_reg_configured = 0;
++}
++EXPORT_SYMBOL(ath11k_hal_srng_clear);
++
+ void ath11k_hal_dump_srng_stats(struct ath11k_base *ab)
+ {
+ 	struct hal_srng *srng;
+diff --git a/drivers/net/wireless/ath/ath11k/hal.h b/drivers/net/wireless/ath/ath11k/hal.h
+index 601542410c752..839095af9267e 100644
+--- a/drivers/net/wireless/ath/ath11k/hal.h
++++ b/drivers/net/wireless/ath/ath11k/hal.h
+@@ -965,6 +965,7 @@ int ath11k_hal_srng_setup(struct ath11k_base *ab, enum hal_ring_type type,
+ 			  struct hal_srng_params *params);
+ int ath11k_hal_srng_init(struct ath11k_base *ath11k);
+ void ath11k_hal_srng_deinit(struct ath11k_base *ath11k);
++void ath11k_hal_srng_clear(struct ath11k_base *ab);
+ void ath11k_hal_dump_srng_stats(struct ath11k_base *ab);
+ void ath11k_hal_srng_get_shadow_config(struct ath11k_base *ab,
+ 				       u32 **cfg, u32 *len);
+
+
 
