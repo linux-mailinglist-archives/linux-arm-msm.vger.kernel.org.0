@@ -1,58 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-63980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F4A7AFC4F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:03:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 94692AFC503
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 10:06:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C7B8481B47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:02:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 782AE3B8866
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jul 2025 08:05:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1F7D29A9FE;
-	Tue,  8 Jul 2025 08:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D32629B789;
+	Tue,  8 Jul 2025 08:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WSe+psrK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/M7ElAp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863B9220F38;
-	Tue,  8 Jul 2025 08:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5689410A1F;
+	Tue,  8 Jul 2025 08:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751961799; cv=none; b=f2TPcOIkKfZRgY9aQKjT7oqLq7dAxeCewqQMFdLS7rwJHaLHKKa38Mk4TPR8qIOicem3MY70qcxSGBlXrJ06Dz7fa5jeS/9T9Dc1/1xGO5ZPCCsl2oSe9L23Hc0WeC6K/6JO5rlrDIRe9MzIHRMQvDaRbsZK+dJj4F23JfO+W9k=
+	t=1751961955; cv=none; b=ZgKvyCgBFCYnKFa/HgXr260zW1ZVHWbrFI1tnoW9ks/1s0OkTnqFwwPBfl9xUoclyH16Z3dPlF/OniGkLiDv2/ZxGQA4uhKHUTEtZumviVqsKGb2wMYWihF95kt8VsRAKIjCwsWEL0PrGok4bQUa8FdHzW5CQH0CDt4yT39A5o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751961799; c=relaxed/simple;
-	bh=YoPu+gg4v+uqZEJ8IS0/lxaC2n6vSBw+7yUDN79lgmw=;
+	s=arc-20240116; t=1751961955; c=relaxed/simple;
+	bh=pR61KyM+qKZt65tV9gRAUety3LIBktxJjUCMLek7X1k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bUqHifQ+Z0x6lRMj4LYvhooe3Id+rlg3m5iN6yx7uVryCnR04nzWQoTYzy6XJHGaJuRSsScotMuOKEKGwON/v/fJ1lR4CA4ZecoK/0TPM2HA8K22rQDNmo3u5mU9h6OzeHQgbuGWMBCu+0Wmt/szvGP5VGy7mP/7Rbaq5BHXwsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WSe+psrK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2038EC4CEF0;
-	Tue,  8 Jul 2025 08:03:11 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=XF/ZrWTW/LhAwuZ6BCjCPDigQGVkoJA2eCDCUY+jfUsvWMWvSqPGpxcarwhEbEA6c6H/rZ4L9yzSO+NFAihrUNn0kU6jsikQjv1RCPBacp1/G9FjtLB/0fRJ53BDMIe2Lem4x5k3vqLAoqf/s1/R7Mzf6o86/JOf37aw9AOk8W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/M7ElAp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6998FC4CEED;
+	Tue,  8 Jul 2025 08:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751961796;
-	bh=YoPu+gg4v+uqZEJ8IS0/lxaC2n6vSBw+7yUDN79lgmw=;
+	s=k20201202; t=1751961955;
+	bh=pR61KyM+qKZt65tV9gRAUety3LIBktxJjUCMLek7X1k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WSe+psrKjVQz6ejJkwLQx0dDHIhy39Ayt+Yr/ljnkLEw3rrqQPV27Too9IvU12Ebd
-	 rHCEnYPE9jGYJoME8X6FsFHEjU/7dk6FzH7YuVOR2u3EcnVZrL8qVowByVn4fWVZ2f
-	 WogPKEwOslWpOEehxlmlBH7oxoKSW6Y5jWidsTYPJ9PxIWn5VseddHANQQmywBlcAk
-	 zFwyXB8cCe/i6S+bx8WcPdzVcNdnmwHwKFhdONGM3KUP4YVHjykRl3DEyVVyi7xcfh
-	 feNWJ93s/jpqJ7QdURdo+tHId7GUqJWHCJ6G4VgWfiJlI1DCmnmxpoLfXr2p3CIjg7
-	 1hxXrwwgnVvKA==
-Date: Tue, 8 Jul 2025 13:33:07 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
-	bvanassche@acm.org, avri.altman@wdc.com, ebiggers@google.com, 
-	neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH V2 3/3] scsi: ufs: qcom: Enable QUnipro Internal Clock
- Gating
-Message-ID: <4dpwzfoh3lkhffe3jtihjyqvqe3nyncl4uvjhw2ctpeid7poa3@igim7botbr3f>
-References: <20250707210300.561-1-quic_nitirawa@quicinc.com>
- <20250707210300.561-4-quic_nitirawa@quicinc.com>
+	b=a/M7ElApJGkjJPAJa985F1T9IeZyU6zYLe2o+sxhfhsJOVEIQTBoQFPNGFxZhFi5d
+	 P4aacDA8eERYuUeUxhXX1RZLcHXYaTg57tbC6HqIhoCrTq/1td5JI+bugvXM5Re0s+
+	 BEuM9D/nGLB8h/AJ0LixKDhX0KwTeqNehCBqV7Xn/MnimZWSU1BslrpvlGG28xLFNZ
+	 ObK7qgzi2CEUZ34IcCH5qpbojRtlvum4A5ST+B07svkXnYvetS8SKBKejAWQxQ3Ht5
+	 2A5n34cbTokIKBJAllyGVivgtV25nv8YPiVn8MlMu+53YqY1bZpragoPGSbOI0QT0D
+	 pdYb1MTrg5RBA==
+Date: Tue, 8 Jul 2025 10:05:51 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Casey Connolly <casey.connolly@linaro.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] pmdomain: qcom: rpmhpd: Add Milos power domains
+Message-ID: <20250708-vengeful-bright-rhino-d8d5ea@krzk-bin>
+References: <20250707-sm7635-rpmhpd-v2-0-b4aa37acb065@fairphone.com>
+ <20250707-sm7635-rpmhpd-v2-2-b4aa37acb065@fairphone.com>
+ <06760125-4800-4068-8936-dddf27c28d17@linaro.org>
+ <DB5VDDKCAQQG.LDCMHXAZN17S@fairphone.com>
+ <fe454257-aa21-4304-868f-aefbea9963c4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,68 +64,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250707210300.561-4-quic_nitirawa@quicinc.com>
+In-Reply-To: <fe454257-aa21-4304-868f-aefbea9963c4@linaro.org>
 
-On Tue, Jul 08, 2025 at 02:33:00AM GMT, Nitin Rawat wrote:
-> Enable internal clock gating for QUnipro by setting the following
-> attributes to 1 during host controller initialization:
-> - DL_VS_CLK_CFG
-> - PA_VS_CLK_CFG_REG
-> - DME_VS_CORE_CLK_CTRL.DME_HW_CGC_EN
+On Mon, Jul 07, 2025 at 04:42:13PM +0200, Casey Connolly wrote:
+> > > > diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
+> > > > index 078323b85b5648e33dd89e08cf31bdc5ab76d553..e09552a469264f28952fc46c3ab8c125e87310da 100644
+> > > > --- a/drivers/pmdomain/qcom/rpmhpd.c
+> > > > +++ b/drivers/pmdomain/qcom/rpmhpd.c
+> > > > @@ -217,6 +217,24 @@ static struct rpmhpd gmxc = {
+> > > >    	.res_name = "gmxc.lvl",
+> > > >    };
+> > > > +/* Milos RPMH powerdomains */
+> > > 
+> > > I can't find any public docs telling us which SoC is Milos (the only
+> > > relevant result is Bjorn's email asking you to use that name instead of
+> > > SM7635). So for the sake of future generations could you reference both
+> > > names in a comment somewhere? Or even the commit message would be enough
+> > > tbh.
+> > 
+> > I don't know the full list of model numbers for Milos. I assume it's
+> > SM7635, SM6650, SM6650P, QCM6690 and QCS6690 based on the info I could
+> > fine, but such info is hard to get. So this is not a definite list that
+> > all those are actually Milos, or that this is the full list of Milos
+> > chipsets.
 > 
-> This change is necessary to support the internal clock gating mechanism
-> in Qualcomm UFS host controller.
-> 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
->  drivers/ufs/host/ufs-qcom.h |  9 +++++++++
->  2 files changed, 30 insertions(+)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index dfdc52333a96..25b5f83b049c 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -558,11 +558,32 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->   */
->  static void ufs_qcom_enable_hw_clk_gating(struct ufs_hba *hba)
->  {
-> +	int err = 0;
-> +
+> oof, I see... that complicates things. It sure would be good if this list
+> was documented in the kernel though imo.
 
-No need to init err.
+Kernel is not the place to store mappings or descriptions of some random
+company products and their names, so no.
 
-> +	/* Enable UTP internal clock gating */
->  	ufshcd_rmwl(hba, REG_UFS_CFG2_CGC_EN_ALL, REG_UFS_CFG2_CGC_EN_ALL,
->  		    REG_UFS_CFG2);
-> 
->  	/* Ensure that HW clock gating is enabled before next operations */
->  	ufshcd_readl(hba, REG_UFS_CFG2);
-> +
-> +	/* Enable Unipro internal clock gating */
-> +	err = ufshcd_dme_rmw(hba, DL_VS_CLK_CFG_MASK,
-> +			     DL_VS_CLK_CFG_MASK, DL_VS_CLK_CFG);
-> +	if (err)
-> +		goto out;
-> +
-> +	err = ufshcd_dme_rmw(hba, PA_VS_CLK_CFG_REG_MASK,
-> +			     PA_VS_CLK_CFG_REG_MASK, PA_VS_CLK_CFG_REG);
-> +	if (err)
-> +		goto out;
-> +
-> +	err = ufshcd_dme_rmw(hba, DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-> +			     DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-> +			     DME_VS_CORE_CLK_CTRL);
-> +out:
-> +	if (err)
-> +		dev_err(hba->dev, "hw clk gating enabled failed\n");
+Also it's not a task of contributor of a new SoC to decipher Qualcomm
+model numbering and document it anywhere.
 
-So the error is not a hard fault and you want the driver to continue? If so, it
-should be justified in commit message.
+Best regards,
+Krzysztof
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
