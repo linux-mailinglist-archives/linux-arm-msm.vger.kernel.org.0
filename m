@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-64130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5F1AAFE190
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:45:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B559AFE1EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:07:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E06803B7854
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 07:44:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC5457B65E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B3713C9A6;
-	Wed,  9 Jul 2025 07:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC72C23B608;
+	Wed,  9 Jul 2025 08:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="U+l7Vgco"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u8JuAV/6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3951714B7;
-	Wed,  9 Jul 2025 07:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79535625;
+	Wed,  9 Jul 2025 08:05:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752047108; cv=none; b=eA+nBrMTwTD5SaTI9Y/fQDSRMIRSbe9JL0VrwU7hr64mVi39Woq5f+d4AahBe/1YrFgMx5NPieM59cs5KRm/g+cOsxEMNMYBubXEQJxL3VyVO4s4UUMx2TpDzZnCbpntog15ekv6MZTJPNL12K5BgUq5C8q+Qcw6GSTdP5bR8y8=
+	t=1752048318; cv=none; b=peC5zzC97lpH1aK9O5sJERK94OT3ZYO4sDqLt9DL2p73BwBvk+kljt/Ls8B6inGyXXuHFC5QoFjqpMLJF84KoOkgfVyX3asX5rPlSNJfSZBbcVXVui2qiBYGC5ADgqjBarzTWO1mvI4SQH/sRFGP435nJQS50mL3/LqPz/hk37M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752047108; c=relaxed/simple;
-	bh=f8alaJu9QGnxkHKJvU+EAqsIi5uNm0RpUbioG++EzEo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=laRC/z8cVsQ8mmWc19rvwmjzVJo1xbdMs7cUC99MRNpHnssQQqK8uZAhbNtyb0BjLmpPyKSdz4fExQw/QSqlmtbuA2BOTJ1eloKNQgKFDrwarso7iAvd7FQJ6ixHT0CyYs5Wm7E2gSAIMG8qKzxUZuBEYjQrbAIAHje+RvGGDOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=U+l7Vgco; arc=none smtp.client-ip=185.70.43.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1752047098; x=1752306298;
-	bh=f8alaJu9QGnxkHKJvU+EAqsIi5uNm0RpUbioG++EzEo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=U+l7VgcozOyYLykbS3qLvCc9HMc0Vi3UZsII0/jmMc/Zi+ap0gI1EonO0CiHymocP
-	 UXxP29lSmf9pq6A4EEkiCvUkUADDj3RTEZUGGOSWgizh7PPvqlqyWVcjQzQwgsGQNk
-	 PPwFx6W0dsQkFixQjE0AUAM11TgZVLKku2guLBx+DiHTpw5UMlx656MmCew3W92SlQ
-	 geWc2sclYkS8i2pU7VWMojmRaYnLIcYHfkEPFkfxY/Y4nxDMPXCiRZyJA4MXypxmU8
-	 KIXRu1J7hZ2yF7ZiZpMr1di7GIkDrN2GwrzEXVSUBPoAvlMRI1JSnsfvzfCi+BRfQi
-	 6e8EbSIJULohw==
-Date: Wed, 09 Jul 2025 07:44:49 +0000
-To: Simon Horman <horms@kernel.org>
-From: Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, Sean Nyekjaer <sean@geanix.com>, Javier Carrasco <javier.carrasco.cruz@gmail.com>, Matti Vaittinen <mazziesaccount@gmail.com>, Antoniu Miclaus <antoniu.miclaus@analog.com>, Ramona Gradinariu <ramona.gradinariu@analog.com>, "Yo-Jung (Leo) Lin" <0xff07@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, =?utf-8?Q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?=
-	<barnabas.czeman@mainlining.org>, Danila Tikhonov <danila@jiaxyga.com>, Antoni Pokusinski <apokusinski01@gmail.com>, Vasileios Amoiridis <vassilisamir@gmail.com>, Petar Stoykov <pd.pstoykov@gmail.com>, shuaijie wang <wangshuaijie@awinic.com>, Yasin Lee <yasin.lee.x@gmail.com>, "Borislav Petkov (AMD)" <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Tony Luck <tony.luck@intel.com>, Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Ingo Molnar <mingo@kernel.org>, Yassine Oudjana <yassine.oudjana@gmail.com>, linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH 2/3] net: qrtr: Define macro to convert QMI version and instance to QRTR instance
-Message-ID: <X2KJB3xtnC-pWM7o5TBw6ln3ItpMwn7tdn5Z8gpZY3oW31isE8PLTX5GUbJ6HcZk_9s72jb6ImwGL-anIoto4dK1MINTxzdRKfbejp_nXcA=@protonmail.com>
-In-Reply-To: <20250707170636.GR89747@horms.kernel.org>
-References: <20250406140706.812425-1-y.oudjana@protonmail.com> <20250406140706.812425-3-y.oudjana@protonmail.com> <fb61323b-aabd-4661-a202-02da7da557ea@oss.qualcomm.com> <aMbAZigHiAN2xupOYs9DodY2mOdNtw_oVjOaweflgA8IoXRQ5ctoZ8GYJ8PNAKDgL4f9N_UD7tFmkePUy9BCE8v20Mae2x-eL1ZpyJEdLZY=@protonmail.com> <20250707170636.GR89747@horms.kernel.org>
-Feedback-ID: 6882736:user:proton
-X-Pm-Message-ID: 8f8894673857ba0bbc9a24fcb09c28e5f1c802d5
+	s=arc-20240116; t=1752048318; c=relaxed/simple;
+	bh=PHFvslbn1dHlskTevgGPTlrGpDxkF+3vYBfYx9dm7QA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KkYdoRs9fvnAC8Dvky8coZPZiDVbrxTLExtlCjUZb2pXh+CyLGDOAOF/K1/a7cN+Keq+hdrfLTCCXqK2N1NGLQMVu/EvPtIeQQhR8GOe4X6AqZSsJsY5lrYphn4INPrI5pV2Q3KmZsVDR9XRJMWoDAFzXf+36qEi3cLU6GlkqVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u8JuAV/6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAACC4CEEF;
+	Wed,  9 Jul 2025 08:05:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752048318;
+	bh=PHFvslbn1dHlskTevgGPTlrGpDxkF+3vYBfYx9dm7QA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u8JuAV/6EPqKfTmJvV9BtrmecFukxAnweZODl2FBKCQLsZhyBuAGQ1tDQppgHAi6e
+	 aT2wVmgLftJUA1ljZHnkKVvKZGkseDj87HRl5SjKH87WplbCuhVqW7SLZkPKJpxUjP
+	 Ax+oq4uyaa09YQ6cRR4cReFdX2AE7ir7kut9R6gr54S/N+XMpMkDT4tvhoFwzja0ek
+	 wdN+HcM775i7vYwGZYwXdsH1NB7iLsb0UGuA4tAFILcGMnEHUJkdE2DALlcBtIlSsF
+	 aJEUkfZYNXsRAsFzgcj0SjUd3ZKc9sNwzo6oQX+mxQrdSbku3LXsx6xF7NonQ6oxI8
+	 JiPntU/199ASA==
+Date: Wed, 9 Jul 2025 13:35:08 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 2/3] PCI/pwrctrl: Allow pwrctrl core to control
+ PERST# GPIO if available
+Message-ID: <kl5rsst6p2lgnepopxij5o6vyca4abrjlktsirfac3v7cnm33l@svrcm7v4gasr>
+References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
+ <20250707-pci-pwrctrl-perst-v1-2-c3c7e513e312@kernel.org>
+ <aG3e26yjO4I1WSnG@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,83 +62,149 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aG3e26yjO4I1WSnG@google.com>
 
+On Tue, Jul 08, 2025 at 08:15:39PM GMT, Brian Norris wrote:
+> Hi Manivannan,
+> 
+> On Mon, Jul 07, 2025 at 11:48:39PM +0530, Manivannan Sadhasivam wrote:
+> > PERST# is an (optional) auxiliary signal provided by the PCIe host to
+> > components for signalling 'Fundamental Reset' as per the PCIe spec r6.0,
+> > sec 6.6.1.
+> > 
+> > If PERST# is available, it's state will be toggled during the component
+> > power-up and power-down scenarios as per the PCI Express Card
+> > Electromechanical Spec v4.0, sec 2.2.
+> > 
+> > Historically, the PCIe controller drivers were directly controlling the
+> > PERST# signal together with the power supplies. But with the advent of the
+> > pwrctrl framework, the power supply control is now moved to the pwrctrl,
+> > but controller drivers still ended up toggling the PERST# signal.
+> 
+> [reflowed:]
+> > This only happens on Qcom platforms where pwrctrl framework is being
+> > used.
+> 
+> What do you mean by this sentence? That this problem only occurs on Qcom
+> platforms? (I believe that's false.) Or that the problem doesn't occur
+> if the platform is not using pwrctrl? (i.e., it maintained power in some
+> other way, before the controller driver gets involved. I believe this
+> variation is correct.)
+> 
 
+The latter one. I will rephrase this sentence in next version.
 
+> > But
+> > nevertheseless, it is wrong to toggle PERST# (especially deassert) without
+> > controlling the power supplies.
+> > 
+> > So allow the pwrctrl core to control the PERST# GPIO is available. The
+> 
+> s/is/if/
+> 
+> ?
+> 
+> > controller drivers still need to parse them and populate the
+> > 'host_bridge->perst' GPIO descriptor array based on the available slots.
+> > Unfortunately, we cannot just move the PERST# handling from controller
+> > drivers as most of the controller drivers need to assert PERST# during the
+> > controller initialization.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+> > ---
+> >  drivers/pci/pwrctrl/core.c  | 39 +++++++++++++++++++++++++++++++++++++++
+> >  include/linux/pci-pwrctrl.h |  2 ++
+> >  include/linux/pci.h         |  2 ++
+> >  3 files changed, 43 insertions(+)
+> > 
+> > diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+> > index 6bdbfed584d6d79ce28ba9e384a596b065ca69a4..abdb46399a96c8281916f971329d5460fcff3f6e 100644
+> > --- a/drivers/pci/pwrctrl/core.c
+> > +++ b/drivers/pci/pwrctrl/core.c
+> 
+> >  static int pci_pwrctrl_notify(struct notifier_block *nb, unsigned long action,
+> >  			      void *data)
+> >  {
+> > @@ -56,11 +61,42 @@ static void rescan_work_func(struct work_struct *work)
+> >   */
+> >  void pci_pwrctrl_init(struct pci_pwrctrl *pwrctrl, struct device *dev)
+> >  {
+> > +	struct pci_host_bridge *host_bridge = to_pci_host_bridge(dev->parent);
+> > +	int devfn;
+> > +
+> >  	pwrctrl->dev = dev;
+> >  	INIT_WORK(&pwrctrl->work, rescan_work_func);
+> > +
+> > +	if (!host_bridge->perst)
+> > +		return;
+> > +
+> > +	devfn = of_pci_get_devfn(dev_of_node(dev));
+> > +	if (devfn >= 0 && host_bridge->perst[PCI_SLOT(devfn)])
+> > +		pwrctrl->perst = host_bridge->perst[PCI_SLOT(devfn)];
+> 
+> It seems a little suspect that we trust the device tree slot
+> specification to not overflow the perst[] array. I think we can
+> reasonably mitigate that in the controller driver (so, patch 3 in this
+> series), but I want to call that out, in case there's something we can
+> do here too.
+> 
+> >  }
+> >  EXPORT_SYMBOL_GPL(pci_pwrctrl_init);
+> >  
+> > +static void pci_pwrctrl_perst_deassert(struct pci_pwrctrl *pwrctrl)
+> > +{
+> > +	/* Bail out early to avoid the delay if PERST# is not available */
+> > +	if (!pwrctrl->perst)
+> > +		return;
+> > +
+> > +	msleep(PCIE_T_PVPERL_MS);
+> > +	gpiod_set_value_cansleep(pwrctrl->perst, 0);
+> 
+> What if PERST# was already deasserted? On one hand, we're wasting time
+> here if so. On the other, you're not accomplishing your spec-compliance
+> goal if it was.
+> 
 
+If controller drivers populate 'pci_host_bridge::perst', then they should not
+deassert PERST# as they don't control the supplies. I've mentioned it in the
+cover letter, but I will mention it in commit message also.
 
+> > +	/*
+> > +	 * FIXME: The following delay is only required for downstream ports not
+> > +	 * supporting link speed greater than 5.0 GT/s.
+> > +	 */
+> > +	msleep(PCIE_RESET_CONFIG_DEVICE_WAIT_MS);
+> 
+> Should this be PCIE_RESET_CONFIG_DEVICE_WAIT_MS or PCIE_T_RRS_READY_MS?
+> Or are those describing the same thing? It seems like they were added
+> within a month or two of each other, so maybe they're just duplicates.
+> 
 
-Sent with Proton Mail secure email.
+You are right. This is already taken care in:
+https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/?h=controller/linkup-fix&id=bbc6a829ad3f054181d24a56944f944002e68898
 
-On Monday, July 7th, 2025 at 6:06 PM, Simon Horman <horms@kernel.org> wrote=
-:
+I will rebase the next version on top of pci/next to make use of it.
 
-> On Sat, Jul 05, 2025 at 06:29:39PM +0000, Yassine Oudjana wrote:
->=20
-> > On Wednesday, April 9th, 2025 at 3:54 PM, Konrad Dybcio konrad.dybcio@o=
-ss.qualcomm.com wrote:
-> >=20
-> > > On 4/6/25 4:07 PM, Yassine Oudjana wrote:
->=20
->=20
-> ...
->=20
-> > > > diff --git a/include/linux/soc/qcom/qrtr.h b/include/linux/soc/qcom=
-/qrtr.h
-> > > > index 4d7f25c64c56..10c89a35cbb9 100644
-> > > > --- a/include/linux/soc/qcom/qrtr.h
-> > > > +++ b/include/linux/soc/qcom/qrtr.h
-> > > > @@ -13,6 +13,8 @@ struct qrtr_device {
-> > > >=20
-> > > > #define to_qrtr_device(d) container_of(d, struct qrtr_device, dev)
-> > > >=20
-> > > > +#define QRTR_INSTANCE(qmi_version, qmi_instance) (qmi_version | qm=
-i_instance << 8)
-> > >=20
-> > > Please use FIELD_PREP + GENMASK to avoid potential overflows
-> > >=20
-> > > Konrad
-> >=20
-> > Since I'm using this macro in initializing QRTR match tables I am unabl=
-e to use
-> > FIELD_PREP. When I do, I get such errors:
->=20
->=20
-> Does using FIELD_PREP_CONST, say in a QRTR_INSTANCE_CONST variant, help?
+> BTW, I see you have a FIXME here, but anyway, I wonder if both of the
+> msleep() delays in this function will need some kind of override (e.g.,
+> via Device Tree), since there's room for implementation or form factor
+> differences, if I'm reading the spec correctly. Maybe that's a question
+> for another time, with actual proof / use case.
+> 
 
-That works, but do we want to have two variants? Or in this case maybe
-I should leave qmi_interface.c untouched and define the macro only for use
-in match tables?
+First delay cannot be skipped as both PCIe CEM and M.2 FF, mandates this delay.
+Though, M.2 mandates only a min delay of 50ms, and leaves the value to be
+defined by the vendor. So a common 100ms would be on the safe side.
 
->=20
-> > In file included from ../arch/arm64/include/asm/sysreg.h:1108,
-> > from ../arch/arm64/include/asm/memory.h:223,
-> > from ../arch/arm64/include/asm/pgtable-prot.h:8,
-> > from ../arch/arm64/include/asm/sparsemem.h:8,
-> > from ../include/linux/numa.h:23,
-> > from ../include/linux/cpumask.h:17,
-> > from ../include/linux/smp.h:13,
-> > from ../include/linux/lockdep.h:14,
-> > from ../include/linux/mutex.h:17,
-> > from ../include/linux/kernfs.h:11,
-> > from ../include/linux/sysfs.h:16,
-> > from ../include/linux/iio/buffer.h:9,
-> > from ../drivers/iio/common/qcom_smgr/qcom_smgr.c:8:
-> > ../include/linux/bitfield.h:114:9: error: braced-group within expressio=
-n allowed only inside a function
-> > 114 | ({ \
-> > | ^
-> > ../include/linux/soc/qcom/qrtr.h:21:10: note: in expansion of macro 'FI=
-ELD_PREP'
-> > 21 | (FIELD_PREP(GENMASK(7, 0), qmi_version) | FIELD_PREP(GENMASK(15, 8=
-), qmi_instance))
-> > | ^~~~~~~~~~
-> > ../drivers/iio/common/qcom_smgr/qcom_smgr.c:825:29: note: in expansion =
-of macro 'QRTR_INSTANCE'
-> > 825 | .instance =3D QRTR_INSTANCE(SNS_SMGR_QMI_SVC_V1,
-> > | ^~~~~~~~~~~~~
->=20
->=20
-> ...
+For the second delay, it comes from the PCIe spec itself. Refer r6.0, sec
+6.6.1. So we cannot skip that, though we should only need it if the link is
+operating at <= 5.0 GT/s. Right now, I haven't implemented the logic to detect
+the link speed, hence the TODO.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
