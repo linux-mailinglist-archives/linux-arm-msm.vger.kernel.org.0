@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-64280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9BA6AFF1AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 21:19:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F889AFF1C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 21:25:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEBE53A3DDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 19:18:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C0653A9D2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 19:25:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79BD123ED63;
-	Wed,  9 Jul 2025 19:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2698D23FC41;
+	Wed,  9 Jul 2025 19:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TDW93xVB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cv4D78Ud"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BB223B63F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 19:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99699223DDD
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 19:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752088757; cv=none; b=O0c3Glm9MQS498IUXjB6b/HiWqXkSKCfse/YYBo6yBjqI3p/krYpva6WEn31UP2kWEfKRgb+qGwGKYCVOzhfbw1N4gp0BruJwiZS/b1/raJrIcxKtae4LBb+de7FuGsnIQOBc/TlE0uJYxuEFBWwBA+Q2veb9GNwBxXF9Ng18Yo=
+	t=1752089135; cv=none; b=s4IAhhFzftOwQkIlr1dizANPJmvlAzP0X2BgWurCpuzEZRPIUi1uTp/ZY+3DHghrkfg7cEJvriWOEvEXQBu0CrykLSjvSlDw2E0f6aPVaUtEcAcEAiTBgvJtEaBeFpx7QrnM/C7nQG7VO5xvqGj7zaGexXmktwwknwMF2uu/zkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752088757; c=relaxed/simple;
-	bh=u3/vvirTVUUq+Hl+b+9fwIo7UB4jJGzLNte8TeeFHxI=;
+	s=arc-20240116; t=1752089135; c=relaxed/simple;
+	bh=Czk5thyzfF1At6el/WvxrhoAQf01IpUl3TQKZoKmkrM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CfWNdCibm6WMjRN4e5XPo8xfYODY3Fkeb+QzKDFo4erVttMZ7Eax15Q0HoHYheABx+ulElXmDiMDaF2LSBRGScpAiCFaEU7/YYDTLLWMY+sbWWRJbCaO0sTFAtc1M/mXJb5fyHR7VofWQk0sKLGGMcNhMDUVdjDjnJVyUNyz9O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TDW93xVB; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=R5YWH01eZe3BVKLDeyD1CDgbBRxVWm5jjmrHOb4Qn73u9A6ESGRCClR60jVKaUhPSAFUWdA+bYHTD8z6mm7YfRQiADO91A1ibZv+V7yYllQtKHrDBhpBjb5lvZHwXXjiOn8YE6s/EEdofCLDgVNEmbhaBfYfbjw1qqE+ct/6xXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cv4D78Ud; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569CokYX016991
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 19:19:15 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569Coijq030103
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 19:25:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pfQKjOtH68DSBNR+Uk2pyki9PruLqbnrYQSvyOAaahk=; b=TDW93xVBktf1jFKF
-	W8U1+rkdZxkR/FU+QXL225L453FnU4yfiZNzIVS7q26JV5wU1K94PFXXq75zrxWN
-	2ZV7PjunDv40buHAfF7EfxLHpcNQTE/K/ruqFeA4D14q0cXEaOXUnPChHuHwxWJG
-	FAl8k/OO5pE61oa4Ml8xcQgDjpwEui6jvTUvh/BSVhG4vbxilHe7mg8eaUt7WGbM
-	TU6ArIQzEsdcAliijMeGZ5UMkuyjU+zDVS+JJNn5ZpUAD0Eo+KR2gJsSyYulBwQj
-	wjJPk9K3kGh/xB9RgjkTc+zrXrnTfEgPqVOUgMkVij3xKOOQuE4ANANY9lp5EYr6
-	z1lVUQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smbnt6x2-1
+	LxJmEoIV/L+emefvsrdmnd313iEFnFzJl4/I7Di1mus=; b=cv4D78Ud1X3h/gCs
+	qPMaz+TMm9VS3DqFYLrBAG6epgV7AnecF3VKdYafxnq96U7AvPb/Byy6ohPh8nKA
+	dQgUz8NI44qwhmy5kw9rdwcNIzb+AFXLESYBSLjEfFsAJvyXIJYRAi2oz0AU0C+d
+	ynxwrAJgUO1lRJZ3HjzWZ+nb/vWFjjv7WkEJp7jlNLznJzOs0pAUlS7aWrN0AFxh
+	MXM6hd8lJsUfzK4/WJroEX9eLavgIqZLx8B1jpReiJPX1KiQk9sN/YBfw4/kv2Bl
+	o6GMXRPVDe203Sar8X8p50i/mATIj3PkrixRVGhNjdBkaMmvJi8wUNbh+VsuV1+K
+	DZmPmw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg27gg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 19:19:14 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d0979e6263so266885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 12:19:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 19:25:32 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d09a3b806aso4056385a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 12:25:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752088753; x=1752693553;
+        d=1e100.net; s=20230601; t=1752089131; x=1752693931;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pfQKjOtH68DSBNR+Uk2pyki9PruLqbnrYQSvyOAaahk=;
-        b=tXCzwgvxj0xKXIFPMmOc/naUCB4ST3eTAQ73MEmgqGJsAMwyr5L/WKIVxcHF6pB+kb
-         7Aw6yYcAZA6PbGKRBJltGgsAzxFyWa7U50s7gpToExzVDgFeSP3IvuuJn33H0ySXEvsE
-         vfzvqGDAVOEB3ammZx/E8VJPpx4aTK63HoW+CiPhNFzkmWtI8D5q31lN6SWo+UhwbtOA
-         8V2t996hdlPFnfIOW5g6ppbbaaqUyua3PTWgECu/M13MhWvl1xqmAzFbgMNL13G5azTv
-         lYDWst6U6yllESmRsJix8cD+wu+DXpw9x9jZeBNKx0Pk53KOqhSrF2HBbbPRQeLcHCAa
-         ycdw==
-X-Forwarded-Encrypted: i=1; AJvYcCVcIit5GRJGYqGdUO+7k4R3rjiYN49xlK7ylTqDt6+TF1RG8cNBs8Gkub7cLe7BbHYl/tfJvsRzFm98uMr5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTVGrDlslc6P7uUMarE0Aohl3RK52bIDptBHbVwZg7LLM9HOB3
-	tq48q+XGn83je78/BYBcEX2QpnZWVQ90E//+5PjY+nVGf6yp6z1uNGzSJ4qkD6yDs9hK/tGr0gw
-	+jHEM+UrTr+yceFIKRY8YP8doHOaG//r5oTqbG/W5SfY+ewKFoPsXc7KqL2JjmoQoQ70e
-X-Gm-Gg: ASbGnctRlrJgtk30iJI5/Dyk7+thuHdksNIo9fcLFhlXfDueSutT+5fGpx0A3JVl3u3
-	qB2hTD5IrrF9AYZWK4kuYogM5NEuXHC+NrapWn6E4DXVpSToSn9HOmLY7lLufiluRGVXlEfNOOS
-	KpIFZu4cUmgCCM3TQ4ANfpnU3xrIQyZdm6S8B5r3DoRzhwtCz1l1WlakWu0ZJMp6C+ZpIqhsH8H
-	bkvX7cVXT0BepVI2tH7F5ay/SLhMcpJj2ElavNxB2eNWoK71yJHSklxdrSwBNoT607O7RCygV32
-	i1WRGxjPHUwEHfzSsdSPiYrpYfMkVZvV/CKDZOeVHAjHQTz75xoD6/jdX0HtqahnOhrSOLi5dwJ
-	ZnOc=
-X-Received: by 2002:a05:620a:c4c:b0:7d5:d01f:602 with SMTP id af79cd13be357-7db7d78e468mr216923885a.14.1752088753165;
-        Wed, 09 Jul 2025 12:19:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcregrlw/J8rloCEh4HZgcfMxUlAlzdGycBiRw/6NNEExrP1Y0htAK4nXMstyn/N9Sgxli/g==
-X-Received: by 2002:a05:620a:c4c:b0:7d5:d01f:602 with SMTP id af79cd13be357-7db7d78e468mr216920885a.14.1752088752693;
-        Wed, 09 Jul 2025 12:19:12 -0700 (PDT)
+        bh=LxJmEoIV/L+emefvsrdmnd313iEFnFzJl4/I7Di1mus=;
+        b=HnnmXauP1N8LKc1ZkRM5XPthLX46CmLdGQcFmFOtZUGiv1QeVBpmGvRr+q1gMwPPIL
+         5+cQNVW2J8gB65BNrmwBKazCxeUCFh5LwbNqVuY778V5CALJG4O7iSVnuSQCv9FfDhCX
+         kADj2pxHAMmZEBO9BX/OhOZk4rSzIu3VDgTSYjk5xM64aJO+VXNJni+WSK7Z8ZCc5e4m
+         k6ycDr6h6AT9eCJKSEzD/YpnS9+S0Hh8Sg5t60OGM/XGT0lzgdXu6CK7GmqdE+8VSvRE
+         2Wun9IELBFcvc1D1NtIGmqUhX923ypYDF8NTdQ6s9mCRhWIF+/16RTAGzgPSO5M9U0/G
+         g5VQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/miyoiHoKLEoJUV64Bu9mUlIxzHu1zoV0pIVavKjzQ6WOGdrGL3WW/ZwqY8usxvEVeVERV77EZpu7rdKY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjKypyheO662CoTaLKcp9ZKmfxkttE190fatcdbA9iCzCli35P
+	KdqU8CQ3CSeWDf2mt17TopKSX+FO4qt85GrBiWc8v9uh5ykYbTTyNVAK+Jkh7HwxhjKVDEtAAgH
+	icJgJUk3r5UAsQDO3fVwaPoJPoNVXYqNH5kK5gyZT8L8GHonkIKy7bpAKmMkeaENWwPTf
+X-Gm-Gg: ASbGnctabpzhoAQNsN2AHzwieYqv+xiXLKy7JidaaLUMKO0VAD9a9jjMLl0bIkGNjLz
+	e2D0swbmxR/aiWQeB6eWYkbD4lz9xQE52UH/LkCL9msQnwjjqejTaTyKbEz7qM5iYzn1M7tFEAc
+	8y2nrzlXVQmmEfudq8GFltZpn2D2GpPcAEVwlbbUTzRXaITQhKaM0j+a06ADJ08vK12/zNAx0Zq
+	nJQRGZX0klLh9jm949Sgp7WiHoEupTRBvxU9FE7D3sbJZzU4f7hAE/uF8rhy5YBsP5niO5Cp2BF
+	sCON/y1ux/3b9DE1MWhx0QLbCJw7fZSa6up3zdkCXA3JFpmbwY6diQUq4rtVibKFTQvfXA0SAXu
+	BHGQ=
+X-Received: by 2002:a05:620a:4396:b0:7d4:5cdc:81e2 with SMTP id af79cd13be357-7db8a26a97amr207083785a.13.1752089131444;
+        Wed, 09 Jul 2025 12:25:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEF0lD4eFqC8H6SYk9QlZhxremi9oqzguzRcKWuEh7z55IS83KvKx0SZBgDPwxIqBeKKCCbcQ==
+X-Received: by 2002:a05:620a:4396:b0:7d4:5cdc:81e2 with SMTP id af79cd13be357-7db8a26a97amr207081385a.13.1752089131024;
+        Wed, 09 Jul 2025 12:25:31 -0700 (PDT)
 Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fcb0c8909sm9334303a12.45.2025.07.09.12.19.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b5e7c2sm1159545866b.148.2025.07.09.12.25.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 12:19:12 -0700 (PDT)
-Message-ID: <075e59d0-569c-429f-ba14-c2e59e2f63a2@oss.qualcomm.com>
-Date: Wed, 9 Jul 2025 21:19:09 +0200
+        Wed, 09 Jul 2025 12:25:30 -0700 (PDT)
+Message-ID: <f5ea9bc1-7617-4573-a10e-3499161a7819@oss.qualcomm.com>
+Date: Wed, 9 Jul 2025 21:25:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,112 +90,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] misc: fastrpc: add support for gdsp remoteproc
+Subject: Re: [PATCH v6 3/4] misc: fastrpc: Cleanup the domain names
 To: Ling Xu <quic_lxu5@quicinc.com>, srini@kernel.org,
         amahesh@qti.qualcomm.com, robh@kernel.org, krzk+dt@kernel.org,
         conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
         arnd@arndb.de, gregkh@linuxfoundation.org
 Cc: quic_kuiw@quicinc.com, ekansh.gupta@oss.qualcomm.com,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 References: <20250709054728.1272480-1-quic_lxu5@quicinc.com>
- <20250709054728.1272480-5-quic_lxu5@quicinc.com>
- <2dfb6c0a-df7b-4039-9a65-0f1036752bbe@quicinc.com>
+ <20250709054728.1272480-4-quic_lxu5@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <2dfb6c0a-df7b-4039-9a65-0f1036752bbe@quicinc.com>
+In-Reply-To: <20250709054728.1272480-4-quic_lxu5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDE3MyBTYWx0ZWRfX5HbX8bpXFUe9
- JCRmph/F2OgXzQrpMgf88Ndmln/u6DGKmdauLs+aaY0xPdJ/VDduIH6DHcEnNhhCbaklKOvHjlU
- Vpy5isX9n47n0kly2X0leEQtOSOQr8YfmK/bEcflLQzdKDm4w/y1dcQ69Vp3XIqFil8QgGcLA3H
- o+K3LUm4n5oYgiJPbik7ltcaV7mmV7PJ9sWFumjLxfs+W2vb/8N1bqWeZtIdV2BtBn/e5IvhWn7
- SpkxY1RopN3UtZnWi85qY0JGUS9SBNQ9qkzk1VqRc0kwZJoIz+WI3npXtk35xScRPhFI+q+mcvE
- Rp3N4gsYgrk+jlStWXIYKA0oKLCd7NoFV7cKFdRzG6zYDdmizbpv0wR/WEUl+yEk5zegKeDWr5Y
- ebBb+Dk9rEER+VSxrv0F9DuTSaiRysxu9fA20obwedeGCNz9oIG1/Ic1tOFHZI4rOcXexzGA
-X-Authority-Analysis: v=2.4 cv=QM1oRhLL c=1 sm=1 tr=0 ts=686ec0b2 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=TB6GD4yhWxgz3a-1klEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: LKFYwicKxxhqJfhOGyQd3beYvmyEd3cw
-X-Proofpoint-GUID: LKFYwicKxxhqJfhOGyQd3beYvmyEd3cw
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=686ec22c cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=UMl6nZT6BRNR5OdSVxkA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 82XWhD-OGmYqU4yzynDqLS2kCXevxEXo
+X-Proofpoint-GUID: 82XWhD-OGmYqU4yzynDqLS2kCXevxEXo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDE3NCBTYWx0ZWRfXxyxUttuLnkMJ
+ Zp7u3z91J+xJGTnYqMLCLzcUyDqtdL5RE6EtmRL1CZgkumBLXHB7xCFjoZ6mUBz2qaxPAjT7W/v
+ 9eySx2xTe6WQvABgfiXDjlycejtnUBj+UWeJVide058FRIEJAaehdWz1nFm6Ae8YkAjByUOY1NA
+ bJHYhLVefhn/m1zvHxXIRrB0qFO938QCJ5SHtoIYetPoRvdxOangy9o3TZutYarse0W2R6/TClX
+ 8D/UFIDuMQV9ayMgdVONdF8C0QlZzHqPiz3QVRvZSmk99Gv7HZqz3uMeWLwdJLbPtbxvXfc1Xxr
+ GrbD4etdgDeJJg+9MTRKa1I+8zYiygR7IpwTgzDskNSBn2u5HZJ8x4/Ll6n7HurF7N/nFGgANEE
+ TWQTYrgE27MPCMtQVB1iKD6v+sIa2/xBSlcNlQJ2QmKp5cPMzzM8kl4ONP9G1suVInd+nf+U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_04,2025-07-09_01,2025-03-28_01
+ definitions=2025-07-09_05,2025-07-09_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507090173
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090174
 
-On 7/9/25 7:52 AM, Ling Xu wrote:
-> 在 7/9/2025 1:47 PM, Ling Xu 写道:
->> The fastrpc driver has support for 5 types of remoteprocs. There are
->> some products which support GDSP remoteprocs. GDSP is General Purpose
->> DSP where tasks can be offloaded. This patch extends the driver to
->> support GDSP remoteprocs.
->>
+On 7/9/25 7:47 AM, Ling Xu wrote:
+> Currently the domain ids are added for each instance of domains, this is
+> totally not scalable approach. Clean this mess and create domain ids for
+> only domains not its instances.
 > 
-> sorry, please ignore this patch.
-> I haven't change commit message here.
-> "Extend the driver to support GDSP remoteprocs."
+> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+> ---
 
-How about this instead:
+[...]
 
-Some platforms (like SMabcd) feature one or more GPDSPs (General
-Purpose DSPs). Similar to other kinds of Hexagon DSPs, they provide a
-FastRPC implementation, allowing code execution in both signed and
-unsigned protection domains.
+> @@ -2330,21 +2323,20 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	case ADSP_DOMAIN_ID:
+>  	case MDSP_DOMAIN_ID:
+>  	case SDSP_DOMAIN_ID:
+> -		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
+> +		/* Unsigned PD offloading is only supported on CDSP */
+>  		data->unsigned_support = false;
+> -		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+> +		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
+>  		if (err)
+>  			goto err_free_data;
+>  		break;
+>  	case CDSP_DOMAIN_ID:
+> -	case CDSP1_DOMAIN_ID:
+>  		data->unsigned_support = true;
+>  		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
+> -		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+> +		err = fastrpc_device_register(rdev, data, true, domain);
+>  		if (err)
+>  			goto err_free_data;
+>  
+> -		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+> +		err = fastrpc_device_register(rdev, data, false, domain);
+>  		if (err)
+>  			goto err_deregister_fdev;
+>  		break;
 
-Extend the checks to allow domain names starting with "gdsp"
-(possibly followed by an index).
+Taking a step back, do we realistically need these checks at all?
+I would assume that there is a layer of security on the DSP side
+that would disallow running code in unsigned PDs on e.g. the ADSP.
+
+What happens if one skips them and attempts doing just that?
 
 Konrad
-
-> 
->> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->> ---
->>  drivers/misc/fastrpc.c | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 85b6eb16b616..d05969de406e 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -27,6 +27,7 @@
->>  #define MDSP_DOMAIN_ID (1)
->>  #define SDSP_DOMAIN_ID (2)
->>  #define CDSP_DOMAIN_ID (3)
->> +#define GDSP_DOMAIN_ID (4)
->>  #define FASTRPC_MAX_SESSIONS	14
->>  #define FASTRPC_MAX_VMIDS	16
->>  #define FASTRPC_ALIGN		128
->> @@ -2249,6 +2250,8 @@ static int fastrpc_get_domain_id(const char *domain)
->>  		return MDSP_DOMAIN_ID;
->>  	else if (!strncmp(domain, "sdsp", 4))
->>  		return SDSP_DOMAIN_ID;
->> +	else if (!strncmp(domain, "gdsp", 4))
->> +		return GDSP_DOMAIN_ID;
->>  
->>  	return -EINVAL;
->>  }
->> @@ -2323,13 +2326,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  	case ADSP_DOMAIN_ID:
->>  	case MDSP_DOMAIN_ID:
->>  	case SDSP_DOMAIN_ID:
->> -		/* Unsigned PD offloading is only supported on CDSP */
->> +		/* Unsigned PD offloading is only supported on CDSP and GDSP */
->>  		data->unsigned_support = false;
->>  		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
->>  		if (err)
->>  			goto err_free_data;
->>  		break;
->>  	case CDSP_DOMAIN_ID:
->> +	case GDSP_DOMAIN_ID:
->>  		data->unsigned_support = true;
->>  		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
->>  		err = fastrpc_device_register(rdev, data, true, domain);
-> 
 
