@@ -1,207 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-64141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BCA0AFE304
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:44:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AE97AFE3BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:12:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFC8D1748F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:44:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62A187B64D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:09:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7507027C879;
-	Wed,  9 Jul 2025 08:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD75A284696;
+	Wed,  9 Jul 2025 09:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0meTvm5F"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VHZzAB8b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4276727AC37;
-	Wed,  9 Jul 2025 08:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EDF78F36;
+	Wed,  9 Jul 2025 09:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752050674; cv=none; b=ul6tRQ5qFdaPnoaY6oWPa3BrJOOGnaYTTlYjIsO0Iaa7GyW5u55oHZsM69lDQzNmx6wfYo81Eb9ryUD9jRQFypE+tqt1e/xICdcO29igayCePUiV5N3wmuRiOwTsftZOSNGtEIiffNkFw4Zi/YCEK74FufEBQXD2YXpbzrxt+A4=
+	t=1752052266; cv=none; b=McmROtQv9VghzIgJ3PXIjETJAHsY6a5CR91mCNIcD233b0pQdeFgX8UtWqvw5ad9VqJqCG7A2gmftyyqTVoGioOErrFG2jk1GaUeXK460U5LbqtFLjBiCjFcErgmC3f4EXl20Emq/cubQ2zFXTmMmoeQynziovHIsrzam/5gUpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752050674; c=relaxed/simple;
-	bh=lwQ2KKKmVP54nbs4jel6XWDPyKiP+QppmSbUcd856N0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MygE7F7wjJB2YWgKPYot/dhJtNsLNIAC5gHyQmNLERdgWw9REfO5QYDRtAYcX1WiQcnp+zJc+Poi/KtOnBn5gWvYa0LdIhbw88Tg1/zwa7ph/iaOiv+6ZDoTrlgzj7a7XqhvnCvJ1/91iT0aqDb3WOWXXiJtiSau/v9DYgzOzjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0meTvm5F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C78BC4CEEF;
-	Wed,  9 Jul 2025 08:44:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752050673;
-	bh=lwQ2KKKmVP54nbs4jel6XWDPyKiP+QppmSbUcd856N0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=0meTvm5Fs8Qz7iZrXUC7Pg2gSzJmhZapvoDupt+zSqtOMzeBBZiuzq4gK4NpMlZy2
-	 PT20Y4k9viWa4D6d/Bys4SM6I6X/AGjbplivRy8Xr+QTg+/5JeHz5G28GYFJ+of2KF
-	 gh5GTlXCy8LC3R2oojoXOyvA5S6dveG79vBipnxU=
-Date: Wed, 9 Jul 2025 10:44:29 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
- secure calls
-Message-ID: <2025070924-wilt-dreamt-fb25@gregkh>
-References: <20250709065533.25724-1-komal.bajaj@oss.qualcomm.com>
+	s=arc-20240116; t=1752052266; c=relaxed/simple;
+	bh=e+AlNfEIWLEOUZb0WGiJuKUfwZfi9mwK1UILrKSjqnk=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=M7zQVWBtw8/slFSnBwYd7Muj0FMgMbGRPQxIzvM43d7QTjx/LO1w28wWGuBHGiFSf0VnVlVrr/zWJ5v83Vam2nzPe4sBzAucpdN8L8ychcERB+247D1mwRMF1nlD9Ie70eUxx5/virE37BaIswzWO2+uG8N+isIpawczLYCOfOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VHZzAB8b; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752052265; x=1783588265;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=e+AlNfEIWLEOUZb0WGiJuKUfwZfi9mwK1UILrKSjqnk=;
+  b=VHZzAB8bXpVPESqBubuBtAnaqdRM2qP+WSjy0zrQQlHsgxceRt6CVRvi
+   casoELT49zdjxg8Lva5eHI0AABJZbHl3/nvXO+Xcfh8O0/QRnd0OrSsVA
+   M57GkwNHl9qqAppk3dyhSl0kf53QJabbZtRqGJh7yUQ19qd0670UjMouy
+   9ZCTNQZLMKPcc8NKDoTHrQ72PfYUwJAoAJ3X8UjPxG5mpd29a9A55GbRu
+   LDHTJqqF0uKZ4yz7zkZdNuzMC4SwZmfnJrxvRMgfWhfLyvKkyR/U2hiSW
+   BqtpjpzwIKHTQdRxa5cMH2p2479jesPxwO7N/VbvfRx97H+pUvMhRi7M5
+   w==;
+X-CSE-ConnectionGUID: JZph60nNShWI1CkDwW7aiw==
+X-CSE-MsgGUID: Qiw2/TzASUq3qpwLoT2Zlg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="54163409"
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="54163409"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 02:11:04 -0700
+X-CSE-ConnectionGUID: 2YofaDi1Rfa2S2hif6cl5Q==
+X-CSE-MsgGUID: uvbwgx//RiSED5u6g+R/jg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="155458540"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.168])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 02:10:56 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Wed, 9 Jul 2025 12:10:52 +0300 (EEST)
+To: Manivannan Sadhasivam <mani@kernel.org>
+cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+    Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+    Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
+    linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+    linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
+    linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
+    qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+    quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+    Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+In-Reply-To: <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
+Message-ID: <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
+References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com> <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com> <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250709065533.25724-1-komal.bajaj@oss.qualcomm.com>
+Content-Type: text/plain; charset=US-ASCII
 
-On Wed, Jul 09, 2025 at 12:25:14PM +0530, Komal Bajaj wrote:
-> EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
-> as read-only for HLOS, enforcing access restrictions that prohibit
-> direct memory-mapped writes via writel().
+On Tue, 8 Jul 2025, Manivannan Sadhasivam wrote:
+
+> On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru wrote:
+> > ASPM states are not being enabled back with pci_enable_link_state() when
+> > they are disabled by pci_disable_link_state(). This is because of the
+> > aspm_disable flag is not getting cleared in pci_enable_link_state(), this
+> > flag is being properly cleared when ASPM is controlled by sysfs.
+> > 
 > 
-> Attempts to write to this region from HLOS can result in silent failures
-> or memory access violations, particularly when toggling EUD (Embedded
-> USB Debugger) state. To ensure secure register access, modify the driver
-> to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
-> Secure Channel Monitor (SCM). SCM has the necessary permissions to access
-> protected memory regions, enabling reliable control over EUD state.
+> A comment in pcie_config_aspm_link() says:
 > 
-> SC7280, the only user of EUD is also affected, indicating that this could
-> never have worked on a properly fused device.
+>  /* Enable only the states that were not explicitly disabled */
 > 
-> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
-> Changes in v4:
-> * Added error logging in disable_eud() for SCM write failures, per Konrad’s suggestion
-> * Link to v3: https://lore.kernel.org/all/20250708085208.19089-1-komal.bajaj@oss.qualcomm.com/
+> But the function is called from both aspm_attr_store_common() and
+> __pci_enable_link_state(). So I don't know if this is behavior is intentional
+> or wrong. 
+
+Hi,
+
+I think it's intentional. Whether the behavior is useful is another good 
+question but the current behavior aligns with the explanation in the 
+comment.
+
+My understanding of the situation is:
+
+pci_disable_link_state() and pci_enable_link_state() are not symmetric 
+despite the names, never have been (this is one of those many quirks ASPM 
+driver has which should be eventually cleaned up, IMO).
+
+It might be appropriate to rename pci_enable_link_state() to 
+pci_set_default_link_state() to match the name to its functionality (and 
+the function comment):
+
+ * pci_enable_link_state - Clear and set the default device link state
+
+Note: "the default ... link state".
+
+
+I've already raised this concern earlier! As you see, my comment are 
+not getting addressed. I'd like to see the author does one of these:
+
+1) Renames pci_enable_link_state() to pci_set_default_link_state()
+
+1b) If pci_enable_link_state() is still needed after that, a new function
+is added to symmetrically pair with pci_disable_link_state().
+
+or alternatively,
+
+2) Changelog justifies very clearly why this change is okay with the 
+existing callers. (And obviously the function comment should be altered to 
+match the functionality in that case too).
+
+If approach 2 is chosen, it should be very carefully reviewed when it 
+comes to the callers.
+
+
+> > Clear the aspm_disable flag with the requested ASPM states requested by
+> > pci_enable_link_state().
+> > 
+> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > 
-> Changes in v3:
-> * Moved secure write before normal writes
-> * Added error checking in disable_eud()
-> * Use ENOMEM error code if platform_get_resource() fails
-> * Select QCOM_SCM driver if USB_QCOM_EUD is enabled
-> * Link to v2: https://lore.kernel.org/all/20250627125131.27606-1-komal.bajaj@oss.qualcomm.com/
+> Fixes tag?
 > 
-> Changes in v2:
-> * Drop separate compatible to be added for secure eud
-> * Use secure call to access EUD mode manager register
-> * Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
+> - Mani
 > 
->  drivers/usb/misc/Kconfig    |  1 +
->  drivers/usb/misc/qcom_eud.c | 27 +++++++++++++++++++++------
->  2 files changed, 22 insertions(+), 6 deletions(-)
+> > ---
+> >  drivers/pci/pcie/aspm.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index 94324fc0d3e650cd3ca2c0bb8c1895ca7e647b9d..0f858ef86111b43328bc7db01e6493ce67178458 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -1453,6 +1453,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
+> >  		down_read(&pci_bus_sem);
+> >  	mutex_lock(&aspm_lock);
+> >  	link->aspm_default = pci_calc_aspm_enable_mask(state);
+> > +	link->aspm_disable &= ~state;
+> >  	pcie_config_aspm_link(link, policy_to_aspm_state(link));
+> >  
+> >  	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
+> > 
+> > -- 
+> > 2.34.1
+> > 
 > 
-> diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
-> index 6497c4e81e95..f49d5ac0e957 100644
-> --- a/drivers/usb/misc/Kconfig
-> +++ b/drivers/usb/misc/Kconfig
-> @@ -148,6 +148,7 @@ config USB_QCOM_EUD
->  	tristate "QCOM Embedded USB Debugger(EUD) Driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	select USB_ROLE_SWITCH
-> +	select QCOM_SCM
+> 
 
-How is this select going to work if COMPILE_TEST is enabled on
-non-ARCH_QCOM configs?
+-- 
+ i.
 
-Please don't use select if at all possible, use "depends" properly.
-
-
->  	help
->  	  This module enables support for Qualcomm Technologies, Inc.
->  	  Embedded USB Debugger (EUD). The EUD is a control peripheral
-> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-> index 83079c414b4f..a58081f53db3 100644
-> --- a/drivers/usb/misc/qcom_eud.c
-> +++ b/drivers/usb/misc/qcom_eud.c
-> @@ -15,6 +15,7 @@
->  #include <linux/slab.h>
->  #include <linux/sysfs.h>
->  #include <linux/usb/role.h>
-> +#include <linux/firmware/qcom/qcom_scm.h>
->  
->  #define EUD_REG_INT1_EN_MASK	0x0024
->  #define EUD_REG_INT_STATUS_1	0x0044
-> @@ -34,7 +35,7 @@ struct eud_chip {
->  	struct device			*dev;
->  	struct usb_role_switch		*role_sw;
->  	void __iomem			*base;
-> -	void __iomem			*mode_mgr;
-> +	phys_addr_t			mode_mgr;
->  	unsigned int			int_status;
->  	int				irq;
->  	bool				enabled;
-> @@ -43,18 +44,30 @@ struct eud_chip {
->  
->  static int enable_eud(struct eud_chip *priv)
->  {
-> +	int ret;
-> +
-> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 1);
-> +	if (ret)
-> +		return ret;
-> +
->  	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
-
-Nit, why is your local writel() function in backwards order of
-parameters from qcom_scm_io_writel()?  That's going to be a major pain
-to maintain over time, don't you think?
-
-
->  	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
->  			priv->base + EUD_REG_INT1_EN_MASK);
-> -	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
->  
->  	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
->  }
->  
->  static void disable_eud(struct eud_chip *priv)
->  {
-> +	int ret;
-> +
-> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 0);
-> +	if (ret) {
-> +		dev_err(priv->dev, "failed to disable eud\n");
-> +		return;
-> +	}
-> +
->  	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
-> -	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
->  }
->  
->  static ssize_t enable_show(struct device *dev,
-> @@ -178,6 +191,7 @@ static void eud_role_switch_release(void *data)
->  static int eud_probe(struct platform_device *pdev)
->  {
->  	struct eud_chip *chip;
-> +	struct resource *res;
->  	int ret;
->  
->  	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
-> @@ -200,9 +214,10 @@ static int eud_probe(struct platform_device *pdev)
->  	if (IS_ERR(chip->base))
->  		return PTR_ERR(chip->base);
->  
-> -	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
-> -	if (IS_ERR(chip->mode_mgr))
-> -		return PTR_ERR(chip->mode_mgr);
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-> +	if (!res)
-> +		return -ENODEV;
-> +	chip->mode_mgr = res->start;
-
-No ioremap() call needed anymore?   Why not?
-
-thanks,
-
-greg k-h
 
