@@ -1,168 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-64276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83BEEAFEF67
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 19:08:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC9F0AFF022
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 19:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 43D5B171F0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 17:07:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B31E91C83728
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 17:50:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2071B22687C;
-	Wed,  9 Jul 2025 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D15823506E;
+	Wed,  9 Jul 2025 17:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MGtx7E7s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RG8Tupd7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331BD22425E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 17:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41CB235055
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 17:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752080817; cv=none; b=nBIFoVCDJYvuySrUVlJ+EJBCyg10/fasGnVOkgaIeT7V0SaKTuelYqZIxPmiuTnNCotIwGPdFcP8a/B2vvV/X3GQjTW33xRaUw8kzT3gJPX65yneGGQvvP6stAutL/ciaZKAROIAA58Spn0fBg1F6Vz9zRzEflg9q5fIk+/mD0M=
+	t=1752083398; cv=none; b=uIqOPodxU81qnS+oZW8fsh4TSD4ylcBevPpHk+rvEJVKuSFU9T9wrRTnbLCqzc+rzh+/vG8Jo2lXLZSwc3OdnI9KGkh4Qm29gnnExpEPHjpUpi7OSIYFeVJwrbYsQmFNOVd9R0rluUBUng2tbRjVDPimeq3Nnlu3XX3hanK5brg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752080817; c=relaxed/simple;
-	bh=Dd21ohWnuUTS/BXEfrNOepJdRU2lCK7un9IzRE42mpI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X0FpKzZ5QsQcBnIcODvwMAokoWAdXVvtiqN2zLIN5cTLR6fqgLcGyzK1XInEy3YZGcrBBcWjoVy6WWCqeV7O9STCa0wIkxvyL1YE4XSGZnkA+dml2ImiD941hgI5OJedwVqBV5MfgErh+RwS4EtRd6reOnpPOj/838EprpLfYoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MGtx7E7s; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569Coamv009959
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 17:06:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wh8yuaaHqpeTognyFmCrL3eiw6cJgczdQVoN39qvEms=; b=MGtx7E7sFI2v1NhU
-	9/x6p9kRuVLvZS9Bgv+Y1AVL+bl8gQlirZkBOqoD4ZaItkc+J8+ioyES2sM+XPmO
-	cmNne12dEhfxazHku+TMtcD3QGnVRoB8rejhzCCmjhVdOwI5E6xO80Sg1zZkL6bX
-	ApjCCEP3PInBtkNqQ2l563mg6vQjKPepDQsyLK5qCqvn9+PX+Hs8bs7MTcuZypzu
-	vBAyhvfUyDxO1tpGLxmLQeptUUl7sp7MNwy4GMWVBN6ZrThpQyu62ndb288Jn24X
-	WBjpzBrgs9+Y7f9DUOQp/8P1+sEByaL3UpfVSOv9tLTMfQFMcb3WQl6vQUYWWHfZ
-	55OtWg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47sm9dswba-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 17:06:53 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7d0979e6263so43085a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 10:06:53 -0700 (PDT)
+	s=arc-20240116; t=1752083398; c=relaxed/simple;
+	bh=fp13JmlXHdq/nQ6HLVzuaBdtpFF8aCP1PCIbRVjcwvM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Iqw8o33WH97/D6QDEKKedwD7l+2r90Gwytb06n7GB5tfUR18eENuxmfg4z2vj6Zk/q/ZfReOxCazBxZsPR4QWwqDOm/Y4/0y/Je8LdtBYX63z3eovAVaQYXW8VMtAn5XPEpmDr7Q797htIvTsMmgr2DgzCxFchtVy7VWFGKVle8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RG8Tupd7; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-234f17910d8so2241025ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 10:49:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752083396; x=1752688196; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pAZS8c+XOFL4yIQsOoZL8wVWpMH2f81j7GH/LPt+ShU=;
+        b=RG8Tupd7yeDy+gWjk8saZVIgp+b8iKmwS40alv0iUHyYmknXrR7xv9U3hgNiyOIs8f
+         xgAq8kjfwArGo5tcORB+h6c3t7VdLj79cayaJprX2BFFEbkyZKZHAZbibmTNDqtpYHDI
+         TWGmFQT/dIWbS3RAc+58x7eakfNgXCxL4IGJcv5z867a5X97FXPR3KdDVHQ5AAeVqazP
+         EKjnD403SDmmUDr2y6NBm6Mvifc2vG8FxAt4jD5pMCe6+ICSzXYKjM3z1UXt+kgqV80P
+         6sqoPMKHmYy8MIMvKghvv8DaRfU1C+mhozTpsml7nmYHg49DnYymogqNUZK1w5A4Mo4E
+         gvlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752080813; x=1752685613;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wh8yuaaHqpeTognyFmCrL3eiw6cJgczdQVoN39qvEms=;
-        b=emeGIFePRzGps/xuMSzwAlYLkAhpqQUtkxval1OIMARUh5n3sYCLe/3CaqNCj36pg3
-         bsul6ceDwLJdo2pPP7b2vTL9X5bwlzM2iFjHbMlryWhmbHDfAsj4HripyDEhSNn5fLSH
-         jbqEG8pJ74VaAA0CRG9278qb9Kluh8Deg2sZbfwu5syCtX+6af8Wl7oAPo8hh381Iv+E
-         UfHI38kwNsq6DXStIsGSSznlYfCAXQr6sCWCvEQ8YT+iFVqpkLLj972lx4qTn2GktEE/
-         nuOjEeR/ITXdUfqns3jfI8Rs2ticxsKnwdGiSJQi/8JGrk1w0BM5n8raEJfbPUx1eKoE
-         TFeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWRs7MYqYTfj/PH4kReL/eihrTh3Q9IeuFzlIOI0W4fWRvgZXlwDuASTSAgewYl0jKzrxczGL+otDDnnEoH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3jayun5EuagpLtbN9Qpd/o/ZlKSzuz/2RHR2tyJVlJAxTvJGa
-	G1AATTv1qP6j7Ug0PHcFATeOHY6I6M94kQMtYZyRXhJWqX1o2+24qwj6UxsfIRkAXyD9KVgGgh5
-	U6Xy2NyWKfwv/avGRXLZP+wjXzgaJUtsAXuUpAhqa/yKVh1qbcer69NDV9JoRpv4q13sB
-X-Gm-Gg: ASbGnctdIcysi+TaYTVCU47I1HXb2e1lQgteuTqhtbPSKBoGm3I2HnmGZtD2S6yJDKJ
-	FoFf3qLkPn+10F8OldQJzq9/uY+8+efuGa+zpfFBf/SliErX+OJOsfA2Um9fWENGPeKVgdU9z5V
-	VT0Rxh554dst1jsqVyLHVIiXS3x8HOiFXi31LywLxJwuNgnvRVifYYKimHUvzvV6qzAAZx7VZ7p
-	s/dgnPOppDtcXEd/q30BdbAxBwdrKvsWHN94dfWIiTYLD+XeFpxZi8VE1VE4d8Abbkj0TeEwR/m
-	hlyaoisONEWyTl4jDVVV/NMHohT+yZwTfgqE/oeV+QzkBqSmJp+KxTLuabxLq/PyTVM0QAKjo6e
-	LFv8=
-X-Received: by 2002:a05:620a:318b:b0:7d4:5d37:4169 with SMTP id af79cd13be357-7db7dd6a732mr172205285a.15.1752080812941;
-        Wed, 09 Jul 2025 10:06:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlkcqXa3BSEjEs9eL1FjQsITzwJ/IuC4Kr/+Nt103WxumFedL2DSA4y2nT1n/tQD+IDxMScg==
-X-Received: by 2002:a05:620a:318b:b0:7d4:5d37:4169 with SMTP id af79cd13be357-7db7dd6a732mr172202485a.15.1752080812237;
-        Wed, 09 Jul 2025 10:06:52 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6abfdb6sm1137405066b.78.2025.07.09.10.06.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 10:06:50 -0700 (PDT)
-Message-ID: <141abf1f-2739-4ccf-8a2b-3451c299ef49@oss.qualcomm.com>
-Date: Wed, 9 Jul 2025 19:06:47 +0200
+        d=1e100.net; s=20230601; t=1752083396; x=1752688196;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pAZS8c+XOFL4yIQsOoZL8wVWpMH2f81j7GH/LPt+ShU=;
+        b=tW1kDUhUHyEsSDcwmd4kAhG7Sf7lOrwMmDAL6c7DriZfaj0MN5wL9lNq4MOkiuYQXD
+         uvLn+i9+3uaoqrp/wDpHskDGMe3I5lgc0f11xtruBI6phcOjPN0wVrWprj52axb5rIzp
+         hb8MKElXOr5d51VlJylu8Dj43cn0YoKyexfZW1lhXIfvBRc5CAQ6apn2TvVXwdJrNKaN
+         3UCqSD1X+gRgFRihU5TJj+aqBUQlALJUTkT76O8+O9t+wm8qLfheikurQ9x6vQZnvYab
+         QuZTxQZAnIxDhfQTC15VAD8ck7z52IaNUCvNh19LJz8JvbMXMpdgUfdUN3vkgqpvJW0K
+         TlXw==
+X-Gm-Message-State: AOJu0Yw2RTJxQTy8eYVlb4GWR+OXFeZgrBevSO57K+8zPT5fOS4GTKUo
+	mgV5aL33z3LfcNu+W58NY85wS1sx3YBiTiVjpCk+cUXrOjjpadSsZAGLFongYGkDOEI=
+X-Gm-Gg: ASbGnctNVuwZ3ncPAomsmGh6uUsylBWOWJtgmSlxj7gcpLGZABNjI6CPMorzlFE2seE
+	yGpU1DEBkbQXrD9Z81Q1r4Uaxxt9m0HNNIaJpDipbT+YzYtYAtS2d1AUmkM/OrpPoI5emW5728M
+	GGvCRdqQ6lnLLa5B826+FTqdeSGwJ3iUTOa9O9xglcqCRu966K84fP4LMyQpbKbvLoT0ZzjgA9K
+	3Mk3X08kIJKsC3IxsPHctDLIn8pwSt7RbSnsKAI11nmZLOw3s9GdnorIiTsFGLw70AooQ7T8wxd
+	qZ/HPPaYLtxsCXIBWZFdMJpZfSRVOK8jVCYvUAvLVDeBG0XY8CbvS4BgB6o=
+X-Google-Smtp-Source: AGHT+IGSQWOZmDkajE7cVVeVfEIdL7s4JkrGA77ytx56rAzGuMiLP/gh8mVeauZZ93RVI3bqFn25Lw==
+X-Received: by 2002:a17:902:f78f:b0:234:8a4a:adad with SMTP id d9443c01a7336-23de24d9922mr9810515ad.26.1752083396036;
+        Wed, 09 Jul 2025 10:49:56 -0700 (PDT)
+Received: from x-wing.. ([49.207.58.60])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee475a3asm14797479a12.17.2025.07.09.10.49.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jul 2025 10:49:55 -0700 (PDT)
+From: Amit Pundir <amit.pundir@linaro.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Sanyog Kale <sanyog.r.kale@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+	linux-sound <linux-sound@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] Revert "soundwire: qcom: Add set_channel_map api support"
+Date: Wed,  9 Jul 2025 23:19:49 +0530
+Message-ID: <20250709174949.8541-1-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: add a sub-entry for the Qualcomm
- bluetooth driver
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Cc: Shuai Zhang <quic_shuaz@quicinc.com>,
-        Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250709144728.43313-1-brgl@bgdev.pl>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250709144728.43313-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: -ZwAo9wqCnVUgXZKDWTrA_qzARJgQh-i
-X-Authority-Analysis: v=2.4 cv=W7k4VQWk c=1 sm=1 tr=0 ts=686ea1ad cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8
- a=rZnPLpBaAhPpgNZSqhoA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: -ZwAo9wqCnVUgXZKDWTrA_qzARJgQh-i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDE1NCBTYWx0ZWRfX68b+H2SuE8HI
- LbwxrGx49PY7+4YP/8Ge5dFeDRIbhFZU1gLnc+DlnzHVHi2cgbkmqH2hH+oys7Qs02qEsFz/VOa
- hDQr0cQUJhhs8yc7bAOtqKHNMIus+ObM5vkFLXunTnTpxojonkZXi6sgWdTBii5bLQRY5Wef1CB
- lj8YmV/p9extrdviB6SlS3BWGbv5g3YLeiP4jCUQuWdNMAlWxQ9c1h85LMMxnpy7S9KoM/HLD+p
- xf/1LLXc7iWdLqeMrXvAKpATEG6qjLq64lrPnHmfO5zFVGg2hhCK5xiGobFJ74MviQqxdUFsFZy
- dX4zE550j3fr6PmLQxqPtzSjU2LKjEeYHXNgBcl4XWw2fK9QHZdqHKSyiYVBs+FSF+AbIdRgqcf
- sTNYn0YFnCpYwPcBqM45kpnD9rvgbaZWnbIyljog6WQiHI3IVsLdg5cRRi3gWmy8rpKFjVMo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_04,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 impostorscore=0 malwarescore=0 mlxscore=0
- adultscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507090154
+Content-Transfer-Encoding: 8bit
 
-On 7/9/25 4:47 PM, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Patches modifying drivers/bluetooth/hci_qca.c should be Cc'ed to the
-> linux-arm-msm mailing list so that Qualcomm maintainers and reviewers
-> can get notified about proposed changes to it. Add a sub-entry that adds
-> the mailing list to the list of addresses returned by get_maintainer.pl.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-> Changes in v2:
-> - add remaining QCA files (Dmitry)
-> 
->  MAINTAINERS | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index efba8922744a3..d018923ddd3eb 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -20464,6 +20464,13 @@ S:	Maintained
->  F:	Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
->  F:	drivers/net/wwan/qcom_bam_dmux.c
->  
-> +QUALCOMM BLUETOOTH DRIVER
-> +L:	linux-arm-msm@vger.kernel.org
-> +S:	Maintained
-> +F:	drivers/bluetooth/btqca.[ch]
-> +F:	drivers/bluetooth/btqcomsmd.c
-> +F:	drivers/bluetooth/hci_qca.c
+This reverts commit 7796c97df6b1b2206681a07f3c80f6023a6593d5.
 
-+ Jeff, maybe you/ath would like to be included there too?
+This patch broke Dragonboard 845c (sdm845). I see:
 
-Konrad
+    Unexpected kernel BRK exception at EL1
+    Internal error: BRK handler: 00000000f20003e8 [#1]  SMP
+    pc : qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom]
+    lr : snd_soc_dai_set_channel_map+0x34/0x78
+    Call trace:
+     qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom] (P)
+     sdm845_dai_init+0x18c/0x2e0 [snd_soc_sdm845]
+     snd_soc_link_init+0x28/0x6c
+     snd_soc_bind_card+0x5f4/0xb0c
+     snd_soc_register_card+0x148/0x1a4
+     devm_snd_soc_register_card+0x50/0xb0
+     sdm845_snd_platform_probe+0x124/0x148 [snd_soc_sdm845]
+     platform_probe+0x6c/0xd0
+     really_probe+0xc0/0x2a4
+     __driver_probe_device+0x7c/0x130
+     driver_probe_device+0x40/0x118
+     __device_attach_driver+0xc4/0x108
+     bus_for_each_drv+0x8c/0xf0
+     __device_attach+0xa4/0x198
+     device_initial_probe+0x18/0x28
+     bus_probe_device+0xb8/0xbc
+     deferred_probe_work_func+0xac/0xfc
+     process_one_work+0x244/0x658
+     worker_thread+0x1b4/0x360
+     kthread+0x148/0x228
+     ret_from_fork+0x10/0x20
+    Kernel panic - not syncing: BRK handler: Fatal exception
+
+Dan has also reported following issues with the original patch
+https://lore.kernel.org/all/33fe8fe7-719a-405a-9ed2-d9f816ce1d57@sabinyo.mountain/
+
+Bug #1:
+The zeroeth element of ctrl->pconfig[] is supposed to be unused.  We
+start counting at 1.  However this code sets ctrl->pconfig[0].ch_mask = 128.
+
+Bug #2:
+There are SLIM_MAX_TX_PORTS (16) elements in tx_ch[] array but only
+QCOM_SDW_MAX_PORTS + 1 (15) in the ctrl->pconfig[] array so it corrupts
+memory like Yongqin Liu pointed out.
+
+Bug 3:
+Like Jie Gan pointed out, it erases all the tx information with the rx
+information.
+
+Cc: <stable@vger.kernel.org> # v6.15+
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+ drivers/soundwire/qcom.c | 26 --------------------------
+ 1 file changed, 26 deletions(-)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 295a46dc2be7..0f45e3404756 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -156,7 +156,6 @@ struct qcom_swrm_port_config {
+ 	u8 word_length;
+ 	u8 blk_group_count;
+ 	u8 lane_control;
+-	u8 ch_mask;
+ };
+ 
+ /*
+@@ -1049,13 +1048,9 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
+ {
+ 	u32 reg = SWRM_DP_PORT_CTRL_BANK(enable_ch->port_num, bank);
+ 	struct qcom_swrm_ctrl *ctrl = to_qcom_sdw(bus);
+-	struct qcom_swrm_port_config *pcfg;
+ 	u32 val;
+ 
+-	pcfg = &ctrl->pconfig[enable_ch->port_num];
+ 	ctrl->reg_read(ctrl, reg, &val);
+-	if (pcfg->ch_mask != SWR_INVALID_PARAM && pcfg->ch_mask != 0)
+-		enable_ch->ch_mask = pcfg->ch_mask;
+ 
+ 	if (enable_ch->enable)
+ 		val |= (enable_ch->ch_mask << SWRM_DP_PORT_CTRL_EN_CHAN_SHFT);
+@@ -1275,26 +1270,6 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
+ 	return ctrl->sruntime[dai->id];
+ }
+ 
+-static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
+-				     unsigned int tx_num, const unsigned int *tx_slot,
+-				     unsigned int rx_num, const unsigned int *rx_slot)
+-{
+-	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
+-	int i;
+-
+-	if (tx_slot) {
+-		for (i = 0; i < tx_num; i++)
+-			ctrl->pconfig[i].ch_mask = tx_slot[i];
+-	}
+-
+-	if (rx_slot) {
+-		for (i = 0; i < rx_num; i++)
+-			ctrl->pconfig[i].ch_mask = rx_slot[i];
+-	}
+-
+-	return 0;
+-}
+-
+ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+ 			     struct snd_soc_dai *dai)
+ {
+@@ -1331,7 +1306,6 @@ static const struct snd_soc_dai_ops qcom_swrm_pdm_dai_ops = {
+ 	.shutdown = qcom_swrm_shutdown,
+ 	.set_stream = qcom_swrm_set_sdw_stream,
+ 	.get_stream = qcom_swrm_get_sdw_stream,
+-	.set_channel_map = qcom_swrm_set_channel_map,
+ };
+ 
+ static const struct snd_soc_component_driver qcom_swrm_dai_component = {
+-- 
+2.43.0
+
 
