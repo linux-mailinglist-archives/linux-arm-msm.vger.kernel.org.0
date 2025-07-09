@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-64237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03E7CAFE94A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:45:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 256F0AFE966
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:50:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45408562742
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 12:45:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 760DB16DAD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 12:50:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E5692DE200;
-	Wed,  9 Jul 2025 12:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 653442D9499;
+	Wed,  9 Jul 2025 12:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ngeRIbHE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JIHtqLsz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDF82DBF75
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 12:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2151A285;
+	Wed,  9 Jul 2025 12:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752065108; cv=none; b=K2n8ND9yxLRpL/HfPvQbrqXxlL0CbFAjCzl64sLyIpnkGnx61M2LbA7eN5PLXVZcpp3vwRHRQwJOEmcC5It+vZmCokuxDOvuZzDXD+F8ZUHvTgNFfgOMt/zN2dOQUTjoDqGTVmeb7lqthbbxs0eRydMo+Ff9aWApj21QupEMNzg=
+	t=1752065451; cv=none; b=SkD4oW+y5xa54vKSLE/VVeEimbmWJpYqhZG6ATf/qUdgS0xMGEjQrlDxKCh3auqhvtY8ZikKTR6Bdfv0sb3D9j2o9IVaA1jKbHwkWYcy6M0mTqIbAY5k62Zp2caSszqeGZWUIVEPKf2ubMckixXgOF2dkMagxgB0JoVawwY4Gok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752065108; c=relaxed/simple;
-	bh=BMt68/dhPsRTBHfMd9scnQZqEqDqvJGhFz6nlk1DgYg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nvzk1HiLPDDC8ORzgicsjOj6Ur4z1CKt8Nia+Rr6ygXeGPcDfz30PGfyKuOEbJkK1sW1uiltMJ9nIq9Gu1h80OuGBKSWWnJ9Id+1u8YXU6im7zPB62hAztmEIJQpFtQ/hhBfRK/H3rKhksTReUePG4Ze1czguAo/VPF//bnjhFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ngeRIbHE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569CABoT006230
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 12:45:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1752065451; c=relaxed/simple;
+	bh=1GB3eGj3uZ+JavVNrHayoVCttNq8ZKTq+hTeX3mhPdM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WOd82sT5JBWAaXov/QPpoN4qcwoN36WtyFcl6xsGfzD1mH31E1Emn77Fl6wLdop31TqtXs3Uw0bLTGdv7u87IMs2dpKKRjr6XzRyRsph+h+HJOpogSgyJqvo/R+gr7uApxhDKXpzHtAYM8IcrSIH02YmCeqBJrBdMskbOnOJfhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JIHtqLsz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569ColjS030293;
+	Wed, 9 Jul 2025 12:50:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OheOR6I3qu/WItpCT/Bc1nnGAPjs1ote7RaPpYQv5uM=; b=ngeRIbHEMwNApo4I
-	P0QLsUxHU0ALfMdLAo+rlFdwWo11FDACYH2wvK3UwH9ks7U8xRQJRSU5Bz1a/oF0
-	VhgxoAW3TX0P7jojHBlit2OUmoDG/jDM9Qf6Yrklb3Kzs+tweEbg4oeCweMlOH6a
-	kWRqXVyjVuQepgCQ/QUuZMpPrPm/4iwXqM08LpgC7jJvapjhoKFioIitZCAufiLF
-	T5WCVZajxJdtbNDGvimRXJO5g4RfHCWjTtDtU7GecXmpI1CgGtuXy6j7OHINQ2KK
-	TqD6UMAot0kJTegJqn7SU8DIksAiuzOcpQBvrzzldH1v1/D2PZTkL8ytzK6jnxbj
-	qmEuqw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu2bcc5s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 12:45:05 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b0e0c573531so3833730a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 05:45:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752065104; x=1752669904;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OheOR6I3qu/WItpCT/Bc1nnGAPjs1ote7RaPpYQv5uM=;
-        b=v1kxJtXXuL3WPbD+MTufYoog3aWkW2/qsPJe+txxLKWFI8CJ6+4haZXn9IrS4xC5KP
-         fPLo13/m/xgb/9FDA8m0Fhyk2TeECWdAzqoiZwCfMm0QjfbWzO+EDQ7uCBpxKotHqUMr
-         fRsWiHb/MPtIKeGIyCzXPZSrHfUpLXkkEkErclaoLaMiex7PfPWV2Tp31pbv4r+3jDAz
-         F7unk8pl59Eyd4PJmyvw5vsZhho4EJZ+nlAVNR9QedhUjkhXSE4d2DVhfHwrAO54d0PS
-         IKo9hrwUBZEwqAHeWx3TFXtd6Kwzl6PWqpjaC5ww1YJ8aingFQ7/jyZVaJaffFt/J7Pz
-         tXzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVnbPa2H4jvkH+QdZodZcwt6ueu3HeKqe7GLjle7qj4QSweXCSdPWkOIbrhQYlpZvgx+tvLHbjVYqlrtzYz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkaCusfVALs5vy2vAlu+jcqe3V7x5N4ogN2Xu9ePOSbI5um/li
-	Tz6ubKdVPYu75KKoWliB49oEIPdadx0QuGvekr5oXOdAp246mZ8koeFNHI/nYdycIAL3KHf5HFn
-	vbAU1wkdRjpCH7EeHo3YvAIxwF/+82U6ALVFjP+kHynVMuMoh/bq2uJzFfDTFCRAv5Rmn
-X-Gm-Gg: ASbGncvBurhlo9dlzfOjPkvKXGZ31uGi3YKc4hQtosm+SP4C2iOSBfXI0BShiSoPrAs
-	5T3xnRN1573wsV6oYmpqgeRQc7A0PdUnHMahohHPm2yvLmrEaYVQEe2oSW8dOV8fgobMoSdrwEt
-	SobwR0p9SX6GOsfqvgFIiAm+xtuqQCzwjFrLljOfQOsOl7hhFL/7YcOCZeP3cqqjdwxOf3ibrh9
-	RIh/vWkyewSzCdBKumLzMN3p+IWLUMn6sB9w/l3KzurifF56n5TS6iAStwKRQdhmwgETZCUfihr
-	C+YQbiDFiqeQ0/NtvHEbQdLdJIAikmIjq0g7ARd7AoW5sB2l6zf/
-X-Received: by 2002:a05:6a20:244b:b0:218:5954:1293 with SMTP id adf61e73a8af0-22cd7e8e202mr4648512637.34.1752065103807;
-        Wed, 09 Jul 2025 05:45:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5UtoAmFLb6WEXtJYsR5WFrd4objqmsX2gM1tvRWAxRXg4xOrY9rs2wqyWmMmyV8enoG7Wng==
-X-Received: by 2002:a05:6a20:244b:b0:218:5954:1293 with SMTP id adf61e73a8af0-22cd7e8e202mr4648454637.34.1752065103356;
-        Wed, 09 Jul 2025 05:45:03 -0700 (PDT)
-Received: from [10.218.37.122] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42ce64esm13333540b3a.153.2025.07.09.05.45.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 05:45:02 -0700 (PDT)
-Message-ID: <ec9dc92d-c38d-4905-96da-e34baf6bac7b@oss.qualcomm.com>
-Date: Wed, 9 Jul 2025 18:15:00 +0530
+	mwD9aLoccLoz1HrlSXC+FDGWhKPUL4knxYPjlEyY03M=; b=JIHtqLszNOPAtkxc
+	954KLy5q7eRINa87qqHRo2x+E6+rawmhC0qfVLdKnKI4atT1rf2fkCPuV5P3DCLP
+	2g4UIB++vLdumVvyCbDugVH9I3lZljEXtUUG+U2jtV/ka+FiFBj/Pk7tYcogizZn
+	QThEdCeT2NwmTizVBfMagWJyESlDOYMA8UwjqgUtsNHbIZXhfbZk3XlWLpQq6QDQ
+	lDlxmCAo0NPWyPNzrNlPuJW2B8Es4KqfKxaMzXXZ4vCKiKe/xvJeUvkBGPZ2eo2G
+	4v48gy9aG0BGuuCWO+BLh5hTl+Pp6+rEgP4bOYO4l0oF81bN5uNKDmRfy7IUaoI7
+	30zvzg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg0ygw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 09 Jul 2025 12:50:47 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 569Colft009341
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 9 Jul 2025 12:50:47 GMT
+Received: from [10.218.37.122] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 9 Jul
+ 2025 05:50:44 -0700
+Message-ID: <21bb1db4-f84b-4d15-876a-cf2635f7fada@quicinc.com>
+Date: Wed, 9 Jul 2025 18:20:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,159 +65,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] bus: mhi: host: pci_generic: Remove MHI driver and
- ensure graceful device recovery
-To: Vivek.Pernamitta@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+Subject: Re: [PATCH 5/5] bus: host: mhi: Need to honor sys_err at power_up
+ state
+To: <Vivek.Pernamitta@quicinc.com>, Manivannan Sadhasivam <mani@kernel.org>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
         Vivek Pernamitta <quic_vpernami@quicinc.com>
 References: <20250703-sriov_vdev_next-20250630-v1-0-87071d1047e3@quicinc.com>
- <20250703-sriov_vdev_next-20250630-v1-4-87071d1047e3@quicinc.com>
+ <20250703-sriov_vdev_next-20250630-v1-5-87071d1047e3@quicinc.com>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250703-sriov_vdev_next-20250630-v1-4-87071d1047e3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20250703-sriov_vdev_next-20250630-v1-5-87071d1047e3@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDExNCBTYWx0ZWRfX4I7io+GHv+jp
- apoNBTdajeyuBYPkuyi5+Awgm8FQvmwL0F335G1OqEMG5Xm9JEs1q+VtAWCJKj4XuWZbYQ3Uttk
- WFDYys0rODOVDIos7zy0ABqUNgjKPmmADHN4uoQ8we53E1DpF98PZni5hI8rIfwldd2d3xOdDLh
- EOKAeQDy823SnhwEefrZqMMZRtdzQ7Rkx8xcO6FgrYSfraIOwgPjrwOmhrKnnvrlbXzBt87SwHl
- qXD2XYSwwa29LjNfbLifTpMDvQMLXs2Zns5IyNkbWZeUwzaC0TFcrI/4769fYZxfOsQ2bdukBtO
- hRhG2kEJ1GyyYcDRPtqVLf9g1krjT7N3yAykGpK76b3ejJVTXJTvHTOGxwVzOJwhCrZccswLoVu
- 8Sa6iiDmiCFuSsWJk/zurd+b+gqtbs25a4YLI5hnbD0G9LJemE/P90+FZ+p7JCa1B2GxmYwY
-X-Proofpoint-ORIG-GUID: C3vTALVI6OBFEZxnvN7M3HWzas9sfeOP
-X-Proofpoint-GUID: C3vTALVI6OBFEZxnvN7M3HWzas9sfeOP
-X-Authority-Analysis: v=2.4 cv=erTfzppX c=1 sm=1 tr=0 ts=686e6451 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=-hW8E1-Tuph7HjTkc5sA:9
- a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=686e65a7 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
+ a=DqsCIWa9XunOjBexoO8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: K6fTHrSlIp23f3ZbwAtS3w-OJ4Bq8rL1
+X-Proofpoint-GUID: K6fTHrSlIp23f3ZbwAtS3w-OJ4Bq8rL1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDExNSBTYWx0ZWRfX+rTD4N8MwL9P
+ 5BwlYHjoHsjLI9IeF5nFU6P7U8vO45qSceKFYSiHLYC3Gygkh5jswqMM0NiI5xbHVZTd1yy8zWx
+ +7OnTDKkwHjNnofBvoBE3P8Q9Y3iL6xbjdfmh7x1fChkka7sB+zWE5GgB80vDM0aJ39ziWX4Tuc
+ uVpYajL/GMCikbBy+9cqV2a7Ff05Q1sWn3YAnc+qfviwZLxDKKPo2vqkB1dzvfGIVjkDC6vY9U8
+ xD7Mceo0/qgay3NSrNl0N9W4FnME0mD6QH5kMytByxlRtJPdbPC2GMciKdEBKV8IWaCl9w0nVAH
+ Y0c3k7oRAfXiO543jl3qi7UXr9Pe1tdb3MzudSeoEqYJn10Qmf8/pI6etBixRsODeQc9JqPv6ih
+ Do/QTzWWYg287gQ3BBsk6+U1bX94sVyHj1hZCeHF6iqFEUjVJS+udL8BD3jCdiZnoXurbEXw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507090114
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090115
 
 
 
 On 7/3/2025 8:39 PM, Vivek.Pernamitta@quicinc.com wrote:
 > From: Vivek Pernamitta <quic_vpernami@quicinc.com>
 > 
-> When the MHI driver is removed from the host side, it is crucial to ensure
-> graceful recovery of the device. To achieve this, the host driver will
-> perform the following steps:
+> In mhi_sync_power_up() host waits for device to enter in to mission mode
+> but SYS_ERR is an valid state, If device sends an SYS_ERR host will bail
+> out for wait_event_timeout() as MHI is in error state and calls
+> mhi_power_down which will teardown MHI driver probe.
+Add "if MHI is tear downed sys err can't be serviced and mhi can't
+be recovered".
 > 
-> 1. Disable SRIOV for any SRIOV-enabled devices on the Physical Function.
-> 2. Perform a SOC_RESET on Physical Function (PF).
-> 
-> Disabling SRIOV ensures that all virtual functions are properly shut down,
-> preventing any potential issues during the reset process. Performing
-> SOC_RESET on each physical function guarantees that the device is fully
-> reset and ready for subsequent operations.
+> If there is any SYS_ERR, sys_err handler needs to process SYS_ERR state
+> and queues the next state transition for device to bring in to Mission
+> mode, so mhi_sync_power_up() will wait for device to enter in to
+s/will wait for/needs to wait for
+> mission mode.
 > 
 > Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
 > ---
->   drivers/bus/mhi/host/pci_generic.c | 33 +++++++++++++++++++++++++++++++--
->   1 file changed, 31 insertions(+), 2 deletions(-)
+>   drivers/bus/mhi/host/internal.h | 2 ++
+>   drivers/bus/mhi/host/pm.c       | 2 +-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 938f37d306a18b9a47f302df85697f837c225f0d..ff9263d5dc4b54956c6ca4403e7b0b2429d0700e 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -45,6 +45,8 @@
->    * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
->    *		   of inband wake support (such as sdx24)
->    * @no_m3: M3 not supported
-> + * @bool reset_on_driver_unbind: Set true for devices support SOC reset and
-> + *				 perform it when unbinding driver
->    */
->   struct mhi_pci_dev_info {
->   	const struct mhi_controller_config *config;
-> @@ -58,6 +60,7 @@ struct mhi_pci_dev_info {
->   	unsigned int mru_default;
->   	bool sideband_wake;
->   	bool no_m3;
-> +	bool reset_on_driver_unbind;
->   };
->   
->   #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> @@ -300,6 +303,7 @@ static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
->   	.dma_data_width = 32,
->   	.sideband_wake = false,
->   	.no_m3 = true,
-> +	.reset_on_driver_unbind = true,
->   };
->   
->   static const struct mhi_channel_config mhi_qcom_sa8775p_channels[] = {
-> @@ -970,6 +974,7 @@ struct mhi_pci_device {
->   	struct work_struct recovery_work;
->   	struct timer_list health_check_timer;
->   	unsigned long status;
-> +	bool reset_on_driver_unbind;
->   };
->   
->   static int mhi_pci_read_reg(struct mhi_controller *mhi_cntrl,
-> @@ -1270,6 +1275,11 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   	mhi_cntrl->mru = info->mru_default;
->   	mhi_cntrl->name = info->name;
->   
-> +	/* Assign reset functionalities only for PF */
-> +	if (pdev->is_physfn)
-> +		mhi_pdev->reset_on_driver_unbind = info->reset_on_driver_unbind;
-> +
-> +
->   	if (info->edl_trigger)
->   		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->   
-> @@ -1336,7 +1346,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   	return err;
->   }
->   
-> -static void mhi_pci_remove(struct pci_dev *pdev)
-> +static void mhi_pci_resource_deinit(struct pci_dev *pdev)
->   {
->   	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
->   	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> @@ -1352,13 +1362,32 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->   	/* balancing probe put_noidle */
->   	if (pci_pme_capable(pdev, PCI_D3hot))
->   		pm_runtime_get_noresume(&pdev->dev);
-> +}
->   
-> +static void mhi_pci_remove(struct pci_dev *pdev)
-> +{
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	/* Disable SRIOV */
-> +	pci_disable_sriov(pdev);
-> +	mhi_pci_resource_deinit(pdev);
-> +	if (mhi_pdev->reset_on_driver_unbind) {
-> +		dev_info(&pdev->dev, "perform SOC reset\n");
-> +		mhi_soc_reset(mhi_cntrl);
-> +	}
-> +
-> +	/* Perform FLR if supported*/
-Misleading comment.
->   	mhi_unregister_controller(mhi_cntrl);
->   }
->   
->   static void mhi_pci_shutdown(struct pci_dev *pdev)
->   {
-> -	mhi_pci_remove(pdev);
-why can't we use this same as mhi_pci_remove.
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 1054e67bb450d2634771d092ed42bbdd63380472..00e46176654d8dc2f28b1535d9ef68233266ff3b 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -170,6 +170,8 @@ enum mhi_pm_state {
+>   							MHI_PM_IN_ERROR_STATE(pm_state))
+>   #define MHI_PM_IN_SUSPEND_STATE(pm_state)		(pm_state & \
+>   							(MHI_PM_M3_ENTER | MHI_PM_M3))
+> +#define MHI_PM_IN_BAD_STATE(pm_state)			((pm_state == MHI_PM_FW_DL_ERR) || \
+> +							(pm_state >= MHI_PM_SYS_ERR_FAIL))
+MHI_PM_IN_UNRECOVERABLE_ERROR ?
 
 - Krishna Chaitanya.
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	mhi_pci_resource_deinit(pdev);
-> +	mhi_unregister_controller(mhi_cntrl);
->   	pci_set_power_state(pdev, PCI_D3hot);
->   }
 >   
+>   #define NR_OF_CMD_RINGS					1
+>   #define CMD_EL_PER_RING					128
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 2af34980e14250cada75c981b690bc9581715212..ee50efc57cf713a7cf38a670cb49ab09a83b30ee 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -1280,7 +1280,7 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+>   		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+>   	wait_event_timeout(mhi_cntrl->state_event,
+>   			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+> -			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> +			   MHI_PM_IN_BAD_STATE(mhi_cntrl->pm_state),
+>   			   msecs_to_jiffies(timeout_ms));
+>   
+>   	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
 > 
 
