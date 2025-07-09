@@ -1,217 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-64277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC9F0AFF022
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 19:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C98EDAFF066
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 20:04:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B31E91C83728
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 17:50:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40C371889053
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 18:04:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D15823506E;
-	Wed,  9 Jul 2025 17:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F6823ABA9;
+	Wed,  9 Jul 2025 18:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RG8Tupd7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KnupimiL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41CB235055
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 17:49:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1F022330F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 18:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752083398; cv=none; b=uIqOPodxU81qnS+oZW8fsh4TSD4ylcBevPpHk+rvEJVKuSFU9T9wrRTnbLCqzc+rzh+/vG8Jo2lXLZSwc3OdnI9KGkh4Qm29gnnExpEPHjpUpi7OSIYFeVJwrbYsQmFNOVd9R0rluUBUng2tbRjVDPimeq3Nnlu3XX3hanK5brg=
+	t=1752084219; cv=none; b=ghgTOwoua/xbZO2fYd1k5LBWZDJoBKRmUjK0bYfRk9aZsaw4vQP7h261mfejOMF8iNgzw1oRagmrfq/mTBDB5LzIsu4IkWs/W+FKorIW1AL90tlx7mnNMfTQPPXkCIl8bBQcrZOMzBwomZgtI77SvmbYEqUSpMc7wxX+3L5B2TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752083398; c=relaxed/simple;
-	bh=fp13JmlXHdq/nQ6HLVzuaBdtpFF8aCP1PCIbRVjcwvM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Iqw8o33WH97/D6QDEKKedwD7l+2r90Gwytb06n7GB5tfUR18eENuxmfg4z2vj6Zk/q/ZfReOxCazBxZsPR4QWwqDOm/Y4/0y/Je8LdtBYX63z3eovAVaQYXW8VMtAn5XPEpmDr7Q797htIvTsMmgr2DgzCxFchtVy7VWFGKVle8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RG8Tupd7; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-234f17910d8so2241025ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 10:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752083396; x=1752688196; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pAZS8c+XOFL4yIQsOoZL8wVWpMH2f81j7GH/LPt+ShU=;
-        b=RG8Tupd7yeDy+gWjk8saZVIgp+b8iKmwS40alv0iUHyYmknXrR7xv9U3hgNiyOIs8f
-         xgAq8kjfwArGo5tcORB+h6c3t7VdLj79cayaJprX2BFFEbkyZKZHAZbibmTNDqtpYHDI
-         TWGmFQT/dIWbS3RAc+58x7eakfNgXCxL4IGJcv5z867a5X97FXPR3KdDVHQ5AAeVqazP
-         EKjnD403SDmmUDr2y6NBm6Mvifc2vG8FxAt4jD5pMCe6+ICSzXYKjM3z1UXt+kgqV80P
-         6sqoPMKHmYy8MIMvKghvv8DaRfU1C+mhozTpsml7nmYHg49DnYymogqNUZK1w5A4Mo4E
-         gvlw==
+	s=arc-20240116; t=1752084219; c=relaxed/simple;
+	bh=27TDKvCzp0syh0EGTxobI8FWbGxi4OXzg+TEq6GiL0s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ukBIR5pHwYhyllOPhxmCGpvnTzRxaOh+e7HO+p7p+KHtVH4F/nhaVO5dW9rg8g3OMk2e6zyuac4kBdm6q1rPyHI8Z/Iu3lfepK1Ee98Lb+a43UC/BJ/64Vp2TFL9yjvGtpQrdZDYlMFEU2tZKnX6ES2jxf2Rz8C1Tf48yo3eKqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KnupimiL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569ColK8030233
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 18:03:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2uc92O1GGv7emWG1TYEn9fypVsBaY5TnEeVaY/0T7/w=; b=KnupimiL4EZalts1
+	9iEjxmVspLViNkxnTUsyCodjfZClzaw3RAAZ2hh6QRgRGnyn1GoKdQZidsvNJHYN
+	Z7/VxAuaKpUtt74ZD+sV0H64fNlFc5S0Yd/FPiazPMl/e0V7hoqjbc5cJLu2kySp
+	7XUXkBuvInznLXZjQPSYeQDgGitwILYrSCJRWt//urOBqwyfdi8imRlHHWnrtTBo
+	MeSHWjhAulRW7flXAk5sA6yGYoCPCxRjjtv0S25CDHWIJ6+uRWzW4mTr47k5zDpu
+	9GsTKJHcr+xuVJte38F/oNEiHARwn1Tmmpzc1opgSA8fRa0kksABdaEGanDNpou6
+	KHMHmg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg20hp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 18:03:36 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7dbce38d456so3086485a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 11:03:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752083396; x=1752688196;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pAZS8c+XOFL4yIQsOoZL8wVWpMH2f81j7GH/LPt+ShU=;
-        b=tW1kDUhUHyEsSDcwmd4kAhG7Sf7lOrwMmDAL6c7DriZfaj0MN5wL9lNq4MOkiuYQXD
-         uvLn+i9+3uaoqrp/wDpHskDGMe3I5lgc0f11xtruBI6phcOjPN0wVrWprj52axb5rIzp
-         hb8MKElXOr5d51VlJylu8Dj43cn0YoKyexfZW1lhXIfvBRc5CAQ6apn2TvVXwdJrNKaN
-         3UCqSD1X+gRgFRihU5TJj+aqBUQlALJUTkT76O8+O9t+wm8qLfheikurQ9x6vQZnvYab
-         QuZTxQZAnIxDhfQTC15VAD8ck7z52IaNUCvNh19LJz8JvbMXMpdgUfdUN3vkgqpvJW0K
-         TlXw==
-X-Gm-Message-State: AOJu0Yw2RTJxQTy8eYVlb4GWR+OXFeZgrBevSO57K+8zPT5fOS4GTKUo
-	mgV5aL33z3LfcNu+W58NY85wS1sx3YBiTiVjpCk+cUXrOjjpadSsZAGLFongYGkDOEI=
-X-Gm-Gg: ASbGnctNVuwZ3ncPAomsmGh6uUsylBWOWJtgmSlxj7gcpLGZABNjI6CPMorzlFE2seE
-	yGpU1DEBkbQXrD9Z81Q1r4Uaxxt9m0HNNIaJpDipbT+YzYtYAtS2d1AUmkM/OrpPoI5emW5728M
-	GGvCRdqQ6lnLLa5B826+FTqdeSGwJ3iUTOa9O9xglcqCRu966K84fP4LMyQpbKbvLoT0ZzjgA9K
-	3Mk3X08kIJKsC3IxsPHctDLIn8pwSt7RbSnsKAI11nmZLOw3s9GdnorIiTsFGLw70AooQ7T8wxd
-	qZ/HPPaYLtxsCXIBWZFdMJpZfSRVOK8jVCYvUAvLVDeBG0XY8CbvS4BgB6o=
-X-Google-Smtp-Source: AGHT+IGSQWOZmDkajE7cVVeVfEIdL7s4JkrGA77ytx56rAzGuMiLP/gh8mVeauZZ93RVI3bqFn25Lw==
-X-Received: by 2002:a17:902:f78f:b0:234:8a4a:adad with SMTP id d9443c01a7336-23de24d9922mr9810515ad.26.1752083396036;
-        Wed, 09 Jul 2025 10:49:56 -0700 (PDT)
-Received: from x-wing.. ([49.207.58.60])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee475a3asm14797479a12.17.2025.07.09.10.49.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 10:49:55 -0700 (PDT)
-From: Amit Pundir <amit.pundir@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Sanyog Kale <sanyog.r.kale@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-	linux-sound <linux-sound@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] Revert "soundwire: qcom: Add set_channel_map api support"
-Date: Wed,  9 Jul 2025 23:19:49 +0530
-Message-ID: <20250709174949.8541-1-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1752084214; x=1752689014;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2uc92O1GGv7emWG1TYEn9fypVsBaY5TnEeVaY/0T7/w=;
+        b=J2k9l+XQzKwzQ2Gnhn7aaw/hRMBq2l+F/ktnnVXj3InA7gj+h/14Fr0EME9J0X+z/E
+         6PTykSRYyS5ZDry9dIfj4jRVuiJfHFfxlNWM59zlYFnCTm/mHi/L/cNFQyR7AQ0GtJuU
+         YxV6kuDIN8L3ayMZ/viYp/ljfKc7jb8UaoHzVkIUwh3B1OWZ7t6Afq/CmBGsyjRuiCHc
+         Of/euBd/gfou81wp0YeU68zd8IxLUwMYqyZtvsSub/ujiRHIZ49tyJZRioinQHzki1er
+         9ysaYjrkq5qLGe4uQxIZ2syaXPAvmqPjeDADrRH3gEVbfs/J7aEyQx1yKFdlu01/Pv4j
+         0Dow==
+X-Forwarded-Encrypted: i=1; AJvYcCXPi2a9HFIYO51ylqNW0ObfST0Y1JzsndC23vf2L0P6V1daXMZQwYPaxxVOxei1wLYevqXinhX+Qvu4dp89@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/00OtBuV3Kf3ntulUXK4nTSHGwWCSArJ9YR07sofqomvvRByA
+	1BDS7PpLylCXyZW+R9Gkd+SXVAuBkJ6mW091Q941kLeFSN3Y8FyNARgbJnkqo+csO9Qeg9hC8+r
+	o8KxDbxFcYKaCsDuQxGL5GvOS6ctRS50QtPW9VihqZ85DBWsYaCEA7RaYAMX30CavPUoK3Mxtp4
+	2L
+X-Gm-Gg: ASbGncuAXqzmmsyxvjfoBcBrxkaUaqGnaYTHIeTG7ep8/N3qkStwSCXIbo1Dm3N1A3G
+	iohxRXY0U1K62+G4cAuZXrHBMS6+kUYASDnxn1xUWo4THeAEhBuKrY4mXGv4ELCr5SXWBnVEMsn
+	LqjsDTK9szwAISqRal116oxhKzO4xuGvTVBVQQq+0BTmjQfsGodTigugEQbnga26cj0pnT+cyID
+	PPJTVqJ+AXgTqjNMa8M2661EcFJAnoY9opGYFgv9A0smK2EWy6+7tLTMQRgSBQc0ru/hw6YzFwo
+	4DlnMdBtBhIrpaVQmRqTOhsrAZI+so+Y2IlaQqr8hNyBkldUEOirGoiCZLgO0bYWIkhROrJ6fa4
+	1ioY=
+X-Received: by 2002:a05:622a:1491:b0:48a:80e5:72be with SMTP id d75a77b69052e-4a9e9db4837mr1964111cf.2.1752084214601;
+        Wed, 09 Jul 2025 11:03:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHT4JbzQDFlByDuD7hy/m9S00Zb2j1K9B+NMiIKO0svgqjP5RylRzZ8vUZfB5MYmmWt5DXtBg==
+X-Received: by 2002:a05:622a:1491:b0:48a:80e5:72be with SMTP id d75a77b69052e-4a9e9db4837mr1963781cf.2.1752084214116;
+        Wed, 09 Jul 2025 11:03:34 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fcb8c80c4sm8994918a12.75.2025.07.09.11.03.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Jul 2025 11:03:33 -0700 (PDT)
+Message-ID: <68dfc6b7-1083-44dc-bdaf-4fc09e944671@oss.qualcomm.com>
+Date: Wed, 9 Jul 2025 20:03:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/12] pinctrl: qcom: mark the `gpio` and `egpio` pins
+ function as non-strict functions
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexey Klimov <alexey.klimov@linaro.org>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Sean Wang <sean.wang@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
+ <20250709-pinctrl-gpio-pinfuncs-v2-11-b6135149c0d9@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250709-pinctrl-gpio-pinfuncs-v2-11-b6135149c0d9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=686eaef8 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=XSwnDwznb6xmaXktW1IA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: ufEfVa8ycSo1mcXqldZWEtdccfnLbbpl
+X-Proofpoint-GUID: ufEfVa8ycSo1mcXqldZWEtdccfnLbbpl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDE2MyBTYWx0ZWRfXxA6x6ZOTQLse
+ EnSg7iK+IKDT9feZHYEJH7c3oXxdTh117HB/JyQkF2WlJBwSVW4HwemnKplTaVCm37XUA788cp5
+ bBgzpgxgYmTjFe0krXBV+6huExS6NaVnAWA4/Fgxz87H+vqzNj7jsC8YIg0lHyPeX33JbYeXCQB
+ d3T8Zxyfn+5F4g3TPUDSOHal3PI/Xw+9wR8iUmj7FZfoAE1oXZbfWcvEclhROwlgqnWf50NQz9E
+ 2HjKvjYMcyRgJ9If5cFOjT8K7SeyhcpY97FS9u3JwG7UmvY8D56oDIK7+QwXjvm9v9oSXm6eTkf
+ e5i3kY5yGQvwF1yIML8SUItko4jtkOCzHLUOwRyzqnDgLvw2RBj7IR7KvRJXNYSWo6fskyCMiVx
+ UemhRnw2Bmm2k7uGrUZePM2dX45drBykUmGcBPY6RmEBtgfZ5C7YJ7KW6sQ3ODF6dKstS5bv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-09_04,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxlogscore=852 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090163
 
-This reverts commit 7796c97df6b1b2206681a07f3c80f6023a6593d5.
+On 7/9/25 4:39 PM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Allow pins muxed to the "gpio" or "egpio" function to be requested as
+> GPIOs even if pinmux_ops say the controller should be strict.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
 
-This patch broke Dragonboard 845c (sdm845). I see:
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-    Unexpected kernel BRK exception at EL1
-    Internal error: BRK handler: 00000000f20003e8 [#1]  SMP
-    pc : qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom]
-    lr : snd_soc_dai_set_channel_map+0x34/0x78
-    Call trace:
-     qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom] (P)
-     sdm845_dai_init+0x18c/0x2e0 [snd_soc_sdm845]
-     snd_soc_link_init+0x28/0x6c
-     snd_soc_bind_card+0x5f4/0xb0c
-     snd_soc_register_card+0x148/0x1a4
-     devm_snd_soc_register_card+0x50/0xb0
-     sdm845_snd_platform_probe+0x124/0x148 [snd_soc_sdm845]
-     platform_probe+0x6c/0xd0
-     really_probe+0xc0/0x2a4
-     __driver_probe_device+0x7c/0x130
-     driver_probe_device+0x40/0x118
-     __device_attach_driver+0xc4/0x108
-     bus_for_each_drv+0x8c/0xf0
-     __device_attach+0xa4/0x198
-     device_initial_probe+0x18/0x28
-     bus_probe_device+0xb8/0xbc
-     deferred_probe_work_func+0xac/0xfc
-     process_one_work+0x244/0x658
-     worker_thread+0x1b4/0x360
-     kthread+0x148/0x228
-     ret_from_fork+0x10/0x20
-    Kernel panic - not syncing: BRK handler: Fatal exception
+heads up for +Luca, I'm not sure how your Milos addition will
+stack up chronologically
 
-Dan has also reported following issues with the original patch
-https://lore.kernel.org/all/33fe8fe7-719a-405a-9ed2-d9f816ce1d57@sabinyo.mountain/
-
-Bug #1:
-The zeroeth element of ctrl->pconfig[] is supposed to be unused.  We
-start counting at 1.  However this code sets ctrl->pconfig[0].ch_mask = 128.
-
-Bug #2:
-There are SLIM_MAX_TX_PORTS (16) elements in tx_ch[] array but only
-QCOM_SDW_MAX_PORTS + 1 (15) in the ctrl->pconfig[] array so it corrupts
-memory like Yongqin Liu pointed out.
-
-Bug 3:
-Like Jie Gan pointed out, it erases all the tx information with the rx
-information.
-
-Cc: <stable@vger.kernel.org> # v6.15+
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
- drivers/soundwire/qcom.c | 26 --------------------------
- 1 file changed, 26 deletions(-)
-
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 295a46dc2be7..0f45e3404756 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -156,7 +156,6 @@ struct qcom_swrm_port_config {
- 	u8 word_length;
- 	u8 blk_group_count;
- 	u8 lane_control;
--	u8 ch_mask;
- };
- 
- /*
-@@ -1049,13 +1048,9 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
- {
- 	u32 reg = SWRM_DP_PORT_CTRL_BANK(enable_ch->port_num, bank);
- 	struct qcom_swrm_ctrl *ctrl = to_qcom_sdw(bus);
--	struct qcom_swrm_port_config *pcfg;
- 	u32 val;
- 
--	pcfg = &ctrl->pconfig[enable_ch->port_num];
- 	ctrl->reg_read(ctrl, reg, &val);
--	if (pcfg->ch_mask != SWR_INVALID_PARAM && pcfg->ch_mask != 0)
--		enable_ch->ch_mask = pcfg->ch_mask;
- 
- 	if (enable_ch->enable)
- 		val |= (enable_ch->ch_mask << SWRM_DP_PORT_CTRL_EN_CHAN_SHFT);
-@@ -1275,26 +1270,6 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
- 	return ctrl->sruntime[dai->id];
- }
- 
--static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
--				     unsigned int tx_num, const unsigned int *tx_slot,
--				     unsigned int rx_num, const unsigned int *rx_slot)
--{
--	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
--	int i;
--
--	if (tx_slot) {
--		for (i = 0; i < tx_num; i++)
--			ctrl->pconfig[i].ch_mask = tx_slot[i];
--	}
--
--	if (rx_slot) {
--		for (i = 0; i < rx_num; i++)
--			ctrl->pconfig[i].ch_mask = rx_slot[i];
--	}
--
--	return 0;
--}
--
- static int qcom_swrm_startup(struct snd_pcm_substream *substream,
- 			     struct snd_soc_dai *dai)
- {
-@@ -1331,7 +1306,6 @@ static const struct snd_soc_dai_ops qcom_swrm_pdm_dai_ops = {
- 	.shutdown = qcom_swrm_shutdown,
- 	.set_stream = qcom_swrm_set_sdw_stream,
- 	.get_stream = qcom_swrm_get_sdw_stream,
--	.set_channel_map = qcom_swrm_set_channel_map,
- };
- 
- static const struct snd_soc_component_driver qcom_swrm_dai_component = {
--- 
-2.43.0
-
+Konrad
 
