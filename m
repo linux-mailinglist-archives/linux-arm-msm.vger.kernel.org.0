@@ -1,178 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-64158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9028FAFE460
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:41:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DCB7AFE46A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:42:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEDD81758CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:41:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 778535A0313
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:42:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D5228AB03;
-	Wed,  9 Jul 2025 09:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8302D286D72;
+	Wed,  9 Jul 2025 09:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g58X1YQw"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="5Gjt2r3L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BC128726B;
-	Wed,  9 Jul 2025 09:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519C3286D6B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 09:40:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752053919; cv=none; b=ZvJQqA2icaexkemvuiNHPmGkXd5+U2R8FFFFHxyN0i5+EzD7LMY3h7QaZA3AtxiDlHFWDwGAxxwYd7QQ14a50WB0T+EWarUMPDaO4Ly7MzFkhHtAwrIJw4XLzJVtZqNAaH8n/hr7eWiqeetPyXT/a0/fkCIE0c/0AZmEPrEfQ78=
+	t=1752054048; cv=none; b=iPsi70HoC41j5cosr4kKf6FNgP92qGDGqH+PvBu+B/xN0TijmbzxXl9mxRCzkzU4mFxtsmiuJcS+KYuOmokmMt9JmkqQ4NRpR6kUYwMTuAiG5EioGmjPVQSnxckNXDDL1GpYO4p7VffzZoRV4R31azYKutRTr4LP8FLYZKfgUjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752053919; c=relaxed/simple;
-	bh=nKrExGfUFm5UUyYKFjmpxVWFJDdKwdrVIjxI8q+BMAw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=HA5IZlape/Rim+Xd+7EtEYuxprRf8D6xwda8H4LsINTDV13N0ncG8FVe/v87KmF6LtezodYVipAqopD9tqDeh0qbVqn05R8ADnZWbvXlbo36aJXhUs6ov9F9scCx+zds1IEr9FCHgiWQdeFJmi8udgaVoL8aDJSPpzr1Opyv9Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g58X1YQw; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5697jrk2010481;
-	Wed, 9 Jul 2025 09:38:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	U4bVqrO1/mJGgpF02jT42iKFcHDR+XFzd6jBC2UdwKE=; b=g58X1YQwE+b+yG6k
-	WBax4VTV3TseyAYQGeEpvz5/N6LbECaQdeItY7U/e1IV7GkKgYCZGiunnE5JHTQf
-	fE2kYTNJHql8UQvSlVBBqIZvHzSnemarkR6xfUftZHhmgE5SxgILU2RF0Qk6HcRV
-	Q4AfMRyXF8VQy5E1T66OT9vaiYIL9ZTR2dTienflkQmWNLnQPvnvel/XetgVPvdo
-	gfg/10uJA4ZQi87yHB5e6IGyDRMbYlgXMMP1HWkspyiN9tg1BT4nQjwgzUA2yrCo
-	jZUFCgP9Ay9dwsjYEFVHc359vHXt/SyvrDEBzM0FilqSYJczYPSiZgAlmwXA6cS0
-	8puzPA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smap0bxj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Jul 2025 09:38:34 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5699cX3l027277
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Jul 2025 09:38:33 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Wed, 9 Jul 2025 02:38:28 -0700
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Date: Wed, 9 Jul 2025 15:07:29 +0530
-Subject: [PATCH 8/8] dt-bindings: clock: qcom,sm4450-dispcc: Reference
- qcom,gcc.yaml
+	s=arc-20240116; t=1752054048; c=relaxed/simple;
+	bh=0tR/3Miogl+S1zt90pDdmQ9mIVpvEnFEC8NUxBegYcA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=ewipxGuwV1kxW6hZnTauD3h+lItfCboLazahsaVifRw6hNjmXY76fvJ7CSqG8s7GG743c8Mhm/gHSKWR5RxRtIv1X4BXKN8EQYFhzYp8PfCT+ZhoHfwX2GU9LR16ATJwsl3FVFxZtKt7O3EukfaLd72HJtMw0gQKayn1XIotLnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=5Gjt2r3L; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ae0dffaa8b2so1042763566b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 02:40:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1752054044; x=1752658844; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IYVZhzdcLS888rj/FaoDivOZnyY0T9daEjwNUmKwLFQ=;
+        b=5Gjt2r3LoVBZofErmVkRIPDYPhnFdBxIh1EY7bMltxiVJIgazc5gMSJvf1qpVvoI0J
+         WWr4ybf841ewgYj6yLtR518ku9XFnHSrpoRvtcPH+6mH7+82Ch8V8phzyGa1QpGX1erQ
+         Y5m9Z04c+5jlZ1Q2f1g1FuyNpFXBIJ1wEGcp7bx3imh7Plh1VjGLkzxzuUjzMopiBHB/
+         sjSRVdyWFct0Yd3Wh+w3lxU1R8NC4kOHYIGORMvOqy0eTsSuPdRPn7k7xQHRNd4gMpG3
+         DYQYcv6dKzXcdDL2S5/j4JnR+aGMSW0E8QrHoreaEUvGy4T8htIsYntH2faoNGtNfpAk
+         /Azw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752054044; x=1752658844;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IYVZhzdcLS888rj/FaoDivOZnyY0T9daEjwNUmKwLFQ=;
+        b=Ccq3Z3LcXzR5cv5l160Z4XKfDbfi2YIme2zliemfw7ZkKvEDX8ojWb/z7GcG3DzhrB
+         oWYnW8cgsUjI+rT+Z+bKsCpJPgZFgnTy3mPNSBX9XEnBh668CkxwmnI2LfIQ5xv3Nvcn
+         +6fD0c7dbmzv576eBue1PAlUmNSZCmtekN9guENQhostE64FEaQ/RkhsqDaTC8DF3EHg
+         no2G1wqOY6PKShwbsLEOFNYHSFUR7qc3LFFr9StJqBSHBZn33Howf6MuIdOUNjVm3kPo
+         iOqwi0e+7cDi348dkuedtlcHA/8J0tjbnKVfi94c/JpaYa3Nwc30DKhX4lYA6Ndd8ctw
+         NrOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWW1jIU7tLvIEEmjxaeRjN5PQQ7Fj61kzGs5GN5NN+xRTmiXq8rG0DabsBg10ibFeGqZ8z+kmWCU4PciyfF@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIntb3p3r5jZvIHPO53il3rp+hrnaLH9zKyn7j9VPBKVmTT1Mn
+	NKAQplCO5JpyVepizWSWLaCEGNtkES//CVrBieWfRKyjV8Ac348Xoo4Fmwh86SP0AWQ=
+X-Gm-Gg: ASbGncvs/5kvBqRXlbv6Q1Q/tQOfOOTLbDxfsE7UPWAi5wIKo527mOGiPJd5dUqvxlb
+	xvFdJYEFGs6qlMK6hD/B/FDKDAZXDAUII4DzGHUOJnw7OW+5sds1RJXF+5JweuLra8LokGlmyNG
+	LUTAByMN33V/3MqappuuNQzr3Dh/7PkSXBgchaBERjMII6p+tZ+mMV4BrRDYvOpjRy+pqoVaANm
+	qPcgINrhiT0wQYPAGkeCK/NKx0g6BCKjG4ABXZbWU9GXUf8OrlxDrIv2AP8PNP2U7ctjlVN4yG5
+	tsZsXN2lzTSXWBL8z1RR/tBqoBDU7nz8HLZUFWV4kYJVQSCogqFEWtv89oU7+9flN71S2KDWTjy
+	zic8UBEyl0clwnTfBJbQd5StZfJ1czV0=
+X-Google-Smtp-Source: AGHT+IFcyIW8fjvyL2XXssYm6oJtrTRwvz8J6yTAl1SegjjQ9SBTzzBbPsgLtLGnPcvW3tndrf/jXw==
+X-Received: by 2002:a17:907:db14:b0:ae3:f524:b51 with SMTP id a640c23a62f3a-ae6cf549811mr183000466b.10.1752054043586;
+        Wed, 09 Jul 2025 02:40:43 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b08568sm1069884166b.139.2025.07.09.02.40.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Jul 2025 02:40:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250709-gcc-ref-fixes-v1-8-ceddde06775b@quicinc.com>
-References: <20250709-gcc-ref-fixes-v1-0-ceddde06775b@quicinc.com>
-In-Reply-To: <20250709-gcc-ref-fixes-v1-0-ceddde06775b@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        "Srinivas
- Kandagatla" <srini@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>
-X-Mailer: b4 0.14.2
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Ar7u3P9P c=1 sm=1 tr=0 ts=686e389a cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=vY0fMMrL0GyAagIjfbUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: _Pb9b17LfcU8LGlsUZnCVAhgMrn1yeUf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA4NSBTYWx0ZWRfX+j/nL6frAFNG
- ytIHhYAUJkfkwK+1uUiCrvo6BDvUfFQiwHqC7fCx86G365DItHXxhn1tE8GwJBYPeNIyxWwM2Hw
- 7sAIS6NMtNX5kvjJ0eSYPmCvQosPna+hPl8QvKD+PnSTyO9S9nQ39d3pq+pWOdutOeq5310605s
- z8rSBHhXBdAu8EdgoKvKVKGnzMLkWNabcUGa8bH4AihNShjNn2icrdC1VpMSm7cVqLBzN9Xq0gl
- VXCI41ln778SjJ6860Ue3yMa7uB+cCdQFbqdQVVBheFok/AW5UqlGGkqkRqGTOWSjOC7u1lYpYw
- utWNZRRkBlX7nTDZ/XjsSUC3vn7u+zb9fWSa5pW+TNZWoWj8W7HYYCwypTFYqqERBNKj0120VPf
- 7r4gEe/rQiTsnunKwLEUJux7ArZJtuFosfRdyAfguRxqAxcv4U6YywjHI5wWbwvX39TZW+VL
-X-Proofpoint-GUID: _Pb9b17LfcU8LGlsUZnCVAhgMrn1yeUf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 adultscore=0
- phishscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507090085
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 09 Jul 2025 11:40:42 +0200
+Message-Id: <DB7FBNQ0TYFZ.3GGPN8XXJXGRW@fairphone.com>
+Cc: "Vinod Koul" <vkoul@kernel.org>, "Kishon Vijay Abraham I"
+ <kishon@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Abel Vesa"
+ <abel.vesa@linaro.org>, <~postmarketos/upstreaming@lists.sr.ht>,
+ <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/4] dt-bindings: phy: qcom,snps-eusb2-repeater:
+ Document qcom,tune-res-fsdif
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Krzysztof Kozlowski"
+ <krzk@kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250625-sm7635-eusb-repeater-v1-0-19d85541eb4c@fairphone.com>
+ <20250625-sm7635-eusb-repeater-v1-1-19d85541eb4c@fairphone.com>
+ <20250708-unicorn-of-ancient-excellence-e8945c@krzk-bin>
+ <20250708-stoic-slim-bison-ac55ee@krzk-bin>
+ <DB6J86NHFTNT.31MFYDTZ6B4O0@fairphone.com>
+In-Reply-To: <DB6J86NHFTNT.31MFYDTZ6B4O0@fairphone.com>
 
-Reference the common qcom,gcc.yaml schema to unify the common
-parts of the binding.
+Hi Krzysztof,
 
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
----
- .../bindings/clock/qcom,sm4450-dispcc.yaml           | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+On Tue Jul 8, 2025 at 10:31 AM CEST, Luca Weiss wrote:
+> On Tue Jul 8, 2025 at 10:21 AM CEST, Krzysztof Kozlowski wrote:
+>> On Tue, Jul 08, 2025 at 10:13:24AM +0200, Krzysztof Kozlowski wrote:
+>>> On Wed, Jun 25, 2025 at 11:14:56AM +0200, Luca Weiss wrote:
+>>> > Document the FS Differential TX Output Resistance Tuning value found =
+on
+>>> > the eUSB2 repeater on Qualcomm PMICs.
+>>> >=20
+>>> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> > ---
+>>> >  Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml =
+| 6 ++++++
+>>> >  1 file changed, 6 insertions(+)
+>>> >=20
+>>> > diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-re=
+peater.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeate=
+r.yaml
+>>> > index 27f064a71c9fb8cb60e8333fb285f0510a4af94f..6bfd11657e29927359980=
+63b3ca390e04a03930d 100644
+>>> > --- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.=
+yaml
+>>> > +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.=
+yaml
+>>> > @@ -52,6 +52,12 @@ properties:
+>>> >      minimum: 0
+>>> >      maximum: 7
+>>> > =20
+>>> > +  qcom,tune-res-fsdif:
+>>> > +    $ref: /schemas/types.yaml#/definitions/uint8
+>>> > +    description: FS Differential TX Output Resistance Tuning
+>>>=20
+>>> Resistance is in Ohms, tuning could be in dB, so I wonder what are the
+>>> actual units here. Neither commit msg nor this description helps me to
+>>> understand that.
+>>
+>> I checked and the values are in Ohms.
+>
+> Yes it's Ohms but not 0x00 =3D 0 ohms, and it's also an offset in ohms
+> from the nominal value according to the Hardware Register Description I
+> have, e.g. 0x7 =3D -12.1ohm from the default
+>
+> I can try and create bindings using these Ohm offset values, I didn't
+> worry about it too much since the other tuning values in these bindings
+> are also just register values, presumably from before Konrad had access
+> to the docs.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml
-index 2aa05353eff17326b9f4234ac1c99dcd82a6abdb..03208166689a9305142d619509dd8fb73a2f629c 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml
-@@ -20,9 +20,6 @@ properties:
-   compatible:
-     const: qcom,sm4450-dispcc
- 
--  reg:
--    maxItems: 1
--
-   clocks:
-     items:
-       - description: Board XO source
-@@ -32,24 +29,15 @@ properties:
-       - description: Byte clock from DSI PHY0
-       - description: Pixel clock from DSI PHY0
- 
--  '#clock-cells':
--    const: 1
--
--  '#reset-cells':
--    const: 1
--
--  '#power-domain-cells':
--    const: 1
--
- required:
-   - compatible
--  - reg
-   - clocks
--  - '#clock-cells'
--  - '#reset-cells'
-   - '#power-domain-cells'
- 
--additionalProperties: false
-+allOf:
-+  - $ref: qcom,gcc.yaml#
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
+I've taken some more looks, and checked how similar tuning is handled in
+qcom,usb-snps-femto-v2.yaml and phy-qcom-snps-femto-v2.c, and changing up
+the concept of tuning in the eUSB2-repeater bindings+driver is not a
+trivial task.
 
--- 
-2.25.1
+Since this is adding just one more property in-line with the already
+supported properties in the bindings+driver, can we get this in as-is,
+and deprecate all 4 qcom,tune-* properties later with a replacement that
+describes the values better?
 
+We have enough people at Qualcomm by now that should be able to do that,
+and have the required resources to answer any potential questions.
+
+Regards
+Luca
 
