@@ -1,82 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-64148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D86EAFE3EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:19:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9C4CAFE456
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:40:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 787D4174CE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:19:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33A1A7B01EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:36:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 827EE2868B4;
-	Wed,  9 Jul 2025 09:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E100728642C;
+	Wed,  9 Jul 2025 09:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Nh/Y3RCP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TFCqqIFJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3C2284B49
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 09:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061E7286422;
+	Wed,  9 Jul 2025 09:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752052729; cv=none; b=Us5l8Pr3byd9OeO+xWpJ0jOOW02x8GPcQ8pPA/MujF6FHCAAYM1oNE7VjjNvCJ+NEhDJcu9IlP+A2taGvOPysmYhO0gIS74x6jQZXr76flascQFLQa0fslgOrsa2YyhjJHkCkX3nOnlz0E2IDGrTAE+WSLapjp9AMj8mmiWz/8I=
+	t=1752053880; cv=none; b=cozxa3yxoQKCYGgd2MFW9BGqw3bP6rDoFR26k6bF3qhqSPNSYILrKyssqTtJvfjq7p1vwoT8iPyL/qiqU3ALE2gfnCnLaFycgdynibIeR3Pnc9LyFoDXGppoN7O/vWkpUiz2Tz/dkiAAvKqFyTKJT5tQRMxDxeM6P3kru/FqFPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752052729; c=relaxed/simple;
-	bh=YZmEw3jGDd+2qgbm25oUb6kfM16R2p862EV52VAwfqs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CpozqK63U90g65Bjvde4AW8PV/UcmR+97MSBBeXkm9TmG0WHRgR2PoTO998JRTMNuZpEvusfhQgxED2iJtyKnZNmhgI9DrjVWAi+UlCQGyj/oGPZRov9wr+ZA9chjiGnSc9W8g1uwliwJbj+ASFrUf44MBaOfC9/4/Ps7o/9Cmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Nh/Y3RCP; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ae3703c2a8bso1050703466b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 02:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752052726; x=1752657526; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uAQIOUI3dQN/BAWWa5L7E496C+B20N9+qpU1jibn7CE=;
-        b=Nh/Y3RCPN8O1hs40jnAcKShZ4I86K3FPiBxiteV36jDlKBWjE1pFWF/ovlzc9RjHQx
-         4qk559FPKK4+vd/UxO7AbYNx3Osnd3tJ4qlQ1NWoqW60WhJXf9zUcVhyVjnAYchzYDMu
-         ntSh+Gxkg0H9cdd5u+xJEaA8zqfwjAXetmGKT4/FkF5ynwQ0DwPUTIcM+gzdyU7khgpD
-         RMBiOy0EPouGpqy0uG9OgFZ3grdLTOT5Hs1UJTg7XFY96yluLnL9ocs1gMiNGpMz/m8q
-         rDpa6kl9jBx7svNvfwFWOAedjxWy3nCJ6CO8F2sRY7W09139ylkt1c7EAeyl76k1yY0w
-         N61w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752052726; x=1752657526;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uAQIOUI3dQN/BAWWa5L7E496C+B20N9+qpU1jibn7CE=;
-        b=fDU757FPiBy9go5OyBXp8biuLmklPZM4Ci8Xu1TWVFuaRO11ET5VWIsc6Mo+V9OLH4
-         0iQ+Z/WE83lCEjbIPVE2LJjiJZTIPGRDGZqGq7T+WfZq8Jnn3Iq8qnsIwnBRBRjBtR3v
-         IKgrNKQ+udu1JbUfO68ri4XOmG5HmI883raI15CIXSJcaZ6py+bvA3u8S3l7Enya+24l
-         1s5Sqm2pioaUrLC4/U6+NeuuURzncj10zg9BdfgwStmHna5rIP/OyR+sZFp+0B3VSrBs
-         R7qHIfPIwIzZZhIV0CAVL8/TNSLOgJLlkdTVflMUHLaWTyuHjm1z6ebDvK1evAVP8/8+
-         MaUg==
-X-Forwarded-Encrypted: i=1; AJvYcCUJarUy1/M5QKEY8IeAs+hHMobgr1cbnB3vt/w997YkjQtDBUi9q++KS0TEu13CqPwW75H9NhizhczcXoyW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAH0IlA42KtTOOA/blNWwN+ozWXSTPWjr7ubrnJWDKXClcB00x
-	x78zChkQ5UHxAfcg98983nrseB1VVhorOmEnpYe1dHVPkQwcKrLXMJnofVkVDibbByE=
-X-Gm-Gg: ASbGncvUnuOEL6Pvlchn3lQa5RGXEt0cRcrPoHY39CNO1/mcR6xc22DYXRy4xjlcFfA
-	YCDqB0pkY/vuKppIArvNtBgYuqV99BUqCJMdBG81JFUSU4HYkLkD3aSpJcY9y88mYTGMDOHbqu0
-	L7kFUXwmyVvLTX5jSUD3uHYPCv6+TUP5I4m8e9x3Icgw8LDGMw5WdAcg8mrtg+xaxCPs85L0YrO
-	/KTCADI6p5HmHzrQDp63uWtdRNzx6ZqW7a+SP2+yP8RLFFXintc+umzEvrCK3B9cfoMW74GDQav
-	e+a6AEPWRg6KjRUBAIjL0REyoItsmfjoMG+7tH3goXe3TWNuzeNjtQGU5R7tAI+MMtAgtpZ7Xlu
-	i/1O4ahv21KHEIBFFNfgeORysg32KpXdWRO75M7pMobg=
-X-Google-Smtp-Source: AGHT+IGx/vzlfyTviick6hyyNUlcbGsI+JPz+PSX0OW7+e4XECNcxPqd0I6M02c/e4D8+rgbMwjMcQ==
-X-Received: by 2002:a17:907:9281:b0:ae3:a8dd:418a with SMTP id a640c23a62f3a-ae6cfc748eamr190274466b.56.1752052725491;
-        Wed, 09 Jul 2025 02:18:45 -0700 (PDT)
-Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b5e737sm1060116866b.142.2025.07.09.02.18.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 02:18:45 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 09 Jul 2025 11:18:18 +0200
-Subject: [PATCH v2 4/4] phy: qcom: phy-qcom-snps-eusb2: Add extra register
- write for Milos
+	s=arc-20240116; t=1752053880; c=relaxed/simple;
+	bh=R/Mrmbjqz9qW+yKtbzLUEO4ZFUbm43oyzl4LOCvlfNs=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ti2Na8XSSEzuiR1rJ38sjWE3L56HYfEhmAS8mRHpZ25U31xLM6elNSHAeqJu081oCIrWmq19fgurBPDzftFWWVDyS5dowhub2UmeSK2UHa5SIz0toYY8nAvztEmQkj3/baRdi4BKXxcy2z4fH9+eR4I8h4hcjw/YJOdFpOA1IDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TFCqqIFJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5698J9MQ008236;
+	Wed, 9 Jul 2025 09:37:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pulPunlH2z/XL5p+XMl/BG
+	yq43vwvOppJpxb90Jr1sM=; b=TFCqqIFJ1E8Af9D36dr/9gD7lCJe3fYda6+e4t
+	sju2oqx0JMXl8yZKp0oo8u48UbfquveLEJrQzie6luGFk8bWlLVgZjceZDCVEen7
+	RoCyYyAFICOYdgSZcW/afYosaM1vh3f2Ohz4eJogqwZDrGLdy4guOkRnPHIAj3gy
+	U6SS7wDQJJW2qTaLojESZL1xecMHbAG97owEQx9LWVkuEskgGcRyIM2eR69DX813
+	jNpOQujb6VD6q/x5fc5/XYvXz899rXnb4f+TfyZbbFUz/KIMUFxXwrD2aZ3yw+gV
+	qmIi2ApuZt+S3MIAh1FbqJaZgwlMjsnizIbP00ndvCsckCxQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pucn3x3q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 09 Jul 2025 09:37:54 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5699brC2024013
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 9 Jul 2025 09:37:53 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Wed, 9 Jul 2025 02:37:48 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH 0/8] Reference the common qcom,gcc.yaml schema
+Date: Wed, 9 Jul 2025 15:07:21 +0530
+Message-ID: <20250709-gcc-ref-fixes-v1-0-ceddde06775b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,65 +66,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-sm7635-eusb-phy-v2-4-4790eeee7ae0@fairphone.com>
-References: <20250709-sm7635-eusb-phy-v2-0-4790eeee7ae0@fairphone.com>
-In-Reply-To: <20250709-sm7635-eusb-phy-v2-0-4790eeee7ae0@fairphone.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
- Abel Vesa <abel.vesa@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-phy@lists.infradead.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAFE4bmgC/xXLQQqAIBBA0avIrBsYDSm6SrQwG2s2FQoRiHdvW
+ n4ev0LhLFxgMhUyP1LkOjVsZyAe4dwZZdMGR87TQCPuMWLmhEleLtgn8t7ZYGm1oM+t9IMu89L
+ aB2hcFldfAAAA
+X-Change-ID: 20250708-gcc-ref-fixes-3f05521a10b1
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        "Srinivas
+ Kandagatla" <srini@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Jagadeesh
+ Kona" <quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752052719; l=1428;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=YZmEw3jGDd+2qgbm25oUb6kfM16R2p862EV52VAwfqs=;
- b=zN8r6w9eZkpsfJvCdS/uEyRLTfMfcMPeQkNPEXxwm1zg2mzNgMq6//5XUqXcPzpMEX576tiX8
- v8sIG6hQ6VlD7xQf/Q2ZKTCgES3vUcgQxUzwebHmbVyiNZdDrA4X384
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=GdQXnRXL c=1 sm=1 tr=0 ts=686e3872 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
+ a=l5o_hXXZbb6RFrwtsEIA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: ALyzEuW73nZ81luR65ePC4FsCTsBwV7m
+X-Proofpoint-ORIG-GUID: ALyzEuW73nZ81luR65ePC4FsCTsBwV7m
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA4NiBTYWx0ZWRfX5hEM786uYreh
+ o+EIUHcTGoxyTqFHhLJsOJNIZmSWIfWk6tyMFb9l2vibjEDJpwjeU8OabqMLuW2no9B0hzs2JbT
+ 0m09HknWt9LjwYazBi2N8kyyES+OcURZlhTyrRnCf+Mqo3gUBaqGE0r1Ayowue1PKt+QMhbVk3d
+ xJrODKChPHd+Gvae+givrj54exUh9An2CGalVhw1eQM69gAYPuU7MmpiYUjj8Gd076GaVxfevrD
+ oWLxZS+DRkLkbEnpuL+TgVPsrdOujLLhhv0nVn8px4c8G6cICKLyAmV7FSjn0QxIoZsNhruFfcl
+ vLMZgMPwsv/q6ZF0Tf4ZNbCwK5DpgouRRY8Th9BO069Nem9H23ZIPjoAK++rrj7Yg/KWGilZpln
+ IK+Eh9JkwdhSnTHf5rMk2CzXr34VnKPHCkquLyk7Sw2XYOPn+MLCanKJgbbYeAkMIr/TDPkN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1011
+ spamscore=0 suspectscore=0 mlxlogscore=702 priorityscore=1501 impostorscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090086
 
-As per the downstream devicetree for Milos, add a register write for
-QCOM_USB_PHY_CFG_CTRL_1 as per the "eUSB2 HPG version 1.0.2 update".
+For all the possible Qualcomm clock controller bindings
+add qcom,gcc.yaml reference to unify the common
+parts of the binding.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 ---
-The downstream driver supports an arbitrary extra init sequence via
-qcom,param-override-seq.
+Satya Priya Kakitapalli (8):
+      dt-bindings: clock: qcom,sm8150-camcc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,lcc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,mmcc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,qcs404-turingcc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,qdu1000-ecpricc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sc8280xp-lpasscc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm4450-camcc: Reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm4450-dispcc: Reference qcom,gcc.yaml
 
-volcano-usb.dtsi has the following which is implemented in this patch:
-
-    /* eUSB2 HPG version 1.0.2 update */
-    qcom,param-override-seq =
-            <0x00 0x58>;
+ .../devicetree/bindings/clock/qcom,lcc.yaml        | 17 +++------------
+ .../devicetree/bindings/clock/qcom,mmcc.yaml       | 24 +++-------------------
+ .../bindings/clock/qcom,qcs404-turingcc.yaml       | 17 ++++-----------
+ .../bindings/clock/qcom,qdu1000-ecpricc.yaml       | 17 ++++-----------
+ .../bindings/clock/qcom,sc8280xp-lpasscc.yaml      | 17 ++++-----------
+ .../bindings/clock/qcom,sm4450-camcc.yaml          | 20 ++++--------------
+ .../bindings/clock/qcom,sm4450-dispcc.yaml         | 20 ++++--------------
+ .../bindings/clock/qcom,sm8150-camcc.yaml          | 20 ++++--------------
+ 8 files changed, 30 insertions(+), 122 deletions(-)
 ---
- drivers/phy/phy-snps-eusb2.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
+change-id: 20250708-gcc-ref-fixes-3f05521a10b1
 
-diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
-index e232b8b4d29100b8fee9e913e2124788af09f2aa..87fc086424ba4d9fb3ce870aa7f7971a51d4a567 100644
---- a/drivers/phy/phy-snps-eusb2.c
-+++ b/drivers/phy/phy-snps-eusb2.c
-@@ -420,6 +420,12 @@ static int qcom_snps_eusb2_hsphy_init(struct phy *p)
- 	/* set default parameters */
- 	qcom_eusb2_default_parameters(phy);
- 
-+	if (of_device_is_compatible(p->dev.of_node, "qcom,milos-snps-eusb2-phy")) {
-+		/* eUSB2 HPG version 1.0.2 update */
-+		writel_relaxed(0x0, phy->base + QCOM_USB_PHY_CFG_CTRL_1);
-+		readl_relaxed(phy->base + QCOM_USB_PHY_CFG_CTRL_1);
-+	}
-+
- 	snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_HS_PHY_CTRL2,
- 				    USB2_SUSPEND_N_SEL | USB2_SUSPEND_N,
- 				    USB2_SUSPEND_N_SEL | USB2_SUSPEND_N);
-
+Best regards,
 -- 
-2.50.0
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
 
