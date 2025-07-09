@@ -1,232 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-64184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC87FAFE622
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 12:43:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30561AFE6B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 13:02:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2113F3BC8DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:42:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 032B73AA460
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B21112900A4;
-	Wed,  9 Jul 2025 10:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C23725A620;
+	Wed,  9 Jul 2025 10:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ly9XizCN"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4zKcKAgW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E13828FA8A;
-	Wed,  9 Jul 2025 10:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EB823D2B8
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 10:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752057700; cv=none; b=I5iAOzqOymuzfH7BqiqLrubE3g/H+Stb53EkfX2gvxN9E6v3CxA6ARe54CDV97KkMbLLKpBVkY+RyY73tjk0qfagdIPC+AnmP+rag2gD3ON/0QNUGqEJzbF4ziJprJW8iXVVu0sdIXCJDmh8CNNIz9iM+floVYcdogTsaD/Hscw=
+	t=1752058792; cv=none; b=aa6Q0fXonPeOw9Im/4/F+/4QBkRU8C0/7I+91KasUtDRvuHKxRlzVOpyogMx31eHHQx068/MVdn+56G5I9qONwVTkf7li9h2BXeAsqB/mktESBn9ccRPA0bPOMVclX1nkHGXfLYBfRRvv4pY+H8VRcZoNJhpiAuL31fQ7TqO4Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752057700; c=relaxed/simple;
-	bh=leLVGRpGAOvCYz0HJ/13TizpZ6EsTlcAMUCQWHk5aDM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=H8Knyyg9VUmKujkbYle+A0eBEIsHqULyt8HwWVhDi+wTXeKwuWS+bnmm2kNCZHhIrhIBxTCE883RZ5UpLqaOMTLvLl0Mc3EOA+CZ3wx2SlrkZRWI/3gMJF6NTqIWE13RGGH7CbtkFyT5maFUQF7lurvMyswKR9HXFq81qO9MUBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ly9XizCN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5697j8Jq009159;
-	Wed, 9 Jul 2025 10:41:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=TbYlrtnqTvqrRHZiqDZ3OZ464UHy7JqGH3TSAiwzqiY=; b=Ly
-	9XizCNZneT/mZeHl+RZvnf8vWc5D8iB+VAHk2B4tVH1cDjP3Mj/2RDp+UiZFtEsJ
-	GI9HyYPAcHTL3CnvGFeh9iEu1mfpe1IFOJjXKP0G7sfIh26BS0z5wqXQNDaOpdis
-	zJcx+pqU/yEdq3SqsIfMqwBel60Xnx0sqDn8gh3ZwImXvTBOQ4JZSf4xzeTXMrVE
-	ULPzE4bLHP1a7ymwjItLerydqvonnY1n7kmjMWyNyinAGRrFm/C/qYX6bY9q2gNG
-	QngrbcwyaCzRsnFGhxUPTxW35ERfsdDERqBkGpMYbS7tlnw5JKeOz2rq+Wo5bcP5
-	e9Nr/9G/zIXJvU/nAQ3g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smafghth-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Jul 2025 10:41:25 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 569Af2OD005364;
-	Wed, 9 Jul 2025 10:41:24 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA04.qualcomm.com (PPS) with ESMTP id 47s9h16ufk-1;
-	Wed, 09 Jul 2025 10:41:24 +0000
-Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 569AfO4B006174;
-	Wed, 9 Jul 2025 10:41:24 GMT
-Received: from hu-devc-lv-u18-c.qualcomm.com (hu-songchai-lv.qualcomm.com [10.81.24.255])
-	by NALASPPMTA04.qualcomm.com (PPS) with ESMTP id 569AfOVE006173;
-	Wed, 09 Jul 2025 10:41:24 +0000
-Received: by hu-devc-lv-u18-c.qualcomm.com (Postfix, from userid 4201483)
-	id E0FC25010D0; Wed,  9 Jul 2025 03:41:23 -0700 (PDT)
-From: songchai <songchai@qti.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, quic_songchai@quicinc.com
-Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v6 7/7] coresight-tgu: add reset node to initialize
-Date: Wed,  9 Jul 2025 03:41:14 -0700
-Message-Id: <20250709104114.22240-8-songchai@qti.qualcomm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250709104114.22240-1-songchai@qti.qualcomm.com>
-References: <20250709104114.22240-1-songchai@qti.qualcomm.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ZJ/XmW7b c=1 sm=1 tr=0 ts=686e4755 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=TW7uPGGm3D3UErKGQS8A:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: TBsb_jYgOhDEDA_BDTOlYS_8veUNln4I
-X-Proofpoint-GUID: TBsb_jYgOhDEDA_BDTOlYS_8veUNln4I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA5NiBTYWx0ZWRfX5IcD8deJLRDh
- Fb0D/kQbxbyBjL19tON1D6BKzeSyN3IRjajrqSeoqo3sVj0WeU3DDp5xoe/gXaFRyYytrB47F6M
- lqMvABbVqR0FN9hElL6PF6doEzNd3DG0pG36eGaGmWJuHuV/T2pr/1os43Yyap2vfNxLD3VUIDa
- B8AF9YTyJGyGKI2g6Si3s1T0zbtqDKxVe5IDZVFcOHfSKDwy+llD4h+PQni7Yb7USqevBciDntv
- KFcS2E4krJEy3Umbq/7PpohW89FyitpFz5VHrkzOeVJxxP5hkmTQ5baLoD7ofNHT0NDpQyVP1/a
- aCAHmIWfYCrB792a/EBC7+YLt0N2ZH6szPMVY9ILKkJDC+5VdDEDtu1BLqbxXIsuiodqe98EDm4
- gPibXEzaDh08Joy3W3M8tuaVyBAdopXVbU1GWLzKkRB8RtndbYKkH6XfCuiGmbGFkH4mwEx/
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 impostorscore=0 spamscore=0 adultscore=0 clxscore=1015
- bulkscore=0 phishscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507090096
+	s=arc-20240116; t=1752058792; c=relaxed/simple;
+	bh=xXuPW7BNu1kc7MdxI3u1vqsSmr7Hbq2kX0tG6vFVM44=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=PgY2rVI9vwjyDDNaRcAe0zv2RoBCAB+GcRfpkv8y+p7oMthOX8llrfBWgseeeLBROsiLWNA82dhpXkaeQn8nl8KcsUmsD98spSOvT8Tse2m1cFgsi9A/ZRscMUHc8vu7b7LEzjloJysegmwhuA1xm9jnXPhJyUTdIGbjUKVV118=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4zKcKAgW; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-451deff247cso4126555e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 03:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752058789; x=1752663589; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dnO+KloSGnsCSQpQy5155dfzAZ7oAybktNY4973okqU=;
+        b=4zKcKAgW1Rh9ocZfcvWquW51pM11e0dAEsHNAROQiM+iuQnN2PvJCS+XqeY70mszT2
+         dyPoGlFwhVXpp1iN7xWSywa6OCWEDAdHEcxHPPjw+jX23JtiGNHmn1Ny6yyz3JiU2s5g
+         /pPGx4qvPilvvfaB7Zc/L4skjkIFTkflipdQtxasb3ZpmL2Ssvgh39KJgreoqkZ3s8du
+         wxEb+wYhFGZWx1i8+VHr31YKj5aLLDu/m4OGFTh1+8V9DGNShLYLcZZ3U7nK+yYvlrbx
+         amETCWIC1nVnEhEMaKgNJWyFMxFELV9KB9K/b9g6jlmqfZkZ/9NT15h5bq1pVjOSa5yj
+         7lCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752058789; x=1752663589;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dnO+KloSGnsCSQpQy5155dfzAZ7oAybktNY4973okqU=;
+        b=PZgUhBjC4V3G4P7wwxetKJ8HXJ6XWI8HxPljepu7Cw6vdzTiD1l+5eqUtULHgEQlVP
+         gepd38em9ApmPoXLoTN95HZby30XD+cdxZZpqyyqdTS2olGEnOYp+zvyrXTVeY9dQWmn
+         7CrTgyZ2QRwuhjWPHHTP/qMnZ7nd2fhxJDrDSm5/8bcQteF2SCKOhuH41ppr7HnIe/lo
+         cFgCSpsfwvrVpYTjZxHNcbyZy/wZ6ySLxDMHogCWuYLUbwZABLF/puUL5dSfvu+Mkyzr
+         zgBaXdWkGMDc0ZwwzCIwC0ChgT6D0N29ZsUu/wart2xUKfsc2SnDm4szkCuVmfwQki/T
+         aclQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFXdHMsHOmlztp2K4COCCbXhzFkaBHxFw2ZSJtL5KQshNylI78dVRyasxOVueBkDGSuFhE2ITxrHFXkU05@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMgFw0XzdbUXIXwpgsTifwvZ72d+mQ/x+pXD1iUgCsIHUBIb6v
+	iMPMdlPa75WfNfTsL0OD1Dn02EYAyAZRD7hGU2v3Rh6RXx+fnZuxq9XSwtqSAHBCTGu4M3O6sI0
+	zZg==
+X-Google-Smtp-Source: AGHT+IH97vlc2PwP5kjBWi2BuUgBLehVgDMNHnMBRqDSahyj4kB6WdLKy5MfyYEnD1QG3au218TPdoT90g==
+X-Received: from wmbes22.prod.google.com ([2002:a05:600c:8116:b0:440:5d62:5112])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:3b0f:b0:453:aca:4d08
+ with SMTP id 5b1f17b1804b1-454d545fc59mr18960475e9.1.1752058788528; Wed, 09
+ Jul 2025 03:59:48 -0700 (PDT)
+Date: Wed,  9 Jul 2025 11:59:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250709105946.4009897-1-tabba@google.com>
+Subject: [PATCH v13 00/20] KVM: Enable host userspace mapping for
+ guest_memfd-backed memory for non-CoCo VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Songwei Chai <quic_songchai@quicinc.com>
+Main changes since v12 [1]:
+* Rename various functions and variables
+* Expand and clarify commit messages
+* Rebase on Linux 6.16-rc5
 
-Add reset node to initialize the value of
-priority/condition_decode/condition_select/timer/counter nodes.
+This patch series enables host userspace mapping of guest_memfd-backed
+memory for non-CoCo VMs. This is required for several evolving KVM use
+cases:
 
-Signed-off-by: Songwei Chai <quic_songchai@quicinc.com>
----
- .../testing/sysfs-bus-coresight-devices-tgu   |  7 ++
- drivers/hwtracing/coresight/coresight-tgu.c   | 75 +++++++++++++++++++
- 2 files changed, 82 insertions(+)
+* Allows VMMs like Firecracker to run guests entirely backed by
+  guest_memfd [2]. This provides a unified memory management model for
+  both confidential and non-confidential guests, simplifying VMM design.
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-index f0d7db72b61c..4ff5ec9be733 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-@@ -42,3 +42,10 @@ KernelVersion	6.16
- Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Songwei Chai (QUIC) <quic_songchai@quicinc.com>
- Description:
- 		(RW) Set/Get the counter value with specific step for TGU.
-+
-+What:		/sys/bus/coresight/devices/<tgu-name>/reset_tgu
-+Date:		July 2025
-+KernelVersion	6.16
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Songwei Chai (QUIC) <quic_songchai@quicinc.com>
-+Description:
-+		(Write) Write 1 to reset the dataset for TGU.
-diff --git a/drivers/hwtracing/coresight/coresight-tgu.c b/drivers/hwtracing/coresight/coresight-tgu.c
-index 303698a9d5ab..35c97f31639e 100644
---- a/drivers/hwtracing/coresight/coresight-tgu.c
-+++ b/drivers/hwtracing/coresight/coresight-tgu.c
-@@ -473,6 +473,80 @@ static ssize_t enable_tgu_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(enable_tgu);
- 
-+/* reset_tgu_store - Reset Trace and Gating Unit (TGU) configuration. */
-+static ssize_t reset_tgu_store(struct device *dev,
-+			       struct device_attribute *attr, const char *buf,
-+			       size_t size)
-+{
-+	unsigned long value;
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	int i, j, ret;
-+
-+	if (kstrtoul(buf, 0, &value) || value == 0)
-+		return -EINVAL;
-+
-+	if (!drvdata->enable) {
-+		ret = pm_runtime_get_sync(drvdata->dev);
-+		if (ret < 0) {
-+			pm_runtime_put(drvdata->dev);
-+			return ret;
-+		}
-+	}
-+
-+	spin_lock(&drvdata->spinlock);
-+	CS_UNLOCK(drvdata->base);
-+
-+	tgu_writel(drvdata, 0, TGU_CONTROL);
-+
-+	if (drvdata->value_table->priority)
-+		memset(drvdata->value_table->priority, 0,
-+			    MAX_PRIORITY * drvdata->max_step *
-+				drvdata->max_reg * sizeof(unsigned int));
-+
-+	if (drvdata->value_table->condition_decode)
-+		memset(drvdata->value_table->condition_decode, 0,
-+			    drvdata->max_condition_decode * drvdata->max_step *
-+				sizeof(unsigned int));
-+
-+		/* Initialize all condition registers to NOT(value=0x1000000) */
-+	for (i = 0; i < drvdata->max_step; i++) {
-+		for (j = 0; j < drvdata->max_condition_decode; j++) {
-+			drvdata->value_table
-+			->condition_decode[calculate_array_location(
-+			drvdata, i, TGU_CONDITION_DECODE, j)] =
-+			0x1000000;
-+		}
-+	}
-+
-+	if (drvdata->value_table->condition_select)
-+		memset(drvdata->value_table->condition_select, 0,
-+				drvdata->max_condition_select * drvdata->max_step *
-+				sizeof(unsigned int));
-+
-+	if (drvdata->value_table->timer)
-+		memset(drvdata->value_table->timer, 0,
-+			    (drvdata->max_step) *
-+				(drvdata->max_timer) *
-+				sizeof(unsigned int));
-+
-+	if (drvdata->value_table->counter)
-+		memset(drvdata->value_table->counter, 0,
-+			    (drvdata->max_step) *
-+				(drvdata->max_counter) *
-+				sizeof(unsigned int));
-+
-+	dev_dbg(dev, "Coresight-TGU reset complete\n");
-+
-+	CS_LOCK(drvdata->base);
-+
-+	drvdata->enable = false;
-+	spin_unlock(&drvdata->spinlock);
-+	pm_runtime_put(drvdata->dev);
-+
-+	return size;
-+}
-+static DEVICE_ATTR_WO(reset_tgu);
-+
- static const struct coresight_ops_helper tgu_helper_ops = {
- 	.enable = tgu_enable,
- 	.disable = tgu_disable,
-@@ -484,6 +558,7 @@ static const struct coresight_ops tgu_ops = {
- 
- static struct attribute *tgu_common_attrs[] = {
- 	&dev_attr_enable_tgu.attr,
-+	&dev_attr_reset_tgu.attr,
- 	NULL,
- };
- 
+* Enhanced Security via direct map removal: When combined with Patrick's
+  series for direct map removal [3], this provides additional hardening
+  against Spectre-like transient execution attacks by eliminating the
+  need for host kernel direct maps of guest memory.
+
+* Lays the groundwork for *restricted* mmap() support for
+  guest_memfd-backed memory on CoCo platforms [4] that permit in-place
+  sharing of guest memory with the host.
+
+Patch breakdown:
+
+Patches 1-7: Primarily infrastructure refactorings and renames to decouple
+guest_memfd from the concept of "private" memory.
+
+Patches 8-9: Add support for the host to map guest_memfd backed memory
+for non-CoCo VMs, which includes support for mmap() and fault handling.
+This is gated by a new configuration option, toggled by a new flag, and
+advertised to userspace by a new capability (introduced in patch 18).
+
+Patches 10-14: Implement x86 guest_memfd mmap support.
+
+Patches 15-17: Implement arm64 guest_memfd mmap support.
+
+Patch 18: Introduce the new capability to advertise this support and
+update the documentation.
+
+Patches 19-20: Update and expand selftests for guest_memfd to include
+mmap functionality and improve portability.
+
+To test this patch series and boot a guest utilizing the new features,
+please refer to the instructions in v8 of the series [5]. Note that
+kvmtool for Linux 6.16 (available at [6]) is required, as the
+KVM_CAP_GMEM_MMAP capability number has changed, additionally, drop the
+--sw_protected kvmtool parameter to test with the default VM type.
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/20250611133330.1514028-3-tabba@google.com/T/
+[2] https://github.com/firecracker-microvm/firecracker/tree/feature/secret-hiding
+[3] https://lore.kernel.org/all/20250221160728.1584559-1-roypat@amazon.co.uk/
+[4] https://lore.kernel.org/all/20250328153133.3504118-1-tabba@google.com/
+[5] https://lore.kernel.org/all/20250430165655.605595-1-tabba@google.com/
+[6] https://android-kvm.googlesource.com/kvmtool/+/refs/heads/tabba/guestmem-basic-6.16
+
+Ackerley Tng (4):
+  KVM: x86/mmu: Generalize private_max_mapping_level x86 op to
+    max_mapping_level
+  KVM: x86/mmu: Allow NULL-able fault in kvm_max_private_mapping_level
+  KVM: x86/mmu: Consult guest_memfd when computing max_mapping_level
+  KVM: x86/mmu: Handle guest page faults for guest_memfd with shared
+    memory
+
+Fuad Tabba (16):
+  KVM: Rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
+  KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+    CONFIG_KVM_GENERIC_GMEM_POPULATE
+  KVM: Introduce kvm_arch_supports_gmem()
+  KVM: x86: Introduce kvm->arch.supports_gmem
+  KVM: Rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
+  KVM: Fix comments that refer to slots_lock
+  KVM: Fix comment that refers to kvm uapi header path
+  KVM: guest_memfd: Allow host to map guest_memfd pages
+  KVM: guest_memfd: Track guest_memfd mmap support in memslot
+  KVM: x86: Enable guest_memfd mmap for default VM type
+  KVM: arm64: Refactor user_mem_abort()
+  KVM: arm64: Handle guest_memfd-backed guest page faults
+  KVM: arm64: Enable host mapping of shared guest_memfd memory
+  KVM: Introduce the KVM capability KVM_CAP_GMEM_MMAP
+  KVM: selftests: Do not use hardcoded page sizes in guest_memfd test
+  KVM: selftests: guest_memfd mmap() test when mmap is supported
+
+ Documentation/virt/kvm/api.rst                |   9 +
+ arch/arm64/include/asm/kvm_host.h             |   4 +
+ arch/arm64/kvm/Kconfig                        |   1 +
+ arch/arm64/kvm/mmu.c                          | 190 ++++++++++++----
+ arch/x86/include/asm/kvm-x86-ops.h            |   2 +-
+ arch/x86/include/asm/kvm_host.h               |  18 +-
+ arch/x86/kvm/Kconfig                          |   7 +-
+ arch/x86/kvm/mmu/mmu.c                        | 115 ++++++----
+ arch/x86/kvm/svm/sev.c                        |  12 +-
+ arch/x86/kvm/svm/svm.c                        |   3 +-
+ arch/x86/kvm/svm/svm.h                        |   4 +-
+ arch/x86/kvm/vmx/main.c                       |   6 +-
+ arch/x86/kvm/vmx/tdx.c                        |   6 +-
+ arch/x86/kvm/vmx/x86_ops.h                    |   2 +-
+ arch/x86/kvm/x86.c                            |   5 +-
+ include/linux/kvm_host.h                      |  64 +++++-
+ include/uapi/linux/kvm.h                      |   2 +
+ tools/testing/selftests/kvm/Makefile.kvm      |   1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  | 208 +++++++++++++++---
+ virt/kvm/Kconfig                              |  14 +-
+ virt/kvm/Makefile.kvm                         |   2 +-
+ virt/kvm/guest_memfd.c                        |  96 +++++++-
+ virt/kvm/kvm_main.c                           |  14 +-
+ virt/kvm/kvm_mm.h                             |   4 +-
+ 24 files changed, 622 insertions(+), 167 deletions(-)
+
+
+base-commit: d7b8f8e20813f0179d8ef519541a3527e7661d3a
+-- 
+2.50.0.727.gbf7dc18ff4-goog
 
 
