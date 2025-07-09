@@ -1,127 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-64133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD02DAFE1FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:10:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 357DBAFE27D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:25:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D5DC481E66
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:09:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65CB37BBDF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:22:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 009B1235072;
-	Wed,  9 Jul 2025 08:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3787C27381B;
+	Wed,  9 Jul 2025 08:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="BArrqa3f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLvZ3KjU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8870A23AE83;
-	Wed,  9 Jul 2025 08:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083AF272808;
+	Wed,  9 Jul 2025 08:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752048587; cv=none; b=H+Gk+hBpiQRn8D1D1lc4Tj935AIZrqBxDT4wxEN7coKhBXJ8JJDJc3jpjetd1RPSoQMo4oS1YBnkW1KvCZM7EPR4nxNlrqBeC0EC6N0VxLA9cwfTjEsJWAX4wKU20enPDr9gCfyvnHptVJX8yYU91cDPd5nW75atnxk2fzK7VA8=
+	t=1752049446; cv=none; b=fqVtAAK1WM/Glb5myVQltzrFhxrTp17dv/tHnPB/hEwCoS8X9QxT1Y9VoENhxa6r6SIeb0eJxesMUHEkFQ4RpaWZi6RPsw8D/zL/AsyaGHt6nQhDyHhy4Ly85eNvvcD3eS+p2q2qmlkskS98WbHNVcYHTSZajcE5PBekll4uYoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752048587; c=relaxed/simple;
-	bh=uZE5jplWSjAv+o+bVBwj8DwJFyiDM+RKcxpQzWaMbCM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iyqTqFBsh704BgayJXUtpkue6VnPxXEGsyM1Ebk561S/+FBRij2+vbtkBR0OayhIFTxHgqfcuFvYgUyrfZUk1T2vs0C2FLnNslZ8/eUqdzYCDTlmssvzwMCocjQqX36kPookXCr+AVC2sUenxccX3MOP0Sy0RzvSoHGngx36iKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=BArrqa3f; arc=none smtp.client-ip=212.227.126.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1752048567; x=1752653367;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=uZE5jplWSjAv+o+bVBwj8DwJFyiDM+RKcxpQzWaMbCM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=BArrqa3fkxJXJWLJI/rBNR5q62+qhwP3y8ZBF9cMyf4EuC0vgd82XrbG0BeA9tO1
-	 4yAIJLltg/3qLc450uvocZ0gOgMSpFk8fsftNfusfuoQmcn6pF4OYrqh2JTcmWJ1q
-	 N9BUTcWO9roEr8GdCYoE5UNFJ/L1p5oK91vs5ICyt9e1fAZ3G2Cvjl9GFQNAdO4Qy
-	 iXqvGBW+/R+SyGi6x7ciIbyo9AiBUcHpInLWVkq1Vw58qmURjFh7t34z1SsxTvzkY
-	 GU0aXjPH2W50hVDf9zGBfTXc9XDmiGSvysRyy/ZFPmWcmFuOb2zIs9IBVsJ9KFHvj
-	 T9e88klvmUqqVV2l3A==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.107] ([91.64.235.193]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MUY9w-1u93JP0vIW-00YZub; Wed, 09 Jul 2025 10:09:27 +0200
-Message-ID: <52b68d5e-b051-4c59-9186-eda9071c9303@oldschoolsolutions.biz>
-Date: Wed, 9 Jul 2025 10:09:25 +0200
+	s=arc-20240116; t=1752049446; c=relaxed/simple;
+	bh=kd4fZ9hjJhejqE60Ux6jIEdKJbcKfAKqOtQDvcCmobo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kfQHeTGJUobgB3oP8e0PPyRZxGDtsNhESe2CgRb4GlEbwWdDsE5Q/ovC7BvYil1Olq2Pfrls3akvCVjYH1na2FkupXXZP1ww1OVyikdrX2WBUAPOAMGwqcfBJv/Qjb/pP8/VrqugxTSdQjaHkhXBHxJ4n0k0XCbDNf7Rjzr/OqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLvZ3KjU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4595EC4CEEF;
+	Wed,  9 Jul 2025 08:24:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752049445;
+	bh=kd4fZ9hjJhejqE60Ux6jIEdKJbcKfAKqOtQDvcCmobo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FLvZ3KjUKCmazemAEuyodtlyTLhEpoP9m+dwEpnLbYDaOFCZqYbb48gn/E3sJMtE9
+	 9nSAUbaGKQSnH4wRpH7dGyKMqVXeqz5snzYI2kIh2Il7ZS/MRfRj0TihdekMgz3ZfR
+	 gCyLaSPPdNw367CCXnebmSGz0UPCPOSo/bVjXSm7f7LxRso0dlrJdUDs+xNYYZPOkf
+	 9M2XA5ICNM4fn4ILcWdQeHTZFbUIz6DH1NNOGMIaANYjAiqbv4rbnYLy7zbxDBGAgO
+	 8Xhkeh1/sZpBnPeHj4p3TtFDlmgYVO6je2bjYQlr7k2PycxbrJ16cT2cYn4WZE/bV4
+	 VDCapKAGrs7Yg==
+Date: Wed, 9 Jul 2025 13:53:53 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 3/3] PCI: qcom: Allow pwrctrl framework to control
+ PERST#
+Message-ID: <btxanvs4enrenhowrf47llnvu6az3jx5gjzba5mulxb5jyqgtp@e5tdobflcyxz>
+References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
+ <20250707-pci-pwrctrl-perst-v1-3-c3c7e513e312@kernel.org>
+ <aG3fblf5twIAitvg@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: x1-hp-x14: Add support for
- X1P42100 HP Omnibook X14
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250708-hp-x14-x1p-v5-0-44c916efa973@oldschoolsolutions.biz>
- <20250708-hp-x14-x1p-v5-3-44c916efa973@oldschoolsolutions.biz>
- <20250709-arboreal-basilisk-of-opportunity-bafaf1@krzk-bin>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <20250709-arboreal-basilisk-of-opportunity-bafaf1@krzk-bin>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lR8fq6HQTQGSlHeN5MJ+99V2xxKIXYPiMFGrBSnMs5eTryMM+tN
- auuOx0xOxQmfwki8RQYm+cEUsMfIZ4QBDxm8nQov0qBfVkmC1l6DPv2IXGHwbvKPDqhaVcF
- g9kfM1mjgNM6GYdgMq/TUkU1LjpCLmekmfxyK5gRX3wskPBGHPBNsPL+XLe5U1Ge+hNDo+X
- DXLI3N0fD5jqym3O7zdOQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:XVvFInXj01o=;jwXqqiOvdH4Jh3JNynB1QTCVb0R
- +S9bwtd2sVobLel8B4LunQVoSqmDXsXEi9iRP8E0/KqHjAx/oqsz1i228Ft6wPoDrGr0HQvvS
- mwMDvyRiHoP0SbzU4RWwB2sME7sqJvMr66898D5kHiBjQ3VQxTXRVdX8AnW5sBtxtSNqNdzmi
- dy0Oej/kxO5Nu8SL8YH+9f2lSyBFGKtMjkgKNGovobmkxw0TH3fMbUm4joEGZU+R6603lcmIX
- jQU1imz9IyqpWKF1DYE5VGeGEcE/eC0yIJaIQaCgATcDf3MnvhNup9O38UvW3cJPPZ9z7i/SW
- 4FFnOqP9FNqcVYEQ8fb0AUi3qrb4yEpGPCY8avUWJzLYi1g0Wp97qZc+YHQTDBKrJ19dAQFxP
- f52dlJcvYmdBGC+o5X0v72NlCq4doDwviDUc8QZZe9FAigJ/tkV2dj+jLPBorYcEbcDLw1i2C
- wM20TiUr1Q4ipl/vOBB6lNwkxYjjXjG4xvtNoHyeW/BSpMN6Um3ifP8M7eM9uF16RUrP5tTjv
- trZTvwHYaEv2BYMwYXSoEPcKdYfBtQFASdOdHOy5K8fp+LqA8RMsFFR75bOIsmbe73zlIPgOU
- TmPet5VHY6tIiww0uUgIE5AydfYUb3GRkDcw7nfDFM7Ti0AhcDVb5Ku7U42uleBoS/YNDaZIl
- AhauTKSj9hKbQQt62puXOT1nyvng8xKUmBsyBvvYDafFkMHzvZ8cJRvnPgqXv8+Az7W8wfck5
- 6TujRxCvB9quLTcuA4eM8j7zrYrjFZ79o5YcBBExaUwO/XV4P044B+uMfZBxay5IVWDTZtCad
- YNJhjMm+TNRK4M3u2N0Hkkqg20QicDAPheUImC3HBG8ZfEatB4jXmYLrMxSqZosAEjcApcQtf
- QldOP469oIOYSglM7+NJtf9LxFj9X9YceKKazQKuWhP6KoZgQ4Rokfs0KV5t443gOwXSousMQ
- QphSwsXQiSYLiHONWCPQAzy1RR+cS5/mp/ao0AoE3eTU72HfJWlaSakakF+7NqNEEanC95aIC
- AX4KWWqXHeuodsPy07mzzEFEYgaWgfs8yuXTf0CuZ97rYfY3jaFDuYTyg6vSRICKfxLvVyd3r
- IczZfTt47II5Ciy1t1yL4tI4qEpuFdMhuz/j7zGKnuf+JFJp7U/I8uk2ioNF5eDiUbOFKKxvW
- sW81EKCl7Z9LDEjvJVQNA9FKXcuIityaeamnwl9sgNlrK3aH+NpSq+fkbdvFfNsBPEXJBFrX0
- wFsIWpJbjKSg+mLqsen3S5JD/f0n3VV53OzPEGiQyBdQWSraHgMj3xvxSNBZy1IBGFNum2DkS
- kuC/UuYB2V9FnhMXAoJAa7reNuoWdV8pCThYwwvrCjzsW2xwFfVZMp3E5s0TfuGWP2vOx5JvE
- oXDwRXoLQoNpKajaTPY+W5T+2qL5CfyC2fL6YHpEvWVCZTrDGH9+ha7405pso78Za4X+hHo8y
- sOE6WX5gM4QaJ6BdTLw34o44RxUTm+MtLKJhNueRg0f5vwm+GKynu17HM4GwCLGyupMe2ZrUQ
- wMcXBeQ0KlNpgZFvofSKqDPjQqis3hOckDF+/6hbgllijggZpPw6IxA44+c0LsgUIYlOkXokq
- w77+3pz3JDKXWYCfyMEt2u9QF6MoGac
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aG3fblf5twIAitvg@google.com>
 
-Hi Krzysztof,
+On Tue, Jul 08, 2025 at 08:18:06PM GMT, Brian Norris wrote:
+> Hi,
+> 
+> On Mon, Jul 07, 2025 at 11:48:40PM +0530, Manivannan Sadhasivam wrote:
+> > Since the Qcom platforms rely on pwrctrl framework to control the power
+> > supplies, allow it to control PERST# also. PERST# should be toggled during
+> > the power-on and power-off scenarios.
+> > 
+> > But the controller driver still need to assert PERST# during the controller
+> > initialization. So only skip the deassert if pwrctrl usage is detected. The
+> > pwrctrl framework will deassert PERST# after turning on the supplies.
+> > 
+> > The usage of pwrctrl framework is detected based on the new DT binding
+> > i.e., with the presence of PERST# and PHY properties in the Root Port node
+> > instead of the host bridge node.
+> > 
+> > When the legacy binding is used, PERST# is only controlled by the
+> > controller driver since it is not reliable to detect whether pwrctrl is
+> > used or not. So the legacy platforms are untouched by this commit.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
+> >  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+> >  drivers/pci/controller/dwc/pcie-qcom.c            | 26 ++++++++++++++++++++++-
+> >  3 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 620ac7cf09472b84c37e83ee3ce40e94a1d9d878..61e1d0d6469030c549328ab4d8c65d5377d525e3 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> 
+> > @@ -1724,6 +1730,12 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > +	devfn = of_pci_get_devfn(node);
+> > +	if (devfn < 0)
+> > +		return -ENOENT;
+> > +
+> > +	pp->perst[PCI_SLOT(devfn)] = reset;
+> 
+> It seems like you assume a well-written device tree, such that this
+> PCI_SLOT(devfn) doesn't overflow the perst[] array. It seems like we
+> should guard against that somehow.
+> 
 
-On 09.07.25 09:39, Krzysztof Kozlowski wrote:
-> On Tue, Jul 08, 2025 at 10:34:08PM +0200, Jens Glathe wrote:
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights rese=
-rved.
-> Odd copyrights. How could this file be published in 2023? Before the
-> laptop was even made? And by Qualcomm? Qualcomm did nothing for this
-> laptop on Linux - it's a Windows platform for them.
+Sure. I will add a check.
 
-Ok understood, only license identifier. But I do copy from other dts(i)=20
-files, there may be unchanged portions.
+> Also see my comment below, where I believe even a well-written device
+> tree could trip this up.
+> 
+> > +
+> >  	port->reset = reset;
+> >  	port->phy = phy;
+> >  	INIT_LIST_HEAD(&port->list);
+> > @@ -1734,10 +1746,20 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
+> >  
+> >  static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
+> >  {
+> > +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> >  	struct device *dev = pcie->pci->dev;
+> >  	struct qcom_pcie_port *port, *tmp;
+> > +	int child_cnt;
+> >  	int ret = -ENOENT;
+> >  
+> > +	child_cnt = of_get_available_child_count(dev->of_node);
+> 
+> I think you're assuming "available children" correlate precisely with a
+> 0-indexed array of ports. But what if, e.g., port 0 is disabled in the
+> device tree, and only port 1 is available? Then you'll overflow.
+> 
 
-with best regards
+Right. I will take care it in next version.
 
-Jens
+> > +	if (!child_cnt)
+> > +		return ret;
+> > +
+> > +	pp->perst = kcalloc(child_cnt, sizeof(struct gpio_desc *), GFP_KERNEL);
+> 
+> IIUC, you kfree() this on error, but otherwise, you never free it. I
+> also see that this driver can't actually be unbound (commit f9a666008338
+> ("PCI: qcom: Make explicitly non-modular")), so technically there's no
+> way to "leak" this other than by probe errors...
+> ...but it still seems like devm_*() would fit better.
+> 
 
+Even if we use devm_(), we need to free the array when qcom_pcie_parse_port()
+fails. And as you spotted, we don't remove the driver currently. So I decided to
+use kfree(). Someone would argue that if we manually free the memory, then it
+defeats the purpose of devm_() variants.
+
+> (NB: I'm not sure I agree with commit f9a666008338 that "[driver unbind]
+> doesn't have a sensible use case anyway". That just sounds like
+> laziness. And it *can* have a useful purpose for testing.)
+> 
+
+There was a whole debate on it. It is mostly due to the fact that this driver
+implements the MSI controller and the IRQCHIP drivers are not expected to go
+away during runtime. But atleast, I would like to build this driver as a module
+and not remove it. The patch is pending for some time.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
