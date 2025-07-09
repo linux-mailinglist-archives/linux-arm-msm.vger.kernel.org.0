@@ -1,201 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-64214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FB50AFE79D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 13:24:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99B33AFE7CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 13:31:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A64103B420D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:22:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52811547159
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:31:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B83E295DA5;
-	Wed,  9 Jul 2025 11:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66ABB2D663B;
+	Wed,  9 Jul 2025 11:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="I0s71cy4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MrPQv+8N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E5B293C63
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 11:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A852222D4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 11:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752060164; cv=none; b=AZiciJuzenxGnSOAk49Uc8WBlmNuHPIKdGaNIihTKY+gn1YL6fWrWEvnz2+2eW6uD8fAe+cY9euuXfkyNqYPHa9+/7O2fmsSd08C8Gcas/92jpN+OsYZ2zjWyIp2Kv4Hvl6Buza+s3gH83K1GA4eh8RLWPpwvAAyAO2AkP1xqeM=
+	t=1752060682; cv=none; b=LetwSP5nf6yLllFqLrkFQ+Hd06TMn0KEwX5JY/7INNHS4FW4Q0j+2D4qUUlwoWfDs2ezxsGLyV2f3NpplYgDQIEY//QPBBsMRKX06wUD6Nu+qS/AVhvloKRMhlysAo1Y/nuzgKdUccP2PDn+cUaDQcN1NpHevvZUMFsj+Kdy6hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752060164; c=relaxed/simple;
-	bh=BJ8xB4hb+tykRRjusqg1Tz73bBRJQquK/5arYt0BGeo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ahrwhHBDAddbCkqQnXX16LwzZxgrQTGmjWKRvtDkjxSNSBxTHjWTEOfxFvbsBHLWivGbdBMSix02wOrbyTlzK8MfWEWEyfUAETL45TQ6vGoQLD9LGuFBCoC+ifW0t5QdQAXBG9ETK6lJTBz8qoIOrdB7H/Sij9as2EBbGpzxwgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=I0s71cy4; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ae3a604b43bso857638466b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 04:22:41 -0700 (PDT)
+	s=arc-20240116; t=1752060682; c=relaxed/simple;
+	bh=4Hkk5OuwSgpa8ZVz2A9112tSYqvhkuQtD4oQV2IJQgI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pUc7CuMGmQSqvT8efa1yEbdkYrK0tkWjTlpF1E/2XmYjsnROw12gRE4qwOa1m+e/fJvfebzCmuefYh9oZ4xmBiwwdZ4wExNkkGKyDfBeu02EzRq6vm4PTY7FQuFYux51V6ouCKrw5fBup7yLZRIYVzaQ8UKMsNiVByaNEiH5NhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MrPQv+8N; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-710e344bbf9so49951777b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 04:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752060160; x=1752664960; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g5w5k+HV8sFNIt4Z8WUuVtI/36kvxiu7k+wZWXpkHCE=;
-        b=I0s71cy4G9Ejk+Z7lA4QbqusERLNd2Cu5aLmY6EYT/OQk5d+k7MXJlRzeP/qBneo4B
-         yoxZpPwLCkZwM4ami1e22WlYoIY4t5q7Mup+Gzg0vzNmSstUTIMpk5hMvrI51L/efRmm
-         cplHi1hI55WivQE1hSLN1L1/941/OWFRcGJCJDffZTOSr8hYUrG9e8YNhiUoNoDz38PK
-         1nwJAscHR/Q3dlXpt96TrJXkfBusL0lkWqc0exJD9WyTFHpij8SK6pLIerONwOqXHpT+
-         O5s18OmnqoXXDh9JCG7FdcbrP+rF4yu8OYCILjuZ+jh3KdGRfhHzbmv4NinRnWJ95rl1
-         +X3A==
+        d=linaro.org; s=google; t=1752060678; x=1752665478; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vhinRnC2KgbrCAQjb5GrNdfbvaAbJYEqjJK/1IzV5G8=;
+        b=MrPQv+8NX70FYkTMV4RTftqbDYYQklA2tp0odqaQtpTNjPt+3tMwzgpqUS1gwxEChA
+         B7btfrilPobCCIcEvY4ha4QHRvSnHhIfIF1yjeSI9XdvPdTJP1L4kdooVJGAFD2bFFHT
+         aKH1LIU1iJquesfGs15pezsI+wf/NHBP4zwHKKUbymBc9hzcooJJF5GltWCwzjJqNKqF
+         qMbE+dlxTbJ2WjYkBWVgG3f/OX8l0wH5A4aYlDG0I0/l0uRp9woh04GXopJwtO1Fu1l+
+         ZjeF5ftkFT4iLiQbfoqESHfgikdEMyMRZUBVJnHU4TK/mXj8xt34JQ3LgX10zG0fOz9e
+         OPrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752060160; x=1752664960;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g5w5k+HV8sFNIt4Z8WUuVtI/36kvxiu7k+wZWXpkHCE=;
-        b=h9vNXmyftnymFQUeAYgkd451Hylr3cocc9ZiIrrbMCxPlKc47MB2vsHUdGBT45gw8K
-         GAA6eBYLdkNBlK3c5bSeqcNWCHGjBLMQwCz3MDE3ZxT3wcDOLfo9HWeZVqfujKmt4+z6
-         jLUCI1bWe8hvWTTTJpT9SaaVoi1hZeF+4SVdy8otoKi8XV2A6M2cKbRhmKTro+thc1AL
-         h2hsO5jiBXgNImc65OzN0KUHA5rJMcKyK8Fb1dW6jhMszNFo6nsMLqdRjyHbDWWw7T4p
-         Sp8wnmbUil5oLS12gBRK5jpC2KeZnZkNGU3ZlMBeXN+NAVnMiGai4GMiCB9+lvWpy4AX
-         yo8g==
-X-Forwarded-Encrypted: i=1; AJvYcCVEyvvnLTZPEXHsslhJrlD6miawwb1looHbyewlveAfgaAugIJHpwKKhTJAxcFdNqCFW0cnGQCbk/6hwIpw@vger.kernel.org
-X-Gm-Message-State: AOJu0YxiHOuFYeEPcPIvNobpMlJ850uOXVviP3nMz9d+SngxqD24Mjtb
-	pDIrQKVJu3dldNqjw/8aYxGMa4HyPygDmd6QJyPWZVLHdxPENtrUiimKYungoexIbic=
-X-Gm-Gg: ASbGnctkeDcw91wfA4bfX66MBLSjatvg6NeGIAQpyFWnCmiGFe7r7q/oM7Qpb1aKLcg
-	+VH6wJ2Ag8SBcnbRfCTzs7CXutiIV+kxwi/6N7oAcWYAHmrssMLA4Y6FcUutUGyQyiXolIHpJrq
-	HKl5SIm+mYqnLFNEk0BqtG6yYu2QICXr1TqJ2AqKbS682tWYhuL5TTPHbll/ml8uIQ1igHqWJcd
-	K8UNGz20f49dIahSETgbr0B1Pc7Rr5zoPoAoEQ+inZLAeSwogIQpP3TYyEWeSUsntuGiVjFX74e
-	M5RF1rCabreLOJI+LC8g91LL6cxHkP4l/Qx0l1KhuegbhQ1BWLF2o5iwGPICDaK53tlMQ4AnhSQ
-	PdFAIpyZdZdPwvvaT0tmgi2ikVuwW6Sxh
-X-Google-Smtp-Source: AGHT+IE/cYuqI4vT6pQgasChnZtvTh9J7UXPtPCMD7zDsylvBEkqznTwLOLiwtQ6YL0FyhhxPxWwWg==
-X-Received: by 2002:a17:907:97c5:b0:ae3:5d36:aa6b with SMTP id a640c23a62f3a-ae6cf76d14amr222432666b.36.1752060160435;
-        Wed, 09 Jul 2025 04:22:40 -0700 (PDT)
-Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f66d93basm1079861066b.4.2025.07.09.04.22.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 04:22:40 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 09 Jul 2025 13:22:29 +0200
-Subject: [PATCH v2 4/4] arm64: dts: qcom: Add PMIV0104 PMIC
+        d=1e100.net; s=20230601; t=1752060678; x=1752665478;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vhinRnC2KgbrCAQjb5GrNdfbvaAbJYEqjJK/1IzV5G8=;
+        b=EtApyhMW53eT9DI/uAgM6sCzJp9kXOXPOQvtFEZqqt+AIj7P8XmRX+eJcynZSAm4PH
+         mG7Gh9AZPJSw6cFgCwHcSbtiBrfwdlssPUxW4t9/Uv/7tYpioSoydsMRg3nrvEHxn+Mp
+         nSIuA/fOaZznv8zqUyhJnlOsjeFbLxhNfBEe+YHniaxCBUgLLe7RawsubOo8DXO9zHME
+         d/+/Di3ELl34U0NnpiZPQafi4414UhyRwxNP728dXRTFj78zSXkQkM//phbthwxDwheF
+         OAGPWQYrqa3nJ65zG6VdZUjygsnD28bYzI1yqWI7vq0pzxDIFCl+CE4Rbc9z4+l1pkOX
+         YWKg==
+X-Forwarded-Encrypted: i=1; AJvYcCV4AIp3Xcs0tYtCNg3DXlU6m9akDJq70jZzPqBY9d7ABSUtvZUI3gDLq1fDreXeSWYU3Z3GZeDIkxWlKLtB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yytzp3oDgBRjIZuj624UbtIPGLH68cUbJ1chjy0rbbR7zopmT8F
+	BuRGYnCiG+3OjtQ8a1WdK1CVNeFSJhLerLBxqouAVqDAbNGLYYaiKGXLtqVt8eFW0AFjqloncAD
+	Ni1OrGm4GdFTub3A4pOdFknbi35u4LE/IXRK23lmxcw==
+X-Gm-Gg: ASbGnctRBe36n/6IXWGoFM0SZEXVX/3QpUlK6MTSo26mGtoGqSILiZBUbQM+gy/075U
+	CaF6qYAq/V+fRqF+P9O28Atn6rx7/MvjQdXSD3kRgfZ/sQtgg9Aar2jYNU1havOOAA5LWUWgCCR
+	EuSTQTV8DQ9u6UBjIcJdZx2jpobitALejoVH3wuCVRi3kX
+X-Google-Smtp-Source: AGHT+IGH/F6xYLHPIoC6QZpCT/W5DUlQY8P9zi7qkAmnI0IUChUcZNLBvcHsqWHGEgSnYu/SEZC21ND0ucUUVBJryNo=
+X-Received: by 2002:a05:690c:311:b0:70e:2ced:6f5f with SMTP id
+ 00721157ae682-717b1a0cdb7mr31460677b3.37.1752060677687; Wed, 09 Jul 2025
+ 04:31:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250709-sm7635-pmiv0104-v2-4-ebf18895edd6@fairphone.com>
-References: <20250709-sm7635-pmiv0104-v2-0-ebf18895edd6@fairphone.com>
-In-Reply-To: <20250709-sm7635-pmiv0104-v2-0-ebf18895edd6@fairphone.com>
-To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752060155; l=2260;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=BJ8xB4hb+tykRRjusqg1Tz73bBRJQquK/5arYt0BGeo=;
- b=sOru2oGeILUyEs8AZfZlxdJBi6QurntuA+Qc9mtV5d8zfpnOFfQBawp3ZrLfZDQ13dZpOZUdj
- mn8scrOcHD2BZpAYui9TkwB+yt50J7Dqf7h8lcLqA1M2ccd+PZHk8HE
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+References: <20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com>
+In-Reply-To: <20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Wed, 9 Jul 2025 13:30:40 +0200
+X-Gm-Features: Ac12FXwikg22mOAGpboGSZcxhcTM_ZXNIAi7032DsK4OuPilgCtD8TpPeVBGJ18
+Message-ID: <CAPDyKFpjPLrM04uoWAT1m6WCt7WKh-e6gycNbjo4wjQQyv=96A@mail.gmail.com>
+Subject: Re: [PATCH v2] pmdomain: governor: Consider CPU latency tolerance
+ from pm_domain_cpu_gov
+To: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add a dts for the PMIC used e.g. on devices with the Milos SoC.
+On Wed, 9 Jul 2025 at 10:30, Maulik Shah <maulik.shah@oss.qualcomm.com> wrote:
+>
+> pm_domain_cpu_gov is selecting a cluster idle state but does not consider
+> latency tolerance of child CPUs. This results in deeper cluster idle state
+> whose latency does not meet latency tolerance requirement.
+>
+> Select deeper idle state only if global and device latency tolerance of all
+> child CPUs meet.
+>
+> Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
+> domain idle state entry (2150) + exit (1983) usec latency mentioned in
+> devicetree, demonstrate the issue.
+>
+>         # echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
+>
+> Before: (Usage is incrementing)
+> ======
+>         # cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+>         State          Time Spent(ms) Usage      Rejected   Above      Below
+>         S0             29817          537        8          270        0
+>
+>         # cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+>         State          Time Spent(ms) Usage      Rejected   Above      Below
+>         S0             30348          542        8          271        0
+>
+> After: (Usage is not incrementing due to latency tolerance)
+> ======
+>         # cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+>         State          Time Spent(ms) Usage      Rejected   Above      Below
+>         S0             39319          626        14         307        0
+>
+>         # cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+>         State          Time Spent(ms) Usage      Rejected   Above      Below
+>         S0             39319          626        14         307        0
+>
+> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/pmiv0104.dtsi | 73 ++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+Applied for fixes and by adding fixes/table-tags, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/pmiv0104.dtsi b/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
-new file mode 100644
-index 0000000000000000000000000000000000000000..85ee8911d93eae5fce512146a8e2c56d79dee398
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
-@@ -0,0 +1,73 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-+ */
-+
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/spmi/spmi.h>
-+
-+/ {
-+	thermal-zones {
-+		pmiv0104-thermal {
-+			polling-delay-passive = <100>;
-+
-+			thermal-sensors = <&pmiv0104_temp_alarm>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <95000>;
-+					hysteresis = <0>;
-+					type = "passive";
-+				};
-+
-+				trip1 {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "hot";
-+				};
-+
-+				trip2 {
-+					/*
-+					 * Current Linux driver currently only supports up to
-+					 * 125°C, should be updated to 145°C once available.
-+					 */
-+					temperature = <125000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&spmi_bus {
-+	pmic@PMIV0104_SID {
-+		compatible = "qcom,pmiv0104", "qcom,spmi-pmic";
-+		reg = <PMIV0104_SID SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pmiv0104_temp_alarm: temp-alarm@a00 {
-+			compatible = "qcom,spmi-temp-alarm";
-+			reg = <0xa00>;
-+			interrupts = <PMIV0104_SID 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+
-+		pmiv0104_gpios: gpio@8800 {
-+			compatible = "qcom,pmiv0104-gpio", "qcom,spmi-gpio";
-+			reg = <0x8800>;
-+			gpio-controller;
-+			gpio-ranges = <&pmiv0104_gpios 0 0 10>;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+
-+		pmiv0104_eusb2_repeater: phy@fd00 {
-+			compatible = "qcom,pmiv0104-eusb2-repeater";
-+			reg = <0xfd00>;
-+			#phy-cells = <0>;
-+		};
-+	};
-+};
+Kind regards
+Uffe
 
--- 
-2.50.0
 
+
+> ---
+> Changes in v2:
+> - Rename device pointer to cpu_dev
+> - Replace dev_pm_qos_read_value() with dev_pm_qos_raw_resume_latency()
+> - Link to v1: https://lore.kernel.org/all/20250708-pmdomain_qos-v1-1-7c502f4c901a@oss.qualcomm.com
+> ---
+>  drivers/pmdomain/governor.c | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/pmdomain/governor.c b/drivers/pmdomain/governor.c
+> index c1e148657c873a6b5b4d9c0f058d54cb020c56e2..39359811a93047b36443a1b9583962726f24b88b 100644
+> --- a/drivers/pmdomain/governor.c
+> +++ b/drivers/pmdomain/governor.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/pm_domain.h>
+>  #include <linux/pm_qos.h>
+>  #include <linux/hrtimer.h>
+> +#include <linux/cpu.h>
+>  #include <linux/cpuidle.h>
+>  #include <linux/cpumask.h>
+>  #include <linux/ktime.h>
+> @@ -349,6 +350,8 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+>         struct cpuidle_device *dev;
+>         ktime_t domain_wakeup, next_hrtimer;
+>         ktime_t now = ktime_get();
+> +       struct device *cpu_dev;
+> +       s64 cpu_constraint, global_constraint;
+>         s64 idle_duration_ns;
+>         int cpu, i;
+>
+> @@ -359,6 +362,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+>         if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
+>                 return true;
+>
+> +       global_constraint = cpu_latency_qos_limit();
+>         /*
+>          * Find the next wakeup for any of the online CPUs within the PM domain
+>          * and its subdomains. Note, we only need the genpd->cpus, as it already
+> @@ -372,8 +376,16 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+>                         if (ktime_before(next_hrtimer, domain_wakeup))
+>                                 domain_wakeup = next_hrtimer;
+>                 }
+> +
+> +               cpu_dev = get_cpu_device(cpu);
+> +               if (cpu_dev) {
+> +                       cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
+> +                       if (cpu_constraint < global_constraint)
+> +                               global_constraint = cpu_constraint;
+> +               }
+>         }
+>
+> +       global_constraint *= NSEC_PER_USEC;
+>         /* The minimum idle duration is from now - until the next wakeup. */
+>         idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+>         if (idle_duration_ns <= 0)
+> @@ -389,8 +401,10 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+>          */
+>         i = genpd->state_idx;
+>         do {
+> -               if (idle_duration_ns >= (genpd->states[i].residency_ns +
+> -                   genpd->states[i].power_off_latency_ns)) {
+> +               if ((idle_duration_ns >= (genpd->states[i].residency_ns +
+> +                   genpd->states[i].power_off_latency_ns)) &&
+> +                   (global_constraint >= (genpd->states[i].power_on_latency_ns +
+> +                   genpd->states[i].power_off_latency_ns))) {
+>                         genpd->state_idx = i;
+>                         genpd->gd->last_enter = now;
+>                         genpd->gd->reflect_residency = true;
+>
+> ---
+> base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
+> change-id: 20250708-pmdomain_qos-29077f8b622e
+>
+> Best regards,
+> --
+> Maulik Shah <maulik.shah@oss.qualcomm.com>
+>
 
