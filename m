@@ -1,148 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-64266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6188AFEC56
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 16:43:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65582AFEC7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 16:48:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44FB8179A18
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:41:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36EAB1892ACC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:47:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 746E62E9723;
-	Wed,  9 Jul 2025 14:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16CC41E492;
+	Wed,  9 Jul 2025 14:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Y3Jg6bF7"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="edPuFj6j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1B42E9728
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 14:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7144D298996
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 14:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752071962; cv=none; b=BRuf/2+zDPXBSsMKguagWlLnFfyxA+eGgaVYKWWk9vMQ3klRk1tdn/jke3RTeFnKPMVitrA1/26Fi+ViCpFCstW2nZ1GLpyOnVg/XF1SwcmCjKJO/05J7SAbt+gcz8OTMUfINBaCe9PuHY71VkbuW4jyn/q+HqchhGWhpH30O5k=
+	t=1752072458; cv=none; b=Oru3YyMcZddyBrEKBXLd9GoTisfCYy+6CTJBUzf+81A9FB0bC2WpabvovuXQmSJd3daV75nmsDBevhJrTL9gxc9Ycu/SXV4ldKox/xMLIy5/0odLyheayOiyM8fYdiTlAUGSzdAllX3TjgNcRMl/P8/0sf1JwkdcNUVsMXvu+kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752071962; c=relaxed/simple;
-	bh=h9Y9QsarkpXYFnUZLolMrTl7+euN/vM4YyfIdXkl13s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B9fG1IPvbQMeAFsgX9bOd1ZEjWIn+SBy4nkjE5DiVEBc/T4qctkuwMXExicei8uPjD84zOzxeVJXZK71XNGYjDV2ajVDcAxTWOeg53XSfjiRk4pl2+816L22TLaAwzYEmcIMaTIvXZYaT3V7P9KB2pdEKOMcyvlbqPhuPGZuBio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Y3Jg6bF7; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1752072458; c=relaxed/simple;
+	bh=q33ce8+frqKgGaRpVRO1z08J/7tP+j9aTiTDexbSRLI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TGZp1FELOtEgf30Uudz6zU9i2//Yx7wlKFs5wLyb6QVlVJiJJMNvsGi7HA5GrgtZtW54KhgWwGCT3A6YMG3qwDy7jeTAf37nHvCHABjhfUQJ8t7QwzQTuu/I8RlJyvsRGm3cOJoJzp4o94Pi88aBLZOk6yFS+wzEn82YxRz19rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=edPuFj6j; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-453398e90e9so41222495e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 07:39:19 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a4f379662cso27447f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 07:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752071958; x=1752676758; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U/0cHEX1WGiZE8mwyI/JPOFvvGfe/GVd0huttz7DYHs=;
-        b=Y3Jg6bF7d7y9+byyvlbQjlO71shSz7ZezydV9BSbvJBt4i4CnIdb7ewhHx/erQKCO+
-         akb3CFTkWfU15VMUUT5T/IvpkZMOUTBO5VnhQlKz+vIfAfYTxwKlYZQ//4I7EwTwfVJb
-         aRcOGHutXleQaaJK0nKVn4Ps/yKfRtayb5O+tG32VCBaPeXnvDJ7SuyCXUIJL+kA0sD7
-         2NHhq1brPS/ABsttY525wI77y8jQ5vpnKBjdMZc9JLdH4quYar4fLP3LmYAPvfgMcCZq
-         yHlhQMN3jVEAjzkPH0LoQtNj21THyNtWrwS+z/yTb+dcI+x2GaWLP2s+OP1jpB/gyB+0
-         6yPw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752072456; x=1752677256; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4NtH0feHwwUczaaFj41kCVHxJaG2GKZc+XLPiyiigkw=;
+        b=edPuFj6jJg/2IGwu8uMXKqZtKJbnOxl+5C7jzkYK8z8FN/NboDPBDjDf+7OiR2qEZF
+         O37UcZesOkkJpKoZy+6+Ipan7jYIFmMMAae5HUoMtbZbZIw5aNSY0u+7mCDxY0gFjNM7
+         5zHcbcZqr+J4yX+GGZFVA9hc0UIj6dCDAc3xN7G9sWvwyySv6hspk614jisM9ceh1cGL
+         ThiKc3OiT4wcF2dLDj6JMDvlQKs12/NRRPO5On2U4IvA9wvhvhRyKT+NQJUe6B/svSp0
+         1GgtJwT3feFH4MoJAfDoxi2Ed/7H20WeSAjHEBqUC5jI8aoTW2l59JwaxwR/Er2neUiE
+         oLQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752071958; x=1752676758;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U/0cHEX1WGiZE8mwyI/JPOFvvGfe/GVd0huttz7DYHs=;
-        b=NmQ6Q5PjKBNNDo0XY9kR2uvxpTxtYZCuOW6t3Td/kpgYYsqscqJ7pxW7sQRHK+xGL4
-         TWKITb8krvs8ze2beMRjzEb6BRO6YAf3VOoMJeS3TZtMzJx4kDSBfXS39Rp4Buz52s4o
-         34G3FGLPdcqzYX8JC9Nx59x+7ScwsPfvDM4V2ZqJmk/bi5uGUz1bNtX0dKgltutYUoAP
-         1c4M9UEetnEmTCNYJrgFomXVJsfdYWmNSgIkhi8M2HMxs+dbBjNNrwxPXgClYS1FzNJ8
-         68LOjXpc/eQnSNWhb5PsYNpEo1s4RD9Cfuu2/5hMmrhg5aLxhtL9LZngyvBBWlVQwIDk
-         lmWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXwE8T/bOZ3uNKP9bAKHA/lGOxaBqtIo5u2eL5A9ZjwL6tYtmCzwbD5oVODwu/P0VKvUeQi7vCLR3U+y2gY@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUAu6/v/QGE/1r5VrY/mLWedHxgIzJdf8PIyPemnH+MEsU2bg5
-	Lo76IUigWpqZ2JJ+2NeEacrd1jPBhuY31yu+IXhOx1yshp3E+HM2XnHwBiiLWFL/6RU=
-X-Gm-Gg: ASbGncsUCYzZetftK5+pj4ZRB21DGiWkpbJy07tLbtxsZujBIpI6wKhXmjJ9wYhRavb
-	JuyF2ZgJT0GRzHpq9kF2erPL9209hMp3L0LwYB8y6FS7FuooYRSQKm2TU5wpCs1L+DXKeyw/lF1
-	7JP74wSgiwOdSqPSm+fkaOTuUMeGTkQ+GCDsO04N3hp2aPZUIr+tdwd15uZFjoFGcztBCpSUc9b
-	lsI611qM/ifKEqA4FQszgTiXEQI4RgdCNDM/arefqmA/u+EkGW02yy7eOCWxcfC08t99NSa7HL1
-	S9Re9A3zfkIXzq9vA0wucitNH0SZD9oxVcDvA893AkhR7+UyQGkaoN4=
-X-Google-Smtp-Source: AGHT+IHJL3AtHw/EonyubylYUgvsAX3aEA1kWb+hfmhi4rwD64AqP18DXBVWa7fZWLEMijUB//O7/Q==
-X-Received: by 2002:a05:600d:19:b0:43d:4e9:27ff with SMTP id 5b1f17b1804b1-454d5c8ae6emr21757475e9.7.1752071958441;
-        Wed, 09 Jul 2025 07:39:18 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:b04e:cfc4:3bd9:6180])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5dfbf56c9sm4480687f8f.79.2025.07.09.07.39.17
+        d=1e100.net; s=20230601; t=1752072456; x=1752677256;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4NtH0feHwwUczaaFj41kCVHxJaG2GKZc+XLPiyiigkw=;
+        b=N8qsWTEKVtp7Z2H3GzFNw8stezz6Z132Z+kiz/Nm4BdVfhT7sf6lXN8i0O5g30HXDC
+         UeB4crCz/0L77dzFYRfZNGBau8jVmkPCioQFiWdp8WoLqY5hnYc8/+1Xlghejd6oaV3c
+         HwBiRHIbzS/HyqjEW7felPD5nwNXswq3rYwU7jE3RoLhfVku1dB7nOCRZRqyQ9xw/tSS
+         PboARbw16oH8PaAiPHyd1EMlm1Z5iGzQO1vRltt0g4aNlTCFhnYEF592ws8XKGlJmnbu
+         GrpZGwVw+qj7UbSufRNYgmkpAZFODvNRs6d1hbUI8WYNYTqtNX9eEzNbm8YrczBYQWyX
+         xoNg==
+X-Forwarded-Encrypted: i=1; AJvYcCViN3xjtJkuXgkz/sGevOrTetgjVebjct+av2JXe7KCuFK/HkEhdE2gpfibSELCRZG74/ee6LHvxyMw3u8q@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhdSf1YyWIL1GaiWq/72BRmnm7162pu+xf1F0a12jVceqRW6Nn
+	va3C1uB/olUy1qfpfts9d3RGr5uuGf34gkcIBCsKv0MQOW5ndO8/95rJlTFFwZYyMDw=
+X-Gm-Gg: ASbGncv4OnIz2aJgt4t83t8vZY4GF24iR0zGmh7FHSD3sO1gAjnzWdCF/qDR4bDTX1C
+	3ibAuA7yIF9ZTdg+jbUFEf6EHEZBC2iS4rG+7pPLgUtTABn/86eHCY7jPCLQk5mx287NoP9Yfnn
+	w/jX6OKTbpc17XPlXxtP62gzlH4IzQ8UX/3NFTmoWGQmM+sgOZ1BFZ39wfET6X7aDqEKEBZ6NoK
+	rkHV6l/95dVxegjkMkqEU7rtPvb9dpFRd7M+lGXIFYQgIHJ8uuGqPbXM84LWTSvLW2NG7hK6T4v
+	aqGq0gBc45CHfzRLuhOCZsJ7FC0+E400HXTvarXFgTdXUxthPL382a1PrjZQiQg=
+X-Google-Smtp-Source: AGHT+IEUE8tMaPDZZaKY17LAPbD4MKLwoSLGBEVWhrKQhzPLWiq+YuKvyeMKc71elZ017y0Pb2Lzbg==
+X-Received: by 2002:a05:6000:705:b0:3b3:9c75:a4fb with SMTP id ffacd0b85a97d-3b5e4522093mr2562948f8f.33.1752072455658;
+        Wed, 09 Jul 2025 07:47:35 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:b04e:cfc4:3bd9:6180])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47285c90esm16243899f8f.91.2025.07.09.07.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 07:39:17 -0700 (PDT)
+        Wed, 09 Jul 2025 07:47:35 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 09 Jul 2025 16:39:08 +0200
-Subject: [PATCH v2 12/12] pinctrl: qcom: make the pinmuxing strict
+To: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Shuai Zhang <quic_shuaz@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-bluetooth@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v2] MAINTAINERS: add a sub-entry for the Qualcomm bluetooth driver
+Date: Wed,  9 Jul 2025 16:47:28 +0200
+Message-ID: <20250709144728.43313-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-pinctrl-gpio-pinfuncs-v2-12-b6135149c0d9@linaro.org>
-References: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
-In-Reply-To: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
-To: Linus Walleij <linus.walleij@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Alexey Klimov <alexey.klimov@linaro.org>, 
- Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Paul Cercueil <paul@crapouillou.net>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1081;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=iQ18p+opwS51aj7kQgPPUv5KuYwgsHKMpCHQbdUzIuo=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBobn8Hh53vwVwSAhW66U/ZVT3BJ1K+Xx5actm8W
- SIfx8mfLfuJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaG5/BwAKCRARpy6gFHHX
- coG7EACGCen1sbTZOcLtihqfgfleRvxd76y5gasx5ejhY5jN73Ryz+vjJHtDwd0l8c5SrMksrB6
- t7OuK5xDmCoMqMKP5oOyeqLRRCAkG+Bmb5B2OQB1nzWC9+7adNNl5rNXdk1UlZJum3AJqNI2xaU
- HzQ2ZDMceCyhG/Rb6B4qmWtfdLKiwGQTSjKvy2FoyiKyP1Kkg9mta/0tJcbaoCJ4KIGpY35E1Bz
- vNq+LbVz1VduLsXlH77XQUw5YQApX2JOKQ6E31YI4F6oiDHonqOoshmaQi+J0BEZYUgZEJIgRGe
- U0vwdMdBK4dlY3yHw6HrK2Tnqh8kawBRgh7OeZYoldO7ICasE0MkR1/VRArAynV34jM/THvbj3H
- +plh1jmtOLBgb3t3xLuhkdAjsXU7lLuznLsCsL+cweuriClQTCPwJtO/CuPSxCxQ0O/D4BSRZu5
- cVnckT4XlctODT6EkMNWLvzHgb/PAfHS0ZpGItYuV+nSdQ0nI653/gECD1stS1bkCeVnT/tJ0nJ
- WcFn6s33bTLewA0UiRkRJa3fwOCoP8hZripGucl8phvCVzKI8bI+ueBfR9B0nZzOJjwDDtVTdjj
- Xun95s+UXln6QtpXMasLGtGzUdktTreMUdgPihMF9TwaoN0biXPnFeXfQt2JXn4vWrGO9/mcIM6
- vn/2GgtvVmDuNAw==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The strict flag in struct pinmux_ops disallows the usage of the same pin
-as a GPIO and for another function. Without it, a rouge user-space
-process with enough privileges (or even a buggy driver) can request a
-used pin as GPIO and drive it, potentially confusing devices or even
-crashing the system. Set it globally for all pinctrl-msm users.
+Patches modifying drivers/bluetooth/hci_qca.c should be Cc'ed to the
+linux-arm-msm mailing list so that Qualcomm maintainers and reviewers
+can get notified about proposed changes to it. Add a sub-entry that adds
+the mailing list to the list of addresses returned by get_maintainer.pl.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v2:
+- add remaining QCA files (Dmitry)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 7010be8d1ace062fcf7743e539d2065d4aed856b..ad572c923e2ab8caed134207ec02c4107d4dc2bd 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -268,6 +268,7 @@ static const struct pinmux_ops msm_pinmux_ops = {
- 	.function_is_gpio	= pinmux_generic_function_is_gpio,
- 	.gpio_request_enable	= msm_pinmux_request_gpio,
- 	.set_mux		= msm_pinmux_set_mux,
-+	.strict			= true,
- };
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index efba8922744a3..d018923ddd3eb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -20464,6 +20464,13 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
+ F:	drivers/net/wwan/qcom_bam_dmux.c
  
- static int msm_config_reg(struct msm_pinctrl *pctrl,
-
++QUALCOMM BLUETOOTH DRIVER
++L:	linux-arm-msm@vger.kernel.org
++S:	Maintained
++F:	drivers/bluetooth/btqca.[ch]
++F:	drivers/bluetooth/btqcomsmd.c
++F:	drivers/bluetooth/hci_qca.c
++
+ QUALCOMM CAMERA SUBSYSTEM DRIVER
+ M:	Robert Foss <rfoss@kernel.org>
+ M:	Todor Tomov <todor.too@gmail.com>
 -- 
 2.48.1
 
