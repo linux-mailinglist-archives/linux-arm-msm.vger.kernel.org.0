@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-64128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71ADFAFE16E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:37:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AB7BAFE181
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:39:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3D10567A9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 07:37:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F46F3A3DCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 07:38:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A00762701CC;
-	Wed,  9 Jul 2025 07:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E694726FD9F;
+	Wed,  9 Jul 2025 07:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MK68mpxR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZOF2ptKA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C7623D2A8;
-	Wed,  9 Jul 2025 07:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BAB23D2A8;
+	Wed,  9 Jul 2025 07:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752046635; cv=none; b=Dj3EiilFZPqNsh17BhdC6AOgs5wUVZwOaF+Vy5D10tcc9U7imhahS24Dxjn5Y9bpB4bliTBQwWxURsGM6JB+81Wo8tgyElkLeC2Z80A7bGFl+tWV5O140KJw8kjGnBY7ONP34i0r7PbnFux42xseiQW0KD6lKK2ptQ7HG9PdvyI=
+	t=1752046757; cv=none; b=ZahZCwdWqOawxoPTem5LWUZ27uztNEG+TxNANoGMuxNvGtjVdwbCBHhXAaNdt0viwTLpxxHl/dfNZYQTTrkfMObDF21yse6GUNXeIjiOgGT/FGAg56rrE3u0Y6ep/4n0Li2JK7bsJO/hsjsSYl7GWOllDVUFT58AhiYsnyGhJmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752046635; c=relaxed/simple;
-	bh=8zyveNntrifP7/dTsOJwMViE80RVCE864l3k3QWDiNE=;
+	s=arc-20240116; t=1752046757; c=relaxed/simple;
+	bh=7T2VttiyfuYfzV16XO7PiYIBrzZ6e4CWp40wmEQeqe0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iPVvuSMQdVaJBJSaJ2bHDL6sPrUQrav63UqowxN+tqBaffX1k3iTkzwF98Rq63O6xrm8eUZrlacBotfXajiXpDfKGKrYoyuc/g3hnt3Gy+bObmgN5V/G5xZHjHD4FOvL9Ifh4Qrkv5awYub9Eh1Fgv6kXMo8EHyzVVUUHeECeAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MK68mpxR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D9AC4CEF1;
-	Wed,  9 Jul 2025 07:37:14 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=WkfoSHn+dhDsT8R+lkLw9u4xOrXEDKJpN8njF+5LLslAmURMuT3laEYOMGw057YG6GzlAmXzv9WO9iVvQRed0ySv7H9kwfHiaEGo/KdzQ/Ce8wPDArAz+TewPUUIDXX+gboPzWpsspYt0vea1wysL4Y5uVvz3vWgBYpzLQfDJ60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZOF2ptKA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF26C4CEF0;
+	Wed,  9 Jul 2025 07:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752046634;
-	bh=8zyveNntrifP7/dTsOJwMViE80RVCE864l3k3QWDiNE=;
+	s=k20201202; t=1752046757;
+	bh=7T2VttiyfuYfzV16XO7PiYIBrzZ6e4CWp40wmEQeqe0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MK68mpxRCItGbK5GgXo19bZXoN2Yytcm/HFCdrDA63uiZiaWv/JsUMm1Wql49b/8k
-	 ulwJet8+PiyebCYbvHAEC6jzBnI7XTJyoirIK9dcCHRKFGFz35s7eevdZdx3QpeZRw
-	 nGR9LuwhAo27BvNuHuoKSc590Cbk/N0EvvK+EUddgVkKE4TL9PxaMO3Vw8WxxiYAmR
-	 2Ghwy1WOHNxX78AAws+IQRrO3o+8m5vVAaQtbjX5WQ2UdR125nYnHDJ/IuWzgcmw2q
-	 CoSIfkGJCyHfZpupx4iLoAnYzXuhw9sNj0etWSMcmv0f7vfKRY+OJJkgM5mZ+5GFV8
-	 mxA6kea9miOfg==
-Date: Wed, 9 Jul 2025 09:37:12 +0200
+	b=ZOF2ptKAUaHLLzvSGMuVQXc2yeqBp8F9JTxsmLWDElqMJLksZ8MY6MtkiU0yWEWMf
+	 KGRZ5CINYWnfHZHUfLPp6XIYFq12HWL7tU7Hpv+HZ+Ujia72rH/JJwDIXIXEihYVHd
+	 RY/lYsCc0zY93HcAK+zH6PcoLaQFoFSoMMLkc9cRb6JKF7k7xzDkDUkrlcvKP0pvO+
+	 WpKEWz7FDTbaOK/nMLAWBQylumaKaW6hbsU464j57H1aePCmWubj5h5RhM01gu9CRO
+	 M9sl9NMEnSwiEXa7FuxIECFn9ZIiR8NIRjXOk70khqUFsgM19bEQqB3l9+5ukrkL0N
+	 TRl/91HjDzyEA==
+Date: Wed, 9 Jul 2025 09:39:14 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: x1-hp-x14: Commonalize HP
- Omnibook X14 device tree
-Message-ID: <20250709-attractive-grouse-of-variation-dadcf1@krzk-bin>
+Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: x1-hp-x14: Add support for
+ X1P42100 HP Omnibook X14
+Message-ID: <20250709-arboreal-basilisk-of-opportunity-bafaf1@krzk-bin>
 References: <20250708-hp-x14-x1p-v5-0-44c916efa973@oldschoolsolutions.biz>
- <20250708-hp-x14-x1p-v5-2-44c916efa973@oldschoolsolutions.biz>
+ <20250708-hp-x14-x1p-v5-3-44c916efa973@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,73 +61,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250708-hp-x14-x1p-v5-2-44c916efa973@oldschoolsolutions.biz>
+In-Reply-To: <20250708-hp-x14-x1p-v5-3-44c916efa973@oldschoolsolutions.biz>
 
-On Tue, Jul 08, 2025 at 10:34:07PM +0200, Jens Glathe wrote:
-> Commonalize the HP Omnibook X14 device tree for derivation of Hamoa (x1e*/x1p6*)
-> and Purwa (x1p4*/x1*) variants. Required because the device trees are not
-> compatible.
+On Tue, Jul 08, 2025 at 10:34:08PM +0200, Jens Glathe wrote:
+> These laptops are the same as the already known 14-fe0xxx models, but
+> with a Purwa SoC, SKU number 14-fe1xxx. [1]
+> 
+> The supported features are the same as for the original Omnibook X14:
+> 
+> - Keyboard (no function keys though)
+> - Display
+> - PWM brightness control
+> - Touchpad
+> - Touchscreen
+> - PCIe ports (pcie4, pcie6a)
+> - USB type-c, type-a
+> - WCN6855 Wifi-6E
+> - WCN6855 Bluetooth
+> - ADSP and CDSP
+> - X1 GPU
+> - GPIO Keys (Lid switch)
+> - Audio definition (works via USB and with internal speakers)
+> 
+> https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
 > 
 > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 > ---
->  ...hp-omnibook-x14.dts => x1-hp-omnibook-x14.dtsi} |   23 -
->  .../boot/dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1610 +-------------------
->  2 files changed, 34 insertions(+), 1599 deletions(-)
+>  arch/arm64/boot/dts/qcom/Makefile                  |  2 ++
+>  .../boot/dts/qcom/x1p42100-hp-omnibook-x14.dts     | 36 ++++++++++++++++++++++
+>  2 files changed, 38 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-> similarity index 98%
-> copy from arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-> copy to arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-> index 8d2a9b7f4730783bbaa81e488a0e99cc195a195f..740d145d51a90b67e572b02486eeff9aa256fcde 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-> @@ -4,17 +4,12 @@
->   * Copyright (c) 2024, Xilin Wu <wuxilin123@gmail.com>
->   */
->  
-> -/dts-v1/;
-> -
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/input/gpio-keys.h>
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  
-> -#include "x1e80100.dtsi"
-> -#include "x1e80100-pmics.dtsi"
-> -
->  / {
->  	model = "HP Omnibook X 14";
->  	compatible = "hp,omnibook-x14", "qcom,x1e80100";
-
-All these properties should be gone from DTSI.
-
-> @@ -860,10 +855,6 @@ vreg_l3j_0p8: ldo3 {
->  
->  &gpu {
->  	status = "okay";
-> -
-> -	zap-shader {
-> -		firmware-name = "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn";
-> -	};
->  };
-
-...
-
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 4bfa926b6a0850c3c459bcba28129c559d50a7cf..63bf3ccc11124a70efb09782b57970b274d80d49 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -333,3 +333,5 @@ x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14.dtb x1p42100-asus-zenbook-a14-el2.dtb
+>  x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
+> +x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..4ec975f9acec30dc8a2383a4c6c15c3e1ee754e1
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
+> @@ -0,0 +1,36 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Incomplete copyrights. While renaming/splitting you are not allowed to
-change them.
-
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "x1e80100.dtsi"
-> +#include "x1e80100-pmics.dtsi"
-> +#include "x1-hp-omnibook-x14.dtsi"
+Odd copyrights. How could this file be published in 2023? Before the
+laptop was even made? And by Qualcomm? Qualcomm did nothing for this
+laptop on Linux - it's a Windows platform for them.
 
 Best regards,
 Krzysztof
