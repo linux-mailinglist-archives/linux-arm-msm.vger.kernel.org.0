@@ -1,132 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-64293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74576AFF3F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 23:35:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D652AFF4B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 00:30:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6173A3A9106
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 21:35:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62676585DB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 22:30:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD46B23AB86;
-	Wed,  9 Jul 2025 21:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFE4924679D;
+	Wed,  9 Jul 2025 22:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="iVF8f94E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTOuyLPK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from aposti.net (aposti.net [185.119.170.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB280A92E;
-	Wed,  9 Jul 2025 21:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.119.170.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F641CAA85;
+	Wed,  9 Jul 2025 22:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752096922; cv=none; b=WADJmlOxJsWHWOboLQOlpwWphOA7pv18UFQS9Iw9ZV4+rmErX9QWJ2g+TbNJJcBGpXNB6dGy6P3nx43BSMuV2lv+96ytOlGd9ufT6OzNOVHjx7gSkTFZ4j0JNXbvgBi9W61h6IwiSoCpKcQy6x9XRxJJM9Q7Q9+rlj8Nl2fZheE=
+	t=1752100211; cv=none; b=F6zSmKfNjhJQgkJGmBKIDMJIAaVF6FlOPX6I1jU4Y4il3RMNd0hkKsWtilnkvDOIq+oTEF3oWQDK9ET4Yx81YVhWdrc5h2PNqrmIH3Yxq28gStZOeg35fHGIYBRgPC4aWbRaYC+T5bQKR65Y38/QuX2zz7+OQdRH8mT4jWMDKxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752096922; c=relaxed/simple;
-	bh=ZfO4tTpnHhlOVCTzI4QpGxMpQ9KbzzhoLV0RV1GM5Ew=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GD0ee0nHBAVK0SJRXc2K36C0Rn/svXXhnPHGjHq9EgwKVQO5SOJJ2hQnGRVKpvWQjcFwJU3/SRyVD9tBLZNM5p21qGb0h+MT9jvbLwyVyVSVeKVC84qUtuZJBeBofH5r3rI1/ezmCDYyGTRQIHj3K5Z92qrnvsQRm3I1HsZGfXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=iVF8f94E; arc=none smtp.client-ip=185.119.170.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1752096392;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AeNyhU0IbImTOM2sec3z2E+lKGcfLSldUoaa9IlHjM8=;
-	b=iVF8f94E7W50OAweMt+hTHDfgObOse4sZp8Eo5dQc8thX1hkibCzhxy/9KVJUZHhnhvRMH
-	4eM0KB6bD8knnRyAYR8EVPHw3dxxkjb9768f3Nvq8ePRJgS9TJDf6pTcpd4E4aNpTbvJ0u
-	DRWRu5b09tEtU9ZhjgXJKyC9Lf2wwfE=
-Message-ID: <5a2c7d244d0467d7236dbce920319c6df519bad7.camel@crapouillou.net>
-Subject: Re: [PATCH v2 07/12] pinctrl: ingenic: use
- pinmux_generic_add_pinfunction()
-From: Paul Cercueil <paul@crapouillou.net>
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Linus Walleij	
- <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Konrad
- Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>,
- Lorenzo Bianconi	 <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
- Matthias Brugger	 <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno	
- <angelogioacchino.delregno@collabora.com>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, Bartosz
- Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Wed, 09 Jul 2025 23:25:30 +0200
-In-Reply-To: <20250709-pinctrl-gpio-pinfuncs-v2-7-b6135149c0d9@linaro.org>
-References: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
-	 <20250709-pinctrl-gpio-pinfuncs-v2-7-b6135149c0d9@linaro.org>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
- LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
- FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
- z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
- +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
- 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
- 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
- 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
- dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
- 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
- rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
- lBwgAhlGy6nqP7O3u7q23hRU=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1752100211; c=relaxed/simple;
+	bh=xHr0SxcTTGeDN1ue6d/qY2D0xz+OPv9AcKajs1DQq90=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=gRrEJ3WDlKeYV+rAtOJCgKVYxaxwg47oXfkuvOdAyw133MDXVn5lElnhzwLTfKCdRo2rnssZx4XGf+24E4wD0fr9zLuaZDT7K1/YTEvFCO1Kr3NyotQOQXp0XIWtBL3GNa7Ugav1k5ml765fPAnej6UIil3QO0z/7Z22zB5rnjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTOuyLPK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E3CC4CEEF;
+	Wed,  9 Jul 2025 22:30:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752100211;
+	bh=xHr0SxcTTGeDN1ue6d/qY2D0xz+OPv9AcKajs1DQq90=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=PTOuyLPKEIvUR+suT8k+/1Ck2XqWrdas0m70vsOe6FMm5Og/ahHF0rQRSrcb14SnJ
+	 LMBvT+0iqFIbwI4vjH6c4giXZi8haH2E0bFdv+gbTkXsSrGlCmDMFW6ybv19i8+YYJ
+	 Zz9CDrMlNjkbBeep5UpnjlL2BuetozjIU0RZtYydCuwZnRQeGoAC8HuqAjUxfp+rt+
+	 B8kt3zUnn5ks84mSONbOczsJ38ndSunhqfdgTZ65h3ZrUWFHCLM9CCnjDpy9qgPFq/
+	 a7aOX4rEyyv3gzQ7UYzoxrvPAQBLn9nPjTvJXJj/SYCliMq6ctrBKHFLn/n9EPoeHU
+	 KX/MlRxnUQbqQ==
+Date: Wed, 09 Jul 2025 17:30:10 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, linux-remoteproc@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht
+To: Luca Weiss <luca.weiss@fairphone.com>
+In-Reply-To: <20250709-sm7635-remoteprocs-v3-1-c943be976180@fairphone.com>
+References: <20250709-sm7635-remoteprocs-v3-0-c943be976180@fairphone.com>
+ <20250709-sm7635-remoteprocs-v3-1-c943be976180@fairphone.com>
+Message-Id: <175210021011.3927964.2963774922041119366.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: remoteproc: qcom,milos-pas:
+ Document remoteprocs
 
-Hi Bartosz,
 
-Le mercredi 09 juillet 2025 =C3=A0 16:39 +0200, Bartosz Golaszewski a
-=C3=A9crit=C2=A0:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->=20
-> Instead of passing individual fields of struct pinfunction to
-> pinmux_generic_add_function(), use pinmux_generic_add_pinfunction()
-> and
-> pass the entire structure directly.
->=20
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-
-Cheers,
--Paul
-
+On Wed, 09 Jul 2025 13:13:07 +0200, Luca Weiss wrote:
+> Document the bindings for the ADSP, CDSP, MPSS and WPSS PAS on the Milos
+> (e.g. SM7635) SoC.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
-> =C2=A0drivers/pinctrl/pinctrl-ingenic.c | 5 ++---
-> =C2=A01 file changed, 2 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/pinctrl/pinctrl-ingenic.c
-> b/drivers/pinctrl/pinctrl-ingenic.c
-> index
-> 3c660471ec6911ee494f45d2ffc13c4dc496fd2e..79119cf20efcf8cc701647d9ff9
-> 79c2b71bf7589 100644
-> --- a/drivers/pinctrl/pinctrl-ingenic.c
-> +++ b/drivers/pinctrl/pinctrl-ingenic.c
-> @@ -4574,9 +4574,8 @@ static int __init ingenic_pinctrl_probe(struct
-> platform_device *pdev)
-> =C2=A0		const struct function_desc *function =3D &chip_info-
-> >functions[i];
-> =C2=A0		const struct pinfunction *func =3D &function->func;
-> =C2=A0
-> -		err =3D pinmux_generic_add_function(jzpc->pctl, func-
-> >name,
-> -						=C2=A0 func->groups,
-> func->ngroups,
-> -						=C2=A0 function->data);
-> +		err =3D pinmux_generic_add_pinfunction(jzpc->pctl,
-> func,
-> +						=C2=A0=C2=A0=C2=A0=C2=A0 function-
-> >data);
-> =C2=A0		if (err < 0) {
-> =C2=A0			dev_err(dev, "Failed to register function
-> %s\n", func->name);
-> =C2=A0			return err;
+>  .../bindings/remoteproc/qcom,milos-pas.yaml        | 201 +++++++++++++++++++++
+>  1 file changed, 201 insertions(+)
+> 
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/remoteproc/qcom,milos-pas.example.dts:20:18: fatal error: dt-bindings/interconnect/qcom,milos-rpmh.h: No such file or directory
+   20 |         #include <dt-bindings/interconnect/qcom,milos-rpmh.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/remoteproc/qcom,milos-pas.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1519: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250709-sm7635-remoteprocs-v3-1-c943be976180@fairphone.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
