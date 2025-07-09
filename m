@@ -1,179 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-64143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AE97AFE3BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:12:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0636FAFE3D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:16:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62A187B64D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:09:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FA6A3B25E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:16:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD75A284696;
-	Wed,  9 Jul 2025 09:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFFC025C810;
+	Wed,  9 Jul 2025 09:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VHZzAB8b"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MD04QiCb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EDF78F36;
-	Wed,  9 Jul 2025 09:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5055A2749F1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 09:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752052266; cv=none; b=McmROtQv9VghzIgJ3PXIjETJAHsY6a5CR91mCNIcD233b0pQdeFgX8UtWqvw5ad9VqJqCG7A2gmftyyqTVoGioOErrFG2jk1GaUeXK460U5LbqtFLjBiCjFcErgmC3f4EXl20Emq/cubQ2zFXTmMmoeQynziovHIsrzam/5gUpU=
+	t=1752052576; cv=none; b=pwEG/LKImvqf6e43UtGprSDoZ6vbq4W6vgbvY7oFrSLcnuduvY8OndfxgsReRE6mPHKUhBGnH58XokBmwAJl6hpRmMxrGlz4Vfwd2XbIdoItpADSKc/SWpTADFYw+yN3XUv/08rEWsSdiGkHK1XSXNjVDG7e1HT1xGAiiBlXQ0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752052266; c=relaxed/simple;
-	bh=e+AlNfEIWLEOUZb0WGiJuKUfwZfi9mwK1UILrKSjqnk=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=M7zQVWBtw8/slFSnBwYd7Muj0FMgMbGRPQxIzvM43d7QTjx/LO1w28wWGuBHGiFSf0VnVlVrr/zWJ5v83Vam2nzPe4sBzAucpdN8L8ychcERB+247D1mwRMF1nlD9Ie70eUxx5/virE37BaIswzWO2+uG8N+isIpawczLYCOfOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VHZzAB8b; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752052265; x=1783588265;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=e+AlNfEIWLEOUZb0WGiJuKUfwZfi9mwK1UILrKSjqnk=;
-  b=VHZzAB8bXpVPESqBubuBtAnaqdRM2qP+WSjy0zrQQlHsgxceRt6CVRvi
-   casoELT49zdjxg8Lva5eHI0AABJZbHl3/nvXO+Xcfh8O0/QRnd0OrSsVA
-   M57GkwNHl9qqAppk3dyhSl0kf53QJabbZtRqGJh7yUQ19qd0670UjMouy
-   9ZCTNQZLMKPcc8NKDoTHrQ72PfYUwJAoAJ3X8UjPxG5mpd29a9A55GbRu
-   LDHTJqqF0uKZ4yz7zkZdNuzMC4SwZmfnJrxvRMgfWhfLyvKkyR/U2hiSW
-   BqtpjpzwIKHTQdRxa5cMH2p2479jesPxwO7N/VbvfRx97H+pUvMhRi7M5
-   w==;
-X-CSE-ConnectionGUID: JZph60nNShWI1CkDwW7aiw==
-X-CSE-MsgGUID: Qiw2/TzASUq3qpwLoT2Zlg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="54163409"
-X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
-   d="scan'208";a="54163409"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 02:11:04 -0700
-X-CSE-ConnectionGUID: 2YofaDi1Rfa2S2hif6cl5Q==
-X-CSE-MsgGUID: uvbwgx//RiSED5u6g+R/jg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
-   d="scan'208";a="155458540"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.168])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 02:10:56 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Wed, 9 Jul 2025 12:10:52 +0300 (EEST)
-To: Manivannan Sadhasivam <mani@kernel.org>
-cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
-    linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
-    linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-    qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
-    quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-    Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
- __pci_enable_link_state()
-In-Reply-To: <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
-Message-ID: <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
-References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com> <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com> <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
+	s=arc-20240116; t=1752052576; c=relaxed/simple;
+	bh=Wif2EAnH+uS1OueMuNGozeeBl8sbJsE1ULddgFc131Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PWpOnluGgM6YL80o2sVxlywJZA8r0Vi04kO4eCEiCN8EH9IFWKx72KekNaAEde47MV0vsGf11vHUcUYhZLDoKWkBEUlG2TTEi0Z14osmLeU1f+9hRzXbnbQAXX/ZwnWprmIyzMb1/cAtVkpx4F+MkaPbFm4O4CLc6PLClpNLWj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MD04QiCb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5697njug008108
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 09:16:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Cv1BCk8MYMc74KhkADwnTl/g1Y3GZM+AUyi9qevFM4U=; b=MD04QiCbcyupDjwl
+	uMpXji2CFwUbWFMp4gW7xRrfwrZxp4LFM7WwubrPVypwEkJ4RNX5iWmon+pTowUp
+	JSmny1owcMo9YZW1vft36dB9wAFi2pcXdOLdReDPrdxwxGwAKAmeqRlidX/FTtSw
+	p1od8/Z6bq4ShAqeq9qtDW+4MDxabq/a2vZJf0Wtl+ubakfRm42HMYLSTsI6iIyP
+	pnEhGuFJ9ArUQcl2QMnMEXzZPgX6xjC5Sj2k+zbRX7SmHTmM+9RzntQeSv7km1K5
+	dxDP2hvWQSW7EetVn/i7lzhakHkyVMw6vpYV4yYGjybvf6aSVka0Kf8ILF9f3AqI
+	RtKmNQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg08pa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 09:16:13 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2366f1bc5d2so13715735ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 02:16:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752052572; x=1752657372;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Cv1BCk8MYMc74KhkADwnTl/g1Y3GZM+AUyi9qevFM4U=;
+        b=LQAhPHevG5dIxV6dWm8pMboNHlqt8iHXz6EAXcrGEx+q075xWXBA5dtUNsBnZTBqDz
+         e2c1sakUmrTHhcxAiejS2O5OpKe0vNmrEd4O1nzfHDj4Nfx3DIqPH/HcLV3wJ4r+7iLd
+         cgcaUTmt89yKeBKTrcuLuHHBMj/8L1oUquolOmFLTJgwikTrYZfen/K1ILtOeYzToU6+
+         AAEakUyafaRMPk9BwedMd+pI6JoNDm2hJxiO+Xf84F1KDXHE5MIaqkfKXdzvslMAHdWJ
+         j5qRwvWd1ANu1D2VCR0EZzj/j5noOSFjSA80R6g823ZWeN7UetIl/Vy6RvVm+Nl+L3CB
+         QTMw==
+X-Forwarded-Encrypted: i=1; AJvYcCV93O411qJzuccnwbAL70lPSV6gNfFpfSoGz54qKFWhE1qLDYFGZ9lML1Il6/U3RKtWrH3EqGdt38dkk++m@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJE9QYLcy79unqWa7QFR6Sn5mIb5yAex2USJVOwzpwnmuuTQKC
+	1e/XKGprRtn+Kh/TpCU4GDgzN9HSEjYuhTfh1NgBFBs0p+AoJgX1Z6duPyuySqTjh5zEbguhHED
+	HRokpsRMCjZIxNDdMWxPUhlCI6LW13IPTbFi8i62XMhGwkeaV7Bo0LHckfzI7ddcQByLe
+X-Gm-Gg: ASbGncuA/RspvxvlJ8G4yW/uAN+vbIHxGvzpv7pi73wN0dqj6xK+es11tpmgrcG2Vnj
+	5GHR2q5I2IOMAGhAxFtuxS2oBzLUjaca7ZkJLtXyT7E59k4tiZUTkhYRe3gVih2WOWtp3zb9Rp+
+	vbchN21/XkRoprWUu/YIzj0F4PF63LTUBc99Tv+P0MXcQk5EPxC7b+LUcF+eAM/gP0I3tgL8gjR
+	yEZWUd9eTN4MO3kAjJGfXBbRaM3Kb6YEW+Cg9CcjqHK4UjCC0FOGpOnhytD8Ac3hh1k0ngzbTvL
+	3ZV4zs5e385M7fzDT2Tz9NuGVmyOksNwjkcPgHmyvwO3aHJrd8hHFRdkZIoz8tDBoOHWIGcHTdn
+	Alirp/h4eEtGe
+X-Received: by 2002:a17:90b:35ca:b0:312:25dd:1c8b with SMTP id 98e67ed59e1d1-31c2fcb0251mr1322477a91.2.1752052571531;
+        Wed, 09 Jul 2025 02:16:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdfQoEh/GXWJ6Pu0rY5iE3WeMtosEwrdpewcGf70D85+7o6PThtirQuZHfaVGHEd9tQdVP5w==
+X-Received: by 2002:a17:90b:35ca:b0:312:25dd:1c8b with SMTP id 98e67ed59e1d1-31c2fcb0251mr1322454a91.2.1752052571046;
+        Wed, 09 Jul 2025 02:16:11 -0700 (PDT)
+Received: from [10.133.33.178] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c30067a55sm1502877a91.14.2025.07.09.02.16.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Jul 2025 02:16:10 -0700 (PDT)
+Message-ID: <d427de7d-76ac-4e5b-b79a-3b7638a8e7fc@oss.qualcomm.com>
+Date: Wed, 9 Jul 2025 17:16:02 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/8] drm/msm/dp: Retry Link Training 2 with lower pattern
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dmitry.baryshkov@oss.qualcomm.com
+Cc: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+ <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski
+ <brgl@bgdev.pl>, quic_lliu6@quicinc.com,
+        quic_fangez@quicinc.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-gpio@vger.kernel.org,
+        quic_xiangxuy@quicinc.com
+References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
+ <20241129-add-displayport-support-for-qcs615-platform-v1-7-09a4338d93ef@quicinc.com>
+ <CAA8EJpoN1qBHyZrQJT_=e_26+tcaKRnSrhtxrK6zBP4BwpL=Hg@mail.gmail.com>
+ <b4345b9e-62c6-470d-b1b0-4758cef7f175@quicinc.com>
+ <xlmgdysjah3ueypdrdu5b6botvidb2wn4rfm4qpeysclscmuwy@vpfv2ymprblj>
+ <b4e1ea54-ff3c-408e-8716-f48001ec9113@oss.qualcomm.com>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <b4e1ea54-ff3c-408e-8716-f48001ec9113@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=686e335e cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=M9roUVu_bSbsc9sLP4sA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ChkNfjsjW14tgplrV65iEnQV7lqEHWlm
+X-Proofpoint-GUID: ChkNfjsjW14tgplrV65iEnQV7lqEHWlm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA4MSBTYWx0ZWRfX/Bz6gsO5DQkR
+ u2/thujRGNDy1V+DdpRPWIiC58d9aolAKsdDDJc7jyYGKUotPTmvw/sXcMrzvTMq2P/aRvQqODm
+ pIxolpJptNLW4CNBZlw2QitHuT1s2Cco54UdOAOKz6t6mxaEXplNbNREmkSvFbMKXX1YvswiC4t
+ HbpsmPcV7yuMEQM8qeBMomQe/e3wiMIUG2rqEbesmLv2hmCtBgMBXOTN6xun80VJPqNDhfwjKLz
+ M6r1HdDhpw/BmxNxlqIEIU1frkQSpivNSzOnXcbwlP6n3bUsdXkqLTvxYhWklIzmyBYY4rJOB6p
+ e+/MNYgRP3YrzygdDK7JfWsF9vCCYt3g0YaBIV1tNgySg2XUvhtpgo/DfJIbU/3gPij4ua5pU9z
+ bs4twZfJua/oCwEU9i9LVBk30OAkjZsYjgeQ5pLZkbwwGaMJRuTQ64ruyIFywG8EV6EkmYKl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090081
 
-On Tue, 8 Jul 2025, Manivannan Sadhasivam wrote:
 
-> On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru wrote:
-> > ASPM states are not being enabled back with pci_enable_link_state() when
-> > they are disabled by pci_disable_link_state(). This is because of the
-> > aspm_disable flag is not getting cleared in pci_enable_link_state(), this
-> > flag is being properly cleared when ASPM is controlled by sysfs.
-> > 
+
+On 5/28/2025 4:49 AM, Konrad Dybcio wrote:
+> On 12/3/24 3:07 PM, Dmitry Baryshkov wrote:
+>> On Tue, Dec 03, 2024 at 04:13:22PM +0800, Xiangxu Yin wrote:
+>>>
+>>>
+>>> On 11/29/2024 9:53 PM, Dmitry Baryshkov wrote:
+>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>>>>
+>>>>> Add a mechanism to retry Link Training 2 by lowering the pattern level
+>>>>> when the link training #2 first attempt fails. This approach enhances
+>>>>> compatibility, particularly addressing issues caused by certain hub
+>>>>> configurations.
+>>>>
+>>>> Please reference corresponding part of the standard, describing this lowering.
+>>>>
+>>> Per DisplayPort 1.4a specification Section 3.5.1.2 and Table 3-10, while the standard doesn't explicitly define a TPS downgrade mechanism, it does specify:
+>>
+>> Anything in DP 2.1?
+>>
+In the DP 2.1 spec, mainly on section '3.6.7.2 8b/10b DP Link Layer LTTPR Link Training Mandates', defined 'LTTPR shall support TPS4'.
+The other parts seems similar to the 1.4 spec.
+>>> - All devices shall support TPS1 and TPS2
+>>> - HDR2-capable devices shall support TPS3
+>>> - HDR3-capable devices shall support TPS4
+>>> While these capabilities are explicitly defined DPCD for sink devices, source device capabilities are less strictly defined, with the minimum requirement being support for TPS1 and TPS2.
+>>> In QCS615 DP phy is only supporting to HBR2, we observed a critical interoperability scenario with a DP->HDMI bridge. When link training at TPS4 consistently failed, downgrading to the next lower training pattern successfully established the link and display output successfully.
+>>
+>> Any other driver doing such TPS lowering? Or maybe we should be
+>> selecting TPS3 for HBR2-only devices?
 > 
-> A comment in pcie_config_aspm_link() says:
+This logic is porting from qualcomm downstream, 
+For other device, only found in some older Tx chips like i915（intel_dp_training_pattern) used the maximum hardware-supported patterns, but not lowering.
+
+According to the description in DPCD table 2-232 003h, From the DP spec perspective, it appears that all supported cases should preferably adopt TPS4, as it is more robust.
+'DPRXs should support TPS4 and set this bit, regardless of whether the DPRX supports HBR3 because TPS4 is more conducive to robust link establishment than TPS2 and TPS3.
+0 = TPS4 is not supported.
+1 = TPS4 is supported (shall be supported for downstream devices with DPCD r1.4, except for eDPRXs).'
+
+Although maximum capability of QCS615 is HBR2, but the actual pattern supports TPS4. 
+From pure design perspective, it would be cleaner to drop this lowering in next patch. 
+> Bump, this patch looks interesting and I'd like to see it revisited if
+> it's correct
 > 
->  /* Enable only the states that were not explicitly disabled */
-> 
-> But the function is called from both aspm_attr_store_common() and
-> __pci_enable_link_state(). So I don't know if this is behavior is intentional
-> or wrong. 
+> Konrad
 
-Hi,
-
-I think it's intentional. Whether the behavior is useful is another good 
-question but the current behavior aligns with the explanation in the 
-comment.
-
-My understanding of the situation is:
-
-pci_disable_link_state() and pci_enable_link_state() are not symmetric 
-despite the names, never have been (this is one of those many quirks ASPM 
-driver has which should be eventually cleaned up, IMO).
-
-It might be appropriate to rename pci_enable_link_state() to 
-pci_set_default_link_state() to match the name to its functionality (and 
-the function comment):
-
- * pci_enable_link_state - Clear and set the default device link state
-
-Note: "the default ... link state".
-
-
-I've already raised this concern earlier! As you see, my comment are 
-not getting addressed. I'd like to see the author does one of these:
-
-1) Renames pci_enable_link_state() to pci_set_default_link_state()
-
-1b) If pci_enable_link_state() is still needed after that, a new function
-is added to symmetrically pair with pci_disable_link_state().
-
-or alternatively,
-
-2) Changelog justifies very clearly why this change is okay with the 
-existing callers. (And obviously the function comment should be altered to 
-match the functionality in that case too).
-
-If approach 2 is chosen, it should be very carefully reviewed when it 
-comes to the callers.
-
-
-> > Clear the aspm_disable flag with the requested ASPM states requested by
-> > pci_enable_link_state().
-> > 
-> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> 
-> Fixes tag?
-> 
-> - Mani
-> 
-> > ---
-> >  drivers/pci/pcie/aspm.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > index 94324fc0d3e650cd3ca2c0bb8c1895ca7e647b9d..0f858ef86111b43328bc7db01e6493ce67178458 100644
-> > --- a/drivers/pci/pcie/aspm.c
-> > +++ b/drivers/pci/pcie/aspm.c
-> > @@ -1453,6 +1453,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
-> >  		down_read(&pci_bus_sem);
-> >  	mutex_lock(&aspm_lock);
-> >  	link->aspm_default = pci_calc_aspm_enable_mask(state);
-> > +	link->aspm_disable &= ~state;
-> >  	pcie_config_aspm_link(link, policy_to_aspm_state(link));
-> >  
-> >  	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
-> > 
-> > -- 
-> > 2.34.1
-> > 
-> 
-> 
-
--- 
- i.
 
 
