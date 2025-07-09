@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-64129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AB7BAFE181
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:39:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5F1AAFE190
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 09:45:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F46F3A3DCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 07:38:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E06803B7854
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 07:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E694726FD9F;
-	Wed,  9 Jul 2025 07:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B3713C9A6;
+	Wed,  9 Jul 2025 07:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZOF2ptKA"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="U+l7Vgco"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BAB23D2A8;
-	Wed,  9 Jul 2025 07:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3951714B7;
+	Wed,  9 Jul 2025 07:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752046757; cv=none; b=ZahZCwdWqOawxoPTem5LWUZ27uztNEG+TxNANoGMuxNvGtjVdwbCBHhXAaNdt0viwTLpxxHl/dfNZYQTTrkfMObDF21yse6GUNXeIjiOgGT/FGAg56rrE3u0Y6ep/4n0Li2JK7bsJO/hsjsSYl7GWOllDVUFT58AhiYsnyGhJmw=
+	t=1752047108; cv=none; b=eA+nBrMTwTD5SaTI9Y/fQDSRMIRSbe9JL0VrwU7hr64mVi39Woq5f+d4AahBe/1YrFgMx5NPieM59cs5KRm/g+cOsxEMNMYBubXEQJxL3VyVO4s4UUMx2TpDzZnCbpntog15ekv6MZTJPNL12K5BgUq5C8q+Qcw6GSTdP5bR8y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752046757; c=relaxed/simple;
-	bh=7T2VttiyfuYfzV16XO7PiYIBrzZ6e4CWp40wmEQeqe0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WkfoSHn+dhDsT8R+lkLw9u4xOrXEDKJpN8njF+5LLslAmURMuT3laEYOMGw057YG6GzlAmXzv9WO9iVvQRed0ySv7H9kwfHiaEGo/KdzQ/Ce8wPDArAz+TewPUUIDXX+gboPzWpsspYt0vea1wysL4Y5uVvz3vWgBYpzLQfDJ60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZOF2ptKA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF26C4CEF0;
-	Wed,  9 Jul 2025 07:39:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752046757;
-	bh=7T2VttiyfuYfzV16XO7PiYIBrzZ6e4CWp40wmEQeqe0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZOF2ptKAUaHLLzvSGMuVQXc2yeqBp8F9JTxsmLWDElqMJLksZ8MY6MtkiU0yWEWMf
-	 KGRZ5CINYWnfHZHUfLPp6XIYFq12HWL7tU7Hpv+HZ+Ujia72rH/JJwDIXIXEihYVHd
-	 RY/lYsCc0zY93HcAK+zH6PcoLaQFoFSoMMLkc9cRb6JKF7k7xzDkDUkrlcvKP0pvO+
-	 WpKEWz7FDTbaOK/nMLAWBQylumaKaW6hbsU464j57H1aePCmWubj5h5RhM01gu9CRO
-	 M9sl9NMEnSwiEXa7FuxIECFn9ZIiR8NIRjXOk70khqUFsgM19bEQqB3l9+5ukrkL0N
-	 TRl/91HjDzyEA==
-Date: Wed, 9 Jul 2025 09:39:14 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: x1-hp-x14: Add support for
- X1P42100 HP Omnibook X14
-Message-ID: <20250709-arboreal-basilisk-of-opportunity-bafaf1@krzk-bin>
-References: <20250708-hp-x14-x1p-v5-0-44c916efa973@oldschoolsolutions.biz>
- <20250708-hp-x14-x1p-v5-3-44c916efa973@oldschoolsolutions.biz>
+	s=arc-20240116; t=1752047108; c=relaxed/simple;
+	bh=f8alaJu9QGnxkHKJvU+EAqsIi5uNm0RpUbioG++EzEo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=laRC/z8cVsQ8mmWc19rvwmjzVJo1xbdMs7cUC99MRNpHnssQQqK8uZAhbNtyb0BjLmpPyKSdz4fExQw/QSqlmtbuA2BOTJ1eloKNQgKFDrwarso7iAvd7FQJ6ixHT0CyYs5Wm7E2gSAIMG8qKzxUZuBEYjQrbAIAHje+RvGGDOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=U+l7Vgco; arc=none smtp.client-ip=185.70.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1752047098; x=1752306298;
+	bh=f8alaJu9QGnxkHKJvU+EAqsIi5uNm0RpUbioG++EzEo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=U+l7VgcozOyYLykbS3qLvCc9HMc0Vi3UZsII0/jmMc/Zi+ap0gI1EonO0CiHymocP
+	 UXxP29lSmf9pq6A4EEkiCvUkUADDj3RTEZUGGOSWgizh7PPvqlqyWVcjQzQwgsGQNk
+	 PPwFx6W0dsQkFixQjE0AUAM11TgZVLKku2guLBx+DiHTpw5UMlx656MmCew3W92SlQ
+	 geWc2sclYkS8i2pU7VWMojmRaYnLIcYHfkEPFkfxY/Y4nxDMPXCiRZyJA4MXypxmU8
+	 KIXRu1J7hZ2yF7ZiZpMr1di7GIkDrN2GwrzEXVSUBPoAvlMRI1JSnsfvzfCi+BRfQi
+	 6e8EbSIJULohw==
+Date: Wed, 09 Jul 2025 07:44:49 +0000
+To: Simon Horman <horms@kernel.org>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, Sean Nyekjaer <sean@geanix.com>, Javier Carrasco <javier.carrasco.cruz@gmail.com>, Matti Vaittinen <mazziesaccount@gmail.com>, Antoniu Miclaus <antoniu.miclaus@analog.com>, Ramona Gradinariu <ramona.gradinariu@analog.com>, "Yo-Jung (Leo) Lin" <0xff07@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, =?utf-8?Q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?=
+	<barnabas.czeman@mainlining.org>, Danila Tikhonov <danila@jiaxyga.com>, Antoni Pokusinski <apokusinski01@gmail.com>, Vasileios Amoiridis <vassilisamir@gmail.com>, Petar Stoykov <pd.pstoykov@gmail.com>, shuaijie wang <wangshuaijie@awinic.com>, Yasin Lee <yasin.lee.x@gmail.com>, "Borislav Petkov (AMD)" <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Tony Luck <tony.luck@intel.com>, Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Ingo Molnar <mingo@kernel.org>, Yassine Oudjana <yassine.oudjana@gmail.com>, linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH 2/3] net: qrtr: Define macro to convert QMI version and instance to QRTR instance
+Message-ID: <X2KJB3xtnC-pWM7o5TBw6ln3ItpMwn7tdn5Z8gpZY3oW31isE8PLTX5GUbJ6HcZk_9s72jb6ImwGL-anIoto4dK1MINTxzdRKfbejp_nXcA=@protonmail.com>
+In-Reply-To: <20250707170636.GR89747@horms.kernel.org>
+References: <20250406140706.812425-1-y.oudjana@protonmail.com> <20250406140706.812425-3-y.oudjana@protonmail.com> <fb61323b-aabd-4661-a202-02da7da557ea@oss.qualcomm.com> <aMbAZigHiAN2xupOYs9DodY2mOdNtw_oVjOaweflgA8IoXRQ5ctoZ8GYJ8PNAKDgL4f9N_UD7tFmkePUy9BCE8v20Mae2x-eL1ZpyJEdLZY=@protonmail.com> <20250707170636.GR89747@horms.kernel.org>
+Feedback-ID: 6882736:user:proton
+X-Pm-Message-ID: 8f8894673857ba0bbc9a24fcb09c28e5f1c802d5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,62 +61,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250708-hp-x14-x1p-v5-3-44c916efa973@oldschoolsolutions.biz>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 08, 2025 at 10:34:08PM +0200, Jens Glathe wrote:
-> These laptops are the same as the already known 14-fe0xxx models, but
-> with a Purwa SoC, SKU number 14-fe1xxx. [1]
-> 
-> The supported features are the same as for the original Omnibook X14:
-> 
-> - Keyboard (no function keys though)
-> - Display
-> - PWM brightness control
-> - Touchpad
-> - Touchscreen
-> - PCIe ports (pcie4, pcie6a)
-> - USB type-c, type-a
-> - WCN6855 Wifi-6E
-> - WCN6855 Bluetooth
-> - ADSP and CDSP
-> - X1 GPU
-> - GPIO Keys (Lid switch)
-> - Audio definition (works via USB and with internal speakers)
-> 
-> https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
-> 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile                  |  2 ++
->  .../boot/dts/qcom/x1p42100-hp-omnibook-x14.dts     | 36 ++++++++++++++++++++++
->  2 files changed, 38 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 4bfa926b6a0850c3c459bcba28129c559d50a7cf..63bf3ccc11124a70efb09782b57970b274d80d49 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -333,3 +333,5 @@ x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14.dtb x1p42100-asus-zenbook-a14-el2.dtb
->  x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
-> +x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..4ec975f9acec30dc8a2383a4c6c15c3e1ee754e1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-> @@ -0,0 +1,36 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Odd copyrights. How could this file be published in 2023? Before the
-laptop was even made? And by Qualcomm? Qualcomm did nothing for this
-laptop on Linux - it's a Windows platform for them.
 
-Best regards,
-Krzysztof
 
+
+
+Sent with Proton Mail secure email.
+
+On Monday, July 7th, 2025 at 6:06 PM, Simon Horman <horms@kernel.org> wrote=
+:
+
+> On Sat, Jul 05, 2025 at 06:29:39PM +0000, Yassine Oudjana wrote:
+>=20
+> > On Wednesday, April 9th, 2025 at 3:54 PM, Konrad Dybcio konrad.dybcio@o=
+ss.qualcomm.com wrote:
+> >=20
+> > > On 4/6/25 4:07 PM, Yassine Oudjana wrote:
+>=20
+>=20
+> ...
+>=20
+> > > > diff --git a/include/linux/soc/qcom/qrtr.h b/include/linux/soc/qcom=
+/qrtr.h
+> > > > index 4d7f25c64c56..10c89a35cbb9 100644
+> > > > --- a/include/linux/soc/qcom/qrtr.h
+> > > > +++ b/include/linux/soc/qcom/qrtr.h
+> > > > @@ -13,6 +13,8 @@ struct qrtr_device {
+> > > >=20
+> > > > #define to_qrtr_device(d) container_of(d, struct qrtr_device, dev)
+> > > >=20
+> > > > +#define QRTR_INSTANCE(qmi_version, qmi_instance) (qmi_version | qm=
+i_instance << 8)
+> > >=20
+> > > Please use FIELD_PREP + GENMASK to avoid potential overflows
+> > >=20
+> > > Konrad
+> >=20
+> > Since I'm using this macro in initializing QRTR match tables I am unabl=
+e to use
+> > FIELD_PREP. When I do, I get such errors:
+>=20
+>=20
+> Does using FIELD_PREP_CONST, say in a QRTR_INSTANCE_CONST variant, help?
+
+That works, but do we want to have two variants? Or in this case maybe
+I should leave qmi_interface.c untouched and define the macro only for use
+in match tables?
+
+>=20
+> > In file included from ../arch/arm64/include/asm/sysreg.h:1108,
+> > from ../arch/arm64/include/asm/memory.h:223,
+> > from ../arch/arm64/include/asm/pgtable-prot.h:8,
+> > from ../arch/arm64/include/asm/sparsemem.h:8,
+> > from ../include/linux/numa.h:23,
+> > from ../include/linux/cpumask.h:17,
+> > from ../include/linux/smp.h:13,
+> > from ../include/linux/lockdep.h:14,
+> > from ../include/linux/mutex.h:17,
+> > from ../include/linux/kernfs.h:11,
+> > from ../include/linux/sysfs.h:16,
+> > from ../include/linux/iio/buffer.h:9,
+> > from ../drivers/iio/common/qcom_smgr/qcom_smgr.c:8:
+> > ../include/linux/bitfield.h:114:9: error: braced-group within expressio=
+n allowed only inside a function
+> > 114 | ({ \
+> > | ^
+> > ../include/linux/soc/qcom/qrtr.h:21:10: note: in expansion of macro 'FI=
+ELD_PREP'
+> > 21 | (FIELD_PREP(GENMASK(7, 0), qmi_version) | FIELD_PREP(GENMASK(15, 8=
+), qmi_instance))
+> > | ^~~~~~~~~~
+> > ../drivers/iio/common/qcom_smgr/qcom_smgr.c:825:29: note: in expansion =
+of macro 'QRTR_INSTANCE'
+> > 825 | .instance =3D QRTR_INSTANCE(SNS_SMGR_QMI_SVC_V1,
+> > | ^~~~~~~~~~~~~
+>=20
+>=20
+> ...
 
