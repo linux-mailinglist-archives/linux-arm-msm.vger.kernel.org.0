@@ -1,190 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-64111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FB1EAFDE08
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 05:18:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24D53AFDECF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 06:28:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EBC116A590
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 03:18:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA0F61BC2F90
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 04:29:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7D5D35897;
-	Wed,  9 Jul 2025 03:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FCF5266F0A;
+	Wed,  9 Jul 2025 04:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="S5frwjjA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q7eXCplE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1A07404E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 03:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28051E835D
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 04:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752031090; cv=none; b=uZofcxGr39FfmhDN5usXXgzutjor32m4yl+GtQjfB3rJXEQZOv/jZeUUwiLrD5kN2erhQp6QDNaPhj6QG7G6whN3slFvazJrn96NKXqJWZRhR5UU0fOAmgc6qv2wpmiG0Imyxu5BVLSkQXB3DGSpLN/znNK0h3L3GSHz80I/qPg=
+	t=1752035320; cv=none; b=IKxNG3AKIFDmiISX8Ch7dOnJNYr/kQ+OVtPhihavOFiXH42BtgXg3GN2gW7LDAbo2CPc0gJ08z7NF7cNf/2eJFyfYWAYmZU4TVVzW5JQC29BUz/S0iugtja2qbWcbuY6epjeFslgPparndHs3kGC+fJ/ooNl0eAlTggfo8EaGTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752031090; c=relaxed/simple;
-	bh=BJ/g+c5xY2G5P29E0eeh/R3h2Ux7fpi7iUA6mqj0GmM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mvctbQwPtJ7xMKFHzsgdx9oAwwzSOc3g21GLG5SPJeGVzZfHUv9SJGcezjIknQS5XjC/GCMpnT7C3LUyU9cq81AvBsQ2gDIrObupG5Pv5gk+6RGHhsFY3AQ3NNkTKESw9SUAJSyM2D0eLEIB3yh1rGhpQnhDFotZ8WidTFmoaPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=S5frwjjA; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-748fe69a7baso4276597b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 20:18:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1752031088; x=1752635888; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9e+Cq19Bnt4gqLovZXhsuwDL43YzIOk43RTj4Ef5Pg=;
-        b=S5frwjjAkQlgePLc86Zu0qV/EGgCWm8MrBsNzmCi2Ib2IPn3AeoPI/tG8PvjRGS83Q
-         jsAEUWWo6L7H1Yzo1ymDuCvava97A+r4FAtG0sxytXX9jNLt7vtDlTewNSInFrBHzvj5
-         gADdgEkF6nyacFJiUgaGqPPaOTYUf0N09RjIs=
+	s=arc-20240116; t=1752035320; c=relaxed/simple;
+	bh=nGDSMdGiSbt3wON2yfyjNDeV5z0MkUjSja5IO9PLcNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gyjenVZUJcCpIYj3C5tjY8ZOlWRHWATuUttZaQPoPZICyjRFTnBA0X43AJx8UIlOM+8VJtpXf7cczJtTCeazXd9yHpFC7IHZodsOfbbAWDVZU2QUopA3zbAWkoX215fX+fNkY3/pEQ9wKCuo+4kCnFgxShfxtpnKTj7K1HMGovM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q7eXCplE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568KFPSc008388
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 04:28:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	46kHjVSek0uSdgdCzU896+4gvfYavkSNrHpJbnFkc+o=; b=Q7eXCplEJXdX5i8l
+	4a7Wyd5WNQCCewVOASQfUiqhZcdsGIC9z8qF+5UWBZgeSULL99PaPpqPfIBuIoYF
+	2EZZ+0MH3R+eJa1BhedIWQpdNBOANg/TKEX+RHfIJGKEm1iGSfqkDlMHuW/hJReh
+	kqggoXl9ZosLkTwnaIZ+a5R4R0qqe7oa+7APFhUiBQGMddEHrjoSbLurzJCRdnFT
+	K0lq9i6jq76Zho9H+ebCcjmiGoIjP9lZgivfrKlTQYboqzdaKiHBJ2CMdX+4Xrum
+	WDlPv+seXzcoC994pH9piuE8q3ylyFx3vdVKRQf7AggFNzOXNHLk7CxnbZcirwBB
+	ft7F1Q==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pucn33fp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 04:28:37 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b3642ab4429so3539454a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jul 2025 21:28:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752031088; x=1752635888;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l9e+Cq19Bnt4gqLovZXhsuwDL43YzIOk43RTj4Ef5Pg=;
-        b=HBrP7q2XQV0DQOyDmezHsJjX005nevqdlTz72QbLl4Dd8sqMXLYXQTUjRgIOfO/WyD
-         TpVV/h5t6M+xXd8WFr376zQriOw0AuFhO3YA+3+/qWscxxH+IA2B1zNL/YxXOfYpXHw+
-         SxQjl1vVnvOMq+Kuw/4UAO0oZ7W2MO/px8LEFZVpNebXU3qOi+vvD3Xo08Yetr0Pja/F
-         KNHP4/WwicDeR46AuIdbzWo9gw+ppZKgY9tDg12tHfvMe+JtQOrno+KLUjfISk6W3sVF
-         JtSutyXBuAyHdgP5yb5gNA+NKH33zV7ZH7CUrRgdXNwD5wOumC1OwMmmVspe1+Upw7Dj
-         7E/g==
-X-Forwarded-Encrypted: i=1; AJvYcCVDSj1ukjPOaZHsZy+5+bcNwJirIpRr6LD+LBwQjXx5OVtanj6ikCmKCequuTuVbl4V2c6Qxvf1LLzj39ZC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxiqWT4ihA9bgMAglTxQf0odCpckNW3inSXRUhTVsv9D8aibWza
-	WqvsEVJDyhhHTiCIPW5pDbyCnN2ObNE7LiTMXjtDwc8WWJZdzSkfpH48usqxWrhvLw==
-X-Gm-Gg: ASbGncvY8IXT9auMErr2YfgZa3IDmol4GoqyofTJylvfxw9DcryIvgrMeTPMulgLDkC
-	GWzZBFxHL7rEqxDLWr38bUvsKdiVMb3dRPXCO5R2Ui9t+su8tgVVQsmS2HTPEON6C6/o8zULWuq
-	hSKHy37eYNidJ7TnQSmx4kNRUSbJfqXJJnNhdU06flcUV/s1n/Y48PA81X+tWtEmwYWBS323NbH
-	vIaT1Uv50mFDqL1FvKHmSYBoEqxO7ws7fHlrZeHYY3tGlVNpOxXLiBBV6T5Z+cHIz4Oml/2xaX9
-	+hJH1aEf052aokTPCb41vNPW7JTu2t3iFQGSz8bdXIrp2+w4jo6PP+dg+FURUCeERB3YQpVqUV7
-	jIdKq8jvXyfnSVxuVxaTnO8qo
-X-Google-Smtp-Source: AGHT+IHNU1Dj5M7Gb2JJO6Y5rMtEmhaKwHD6t4IyD/awUkiX39KRiD2H/1C+9hth+BePaoYj8l5m0Q==
-X-Received: by 2002:a05:6a20:1596:b0:220:af59:2e35 with SMTP id adf61e73a8af0-22cd8f236cdmr1320687637.38.1752031088548;
-        Tue, 08 Jul 2025 20:18:08 -0700 (PDT)
-Received: from localhost ([2a00:79e0:2e14:7:9b88:4872:11ac:8ccb])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce35a1d3dsm13309324b3a.34.2025.07.08.20.18.07
+        d=1e100.net; s=20230601; t=1752035316; x=1752640116;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=46kHjVSek0uSdgdCzU896+4gvfYavkSNrHpJbnFkc+o=;
+        b=YLyoGNSnG/LgT4ao2nFo8DkxdhrU53NYkxAIZ4sfbK4Kgi3D2ciT0sWq1kPgVC/CTC
+         f1lY5EEcqgCoWi9po0F89Ep8x5ughDJf/leSF4lULnS3lHbzTQZ41osXiRC+oytnBMig
+         HYwQ6yVzgrLq+OuVFe3UPVWIVmW/VJy3k8DyFdWQWEtlkNdYicQrMq6+eypCWq1kPvBi
+         ok3tjHgrrGBe/8qqu1S+vvCT6+eg3i+Ws3wfg5ECq3utggluuQQUW/Wl+GytXS3j2L9c
+         P7+TKSmEuNnwwcxAVzdLMvX5vU5RNhuAMmNyNFaC7tXvHTwTajSFbol9Eeiez2r7GHUT
+         lUVg==
+X-Gm-Message-State: AOJu0YxjZUU5Os2t7ahklfnhnIkle7n9XWNLqKx2EWtLSPhh2vxuM4ty
+	sLsKAh07PH7wM+4CoRXAhlv85Gxl6nTQafjFogZVs5IJzZ+EjK3HVn4xERXKli62ZgO5BIRQcPL
+	/Rkr72UGkTksbNQtU4zAYdJrMP15nU3qaPyZFc/d51My+rPpU+SGIls06c+jrukclPwRS
+X-Gm-Gg: ASbGncuAIgpZihhTW2qlyXskckQ/pYJUchSKEsgZ+cP8OCwd1nVMbyVHsEjmEQWKmYP
+	okDDTcx/Qsb3ecyC5+ysigEUrfBnPW9/+Xog6KeWXPsdmbDTVSJN2ME02/1ZQhS8gb6rvxjBN0h
+	5RexLXr2XvYjhM6rCJcFQTcAxdkWbEBYwYztzTmuRiF1GWkrvMaEoYX55l3L/NQ/sFAERlB5/RD
+	Xf15oEsswwJ0hQsUivWgjizlOh/HUnwADZy6C5gF+N5OSaJ6pNHSBF6CEkuc0g+ooY72NdIRy4Z
+	+XA5EQ8uQBQEa7/GzYTkaOQpq0MNlgimzmEx/7pw5KqJSPcNDV4QScPNbsi6wRE=
+X-Received: by 2002:a05:6a20:ce4d:b0:215:df90:b298 with SMTP id adf61e73a8af0-22cd865ae90mr1458521637.26.1752035316261;
+        Tue, 08 Jul 2025 21:28:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1XrTBoe3AdLJKGcotRecgsSopH6Gfr07q95OqUr4/vqz2YgYImVe+KEbGNSUtTurtM2DibA==
+X-Received: by 2002:a05:6a20:ce4d:b0:215:df90:b298 with SMTP id adf61e73a8af0-22cd865ae90mr1458495637.26.1752035315826;
+        Tue, 08 Jul 2025 21:28:35 -0700 (PDT)
+Received: from [10.151.37.217] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee450dcfsm13036210a12.2.2025.07.08.21.28.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 20:18:07 -0700 (PDT)
-Date: Tue, 8 Jul 2025 20:18:06 -0700
-From: Brian Norris <briannorris@chromium.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH RFC 3/3] PCI: qcom: Allow pwrctrl framework to control
- PERST#
-Message-ID: <aG3fblf5twIAitvg@google.com>
-References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
- <20250707-pci-pwrctrl-perst-v1-3-c3c7e513e312@kernel.org>
+        Tue, 08 Jul 2025 21:28:34 -0700 (PDT)
+Message-ID: <dd2fab47-d451-43d2-b2d5-36d957c5aa46@oss.qualcomm.com>
+Date: Wed, 9 Jul 2025 09:58:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250707-pci-pwrctrl-perst-v1-3-c3c7e513e312@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: ipq6018: Add the IMEM node
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250708-imem-v2-0-692eb92b228e@oss.qualcomm.com>
+ <20250708-imem-v2-3-692eb92b228e@oss.qualcomm.com>
+ <bdb5e19c-dbab-4ea3-9a6d-a4ac795fb43a@oss.qualcomm.com>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+In-Reply-To: <bdb5e19c-dbab-4ea3-9a6d-a4ac795fb43a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=GdQXnRXL c=1 sm=1 tr=0 ts=686deff5 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=CWjMFFrlLJj86FlfhvIA:9
+ a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-GUID: au23bnJ3fMm8TPR7VGGssXTMikTu4Vt-
+X-Proofpoint-ORIG-GUID: au23bnJ3fMm8TPR7VGGssXTMikTu4Vt-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDAzNiBTYWx0ZWRfX+TStoAQn1bbj
+ i56W8+POAy+xQmB2lv26rE46wEzRTgG2iD4dme3UCWPj7XAhrJqCOOrQMXFFOohDk8QEW8XFj+h
+ 7M2LVTFWYrvfeM0xvqLFR4sqvOdRVYVSRfiknOKq4AQeHh0UvlcfzW4ZdTDQ6LAHagE3wlHWUMA
+ 5Bw4neLyNVWjZudRMIsyd1ufFHgBkQ4Lcm8ZJDmUBvipzBr5vBCxjIP3OfBbCcl7lo1FTDb++9j
+ yt4SwK5nj/W63h587NbxzPwlyxAy3QYsB+BdsUdh6fd2Dytxu45W7cv5/RHVakGMEUmyqDhsDro
+ f51DZjLrTut3YOkHXTXXo2S4nu8QfKFQs/oJFDLqxxuvDeF1mKEKakFVqya5pDD2/M6RDqfdu9V
+ VruL94eLm424465gdGpcLdNbLxkqyWyneS78Gg/UFQLtAq8/C8arD61nJarIVXNY4AzIDYWH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-09_01,2025-07-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 mlxlogscore=920 priorityscore=1501 impostorscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090036
 
-Hi,
 
-On Mon, Jul 07, 2025 at 11:48:40PM +0530, Manivannan Sadhasivam wrote:
-> Since the Qcom platforms rely on pwrctrl framework to control the power
-> supplies, allow it to control PERST# also. PERST# should be toggled during
-> the power-on and power-off scenarios.
-> 
-> But the controller driver still need to assert PERST# during the controller
-> initialization. So only skip the deassert if pwrctrl usage is detected. The
-> pwrctrl framework will deassert PERST# after turning on the supplies.
-> 
-> The usage of pwrctrl framework is detected based on the new DT binding
-> i.e., with the presence of PERST# and PHY properties in the Root Port node
-> instead of the host bridge node.
-> 
-> When the legacy binding is used, PERST# is only controlled by the
-> controller driver since it is not reliable to detect whether pwrctrl is
-> used or not. So the legacy platforms are untouched by this commit.
-> 
-> Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
->  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
->  drivers/pci/controller/dwc/pcie-qcom.c            | 26 ++++++++++++++++++++++-
->  3 files changed, 27 insertions(+), 1 deletion(-)
+On 7/8/2025 7:49 PM, Konrad Dybcio wrote:
+> On 7/8/25 7:39 AM, Kathiravan Thirumoorthy wrote:
+>> Add the IMEM node to the device tree to extract debugging information
+>> like system restart reason, which is populated via IMEM. Define the
+>> IMEM region to enable this functionality.
+>>
+>> As described, overall IMEM region is 32KB but only initial 4KB is
+>> accessible by all masters in the SoC.
+>>
+>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+>> ---
+>> Changes in v2:
+>> - Rounded off the size to 0x8000 (Konrad)
+>> - Represent the reg's address space in hexadecimal format (Krzysztof)
+>> ---
+>> In 'ranges' property 0 is used instead of 0x0 to align with the existing
+>> format.
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> index bfe59b0208415902c69fd0c0c7565d97997d4207..3b9e40045906b26b94e2d2510b0570d3eaf084ce 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> @@ -659,6 +659,15 @@ qpic_nand: nand-controller@79b0000 {
+>>   			status = "disabled";
+>>   		};
+>>   
+>> +		sram@8600000 {
+>> +			compatible = "qcom,ipq6018-imem", "syscon", "simple-mfd";
+>> +			reg = <0x0 0x08600000 0x0 0x8000>;
+>> +			ranges = <0 0 0x08600000 0x8000>;
+>> +
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +		};
+> On this platform, shouldn't it be 0x6860_0000?
 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 620ac7cf09472b84c37e83ee3ce40e94a1d9d878..61e1d0d6469030c549328ab4d8c65d5377d525e3 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+Actually, that's from the RPM perspective. From the ARM side, the 
+address is 0x0860_0000. The hardware docs show the RPM view by default, 
+so please switch to the ARM view.
 
-> @@ -1724,6 +1730,12 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
->  	if (ret)
->  		return ret;
->  
-> +	devfn = of_pci_get_devfn(node);
-> +	if (devfn < 0)
-> +		return -ENOENT;
-> +
-> +	pp->perst[PCI_SLOT(devfn)] = reset;
-
-It seems like you assume a well-written device tree, such that this
-PCI_SLOT(devfn) doesn't overflow the perst[] array. It seems like we
-should guard against that somehow.
-
-Also see my comment below, where I believe even a well-written device
-tree could trip this up.
-
-> +
->  	port->reset = reset;
->  	port->phy = phy;
->  	INIT_LIST_HEAD(&port->list);
-> @@ -1734,10 +1746,20 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
->  
->  static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
->  {
-> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
->  	struct device *dev = pcie->pci->dev;
->  	struct qcom_pcie_port *port, *tmp;
-> +	int child_cnt;
->  	int ret = -ENOENT;
->  
-> +	child_cnt = of_get_available_child_count(dev->of_node);
-
-I think you're assuming "available children" correlate precisely with a
-0-indexed array of ports. But what if, e.g., port 0 is disabled in the
-device tree, and only port 1 is available? Then you'll overflow.
-
-> +	if (!child_cnt)
-> +		return ret;
-> +
-> +	pp->perst = kcalloc(child_cnt, sizeof(struct gpio_desc *), GFP_KERNEL);
-
-IIUC, you kfree() this on error, but otherwise, you never free it. I
-also see that this driver can't actually be unbound (commit f9a666008338
-("PCI: qcom: Make explicitly non-modular")), so technically there's no
-way to "leak" this other than by probe errors...
-...but it still seems like devm_*() would fit better.
-
-(NB: I'm not sure I agree with commit f9a666008338 that "[driver unbind]
-doesn't have a sensible use case anyway". That just sounds like
-laziness. And it *can* have a useful purpose for testing.)
-
-Brian
-
-> +	if (!pp->perst)
-> +		return -ENOMEM;
-> +
->  	for_each_available_child_of_node_scoped(dev->of_node, of_port) {
->  		ret = qcom_pcie_parse_port(pcie, of_port);
->  		if (ret)
- 
+>
+> Konrad
 
