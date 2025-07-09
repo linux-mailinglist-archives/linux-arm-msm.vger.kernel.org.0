@@ -1,153 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-64225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54A4DAFE83E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 13:52:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EAE66AFE872
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 13:57:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E010E542756
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:52:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7F7A4E714E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 11:55:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CAE02D77F6;
-	Wed,  9 Jul 2025 11:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2BDC2D8362;
+	Wed,  9 Jul 2025 11:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvMd4y4R"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Nk5LU/un"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A76B2BD5BC;
-	Wed,  9 Jul 2025 11:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE62BD5BC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 11:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752061959; cv=none; b=HR6+3k1yDHZ5vgGX31EnSeJfuMb+yAY/65NLe0Xe3vBaz5e/7D0DjOOmkvFIWOysEY20h9B3vFhXlfXA1iW8cRwuch22DBkriELa30n6TyN3Bwiw3OYSQpiPEQTFkU2jCakyh/PM1ECyFhw9QZHHd5StdJ5rT9OUOyHAkvMe88c=
+	t=1752062173; cv=none; b=o50XCcxEotleSbM9ZuD43Zgb9qNkO7r83Nt5vjtoRU28fpUrAnqSce3imLRYXJ4F8owV1MWzQlo26pXIG+HacdMTpgItz4NdY7lfl11oIcnrhcGUaz4NxEmv7CgQCGNH9d0Q0zNDRwk1olB9Cgh/hUU8voIX/luGxp0ibif3Plk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752061959; c=relaxed/simple;
-	bh=BL4mdT3PrGBtb3/SFQL2jD7FRK8O1qchsF7KKukY9XA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r0juhkrdNJruGqJOhzhkQ5h0QdsKfYBfA+piqfRz1IFOFxPwXb0qdCFrX1n9AKdD2CYkMU1a0JzlZqfoqbzWGgKz51KX4nc81sH4FcIRylQA2CCZJCXAY6xUkth+64R6Prb2eLKlAHvSDIxhEfK4G3THRB+KjTC/e4nCN93cTUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvMd4y4R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA51C4CEEF;
-	Wed,  9 Jul 2025 11:52:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752061957;
-	bh=BL4mdT3PrGBtb3/SFQL2jD7FRK8O1qchsF7KKukY9XA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZvMd4y4RA/rH/vBz2NPE24B+63jpq3mXdRvGp9SqOHHXWwIfAg4hSDnkNt+OD6ZKq
-	 pCptueeS6OZeAkYaSoncsrNvJ8u0plrtK6kraivJUi5keG1qYYi/P/xx5bn/8eXvyR
-	 bgAQnt/NEdrcBNe00v1fxZOl+2HxbH5n+TZCNwJsnoaiTpOQfOISq63SRXLeKMHbBf
-	 /vVfgT1d1jJXYQdyNlQC/h5GtV9dYKqK2UcWJzRp9BDOpR/QokzyRzRDiPSc18bbIE
-	 R3OMtJbRFhCw1LqhPxL3Zk6wo9iAW4YEBIzOnXGqiXThDpUxRj79ndz30ijP5ExInM
-	 Rt85QuqDsa5Yw==
-Date: Wed, 9 Jul 2025 12:52:28 +0100
-From: Simon Horman <horms@kernel.org>
-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Ramona Gradinariu <ramona.gradinariu@analog.com>,
-	"Yo-Jung (Leo) Lin" <0xff07@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Petar Stoykov <pd.pstoykov@gmail.com>,
-	shuaijie wang <wangshuaijie@awinic.com>,
-	Yasin Lee <yasin.lee.x@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Yassine Oudjana <yassine.oudjana@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH 2/3] net: qrtr: Define macro to convert QMI version and
- instance to QRTR instance
-Message-ID: <20250709115228.GY452973@horms.kernel.org>
-References: <20250406140706.812425-1-y.oudjana@protonmail.com>
- <20250406140706.812425-3-y.oudjana@protonmail.com>
- <fb61323b-aabd-4661-a202-02da7da557ea@oss.qualcomm.com>
- <aMbAZigHiAN2xupOYs9DodY2mOdNtw_oVjOaweflgA8IoXRQ5ctoZ8GYJ8PNAKDgL4f9N_UD7tFmkePUy9BCE8v20Mae2x-eL1ZpyJEdLZY=@protonmail.com>
- <20250707170636.GR89747@horms.kernel.org>
- <X2KJB3xtnC-pWM7o5TBw6ln3ItpMwn7tdn5Z8gpZY3oW31isE8PLTX5GUbJ6HcZk_9s72jb6ImwGL-anIoto4dK1MINTxzdRKfbejp_nXcA=@protonmail.com>
+	s=arc-20240116; t=1752062173; c=relaxed/simple;
+	bh=vq5TdR2eOaZQq4wzgDb/MUODx9FACB9AhF7YRu/UXj8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=dpMiIxPcvheGqYrxe9yLYmTEI0AlMrjgqqtXFJ5MqBzuBnt8bfcVtFKi4ZNHk801/RosR/dlowqzmqjxMVJhywxkJ5Y5yQ8I0RJlUb4qnzgr8dlPWqFfUSf/A+hW0Wuwew3DVA84ow6Y3ZFMWUnYywZEBaBkBgkWoCihNV4t3rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Nk5LU/un; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ae0bde4d5c9so1124051566b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 04:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1752062170; x=1752666970; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vq5TdR2eOaZQq4wzgDb/MUODx9FACB9AhF7YRu/UXj8=;
+        b=Nk5LU/unA3B4/PoWsjaeQ0G84+QYetFfFXNnyM2xLEPwM5f44Ekf3SBvG97fEPruyw
+         D+RMfYu3yYQf5yl1InGmEwWF86oEw96mDQaHWLPDCrt3GwThX64lC/hG9HX3ke/nRj4k
+         JafEfprqmZRDsoRsQOD1orvsXmm85bKd/xZUHELyC9kjAMVsfx6SW1jYi89wiQO8ePp5
+         BuJG0Zb6RGPSz0+b7jLlZ93sJ0oAOpel6SDgiRlApvgYII1KBqQh+zvwIqrRB19Uocs0
+         2l6jMoFTI+wV/9XHm5PZW/mHKi6aDUFBMkk5Vh8xwfPPh0tDebuyjsnCvmakbZ++iWrJ
+         4GiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752062170; x=1752666970;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vq5TdR2eOaZQq4wzgDb/MUODx9FACB9AhF7YRu/UXj8=;
+        b=YvMwV6HZuGmWzPNNPL7ZPtL9wt2ZbHpG7gY6orBc5HaaAZlTwgntQ9B6IADnDsfZBT
+         Vf+CtnQEli0k6GB9gGJ+hZfEz9tf8HB6CY0JdgFCbtB+8eskgy/MMVD9bmcqLAr8yFMO
+         m/bw9fBIyKfZHDW9rWIAE9BC4VQkw13gSXTvnC+hIdws44qHfZl8kAHMedPfOiGITffg
+         6xjnnGVgNY/JMPrjTmhvK39jKd4TQfyCzpCcMWAuq668wcEKYmczA5D9x4IdoZvzD1Lp
+         edSjJ7rvQcFdFjjKa5JHlYAFulIfSfl5cj5K8T6bOuhZj1Ba5sev/daxk/I8zZck25SL
+         Dvmw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrkO6PESmT3L3ZI+sHUYPTrnIZWWXLOAiswZWEszpNTY6jRhhKIuvXr4R5+UZ5I+rv727RptDC/RON9UXA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0lO/Nq5DVtd4E6jYxmvbfqssJNakEyITgET/FmJnN7ZHGgHor
+	xwEknyTD7F7tlMtInZz9EtIqdpvW9yWR2k1euc2XbQeoLtUTtz8HE7uMasUnkYmUfas=
+X-Gm-Gg: ASbGncuWJdAcIMAyLNHGcbpxMRojghfoZzzCpIiu7mJcwvYV9Eu4QKZo8t7Urix7qGm
+	5HFt8JinQJhJsyfZ/UfC4vFmhMvPSeBayn8xmGPIsmUov7rwvWNSWq77m+EqBFltGsmYkz2XofX
+	Chzw099WUVz0msNIq8GKgHenKBaine405J6RUDVHvM/AJuzx83E4sXiEwBrh1v9t9xtaApENHEl
+	2X/I1+oIRXbpya8LeN+ajMhtm4qMU2+TRvvY95m7Nw7egr4cFM5GWftcwzBtSxr6FVKrknl8Uy/
+	cx6PT3lCXSSk3J585sJI7kYeP/ZXoWHmQHCg4uqE26IGmKr/yONhQZTp6P9v3VTg/84FzQzBpQo
+	Q8KLQuQ3hmP2eYgn2o0YSjkUQQhCa+ug=
+X-Google-Smtp-Source: AGHT+IE2lZBOcPVAhbCa9Rpom0DV95oxei90z5HkhH9xsj7T1YUJ++qd0fI4HdkMjuB4B5bxAz52+A==
+X-Received: by 2002:a17:906:c152:b0:adb:2e9f:5d11 with SMTP id a640c23a62f3a-ae6cfbe874bmr232648366b.37.1752062170333;
+        Wed, 09 Jul 2025 04:56:10 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6ac460dsm1094703366b.106.2025.07.09.04.56.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Jul 2025 04:56:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <X2KJB3xtnC-pWM7o5TBw6ln3ItpMwn7tdn5Z8gpZY3oW31isE8PLTX5GUbJ6HcZk_9s72jb6ImwGL-anIoto4dK1MINTxzdRKfbejp_nXcA=@protonmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 09 Jul 2025 13:56:09 +0200
+Message-Id: <DB7I7D3P01FF.3T5WRSTJIWLVK@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 4/4] regulator: qcom-rpmh: add support for pm7550
+ regulators
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250625-pm7550-pmr735b-rpmh-regs-v1-0-cab8ef2e5c92@fairphone.com> <20250625-pm7550-pmr735b-rpmh-regs-v1-4-cab8ef2e5c92@fairphone.com> <bc27209a-e0f8-40bf-979f-3d747c501ae8@oss.qualcomm.com> <23ae6ddb-682a-4c4a-bd63-f0a1adb6f4f8@oss.qualcomm.com>
+In-Reply-To: <23ae6ddb-682a-4c4a-bd63-f0a1adb6f4f8@oss.qualcomm.com>
 
-On Wed, Jul 09, 2025 at 07:44:49AM +0000, Yassine Oudjana wrote:
-> 
-> 
-> 
-> 
-> 
-> Sent with Proton Mail secure email.
-> 
-> On Monday, July 7th, 2025 at 6:06 PM, Simon Horman <horms@kernel.org> wrote:
-> 
-> > On Sat, Jul 05, 2025 at 06:29:39PM +0000, Yassine Oudjana wrote:
-> > 
-> > > On Wednesday, April 9th, 2025 at 3:54 PM, Konrad Dybcio konrad.dybcio@oss.qualcomm.com wrote:
-> > > 
-> > > > On 4/6/25 4:07 PM, Yassine Oudjana wrote:
-> > 
-> > 
-> > ...
-> > 
-> > > > > diff --git a/include/linux/soc/qcom/qrtr.h b/include/linux/soc/qcom/qrtr.h
-> > > > > index 4d7f25c64c56..10c89a35cbb9 100644
-> > > > > --- a/include/linux/soc/qcom/qrtr.h
-> > > > > +++ b/include/linux/soc/qcom/qrtr.h
-> > > > > @@ -13,6 +13,8 @@ struct qrtr_device {
-> > > > > 
-> > > > > #define to_qrtr_device(d) container_of(d, struct qrtr_device, dev)
-> > > > > 
-> > > > > +#define QRTR_INSTANCE(qmi_version, qmi_instance) (qmi_version | qmi_instance << 8)
-> > > > 
-> > > > Please use FIELD_PREP + GENMASK to avoid potential overflows
-> > > > 
-> > > > Konrad
-> > > 
-> > > Since I'm using this macro in initializing QRTR match tables I am unable to use
-> > > FIELD_PREP. When I do, I get such errors:
-> > 
-> > 
-> > Does using FIELD_PREP_CONST, say in a QRTR_INSTANCE_CONST variant, help?
-> 
-> That works, but do we want to have two variants? Or in this case maybe
-> I should leave qmi_interface.c untouched and define the macro only for use
-> in match tables?
+On Wed Jun 25, 2025 at 4:20 PM CEST, Konrad Dybcio wrote:
+> On 6/25/25 4:10 PM, Konrad Dybcio wrote:
+>> On 6/25/25 11:18 AM, Luca Weiss wrote:
+>>> Add RPMH regulators exposed by Qualcomm Technologies, Inc. PM7550 PMIC.
+>>> It has 6 FTS525 (FT-SMPS) and 23 LDOs with 3 different types.
+>>> L1-L11 are LDO515 LV NMOS, L12-L13 are LDO515 MV PMOS, L14-L23 are
+>>> LDO512 MV PMOS.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>=20
+>> FWIW everything you said in the commit message is correct, but I'm not
+>> 100% sure how to map these LDO types to the existing definitions
+>
+> OK so found another page (also made sure that the supply maps are
+> indeed OK)
+>
+> SMPS is OK
+> L1-L11 is OK
+> L14-23 is OK
+>
+> L12/13 -> pmic5_pldo515_mv
 
-FWIIW, my order of preference would be:
+Based on what are you saying that?
 
-1. Two variants, declared next to each other
-2. One variant (using FIELD_PREP_CONST)
-3. Leave qmi_interface.c untouched
+Based on 80-62408-1 Rev. AG for the LDO515, the Output voltage range for
+MV PMOS is "programmable range 1.504-3.544" which matches "pmic5_pldo".
 
-...
+But yes, in the table next to it, it's saying 1.8-3.3V, which matches
+"pmic5_pldo515_mv".
+
+If you're sure, I can update it but the datasheet is a bit confusing.
+Let me know!
+
+Regards
+Luca
+
+>
+> so please update that and add:
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Konrad
+
 
