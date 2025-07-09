@@ -1,204 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-64135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D397EAFE281
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:25:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC393AFE29F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:30:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8A941BC75FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:26:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 935277BBDD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:29:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CE79273D7B;
-	Wed,  9 Jul 2025 08:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D19807082F;
+	Wed,  9 Jul 2025 08:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nyCbAk92"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JUDe1oZa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9991EB9F2;
-	Wed,  9 Jul 2025 08:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01974276027
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 08:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752049545; cv=none; b=LI/1JRZuypLI7b6lse4VycPom6XgtH07atsG/fTZKfns23fFzrnLnfj6z5wahXCosyN/Dh8DINlYz6MdWAEvIsL96o9jDsCZoCEBDVGGw7ZbBZY/P9xidemJ6nsW1NkIYD6Poba9xZY3yv6V+1AG+72RQcTxl3vFS5+qAacBrhg=
+	t=1752049820; cv=none; b=AT7PNLdDaDaUVB95Amn9brJlFoJiiBAkeDRAKHlie4WRkCpaAgMogSv2acNgFBenTDYqTFFLqhOmDRsJoijW1F+jDZpIm6y7UxV88sz2prXG5ZQuB8fBHwK1552FiT5WrVRuIRFQ5n0WefBwz3XgqQCLWjMfyH+QK1+F1wFVFg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752049545; c=relaxed/simple;
-	bh=r5RG0r6VfhGCnEFFMGPgiUsflE0JaER9sAslCslskZk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TPUicTLCz/32oUWFqv83K6hfREuUNjJvmuvY57Tpn/dtXha31BpYILzHcXH4LlCngIE/rDCejuhDHqQWQr0RbBap2LEgTjZzXKYQZo4czLnJfs+tDw4pblZFsFbrqmVLbmYbg+LNW5qPfJPuZfHZVXNwkH+Kt2YiNRozNtH+t7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nyCbAk92; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5697mBnU024365;
-	Wed, 9 Jul 2025 08:25:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	COZ2Sh8sxgfBJ7zX3NCff/RrAJHNSAnAxPWUBtHFUog=; b=nyCbAk926zsau2SP
-	mJvfxBRtOB72Ar4axeO5P4YE24XUL8E5DeVRR5Z3gx0RUjY0wEU01dOCacmVZf3c
-	6bYfLdX3iHQ4Epq8O9wZpvdQhP3hvVZp3EpiioBzPkyTb0wMyQInHfR0KZ6WcChp
-	JEkbSC60UjpysnQRGl4Y5RibKiAMY5oPOyDPjCzTUkHoxowyTup4J5FJW1p9sdX5
-	z5UZXzOJ3vDT4292P7xL4zMMLNKafsGto0WZhtQiog7E6tqtVXPDyDVbX4ib9vSR
-	sw70Bar9vbKvUfmKUgOQtCDY4m9BZoEjX/OEOQQcYUh/k/cz8tMtmFtSMovd2DKz
-	0llc0w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smbnr3pj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Jul 2025 08:25:31 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5698PUG1032555
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Jul 2025 08:25:30 GMT
-Received: from [10.239.133.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 9 Jul
- 2025 01:25:26 -0700
-Message-ID: <c6cfc51b-ca0e-4eac-8462-00dcbc136afd@quicinc.com>
-Date: Wed, 9 Jul 2025 16:25:23 +0800
+	s=arc-20240116; t=1752049820; c=relaxed/simple;
+	bh=y+ALyJ89mofNMm5St1h2kQaTOCzXFGBJGXcWVmtRKgo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WzlSc5Pqp6Of8jKFqj/hR8DyKJT4bhkPyiOy8q237+G6XJ3RDhobmO8C9KjmVOrZqHjpgPLCv46y0LSje+TILc4efkUT6rQjGE2fUAzdwY/mCXX+TZealp8Nnd9nJE/cJ3ETXp/uiWYQcYLBVtIvehfqWLlKuwkymxrWJ5sbRYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JUDe1oZa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5698IHmC003496
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 08:30:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ktjlYwdjVYmfZRvKpskcTT
+	MIsN/4CSP1auyN3yxMpZg=; b=JUDe1oZajjWbMuyCoXOUvQGvU8UqtuXswC3McL
+	ROw5nhXnAkJU8/Gf1P8jh+EBJBgXVim7J7FPLNX2WDGos00/lvIhc5Lfk5Z62qwI
+	j8sH+CbRaFJoPgHQcmdLtu6yOL5RmrHKby8hj209aWKSZvIE90D1w6iCKunLja83
+	Iv9jrGyI7sGQ4F8xfjX8ectBTRtOk2RpgdocbgkufHtoiluHL18DjRD/r0gHmUY3
+	TIy3cjXC45VPrPxDNivMXCdww9hIlK8cl2MLlpTCv2FEEfQ/1nP/8uWjcXeLFGdZ
+	uVT7n64f6O9vpIKMWpvyW2HNRRq/E7UJtQuvz8zTBQJ29QPQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvefkkap-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 08:30:17 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-74b537e8d05so4329537b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 01:30:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752049816; x=1752654616;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ktjlYwdjVYmfZRvKpskcTTMIsN/4CSP1auyN3yxMpZg=;
+        b=W0Y5TNpgO1rRMz2SyVs2MXdTPuYu+3xfX78iQU/oxI02nQzzNynNhEPEJX6il38/PJ
+         p6YfhG+zzJRVVmUL4LAl6niejhbMFqJ/kqCFF4CqNfN2cbkdVrZiYoWuKq9smsto5ADz
+         DZfmXFU4Q0EpxMA7U0eomhguHH2NtunNJ4Xe6nACIUa5dV2glTOroa0Fc+b/fIk8xYa0
+         cFcxKLaV/IrqZk2yCt8scOesoX6zR1rbHmqdo8d04lZtkj16Ylska0FF6FTHP1CrTZBA
+         nJYTsaTJXz64Ql2nj8/ze2OtcFvXuj701oncMre4FcC0MAhcKZK6qFCSXAHk98/LZw2l
+         YdPw==
+X-Forwarded-Encrypted: i=1; AJvYcCU36ZjE0ymWppJtwQtjXMtrH5kHJ6m7biYG6SkfBbhjO5FAVwqEkg6slkU52Tg3bpYOJ5td0VJGAryjUHsg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzc1J619w+5rhkuhUnOl7yhyVy3T4YCeAwRazw1nQvrw3lJ8Miv
+	OKyddFteWKvf/vdaiiGdN9T71unbXo10oxzgZSmqQ5RdM0xj+6meQu/vHIkgQ3ezA7LEWS0tGvl
+	aN78ELSqdR+lP47y/EUjXk+2O8ViQFQEc23B77/D4iBe7i2ijmH0bGtYVOz7r/tOBtsfW
+X-Gm-Gg: ASbGncs+eISh/US2Q1ze7xLf13Wfbc1k1MKcNP3YQrznds2gE7it/LCzQ6vFgPt8ERW
+	qVojsHWX7hC7TByiLrd6ZJ0SxE80tLnTSWZ8+GU/PXcYvGPhOlvv81AHQgr+DhS3V3dkRPfyMNg
+	QaiJInvT6Yc5a1U3mOqQ9PEKZN7QsTnl1loCQE9VU6ZYltqLm1AlLSeo5WY2g+Ph1SD3aX6APvC
+	zifa5TXSh6egVifqSZ+99cYZSC+gu7uwnP+F6NUMadr7tb3xIYWPFfuTvLieb5OAIIo4couKK8U
+	lykONHJC1+a/4I5N9yi5t80qKbiU0KLZaBnZh/rwKghFCze0Uu8=
+X-Received: by 2002:a05:6a20:9f9b:b0:22b:8f7f:5cb2 with SMTP id adf61e73a8af0-22cd59ffc44mr3039819637.8.1752049816350;
+        Wed, 09 Jul 2025 01:30:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWpSdApdQoxlULCIi1tLXiJftge0qv/gC9NuOeXgguazYgPCvb/8rGO86lxxZ3U+TPbN3alQ==
+X-Received: by 2002:a05:6a20:9f9b:b0:22b:8f7f:5cb2 with SMTP id adf61e73a8af0-22cd59ffc44mr3039772637.8.1752049815935;
+        Wed, 09 Jul 2025 01:30:15 -0700 (PDT)
+Received: from hu-mkshah-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce35ccb9esm14872105b3a.50.2025.07.09.01.30.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jul 2025 01:30:15 -0700 (PDT)
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Date: Wed, 09 Jul 2025 14:00:11 +0530
+Subject: [PATCH v2] pmdomain: governor: Consider CPU latency tolerance from
+ pm_domain_cpu_gov
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 0/2] coresight: Add Coresight Trace Network On Chip
- driver
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>
-CC: <kernel@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        Leo Yan <leo.yan@arm.com>
-References: <20250611-trace-noc-v10-0-a83b5c63da34@quicinc.com>
-Content-Language: en-US
-From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-In-Reply-To: <20250611-trace-noc-v10-0-a83b5c63da34@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA3NSBTYWx0ZWRfXyx+D+kMo8223
- 4eoDswe4moMyOwyx0wburBNMbnB1aTQXTun3ltK1ZZpNOjZcHFCFKcottbVMxagf7nW0gVB4ihr
- xG5b43lgtn39gHuDXJh1pNOllBlcL9RATeFQs0nmtj3cRp9HTx8YNNlwJFhBaNLKEJOM1UfMd7e
- LqzfGvHGx/t0adL1n+gGwezi9FoyF/xuJu0P54q8GIBvyf4B+RD7kXQVaQwiFTmPMnK5JN92xme
- Z6FFbTEblJZfxrJCst3YSN8omXZvV5mlTjhhT1ZQiRoURIDkwfxrh55/LGLkEkHdpGCsUPb9Nwd
- ROkoTM4X0Wn88oQrBDTDSQc1C8EjR0+nBbfLjAAaB3KnsOT3J7b7G7X96uO43DHjnuFL/h7cj9O
- oGSIRB2kSA2Hg3A6UFZI8kyMnfsyM9pCYWYj9vQN9yPJhlQQlsUM+qhTzkgWgu1AwgnQynVv
-X-Authority-Analysis: v=2.4 cv=QM1oRhLL c=1 sm=1 tr=0 ts=686e277b cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=6ZaSXbcDHRiDiM3bpcAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: fn5V7WnPvgFSAqDRf_6MBVoPXphwGdGX
-X-Proofpoint-GUID: fn5V7WnPvgFSAqDRf_6MBVoPXphwGdGX
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAJIobmgC/33MQQrCMBCF4auUWZsyHaxpXfUeIhLTiQ2YpM1oE
+ UrvbvAAbh58i/dvIJw9C5yrDTKvXnyKBXSowE4mPlj5sRgIqUWNnZrDmILx8bYkUdSj1q67n4g
+ YymXO7Pznl7tci11OQb2mzOZPZG1Uo7RtkdzR9tiYIYnUy9s8bQqhLgP7/gWAlL59qQAAAA==
+X-Change-ID: 20250708-pmdomain_qos-29077f8b622e
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752049813; l=4349;
+ i=maulik.shah@oss.qualcomm.com; s=20240109; h=from:subject:message-id;
+ bh=y+ALyJ89mofNMm5St1h2kQaTOCzXFGBJGXcWVmtRKgo=;
+ b=Lrfa7NEP6jO4ZZpra+PKTz8jeXjYBtHM5IoRLAuEMMLR9HQzgN/vJxoa9JAGwyRpLo4MTp878
+ nk+gmTyRorDAPEBOLN53+tLrkuTsvlwsufTjUWfXDr1k0VKNH1mG8kW
+X-Developer-Key: i=maulik.shah@oss.qualcomm.com; a=ed25519;
+ pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA3NSBTYWx0ZWRfX7ZL6MmCqkz4d
+ dyyJQqQ68xbgzIqP2qz5tD5idXQ7xcyATkERIFv1D5acqRzhxOzBk1w3SCbqBa9pRRHl6a9ZDO9
+ 7FV3BL/czeTL5HuAtye36aRynHLqsYueOi0D8a94rc237GG4WH8M15ICrOz1CLdUNtBVmiiW7DF
+ Z5P2GqZsJUcnMMmdKcv5LdsVbUMDgoW4IjULyWripGclwZs/InMVMHC4Iiomn/rZHW53Ckhik2N
+ kt571hzflvMqCAehnXpWI/nIn6t3EnKjNqKYb2J+r9B5FqDE6BaQWzq4A9cR6n5U62P/4Z72rkS
+ 0N189PUjqV2scSxbZ8J5qNtAWO8sXYWxtgbw580VT1gEMZag0QvMk6eG5/2eSx2JNnamJRlFNLO
+ +mNXld155TwCDFXEBe713CpsXbSdxaIBE/7j2fEzCl9oXYb+Xtxa4mMWvPlSWQrAT4nJFxK9
+X-Authority-Analysis: v=2.4 cv=dciA3WXe c=1 sm=1 tr=0 ts=686e2899 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=pR31FINYhqodxwX9k7wA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: c0lOtNTM3MwMn3t6Ok599n2PAWCOOzYR
+X-Proofpoint-ORIG-GUID: c0lOtNTM3MwMn3t6Ok599n2PAWCOOzYR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507090075
+ clxscore=1015 malwarescore=0 suspectscore=0 impostorscore=0 phishscore=0
+ mlxscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090075
 
-On 6/11/2025 6:42 PM, Yuanfang Zhang wrote:
-> The Trace Network On Chip (TNOC) is an integration hierarchy which is a
-> hardware component that integrates the functionalities of TPDA and
-> funnels. It collects trace from subsystems and transfers it to coresight
-> sink.
-> 
-> In addition to the generic TNOC mentioned above, there is also a special type
-> of TNOC called Interconnect TNOC. Unlike the generic TNOC, the Interconnect
-> TNOC doesn't need ATID. Its primary function is to connect the source of
-> subsystems to the Aggregator TNOC. Its driver is different from this patch and
-> will describe it and upstream its driver separately.
-> 
-> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> ---
-> Changes in v10:
-> - Rebase to coresight/next branch.
-> - Link to v9: https://lore.kernel.org/r/20250611-trace-noc-v9-0-4322d4cf8f4b@quicinc.com
-> 
-> Changes in v9:
-> - Mention the binding is only for Aggregator TNOC.
-> - Link to v8: https://lore.kernel.org/r/20250606-trace-noc-v8-0-833f94712c57@quicinc.com
-> 
-> Changes in v8:
-> - Add sysfs node to expose atid.
-> - Link to v7: https://lore.kernel.org/r/20250523-trace-noc-v7-0-d65edbab2997@quicinc.com
-> 
-> Changes in v7:
-> - Move the content in header file into coresight-tnoc.c.
-> - Use scoped_guard() to replace spin_lock().
-> - Invoke coresight_trace_id_put_system_id() for registration failure.
-> - Link to v6: https://lore.kernel.org/r/20250522-trace-noc-v6-0-f5a9bcae90ee@quicinc.com
-> 
-> Changes in v6:
-> - Add a newline after return statements.
-> - Use 'x &= foo' to replace 'x = x & foo'.
-> - Use 'x |= foo' to replace 'x = x | foo'.
-> - Link to v5: https://lore.kernel.org/r/20250512-trace-noc-v5-0-f2ef070baee5@quicinc.com
-> 
-> Changes in v5:
-> - update cover-letter to describe the Interconnect TNOC.
-> - Link to v4: https://lore.kernel.org/r/20250415-trace-noc-v4-0-979938fedfd8@quicinc.com
-> 
-> Changes in v4:
-> - Fix dt_binding warning.
-> - update mask of trace_noc amba_id.
-> - Modify driver comments.
-> - rename TRACE_NOC_SYN_VAL to TRACE_NOC_SYNC_INTERVAL.
-> - Link to v3: https://lore.kernel.org/r/20250411-trace-noc-v3-0-1f19ddf7699b@quicinc.com
-> 
-> Changes in v3:
-> - Remove unnecessary sysfs nodes.
-> - update commit messages.
-> - Use 'writel' instead of 'write_relaxed' when writing to the register for the last time.
-> - Add trace_id ops.
-> - Link to v2: https://lore.kernel.org/r/20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com
-> 
-> Changes in v2:
-> - Modified the format of DT binging file.
-> - Fix compile warnings.
-> - Link to v1: https://lore.kernel.org/r/46643089-b88d-49dc-be05-7bf0bb21f847@quicinc.com
-> 
-> ---
-> Yuanfang Zhang (2):
->       dt-bindings: arm: Add device Trace Network On Chip definition
->       coresight: add coresight Trace Network On Chip driver
-> 
->  .../bindings/arm/qcom,coresight-tnoc.yaml          | 113 ++++++++++
->  drivers/hwtracing/coresight/Kconfig                |  12 +
->  drivers/hwtracing/coresight/Makefile               |   1 +
->  drivers/hwtracing/coresight/coresight-tnoc.c       | 242 +++++++++++++++++++++
->  4 files changed, 368 insertions(+)
-> ---
-> base-commit: 408c97c4a5e0b634dcd15bf8b8808b382e888164
-> change-id: 20250403-trace-noc-f8286b30408e
-> 
-> Best regards,
+pm_domain_cpu_gov is selecting a cluster idle state but does not consider
+latency tolerance of child CPUs. This results in deeper cluster idle state
+whose latency does not meet latency tolerance requirement.
 
-Hi Suzuki, Mike,
+Select deeper idle state only if global and device latency tolerance of all
+child CPUs meet.
 
-I wanted to check in on the status of this patch series ([v10 0/2]). I’d like to confirm whether
-it is planned to be picked for this cycle, or if there’s anything further I should address.
+Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
+domain idle state entry (2150) + exit (1983) usec latency mentioned in
+devicetree, demonstrate the issue.
 
-thanks,
-Yuanfang.
+	# echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
+
+Before: (Usage is incrementing)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             29817          537        8          270        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             30348          542        8          271        0
+
+After: (Usage is not incrementing due to latency tolerance)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+---
+Changes in v2:
+- Rename device pointer to cpu_dev
+- Replace dev_pm_qos_read_value() with dev_pm_qos_raw_resume_latency()
+- Link to v1: https://lore.kernel.org/all/20250708-pmdomain_qos-v1-1-7c502f4c901a@oss.qualcomm.com
+---
+ drivers/pmdomain/governor.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/pmdomain/governor.c b/drivers/pmdomain/governor.c
+index c1e148657c873a6b5b4d9c0f058d54cb020c56e2..39359811a93047b36443a1b9583962726f24b88b 100644
+--- a/drivers/pmdomain/governor.c
++++ b/drivers/pmdomain/governor.c
+@@ -8,6 +8,7 @@
+ #include <linux/pm_domain.h>
+ #include <linux/pm_qos.h>
+ #include <linux/hrtimer.h>
++#include <linux/cpu.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpumask.h>
+ #include <linux/ktime.h>
+@@ -349,6 +350,8 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+ 	struct cpuidle_device *dev;
+ 	ktime_t domain_wakeup, next_hrtimer;
+ 	ktime_t now = ktime_get();
++	struct device *cpu_dev;
++	s64 cpu_constraint, global_constraint;
+ 	s64 idle_duration_ns;
+ 	int cpu, i;
+ 
+@@ -359,6 +362,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+ 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
+ 		return true;
+ 
++	global_constraint = cpu_latency_qos_limit();
+ 	/*
+ 	 * Find the next wakeup for any of the online CPUs within the PM domain
+ 	 * and its subdomains. Note, we only need the genpd->cpus, as it already
+@@ -372,8 +376,16 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+ 			if (ktime_before(next_hrtimer, domain_wakeup))
+ 				domain_wakeup = next_hrtimer;
+ 		}
++
++		cpu_dev = get_cpu_device(cpu);
++		if (cpu_dev) {
++			cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
++			if (cpu_constraint < global_constraint)
++				global_constraint = cpu_constraint;
++		}
+ 	}
+ 
++	global_constraint *= NSEC_PER_USEC;
+ 	/* The minimum idle duration is from now - until the next wakeup. */
+ 	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+ 	if (idle_duration_ns <= 0)
+@@ -389,8 +401,10 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
+ 	 */
+ 	i = genpd->state_idx;
+ 	do {
+-		if (idle_duration_ns >= (genpd->states[i].residency_ns +
+-		    genpd->states[i].power_off_latency_ns)) {
++		if ((idle_duration_ns >= (genpd->states[i].residency_ns +
++		    genpd->states[i].power_off_latency_ns)) &&
++		    (global_constraint >= (genpd->states[i].power_on_latency_ns +
++		    genpd->states[i].power_off_latency_ns))) {
+ 			genpd->state_idx = i;
+ 			genpd->gd->last_enter = now;
+ 			genpd->gd->reflect_residency = true;
+
+---
+base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
+change-id: 20250708-pmdomain_qos-29077f8b622e
+
+Best regards,
+-- 
+Maulik Shah <maulik.shah@oss.qualcomm.com>
+
 
