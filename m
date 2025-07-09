@@ -1,186 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-64138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6476AFE2B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:33:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89864AFE2EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 10:40:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 53FD7486FA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:32:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD66F1BC2C1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 08:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B82F27511E;
-	Wed,  9 Jul 2025 08:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DB6927D77B;
+	Wed,  9 Jul 2025 08:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WZSBR7BL"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGyntLRJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C457276030
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 08:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3E270575;
+	Wed,  9 Jul 2025 08:40:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752049941; cv=none; b=ut+G0yiJUBpLb3fMpOdkjGkoHLYhPD43yhbvrOJ2jLGFAVhMrbu1qf+0fsPrp0vmJ1b5VuC9zmB4C1UVH+3HraMEBNtKHLEZurotcpUdeXUCceXDS2m+zINrYHzgJxI2po97BgU8XAlcco8L5JPdSagNhpUB+XK+JibJTF4OJG8=
+	t=1752050422; cv=none; b=nc6Ij8TDNwZBRtmkN6oKgfi3VDGj4ku+E042rVR3BqML9KNf8xktpXVnKbdVmjqZuutGswj6sZmS0pMQRmoSuWX+eKgM9f9bcRBPWntBwB3NllMIDaBRd63gJ/VQmd2DgfmMqnMrogiTfHSDpT9iRFMcXQ+5j++pG02IYVUomfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752049941; c=relaxed/simple;
-	bh=DzcH7L60UbeOJ9WOUsF8qxsGcS7+hgTpKAgmlponWSI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d6LddJfJ+bGIdh1fbkTtn66vqgXSnSEvne12PQmwUnGptqb54jgcTVjJSxFKO6fuPZ8szCKfN6YTD3/uFhSYIf2+iyyxyESdrt4blFJ3hb64tPbSq9ZzCk1ymEpsIKW+zWhtpbU1mR48KrQREwuqG3htswOtrsxY8KdmQ6ZLFos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WZSBR7BL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5698R9FR029138
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 08:32:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AEc/ZNFmxnMuleR9FhMEb0OULDquczMqvJCfIuUAe8U=; b=WZSBR7BLHEagmRl5
-	rwWr0YWWaDnIhlQGDUzVVYTUESQ1ALhOfI8h+wBnANG2Atyh4CZQBk17oBrgZxtr
-	bOYbddBy1A8xEFGQl/hZfpKsnet0m5TyggaSgRcI9BPg1RMy+72kZriYoRIEuaba
-	/kKwLwa5DycQ2FLAOKndTf3+bpPMJ8QFrHbOZrzmWXM4LLx/G3VS29GtYBsAmBA8
-	IaHFHqA8OVgel+o/Mjw2zCCB78uDZKzf+3/64FLCdBhRGke7Z0oABVWnLhd2YY10
-	CUAfElFQzBdb6f46IpkNT8D8SPXKGSytf7aZhA0ju8mcjnlvueDLSc2s7mkOwTFF
-	WwYQIg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu2bbg9x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 08:32:18 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b350d850677so3435366a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 01:32:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752049937; x=1752654737;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AEc/ZNFmxnMuleR9FhMEb0OULDquczMqvJCfIuUAe8U=;
-        b=XKvKnnDS78QSotvbEfrPSjxz3DM03L97KHdwm06GdwSCeoict8Lpgshgib/s/8mSPm
-         WGrvOdR0HgpYMr1ZoxrHkbLPvn77Vmm99PiikBYg6EFAdh+PtJgaKIluooMOIkJf0zY7
-         3qMit5tEDDtxXQo1+FuCQ6gBYZTEL9ICqg+M5ttohiF4C1iB+oeDZpm+oDTlFouByv8d
-         UCCDwx8qtyUtFC9ad9VdgB+KUbU04EbM4pVs3mVn+d4HktxG3iGLInsWC944aKSUpkrC
-         UQzy7QwioDb9zCZKfP6HYLFHQZGTUb9W7mIwBFkPXKgugXJTJi9mz+dRN/ezVO5RT3/m
-         w3xA==
-X-Forwarded-Encrypted: i=1; AJvYcCXwJ+J/kfkEdsFRP9VhBVWnxxDTd8uvBPrxMQNFSS0eF5MPIxFdDssRZ67x84LHmMisj0qn058G+Xva4hk9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxW9NC+G1Sh+BKeINiyusnHwzQanlatdkEpjTxIfWAs3F6fUY4G
-	v4MeNI/M6qYbjrMUhV0i6kFn+QC45ulpywMR9hFFfE8Lxuef2PWhiKEu7KR3lUkD1xKX9KNLBhD
-	5iPlRpdo+Rjj9AK9H5mkfRD7qRUWz0br/P2WIkfR2qVsZLGp38S3qY83KTEe4SrLYBVpJ
-X-Gm-Gg: ASbGncsNQLRFiWoDiQs6aKVJubg5bKkxshQ39KznPTvz5MROACWMgx3JMS9iMEDgXtY
-	Kl/xKzir6WvETuQMXbULUvpsLwxHnrDrA7RDBOkTSW1mM+U5TX3TanuH+F3VTVLXCpUJUVwFOEf
-	Z9JEujfcQEOxGKZmmTh2FVXPQoHkH03/xLzwyQSFZbo58+UiyEEVGS1x2A47jqrxvYbJ5hV81JM
-	k12Fd4yqNmgcMr4LnSbw5tldB9EymfJT1/wcAxA5dHmKvITdOP/L8k9v8uNaI0BLsO4umGYovYk
-	vGD71urmulkVivM7ZlZeKz21aYTP3m1Qan+iwUK5qW3qXPo=
-X-Received: by 2002:a05:6a21:9995:b0:225:7617:66ff with SMTP id adf61e73a8af0-22cd7487ecfmr2576725637.20.1752049937297;
-        Wed, 09 Jul 2025 01:32:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF21ezKBzrGdz4BI6Lzw1JTE2T+1doJUN0UmTgSxYTC/KdMGVYc+82ZfcvVJicGxGSuhavU4Q==
-X-Received: by 2002:a05:6a21:9995:b0:225:7617:66ff with SMTP id adf61e73a8af0-22cd7487ecfmr2576700637.20.1752049936822;
-        Wed, 09 Jul 2025 01:32:16 -0700 (PDT)
-Received: from [10.217.199.21] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce417dd7esm15183345b3a.97.2025.07.09.01.32.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 01:32:16 -0700 (PDT)
-Message-ID: <803a7bea-68d6-4973-ad2a-0d8721865831@oss.qualcomm.com>
-Date: Wed, 9 Jul 2025 14:02:13 +0530
+	s=arc-20240116; t=1752050422; c=relaxed/simple;
+	bh=rJjvFom5kGiJovMaDBO1GA+keaiaEhwhXvL8IYaiUbc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dGL/xgrTQT4guZmIamVMU9WDvufOlwytTluYUBfe8akt7RKMylaxUOkZjCEM+PE5+vT8wN4W/1b5KwarF5lnogzR87QEzS3rLhmHxPSffrMNwl31KYyXwdRsxhP/ijGlZllqOpDvsXNeKFMmt7grdRp6shTfRM/23cS6WH4keUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGyntLRJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E896C4CEEF;
+	Wed,  9 Jul 2025 08:40:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1752050421;
+	bh=rJjvFom5kGiJovMaDBO1GA+keaiaEhwhXvL8IYaiUbc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UGyntLRJ72vNQ7mcHJApcv5FnCj24vgzsvCY88BiXV7MOwa2Sbv/d7u/AJpL67tZf
+	 bMGfs7mhqK7zwcgkUX2SE9Lg2hWaKBKlhB/cCeyrVmjg3KgPVm089bXXbQFCvY871v
+	 6znt4cNM9uZZZY9MgQMzqgaNBzuhJAGQJD6sD+fA=
+Date: Wed, 9 Jul 2025 10:40:18 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
+ secure calls
+Message-ID: <2025070909-enlighten-skilled-2c71@gregkh>
+References: <20250709065533.25724-1-komal.bajaj@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pmdomain: governor: Consider CPU latency tolerance from
- pm_domain_cpu_gov
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20250708-pmdomain_qos-v1-1-7c502f4c901a@oss.qualcomm.com>
- <CAPDyKFrL63Jv4_cUbrjAaU4UtNNDVMpALt41Mu6NbGcAefmWUA@mail.gmail.com>
-Content-Language: en-US
-From: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>
-In-Reply-To: <CAPDyKFrL63Jv4_cUbrjAaU4UtNNDVMpALt41Mu6NbGcAefmWUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDA3NSBTYWx0ZWRfX6QKOuBMFTeww
- G3ex5he/Mh232YKnDbhrb7MzjJNgG4iEeeY5r0l4sJvQeB4iin39ylxVkkvbHURTwH3uy0M5QiV
- Jl+Ealhex4DewHnih22ojzSxcECNsD13ra56QjaeYmUSFHfpeYYr0qoeUXiZ0H8NWpvrq5btWT2
- mUd/FhXEDBkcXcc5XXSuXl6mwGZG3NiQZJN31rQk3LRre3s+26JF7CZ9GWkRBIyAjDqfJzWwBHN
- 9Xtnj1mUSefiDfaSKeusu6lpQ1kKWQ3igzNLDKuQjHbtty98ebDnooqclUCLoExtNQXuKgZpuYE
- hLDz22WlaiEijmnMCX2wk9G+o+FHskr+FK5/9gBAHixjatGUuq2Ha6Wj2G+dhXwigI4BrIjDYfX
- hW8RE8t5gA+e8GuP17VRJ9n2kmrSwtUqnsDBapcyTUXN8DC0IqjZzI9EzNwi3+8aCbf6A63E
-X-Proofpoint-ORIG-GUID: rebrtXj1ZfxVh0YOOKsOh21nmlLO9HQq
-X-Proofpoint-GUID: rebrtXj1ZfxVh0YOOKsOh21nmlLO9HQq
-X-Authority-Analysis: v=2.4 cv=erTfzppX c=1 sm=1 tr=0 ts=686e2912 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=p3CtfcOl4c16AG3dCFcA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507090075
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250709065533.25724-1-komal.bajaj@oss.qualcomm.com>
 
-
-
-On 7/8/2025 8:11 PM, Ulf Hansson wrote:
-> On Tue, 8 Jul 2025 at 07:15, Maulik Shah <maulik.shah@oss.qualcomm.com> wrote:
->>
->>
->> diff --git a/drivers/pmdomain/governor.c b/drivers/pmdomain/governor.c
->> index c1e148657c873a6b5b4d9c0f058d54cb020c56e2..d5ac4c1b5b5a432f0072209d17379e58ec891202 100644
->> --- a/drivers/pmdomain/governor.c
->> +++ b/drivers/pmdomain/governor.c
->> @@ -8,6 +8,7 @@
->>  #include <linux/pm_domain.h>
->>  #include <linux/pm_qos.h>
->>  #include <linux/hrtimer.h>
->> +#include <linux/cpu.h>
->>  #include <linux/cpuidle.h>
->>  #include <linux/cpumask.h>
->>  #include <linux/ktime.h>
->> @@ -349,6 +350,8 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
->>         struct cpuidle_device *dev;
->>         ktime_t domain_wakeup, next_hrtimer;
->>         ktime_t now = ktime_get();
->> +       struct device *device;
+On Wed, Jul 09, 2025 at 12:25:14PM +0530, Komal Bajaj wrote:
+> EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+> as read-only for HLOS, enforcing access restrictions that prohibit
+> direct memory-mapped writes via writel().
 > 
-> Nitpick: Maybe rename to "cpu_dev" to better distinguish between the
-> cpuidle_device *dev, above?
-
-Updated in v2.
-
+> Attempts to write to this region from HLOS can result in silent failures
+> or memory access violations, particularly when toggling EUD (Embedded
+> USB Debugger) state. To ensure secure register access, modify the driver
+> to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
+> Secure Channel Monitor (SCM). SCM has the necessary permissions to access
+> protected memory regions, enabling reliable control over EUD state.
 > 
->> +       s64 cpu_constraint, global_constraint;
->>         s64 idle_duration_ns;
->>         int cpu, i;
->>
->> @@ -359,6 +362,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
->>         if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
->>                 return true;
->>
->> +       global_constraint = cpu_latency_qos_limit();
->>         /*
->>          * Find the next wakeup for any of the online CPUs within the PM domain
->>          * and its subdomains. Note, we only need the genpd->cpus, as it already
->> @@ -372,8 +376,16 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
->>                         if (ktime_before(next_hrtimer, domain_wakeup))
->>                                 domain_wakeup = next_hrtimer;
->>                 }
->> +
->> +               device = get_cpu_device(cpu);
->> +               if (device) {
->> +                       cpu_constraint = dev_pm_qos_read_value(device, DEV_PM_QOS_RESUME_LATENCY);
+> SC7280, the only user of EUD is also affected, indicating that this could
+> never have worked on a properly fused device.
 > 
-> We should be able to use dev_pm_qos_raw_resume_latency() here, similar
-> to how cpuidle_governor_latency_req() does it. I think it's better as
-> it avoids acquiring/releasing the spinlock.
+> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Changes in v4:
+> * Added error logging in disable_eud() for SCM write failures, per Konrad’s suggestion
+> * Link to v3: https://lore.kernel.org/all/20250708085208.19089-1-komal.bajaj@oss.qualcomm.com/
+> 
+> Changes in v3:
+> * Moved secure write before normal writes
+> * Added error checking in disable_eud()
+> * Use ENOMEM error code if platform_get_resource() fails
+> * Select QCOM_SCM driver if USB_QCOM_EUD is enabled
+> * Link to v2: https://lore.kernel.org/all/20250627125131.27606-1-komal.bajaj@oss.qualcomm.com/
+> 
+> Changes in v2:
+> * Drop separate compatible to be added for secure eud
+> * Use secure call to access EUD mode manager register
+> * Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
+> 
+>  drivers/usb/misc/Kconfig    |  1 +
+>  drivers/usb/misc/qcom_eud.c | 27 +++++++++++++++++++++------
+>  2 files changed, 22 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+> index 6497c4e81e95..f49d5ac0e957 100644
+> --- a/drivers/usb/misc/Kconfig
+> +++ b/drivers/usb/misc/Kconfig
+> @@ -148,6 +148,7 @@ config USB_QCOM_EUD
+>  	tristate "QCOM Embedded USB Debugger(EUD) Driver"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+>  	select USB_ROLE_SWITCH
+> +	select QCOM_SCM
+>  	help
+>  	  This module enables support for Qualcomm Technologies, Inc.
+>  	  Embedded USB Debugger (EUD). The EUD is a control peripheral
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index 83079c414b4f..a58081f53db3 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -15,6 +15,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/sysfs.h>
+>  #include <linux/usb/role.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+>  
+>  #define EUD_REG_INT1_EN_MASK	0x0024
+>  #define EUD_REG_INT_STATUS_1	0x0044
+> @@ -34,7 +35,7 @@ struct eud_chip {
+>  	struct device			*dev;
+>  	struct usb_role_switch		*role_sw;
+>  	void __iomem			*base;
+> -	void __iomem			*mode_mgr;
+> +	phys_addr_t			mode_mgr;
+>  	unsigned int			int_status;
+>  	int				irq;
+>  	bool				enabled;
+> @@ -43,18 +44,30 @@ struct eud_chip {
+>  
+>  static int enable_eud(struct eud_chip *priv)
+>  {
+> +	int ret;
+> +
+> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 1);
+> +	if (ret)
+> +		return ret;
+> +
+>  	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+>  	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+>  			priv->base + EUD_REG_INT1_EN_MASK);
+> -	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+>  
+>  	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+>  }
+>  
+>  static void disable_eud(struct eud_chip *priv)
+>  {
+> +	int ret;
+> +
+> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 0);
+> +	if (ret) {
+> +		dev_err(priv->dev, "failed to disable eud\n");
+> +		return;
+> +	}
+> +
+>  	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+> -	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
+>  }
+>  
+>  static ssize_t enable_show(struct device *dev,
+> @@ -178,6 +191,7 @@ static void eud_role_switch_release(void *data)
+>  static int eud_probe(struct platform_device *pdev)
+>  {
+>  	struct eud_chip *chip;
+> +	struct resource *res;
+>  	int ret;
+>  
+>  	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+> @@ -200,9 +214,10 @@ static int eud_probe(struct platform_device *pdev)
+>  	if (IS_ERR(chip->base))
+>  		return PTR_ERR(chip->base);
+>  
+> -	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+> -	if (IS_ERR(chip->mode_mgr))
+> -		return PTR_ERR(chip->mode_mgr);
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +	if (!res)
+> +		return -ENODEV;
+> +	chip->mode_mgr = res->start;
+>  
+>  	chip->irq = platform_get_irq(pdev, 0);
+>  	if (chip->irq < 0)
+> -- 
+> 2.48.1
+> 
+> 
 
-Yes, updated to use dev_pm_qos_raw_resume_latency() in v2.
+Hi,
 
-Thanks,
-Maulik
+This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
+a patch that has triggered this response.  He used to manually respond
+to these common problems, but in order to save his sanity (he kept
+writing the same thing over and over, yet to different people), I was
+created.  Hopefully you will not take offence and will fix the problem
+in your patch and resubmit it so that it can be accepted into the Linux
+kernel tree.
+
+You are receiving this message because of the following common error(s)
+as indicated below:
+
+- You have marked a patch with a "Fixes:" tag for a commit that is in an
+  older released kernel, yet you do not have a cc: stable line in the
+  signed-off-by area at all, which means that the patch will not be
+  applied to any older kernel releases.  To properly fix this, please
+  follow the documented rules in the
+  Documentation/process/stable-kernel-rules.rst file for how to resolve
+  this.
+
+If you wish to discuss this problem further, or you have questions about
+how to resolve this issue, please feel free to respond to this email and
+Greg will reply once he has dug out from the pending patches received
+from other developers.
+
+thanks,
+
+greg k-h's patch email bot
 
