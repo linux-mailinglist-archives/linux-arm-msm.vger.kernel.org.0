@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-64270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA896AFECD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 16:57:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B38CAFECC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 16:56:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99FEF1C81120
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:56:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82E197B67F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC242E7640;
-	Wed,  9 Jul 2025 14:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5784F2E7BB6;
+	Wed,  9 Jul 2025 14:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="S2X+5WHk"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="G2/wTAhW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D7223770D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 14:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550122E62C6
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 14:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752072928; cv=none; b=IucJ7ysFhhQAcLXFJsenxzKM55n5Gv70ouukdXhC7islHASyl5lapn0Mi437cf0r4OaYWOX0423TgG9mMFU1kDjX2kk32eUcNoDnJShCjCmFz0EqNQK5PFVbhEBSYsyM3hSc6QayZ2ig0tTD3o7ul23mrP210j8NL4idTNgXQ1U=
+	t=1752072929; cv=none; b=BUI00/aDWFJtuYo+8TX7yqkRRL4B+7ndJsfdplTIkQqVD5wYxZLNBfcsbsrc9RUDEwTPgqKh7GO1ybdpP5lLFdSr0zZetwvJ1YWvN6xmt1tFvLrNFtreGJNmD7Kyo2nEkalvfxNDn+EA21HiyN8ZNrH0h4WjxkUX5ACpzcFKxY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752072928; c=relaxed/simple;
-	bh=NXnGscA8zt8gzxiNiTYIUpV9OfGd5HRPGvlVvXT/iJo=;
+	s=arc-20240116; t=1752072929; c=relaxed/simple;
+	bh=JjK37/7ou8Ub4yuQzbdrYu/+a8HXwLFQlJ7GCGIoSKo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RNu+f9kT0wuWwLWHq8i3fxxT0tb9FoBsjD5F7mkD911lAudFZnn0ZW2KrLFZYxS3E8v1DspEh5JZUMZdqwP1lJM2bWkQD59O2iZvG9nI7sUMM4QXyK+HgTtvBxdNSrJHX4XxE7E0FiMH+acVLixlufxtB2yak3uGjHQ5ul7fjVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=S2X+5WHk; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=uf/7mP0Lmqj4YK1mcht5MEpCt9LIrItREpU/gxpNGI0QtBx/5nIkM6OKJfAQ2jwVLY0a/WgY/8nvREwvOg9PazRX61nRDRccOfuoyL4jWMOKaboIl9Lr9eFWJdS7bVcV6bU2G/BTA4IbGOJ+Ut/KOoUHR309Pe2VfALFD//z144=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=G2/wTAhW; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-acb5ec407b1so987330466b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 07:55:26 -0700 (PDT)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ae0de0c03e9so965886666b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 07:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair; t=1752072925; x=1752677725; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Q3A3hRQjja7NMerwUSuHLGaJ14/ejKpqQyPzO1AUrp8=;
-        b=S2X+5WHkxvCTkI8GCnIhZ6XJc4CH/JVvODRxquvXfi8ySc1qbffB5YvWv5Ax8Htb6V
-         80cNmZKswnQWtSkv05BGtBrc5iWe6L4jpssglTblkmQcntpFnN9eSUaVRZui/YfPkor4
-         JNElNPQoTjYCJjyezgc6q++paIgQnsObA7Erol1sNQ252y7OOk8x7eTN7PR8guccyFIw
-         i3+Bz3RgJk5humniUz2MIpbUDOqwEaTHRZoRG//587PFmRA/8oBDruHURm2RQ4E6mfeo
-         1NmtOMJmn+5ZaoaTmM2SL3h/0tb347K/73r5fkR6XhMXj3OeCNy0lxNd8Tq9+nxife7S
-         P9ug==
+        bh=FqUnckrV2DHR0JIRkRD40uIY/f6Qb0J4rvTjJoaYqS8=;
+        b=G2/wTAhWzSamOvQZZmw1tZalAIExmzLA92jJ4s96G2FxsX9D6IDLry+yOxzIPIiFkL
+         cpbEwPnisAa89f0FULNEFxVtHK04GId/bjyb5Ith3GQFCmxLbYDXc95xl+RCwGM88146
+         teocst8VOAlfrJPyLY1nI4IRSLz4MnYIHUJ3sU3/WN3qrXAgb/WVEkY0ppQsjAcoQnx/
+         wMoVGaAhUVOV8Mc8+CeO0SKGSZrtll7RWwZrjUniH5mlioCtIKj0AukzKMcY9hIZOqvZ
+         ZC8ub/Epl9gA5wnH1dp9L3ggx0a8lM0VzhxyxW80sSRC4269Wrp+YXAe8PbmeQJg2mic
+         Gb7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1752072925; x=1752677725;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q3A3hRQjja7NMerwUSuHLGaJ14/ejKpqQyPzO1AUrp8=;
-        b=pY4zXwlA3yxX9xkWF9lTewrs0bXeyuNpJGrKXjAQxri64WrbXt6792DrObG1u4dJk+
-         PcW2idHPgAuTf2i4dYT4tNbsKojxgianhEUjSw789YhkQ8jUL8IibTZvdRVUBka/MKS0
-         e94UsfRxyrhdid/1/LZZqmWJHyJrKHJPI5UME4GHd6HAPDh/uOI+kBnGoliaO7ANSxan
-         PvGqhST0+0fNliaHFbEiy73kHTjlvds4qOhQD+cv/xd4YAncZ5Wd+9PR1Yt6YfMs57wt
-         L7mwxfrRmOG4u45jxCtljJabubQVi0OEq1YMI65CBRK1TU8XmMbceu4LMnzuga9V2gxv
-         Hlwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUWpOGGGTxw4rxeuEjkLwFmVL+OxdPhwcmGkN6lo3n1BWl6cJr88DZbvrdPBy0WM5hpVm6kJPsoiuboYHJg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2l+WACNdEb8xKYVEB/9boyZzAtdh1OYdKlLI0eHgonIIl7rjB
-	s16mQj9BX/pEBns+aX0mJ3UQ6MmDPHMwWVlvrtVvsCazCTefo4gysduvmWghlxsRYPc=
-X-Gm-Gg: ASbGncs7wNeTXLayjoTFXJ8/5CjsvySfBx3FnaZT07XafDNmzpmoF1iegvnf/nGmeN4
-	2XMB8dvJud9d3/nW85hOSU/yNkM0XeomY7mB+QRKut0SUxQBRTIIyQTKeLuJtRVxxWOooYCb6ZO
-	9I9Q0h4k2bOj9FLbodGhjh1RT0GtcZ8dSTyxe6xiUu8Cc1D8MQaWwd0BkugC8Dk4ENu1mfwmvOd
-	IPM73mI7kbmnNvZKY6YGKSMTQ1O0NRfWMijBDyPK7hthVIC5zzLxaWjRtTUBT/QMuh+11TpmDik
-	CnTnvU3bCJgEsvYr+YjmDXq59OdRK+9jW8mmxRrTHYY09VWY9Qxz0peM1OSGpI9NzZ8LOn/Ipl8
-	5xgVtGC0cbeSw6LtqsgqrMyn6uOD27tOf+3/TQUSs7nw=
-X-Google-Smtp-Source: AGHT+IE1CWKVdaIzESsJv98mg9o7AX3rvILsP4/LmkQKyHBEdouOQ04zPbRMcVC/GnkZe9exm7j4sg==
-X-Received: by 2002:a17:907:3c90:b0:ae3:6cc8:e426 with SMTP id a640c23a62f3a-ae6e1049e58mr9441866b.9.1752072924666;
-        Wed, 09 Jul 2025 07:55:24 -0700 (PDT)
+        bh=FqUnckrV2DHR0JIRkRD40uIY/f6Qb0J4rvTjJoaYqS8=;
+        b=aAi0TxY+6ziYaeZOiwim+IiA4UgrAkb0Zo8s+A6Agcdv78JOIEc3mRLvxaBF7GQzpm
+         2zR52SQl0azSoO1ciAg1RJNr2d5tdeVjkcR5lPwXPOswe0HADR6RNMPl6c6QLOYKYKQ9
+         5qpx9QKzb4uYnNURzXxrnlrO+A13gtR+lOgeduW0VnKm7US0kStbA+SUl3+zMjQ3eJPc
+         bj0CT7h1Q5rOtqSFW8oCW312mJghTnG08j+OEjlElw5eFiPO2YwdEaukYUpkbuUQ3xH7
+         bb+O6l9E7W6UbK980LXDF/f3+agIAll41C6X8aXVbvH1cPQ7+8ybmmB6dxZI/XfQ5JsD
+         fhfA==
+X-Forwarded-Encrypted: i=1; AJvYcCXRlviGGFDFX9w4moAArK8MRImVWrVxksdgpkX7iLrMwT6b8Iru3Lmw5oJrRomxA7qBkocTM9JiX8P56oiF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMNIGd2aTHnrsrLy7etXXeDA4X+MHWQNLi5qS+Y9SFQcnqewE7
+	VFdm54VEWMk/NvUCu41rPRhOaZiwEqX/ONBPdFkSf5bBAdzz7wqMxPWlXceIdZUC7K4=
+X-Gm-Gg: ASbGnct/N2vwlYbj1ZASu/71S7fnY7UqoGdlbQEqOUYVV+gDG7YxyN9DwvbpF4pvNYZ
+	vMTQXegCbqxDrmIJpwgSfx0iQWvYh3vOfvtB/2kd0JPlohKWi2nGYfPMLBL3J9ELTYUGv2+pn4C
+	Vzl8QHQiqpuB/ULFhLOrStD7dgYpxkV02XyGjV78BhPFNiDWxjwD1DQKWqZOkd21gmVd90kd5rA
+	VfTkACI1eXZXqgH8JcG30f77qQPPY7WoN5X/ds8azw6Aau5+i5VOlbehweHogSVxOwMR+5lXKxb
+	SoQESnCK3cIbMirt0j9T72D93BOQpwfKGZwNHv2TJBSg3XT5nB1W6bCa92Czc2lucJYmqWWlrZk
+	YlHo+feH+ZepJRSS7YPZUNDsZvigDGF/e8zxG8UywZUk=
+X-Google-Smtp-Source: AGHT+IHYj4k/qDDYaJjD9Pvlt5hW+aGvDzyWD8yDesgLcfq/4kuKmOi8Z6ujnsY58oHIu98v8zVcqQ==
+X-Received: by 2002:a17:907:ea6:b0:ae0:c976:cc84 with SMTP id a640c23a62f3a-ae6cf6128f6mr309110666b.24.1752072925389;
+        Wed, 09 Jul 2025 07:55:25 -0700 (PDT)
 Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b600ddsm1116795766b.158.2025.07.09.07.55.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 09 Jul 2025 07:55:24 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 09 Jul 2025 16:55:14 +0200
-Subject: [PATCH v2 1/4] dt-bindings: phy: qcom,snps-eusb2-repeater:
- Document qcom,tune-res-fsdif
+Date: Wed, 09 Jul 2025 16:55:15 +0200
+Subject: [PATCH v2 2/4] phy: qualcomm: phy-qcom-eusb2-repeater: Support
+ tune-res-fsdif prop
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-sm7635-eusb-repeater-v2-1-b6eff075c097@fairphone.com>
+Message-Id: <20250709-sm7635-eusb-repeater-v2-2-b6eff075c097@fairphone.com>
 References: <20250709-sm7635-eusb-repeater-v2-0-b6eff075c097@fairphone.com>
 In-Reply-To: <20250709-sm7635-eusb-repeater-v2-0-b6eff075c097@fairphone.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -95,45 +95,41 @@ To: Vinod Koul <vkoul@kernel.org>,
 Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752072923; l=1262;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752072923; l=1187;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=NXnGscA8zt8gzxiNiTYIUpV9OfGd5HRPGvlVvXT/iJo=;
- b=H+Maa8FQfQMc4eZK+lVTkgEgw5axIHwWJiezVuUHjjiMKqtPvImloJEAECKGkVNX2B4QbuKj/
- VbyHsa6K3PHDkywR6SF4gjvn6DReQ+U5+SEDTmfS3zD9EEvXZb76HsM
+ bh=JjK37/7ou8Ub4yuQzbdrYu/+a8HXwLFQlJ7GCGIoSKo=;
+ b=a4O39biLPv1ckqefPreNqneOFtzOmXRAtTy90P3R2Po9bjTLgvaXw8O0srrHGpicIbkBCZwtq
+ GMA3OKt/wNkAXcOlHdD0WJfhA5Q0vh5eGp6Mfjp75rWf3jKut3x0cbF
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Document the FS Differential TX Output Resistance Tuning value found on
-the eUSB2 repeater on Qualcomm PMICs. The tuning values have special
-meanings, being different offsets of the resistance to the default value
-in Ohms but the exact meaning is not relevant here, as the correct
-tuning is determined by hardware engineers to make sure the electrical
-properties are as expected.
+Support reading the FS Differential TX Output Resistance Tuning from
+devicetree and writing the register, as required on some boards.
 
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
-index 27f064a71c9fb8cb60e8333fb285f0510a4af94f..6bfd11657e2992735998063b3ca390e04a03930d 100644
---- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
-@@ -52,6 +52,12 @@ properties:
-     minimum: 0
-     maximum: 7
+diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+index d7493c2294ef23e37e484019a49ddf7b3d6a6a46..61594739e5b12706775622e1f76af6ad5d2d29bf 100644
+--- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
++++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+@@ -136,6 +136,9 @@ static int eusb2_repeater_init(struct phy *phy)
+ 	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
+ 		regmap_write(regmap, base + EUSB2_TUNE_IUSB2, val);
  
-+  qcom,tune-res-fsdif:
-+    $ref: /schemas/types.yaml#/definitions/uint8
-+    description: FS Differential TX Output Resistance Tuning
-+    minimum: 0
-+    maximum: 7
++	if (!of_property_read_u8(np, "qcom,tune-res-fsdif", &val))
++		regmap_write(regmap, base + EUSB2_TUNE_RES_FSDIF, val);
 +
- required:
-   - compatible
-   - reg
+ 	/* Wait for status OK */
+ 	ret = regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, poll_val,
+ 				       poll_val & RPTR_OK, 10, 5);
 
 -- 
 2.50.0
