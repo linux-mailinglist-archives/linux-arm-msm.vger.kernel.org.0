@@ -1,210 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-64231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9B96AFE8C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:23:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8055DAFE8F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 14:31:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C38DC3B983B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 12:22:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 043895A3FF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jul 2025 12:31:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283712D9EC8;
-	Wed,  9 Jul 2025 12:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E0782DAFD6;
+	Wed,  9 Jul 2025 12:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="KaHYqS8i"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Bl45FezI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287292D9489
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 12:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C402DAFC8
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jul 2025 12:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752063784; cv=none; b=V62iqfAi6xsHWgAwhbUI4Q5fhBDxVwFHSK7eTV8s0vNe3SH7DPcL78MPIgdf27zb3w42JBkVU2F1UJlmFqoIZJacAcu2jPCFcv31WbTd8qUeM9mSDTCdZt/W8UXeAWPyR3g8C4vgl2EF0+qduQPssRMx9aRiOk3t7AXY7rVdkkQ=
+	t=1752064294; cv=none; b=fV41ANmTih6h4vTfjpiAOymrOP/3xVfmw2TQ9ZHOimTAJ1HBJsO4UhUrRZo/lFywQneVyKtCXArKHbtVyKV84G7IVThEB/f2i3WldFxH32s5ZS1OcS/jifI8pzMYp81n02NkUsv4FyvDtByyYWp/vON9TsqAQoTqk1KmaFfwApQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752063784; c=relaxed/simple;
-	bh=IvC2le71PqR6iklFWS+/lEeQnMsx53wFKpG61tQVWYM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=JwD912JaZz3ofvywkavISkPrNS3ua/gNfXHLtv9LlNT3UQrj27FzuB1x1Z8rDL2oMZ//7jMTSP4Sr04yBx84LYBRusX7356ZLFWbmMPiJ8q+UilxxF6KAdyqbzJdNEX3trKIBPlqdAnt94OwvZm+QYycm1OWCaoRBFlDa88JGMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=KaHYqS8i; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-60780d74c85so7749001a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 05:23:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752063780; x=1752668580; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ROuluNw4/vejFJBCXsSXIQySN8U2GYIufRUS7I5ilA8=;
-        b=KaHYqS8iqbxYPREL2TiI/9DugiMQb0I8r/Jyi/KW/07Ltalw27bZVDaS21nDSH4XJV
-         RYGKD/G0ayvLK65G2aX1u6zLOOtZowY5IgzvN3e8RbasHVviKHVMvBcfqTN9ZuKqqbRt
-         MiLxoIkQ/V5KcTDkwWIu+dY/i8jwm084Sao3eJ5WZoATuMhjlaH8FO2/exD5qk+ipu2A
-         REDTfvZHfvTkkXuS/p0Qo9G/IiUPsoqLQizC3OT+pYQkK+xN3ifSXHMRB6iuL0oxNA9A
-         zALRpDDEW5p0o1EAHgU7pIsXGkRDpNfwubyIQRrcIz26BJDsM0COmnyAAis6s3ledH0W
-         OI5w==
+	s=arc-20240116; t=1752064294; c=relaxed/simple;
+	bh=7yd5xrkWlkddJneP+p37SueXY9r93VYw7uJzxQg3qFw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ONkn1rjtIHisnd6ATADknQuv3tw3XBW+z69wrYiCB8w2IH4noOOJC19HTtokfO5EO+0IZPhc6BOjPmRNuk6NnEa1AmzPE1zIUwefyusRo2RSeg747fb+o+HfKHt68+95P3BWQIXjHdGK2PpCqg16OFheSaKfxO81T5m10XWNw4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Bl45FezI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5697jhdc010137
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Jul 2025 12:31:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iJx6t7w6ssrs3a9tOwEvfHFgR1eHqpcHEVJO/pfvIZY=; b=Bl45FezI+8ohQ6Fs
+	efgc2EZuyghwoIPcmAUNMZ+PWHFI9zV5bjYaxY3C3FfMrmh7bscGdS9dCnksJPMW
+	Tj1NH4oO9KP+N9Ig+rO/QCpnd8y/g4cBHOszdZ1Eb6ybxoFTAuGls5rnOESmNiDb
+	+8/HhVGyWeodCpeQ2PWfXgnI81BYFkw1DVYMYw5nGEyKjSE5VHTUKaX15tZUpgNQ
+	DTtwY9d83yAEtyHbsF/lNRBWcBiXnWiH8P9TzMnJwCPnDDu8/j70ojlLg7ulb4cq
+	3c3BJohQmGRK451I98VQuOpn6OId4aXDm9nab7HgL+US0JqaLIkB9u0zb1kyufCm
+	Q0vytQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smafgy7u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 12:31:31 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-236725af87fso85215225ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jul 2025 05:31:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752063780; x=1752668580;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ROuluNw4/vejFJBCXsSXIQySN8U2GYIufRUS7I5ilA8=;
-        b=XLA+5hB5l5oxgg7ssEt3WDM/D1RaIEOfR43g0B/WmVseH3HeXOjT44J1KxU3DamuiX
-         EYt3RForeHfQXtE7WjJbrkKvAdtVjujDKeAPNnIEosgTCj5XQ5dZdZVrgYTKjc0pfjZF
-         D+2UQVdR0CVQ9qsmOqZomOK+iA01D48CorfXvxE1LBicyXffFJEoCdMEVRW2Q9qH2wRR
-         BHfaTjzTDp8yC11V3hHl+A0L74KCyB+/1siz2nl8AG/7sn+xLbg2KIf3O2Y61r/7LlNf
-         8MEBL/yVw0mup0xDuVsp/KowucEKZWevWXT+xyQXT0AqOxdbaoz6dpFjKuFxNHNtvnpk
-         JcTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXJO70CR/WaDnbmE6C2F0Flw+X5eLdhC+Ium3drf3xSJp8xyr1rzpvbvpTuIpDt9AOxLxW7KFGx4ahY/DmP@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJNwmgqxa4oqIDy1SOn5W4wDfgweL5Pcu9LLr83+Q/iMZXu3L0
-	M04377AeqJcLcQjAmrPCwb/TUKxRfP+how8xu+9adjz8H0FDgaI21Q4iXuhfZJfxgWU=
-X-Gm-Gg: ASbGncul5VbXhRrcpDkbAIRZNCC8kTcya8dG2xJmEL0N8Uaa+qqw9vUPVAOQ574K2cg
-	FgWxQn/sWAnerKn8A+VNzC4IjqreBBHLgSdXxWVOhFKuvGt8MY/AGw170oThDymYhXV7puWjpqa
-	ypAVpXKxron2CLzXQlI5u9uhgdCyabEQXAbsMih2gpzVciG9Q2z3+YovSf7xdmAo4nYjl/1648x
-	7cv8tf3evWagJA48Rk6RhxSx5e/kipBeBGjm00u4iNh4/4O0g1QC4h+dbyAIuLP0Vy95KT31GHW
-	OGTz3mffd5hQr6hikdHpzjkNwlFpp1tWIuVCWmW0vsYkNZkdiD9M+1qltFk9kHHMISmIovo/DFQ
-	1XBTMygaL6p2PSm8HKmGNaujWvtiHcWk=
-X-Google-Smtp-Source: AGHT+IFoNmrlnmfODsFWZlCW/cQmQ6VYP8ewayBQbqu+4gVzC+PMHw17LB0EaYf/AmeXCy2KQcHZJg==
-X-Received: by 2002:a17:906:c045:b0:ae0:d7c7:97ee with SMTP id a640c23a62f3a-ae6cf79a055mr227716066b.41.1752063780327;
-        Wed, 09 Jul 2025 05:23:00 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b04d5csm1074482666b.120.2025.07.09.05.22.59
+        d=1e100.net; s=20230601; t=1752064290; x=1752669090;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iJx6t7w6ssrs3a9tOwEvfHFgR1eHqpcHEVJO/pfvIZY=;
+        b=uz40RYF8uvcsmIsO8Dzo5LKH5HOusn4q894d4XRaKJkGmfSQs7Lb0lOeq1tAq5XNAt
+         VMoKo/Sk15XEDahkpCpsEEetj+VT0BgIO1k8GHx9BnzI7wlm7DUKi2/hN7hN7l9Ww3ve
+         7hEunpwg6ZadOfdeGho2fbGEY29mM6+OuCDxwmbO+rE8EEHCkIXSKc9xU002OoSXnZZN
+         +YmpGgxYC+PglTHrRuuhuMFxU3T7DV6KtKn6yXJAA3QFQqfyl8Gptq9lHKUn3KPsxwC1
+         EUS0Hu20C0aEDHxJsI+OoAxl5bnlk9X6lbdwjM1+qGAuoDOh+w+Rez/oN0fa35NqNmg5
+         IdxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWle6JhP5NdvkJvIT4oZXw8Ow5sC0mQw72omfi4tNYpIrnp1r5nDjR+vKHqWiaxIKyud+IwJlVCSWqUDVLy@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5CNHdGq6zFBvxZRh04+6qTt+w32MTglciCg5XXidWl22ZU0Kg
+	2Q1qxc5k7Y56UhOIYk6vSvGyGLzRrPGloAkcBIhWMPM7QpVj7LVkIDqwPUf5PD3HNUGTNZJha1r
+	idvAUlJvguih7Wc37ZQ/Z2PnvXIfnUK42UShNspElGv6LjB9K//YiZOvsPt5wqoy8vtEgqgLu5o
+	TP
+X-Gm-Gg: ASbGncujGHfwG5lFby8s/KkT7T+ohwNG/Ruoz00qn8aEQ4Ro71nOjnfHAOPw4aU39eF
+	gE6vW6YfAiBY6PosAz9qkNrAJO4nOnYZ3J14/ilEkJLltN24qQ5unfic9jbgcvzoFV0/U598eC7
+	K0Gx3FSuW3YhiXtjZqV7vEy9TIYfJVoQOW27SsIo24uyxpWJAtJBLKVtLSj2diRzZMMR0/++TzV
+	gcWEW0PYCD8Al2KiandPCpB2bzaTRKk0nwDnPaGT/Nyjvmqwhki/k2FvVzCe9ldrS4BdJjp4fg+
+	0WjZ+0BNIu7K8H8vGYuRjHkWiAhiGl+VcvNGhMKX4ijdy25OPLbi
+X-Received: by 2002:a17:903:3c47:b0:235:5a9:976f with SMTP id d9443c01a7336-23ddb2f2db9mr46315315ad.24.1752064289648;
+        Wed, 09 Jul 2025 05:31:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHjreNNXd3+SYHL4S/oHX+L23Vo5LZefCgSCCamZIx++CFBdFw3mmJOU4Ve8ksAGPCCBqWoEg==
+X-Received: by 2002:a17:903:3c47:b0:235:5a9:976f with SMTP id d9443c01a7336-23ddb2f2db9mr46314845ad.24.1752064289178;
+        Wed, 09 Jul 2025 05:31:29 -0700 (PDT)
+Received: from [10.218.37.122] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c8431e2c5sm139239055ad.39.2025.07.09.05.31.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 05:23:00 -0700 (PDT)
+        Wed, 09 Jul 2025 05:31:28 -0700 (PDT)
+Message-ID: <2a18cf9e-1dd2-4e09-81f4-eb1d07324c8e@oss.qualcomm.com>
+Date: Wed, 9 Jul 2025 18:01:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 09 Jul 2025 14:22:59 +0200
-Message-Id: <DB7IRWJ1AFCT.2CVF97683XYEO@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
-Cc: "Vinod Koul" <vkoul@kernel.org>, "Kishon Vijay Abraham I"
- <kishon@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Abel Vesa"
- <abel.vesa@linaro.org>, <~postmarketos/upstreaming@lists.sr.ht>,
- <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: phy: qcom,snps-eusb2-repeater:
- Document qcom,tune-res-fsdif
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250625-sm7635-eusb-repeater-v1-0-19d85541eb4c@fairphone.com>
- <20250625-sm7635-eusb-repeater-v1-1-19d85541eb4c@fairphone.com>
- <20250708-unicorn-of-ancient-excellence-e8945c@krzk-bin>
- <20250708-stoic-slim-bison-ac55ee@krzk-bin>
- <DB6J86NHFTNT.31MFYDTZ6B4O0@fairphone.com>
- <DB7FBNQ0TYFZ.3GGPN8XXJXGRW@fairphone.com>
- <1c7fdeca-d531-4f90-9e4c-4d8bfac67fae@kernel.org>
-In-Reply-To: <1c7fdeca-d531-4f90-9e4c-4d8bfac67fae@kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+To: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+        quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
+ <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com>
+ <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
+ <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=ZJ/XmW7b c=1 sm=1 tr=0 ts=686e6123 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=WFThVEArfCvG9L-vA9EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: _oqNLJU3TCg0EXiOr9_EzgCuTieYZJuC
+X-Proofpoint-GUID: _oqNLJU3TCg0EXiOr9_EzgCuTieYZJuC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA5MDExMiBTYWx0ZWRfXygH57Fo1UsKx
+ 1zPe9BWlrihtPf7dqluPMzZ3wLZuOBjHTiZI3ouUlZXz4XgqDHW06Tlwh+nOkAk9RPJk9FPntwd
+ +tv1zd3ByX8TKOSCGIiCqk1Pd1N5AMdNxN2X3s4A+jCUYnEnMi/4I5po+uqH9HVJdYEah2dT7/g
+ LgRr7DInzGAvumm5DSX1Mfo1d3x3Vt627H0DrJlb5e8iWaiZnJt4ZkETOInliIH/sGhmIIqCSCz
+ /T3I4BdzWwVihbHImHatqvKswZYu0V5rz/y8CKnZwLhaNzgn/t8knfbliHqNid4ygVWLBRZ3W4d
+ sae4JrbKPOQKDDrwMjxW1cUKv2HfUDL8FqMTqlntAnleJYW9uWZrih5iJ/I2lJyDg9IsHMNmrg6
+ LNtdwmZafPwqikIuWur0VI+7AaJP0qyG6Svw0ZNlsp+yqPUPjbzhQVO6j9Waq86+13xzG/v1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-09_02,2025-07-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 impostorscore=0 spamscore=0 adultscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507090112
 
-On Wed Jul 9, 2025 at 12:16 PM CEST, Krzysztof Kozlowski wrote:
-> On 09/07/2025 11:40, Luca Weiss wrote:
->> Hi Krzysztof,
->>=20
->> On Tue Jul 8, 2025 at 10:31 AM CEST, Luca Weiss wrote:
->>> On Tue Jul 8, 2025 at 10:21 AM CEST, Krzysztof Kozlowski wrote:
->>>> On Tue, Jul 08, 2025 at 10:13:24AM +0200, Krzysztof Kozlowski wrote:
->>>>> On Wed, Jun 25, 2025 at 11:14:56AM +0200, Luca Weiss wrote:
->>>>>> Document the FS Differential TX Output Resistance Tuning value found=
- on
->>>>>> the eUSB2 repeater on Qualcomm PMICs.
->>>>>>
->>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>>>> ---
->>>>>>  Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml=
- | 6 ++++++
->>>>>>  1 file changed, 6 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-r=
-epeater.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeat=
-er.yaml
->>>>>> index 27f064a71c9fb8cb60e8333fb285f0510a4af94f..6bfd11657e2992735998=
-063b3ca390e04a03930d 100644
->>>>>> --- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater=
-.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater=
-.yaml
->>>>>> @@ -52,6 +52,12 @@ properties:
->>>>>>      minimum: 0
->>>>>>      maximum: 7
->>>>>> =20
->>>>>> +  qcom,tune-res-fsdif:
->>>>>> +    $ref: /schemas/types.yaml#/definitions/uint8
->>>>>> +    description: FS Differential TX Output Resistance Tuning
->>>>>
->>>>> Resistance is in Ohms, tuning could be in dB, so I wonder what are th=
-e
->>>>> actual units here. Neither commit msg nor this description helps me t=
-o
->>>>> understand that.
->>>>
->>>> I checked and the values are in Ohms.
+
+
+On 7/9/2025 2:40 PM, Ilpo Järvinen wrote:
+> On Tue, 8 Jul 2025, Manivannan Sadhasivam wrote:
+> 
+>> On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru wrote:
+>>> ASPM states are not being enabled back with pci_enable_link_state() when
+>>> they are disabled by pci_disable_link_state(). This is because of the
+>>> aspm_disable flag is not getting cleared in pci_enable_link_state(), this
+>>> flag is being properly cleared when ASPM is controlled by sysfs.
 >>>
->>> Yes it's Ohms but not 0x00 =3D 0 ohms, and it's also an offset in ohms
->>> from the nominal value according to the Hardware Register Description I
->>> have, e.g. 0x7 =3D -12.1ohm from the default
+>>
+>> A comment in pcie_config_aspm_link() says:
+>>
+>>   /* Enable only the states that were not explicitly disabled */
+>>
+>> But the function is called from both aspm_attr_store_common() and
+>> __pci_enable_link_state(). So I don't know if this is behavior is intentional
+>> or wrong.
+> 
+> Hi,
+> 
+> I think it's intentional. Whether the behavior is useful is another good
+> question but the current behavior aligns with the explanation in the
+> comment.
+> 
+> My understanding of the situation is:
+> 
+> pci_disable_link_state() and pci_enable_link_state() are not symmetric
+> despite the names, never have been (this is one of those many quirks ASPM
+> driver has which should be eventually cleaned up, IMO).
+> 
+> It might be appropriate to rename pci_enable_link_state() to
+> pci_set_default_link_state() to match the name to its functionality (and
+> the function comment):
+> 
+>   * pci_enable_link_state - Clear and set the default device link state
+> 
+> Note: "the default ... link state".
+> 
+> 
+> I've already raised this concern earlier! As you see, my comment are
+> not getting addressed. I'd like to see the author does one of these:
+> 
+Hi llpo,
+
+I replied to your comment on v3 patch[1], and I feel instead of having
+new function() we can use same API to our purpose.
+> 1) Renames pci_enable_link_state() to pci_set_default_link_state()
+> 
+> 1b) If pci_enable_link_state() is still needed after that, a new function
+> is added to symmetrically pair with pci_disable_link_state().
+> 
+> or alternatively,
+> 
+> 2) Changelog justifies very clearly why this change is okay with the
+> existing callers. (And obviously the function comment should be altered to
+> match the functionality in that case too).
+> 
+> If approach 2 is chosen, it should be very carefully reviewed when it
+> comes to the callers.
+>
+I am in favor of approach 2 which you suggested, but lets wait for other
+reviewers feedback on this. Based up on the response i will make
+necessary changes in v5.
+
+[1] 
+https://lore.kernel.org/all/b3d818f5-942c-1761-221d-af7d7e8f3624@oss.qualcomm.com/
+
+- Krishna Chaitanya.
+> 
+>>> Clear the aspm_disable flag with the requested ASPM states requested by
+>>> pci_enable_link_state().
 >>>
->>> I can try and create bindings using these Ohm offset values, I didn't
->>> worry about it too much since the other tuning values in these bindings
->>> are also just register values, presumably from before Konrad had access
->>> to the docs.
->>=20
->> I've taken some more looks, and checked how similar tuning is handled in
->> qcom,usb-snps-femto-v2.yaml and phy-qcom-snps-femto-v2.c, and changing u=
-p
->> the concept of tuning in the eUSB2-repeater bindings+driver is not a
->> trivial task.
->>=20
->> Since this is adding just one more property in-line with the already
->> supported properties in the bindings+driver, can we get this in as-is,
->> and deprecate all 4 qcom,tune-* properties later with a replacement that
->> describes the values better?
->
-> This is a new property, so other existing properties do not matter here.
-> We cannot take new code which you already think should be deprecated.
->
-> register-like values are acceptable for vendor properties, but that does
-> not make them usually more readable. The question is whether this should
-> be more readable for hardware engineers or anyone writing/validating
-> DTS. Is the actual resistance important or no one ever cares because you
-> paste whatever qcom told you and you do not know what should be actually
-> there?
->
-> I can imagine the first - that some document explains you should have
-> resistance of foo because of bar, which would mean the property should
-> be more readable. But I can also imagine the second. Make your claim in
-> commit msg.
-
-Would this text in the commit message work for you?
-
----
-Document the FS Differential TX Output Resistance Tuning value found on
-the eUSB2 repeater on Qualcomm PMICs. The tuning values have special
-meanings, being different offsets of the resistance to the default value
-in Ohms but the exact meaning is not relevant here, as the correct
-tuning is determined by hardware engineers to make sure the electrical
-properties are as expected.
----
-
-I'm trying to avoid resending the whole series if we're not yet aligned
-on the wording.
-
-Regards
-Luca
-
->
->> We have enough people at Qualcomm by now that should be able to do that,
->> and have the required resources to answer any potential questions.
-> They are busy sending vendor/downstream tree patches...
->
-> Best regards,
-> Krzysztof
-
+>>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>>
+>> Fixes tag?
+>>
+>> - Mani
+>>
+>>> ---
+>>>   drivers/pci/pcie/aspm.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+>>> index 94324fc0d3e650cd3ca2c0bb8c1895ca7e647b9d..0f858ef86111b43328bc7db01e6493ce67178458 100644
+>>> --- a/drivers/pci/pcie/aspm.c
+>>> +++ b/drivers/pci/pcie/aspm.c
+>>> @@ -1453,6 +1453,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
+>>>   		down_read(&pci_bus_sem);
+>>>   	mutex_lock(&aspm_lock);
+>>>   	link->aspm_default = pci_calc_aspm_enable_mask(state);
+>>> +	link->aspm_disable &= ~state;
+>>>   	pcie_config_aspm_link(link, policy_to_aspm_state(link));
+>>>   
+>>>   	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
+>>>
+>>> -- 
+>>> 2.34.1
+>>>
+>>
+>>
+> 
 
