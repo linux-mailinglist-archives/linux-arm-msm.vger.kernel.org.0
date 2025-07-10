@@ -1,72 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-64475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD118B00F1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 00:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA5E0B00F2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 01:01:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CF141C41F5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 22:56:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7E9C1C44C14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 23:01:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6502129C32B;
-	Thu, 10 Jul 2025 22:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CB2928C5B0;
+	Thu, 10 Jul 2025 23:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TyUBK/XF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Id35bl8R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F0128FFC6;
-	Thu, 10 Jul 2025 22:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F832235BE2;
+	Thu, 10 Jul 2025 23:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752188141; cv=none; b=Lm+B3onlcPehAi6FdoqfiA8SK3i7RBhftWWgbfVPQohITrWfVRN2QVn+K193hycNcXkIwkzd4/tQ58Y4RNZ/vR8oWTlAEw/7DvW0JnqBowfq/117utnKZs+NzjUOSKMOzAGY+UeSdItgBpfEhjMfOJI90XS9AHstRvAovV5XD7Q=
+	t=1752188485; cv=none; b=Ld6WaLVBmk3iL3w5YayrD5HJdWUrFFCSIJ8xeQ2GgVrpxVdqg4TMHopRt88WD6AK/Zmza1+LlRk9GaWcqRcqDHqsVu3aoQknQUGOWgznN8fbGgRjknlSg8eftadAkgJNCQQkqloe6lF+s5QqLpHMXfccMmwgkP74zUdrePaORKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752188141; c=relaxed/simple;
-	bh=ppem5ioqyvvNaJrxZ8a+k8hXOxE1osk+Jas8tjtD+SA=;
+	s=arc-20240116; t=1752188485; c=relaxed/simple;
+	bh=7ZHvFCmV3/wqSVJYpykZn9eCOEAwB+1FKd0S0WN3FJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LnaHS/mSMmKJhNa1IRyBwFZqZ37pDxrPlv8ITN2gwQQxtbvdt7/8ReDMpm4jFmzPbEkOhWXOBppFdLjHFzMRuREMgksY/M1DBs9D16NH64yrozs+rmYkQk7Wi3nYNtVb+E6fjxwwfEHsM+LRY02tz/F/orAhUjXyD3JZvyEStHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TyUBK/XF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783CBC4CEE3;
-	Thu, 10 Jul 2025 22:55:40 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=AdTBLP69H++1EEYXKK7aw6pQpiHCBsZkiwwhBrnuVoRkLZGpodL6zcfvACEMVzuyGPSmiJGM09Aj4MHjdYwssCM8s8VVKUQLM7JQ6ImEL0h7JxRrqW+hNF/LgdC1pDRsApR/73Dgyzg62NgLUSEFg3f6q6vOvOt68zSYWh5HYZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Id35bl8R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535A8C4CEE3;
+	Thu, 10 Jul 2025 23:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752188140;
-	bh=ppem5ioqyvvNaJrxZ8a+k8hXOxE1osk+Jas8tjtD+SA=;
+	s=k20201202; t=1752188484;
+	bh=7ZHvFCmV3/wqSVJYpykZn9eCOEAwB+1FKd0S0WN3FJc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TyUBK/XFn69FTeUCpolhOAcM1/eKSNtWfNsBiof5Re4WgKIBMc+ezRzYD/f1j88QQ
-	 QlNQNbH+y69lo3i5alT1C98xkkE0IPkrx8k1mdcPUzWWAaVAkWI6zFse05FksFE1EX
-	 FRGGrP9IHrQkrExSII5t3vYNMS4rgB/NsS943z9EDc26KZs1rW00Uf0H6ExYmBqPRy
-	 4XtDv01EiIRVaHyO/Yn7L/HjR4v+ytyU2Zhx1Vdp/Nulk5+Xs1pKETGpyk8yJ4/ZQn
-	 1li0U1hp1JEZsSTJ2uD60z4QlwZFZqKzK0xBpUtVej03CiMcj4vyigyqyjvLnHUe1H
-	 QSzLVTXZTS6rw==
-Date: Thu, 10 Jul 2025 17:55:39 -0500
+	b=Id35bl8RsiWp5XMT7ujO65piGM28PG24E9ifGZSh5VQwSCi9hhfjkhRUKHd4iTuhp
+	 BK93YsSjoGS07SIW3HAatdra9mZZ6to86sX8UlbPVZQEZWuNPHekOyk0gopFCu3UXm
+	 UEj8axrjiiJqrwUkMHOjWKJwsgpxOfBYHZpJk2MS1M0JM82gPm4en2ske4uwIMsnPO
+	 R5I5xPg6EgqfcpNx1iRUeRHVOfWG6k66jsdEvHC2yma/xKIprWj34/RUYOPRl0c/Y3
+	 KqL0UyWXSNRW0Npd2e8MmQvlEhzhcM39SJ1VuHnQTQfC0hyHHTrSzdEDHpcG1LUnnd
+	 M2gbS6Jzncyrg==
+Date: Thu, 10 Jul 2025 18:01:18 -0500
 From: Rob Herring <robh@kernel.org>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Anusha Rao <quic_anusha@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-	quic_leiwei@quicinc.com, quic_pavir@quicinc.com,
-	quic_suruchia@quicinc.com
-Subject: Re: [PATCH v3 07/10] dt-bindings: clock: qcom: Add NSS clock
- controller for IPQ5424 SoC
-Message-ID: <20250710225539.GA29510-robh@kernel.org>
-References: <20250710-qcom_ipq5424_nsscc-v3-0-f149dc461212@quicinc.com>
- <20250710-qcom_ipq5424_nsscc-v3-7-f149dc461212@quicinc.com>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v8 01/15] dt-bindings: net: Introduce the
+ ethernet-connector description
+Message-ID: <20250710230118.GA31751-robh@kernel.org>
+References: <20250710134533.596123-1-maxime.chevallier@bootlin.com>
+ <20250710134533.596123-2-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,231 +80,154 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250710-qcom_ipq5424_nsscc-v3-7-f149dc461212@quicinc.com>
+In-Reply-To: <20250710134533.596123-2-maxime.chevallier@bootlin.com>
 
-On Thu, Jul 10, 2025 at 08:28:15PM +0800, Luo Jie wrote:
-> NSS clock controller provides the clocks and resets to the networking
-> blocks such as PPE (Packet Process Engine) and UNIPHY (PCS) on IPQ5424
-> devices.
+On Thu, Jul 10, 2025 at 03:45:18PM +0200, Maxime Chevallier wrote:
+> The ability to describe the physical ports of Ethernet devices is useful
+> to describe multi-port devices, as well as to remove any ambiguity with
+> regard to the nature of the port.
 > 
-> Add the compatible "qcom,ipq5424-nsscc" support based on the current
-> IPQ9574 NSS clock controller DT binding file. ICC clocks are always
-> provided by the NSS clock controller of IPQ9574 and IPQ5424, so add
-> interconnect-cells as required DT property.
+> Moreover, describing ports allows for a better description of features
+> that are tied to connectors, such as PoE through the PSE-PD devices.
 > 
-> Also add master/slave ids for IPQ5424 networking interfaces, which is
-> used by nss-ipq5424 driver for providing interconnect services using
-> icc-clk framework.
+> Introduce a binding to allow describing the ports, for now with 2
+> attributes :
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>  - The number of lanes, which is a quite generic property that allows
+>    differentating between multiple similar technologies such as BaseT1
+>    and "regular" BaseT (which usually means BaseT4).
+> 
+>  - The media that can be used on that port, such as BaseT for Twisted
+>    Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
+>    ethernet, etc. This allows defining the nature of the port, and
+>    therefore avoids the need for vendor-specific properties such as
+>    "micrel,fiber-mode" or "ti,fiber-mode".
+> 
+> The port description lives in its own file, as it is intended in the
+> future to allow describing the ports for phy-less devices.
+> 
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 > ---
->  .../bindings/clock/qcom,ipq9574-nsscc.yaml         | 14 +++--
->  include/dt-bindings/clock/qcom,ipq5424-nsscc.h     | 65 ++++++++++++++++++++++
->  include/dt-bindings/interconnect/qcom,ipq5424.h    | 13 +++++
->  include/dt-bindings/reset/qcom,ipq5424-nsscc.h     | 46 +++++++++++++++
->  4 files changed, 134 insertions(+), 4 deletions(-)
+>  .../bindings/net/ethernet-connector.yaml      | 47 +++++++++++++++++++
+>  .../devicetree/bindings/net/ethernet-phy.yaml | 18 +++++++
+>  MAINTAINERS                                   |  1 +
+>  3 files changed, 66 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
-> index b9ca69172adc..86ee9ffb2eda 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
-> @@ -4,7 +4,7 @@
->  $id: http://devicetree.org/schemas/clock/qcom,ipq9574-nsscc.yaml#
->  $schema: http://devicetree.org/meta-schemas/core.yaml#
->  
-> -title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574
-> +title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574 and IPQ5424
->  
->  maintainers:
->    - Bjorn Andersson <andersson@kernel.org>
-> @@ -12,15 +12,19 @@ maintainers:
->  
->  description: |
->    Qualcomm networking sub system clock control module provides the clocks,
-> -  resets on IPQ9574
-> +  resets on IPQ9574 and IPQ5424
->  
-> -  See also::
-> +  See also:
-> +    include/dt-bindings/clock/qcom,ipq5424-nsscc.h
->      include/dt-bindings/clock/qcom,ipq9574-nsscc.h
-> +    include/dt-bindings/reset/qcom,ipq5424-nsscc.h
->      include/dt-bindings/reset/qcom,ipq9574-nsscc.h
->  
->  properties:
->    compatible:
-> -    const: qcom,ipq9574-nsscc
-> +    enum:
-> +      - qcom,ipq5424-nsscc
-> +      - qcom,ipq9574-nsscc
->  
->    clocks:
->      items:
-> @@ -57,6 +61,7 @@ required:
->    - compatible
->    - clocks
->    - clock-names
-> +  - '#interconnect-cells'
+> diff --git a/Documentation/devicetree/bindings/net/ethernet-connector.yaml b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
+> new file mode 100644
+> index 000000000000..8765efc6e233
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/ethernet-connector.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Generic Ethernet Connector
+> +
+> +maintainers:
+> +  - Maxime Chevallier <maxime.chevallier@bootlin.com>
+> +
+> +description:
+> +  An Ethernet Connectr represents the output of a network component such as
 
-You just made this required for everyone. Again, that's an ABI change.
+typo.
 
+> +  a PHY, an Ethernet controller with no PHY, or an SFP module.
+> +
+> +properties:
+> +
+> +  lanes:
+> +    description:
+> +      Defines the number of lanes on the port, that is the number of physical
+> +      channels used to convey the data with the link partner.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +  media:
+> +    description:
+> +      The mediums, as defined in 802.3, that can be used on the port.
+> +    items:
+> +      enum:
+> +        - BaseT
+> +        - BaseK
+> +        - BaseS
+> +        - BaseC
+> +        - BaseL
+> +        - BaseD
+> +        - BaseE
+> +        - BaseF
+> +        - BaseV
+> +        - BaseMLD
+> +    maxItems: 1
+
+Drop 'items' and 'maxItems' and then it is implicitly only 1.
+
+> +
+> +required:
+> +  - lanes
+> +  - media
+> +
+> +additionalProperties: true
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/net/ethernet-phy.yaml b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+> index 71e2cd32580f..6bf670beb66f 100644
+> --- a/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+> +++ b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+> @@ -277,6 +277,17 @@ properties:
 >  
->  allOf:
->    - $ref: qcom,gcc.yaml#
-> @@ -94,5 +99,6 @@ examples:
->                      "bus";
->        #clock-cells = <1>;
->        #reset-cells = <1>;
-> +      #interconnect-cells = <1>;
+>      additionalProperties: false
+>  
+> +  mdi:
+> +    type: object
+> +
+> +    patternProperties:
+> +      '^connector-[a-f0-9]+$':
+> +        $ref: /schemas/net/ethernet-connector.yaml#
+> +
+> +        unevaluatedProperties: false
+> +
+> +    additionalProperties: false
+> +
+>  required:
+>    - reg
+>  
+> @@ -313,5 +324,12 @@ examples:
+>                      default-state = "keep";
+>                  };
+>              };
+> +
+> +            mdi {
+> +              connector-0 {
+> +                lanes = <2>;
+> +                media = "BaseT";
+> +              };
+
+Your indentation is not consistent.
+
+I think we should consider a compatible here. Soon as you want to 
+distinguish one connector from another you will need one. Though we 
+could always retrofit that later.
+
+> +            };
+>          };
 >      };
->  ...
-> diff --git a/include/dt-bindings/clock/qcom,ipq5424-nsscc.h b/include/dt-bindings/clock/qcom,ipq5424-nsscc.h
-> new file mode 100644
-> index 000000000000..59ce056ead93
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,ipq5424-nsscc.h
-> @@ -0,0 +1,65 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLOCK_QCOM_IPQ5424_NSSCC_H
-> +#define _DT_BINDINGS_CLOCK_QCOM_IPQ5424_NSSCC_H
-> +
-> +/* NSS_CC clocks */
-> +#define NSS_CC_CE_APB_CLK					0
-> +#define NSS_CC_CE_AXI_CLK					1
-> +#define NSS_CC_CE_CLK_SRC					2
-> +#define NSS_CC_CFG_CLK_SRC					3
-> +#define NSS_CC_DEBUG_CLK					4
-> +#define NSS_CC_EIP_BFDCD_CLK_SRC				5
-> +#define NSS_CC_EIP_CLK						6
-> +#define NSS_CC_NSS_CSR_CLK					7
-> +#define NSS_CC_NSSNOC_CE_APB_CLK				8
-> +#define NSS_CC_NSSNOC_CE_AXI_CLK				9
-> +#define NSS_CC_NSSNOC_EIP_CLK					10
-> +#define NSS_CC_NSSNOC_NSS_CSR_CLK				11
-> +#define NSS_CC_NSSNOC_PPE_CFG_CLK				12
-> +#define NSS_CC_NSSNOC_PPE_CLK					13
-> +#define NSS_CC_PORT1_MAC_CLK					14
-> +#define NSS_CC_PORT1_RX_CLK					15
-> +#define NSS_CC_PORT1_RX_CLK_SRC					16
-> +#define NSS_CC_PORT1_RX_DIV_CLK_SRC				17
-> +#define NSS_CC_PORT1_TX_CLK					18
-> +#define NSS_CC_PORT1_TX_CLK_SRC					19
-> +#define NSS_CC_PORT1_TX_DIV_CLK_SRC				20
-> +#define NSS_CC_PORT2_MAC_CLK					21
-> +#define NSS_CC_PORT2_RX_CLK					22
-> +#define NSS_CC_PORT2_RX_CLK_SRC					23
-> +#define NSS_CC_PORT2_RX_DIV_CLK_SRC				24
-> +#define NSS_CC_PORT2_TX_CLK					25
-> +#define NSS_CC_PORT2_TX_CLK_SRC					26
-> +#define NSS_CC_PORT2_TX_DIV_CLK_SRC				27
-> +#define NSS_CC_PORT3_MAC_CLK					28
-> +#define NSS_CC_PORT3_RX_CLK					29
-> +#define NSS_CC_PORT3_RX_CLK_SRC					30
-> +#define NSS_CC_PORT3_RX_DIV_CLK_SRC				31
-> +#define NSS_CC_PORT3_TX_CLK					32
-> +#define NSS_CC_PORT3_TX_CLK_SRC					33
-> +#define NSS_CC_PORT3_TX_DIV_CLK_SRC				34
-> +#define NSS_CC_PPE_CLK_SRC					35
-> +#define NSS_CC_PPE_EDMA_CFG_CLK					36
-> +#define NSS_CC_PPE_EDMA_CLK					37
-> +#define NSS_CC_PPE_SWITCH_BTQ_CLK				38
-> +#define NSS_CC_PPE_SWITCH_CFG_CLK				39
-> +#define NSS_CC_PPE_SWITCH_CLK					40
-> +#define NSS_CC_PPE_SWITCH_IPE_CLK				41
-> +#define NSS_CC_UNIPHY_PORT1_RX_CLK				42
-> +#define NSS_CC_UNIPHY_PORT1_TX_CLK				43
-> +#define NSS_CC_UNIPHY_PORT2_RX_CLK				44
-> +#define NSS_CC_UNIPHY_PORT2_TX_CLK				45
-> +#define NSS_CC_UNIPHY_PORT3_RX_CLK				46
-> +#define NSS_CC_UNIPHY_PORT3_TX_CLK				47
-> +#define NSS_CC_XGMAC0_PTP_REF_CLK				48
-> +#define NSS_CC_XGMAC0_PTP_REF_DIV_CLK_SRC			49
-> +#define NSS_CC_XGMAC1_PTP_REF_CLK				50
-> +#define NSS_CC_XGMAC1_PTP_REF_DIV_CLK_SRC			51
-> +#define NSS_CC_XGMAC2_PTP_REF_CLK				52
-> +#define NSS_CC_XGMAC2_PTP_REF_DIV_CLK_SRC			53
-> +
-> +#endif
-> diff --git a/include/dt-bindings/interconnect/qcom,ipq5424.h b/include/dt-bindings/interconnect/qcom,ipq5424.h
-> index 66cd9a9ece03..a78604beff99 100644
-> --- a/include/dt-bindings/interconnect/qcom,ipq5424.h
-> +++ b/include/dt-bindings/interconnect/qcom,ipq5424.h
-> @@ -27,4 +27,17 @@
->  #define MASTER_NSSNOC_SNOC_1		22
->  #define SLAVE_NSSNOC_SNOC_1		23
->  
-> +#define MASTER_NSSNOC_PPE		0
-> +#define SLAVE_NSSNOC_PPE		1
-> +#define MASTER_NSSNOC_PPE_CFG		2
-> +#define SLAVE_NSSNOC_PPE_CFG		3
-> +#define MASTER_NSSNOC_NSS_CSR		4
-> +#define SLAVE_NSSNOC_NSS_CSR		5
-> +#define MASTER_NSSNOC_CE_AXI		6
-> +#define SLAVE_NSSNOC_CE_AXI		7
-> +#define MASTER_NSSNOC_CE_APB		8
-> +#define SLAVE_NSSNOC_CE_APB		9
-> +#define MASTER_NSSNOC_EIP		10
-> +#define SLAVE_NSSNOC_EIP		11
-> +
->  #endif /* INTERCONNECT_QCOM_IPQ5424_H */
-> diff --git a/include/dt-bindings/reset/qcom,ipq5424-nsscc.h b/include/dt-bindings/reset/qcom,ipq5424-nsscc.h
-> new file mode 100644
-> index 000000000000..f2f7eaa28b21
-> --- /dev/null
-> +++ b/include/dt-bindings/reset/qcom,ipq5424-nsscc.h
-> @@ -0,0 +1,46 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_RESET_QCOM_IPQ5424_NSSCC_H
-> +#define _DT_BINDINGS_RESET_QCOM_IPQ5424_NSSCC_H
-> +
-> +#define NSS_CC_CE_APB_CLK_ARES					0
-> +#define NSS_CC_CE_AXI_CLK_ARES					1
-> +#define NSS_CC_DEBUG_CLK_ARES					2
-> +#define NSS_CC_EIP_CLK_ARES					3
-> +#define NSS_CC_NSS_CSR_CLK_ARES					4
-> +#define NSS_CC_NSSNOC_CE_APB_CLK_ARES				5
-> +#define NSS_CC_NSSNOC_CE_AXI_CLK_ARES				6
-> +#define NSS_CC_NSSNOC_EIP_CLK_ARES				7
-> +#define NSS_CC_NSSNOC_NSS_CSR_CLK_ARES				8
-> +#define NSS_CC_NSSNOC_PPE_CLK_ARES				9
-> +#define NSS_CC_NSSNOC_PPE_CFG_CLK_ARES				10
-> +#define NSS_CC_PORT1_MAC_CLK_ARES				11
-> +#define NSS_CC_PORT1_RX_CLK_ARES				12
-> +#define NSS_CC_PORT1_TX_CLK_ARES				13
-> +#define NSS_CC_PORT2_MAC_CLK_ARES				14
-> +#define NSS_CC_PORT2_RX_CLK_ARES				15
-> +#define NSS_CC_PORT2_TX_CLK_ARES				16
-> +#define NSS_CC_PORT3_MAC_CLK_ARES				17
-> +#define NSS_CC_PORT3_RX_CLK_ARES				18
-> +#define NSS_CC_PORT3_TX_CLK_ARES				19
-> +#define NSS_CC_PPE_BCR						20
-> +#define NSS_CC_PPE_EDMA_CLK_ARES				21
-> +#define NSS_CC_PPE_EDMA_CFG_CLK_ARES				22
-> +#define NSS_CC_PPE_SWITCH_BTQ_CLK_ARES				23
-> +#define NSS_CC_PPE_SWITCH_CLK_ARES				24
-> +#define NSS_CC_PPE_SWITCH_CFG_CLK_ARES				25
-> +#define NSS_CC_PPE_SWITCH_IPE_CLK_ARES				26
-> +#define NSS_CC_UNIPHY_PORT1_RX_CLK_ARES				27
-> +#define NSS_CC_UNIPHY_PORT1_TX_CLK_ARES				28
-> +#define NSS_CC_UNIPHY_PORT2_RX_CLK_ARES				29
-> +#define NSS_CC_UNIPHY_PORT2_TX_CLK_ARES				30
-> +#define NSS_CC_UNIPHY_PORT3_RX_CLK_ARES				31
-> +#define NSS_CC_UNIPHY_PORT3_TX_CLK_ARES				32
-> +#define NSS_CC_XGMAC0_PTP_REF_CLK_ARES				33
-> +#define NSS_CC_XGMAC1_PTP_REF_CLK_ARES				34
-> +#define NSS_CC_XGMAC2_PTP_REF_CLK_ARES				35
-> +
-> +#endif
-> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 881a1f08e665..b584f8dfdb24 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -8959,6 +8959,7 @@ R:	Russell King <linux@armlinux.org.uk>
+>  L:	netdev@vger.kernel.org
+>  S:	Maintained
+>  F:	Documentation/ABI/testing/sysfs-class-net-phydev
+> +F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>  F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
+>  F:	Documentation/devicetree/bindings/net/mdio*
+>  F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
 > -- 
-> 2.34.1
+> 2.49.0
 > 
 
