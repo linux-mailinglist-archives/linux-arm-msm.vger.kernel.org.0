@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-64454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C4F2B00ADD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:55:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 855E1B00AED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:58:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5FCD761FA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:54:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E66E54E68CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:58:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0402F1FF3;
-	Thu, 10 Jul 2025 17:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 357082F1FE4;
+	Thu, 10 Jul 2025 17:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3LbuAwo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuhbQXoI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5C432C8B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3E2F19B1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752170075; cv=none; b=SlteLSMJnrDJ2jdQJ1LAdltgM8Uk0gkiV+Mcx6m1NfEoH0oe1TGiRZWMugKAHDM+9JfiXtv/TjEvCnp47nkuv+WZFeBbrF5UWK5l2ByDGvk6rT1FT8h9pXBYXhtRaF3wLgxdq5EdtjGSa/b04iCcxDVdEVMoTIPnH2rwMOsQPx4=
+	t=1752170297; cv=none; b=MN/G8SdlLdmNvjZKnrLTQuIbPzmzV+JDqLn+1ww+MxwIoR3EpWvN217V51PxFzU6nGuC0KM8xDWQCDOzbuDnk3cJYUDTe3f+lGYze+iSq1gV8TFkE3iDt8Cf2WwXM5K8VhLGV+oZ7T9BBhwVfoz6DE998iu9vRMG+Um+yE9YUFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752170075; c=relaxed/simple;
-	bh=F05HSydP5BNA2szlMLXA5Y3OXlzOycAxUT/KLRoTscg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I8qr6Qf8KQX8tkZd1Gkx1fcthX6adk9K4ikIwkeKT4aJ9ZlArdA8it950YwEPmzRRm0d4+0WFTmYjh76hUiBBRln937Tr/iTX1U38G14eKQmXXKBNFMvyFNAtpMbn6+HaX/zitlUwwYZtSTlt/q8zPijFSu8t9h0jvFfUGYuR30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3LbuAwo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AE3C4CEE3;
-	Thu, 10 Jul 2025 17:54:35 +0000 (UTC)
+	s=arc-20240116; t=1752170297; c=relaxed/simple;
+	bh=k6LS5lbNC+oc98XASinvjgEjc5c1xSROedbasnLwM9Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hPr/vGSP+HTxre9jajdUZ9eCh+Anfjefwx4dX56sTYw092vbApL6Mp0F3ya8kA9Msjr6BfnXisijdN2Nv4XDI3VHoRr/5zfh2wDvyChalPsr2AE16PxVzck8VzFcwwdDNdz9iDm1YkJLdCrTCvW1akBtwkFGwaorZHbXOVpEaE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuhbQXoI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB40C4CEE3;
+	Thu, 10 Jul 2025 17:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752170075;
-	bh=F05HSydP5BNA2szlMLXA5Y3OXlzOycAxUT/KLRoTscg=;
+	s=k20201202; t=1752170296;
+	bh=k6LS5lbNC+oc98XASinvjgEjc5c1xSROedbasnLwM9Y=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Q3LbuAwoJH303RGl9w6tdCBvhbsnhmPEP1AoD7Zgvxr3jjKZZEahWEn5kfOOgRzg3
-	 uXNvRxochNO5B4GWmiMekfeS4CLN+yXxAPOX7ovTZL6bS9ov8knLtjm2ugiMGlkwhE
-	 TjsvhqYunKmc+jjG9i5jJ+YlQRmRj7ZUp061kz/G1B30yKB40HtcYzy7hfxMYwYVgC
-	 z+Hua1xqkR1JkYjiNJn/QjvHd1jIXid87P61P8w56wV9ZV6WCY0Oig9CQCkI0KB37a
-	 Ra/jSRojD49hb2W6qdNOKWUw2ujO9pXCXhu+vUPsYpp0GDiNgLrq9dtqN6Zi17Qxb2
-	 U0ZzgQmulJUeQ==
+	b=IuhbQXoIAJ3e8QF1KzrDMjcxey2lhro3ejsOBDwYiEs4cMGQAhDtYrn1/CjJlJwmk
+	 STPqSs4Qb/22CJddWme0gsrzoxTQigLOesDYEjDaHPPwHpHhSabGxxnHj/Zs/vP5Vi
+	 yvDn1WczXx1hXcKfsIufYZlTqFQD6wTU5Ht8QHGHaCujvo4CO524txaXf3+uOflFVx
+	 fNIGRdfysqKImLk1rjAyrHhkjGyQbEH5RdbJKEMYIIkGnuKG1P/zUh05I9Bz2V7sSh
+	 kJvsgS2tG0pDqNclRaUIBrzltN4eLIbnv8wXS/FoE15OYvboI7mcfyUoBhkkltz8cB
+	 y2RwvcV2LLWLw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: arm@kernel.org,
 	soc@kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [GIT PULL] Qualcomm DeviceTree fixes for v6.16
-Date: Thu, 10 Jul 2025 12:54:33 -0500
-Message-ID: <20250710175434.6201-1-andersson@kernel.org>
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Subject: [GIT PULL] Qualcomm Arm64 defconfig fixes for v6.16
+Date: Thu, 10 Jul 2025 12:58:14 -0500
+Message-ID: <20250710175815.6504-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -66,28 +66,27 @@ The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.16
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-fixes-for-6.16
 
-for you to fetch changes up to e8d3dc45f2d3b0fea089e0e6e351d1287a5a2a29:
+for you to fetch changes up to 3871b51a684275e3a47fbebf93c0a0e7a05d7f9f:
 
-  arm64: dts: qcom: x1e80100: describe uefi rtc offset (2025-06-10 09:14:58 -0500)
-
-----------------------------------------------------------------
-Qualcomm DeviceTree fixes for v6.16
-
-The RTC DeviceTree binding was changed in v6.16, to require an explicit
-flag indicating that we store RTC offset in in an UEFI variable.
-
-The result sent X Elite and Lenovo Thinkpad X13s users back to 1970, add
-the flag to explicitly select the correct configuration for these
-devices.
+  arm64: defconfig: Enable Qualcomm CPUCP mailbox driver (2025-06-09 21:14:40 -0500)
 
 ----------------------------------------------------------------
-Johan Hovold (2):
-      arm64: dts: qcom: sc8280xp-x13s: describe uefi rtc offset
-      arm64: dts: qcom: x1e80100: describe uefi rtc offset
+Qualcomm Arm64 defconfig fixes for v6.16
 
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 ++
- arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi               | 1 +
- 2 files changed, 3 insertions(+)
+The v6.16 driver and DeviceTree updates described and implemented CPU
+frequency scaling for the Qualcomm X Elite platform. But the necessary
+CPUCP mailbox driver was not enabled, resulting in a series of error
+messages being logged during boot (and no CPU frequency scaling).
+
+Enable the missing drivers to silence the errors, and enable CPU
+frequency scaling on this platform.
+
+----------------------------------------------------------------
+Bjorn Andersson (1):
+      arm64: defconfig: Enable Qualcomm CPUCP mailbox driver
+
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
