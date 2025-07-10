@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-64347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8253AFFFC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:53:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D893EAFFFD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:55:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 71C937A14E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:52:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2EBE6173701
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:55:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D13242E0934;
-	Thu, 10 Jul 2025 10:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 074702E0936;
+	Thu, 10 Jul 2025 10:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C9oQg7CY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T+NqNTBT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FF42DFF22;
-	Thu, 10 Jul 2025 10:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B5A24501E;
+	Thu, 10 Jul 2025 10:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752144819; cv=none; b=qlSpfNctEwimfFuh4lVlLZ0zRNHOz+ZVNk6bykPKnz2HpPKY/OOhHikqxdFLijbAxCgh2cxjYfG/E3ypjIykKphx557PuIBYiPeqaRVUCYK4bTKYcNkn+gvU5idh0/PWeyzuRHOYlwM7wyx3251Tv6pWxsGr0coqs0hyItmtxlE=
+	t=1752144906; cv=none; b=r+VFoWfGi+1bD2yHvAgq9vEZH5GQDCpJOWv/6W9sDwLS0UO2mGkRlZ4BzH6BADW6l5HzE3BSeYsQ9efu/F4chm/05CJYHgcvZ5qBHwU16dSRsqmHpfNBFUsdcPufaPVQwdZu2VEp2IqYEihNhCY78GloqxKxSJHB64HXtrFqiJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752144819; c=relaxed/simple;
-	bh=ro3Q/mxkYE02hXN/xizwugoeeaB4lO8rt4m4w9jCPK8=;
+	s=arc-20240116; t=1752144906; c=relaxed/simple;
+	bh=OOr8yxV8EcvANJT9Qa+ogkgghedjEk5bH9TN1Xwqf7k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Him+Ot/jye0vwd3AaKYqjENNLYhK1z4YRJWFW1qD0HIweShLpNSO4lUqabCExTlGSdpSYCwcrBe0Hvnd1glRjV1Z3Len78vh1wvJimF0a3J6fZVd1Ol0bABfKoIGFq9FlkUobHuRKM7I3C7CdbN0L861RBX7E+zkAQWOnXvu1Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C9oQg7CY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7878C4CEE3;
-	Thu, 10 Jul 2025 10:53:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Fw5QMNN3pvSvLFxGaCV/uEAvrwbPPaeNu2z5EcTVBMLf/XGLCqx5/EOWDIGd+NI6R8i5oBoOtG43bC7vyiVNmDQt/BtNpCg1QKuImTEtdI/VPGZyjjhOrjE7ccqWwPl3Lg/LlhBGqKA2o+BR+1K9sXa6xdEzdawpX5efgWSbv0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T+NqNTBT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5201FC4CEE3;
+	Thu, 10 Jul 2025 10:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752144819;
-	bh=ro3Q/mxkYE02hXN/xizwugoeeaB4lO8rt4m4w9jCPK8=;
+	s=k20201202; t=1752144905;
+	bh=OOr8yxV8EcvANJT9Qa+ogkgghedjEk5bH9TN1Xwqf7k=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=C9oQg7CY40/3rFkstDrq8Z2gapwbi6Ye3YWLqmmYeFST3pvTKl8RxeqAg1XHEipYg
-	 dqs2joZnbiscrnMV+EJcAqGGnc3nNG38ZQmXniBwZx/rrvZIpA7FqDzgtOt6pBO4nI
-	 AYCoeDEYRuBnh24pzIM8PViYnglwn/tBdKBbvqRrA4zyo6G6/hLqqd6rW9Ix4qTkSz
-	 +FuhimKljlNylvzdOv124QorX5d1IwFAuZw0tKcqv2xrNf0ruR/Onb74CBr0qGUUM2
-	 kUJ5HV6SxEWL6gqkCDpo7Xb1hh5sNJ81oD5ziwf04djNADKIlGGNPQUlZwfeU3L8sH
-	 PhvQAM4n2zjsQ==
-Message-ID: <553adfd2-8518-40b8-a762-1be026fb15b6@kernel.org>
-Date: Thu, 10 Jul 2025 12:53:34 +0200
+	b=T+NqNTBTqUNUBtJM3ACnXP2meUWSPsxcuU/K6ekqDxcivhmxF+QZDfr1jK5MEqVJe
+	 Y+OAWX2XclexjBBhx6i7HSWGOcL6sOAVu/xHHrlclAwXInENWUbnH95RzKUbWWXQYY
+	 rfH6057NWPmCGJ612boqB6S6rNnyH6GnuzMUBAezNIitnCZAQB/sz6AYEyjs89pmue
+	 WVS2ge1/rZ1WVj7Up3sxZOOVlYKXqZ3WkUg8OYf6ZnFiRnBQ5EzIRfqBFy6Tm91u21
+	 2GvST+ChXbUDKtx96SBuLVAWy4wsgMVEru6fTh0enChmi38uPdFPHETlos7dIyV9CM
+	 nPMuSxzyWq3zA==
+Message-ID: <aac2a4fb-c9e8-4e1d-b0cd-d6481dc27252@kernel.org>
+Date: Thu, 10 Jul 2025 12:55:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/3] arm64: dts: qcom: x1-hp-x14: Add support for
- X1P42100 HP Omnibook X14
+Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: x1-hp-x14: Unify HP Omnibook X14
+ device tree structure
 To: jens.glathe@oldschoolsolutions.biz, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ linux-kernel@vger.kernel.org
 References: <20250710-hp-x14-x1p-v7-0-19c10c81713a@oldschoolsolutions.biz>
+ <20250710-hp-x14-x1p-v7-2-19c10c81713a@oldschoolsolutions.biz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,51 +105,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250710-hp-x14-x1p-v7-0-19c10c81713a@oldschoolsolutions.biz>
+In-Reply-To: <20250710-hp-x14-x1p-v7-2-19c10c81713a@oldschoolsolutions.biz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 10/07/2025 12:50, Jens Glathe via B4 Relay wrote:
-> This patch series adds support for the HP Omnibook X Laptop 14-fe1xxx. [1]
+> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 > 
-> Since this is actually the same model as the 14-fe0xxx, but with an
-> X1P-42-100 SoC (Purwa), it needs a slightly different device tree.
-> To have as minimal duplicate definition as possible, the hp X14 gets 
-> commonalized into a dtsi (and it stays compatible to the derived 
-> device trees, like the Ultrabook G1q). 
-> 
-> The supported features are the same as for the original Omnibook X14:
-> 
-> - Keyboard (no function keys though)
-> - Display
-> - PWM brightness control
-> - Touchpad
-> - Touchscreen
-> - PCIe ports (pcie4, pcie6a)
-> - USB type-c, type-a
-> - WCN6855 Wifi-6E
-> - WCN6855 Bluetooth
-> - ADSP and CDSP
-> - X1 GPU
-> - GPIO Keys (Lid switch)
-> - Audio definition (works via USB and with internal speakers)
-> 
-> [1]: https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
+> Extract common elements into a shared .dtsi file for HP Omnibook X14 to
+> support both Hamoa (x1e*/x1p6*) and Purwa (x1p4*/x1*) variants.
+> Required because the device trees are not compatible.
 > 
 > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
-> Changes in v7:
-> - rebased to next-20250710.
-> - reworded commit message for patch #2
-> - picked up reviewed-by for patch #3 (thanks)
-> - fixed link ref in patch #3
-> - Link to v6: https://lore.kernel.org/r/20250709-hp-x14-x1p-v6-0-f45cc186a62d@oldschoolsolutions.biz
 
-Please slow down a bit. You keep sending every day. It is fine for
-simple patchsets reaching v2 or v3... but this keeps going and you
-reached v7!
+Why am I bothering to review if you keep changing and eventually
+dropping the tag.
 
-Instead wait for few days to give people actually chance to review.
+<form letter>
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+of patchset, under or above your Signed-off-by tag, unless patch changed
+significantly (e.g. new properties added to the DT bindings). Tag is
+"received", when provided in a message replied to you on the mailing
+list. Tools like b4 can help here. However, there's no need to repost
+patches *only* to add the tags. The upstream maintainer will do that for
+tags received on the version they apply.
+
+Please read:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
 Krzysztof
