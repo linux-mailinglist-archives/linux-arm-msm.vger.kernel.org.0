@@ -1,141 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-64340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2896AAFFF3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:27:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF03EAFFF63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:35:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 113AA6434CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:27:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FF65645CD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:35:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D4A2DCBF7;
-	Thu, 10 Jul 2025 10:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 723F92D8DBE;
+	Thu, 10 Jul 2025 10:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a1BzNoYu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ck0Q9158"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3637E2DC339;
-	Thu, 10 Jul 2025 10:27:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439CF19CC28;
+	Thu, 10 Jul 2025 10:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752143232; cv=none; b=RPiIAuF9gsd6tZnlyX7lRoyEejp+NQXk/vEDRgPdBBlZ2jcvb+OfwfGyxhO2pnp/vzgAM0cwl/gD0+rf5PN4XMVAQRyN7v/5+VpTu9nMFBHpgvtlxENvTbOO8z6ogWZdneyCFvckiuF9E+DQ0DOEsAY2448YwZV4+ymHuFxIT7U=
+	t=1752143719; cv=none; b=SQ+IvZM3eua8BOrnkK8tQVSuoYyiPAo+jVTUUsGkSYoTeEUDIf03Iu7WtzmY95SGs7GWj7TpBUjxzVDAMiqM8xJKTrOgoo1SWpaxUSemZqdRVuY7+Hg6iYdxrmLsb16qzSdodyWZaJnEl46NtAA6N+89a1ru6FKTXYNqRX1KlhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752143232; c=relaxed/simple;
-	bh=n8CHfQarFEnSKVlslPEJ6WO7RgjCYWr7Wdpw+f/FCUs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qFtiBcZ4sOB8ISTcgx5L2Cyj//4DyPQgv3HEwCvXzrAJ2ooORQVGYNF/w8UMBCkTLsmSdX3/7X6FeRtkWm7ppCGWy+0OHIu5qtuf3luNhAdHWBnBXgwaAaPi26eDjZK45t4dyPAlJgK7u53qd9Ub7CIdR7Ferxo4LXxs580cpyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a1BzNoYu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A9BRSN014483;
-	Thu, 10 Jul 2025 10:27:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sZDlHaKSp5/wsgkggzwbb/iS5diX6jtexug53tdC++I=; b=a1BzNoYulfh0A9kO
-	6WUkJxbkU8aaQRezsCRWgTEMxR/z9L6JQuon2hHt1AdAgHxDrYyfHTMfn//Wk11R
-	YZWv8YYqkVhhYP430/0ueIG95DRqRkLyRIqi/KiBIky9llplP4+LxjGq4y2qtuB/
-	Q9Lr4ggeXEB8t9Ez13UFvTRlAXldtSjaN1v1qHpyFS6WRMDpKQ8PpzMx54gJJmoo
-	d5eIPC8aJ9x7VG922PX+HPIA+YImI+jPa+J2AV+D3aVPfmfQCEx5xjYdBVcxR5T7
-	l03xmc7A1utlsErNsBda1bR6aDs/+D8gJbM6qU0r/+KSvBZiYfN74NUi7jci/T2L
-	86vXOA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47r9b15g5t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 10:27:08 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56AAR7L5032522
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 10:27:07 GMT
-Received: from [10.50.13.177] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
- 2025 03:27:03 -0700
-Message-ID: <6985874e-efae-746d-efbd-dc537b5f24c0@quicinc.com>
-Date: Thu, 10 Jul 2025 15:56:57 +0530
+	s=arc-20240116; t=1752143719; c=relaxed/simple;
+	bh=bYZMyZWLjbybXxy6KtLgDhn/vD8fk7GrJM/5ipnjZL0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SaX8785W57dXchCSXKJakPOoZD9oPLtUB6reYY+BuyVwCYQ7D4kWbwH7ETEXMPMj2wr2CRwiIzfHBlqAp8UpGs2tIN50iqyEJtkaZ+N/K350BDst+8Plk+S6qiJ6l7wVR5k94IIBVanGw8Ecfee2UT0d7VIjCVbvOSmEId5tfWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ck0Q9158; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FC6C4CEE3;
+	Thu, 10 Jul 2025 10:35:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752143719;
+	bh=bYZMyZWLjbybXxy6KtLgDhn/vD8fk7GrJM/5ipnjZL0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ck0Q91586xsRB4whk1o6Tu4MKUSqZKpZN09appcfipZ4+SUKdIQfXekmZOrtBWHG/
+	 3CUuLC8/2we290Dh8/cSIK24SzbDxMG9jrLCfnOcoQ8U2i4eyaKh3J2G2O4QUuFbnA
+	 LV/7DQVyr02y4gE+5EvI1UjE1oaiFMwT9oWbi8k9AnYtN/h9ZjtZNMEU8qH+jnRMkL
+	 7N1MysoyYjZ0sHiZ4uJQwWSUPBb4NiBFu/sqlT2anLN+CxGRrGlRxdbhCFd01eAzFM
+	 3xX0AsVnWBjVH+n+4mGZKNH3JXwdQivpgGe4qHwj7ga//j3jHEWYGNQCjGzu4zzbuC
+	 i3go/8u74ssqA==
+Message-ID: <6f7328df-712b-4c62-82c6-ee69ecec2108@kernel.org>
+Date: Thu, 10 Jul 2025 11:35:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v6 6/7] arm64: dts: qcom: qcm2290: Add Venus video node
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "soundwire: qcom: Add set_channel_map api support"
+To: Amit Pundir <amit.pundir@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Mohammad Rafi Shaik
+ <quic_mohs@quicinc.com>, Srinivas Kandagatla <srini@kernel.org>,
+ Bard Liao <yung-chuan.liao@linux.intel.com>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+ Sanyog Kale <sanyog.r.kale@intel.com>,
+ Dan Carpenter <dan.carpenter@linaro.org>,
+ Yongqin Liu <yongqin.liu@linaro.org>, Jie Gan <jie.gan@oss.qualcomm.com>
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ linux-sound <linux-sound@vger.kernel.org>,
+ lkml <linux-kernel@vger.kernel.org>, stable@vger.kernel.org
+References: <20250709174949.8541-1-amit.pundir@linaro.org>
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Jorge Ramirez-Ortiz
-	<jorge.ramirez@oss.qualcomm.com>,
-        <quic_vgarodia@quicinc.com>, <krzk+dt@kernel.org>,
-        <konradybcio@kernel.org>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <amit.kucheria@oss.qualcomm.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250708180530.1384330-1-jorge.ramirez@oss.qualcomm.com>
- <20250708180530.1384330-7-jorge.ramirez@oss.qualcomm.com>
- <8f30092c-0e17-6f4d-f3f1-769508d2f58e@quicinc.com>
- <c3803de2-56f3-4346-9490-67cd63abb287@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <c3803de2-56f3-4346-9490-67cd63abb287@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=dYuA3WXe c=1 sm=1 tr=0 ts=686f957c cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=8UWQUrJTcZgO8iOpsvMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA4OSBTYWx0ZWRfXwd8n9v6IX7l8
- ThkLh9zTzYZYlecnv99Bu4lPazQinavl645UwCTHxzGsQmornK2ZhuFoTo95qrKy5HbXKf8wPcH
- XtgiaIsQyVybf4kd5hg3F4M5Tdo/TF19noLQDljtJLhwhnptsRX61tK7YSjDVdabA5iP8hK1jTq
- gwUtZImuaKkuZzC+E7AAnuXitaGLIG66S0LbrL++DXufv7khszqP5TLdUmMT+NaApf42nziZGms
- Y2BY0SYhmiJG1bLDTUtliMbcWGcSJwoEg8pSF6Vm+pY7WLM+vgU5I596kBYYPWkEiKW/RyXa+bT
- uJ32e3TzYCmAPOm0af5YLIdRmES7dnrE1N45A73bTztuLWpaE/krVJmbTrLdcQuHIu1qw43ZnrD
- Juc7am9zlKOnzEIDCz10wg5n7mMDkcabaVOmbPhwc0p2ezcGu+suIiq8zHi/DCOVs7GrjBAq
-X-Proofpoint-GUID: e4pmgR9_fnTrpc1lsPUn9uS8Ct1-psDq
-X-Proofpoint-ORIG-GUID: e4pmgR9_fnTrpc1lsPUn9uS8Ct1-psDq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-10_02,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxlogscore=880 malwarescore=0
- mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507100089
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <20250709174949.8541-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
 
-On 7/10/2025 2:45 PM, Bryan O'Donoghue wrote:
-> On 10/07/2025 09:57, Dikshita Agarwal wrote:
->>> +            iommus = <&apps_smmu 0x860 0x0>,
->>> +                 <&apps_smmu 0x880 0x0>,
->>> +                 <&apps_smmu 0x861 0x04>,
->>> +                 <&apps_smmu 0x863 0x0>,
->>> +                 <&apps_smmu 0x804 0xe0>;
->> What’s the rationale behind having five entries here?
->> could you share the use-cases that justify this configuration?
+On 7/9/25 6:49 PM, Amit Pundir wrote:
+> This reverts commit 7796c97df6b1b2206681a07f3c80f6023a6593d5.
 > 
-> Already getting in trouble with non-pixel/secure # of iommus.
+> This patch broke Dragonboard 845c (sdm845). I see:
 > 
-> Why not specify the maximum expected number hardware supports, specifically
-> so we don't end up buried under incomplete schema again ?
+thanks Amit for sending this out,
 
-Adding this in DT schema is fine, concern here is, adding it to the DT
-without a present use-case may be premature. Surprising to see it doesn't
-create any boot-up issues.
-
-Thanks,
-Dikshita
+>     Unexpected kernel BRK exception at EL1
+>     Internal error: BRK handler: 00000000f20003e8 [#1]  SMP
+>     pc : qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom]
+>     lr : snd_soc_dai_set_channel_map+0x34/0x78
+>     Call trace:
+>      qcom_swrm_set_channel_map+0x7c/0x80 [soundwire_qcom] (P)
+>      sdm845_dai_init+0x18c/0x2e0 [snd_soc_sdm845]
+>      snd_soc_link_init+0x28/0x6c
+>      snd_soc_bind_card+0x5f4/0xb0c
+>      snd_soc_register_card+0x148/0x1a4
+>      devm_snd_soc_register_card+0x50/0xb0
+>      sdm845_snd_platform_probe+0x124/0x148 [snd_soc_sdm845]
+>      platform_probe+0x6c/0xd0
+>      really_probe+0xc0/0x2a4
+>      __driver_probe_device+0x7c/0x130
+>      driver_probe_device+0x40/0x118
+>      __device_attach_driver+0xc4/0x108
+>      bus_for_each_drv+0x8c/0xf0
+>      __device_attach+0xa4/0x198
+>      device_initial_probe+0x18/0x28
+>      bus_probe_device+0xb8/0xbc
+>      deferred_probe_work_func+0xac/0xfc
+>      process_one_work+0x244/0x658
+>      worker_thread+0x1b4/0x360
+>      kthread+0x148/0x228
+>      ret_from_fork+0x10/0x20
+>     Kernel panic - not syncing: BRK handler: Fatal exception
 > 
+> Dan has also reported following issues with the original patch
+> https://lore.kernel.org/all/33fe8fe7-719a-405a-9ed2-d9f816ce1d57@sabinyo.mountain/
+> 
+> Bug #1:
+> The zeroeth element of ctrl->pconfig[] is supposed to be unused.  We
+> start counting at 1.  However this code sets ctrl->pconfig[0].ch_mask = 128.
+> 
+> Bug #2:
+> There are SLIM_MAX_TX_PORTS (16) elements in tx_ch[] array but only
+> QCOM_SDW_MAX_PORTS + 1 (15) in the ctrl->pconfig[] array so it corrupts
+> memory like Yongqin Liu pointed out.
+> 
+> Bug 3:
+> Like Jie Gan pointed out, it erases all the tx information with the rx
+> information.
+> 
+> Cc: <stable@vger.kernel.org> # v6.15+
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 > ---
-> bod
+
+Acked-by: Srinivas Kandagatla <srini@kernel.org>
+
+--srini
+>  drivers/soundwire/qcom.c | 26 --------------------------
+>  1 file changed, 26 deletions(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 295a46dc2be7..0f45e3404756 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -156,7 +156,6 @@ struct qcom_swrm_port_config {
+>  	u8 word_length;
+>  	u8 blk_group_count;
+>  	u8 lane_control;
+> -	u8 ch_mask;
+>  };
+>  
+>  /*
+> @@ -1049,13 +1048,9 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
+>  {
+>  	u32 reg = SWRM_DP_PORT_CTRL_BANK(enable_ch->port_num, bank);
+>  	struct qcom_swrm_ctrl *ctrl = to_qcom_sdw(bus);
+> -	struct qcom_swrm_port_config *pcfg;
+>  	u32 val;
+>  
+> -	pcfg = &ctrl->pconfig[enable_ch->port_num];
+>  	ctrl->reg_read(ctrl, reg, &val);
+> -	if (pcfg->ch_mask != SWR_INVALID_PARAM && pcfg->ch_mask != 0)
+> -		enable_ch->ch_mask = pcfg->ch_mask;
+>  
+>  	if (enable_ch->enable)
+>  		val |= (enable_ch->ch_mask << SWRM_DP_PORT_CTRL_EN_CHAN_SHFT);
+> @@ -1275,26 +1270,6 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
+>  	return ctrl->sruntime[dai->id];
+>  }
+>  
+> -static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
+> -				     unsigned int tx_num, const unsigned int *tx_slot,
+> -				     unsigned int rx_num, const unsigned int *rx_slot)
+> -{
+> -	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
+> -	int i;
+> -
+> -	if (tx_slot) {
+> -		for (i = 0; i < tx_num; i++)
+> -			ctrl->pconfig[i].ch_mask = tx_slot[i];
+> -	}
+> -
+> -	if (rx_slot) {
+> -		for (i = 0; i < rx_num; i++)
+> -			ctrl->pconfig[i].ch_mask = rx_slot[i];
+> -	}
+> -
+> -	return 0;
+> -}
+> -
+>  static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+>  			     struct snd_soc_dai *dai)
+>  {
+> @@ -1331,7 +1306,6 @@ static const struct snd_soc_dai_ops qcom_swrm_pdm_dai_ops = {
+>  	.shutdown = qcom_swrm_shutdown,
+>  	.set_stream = qcom_swrm_set_sdw_stream,
+>  	.get_stream = qcom_swrm_get_sdw_stream,
+> -	.set_channel_map = qcom_swrm_set_channel_map,
+>  };
+>  
+>  static const struct snd_soc_component_driver qcom_swrm_dai_component = {
+
 
