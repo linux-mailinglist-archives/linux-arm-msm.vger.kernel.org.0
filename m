@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-64383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EECCB00348
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:26:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6409B00355
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:27:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 217EC1C45D51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 13:26:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB57C8E3C1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 13:27:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE86C2264CF;
-	Thu, 10 Jul 2025 13:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE5D226D1F;
+	Thu, 10 Jul 2025 13:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/deECGy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HzeW2jz1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4E52253F2;
-	Thu, 10 Jul 2025 13:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1A72248B3;
+	Thu, 10 Jul 2025 13:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752153963; cv=none; b=oij2EHYwdJ1P1wrI5Il1wryS+8qJErLlUx8TcrD0Qbkd0tQ48yHUep6nMGyWuypvIa9B9Rv6Nn8WG50nS26uvoxeqwztOqsSi6tNucWgy5H+7nov0i/spQovEFR/xrasG2KQfmWgUwr+R8e5+6RWkGazo8f4AD3W8txfEpQQXcw=
+	t=1752154069; cv=none; b=mvfiAbHIp//T8ldOb16Eq5kvQuPjJMYgq5NuIHlwkS3i4Q/fSbQ+DrEdOJ1LnVPrCoLijna5l4m2pO4vQNI7cY96poUlgt5q7fR5dCEhh6N4xpVcIOrd/a/aqycmNb1eT3i44E2EvoH71OXLEagdn6114XIHpokuSR+tqbEGgTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752153963; c=relaxed/simple;
-	bh=eUxP26hw7E5IC50cdeq3HQ9aa8Xut6XJM8PdoOMtSik=;
+	s=arc-20240116; t=1752154069; c=relaxed/simple;
+	bh=vntoWKUWJsvWv9hwsBZdihuxjDBsVvfEetv3fY2yT58=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dBAp/VwXBkr8bH5Gc8KlLl8YouspGKNoO3UngcqFCvx8XnmyuE5BpO8+uWLDJl0d7H7kQvbxL6m9VFqyGnMM/oeSUKPnaeJKgoyoklHGR73tEqwKfG0XnkVBWPzbG4CZ/tM2qijT9MEVPosuZyxB8B2GWx5xTOoyj3xmYYkKakc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/deECGy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A779EC4CEED;
-	Thu, 10 Jul 2025 13:26:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qjLZ4JRDo8eRt3Cmcc+7uMNAnb5ovJV1GiuT0xgp7nRZ75koeIDaqRVW8LGFbvNJ0S5QDMuFbpdEeQVE8LcL06jds+aKVG/OTPVXg1ek7fNwDrRFmgzbD3eZeAAB3u/Qo1gUV9D7HFdTPX0Q3YItooD6TyrZ3gbvKq1u603unhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HzeW2jz1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5581FC4CEF5;
+	Thu, 10 Jul 2025 13:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752153963;
-	bh=eUxP26hw7E5IC50cdeq3HQ9aa8Xut6XJM8PdoOMtSik=;
+	s=k20201202; t=1752154068;
+	bh=vntoWKUWJsvWv9hwsBZdihuxjDBsVvfEetv3fY2yT58=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=O/deECGySK26OwpCK67s02BwjAP0iIVP4dfJJBDQ7BxuIg9wE5JhCQwG1TcLoMwhR
-	 E51sdeBHTIXELt2bvRgJchbPYWP5FCYPu0C1caaQMAFWbDxs7iexrHXbE7+PEZEtaY
-	 20dE4oaf84qs7E8mCL//hdKQk3hfQ8W15KnUSbyJxN6nU5vet3l5nfH3T5n5B3baUi
-	 4MTvcb2K4wW7oDAkB3/xVGEfRoZyCbNI3AlYS6lTIZMY9JVMmGkhcs4O6di0UbHrAd
-	 FHhpaMq9xnFAiTg50ajLjTc5Ko4gGnVLaw8ausQlbPFCDjLDOOXr98HHSmuj7yB+Wv
-	 lDBhctgelTSjA==
-Message-ID: <aa94dcb8-8a9a-407e-9bab-39a321a7136b@kernel.org>
-Date: Thu, 10 Jul 2025 15:25:58 +0200
+	b=HzeW2jz1J1aL41c3ViUvNxalRw843mSfS4yNm0nq8UNo3kZyy+fpVmHhaHWcgnwzh
+	 59+yt+y+AP2LpHrWgoWNIutFFzc43S4fa8UbIsCa7anH2LjxADxzuaORNGxF3MQKkx
+	 423suvwXPLEr1Vxc+u6zVyFesjworpGt88ilmzFLMALXscT3zcoMjD0czaAuUzqyxO
+	 VBxMPkHNODt2yiUB4IIK/PV4+wjpbzq2MVG2EkMn44apsYs/ZyUcFRU0N0p7E3qFyW
+	 9rhkNtmn5RbvB78CWXb+BK0cpONGqoOCO60oWyjes8OFU03GPghFXYfCdTrtZqmz0b
+	 /+tDS4GwVxYYg==
+Message-ID: <c9bd8760-1c85-4aa6-9633-1f52ed4952c9@kernel.org>
+Date: Thu, 10 Jul 2025 15:27:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: x1-hp-x14: Unify HP Omnibook X14
- device tree structure
-To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+Subject: Re: [PATCH v4 1/2] dt-bindings: clock: qcom,videocc: Add sc8180x
+ compatible
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250710-hp-x14-x1p-v7-0-19c10c81713a@oldschoolsolutions.biz>
- <20250710-hp-x14-x1p-v7-2-19c10c81713a@oldschoolsolutions.biz>
- <aac2a4fb-c9e8-4e1d-b0cd-d6481dc27252@kernel.org>
- <056c3569-02d7-4668-89d0-91a8d92814ef@oldschoolsolutions.biz>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
+ <20250710-sc8180x-videocc-dt-v4-1-07a9d9d5e0e6@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,36 +110,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <056c3569-02d7-4668-89d0-91a8d92814ef@oldschoolsolutions.biz>
+In-Reply-To: <20250710-sc8180x-videocc-dt-v4-1-07a9d9d5e0e6@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 10/07/2025 13:31, Jens Glathe wrote:
-> On 10.07.25 12:55, Krzysztof Kozlowski wrote:
->> Why am I bothering to review if you keep changing and eventually
->> dropping the tag.
+On 10/07/2025 15:00, Satya Priya Kakitapalli wrote:
+> The sc8180x video clock controller block is identical to that
+> of sm8150. Add a new compatible string for sc8180x videocc and
+> use sm8150 as fallback.
 > 
-> Sorry about that. b4 didn't take it, and since I changed the commit 
-> message after Bryan made the suggestion, didn't know if it was still 
-> justified.
-> 
-It takes for me. b4 shazam -v6:
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
+>  .../devicetree/bindings/clock/qcom,videocc.yaml    | 23 +++++++++++++---------
+>  1 file changed, 14 insertions(+), 9 deletions(-)
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
-  [PATCH v6 1/3] dt-bindings: arm: qcom: Add HP Omnibook X14 AI X1P4200 variant
-    + Link: https://lore.kernel.org/r/20250709-hp-x14-x1p-v6-1-f45cc186a62d@oldschoolsolutions.biz
-  [PATCH v6 2/3] arm64: dts: qcom: x1-hp-x14: Commonalize HP Omnibook X14 device tree
-    + Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> (✓ DKIM/kernel.org)
-    + Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> (✓ DKIM/qualcomm.com)
-    + Link: https://lore.kernel.org/r/20250709-hp-x14-x1p-v6-2-f45cc186a62d@oldschoolsolutions.biz
-  [PATCH v6 3/3] arm64: dts: qcom: x1-hp-x14: Add support for X1P42100 HP Omnibook X14
-    + Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> (✓ DKIM/kernel.org)
-    + Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> (✓ DKIM/qualcomm.com)
-    + Link: https://lore.kernel.org/r/20250709-hp-x14-x1p-v6-3-f45cc186a62d@oldschoolsolutions.biz
+<form letter>
+This is a friendly reminder during the review process.
 
-All tags are there.
+It looks like you received a tag and forgot to add it.
 
-If b4 misses it, you should add it.
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+of patchset, under or above your Signed-off-by tag, unless patch changed
+significantly (e.g. new properties added to the DT bindings). Tag is
+"received", when provided in a message replied to you on the mailing
+list. Tools like b4 can help here. However, there's no need to repost
+patches *only* to add the tags. The upstream maintainer will do that for
+tags received on the version they apply.
+
+Please read:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
 Krzysztof
