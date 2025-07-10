@@ -1,62 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-64460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D541EB00D3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 22:38:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1DE7B00D63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 22:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3158C5A3B2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 20:38:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FC177B747F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 20:48:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CCDA2FE377;
-	Thu, 10 Jul 2025 20:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB3202FCE11;
+	Thu, 10 Jul 2025 20:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TA6c2YcV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6fyEEN4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAEE2FE370;
-	Thu, 10 Jul 2025 20:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B003728C5D7;
+	Thu, 10 Jul 2025 20:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752179835; cv=none; b=nymM7plfb8NAfU5kuRjOuEbi3X8TEyATgLLWJGj1YYZpxW3Y0kjWP5x/ngFJyDc03XqSxJgDhHFOURNOv0LROiJVEZLBHn+P9YvpjIg/YngJtynOYII7ngUnnf4iV5E68kdX2aIAhgSBaBbu2TmMRwtmE8NhTmTHvanqra+rNQE=
+	t=1752180594; cv=none; b=UZwyqbfmL+gy1wcHAlYxPnllWm+ZOl8JHX7La8oMonQh/fKxEi/aEhoJYSLdgJBOa//6FP9ZOnZouMZFUAGJ4/k1gMCqu3rR58I4gZEsPSslPemunAN/qS6+FYkiFdPINGq1/N9txCAz6RPCalgs5scaEtDn8EXctIE4u4H1c+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752179835; c=relaxed/simple;
-	bh=CgImUwkenH3liQ9C4iUaFmfKZb9tKRP5V6VjbmRzY7c=;
+	s=arc-20240116; t=1752180594; c=relaxed/simple;
+	bh=R7alaaCPHt1AUC5EDQMaWx/LazeRtOK9h/LtGYLubzc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XU9t/pgk5KUrjd/3UvxVCmIIOIlvtOhson3RzdZEHtyghaAYZeo0O1lc2AF6VfPBWJVq3AyeILoZJ3B2vcwqGU0Mk5R0pwkWaS0GqAhamb4FK1NfgukXNkGuLmRHLmex6XN5WpxLNe7CYnFhbJfGSiGxNFyOMT2HSe1iw9BWGAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TA6c2YcV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D23AC4CEF9;
-	Thu, 10 Jul 2025 20:37:14 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nWhSvfjZe2LrvpM3In6r2w5oMcKpJPPuwcAeOuouTN58eTMwDIVvjDz3Nlctgctj9gWARXzyCtVDHbSs51F25Zu1SqnyXzNQaD7yPhuh3MqPkEVIi0ODkwQBbl5WHjB64QQImJMHStm416QGv3Xr5pi0R3+NCPnl4xITfd9n9Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6fyEEN4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2068FC4CEF4;
+	Thu, 10 Jul 2025 20:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752179835;
-	bh=CgImUwkenH3liQ9C4iUaFmfKZb9tKRP5V6VjbmRzY7c=;
+	s=k20201202; t=1752180594;
+	bh=R7alaaCPHt1AUC5EDQMaWx/LazeRtOK9h/LtGYLubzc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TA6c2YcVTUWe8n7Xs2HiUhvJxDMcNT6SJjTUUXso5JEZKSsxFA3wb79FtxLbTTNwq
-	 i54iGisjtcG3VMssx1SIWXEDDadm7Gebx0O0Jy9w6gGBizquH2j8hKMQIg4CB7XcfR
-	 KXBMGANpwxlgjgpVQOBItGHx4qPCQg9TiZsw9ar/GKDsCsIfgwayem9liUNUvhWDfm
-	 ZHyZhl1j3qdcsWlCktLbIYkQ3k/Xv5radA5gtc6opgrh1zr6wXDuDPgHzGrN2S06Ii
-	 V2nJbm6F8gOqb8l3BkwdzdzAZdG7zIVa/0sGk1H70zDbsg5bwsP+rOXkSVC9CqdMqE
-	 glSd795lbkl6Q==
-Date: Thu, 10 Jul 2025 15:37:13 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Paul Cercueil <paul@crapouillou.net>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 01/12] pinctrl: pinmux: open-code
- PINCTRL_FUNCTION_DESC()
-Message-ID: <z5hmnijgcowad5d7kksqockdltuggf2mszrsxhyv6yqwo3jwqr@n6hslkul4mbq>
-References: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
- <20250709-pinctrl-gpio-pinfuncs-v2-1-b6135149c0d9@linaro.org>
+	b=h6fyEEN4OVF3X4z4T6olPNkDshuKXL14P1ZPQgpydfMFcwR9gfB/GOgMD4XCHMsaT
+	 imvTz7KUSeoR1/jaC3kgG9uR9g+XUykWN4fqfF0+nqa4G5qvdeRbBc9MnFG6JPwpxC
+	 ox4Ky8S7mPhrBIne33gDYoUD0T/ERZI7PD7fw9WWgjzVEj37q6CWRlQMB9b2NLWezl
+	 pJUcn55+qsWr3Y3mSb6HfxYvVxDKlTeiX2xva/VTcEnydxdor+JtVDcKnaLMw8YBlC
+	 yvnIRSbvTfsVnfz3DHpgDKlZWNaOUzIt2YJhwLMQOWTEF/SJIDs2dY6X2jqzlqJK3p
+	 Bvxnwb3KGLDBg==
+Date: Thu, 10 Jul 2025 22:49:49 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Elie Morisse <syniurge@gmail.com>, 
+	Shyam Sundar S K <shyam-sundar.s-k@amd.com>, Codrin Ciubotariu <codrin.ciubotariu@microchip.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Michal Simek <michal.simek@amd.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Jarkko Nikula <jarkko.nikula@linux.intel.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Jan Dabros <jsd@semihalf.com>, Jean Delvare <jdelvare@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Oleksij Rempel <o.rempel@pengutronix.de>, 
+	Gregory CLEMENT <gregory.clement@bootlin.com>, Ajay Gupta <ajayg@nvidia.com>, 
+	Aaro Koskinen <aaro.koskinen@iki.fi>, Andreas Kemnade <andreas@kemnade.info>, 
+	Kevin Hilman <khilman@baylibre.com>, Roger Quadros <rogerq@kernel.org>, 
+	Tony Lindgren <tony@atomide.com>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
+	Vignesh R <vigneshr@ti.com>, Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+	Robert Foss <rfoss@kernel.org>, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>, Chris Brandt <chris.brandt@renesas.com>, 
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, linux-omap@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH 23/80] i2c: Remove redundant pm_runtime_mark_last_busy()
+ calls
+Message-ID: <sj24iciugqjrof6672tvlnxjfvgperdliftfa47cquyfe6g22c@s5e7twdtjhsj>
+References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
+ <20250704075415.3218608-1-sakari.ailus@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,61 +82,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250709-pinctrl-gpio-pinfuncs-v2-1-b6135149c0d9@linaro.org>
+In-Reply-To: <20250704075415.3218608-1-sakari.ailus@linux.intel.com>
 
-On Wed, Jul 09, 2025 at 04:38:57PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> This macro is only used in one place and pin function descriptors should
-> only be created by pinmux core so there's no point in exposing it to
-> other pinctrl users. Remove the macro and hand-code its functionality.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Sakari,
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+On Fri, Jul 04, 2025 at 10:54:15AM +0300, Sakari Ailus wrote:
+> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
+> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
+> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
+> pm_runtime_mark_last_busy().
+> 
+> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-Regards,
-Bjorn
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
 
-> ---
->  drivers/pinctrl/pinmux.c | 3 ++-
->  drivers/pinctrl/pinmux.h | 7 -------
->  2 files changed, 2 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/pinmux.c b/drivers/pinctrl/pinmux.c
-> index 0743190da59e819d1c72c1ed1ece72f206d60d65..daa7a11adabf672f802a8e9577c14e4da56b8678 100644
-> --- a/drivers/pinctrl/pinmux.c
-> +++ b/drivers/pinctrl/pinmux.c
-> @@ -893,7 +893,8 @@ int pinmux_generic_add_function(struct pinctrl_dev *pctldev,
->  	if (!function)
->  		return -ENOMEM;
->  
-> -	*function = PINCTRL_FUNCTION_DESC(name, groups, ngroups, data);
-> +	function->func = PINCTRL_PINFUNCTION(name, groups, ngroups);
-> +	function->data = data;
->  
->  	error = radix_tree_insert(&pctldev->pin_function_tree, selector, function);
->  	if (error)
-> diff --git a/drivers/pinctrl/pinmux.h b/drivers/pinctrl/pinmux.h
-> index 2965ec20b77fb360ca244800e30f1eafa988a2b1..5c039fd09f7474b4c104d3c36e0e8b8dc73a2ddd 100644
-> --- a/drivers/pinctrl/pinmux.h
-> +++ b/drivers/pinctrl/pinmux.h
-> @@ -141,13 +141,6 @@ struct function_desc {
->  	void *data;
->  };
->  
-> -/* Convenient macro to define a generic pin function descriptor */
-> -#define PINCTRL_FUNCTION_DESC(_name, _grps, _num_grps, _data)	\
-> -(struct function_desc) {					\
-> -	.func = PINCTRL_PINFUNCTION(_name, _grps, _num_grps),	\
-> -	.data = _data,						\
-> -}
-> -
->  int pinmux_generic_get_function_count(struct pinctrl_dev *pctldev);
->  
->  const char *
-> 
-> -- 
-> 2.48.1
-> 
+Thanks,
+Andi
 
