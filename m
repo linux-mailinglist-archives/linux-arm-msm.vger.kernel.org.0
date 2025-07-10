@@ -1,178 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-64303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77DE4AFFB7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 09:59:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B36ADAFFBAB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:06:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9889858547A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 07:59:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 958363A334D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 08:06:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9285728B519;
-	Thu, 10 Jul 2025 07:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FA3C28B7DA;
+	Thu, 10 Jul 2025 08:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l1yTUzjy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKcHiVjk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58F728B4E0;
-	Thu, 10 Jul 2025 07:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D3B28B4FC;
+	Thu, 10 Jul 2025 08:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752134348; cv=none; b=UNCGsG778A0lZBwxCakdDGczbWXkSTDyPjDfJsIIKlomA02RfUqnsU9l+wOYyP50LhWVEPeXCfqfDSaSWePi0mPvR7ODpQzI9TZNyghW1m1ZTeMdObvBl35OeAWt8MAJoWh7Tl66H/Yez+7DCbT+C5qKPuBEK7yoQTTl6O45H1Q=
+	t=1752134791; cv=none; b=c5kesM8V8FuDOJkrSYA+4eGic+yUR41+8cZslT94uIkb0RHK4oe3Of7ENKNAj6xJFeHUWgziNZItiFVIK2SQBBDEGPFe6QS39qg0+zHxbKz93WHXkuLaXXugUAahVIUpXY6FYI/u2sRITZ8KIcrNSzsOGtA3eXRYM6GD1J1TcDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752134348; c=relaxed/simple;
-	bh=/b8ziFGdDpEuf8DZiIEsTPibr3pxuE68xuG+bfQLHI8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Km9OtrBeZCm+U6sSmzgB6O2DxIomuHE5r2VZUon54qY9HYdYF8f27PeJDDEt0veGqn5zlxoNDv7J1wEMAZZJplkPNNo/IHwNLllJzqF0YR/wZTdC3SIFOOV3v+Ly1MVsjETCZaj62+NfdP8rcYfGSpRR9lNO3cPoIU2dSEaUk2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l1yTUzjy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A1HKQV011316;
-	Thu, 10 Jul 2025 07:59:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oOErOWq/REZd642WD4gTAc2u2l5kA/4CfeaP22QXb5A=; b=l1yTUzjyqZYePwtW
-	vuzouT64SdF5PsNYDe58+CtiNxFXeEFOZMMr5MPzHo8ZMPDhC6k/uML9qsZjiDLu
-	FAYSmdriGJS0Nt1cgIsy1dT+8CrVgAkeqF1t+R2s6yhNA8YhgYSf9sMQF6XjcqHQ
-	OD1dxR1TzCA7odXdkMl07oLhpURnmu/upXNQCRIMJrOF62FFux2jvxsmot28s9FB
-	zu0xTt1zvnGdo7qtcvJor+TZcHhvBCqyfmP8dLH9dO5oKEJh0i1+dJXlcD+aRXGu
-	P16rPHGTue18NyJfCXkt7cV6YFRg0OJ756yEnkHBIil8i7cU5GL8SY1h7hF/k+4u
-	w4vYJg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smafm1ds-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 07:59:00 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56A7wxmF009487
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 07:58:59 GMT
-Received: from [10.217.223.199] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
- 2025 00:58:51 -0700
-Message-ID: <6e7da6f3-3a2c-48be-8fb4-c2377d86efc3@quicinc.com>
-Date: Thu, 10 Jul 2025 13:28:48 +0530
+	s=arc-20240116; t=1752134791; c=relaxed/simple;
+	bh=Qdz0Seg600/NfZ8qh0A2H91OLBFUzDUq9XUtOoB6PgA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IBEYI+27ZL19wicZ8b8ys3u8aMLWxoOaihLFCigYgGLd970hDmxxDrHmVkdsQJ/8mn5jO+30obHnlojSxC4sIumro0YBZB546yqnFWd2DBrG3iB/SKUcBq+mxJCrAWWRIuGm4HEpqfDJdeaXzHWQClEMyc+FxRLq86ht6wBlbj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKcHiVjk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 932E7C4CEE3;
+	Thu, 10 Jul 2025 08:06:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752134790;
+	bh=Qdz0Seg600/NfZ8qh0A2H91OLBFUzDUq9XUtOoB6PgA=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=VKcHiVjkvIkYF3H/YhQGCwJ0nLT0W/IxmGGTBvVM59eo8x0Qh3jA90NKNU6B4Btyo
+	 q0ZA2Y/SnchkV+mpaAVXzDjRqM0qBdk+IkY6uDdcotRMr8nt/JIqyv1h3bSmkR0QbQ
+	 PiymNnfc1FjBgHBzE/xpzDubb3B3a4MZ6aW2uvMJEmxIRB8sPYRsN1iXXCEJJmP+dy
+	 ZDHneKD9BtM4wTRsFElDht1e+FewVNKxv03yygXPWRofuT+T6y7C1bVanzwYFH0xW7
+	 VwpyOkqyLsEFgeuPp67AnHY0XXTv9wxp/llT0omYocxYeCoD8Ipv1WVRiQHg8VuEEF
+	 hws+qRu0GA8qw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79F11C83F1A;
+	Thu, 10 Jul 2025 08:06:30 +0000 (UTC)
+From: Yassine Oudjana via B4 Relay <devnull+y.oudjana.protonmail.com@kernel.org>
+Subject: [PATCH v2 0/4] QRTR bus and Qualcomm Sensor Manager IIO drivers
+Date: Thu, 10 Jul 2025 09:06:26 +0100
+Message-Id: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] mmc: Avoid reprogram all keys to Inline Crypto Engine
- for MMC runtime suspend resume
-Content-Language: en-GB
-To: Eric Biggers <ebiggers@kernel.org>
-CC: Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter
-	<adrian.hunter@intel.com>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>, Neeraj Soni <quic_neersoni@quicinc.com>,
-        "Ram Prakash
- Gupta" <quic_rampraka@quicinc.com>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Sachin Gupta <quic_sachgupt@quicinc.com>,
-        Bhaskar Valaboju
-	<quic_bhaskarv@quicinc.com>,
-        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        Sarthak Garg <quic_sartgarg@quicinc.com>
-References: <20250606104714.1501297-1-quic_dmukhopa@quicinc.com>
- <20250606175909.GB53397@google.com>
-From: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
-In-Reply-To: <20250606175909.GB53397@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ZJ/XmW7b c=1 sm=1 tr=0 ts=686f72c4 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=LfTJMgrNiS4hAUzoDj8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: _u3z_R_9suJgYVM1kEPHAqPGZ417J-kq
-X-Proofpoint-GUID: _u3z_R_9suJgYVM1kEPHAqPGZ417J-kq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA2NiBTYWx0ZWRfXyS7psnf9iPaN
- a4MbTF/oKoYhgscWVQE+jY/gGjUHi/dXO6h4us1Ze/JJALtvqIJemwIZyTmw8rnGBGkdTSDjJq7
- 9CbnVVVprHRkQmmqkSUQ52NKYwCXEUlE5iyiX3suFYRNkqZNXi3dnA5Wa/hbHe66NXXCQea+TZA
- RVqhaPvS0HxHu8D0i+XhX8FnZ+jyIGPgcQKvbErezIVZLf55Q5KOak2aazPj0mzHKHtt450NYda
- 0258jj8gqZ7TZJrdLPvyhvKRqpjHHyeLOt4BRWWzu23nscQG8MIdN+RMWKEDeqmDjzBf4lV/VaI
- wBRWAhJJrMOxEZyfdu6tz4vIqkTXios87VgI+V4a4mzN/dye5SnJQsJfRpp0T+5j4U1PUxQXftQ
- 3VDs2PlTHqG0AHXzpa2xlqFK4VMeGpiNrrg+plQNBtXWcYyKxoHXPmt2C6VHgw5EWUZABSB2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-09_05,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 impostorscore=0 spamscore=0 adultscore=0 clxscore=1015
- bulkscore=0 phishscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507100066
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIJ0b2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDc0MD3cLk/Fzd4tz0Il2LlCRLsxRjc4MkQwMloPqCotS0zAqwWdGxtbU
+ AE1gPnVsAAAA=
+X-Change-ID: 20250710-qcom-smgr-8db96d370b10
+To: Manivannan Sadhasivam <mani@kernel.org>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Masahiro Yamada <masahiroy@kernel.org>, 
+ Nathan Chancellor <nathan@kernel.org>, 
+ Nicolas Schier <nicolas.schier@linux.dev>, 
+ Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+ linux-iio@vger.kernel.org, Yassine Oudjana <y.oudjana@protonmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752134788; l=7200;
+ i=y.oudjana@protonmail.com; s=20250710; h=from:subject:message-id;
+ bh=Qdz0Seg600/NfZ8qh0A2H91OLBFUzDUq9XUtOoB6PgA=;
+ b=jYuw5kDhYNu17UC7FXwR+r3E3JhLoV9iC6fqTVG8lW74iwK/Y/6q6S8qTRpQ5pmbAc2xJ3aJB
+ 1Fl+JwaxKjIA82Fib1rsFeL6qicvL51pRyO8Yp1zacVTInp19GEu0HB
+X-Developer-Key: i=y.oudjana@protonmail.com; a=ed25519;
+ pk=kZKEHR1e5QKCbhElU9LF/T1SbfTr8xzy2cO8fN70QgY=
+X-Endpoint-Received: by B4 Relay for y.oudjana@protonmail.com/20250710 with
+ auth_id=455
+X-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
+Reply-To: y.oudjana@protonmail.com
 
-Hi Eric,
+Sensor Manager is a QMI service available on several Qualcomm SoCs which
+exposes available sensors and allows for getting data from them. This
+service is provided by either:
 
-Thanks for the review.
+- SSC (Snapdragon Sensor Core): Also known as SLPI (Sensor Low Power
+  Island). Has its own set of pins and peripherals to which sensors are
+  connected. These peripherals are generally inaccessible from the AP,
+  meaning sensors need to be operated exclusively through SSC. The only
+  known SoCs in this category are MSM8996 and MSM8998 (and their
+  derivatives).
+- ADSP (Audio DSP): Shares pins and peripherals with the AP. At least on
+  some devices, these pins could be configured as GPIOs which allows the AP
+  to access sensors by bit-banging their interfaces. Some SoCs in this
+  category are SDM630/660, MSM8953, MSM8974 and MSM8226.
 
-Clarifications are given inline below.
+Before Sensor Manager becomes accessible, another service known as Sensor
+Registry needs to be provided by the AP. The remote processor that provides
+Sensor Manager will then request data from it, and once that process is
+done, will expose several services including Sensor Manager.
 
-On 6/6/2025 11:29 PM, Eric Biggers wrote:
-> On Fri, Jun 06, 2025 at 04:17:14PM +0530, Debraj Mukhopadhyay wrote:
->> Crypto reprogram all keys is called for each MMC runtime
->> suspend/resume in current upstream design.
-> It's called from mmc_set_initial_state(), which is documented as:
->
-> /*
->   * Set initial state after a power cycle or a hw_reset.
->   */
->
-> Please clarify how that corresponds to "MMC runtime suspend/resume".
-As part of suspend/resume, mmc regulators are turned off/on - 
-effectively performing a power cycle, and hence mmc_set_initial_state is 
-called after runtime suspend/resume.
-Call flow:
-Suspend: mmc_runtime_suspend() → _mmc_suspend() → mmc_power_off() → 
-mmc_set_initial_state()
-Resume: mmc_runtime_resume() → _mmc_resume() → mmc_power_up() → 
-mmc_set_initial_state()
->> streaming applications have been observed due to this. Add the flag
->> MMC_CAP2_DONT_REPROGRAM as part of host->caps2 to control reprogramming
->> keys to crypto engine for socs which dont require this feature.
-> The flag has a different name in the code.
-Ack, will be addressed in the v3 patch.
->> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
->> index fec4fbf16a5b..d41672e2856e 100644
->> --- a/drivers/mmc/core/crypto.c
->> +++ b/drivers/mmc/core/crypto.c
->> @@ -15,7 +15,7 @@
->>   void mmc_crypto_set_initial_state(struct mmc_host *host)
->>   {
->>   	/* Reset might clear all keys, so reprogram all the keys. */
->> -	if (host->caps2 & MMC_CAP2_CRYPTO)
->> +	if (host->caps2 & MMC_CAP2_CRYPTO && !(host->caps2 & MMC_CAP2_CRYPTO_NO_REPROG))
->>   		blk_crypto_reprogram_all_keys(&host->crypto_profile);
-> Add parentheses around 'host->caps2 & MMC_CAP2_CRYPTO'
-Ack, will be addressed in the v3 patch.
->> +#ifdef CONFIG_MMC_CRYPTO
->> +#define MMC_CAP2_CRYPTO_NO_REPROG	(1 << 29)	/* Host does not support inline crypto key reprogramming */
->> +#else
->> +#define MMC_CAP2_CRYPTO_NO_REPROG	0
->> +#endif
-> Well, it does support inline crypto key reprogramming.  It just doesn't want the
-> MMC core driver to handle it.  Please update the comment to something like:
-> /* Host driver handles crypto key reprogramming */
->
-> - Eric
+This series adds a kernel driver for the Sensor Manager service, exposing
+sensors accessible through it as IIO devices. To facilitate probing of this
+ driver, QRTR is turned into a bus, with services being exposed as devices.
+Once the Sensor Manager service becomes available, the kernel attaches its
+device to the driver added in this series. This allows for dynamic probing
+of Sensor Manager without the need for static DT bindings, which would also
+not be ideal because they would be describing software rather than
+hardware. Sensor Manager is given as a working example of the QRTR bus.
+Kernel drivers for other services may also be able to benefit from this
+change.
 
-Ack, will be addressed in the v3 patch.
+As previously mentioned, a Sensor Registry server must run on the AP to
+provide the remote processor (either SLPI or ADSP) with necessary data.
+A userspace implementation of this server is made[1]. The server can be
+supplied with the necessary data in the form of a plain-text configuration
+file that can be pulled from the Android vendor partition (sample[2]), or
+generated from a binary file that can be pulled from the persist partition.
+A more recently developed kernel implementation of the Sensor Registry
+server[3] can also be used. This last implementation only supports reading
+data from the binary file pulled from persist. Sensor Registry remains out
+of the scope of this patch series, as the Sensor Registry server and Sensor
+Manager client (this series) are fully independent components.
 
-Thanks,
+Due to the total lack of documentation on Sensor Manager, this driver was
+almost entirely the result of a process of capturing transactions between
+SSC and the proprietary Android daemons with several methods and manually
+decoding and interpreting them, sometimes by comparing with values acquired
+from Android APIs. A blog post[4] describes part of this process more
+detail. A little piece of downstream Android open-source code[5] was also
+used as reference during later stages of development. All of this, as well
+as a lack of time on my side for the last couple of years, meant that this
+driver had to go through a slow and intermittent development process for
+more than 3 years before reaching its current state.
 
-Debraj
+Currently supported sensor types include accelerometers, gyroscopes,
+magentometers, proximity and pressure sensors. Other types (namely
+light and temperature sensors) are close to being implemented.
+
+Some testing instructions may also be found here[6].
+
+[1] https://gitlab.com/msm8996-mainline/sns-reg
+[2] https://github.com/nian0114/android_vendor_xiaomi_scorpio/blob/mkn-mr1/proprietary/etc/sensors/sensor_def_qcomdev.conf
+[3] https://github.com/sdm660-mainline/linux/pull/57
+[4] https://emainline.gitlab.io/2022/04/08/Unlocking_SSC_P2.html
+[5] https://android.googlesource.com/platform/system/chre/+/android-8.0.0_r2/platform/slpi
+[6] https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_requests/4118
+
+Changes since v1:
+- Split qdev renaming into separate patch
+- Export new QRTR symbols with namespace
+- Change struct initialization style
+- Remove redundant NULL initialization of qdev->dev.driver
+- Remove redundant devm_kfree
+- Use variable in sizeof rather than type
+- Change error return style in qcom_smd_qrtr_init
+- Change order of operations in qcom_smd_qrtr_exit
+- Use FIELD_PREP and GENMASK in QRTR_INSTANCE macro and add a CONST variant
+- Remove per-sensor subdrivers and eliminate use of platform devices
+- Put year range in copyright statements
+- Use dev_err_probe for error messages in probe
+- Remove unused include of linux/of.h
+- Avoid casting away const in qcom_smgr_buffering_report_handler
+- Use iio_push_to_buffers instead of iio_push_to_buffers_with_timestamp
+- Preprocess proximity sensor data before pushing to buffer
+- Add warning message for report with unknown ID received
+- Change sentinel value style in array of struct initialization
+- Refuse to set sampling frequency when buffer enabled
+- Return -EINVAL inside default case in all applicable switch statements
+- Move samp_freq_vals in qcom_smgr_iio_read_avail to priv and fix maximum
+- Add devm_add_action_or_reset for releasing QMI handle and get rid of
+  qcom_smgr_remove
+- Add service versions and instance IDs found on some platforms to QRTR
+  match table
+- Fix null pointer dereference on registering unsupported sensor
+
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+---
+Yassine Oudjana (4):
+      net: qrtr: smd: Rename qdev to qsdev
+      net: qrtr: Turn QRTR into a bus
+      net: qrtr: Define macro to convert QMI version and instance to QRTR instance
+      iio: Add Qualcomm Sensor Manager driver
+
+ MAINTAINERS                                     |  13 +
+ drivers/iio/accel/qcom_smgr_accel.c             | 138 ++++
+ drivers/iio/common/Kconfig                      |   1 +
+ drivers/iio/common/Makefile                     |   1 +
+ drivers/iio/common/qcom_smgr/Kconfig            |  16 +
+ drivers/iio/common/qcom_smgr/Makefile           |   8 +
+ drivers/iio/common/qcom_smgr/qcom_smgr.c        | 840 ++++++++++++++++++++++++
+ drivers/iio/common/qcom_smgr/qmi/Makefile       |   3 +
+ drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.c | 713 ++++++++++++++++++++
+ drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.h | 161 +++++
+ drivers/soc/qcom/qmi_interface.c                |   5 +-
+ include/linux/iio/common/qcom_smgr.h            |  80 +++
+ include/linux/mod_devicetable.h                 |   9 +
+ include/linux/soc/qcom/qrtr.h                   |  46 ++
+ net/qrtr/af_qrtr.c                              |  23 +-
+ net/qrtr/qrtr.h                                 |   3 +
+ net/qrtr/smd.c                                  | 252 ++++++-
+ scripts/mod/devicetable-offsets.c               |   4 +
+ scripts/mod/file2alias.c                        |  10 +
+ 19 files changed, 2302 insertions(+), 24 deletions(-)
+---
+base-commit: 835244aba90de290b4b0b1fa92b6734f3ee7b3d9
+change-id: 20250710-qcom-smgr-8db96d370b10
+
+Best regards,
+-- 
+Yassine Oudjana <y.oudjana@protonmail.com>
+
 
 
