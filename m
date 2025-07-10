@@ -1,205 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-64406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC822B004E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 16:15:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9E57B004F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 16:20:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48C511C4016D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 14:16:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 395FD4A10D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 14:19:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F302E1442E8;
-	Thu, 10 Jul 2025 14:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD1392727E9;
+	Thu, 10 Jul 2025 14:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="OIDPkdGX"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="D3qt60sn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049A8231A24;
-	Thu, 10 Jul 2025 14:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752156944; cv=pass; b=DRHq9dtcO5+mEYaUySW3PK9LzWD7wNawODkoQbem7wxIurpaCUNom5Z4gRDEu6XPehbL0h7j4jEMe2PHcEJgi/hQt1pEHYKU4fez4ehm0wo69i+F5Rfv9VFBrlG44ocmD2HnLmgM+E+HiLbIXa40lAZOfQWMYereCxWRM2eCa+s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752156944; c=relaxed/simple;
-	bh=VkWIov4pncN1CxRUjWnTedpZphrnmnhBJGxO59cUQio=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n2CQrgplkTih2p4fEEmR0nElUcznkLn245ObJbRF1vHfJR4RRvbBh8ObswkBTzAOEMH3zQhxNTR3y7r+hAvb4l3qBnmyz+sYhH+CmzBGPBkbdpxympvPUcR1Q6v055HhvdzUVjF4wxUUPe5jXwBr8WmhQSDfyGpe3YJ9wd1fclY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=OIDPkdGX; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1752156866; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BxbU6/hBdzFK5J83uPrxiRnMJK5DwDubdmhCFsE8xTFJLhOQwhMIoE0J/wBnyQyVlNelxEurbeyG3Xb5KTEPiBLS8OuGd9aH4/YeNeOF16WOmHfai83x8rCj2fNCFcM8D0abUMGw+4K606NNNvOwossKZ2ZMZhpe21y84FzzmbQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1752156866; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=+Bd1ScZrM2JC5+XfTmUMVfKPSMOMu2+hKdobUpn9uAo=; 
-	b=AWvkfaannUwK9VBk/+ID3M8INlNR+LiGkN7SOXEEnqmMuDP4zI3T+5yxF6efYDCxhR+Z8TG8xY5n450grEiA0kOdZ/E3Nz80+CF01Blo8mcW30Zc5SpF8UpJdaUFNybrwuCMUjWqAScmFQb47e2MLe3O+kweM9JCdjLvuO2frAU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1752156866;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=+Bd1ScZrM2JC5+XfTmUMVfKPSMOMu2+hKdobUpn9uAo=;
-	b=OIDPkdGXgEeMzXE5rpruOGW/k17fl/ejoogEYAs4cEaibKURNF8jt9+ONc15Ma8w
-	ynSLNOGF5peSetDKVHK6VxLJi/C1EuJNxkmowaFbwvPQuPK8ez2Ud3aSag9e1SxQypg
-	MVpEQC+ZI+L9/HgMSDY9Yc3FhtnaiQxRiVysRfBA=
-Received: by mx.zohomail.com with SMTPS id 1752156862699411.0438114787785;
-	Thu, 10 Jul 2025 07:14:22 -0700 (PDT)
-Message-ID: <d4e9f38b-895e-45ea-90db-3c2839c76c70@collabora.com>
-Date: Thu, 10 Jul 2025 19:14:15 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE57427147D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 14:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752157144; cv=none; b=n9qxCw1RD+wXRhLWHBovPTnrFEifZCorysvjaFmf4UYPUnSv3jVMSSqt8lHWRIfWFLao1xen8e7l98djC35NiQA4N2X/pLmNVrZFkO55Xiqyn+/6HsqEvJrXjueiGrJUpmkLs0+Q/KxKuyIpIJqWzSdQhrKK+oO1vmdx/LAcyaY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752157144; c=relaxed/simple;
+	bh=oEQ/x0dY0kNGAWfhYKRJWYj+mHzmWk1s5K3JD3k6Ii0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MoeEEdRAuP5ozFmXcA7366DEz4WuLV//lanTlThX2ItU5BTK/Qbpi6a0VLGw/0bwEfSO/JV5EQBOHoC1npGLKezysZK0bDxyyMdn7D5ihoXvQ7LbFhjUUBLsdZLujiNcaHarY2X7O4xG8yd2scRwEKla41h71VBhlPa5r5+Ug/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=D3qt60sn; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-553d2eb03a0so2461722e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 07:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752157141; x=1752761941; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SRPHLltBMzeDe5jIxfPi59kLql9c4fXU4cd9YzbhV4o=;
+        b=D3qt60snEaCbtFEVFVtcoGb44O4DG6QDvuDfYU/b1IRoOjyVG7ImLR3yKsFDXmZup5
+         yrOZ1OvKn2ugokeadZBoWXBkNYUnICeIkox+MCcx7FYUSkeuiihkFfRPvoBrgbs23Gne
+         hqlA6bJbdY5HZTLVpRGdOo4skcp9stOLxU039I+suIM+J8p4ctgEF3myTMYbaiToKVYM
+         J4+7JPZu0l478pYppmQ8rBms59bU/jCmk+fdhkVYXzy+NHul0y/aVs2Nrd9nju6BPnyj
+         nSDvubBrVe8LkkYK41qDGeBEySxcpWC26CBpJyxIOAbhOXyYoWuCcDxLX86qcKA08qqP
+         MoRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752157141; x=1752761941;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SRPHLltBMzeDe5jIxfPi59kLql9c4fXU4cd9YzbhV4o=;
+        b=UJOxf9iKaMGp6m+q0Y+9Dho+fAvLl9ZY2WJ3l7SMgZMdD1oU26uPwnAvltld5hKYF/
+         wc0xoJpOUITSuDNJqlsm3a5ZhYInBkA8o9yU6xSs2ooKjLWjCKrIQRRtDp9wGMee0M7w
+         +99ArOyk0MPhdBo+1gGVCv2HNu2q24AHQlc/J56dZGbKRNn8XxVnLkcG5vf929Cq+4EN
+         X23UpRoIDjgHe5NguX0J0SNGW/O5rIniXzey+T/4s9Iyjqv3gMafQAcE3BwVuyyT184f
+         nbAw74UjdKsJfJl89zy6AePoaT07BBoich8xVhBPRVza0NIzKNC93URXNPuoSECRGW/A
+         EwpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVunfHx97VuPNIvfBDO2Ld/PNFrzveVelcaEt+zsOunIm41REEOakQyosNYKjA3MzNyfj+iBUaYkHQFtZrP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhgbfO+uf+IqGhi1U+9oi+Mip67y3iNSpz3gEPimPiFv6SE8Jz
+	+Sd2m1EJ8YdQj801XFTozJ9bvNTJFEJbHhqjX2HHsTKf1oVPhkq3CDHiQXMH7zgWQN7iBIRTD9/
+	zOYC0nPDiDjdcz0uh0d56rtRPkt2Kj6mlMXfhQebP5Q==
+X-Gm-Gg: ASbGncvboX8SzrZwcYJsTvl1mkAXWxXR1+fN/UcLVinR2OYzN17aaMwoUnd+63AZLqS
+	CuApUvTVIP6uE1TwAXhVEKgABLyRYKgrcpwgUm9w1R8fCNEEAuku56clI5YFExVAGC1r4rRZ5xy
+	+xGnVLlbSOsxf4EzpTqryAc4irMIpajVN24MBlwJ36jSKuyehgkfaJy4OJCA8udqTHP4dyIPD/u
+	7Q=
+X-Google-Smtp-Source: AGHT+IGjaU4rKpa8CqG5pu0KCCEMGlHrurb1k5qJX9u+E2WEI/JPgsWZwxZnIfescabddMghBfCvSskJKJ/p+LQUdH4=
+X-Received: by 2002:a05:6512:1322:b0:554:f72c:8192 with SMTP id
+ 2adb3069b0e04-559006c631bmr1170872e87.5.1752157140814; Thu, 10 Jul 2025
+ 07:19:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] bus: mhi: host: keep bhi buffer through suspend cycle
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Manivannan Sadhasivam <mani@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
- Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Youssef Samir <quic_yabdulra@quicinc.com>,
- Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
- Alexander Wilhelm <alexander.wilhelm@westermo.com>,
- Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Siddartha Mohanadoss <smohanad@codeaurora.org>,
- Sujeev Dias <sdias@codeaurora.org>, Julia Lawall <julia.lawall@lip6.fr>,
- John Crispin <john@phrozen.org>, Muna Sinada <quic_msinada@quicinc.com>,
- Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
- Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Cc: kernel@collabora.com
-References: <20250630074330.253867-1-usama.anjum@collabora.com>
- <20250630074330.253867-2-usama.anjum@collabora.com>
- <b76cfe82-b977-4166-85d8-368539b392fd@oss.qualcomm.com>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <b76cfe82-b977-4166-85d8-368539b392fd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+References: <20250709144728.43313-1-brgl@bgdev.pl> <141abf1f-2739-4ccf-8a2b-3451c299ef49@oss.qualcomm.com>
+In-Reply-To: <141abf1f-2739-4ccf-8a2b-3451c299ef49@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 10 Jul 2025 16:18:49 +0200
+X-Gm-Features: Ac12FXw57wqi3gyfzBD_lV_SmnPhS5NgG7-5dfbuNvEr-NTt537CCC_khbehbx8
+Message-ID: <CAMRc=McYqNm4gVgDir=Er_TdOCFUknapFx8a7q4cdyY63sb-0A@mail.gmail.com>
+Subject: Re: [PATCH v2] MAINTAINERS: add a sub-entry for the Qualcomm
+ bluetooth driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
+	Shuai Zhang <quic_shuaz@quicinc.com>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-bluetooth@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you so much for review.
+On Wed, Jul 9, 2025 at 7:06=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 7/9/25 4:47 PM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Patches modifying drivers/bluetooth/hci_qca.c should be Cc'ed to the
+> > linux-arm-msm mailing list so that Qualcomm maintainers and reviewers
+> > can get notified about proposed changes to it. Add a sub-entry that add=
+s
+> > the mailing list to the list of addresses returned by get_maintainer.pl=
+.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> > Changes in v2:
+> > - add remaining QCA files (Dmitry)
+> >
+> >  MAINTAINERS | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index efba8922744a3..d018923ddd3eb 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -20464,6 +20464,13 @@ S:   Maintained
+> >  F:   Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
+> >  F:   drivers/net/wwan/qcom_bam_dmux.c
+> >
+> > +QUALCOMM BLUETOOTH DRIVER
+> > +L:   linux-arm-msm@vger.kernel.org
+> > +S:   Maintained
+> > +F:   drivers/bluetooth/btqca.[ch]
+> > +F:   drivers/bluetooth/btqcomsmd.c
+> > +F:   drivers/bluetooth/hci_qca.c
+>
+> + Jeff, maybe you/ath would like to be included there too?
+>
 
-On 7/8/25 2:47 PM, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 6/30/2025 1:13 PM, Muhammad Usama Anjum wrote:
->> When there is memory pressure, at resume time dma_alloc_coherent()
->> returns error which in turn fails the loading of firmware and hence
->> the driver crashes:
->>
-> why only bhi? bhie can also have same issue.
-I was thinking I'd handled all bhie cases in earlier patch. But I haven't. I'll post
-fix for bhie in next version.
+I suppose this is material for a separate patch and MAINTAINERS entry?
 
->> kernel: kworker/u33:5: page allocation failure: order:7,
->> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
->> kernel: CPU: 1 UID: 0 PID: 7693 Comm: kworker/u33:5 Not tainted
->> 6.11.11-valve17-1-neptune-611-g027868a0ac03 #1
->> 3843143b92e9da0fa2d3d5f21f51beaed15c7d59
->> kernel: Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
->> kernel: Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
->> kernel: Call Trace:
->> kernel:  <TASK>
->> kernel:  dump_stack_lvl+0x4e/0x70
->> kernel:  warn_alloc+0x164/0x190
->> kernel:  ? srso_return_thunk+0x5/0x5f
->> kernel:  ? __alloc_pages_direct_compact+0xaf/0x360
->> kernel:  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
->> kernel:  __alloc_pages_noprof+0x321/0x350
->> kernel:  __dma_direct_alloc_pages.isra.0+0x14a/0x290
->> kernel:  dma_direct_alloc+0x70/0x270
->> kernel:  mhi_fw_load_handler+0x126/0x340 [mhi
->> a96cb91daba500cc77f86bad60c1f332dc3babdf]
->> kernel:  mhi_pm_st_worker+0x5e8/0xac0 [mhi
->> a96cb91daba500cc77f86bad60c1f332dc3babdf]
->> kernel:  ? srso_return_thunk+0x5/0x5f
->> kernel:  process_one_work+0x17e/0x330
->> kernel:  worker_thread+0x2ce/0x3f0
->> kernel:  ? __pfx_worker_thread+0x10/0x10
->> kernel:  kthread+0xd2/0x100
->> kernel:  ? __pfx_kthread+0x10/0x10
->> kernel:  ret_from_fork+0x34/0x50
->> kernel:  ? __pfx_kthread+0x10/0x10
->> kernel:  ret_from_fork_asm+0x1a/0x30
->> kernel:  </TASK>
->> kernel: Mem-Info:
->> kernel: active_anon:513809 inactive_anon:152 isolated_anon:0
->>      active_file:359315 inactive_file:2487001 isolated_file:0
->>      unevictable:637 dirty:19 writeback:0
->>      slab_reclaimable:160391 slab_unreclaimable:39729
->>      mapped:175836 shmem:51039 pagetables:4415
->>      sec_pagetables:0 bounce:0
->>      kernel_misc_reclaimable:0
->>      free:125666 free_pcp:0 free_cma:0
->>
->> In above example, if we sum all the consumed memory, it comes out
->> to be 15.5GB and free memory is ~ 500MB from a total of 16GB RAM.
->> Even though memory is present. But all of the dma memory has been
->> exhausted or fragmented.
->>
->> Fix it by allocating it only once and then reuse the same allocated
->> memory. As we'll allocate this memory only once, this memory will stay
->> allocated.
->>
->> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->>
->> Fixes: cd457afb1667 ("bus: mhi: core: Add support for downloading firmware over BHIe")
->> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->> ---
->> Reported here:
->> https://lore.kernel.org/all/ead32f5b-730a-4b81-b38f-93d822f990c6@collabora.com
->>
->> Still a lot of more fixes are required. Hence, I'm not adding closes tag.
->> ---
->>   drivers/bus/mhi/host/boot.c     | 19 ++++++++++---------
->>   drivers/bus/mhi/host/init.c     |  5 +++++
->>   drivers/bus/mhi/host/internal.h |  2 ++
->>   include/linux/mhi.h             |  1 +
->>   4 files changed, 18 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->> index b3a85aa3c4768..11bb8c12ac597 100644
->> --- a/drivers/bus/mhi/host/boot.c
->> +++ b/drivers/bus/mhi/host/boot.c
->> @@ -302,8 +302,8 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
->>       return -EIO;
->>   }
->>   -static void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
->> -                struct image_info *image_info)
->> +void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
->> +             struct image_info *image_info)
->>   {
->>       struct mhi_buf *mhi_buf = image_info->mhi_buf;
->>   @@ -455,18 +455,19 @@ static enum mhi_fw_load_type mhi_fw_load_type_get(const struct mhi_controller *m
->>     static int mhi_load_image_bhi(struct mhi_controller *mhi_cntrl, const u8 *fw_data, size_t size)
->>   {
->> -    struct image_info *image;
->> +    struct image_info *image = mhi_cntrl->bhi_image;
->>       int ret;
->>   -    ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
->> -    if (ret)
->> -        return ret;
->> +    if (!image) {
->> +        ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
->> +        if (ret)
->> +            return ret;
->>   -    /* Load the firmware into BHI vec table */
->> -    memcpy(image->mhi_buf->buf, fw_data, size);
->> +        /* Load the firmware into BHI vec table */
->> +        memcpy(image->mhi_buf->buf, fw_data, size);
->> +    }
->>         ret = mhi_fw_load_bhi(mhi_cntrl, &image->mhi_buf[image->entries - 1]);
-> if mhi fw load fails didn't we need to free bhi buffer.
-Good point. I'll fix in v2.
-
+Bart
 
