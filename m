@@ -1,173 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-64421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8390B007D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:57:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCCCEB007F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 18:01:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 582CC1C87074
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:54:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A595B5468DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 16:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBE2C27FB06;
-	Thu, 10 Jul 2025 15:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 168D42EE999;
+	Thu, 10 Jul 2025 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LbZI3pzS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jN31oc9R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38C827F00E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 15:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF4F2EE980;
+	Thu, 10 Jul 2025 16:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752162725; cv=none; b=DKdSJHdZDpkin3ckh9G5wwopJ5sN1NcFJDkgMwkJ3z1ffmo7dgmkOb8yR47Mp/LRj7AXm9X51AmGI2Lgl87Rkbx01shzFdJmsJyup0hcFdmE/6wid+RyG/O6UoHYFXJxn/VgbvJc9bK91zha/YJS9nbBaoQl8S5zawgTZViXsMw=
+	t=1752163262; cv=none; b=SN6/eQgp5TRb6xGb3hqNEAtb4nZp9BUjilmBEXnpkFwe6v6DnPB5QbnI8Pud0EcjSmTb7Lsg0F8oB1rKdW+AW9845JYc6HuKEF4PoiQ1G4+1ygFmtfEpJFly/I1JdUlioT5VK+O/aBj6WStPfhEH93idt7cIvwMDc5OK8e9kvK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752162725; c=relaxed/simple;
-	bh=vZWFDt1fg2g84/6CbpXmdsOPkf8vAndRakJ7mBAnblA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rMn/jLl4TPZ7ctCV731ew4OOOy+MLkejo/2nk41mTUSkJjh3WaRywoy5y0GAbll9eAfzPjO6/t5iz9FOgs/q2ejt7XlSb0jxH7cU2KnS4fnkgjq8PqU687R3QRJ76w9tHuzxHxciyruVa73aRwl5hVGkpe5eaiDhWWEoxhs5+eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LbZI3pzS; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752162722;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JJwHo4Zhfo+XQdxC69KbVscnMO2afRdyYYJQIDGMOLg=;
-	b=LbZI3pzSlMWQ48lw7PMYZfi8wSQz/y8h/o+W7ggoZR7k1QqLy4TAgQoLGm+2sb5notX5Or
-	ONVKckjZF6bgzjmLy0pJ6UKJvbONxUPDa4LA3eSi6fgyfspHRglXeITVxoZtmbLMnKKbd3
-	wXjdy2jsUbbz4KX6YjVf92yimN5Y7Kc=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-gRal3kXZMCS7d8TInSzvUQ-1; Thu, 10 Jul 2025 11:52:01 -0400
-X-MC-Unique: gRal3kXZMCS7d8TInSzvUQ-1
-X-Mimecast-MFC-AGG-ID: gRal3kXZMCS7d8TInSzvUQ_1752162721
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-704817522b9so16606556d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 08:52:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752162721; x=1752767521;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JJwHo4Zhfo+XQdxC69KbVscnMO2afRdyYYJQIDGMOLg=;
-        b=DLcwrMpHI2EF2YxMvBUhzsJMcBe6saOCkaPkN0FL9eAfWx4j5eQZZbrlCKUeIvwvzI
-         NpMYOCf+AhwVjWmkkw+UGG7Da3YmvBHLDpkUGVFfAJJ4647dwP9hXUlHKS+9lxAMBK/o
-         Un7p79QODL8Q9NTBDyGAYTf11WuPkIqMpS3tfBHv/eZYgZQk/V1Kf2c2iTQwQiEGtu6u
-         GUfuCz4Vf5WzWQKv9ESzbFf01tVF11senSv2RtYW35pVNYx+nOHZBmbQIRyZWNTu3uRs
-         25YpO3Zll5FBV5D24wGrJNZAj1zt2C3r03xEHmHQj8/kQUZP6CONEAIg98yiMNF75Lwy
-         7stg==
-X-Forwarded-Encrypted: i=1; AJvYcCWHHHG3KlNzp0QDWkB64elwI0OyFmD/dWjpFSXCqEYtSuOTu4LmW2dd2LO9ohOegDS4w6CDF1CpURXXLUKt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4pt/5bqMQKHnprBgWx1SvkDPmS4omWPh/IymiquaS+onG/+ZL
-	ROlMFG6PDaAPchfzQNQ8jE8QSQpOLfJClQQ6jHy0BAhYvjGjXRbM87wJ+F9t3y8D6okXjd4BcX4
-	rx1x7Z+Pl1x2Q0qPuIdUv3vwPcYQeaPPuStAguvNGYQUH1401l/j7RxsoJxjoeWndLx0=
-X-Gm-Gg: ASbGncvDPPha5yZiAfq7bu1lizbwG9XlP56JOSohND8EFCU2nYg/cV869W0Bb0j9K3v
-	PnMg+xoK5CVvvRcl+YyoGCIhTFLEN5f287JyOAMeSBBCFsRBiTBGjzdPn6BGYPkf26ZCv+6IJjc
-	bWHNs68W16J2HDTpkzZfo4GjK4SNpGgQE42tMH0z8ybqemWsyFxvzqyTN+LHmom89AWZF6WD+qt
-	KN3JA3DbW/yW14mrKDpOt1NoAi6ODIZ7ikHjjltePnkQdifxRWN82r+xEjDIiDOSJaaaMIiqNw8
-	Lw1glQvko9qFJ5KOAjHp2I48Rzqoh0wzZ8s6Lot+S0NL+qeJyPGNHliTnO/H
-X-Received: by 2002:a05:6214:27ef:b0:700:bae3:e1a5 with SMTP id 6a1803df08f44-70494f70162mr73492386d6.19.1752162720460;
-        Thu, 10 Jul 2025 08:52:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG03Gb2AMowqF+jhr90PyL5QhMQySpCZDY992sVjt31FhV8SI5QbSkQU4E7TgwJWA3WWhabRg==
-X-Received: by 2002:a05:6214:27ef:b0:700:bae3:e1a5 with SMTP id 6a1803df08f44-70494f70162mr73489626d6.19.1752162717842;
-        Thu, 10 Jul 2025 08:51:57 -0700 (PDT)
-Received: from [192.168.1.3] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70497d3940asm9475456d6.73.2025.07.10.08.51.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 08:51:57 -0700 (PDT)
-From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 10 Jul 2025 11:51:12 -0400
-Subject: [PATCH 6/6] sound: soc: stm: stm32_sai_sub: convert from
- round_rate() to determine_rate()
+	s=arc-20240116; t=1752163262; c=relaxed/simple;
+	bh=v8ElBDnMClgNepe5mdVK1RbBPo+dvrlzWpM5bJHEYik=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WcE1k7Mw1PToznba5Fl47Z25mgQtsuVkpBKxBjbMmBwZKp2WC8UcgDr3XPtDHkhEIywVuKVZkDA4g0/Q7+UdLOBGkDocqk1XLir2+uZBPzvJCng4g6nmjUEbCOm7dViSnPs2UoH7+w0NkDEUmmOEz3McXICYMZhI+ycr4GBob8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jN31oc9R; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56ADcTgl022589;
+	Thu, 10 Jul 2025 16:00:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iRZh7WJh0N1Au7LsGB/4Me9YIACj+GKTzoKa+QiWZBU=; b=jN31oc9R7AcH1F9E
+	pMHO/Dk371obuGXZ2JH7nbJiwH2DjE092GuhMTo82mHjDoEPFaYrMg3rO0lyZ5uG
+	dhHbMNvpIeW9aZsiYTV6GMkjqha6VnYOlhs3uSit6SVnmrvhkH8/h1eVbsySJk2L
+	n35UXb/WyHqaOGHRcrncFWEWdZ3pSyvjNoruRIhO7pOa6lc1f4Adu4OrBO/1TN2F
+	7aXXUSChEX3YGlZfMDWB+s1olpf3LLOFVRLQFTD0reTIN5qEts2iDLpOzLeNr4Lo
+	3jc4xo9DEU1LCNzTijDM9QPdNcdxsq3OgnjFoRl2D/kKFzZs0FJsLhUPWyzUVXCq
+	/ZIZng==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47t83u1tre-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Jul 2025 16:00:44 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56AG0h4E007078
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Jul 2025 16:00:43 GMT
+Received: from [10.216.28.220] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
+ 2025 09:00:39 -0700
+Message-ID: <9d47157e-955e-4694-b2fe-b0d6a685afef@quicinc.com>
+Date: Thu, 10 Jul 2025 21:30:17 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 2/3] scsi: ufs: core: Add ufshcd_dme_rmw to modify DME
+ attributes
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <mani@kernel.org>,
+        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
+        <bvanassche@acm.org>, <avri.altman@wdc.com>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, kernel test robot <lkp@intel.com>
+References: <20250709205635.3395-1-quic_nitirawa@quicinc.com>
+ <20250709205635.3395-3-quic_nitirawa@quicinc.com>
+ <cc6e8ae1-d63a-4f90-8752-07251b3bff04@oss.qualcomm.com>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <cc6e8ae1-d63a-4f90-8752-07251b3bff04@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250710-sound-clk-round-rate-v1-6-4a9c3bb6ff3a@redhat.com>
-References: <20250710-sound-clk-round-rate-v1-0-4a9c3bb6ff3a@redhat.com>
-In-Reply-To: <20250710-sound-clk-round-rate-v1-0-4a9c3bb6ff3a@redhat.com>
-To: Support Opensource <support.opensource@diasemi.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Oder Chiou <oder_chiou@realtek.com>, Srinivas Kandagatla <srini@kernel.org>, 
- Olivier Moysan <olivier.moysan@foss.st.com>, 
- Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Maxime Ripard <mripard@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org, 
- Brian Masney <bmasney@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752162699; l=1764;
- i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=vZWFDt1fg2g84/6CbpXmdsOPkf8vAndRakJ7mBAnblA=;
- b=qoEKZTVvf/Mg1qqHNBU8HndCgCmiS0GmOJSvOpA45N85Yb6978lTjjiSZ4dbTnh0LPFhTtH2p
- Pn2SWV3e4UADKJGs88lQVhTDLPfehYeojWCySSStGKSngtnmPzV3I8g
-X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
- pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _LrJlFTzeKxSn6TrRoZvidc8JuC60bA0
+X-Authority-Analysis: v=2.4 cv=OotPyz/t c=1 sm=1 tr=0 ts=686fe3ac cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=QyXUC8HyAAAA:8
+ a=STXggq6GYrdehICBV5YA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDEzNyBTYWx0ZWRfX4NBtf8Vmzhin
+ PoNNx4Y0P/lg0J0vuWKi+u2mr6qh+zWIG1oEyiTjeQzqKhvpcTKBlybPQspRdoLD0965Yq0Gj9j
+ TplWOqcUd+vn/TC6ZIOYsliEESySVYmIg6HOtPr9EB6NZMTVHLqBEaqX6zs2fSjkwtAd4QRqpUk
+ DgOjJ/YxiOvcuqZgVF9LkvFyLnA5OwBY2u7RzXnYpaK67ebOW9T33OU63Jul7oOqDESWYFPmd5m
+ OWy1ZaIfv9vJML2cZlp4nbGGgUpGwWI0U3TencEr/0vg1rwpsK4A6dLoXQ+r7NyMAYOs0BXulV2
+ 1zWlHO9PFsdEjkoYw+xFDNTlKsHLEUmM4YlGBSUC8KGJVv8AsCN9fHMwhQhWPZE0ph1QkRQfQbo
+ ACa9SK0EklDWDe9QzOabPd8wgK1HObjyACwOtV+ExZ8diWOLTCOVYG3hOhQDht3wyz8N+Nxe
+X-Proofpoint-GUID: _LrJlFTzeKxSn6TrRoZvidc8JuC60bA0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-10_04,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 mlxscore=0 adultscore=0 spamscore=0
+ malwarescore=0 mlxlogscore=808 clxscore=1015 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507100137
 
-The round_rate() clk ops is deprecated, so migrate this driver from
-round_rate() to determine_rate() using the Coccinelle semantic patch
-on the cover letter of this series.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
----
- sound/soc/stm/stm32_sai_sub.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
-index bf5299ba11c3c95ad89dfb00612ade7ed42b9d0d..463a2b7d023b9cae802f88041c23a9bcc3219a6a 100644
---- a/sound/soc/stm/stm32_sai_sub.c
-+++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -489,20 +489,22 @@ static int stm32_sai_set_parent_rate(struct stm32_sai_sub_data *sai,
- 	return -EINVAL;
- }
- 
--static long stm32_sai_mclk_round_rate(struct clk_hw *hw, unsigned long rate,
--				      unsigned long *prate)
-+static int stm32_sai_mclk_determine_rate(struct clk_hw *hw,
-+					 struct clk_rate_request *req)
- {
- 	struct stm32_sai_mclk_data *mclk = to_mclk_data(hw);
- 	struct stm32_sai_sub_data *sai = mclk->sai_data;
- 	int div;
- 
--	div = stm32_sai_get_clk_div(sai, *prate, rate);
-+	div = stm32_sai_get_clk_div(sai, req->best_parent_rate, req->rate);
- 	if (div <= 0)
- 		return -EINVAL;
- 
--	mclk->freq = *prate / div;
-+	mclk->freq = req->best_parent_rate / div;
- 
--	return mclk->freq;
-+	req->rate = mclk->freq;
-+
-+	return 0;
- }
- 
- static unsigned long stm32_sai_mclk_recalc_rate(struct clk_hw *hw,
-@@ -558,7 +560,7 @@ static const struct clk_ops mclk_ops = {
- 	.enable = stm32_sai_mclk_enable,
- 	.disable = stm32_sai_mclk_disable,
- 	.recalc_rate = stm32_sai_mclk_recalc_rate,
--	.round_rate = stm32_sai_mclk_round_rate,
-+	.determine_rate = stm32_sai_mclk_determine_rate,
- 	.set_rate = stm32_sai_mclk_set_rate,
- };
- 
+On 7/10/2025 5:56 PM, Konrad Dybcio wrote:
+> On 7/9/25 10:56 PM, Nitin Rawat wrote:
+>> Introduce `ufshcd_dme_rmw` API to read, modify, and write DME
+>> attributes in UFS host controllers using a mask and value.
+>>
+>> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> This tag makes sense if your patch is merged into the tree
+> but happens to contain a build warning/error. Using it here
+> makes it look like the kernel test robot suggested
+> introducing this wrapper
 
--- 
-2.50.0
+sure Konrad. Thanks. I'll update in next patchset.
+
+> 
+> Konrad
 
 
