@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-64338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D25AAFFF15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:21:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8C4EAFFF28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:25:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B4815A13A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:21:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34FBE1C2563E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:26:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 514492980B9;
-	Thu, 10 Jul 2025 10:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB9822D8771;
+	Thu, 10 Jul 2025 10:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ngO6uyn/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R1DYcAdG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B8928B7C6;
-	Thu, 10 Jul 2025 10:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7408821;
+	Thu, 10 Jul 2025 10:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752142911; cv=none; b=Su2pfogCcjirXEe2hWiko7qMG56d+zQr4Gz8JyAanhRVBdLRhpl6X/jvYsEGYN2dih5A6PYUyK28Ovs6/+NBSL+QjNo4+KmgXu+yETtlrs1En2+dKVdNTEbQ/fasJxZ7//qRHzVATVKUe95U6SqTseISedU+iIO8t+uDhiz7+qQ=
+	t=1752143133; cv=none; b=Pn03clLGz4bCiYcWAtPFiq9iDKjhm6ehMI4eEi0j1U/ekCYhO/Z7LY7G8VMDQ0ww7HVXguf2zDDaRXOyGd2TVANyuioPgoXyWihpE3Y1/usIM9N4x6YlxnNdo+cm6f6tW5c52h5X/6zsH178XNlo8YCbT4tt2fDxWoxgsJNXkv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752142911; c=relaxed/simple;
-	bh=A+9Sz68hzFxOWXlYTrr0jLnxA/21fIK4aonpJxZXUMM=;
+	s=arc-20240116; t=1752143133; c=relaxed/simple;
+	bh=1q0jGZCotwRtBVi9Aa70CLuH18o7Rq0YgwEDCowVdiI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fHBoHvMdiG47SYQ/jrfpq7wxoYQVUo6sZvmUqze7IjoPeFQUQqGRNvJFdcMvT9HR5XaSebxtSKo+ktMY5bbJqkBbI/xEYSsFcp4iq8+DnoIivDmv2+El513/muvc+vQh5JWThocgqiF1f4vtf3BMYI08OMWIRHdEFa4Cy26hibQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ngO6uyn/; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=O2Uhv09EXPxYrJ2eJZV1cW53GM/FjGUdoMdjmRbOAgASKhSTCzFks/y4cnSGv2O3FgBzCAiHUU44ZbFmQkVBqJfkqWgBm2511GPpJ13f7JHQgvaDt1WZpMNBJXgwz5aOkazR5wlyy8b4+NDA5h5A1J6gW7oHiys8Ge4YXMJRpZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R1DYcAdG; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A97I30016625;
-	Thu, 10 Jul 2025 10:21:45 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A8kAKU016804;
+	Thu, 10 Jul 2025 10:25:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tf3urf9uVqztqSfyUPaLE7aNRQmb9rU20q9mQcpzNms=; b=ngO6uyn/9GojR7e6
-	qs0WAwVOe6Tma28F8jn0r2Z7jr2kFNgSTwAp5g9vwTd566AXh6yRJ6Snq9GlU41d
-	xHlrsifdsyrIO6XEPTNpTbwXGkyz6tfqWHGV4/eXHsme9xx2128z/CkzhX189j4c
-	qwagUC+a8FJCEcPcXEt5hpHw7CJ4DsCslpGfhcprNEhvOgLFmT3i7suCOsjc5es/
-	TXxzg2RxWwbcr5teoHh6D6kQdtHPTdK8TD28WyCHw1pJ+RdXgRlV2oPIQmoFtjQE
-	FWMMWkbUqc1IHJ2BRdVDNW3KhT6zR1XmWV8SJXW001BFcKJtTFwqFJ8RlvTwSfSZ
-	mGuIbA==
+	1q0jGZCotwRtBVi9Aa70CLuH18o7Rq0YgwEDCowVdiI=; b=R1DYcAdGBOka5kQf
+	dR1Y6DcyRnhF3EDfh74/NWthtnfrOLl13OK9dWLgRCgJuP9ZUK3d4xYu3Z1eTCCP
+	nq1QDZle87zvvbbYZHSPwqsBgr/1Ha9keG5vsVYgLQGqF7+6rUuf/q5sAhgADUVa
+	oQnEp+X55NsM7HS5fLuPYXx+DmaMLDjz6LhpnP8Nts6o5pDmgUcKSj2dqIz2U/xD
+	8DAg3mAvGIhd+oAWMS++crbhILAl9uBENXYPjemLWcQTbYQJh1HO2q29dHdDyxP5
+	LctrbFLhVJZtlkFTlhQJ2NGCyPRgwb6dwiromfbaCrBSKSJszb0PhCBMbCMhj+2C
+	ipdsKg==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smap4k1k-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smbnvjfn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 10:21:45 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56AALiff026017
+	Thu, 10 Jul 2025 10:25:16 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56AAP7Yo032077
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 10:21:44 GMT
-Received: from [10.218.23.250] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 10 Jul 2025 10:25:07 GMT
+Received: from [10.253.75.243] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
- 2025 03:21:38 -0700
-Message-ID: <80848e86-1c0d-4edf-ac25-006a5cd1779f@quicinc.com>
-Date: Thu, 10 Jul 2025 15:50:57 +0530
+ 2025 03:25:00 -0700
+Message-ID: <4f963fcc-2b92-4a01-93a4-f0ae942c1b6f@quicinc.com>
+Date: Thu, 10 Jul 2025 18:24:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,109 +65,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] dt-bindings: clock: qcom,qcs404-turingcc: Reference
- qcom,gcc.yaml
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jeff Hugo
-	<jeff.hugo@oss.qualcomm.com>,
-        Srinivas Kandagatla <srini@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250709-gcc-ref-fixes-v1-0-ceddde06775b@quicinc.com>
- <20250709-gcc-ref-fixes-v1-4-ceddde06775b@quicinc.com>
- <74785dcd-6436-40a6-b747-a4890edc2113@kernel.org>
-Content-Language: en-US
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-In-Reply-To: <74785dcd-6436-40a6-b747-a4890edc2113@kernel.org>
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sa8775p: remove aux clock from
+ pcie phy
+To: Johan Hovold <johan@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <jingoohan1@gmail.com>,
+        <mani@kernel.org>, <lpieralisi@kernel.org>, <kwilczynski@kernel.org>,
+        <bhelgaas@google.com>, <johan+linaro@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <neil.armstrong@linaro.org>,
+        <abel.vesa@linaro.org>, <kw@linux.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <qiang.yu@oss.qualcomm.com>,
+        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>
+References: <20250625090048.624399-1-quic_ziyuzhan@quicinc.com>
+ <20250625090048.624399-4-quic_ziyuzhan@quicinc.com>
+ <25ddb70a-7442-4d63-9eff-d4c3ac509bbb@oss.qualcomm.com>
+ <aG-LWxKE11Ah_GS0@hovoldconsulting.com>
+From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+In-Reply-To: <aG-LWxKE11Ah_GS0@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Ar7u3P9P c=1 sm=1 tr=0 ts=686f9439 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA4OSBTYWx0ZWRfXx6u/93p3/wSe
+ gmB5E7RkHIwssuQY8Ga0spaR3+9/JDEBNrEg1pA3W+uuhNQmDvMV5JPHwUPn1eXx2Wys/010R6d
+ urXqbJluJg6Clw2r4gEjBTuAOkFcZhc7t9gQsuWOCVXXBk69iGfiXbd5uGhpKRD8KFO7/i/+GzM
+ 5wOaFCQxeMHJqA2n6Y0eN8tpSmec/wtiIMUAk0aAXoLSektSToZBkJwF2kZHU6k3QrYB0m5FgT6
+ 3y+S1wTpSqi+yaWkNQmLBtmV/9BY/n5qW6Dn6979GuAAlG8Fnw2eOzUe2gW+j8tJKVF4p4A1DB/
+ XzSKj7ydm++4LG6OMfyVsKMJFmMaQ3yElo1e+2WlWvmBTe90SVJ8ampvIBJoQN2ZqrJ4lIS2S2X
+ 8YOheIgNK0D1IyQZehpLl1Qi1cRrjsUoXULe0KONg1hWJqIAciNm6LstuePNr4QHSO9qKOqF
+X-Authority-Analysis: v=2.4 cv=QM1oRhLL c=1 sm=1 tr=0 ts=686f950c cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=OnOfrgqvBbQOueBi47sA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 7oMePWCFDFo_bjfu_8GD2J1b09EWO55c
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA4OCBTYWx0ZWRfX771G0X3zTjn+
- izOg0Pd3JysxSLbyKmHiWovPpi1N+tMWga8ySHyl7pipoIrw0aM+rssH12sqvi5mP7ns1F+D1UE
- I61OlqrdeH8Sz8bB4j3PYObFWW0wh0jehJ/mLdYUQNJyisO2ee+uhE8lZYff7ub+SFrrK+wMJ4u
- y4JLX5hE3vGXnBxKF+t2YI2362aA1SgfsW2GXuSQ/G4LX/IJO7mkN27DhGHEI7eZhxFPETi2Cp7
- gQ9e9vA/yNmos5WtTKHTYgc6vcaBUcP7QFH2WGBks+nVAcNFtC2U/VK3KoBLxRFgc6o8d08Bcjo
- Q18izkAc36HHUb5F/4a6PBHBbwepSkeK+v9EkuO36W0HzJQLQWLessVNVbFlyVzhawPHrj3rc02
- EqlKyylTf/VhYNH8WP0wGhJxltXDDW1NCqGyHntOmV54BKmGQ0RlO+89WMY/JuoTW36/rRUC
-X-Proofpoint-GUID: 7oMePWCFDFo_bjfu_8GD2J1b09EWO55c
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=EnfF8tveDwBOVxb-o-4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Rsc-n-n6tRHAxd-CNuI8U1R0DAQDFAUn
+X-Proofpoint-GUID: Rsc-n-n6tRHAxd-CNuI8U1R0DAQDFAUn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-10_01,2025-07-09_01,2025-03-28_01
+ definitions=2025-07-10_02,2025-07-09_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 adultscore=0
- phishscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507100088
+ clxscore=1011 impostorscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=999 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507100089
 
 
-On 7/9/2025 3:37 PM, Krzysztof Kozlowski wrote:
-> On 09/07/2025 11:37, Satya Priya Kakitapalli wrote:
->> Reference the common qcom,gcc.yaml schema to unify the common
->> parts of the binding.
->>
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
->>   .../devicetree/bindings/clock/qcom,qcs404-turingcc.yaml | 17 ++++-------------
->>   1 file changed, 4 insertions(+), 13 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs404-turingcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs404-turingcc.yaml
->> index 033e010754a26bd03e02a364b0a6f36d87a3af62..794984f563fe3eb253aaf7524205097cf0c62711 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,qcs404-turingcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,qcs404-turingcc.yaml
->> @@ -13,26 +13,17 @@ properties:
->>     compatible:
->>       const: qcom,qcs404-turingcc
->>   
->> -  reg:
->> -    maxItems: 1
->> -
->>     clocks:
->>       maxItems: 1
->>   
->> -  '#clock-cells':
->> -    const: 1
->> -
->> -  '#reset-cells':
->> -    const: 1
->> -
->>   required:
->>     - compatible
->> -  - reg
->>     - clocks
->> -  - '#clock-cells'
->> -  - '#reset-cells'
-> No, this becomes now power domain provider without explanation.
-
-
-My bad, I will drop the files which do not have the power domain cells 
-in my next post.
-
-
-> Don't just blindly copy other people's commits without understanding them.
+On 7/10/2025 5:43 PM, Johan Hovold wrote:
+> On Fri, Jun 27, 2025 at 04:50:57PM +0200, Konrad Dybcio wrote:
+>> On 6/25/25 11:00 AM, Ziyue Zhang wrote:
+>>> gcc_aux_clk is used in PCIe RC and it is not required in pcie phy, in
+>>> pcie phy it should be gcc_phy_aux_clk, so remove gcc_aux_clk and
+>>> replace it with gcc_phy_aux_clk.
+>> GCC_PCIE_n_PHY_AUX_CLK is a downstream of the PHY's output..
+>> are you sure the PHY should be **consuming** it too?
+> Could we get a reply here, please?
 >
-> Best regards,
-> Krzysztof
+> A bunch of Qualcomm SoCs in mainline do exactly this currently even
+> though it may not be correct (and some downstream dts do not use these
+> clocks).
+>
+> Johan
+
+Hi Johan
+
+After reviewing the downstream platforms, it seems that GCC_PCIE_n_PHY_AUX_CLK
+is generally needed. Would you mind letting us know if there are any platforms
+where this clock is not required?
+
 
