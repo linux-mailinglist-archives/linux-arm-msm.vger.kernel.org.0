@@ -1,407 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-64310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE1BAAFFCCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:53:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3012FAFFCF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 10:56:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A106E189547D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 08:54:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72BF0587A1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 08:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D4C28C86E;
-	Thu, 10 Jul 2025 08:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9414B28DEE4;
+	Thu, 10 Jul 2025 08:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmgaNJaV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DXobjUdh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7A8156F4A;
-	Thu, 10 Jul 2025 08:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6309E28DF0F;
+	Thu, 10 Jul 2025 08:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752137625; cv=none; b=InofNi0aeo9j031P0ftO6mdCTqFR/w8M9YrSTlsmNhmZqElBcqmhv4ThYSNWVvh4ZJdpwLsfI9HZh/VP359RFzToW51l/O60yq8L8fpDP6zGTHF8XEBwJrPfRgX23bgStIX4jG4CglLSp3TA46eXKL90ngJdqZT7V0lbowCy1xE=
+	t=1752137757; cv=none; b=fX5cYQ81VmJZdG7B9qrO6vwRPlWUxjZSbvuGiR292Lu3g3ihOBrdsm10w+3KBBXb8tkF/fjFAAAc3C2Ewn6yQb1XXJ4hxoVyqE9ELkPWHWccnJi/0xW8qAcOAyhNF0DpQj5XRwEA2I2ao8GT1i2vAou+GJqupYtW/eHrXhS2HnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752137625; c=relaxed/simple;
-	bh=j8B+TB81hLh/C1n4b+kDAND4dFAeJvtHpDR1GqvCfC0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IJX0WKx3lqUcaKciWEWgfs+KRSSPLpCUauw29afyetsb8UMO40DGbXxb/b8KYpCiKnr2ahiZUSIjPR1s+bsuYSzTmr4/MJGrIZSJv7OUXTtNrDO/dI46G6MgMX/i7anovAPF022YFrPKc4Zkk6vli7qAjMvKYRqInWUMCQLxF8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WmgaNJaV; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-60c4521ae2cso1259464a12.0;
-        Thu, 10 Jul 2025 01:53:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752137621; x=1752742421; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=69Ugmuq7ybV9YKhFzvOAb5xdvwi1/kSdd3sFQ7b/L4w=;
-        b=WmgaNJaVLqPiOR7LIy6MqJtcP1fDEG+HCoJkjmukBJ+UbF6UmWdS8snEmt/nEoyN36
-         PNtF1s+SaQvVnNgJAfs8Vym9M8gMRQ+1xAjV8xyz9CfK3rXo4djVs8EEAY3lb9J2IiFN
-         eqnvuakm93tCCursYVUD2RTaWB0eM0aky4aiKrjjH4yexcIsKpY/K3L+7XBF3+u+wvCB
-         Cml1e5tbV4vRfiQiVBlPA8gjlwOCqSMgexBJ6N5rHCnZKqqk5JTOtx9vRyp2s/aWS+te
-         J234DIkSz04f+WEzi8vxou77Q7a7My/wZbx72Yez5VCWdc5o0Y64qCMOmjKMHcXTG4FC
-         DMwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752137621; x=1752742421;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=69Ugmuq7ybV9YKhFzvOAb5xdvwi1/kSdd3sFQ7b/L4w=;
-        b=VizJd1QQCqSnrm+m2vAUYL2NFEimrSBz40r0QTSUcnard+mr0rPis6xr6nVO4ikWKe
-         fv1xOoONaj+F46tQHJoVE63GbcDLBqcmnijHpLC3s07Nwl+zuKMURC6YVSyJWzVOqTLP
-         G2jOhO9W5+Pu3QdNiFg0umOPB+pPkkD8WeW3rSWQ30JrDhYJ8+EIymhmFdEUZU9lwXuN
-         DISzkW4ptiW9hp/IK0W2DPLO1+Qciux7vUiC/5Rf09VQ/et5/xv5O2Kvm6dPmHiMxEpu
-         CtOr2yVBAn6B/NfBROjJH/5ug1DgmkRO1S5JiyFtQLJGV7pTZUtDhcTHjjX2V7DyzVsW
-         MDCw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5Xw5HvvkIiucK06r6+YEKOUPmK7Fb7r0TP0UPXNfMNDBEqCnvYMUN7mt0FHO5tG8rkuJGpCOetErzz3JV@vger.kernel.org, AJvYcCVloVggDNjOB3p00rGtqjSxaIezGLAJGiwKVgK1xQXTM47GoUVyCWLwT+Ko6feTDsPHi2nq+YrTxtaxhWuE@vger.kernel.org, AJvYcCWfmW/pHk2yzmYgts4/sRG5Z2ib1CEeXuI4dOA6EOFiOmXK+ADBc1f3agUFybkQ9al9vxqNgutflMg0@vger.kernel.org, AJvYcCXAZYr16xrDvES9z8Is3wXrcMbG6lb6BMMlMCYhzWKAAR+YLjzU6NbdG1BICmK6XG8njT2FTSF3@vger.kernel.org, AJvYcCXroUoNhEtJpM0r+n7KQW1T+URzrLHvNhAL9DTqKk7K0C7P6qliH86ajHKAElsVlDEmvUbYgVC4chauYWHn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7Kzngmh+twlArkdeg2cvO+ZrLr/EGp18By4wqCbEpFeklqri8
-	baSF17za6qjfugWkDCmNi+8Fmm0UZNVsKyYjmxZVMcnCCWawZI1zDXtYoa51Q95xNAkz1YM7CYQ
-	knBee1Yd7fv8tJRY0nGsZYwBzjPVq048=
-X-Gm-Gg: ASbGncvlo+cuqm2csNk6bZaxbUKktisp3FzCEL9IRbxl7y1FlcZMxvcd0qt2qHtsx70
-	EX1oPt1+q6RqFfpjk4SO4XT3dRM+joenpsNaF3u64l/cYZbT7cqLsHhwPns0o6oZVGnSS+DsHq6
-	RBOVEUv3LvncYXrN34fYMl957skoo56oGFsb5d8VjJ+iXHFA==
-X-Google-Smtp-Source: AGHT+IE/057CHjK/mOyiohxDHs24SY8jAE5xKdEv0ZJOoCjA/SIh8PibhxLy6qD7qDjnRhCyTxBW5bPj8u8UyJ1K09g=
-X-Received: by 2002:a17:906:8f01:b0:ae0:d332:f637 with SMTP id
- a640c23a62f3a-ae6e13a247amr316221766b.31.1752137621158; Thu, 10 Jul 2025
- 01:53:41 -0700 (PDT)
+	s=arc-20240116; t=1752137757; c=relaxed/simple;
+	bh=2ta2eZl1fMMsCqmW4VZnYmLNDmkLTRZBsKFzYUb4hDg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BJqStQG+RhWB7MYUtuem0nTyUft59EHK78GEcsHOFBCyobFyMNXiGkps+fZJQAIGxpn5c11J8d8tCBbny5sNxQGgX6wN+/o+c2OiArsPWF8crQ+Ws7Q/+tE6k0Zvs0qremUCApjg2hAoLqMUb3u7/iy4VFiRsbX3+y/jrDrf9hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DXobjUdh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A0G58h012459;
+	Thu, 10 Jul 2025 08:55:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YoUDVSez8y8lC1Edtv6vomRCjdGeeZziTBQod4cqaL8=; b=DXobjUdhCrTis/os
+	EjhXcnC6UnqrAHwjo56UvsV6waYlG+K583kFt5cMDByDfmPgeD79yH04e43d2yyr
+	NLBFw58fB7scF1HNTbANwqbg4dxo4UYXS5bQtdQT6FxUqUjtdZbDiT/Hiq4KEChf
+	3mesa6PKLeLkH8pJa4AV1PtW1jKBWCFS5/4cuG8tuvCIMqSMRBFEzrMvm3JMoD2I
+	VNDBzjssttrtzYvaZ5TW4D5AbwIwJj7c48/tLDEfPpnZ5Rts3BbAB1jqU8qcKz6d
+	k9sRr7X+UmnnYjdhQ7nkDFP/Bv25ogMaT3QDSvthOt5I8DFzFla0g1QoCjIQOw/m
+	NubqKQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pucn7sxx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Jul 2025 08:55:50 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56A8tnlW013714
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Jul 2025 08:55:49 GMT
+Received: from [10.204.100.36] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
+ 2025 01:55:45 -0700
+Message-ID: <55125121-5349-3b8b-2e81-29eec95d8337@quicinc.com>
+Date: Thu, 10 Jul 2025 14:25:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com> <20250710-qcom-smgr-v2-2-f6e198b7aa8e@protonmail.com>
-In-Reply-To: <20250710-qcom-smgr-v2-2-f6e198b7aa8e@protonmail.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Thu, 10 Jul 2025 11:53:04 +0300
-X-Gm-Features: Ac12FXxhcKgMVc-WwlJ7x50JyK0vY6h0yIvi7Sw6HCxlOsEYDe0XTFuJUJDzFbg
-Message-ID: <CAHp75Ved4cnpmiUzidoJqRbdnz=L-0F_KdyWifOOrZHUUf2KQA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] net: qrtr: Turn QRTR into a bus
-To: y.oudjana@protonmail.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, 
-	=?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>, 
-	Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>, linux-arm-msm@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, linux-iio@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 2/5] media: venus: vdec: AR50_LITE video core support
+Content-Language: en-US
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+CC: <krzk+dt@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <quic_vgarodia@quicinc.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
+        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
+ <20250626135931.700937-3-jorge.ramirez@oss.qualcomm.com>
+ <c0e8460d-1c94-d398-38a0-f63395256f27@quicinc.com> <aF62Msej5LvY51D6@trex>
+ <8c7232a3-8c49-d77e-e8e4-6d86a33e2b42@quicinc.com> <aG1uINWPwvl505zG@trex>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <aG1uINWPwvl505zG@trex>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jul 10, 2025 at 11:06=E2=80=AFAM Yassine Oudjana via B4 Relay
-<devnull+y.oudjana.protonmail.com@kernel.org> wrote:
->
-> Implement a QRTR bus to allow for creating drivers for individual QRTR
-> services. With this in place, devices are dynamically registered for QRTR
-> services as they become available, and drivers for these devices are
-> matched using service and instance IDs.
-
-...
-
-> +struct qrtr_device_id {
-> +       __u16 service;
-> +       __u16 instance;
-> +       kernel_ulong_t driver_data;     /* Data private to the driver */
-
-Can we not repeat mistakes from the past and use const void * from day 1 pl=
-ease?
-
-> +};
-> +
->  /* dmi */
-
-Wouldn't it be better to keep sections ordered alphabetically so 'q'
-will go at least after 'd'?
-
-...
-
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +
-> +#ifndef __QCOM_QRTR_H__
-> +#define __QCOM_QRTR_H__
-> +
-> +#include <linux/mod_devicetable.h>
-
-Not enough. Please, follow IWYU principle and include / forward
-declare all this header uses.
-
-> +struct qrtr_device {
-> +       struct device dev;
-> +       unsigned int node;
-> +       unsigned int port;
-> +       u16 service;
-> +       u16 instance;
-> +};
-> +
-> +#define to_qrtr_device(d) container_of(d, struct qrtr_device, dev)
-> +
-> +struct qrtr_driver {
-> +       int (*probe)(struct qrtr_device *qdev);
-> +       void (*remove)(struct qrtr_device *qdev);
-> +       const struct qrtr_device_id *id_table;
-> +       struct device_driver driver;
-> +};
-> +
-> +#define to_qrtr_driver(d) container_of(d, struct qrtr_driver, driver)
-> +
-> +#define qrtr_driver_register(drv) __qrtr_driver_register(drv, THIS_MODUL=
-E)
-> +
-> +int __qrtr_driver_register(struct qrtr_driver *drv, struct module *owner=
-);
-> +void qrtr_driver_unregister(struct qrtr_driver *drv);
-> +
-> +#define module_qrtr_driver(__qrtr_driver) \
-> +       module_driver(__qrtr_driver, qrtr_driver_register, \
-> +                       qrtr_driver_unregister)
-> +
-> +#endif /* __QCOM_QRTR_H__ */
-
-...
-
-> +       int ret =3D 0;
-
-What is this assignment for? (The below is left for the context)
-
->         if (cb->type =3D=3D QRTR_TYPE_NEW_SERVER) {
->                 /* Remote node endpoint can bridge other distant nodes */
->                 qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-> +
-> +               /* Create a QRTR device */
-> +               ret =3D ep->add_device(ep, le32_to_cpu(pkt->server.node),
-> +                                              le32_to_cpu(pkt->server.po=
-rt),
-> +                                              le32_to_cpu(pkt->server.se=
-rvice),
-> +                                              le32_to_cpu(pkt->server.in=
-stance));
-> +               if (ret)
-> +                       goto err;
-> +       } else if (cb->type =3D=3D QRTR_TYPE_DEL_SERVER) {
-> +               /* Remove QRTR device corresponding to service */
-> +               ret =3D ep->del_device(ep, le32_to_cpu(pkt->server.port))=
-;
-> +               if (ret)
-> +                       goto err;
->         }
-
-...
-
-> +       return ret ? ret : -EINVAL;
-
-It's also possible
-
-       return ret ?: -EINVAL;
-
->  }
-
-...
-
-> +++ b/net/qrtr/smd.c
-> @@ -7,6 +7,7 @@
->  #include <linux/module.h>
->  #include <linux/skbuff.h>
->  #include <linux/rpmsg.h>
-> +#include <linux/soc/qcom/qrtr.h>
-
-Can we keep this more ordered?
-
-Also include export.h when the code uses one of the EXPORT_*() macros.
-
-...
-
-> +static int qcom_smd_qrtr_device_match(struct device *dev, const struct d=
-evice_driver *drv)
-> +{
-> +       struct qrtr_device *qdev =3D to_qrtr_device(dev);
-> +       struct qrtr_driver *qdrv =3D to_qrtr_driver(drv);
-> +       const struct qrtr_device_id *id =3D qdrv->id_table;
-> +
-> +       if (!id)
-> +               return 0;
-> +
-> +       while (id->service !=3D 0) {
-
-' !=3D 0' is redundant
-
-> +               if (id->service =3D=3D qdev->service && id->instance =3D=
-=3D qdev->instance)
-> +                       return 1;
-> +               id++;
-> +       }
-> +
-> +       return 0;
-> +}
-
-...
-
-> +static int qcom_smd_qrtr_match_device_by_port(struct device *dev, const =
-void *data)
-> +{
-> +       struct qrtr_device *qdev =3D to_qrtr_device(dev);
-> +       unsigned const int *port =3D data;
-
-Why not
-
-       unsigned int port =3D *((const unsigned int *)data);
-
-> +       return qdev->port =3D=3D *port;
-> +}
-
-...
-
-> +static void qcom_smd_qrtr_add_device_worker(struct work_struct *work)
-> +{
-> +       struct qrtr_new_server *new_server =3D container_of(work, struct =
-qrtr_new_server, work);
-> +       struct qrtr_smd_dev *qsdev =3D new_server->parent;
-> +       struct qrtr_device *qdev;
-> +       int ret;
-> +
-> +       qdev =3D kzalloc(sizeof(*qdev), GFP_KERNEL);
-> +       if (!qdev)
-> +               return;
-> +
-> +       *qdev =3D (struct qrtr_device) {
-> +               .node =3D new_server->node,
-> +               .port =3D new_server->port,
-> +               .service =3D new_server->service,
-> +               .instance =3D new_server->instance
-
-Leave trailing comma.
-
-> +       };
-
-> +       devm_kfree(qsdev->dev, new_server);
-
-?!?! No, just no. Please, fix the object lifetimes and use proper
-allocators (not managed).
-
-> +       dev_set_name(&qdev->dev, "%d-%d", qdev->node, qdev->port);
-
-No error check?
-
-> +       qdev->dev.bus =3D &qrtr_bus;
-> +       qdev->dev.parent =3D qsdev->dev;
-> +       qdev->dev.release =3D qcom_smd_qrtr_dev_release;
-> +
-> +       ret =3D device_register(&qdev->dev);
-> +       if (ret) {
-> +               dev_err(qsdev->dev, "Failed to register QRTR device: %pe\=
-n", ERR_PTR(ret));
-> +               put_device(&qdev->dev);
-> +       }
-> +}
-
-...
-
-> +static int qcom_smd_qrtr_add_device(struct qrtr_endpoint *parent, unsign=
-ed int node,
-> +                                   unsigned int port, u16 service, u16 i=
-nstance)
-> +{
-> +       struct qrtr_smd_dev *qsdev =3D container_of(parent, struct qrtr_s=
-md_dev, ep);
-> +       struct qrtr_new_server *new_server;
-> +
-> +       new_server =3D devm_kzalloc(qsdev->dev, sizeof(*new_server), GFP_=
-KERNEL);
-
-Why is the managed API in use?!
-
-> +       if (!new_server)
-> +               return -ENOMEM;
-> +
-> +       *new_server =3D (struct qrtr_new_server) {
-> +               .parent =3D qsdev,
-> +               .node =3D node,
-> +               .port =3D port,
-> +               .service =3D service,
-> +               .instance =3D instance
-
-Leave trailing comma.
-
-> +       };
-> +
-> +       INIT_WORK(&new_server->work, qcom_smd_qrtr_add_device_worker);
-> +       schedule_work(&new_server->work);
-> +
-> +       return 0;
-> +}
-> +
-> +static int qcom_smd_qrtr_del_device(struct qrtr_endpoint *parent, unsign=
-ed int port)
-> +{
-> +       struct qrtr_smd_dev *qsdev =3D container_of(parent, struct qrtr_s=
-md_dev, ep);
-> +       struct qrtr_del_server *del_server;
-> +
-> +       del_server =3D devm_kzalloc(qsdev->dev, sizeof(*del_server), GFP_=
-KERNEL);
-
-Ditto.
-
-> +       if (!del_server)
-> +               return -ENOMEM;
-> +
-> +       del_server->parent =3D qsdev;
-> +       del_server->port =3D port;
-> +
-> +       INIT_WORK(&del_server->work, qcom_smd_qrtr_del_device_worker);
-> +       schedule_work(&del_server->work);
-> +
-> +       return 0;
-> +}
-
-...
-
-> +static int qcom_smd_qrtr_device_unregister(struct device *dev, void *dat=
-a)
-> +{
-> +       device_unregister(dev);
-> +
-> +       return 0;
-
-Why? Can't this function be void?
-
-> +}
-
-...
-
->  {
->         struct qrtr_smd_dev *qsdev =3D dev_get_drvdata(&rpdev->dev);
->
-> +       device_for_each_child(qsdev->dev, NULL, qcom_smd_qrtr_device_unre=
-gister);
-
-Perhaps _reversed() ?
-
->         qrtr_endpoint_unregister(&qsdev->ep);
->
->         dev_set_drvdata(&rpdev->dev, NULL);
-
->  };
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=GdQXnRXL c=1 sm=1 tr=0 ts=686f8016 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=2vAVLMtbNmCXBqtmqXEA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: jjOCHvtZkpOqGb27fq0AfEzQ5zEc6dLd
+X-Proofpoint-ORIG-GUID: jjOCHvtZkpOqGb27fq0AfEzQ5zEc6dLd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA3NiBTYWx0ZWRfXyAlgXqOIoaf9
+ 4t2eJga5m0jhrx/JTt7qnSw8As494AIdoyI0WkMe7B0x8IdfDyErFPoBaPONLPX25f+OLBEPyjZ
+ WbJLpDvjhk65008bwED/Cm0qNiq237CcXfv7ot0ec4R/IHB0KMzojxAhYhqKqF0bxLFDzztX+OD
+ AL6Rp6g3qCUbqXKXhtyfyYMw8sn8bsv4sjhFmuia4W9rM/YysniHz0g1ueqgUqra4dRJK6Oilgj
+ unDZCXliQQPi8Lw5M+EEgWpeEcnM7SqokoVDuzmkt29mhO0ispjXqKEkimOEECejQBSxlKnxlIj
+ uDMEOZRdsgmhkE0KSw5ld/Yb/8uwT9JIheX0+WmB90xhgShl5NjU6V6Xmi7BfOQMz1Et8clPc6Z
+ 4nBnHkhJyvAQ34G6XZCijxiskynuU70AtUsARH82aUfkjJpelmQonHrnIqj1By1B/VB8UAqZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-10_01,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507100076
 
 
-> +static void __exit qcom_smd_qrtr_exit(void)
-> +{
-> +       unregister_rpmsg_driver(&qcom_smd_qrtr_driver);
-> +       bus_unregister(&qrtr_bus);
-> +}
-> +
-> +subsys_initcall(qcom_smd_qrtr_init);
-> +module_exit(qcom_smd_qrtr_exit);
 
-Move these two closer to the mentioned callbacks.
+On 7/9/2025 12:44 AM, Jorge Ramirez wrote:
+> On 30/06/25 12:17:32, Dikshita Agarwal wrote:
+>>
+>>
+>> On 6/27/2025 8:48 PM, Jorge Ramirez wrote:
+>>> On 27/06/25 18:17:27, Dikshita Agarwal wrote:
+>>>>
+>>>>
+>>>> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
+>>>>> The AR50_LITE is a streamlined variant of the AR50 video core, designed
+>>>>> for power and cost-efficient platforms.
+>>>>>
+>>>>> It supports hardware-accelerated decoding of H.264, HEVC, and VP9
+>>>>> formats.
+>>>>>
+>>>>> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>>>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>>> ---
+>>>>>  drivers/media/platform/qcom/venus/core.c      | 11 ++-
+>>>>>  drivers/media/platform/qcom/venus/core.h      | 11 ++-
+>>>>>  drivers/media/platform/qcom/venus/firmware.c  |  8 +-
+>>>>>  drivers/media/platform/qcom/venus/helpers.c   | 80 +++++++++++++++++++
+>>>>>  drivers/media/platform/qcom/venus/helpers.h   |  2 +
+>>>>>  .../media/platform/qcom/venus/hfi_helper.h    | 10 ++-
+>>>>>  drivers/media/platform/qcom/venus/hfi_venus.c | 14 ++--
+>>>>>  .../media/platform/qcom/venus/pm_helpers.c    |  1 +
+>>>>>  drivers/media/platform/qcom/venus/vdec.c      | 15 ++--
+>>>>>  9 files changed, 128 insertions(+), 24 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>>>>> index d305d74bb152..736ef53d988d 100644
+>>>>> --- a/drivers/media/platform/qcom/venus/core.c
+>>>>> +++ b/drivers/media/platform/qcom/venus/core.c
+>>>>> @@ -254,14 +254,19 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
+>>>>>  
+>>>>>  static void venus_assign_register_offsets(struct venus_core *core)
+>>>>>  {
+>>>>> -	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+>>>>> -		core->vbif_base = core->base + VBIF_BASE;
+>>>>> +	if (IS_IRIS2(core) || IS_IRIS2_1(core) || IS_AR50_LITE(core)) {
+>>>>>  		core->cpu_base = core->base + CPU_BASE_V6;
+>>>>>  		core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
+>>>>>  		core->cpu_ic_base = core->base + CPU_IC_BASE_V6;
+>>>>>  		core->wrapper_base = core->base + WRAPPER_BASE_V6;
+>>>>>  		core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
+>>>>> -		core->aon_base = core->base + AON_BASE_V6;
+>>>>> +		if (IS_AR50_LITE(core)) {
+>>>>> +			core->vbif_base = NULL;
+>>>>> +			core->aon_base = NULL;
+>>>>> +		} else {
+>>>>> +			core->vbif_base = core->base + VBIF_BASE;
+>>>>> +			core->aon_base = core->base + AON_BASE_V6;
+>>>>> +		}
+>>>>>  	} else {
+>>>>>  		core->vbif_base = core->base + VBIF_BASE;
+>>>>>  		core->cpu_base = core->base + CPU_BASE;
+>>>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>>>>> index b412e0c5515a..e755a28e919b 100644
+>>>>> --- a/drivers/media/platform/qcom/venus/core.h
+>>>>> +++ b/drivers/media/platform/qcom/venus/core.h
+>>>>> @@ -382,6 +382,7 @@ enum venus_inst_modes {
+>>>>>   * @lock:	instance lock
+>>>>>   * @core:	a reference to the core struct
+>>>>>   * @clk_data:	clock data per core ID
+>>>>> + * @eosbufs:	a lit of EOS buffers
+>>>>>   * @dpbbufs:	a list of decoded picture buffers
+>>>>>   * @internalbufs:	a list of internal bufferes
+>>>>>   * @registeredbufs:	a list of registered capture bufferes
+>>>>> @@ -450,6 +451,7 @@ struct venus_inst {
+>>>>>  	struct mutex lock;
+>>>>>  	struct venus_core *core;
+>>>>>  	struct clock_data clk_data;
+>>>>> +	struct list_head eosbufs;
+>>>>>  	struct list_head dpbbufs;
+>>>>>  	struct list_head internalbufs;
+>>>>>  	struct list_head registeredbufs;
+>>>>> @@ -520,7 +522,14 @@ struct venus_inst {
+>>>>>  #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
+>>>>>  #define IS_V3(core)	((core)->res->hfi_version == HFI_VERSION_3XX)
+>>>>>  #define IS_V4(core)	((core)->res->hfi_version == HFI_VERSION_4XX)
+>>>>> -#define IS_V6(core)	((core)->res->hfi_version == HFI_VERSION_6XX)
+>>>>> +static inline bool IS_V6(struct venus_core *core)
+>>>>> +{
+>>>>> +	if (WARN_ON_ONCE(!core))
+>>>>> +		return false;
+>>>>> +
+>>>>> +	return core->res->hfi_version == HFI_VERSION_6XX ||
+>>>>> +	       core->res->hfi_version == HFI_VERSION_6XX_LITE;
+>>>>> +}
+>>>> It should be HFI_VERSION_4XX_LITE for AR50_LITE. 4XX represents SC7280 and
+>>>> SDM845 which are AR50.
+>>>
+>>> ah good information - where is this documented? I never found this
+>>> information... I'd appreciate if you could confirm with some document
+>>> for future reference.
+>>>
+>>>>>  
+>>>>>  #define IS_AR50(core)		((core)->res->vpu_version == VPU_VERSION_AR50)
+>>>>>  #define IS_AR50_LITE(core)	((core)->res->vpu_version == VPU_VERSION_AR50_LITE)
+>>>>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+>>>>> index 66a18830e66d..f8dcef0426ac 100644
+>>>>> --- a/drivers/media/platform/qcom/venus/firmware.c
+>>>>> +++ b/drivers/media/platform/qcom/venus/firmware.c
+>>>>> @@ -30,7 +30,7 @@ static void venus_reset_cpu(struct venus_core *core)
+>>>>>  	u32 fw_size = core->fw.mapped_mem_size;
+>>>>>  	void __iomem *wrapper_base;
+>>>>>  
+>>>>> -	if (IS_IRIS2_1(core))
+>>>>> +	if (IS_IRIS2_1(core) || IS_AR50_LITE(core))
+>>>>>  		wrapper_base = core->wrapper_tz_base;
+>>>>>  	else
+>>>>>  		wrapper_base = core->wrapper_base;
+>>>>> @@ -42,7 +42,7 @@ static void venus_reset_cpu(struct venus_core *core)
+>>>>>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+>>>>>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+>>>>>  
+>>>>> -	if (IS_IRIS2_1(core)) {
+>>>>> +	if (IS_IRIS2_1(core) || IS_AR50_LITE(core)) {
+>>>>>  		/* Bring XTSS out of reset */
+>>>>>  		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
+>>>>>  	} else {
+>>>>> @@ -68,7 +68,7 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
+>>>>>  	if (resume) {
+>>>>>  		venus_reset_cpu(core);
+>>>>>  	} else {
+>>>>> -		if (IS_IRIS2_1(core))
+>>>>> +		if (IS_IRIS2_1(core) || IS_AR50_LITE(core))
+>>>>>  			writel(WRAPPER_XTSS_SW_RESET_BIT,
+>>>>>  			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+>>>>>  		else
+>>>>> @@ -181,7 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+>>>>>  	void __iomem *wrapper_base = core->wrapper_base;
+>>>>>  	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
+>>>>>  
+>>>>> -	if (IS_IRIS2_1(core)) {
+>>>>> +	if (IS_IRIS2_1(core) || IS_AR50_LITE(core)) {
+>>>>>  		/* Assert the reset to XTSS */
+>>>>>  		reg = readl(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+>>>> No need to handle no-tz case. Pls drop.
+>>>
+>>> ok
+>>>
+>>>>>  		reg |= WRAPPER_XTSS_SW_RESET_BIT;
+>>>>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>>>>> index 8295542e1a7c..812bec9a05be 100644
+>>>>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>>>>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>>>>> @@ -230,6 +230,79 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+>>>>>  }
+>>>>>  EXPORT_SYMBOL_GPL(venus_helper_alloc_dpb_bufs);
+>>>>>  
+>>>>> +static void free_eos_buf(struct venus_inst *inst, struct intbuf *buf)
+>>>>> +{
+>>>>> +	list_del_init(&buf->list);
+>>>>> +	dma_free_attrs(inst->core->dev, buf->size, buf->va, buf->da,
+>>>>> +		       buf->attrs);
+>>>>> +	kfree(buf);
+>>>>> +}
+>>>>> +
+>>>>> +int venus_helper_free_eos_bufs(struct venus_inst *inst)
+>>>>> +{
+>>>>> +	struct intbuf *buf, *n;
+>>>>> +
+>>>>> +	list_for_each_entry_safe(buf, n, &inst->eosbufs, list) {
+>>>>> +		free_eos_buf(inst, buf);
+>>>>> +	}
+>>>>> +
+>>>>> +	if (list_empty(&inst->eosbufs))
+>>>>> +		INIT_LIST_HEAD(&inst->eosbufs);
+>>>>> +
+>>>>> +	return 0;
+>>>>> +}
+>>>>> +EXPORT_SYMBOL_GPL(venus_helper_free_eos_bufs);
+>>>>> +
+>>>>> +int venus_helper_alloc_eos_buf(struct venus_inst *inst,
+>>>>> +			       struct hfi_frame_data *data)
+>>>>> +{
+>>>>> +	struct venus_core *core = inst->core;
+>>>>> +	struct device *dev = core->dev;
+>>>>> +	struct intbuf *buf;
+>>>>> +	int ret = 0;
+>>>>> +
+>>>>> +	memset(data, 0, sizeof(*data));
+>>>>> +
+>>>>> +	data->buffer_type = HFI_BUFFER_INPUT;
+>>>>> +	data->flags = HFI_BUFFERFLAG_EOS;
+>>>>> +
+>>>>> +	if (IS_AR50_LITE(inst->core)) {
+>>>>> +		/* We must send valid sizes and addresses */
+>>>>> +		buf = kzalloc(sizeof(*buf), GFP_KERNEL);
+>>>>> +		if (!buf) {
+>>>>> +			ret = -ENOMEM;
+>>>>> +			goto fail;
+>>>>> +		}
+>>>>> +
+>>>>> +		buf->type = HFI_BUFFER_INPUT;
+>>>>> +		buf->size = SZ_4K;
+>>>>> +		buf->attrs = DMA_ATTR_NO_KERNEL_MAPPING;
+>>>>> +		buf->va = dma_alloc_attrs(dev, buf->size, &buf->da, GFP_KERNEL,
+>>>>> +					  buf->attrs);
+>>>>> +		if (!buf->va) {
+>>>>> +			ret = -ENOMEM;
+>>>>> +			goto fail;
+>>>>> +		}
+>>>>> +
+>>>>> +		list_add_tail(&buf->list, &inst->eosbufs);
+>>>>> +
+>>>>> +		data->alloc_len = buf->size;
+>>>>> +		data->device_addr = buf->da;
+>>>>> +
+>>>> why this special handling for eos buffer is needed for AR50_LITE?
+>>>
+>>> this _fix_ was develope through testing: without it there is no EOS and
+>>> errors are reporting upon killing the player
+>>>
+>> Would be better to see why there is no EOS from firmware,
+>> there shouldn't be the need to have a dma allocation for this dummy
+>> buffers, as there is no useful info in the buffer. Having the device
+>> address as 0 or 0xdeadb000 should be enough.
+>>
+> 
+> hi dikshita,
+> 
+> I am still keeping this on v6 as per our internal discussions and
+> because v6 is quite different from v5 so wanted to provide early access
+> to users.
+> 
+> if the firwmare is fixed to address this issue on time, I might revert
+> the EOS page buffer. 
+> 
+I'd prefer to resolve this via correct EOS handling or gain clarity on why
+AR50_LITE requires special treatment, instead of proceeding with new patch
+sets built around this design.
 
---
-With Best Regards,
-Andy Shevchenko
+Thanks,
+Dikshita
+> TIA
+> jorge
 
