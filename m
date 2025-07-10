@@ -1,215 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-64441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF7CCB009C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:19:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46481B00A21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40BB55C2557
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:18:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0621A1787C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:43:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E5B2F0C62;
-	Thu, 10 Jul 2025 17:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1FFE2F0E2C;
+	Thu, 10 Jul 2025 17:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kftSpZ9Y"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RNZsbGA6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A222EFD81
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED632EFDAA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752167889; cv=none; b=g54SnRvUmDLNbveGOcCMwwWC93GSaP/tAOXgpVHJ1JnTkQqEJIE5KcHxtSCx/CJfODDuvv2R4QqbwQ3vXIIl2ISHq4drL2dJXIkt1zJPoHMYwvWXmn6rZicf2UywlMDwWgWUvy/aLiZWD5VK7LmlL1548ro0xgkkBmSwYy+AZNo=
+	t=1752169404; cv=none; b=T5/0kbF8sD6egCAj6oiUGtp1gk6LIK1dJX7avkL7/IzunlMUOKmXI2XlWMwY5MnaOZLF7oKvVjD100ibJhRXrNSMbXKxTEnyis1Ah++QzIeELd887eRCWvF8ymD6MBl/rYHVO/Bnd00kvqoFLKLbPPP6orms31dekxVTSXR/llw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752167889; c=relaxed/simple;
-	bh=AMvH8CbgflCSwtZv4m6a1RA/Wg9jDTGoMyT6/VZgH/o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eG8CjAKPS/lUAxtHGzfMGS2ArNt0xLHIyRwHva1uCG7OQvqFFZdbVTfXQmUnEAza+n5pjKaQqGbbLqpUFfCDuW60F6YbBbtWZsi/rhLUeSL6o5g3Ef/6wdhw0dIkugwLdbnakVKjkV/ADd8VRhVWOADxLb+m/GrrQTr9nWwIOG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kftSpZ9Y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A900x2016172
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:18:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ar7cVymq/jtUHBmvH1VZaUyciNOHi8uWBeFm9Lj+JaM=; b=kftSpZ9YXjb9tP8z
-	JAa7GP/C5N1nGxlH9A8arpDhrAqIcgd0Ga9o0P84DK05+Q7dKtyGNZt6b8HMn2tw
-	2ORX65/2UdoBSPG0ncP6NiYWtDVilajBiYoZ6j+5CahLCPbwt4t8lyz9oZ8rUkB5
-	tmZWZN+HNChoCB6+SRBUW4I1tS2X3FifvuGUeLC2qUMcNERFtPWQ27xtQePftVGY
-	H5SdSLyPMSLonbwuZYQFzVQHI43CrnNINhkcycur23ivtvSTguMNk/IHaQh8e8c+
-	x1KfD1I4AVZIIxD8PhiiccHeNDKBbgGNNU51RDnTtnRF11rxnwvnNfHsIZ5/Uw/3
-	o+Vzeg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvefs8qm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:18:06 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-748e6457567so1829978b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 10:18:06 -0700 (PDT)
+	s=arc-20240116; t=1752169404; c=relaxed/simple;
+	bh=vneJkQuL/Z9KZYxCdcdDpCorNOqE4VZX51RmlX/8Hik=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IAYsuduxEckjHP1bf81uNVRE/gkAMd7IihDTCsdZeVwt68UkXMmrbJZVTCXqEhH6BCmFNh91+AUroTw0q+9AqaiqBY8DGiy1Ct3EK3TmOar5FnTI713STz3yjyxfU9OYNq3aSXe9qfK7I4ISaa6io1fN7GXOLFmrX8tbtoVRPlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RNZsbGA6; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1752169401;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=DyfQeplimHxaigWHPTIL8Brwr48uc1PFyqGCkna6oLc=;
+	b=RNZsbGA6SNmsYVsUEOS9OKYBeOG6BCUKafhqGrgkzHaVmhYpq1ZDjdwsDRNj+0M+FBgQC8
+	cONAI3qqPrmcfRtJcx899uUZj/k8JOZ5ozsI3x8x34cHHy/imtu65Y+dMto7uBrDemskfs
+	iOhCeoFAOlZmnlMgTcO0+t2or2pr44I=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-w2J2qw24Ofed9J6HjXNTwg-1; Thu, 10 Jul 2025 13:43:18 -0400
+X-MC-Unique: w2J2qw24Ofed9J6HjXNTwg-1
+X-Mimecast-MFC-AGG-ID: w2J2qw24Ofed9J6HjXNTwg_1752169397
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4a58813b591so24320171cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 10:43:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752167885; x=1752772685;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ar7cVymq/jtUHBmvH1VZaUyciNOHi8uWBeFm9Lj+JaM=;
-        b=QZxmmLThNnWrWouf4T+RjUMs7pkA27IGbxtPLDdRQZWcXGGhxi7Dp7qn6BnVXSg3Da
-         bXDD0eaxaWiKIVpv++sbJTMWoqepGmp1CV2WCdDSbqr/VWF6SeGJAAvHKBDucLrCJcxE
-         vaj6oUwkKbme8I8Ka2kOOk5HAak4h16KvTSoKk+orYG6SbBcZ7JPz91w41aVcgsWDybh
-         MHQA/SK7nd+HEpuYH2OIoyNv7O2+r+HnYj/PnVhHPJqG9oGSrd+F/yHveDL+V9rNyHRI
-         HuBQzZC7WFGUYCa9fDz/Xbl/uxD2YOsOWUqH4qoKRwIfuIGUDbb756ObcBgR3hQ9HbSk
-         NAHA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsQMjwfwL6y3Zaw0CkIBAbXRmuqsmpeuIutKRVhMB56wRG4XH0dk9vRs29CB+qhsJv24X8XIfrqC14rgV6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4QiR87wcIrOM4wCObPY2MixlQZBp7JTUHaEALi+mjuuEf7xS1
-	5MGBIX4pbiJNDYaC8FK9klFw5b2uolAN7CtX8ZKgdbee46PMB35UlJhk2tEb2ZIYZQJKec0Mzpi
-	GsN5WrhSNQJE8KL2qGgYchTWv+pvYu30y3iOtrFtRO0xFJuABiZ1TxNXeBWDAOU4P5n/t
-X-Gm-Gg: ASbGnctfUNXv+57MdacZHzA/KV0hSksl2uAC60Ymp1pblbHNVlSSmnlOKV5xI6SVDOH
-	y1/8SnvAGLbYLwRqf0W44lWP7CJ39009bgBbpGaKn1D8oaCTdDq4cpf74+s0fCU1YOx+H3071UT
-	r5fTod22E9ZD/GjNOj4f8c4STKMaFpTEscKR5GsAREadoo5qRZE+gBf4SzKzVP8eaE4dxlaYGIr
-	WGg+wSKlbQCPjwaZCQ2F831O14o+KS5rM03c/sqoTIQdDrzkj6Nq+TEvHh7pRBhWIrECqEHUpcY
-	6COUS9B3QeTe/yCbOR8jYuSQrEx3nz7z4O1CkR3iKVnZ+1DVN0g=
-X-Received: by 2002:a05:6a20:729e:b0:21f:9b24:321b with SMTP id adf61e73a8af0-22fc57e7824mr8500615637.20.1752167884946;
-        Thu, 10 Jul 2025 10:18:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHffsp+s2THEsKwd99/2YsGeT6E/wKdQJkZlm+vr/bjKBhhIbOq/IXrxnXy0oU1VYAbUwh2SA==
-X-Received: by 2002:a05:6a20:729e:b0:21f:9b24:321b with SMTP id adf61e73a8af0-22fc57e7824mr8500573637.20.1752167884443;
-        Thu, 10 Jul 2025 10:18:04 -0700 (PDT)
-Received: from [192.168.29.92] ([49.43.227.1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe72ea8bsm2779997a12.76.2025.07.10.10.17.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jul 2025 10:18:04 -0700 (PDT)
-Message-ID: <304d71ca-5773-4fa6-aece-50f92b70c77f@oss.qualcomm.com>
-Date: Thu, 10 Jul 2025 22:47:53 +0530
+        d=1e100.net; s=20230601; t=1752169397; x=1752774197;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DyfQeplimHxaigWHPTIL8Brwr48uc1PFyqGCkna6oLc=;
+        b=CpwK6PbMNT8V6eyWJLKXmKIgH/pJgDWMfm2Mr5L+g5IFF4mpFCjCLxxeJ5RNRIVWy7
+         Ug6R4wQFKj80cplNYDtmKXsXXSwYhspgEHnxsfSHFBrbvgsHq101MHVFtBFxag27QLm9
+         75zTBjINpob2kvvVUlw1akEe/0DFpjBbN7hQ8sWSRxsqp01qtQBdNuU93zzJJ1S8lURC
+         1wV1uIzH8bQ6NQMNJ4WACsVjZuOl3Mh3BsPuz3ouA8VIgXwOtJ/jl/b+CSk8hwqDAxKw
+         pLTj6x0uHZdwuVRCRNKQ6xCxOekukdQECvacF4KUGuQ5eY0Nb6IGgipf7eKxJaEjNvFx
+         t3wA==
+X-Forwarded-Encrypted: i=1; AJvYcCVMcPDKDmwhdkqBXmG3EZyFy+cwdiiaJnYPi21hdpNKw1Dxod0fQwSTbb9rF6q6Axkz6HsFStgiWbyy4DgQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfQlcBAZW3MBpEBcLxrtaS2vnyYCrQZNGQRsYcsRdjs4P+NbXM
+	Jpc/e8wMCKYiEtFUNX+kTumJs2hIIhTkvjuI4Bsd2jPW8FcKe3xU8ooQDfgItAKhKMFNCLfMC2g
+	QSgcdrh1I0ZJlo/nRuIXY4ZCWb6yqk7ELykZv2vyDJhkF+fMFzInzxHvXLziuidYRwi0=
+X-Gm-Gg: ASbGncuhm8GXFuWjL80VqFpjg3k9f48ArkVQc8CGH0OhIMezH8ROAjfQ6ij3d3ftpgD
+	nMVVHYJsk4As9lq/YODnXN+G2kdy60kDvuhvg3ZtOhjwMTPMyuaoh3ksKMaRUZS/nmV0Uab4YAi
+	yn4TRTvH/agSXJ+ik+lJ42isW+qUYJ3gqXgY5XV5K/awchrhIMIV953jKpwoo9VRnrvgHZcKbTq
+	rPgttG00x9KEnR8nYSUI3Vth9dnPMlqYsy+qaRU+O2HOo6oeLS6SI7APUAuD8vU/AqpHwuTn6an
+	BV/lhm5aUH9NOw1li8vZxR5jsHCh35rxo9eBUBN7m7nVofqzLMZdV39FBVgo
+X-Received: by 2002:a05:622a:2587:b0:4a7:944:9af6 with SMTP id d75a77b69052e-4a9e9bb2cb6mr64645751cf.3.1752169397555;
+        Thu, 10 Jul 2025 10:43:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzZd5sCbip5ZJYV/QhNlPWrkBJ+B+0jLvPSQhYSok5Gwj5HHCpjaKv310CLkZIEGxcJf2Gkg==
+X-Received: by 2002:a05:622a:2587:b0:4a7:944:9af6 with SMTP id d75a77b69052e-4a9e9bb2cb6mr64645231cf.3.1752169397063;
+        Thu, 10 Jul 2025 10:43:17 -0700 (PDT)
+Received: from [192.168.1.3] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70497d71419sm10652876d6.86.2025.07.10.10.43.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 10:43:16 -0700 (PDT)
+From: Brian Masney <bmasney@redhat.com>
+Subject: [PATCH 0/9] drm: convert from clk round_rate() to determine_rate()
+Date: Thu, 10 Jul 2025 13:43:01 -0400
+Message-Id: <20250710-drm-clk-round-rate-v1-0-601b9ea384c3@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] bus: mhi: keep device context through suspend cycles
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Youssef Samir <quic_yabdulra@quicinc.com>,
-        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
-        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
-        Muna Sinada <quic_msinada@quicinc.com>,
-        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
-        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Cc: kernel@collabora.com
-References: <20250630074330.253867-1-usama.anjum@collabora.com>
- <20250630074330.253867-4-usama.anjum@collabora.com>
- <b72b3635-1c09-444f-98f5-30fcc219b297@oss.qualcomm.com>
- <c40f13e8-7420-4046-880d-7c72620fc021@collabora.com>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <c40f13e8-7420-4046-880d-7c72620fc021@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDE0NyBTYWx0ZWRfX0kyrkQmFHXTa
- tvrCAq75/PfCEcoKsACG57dZZqFpMi408MytULucLUeM8f5DdEv5GWzlYmLw/0iFuaovKaSp9Ti
- 2Kj/nfKpmBo+eJQH2D5jtJDFFtIcPwMxiGc+WOimPIy2ru7rO9t+czL5hIjZxijV/i3csm2+Ftw
- m7NGiaxgHyW7rr/kmT2gi4vmyRFyt3lmgyCLfUXq4257TA7FdeUaaj2srfI7rtzdnxIWWCko/HX
- q9qS3nfkgXUUcyRlhZAIattYZ9YTcZCZcNeBGjCPPHuPFz89Wr/C6dA1X5c241uJBjdsK/zwkzc
- aSc5ZOH4OWTbDXw0R1ABls1vBofRFTHa8k4SJvnyvB0JYceEwNoBL4iBOHqwKnENYeXC+wjusbo
- RJZSO0T0FV4CsLPx/spFid+nV2sOTaNCVYoHdWSrN1PLhe5VYrJuhq0G8ZDRl8UfjnIg+mpg
-X-Authority-Analysis: v=2.4 cv=dciA3WXe c=1 sm=1 tr=0 ts=686ff5ce cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=4nqOr+EkFiuPl9GB/B4vcQ==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=QX4gbG5DAAAA:8 a=zOkQIraDPy1jB-BB_0EA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
- a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-GUID: LUwYi6drN_eoUVhsUlSapkU1QQbH_Izu
-X-Proofpoint-ORIG-GUID: LUwYi6drN_eoUVhsUlSapkU1QQbH_Izu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-10_04,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 suspectscore=0 impostorscore=0 phishscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507100147
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKX7b2gC/x2M0QpAQBAAf0X7bOuQdH5FHs7dYsPRHlKXf3d5n
+ KaZCIGEKUCbRRC6OfDuExR5BnY2fiJklxhKVdaqKRQ62dCuC8p+eYdiTsIhKa2tspVpIIWH0Mj
+ PP+369/0AcAOnAmQAAAA=
+X-Change-ID: 20250710-drm-clk-round-rate-b25099c0c3a7
+To: Philipp Zabel <p.zabel@pengutronix.de>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Yannick Fertre <yannick.fertre@foss.st.com>, 
+ Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, 
+ Philippe Cornu <philippe.cornu@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, imx@lists.linux.dev, 
+ linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-sunxi@lists.linux.dev, Brian Masney <bmasney@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752169393; l=5611;
+ i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
+ bh=vneJkQuL/Z9KZYxCdcdDpCorNOqE4VZX51RmlX/8Hik=;
+ b=SpSyr0e3I/aRNxEswleY3osHpqJj9B58Sz5Gtf7aIsUZ1Ktyc0g084VrIsjKHpCXHyL9qqOiF
+ ZRnFirWq0YVBiYQPmMMBH7RCwJ87s3PvceRTEkBR4y7+BkHAKJo5Jbj
+X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
+ pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 
+The round_rate() clk ops is deprecated in the clk framework in favor
+of the determine_rate() clk ops, so let's go ahead and convert the
+drivers in the drm subsystem using the Coccinelle semantic patch
+posted below. I did a few minor cosmetic cleanups of the code in a
+few cases.
 
+Coccinelle semantic patch:
 
-On 7/10/2025 8:37 PM, Muhammad Usama Anjum wrote:
-> On 7/8/25 3:15 PM, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 6/30/2025 1:13 PM, Muhammad Usama Anjum wrote:
->>> Don't deinitialize the device context while going into suspend or
->>> hibernation cycles. Otherwise the resume may fail if at resume time, the
->>> memory pressure is high and no dma memory is available.
->>>
->>> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->>>
->>> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
->>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->>> ---
->>>    drivers/bus/mhi/host/init.c | 11 ++++++-----
->>>    1 file changed, 6 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>> index 2e0f18c939e68..8f56e73fdc42e 100644
->>> --- a/drivers/bus/mhi/host/init.c
->>> +++ b/drivers/bus/mhi/host/init.c
->>> @@ -1133,9 +1133,11 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->>>          mutex_lock(&mhi_cntrl->pm_mutex);
->>>    -    ret = mhi_init_dev_ctxt(mhi_cntrl);
->> mhi init dev ctxt also initializes the ring pointers to base value,
->> I think we should take care of them also ?
-> Are you referring to mhi_rings? They are getting initialized inside
-> mhi_init_dev_ctxt() and de-initialized in __mhi_deinit_dev_ctxt(). That's
-> why I've not handled them separately.
-> 
-Maybe I was not clear in my previous comment/not a correct place to do
-the comment.
+    virtual patch
 
-My point you are not freeing __mhi_deinit_dev_ctxt as part of suspend,
-that means we are expecting device will continue to use the rp and wr 
-pointers of ring as the previous i.e before suspend pointers.
+    // Look up the current name of the round_rate function
+    @ has_round_rate @
+    identifier round_rate_name =~ ".*_round_rate";
+    identifier hw_param, rate_param, parent_rate_param;
+    @@
 
-What if PCIe keeps link in D3cold as part of system suspend, will the
-device able to handle the previous rp & wp of ring. I don't think
-device can handle this.
+    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
+                  unsigned long *parent_rate_param)
+    {
+    	...
+    }
 
-- Krishna Chaitanya.
->>
->> - Krishna Chaitanya.
->>> -    if (ret)
->>> -        goto error_dev_ctxt;
->>> +    if (!mhi_cntrl->mhi_ctxt) {
->>> +        ret = mhi_init_dev_ctxt(mhi_cntrl);
->>> +        if (ret)
->>> +            goto error_dev_ctxt;
->>> +    }
->>>          ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, BHIOFF, &bhi_off);
->>>        if (ret) {
->>> @@ -1212,8 +1214,6 @@ void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl)
->>>    {
->>>        mhi_cntrl->bhi = NULL;
->>>        mhi_cntrl->bhie = NULL;
->>> -
->>> -    __mhi_deinit_dev_ctxt(mhi_cntrl);
->>>    }
->>>      void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->>> @@ -1234,6 +1234,7 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->>>        }
->>>          mhi_deinit_dev_ctxt(mhi_cntrl);
->>> +    __mhi_deinit_dev_ctxt(mhi_cntrl);
->>>    }
->>>    EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->>>    
-> 
+    // Rename the route_rate function name to determine_rate()
+    @ script:python generate_name depends on has_round_rate @
+    round_rate_name << has_round_rate.round_rate_name;
+    new_name;
+    @@
+
+    coccinelle.new_name = round_rate_name.replace("_round_rate", "_determine_rate")
+
+    // Change rate to req->rate; also change occurrences of 'return XXX'.
+    @ chg_rate depends on generate_name @
+    identifier has_round_rate.round_rate_name;
+    identifier has_round_rate.hw_param;
+    identifier has_round_rate.rate_param;
+    identifier has_round_rate.parent_rate_param;
+    identifier ERR =~ "E.*";
+    expression E;
+    @@
+
+    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
+                  unsigned long *parent_rate_param)
+    {
+    <...
+    (
+    -return -ERR;
+    +return -ERR;
+    |
+    - return rate_param;
+    + return 0;
+    |
+    - return E;
+    + req->rate = E;
+    +
+    + return 0;
+    |
+    - rate_param
+    + req->rate
+    )
+    ...>
+    }
+
+    // Coccinelle only transforms the first occurrence of the rate parameter
+    // Run a second time. FIXME: Is there a better way to do this?
+    @ chg_rate2 depends on generate_name @
+    identifier has_round_rate.round_rate_name;
+    identifier has_round_rate.hw_param;
+    identifier has_round_rate.rate_param;
+    identifier has_round_rate.parent_rate_param;
+    @@
+
+    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
+                  unsigned long *parent_rate_param)
+    {
+    <...
+    - rate_param
+    + req->rate
+    ...>
+    }
+
+    // Change parent_rate to req->best_parent_rate
+    @ chg_parent_rate depends on generate_name @
+    identifier has_round_rate.round_rate_name;
+    identifier has_round_rate.hw_param;
+    identifier has_round_rate.rate_param;
+    identifier has_round_rate.parent_rate_param;
+    @@
+
+    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
+                  unsigned long *parent_rate_param)
+    {
+    <...
+    (
+    - *parent_rate_param
+    + req->best_parent_rate
+    |
+    - parent_rate_param
+    + &req->best_parent_rate
+    )
+    ...>
+    }
+
+    // Convert the function definition from round_rate() to determine_rate()
+    @ func_definition depends on chg_rate @
+    identifier has_round_rate.round_rate_name;
+    identifier has_round_rate.hw_param;
+    identifier has_round_rate.rate_param;
+    identifier has_round_rate.parent_rate_param;
+    identifier generate_name.new_name;
+    @@
+
+    - long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
+    -               unsigned long *parent_rate_param)
+    + int new_name(struct clk_hw *hw, struct clk_rate_request *req)
+    {
+        ...
+    }
+
+    // Update the ops from round_rate() to determine_rate()
+    @ ops depends on func_definition @
+    identifier has_round_rate.round_rate_name;
+    identifier generate_name.new_name;
+    @@
+
+    {
+        ...,
+    -   .round_rate = round_rate_name,
+    +   .determine_rate = new_name,
+        ...,
+    }
+
+Note that I used coccinelle 1.2 instead of 1.3 since the newer version
+adds unnecessary braces as described in this post.
+https://lore.kernel.org/cocci/67642477-5f3e-4b2a-914d-579a54f48cbd@intel.com/
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+---
+Brian Masney (9):
+      drm/imx/ipuv3/imx-tve: convert from round_rate() to determine_rate()
+      drm/mcde/mcde_clk_div: convert from round_rate() to determine_rate()
+      drm/msm/disp/mdp4/mdp4_lvds_pll: convert from round_rate() to determine_rate()
+      drm/msm/hdmi_pll_8960: convert from round_rate() to determine_rate()
+      drm/pl111: convert from round_rate() to determine_rate()
+      drm/stm/dw_mipi_dsi-stm: convert from round_rate() to determine_rate()
+      drm/stm/lvds: convert from round_rate() to determine_rate()
+      drm/sun4i/sun4i_hdmi_ddc_clk: convert from round_rate() to determine_rate()
+      drm/sun4i/sun4i_tcon_dclk: convert from round_rate() to determine_rate()
+
+ drivers/gpu/drm/imx/ipuv3/imx-tve.c           | 17 ++++++++++-------
+ drivers/gpu/drm/mcde/mcde_clk_div.c           | 13 ++++++++-----
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c | 13 ++++++++-----
+ drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c      | 12 +++++++-----
+ drivers/gpu/drm/pl111/pl111_display.c         | 13 ++++++++-----
+ drivers/gpu/drm/stm/dw_mipi_dsi-stm.c         | 14 ++++++++------
+ drivers/gpu/drm/stm/lvds.c                    | 12 +++++++-----
+ drivers/gpu/drm/sun4i/sun4i_hdmi_ddc_clk.c    | 12 +++++++-----
+ drivers/gpu/drm/sun4i/sun4i_tcon_dclk.c       | 18 ++++++++++--------
+ 9 files changed, 73 insertions(+), 51 deletions(-)
+---
+base-commit: b551c4e2a98a177a06148cf16505643cd2108386
+change-id: 20250710-drm-clk-round-rate-b25099c0c3a7
+
+Best regards,
+-- 
+Brian Masney <bmasney@redhat.com>
+
 
