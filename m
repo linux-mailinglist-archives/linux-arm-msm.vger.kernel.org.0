@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-64384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6409B00355
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:27:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE9E2B0039F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:36:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB57C8E3C1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 13:27:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7118546A51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 13:34:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE5D226D1F;
-	Thu, 10 Jul 2025 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 415E4258CDF;
+	Thu, 10 Jul 2025 13:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HzeW2jz1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j8XUk71M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1A72248B3;
-	Thu, 10 Jul 2025 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13478258CEF;
+	Thu, 10 Jul 2025 13:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752154069; cv=none; b=mvfiAbHIp//T8ldOb16Eq5kvQuPjJMYgq5NuIHlwkS3i4Q/fSbQ+DrEdOJ1LnVPrCoLijna5l4m2pO4vQNI7cY96poUlgt5q7fR5dCEhh6N4xpVcIOrd/a/aqycmNb1eT3i44E2EvoH71OXLEagdn6114XIHpokuSR+tqbEGgTk=
+	t=1752154454; cv=none; b=FAI5vl0AF/2lZPfkl+obu1E1b5uehZ0geqFaEIAEYEyja3gAIzzYWVnYatNmDu56ijqdc0FcGIew5iqUHKN+QlnUv2KLnkl22GAEfI4z1iduk/NkGB/2xBo3jC66U/ZMi2ap5YhHSubdXVao+RogH/tNkCwD/IHE+wZu2lFBXnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752154069; c=relaxed/simple;
-	bh=vntoWKUWJsvWv9hwsBZdihuxjDBsVvfEetv3fY2yT58=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qjLZ4JRDo8eRt3Cmcc+7uMNAnb5ovJV1GiuT0xgp7nRZ75koeIDaqRVW8LGFbvNJ0S5QDMuFbpdEeQVE8LcL06jds+aKVG/OTPVXg1ek7fNwDrRFmgzbD3eZeAAB3u/Qo1gUV9D7HFdTPX0Q3YItooD6TyrZ3gbvKq1u603unhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HzeW2jz1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5581FC4CEF5;
-	Thu, 10 Jul 2025 13:27:45 +0000 (UTC)
+	s=arc-20240116; t=1752154454; c=relaxed/simple;
+	bh=zOHewkDTFd+vFUFT93OThrCEvn9XerBafGlxxGr0u7s=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=O5sftZnPZfkR7niWr55+RmcGal9kpBBkypkdMfgsPJAeBz8X19LndbkOPzeYokntVLq3qM+KGnvQO4+oxS/fKNhzF7M08hc2F+HgNZnRofh8Bxi2MPrmb5J50RxCZCG9l8s4injeU+WV3yWH/l3uQjLy7tVxnq92ctim6062URM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j8XUk71M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48073C4CEED;
+	Thu, 10 Jul 2025 13:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752154068;
-	bh=vntoWKUWJsvWv9hwsBZdihuxjDBsVvfEetv3fY2yT58=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HzeW2jz1J1aL41c3ViUvNxalRw843mSfS4yNm0nq8UNo3kZyy+fpVmHhaHWcgnwzh
-	 59+yt+y+AP2LpHrWgoWNIutFFzc43S4fa8UbIsCa7anH2LjxADxzuaORNGxF3MQKkx
-	 423suvwXPLEr1Vxc+u6zVyFesjworpGt88ilmzFLMALXscT3zcoMjD0czaAuUzqyxO
-	 VBxMPkHNODt2yiUB4IIK/PV4+wjpbzq2MVG2EkMn44apsYs/ZyUcFRU0N0p7E3qFyW
-	 9rhkNtmn5RbvB78CWXb+BK0cpONGqoOCO60oWyjes8OFU03GPghFXYfCdTrtZqmz0b
-	 /+tDS4GwVxYYg==
-Message-ID: <c9bd8760-1c85-4aa6-9633-1f52ed4952c9@kernel.org>
-Date: Thu, 10 Jul 2025 15:27:43 +0200
+	s=k20201202; t=1752154453;
+	bh=zOHewkDTFd+vFUFT93OThrCEvn9XerBafGlxxGr0u7s=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=j8XUk71MHLmoX8lc/BCtZo4Qk+A1hx09W5WEaXVzHE5CHsWTy8NF5fIYIpuWw+Jen
+	 R1XsnztL7seHVvOAWKV4cuOCspei+OeRY3g7kKw2iMRCX4/JogzE9+jbmVTIIRtOZh
+	 OJAP2C7NvyhKQN7cnG3xOcizQqcAl2tKIugcI7l5AxJ0rpbNb+sxXJK6dRI0gaIiFp
+	 rQL8VqF+/fmE9UR6M+sW/+Zw2uC97XRKHY82bngrDHBMLmhXspj51WiiDgGaXEZFxJ
+	 l5CWz+tDiEGnukojkKWv8+jsEWqffupW83j9WvGHBCFEFsbtPq8NH2u0qIphQcqJQQ
+	 XNsgA+UX+jWOA==
+Message-ID: <b197ef12-652b-4c7a-97d2-49954e9f1384@kernel.org>
+Date: Thu, 10 Jul 2025 15:34:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,6 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 1/2] dt-bindings: clock: qcom,videocc: Add sc8180x
  compatible
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -65,7 +66,7 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  linux-clk@vger.kernel.org
 References: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
  <20250710-sc8180x-videocc-dt-v4-1-07a9d9d5e0e6@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <c9bd8760-1c85-4aa6-9633-1f52ed4952c9@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -110,29 +111,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250710-sc8180x-videocc-dt-v4-1-07a9d9d5e0e6@quicinc.com>
+In-Reply-To: <c9bd8760-1c85-4aa6-9633-1f52ed4952c9@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/07/2025 15:00, Satya Priya Kakitapalli wrote:
-> The sc8180x video clock controller block is identical to that
-> of sm8150. Add a new compatible string for sc8180x videocc and
-> use sm8150 as fallback.
+On 10/07/2025 15:27, Krzysztof Kozlowski wrote:
+> On 10/07/2025 15:00, Satya Priya Kakitapalli wrote:
+>> The sc8180x video clock controller block is identical to that
+>> of sm8150. Add a new compatible string for sc8180x videocc and
+>> use sm8150 as fallback.
+>>
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>  .../devicetree/bindings/clock/qcom,videocc.yaml    | 23 +++++++++++++---------
+>>  1 file changed, 14 insertions(+), 9 deletions(-)
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->  .../devicetree/bindings/clock/qcom,videocc.yaml    | 23 +++++++++++++---------
->  1 file changed, 14 insertions(+), 9 deletions(-)
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> 
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
+> It looks like you received a tag and forgot to add it.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Apologies, wrong keyword. It is supposed to be this one:
 
+
+---
 
 <form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
 If you do not know the process, here is a short explanation:
+
 Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
 of patchset, under or above your Signed-off-by tag, unless patch changed
 significantly (e.g. new properties added to the DT bindings). Tag is
@@ -141,11 +153,10 @@ list. Tools like b4 can help here. However, there's no need to repost
 patches *only* to add the tags. The upstream maintainer will do that for
 tags received on the version they apply.
 
-Please read:
+Full context and explanation:
 https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
 </form letter>
+
 
 Best regards,
 Krzysztof
