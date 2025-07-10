@@ -1,57 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-64353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09BC9B00096
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 13:32:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A448B00146
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 14:11:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2CC23B57B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 11:31:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42E1C3AD2ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 12:11:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E11691E9B2D;
-	Thu, 10 Jul 2025 11:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 006EA2550D4;
+	Thu, 10 Jul 2025 12:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="ttYY/QiH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HC4i460z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE07C8EB;
-	Thu, 10 Jul 2025 11:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3121B2405ED
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 12:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752147120; cv=none; b=s6GXaOhbi7XKbeH29Eeq46bw5wPIf7Lo9YuRPjLs9sZ7MCH14vCzErBT+iC3UARdHBeFP+/A27EJwujhmbQ0boAMTimGjjigZDYajrU5UgRCRzvsG9jEmI5Aom7O49PzIDZzFaX0SlYuX+QszNli2FhYzwyD133SL681XrKno7Y=
+	t=1752149455; cv=none; b=VJWeXJijc43FSk2DK1+0HKrQZvcnvmYMfEBw+Ojd0mIlRl79BEMBshq0lS0bEOr2FAcZP8CagGTkeOo4dUo7y1vca8iTFBttTzfL7/XSo0/aat9/KBo5LNUcJvvaCNO/ee49DXQ/S17E0EI2TmDEQDgEQWdDvAWNTbIT0irgfv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752147120; c=relaxed/simple;
-	bh=veiSIyO5h+Jn0NkjIFFPBiRxaozm4iNhyDlp5Cuuivc=;
+	s=arc-20240116; t=1752149455; c=relaxed/simple;
+	bh=3WpSLx1lOvBgBlWtCmaes9/MUjWZbRyaDXKVUI5jEkg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m0fTIierziYdZJ20QytBmnSYV5H0qj03nTsY24y3w/FsnlwfI5gOed3VaMJhVGASTrc4yOrY434VToIyTpY/cddWL+lrMvEG534aisH6YM1BPrz0lIItSrvK9EuOw9tHUaigRHtuQkhuGwt3RrOBcBpweyy0wG4w4VUEJhAe+VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=ttYY/QiH; arc=none smtp.client-ip=212.227.126.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1752147110; x=1752751910;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=veiSIyO5h+Jn0NkjIFFPBiRxaozm4iNhyDlp5Cuuivc=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ttYY/QiHaidnzgG9zryNKG1G6yBmNBRgjM1643EMq5Q74B5xur6M7+VDYe/kufMl
-	 jn354P/V1kAnJaqt3OGTxTm/YyGlnUbiW2H07ArWL/71iZm63PEemG8pD/kOJDib9
-	 HwLYbFDBP2Bt+I72yp1MSXHr8nvX2fXE/JZwjgeJTGKptRPsvnvxvCn3KawSA5rFs
-	 jxQh/5STj42JMKuaftui4InSbR+5uHxpORqp1gses/7jeY68JWlHX2bwP0Dtj8NPw
-	 aoicZ9mXHUnHzjsU7G/aapz+XgNkRQfVmVdPPX2Ezz7HQ5juHZNFYosmp0khaPM0x
-	 yiIp7zY6woOPVt1UAg==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.107] ([62.226.41.123]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MA4ja-1uOFye1z9G-00FAtR; Thu, 10 Jul 2025 13:31:50 +0200
-Message-ID: <056c3569-02d7-4668-89d0-91a8d92814ef@oldschoolsolutions.biz>
-Date: Thu, 10 Jul 2025 13:31:49 +0200
+	 In-Reply-To:Content-Type; b=gaPaEP65GB+ZZjdIVnIOglq+Lg9iv1rShBosO4Iw3J5Jd3fIznZKCYjb9/VziyGRr0im/l4RoGzzVkqsW0Li63S4/fJ2TgERHE7oaCTdEdeW7xvODbxjct/0yIYeB5eVjAmbEg8KqFPpcRawRsDI9UZRNhfK73HcOFPc9lXDYjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HC4i460z; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A9HFpd010099
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 12:10:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qylshFqGhjqdpqss4EWahA3a0P0XpI5R9ccWJmm4pUM=; b=HC4i460zUPUFENA3
+	MjRi8M3dzKhyuwssANgdh7k8mfip5nLU8X7F1JLj/sxneVaa7iaUdR15UzXVOO1F
+	ImzFzHvTm3/blYiN9gmEt4eFM+SKwfcWqWcLM5UUWm+cNkd4TvGlDZQkev5fv2sT
+	TcFrMkRA6al43ifj2jkubAJs3FrUfNvtZkkkcVcB4X5gGng2otxgKTuXqt6KlQyp
+	dcUR+PaPy4JSoiLFp59cAR7s6aGWZ6mI3ejAN7yQdgXz2XAOshrFt26Xpk6Yu27Q
+	bXAA1+6Ihl0EE1FsykzY+81TpsEqFSxeR8ojjOmPNiMs9ZCfJm++Ekb9bCaLzkT1
+	Z5N+Cw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47sm9dvv4s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 12:10:52 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7dbce38d456so18702285a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 05:10:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752149452; x=1752754252;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qylshFqGhjqdpqss4EWahA3a0P0XpI5R9ccWJmm4pUM=;
+        b=tnKsxhBOa2NowJsNwxKeTqlikHRWtObWT6s/Gi1yLYkQvmUPeca4DvmB7oLb1AhxkW
+         UJH/iVCeMj1iwKiE1Hqzvv37MEw44Aoih9RQZelcrxn9QQktlUdBlhj561r6V/XYQdPY
+         NmRC9hs64NK7WUpejjezrRdi62ObgHKZK4BJx7JdL9UDGD2rMMmxXmi5SdT4igDFWjQT
+         7GHK7UDy3DTvMoARHDb3BIREKA2rr7LJ9HZmcBjtNAG5t35KUzYcYXMd2wi/sAuw410d
+         AVZz2mL/w0HnpO/tNEioP5zqYwxlV81dp+fw/cSzLisFRaWJw2vb9DcNxZpyweQedI2v
+         Jc1w==
+X-Forwarded-Encrypted: i=1; AJvYcCUSkJKVUCLC+3r/MCiyv00MbgXIfaKUIqT+3GqKgUy5TRMmDRtW2ZmTrl9BimdyidgHsv51mST6AukVEX4p@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGzH4B7O0QnRLQLUb9RuV49ZIH3Ec7E1rKAXnOC8jPlRER7t1V
+	nJo31muV9Xi1CgrJGv97nLbddpDlX6Wn6QEK6uXpR5WIN/ZVtIw/KoO89QGtC5SyW5jvGLTO3k8
+	DkEZpcynNptc1wrA3KCTYASEd0aIMe1FM00nRN2ZIyTUNRlbQkDXAQVUxrHfth3Qt3KdD
+X-Gm-Gg: ASbGncv1wvg2FpCVXtxSff0MBa3velvpZ0xIvYdxa1A/4C45Z8am7C+EulfATLcfz+5
+	Su0eVnidLjvfox68AgxmTyvf3tvrW/ep5lq5JawP8/gR0FIylDjgQT0mmcnVhQZPA9l2tDicgQ4
+	X69vIexUMOQHiJab+hvDvS2jOOnuq80MHZM1SGEItfJHqP7g5nRY7kVIrDKmm4XnAsNmJ9SfSw0
+	+Co82pWXQ9llHhh37zRF/vQrVrnG3Qbf3/JTcdms6vjbmaDNt5oIm9K6VY43MZV8oGRASJzD6DQ
+	QsYuOC99enDxpN717W2bmMfpEpxmyIHVGMdPooxObvzHMd8oNBJbMuaE1LUbOwJS0oCpA5q88qn
+	1SvE=
+X-Received: by 2002:a05:620a:470d:b0:7c5:687f:d79d with SMTP id af79cd13be357-7db8ec65af8mr344976985a.8.1752149451757;
+        Thu, 10 Jul 2025 05:10:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNdXIlzeTaHsQw8JV+VNgiKFo/GTeGYtHM7NPf/e+vpsxjpM2ZxW4+HG2cXIrSvCR3dYQdRw==
+X-Received: by 2002:a05:620a:470d:b0:7c5:687f:d79d with SMTP id af79cd13be357-7db8ec65af8mr344975285a.8.1752149451347;
+        Thu, 10 Jul 2025 05:10:51 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8294bd9sm121061566b.132.2025.07.10.05.10.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Jul 2025 05:10:50 -0700 (PDT)
+Message-ID: <7d073433-f254-4d75-a68b-d184f900294a@oss.qualcomm.com>
+Date: Thu, 10 Jul 2025 14:10:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,61 +90,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: x1-hp-x14: Unify HP Omnibook X14
- device tree structure
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250710-hp-x14-x1p-v7-0-19c10c81713a@oldschoolsolutions.biz>
- <20250710-hp-x14-x1p-v7-2-19c10c81713a@oldschoolsolutions.biz>
- <aac2a4fb-c9e8-4e1d-b0cd-d6481dc27252@kernel.org>
+Subject: Re: [PATCH v2 4/4] phy: qcom: phy-qcom-snps-eusb2: Add extra register
+ write for Milos
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250709-sm7635-eusb-phy-v2-0-4790eeee7ae0@fairphone.com>
+ <20250709-sm7635-eusb-phy-v2-4-4790eeee7ae0@fairphone.com>
 Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <aac2a4fb-c9e8-4e1d-b0cd-d6481dc27252@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:tpb5aofj5y62ZXBjqRcxLwNQ+Z93p7O9OB35MiIouuuv16gP1oL
- +Hw8jXN4lD41lW2dvbEphC6yb+jeHlI9V6j0DBf+DMir+uut2TJQ3sOyOG3k0aJVndpcbcT
- QVgxMztSsiKPztZ40cMrznnK3i1jE6x2NHYKLy9LyEAju+AmsKvFCmZNehfbBSsfnaLRT+c
- rhXE1VzELqHV5PgBhoVrA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:6OwrPtFUynw=;e8kDEdPxcF1sDVTIBF9EnVx3sF2
- jXbXwlTHVg9vlHqU1lpeVOw0O2u88I+80DmKQIvt804dqyFRQPYa6Z+d56G0Z/nlInalr2ezh
- rdOGiIgn9tU/kv3NgLKRVXMaAbbA7n4fXKhsaLpjUtNQ7LtDL5oFEMToy3A6pmBa9UERXRkd1
- WVTUj6Ka6eiIfnYHZYfqyeedduVgiwlIgPZYFytB7pBgZsJCJa7uklHaBbcOq3gN+6UMz6xPd
- EmilTimy4dOFQraYKnSy4OFdIYpi/xIrv5BMQJiOcTFxjqHStho/B3FAJ9lp+qn4HQIpMh6FM
- UcT/kSuvIiTkcoH7JrP7rtfIhRHEWP5QCmVXPJnEs2tzpPmaiT1vIQqCIjpXadxBMwp9S4dEb
- zo2mzVqiGSf96YVyQtG1EVcPy5grHmRjp2cAM4yaNeELA2DrUqiezLOUp+e6csHEqTeoGTCKs
- XC98nF6sNuWdf/TpukQtOMzF+N6jVgGrHgIKLN2R3s/xRdUI3kfwMGJXxAxnD9VOB6MuS/YiO
- WRIog3RReAr/jC4kzK5FBhhoc5UJU8Akx3Jn+VoFccG7YTMi4P61+OPJnqjJbAG9TN1w1sxQO
- z9w6G8+0eHTL1y4eSRn53DlzpXI0nmRm4y2zS9Z1yiPftXiIdW4FiLHA2LJDsyPGgz7EVMwyQ
- httTvGwxKppi8d5JOMzm77eP0fcASg1Qm3ntmdVIbdRbo8AocMTwloWAw/Q0FfKCWmyA9C1Sd
- Eb0rJ3C19WA0F4loOfSBhLAkiRPaIYD+PSNO21kmszkFMrrl90EY9UoujbySMfiH9mV8jlb3G
- Jr3u2MJPJZq73TTVHXZobursgibhGqexEpnVJOSIFLB+ZSZYKoQ78Wi7yS9MN9A63JpEh5+hK
- uv/uIB6TmmwWDw4F5SvS7qY+vmjg5LNIPJHKtkisS10vbUqpTY9q7olS4G4Z9UjpHBXzbHot4
- g8Qe0DCP4ld8FRbeQjY9iNS4EHymspdilHoMBryGysFqueUdLFqdaFzybNp7Lc/i7x+jKhOGH
- FZ9BB5eI3CxCneuyW+GMIGJ0OgRLFJTPneFFGGhj8Ey5xZH/sUL3RoM+AzLRbwMib2CwXXY8h
- r58IDDzHn/zSw3MYoaN+qslu7xwcgDGp5q/WGSY2s+EQ57bAVOh71aI+wepiqU3X3IHJnDkGx
- gc546UrvVp6PdkBi2wqjTLxLgnRFltJ7s0j3vH9ulUm5A4HB6hfYjYycLBcRzxWKJGCecBYBY
- q+YRc1eCmoTlET6imj/BDln6RpLlwBr7fy01LOPPbhMtbBpKX/ycAVsSLQqb6YacAQ7+eKaNE
- J1NvzvHi1T6ClO/nLOqcm9ZHZ0GY8t1zMhhTu9Qp+qbJwAg1NhRIfT0TgyINOdLd155h0PaYD
- O8xQ3uxbmSyvk3LH0ZH2zhqSwhJLuV/g9LBQ2gF2TfzqxlPpyX79rv1KLxdsMyKPBhvPwRV7+
- akrtPH6hcF9hMl+caOBP/0ZMqCghYXytmvYEMBpbpc8XZ9oU5nbt3PLa3A0J4169S00QkObcj
- VVqq8iDPRJwvVcvv9idhry/iJgbqQO5rDl4LXHzCzD+CzBbLaEbhu7BBgCgSnQ==
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250709-sm7635-eusb-phy-v2-4-4790eeee7ae0@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: T8TNEqYHegcBIrKGtWWIhK4-D7waNHU-
+X-Authority-Analysis: v=2.4 cv=W7k4VQWk c=1 sm=1 tr=0 ts=686fadcd cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=6H0WHjuAAAAA:8
+ a=JvZHP73eehLcbYbFTREA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-ORIG-GUID: T8TNEqYHegcBIrKGtWWIhK4-D7waNHU-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDEwNCBTYWx0ZWRfX7sxc/Xld5TlE
+ s39jW5zBzt3STAX+UYp/VcXqCwUKfwU7tNmdvmVREeYtE8Z0HA7xhKhCOtLT8R33ZcFbQWB0v43
+ TnKrTrIAcilV9FflESWacl0QAtxXbpUWnTstCxXedKiJoZJeFIFKNhZlizY4DJNcIy7k5eAbZBK
+ 04lX++41kt8fQSDLVasTWx5uRylhd2TVsfxyAcDGoBfPIJQis9rHNih2CS9bszKckY4tsnhRjys
+ VGU0aiXlHjxO5b9oEmehm4ekzrjEQH5fEFHOgtlr+GK7y2o3+L9JLDjV6Jt/PVtB7q4IVD30VnY
+ fho+oIFZ8V3n41ZQ7I/lR3Zo4Rqjsx95Y/BqlKOknBkSX9XmeiVJxxjCl/Ml3ZQtDZbY2/fUDxC
+ 7xBlWhlizIh4ZTYHhC/FCODU4aA9PjRNYZ3amPrvFcsodPEBlUQ37V32rmpktYGXE6p9WAHr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-10_02,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507100104
 
-On 10.07.25 12:55, Krzysztof Kozlowski wrote:
-> Why am I bothering to review if you keep changing and eventually
-> dropping the tag.
+On 7/9/25 11:18 AM, Luca Weiss wrote:
+> As per the downstream devicetree for Milos, add a register write for
+> QCOM_USB_PHY_CFG_CTRL_1 as per the "eUSB2 HPG version 1.0.2 update".
+> 
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> The downstream driver supports an arbitrary extra init sequence via
+> qcom,param-override-seq.
+> 
+> volcano-usb.dtsi has the following which is implemented in this patch:
+> 
+>     /* eUSB2 HPG version 1.0.2 update */
+>     qcom,param-override-seq =
+>             <0x00 0x58>;
+> ---
+>  drivers/phy/phy-snps-eusb2.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
+> index e232b8b4d29100b8fee9e913e2124788af09f2aa..87fc086424ba4d9fb3ce870aa7f7971a51d4a567 100644
+> --- a/drivers/phy/phy-snps-eusb2.c
+> +++ b/drivers/phy/phy-snps-eusb2.c
+> @@ -420,6 +420,12 @@ static int qcom_snps_eusb2_hsphy_init(struct phy *p)
+>  	/* set default parameters */
+>  	qcom_eusb2_default_parameters(phy);
+>  
+> +	if (of_device_is_compatible(p->dev.of_node, "qcom,milos-snps-eusb2-phy")) {
+> +		/* eUSB2 HPG version 1.0.2 update */
+> +		writel_relaxed(0x0, phy->base + QCOM_USB_PHY_CFG_CTRL_1);
+> +		readl_relaxed(phy->base + QCOM_USB_PHY_CFG_CTRL_1);
 
-Sorry about that. b4 didn't take it, and since I changed the commit=20
-message after Bryan made the suggestion, didn't know if it was still=20
-justified.
+Said HPG asks to clear bits [7:1] on all targets
 
-with best regards
-
-Jens
-
+Konrad
 
