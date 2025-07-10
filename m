@@ -1,348 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-64333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58B73AFFDEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 11:21:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F404EAFFE55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 11:40:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A84BA1884DB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 09:21:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 487B4582B75
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 09:40:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8081291C04;
-	Thu, 10 Jul 2025 09:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889962D3ED6;
+	Thu, 10 Jul 2025 09:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ESnPQ138"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4POTkIp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC57121B9E7;
-	Thu, 10 Jul 2025 09:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A728D82F;
+	Thu, 10 Jul 2025 09:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752139283; cv=none; b=sjn3ADviXFOjRtIrUpJGBh8YM1+0s8hcOvHt+LMleRmY2+9/GjQ0fRhA+2Ci6XfM7we0Z0VQaeWBDegfPlmgbbZ8tfxZp7xIv+1b1zg+191iEC325iO6i/Pe/Xxpy3STpgfymTKeMZdaPeZxNQ3TcjgU0i3DjCmL1l8HEYo4dKQ=
+	t=1752140410; cv=none; b=SQD8wPjdfCu6WMJW+4A7GTC+lLssu7GcQ0WIQEoA6qGaG1fGNoe/6vgvbXIIPRiWsiicEpkM2N/TeaV36jo8MnQmMqTnHGB7QawO7apUcDpsvBMjcC3ZlMtdfxDSl0KgPtiu1pCrdB7RKPcEb86GjDUThiGTHM3uihqRm4sPMV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752139283; c=relaxed/simple;
-	bh=nDO4FCjIcpvN2V+UNsSZi+nZmpl//HrngwdQf7fGnqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZCuUMo/WSkNxqbrjjBSNN4cl80Ng+IMIMGlED5fB7zwUM0O7AwGGBr9BFvfuSBxWP2XPQajfXRsIyNeJFMvqH39xgOKAap5JuL9WfwSSqvQmEZNs9uIDqUWVwKLvy2gsDiuCzHTAMt+S4vBncvyDI6qCY+0v572bBInZpN8sSj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ESnPQ138; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A1QXr0031076;
-	Thu, 10 Jul 2025 09:21:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QbwxA+Zbt6DBDA5wCJwhTDJ7c20lDYAcBdDw52mlG98=; b=ESnPQ138J0A6FKNo
-	Vohg9FIG+Vb9xaGcrj0ZG0x2yGmxGSpX1XRYip41OcoKJH75PkRD0PJFgD7kBBM4
-	tZifHlfrYnzu83UR0sK0YAIS7DbjSG5KO2Nl8Qp0wdHpRMv0irpuddrUGYHJFMf5
-	88rXPwg0qwtstD4jJHDhXaHukWV0XNieYc5O1XSD3DL1aaWORK6e5m1SPvRlZxnT
-	q8D5YvJl/rVSxX/nj6V5ouf9odqd7UexfzGofJUSAkPAKi89HD4LrjxnCJTJsrPz
-	FqkMk2BBpuhTD5XKF200kmDu64Hp88ehJL64lB4N+yjlOif9k+nMoVhuXDsHlx+5
-	IJdY7g==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg4bh0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 09:21:18 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56A9LH0x002983
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 09:21:17 GMT
-Received: from [10.204.100.36] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
- 2025 02:21:13 -0700
-Message-ID: <7d50318e-1189-15aa-8c26-9c522c3194c4@quicinc.com>
-Date: Thu, 10 Jul 2025 14:51:08 +0530
+	s=arc-20240116; t=1752140410; c=relaxed/simple;
+	bh=x+A+4ftMt9Yq8X3LVyeioVSBjpZxfMyX5lyRPLKUhi8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AP5B924k8pVRAZPT1Sigv2VE1qfDhTw77c1OEGWVGmaW6je6NJQ5Gbgyp3O1r+rQ+3o5UHdiUcaxs/EkEuhl8zVmgn0eMoqQgg4HLQhYNlOP6p5eRdfHGvuN5Af+tb//BkBw0Vs09VCnCmYLhx4vZc+3Ufk8gEWxM1N5ESU7OyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4POTkIp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D50C4CEE3;
+	Thu, 10 Jul 2025 09:40:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752140410;
+	bh=x+A+4ftMt9Yq8X3LVyeioVSBjpZxfMyX5lyRPLKUhi8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=L4POTkIpYO7M/uIVs2tfsDFKlBk6sV49cdEcWqTYA2YO5XVtTLLEMKbFqUWRJwOBm
+	 Rn+GygnEloY8OsOuTn5T/RoB8FCvfiexHcHvjErCX4g1eRPKlgYybQyCj9BXlvjABl
+	 IXs88RfBoD2e9sN3nJ+XUetLdfnI6nHf86zDcGYKWSLKSuKTstHCuAXjjD6SnH8O/E
+	 ab1ld2U4/RlFvKtYkostKf9eluRdjbd4XVG3BVEtDW+hUyxMAyKNt7uaXfj9+dZwz6
+	 SI6rg0mdeD0BeogTZqZ2H8nLAekV/NH/OBhTvtO6eHnmzdZgDviE1xRp/Rv6IJKCc5
+	 ZEFzzXpewyXzA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uZnl3-000000007bx-0tkl;
+	Thu, 10 Jul 2025 11:40:01 +0200
+Date: Thu, 10 Jul 2025 11:40:01 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 6/8] firmware: qcom: scm: add modparam to control
+ QSEECOM enablement
+Message-ID: <aG-KcWsztfTUHE0Y@hovoldconsulting.com>
+References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
+ <20250625-more-qseecom-v4-6-aacca9306cee@oss.qualcomm.com>
+ <aF0cyOpkjUI4R3bv@hovoldconsulting.com>
+ <gqoba4uu62sh4qxapqkhlufxnliatevnsqcxvijvb74tposf2b@iyonh347aext>
+ <aF1EDMsw1KQTlteX@hovoldconsulting.com>
+ <cjinqyqn7qgvdoltoywxa2lq6bjyfrotmon3iv24tqt3bpdlpe@3xb2k42ffegj>
+ <aF6Srse7BhDJkQiH@hovoldconsulting.com>
+ <7jjxjkk6qwym2mt6xp7t2t4wckyrvwaj2ydubkimnx2oybitab@u4nhj5mib64l>
+ <aGKGHvDzlKrBDrjN@hovoldconsulting.com>
+ <af553qttxd6tqkypokqkgki3dceatsbqfw5botjrcesvg22nyr@zogoseo3j7hc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v6 4/7] media: venus: hfi_plat_v4: Add capabilities for
- the 4XX lite core
-Content-Language: en-US
-To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        <bryan.odonoghue@linaro.org>, <quic_vgarodia@quicinc.com>,
-        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <mchehab@kernel.org>,
-        <robh@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <amit.kucheria@oss.qualcomm.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250708180530.1384330-1-jorge.ramirez@oss.qualcomm.com>
- <20250708180530.1384330-5-jorge.ramirez@oss.qualcomm.com>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250708180530.1384330-5-jorge.ramirez@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=686f860e cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8
- a=8_8YVVxbfvZV4YOWEbQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: vexuhuUL-H5dpGBA0l4Ei3HPb4EizI9-
-X-Proofpoint-GUID: vexuhuUL-H5dpGBA0l4Ei3HPb4EizI9-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA3OSBTYWx0ZWRfXzR1ug89XCMSu
- hpLAgBmOvLSVCbRaPko1pCuTbzkuhBaen2pIahc7VO/SSMEBS6cWprGAq0L67aMGsZwabf5JclU
- iMQcdIlvAUqX19+BDjU1cM6wQrXRjwmPsnns0UoQjk9W/p7i9QOFWI1snXZkNTnSMg6e4BK/QKL
- NlXCf0IkeMqaiTbxPmj6oHDsiEXJbcXqVYzuEOHVqIN1+j78vaAMgh6sp34lPTLxKz8Ew6hko++
- tbFfVgmLndwuvr1NeswmeONwixE0uP72oxSeEgMVC1LRhsUHdiq3JZfYzihPW8/wH05J2L4v115
- nt6+WpYrozX+KMa4QBeoiDqsvNQWuixDFLHHLnlG+NzmG00j+FuhrBVaNu6A3+tVCHhTrRPH4rB
- XblNqjvObXKFz2DHGkkj1yLnZnCJs1r+tLwvWX6zV0kyxEWL1lyGwyS0N4T3KU92tD5jiMPV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-10_01,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
- adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507100079
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <af553qttxd6tqkypokqkgki3dceatsbqfw5botjrcesvg22nyr@zogoseo3j7hc>
 
+On Tue, Jul 01, 2025 at 02:10:49PM +0300, Dmitry Baryshkov wrote:
+> On Mon, Jun 30, 2025 at 02:42:06PM +0200, Johan Hovold wrote:
 
-
-On 7/8/2025 11:35 PM, Jorge Ramirez-Ortiz wrote:
-> Populate the HFI v4 lite capability set used by the AR50_LITE video
-> core.
+> > Here it's just Qualcomm doing something funny that affects their own
+> > platforms. We should be able to figure this out without forcing users or
+> > distros to pass command line parameters.
 > 
-> These capabilities define the supported codec formats and operational
-> limits specific to this streamlined VPU variant.
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> ---
->  .../platform/qcom/venus/hfi_platform_v4.c     | 165 +++++++++++++++---
->  1 file changed, 145 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> index c8e0f8040649..4b7271468ec4 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> @@ -245,25 +245,149 @@ static const struct hfi_plat_caps caps[] = {
->  	.num_fmts = 4,
->  } };
->  
-> +static const struct hfi_plat_caps caps_lite[] = {
-> +{
-> +	.codec = HFI_VIDEO_CODEC_H264,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = { HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> +	.num_pl = 5,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_HEVC,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_VP9,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-> +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_H264,
-> +	.domain = VIDC_SESSION_TYPE_ENC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> +	.num_caps = 15,
-> +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> +	.num_pl = 5,
-> +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-> +	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
-10 bit encoder is not supported on AR50 LITE.
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_HEVC,
-> +	.domain = VIDC_SESSION_TYPE_ENC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> +	.num_caps = 15,
-> +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-> +	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
-10 bit encoder is not supported on AR50 LITE.
+> This is not intended for the normal working course, but for the initial
+> bringup / nailing out issues after the bringup (e.g. after firmware
+> upgrade).
 
-Thanks,
-Dikshita
-> +	.num_fmts = 4,
-> +} };
-> +
->  static const struct hfi_plat_caps *get_capabilities(unsigned int *entries,
->  						    bool lite)
->  {
-> -	WARN_ON(lite);
-> +	*entries = lite ? ARRAY_SIZE(caps_lite) : ARRAY_SIZE(caps);
->  
-> -	*entries = ARRAY_SIZE(caps);
-> -	return caps;
-> +	return lite ? caps_lite : caps;
->  }
->  
->  static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count, bool lite)
->  {
-> -	WARN_ON(lite);
-> -
-> -	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> -		      HFI_VIDEO_CODEC_VP8;
-> -	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> -		      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-> -		      HFI_VIDEO_CODEC_MPEG2;
-> -	*count = 8;
-> +	if (lite) {
-> +		*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC;
-> +		*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> +			      HFI_VIDEO_CODEC_VP9;
-> +		*count = 5;
-> +	} else {
-> +		*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> +			      HFI_VIDEO_CODEC_VP8;
-> +		*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> +			      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-> +			      HFI_VIDEO_CODEC_MPEG2;
-> +		*count = 8;
-> +	}
->  }
->  
->  static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
-> @@ -277,14 +401,21 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
->  	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
->  };
->  
-> +static const struct hfi_platform_codec_freq_data codec_freq_data_lite[] = {
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> +};
-> +
->  static const struct hfi_platform_codec_freq_data *
->  get_codec_freq_data(u32 session_type, u32 pixfmt, bool lite)
->  {
->  	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
->  	const struct hfi_platform_codec_freq_data *found = NULL;
-> -	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-> -
-> -	WARN_ON(lite);
-> +	const struct hfi_platform_codec_freq_data *data = lite ?
-> +					codec_freq_data_lite : codec_freq_data;
->  
->  	for (i = 0; i < data_size; i++) {
->  		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
-> @@ -300,8 +431,6 @@ static unsigned long codec_vpp_freq(u32 session_type, u32 codec, bool lite)
->  {
->  	const struct hfi_platform_codec_freq_data *data;
->  
-> -	WARN_ON(lite);
-> -
->  	data = get_codec_freq_data(session_type, codec, lite);
->  	if (data)
->  		return data->vpp_freq;
-> @@ -313,8 +442,6 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec, bool lite)
->  {
->  	const struct hfi_platform_codec_freq_data *data;
->  
-> -	WARN_ON(lite);
-> -
->  	data = get_codec_freq_data(session_type, codec, lite);
->  	if (data)
->  		return data->vsp_freq;
-> @@ -326,8 +453,6 @@ static unsigned long codec_lp_freq(u32 session_type, u32 codec, bool lite)
->  {
->  	const struct hfi_platform_codec_freq_data *data;
->  
-> -	WARN_ON(lite);
-> -
->  	data = get_codec_freq_data(session_type, codec, lite);
->  	if (data)
->  		return data->low_power_freq;
+And for that you do not need a module parameter either.
+
+> > Do we know if there are any sc8280xp or x1e machines that boot off UFS?
+> > 
+> > If not (even with the exception of the CRDs) then it should be fine to
+> > just whitelist the SoCs without any command line parameters.
+> 
+> I'm not aware of such platforms.
+
+Then go for it.
+
+> > Adding to a blacklist is bound to be overlooked, while adding to a
+> > whitelist is not.
+> 
+> You can't overlook it since it is required as a part of almost any
+> distro setup - point UEFI boot sequence to your new bootloader entry.
+
+The distros don't do bring ups of these machines themselves.
+
+> > I'd rather see you get to the bottom of the UFS boot issue and whether
+> > there is some way to determine this programmatically.
+> 
+> I don't see a good way to do that - UFS might be probed very late, it
+> might be unused for the boot at all, etc.
+
+How about asking the Qualcomm firmware team?
+
+Again, there's no rush here. Whitelisting is perfectly fine until then.
+
+> > If everything that's currently upstream boots from NVMe that may not
+> > necessarily mean it works for devices using UFS.
+> 
+> And? I don't care that much about theoretical devices here.
+
+It's not theoretical. We know that the UEFI vars on the CRDs are not
+persistent when booting off UFS. Not to mention your Yoga.
+
+> > > > But if this series now enables broken EFI variable support on every
+> > > > other device then I don't think that's ok (even if you provide a command
+> > > > line parameter that each user now have to pass).
+> > > > 
+> > > > Then I'd rather see a proposal for how to determine which machines
+> > > > support this or not, information which was not available when this
+> > > > interface was reverse engineered and where a conservative whitelist
+> > > > approach made perfect sense.
+> > > 
+> > > WIP
+> > 
+> > Good. We can manage with adding new entries for a while still while you
+> > guys at Qualcomm work this out.
+> 
+> You (we) guys at Linaro could have figured that out too ;-)
+
+Linaro relies on Qualcomm to provide details on things like this. As you
+know.
+
+Johan
 
