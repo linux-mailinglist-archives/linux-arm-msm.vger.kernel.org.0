@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-64431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB19AB008A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 18:29:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D7CFB008A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 18:29:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9874854281C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 16:28:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7653A3B42FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 16:28:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 224C42F0E25;
-	Thu, 10 Jul 2025 16:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA5F2F0E3E;
+	Thu, 10 Jul 2025 16:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="L98kfYr+"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GYMo8y91"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED222F0E21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F01C2F0E2C
 	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 16:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752164876; cv=none; b=k9JISWLXBHf2J6kNXj5MWVCAPAGVfybEhBKryAAu3wMfhfAiEMsyvIJPFEeYcAXKTBQVpG0Mvke6ks5WhtAqRcr2Axlx32Z3dS/3zQQ1Bns0I2rl74jtSmbBwvTFgdaFKJEMhZelyAdHlV9lF21eJBKam+f3Ki62zei3MFo+ErM=
+	t=1752164875; cv=none; b=mKx0CK4WkIGuDLkp+9FOltoA+KWtetsga0HEFaspT0Scvs8uLwr/yBwbzHzUz5i4GGuwVIfZT01GOhhMlgU1EySd943FqAEuQoWHAUh25Fm0Nmsh1VmSVopA6A3qweGzRbvLwrhNiR6ok6nqs6xSckotYmlzDIdTtpCQw8RhAPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752164876; c=relaxed/simple;
-	bh=2tcX4i+WplqrfRmawSRGIQU9quR/NT2tlxOGP4FTR2U=;
+	s=arc-20240116; t=1752164875; c=relaxed/simple;
+	bh=nqAod6ptbkqWsY1ReyritvzpOhyiZE8UL5uK1TlylSY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Tj4moz3NwPcI7oWDPMeh4MJYo3HlOw0FqswnCbqiT+z5irCEfZSg80QQCsBOt2T0F3H7vqgSSb5ucc73xfjpHgjsifr6ICeOQqf0wyslWnaN1bhUAwIaGU5y3fiQDqRqDRf6FeWwLEJvrEpWUSPQJgBJDWvZFo+rm4AL78h9KUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=L98kfYr+; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:To:Cc; b=YZspUjQfqhxxVu9Qk8GHx/GTLHROiYjjIOksSTm+fpChyZNXqMcNROri/cNvIVnitS+RzH47qeb/B8ZFcrtezB+gUjnhMkksihhLXtrPT1lktpm68yhj0grvs9E9CORoLqgWrD5hJNja4adwsBn+ohoiL+5w+6qmnSV1N9jAU78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GYMo8y91; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752164872;
+	s=mimecast20190719; t=1752164873;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8lg6vSRQIoxZQq3J6kiqCP0RJ7z/x8IqpzwjD/7nChQ=;
-	b=L98kfYr+6u9NVtE4T1HobAclVDxgOC4uo2FIJ6jZ5DjMwXJHIDhWsc08TR2mBS5S/pe3Tg
-	y5axUx842qtp6qoz/wcnbBzxV7L0vWbifGqC0306fpz8lO7tAioVEZeEpUtmqB932ymJRZ
-	fwyQ9jJmhyOpALqV8zOneW6LCYBllV8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=5R3syR4S85etmH81khP1EmeTBgeUTYs1zijTxbmA/kg=;
+	b=GYMo8y91X/8JpzsTHmBwXm3AAAUEFIe4zgxNZJ0/K0mZvIjHH5t9lvvdzwgQyUCt656for
+	1lMcyaLcj1VkgoNEYYW+0HfIRhQI86A369eCBZxVpapOl8EWx4c9EzVYiG6q4FhVRgz2Sx
+	Wg+xTX0GULfXk0971vqT9W55rQ4oCj4=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-tR7unPYcPeaEj50_R6pD7g-1; Thu, 10 Jul 2025 12:27:51 -0400
-X-MC-Unique: tR7unPYcPeaEj50_R6pD7g-1
-X-Mimecast-MFC-AGG-ID: tR7unPYcPeaEj50_R6pD7g_1752164870
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d399070cecso214996485a.3
+ us-mta-656-8gO2vNNSNQiFIhx2nsP51g-1; Thu, 10 Jul 2025 12:27:52 -0400
+X-MC-Unique: 8gO2vNNSNQiFIhx2nsP51g-1
+X-Mimecast-MFC-AGG-ID: 8gO2vNNSNQiFIhx2nsP51g_1752164871
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d399065d55so146016185a.1
         for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 09:27:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752164870; x=1752769670;
+        d=1e100.net; s=20230601; t=1752164871; x=1752769671;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8lg6vSRQIoxZQq3J6kiqCP0RJ7z/x8IqpzwjD/7nChQ=;
-        b=oCWOO5fo32YVoHdl1rMisIeB3iEbvHxrOVkFJWEwcp+5ZUAC9ipFQoQ5gdeKCWjQHJ
-         dkoug3hyIkLkK2hgLfDA2CbsatHigFW5kg/s/Bcb/kfee/oWUxe+2KJPhwqm8nwn3BR6
-         wsj8x836uSGbuF9SW8t92jO6ZMV437U87L9Nvik1ZqqVJOzUilXOLGjdlxvFADX9vnBR
-         HGjCemEbx1coo5VxH/coYUZK8xDecye4/HbO7gVoKNs3qCp7glQACezMgHvdUmy6fgAQ
-         V3vVQYr07khMP13U//05UPNtME1EeY5F0fSi6D4zr5LStziO5jFFNzDcunI9r+YicGVn
-         rxYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWObHNCsSYjb7wanXQd0jmJU5Ff5+QnwC0rxRbYRbVuJBmmhFphF3vpVfyXoDF1bfMMeeeeDgQ52dqnu1KY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2qfBbfF6GpN9gh7CLlKCrtDAVK4tkst5SAIJeZ1jT8HVSuReD
-	ikbyuOjaXjcL2lkwwT9iku2g+1As8CyLzZUS5CDKaVZAZAoPtBzW75lJQDjlPbin0LdwORINbeA
-	QfSjvNDRfWKsaTHLljZle/YT+dT7i12ilv9Q3xNXYnM2tsnlqFCZBrHHLuMLd2c/dlXA=
-X-Gm-Gg: ASbGnct26hiD6XqlZyRiorsPzNsoAmOUm1PoWo1Js0j8xSrABJetBdsrJefPUwNyNS1
-	W1k0Prevw6jrAK/o/pzcxLJxRrSJ11zwkniIPl7D+pFX0hgfhCl7LW3nZf1PFfbfEL45uZ2HqVK
-	HEVGDLWBsRxqfSoQd1Ly2sLOxOTfpdknJAWYPuR8Wq1wITv2uaNE1hfSgn/erJ2j1+hDTaE6sWq
-	jt9AXqxNcRklPcNR5q88i4yOtirnAtjDW5DovMeGDXeB5RonC0bvlOAHS5mDmJKqilKl4gbqr3P
-	6rbIrG+b+0VVSOSf1Dh/aWn5D70Rca46lYuH1zGFE3sn2RUGAEdEAyo2GX9K
-X-Received: by 2002:a05:620a:278b:b0:7d4:4b40:fcab with SMTP id af79cd13be357-7dde995087emr35199985a.6.1752164869848;
-        Thu, 10 Jul 2025 09:27:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFzID3fxPLzjceUNQ7ykn+etrxan44d1sFVAzLmbbmeJrEyagiiMxYKuKtBXqRalDrZs3g0iA==
-X-Received: by 2002:a05:620a:278b:b0:7d4:4b40:fcab with SMTP id af79cd13be357-7dde995087emr35185885a.6.1752164868703;
-        Thu, 10 Jul 2025 09:27:48 -0700 (PDT)
+        bh=5R3syR4S85etmH81khP1EmeTBgeUTYs1zijTxbmA/kg=;
+        b=c5tN1AjcrEkKz6gdBOAOVGQCSLlFuGAtSCaCUZdtq5Kxbmv5TTyrsGofMLzh6f+qQM
+         2zwa8BDgi0D7SmHVEIHeOpRD1tbGr9+TgVWvDV/kUYmD+3ySW1ty1iGVzEvAZIBL6ItW
+         oMjiJBHCdgMw6+1qXz3IwpBz8pjipN/M9LXVZW9ni68MyDoouhjZe8FtnOzbtzrjhAS7
+         JdrwSnFd9a6kEBicolbn7IBp7bG9yuHF5BCza0PMHwbXvf5FWc8WFFgwShAFWL+++NLS
+         he2EzZsHBaGiKegcSz4shepWdTw9CgO18hrQRYhkvexMms3He8HqxO7qGkb0pPiR5Hfo
+         A3JA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfxifrMy+hogc2xezKqnVG4NzSMCV3mm1oOI6IIhOxlGtdIdjwZ1zDB8Wk8VQKsoerHhwSrmKwfVVA4RH2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw00Zss9Zj4z73ed7kVIpOn7Zp9tfaVkXmWRu1mSpi8a68PJMNo
+	LhYVtsVIVgNko58ZdYu6m9DLYtvLFU4GKBsIChd1uuYAu5/0yAlaHUQDoHky0K5RF+FBGlIDN8q
+	WAX/3kEFAYbnALj/OIfuDqXQXhG62pThn395XwWHWKYzomE9xjeQ9Kgr9HIRMeW1cMLc=
+X-Gm-Gg: ASbGncsfcCMLsr25cmNUnoNr7uqSXG8TMcf8nbfigd2/ZU3oGA1bfePnuSmqUL6YviM
+	KfZfnOmEW2hEdwYmzDe8s/6GdStHPQQe8aJLVrf3KACdjfxJJMougNVEgSJ32GDqreTWDIL/Ttn
+	E6z5JH/vzvaQEmgFWhPIPqUlyfKdN8vQsEfVvPM6VTTiqI8uLazxSct4zOD40js0vY7Zv6Eh40J
+	BlLoqiYoeqBAaPFcw8zS2m+I6vd2goDsw5V63IXCW2W5l8wgiuOLWZG1Nh8SFICp7kmX057fB49
+	xDNfsbgiZQInc+/i43nd7dKX4dAZEEb3JgzAWRrp0txNsMmWg7LAvAePOCP/
+X-Received: by 2002:a05:620a:2544:b0:7d3:f17d:10c8 with SMTP id af79cd13be357-7dded1f16b8mr20792285a.43.1752164871212;
+        Thu, 10 Jul 2025 09:27:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOyyYlCkE/VGPozckcGjQXSedTTbkLOtyXFJPCLzGJ2sRyA8bY8gLQAjWSxObzTseQLmP6BQ==
+X-Received: by 2002:a05:620a:2544:b0:7d3:f17d:10c8 with SMTP id af79cd13be357-7dded1f16b8mr20785785a.43.1752164870612;
+        Thu, 10 Jul 2025 09:27:50 -0700 (PDT)
 Received: from [192.168.1.3] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdc5df99asm113487685a.49.2025.07.10.09.27.46
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdc5df99asm113487685a.49.2025.07.10.09.27.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 09:27:47 -0700 (PDT)
+        Thu, 10 Jul 2025 09:27:50 -0700 (PDT)
 From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 10 Jul 2025 12:27:27 -0400
-Subject: [PATCH 1/7] drm/msm/dsi_phy_10nm: convert from round_rate() to
+Date: Thu, 10 Jul 2025 12:27:28 -0400
+Subject: [PATCH 2/7] drm/msm/dsi_phy_14nm: convert from round_rate() to
  determine_rate()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -91,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250710-drm-msm-phy-clk-round-rate-v1-1-364b1d9ee3f8@redhat.com>
+Message-Id: <20250710-drm-msm-phy-clk-round-rate-v1-2-364b1d9ee3f8@redhat.com>
 References: <20250710-drm-msm-phy-clk-round-rate-v1-0-364b1d9ee3f8@redhat.com>
 In-Reply-To: <20250710-drm-msm-phy-clk-round-rate-v1-0-364b1d9ee3f8@redhat.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>, 
@@ -105,11 +105,11 @@ Cc: linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  linux-kernel@vger.kernel.org, Brian Masney <bmasney@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752164864; l=1824;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752164864; l=3196;
  i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=2tcX4i+WplqrfRmawSRGIQU9quR/NT2tlxOGP4FTR2U=;
- b=qzj4XInGJ7/EHJVBNG2+t0ziIbNz896g6fTJEvecN0CZRiGCaopgTV+PetsARQ4sfl9hv4ynl
- EW7hPRPg9BxC9pUnEaWMMeMPqih8fcUG8Gm5AhUD6C5SJGf/nMExHjE
+ bh=nqAod6ptbkqWsY1ReyritvzpOhyiZE8UL5uK1TlylSY=;
+ b=OoNhhsZUbmAMdwPUtra7QULaHqehIf0/38bmAqXxUkaMeC3doTAw/V/9TIJKb+x9w7DYvOig4
+ Gf4oVrvhKVRAcfxi2pcc58T03+pEYH6XMrMX4bp1bgSK7BzZMg4R1Tf
 X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
  pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 
@@ -119,44 +119,81 @@ on the cover letter of this series.
 
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 36 ++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index af2e30f3f842a0157f161172bfe42059cabe6a8a..d9848b5849836a75f8f6b983d96f8901d06a5dd3 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -444,21 +444,21 @@ static unsigned long dsi_pll_10nm_vco_recalc_rate(struct clk_hw *hw,
- 	return (unsigned long)vco_rate;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+index 3a1c8ece6657c988cfb0c26af39b5d145bc576f8..4bc9b7e44ce775f676fc89cf4565adeb309f0177 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+@@ -578,21 +578,21 @@ static void dsi_pll_14nm_vco_unprepare(struct clk_hw *hw)
+ 	pll_14nm->phy->pll_on = false;
  }
  
--static long dsi_pll_10nm_clk_round_rate(struct clk_hw *hw,
+-static long dsi_pll_14nm_clk_round_rate(struct clk_hw *hw,
 -		unsigned long rate, unsigned long *parent_rate)
-+static int dsi_pll_10nm_clk_determine_rate(struct clk_hw *hw,
++static int dsi_pll_14nm_clk_determine_rate(struct clk_hw *hw,
 +					   struct clk_rate_request *req)
  {
- 	struct dsi_pll_10nm *pll_10nm = to_pll_10nm(hw);
+ 	struct dsi_pll_14nm *pll_14nm = to_pll_14nm(hw);
  
--	if      (rate < pll_10nm->phy->cfg->min_pll_rate)
--		return  pll_10nm->phy->cfg->min_pll_rate;
--	else if (rate > pll_10nm->phy->cfg->max_pll_rate)
--		return  pll_10nm->phy->cfg->max_pll_rate;
+-	if      (rate < pll_14nm->phy->cfg->min_pll_rate)
+-		return  pll_14nm->phy->cfg->min_pll_rate;
+-	else if (rate > pll_14nm->phy->cfg->max_pll_rate)
+-		return  pll_14nm->phy->cfg->max_pll_rate;
 -	else
 -		return rate;
-+	if (req->rate < pll_10nm->phy->cfg->min_pll_rate)
-+		req->rate = pll_10nm->phy->cfg->min_pll_rate;
-+	else if (req->rate > pll_10nm->phy->cfg->max_pll_rate)
-+		req->rate = pll_10nm->phy->cfg->max_pll_rate;
++	if (req->rate < pll_14nm->phy->cfg->min_pll_rate)
++		req->rate = pll_14nm->phy->cfg->min_pll_rate;
++	else if (req->rate > pll_14nm->phy->cfg->max_pll_rate)
++		req->rate = pll_14nm->phy->cfg->max_pll_rate;
 +
 +	return 0;
  }
  
- static const struct clk_ops clk_ops_dsi_pll_10nm_vco = {
--	.round_rate = dsi_pll_10nm_clk_round_rate,
-+	.determine_rate = dsi_pll_10nm_clk_determine_rate,
- 	.set_rate = dsi_pll_10nm_vco_set_rate,
- 	.recalc_rate = dsi_pll_10nm_vco_recalc_rate,
- 	.prepare = dsi_pll_10nm_vco_prepare,
+ static const struct clk_ops clk_ops_dsi_pll_14nm_vco = {
+-	.round_rate = dsi_pll_14nm_clk_round_rate,
++	.determine_rate = dsi_pll_14nm_clk_determine_rate,
+ 	.set_rate = dsi_pll_14nm_vco_set_rate,
+ 	.recalc_rate = dsi_pll_14nm_vco_recalc_rate,
+ 	.prepare = dsi_pll_14nm_vco_prepare,
+@@ -622,18 +622,20 @@ static unsigned long dsi_pll_14nm_postdiv_recalc_rate(struct clk_hw *hw,
+ 				   postdiv->flags, width);
+ }
+ 
+-static long dsi_pll_14nm_postdiv_round_rate(struct clk_hw *hw,
+-					    unsigned long rate,
+-					    unsigned long *prate)
++static int dsi_pll_14nm_postdiv_determine_rate(struct clk_hw *hw,
++					       struct clk_rate_request *req)
+ {
+ 	struct dsi_pll_14nm_postdiv *postdiv = to_pll_14nm_postdiv(hw);
+ 	struct dsi_pll_14nm *pll_14nm = postdiv->pll;
+ 
+-	DBG("DSI%d PLL parent rate=%lu", pll_14nm->phy->id, rate);
++	DBG("DSI%d PLL parent rate=%lu", pll_14nm->phy->id, req->rate);
+ 
+-	return divider_round_rate(hw, rate, prate, NULL,
+-				  postdiv->width,
+-				  postdiv->flags);
++	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
++				       NULL,
++				       postdiv->width,
++				       postdiv->flags);
++
++	return 0;
+ }
+ 
+ static int dsi_pll_14nm_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -680,7 +682,7 @@ static int dsi_pll_14nm_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ static const struct clk_ops clk_ops_dsi_pll_14nm_postdiv = {
+ 	.recalc_rate = dsi_pll_14nm_postdiv_recalc_rate,
+-	.round_rate = dsi_pll_14nm_postdiv_round_rate,
++	.determine_rate = dsi_pll_14nm_postdiv_determine_rate,
+ 	.set_rate = dsi_pll_14nm_postdiv_set_rate,
+ };
+ 
 
 -- 
 2.50.0
