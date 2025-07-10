@@ -1,90 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-64455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AAEFB00ADB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:55:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C4F2B00ADD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:55:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 464635834BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:55:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5FCD761FA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:54:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECDDC2F2726;
-	Thu, 10 Jul 2025 17:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0402F1FF3;
+	Thu, 10 Jul 2025 17:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Exp633wo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3LbuAwo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBE8266B41;
-	Thu, 10 Jul 2025 17:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5C432C8B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 17:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752170079; cv=none; b=gql7PEj+0ywMsBj62AcMGc0kxwiXeUHeJ7NC3H6Kr+MXfy4YthH8EeudYpH1Qrf0Sqv2qPejhGPBi9r9l9KVCJyIVWAq1IE3Th3tWo2BB+kmR00pJ1whLO0Qm4XRHqyRS5K+wez5AM22ra55Rl1FilgEVvB3Dnf9FLVlRv6N2cQ=
+	t=1752170075; cv=none; b=SlteLSMJnrDJ2jdQJ1LAdltgM8Uk0gkiV+Mcx6m1NfEoH0oe1TGiRZWMugKAHDM+9JfiXtv/TjEvCnp47nkuv+WZFeBbrF5UWK5l2ByDGvk6rT1FT8h9pXBYXhtRaF3wLgxdq5EdtjGSa/b04iCcxDVdEVMoTIPnH2rwMOsQPx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752170079; c=relaxed/simple;
-	bh=jQQeRieZ7pRGi+z7yw6sLkaXJ3c1Id4neVF9B6GLF4E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pu17bfhsqlzrLVZpzAC2KMC4IfZbkIK2fWFa882tAeXKWdtuu6n0NHs5MqNV9PX4fc9xEQIjJ9joFdX9bYaNhlI/Av52Yl2th6Bqo3iHqgM6SWuJTaw7a8uX87ONcbDecmpCgGJVvzC/OCsGHRMuTwN2K4S5Ku6Qk0bsCjuFNno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Exp633wo; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b2c4e46a89fso1249191a12.2;
-        Thu, 10 Jul 2025 10:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752170077; x=1752774877; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rXxvi+5q4QFQw8v85rfTWOMN7g2ZTWMoWhyMZwHTM50=;
-        b=Exp633woWBLNxrgeLUm72HIhNq3JlVlSvpnFWgMJMrCbgO8SucbdoPhxrsqq1Bv/TC
-         qSOP8xvm0jaA/SP6Fr3oJyGa0pFvMhen2BASH84ruoCrVw+5u9nnA6+xgQkd+kRWUoi8
-         lb5iMs8oFO35OaCtSWoFkcc/yRbyWg03RbUT5G+DkfJKQpSBQW1OJwf4AzryFXK+WxXU
-         Y+7AJmKmntLdKQdVldqUG2FATYbLbLaXilCH6RRhgjJw/t8tzZ8bD04C9HDny/andNyV
-         WVHuuzvrHb1NZ0RHUDu7GHPQCJ/2S4wCpzaI0ZtVhB36+5FkDdgtbvtM8uNpWQTh8vCr
-         7l1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752170077; x=1752774877;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rXxvi+5q4QFQw8v85rfTWOMN7g2ZTWMoWhyMZwHTM50=;
-        b=Pxf+M/+gvclhO8xdSl5XqKOvnEc8UASqqC57T97lgbnsOSHK5ABudMonM2H88yPfjU
-         ArChz7CDV31MM5qQa7pdr6Ge/YyIgsuDGMkDv+PxgGJf5sMTFlVWR3S8yMUULujj9UrM
-         pudNtYFhv9uFH0VuenzdwsLPD72Ch6Vbxvs2p6CwXdfSfqhsy1LfRpnR4Fs6C1SZ9QrW
-         CW/OniLf09ljskslx5RZl+nQ+85rXZRDjjoPt8vMYPLKxXMz1wEPhYFlKk15rn7r1b/j
-         nj2vB/844vGPOipYFC2LNWWimQSr6beI5XDF/AtstLMQ+bKvYL5Fnqsc8i8VD3+u/0J9
-         iU2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUpKBCKiq3O3nRnasyOu5dLVaMVPLbGQercYe1P/jy2GeMEn0jhOU0aNTdgbZHF6a1A3p1Q7x7mveQ=@vger.kernel.org, AJvYcCW+vFHGLuXjKqkfe7SSIV889R/pXrEiyQJwkpSgX8ylPAxcY2MidZ9XIgdt5Jc9o6EYOEoDtl9L7QFC1Kop@vger.kernel.org, AJvYcCXq91HBYw+I3FVxGWGGcBduPdjJ4llJgPVvt4gPIXBz3gmnbgYJWwp4DQOx3SiXeOJ6tGuBApFrQfJ8Lg4x@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyETmya/P5AjJeLCi1edfSNBJAxrsoZARoLx10ZkZMfjL0Ng+F
-	3LX0HHsgC6Saw2qXQm072Px6BG9iKa4qBEt+6k5YgIEp+ZzcO3q0BQGM
-X-Gm-Gg: ASbGncuqErQRjB7rTDJx91JLGSPkG+mu6c1BSeU6shFoIaJGHL/z+Gyr9uV+r7ULSse
-	xqO8EgLRWHkBx8ufhq/qq2dN1bDS0fFG3G9maJcxDNx1et1JzcbGQgCs+LMAlXfUKXvCY8nMo95
-	PyMpIp5KNJ1PpFldJgq5484FP8ZQ/YxzL2ojFmOGt0XemGFfs18ygoMGdMzdEi8oNypJJZCILGG
-	SHIOE5+Y428aETJyXjEIfCtCaRKDOAIeX7OQXOPbIv2M7hE/GkxR2+03sOJKhEuOuk1n73Dirgl
-	dLglWG8DkrYr12EnoHrBlBTFKEkeuq1OUYWn0asmA9uHBWKaAHSqdYUGLqq5Z1xwrxeLpHEW9GE
-	P
-X-Google-Smtp-Source: AGHT+IHdHFmXufRa/zotSV6mFnexsIVBhnLZI862K14IVzlEoidavjo6EHbFOG2l+bSLn/XhPu5DFw==
-X-Received: by 2002:a05:6a20:a10a:b0:201:85f4:ad07 with SMTP id adf61e73a8af0-23120a0413emr378471637.33.1752170077326;
-        Thu, 10 Jul 2025 10:54:37 -0700 (PDT)
-Received: from gmail.com ([2402:e280:3e9b:22f:79aa:4a35:715c:d62c])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe6f841csm2730885a12.57.2025.07.10.10.54.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 10:54:36 -0700 (PDT)
-From: Sumeet Pawnikar <sumeet4linux@gmail.com>
-To: amitk@kernel.org,
-	thara.gopinath@gmail.com,
-	rafael@kernel.org
-Cc: rui.zhang@intel.com,
-	lukasz.luba@arm.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	sumeet4linux@gmail.com
-Subject: [PATCH] drivers/thermal/qcom/lmh: Fix incorrect error message
-Date: Thu, 10 Jul 2025 23:24:25 +0530
-Message-ID: <20250710175426.5789-1-sumeet4linux@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1752170075; c=relaxed/simple;
+	bh=F05HSydP5BNA2szlMLXA5Y3OXlzOycAxUT/KLRoTscg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I8qr6Qf8KQX8tkZd1Gkx1fcthX6adk9K4ikIwkeKT4aJ9ZlArdA8it950YwEPmzRRm0d4+0WFTmYjh76hUiBBRln937Tr/iTX1U38G14eKQmXXKBNFMvyFNAtpMbn6+HaX/zitlUwwYZtSTlt/q8zPijFSu8t9h0jvFfUGYuR30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3LbuAwo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AE3C4CEE3;
+	Thu, 10 Jul 2025 17:54:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752170075;
+	bh=F05HSydP5BNA2szlMLXA5Y3OXlzOycAxUT/KLRoTscg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Q3LbuAwoJH303RGl9w6tdCBvhbsnhmPEP1AoD7Zgvxr3jjKZZEahWEn5kfOOgRzg3
+	 uXNvRxochNO5B4GWmiMekfeS4CLN+yXxAPOX7ovTZL6bS9ov8knLtjm2ugiMGlkwhE
+	 TjsvhqYunKmc+jjG9i5jJ+YlQRmRj7ZUp061kz/G1B30yKB40HtcYzy7hfxMYwYVgC
+	 z+Hua1xqkR1JkYjiNJn/QjvHd1jIXid87P61P8w56wV9ZV6WCY0Oig9CQCkI0KB37a
+	 Ra/jSRojD49hb2W6qdNOKWUw2ujO9pXCXhu+vUPsYpp0GDiNgLrq9dtqN6Zi17Qxb2
+	 U0ZzgQmulJUeQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [GIT PULL] Qualcomm DeviceTree fixes for v6.16
+Date: Thu, 10 Jul 2025 12:54:33 -0500
+Message-ID: <20250710175434.6201-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,30 +59,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It was showing wrong error message as ARM threshold
-thremal trip for setting LOW threshold thermal trip.
-Fix this incorrect error message for setting LOW
-threshold thermal trip.
 
-Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
----
- drivers/thermal/qcom/lmh.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
 
-diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
-index 991d1573983d..95324b2f893d 100644
---- a/drivers/thermal/qcom/lmh.c
-+++ b/drivers/thermal/qcom/lmh.c
-@@ -204,7 +204,7 @@ static int lmh_probe(struct platform_device *pdev)
- 	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low,
- 				 LMH_NODE_DCVS, node_id, 0);
- 	if (ret) {
--		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
-+		dev_err(dev, "Error setting thermal LOW threshold%d\n", ret);
- 		return ret;
- 	}
- 
--- 
-2.43.0
+  Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
 
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.16
+
+for you to fetch changes up to e8d3dc45f2d3b0fea089e0e6e351d1287a5a2a29:
+
+  arm64: dts: qcom: x1e80100: describe uefi rtc offset (2025-06-10 09:14:58 -0500)
+
+----------------------------------------------------------------
+Qualcomm DeviceTree fixes for v6.16
+
+The RTC DeviceTree binding was changed in v6.16, to require an explicit
+flag indicating that we store RTC offset in in an UEFI variable.
+
+The result sent X Elite and Lenovo Thinkpad X13s users back to 1970, add
+the flag to explicitly select the correct configuration for these
+devices.
+
+----------------------------------------------------------------
+Johan Hovold (2):
+      arm64: dts: qcom: sc8280xp-x13s: describe uefi rtc offset
+      arm64: dts: qcom: x1e80100: describe uefi rtc offset
+
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 ++
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi               | 1 +
+ 2 files changed, 3 insertions(+)
 
