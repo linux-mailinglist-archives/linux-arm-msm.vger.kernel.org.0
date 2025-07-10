@@ -1,63 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-64453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95789B00A81
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:50:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AAEFB00ADB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 19:55:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D75C67BBFCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:48:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 464635834BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:55:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9166A2F235D;
-	Thu, 10 Jul 2025 17:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECDDC2F2726;
+	Thu, 10 Jul 2025 17:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="UpGY+9j1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Exp633wo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA6199BC;
-	Thu, 10 Jul 2025 17:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBE8266B41;
+	Thu, 10 Jul 2025 17:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752169742; cv=none; b=kG4YlhixqeLdiv0iqndg/9emR2BNsFG3uC5Ng5G3fSgG8cwbKj1fdd2ovgVt8PqfB9sOiHF5VL/D6nlsJ9lCJNcVqJ0cOM+dyiqBxQAjGRhH71t/S1S/jNsiwuc8bfwEXHVew9KKaX5bnJFQ88vujsZ13Vuz6vxXRKO4tAItqkQ=
+	t=1752170079; cv=none; b=gql7PEj+0ywMsBj62AcMGc0kxwiXeUHeJ7NC3H6Kr+MXfy4YthH8EeudYpH1Qrf0Sqv2qPejhGPBi9r9l9KVCJyIVWAq1IE3Th3tWo2BB+kmR00pJ1whLO0Qm4XRHqyRS5K+wez5AM22ra55Rl1FilgEVvB3Dnf9FLVlRv6N2cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752169742; c=relaxed/simple;
-	bh=+/YegUR3QD020fI4pwf488L2amOa0J/wVfb1IzvgWm4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMB2nH01zaEJiRd8RC995EVUYH5Oq+bHGEbP7V+VnorM+rNA/uutpe6FCFelqN+082xU/u0ONKBz2btt3gR+7qIsxTIei52URT7DL/ppUO85obxwjsY6uFikki3cSWBkE64X8qQIvXYqt1zchpfKAcx0HXLjG/EE5ePptxPG6wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=UpGY+9j1; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 864CA2391;
-	Thu, 10 Jul 2025 19:48:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1752169709;
-	bh=+/YegUR3QD020fI4pwf488L2amOa0J/wVfb1IzvgWm4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpGY+9j1t4JKD0xB4Bs8wApn+zNmonRiV0SIEo6JqXBqYJP+yYUqCLb1SOh829pcN
-	 K7VjMTluL1zU8KXNHZNggACbOEisb96QBN64Exh/07qYR3rbt1X8+MKWES0ALa7jec
-	 pcJCcCqNJAGD4Rka9iYH746zzavHJE210lVzSyo0=
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: linux-media@vger.kernel.org
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	s=arc-20240116; t=1752170079; c=relaxed/simple;
+	bh=jQQeRieZ7pRGi+z7yw6sLkaXJ3c1Id4neVF9B6GLF4E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pu17bfhsqlzrLVZpzAC2KMC4IfZbkIK2fWFa882tAeXKWdtuu6n0NHs5MqNV9PX4fc9xEQIjJ9joFdX9bYaNhlI/Av52Yl2th6Bqo3iHqgM6SWuJTaw7a8uX87ONcbDecmpCgGJVvzC/OCsGHRMuTwN2K4S5Ku6Qk0bsCjuFNno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Exp633wo; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b2c4e46a89fso1249191a12.2;
+        Thu, 10 Jul 2025 10:54:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752170077; x=1752774877; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXxvi+5q4QFQw8v85rfTWOMN7g2ZTWMoWhyMZwHTM50=;
+        b=Exp633woWBLNxrgeLUm72HIhNq3JlVlSvpnFWgMJMrCbgO8SucbdoPhxrsqq1Bv/TC
+         qSOP8xvm0jaA/SP6Fr3oJyGa0pFvMhen2BASH84ruoCrVw+5u9nnA6+xgQkd+kRWUoi8
+         lb5iMs8oFO35OaCtSWoFkcc/yRbyWg03RbUT5G+DkfJKQpSBQW1OJwf4AzryFXK+WxXU
+         Y+7AJmKmntLdKQdVldqUG2FATYbLbLaXilCH6RRhgjJw/t8tzZ8bD04C9HDny/andNyV
+         WVHuuzvrHb1NZ0RHUDu7GHPQCJ/2S4wCpzaI0ZtVhB36+5FkDdgtbvtM8uNpWQTh8vCr
+         7l1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752170077; x=1752774877;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rXxvi+5q4QFQw8v85rfTWOMN7g2ZTWMoWhyMZwHTM50=;
+        b=Pxf+M/+gvclhO8xdSl5XqKOvnEc8UASqqC57T97lgbnsOSHK5ABudMonM2H88yPfjU
+         ArChz7CDV31MM5qQa7pdr6Ge/YyIgsuDGMkDv+PxgGJf5sMTFlVWR3S8yMUULujj9UrM
+         pudNtYFhv9uFH0VuenzdwsLPD72Ch6Vbxvs2p6CwXdfSfqhsy1LfRpnR4Fs6C1SZ9QrW
+         CW/OniLf09ljskslx5RZl+nQ+85rXZRDjjoPt8vMYPLKxXMz1wEPhYFlKk15rn7r1b/j
+         nj2vB/844vGPOipYFC2LNWWimQSr6beI5XDF/AtstLMQ+bKvYL5Fnqsc8i8VD3+u/0J9
+         iU2A==
+X-Forwarded-Encrypted: i=1; AJvYcCUpKBCKiq3O3nRnasyOu5dLVaMVPLbGQercYe1P/jy2GeMEn0jhOU0aNTdgbZHF6a1A3p1Q7x7mveQ=@vger.kernel.org, AJvYcCW+vFHGLuXjKqkfe7SSIV889R/pXrEiyQJwkpSgX8ylPAxcY2MidZ9XIgdt5Jc9o6EYOEoDtl9L7QFC1Kop@vger.kernel.org, AJvYcCXq91HBYw+I3FVxGWGGcBduPdjJ4llJgPVvt4gPIXBz3gmnbgYJWwp4DQOx3SiXeOJ6tGuBApFrQfJ8Lg4x@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyETmya/P5AjJeLCi1edfSNBJAxrsoZARoLx10ZkZMfjL0Ng+F
+	3LX0HHsgC6Saw2qXQm072Px6BG9iKa4qBEt+6k5YgIEp+ZzcO3q0BQGM
+X-Gm-Gg: ASbGncuqErQRjB7rTDJx91JLGSPkG+mu6c1BSeU6shFoIaJGHL/z+Gyr9uV+r7ULSse
+	xqO8EgLRWHkBx8ufhq/qq2dN1bDS0fFG3G9maJcxDNx1et1JzcbGQgCs+LMAlXfUKXvCY8nMo95
+	PyMpIp5KNJ1PpFldJgq5484FP8ZQ/YxzL2ojFmOGt0XemGFfs18ygoMGdMzdEi8oNypJJZCILGG
+	SHIOE5+Y428aETJyXjEIfCtCaRKDOAIeX7OQXOPbIv2M7hE/GkxR2+03sOJKhEuOuk1n73Dirgl
+	dLglWG8DkrYr12EnoHrBlBTFKEkeuq1OUYWn0asmA9uHBWKaAHSqdYUGLqq5Z1xwrxeLpHEW9GE
+	P
+X-Google-Smtp-Source: AGHT+IHdHFmXufRa/zotSV6mFnexsIVBhnLZI862K14IVzlEoidavjo6EHbFOG2l+bSLn/XhPu5DFw==
+X-Received: by 2002:a05:6a20:a10a:b0:201:85f4:ad07 with SMTP id adf61e73a8af0-23120a0413emr378471637.33.1752170077326;
+        Thu, 10 Jul 2025 10:54:37 -0700 (PDT)
+Received: from gmail.com ([2402:e280:3e9b:22f:79aa:4a35:715c:d62c])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe6f841csm2730885a12.57.2025.07.10.10.54.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 10:54:36 -0700 (PDT)
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
+To: amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	rafael@kernel.org
+Cc: rui.zhang@intel.com,
+	lukasz.luba@arm.com,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH 12/72] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Replace clock-frequency in camera sensor node
-Date: Thu, 10 Jul 2025 20:47:08 +0300
-Message-ID: <20250710174808.5361-13-laurent.pinchart@ideasonboard.com>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
-References: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	sumeet4linux@gmail.com
+Subject: [PATCH] drivers/thermal/qcom/lmh: Fix incorrect error message
+Date: Thu, 10 Jul 2025 23:24:25 +0530
+Message-ID: <20250710175426.5789-1-sumeet4linux@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,32 +93,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The clock-frequency for camera sensors has been deprecated in favour of
-the assigned-clocks and assigned-clock-rates properties. Replace it in
-the device tree.
+It was showing wrong error message as ARM threshold
+thremal trip for setting LOW threshold thermal trip.
+Fix this incorrect error message for setting LOW
+threshold thermal trip.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
 ---
- .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso      | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/qcom/lmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index 51f1a4883ab8..dbe1911d8e47 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -44,7 +44,8 @@ camera@10 {
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index 991d1573983d..95324b2f893d 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -204,7 +204,7 @@ static int lmh_probe(struct platform_device *pdev)
+ 	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low,
+ 				 LMH_NODE_DCVS, node_id, 0);
+ 	if (ret) {
+-		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
++		dev_err(dev, "Error setting thermal LOW threshold%d\n", ret);
+ 		return ret;
+ 	}
  
- 		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
- 		clock-names = "xvclk";
--		clock-frequency = <19200000>;
-+		assigned-clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
-+		assigned-clock-rates = <19200000>;
- 
- 		/*
- 		 * The &vreg_s4a_1p8 trace is powered on as a,
 -- 
-Regards,
-
-Laurent Pinchart
+2.43.0
 
 
