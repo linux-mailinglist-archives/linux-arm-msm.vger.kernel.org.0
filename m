@@ -1,146 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-64410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAE8EB005F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:08:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD9FCB006A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 17:30:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A65C3188D6B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:09:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14CB01715E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jul 2025 15:30:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02DD72741CF;
-	Thu, 10 Jul 2025 15:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEDC72749C9;
+	Thu, 10 Jul 2025 15:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="bEdYrqdJ"
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="K5IayD9K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IgqoPP0F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from flow-a4-smtp.messagingengine.com (flow-a4-smtp.messagingengine.com [103.168.172.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A02E154BF5;
-	Thu, 10 Jul 2025 15:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752160129; cv=pass; b=s+eOmi1aEJgg840C6bLkLLnRHtOn3d8DvFVNtYiE3YK0CQ1fdIovf/hr4NkiS4tthc/J54Od0wGGyITZEyLy4DH1wDQtSdskX93b8B8E0uzwbd5pDld2rLaPdtmXS6cGDiC/qVU4SHQm6UH2+i9T6iaZkeS5CSbbVGwc23WGRtE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752160129; c=relaxed/simple;
-	bh=0PpOzP35oubhU2Vis79WCDYNRmloUDZPCANXbEPXYAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pRQJLfavKRZEyKeaC3hc4B4AKAixe0dEl4qKxpuj5QkDdqeof3lnwOfi9FD88+iJhHYU5CALqlJercMWIfJu+iwY9USeIBU7IP8U+SWllJOrvVHS1goWC2zBSOSmdF2ESka1lffaOsFL60u5EypD07TjYJ4HUWhRJH1WMbGcFvg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=bEdYrqdJ; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1752160063; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Ey677D7vp5EHx9o22NhmGckpctpPOXMgkwrKyeE0GtEQnaMxWYzFFc4EmKX/B0i5bTYfNacI+XlqFl1CS9iAJu99gP7ycpTJ1MtaeVoRVgoA1FeimGjv1SO87DpcuVzyZQU8YuNuBTDDY8Azaj48abGEbWLt6sANpkVN5vRzSzw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1752160063; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=E3Zohc0nzj3FVWgHmXsuojr1RG8LeIWFa1m+NDG2dEk=; 
-	b=IBv+vEKMEXET51NPwsWAZW0/tlx01+cFffz/UkspLw/IWquTYzKHnJddAszExQFr97VZ+HpU1WAbJlgXJ5YIJ08TYBANiYx2S+GwOaSaIISPJR1gwHbpXKi9wQNCFLp5YDCdyKkPBXBk2Dqugz5bFptPKLEgvE6tZj8NjaGK5Sw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1752160063;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=E3Zohc0nzj3FVWgHmXsuojr1RG8LeIWFa1m+NDG2dEk=;
-	b=bEdYrqdJwiD1Hvw4frXuTi3fB/DJJPLsmxLTjS1MxJLXWsTb1VJKICpjzCXZqiFl
-	KKBWUX045NEgZPlAfUEReYADODGYuwyyFdfXL1vteRkFYr24orL9vciBHgPe87/sKf9
-	zBi5hvJaMbf7rWSH8gQS3IZAN6hdXrFht43SDSQQ=
-Received: by mx.zohomail.com with SMTPS id 1752160060955259.8992334590108;
-	Thu, 10 Jul 2025 08:07:40 -0700 (PDT)
-Message-ID: <c40f13e8-7420-4046-880d-7c72620fc021@collabora.com>
-Date: Thu, 10 Jul 2025 20:07:25 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C9351022;
+	Thu, 10 Jul 2025 15:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.139
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752161419; cv=none; b=fy2INEodJlThGZgPigvkYymaTYGPFzv2JPT2AhT7Mec3Ulo7Mf8DXcnkoKBOyzKn0Q0cJx+Udqqkb5RzhoUWGPdMp6Cn8N54YMP5kUEbk1cNi+3fjfBzM5CphXhWRZOeZfTZUFRswhXX1sbjatamSCtmGnKY+BfRzCFjAzo0WZQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752161419; c=relaxed/simple;
+	bh=Hx5gJn2ZSzuiEXr2+guVv+VH2sDXh3KjJ4gfQXoVnu0=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=uAKVa5QyUxQtfrrOTmzRSOgCNgrC92rC2Z1+I6EDy1XloJcRrgxmsKRt2f0Qa11YjEHP2m/u50mje3qTwe4ZbPeVtQs3mRfOBMDQKamgt+yfc/WXa8fxwa8632F1eNUrCWn0B/UuWxfrBwHVBfS71njfel9tHDYJ/hLGg8wGr7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=K5IayD9K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IgqoPP0F; arc=none smtp.client-ip=103.168.172.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailflow.phl.internal (Postfix) with ESMTP id 381A81380AE6;
+	Thu, 10 Jul 2025 11:30:15 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Thu, 10 Jul 2025 11:30:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752161415;
+	 x=1752168615; bh=AYtsN1wjDw19ZCXecXpxbhgdbQXxdI7F+9XO8m7p4xo=; b=
+	K5IayD9KBwVg1gILQlSHYjf3udls02vXkLBpptYge5R+R+Moivx7JYjl22TYks76
+	MJH8LbhDcOvzsXHLaH85qaQHcqY0f6SKi4ujBYQGy4grm/wrr8E1uukFfTUvsCx7
+	oPoshtq8kYgxKCx2jpvviQzA+BOtLvWSzl0/TFsmOoFmlUOYpgMVZSTdO/9Egv6g
+	5H3Ts+my98W9tTSPwVOy8lpK1KcGMrhrJMjcNAaS8+JeBye5rYpvv8jwE4IoKtuM
+	XhhrmHSFQtTrc2u/JTvdANK9onwYdaVuf3y5vQhTFrDGJHXAKxCs1ooAZNisUVMl
+	tndsI+Stljm31W/4Xva6Lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752161415; x=
+	1752168615; bh=AYtsN1wjDw19ZCXecXpxbhgdbQXxdI7F+9XO8m7p4xo=; b=I
+	gqoPP0FBDqcwRSh6zLWTt/Z9BnBvNur3PAewb6oFv36a9jh72PICHYk9wxH2eKrF
+	XjxUIlP+0KJncy+Enab0Ew2aFOKt+biVNHRGnw+eBQhVHSXZ+35PKxBdkj9tRALN
+	HYZ3gIYEaWptzFjZeM8FAaY0Y8AZ3zcG7zuhTtfC2gDcbMQGlv4UDeMy5wJyrB8K
+	nATDeSL1ZVsNMRITcODUQseF5pxaAv58JsFc34HNi89sxrk8YZ/9HhZXqMdkld8C
+	9lCrmBM0g7M3Q2Jvt37Mzqu8RlMo9CO1wtfNaz0Z7n0RPhQqywCOS/+IcUIv36Xe
+	E0ByL9bZvLnNDk98Dv4rQ==
+X-ME-Sender: <xms:hNxvaP5PqC6uCz7DJF3Lf-he7nvOHA0FEA0lrKjfK2VEP1AopHSxew>
+    <xme:hNxvaE5fpl_KeVc_G6wPTalZ8ewClXZijQQuODRJLAqp0tcTf-G2ovY-a4NNobMiy
+    PhHRIep95lV-GAIrbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegtdekudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
+    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
+    hnpefhtdfhvddtfeehudekteeggffghfejgeegteefgffgvedugeduveelvdekhfdvieen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
+    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeegfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepshhouhhvihhkrdgthhgrkhhrrghvrghrthihsegrrhhmrdgtohhmpd
+    hrtghpthhtoheptggrthgrlhhinhdrmhgrrhhinhgrshesrghrmhdrtghomhdprhgtphht
+    thhopehmrghrkhdrrhhuthhlrghnugesrghrmhdrtghomhdprhgtphhtthhopehsuhguvg
+    gvphdrhhholhhlrgesrghrmhdrtghomhdprhgtphhtthhopegrlhgvgigrnhgurhgvrdgs
+    vghllhhonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtohepsggtmhdqkhgvrhhnvg
+    hlqdhfvggvuggsrggtkhdqlhhishhtsegsrhhorggutghomhdrtghomhdprhgtphhtthho
+    pehflhhorhhirghnrdhfrghinhgvlhhlihessghrohgruggtohhmrdgtohhmpdhrtghpth
+    htoheprhhjuhhisegsrhhorggutghomhdrtghomhdprhgtphhtthhopehssghrrghnuggv
+    nhessghrohgruggtohhmrdgtohhm
+X-ME-Proxy: <xmx:hNxvaMVwMJ0kPtzMweGlqJFxtR32fCcqUjL93mxuIoFwYXvrvnK2-Q>
+    <xmx:hNxvaMQ4vAzsbERXmbYESjJdniu1wS8rDqBkbmHGY2L4P478HeYn2w>
+    <xmx:hNxvaIY3hERQ_hAy6KJIT2EFKx6z6XywTN0s7LmuU9zrS1399KoI_A>
+    <xmx:hNxvaJeXcJ6YZPcxekqGAUX2QhMHZOy96w_vkJJZnkICTsn0o7RYyg>
+    <xmx:h9xvaDX66XzA7KOwRJMm5KxJ8ZoExCuGvUSKgaK-nhr9G3NxT5ubYWGd>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 80820700068; Thu, 10 Jul 2025 11:30:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] bus: mhi: keep device context through suspend cycles
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Manivannan Sadhasivam <mani@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
- Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Youssef Samir <quic_yabdulra@quicinc.com>,
- Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
- Alexander Wilhelm <alexander.wilhelm@westermo.com>,
- Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Siddartha Mohanadoss <smohanad@codeaurora.org>,
- Sujeev Dias <sdias@codeaurora.org>, Julia Lawall <julia.lawall@lip6.fr>,
- John Crispin <john@phrozen.org>, Muna Sinada <quic_msinada@quicinc.com>,
- Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
- Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Cc: kernel@collabora.com
-References: <20250630074330.253867-1-usama.anjum@collabora.com>
- <20250630074330.253867-4-usama.anjum@collabora.com>
- <b72b3635-1c09-444f-98f5-30fcc219b297@oss.qualcomm.com>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <b72b3635-1c09-444f-98f5-30fcc219b297@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+X-ThreadId: T1700ebcd39f54138
+Date: Thu, 10 Jul 2025 17:29:36 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Shivendra Pratap" <shivendra.pratap@oss.qualcomm.com>,
+ "Bartosz Golaszewski" <bartosz.golaszewski@linaro.org>,
+ "Bjorn Andersson" <andersson@kernel.org>,
+ "Sebastian Reichel" <sre@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Sudeep Holla" <sudeep.holla@arm.com>,
+ "Souvik Chakravarty" <Souvik.Chakravarty@arm.com>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Andy Yan" <andy.yan@rock-chips.com>,
+ "Mark Rutland" <mark.rutland@arm.com>,
+ "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+ "Olof Johansson" <olof@lixom.net>, "Konrad Dybcio" <konradybcio@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, "Vinod Koul" <vkoul@kernel.org>,
+ "Catalin Marinas" <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>,
+ "Florian Fainelli" <florian.fainelli@broadcom.com>,
+ "Elliot Berman" <elliotb317@gmail.com>
+Cc: "Stephen Boyd" <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ "Alim Akhtar" <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org,
+ "Wei Xu" <xuwei5@hisilicon.com>, linux-rockchip@lists.infradead.org,
+ "Baolin Wang" <baolin.wang@linux.alibaba.com>,
+ "Sen Chu" <sen.chu@mediatek.com>, "Sean Wang" <sean.wang@mediatek.com>,
+ "Macpaul Lin" <macpaul.lin@mediatek.com>,
+ "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
+ "Ray Jui" <rjui@broadcom.com>, "Scott Branden" <sbranden@broadcom.com>,
+ bcm-kernel-feedback-list@broadcom.com,
+ "Nicolas Ferre" <nicolas.ferre@microchip.com>,
+ "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
+ "Elliot Berman" <quic_eberman@quicinc.com>,
+ "Srinivas Kandagatla" <srini@kernel.org>
+Message-Id: <12c9a69c-7e27-4d43-9b1b-542e735176ec@app.fastmail.com>
+In-Reply-To: 
+ <20250710-arm-psci-system_reset2-vendor-reboots-v10-3-b2d3b882be85@oss.qualcomm.com>
+References: 
+ <20250710-arm-psci-system_reset2-vendor-reboots-v10-0-b2d3b882be85@oss.qualcomm.com>
+ <20250710-arm-psci-system_reset2-vendor-reboots-v10-3-b2d3b882be85@oss.qualcomm.com>
+Subject: Re: [PATCH v10 03/10] power: reset: reboot-mode: Add optional cookie argument
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On 7/8/25 3:15 PM, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 6/30/2025 1:13 PM, Muhammad Usama Anjum wrote:
->> Don't deinitialize the device context while going into suspend or
->> hibernation cycles. Otherwise the resume may fail if at resume time, the
->> memory pressure is high and no dma memory is available.
->>
->> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->>
->> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
->> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->> ---
->>   drivers/bus/mhi/host/init.c | 11 ++++++-----
->>   1 file changed, 6 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->> index 2e0f18c939e68..8f56e73fdc42e 100644
->> --- a/drivers/bus/mhi/host/init.c
->> +++ b/drivers/bus/mhi/host/init.c
->> @@ -1133,9 +1133,11 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->>         mutex_lock(&mhi_cntrl->pm_mutex);
->>   -    ret = mhi_init_dev_ctxt(mhi_cntrl);
-> mhi init dev ctxt also initializes the ring pointers to base value,
-> I think we should take care of them also ?
-Are you referring to mhi_rings? They are getting initialized inside
-mhi_init_dev_ctxt() and de-initialized in __mhi_deinit_dev_ctxt(). That's
-why I've not handled them separately.
+On Thu, Jul 10, 2025, at 11:15, Shivendra Pratap wrote:
 
+>  static int reboot_mode_notify(struct notifier_block *this,
+>  			      unsigned long mode, void *cmd)
+>  {
+>  	struct reboot_mode_driver *reboot;
+> -	unsigned int magic;
+> +	struct mode_info *info;
 > 
-> - Krishna Chaitanya.
->> -    if (ret)
->> -        goto error_dev_ctxt;
->> +    if (!mhi_cntrl->mhi_ctxt) {
->> +        ret = mhi_init_dev_ctxt(mhi_cntrl);
->> +        if (ret)
->> +            goto error_dev_ctxt;
->> +    }
->>         ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, BHIOFF, &bhi_off);
->>       if (ret) {
->> @@ -1212,8 +1214,6 @@ void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl)
->>   {
->>       mhi_cntrl->bhi = NULL;
->>       mhi_cntrl->bhie = NULL;
->> -
->> -    __mhi_deinit_dev_ctxt(mhi_cntrl);
->>   }
->>     void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->> @@ -1234,6 +1234,7 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->>       }
->>         mhi_deinit_dev_ctxt(mhi_cntrl);
->> +    __mhi_deinit_dev_ctxt(mhi_cntrl);
->>   }
->>   EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->>   
+>  	reboot = container_of(this, struct reboot_mode_driver, reboot_notifier);
+> -	magic = get_reboot_mode_magic(reboot, cmd);
+> -	if (magic)
+> -		reboot->write(reboot, magic);
+> +	info = get_reboot_mode_info(reboot, cmd);
+> +	if (info) {
+> +		if (info->is_cookie_valid) {
+> +			reboot->write_with_cookie(reboot, info->magic, info->cookie);
+> +		} else {
+> +			if (info->magic)
+> +				reboot->write(reboot, info->magic);
+> +		}
+> +	}
 
+I don't quite see why we need two possible callbacks here, could
+this be done with a single '->write' callback when you either
+add another argument, or extend the existing 'magic' value
+to 64 bit?
+
+There are only a couple of drivers that provide this callback,
+so it should be easy to just change them all at once.
+
+     Arnd
 
