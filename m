@@ -1,190 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-64481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F693B01141
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 04:34:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAAE3B0115E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 04:49:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A0E44877CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 02:33:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B392718951BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 02:49:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 241D3189BB0;
-	Fri, 11 Jul 2025 02:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBEB4191F74;
+	Fri, 11 Jul 2025 02:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="USpFUAKU"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BaSP2puf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3AF4A0A;
-	Fri, 11 Jul 2025 02:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1227B155C87;
+	Fri, 11 Jul 2025 02:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752201245; cv=none; b=Fp6E35ls+zOoI8xk4iwmISdBEm0VLZw3rWW+DUnE/xNWgem4VQWXGa6EaCBerwF4qct2P0lcusigczy83s3NnUND6j3z8aMb9pq0kwxfk+0sjQ66fmdRCWK61byf9eAnKbG2mS+hjS9s2LG0dXjzKEfjJoxspZ0Byrm3ye3HnfI=
+	t=1752202176; cv=none; b=GYsXip40EdihTEawTUt4CJikCldBfwZ3fFyugCcc0sqN6pWGp9NI36ru6D//iXhcDeSsj+7nXCyWITZ+g3sw2G69IhujcbZG0Gh0oWE0brw83SgyvA7X/U9PKWnsDcfNAMLR8xeJCLaC3GZ7aN4RVCZgou1rzS8WLt3g8Su1CNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752201245; c=relaxed/simple;
-	bh=KvUVfXT13s1CIpLtx2rXN7lHbPJYc+jNnM7XY+E2DXQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SKb2bhYuO3abaSpjVZ/t87RHsrp2VPuK3+srA5Oa+ny7IUgSxRwNgNB/0QB47bHgkyyVWY9FaF/4bPYVudk+FlAo3S2BIzObMZGFdD3by4+bhIVuwi3nAkc30DFq4dzPnk0l1vMjNOnCwdt1kynMmcemoWJbFVg4UdrKkXWidXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=USpFUAKU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56B1Xisv003833;
-	Fri, 11 Jul 2025 02:33:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	41rFHfCgHRhlOOHf+cNsdjLu5b5W0PJYTOYx9AMOy/I=; b=USpFUAKUCdDva4GK
-	1o06w36hbMpiSpVzEGXCzvV4rU8kF1/8QdLrfvpaSYGeQMefDEafEuu9Xm9v/Hat
-	DoFzOAM53OP0SJT9TaRHavbfFtRuQef1kZqKBI+5ybGeAkITXh7TyjP+lrpi0AYo
-	8WJzqMiYsaVesrQpNaz3/GinoXrZiPiVb1gU2awsFCbTqjX0WoVbw5B2S8KDRZJG
-	QbftcCs0XoxtnBkI1rdiFOqYQ6AruNdFrY9S8HgICFVmK5TpUdV9hDSfNZroUWdO
-	Wbmc+uT44shZ6wN84E0XeOc3B2SVZLlCs4HtvqC4jYr1GHpV4PQ1mncIvSLqfidm
-	Gb5OGg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu2bj7xd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Jul 2025 02:33:55 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56B2XshU019233
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Jul 2025 02:33:54 GMT
-Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 10 Jul
- 2025 19:33:50 -0700
-Message-ID: <170ed625-ca3a-49ef-95bb-158d666be909@quicinc.com>
-Date: Fri, 11 Jul 2025 10:33:48 +0800
+	s=arc-20240116; t=1752202176; c=relaxed/simple;
+	bh=LLjZv6YaeoDc4SEEKroZA66mxOHL4zJDsp3M43OYKV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P88a4e3KHQpXwrQGidu+doHFf54XBsGEP/QF29MqqjSCODrjYTZOCsZQI7FBZ6CKg6bkiINizbxoRbt3RRECt4ZSYEFslRADxQTsQ2Ezx9oKkPQwuoT+Vj/89hVWBAIAcdFS6zarcp/1O3ckVP022JIrfurjBeHzjvAk0XVt1Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BaSP2puf; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752202175; x=1783738175;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LLjZv6YaeoDc4SEEKroZA66mxOHL4zJDsp3M43OYKV4=;
+  b=BaSP2pufH6pDRl6JL1M6inJpBfoffZWis7MO2Y77g8XWU77Um1Py+Rxh
+   g6czriBWNyKoEku5sIJ5OyydR++7KwgL4Q9HayerUf5bzKFHqt9dJIew0
+   vzoSX4/2mTO6ERGcX6MaqQa7j9YM1GT53LR7MUeveXyOL0eBDm3EJtSuf
+   nz9mjs2/LtxUcDTvEcfhGHEKPIeExxnm3b25WQwthAfeiMWhr38OPEOfD
+   oz9AKbFYcAQy9WtcVB5TK/3FgdPANSn7ldkn4xowuvnD+JCm+VYjXgsdV
+   kWVJQtl8OQMjMIvbzJ8O1VlFTTFpmkW/vmy6Yv4kVMRprgHoFBUHeeJCX
+   w==;
+X-CSE-ConnectionGUID: mYhOt9fsQjmB5yPECn2oJw==
+X-CSE-MsgGUID: KIVOvhvpTvu0CDILKFeyeg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="53604569"
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; 
+   d="scan'208";a="53604569"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2025 19:49:35 -0700
+X-CSE-ConnectionGUID: diX3w/CCSQOd3a1b8DOe9A==
+X-CSE-MsgGUID: 6Z1BSWOoSwiK5I6R6DFClw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; 
+   d="scan'208";a="161817339"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by fmviesa004.fm.intel.com with ESMTP; 10 Jul 2025 19:49:28 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1ua3pG-0005l9-01;
+	Fri, 11 Jul 2025 02:49:26 +0000
+Date: Fri, 11 Jul 2025 10:48:44 +0800
+From: kernel test robot <lkp@intel.com>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Elliot Berman <elliotb317@gmail.com>
+Cc: oe-kbuild-all@lists.linux.dev, Stephen Boyd <swboyd@chromium.org>,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	Andre Draszik <andre.draszik@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org, Wei Xu <xuwei5@hisilicon.com>
+Subject: Re: [PATCH v10 01/10] power: reset: reboot-mode: Add device tree
+ node-based registration
+Message-ID: <202507111052.smU9DwLS-lkp@intel.com>
+References: <20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] misc: fastrpc: add support for gdsp remoteproc
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <srini@kernel.org>,
-        <amahesh@qti.qualcomm.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250709054728.1272480-1-quic_lxu5@quicinc.com>
- <20250709054728.1272480-5-quic_lxu5@quicinc.com>
- <2dfb6c0a-df7b-4039-9a65-0f1036752bbe@quicinc.com>
- <075e59d0-569c-429f-ba14-c2e59e2f63a2@oss.qualcomm.com>
-Content-Language: en-US
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <075e59d0-569c-429f-ba14-c2e59e2f63a2@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDAxNiBTYWx0ZWRfX5TuJ90wyKShd
- iXyj+yt/DvtxFF8xxiSXCuNBhzHhi8Wq29dt6Nr1VRBJNPQ2M8XN56syh4111XjjfiH4fdMLBx2
- 9PFZ7/jlKKDVfXAAFiHTJGbVcQc+BWseCOOAzKIVuA9pObiqgfcfeY2+z/wUOQ0S+Z1PmPptW6o
- LTrv2b8zi7QVsCg0pZhHetWWfV8Z6RMUr4770faF5J+otab07bcj9RZUHZhH3ObQcIva9CZ9Os9
- 6l2KgvTOn34bC4SIFZcrkB/XxRTk9QK1GI54w92rBZ3Dbb9aAoZWd7Lz/Ovn7U+TNT2j0UWyhsx
- Bd9mL+L02WvBjqGolUYlhE/RQngkTs8x5JEZidRlAYXJak/2VdED+p2VH5+hCaHZKR9LR1qOf0q
- Vpuy1W6AvE3c+L4G6Atav95ALviX5EO+zTZKwWrk4H3TrSaHRsOKuALjxGGy+7g6OjODWvBF
-X-Proofpoint-ORIG-GUID: OHDNXzum-nuG6eQgjmLLvDbAtU2p8uRi
-X-Proofpoint-GUID: OHDNXzum-nuG6eQgjmLLvDbAtU2p8uRi
-X-Authority-Analysis: v=2.4 cv=erTfzppX c=1 sm=1 tr=0 ts=68707813 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=PanXxo5gIGnb8EET3dMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-11_01,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507110016
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85@oss.qualcomm.com>
 
-在 7/10/2025 3:19 AM, Konrad Dybcio 写道:
-> On 7/9/25 7:52 AM, Ling Xu wrote:
->> 在 7/9/2025 1:47 PM, Ling Xu 写道:
->>> The fastrpc driver has support for 5 types of remoteprocs. There are
->>> some products which support GDSP remoteprocs. GDSP is General Purpose
->>> DSP where tasks can be offloaded. This patch extends the driver to
->>> support GDSP remoteprocs.
->>>
->>
->> sorry, please ignore this patch.
->> I haven't change commit message here.
->> "Extend the driver to support GDSP remoteprocs."
-> 
-> How about this instead:
-> 
-> Some platforms (like SMabcd) feature one or more GPDSPs (General
-> Purpose DSPs). Similar to other kinds of Hexagon DSPs, they provide a
-> FastRPC implementation, allowing code execution in both signed and
-> unsigned protection domains.
-> 
-> Extend the checks to allow domain names starting with "gdsp"
-> (possibly followed by an index).
-> 
-Thanks very much.
-I will update in next patch.
-> Konrad
-> 
->>
->>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->>> ---
->>>  drivers/misc/fastrpc.c | 6 +++++-
->>>  1 file changed, 5 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>> index 85b6eb16b616..d05969de406e 100644
->>> --- a/drivers/misc/fastrpc.c
->>> +++ b/drivers/misc/fastrpc.c
->>> @@ -27,6 +27,7 @@
->>>  #define MDSP_DOMAIN_ID (1)
->>>  #define SDSP_DOMAIN_ID (2)
->>>  #define CDSP_DOMAIN_ID (3)
->>> +#define GDSP_DOMAIN_ID (4)
->>>  #define FASTRPC_MAX_SESSIONS	14
->>>  #define FASTRPC_MAX_VMIDS	16
->>>  #define FASTRPC_ALIGN		128
->>> @@ -2249,6 +2250,8 @@ static int fastrpc_get_domain_id(const char *domain)
->>>  		return MDSP_DOMAIN_ID;
->>>  	else if (!strncmp(domain, "sdsp", 4))
->>>  		return SDSP_DOMAIN_ID;
->>> +	else if (!strncmp(domain, "gdsp", 4))
->>> +		return GDSP_DOMAIN_ID;
->>>  
->>>  	return -EINVAL;
->>>  }
->>> @@ -2323,13 +2326,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>>  	case ADSP_DOMAIN_ID:
->>>  	case MDSP_DOMAIN_ID:
->>>  	case SDSP_DOMAIN_ID:
->>> -		/* Unsigned PD offloading is only supported on CDSP */
->>> +		/* Unsigned PD offloading is only supported on CDSP and GDSP */
->>>  		data->unsigned_support = false;
->>>  		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
->>>  		if (err)
->>>  			goto err_free_data;
->>>  		break;
->>>  	case CDSP_DOMAIN_ID:
->>> +	case GDSP_DOMAIN_ID:
->>>  		data->unsigned_support = true;
->>>  		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
->>>  		err = fastrpc_device_register(rdev, data, true, domain);
->>
+Hi Shivendra,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on 58ba80c4740212c29a1cf9b48f588e60a7612209]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Shivendra-Pratap/power-reset-reboot-mode-Add-device-tree-node-based-registration/20250710-172104
+base:   58ba80c4740212c29a1cf9b48f588e60a7612209
+patch link:    https://lore.kernel.org/r/20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85%40oss.qualcomm.com
+patch subject: [PATCH v10 01/10] power: reset: reboot-mode: Add device tree node-based registration
+config: riscv-randconfig-002-20250711 (https://download.01.org/0day-ci/archive/20250711/202507111052.smU9DwLS-lkp@intel.com/config)
+compiler: riscv64-linux-gcc (GCC) 12.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250711/202507111052.smU9DwLS-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507111052.smU9DwLS-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/power/reset/reboot-mode.c:15: warning: "pr_fmt" redefined
+      15 | #define pr_fmt(fmt)     "reboot-mode: " fmt
+         | 
+   In file included from include/asm-generic/bug.h:28,
+                    from arch/riscv/include/asm/bug.h:83,
+                    from include/linux/bug.h:5,
+                    from arch/riscv/include/asm/current.h:13,
+                    from include/linux/sched.h:12,
+                    from include/linux/ratelimit.h:6,
+                    from include/linux/dev_printk.h:16,
+                    from include/linux/device.h:15,
+                    from drivers/power/reset/reboot-mode.c:6:
+   include/linux/printk.h:397: note: this is the location of the previous definition
+     397 | #define pr_fmt(fmt) fmt
+         | 
+
+
+vim +/pr_fmt +15 drivers/power/reset/reboot-mode.c
+
+    13	
+    14	#define PREFIX "mode-"
+  > 15	#define pr_fmt(fmt)	"reboot-mode: " fmt
+    16	
 
 -- 
-Thx and BRs,
-Ling Xu
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
