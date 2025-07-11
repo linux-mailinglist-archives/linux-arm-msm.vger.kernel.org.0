@@ -1,234 +1,439 @@
-Return-Path: <linux-arm-msm+bounces-64616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6310B01F19
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:25:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1442BB01F1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:28:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 593603A93AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:24:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF2071CA4F06
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E97AA2E718A;
-	Fri, 11 Jul 2025 14:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54CF2E7653;
+	Fri, 11 Jul 2025 14:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edeIEV48"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AtUT223i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7D42E7173;
-	Fri, 11 Jul 2025 14:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866892DCF58
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 14:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752243917; cv=none; b=IkMIfOuwQS2tlWi/SwwW/gVTfxD3+3F99ATU5j57U71TjS4VPoqWzRargYDyWTcm4ZXKRe+QWn1sJwuvmWLuIEteNMcclzYD8KUZecHE/jclOmGE99iUU/k4TsfmyGjCcxDVurR5TE57A7n5hLYmgcfryMA54cvLSFN548DIENo=
+	t=1752244116; cv=none; b=GUCedzEGaaENdA6Ei1GOZ9Qpbe9AaGzQh/iwrb7W+jP2NBXZl+Qa+MlmyaYjCBFqA2qCdORCsl3siD9G8B4PqUS2S0W2gXkpmuYIp2Jab9OS6vFiLQcSwqqLVn1IyQSb3V+lt/Cf8kmwYNjOAjeU7x47t8wJIWeLlZ8QdTN1vW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752243917; c=relaxed/simple;
-	bh=mT92Yf1qT91lUyIxzQhq7R8nLdUDilbEyTBw9eze26A=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NUnUz006SYhTpNarmnCSJ5LepOMjG1mUlAogQnzPZiBONN3o7KjL8Mny3V+giDT82cPjngmm16t38GLEazYqzrorfrdHhkCtDTSUiay17B6OXJVy8ZOzdPXintyOAAKDskVmGu1Yds50SDrUKTRWlNsCHDZZ4D/WD4/fKd5Jwws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edeIEV48; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E4DC4CEED;
-	Fri, 11 Jul 2025 14:25:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752243917;
-	bh=mT92Yf1qT91lUyIxzQhq7R8nLdUDilbEyTBw9eze26A=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=edeIEV488UPbnlYE7PWZZWbOmUSjBS8wRFsDqD2aTeIr9m6LdZ1lnxG0DXFJfuWbC
-	 RAeA8al1VK+smMmAmWqjBJHhW2SiWIivOLgMN6pc8f+CjbIVb6pT3Vmo/86DsQ61k6
-	 HhG59iKQMRWFDYchTY3Ww8GkWetdZfZl0OtMaBxLvgvaYtI+3LlXyzcVcLDsx7dQHO
-	 cppRrvXep/BfaFomrHZYAeUE5EKIbZk7lkuSJ0SLUATy9GRT/uMO7nZdbbkMTgJQuI
-	 YztNfC/M8HWkcoo3G/HvumY4fM/4fahY2Ian2ggRB0c/t50Ln7XVfVLqXgWvmyyzhZ
-	 XvuUi2yw1HLvg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1uaEgc-00Eu7B-9D;
-	Fri, 11 Jul 2025 15:25:14 +0100
-Date: Fri, 11 Jul 2025 15:25:13 +0100
-Message-ID: <868qkuajp2.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-mm@kvack.org,
-	kvmarm@lists.linux.dev,
-	pbonzini@redhat.com,
-	chenhuacai@kernel.org,
-	mpe@ellerman.id.au,
-	anup@brainfault.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	seanjc@google.com,
-	viro@zeniv.linux.org.uk,
-	brauner@kernel.org,
-	willy@infradead.org,
-	akpm@linux-foundation.org,
-	xiaoyao.li@intel.com,
-	yilun.xu@intel.com,
-	chao.p.peng@linux.intel.com,
-	jarkko@kernel.org,
-	amoorthy@google.com,
-	dmatlack@google.com,
-	isaku.yamahata@intel.com,
-	mic@digikod.net,
-	vbabka@suse.cz,
-	vannapurve@google.com,
-	ackerleytng@google.com,
-	mail@maciej.szmigiero.name,
-	david@redhat.com,
-	michael.roth@amd.com,
-	wei.w.wang@intel.com,
-	liam.merwick@oracle.com,
-	isaku.yamahata@gmail.com,
-	kirill.shutemov@linux.intel.com,
-	suzuki.poulose@arm.com,
-	steven.price@arm.com,
-	quic_eberman@quicinc.com,
-	quic_mnalajal@quicinc.com,
-	quic_tsoni@quicinc.com,
-	quic_svaddagi@quicinc.com,
-	quic_cvanscha@quicinc.com,
-	quic_pderrin@quicinc.com,
-	quic_pheragu@quicinc.com,
-	catalin.marinas@arm.com,
-	james.morse@arm.com,
-	yuzenghui@huawei.com,
-	oliver.upton@linux.dev,
-	will@kernel.org,
-	qperret@google.com,
-	keirf@google.com,
-	roypat@amazon.co.uk,
-	shuah@kernel.org,
-	hch@infradead.org,
-	jgg@nvidia.com,
-	rientjes@google.com,
-	jhubbard@nvidia.com,
-	fvdl@google.com,
-	hughd@google.com,
-	jthoughton@google.com,
-	peterx@redhat.com,
-	pankaj.gupta@amd.com,
-	ira.weiny@intel.com
-Subject: Re: [PATCH v13 17/20] KVM: arm64: Enable host mapping of shared guest_memfd memory
-In-Reply-To: <20250709105946.4009897-18-tabba@google.com>
-References: <20250709105946.4009897-1-tabba@google.com>
-	<20250709105946.4009897-18-tabba@google.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1752244116; c=relaxed/simple;
+	bh=5lu9J7vEa5g/Ym4QOLfMfN7IjWP//SMmKc5Fo0NVgCk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hVt7AXy4sd501bfuu7YfgiczRsLtVAaskBFVcOVhbP+NHkOQwdiuFxxmKgfRff0Li5HriQchgt/tz8ze8zh5IUoB8FHL0My2xeJeCPovnm88/ewEzCV6f2V2BkGq82qntE3mVJHWHMEE383ESErzyqygqG87HjaCAp9wPGNi90Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AtUT223i; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-748e63d4b05so1354694b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 07:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752244113; x=1752848913; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kavBJrWMoEXOlmfl1NFVvnCa8WpRzs2d/kXFVbejgNU=;
+        b=AtUT223ijW/XBeedQbuFZD6UxC318G4PyAl6Tx2EjCciTSeam86th1BUkh3pIyitmc
+         Viq8fVpsljF1D5MSRQtYfxWiszgF2odxQ5OAdF1yBc94Nzihv+D4kvTJys50HYD2YPhn
+         o7w9sZHJ8YsIYn3hDo9Jm45JSR6By3eC+kumU4rWVSSrO3A2SvZFS5p2DnrDek2X7q+K
+         08TjOosVxxdYk+27lOn5GvRjPQ6LZh+ojlhP5w21qRhPuynWYYOIjBUWvUuR95i2wKU3
+         NcPCUuvbVPIkUz2wxv9OxI/qnv5tNPzbEaOhEZmdT/84vsJ6HROyJEk655sRTyG7u+hv
+         IPUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752244113; x=1752848913;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kavBJrWMoEXOlmfl1NFVvnCa8WpRzs2d/kXFVbejgNU=;
+        b=mP386BgO+cS0/Zl+EYi1HMo1/47f0HD3KbSUr0IOX1zwpLa2c659g25ASPAbEdWo/f
+         AXDmQWs2XO3aEvf8TSQqMw/qcnQkqaIUiRkeKl4fpcoaH5rtptpvEEWPHt4wQt8Ove80
+         NXXkUriLoIczfGv96f14CaHwfuQverFGaLhwFXedCsQ+AlgkpXnlZ0av3TlaN9WwVuo5
+         o/gEDrqjsruwD5Flk26QHX6SwzwGhh4vneMgC+x3wD/BG9SLTyfooYHGBhGXJx+t2vyQ
+         FbfoW80XxpBtKR67PI+hoWT1N6J4j3oa4hbENrHtRLIZXWegv1aYonXSaWdOPbAu3/aa
+         JNFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFAQpbowjOjqEihmSq1RR35pgqgHG08lKjsZGRj5CyfnAGQavxfhxT7W6GoXKz97ah7vyn+9ejYLh2r9rW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzo8CfqFzYv6zfSYlpNf4V+/VPFSU4UyGMBOlS2W5DAxGXeJu6X
+	+QF5aq7pNzQHeZfl9O5E4Ad28TGHDeRG4Figg6ur0GeRUDg1/sGAqVYxvE8iUPurWM1+kUJ+2mi
+	Ndve4pqS7ydlnH/3l3mzNTWZc0hu8GZ5mXz3p0SRJmg==
+X-Gm-Gg: ASbGncv6MVva+3UdsAo5J5qlQn+dY0QP1Db0Aju5SFGZjyXiDianUtVKVIBIAJ9p5Fs
+	hZ9mWul7y9oHIpqXJMfg6MCaPXyta+n8M/VUFiyctszC13kkJYQxrpVMLV/NsnI+aJBBzalwcDv
+	r14iCEzpfaVgwT72Iaei1ZLI/5PTkntHtzZLeP9oqrtq8VWOl3EuLJxCs7TrgzR+2Y0zJohNXxG
+	MZ9vLkvckMYSzj2BwnxPEpA1dMFcRiTlTEXcKNo
+X-Google-Smtp-Source: AGHT+IFQEaj4XEmCCZd/lDPyMbe3Az5tjgXWpi25VZ2oSOWrvTAIzBIrbh29POWkk83PSgv9fZuRzT5r2CSPjpUha6A=
+X-Received: by 2002:a05:6a00:180c:b0:740:aa31:fe66 with SMTP id
+ d2e1a72fcca58-74ee03a14d1mr4867171b3a.4.1752244112974; Fri, 11 Jul 2025
+ 07:28:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
- in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20250710-trace-noc-v11-0-f849075c40b8@quicinc.com> <20250710-trace-noc-v11-2-f849075c40b8@quicinc.com>
+In-Reply-To: <20250710-trace-noc-v11-2-f849075c40b8@quicinc.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Fri, 11 Jul 2025 15:28:21 +0100
+X-Gm-Features: Ac12FXwP-5p6tbob2mC_VaXP7_PYnF7qOh1BBZjIaH7H8bD6G7mpriawAwP7p3E
+Message-ID: <CAJ9a7ViquNGu=L6AmSf92bQAvEA4UE33y_25wXL=k2EoUH_T2A@mail.gmail.com>
+Subject: Re: [PATCH v11 2/2] coresight: add coresight Trace Network On Chip driver
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, kernel@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Leo Yan <leo.yan@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 09 Jul 2025 11:59:43 +0100,
-Fuad Tabba <tabba@google.com> wrote:
-> 
-> Enable host userspace mmap support for guest_memfd-backed memory on
-> arm64. This change provides arm64 with the capability to map guest
-> memory at the host directly from guest_memfd:
-> 
-> * Define kvm_arch_supports_gmem_mmap() for arm64: The
->   kvm_arch_supports_gmem_mmap() macro is defined for arm64 to be true if
->   CONFIG_KVM_GMEM_SUPPORTS_MMAP is enabled. For existing arm64 KVM VM
->   types that support guest_memfd, this enables them to use guest_memfd
->   with host userspace mappings. This provides a consistent behavior as
->   there are currently no arm64 CoCo VMs that rely on guest_memfd solely
->   for private, non-mappable memory. Future arm64 VM types can override
->   or restrict this behavior via the kvm_arch_supports_gmem_mmap() hook
->   if needed.
-> 
-> * Select CONFIG_KVM_GMEM_SUPPORTS_MMAP in arm64 Kconfig.
-> 
-> * Enforce KVM_MEMSLOT_GMEM_ONLY for guest_memfd on arm64: Compile and
->   runtime checks are added to ensure that if guest_memfd is enabled on
->   arm64, KVM_GMEM_SUPPORTS_MMAP must also be enabled. This means
->   guest_memfd-backed memory slots on arm64 are currently only supported
->   if they are intended for shared memory use cases (i.e.,
->   kvm_memslot_is_gmem_only() is true). This design reflects the current
->   arm64 KVM ecosystem where guest_memfd is primarily being introduced
->   for VMs that support shared memory.
+On Thu, 10 Jul 2025 at 06:28, Yuanfang Zhang <quic_yuanfang@quicinc.com> wrote:
 >
-> Reviewed-by: James Houghton <jthoughton@google.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Acked-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> Add a driver to support Coresight device Trace Network On Chip (TNOC),
+> which is an integration hierarchy integrating functionalities of TPDA
+> and funnels. It aggregates the trace and transports to coresight trace
+> bus.
+>
+> Compared to current configuration, it has the following advantages:
+> 1. Reduce wires between subsystems.
+> 2. Continue cleaning the infrastructure.
+> 3. Reduce Data overhead by transporting raw data from source to target.
+>
+>   +------------------------+                +-------------------------+
+>   | Video Subsystem        |                |Video Subsystem          |
+>   |       +-------------+  |                |       +------------+    |
+>   |       | Video TPDM  |  |                |       | Video TPDM |    |
+>   |       +-------------+  |                |       +------------+    |
+>   |            |           |                |              |          |
+>   |            v           |                |              v          |
+>   |   +---------------+    |                |        +-----------+    |
+>   |   | Video funnel  |    |                |        |Video TNOC |    |
+>   |   +---------------+    |                |        +-----------+    |
+>   +------------|-----------+                +------------|------------+
+>                |                                         |
+>                v-----+                                   |
+> +--------------------|---------+                         |
+> |  Multimedia        v         |                         |
+> |  Subsystem   +--------+      |                         |
+> |              |  TPDA  |      |                         v
+> |              +----|---+      |              +---------------------+
+> |                   |          |              |   Aggregator  TNOC  |
+> |                   |          |              +----------|----------+
+> |                   +--        |                         |
+> |                     |        |                         |
+> |                     |        |                         |
+> |              +------v-----+  |                         |
+> |              |  Funnel    |  |                         |
+> |              +------------+  |                         |
+> +----------------|-------------+                         |
+>                  |                                       |
+>                  v                                       v
+>       +--------------------+                    +------------------+
+>       |   Coresight Sink   |                    |  Coresight Sink  |
+>       +--------------------+                    +------------------+
+>
+>        Current Configuration                            TNOC
+>
+> Reviewed-by: Leo Yan <leo.yan@arm.com>
+> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
 > ---
->  arch/arm64/include/asm/kvm_host.h | 4 ++++
->  arch/arm64/kvm/Kconfig            | 1 +
->  arch/arm64/kvm/mmu.c              | 8 ++++++++
->  3 files changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index d27079968341..bd2af5470c66 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -1675,5 +1675,9 @@ void compute_fgu(struct kvm *kvm, enum fgt_group_id fgt);
->  void get_reg_fixed_bits(struct kvm *kvm, enum vcpu_sysreg reg, u64 *res0, u64 *res1);
->  void check_feature_map(void);
->  
-> +#ifdef CONFIG_KVM_GMEM
-> +#define kvm_arch_supports_gmem(kvm) true
-> +#define kvm_arch_supports_gmem_mmap(kvm) IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP)
-> +#endif
->  
->  #endif /* __ARM64_KVM_HOST_H__ */
-> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-> index 713248f240e0..28539479f083 100644
-> --- a/arch/arm64/kvm/Kconfig
-> +++ b/arch/arm64/kvm/Kconfig
-> @@ -37,6 +37,7 @@ menuconfig KVM
->  	select HAVE_KVM_VCPU_RUN_PID_CHANGE
->  	select SCHED_INFO
->  	select GUEST_PERF_EVENTS if PERF_EVENTS
-> +	select KVM_GMEM_SUPPORTS_MMAP
->  	help
->  	  Support hosting virtualized guest machines.
->  
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 71f8b53683e7..b92ce4d9b4e0 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -2274,6 +2274,14 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
->  	if ((new->base_gfn + new->npages) > (kvm_phys_size(&kvm->arch.mmu) >> PAGE_SHIFT))
->  		return -EFAULT;
->  
-> +	/*
-> +	 * Only support guest_memfd backed memslots with mappable memory, since
-> +	 * there aren't any CoCo VMs that support only private memory on arm64.
-> +	 */
-> +	BUILD_BUG_ON(IS_ENABLED(CONFIG_KVM_GMEM) && !IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP));
-> +	if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
-> +		return -EINVAL;
+>  drivers/hwtracing/coresight/Kconfig          |  12 ++
+>  drivers/hwtracing/coresight/Makefile         |   1 +
+>  drivers/hwtracing/coresight/coresight-tnoc.c | 242 +++++++++++++++++++++++++++
+>  3 files changed, 255 insertions(+)
+>
+> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> index f064e3d172b3d630515bb3a11450e883a6b5b4bf..6a4239ebb582e95f0ebe8e9c8738a726f27f60a1 100644
+> --- a/drivers/hwtracing/coresight/Kconfig
+> +++ b/drivers/hwtracing/coresight/Kconfig
+> @@ -268,4 +268,16 @@ config CORESIGHT_KUNIT_TESTS
+>             Enable Coresight unit tests. Only useful for development and not
+>             intended for production.
+>
+> +config CORESIGHT_TNOC
+> +       tristate "Coresight Trace Network On Chip driver"
+> +       help
+> +         This driver provides support for Trace Network On Chip (TNOC) component.
+> +         TNOC is an interconnect used to collect traces from various subsystems
+> +         and transport to a coresight trace sink. It sits in the different
+> +         tiles of SOC and aggregates the trace local to the tile and transports
+> +         it another tile or to coresight trace sink eventually.
 > +
->  	hva = new->userspace_addr;
->  	reg_end = hva + (new->npages << PAGE_SHIFT);
->  
+> +         To compile this driver as a module, choose M here: the module will be
+> +         called coresight-tnoc.
+> +
+>  endif
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index 4e7cc3c5bf994d4066adc3b6c203edd19e88a823..ab16d06783a572ea1308dfb3a30c96df9e5ffdb7 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -36,6 +36,7 @@ obj-$(CONFIG_CORESIGHT_SINK_TPIU) += coresight-tpiu.o
+>  obj-$(CONFIG_CORESIGHT_SINK_ETBV10) += coresight-etb10.o
+>  obj-$(CONFIG_CORESIGHT_LINKS_AND_SINKS) += coresight-funnel.o \
+>                                            coresight-replicator.o
+> +obj-$(CONFIG_CORESIGHT_TNOC) += coresight-tnoc.o
+>  obj-$(CONFIG_CORESIGHT_SOURCE_ETM3X) += coresight-etm3x.o
+>  coresight-etm3x-y := coresight-etm3x-core.o coresight-etm-cp14.o \
+>                      coresight-etm3x-sysfs.o
+> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..0e4164707eea974e6f34d2de01693354d6eefdcd
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+> @@ -0,0 +1,242 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> + #include <linux/amba/bus.h>
+> + #include <linux/coresight.h>
+> + #include <linux/device.h>
+> + #include <linux/io.h>
+> + #include <linux/kernel.h>
+> + #include <linux/module.h>
+> + #include <linux/of.h>
+> + #include <linux/platform_device.h>
+> +
+> +#include "coresight-priv.h"
+> +#include "coresight-trace-id.h"
+> +
+> +#define TRACE_NOC_CTRL      0x008
+> +#define TRACE_NOC_XLD       0x010
+> +#define TRACE_NOC_FREQVAL   0x018
+> +#define TRACE_NOC_SYNCR     0x020
+> +
+> +/* Enable generation of output ATB traffic.*/
+> +#define TRACE_NOC_CTRL_PORTEN   BIT(0)
+> +/* Sets the type of issued ATB FLAG packets.*/
+> +#define TRACE_NOC_CTRL_FLAGTYPE BIT(7)
+> +/* Sets the type of issued ATB FREQ packet*/
+> +#define TRACE_NOC_CTRL_FREQTYPE BIT(8)
+> +
+> +#define TRACE_NOC_SYNC_INTERVAL        0xFFFF
+> +
+> +/*
+> + * struct trace_noc_drvdata - specifics associated to a trace noc component
+> + * @base:      memory mapped base address for this component.
+> + * @dev:       device node for trace_noc_drvdata.
+> + * @csdev:     component vitals needed by the framework.
+> + * @spinlock:  serialize enable/disable operation.
+> + * @atid:      id for the trace packet.
+> + */
+> +struct trace_noc_drvdata {
+> +       void __iomem            *base;
+> +       struct device           *dev;
+> +       struct coresight_device *csdev;
+> +       spinlock_t              spinlock;
+> +       u32                     atid;
+> +};
+> +
+> +DEFINE_CORESIGHT_DEVLIST(trace_noc_devs, "traceNoc");
+> +
+> +static void trace_noc_enable_hw(struct trace_noc_drvdata *drvdata)
+> +{
+> +       u32 val;
+> +
+> +       /* Set ATID */
+> +       writel_relaxed(drvdata->atid, drvdata->base + TRACE_NOC_XLD);
+> +
+> +       /* Set the data word count between 'SYNC' packets */
+> +       writel_relaxed(TRACE_NOC_SYNC_INTERVAL, drvdata->base + TRACE_NOC_SYNCR);
+> +
+> +       /* Set the Control register:
+> +        * - Set the FLAG packets to 'FLAG' packets
+> +        * - Set the FREQ packets to 'FREQ_TS' packets
+> +        * - Enable generation of output ATB traffic
+> +        */
+> +
+> +       val = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
+> +
+> +       val &= ~TRACE_NOC_CTRL_FLAGTYPE;
+> +       val |= TRACE_NOC_CTRL_FREQTYPE;
+> +       val |= TRACE_NOC_CTRL_PORTEN;
+> +
+> +       writel(val, drvdata->base + TRACE_NOC_CTRL);
+> +}
+> +
+> +static int trace_noc_enable(struct coresight_device *csdev, struct coresight_connection *inport,
+> +                           struct coresight_connection *outport)
+> +{
+> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +       scoped_guard(spinlock, &drvdata->spinlock) {
+> +               if (csdev->refcnt == 0)
+> +                       trace_noc_enable_hw(drvdata);
+> +
+> +               csdev->refcnt++;
+> +       }
+> +
+> +       dev_dbg(drvdata->dev, "Trace NOC is enabled\n");
+> +       return 0;
+> +}
+> +
+> +static void trace_noc_disable(struct coresight_device *csdev, struct coresight_connection *inport,
+> +                             struct coresight_connection *outport)
+> +{
+> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +       scoped_guard(spinlock, &drvdata->spinlock) {
+> +               if (--csdev->refcnt == 0)
+> +                       writel(0x0, drvdata->base + TRACE_NOC_CTRL);
+> +       }
+> +       dev_dbg(drvdata->dev, "Trace NOC is disabled\n");
+> +}
+> +
+> +static int trace_noc_id(struct coresight_device *csdev, __maybe_unused enum cs_mode mode,
+> +                       __maybe_unused struct coresight_device *sink)
+> +{
+> +       struct trace_noc_drvdata *drvdata;
+> +
+> +       drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +       return drvdata->atid;
+> +}
+> +
+> +static const struct coresight_ops_link trace_noc_link_ops = {
+> +       .enable         = trace_noc_enable,
+> +       .disable        = trace_noc_disable,
+> +};
+> +
+> +static const struct coresight_ops trace_noc_cs_ops = {
+> +       .trace_id       = trace_noc_id,
+> +       .link_ops       = &trace_noc_link_ops,
+> +};
+> +
+> +static int trace_noc_init_default_data(struct trace_noc_drvdata *drvdata)
+> +{
+> +       int atid;
+> +
+> +       atid = coresight_trace_id_get_system_id();
+> +       if (atid < 0)
+> +               return atid;
+> +
+> +       drvdata->atid = atid;
+> +
+> +       return 0;
+> +}
+> +
+> +static ssize_t traceid_show(struct device *dev,
+> +                           struct device_attribute *attr, char *buf)
+> +{
+> +       unsigned long val;
+> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +       val = drvdata->atid;
+> +       return sprintf(buf, "%#lx\n", val);
+> +}
+> +static DEVICE_ATTR_RO(traceid);
+> +
+> +static struct attribute *coresight_tnoc_attrs[] = {
+> +       &dev_attr_traceid.attr,
+> +       NULL,
+> +};
+> +
+> +static const struct attribute_group coresight_tnoc_group = {
+> +       .attrs = coresight_tnoc_attrs,
+> +};
+> +
+> +static const struct attribute_group *coresight_tnoc_groups[] = {
+> +       &coresight_tnoc_group,
+> +       NULL,
+> +};
+> +
+> +static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
+> +{
+> +       struct device *dev = &adev->dev;
+> +       struct coresight_platform_data *pdata;
+> +       struct trace_noc_drvdata *drvdata;
+> +       struct coresight_desc desc = { 0 };
+> +       int ret;
+> +
+> +       desc.name = coresight_alloc_device_name(&trace_noc_devs, dev);
+> +       if (!desc.name)
+> +               return -ENOMEM;
+> +
+> +       pdata = coresight_get_platform_data(dev);
+> +       if (IS_ERR(pdata))
+> +               return PTR_ERR(pdata);
+> +       adev->dev.platform_data = pdata;
+> +
+> +       drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +       if (!drvdata)
+> +               return -ENOMEM;
+> +
+> +       drvdata->dev = &adev->dev;
+> +       dev_set_drvdata(dev, drvdata);
+> +
+> +       drvdata->base = devm_ioremap_resource(dev, &adev->res);
+> +       if (!drvdata->base)
+> +               return -ENOMEM;
+> +
+> +       spin_lock_init(&drvdata->spinlock);
+> +
+> +       ret = trace_noc_init_default_data(drvdata);
+> +       if (ret)
+> +               return ret;
+> +
+> +       desc.ops = &trace_noc_cs_ops;
+> +       desc.type = CORESIGHT_DEV_TYPE_LINK;
+> +       desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
+> +       desc.pdata = adev->dev.platform_data;
+> +       desc.dev = &adev->dev;
+> +       desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
+> +       desc.groups = coresight_tnoc_groups;
+> +       drvdata->csdev = coresight_register(&desc);
+> +       if (IS_ERR(drvdata->csdev)) {
+> +               coresight_trace_id_put_system_id(drvdata->atid);
+> +               return PTR_ERR(drvdata->csdev);
+> +       }
+> +       pm_runtime_put(&adev->dev);
+> +
+> +       return 0;
+> +}
+> +
+> +static void trace_noc_remove(struct amba_device *adev)
+> +{
+> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+> +
+> +       coresight_unregister(drvdata->csdev);
+> +       coresight_trace_id_put_system_id(drvdata->atid);
+> +}
+> +
+> +static struct amba_id trace_noc_ids[] = {
+> +       {
+> +               .id     = 0x000f0c00,
+> +               .mask   = 0x00ffff00,
+> +       },
+> +       {},
+> +};
+> +MODULE_DEVICE_TABLE(amba, trace_noc_ids);
+> +
+> +static struct amba_driver trace_noc_driver = {
+> +       .drv = {
+> +               .name   = "coresight-trace-noc",
+> +               .suppress_bind_attrs = true,
+> +       },
+> +       .probe          = trace_noc_probe,
+> +       .remove         = trace_noc_remove,
+> +       .id_table       = trace_noc_ids,
+> +};
+> +
+> +module_amba_driver(trace_noc_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Trace NOC driver");
+>
+> --
+> 2.34.1
+>
 
-Honestly, I don't see the point in making CONFIG_KVM_GMEM a buy in. We
-have *no* configurability for KVM/arm64, the only exception being the
-PMU support, and that has been a pain at every step of the way.
-
-Either KVM is enabled, and it comes with "batteries included", or it's
-not. Either way, we know exactly what we're getting, and it makes
-reproducing problems much easier.
-
-Thanks,
-
-	M.
-
+Reviewed-by: Mike Leach <mike.leach@linaro.com>
 -- 
-Without deviation from the norm, progress is not possible.
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
