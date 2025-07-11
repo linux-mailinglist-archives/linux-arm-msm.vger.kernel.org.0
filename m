@@ -1,762 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-64524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6589B01826
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:38:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 163E4B0181D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:37:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD1605A1629
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:38:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE1481896237
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52CFE27D782;
-	Fri, 11 Jul 2025 09:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D76C227C879;
+	Fri, 11 Jul 2025 09:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qrBUEqhF"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="frXUmO7+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A414F27CB02
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:37:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543FF27A477
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752226660; cv=none; b=hbw0A2q+eOPNYUPl6xj/0LsFW1iWXsCnnzcNIhMVEeEe6rzTnWMHUuYE+j35rL2Vt/imTyInOwjYMyFTLW++o3WhM8PzQvgmGMrpvFJWb5UqV7BxPmMZ9T0p1N7mJHSU5hrz6aw2DUnVGP7/2F3H4nsm+DMIPpaFUC8avw0N3tI=
+	t=1752226626; cv=none; b=ONL51397DVUQGTLxSGBGjBY/yljH86blWDHhSIW5r0k6k+xtoXSow9NxOIVCLQQPZsjuohs5YJ/YiZOGUab9HHLkFMJVofR8lDSloqB0E+MdR3uk53lw1dHbH7P4wnTvpgSb3+EKaeDTin8VWmGO5/OPO5xvJOGN5tVPbpN/7Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752226660; c=relaxed/simple;
-	bh=tmeaFPZiRFFkwMdVxW7c7jSqi1d+sDYCXhN2nCh2uZY=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=DQacN8WbhAZlA8frr4kFUSLJ+s+mqo0qIpAlllab9WaHk7yBWx2Puvkwy/JG4iqjJoTssLplAua0vVInhZxLWbkssQy/jgZfrS9hPf8gREq/LDngsvPS5IZUENJMUdC1DgKEKup/ZONz4S1TMAHTj1INl0luCQIMm4sdHvzDf8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qrBUEqhF; arc=none smtp.client-ip=209.85.218.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-ae6f9b15604so68151966b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:37:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752226656; x=1752831456; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=s24zxkMRC1OeCsWQ5Jm+L322PE3ZBEn4WYJVkxJHa58=;
-        b=qrBUEqhF4eMMy0ucZScLyGFxGLY79K7kwoXTlHl5aOcbqCL5DsjqvyZm8nxJ6x1z2Y
-         9u99Eda6Fjw2GmLOKwgxJjllCmqKod18SutedUJVYmBfPYJ9yXFzrPwP7mGIZrnBuG3L
-         pSnHLq3xgIlo58ODp4Gp6E9RftFD8+lwInCh3hSLUndlFU5AWunoUG22Mhi/FnGRTTo2
-         g5e0z70ql7WNS0OZq1ACH5PP8VC3jzW0qZd2UvTYvWfKpBnWkA727XiJP+jgPuY9WrWh
-         6cquZItZ3iaAL2eIVYdS1VJEC6+3/ympJdThjh04a/yEAEzVmGZUyEO7eKL8mAvciD+w
-         bAdA==
+	s=arc-20240116; t=1752226626; c=relaxed/simple;
+	bh=9suKWsS0rHymfk9TQGmbQKs5zALFUrp1fPpFra/s9UI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TlZAEUWehKWCaut7iUnyc/w2jBudIem6rOjPhcGkdsWTG0xMR1Vf4sdwGFP8JizVfynpD4N5oGWiDJPz2bgYA1neS0kEaZIhjJtfbipGhi4+J7OPaQtnVp00P9SBZe70oEeClK0HUFQGMQ4SLNGQLgfj4F2itDi4yPdb7WcZ0Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=frXUmO7+; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1752226623;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xA0OBovI0qiiKgM2RE7S4aciFKin8qkBM8MTFs6V5aA=;
+	b=frXUmO7++R7pCUagMSAPdeh/LaQCQ7bMZkH9mv5x8BscF4aB4sqjzB1dfGialk4BT+iExU
+	baQsE2y3vd1xxXcD59SYGrXJ0yLRsvLZSjjlFSromWgtbhibi3+1BDKFs9w9VuJ/S2LMMA
+	5mBJcmUj+iJ4VfiizIPLQdejbMNkN6c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-3Z6EfNrjPJKhDfLTTR2GwQ-1; Fri, 11 Jul 2025 05:37:01 -0400
+X-MC-Unique: 3Z6EfNrjPJKhDfLTTR2GwQ-1
+X-Mimecast-MFC-AGG-ID: 3Z6EfNrjPJKhDfLTTR2GwQ_1752226621
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-453a5d50b81so14013455e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:37:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752226656; x=1752831456;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s24zxkMRC1OeCsWQ5Jm+L322PE3ZBEn4WYJVkxJHa58=;
-        b=gd7JAUiJhTqZ9bNKJ0vqQSGFHAJzaNMrKH6JMDpHpUd3yIUMEjZJKp0D4mwYDLKkPi
-         r15Ic/TiCVVbX5/RXT+3J2zqfDfQjpO3LZ4cbNtiMtbk5WwzwbNqSjTXs4siTEfvC6by
-         GJ6nA4UOcVF7gdzopawnhQ7HKgBwIqG9iSEjHUY+4ma/iV4did+ud7R+OFkT3euduOt1
-         /p8o0RGS4BxPWqfGD6j6M+3Ha88jZNctkLz223xfnbo5qZmAUiP4jztuURJQW08jJh1o
-         ELI5stBnMiAIbF0DrYJkQhSmRT/4AI2lPS7NUTO/csIcqF7q/EoJz9cmylo83dzcr6iv
-         nYRw==
-X-Forwarded-Encrypted: i=1; AJvYcCVxqn+Zmr3XeQsf+qldcxgUgDFSNHylxenRG8j4v9AHpEezVFmqxRATj+HJoBzgGQ0wwkCpuqnn7tG4aRb+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc3tG5Ys9eaQg/a8/WPQY2ahmA9HJLCVY6WWbxTqqHWPMsc0Gp
-	Tol7WaveWxOr6I7twNteFce0gn7G/PKM9JnJCn8yWNsxlLWY/+BPef5XAPAbqfXEmrayvMSnoT0
-	eSm4hfYiqu7Z/6OSIbw==
-X-Google-Smtp-Source: AGHT+IEE+Iad30lp8vlVTMnoKWDJrzSh/Gl4mnzAn3kxLg1w2hmTp8NWUwAAAjRm4Pv+hBo2ock630z7qIlqeIc=
-X-Received: from edon10.prod.google.com ([2002:aa7:d04a:0:b0:5fc:3251:d24f])
- (user=verhaegen job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:906:d7d4:b0:ad8:a512:a9fc with SMTP id a640c23a62f3a-ae6fc3662f6mr256255866b.42.1752226655971;
- Fri, 11 Jul 2025 02:37:35 -0700 (PDT)
-Date: Fri, 11 Jul 2025 10:36:30 +0100
-In-Reply-To: <20250711093636.28204-1-verhaegen@google.com>
+        d=1e100.net; s=20230601; t=1752226620; x=1752831420;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xA0OBovI0qiiKgM2RE7S4aciFKin8qkBM8MTFs6V5aA=;
+        b=Kcn9P3jZVwvDI5nEsS7nmLIj+ZZydgUGVnl9EVWwOr3FZ6lm34qrOeaOVjv9DWJgrm
+         z9Dm74NdfUAt04fMWXlpaCQz6zglfaV609xenGP9/avYaYZmsB2x5dhYJypZnv5jsJ9x
+         6h09yfG5OC3UGm7Y13Z8tEkgb5Nse2bENfeQYk5iljLghNGWIFN3bma6wd/zk3xb6dZy
+         ORGo34vftHx89cxkyzz0wA1NbI6UQpVsnVxY+7hfX0bu+7kNrlSmlKMkJEjQf6CBTGyR
+         vbTdvoR0mPBOHyRMriQIwPtpiEbslQhmciJrH/xoItM1kln2pPNRQm/6RSMyDN/4ZAvy
+         SAEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXfO8dBMd6gz/Boabjy+fnv8qu8ZIACnq/VrlEuB2zvrW9pN7UaumGwB0VbxJ37BOn3czrysBZ+sFNcFfPV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxP2l0jmOTDCSObV7nSgVsTikKlH95WmOuvknVgEjSkh8aiR5UR
+	eFtZy3lZmLUOUWwO/m+UB018O/40N4W9wnXv2WMCFSnZdaw3yiteiiMwTUBXM4lmiaRT0dp4mQg
+	dZYCdYgLdDlsMpc75LXDYlfcBxKRebb1CXzFeQ5m/MMy1zB4gXF4Eihz6u6UxQbfbwQ0=
+X-Gm-Gg: ASbGncvdMdgL3mL55PpuelIWvsIz0vlKxbm1AfyZlnx9IfnFULNxEfzTjqor12QLZit
+	U2TP3KthMqntzIW91TRvscOp82U5+8JLgUXtVUJxeAZrFmCAL7RCnz5vKB5nz7YpMCulIfDgho8
+	BHOizMHYsgfcAa1FoXuV8suJjL6glMJnQ6fBpNafRlsSt7iAooJ7xf/C+UXYVfZFpwDEZ7Aqcg7
+	qdPKiJ12bOy2I9vX56dbVM1h/u/oZAFQRlOipRI1XVsCBrjKsqGYcKEMdhKzs9GYzK77So/sZ2y
+	ZJm5c4wGf0gn1cS+PY3QvWXTk5Mw30dDZeAKhYa8KfWTRfhlthAcQPfYDXyxCcu1OnfJVRT8rj9
+	Ge6SoYJk6Xi1dkADWr73u/0XTOjqHkMG2a8zTaYV10JcYaQ/iAkeuUJ7IyxEa3cZC/Ts=
+X-Received: by 2002:a05:6000:4025:b0:3a4:f8e9:cef2 with SMTP id ffacd0b85a97d-3b5f2e1b641mr1754272f8f.36.1752226620412;
+        Fri, 11 Jul 2025 02:37:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+hICpGbhlJGiLJG3KWJjiX9CPM0fHoBscZr6YOelTdPL05gMC9v1YCtA5hYWnCGxZHpNopg==
+X-Received: by 2002:a05:6000:4025:b0:3a4:f8e9:cef2 with SMTP id ffacd0b85a97d-3b5f2e1b641mr1754206f8f.36.1752226619794;
+        Fri, 11 Jul 2025 02:36:59 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f3c:3a00:5662:26b3:3e5d:438e? (p200300d82f3c3a00566226b33e5d438e.dip0.t-ipconnect.de. [2003:d8:2f3c:3a00:5662:26b3:3e5d:438e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8bd18ffsm3915762f8f.9.2025.07.11.02.36.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jul 2025 02:36:59 -0700 (PDT)
+Message-ID: <455fc70a-23e4-4c01-b502-37834473d195@redhat.com>
+Date: Fri, 11 Jul 2025 11:36:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250711093636.28204-1-verhaegen@google.com>
-X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
-Message-ID: <20250711093636.28204-5-verhaegen@google.com>
-Subject: [PATCH v2 4/4] ASoC: codecs: Implement 64-bit pointer operation
-From: Joris Verhaegen <verhaegen@google.com>
-To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Charles Keepax <ckeepax@opensource.cirrus.com>, 
-	Richard Fitzgerald <rf@opensource.cirrus.com>, David Rhodes <david.rhodes@cirrus.com>, 
-	Cezary Rojewski <cezary.rojewski@intel.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
-	Bard Liao <yung-chuan.liao@linux.intel.com>, 
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Srinivas Kandagatla <srini@kernel.org>, 
-	Daniel Baluta <daniel.baluta@nxp.com>, Orson Zhai <orsonzhai@gmail.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Joris Verhaegen <verhaegen@google.com>, kernel-team@android.com, 
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org, 
-	sound-open-firmware@alsa-project.org, linux-arm-kernel@lists.infradead.org, 
-	David Li <dvdli@google.com>, Miller Liang <millerliang@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 10/20] KVM: x86/mmu: Generalize
+ private_max_mapping_level x86 op to max_mapping_level
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250709105946.4009897-1-tabba@google.com>
+ <20250709105946.4009897-11-tabba@google.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250709105946.4009897-11-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Implement the new .pointer64 compress operation for the various ASoC
-drivers that support compress offload.
+On 09.07.25 12:59, Fuad Tabba wrote:
+> From: Ackerley Tng <ackerleytng@google.com>
+> 
+> Generalize the private_max_mapping_level x86 operation to
+> max_mapping_level.
+> 
+> The private_max_mapping_level operation allows platform-specific code to
+> limit mapping levels (e.g., forcing 4K pages for certain memory types).
+> While it was previously used exclusively for private memory, guest_memfd
+> can now back both private and non-private memory. Platforms may have
+> specific mapping level restrictions that apply to guest_memfd memory
+> regardless of its privacy attribute. Therefore, generalize this
+> operation.
+> 
+> Rename the operation: Removes the "private" prefix to reflect its
+> broader applicability to any guest_memfd-backed memory.
+> 
+> Pass kvm_page_fault information: The operation is updated to receive a
+> struct kvm_page_fault object instead of just the pfn. This provides
+> platform-specific implementations (e.g., for TDX or SEV) with additional
+> context about the fault, such as whether it is private or shared,
+> allowing them to apply different mapping level rules as needed.
+> 
+> Enforce "private-only" behavior (for now): Since the current consumers
+> of this hook (TDX and SEV) still primarily use it to enforce private
+> memory constraints, platform-specific implementations are made to return
+> 0 for non-private pages. A return value of 0 signals to callers that
+> platform-specific input should be ignored for that particular fault,
+> indicating no specific platform-imposed mapping level limits for
+> non-private pages. This allows the core MMU to continue determining the
+> mapping level based on generic rules for such cases.
+> 
+> Suggested-by: Sean Christoperson <seanjc@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
 
-For drivers with complex but similar 32-bit and 64-bit logic
-(wm_adsp, sof, uniphier), a shared internal function is used to handle
-both requests, minimizing code duplication and improving maintainability.
+Acked-by: David Hildenbrand <david@redhat.com>
 
-For other drivers, internal counters and related variables are updated
-to u64 to ensure the source of the timestamp data is overflow-safe.
-The legacy .pointer operation is retained in all drivers to ensure
-full backward compatibility.
-
-Signed-off-by: Joris Verhaegen <verhaegen@google.com>
-Tested-by: Joris Verhaegen <verhaegen@google.com>
-Reviewed-by: David Li <dvdli@google.com>
-Reviewed-by: Miller Liang <millerliang@google.com>
----
- sound/soc/codecs/cs47l15.c                    |  1 +
- sound/soc/codecs/cs47l24.c                    |  1 +
- sound/soc/codecs/cs47l35.c                    |  1 +
- sound/soc/codecs/cs47l85.c                    |  1 +
- sound/soc/codecs/cs47l90.c                    |  1 +
- sound/soc/codecs/cs47l92.c                    |  1 +
- sound/soc/codecs/wm5102.c                     |  1 +
- sound/soc/codecs/wm5110.c                     |  1 +
- sound/soc/codecs/wm_adsp.c                    | 53 +++++++++++++++----
- sound/soc/codecs/wm_adsp.h                    |  3 ++
- .../intel/atom/sst-mfld-platform-compress.c   | 17 +++++-
- sound/soc/intel/atom/sst-mfld-platform.h      |  2 +
- sound/soc/intel/atom/sst/sst_drv_interface.c  | 43 +++++++++++++--
- sound/soc/qcom/qdsp6/q6asm-dai.c              | 41 ++++++++++----
- sound/soc/sof/compress.c                      | 44 +++++++++++----
- sound/soc/sprd/sprd-pcm-compress.c            | 28 +++++++---
- sound/soc/sprd/sprd-pcm-dma.h                 |  2 +-
- sound/soc/uniphier/aio-compress.c             | 40 +++++++++++---
- 18 files changed, 232 insertions(+), 49 deletions(-)
-
-diff --git a/sound/soc/codecs/cs47l15.c b/sound/soc/codecs/cs47l15.c
-index 29a2bcfb3048..40e75af3367e 100644
---- a/sound/soc/codecs/cs47l15.c
-+++ b/sound/soc/codecs/cs47l15.c
-@@ -1342,6 +1342,7 @@ static const struct snd_compress_ops cs47l15_compress_ops = {
- 	.get_caps = &wm_adsp_compr_get_caps,
- 	.trigger = &wm_adsp_compr_trigger,
- 	.pointer = &wm_adsp_compr_pointer,
-+	.pointer64 = &wm_adsp_compr_pointer64,
- 	.copy = &wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/cs47l24.c b/sound/soc/codecs/cs47l24.c
-index e2a839fae4fc..30c434a3fa53 100644
---- a/sound/soc/codecs/cs47l24.c
-+++ b/sound/soc/codecs/cs47l24.c
-@@ -1189,6 +1189,7 @@ static const struct snd_compress_ops cs47l24_compress_ops = {
- 	.get_caps	= wm_adsp_compr_get_caps,
- 	.trigger	= wm_adsp_compr_trigger,
- 	.pointer	= wm_adsp_compr_pointer,
-+	.pointer64	= wm_adsp_compr_pointer64,
- 	.copy		= wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/cs47l35.c b/sound/soc/codecs/cs47l35.c
-index 85555c7a2e4b..8b416f452c45 100644
---- a/sound/soc/codecs/cs47l35.c
-+++ b/sound/soc/codecs/cs47l35.c
-@@ -1624,6 +1624,7 @@ static const struct snd_compress_ops cs47l35_compress_ops = {
- 	.get_caps = &wm_adsp_compr_get_caps,
- 	.trigger = &wm_adsp_compr_trigger,
- 	.pointer = &wm_adsp_compr_pointer,
-+	.pointer64 = &wm_adsp_compr_pointer64,
- 	.copy = &wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/cs47l85.c b/sound/soc/codecs/cs47l85.c
-index d34f4e8c26d3..b8ef0a69a2c5 100644
---- a/sound/soc/codecs/cs47l85.c
-+++ b/sound/soc/codecs/cs47l85.c
-@@ -2568,6 +2568,7 @@ static const struct snd_compress_ops cs47l85_compress_ops = {
- 	.get_caps = &wm_adsp_compr_get_caps,
- 	.trigger = &wm_adsp_compr_trigger,
- 	.pointer = &wm_adsp_compr_pointer,
-+	.pointer64 = &wm_adsp_compr_pointer64,
- 	.copy = &wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/cs47l90.c b/sound/soc/codecs/cs47l90.c
-index a9e703981f37..1ae44155e306 100644
---- a/sound/soc/codecs/cs47l90.c
-+++ b/sound/soc/codecs/cs47l90.c
-@@ -2483,6 +2483,7 @@ static const struct snd_compress_ops cs47l90_compress_ops = {
- 	.get_caps = &wm_adsp_compr_get_caps,
- 	.trigger = &wm_adsp_compr_trigger,
- 	.pointer = &wm_adsp_compr_pointer,
-+	.pointer64 = &wm_adsp_compr_pointer64,
- 	.copy = &wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/cs47l92.c b/sound/soc/codecs/cs47l92.c
-index 2c355c61acd8..0be338dabf25 100644
---- a/sound/soc/codecs/cs47l92.c
-+++ b/sound/soc/codecs/cs47l92.c
-@@ -1950,6 +1950,7 @@ static const struct snd_compress_ops cs47l92_compress_ops = {
- 	.get_caps = &wm_adsp_compr_get_caps,
- 	.trigger = &wm_adsp_compr_trigger,
- 	.pointer = &wm_adsp_compr_pointer,
-+	.pointer64 = &wm_adsp_compr_pointer64,
- 	.copy = &wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/wm5102.c b/sound/soc/codecs/wm5102.c
-index 9fc7a8325724..3f691f2f3269 100644
---- a/sound/soc/codecs/wm5102.c
-+++ b/sound/soc/codecs/wm5102.c
-@@ -2013,6 +2013,7 @@ static const struct snd_compress_ops wm5102_compress_ops = {
- 	.get_caps	= wm_adsp_compr_get_caps,
- 	.trigger	= wm_adsp_compr_trigger,
- 	.pointer	= wm_adsp_compr_pointer,
-+	.pointer64	= wm_adsp_compr_pointer64,
- 	.copy		= wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/wm5110.c b/sound/soc/codecs/wm5110.c
-index 212eca675f27..8470ade90bad 100644
---- a/sound/soc/codecs/wm5110.c
-+++ b/sound/soc/codecs/wm5110.c
-@@ -2370,6 +2370,7 @@ static const struct snd_compress_ops wm5110_compress_ops = {
- 	.get_caps	= wm_adsp_compr_get_caps,
- 	.trigger	= wm_adsp_compr_trigger,
- 	.pointer	= wm_adsp_compr_pointer,
-+	.pointer64	= wm_adsp_compr_pointer64,
- 	.copy		= wm_adsp_compr_copy,
- };
- 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 8a1d5cc75d6c..0c3cc08aa3a8 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -173,7 +173,7 @@ struct wm_adsp_compr {
- 	struct snd_compressed_buffer size;
- 
- 	u32 *raw_buf;
--	unsigned int copied_total;
-+	u64 copied_total;
- 
- 	unsigned int sample_rate;
- 
-@@ -1858,17 +1858,16 @@ static int wm_adsp_buffer_reenable_irq(struct wm_adsp_compr_buf *buf)
- 				    buf->irq_count);
- }
- 
--int wm_adsp_compr_pointer(struct snd_soc_component *component,
--			  struct snd_compr_stream *stream,
--			  struct snd_compr_tstamp *tstamp)
-+static int wm_adsp_compr_pointer_internal(struct snd_soc_component *component,
-+					  struct snd_compr_stream *stream,
-+					  struct snd_compr_tstamp *tstamp32,
-+					  struct snd_compr_tstamp64 *tstamp64)
- {
- 	struct wm_adsp_compr *compr = stream->runtime->private_data;
- 	struct wm_adsp *dsp = compr->dsp;
- 	struct wm_adsp_compr_buf *buf;
- 	int ret = 0;
- 
--	compr_dbg(compr, "Pointer request\n");
--
- 	mutex_lock(&dsp->cs_dsp.pwr_lock);
- 
- 	buf = compr->buf;
-@@ -1908,17 +1907,53 @@ int wm_adsp_compr_pointer(struct snd_soc_component *component,
- 		}
- 	}
- 
--	tstamp->copied_total = compr->copied_total;
--	tstamp->copied_total += buf->avail * CS_DSP_DATA_WORD_SIZE;
--	tstamp->sampling_rate = compr->sample_rate;
-+	if (tstamp32) {
-+		tstamp32->copied_total = (u32)compr->copied_total;
-+		tstamp32->copied_total += buf->avail * CS_DSP_DATA_WORD_SIZE;
-+		tstamp32->sampling_rate = compr->sample_rate;
-+	}
-+	if (tstamp64) {
-+		tstamp64->copied_total = compr->copied_total;
-+		tstamp64->copied_total += buf->avail * CS_DSP_DATA_WORD_SIZE;
-+		tstamp64->sampling_rate = compr->sample_rate;
-+	}
- 
- out:
- 	mutex_unlock(&dsp->cs_dsp.pwr_lock);
- 
- 	return ret;
- }
-+
-+int wm_adsp_compr_pointer(struct snd_soc_component *component,
-+			  struct snd_compr_stream *stream,
-+			  struct snd_compr_tstamp *tstamp)
-+{
-+	struct wm_adsp_compr *compr = stream->runtime->private_data;
-+	int ret = 0;
-+
-+	compr_dbg(compr, "Pointer request\n");
-+
-+	ret = wm_adsp_compr_pointer_internal(component, stream, tstamp, NULL);
-+
-+	return ret;
-+}
- EXPORT_SYMBOL_GPL(wm_adsp_compr_pointer);
- 
-+int wm_adsp_compr_pointer64(struct snd_soc_component *component,
-+			    struct snd_compr_stream *stream,
-+			    struct snd_compr_tstamp64 *tstamp)
-+{
-+	struct wm_adsp_compr *compr = stream->runtime->private_data;
-+	int ret = 0;
-+
-+	compr_dbg(compr, "Pointer64 request\n");
-+
-+	ret = wm_adsp_compr_pointer_internal(component, stream, NULL, tstamp);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(wm_adsp_compr_pointer64);
-+
- static int wm_adsp_buffer_capture_block(struct wm_adsp_compr *compr, int target)
- {
- 	struct wm_adsp_compr_buf *buf = compr->buf;
-diff --git a/sound/soc/codecs/wm_adsp.h b/sound/soc/codecs/wm_adsp.h
-index 25210d404bf1..5027236bb92e 100644
---- a/sound/soc/codecs/wm_adsp.h
-+++ b/sound/soc/codecs/wm_adsp.h
-@@ -132,6 +132,9 @@ int wm_adsp_compr_handle_irq(struct wm_adsp *dsp);
- int wm_adsp_compr_pointer(struct snd_soc_component *component,
- 			  struct snd_compr_stream *stream,
- 			  struct snd_compr_tstamp *tstamp);
-+int wm_adsp_compr_pointer64(struct snd_soc_component *component,
-+			    struct snd_compr_stream *stream,
-+			    struct snd_compr_tstamp64 *tstamp);
- int wm_adsp_compr_copy(struct snd_soc_component *component,
- 		       struct snd_compr_stream *stream,
- 		       char __user *buf, size_t count);
-diff --git a/sound/soc/intel/atom/sst-mfld-platform-compress.c b/sound/soc/intel/atom/sst-mfld-platform-compress.c
-index 89c9c5ad6b21..9fbd0d641059 100644
---- a/sound/soc/intel/atom/sst-mfld-platform-compress.c
-+++ b/sound/soc/intel/atom/sst-mfld-platform-compress.c
-@@ -210,7 +210,21 @@ static int sst_platform_compr_pointer(struct snd_soc_component *component,
- 	stream->compr_ops->tstamp(sst->dev, stream->id, tstamp);
- 	tstamp->byte_offset = tstamp->copied_total %
- 				 (u32)cstream->runtime->buffer_size;
--	pr_debug("calc bytes offset/copied bytes as %d\n", tstamp->byte_offset);
-+	pr_debug("calc bytes offset/copied bytes as %u\n", tstamp->byte_offset);
-+	return 0;
-+}
-+
-+static int sst_platform_compr_pointer64(struct snd_soc_component *component,
-+					struct snd_compr_stream *cstream,
-+					struct snd_compr_tstamp64 *tstamp)
-+{
-+	struct sst_runtime_stream *stream;
-+
-+	stream = cstream->runtime->private_data;
-+	stream->compr_ops->tstamp64(sst->dev, stream->id, tstamp);
-+	tstamp->byte_offset =
-+		tstamp->copied_total % cstream->runtime->buffer_size;
-+	pr_debug("calc bytes offset/copied bytes as %u\n", tstamp->byte_offset);
- 	return 0;
- }
- 
-@@ -265,6 +279,7 @@ const struct snd_compress_ops sst_platform_compress_ops = {
- 	.set_metadata = sst_platform_compr_set_metadata,
- 	.trigger = sst_platform_compr_trigger,
- 	.pointer = sst_platform_compr_pointer,
-+	.pointer64 = sst_platform_compr_pointer64,
- 	.ack = sst_platform_compr_ack,
- 	.get_caps = sst_platform_compr_get_caps,
- 	.get_codec_caps = sst_platform_compr_get_codec_caps,
-diff --git a/sound/soc/intel/atom/sst-mfld-platform.h b/sound/soc/intel/atom/sst-mfld-platform.h
-index 8b5777d3229a..bc21a36a4cc0 100644
---- a/sound/soc/intel/atom/sst-mfld-platform.h
-+++ b/sound/soc/intel/atom/sst-mfld-platform.h
-@@ -106,6 +106,8 @@ struct compress_sst_ops {
- 
- 	int (*tstamp)(struct device *dev, unsigned int str_id,
- 			struct snd_compr_tstamp *tstamp);
-+	int (*tstamp64)(struct device *dev, unsigned int str_id,
-+			struct snd_compr_tstamp64 *tstamp);
- 	int (*ack)(struct device *dev, unsigned int str_id,
- 			unsigned long bytes);
- 	int (*close)(struct device *dev, unsigned int str_id);
-diff --git a/sound/soc/intel/atom/sst/sst_drv_interface.c b/sound/soc/intel/atom/sst/sst_drv_interface.c
-index 8bb27f86eb65..f6472ad29e47 100644
---- a/sound/soc/intel/atom/sst/sst_drv_interface.c
-+++ b/sound/soc/intel/atom/sst/sst_drv_interface.c
-@@ -325,8 +325,8 @@ static int sst_cdev_stream_partial_drain(struct device *dev,
- 	return sst_drain_stream(ctx, str_id, true);
- }
- 
--static int sst_cdev_tstamp(struct device *dev, unsigned int str_id,
--		struct snd_compr_tstamp *tstamp)
-+static int sst_cdev_tstamp32(struct device *dev, unsigned int str_id,
-+			     struct snd_compr_tstamp *tstamp)
- {
- 	struct snd_sst_tstamp fw_tstamp = {0,};
- 	struct stream_info *stream;
-@@ -350,9 +350,41 @@ static int sst_cdev_tstamp(struct device *dev, unsigned int str_id,
- 	tstamp->sampling_rate = fw_tstamp.sampling_frequency;
- 
- 	dev_dbg(dev, "PCM  = %u\n", tstamp->pcm_io_frames);
--	dev_dbg(dev, "Ptr Query on strid = %d  copied_total %d, decodec %d\n",
-+	dev_dbg(dev, "Ptr Query on strid = %d  copied_total %u, decodec %u\n",
- 		str_id, tstamp->copied_total, tstamp->pcm_frames);
--	dev_dbg(dev, "rendered %d\n", tstamp->pcm_io_frames);
-+	dev_dbg(dev, "rendered %u\n", tstamp->pcm_io_frames);
-+
-+	return 0;
-+}
-+
-+static int sst_cdev_tstamp64(struct device *dev, unsigned int str_id,
-+			     struct snd_compr_tstamp64 *tstamp)
-+{
-+	struct snd_sst_tstamp fw_tstamp = {0,};
-+	struct stream_info *stream;
-+	struct intel_sst_drv *ctx = dev_get_drvdata(dev);
-+	void __iomem *addr;
-+
-+	addr = (void __iomem *)(ctx->mailbox + ctx->tstamp) +
-+		(str_id * sizeof(fw_tstamp));
-+
-+	memcpy_fromio(&fw_tstamp, addr, sizeof(fw_tstamp));
-+
-+	stream = get_stream_info(ctx, str_id);
-+	if (!stream)
-+		return -EINVAL;
-+	dev_dbg(dev, "rb_counter %llu in bytes\n", fw_tstamp.ring_buffer_counter);
-+
-+	tstamp->copied_total = fw_tstamp.ring_buffer_counter;
-+	tstamp->pcm_frames = fw_tstamp.frames_decoded;
-+	tstamp->pcm_io_frames = div_u64(fw_tstamp.hardware_counter,
-+			(u64)stream->num_ch * SST_GET_BYTES_PER_SAMPLE(24));
-+	tstamp->sampling_rate = fw_tstamp.sampling_frequency;
-+
-+	dev_dbg(dev, "PCM  = %llu\n", tstamp->pcm_io_frames);
-+	dev_dbg(dev, "Ptr Query on strid = %d  copied_total %llu, decodec %llu\n",
-+		str_id, tstamp->copied_total, tstamp->pcm_frames);
-+	dev_dbg(dev, "rendered %llu\n", tstamp->pcm_io_frames);
- 
- 	return 0;
- }
-@@ -650,7 +682,8 @@ static struct compress_sst_ops compr_ops = {
- 	.stream_drop = sst_cdev_stream_drop,
- 	.stream_drain = sst_cdev_stream_drain,
- 	.stream_partial_drain = sst_cdev_stream_partial_drain,
--	.tstamp = sst_cdev_tstamp,
-+	.tstamp = sst_cdev_tstamp32,
-+	.tstamp64 = sst_cdev_tstamp64,
- 	.ack = sst_cdev_ack,
- 	.get_caps = sst_cdev_caps,
- 	.get_codec_caps = sst_cdev_codec_caps,
-diff --git a/sound/soc/qcom/qdsp6/q6asm-dai.c b/sound/soc/qcom/qdsp6/q6asm-dai.c
-index a400c9a31fea..d9917eca5f80 100644
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -59,9 +59,9 @@ struct q6asm_dai_rtd {
- 	unsigned int pcm_count;
- 	unsigned int pcm_irq_pos;       /* IRQ position */
- 	unsigned int periods;
--	unsigned int bytes_sent;
--	unsigned int bytes_received;
--	unsigned int copied_total;
-+	uint64_t bytes_sent;
-+	uint64_t bytes_received;
-+	uint64_t copied_total;
- 	uint16_t bits_per_sample;
- 	uint16_t source; /* Encoding source bit mask */
- 	struct audio_client *audio_client;
-@@ -1024,9 +1024,27 @@ static int q6asm_dai_compr_trigger(struct snd_soc_component *component,
- 	return ret;
- }
- 
--static int q6asm_dai_compr_pointer(struct snd_soc_component *component,
--				   struct snd_compr_stream *stream,
--				   struct snd_compr_tstamp *tstamp)
-+static int q6asm_dai_compr_pointer32(struct snd_soc_component *component,
-+				     struct snd_compr_stream *stream,
-+				     struct snd_compr_tstamp *tstamp)
-+{
-+	struct snd_compr_runtime *runtime = stream->runtime;
-+	struct q6asm_dai_rtd *prtd = runtime->private_data;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&prtd->lock, flags);
-+
-+	tstamp->copied_total = (u32) prtd->copied_total;
-+	tstamp->byte_offset = prtd->copied_total % prtd->pcm_size;
-+
-+	spin_unlock_irqrestore(&prtd->lock, flags);
-+
-+	return 0;
-+}
-+
-+static int q6asm_dai_compr_pointer64(struct snd_soc_component *component,
-+				     struct snd_compr_stream *stream,
-+				     struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_compr_runtime *runtime = stream->runtime;
- 	struct q6asm_dai_rtd *prtd = runtime->private_data;
-@@ -1050,11 +1068,12 @@ static int q6asm_compr_copy(struct snd_soc_component *component,
- 	struct q6asm_dai_rtd *prtd = runtime->private_data;
- 	unsigned long flags;
- 	u32 wflags = 0;
--	int avail, bytes_in_flight = 0;
-+	u64 avail = 0;
-+	u64 bytes_in_flight = 0;
- 	void *dstn;
- 	size_t copy;
- 	u32 app_pointer;
--	u32 bytes_received;
-+	u64 bytes_received;
- 
- 	bytes_received = prtd->bytes_received;
- 
-@@ -1065,8 +1084,7 @@ static int q6asm_compr_copy(struct snd_soc_component *component,
- 	if (prtd->next_track)
- 		bytes_received = ALIGN(prtd->bytes_received, prtd->pcm_count);
- 
--	app_pointer = bytes_received/prtd->pcm_size;
--	app_pointer = bytes_received -  (app_pointer * prtd->pcm_size);
-+	app_pointer = bytes_received % prtd->pcm_size;
- 	dstn = prtd->dma_buffer.area + app_pointer;
- 
- 	if (count < prtd->pcm_size - app_pointer) {
-@@ -1164,7 +1182,8 @@ static const struct snd_compress_ops q6asm_dai_compress_ops = {
- 	.free		= q6asm_dai_compr_free,
- 	.set_params	= q6asm_dai_compr_set_params,
- 	.set_metadata	= q6asm_dai_compr_set_metadata,
--	.pointer	= q6asm_dai_compr_pointer,
-+	.pointer	= q6asm_dai_compr_pointer32,
-+	.pointer64	= q6asm_dai_compr_pointer64,
- 	.trigger	= q6asm_dai_compr_trigger,
- 	.get_caps	= q6asm_dai_compr_get_caps,
- 	.get_codec_caps	= q6asm_dai_compr_get_codec_caps,
-diff --git a/sound/soc/sof/compress.c b/sound/soc/sof/compress.c
-index d7b044f33d79..6eb0ceccde37 100644
---- a/sound/soc/sof/compress.c
-+++ b/sound/soc/sof/compress.c
-@@ -359,33 +359,59 @@ static int sof_compr_copy(struct snd_soc_component *component,
- 		return sof_compr_copy_capture(rtd, buf, count);
- }
- 
--static int sof_compr_pointer(struct snd_soc_component *component,
--			     struct snd_compr_stream *cstream,
--			     struct snd_compr_tstamp *tstamp)
-+static int sof_compr_pointer_internal(struct snd_soc_component *component,
-+				      struct snd_compr_stream *cstream,
-+				      struct snd_compr_tstamp *tstamp32,
-+				      struct snd_compr_tstamp64 *tstamp64)
- {
- 	struct snd_sof_pcm *spcm;
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
- 	struct sof_compr_stream *sstream = cstream->runtime->private_data;
-+	u64 pcm_io_frames;
- 
- 	spcm = snd_sof_find_spcm_dai(component, rtd);
- 	if (!spcm)
- 		return -EINVAL;
--
--	tstamp->sampling_rate = sstream->sampling_rate;
--	tstamp->copied_total = sstream->copied_total;
--	tstamp->pcm_io_frames = div_u64(spcm->stream[cstream->direction].posn.dai_posn,
--					sstream->channels * sstream->sample_container_bytes);
-+	pcm_io_frames =
-+		div_u64(spcm->stream[cstream->direction].posn.dai_posn,
-+			sstream->channels * sstream->sample_container_bytes);
-+
-+	if (tstamp32) {
-+		tstamp32->sampling_rate = sstream->sampling_rate;
-+		tstamp32->copied_total = (u32)sstream->copied_total;
-+		tstamp32->pcm_io_frames = (u32)pcm_io_frames;
-+	}
-+	if (tstamp64) {
-+		tstamp64->sampling_rate = sstream->sampling_rate;
-+		tstamp64->copied_total = sstream->copied_total;
-+		tstamp64->pcm_io_frames = pcm_io_frames;
-+	}
- 
- 	return 0;
- }
- 
-+static int sof_compr_pointer32(struct snd_soc_component *component,
-+			     struct snd_compr_stream *cstream,
-+			     struct snd_compr_tstamp *tstamp)
-+{
-+	return sof_compr_pointer_internal(component, cstream, tstamp, NULL);
-+}
-+
-+static int sof_compr_pointer64(struct snd_soc_component *component,
-+			     struct snd_compr_stream *cstream,
-+			     struct snd_compr_tstamp64 *tstamp)
-+{
-+	return sof_compr_pointer_internal(component, cstream, NULL, tstamp);
-+}
-+
- struct snd_compress_ops sof_compressed_ops = {
- 	.open		= sof_compr_open,
- 	.free		= sof_compr_free,
- 	.set_params	= sof_compr_set_params,
- 	.get_params	= sof_compr_get_params,
- 	.trigger	= sof_compr_trigger,
--	.pointer	= sof_compr_pointer,
-+	.pointer	= sof_compr_pointer32,
-+	.pointer64	= sof_compr_pointer64,
- 	.copy		= sof_compr_copy,
- };
- EXPORT_SYMBOL(sof_compressed_ops);
-diff --git a/sound/soc/sprd/sprd-pcm-compress.c b/sound/soc/sprd/sprd-pcm-compress.c
-index 57bd1a0728ac..3dea3b00af77 100644
---- a/sound/soc/sprd/sprd-pcm-compress.c
-+++ b/sound/soc/sprd/sprd-pcm-compress.c
-@@ -85,9 +85,9 @@ struct sprd_compr_stream {
- 	int info_size;
- 
- 	/* Data size copied to IRAM buffer */
--	int copied_total;
-+	u64 copied_total;
- 	/* Total received data size from userspace */
--	int received_total;
-+	u64 received_total;
- 	/* Stage 0 IRAM buffer received data size */
- 	int received_stage0;
- 	/* Stage 1 DDR buffer received data size */
-@@ -511,9 +511,24 @@ static int sprd_platform_compr_trigger(struct snd_soc_component *component,
- 	return ret;
- }
- 
--static int sprd_platform_compr_pointer(struct snd_soc_component *component,
--				       struct snd_compr_stream *cstream,
--				       struct snd_compr_tstamp *tstamp)
-+static int sprd_platform_compr_pointer32(struct snd_soc_component *component,
-+					 struct snd_compr_stream *cstream,
-+					 struct snd_compr_tstamp *tstamp)
-+{
-+	struct snd_compr_runtime *runtime = cstream->runtime;
-+	struct sprd_compr_stream *stream = runtime->private_data;
-+	struct sprd_compr_playinfo *info =
-+		(struct sprd_compr_playinfo *)stream->info_area;
-+
-+	tstamp->copied_total = (u32)stream->copied_total;
-+	tstamp->pcm_io_frames = (u32)info->current_data_offset;
-+
-+	return 0;
-+}
-+
-+static int sprd_platform_compr_pointer64(struct snd_soc_component *component,
-+					 struct snd_compr_stream *cstream,
-+					 struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_compr_runtime *runtime = cstream->runtime;
- 	struct sprd_compr_stream *stream = runtime->private_data;
-@@ -660,7 +675,8 @@ const struct snd_compress_ops sprd_platform_compress_ops = {
- 	.free = sprd_platform_compr_free,
- 	.set_params = sprd_platform_compr_set_params,
- 	.trigger = sprd_platform_compr_trigger,
--	.pointer = sprd_platform_compr_pointer,
-+	.pointer = sprd_platform_compr_pointer32,
-+	.pointer64 = sprd_platform_compr_pointer64,
- 	.copy = sprd_platform_compr_copy,
- 	.get_caps = sprd_platform_compr_get_caps,
- 	.get_codec_caps = sprd_platform_compr_get_codec_caps,
-diff --git a/sound/soc/sprd/sprd-pcm-dma.h b/sound/soc/sprd/sprd-pcm-dma.h
-index be5e385f5e42..31866a5df84b 100644
---- a/sound/soc/sprd/sprd-pcm-dma.h
-+++ b/sound/soc/sprd/sprd-pcm-dma.h
-@@ -46,7 +46,7 @@ struct sprd_compr_ops {
- 	int (*stop)(int str_id);
- 	int (*pause)(int str_id);
- 	int (*pause_release)(int str_id);
--	int (*drain)(int received_total);
-+	int (*drain)(u64 received_total);
- 	int (*set_params)(int str_id, struct sprd_compr_params *params);
- };
- 
-diff --git a/sound/soc/uniphier/aio-compress.c b/sound/soc/uniphier/aio-compress.c
-index 4a19d4908ffd..d450f5432d02 100644
---- a/sound/soc/uniphier/aio-compress.c
-+++ b/sound/soc/uniphier/aio-compress.c
-@@ -247,9 +247,9 @@ static int uniphier_aio_compr_trigger(struct snd_soc_component *component,
- 	return ret;
- }
- 
--static int uniphier_aio_compr_pointer(struct snd_soc_component *component,
--				      struct snd_compr_stream *cstream,
--				      struct snd_compr_tstamp *tstamp)
-+static int uniphier_aio_compr_pointer_internal(
-+	struct snd_soc_component *component, struct snd_compr_stream *cstream,
-+	struct snd_compr_tstamp *tstamp32, struct snd_compr_tstamp64 *tstamp64)
- {
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
- 	struct snd_compr_runtime *runtime = cstream->runtime;
-@@ -258,6 +258,7 @@ static int uniphier_aio_compr_pointer(struct snd_soc_component *component,
- 	int bytes = runtime->fragment_size;
- 	unsigned long flags;
- 	u32 pos;
-+	u64 copied_total;
- 
- 	spin_lock_irqsave(&sub->lock, flags);
- 
-@@ -266,18 +267,42 @@ static int uniphier_aio_compr_pointer(struct snd_soc_component *component,
- 	if (sub->swm->dir == PORT_DIR_OUTPUT) {
- 		pos = sub->rd_offs;
- 		/* Size of AIO output format is double of IEC61937 */
--		tstamp->copied_total = sub->rd_total / 2;
-+		copied_total = sub->rd_total / 2;
- 	} else {
- 		pos = sub->wr_offs;
--		tstamp->copied_total = sub->rd_total;
-+		copied_total = sub->rd_total;
-+	}
-+
-+	if (tstamp32) {
-+		tstamp32->copied_total = (u32)copied_total;
-+		tstamp32->byte_offset = pos;
-+	}
-+	if (tstamp64) {
-+		tstamp64->copied_total = copied_total;
-+		tstamp64->byte_offset = pos;
- 	}
--	tstamp->byte_offset = pos;
- 
- 	spin_unlock_irqrestore(&sub->lock, flags);
- 
- 	return 0;
- }
- 
-+static int uniphier_aio_compr_pointer32(struct snd_soc_component *component,
-+					struct snd_compr_stream *cstream,
-+					struct snd_compr_tstamp *tstamp)
-+{
-+	return uniphier_aio_compr_pointer_internal(component, cstream, tstamp,
-+						   NULL);
-+}
-+
-+static int uniphier_aio_compr_pointer64(struct snd_soc_component *component,
-+					struct snd_compr_stream *cstream,
-+					struct snd_compr_tstamp64 *tstamp)
-+{
-+	return uniphier_aio_compr_pointer_internal(component, cstream, NULL,
-+						   tstamp);
-+}
-+
- static int aio_compr_send_to_hw(struct uniphier_aio_sub *sub,
- 				char __user *buf, size_t dstsize)
- {
-@@ -426,7 +451,8 @@ const struct snd_compress_ops uniphier_aio_compress_ops = {
- 	.get_params     = uniphier_aio_compr_get_params,
- 	.set_params     = uniphier_aio_compr_set_params,
- 	.trigger        = uniphier_aio_compr_trigger,
--	.pointer        = uniphier_aio_compr_pointer,
-+	.pointer        = uniphier_aio_compr_pointer32,
-+	.pointer64      = uniphier_aio_compr_pointer64,
- 	.copy           = uniphier_aio_compr_copy,
- 	.get_caps       = uniphier_aio_compr_get_caps,
- 	.get_codec_caps = uniphier_aio_compr_get_codec_caps,
 -- 
-2.50.0.727.gbf7dc18ff4-goog
+Cheers,
+
+David / dhildenb
 
 
