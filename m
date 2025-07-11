@@ -1,233 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-64588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D374EB01CCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:05:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF0C7B01D0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:13:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E25A25C16A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:04:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D846F1CA1FDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:13:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A648F2D321A;
-	Fri, 11 Jul 2025 13:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5593B2D3A68;
+	Fri, 11 Jul 2025 13:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EIabZncs";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UfGei8LT";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EIabZncs";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UfGei8LT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AMR4YYqP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771A52D3202
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC242D23A8;
+	Fri, 11 Jul 2025 13:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752238863; cv=none; b=gkhJgAYKlLaJIJeLn7WI+p4R3F6fISr1L0czGrpls1mG0W69OJG8TApGFJe6yCM+lLr+gbShJIZEhk9zwSiPzPwBIt/KAn/qlA4Nvr8q9vOrNIx6+hswSgMI9myUHWJebXS62qwd5uAjNiMzcISk0JOaLu++4YByulkrkLOKGSU=
+	t=1752239554; cv=none; b=jiC6v7kIH8n2JE36ownvwP5eRl7hywoEVp9WDYOVu63u2xdXACg+icF5hWTZpG5BkYTWT9UKjvqpYqdl3mDHBNLKu6+9lc9WqJnqTcfqgKZ7MBLSe78IxkqsHDx0tbzzcIZluOd7f2rLleS8TbhiJ1AcWm+Lm+Li162oFNHXxY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752238863; c=relaxed/simple;
-	bh=iBer7s0qVLn8GqkLLJOd0rCYF9C7SMkm/SF3DGMKN7Q=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BBnLRwe+d9WEGgkNV/mUZLe6Cz8z3OdiIxxrEygjoxjwPb6py8uUL1G2gRzDWD0DKUs61rHobpdP3gAT5SMUlG1mzj71g4vKLHnaMd2SdceeXMrn/dA36FOWhhKqCLXBC9xu2H3QqXPXHlzvMF3PFo0wCrtEINoDvj8WywlwJDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EIabZncs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UfGei8LT; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EIabZncs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UfGei8LT; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8E277211A1;
-	Fri, 11 Jul 2025 13:00:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1752238858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=99/nrZ3jMvnnDXT1EtGRSVK6t1HpEMJ2yRrbZ2a36ss=;
-	b=EIabZncsmdgObTpqbVT7iazVG+CJVs8CfHJkhkXVBdUNKSNxb2qpFnFsxczCd6mJHRJipR
-	K5ZWX0c1IV83fRF5+ACDnDYOPwQJLLKYktLx9PIZW2/B4cGFPW29JD0vZSTCR8ofzNgvXp
-	dztMQ2eWHdEW8GHQqwo2xDxePWV9Ed8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1752238858;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=99/nrZ3jMvnnDXT1EtGRSVK6t1HpEMJ2yRrbZ2a36ss=;
-	b=UfGei8LTKPLOBPN2mXLGtctqnYSsqbb/d3+1+IFV5osq3wVnWWCXEf7ARCmOywavObR0cP
-	4axW4ATOf+VF0EBw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EIabZncs;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=UfGei8LT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1752238858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=99/nrZ3jMvnnDXT1EtGRSVK6t1HpEMJ2yRrbZ2a36ss=;
-	b=EIabZncsmdgObTpqbVT7iazVG+CJVs8CfHJkhkXVBdUNKSNxb2qpFnFsxczCd6mJHRJipR
-	K5ZWX0c1IV83fRF5+ACDnDYOPwQJLLKYktLx9PIZW2/B4cGFPW29JD0vZSTCR8ofzNgvXp
-	dztMQ2eWHdEW8GHQqwo2xDxePWV9Ed8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1752238858;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=99/nrZ3jMvnnDXT1EtGRSVK6t1HpEMJ2yRrbZ2a36ss=;
-	b=UfGei8LTKPLOBPN2mXLGtctqnYSsqbb/d3+1+IFV5osq3wVnWWCXEf7ARCmOywavObR0cP
-	4axW4ATOf+VF0EBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E2EC413918;
-	Fri, 11 Jul 2025 13:00:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id i29HNgkLcWj7NgAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Fri, 11 Jul 2025 13:00:57 +0000
-Date: Fri, 11 Jul 2025 15:00:53 +0200
-Message-ID: <87wm8eg9ve.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Joris Verhaegen <verhaegen@google.com>
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	kernel-team@android.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@opensource.cirrus.com,
-	linux-arm-msm@vger.kernel.org,
-	sound-open-firmware@alsa-project.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 0/4] ALSA: compress_offload: Add 64-bit safe timestamp API
-In-Reply-To: <8734b2hpcu.wl-tiwai@suse.de>
-References: <20250711093636.28204-1-verhaegen@google.com>
-	<aHD7/9MZbcOmn+08@opensource.cirrus.com>
-	<8734b2hpcu.wl-tiwai@suse.de>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1752239554; c=relaxed/simple;
+	bh=buj/9LK9WnRrx9la+Ug00s901rQX5MS5V6pK1tKyVPQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gk7MLDGnSH41vFu8bA4u026RwlwC0QdYzWEnn0i0FLQb81OHsW4jHhpMM3t+aL7MxJyApv0/H+8NgjCyRoN2W/SYECPZzVVqOaF2uLC5chy7pPZxUrMNBQowJkzloaF4+myu020MZtsA9+NWNmAsY2C/P1KRJahlN4cVwnCNkqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AMR4YYqP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BBLP7A018809;
+	Fri, 11 Jul 2025 13:12:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Bl1nSPn5YlRo3UiVoA8IR2
+	c/9+m0L+tOtQINu67XSlc=; b=AMR4YYqPLwOQ8HgTlUj3ND+N0gEkDIHDwD9Yrn
+	qHaXaNrlto0oegBiwBBkGkEvdrSKhLQS9wYTWeH7OF7K9eTacrKi+y2YEUbW2L8J
+	rIXF9vTM/9T4Z+Q+8ktlR2+c5NDwldI0Forrgu7j6mr+/9QujPdMv2IY67FaeTeL
+	rG0TKAROVIqlM1xH4oX6BNW4KbVDVXUyd5zGDxRueFfTmX4rKMIagUReGhGPsRPE
+	mdYQNOmGs4grFYk+FWFwJE73niPHxZ6E66/uU3hlg3viZOk+cfCUtdhikn9gOkc8
+	2HKlL47XM+ef9ZQFoodxLUSpze9hzWhF4u5c2/C3jreyq2Zw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47tkf32j5h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Jul 2025 13:12:10 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56BDC9j2019978
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Jul 2025 13:12:09 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Fri, 11 Jul 2025 06:12:03 -0700
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <quic_svankada@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 0/7] qcom: qcs8300: Add qcs8300 camss support
+Date: Fri, 11 Jul 2025 18:41:27 +0530
+Message-ID: <20250711131134.215382-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spamd-Result: default: False [-2.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCPT_COUNT_TWELVE(0.00)[29];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[opensource.cirrus.com,kernel.org,perex.cz,suse.com,gmail.com,cirrus.com,intel.com,linux.intel.com,linux.dev,nxp.com,linux.alibaba.com,socionext.com,android.com,vger.kernel.org,alsa-project.org,lists.infradead.org];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	R_RATELIMIT(0.00)[to_ip_from(RLzj6aswpe58r68z1acwzd13oz)];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns]
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 8E277211A1
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -2.01
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDA5MyBTYWx0ZWRfX4AlnZ+BefChF
+ qO4LfICsTapvG8UfsT67gJ0kC/Ksm8hSs6sJk2z4SLX8R1MSIrx66qCW1HZpRLr6cytVTcRj/nx
+ CaW+JEXHK3weHAFz8BLgQAQg7lkUULZtnI6Mol8NQ1RdIhdvLlh4gqV/ZalbzW+kcaS4sHzkE3w
+ d/a6kxz4qsw4pkXhWnwgNmwWet6j5ROSBGbpMpFUfIsVUhmXpsE01AzbtdjqZ//3LtBEHAXh9fJ
+ tYFKuOjkbuuY17EpAmYYlaynX5xvLhS3N5+/p44q/FnE2BHXXoQD+pCjymA+kZ3CskSs9QtSDco
+ cU0CNSOs+c55R/HNNfDF/bNgxZVLSO29om/evhTeeX5vb7tDPHSWnovIKe7KQwT2g0QaKpv8mMQ
+ Oe6cI9lkgXHWzXU0cFmZyTlDV+KcEhD4R5S0cRFdIBOCa4Vh9rXh5M+2ZQ0lDUF8Vu6vSG1V
+X-Proofpoint-GUID: Lm_SF-pIGKVbL7LD6FApfTwYH86JsB5X
+X-Authority-Analysis: v=2.4 cv=Xuf6OUF9 c=1 sm=1 tr=0 ts=68710daa cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=vOnZBVaixI17Gw8aOCoA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: Lm_SF-pIGKVbL7LD6FApfTwYH86JsB5X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_03,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110093
 
-On Fri, 11 Jul 2025 14:41:05 +0200,
-Takashi Iwai wrote:
-> 
-> On Fri, 11 Jul 2025 13:56:47 +0200,
-> Charles Keepax wrote:
-> > 
-> > On Fri, Jul 11, 2025 at 10:36:26AM +0100, Joris Verhaegen wrote:
-> > > The current compress offload timestamping API relies on
-> > > struct snd_compr_tstamp, whose cumulative counters like
-> > > copied_total are defined as __u32. On long-running high-resolution
-> > > audio streams, these 32-bit counters can overflow,
-> > > causing incorrect availability calculations.
-> > > 
-> > > This patch series introduces a parallel, 64-bit safe API to solve
-> > > this problem while maintaining perfect backward compatibility with the
-> > > existing UAPI. A new pointer64 operation and corresponding ioctls
-> > > are added to allow the kernel to track counters using u64 and expose
-> > > these full-width values to user-space.
-> > > 
-> > > The series is structured as follows:
-> > > 
-> > > Patch 1: Introduces the new internal pointer64 op, refactors the
-> > > core logic to use it, and defines the new UAPI structs.
-> > > 
-> > > Patch 2: Exposes the SNDRV_COMPRESS_TSTAMP64 ioctl.
-> > > 
-> > > Patch 3: Exposes the corresponding SNDRV_COMPRESS_AVAIL64 ioctl.
-> > > 
-> > > Patch 4: Implements the new .pointer64 operation in various ASoC
-> > > drivers that support compress offload.
-> > > 
-> > > This series has been tested on a Pixel 9 device. All compress offload
-> > > use cases, including long-running playback, were verified to work
-> > > correctly with the new 64-bit API, and no regressions were observed
-> > > when using the legacy API.
-> > > 
-> > > Thanks,
-> > > Joris (George) Verhaegen
-> > > 
-> > > Signed-off-by: Joris Verhaegen <verhaegen@google.com>
-> > > 
-> > > ---
-> > 
-> > Would it not be slightly simpler to just update all the in kernel
-> > bits to use 64-bit and then only convert to 32-bit for the
-> > existing 32-bit IOCTLs? Why do we need 32-bit callbacks into the
-> > drivers for example?
-> 
-> Right, it's a usual pattern to have only the 64bit ops in the kernel
-> driver side while providing the 32bit stuff converted in the core
-> layer.  Having two different ops are rather confusing and
-> superfluous after conversions.
-> 
-> If there are tons of users for this API, it'd be needed to convert
-> gradually, and eventually drop the 32bit ops at the end.  But in this
-> case, there doesn't seem so many relevant drivers, hence the
-> conversion can be done in a shot as done in your patch 4.
+From: Vikram Sharma <vikramsa@qti.qualcomm.com>
 
-Also, don't forget to increase the protocol version if you change the
-ABI.
+QCS8300 is a Qualcomm SoC. This series adds bindings and devicetree
+and driver changes to bring up CSIPHY, TPG, CSID, VFE/RDI interfaces
+in QCS8300.
 
+QCS8300 provides
+- 2 x VFE, 3 RDI per VFE
+- 5 x VFE Lite, 6 RDI per VFE
+- 2 x CSID
+- 5 x CSID Lite
+- 3 x TPG
+- 3 x CSIPHY
 
-thanks,
+Changes compared to v1:
+- Changed the order for register entries in bindings - Krzysztof
+- Changed the naming for interrupts for consistency - Krzysztof
+- Combined separate series for driver and dtsi into one.
+- Rebased on top of latest version of sa8775p camss patches.
+- Link to v1:
+  Driver: https://lore.kernel.org/all/20250214095611.2498950-1-quic_vikramsa@quicinc.com
+  DTSI: https://lore.kernel.org/all/20250214094747.2483058-1-quic_vikramsa@quicinc.com  
 
-Takashi
+Dependencies:
+https://lore.kernel.org/all/20250703171938.3606998-1-quic_vikramsa@quicinc.com
+
+Driver side changes for TPG will be submitted as a separate series which will be
+rebased on top of these patches.
+TPG Patches:
+https://lore.kernel.org/all/20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com/
+https://lore.kernel.org/all/20250217-qcs8300_tpg-v1-1-6e0f4dd3ad1f@quicinc.com/ 
+
+Tested with following commands:
+- media-ctl -d /dev/media0 --reset
+- yavta --no-query -w '0x009f0903 0' /dev/v4l-subdev0
+- media-ctl -d /dev/media0 -V '"msm_tpg0":0[fmt:SRGGB10/1920x1080
+  field:none]'
+- media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/1920x1080
+  field:none]'
+- media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/1920x1080
+  field:none]'
+- media-ctl -d /dev/media0 -l '"msm_tpg0":1->"msm_csid0":0[1]'
+- media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+- yavta --no-query -w '0x009f0903 9' /dev/v4l-subdev0
+- yavta -B capture-mplane -n 5 -f SRGGB10P -s 1920x1080 /dev/video0
+  --capture=7
+
+Used following tools for the sanity check of these changes.
+- make CHECK_DTBS=y W=1 qcom/qcs8300-ride.dtb
+- make DT_CHECKER_FLAGS=-m W=1
+DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml dt_binding_check
+- Smatch: make CHECK="smatch --full-path" M=drivers/media/platform/qcom/camss/
+- Sparse: make C=2 M=drivers/media/platform/qcom/camss/
+- make -j32
+- checkpatch.pl
+
+Vikram Sharma (7):
+  media: dt-bindings: Add qcom,qcs8300-camss compatible
+  arm64: dts: qcom: qcs8300: Add support for camss
+  media: qcom: camss: Add qcs8300 compatible
+  media: qcom: camss: enable csid 690 for qcs8300
+  media: qcom: camss: enable vfe 690 for qcs8300
+  media: qcom: camss: Add support for CSIPHY QCS8300
+  media: qcom: camss: Enumerate resources for QCS8300
+
+ .../bindings/media/qcom,qcs8300-camss.yaml    | 336 +++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 171 ++++++++
+ .../platform/qcom/camss/camss-csid-gen3.c     |   5 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |   2 +
+ .../platform/qcom/camss/camss-vfe-gen3.c      |   4 +-
+ drivers/media/platform/qcom/camss/camss-vfe.c |   2 +
+ drivers/media/platform/qcom/camss/camss.c     | 401 ++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss.h     |   1 +
+ 8 files changed, 919 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+
+-- 
+2.25.1
+
 
