@@ -1,161 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-64551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC0A7B01A40
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:03:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11D24B01A52
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:09:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 870B2761668
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:03:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B302F541F1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:09:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E983283CB0;
-	Fri, 11 Jul 2025 11:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC95B288C3E;
+	Fri, 11 Jul 2025 11:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wE3+qMbi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D64A327EC99;
-	Fri, 11 Jul 2025 11:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D2E288C0E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 11:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752231827; cv=none; b=St6zhfbyIKWrM7pgFEmEg3EecPu+etaQXaIdXlfAj0couQW2YNQ0TGMcxj1AqTujqwSnLT2rxu9hdQNQzLXBXgbBsJ9UDSW2l3gqdMMwGrtY9k2LyXKfYU6ZMxvWQfbdwhqWQ52P5v7pEtAlzpaPI8Q8OA3RSOGkr92ohx8zV4M=
+	t=1752232175; cv=none; b=dRok8tdbCdzDxRMJkjH9qNzRVXhXk27OlwV49KmskoT2dwVZt/chbGUCU98fzck51SEl3ZUKtc0qfLlGgVH/2KsEXB/r5tX2oUR5mK165mO8IS6ZvMO6klnoazaAHiFAWOPPZLZ02FMYs7JzwVPJ1GG6B9UtV09Q55X1pW9u8+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752231827; c=relaxed/simple;
-	bh=Xifiq/9Gg8y9DEvTT6Sc2V4g3MYCUrrYoIsrJyJvGfo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=vCuO1/0f2uJUblJJYuL8b9opjHsfMufht9YLEC3VKA6rA/grVlqqksun29GeTlAXan+w+gtoL6ikZqlJPwJR8oBUTiZjkLhDT1Hh3kgJXapCGkECaIQz6jomrkggSVY0D0X+bPIioCA8UtLu62H+5kqyFTTMZOMULw5Oe8CEwHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 585BE16F2;
-	Fri, 11 Jul 2025 04:03:33 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 60E813F6A8;
-	Fri, 11 Jul 2025 04:03:42 -0700 (PDT)
-Message-ID: <3ef8295d-2dd3-404c-9776-5792a7567f56@arm.com>
-Date: Fri, 11 Jul 2025 12:03:39 +0100
+	s=arc-20240116; t=1752232175; c=relaxed/simple;
+	bh=pEbsbZRW72uqAMiY+GWSPB3tnRE4dYbX0ZSg/zik3CM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GbX61n8GWBx6/7Y4/QPPPP2waiNobztV5lOFQgRHnVbslWEaVXR65lwyJqWCzx9JtR8m13BbLABXKlj+Zzu2SOzqAuWyio98aOK3lltgB1ABbIwUifnCAwUNqT8IHfqiaubkSr4SWH2lErf3LhcfMHZ2N9MX48Mr6bNhVD+PSRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wE3+qMbi; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4aaf43cbbdcso98461cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 04:09:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752232173; x=1752836973; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YtL2RY30FqQCse8pZRhypsMK1Ug1daCGyP2jBjuiKck=;
+        b=wE3+qMbizN8X/mDoh8cIWnDGvuwBTzvFFjajouOToSxs04BNz4lzpIAdxKSXH9/8bh
+         EWY7E7ZwUZXZqIHEsraQm/pJ5lqKAVK+sYa6CzWyaSV2mXrIHN3xWa8UXOkx3FK2Desu
+         e+pH/HCuOL1rEIv5oohwjVa9mK3IMzI1Wj7XqxoTQRf9rtMMeTZKWU2gxuHHiqJfG+ay
+         xDwMT6qEgxNWtUA71f8h99vPmkB4M3OTwO7gKNBAb9SBDdmWCteeLRQ9bh4arOyFYqKT
+         Vi2rhOgIMkQvol8vclnGpMifuI0XmB8piw4/hImFQxNL9FMbM+UACgRlqB1J5tyxRUfF
+         fomw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752232173; x=1752836973;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YtL2RY30FqQCse8pZRhypsMK1Ug1daCGyP2jBjuiKck=;
+        b=neQygAdBGk12UNk6mnPOGJIIPmcu0uSeU5sMsL+l79pm4Pm0P08i0ZT4drh+axMfIc
+         PQAIMW2bjrg0Xob4iTxylmkbEKcxSz3t8PvR/D1k5XssW6vNp50A+SqrzOmFX6dh7G2u
+         kFR/EkdYnty7MyikxtqK8hZIiktzqI5RuD2TH2zgVy/yjf3u6aZhLoEZvSXvDhatsNU+
+         gi/5v/atoeOl5z5dhYvr3jOpGyVVnFCGDq7kSSZ/h7eeMxKfkI8SL/saIkGI84dzLzu4
+         HovGq6diOOZq1b/rFwZ9JPeylwIeBN0gB63XFLgiYQlZ6wiQEzAHfl/ec3s/pYS0goyj
+         rhfw==
+X-Forwarded-Encrypted: i=1; AJvYcCVSyHkGlkMMKs4qrmH7//ejKIvmp3B3HZFilYZs54A+6J5iGGX0u+Ah/bZwBXIq56sBbgURN/RVF5N9fQAr@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMxjuFxQ1D1oRFV3fK6er1sFOV/m77atADPEGFXNr/VJQvAOF1
+	tyJRgRy69xNh5TOefQaL+eW0qjpGZIJtqga3+iLLtWKObxJ6fYWYth1vVZ0Qwh7uip47gnkhu/a
+	cdHZ5ztf6Qug4gjfkjTfqET0E1/Tj7XQKLQaN7Y3Z
+X-Gm-Gg: ASbGncs04gCyPs/6nWQNU1yoF8ej740enlFTS+XqTonkw6ltGGWfJTHZz6dAQfvfkAu
+	BDlgb2ExbllE/c2wHuzBvWRCvoQCoudPqHVqb8kAaXY9d5Il57mz1NZKQRGrH13ATwKukNy5BmK
+	qfiUuSGhTpn0clr9/5SXy6RQYnDkvBAZrjWE1QH4G4rSQDK4X7/a2T5ogd217dt7psFYtyKkMGK
+	KBrts9o3Exy8WMaHg==
+X-Google-Smtp-Source: AGHT+IERmXIWH70IswPePcnTHu8w/geAIcWqwjz0lTJocB7rOcnLO6OtVHZyap867obl3kpAHCdb6bS3TpHBmI7izYE=
+X-Received: by 2002:ac8:7d4e:0:b0:4a5:9af6:8f84 with SMTP id
+ d75a77b69052e-4a9fbe8344fmr3522001cf.14.1752232172426; Fri, 11 Jul 2025
+ 04:09:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] dt-bindings: arm: Add CoreSight QMI component
- description
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250424115854.2328190-1-quic_jinlmao@quicinc.com>
- <20250424115854.2328190-2-quic_jinlmao@quicinc.com>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20250424115854.2328190-2-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250709105946.4009897-17-tabba@google.com> <20250711095937.22365-1-roypat@amazon.co.uk>
+In-Reply-To: <20250711095937.22365-1-roypat@amazon.co.uk>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 11 Jul 2025 12:08:55 +0100
+X-Gm-Features: Ac12FXy7m-zlvbmjUHarQqtRk7cRzn7RmdIcZj367UfAD88hqnMBvOGnU1eJgFc
+Message-ID: <CA+EHjTz8nC-_904=N==B=SJ0sb8AV047LbnA8x6gqZr3cRONPQ@mail.gmail.com>
+Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest
+ page faults
+To: "Roy, Patrick" <roypat@amazon.co.uk>
+Cc: "ackerleytng@google.com" <ackerleytng@google.com>, 
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "amoorthy@google.com" <amoorthy@google.com>, 
+	"anup@brainfault.org" <anup@brainfault.org>, "aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>, 
+	"brauner@kernel.org" <brauner@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, 
+	"chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>, 
+	"chenhuacai@kernel.org" <chenhuacai@kernel.org>, "david@redhat.com" <david@redhat.com>, 
+	"dmatlack@google.com" <dmatlack@google.com>, "fvdl@google.com" <fvdl@google.com>, 
+	"hch@infradead.org" <hch@infradead.org>, "hughd@google.com" <hughd@google.com>, 
+	"ira.weiny@intel.com" <ira.weiny@intel.com>, "isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>, 
+	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>, "james.morse@arm.com" <james.morse@arm.com>, 
+	"jarkko@kernel.org" <jarkko@kernel.org>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "jthoughton@google.com" <jthoughton@google.com>, 
+	"keirf@google.com" <keirf@google.com>, 
+	"kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>, 
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>, 
+	"liam.merwick@oracle.com" <liam.merwick@oracle.com>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	"mail@maciej.szmigiero.name" <mail@maciej.szmigiero.name>, "maz@kernel.org" <maz@kernel.org>, 
+	"mic@digikod.net" <mic@digikod.net>, "michael.roth@amd.com" <michael.roth@amd.com>, 
+	"mpe@ellerman.id.au" <mpe@ellerman.id.au>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>, 
+	"palmer@dabbelt.com" <palmer@dabbelt.com>, "pankaj.gupta@amd.com" <pankaj.gupta@amd.com>, 
+	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
+	"peterx@redhat.com" <peterx@redhat.com>, "qperret@google.com" <qperret@google.com>, 
+	"quic_cvanscha@quicinc.com" <quic_cvanscha@quicinc.com>, 
+	"quic_eberman@quicinc.com" <quic_eberman@quicinc.com>, 
+	"quic_mnalajal@quicinc.com" <quic_mnalajal@quicinc.com>, 
+	"quic_pderrin@quicinc.com" <quic_pderrin@quicinc.com>, 
+	"quic_pheragu@quicinc.com" <quic_pheragu@quicinc.com>, 
+	"quic_svaddagi@quicinc.com" <quic_svaddagi@quicinc.com>, 
+	"quic_tsoni@quicinc.com" <quic_tsoni@quicinc.com>, "rientjes@google.com" <rientjes@google.com>, 
+	"seanjc@google.com" <seanjc@google.com>, "shuah@kernel.org" <shuah@kernel.org>, 
+	"steven.price@arm.com" <steven.price@arm.com>, "suzuki.poulose@arm.com" <suzuki.poulose@arm.com>, 
+	"vannapurve@google.com" <vannapurve@google.com>, "vbabka@suse.cz" <vbabka@suse.cz>, 
+	"viro@zeniv.linux.org.uk" <viro@zeniv.linux.org.uk>, "wei.w.wang@intel.com" <wei.w.wang@intel.com>, 
+	"will@kernel.org" <will@kernel.org>, "willy@infradead.org" <willy@infradead.org>, 
+	"xiaoyao.li@intel.com" <xiaoyao.li@intel.com>, "yilun.xu@intel.com" <yilun.xu@intel.com>, 
+	"yuzenghui@huawei.com" <yuzenghui@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi
-
-On 24/04/2025 12:58, Mao Jinlong wrote:
-> Add new coresight-qmi.yaml file describing the bindings required
-> to define qmi node in the device trees.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-
-Why does this have to do anything with coresight ? Surely coresight may
-be using the QMI along with other subsystems. I don't see why this is
-named as "coresight-qmi"
-
-In my opinion, the QMI driver should be outside coresight driver
-framework and whatever coresight component driver relies on it
-could add the dependency.
-
-Suzuki
+Hi Patrick,
 
 
-> ---
->   .../bindings/arm/qcom,coresight-qmi.yaml      | 65 +++++++++++++++++++
->   1 file changed, 65 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
-> new file mode 100644
-> index 000000000000..601c865fe4d7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
-> @@ -0,0 +1,65 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-qmi.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm coresight QMI(Qualcomm Messaging Interface) component
-> +
-> +description: |
-> +  Qualcomm Messaging Interface (QMI) is an interface that clients can
-> +  use to send, and receive, messages from a remote entity. The coresight
-> +  QMI component is to configure QMI instance ids and service ids for different
-> +  remote subsystem connections. Coresight QMI driver uses the ids to init
-> +  the qmi connections. Other coresight drivers call the send qmi request
-> +  function when connection is established.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,coresight-qmi
-> +
-> +patternProperties:
-> +  '^conns(-[0-9]+)?$':
-> +    type: object
-> +    description:
-> +      QMI instance id and service id for different remote subsystem connections.
-> +
-> +    properties:
-> +      qmi-id:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          Instance id for the remote subsystem connection.
-> +
-> +      service-id:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          Service id for the remote subsystem connection.
-> +
-> +    additionalProperties: false
-> +
-> +    required:
-> +      - qmi-id
-> +      - service-id
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # Minimum coresight qmi definition.
-> +  - |
-> +    coresight-qmi {
-> +      compatible = "qcom,coresight-qmi";
-> +
-> +      conns-0 {
-> +          qmi-id = <0xd>;
-> +          service-id = <0x33>;
-> +      };
-> +    };
-> +
-> +...
+On Fri, 11 Jul 2025 at 10:59, Roy, Patrick <roypat@amazon.co.uk> wrote:
+>
+>
+> Hi Fuad,
+>
+> On Wed, 2025-07-09 at 11:59 +0100, Fuad Tabba wrote:> -snip-
+> > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
+> > +
+> > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> > +                     struct kvm_s2_trans *nested,
+> > +                     struct kvm_memory_slot *memslot, bool is_perm)
+> > +{
+> > +       bool write_fault, exec_fault, writable;
+> > +       enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
+> > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+> > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
+> > +       struct page *page;
+> > +       struct kvm *kvm = vcpu->kvm;
+> > +       void *memcache;
+> > +       kvm_pfn_t pfn;
+> > +       gfn_t gfn;
+> > +       int ret;
+> > +
+> > +       ret = prepare_mmu_memcache(vcpu, true, &memcache);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> > +       if (nested)
+> > +               gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
+> > +       else
+> > +               gfn = fault_ipa >> PAGE_SHIFT;
+> > +
+> > +       write_fault = kvm_is_write_fault(vcpu);
+> > +       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+> > +
+> > +       if (write_fault && exec_fault) {
+> > +               kvm_err("Simultaneous write and execution fault\n");
+> > +               return -EFAULT;
+> > +       }
+> > +
+> > +       if (is_perm && !write_fault && !exec_fault) {
+> > +               kvm_err("Unexpected L2 read permission error\n");
+> > +               return -EFAULT;
+> > +       }
+> > +
+> > +       ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
+> > +       if (ret) {
+> > +               kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
+> > +                                             write_fault, exec_fault, false);
+> > +               return ret;
+> > +       }
+> > +
+> > +       writable = !(memslot->flags & KVM_MEM_READONLY);
+> > +
+> > +       if (nested)
+> > +               adjust_nested_fault_perms(nested, &prot, &writable);
+> > +
+> > +       if (writable)
+> > +               prot |= KVM_PGTABLE_PROT_W;
+> > +
+> > +       if (exec_fault ||
+> > +           (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
+> > +            (!nested || kvm_s2_trans_executable(nested))))
+> > +               prot |= KVM_PGTABLE_PROT_X;
+> > +
+> > +       kvm_fault_lock(kvm);
+>
+> Doesn't this race with gmem invalidations (e.g. fallocate(PUNCH_HOLE))?
+> E.g. if between kvm_gmem_get_pfn() above and this kvm_fault_lock() a
+> gmem invalidation occurs, don't we end up with stage-2 page tables
+> refering to a stale host page? In user_mem_abort() there's the "grab
+> mmu_invalidate_seq before dropping mmap_lock and check it hasnt changed
+> after grabbing mmu_lock" which prevents this, but I don't really see an
+> equivalent here.
 
+You're right. I'll add a check for this.
+
+Thanks for pointing this out,
+/fuad
+
+> > +       ret = KVM_PGT_FN(kvm_pgtable_stage2_map)(pgt, fault_ipa, PAGE_SIZE,
+> > +                                                __pfn_to_phys(pfn), prot,
+> > +                                                memcache, flags);
+> > +       kvm_release_faultin_page(kvm, page, !!ret, writable);
+> > +       kvm_fault_unlock(kvm);
+> > +
+> > +       if (writable && !ret)
+> > +               mark_page_dirty_in_slot(kvm, memslot, gfn);
+> > +
+> > +       return ret != -EAGAIN ? ret : 0;
+> > +}
+> > +
+> > -snip-
+>
+> Best,
+> Patrick
+>
+>
 
