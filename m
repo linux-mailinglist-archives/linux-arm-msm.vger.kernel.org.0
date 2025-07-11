@@ -1,107 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-64614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D32D1B01ED8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:17:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36898B01EDD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:18:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 308FC5C1687
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:18:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94C51CA7964
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:18:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE472E5433;
-	Fri, 11 Jul 2025 14:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8AB2E4246;
+	Fri, 11 Jul 2025 14:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iQgqVpHB"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ldasQLkh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCDF2E54BB;
-	Fri, 11 Jul 2025 14:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B4F2DE714
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 14:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752243466; cv=none; b=sx8d4yxvydovfaKesErfihQmdnpKMNSK0nRJUE2mA0Yob+K/ablFN99luCLW6YNEgE/HhQW0XUR4dut3mvLe3vk4ZITQ8xQTessHY/vQneiT6P0KPXMLLY3hz5u5s7wtPeV9ILIqZFaYSYnT8kQOjgm4piyM8StAIhEObSyOCmM=
+	t=1752243506; cv=none; b=sW1pCA3uCxsZUeKMhssH2utCZaEj79BCHvwvHSjOmhDsS9kkMAD98bGy+LM8ymkVq/Lg2YFEwge4mHPu5WEY8Hd9UJXy0IeElZDtNlgx23NoPZYLZkvWO8/N++yaaMXO/mkLsNCXt1jllEQ7yBG90DrqpldRExlNtCMsQGKMeps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752243466; c=relaxed/simple;
-	bh=MD6S8/xxj9RTBUu3TwT1Ermw4nxmIe/UYx06I1y29OE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m1C6/kqfpHd0nx+4kyHtYqqlz8OkqTMej71z7xosQ25XZzqhrKpRLsU04enRKNu7v4nhnnJiw3g4uJmqkfEy1JGDkajU15SF2Q1qmWevM/gAboii9XQT6+JZNKOBv38Qf/A30D24KkdxiDjbnRIcr8RfEpKmGIDqDBQAbs/p8Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iQgqVpHB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589F1C4CEF0;
-	Fri, 11 Jul 2025 14:17:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752243466;
-	bh=MD6S8/xxj9RTBUu3TwT1Ermw4nxmIe/UYx06I1y29OE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iQgqVpHBqtx+tzbCEiuB5gcHOQoLTusIkyEl7pGgvZqch8b5vxE9rGFannoJAMlz/
-	 9DFA+YYrqFEZHdMcscBKQteYDkolwSbimqUmbqed0ugaS/HFEAu/121w8zG5Vk/EJ7
-	 BcAtE6WiXqQx1U95eaWe8mLHavcnvzcTMCDA90vtNUm15g0y3/x8AijPhG/njxzsgm
-	 9jT+Ag3OVzKqDH3r5XoDJKibdfd4RJzvxE6uCc50Ytkq6G3+1Jpu2h6KhxO/DALbk6
-	 YYzW8aev9mEV0W45PuDMcE8RRKYIm0FylI2yWy7WA9bove/zlhQRsnm2+XtYznscGY
-	 kkIYZNMXWpsCg==
-Message-ID: <19d71903-ae26-4de0-b271-77ae7a89fe22@kernel.org>
-Date: Fri, 11 Jul 2025 16:17:41 +0200
+	s=arc-20240116; t=1752243506; c=relaxed/simple;
+	bh=EeHQX3xHa/SasShpS2hysO5j+FP/KZl3ZrefBTI2Wdo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UcPi771laZ0yKeHmQBfwcP2fU8NMlsBB9EmC7O0f0OfTiNpmeiiBEMCx/DKoDuLeBsLJpsQYNhqHP44pPNFIIwVZgXirMSYjDWOWyxOXOy+3xKbvXAGAPpR3nO1AoNN585XFenJ2JX5sNGKCknCtnos3JiivYW+kmphY6rwZ9bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ldasQLkh; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso167641cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 07:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752243504; x=1752848304; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPqXh8MG6l1A7ppi1PWLeVr8JkzkP6r8TXr4WFndhco=;
+        b=ldasQLkhO4TyYirnq5XDRizAfGHZLV5GfU7p/n1Ya7DvaJOh+wFbgrcd1jGnwyrl2o
+         yN2THmb7Lj47WQ8lZyw3N4R78QrYHqxFUyrMnaNQRoHgRnEn0vbR/lG84DSduTtMcbXL
+         ozeaUSMkhJfWroWFCm7cp2c9OIHltm/5EWz9xbwQtIK6qQdOU5xofYGlV/F/QyeKEUV9
+         l7egifHXu5aZlnE8VP2BIXHhzuW2ptjyXTEKDawWMy3hH8rMkDLq1JGNC2E65AHAo6q4
+         hkipXEq0hmIxycCMyxoI+G3XVjDAZKuHRbIMqPpyZZOBBpRMi1O8/Z7dYa63vXpmi+vU
+         joJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752243504; x=1752848304;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SPqXh8MG6l1A7ppi1PWLeVr8JkzkP6r8TXr4WFndhco=;
+        b=IiXW1TY/+Hl7/lO2KIM66wRDjfaAkryNFewsoeE+IdehwwUc2sMKjGX4ye2I2LagLA
+         Ymuc+sqihJrpRs0OcW+DpwBsVlk0mgHdW+g92F/R4CR0wBXDI4tQff74YKWvWuy7bC0P
+         Fq0v9KxLwGbvYrfFl/bAtEBIvHg0nuhFJ44OnAayzc4c7hWI01mbeK+Y8nCGS9GPMkwZ
+         UaeaJZQcEBQ9CkNRI5PdOE6vC765qCX2HC0LmLCtJK5pd5cbv1b5GsNLuoEy2WWkcH2w
+         AtVQ898WE71w4IHgW5fcKdkxnxoB4qu85iMbRQBTTXn9xUaL9h9Mnd87HEotQKVSOJpN
+         tv1g==
+X-Forwarded-Encrypted: i=1; AJvYcCWtUkueQmK+jP/prdGtP1w7dHOsi1Vn6irpfDxnUGmOQqhUAXZgVQ04YZWopj8oWSOJWXYicOEPMfLh0DnF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYZ9RJnVEVoGDfVr12dn7mP0Chl7+xvmADIpMJ1bP8pRD1mH9L
+	AOPK9eHsVjeueGV56QEYEN6+6txGrsRjOigx+uMVuN+kNIiUt+A4M5i737tu9vyOyZxWER8lvg6
+	Nc9kZkTjC4EL806lZidXi1bzuE7ALluBYmqQA0Fbu
+X-Gm-Gg: ASbGnctUUxa7djx18E9+uSWalLH6sIgOMu6se5X4sxEbfSlv0UiJQcNaHVhuYvj0Qn7
+	A1TLQfLkvD/KVKHKn+QcZwhnjDLz4FNycZrDWUO7WxSvy6KSyE3q6YGm51w6+cFcaX2HDT0rleu
+	ZeXbqGr3ZMM1SVXaO+xIK5r2eSQE2yutml6ZDppHpgJlZu7r4QhNwPmqHobmYln1F9oqc3eZHWf
+	CZ2QV8=
+X-Google-Smtp-Source: AGHT+IFB29LZRp6S9EJ4JwmCmEMzaf7JXF7ZrEyQ3VcuzP+ZF9XJDCj3TztBCcGyfvrNcJcm+eOBHyX3XQUVn4sD0j4=
+X-Received: by 2002:a05:622a:49:b0:4a9:d263:d983 with SMTP id
+ d75a77b69052e-4a9fbf49438mr3728031cf.22.1752243503244; Fri, 11 Jul 2025
+ 07:18:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: add a sub-entry for the Qualcomm
- bluetooth driver
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
- Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Shuai Zhang <quic_shuaz@quicinc.com>,
- Stephan Gerhold <stephan.gerhold@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250709144728.43313-1-brgl@bgdev.pl>
- <141abf1f-2739-4ccf-8a2b-3451c299ef49@oss.qualcomm.com>
- <CAMRc=McYqNm4gVgDir=Er_TdOCFUknapFx8a7q4cdyY63sb-0A@mail.gmail.com>
- <CABBYNZJQrHEWGBaNy77NqTbNn8jU=iRi0wsnvPqDb6rA9E5-7g@mail.gmail.com>
- <CAMRc=Md0FCfqAxqLN98QbMFeACbq8DU6o9k6j+bnF6jPY=KGdQ@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <CAMRc=Md0FCfqAxqLN98QbMFeACbq8DU6o9k6j+bnF6jPY=KGdQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250709105946.4009897-17-tabba@google.com> <20250711095937.22365-1-roypat@amazon.co.uk>
+ <86a55aalbv.wl-maz@kernel.org>
+In-Reply-To: <86a55aalbv.wl-maz@kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 11 Jul 2025 15:17:46 +0100
+X-Gm-Features: Ac12FXwgQHu30_kYr5OEcOlHvsbWxMi7kgse2dUFQjfHWptAQiWGsqT7tOy6s0Q
+Message-ID: <CA+EHjTz-MWYUKA6dbcZGvt=rRXnorrpJHbNLq-Kng5q7yaLERA@mail.gmail.com>
+Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest
+ page faults
+To: Marc Zyngier <maz@kernel.org>
+Cc: "Roy, Patrick" <roypat@amazon.co.uk>, "ackerleytng@google.com" <ackerleytng@google.com>, 
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "amoorthy@google.com" <amoorthy@google.com>, 
+	"anup@brainfault.org" <anup@brainfault.org>, "aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>, 
+	"brauner@kernel.org" <brauner@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, 
+	"chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>, 
+	"chenhuacai@kernel.org" <chenhuacai@kernel.org>, "david@redhat.com" <david@redhat.com>, 
+	"dmatlack@google.com" <dmatlack@google.com>, "fvdl@google.com" <fvdl@google.com>, 
+	"hch@infradead.org" <hch@infradead.org>, "hughd@google.com" <hughd@google.com>, 
+	"ira.weiny@intel.com" <ira.weiny@intel.com>, "isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>, 
+	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>, "james.morse@arm.com" <james.morse@arm.com>, 
+	"jarkko@kernel.org" <jarkko@kernel.org>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "jthoughton@google.com" <jthoughton@google.com>, 
+	"keirf@google.com" <keirf@google.com>, 
+	"kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>, 
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>, 
+	"liam.merwick@oracle.com" <liam.merwick@oracle.com>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	"mail@maciej.szmigiero.name" <mail@maciej.szmigiero.name>, "mic@digikod.net" <mic@digikod.net>, 
+	"michael.roth@amd.com" <michael.roth@amd.com>, "mpe@ellerman.id.au" <mpe@ellerman.id.au>, 
+	"oliver.upton@linux.dev" <oliver.upton@linux.dev>, "palmer@dabbelt.com" <palmer@dabbelt.com>, 
+	"pankaj.gupta@amd.com" <pankaj.gupta@amd.com>, 
+	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
+	"peterx@redhat.com" <peterx@redhat.com>, "qperret@google.com" <qperret@google.com>, 
+	"quic_cvanscha@quicinc.com" <quic_cvanscha@quicinc.com>, 
+	"quic_eberman@quicinc.com" <quic_eberman@quicinc.com>, 
+	"quic_mnalajal@quicinc.com" <quic_mnalajal@quicinc.com>, 
+	"quic_pderrin@quicinc.com" <quic_pderrin@quicinc.com>, 
+	"quic_pheragu@quicinc.com" <quic_pheragu@quicinc.com>, 
+	"quic_svaddagi@quicinc.com" <quic_svaddagi@quicinc.com>, 
+	"quic_tsoni@quicinc.com" <quic_tsoni@quicinc.com>, "rientjes@google.com" <rientjes@google.com>, 
+	"seanjc@google.com" <seanjc@google.com>, "shuah@kernel.org" <shuah@kernel.org>, 
+	"steven.price@arm.com" <steven.price@arm.com>, "suzuki.poulose@arm.com" <suzuki.poulose@arm.com>, 
+	"vannapurve@google.com" <vannapurve@google.com>, "vbabka@suse.cz" <vbabka@suse.cz>, 
+	"viro@zeniv.linux.org.uk" <viro@zeniv.linux.org.uk>, "wei.w.wang@intel.com" <wei.w.wang@intel.com>, 
+	"will@kernel.org" <will@kernel.org>, "willy@infradead.org" <willy@infradead.org>, 
+	"xiaoyao.li@intel.com" <xiaoyao.li@intel.com>, "yilun.xu@intel.com" <yilun.xu@intel.com>, 
+	"yuzenghui@huawei.com" <yuzenghui@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/11/25 3:45 PM, Bartosz Golaszewski wrote:
-> On Fri, Jul 11, 2025 at 3:42 PM Luiz Augusto von Dentz
-> <luiz.dentz@gmail.com> wrote:
->>
->> Hi Bartosz,
->>
->> On Thu, Jul 10, 2025 at 10:22 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>>
->>> On Wed, Jul 9, 2025 at 7:06 PM Konrad Dybcio
->>> <konrad.dybcio@oss.qualcomm.com> wrote:
->>>>
->>>> On 7/9/25 4:47 PM, Bartosz Golaszewski wrote:
->>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>>>
->>>>> Patches modifying drivers/bluetooth/hci_qca.c should be Cc'ed to the
->>>>> linux-arm-msm mailing list so that Qualcomm maintainers and reviewers
->>>>> can get notified about proposed changes to it. Add a sub-entry that adds
->>>>> the mailing list to the list of addresses returned by get_maintainer.pl.
->>
->> Should this go via bluetooth-next or arm-msm has its own dedicated
->> tree? If we continue using bluetooth-next let's agree to have someone
->> from linux-arm-msm signing-off the patches for these drivers before we
->> merge them in bluetooth-next, including this change.
->>
-> 
-> I think this should go through bluetooth-next. Let's wait for Konrad
-> or Bjorn to Ack this then.
+Hi Marc,
 
-Acked-by: Konrad Dybcio <konradybcio@kernel.org>
+On Fri, 11 Jul 2025 at 14:50, Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Fri, 11 Jul 2025 10:59:39 +0100,
+> "Roy, Patrick" <roypat@amazon.co.uk> wrote:
+> >
+> >
+> > Hi Fuad,
+> >
+> > On Wed, 2025-07-09 at 11:59 +0100, Fuad Tabba wrote:> -snip-
+> > > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
+> > > +
+> > > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> > > +                     struct kvm_s2_trans *nested,
+> > > +                     struct kvm_memory_slot *memslot, bool is_perm)
+> > > +{
+> > > +       bool write_fault, exec_fault, writable;
+> > > +       enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
+> > > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+> > > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
+> > > +       struct page *page;
+> > > +       struct kvm *kvm = vcpu->kvm;
+> > > +       void *memcache;
+> > > +       kvm_pfn_t pfn;
+> > > +       gfn_t gfn;
+> > > +       int ret;
+> > > +
+> > > +       ret = prepare_mmu_memcache(vcpu, true, &memcache);
+> > > +       if (ret)
+> > > +               return ret;
+> > > +
+> > > +       if (nested)
+> > > +               gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
+> > > +       else
+> > > +               gfn = fault_ipa >> PAGE_SHIFT;
+> > > +
+> > > +       write_fault = kvm_is_write_fault(vcpu);
+> > > +       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+> > > +
+> > > +       if (write_fault && exec_fault) {
+> > > +               kvm_err("Simultaneous write and execution fault\n");
+> > > +               return -EFAULT;
+> > > +       }
+> > > +
+> > > +       if (is_perm && !write_fault && !exec_fault) {
+> > > +               kvm_err("Unexpected L2 read permission error\n");
+> > > +               return -EFAULT;
+> > > +       }
+> > > +
+> > > +       ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
+> > > +       if (ret) {
+> > > +               kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
+> > > +                                             write_fault, exec_fault, false);
+> > > +               return ret;
+> > > +       }
+> > > +
+> > > +       writable = !(memslot->flags & KVM_MEM_READONLY);
+> > > +
+> > > +       if (nested)
+> > > +               adjust_nested_fault_perms(nested, &prot, &writable);
+> > > +
+> > > +       if (writable)
+> > > +               prot |= KVM_PGTABLE_PROT_W;
+> > > +
+> > > +       if (exec_fault ||
+> > > +           (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
+> > > +            (!nested || kvm_s2_trans_executable(nested))))
+> > > +               prot |= KVM_PGTABLE_PROT_X;
+> > > +
+> > > +       kvm_fault_lock(kvm);
+> >
+> > Doesn't this race with gmem invalidations (e.g. fallocate(PUNCH_HOLE))?
+> > E.g. if between kvm_gmem_get_pfn() above and this kvm_fault_lock() a
+> > gmem invalidation occurs, don't we end up with stage-2 page tables
+> > refering to a stale host page? In user_mem_abort() there's the "grab
+> > mmu_invalidate_seq before dropping mmap_lock and check it hasnt changed
+> > after grabbing mmu_lock" which prevents this, but I don't really see an
+> > equivalent here.
+>
+> Indeed. We have a similar construct in kvm_translate_vncr() as well,
+> and I'd definitely expect something of the sort 'round here. If for
+> some reason this is not needed, then a comment explaining why would be
+> welcome.
+>
+> But this brings me to another interesting bit: kvm_translate_vncr() is
+> another path that deals with a guest translation fault (despite being
+> caught as an EL2 S1 fault), and calls kvm_faultin_pfn(). What happens
+> when the backing store is gmem? Probably nothin
 
-Konrad
+I'll add guest_memfd handling logic to kvm_translate_vncr().
+
+> I don't immediately see why NV and gmem should be incompatible, so
+> something must be done on that front too (including the return to
+> userspace if the page is gone).
+
+Should it return to userspace or go back to the guest?
+user_mem_abort() returns to the guest if the page disappears (I don't
+quite understand the rationale behind that, but it was a deliberate
+change [1]): on mmu_invalidate_retry() it sets ret to -EAGAIN [2],
+which gets flipped to 0 on returning from user_mem_abort() [3].
+
+[1] https://lore.kernel.org/all/20210114121350.123684-4-wangyanan55@huawei.com/
+[2] https://elixir.bootlin.com/linux/v6.16-rc5/source/arch/arm64/kvm/mmu.c#L1690
+[3] https://elixir.bootlin.com/linux/v6.16-rc5/source/arch/arm64/kvm/mmu.c#L1764
+
+Cheers,
+/fuad
+
+
+> Thanks,
+>
+>         M.
+>
+> --
+> Without deviation from the norm, progress is not possible.
 
