@@ -1,200 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-64553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 320A2B01A54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:10:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A032B01A5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:14:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 868BB5A6B2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:10:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9550358829B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:14:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D411288C3F;
-	Fri, 11 Jul 2025 11:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A94DA288C97;
+	Fri, 11 Jul 2025 11:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a+iNk6mf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MaAVU6/C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AACD288C0E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 11:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB271DED5B;
+	Fri, 11 Jul 2025 11:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752232199; cv=none; b=OTo+BQZHXEPo/5S7g0KNvzEZjcOxSZHxeus9waIDhxvDRF9st+CIhdFzwp0ir9HuL89PdFZWCQgT2Uc9N0R5JI4JudmQYah6VaERKTPfRSWHgYlMZ7TbsQoED2alzY7sWQ2t60kRPdd8yW6PmdBldc0iQ4PH9U+2iUtiKx0aZLY=
+	t=1752232490; cv=none; b=gxnmzq5saaxwBNqqvyh3kJRmS78hGJnjdLghJ/S67dVWWMbjVgrGMhoj+BeQrLrgGNEBeijInioEnDz8AKZAk4qKNS4BxdOjJPVpkMmeyp5eos5lF2b8AsvTrQZxHngElbuyuF/Wp5FcA/P/f6cDONoxxI3U5q0rT/W4Ud00V/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752232199; c=relaxed/simple;
-	bh=85A02jJf5WEx+s1nM2l46kcEE5hoPxUVck5YTP4i3e0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mf/l1tZETFSjfG2P1KizNH0mUaFcQWybRsm4QArOzULY45laDjmHpDGF2kk+fZ1i25mNBgo00EgVbL8udLLcCGAlqqDKwxcJY5+g8rQZ0IZXT1rMnLgtfiOoerZ7t7ByHuBVKhMbGaWG2shEZvBQe6lM2MfdyPwhzFcMjbGvI0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a+iNk6mf; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4aa2cbc016dso122571cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 04:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752232196; x=1752836996; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1adRS81oh+n8n4i/QBjxAv/fs2/9/zd1hp4GUeUvO78=;
-        b=a+iNk6mf9OzMZiiC7K3OJbaPq4LJEXN4qlhfB27wIswkFp0JXlkYUv/Ovd7TGvru+P
-         4mENohTo0D1yUfRMFw0dzLmAY6qPM90Xt2aqU+7rxMp9NkRKwdi+uY0qIrQkAClEOqkr
-         DgyUsnRTKx/tX8tF6F8O+3I++QyOI3YEoGQOgi4BTyH0tFFggHf/zMfj3L3moVC1WvRR
-         0HuuQ0RosOMpq4lgRDGXy6R1XbETaGeKx7gvEGHk0utphWUwvGc25V5eUbVvr0ZRfWmF
-         7O91A7OhQ0S/11SQZdFGt66OT2EZfA7WI2H2s+P1ZK0O6xOy/RizmtqubEuCOqrUupD/
-         Puug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752232196; x=1752836996;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1adRS81oh+n8n4i/QBjxAv/fs2/9/zd1hp4GUeUvO78=;
-        b=rY3YCERtGJvHxAj7r0GlqkkrTFgqALhOKA4GXpcDkmAj1s2VIHtdi8+tGjdoCvt9O+
-         EvJUcoqmljNey7xYkfufhKZAHsoXIKSJmZzu2x7RSNViT0jOAJO69eoruqBCNaF+3CC8
-         19UzYXUTU/46MczA37k29iVo5b8TfaRFJ3uCkKv1oXMeFt/IeP7bZKkAj7urKYne3NNk
-         kWfEB2vFGtyytAsvAO1J4hsKu9Szdz8Ycfky9pns26ZuHQ5sKO9kUQeioI1t7gAWhglQ
-         6rpqdXMetmSgyXo0TX4CzvRmnabvb860yE6I2C+XBFE+WyTxqY0K+D2/zfj9vV/DRKxM
-         KsFA==
-X-Forwarded-Encrypted: i=1; AJvYcCWTYD6rxZ4SEmnm/mw6XCW0ivv1VKfseYdrsMVvrnNuPppRR2I5e+OGPQUoYEfy1PbFqW9vPSWTeUc5LAeI@vger.kernel.org
-X-Gm-Message-State: AOJu0YycbI2FsYVogBzriXFXWzdj2M3EYhxMaVQHWpBZWzDzCS2ww17h
-	pw9fShYDz3bd46sNSvkwjyTIp4e5CWvgGZ48Tx431/NMVFvfw1NtCxlWvK9d9uiYo3XBz/mxGJf
-	KkTEcymqxSvetSCdXfpMCdSq3Dr2TWfoPT9kuJZkk
-X-Gm-Gg: ASbGncsEsaoFQj/LdlWJcUnxzkSkpCDjsnoSjb/8UxQuQjNGkVqrGYhZ6bgUIiNwSm0
-	RUYvXMokuGoBiEhMdqDZ2246WUTTiCpG7nTQIUmhMnGYa4NYcRf5GQ2Vr78u4BBDqbYYNE9vYDu
-	og6hGuWtSFHG5deQtGNvanOuNGTAd1jL6E/zPCEuf1I1KY1xfn5yuTOmp+e2Z6UPpqIaOzSlwrj
-	/AyqFs=
-X-Google-Smtp-Source: AGHT+IGBKlguTczLsGN7D7jbMA8nnKKR5d3w/jJqmzY0oTVBdGcJ/buS8qD/dIqG5s4GGMRAPLRGdxeOmdIRAnouGp8=
-X-Received: by 2002:a05:622a:a916:b0:4a9:8b69:6537 with SMTP id
- d75a77b69052e-4a9fbf275d9mr2923021cf.22.1752232195939; Fri, 11 Jul 2025
- 04:09:55 -0700 (PDT)
+	s=arc-20240116; t=1752232490; c=relaxed/simple;
+	bh=agy6+8GdtzC7Fj6vgysblX5H44rHd2wNP80PLXciBwU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=MrQ1w3JFwO8Aypjh0J+tV+MfVpHmRcLjrmkWdWdFTpb48D4+Scy2x1HAC8411PVcBTtmRvbh7z56C85jlCqeGE/sr5O4ONY0+jnJqZ6mO8RIOPN5uhH1YPiA+cad14zSlZLZU00aOHsgk1zwuR3NqTRC4vcyks7vTYKJV2g6Vpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MaAVU6/C; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BAJxQm003966;
+	Fri, 11 Jul 2025 11:14:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=iUEEX5QYSW5bIoU9Z4+oK4
+	yCkYAtXtkYtTd5W0cSkVQ=; b=MaAVU6/CCjjcNOQCO/6dEj80rie4An/zaKLTBs
+	op/WHHq8yKwr3zQFnDru4w+pC+Q8oaI1LuOFKc1pQlI7sPy3IvS4ZLpXSO0ePmTS
+	A8O8GT+LbHrVO3pK5yVu766dhnG3Y0lqzSRb6ykmudmk8StpPlpOo64vbXkFlLFV
+	o//j7dob/erD/NbK5cJGPOdgd9q0psmUjVAHiNkfXJNrPmSamDcRKV9AiUk3K4XM
+	8lFypjoC2Pvz8VCGbE32p8iOtLxaKw8liNjSI3SciQvO6VXSr1Q1mQykndUMcjxH
+	rDzNOAZo8sOfVa8YGqeWcItPDQwuj8k0MhucEjhO4EkI6Aqg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smbp0e62-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Jul 2025 11:14:45 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56BBEieZ014808
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Jul 2025 11:14:44 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Fri, 11 Jul 2025 04:14:41 -0700
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <kathiravan.thirumoorthy@oss.qualcomm.com>
+Subject: [PATCH v1] arm64: dts: qcom: ipq5424: add i2c nodes
+Date: Fri, 11 Jul 2025 16:44:18 +0530
+Message-ID: <20250711111418.3980520-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250709105946.4009897-1-tabba@google.com> <20250709105946.4009897-15-tabba@google.com>
- <6fc1edd4-8a3c-4cba-8779-461a16b5126e@redhat.com>
-In-Reply-To: <6fc1edd4-8a3c-4cba-8779-461a16b5126e@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 11 Jul 2025 12:09:19 +0100
-X-Gm-Features: Ac12FXzb-fN6GfwAX5mOcl0uP18BvI0qeajeteMMtilzL-SP9ogjqoPftjSQs3k
-Message-ID: <CA+EHjTyX5BEFUSBh0HFgrpfu16MprZuYiSp6N8mDt1C5XyYYwA@mail.gmail.com>
-Subject: Re: [PATCH v13 14/20] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDA3OSBTYWx0ZWRfX0Y6qRfI/XuiE
+ 3rCeRuQyK0v/oWSwNCxTcrRnqjVnUE6xb9urg0glQAi1PirKKZ1+L10k3xp5wGbhmPp8KdrumKv
+ XfVKx+/DX3tLfjWBiU4UvSF4kyzZmqZ2ysZCTNiZAFdqqbSNbYJzz74cp/8+VgG1Iwnuz+aSKgP
+ 7YfCkAVVhCvkBggRxwflNbMQrKm/lphIxQz2fDQ00Vw8reMNS3rSVUUrCAJhqrwCdOzPXmw5NH0
+ fPLZ9tWKBWJnmvpPnZ498cFnzLs3/aGnGOOKUUYbRndEzufWgaAoR4XTe3wPpC8pVcwGh+iic+Y
+ x2kJEID4wHcJhpiauO2lnxJwbKGXIcigfEmvmqcm5TiAFDwJcVrBxyPvEFGDnpaNOojoogLm2XJ
+ L/yss97wz/uQM6Oxf9M/G0pkFU4YSzAdCk2zQ5rBA/GX/2kRWoytGm7grdLK/h6YO3oVGr3C
+X-Authority-Analysis: v=2.4 cv=QM1oRhLL c=1 sm=1 tr=0 ts=6870f225 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=5VfnTfZ0KsacMTR8VH4A:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: VJZ7sRsw67L_qWndIrCltPIEdWwg4A7C
+X-Proofpoint-GUID: VJZ7sRsw67L_qWndIrCltPIEdWwg4A7C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_03,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 impostorscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=873 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507110079
 
-Hi David,
+Serial engines 2 and 3 on the IPQ5424 support I2C. The I2C instance
+operates on serial engine 2, designated as i2c0, and on serial engine 3,
+designated as i2c1. Add both the i2c0 and i2c1 nodes.
 
-On Fri, 11 Jul 2025 at 10:45, David Hildenbrand <david@redhat.com> wrote:
->
-> On 09.07.25 12:59, Fuad Tabba wrote:
-> > Enable host userspace mmap support for guest_memfd-backed memory when
-> > running KVM with the KVM_X86_DEFAULT_VM type:
-> >
-> > * Define kvm_arch_supports_gmem_mmap() for KVM_X86_DEFAULT_VM: Introduce
-> >    the architecture-specific kvm_arch_supports_gmem_mmap() macro,
-> >    specifically enabling mmap support for KVM_X86_DEFAULT_VM instances.
-> >    This macro, gated by CONFIG_KVM_GMEM_SUPPORTS_MMAP, ensures that only
-> >    the default VM type can leverage guest_memfd mmap functionality on
-> >    x86. This explicit enablement prevents CoCo VMs, which use guest_memfd
-> >    primarily for private memory and rely on hardware-enforced privacy,
-> >    from accidentally exposing guest memory via host userspace mappings.
-> >
-> > * Select CONFIG_KVM_GMEM_SUPPORTS_MMAP in KVM_X86: Enable the
-> >    CONFIG_KVM_GMEM_SUPPORTS_MMAP Kconfig option when KVM_X86 is selected.
-> >    This ensures that the necessary code for guest_memfd mmap support
-> >    (introduced earlier) is compiled into the kernel for x86. This Kconfig
-> >    option acts as a system-wide gate for the guest_memfd mmap capability.
-> >    It implicitly enables CONFIG_KVM_GMEM, making guest_memfd available,
-> >    and then layers the mmap capability on top specifically for the
-> >    default VM.
-> >
-> > These changes make guest_memfd a more versatile memory backing for
-> > standard KVM guests, allowing VMMs to use a unified guest_memfd model
-> > for both private (CoCo) and non-private (default) VMs. This is a
-> > prerequisite for use cases such as running Firecracker guests entirely
-> > backed by guest_memfd and implementing direct map removal for non-CoCo
-> > VMs.
-> >
-> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >   arch/x86/include/asm/kvm_host.h | 9 +++++++++
-> >   arch/x86/kvm/Kconfig            | 1 +
-> >   arch/x86/kvm/x86.c              | 3 ++-
-> >   3 files changed, 12 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> > index 4c764faa12f3..4c89feaa1910 100644
-> > --- a/arch/x86/include/asm/kvm_host.h
-> > +++ b/arch/x86/include/asm/kvm_host.h
-> > @@ -2273,9 +2273,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
-> >   #ifdef CONFIG_KVM_GMEM
-> >   #define kvm_arch_has_private_mem(kvm) ((kvm)->arch.has_private_mem)
-> >   #define kvm_arch_supports_gmem(kvm)  ((kvm)->arch.supports_gmem)
-> > +
-> > +/*
-> > + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> > + */
-> > +#define kvm_arch_supports_gmem_mmap(kvm)             \
-> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&   \
-> > +      (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
-> >   #else
-> >   #define kvm_arch_has_private_mem(kvm) false
-> >   #define kvm_arch_supports_gmem(kvm) false
-> > +#define kvm_arch_supports_gmem_mmap(kvm) false
-> >   #endif
-> >
-> >   #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> > diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-> > index df1fdbb4024b..239637b663dc 100644
-> > --- a/arch/x86/kvm/Kconfig
-> > +++ b/arch/x86/kvm/Kconfig
-> > @@ -47,6 +47,7 @@ config KVM_X86
-> >       select KVM_GENERIC_HARDWARE_ENABLING
-> >       select KVM_GENERIC_PRE_FAULT_MEMORY
-> >       select KVM_GENERIC_GMEM_POPULATE if KVM_SW_PROTECTED_VM
-> > +     select KVM_GMEM_SUPPORTS_MMAP
-> >       select KVM_WERROR if WERROR
->
-> Given the error, likely we want to limit to 64BIT.
->
-> select KVM_GMEM_SUPPORTS_MMAP if X86_64
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-Will do.
+diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+index 66bd2261eb25..858b9c714a13 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+@@ -425,6 +425,28 @@ uart1: serial@1a84000 {
+ 				interrupts = <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
++			i2c0: i2c@1a88000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x01a88000 0 0x4000>;
++				clocks = <&gcc GCC_QUPV3_I2C0_CLK>;
++				clock-names = "se";
++				interrupts = <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>;
++				assigned-clocks = <&gcc GCC_QUPV3_I2C0_CLK>;
++				assigned-clock-rates = <64000000>;
++				status = "disabled";
++			};
++
++			i2c1: i2c@1a8c000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x01a8c000 0 0x4000>;
++				clocks = <&gcc GCC_QUPV3_I2C1_CLK>;
++				clock-names = "se";
++				interrupts = <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>;
++				assigned-clocks = <&gcc GCC_QUPV3_I2C1_CLK>;
++				assigned-clock-rates = <64000000>;
++				status = "disabled";
++			};
++
+ 			spi0: spi@1a90000 {
+ 				compatible = "qcom,geni-spi";
+ 				reg = <0 0x01a90000 0 0x4000>;
 
-Cheers,
-/fuad
+base-commit: 58ba80c4740212c29a1cf9b48f588e60a7612209
+-- 
+2.34.1
 
-> --
-> Cheers,
->
-> David / dhildenb
->
 
