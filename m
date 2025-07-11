@@ -1,210 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-64601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0925DB01D79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:29:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 904CFB01D82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:30:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 530F7A43A07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:29:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6CC8EA43B52
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E9BF2D374A;
-	Fri, 11 Jul 2025 13:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C6D2D3EDF;
+	Fri, 11 Jul 2025 13:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="idm+1zLI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oj/bsEP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B2A2D3233
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F8299AA4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752240569; cv=none; b=mwEpUVtOY2TUvBNHj1UHsHdLP7VfJTsYgQF4fB4Y160bK4kG1gAaMuYovIx5SjS70Lk8WTCrG6K2ushEovRED/L3Fb/+R4fKlz82spHFRkqsMwZRTfTQGYSh1zrrCc4CCCL/SHM+sJ67MatouD8T71vVS3yBrIJIeQHWa2eAqf8=
+	t=1752240627; cv=none; b=eLTNchFQ2f+TXGaMSuXyMJhGUxM0d5aGRtXNaaoLgbhnhXeaqn+WYcMyhJl892I38ee8iEr1j/8ncFDCHvgc+NUhHSMZJtOce4u+Ddy8Tp+RWvBXpRv0p0vgwSgcCHmsdtR8OshC6usIKP/t0ffhaJeBiUXCuJO+dNqyZmQ2R/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752240569; c=relaxed/simple;
-	bh=WDiPIjuqiChPX+asKp37/ByLWlXgZKPqmpcoStrHRxM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NLeeRaZKKiMhm2OHdiUAE1Ac/juD23/BsU3KdlIZGRTdCeIODbfTGpsdzGYhcODWC4zzGPaszJysku4EGMeC+LhX24ojk2J1EpoOiswBS0uPlYXHLHqf1FtXVUaqilEHLDul/yOXwtEJLnWzNHzGaeO2FmkIaW21160SdOMfPSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=idm+1zLI; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2352400344aso19346355ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 06:29:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752240567; x=1752845367; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pPQRVC+gYXzA0BtSE8rtHH/2+eUDBChSDQmEkeHBXgE=;
-        b=idm+1zLI9/PsnIdNl2AjPQmXZRdGyJf4BmfeAe0FmCmw3CfOCb5XcK56fFNOyW9bKN
-         9hLHYqM/i4dS9ifqsHHEUsDrDl34xwMjHufMPq4cAlAhGqPg9VqYih2F/gY/LTmiGIRY
-         zMJgcrB+QxAf/nzzS0Hj7B3ygDIrQon2YRQGCND0ktvK9KySusQ9V3XiJOnduOr8hMNA
-         jMoYUiiMcFzixAqeIyRVgyVya/G75h+4Qj8p0i1vybz/BGt53Kea5KmaeIb3oqrKB7z3
-         9pmw0YAtfooThSpEMQsMPv/YGQZo4jRW/A2Vrk/82rWD2/8CAbNMn6SNbha6pm+cz4yU
-         z3Rg==
+	s=arc-20240116; t=1752240627; c=relaxed/simple;
+	bh=RBviiJM8e7A0n90vapmlXNzmXiF33YX206n+gYRNKHY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Gp6a6MhuIAsHSMn7PnhpFKwl8UUI8zFySgJr/Un0dRkvRnYBoDQEQM+NYBkieauWoCV6NQYYvmwdVG0Yt3BsrC7Q4vDGvpGTHR6RJl71LekBggooXIrz2OC6pKpDTEznUQIFl3AOypbzOwQMPvkNJ6vCAJhbmEXZFRhbePW7yio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oj/bsEP2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BAi0gg012032
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:30:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ugGPY7HB1MN48isl0Ga4J9P6wFQAlkyxD2Wpj5v5zAo=; b=oj/bsEP2bmM6cLM2
+	49Wab/6780Rf9Me254aXp+8YNArnkVf5O4ZBPSjJkrTP3sBEbS3QSdW76PPnF+9y
+	nL3/KxFeOe8y9jB3+RI5DIfCUqe9f1W1ZPD7GbMBWHKvAH7cXLGT6j5t+nEa04hm
+	e05KjBxQ79waKmTjXzY/hkoRHd+ZX3q9Z0495PuOMNot46Vq19+n3AAKto1zS4Gd
+	EXCsFQme2jp2/fEspARG8V16SISI4pSwBrvbAuE2G5CrjSiFZVpEGIl6t+lv/SJ0
+	s3VAmU79VwK0IsPoNhXbEpHpmKVub3GmapFNE1lH3fOTtkXPXQ+4aZRJQ5/k7pqZ
+	YzJsFg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47sm9e0p4k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:30:22 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e0003c5851so9265185a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 06:30:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752240567; x=1752845367;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pPQRVC+gYXzA0BtSE8rtHH/2+eUDBChSDQmEkeHBXgE=;
-        b=mg71tKv6Ihh1fIZSH/AKey07X3Hje2Ui/fptapTN4GHiA9rI1kbuInFmWXRFHpoSs+
-         FoN5WLEbJWAvwh/4sFhqKAsjYQVzRNWvCk/9eFHTFTB13J27yDzQNIM6oksjSxlLH4bX
-         dNMualsnSZkZCGsZl6i+S7lMIKeJkyhRhDxnAwmGFK7ULYhl4NxS9D6HAgckdIdczF1N
-         +2nV6yno0PWI5gk2RGExLyWXgNVEToWV/pMU9mwtpTqwYDfBsO0BneJpMeX0bEyagHM6
-         WFCRMpHJbG3XwMsu+0xDpTJq8eUr6AUAoVyPm3drMA/Ty/W8jCkjNquQtuBmuXNEWlhH
-         T9EA==
-X-Forwarded-Encrypted: i=1; AJvYcCUM1bZT0P0LEvQR54coJfchhKJwH+wo0d3HdoQ2Z/Hi25o5lzzYDgvGwfeVUlNY30p6UDm9JwyCLcoBScmn@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzHfONBeBT9iFRXHHzzLkfCpBGH0yeXeruLx4POg0DllYC96R7
-	SQQz2BZ7otfpyiWyxiM6XagfnDZBp1F41PpxwNQK9UFux4ihU1pwi5yE5oEBE54JWX+ZyjDQKzc
-	mwk3NsoLUVLgBPAbih0Kv2hfm4FvJWAl01+HfbGVrhw==
-X-Gm-Gg: ASbGnctE7qMLpAlvTTAQF8oHH9vbx6S0ZTFSX7Z6gRU2wiG/ya3kYQTzLkhOWoXtK9r
-	PYvjZMR15Aw2hq2GBUH41j2Ma2oDVjRxRpwXNpf5bxLGJ0NJ1FjBOcDJIjueRzBufDuYBYhd5hB
-	QT97gqvV2orFe40iCSzeMasgpbaW4rcsCsqHiamryuBlsNqSREv5jI15of1yS0H8lgp4fVvpBvb
-	zXtS03tChnNca1g4Sb3H5xIjoHol7/BNwzQLoON
-X-Google-Smtp-Source: AGHT+IG4zXliACGrQprvEQ5wj7JsyfYLrvCmNiaEH+tMrZ+FZGuEDY+CASzdByOLlOs/WswgsUHGYzyvgG94wPmljLk=
-X-Received: by 2002:a17:90b:4b8d:b0:313:b1a:3939 with SMTP id
- 98e67ed59e1d1-31c50da140amr3325921a91.15.1752240566909; Fri, 11 Jul 2025
- 06:29:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752240622; x=1752845422;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ugGPY7HB1MN48isl0Ga4J9P6wFQAlkyxD2Wpj5v5zAo=;
+        b=HO0EYe2hokW0p+72Xd1cRYiLmmhq7PErW1+h8LhJ+Y4SvJYLnsazIIBAQgZuJaZe/2
+         f7RB4R22M1jYZbMPMtJIjJbWwwKginnHZUAcwPpsTnKx/SwF1a/qLk5vMhfg2i9tCkFQ
+         m66BrpDNIvpC2hgLhNuyLmA7VaMm19BbNBfTn1pVu3bhkzONhOSB+ydjzR4IIGDaynvC
+         jwrtZlJJZq4h6Jp10zYFHMp4pNTn9j07ky3RcU+CcuXoPb58kJofg/Z9zbMjRbBCnG5J
+         4PdXlNZuoz+vCAiXFgt18MOf1jugxsZBzYvdyJlDvm6Z1sUrH6CW8nC+OYPHIOaSGzVC
+         0O7A==
+X-Gm-Message-State: AOJu0YxHZmA7EEpLAqi4hUCtrh2tH5lvz41fUg2yQwBjFQMk4HrnOFeb
+	1PjlW1mB09ICJ4dspyPt9K6YVvQX5EZ+rJ5TcUxuNzMAgaEtGLb9tfFVMsgbZdcsXL6GocsWnVN
+	bLmlyKI+XaPDhPnvktT16hwTcjvoROT8vSz3zzwwdT+/8fhGHX3IraygcFawxKV8XGOEi
+X-Gm-Gg: ASbGnctPcd3Lfu0bcOJFoIK4JyGiPYn0kFVFcSSqwlYtqrFuh1OWOm+1Ju0nDiGbOt0
+	9JzEkSyI0vNNnfrJHFAUge33BTpEH2StVlvVoiF6/NSz7isYj9Nn3y6nhnY4roPwCu4ypNgA0Rm
+	OA/l5k1rIhoj5vVNRBHnV4JkNJXpkgv/iAFBRZE+oyYUcvImgUJRQKJ1Yv9CtZt7FGdIRDZ6oJQ
+	fUReCQAb/VXGi81VLuK80lb2VDsmIojRXPo0axNnebJ6oAaZ2Wo1lPD/ERpuJsMn4Ta5y5YSAMV
+	ok7b5CMjRa3jlz0ltS8yXvr/E+Gg7UBFN1ASQLoYnTYZdgHKnwikxTFh2VThkRi/137DqEUJIAm
+	wF68LPtE/gzXkWAreqNn2
+X-Received: by 2002:a05:620a:29c7:b0:7d3:c688:a590 with SMTP id af79cd13be357-7dde9f3ffdbmr163374685a.4.1752240621641;
+        Fri, 11 Jul 2025 06:30:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsp1g8FjvQHBY+1zEIqsJCVWoSQT8u3SuCm/JjGfMzQL7BPTgiKOwfjtpcw4oJxyfJ1QjdOg==
+X-Received: by 2002:a05:620a:29c7:b0:7d3:c688:a590 with SMTP id af79cd13be357-7dde9f3ffdbmr163370785a.4.1752240620875;
+        Fri, 11 Jul 2025 06:30:20 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8291bbesm292303766b.126.2025.07.11.06.30.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jul 2025 06:30:20 -0700 (PDT)
+Message-ID: <493987e4-2b1a-42b1-af5e-85cd9f2a5d7c@oss.qualcomm.com>
+Date: Fri, 11 Jul 2025 15:30:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250711094031.4171091-1-quic_jinlmao@quicinc.com>
-In-Reply-To: <20250711094031.4171091-1-quic_jinlmao@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Fri, 11 Jul 2025 14:29:14 +0100
-X-Gm-Features: Ac12FXz2yLkWQDmM32aTY0N8Gj1hFRU1asfRpnUpH_TzU92dKa2GOxAV8v2hkGM
-Message-ID: <CAJ9a7VhmHooDpht-gU7eAA5O028Tn=CVmCNHU6Qg+UYXp6kUQg@mail.gmail.com>
-Subject: Re: [PATCH v6 0/5] coresight: Add remote etm support
-To: Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: socinfo: Add support to retrieve APPSBL build
+ details
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250711-appsbl_crm_version-v1-1-48b49b1dfdcf@oss.qualcomm.com>
+ <3cd5864e-e6cf-404f-94b5-b85866086d76@oss.qualcomm.com>
+ <e5bb0197-70e4-4b4e-922f-baaaa2e514c7@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <e5bb0197-70e4-4b4e-922f-baaaa2e514c7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: CN3O8x-xcTAWEDbyQVXfR7l9MKCs8def
+X-Authority-Analysis: v=2.4 cv=W7k4VQWk c=1 sm=1 tr=0 ts=687111ee cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=AoRLLdadn5v-kRkyVHkA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: CN3O8x-xcTAWEDbyQVXfR7l9MKCs8def
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDA5NiBTYWx0ZWRfX0mxe/qkUoafn
+ dDiglP7vicgaK1nvdBvqD1YWuWlq0FdNGg98DLjBhwhS56qQQ8JYOfRXKXIki5OpQ48yX/09zup
+ 0rOapAva/dzkfxfriQCZ8/n1rAouuf6GVd/jPbNttKOZj5mGJ5sYDxJ4S0FzEddZMXnwDgTkVL9
+ ctVjWrIvVVMaFB1c3BMa8436zn844jI40di6Jl7g8WmZg+QUNtHYqLUB8zIJT7ju4E/cocjSo51
+ 20KpdeFgaRmJOwo/QmZvqgAY8Pcs5bhaQvO6rc1Ni//dlaPbciaLmvt+l/ek1dBxyMc/ZD9rUy6
+ GYpsm2tY3z2HF2Iu4ZNu6RibU+HeudUo1GKAzFZ2GVz7cIQF6wN2gRR2ZLQdAq39c9+1PDYInXu
+ ZIJMGKWnT67iRr0DrhHQDOgzOauOwDADBnEDX55vJmzgL/eEw7P9wo+yei0l8b0mnQhcE7id
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_03,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ mlxlogscore=554 priorityscore=1501 impostorscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110096
 
-Hi,
+On 7/11/25 3:24 PM, Kathiravan Thirumoorthy wrote:
+> 
+> On 7/11/2025 5:41 PM, Konrad Dybcio wrote:
+>> On 7/11/25 1:03 PM, Kathiravan Thirumoorthy wrote:
+>>> Add support to retrieve APPS (Application Processor Subsystem) Bootloader
+>>> image details from SMEM.
+>>>
+>>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+>>> ---
+>> Can we expand the driver with all the known IDs at once instead?
+> 
+> With respect to the IPQ SoCs only APPSBL image detail is missing, which this change address it
 
-The majority of this code should not be in the coresight drivers
-directory as it is not actually coresight.
+Next week someone else will come around and say the same thing
+for e.g. automotive platforms
 
-This seems to be a communications bus system for various SoC
-components - one of which happens to be a remote etm. It really needs
-to be in a qcom-qmi subdirectory - which would also remove your
-reliance on the coresight maintainers for getting all the qmi drivers
-upstreamed. I note that there is a CONFIG dependency of
-QCOM_QMI_HELPERS, which implies there is already a set of QMI
-functionality not in the coresight directory.
+> 
+> I can expand the list, but unfortunately don't have ways to validate them. I can check internally with folks to test it or even send an RTF. Till then, can this patch go independently?
 
-We already have  a dummy coresight driver to cover these cases where
-the actual etm source or sink might be in a different subsystem. This
-could be extended in a generic manner to have an associated driver /
-component, with the dummy source then forwarding the enable / disable
-commands and acting as the coresight device for the purposes of
-enabling the trace path from source to sink.
+There is nothing to validate here really, the bootloader either
+populates the data or not
 
-Thus the "coresight-remote-etm" driver becomes "qmi-node-etm" driver,
-with the proprietary comms info, instance IDs etc encapsulated away
-from any generic coresight information, and has an associated
-coresight-dummy-source to handle the connection to the coresight trace
-framework. I imagine the association could easily be modeled in device
-tree using a phandle reference.
+For now, this one alone is good to go, but please look into the
+broader scope
 
-This would not change your usage model, but would give better
-separation between what is clearly the QMI comms subsystem, and what
-is needed to handle coresight connectivity.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Moreover, having the generic coresight dummy driver extended in this
-way would allow other underlying communication systems to be used on
-other devices in future.
-
-Best Regards
-
-Mike
-
-
-On Fri, 11 Jul 2025 at 10:40, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->
-> The system on chip (SoC) consists of main APSS(Applications processor
-> subsytem) and additional processors like modem, lpass. There is
-> coresight-etm driver for etm trace of APSS. Coresight remote etm driver
-> is for enabling and disabling the etm trace of remote processors.
-> It uses QMI interface to communicate with remote processors' software
-> and uses coresight framework to configure the connection from remote
-> etm source to TMC sinks.
->
-> Example to capture the remote etm trace:
->
-> Enable source:
-> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 > /sys/bus/coresight/devices/remote_etm0/enable_source
->
-> Capture the trace:
-> cat /dev/tmc_etf0 > /data/remote_etm.bin
->
-> Disable source:
-> echo 0 > /sys/bus/coresight/devices/remote_etm0/enable_source
->
-> Changes since V5:
-> 1. Fix the warning and error when compile.
-> 2. Add traceid for remote etm.
-> 3. Change qcom,qmi-id tp qcom,qmi-instance-id.
->
-> Changes since V4:
-> 1. Add coresight QMI driver
-> 2. Add coresight qmi node and qcom,qmi-id of modem-etm in msm8996 dtsi
-> V5: https://lwn.net/ml/all/20250424115854.2328190-1-quic_jinlmao@quicinc.com/
->
-> Changes since V3:
-> 1. Use different compatible for different remote etms in dt.
-> 2. Get qmi instance id from the match table data in driver.
->
-> Change since V2:
-> 1. Change qcom,inst-id to qcom,qmi-id
-> 2. Fix the error in code for type of remote_etm_remove
-> 3. Depend on QMI helper in Kconfig
->
-> Changes since V1:
-> 1. Remove unused content
-> 2. Use CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS as remote etm source type.
-> 3. Use enabled instead of enable in driver data.
-> 4. Validate instance id value where it's read from the DT.
->
-> Mao Jinlong (5):
->   dt-bindings: arm: Add CoreSight QMI component description
->   coresight: Add coresight QMI driver
->   dt-bindings: arm: Add qcom,qmi-id for remote etm
->   coresight: Add remote etm support
->   arm64: dts: qcom: msm8996: Add coresight qmi node
->
->  .../bindings/arm/qcom,coresight-qmi.yaml      |  65 +++++
->  .../arm/qcom,coresight-remote-etm.yaml        |   9 +
->  arch/arm64/boot/dts/qcom/msm8996.dtsi         |  11 +
->  drivers/hwtracing/coresight/Kconfig           |  23 ++
->  drivers/hwtracing/coresight/Makefile          |   2 +
->  drivers/hwtracing/coresight/coresight-qmi.c   | 198 +++++++++++++
->  drivers/hwtracing/coresight/coresight-qmi.h   | 101 +++++++
->  .../coresight/coresight-remote-etm.c          | 262 ++++++++++++++++++
->  8 files changed, 671 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
->  create mode 100644 drivers/hwtracing/coresight/coresight-qmi.c
->  create mode 100644 drivers/hwtracing/coresight/coresight-qmi.h
->  create mode 100644 drivers/hwtracing/coresight/coresight-remote-etm.c
->
-> --
-> 2.25.1
->
-
-
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Konrad
 
