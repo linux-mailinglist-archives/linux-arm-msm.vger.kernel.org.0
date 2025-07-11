@@ -1,230 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-64565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B210B01C12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A0E40B01C1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:34:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24C253B97E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 12:32:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D19354705C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 12:33:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BCF29ACDE;
-	Fri, 11 Jul 2025 12:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0B972980BF;
+	Fri, 11 Jul 2025 12:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E/pjBBTo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dTLAhLTC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A6928B507
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 12:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8328C28A1C5;
+	Fri, 11 Jul 2025 12:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752237152; cv=none; b=ARdzaGulVncTm58pL5f5djltYV2KYzaXTlfEi61cLFpbecFTxJaPK98FbSE/AKFksgfWCnIzpjL8vmi1wHZtLI7unauV/Q7brCZGExFh42+1vhdtUP2g8eWAfG/4tVoizQOI7rDloqNIIoU5cOGN1FCRlXxPlXvX6f/KmiZMKqs=
+	t=1752237247; cv=none; b=RyNL4hW0m6TUWiXggvJf0OubyqsCxOZpFT4T1ExoN4Cbs/haz8hYKmAJ4WVEUO2DLg7LuFSX7bGuChBJyQrcBPO5+Bug5QsgmrC8BJsizrvX5VlcWQk2hDFCp6Mk3lTcWIKa5Ry2SKxmbBDIxoomkCCVUMBoq+OmBjCjeA2OHzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752237152; c=relaxed/simple;
-	bh=jskRVxDVP/S7EV7/YxIs2gggxobMl3QXDo9NH63okro=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AcLOAWlCgoi2dLuy+3EbfXBNBYKa6+62pp99ToXvJPrdiRl+NflXkmfc/69eBtf8v8paWUJoc69wfD95V4ERRlFziK0rCbS21Z2VXHgMT9LZxmDr/vZG37BnB87sjSS9GufCPlX4rsoHlzGTC1aOdqJzGrvNbIiI6zn7OnM/WDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E/pjBBTo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BAkNfP031212
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 12:32:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I+uJUa0zDVqqPkW/P6ZNncfaiD0Ik/YbmbIwujNrzqc=; b=E/pjBBToKGzsD7Nd
-	aP/K0oulwHPlxsH9QDB5UjkokGaSTwp+ppzV3nPC+zT0BAr1G2IsxtUchb0/O1r6
-	IXdkA7CV8TuW/2M6R1CGUEA9OTppGialSdxTjdC5tlulcQFhsGbFUpxIAY5Wdejn
-	A3ym7h3zKXy/RBGl6G/H77MKPrI7+QLrsSlDnCZJN7KV9rsIRPzDY02eapz7lveF
-	aZ7oKzOgavVo3GAdhfV6WxApnbgw0XnrD2vuizxgp7T753m8zZZmrSlR6jxDNbDC
-	4rgx/9s1/zjlN4vrW6g+s0VCJ+K5kIBA7byNQu6EUv95pcKztrKQZlEfD0AxWhx4
-	apS7jQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47u15ar91e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 12:32:29 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-748f13ef248so1984344b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 05:32:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752237148; x=1752841948;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I+uJUa0zDVqqPkW/P6ZNncfaiD0Ik/YbmbIwujNrzqc=;
-        b=wJkSo9+w/n2hZ5vB1aw7C9siYp9fUbHtao2kGymujm+eSXvWzGt/H6LSTwzaKtHF22
-         uEl694DXjqroP3tq96o+cAoVgMrQEVP1AsAClNqiigYkvSBWj9r8gvoveI2PkiQtWlw4
-         sVSuG2JFHsXCzV5C3Zy3k2wwiKgM8TH6dR8VKc8kr3naMr/yGNBlDkW5wTACkJkQ2Wn8
-         fGb/dF946YiC4iuoPLJ0DBZeCdn9TM3wS8O+Ud0sdwhKmEsaB5FWqVTC82rAGrkJiJTx
-         s1pv0Nb1PgP/6ccshpu4j4DPTIh7ICeITHjmypgy/UlZshfR3/yxJCQ+MgugReEaN3jC
-         cRFA==
-X-Forwarded-Encrypted: i=1; AJvYcCVGjBFWIpyNFnaJdKoUdfRh87zO3iukLNqKxGdE/sv5WHqQhRAlGq0p+pM7QxJa6E4nBusgf3Cn3Uqbx/hn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUqhDkB8xTG2KfQKU+VgaWIX28Pt0mFrYH+2CJ/GyqGzCyc/yS
-	M1uEupbdEpoFINRO9MGjwwrSb0cpvxpWs12DZscifqseKK5vPPutH3RaJSNCXnvZdGNVLLeSRcB
-	2ixQLdqteWujHg2V26386J1/56VmHNRxmPNulQ1hOjODgqX1xtaML8rC5khqCqeNfUMvz
-X-Gm-Gg: ASbGncs4zKYmarDn7HdGBx2lRwQH7v+HJj4vlzyOaiRXGUTPWM0Bb8U8YvM+gKABIw3
-	QtMHtHk34vDzmPPYUMnxVd9MZjDphTMS4q40cg26JGufVhow9HOdPrV+rwoAXOwNLTwQa0tmZGX
-	MCcq/eGpF9f4M+3Pkyhjc0UIdv57KK14SmiyGdP7G3o9PviEZdx0E/at6EPOf9LFTBx9kxNIrAE
-	R9+6cYn8Eak9cUD1ml70euG/nlI+4HB6KNaoj2gdzUyDNLVJkcTkRfiq2IrhFEBhcU4Sgf+mebm
-	e/DvPokQxNVnsctGhh1/5X8bj11/IBkrg07uKIJNqIHq+VBJokueR5+9oXGXOJu/42WfAx0=
-X-Received: by 2002:a05:6a00:1151:b0:74c:f1d8:c402 with SMTP id d2e1a72fcca58-74ee07bb96dmr4845194b3a.8.1752237148312;
-        Fri, 11 Jul 2025 05:32:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9gsUsqbiWSyynICyXIvV85uCk9/J6nn3GoQC+GKfjb1N1fCIuGevD1MSbYwD9kXnui8JeEw==
-X-Received: by 2002:a05:6a00:1151:b0:74c:f1d8:c402 with SMTP id d2e1a72fcca58-74ee07bb96dmr4845108b3a.8.1752237147622;
-        Fri, 11 Jul 2025 05:32:27 -0700 (PDT)
-Received: from [10.219.56.108] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f90d66sm5040981b3a.173.2025.07.11.05.32.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jul 2025 05:32:27 -0700 (PDT)
-Message-ID: <cdadd6cf-18c9-15c7-c58a-b5d56b53452a@oss.qualcomm.com>
-Date: Fri, 11 Jul 2025 18:02:15 +0530
+	s=arc-20240116; t=1752237247; c=relaxed/simple;
+	bh=OaM04B/jvmRCFs9Pga6hG/UcJ4uI5yYpfmWIbmK2Zyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O3bHI4lN8RyGcCxvsxc+7tnQCPgprisi3sw32ytD8DbZUNcdH51UGhK49Ytam8YnE9i8mZ2VSKFJ/ijGjVJbEQoVMRJ4tQDBGvi2CjJyc+NzxtpaqvuPT6RHY9G146t1UrjMqtFcrWqdo5+AK0tNqUVzhs3YClzwnPiBQshYyic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dTLAhLTC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D88C4CEED;
+	Fri, 11 Jul 2025 12:34:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752237247;
+	bh=OaM04B/jvmRCFs9Pga6hG/UcJ4uI5yYpfmWIbmK2Zyc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dTLAhLTCRZXAC4B/2QKacwHAUGAi6WddnWYmmBZEgz/U07KVHiwt0PANdevA2fmRW
+	 gWM2pmMus+RFmABeOsW5pGonIvo+KiacmI3KBi8rnrjRN94re/ZOvPYIzGBYXeRvzT
+	 3269c/hfw6YgxKqV/Awqvy4tCE9NZwhyGtcY82Ee5wUEIiRFf63Vw4UcSpGevnYBeF
+	 RuN1yBG0+m2E2XfP+2Nnf3S5jG/ZJpo0fFxVK8AIi6RgJiIbBHP41De+ubmZGo0oVx
+	 br3pXXJLxUgerpY8f1BoD4YWU63zHnTMWLq4RxQi9r2mnnkoUlVHMRRlKd/PT1wHO8
+	 sYlGlN6t2JKdQ==
+Date: Fri, 11 Jul 2025 18:04:03 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: George Verhaegen <verhaegen@google.com>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>, kernel-team@android.com,
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org,
+	sound-open-firmware@alsa-project.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v1 0/4] ALSA: compress_offload: Add 64-bit safe timestamp
+ API
+Message-ID: <aHEEu1eSSGRhITmW@vaman>
+References: <20250711082441.4193295-1-verhaegen@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v10 02/10] dt-bindings: power: reset: Document reboot-mode
- cookie
-To: Rob Herring <robh@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Elliot Berman <elliotb317@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Andre Draszik <andre.draszik@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, Wei Xu <xuwei5@hisilicon.com>,
-        linux-rockchip@lists.infradead.org,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Sen Chu <sen.chu@mediatek.com>, Sean Wang <sean.wang@mediatek.com>,
-        Macpaul Lin <macpaul.lin@mediatek.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>
-References: <20250710-arm-psci-system_reset2-vendor-reboots-v10-0-b2d3b882be85@oss.qualcomm.com>
- <20250710-arm-psci-system_reset2-vendor-reboots-v10-2-b2d3b882be85@oss.qualcomm.com>
- <20250710224740.GA15385-robh@kernel.org>
-Content-Language: en-US
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <20250710224740.GA15385-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 9R0Ql_X4iUcnhigVIXjWK0iyVnimjwvj
-X-Proofpoint-ORIG-GUID: 9R0Ql_X4iUcnhigVIXjWK0iyVnimjwvj
-X-Authority-Analysis: v=2.4 cv=RtzFLDmK c=1 sm=1 tr=0 ts=6871045d cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=s8YR1HE3AAAA:8
- a=PKmmUXB_vcMajKhYsGEA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
- a=jGH_LyMDp9YhSvY-UuyI:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDA4OSBTYWx0ZWRfX8CS+bbDyFo3z
- S1ndYvxvzn89s/wie6JucxFAa+q3+GNGuO5W0KTQh0Gn7/OU9fiRu8/gUWXdnIczs7/niaeRrI4
- RLpTCKo/BXqgSNMVCfOzs1CbMg6FkZx3YjGHkweFNRSQcHnnPnfVWUWguGefNUApOj5BmRtadYw
- k3J6Gu77ERHsDqKE6inyuMef5W1LIXK4JP3l3LXEc+1diriKGok+G2KimSTTf35MT3Uy07zlQCN
- 1/ZYw5TRObdgDaPLLoPUwk/N2YXJ2pSoarPIDN72UZXOqhFkzqS2QMkOyk3g2wUPt5zSsergFUm
- wkFp09Ab/do6lgVhVECRNgwsFbLZlQcDsOXny/dsqZkdY21ptTmXBUpHCUEqawXjBrHAc3V6obh
- pA0TcnxYlwOuolUAcvOPh1wMjbVP3uUwBYtHCDej0BF8sKXPDN94r1uYn2RrPuzh4p0dn35c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-11_03,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxlogscore=999 suspectscore=0 adultscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 mlxscore=0 impostorscore=0 phishscore=0
- spamscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507110089
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250711082441.4193295-1-verhaegen@google.com>
 
-
-
-On 7/11/2025 4:17 AM, Rob Herring wrote:
-> On Thu, Jul 10, 2025 at 02:45:44PM +0530, Shivendra Pratap wrote:
->> Update the reboot-mode binding to support an optional cookie
->> value in mode-<cmd> properties. The cookie is used to supply
->> additional data for reboot modes that accept two arguments.
->>
->> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->> ---
->>  .../devicetree/bindings/power/reset/reboot-mode.yaml         | 12 +++++++-----
->>  1 file changed, 7 insertions(+), 5 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> index 3ddac06cec7277789b066d8426ea77d293298fac..a4d2fe1db51e0c1f34ebefddaad82b8cc0b1b34a 100644
->> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> @@ -10,14 +10,15 @@ maintainers:
->>    - Andy Yan <andy.yan@rock-chips.com>
->>  
->>  description: |
->> -  This driver get reboot mode arguments and call the write
->> -  interface to store the magic value in special register
->> -  or ram. Then the bootloader can read it and take different
->> -  action according to the argument stored.
->> +  This driver gets reboot mode arguments and calls the write
->> +  interface to store the magic and an optional cookie value
->> +  in special register or ram. Then the bootloader can read it
->> +  and take different action according to the argument stored.
->>  
->>    All mode properties are vendor specific, it is a indication to tell
->>    the bootloader what to do when the system reboots, and should be named
->> -  as mode-xxx = <magic> (xxx is mode name, magic should be a non-zero value).
->> +  as mode-xxx = <magic cookie> (xxx is mode name, magic should be a
->> +  non-zero value, cookie is optional).
+On 11-07-25, 09:24, George Verhaegen wrote:
+> From: Joris Verhaegen <verhaegen@google.com>
 > 
-> I don't understand the distinction between magic and cookie... Isn't all 
-> just magic values and some platform needs more than 32-bits of it?
-Need two different arguments. Will try to clarify a bit below.
-PSCI defines SYSTEM_RESET2 vendor-specific resets which takes two
-parameters - reset_type and cookie. Both parameters are independent and
-used by firmware to define different types of resets or shutdown.
-As per spec:
-reset_type: Values in the range 0x80000000-0xFFFFFFFF of the reset_type parameter
-can be used to request vendor-specific resets or shutdowns.
-cookie: the cookie parameter can be used to pass additional data to the 
-implementation.
+> The current compress offload timestamping API relies on
+> struct snd_compr_tstamp, whose cumulative counters like
+> copied_total are defined as __u32. On long-running high-resolution
+> audio streams, these 32-bit counters can overflow,
+> causing incorrect availability calculations.
 
-Now to implement SYSTEM_RESET2 vendor-specific resets using reboot-mode
-driver, we will need two separate arguments. reboot-mode already defines a
-magic, which will be used as reset_type. For the second parameter requirement of
-SYSTEM_RESET2, we add support for additional argument cookie.
+In your testing when did you observe the overflow condition?
+
+> This patch series introduces a parallel, 64-bit safe API to solve
+> this problem while maintaining perfect backward compatibility with the
+> existing UAPI. A new pointer64 operation and corresponding ioctls
+> are added to allow the kernel to track counters using u64 and expose
+> these full-width values to user-space.
+
+Please share patches for tinycompress support too, we need those to test
+this
+
+> The series is structured as follows:
 > 
->>  
->>    For example, modes common Android platform are:
->>      - normal: Normal reboot mode, system reboot with command "reboot".
->> @@ -45,5 +46,6 @@ examples:
->>        mode-recovery = <1>;
->>        mode-bootloader = <2>;
->>        mode-loader = <3>;
->> +      mode-edl = <1 2>;
->>      };
->>  ...
->>
->> -- 
->> 2.34.1
->>
+> Patch 1: Introduces the new internal pointer64 op, refactors the
+> core logic to use it, and defines the new UAPI structs.
+> 
+> Patch 2: Exposes the SNDRV_COMPRESS_TSTAMP64 ioctl.
+> 
+> Patch 3: Exposes the corresponding SNDRV_COMPRESS_AVAIL64 ioctl.
+> 
+> Patch 4: Implements the new .pointer64 operation in various ASoC
+> drivers that support compress offload.
+> 
+> This series has been tested on a Pixel 9 device. All compress offload
+> use cases, including long-running playback, were verified to work
+> correctly with the new 64-bit API, and no regressions were observed
+> when using the legacy API.
+> 
+> Thanks,
+> George (Joris) Verhaegen
+> 
+> Signed-off-by: Joris Verhaegen <verhaegen@google.com>
+> 
+> ---
+> 
+> Joris Verhaegen (4):
+>   ALSA: compress_offload: Add 64-bit safe timestamp infrastructure
+>   ALSA: compress_offload: Add SNDRV_COMPRESS_TSTAMP64 ioctl
+>   ALSA: compress_offload: Add SNDRV_COMPRESS_AVAIL64 ioctl
+>   ASoC: codecs: Implement 64-bit pointer operation
+> 
+>  include/sound/compress_driver.h               |   3 +
+>  include/sound/soc-component.h                 |   5 +
+>  include/sound/soc-dai.h                       |   6 +
+>  include/uapi/sound/compress_offload.h         |  32 +++
+>  sound/core/compress_offload.c                 | 210 ++++++++++++++----
+>  sound/soc/codecs/cs47l15.c                    |   1 +
+>  sound/soc/codecs/cs47l24.c                    |   1 +
+>  sound/soc/codecs/cs47l35.c                    |   1 +
+>  sound/soc/codecs/cs47l85.c                    |   1 +
+>  sound/soc/codecs/cs47l90.c                    |   1 +
+>  sound/soc/codecs/cs47l92.c                    |   1 +
+>  sound/soc/codecs/wm5102.c                     |   1 +
+>  sound/soc/codecs/wm5110.c                     |   1 +
+>  sound/soc/codecs/wm_adsp.c                    |  53 ++++-
+>  sound/soc/codecs/wm_adsp.h                    |   3 +
+>  .../intel/atom/sst-mfld-platform-compress.c   |  17 +-
+>  sound/soc/intel/atom/sst-mfld-platform.h      |   2 +
+>  sound/soc/intel/atom/sst/sst_drv_interface.c  |  43 +++-
+>  sound/soc/qcom/qdsp6/q6asm-dai.c              |  41 +++-
+>  sound/soc/soc-component.c                     |  20 ++
+>  sound/soc/soc-compress.c                      |  21 ++
+>  sound/soc/soc-dai.c                           |  14 ++
+>  sound/soc/sof/compress.c                      |  44 +++-
+>  sound/soc/sprd/sprd-pcm-compress.c            |  28 ++-
+>  sound/soc/sprd/sprd-pcm-dma.h                 |   2 +-
+>  sound/soc/uniphier/aio-compress.c             |  40 +++-
+>  26 files changed, 503 insertions(+), 89 deletions(-)
+> 
+> -- 
+> 2.50.0.727.gbf7dc18ff4-goog
+
+-- 
+~Vinod
 
