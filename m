@@ -1,120 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-64630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0FCFB0230A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 19:45:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 209F7B02323
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 19:50:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02AEF5C56A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 17:45:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8708A47233
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 17:49:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35ED32F273A;
-	Fri, 11 Jul 2025 17:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 443732F0E59;
+	Fri, 11 Jul 2025 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hVF4bZbE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gApSY9r+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBC62F19A9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 17:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C181B155C97
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 17:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752255893; cv=none; b=rkRtvGULP6b93JbfXm4zjaQXKC/J1v1wlmSCYsVIaAek8J8Z6wKg4ipV8gmOnpsUTxCGwjs8qVD8DLFjwFO4TpC4mJZDzWABrSIXL7vk/CyfZ7OQEP/r/A5//+ZvoaxIrfoEUcQv1CxssDbytpTkeJHr5IBuqn+jG7J0RQ7i4eM=
+	t=1752256209; cv=none; b=ifs1qq/t8qMcBFKpoGCeuU3mOvXqiqOBq8Tr6OUB34g3b5OdnPtzmOR3R2pyLsPeNPwqLt6OweGJs8JELWNlhuLhslD7HO4Ih1F2maOoYyPpnAhd2YBflWN3uw6u1f2uw3SGbWo8N+YQmSGxm0V5GUDW6uzCKt+kRb62Ne1BuZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752255893; c=relaxed/simple;
-	bh=u+ZM5SO8L4rZ2xYIS3dtWrMrDyHsyXlquIkrSDaXE+w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m/Nhx8Ze4qjp9vtgZ0xGAQ1UYszeQorhE2L9+MaWjIKevsY6vDJ0wETsufh6+j7gx+DdtsjVGcZH9X6s25OtRxq70Hix7v/BDD9dWv3nsEoK6RC3c7Leq/ocZ0GuOFooLshyfEJtA4pSmjErmBpZT8Ah8zCoe5JkCWF3iKDrGr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hVF4bZbE; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32b7113ed6bso20235511fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 10:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752255889; x=1752860689; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u+ZM5SO8L4rZ2xYIS3dtWrMrDyHsyXlquIkrSDaXE+w=;
-        b=hVF4bZbEuP4pvsIBFxaWeWBlnqNCB7BB/8a/uCD1T/DUCO2u8PBQaL5NwIZc8VVKqi
-         syC4aExadO+FYZh9gUFcvIdzcjJUTQuPBU/8HO/urMdoSB7zWNXrjOCiOeFXG4D/wHHd
-         jZGYvL8sLieeQ07O9T+cbLWv/U46cyOTu+nTw/8wZ554+qxc9wE2tamuPmXoJboHT1B3
-         v6rxJwF1LS4Nt8F7/jCbbg5AP0BbYriPjz7wFXdPRUnILInVlChIa5JXrCX7wLJnntah
-         H+RrgZ1rwnKLeBvMoSqYBoN9vxP5LJc/gSaVvAAxBkvBEY/tL519nSt/Swt65OrL/0qJ
-         APsw==
+	s=arc-20240116; t=1752256209; c=relaxed/simple;
+	bh=86r/sDTlSeSMo/+bzTvTxRRnHkxkb+sDRT3RGVt9qwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=otzUuPsXBLQx4Jj7u7qNXZIX4/xAnvSsaWJAmXFFkxglUUsWvPgJ52inWijV0vXsIAl+mptAP8zWQEzPfsVfOHKFsOnm7o1B1cYTl/KMe32savMWmlRBEmAR+apGgrGI+LzBGWV7Er+lC89loA9PIduP1POBs0fAXhoPEtoXvF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gApSY9r+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BAhrFn008618
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 17:50:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zODF07FEndKVYerePzf13yZa0v9IMBpC/Vm6umRGgcQ=; b=gApSY9r+2eAhMTb/
+	78i0vkS9emlIFK2N5TD+V0KqbqrE+DJTruHeob27jHnXjtuMt6rEH6OnMoIKrZxX
+	3Jq4Hr5MiTU8vX6sUu6IL//2V4H3anIsaXpeuOu0QaYGh6EQ5x45kEy0GonU8Lv/
+	nLN1jzwClGo2Lr3s2CEXqhRwP8bFtWyp5WkI8xz2IMmP/8P/jxUqHbb+orW6fkJb
+	WtBbHDz+O9dVEaTTVpNR3QLe7fR3brxtWx7elNWmJgiibuy2YvnEBP1TFmDrkja+
+	dCF80k5Kjn7KMZFjQb1pJYRpF25bm1DDZDkX3l+rxZqa+NFHLEzIEUJvOagwF9/t
+	k90SgA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47smcg9djw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 17:50:06 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-23507382e64so24676405ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 10:50:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752255889; x=1752860689;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u+ZM5SO8L4rZ2xYIS3dtWrMrDyHsyXlquIkrSDaXE+w=;
-        b=Xv0MYZH7S6zZXqpPbQNwBWY17H1Am8my1IbeI/laH1VbOh+wb7WMPXS2QShKhynClt
-         wymkXx3Emm3PycQWCmOlm40+BJ3mEJgMHDg9iQYr+dfdYT8sReJ7BWnQCOK83g9/8yWp
-         YaiyBwnYqg6MN+5+mqi9pjAZ6AmmIEoqWj2Sqq4dvOg11QSuj2FfzQLBL6GjHm+pWofT
-         123SQadqkuZDSzFYW8YqOFUTe0hrZd+Wjx3to0swDScas092lm34cHRMdG5RE2F7i9tP
-         MKE9ScJUyaPUZpP3aInSL5CZCCs/BZPvRIwxwYTax2LNxBnsCLlUTmr+sFng5fjEJu5w
-         +M3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVj/BDaNHHo0g+b3Bz5y0qWtd9eWtZEgP3/O2tTZEbDKgBHVSyxl1JReGB+sFHQyw3tEXjb30ogpqhIYHKd@vger.kernel.org
-X-Gm-Message-State: AOJu0YzA47Cs8Qiu741QdgpEY9Fc3x2KM/bw0YxRLXapROKtMqoIibqE
-	QeiBQHNlfXQ4d4VTMeWj+qkn81QQhisnaXMAzb5xXoAwo1RdAf+tbjvNh/7DdlvleQhIH6YJTyA
-	MrbrWPz/ALYNVMfPl9LateEpfMQevKbfhCGtr05FaJQ==
-X-Gm-Gg: ASbGncsMY1sk6R/lsZLtRggJZWct6T0+kiSEAfiRVsXdGMj69rE+zJJG1PSEh3K6NeC
-	/VMURyYLEUufD3XMGNhcAhB2R5H5lmXJupGE9DAJjcFBd/KNtR5A8hBPHIy/eEVKtttADrOGm9z
-	d4HWs2RqFPLs7EPrEb1n0X/RP44+o57YjNaV931/t0LFStIsEx5LCgv27jwl2g6ZKrVh+Z8BsT8
-	WiTYeQ=
-X-Google-Smtp-Source: AGHT+IH6ZOzBfHIgYUwgOc3NHyt2gji+Em8NzLEp8xFU4pLvltizLDn2SrTtw5BwtYgzrpRFDHd1anYmDStmm3/BYxA=
-X-Received: by 2002:a2e:ae05:0:b0:32b:75f0:cfa4 with SMTP id
- 38308e7fff4ca-3305343ffbdmr14799021fa.25.1752255889239; Fri, 11 Jul 2025
- 10:44:49 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752256206; x=1752861006;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zODF07FEndKVYerePzf13yZa0v9IMBpC/Vm6umRGgcQ=;
+        b=ce/kpon6GyBupIv80rXRs3s27zNG2/6xEhq7n2JTtOF1Xc9WflOvMVEgIIV6VzJg2o
+         v9I74AlQlAmRy/DZDyNZ7L7bBsJMpxUcEQVepY6ET502uENg6jptaE7NmwBXSr1pDMvv
+         A/jxCs56l201+d5oNyUDRtnz89PE6HykIlBUDomWzNij2r2rwPExSf5xJXmxPxaRGp0T
+         rg2rIhmDimMc6y1vbFe8Vaqp5CvOfCm8jo7ir3OaZuDtXeZR10JDgibbj+0d9iCZ/5xO
+         W0u0BJPClLoXHBU1UvuEUmoacgpc4JVwE9OS9Xxotzgyw6VLyjEDLPOfUmZJ6cEFdlog
+         Ml5w==
+X-Forwarded-Encrypted: i=1; AJvYcCWyJkU8S5BLKCi7rB79+Wx4f7YmG47VkxtBndcaB9u1DiM9ppKTS0kOFMXI+nHW+8eZboc+rMGCoxuTQynD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3CiyYsSo1mcRx4weMyIYb+gxUmZoyQyUnBYSHMYQfw5pd+sPl
+	NKqMVRrOr75jukUhou/IDEPNOXxO2ub9k7I+VZI61MGUTstX0T+IvFLRpQYbd7CM8Wt8SQjq8aQ
+	5adR7O8WhEkYPuSWIzplqfQHldFLS+nz4QUciDuL3UEhGbIfV2S6rdp3nxL8AUWlWtmHQ
+X-Gm-Gg: ASbGncsNmJ/swYsovm7F+Pw5s2goshDpXOugKKdc0IP0vDAjM4JgXGRcZd+Eah1YBcV
+	4MeTEgBrNTRQeA2coIAq9YEGoihhezz6udsGKRYJ6vXBlMzK1P15NANLbi6s14zdBo2Ol8q7ePV
+	vlZxVMyEahe+G3uwhmYIGm80jwhBoLDs+Gl5Bngx0p3IU7PP3Xe8qWAj4wvsRkdpr9mf7cSG6CO
+	nWT3grmMJ3+Rga9YnLmRzfdPKT5wo4t9ctpIV1QEcy86aF6/5n4frkzBN8FUL5tQkWaCMyXulVi
+	X2fDPJH6mW7YFF7VdxZZThRWExqH/4IIgOwhHbF6qzq4GWJWBrtgtKp0GR1OWfTpC1+3ZVSDSQ=
+	=
+X-Received: by 2002:a17:902:f545:b0:235:efbb:9539 with SMTP id d9443c01a7336-23dee1abb0emr63643245ad.17.1752256205870;
+        Fri, 11 Jul 2025 10:50:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoW1pfrpu8TJ9bIwQOf4KOWgHALwSOkO1BYsTZCrJkUsn+7Lrx4ekRpFxTdtXkf6n8J7ntUA==
+X-Received: by 2002:a17:902:f545:b0:235:efbb:9539 with SMTP id d9443c01a7336-23dee1abb0emr63642755ad.17.1752256205266;
+        Fri, 11 Jul 2025 10:50:05 -0700 (PDT)
+Received: from [192.168.29.115] ([49.43.229.152])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de433e160sm50153985ad.172.2025.07.11.10.49.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jul 2025 10:50:04 -0700 (PDT)
+Message-ID: <42a98c8d-7287-8aa1-ad39-4d5b79e177b7@oss.qualcomm.com>
+Date: Fri, 11 Jul 2025 23:19:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250710-drm-clk-round-rate-v1-0-601b9ea384c3@redhat.com> <20250710-drm-clk-round-rate-v1-5-601b9ea384c3@redhat.com>
-In-Reply-To: <20250710-drm-clk-round-rate-v1-5-601b9ea384c3@redhat.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 11 Jul 2025 19:44:38 +0200
-X-Gm-Features: Ac12FXxUNTUQvVOGg3MoOkpShRe7WywXW6kbpP4WvN3P-CcJwwv5gR7MoObTWCg
-Message-ID: <CACRpkda3R+2hhzvd+snkTGrRb-gZ8OUvzAhFE5Cg6yXfZ+E4nQ@mail.gmail.com>
-Subject: Re: [PATCH 5/9] drm/pl111: convert from round_rate() to determine_rate()
-To: Brian Masney <bmasney@redhat.com>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Yannick Fertre <yannick.fertre@foss.st.com>, 
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, 
-	Philippe Cornu <philippe.cornu@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Stephen Boyd <sboyd@kernel.org>, dri-devel@lists.freedesktop.org, imx@lists.linux.dev, 
-	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v10 02/10] dt-bindings: power: reset: Document reboot-mode
+ cookie
+Content-Language: en-US
+To: Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Elliot Berman <elliotb317@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        =?UTF-8?Q?Andr=c3=a9_Draszik?=
+ <andre.draszik@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, Wei Xu <xuwei5@hisilicon.com>,
+        linux-rockchip@lists.infradead.org,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Sen Chu <sen.chu@mediatek.com>, Sean Wang <sean.wang@mediatek.com>,
+        Macpaul Lin <macpaul.lin@mediatek.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+References: <20250710-arm-psci-system_reset2-vendor-reboots-v10-0-b2d3b882be85@oss.qualcomm.com>
+ <20250710-arm-psci-system_reset2-vendor-reboots-v10-2-b2d3b882be85@oss.qualcomm.com>
+ <20250710224740.GA15385-robh@kernel.org>
+ <cdadd6cf-18c9-15c7-c58a-b5d56b53452a@oss.qualcomm.com>
+ <454c8361-151e-42b3-adfc-d82d2af62299@app.fastmail.com>
+ <28f277af-9882-2c70-5156-123c95adc2ee@oss.qualcomm.com>
+ <b870ed33-7d4f-4b0e-a9ae-b9c374ea854b@app.fastmail.com>
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <b870ed33-7d4f-4b0e-a9ae-b9c374ea854b@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=P7o6hjAu c=1 sm=1 tr=0 ts=68714ecf cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=8g6h00HoWaIZ3EdQG8aEvw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=xZdgJlt2tE-EQpnRY6gA:9
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: E-AOE1kk2653Xqho_0nkD4_GhJeTYu0z
+X-Proofpoint-GUID: E-AOE1kk2653Xqho_0nkD4_GhJeTYu0z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDEzMSBTYWx0ZWRfX0Po31QY6cH9i
+ B/XjJ7ExcGoqEpWaNLL58wjTWtDemqcshxdgreVmzhOImcjGy1nq1VSYtAX7fEbHTdf45C+wJy6
+ xrUxjGQljFapkrVhMbysyjfPh2q/kb/ePQ5GkaBEcFF6kl6TdFzM9Yq4LYClKeaU5/njePxBUfh
+ 9ZtTvSiGs+xC8Eq0UBn6o4JCRW2tyxsyM/AjW/c4Ls55GSVLUzGKfF2dDk+BUvqowe49wLx6Dbu
+ GvPHXW+ZLERizO+lJYLCzAJRrDi5nCoehzO0csSmElNVuS6Rrjo5RzCMQxjwwAaGkW5RZ2SYHPE
+ t7Tf9es8v0uF6+kGSAcrQgbzoKDM6t7EY6ZKu5GPLmC8bvpVh4jIegTe+Owm2kwmx6mJy2tdqu7
+ r9/+3bUo4/hAzcoKM3exfg2OtiIDx16D3Yog100ECfbO1rvhsvHwO33tx31Sh/ce4++A0WhK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_05,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxlogscore=645 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110131
 
-On Thu, Jul 10, 2025 at 7:43=E2=80=AFPM Brian Masney <bmasney@redhat.com> w=
-rote:
 
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Yours,
-Linus Walleij
+On 7/11/2025 11:09 PM, Arnd Bergmann wrote:
+> On Fri, Jul 11, 2025, at 19:00, Shivendra Pratap wrote:
+>> On 7/11/2025 8:14 PM, Arnd Bergmann wrote:
+>>> On Fri, Jul 11, 2025, at 14:32, Shivendra Pratap wrote:
+>>>
+>>> The distinction between cookie and magic value may be relevant in the
+>>> context of the psci specification, but for the Linux driver, this is
+>>> really just a 64-bit magic number.
+>> ok. then if i understand, this binding change for reboot-mode be dropped
+>> and driver can internally handle the two 32 bit numbers?
+> 
+> Yes, if you can easily keep it internal to the psci driver, that
+> would work, or you could just change the callback type to take a
+> 64-bit number and leave the interpretation up to the driver.
+ok. thanks. Will try it out. 
+> 
+>      Arnd
 
