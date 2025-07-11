@@ -1,219 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-64518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A19AB01787
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:22:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94CACB0181F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:37:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 212D33B1812
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:21:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E445E17D32A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3B6279DD9;
-	Fri, 11 Jul 2025 09:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B654127C864;
+	Fri, 11 Jul 2025 09:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nvwysewU"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dHBxRfa5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F964279903;
-	Fri, 11 Jul 2025 09:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DF27CB02
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752225708; cv=none; b=Stx1PPaZHKj4GFHyjaQtNYd5mvJUvsjOBiAhKLrg3pF+sIqT58aJHIxuI+5BrvZ87sSgxrCv6BdPni305oVpY8LPsdB47JZsHZi2X35iQ2zziGobLrQw7rKuA6tdvYszNry82/nHiHDcDw1nLwbZqz1cO7a0PRM6jIEyzY2txVs=
+	t=1752226628; cv=none; b=BMv+WT5/9L40aoHEOz81RGDo6CMhzs+njYCDLDZj6PzgzVzY5OR+vFKDd1g5teR9kl/YzXWn+waCVSSf4j9vzm4851/DMF+gXbHv9JfuGzGkIPYmtm9sggLFfogdiCNffaNwygo3njdQtiNwWvqwlsrZw5p8bvdweihOj0ksQdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752225708; c=relaxed/simple;
-	bh=ne44bbTYibQEKk06zvdeZXV0JGbJvTKjbOlOl+PFBzk=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=riYxoVZWkzEU35ehYLdzQsiOXocPGq1C2ytYkF9jNq4Y6bFeJiBiYkXnA3uZX1N20e+W1CYZLQNqtfewwK4mBmHq3hWtf9zoR9vxHCWL5giI/vn/pJPLHp8L8jhAU7hBJ0KB9O37RCewYiNsh0ogi5nmPef02Gd+HQ8qXyRF0eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nvwysewU; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752225706; x=1783761706;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=ne44bbTYibQEKk06zvdeZXV0JGbJvTKjbOlOl+PFBzk=;
-  b=nvwysewU2S+nZlK4caS8sdHhQHk/6mBK74hxvfV876P8fBRxyyFXVFGS
-   CEQiysWAmsWdjn+vWx3H5ZtfmRJjnol6lve7mqvno06S658ynV+ivnDVo
-   BwIv9aOf6BzniX7fmFa6epkkzDjHhp/kpCK8eLsogrMnTdfNxnf++hgU6
-   djfubIDc/ysKi+JXLXp1TdwOj1LnNCQSgKdHCpYHO4mUWIisUR7gHqFlw
-   rudkwGuDqWV7FmeVFx3EY5ukk5u9Zk7+3Aoe76cVPkuW5gLkPjMxzmS2T
-   NHpXVamqg/y601/Xu02oSBf3+0mEyyyLud1VquTSFbSZNQDnpX1gztb9i
-   w==;
-X-CSE-ConnectionGUID: vLTQtjgZR72oWYoBbLrtrw==
-X-CSE-MsgGUID: TcuCp9hPQv+OK8Alr1eVoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="79956152"
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; 
-   d="scan'208";a="79956152"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 02:21:45 -0700
-X-CSE-ConnectionGUID: PvcNX0ouT4iYz06C15Oy9w==
-X-CSE-MsgGUID: xk3fq7z+Tg23rwGF7zV5Gg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; 
-   d="scan'208";a="160872671"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.249])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 02:21:39 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Fri, 11 Jul 2025 12:21:36 +0300 (EEST)
-To: Manivannan Sadhasivam <mani@kernel.org>
-cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
-    linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
-    linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-    qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
-    quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-    Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
- __pci_enable_link_state()
-In-Reply-To: <irnkdlrmlozp7joydgnawfuivl2nnuxsb2t4osgxzbtyrfzd3n@7dhzjcd42aiw>
-Message-ID: <c7d4288d-4d0e-a3c2-83d2-c3f1b282d4ac@linux.intel.com>
-References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com> <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com> <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2> <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
- <2a18cf9e-1dd2-4e09-81f4-eb1d07324c8e@oss.qualcomm.com> <irnkdlrmlozp7joydgnawfuivl2nnuxsb2t4osgxzbtyrfzd3n@7dhzjcd42aiw>
+	s=arc-20240116; t=1752226628; c=relaxed/simple;
+	bh=6YZCSoHK95TeXgXlBf0GOGvNtzlsSLsVXR1XKW53PBY=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=tgIHWXmvsl0mM408ps3ZKsbhHMyxhPioQkNvf5yNTRW+il6ZGYnEm99n8iAti6EP78I82YzXmojd6wBb9tytf+DYFensduQDTUJd1/CR6UeYTg8p7H3BWLKrT2rpZH7hvKPWdQVUSrC4Rkujjka6ToZi3lw0PCUWVAw3dhC1ndk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dHBxRfa5; arc=none smtp.client-ip=209.85.208.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-60724177a1fso2032690a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752226625; x=1752831425; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+N72RreF3X1ulCyF9Eewj5G4ApF4h1mESu3uQOVVQvU=;
+        b=dHBxRfa57PkShbEqvEpLdOLISuSr0rXOeII/X1rz5gCnTgyXg+5je9g9r2JLVQ7V+h
+         YRJuLIuxGUbXjKwAG2/ZQSR40KnmzFXboiVeQL+dJp35E+WI8JxBl8DWQRYaA9zMtusw
+         2TBPjf3688JJWf8FZPpZafK0iAZLa3yk8l90EamWkO4BoLhg2Y4TjYf9UXWNYb0YEjxQ
+         LRVQUeJ1URSQK3mooEyurwApxUJTzAqXnh06CnnLCMaw63WTwf/wYuh4trowRnp3jdII
+         /59qGyazm5v4jKRozwnqRw5TdfwB8y4gpqa2ubv8NU04MzmiLi22YXLVD/AIQDBdygq4
+         Wj4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752226625; x=1752831425;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+N72RreF3X1ulCyF9Eewj5G4ApF4h1mESu3uQOVVQvU=;
+        b=T0A+PI4DNHUjdjWrx4GQbIPYgvoaj5REOiCsNiL2wsGXt7qVTImpaP1RArXRcoRN2r
+         XkctAI2S4jl/x7Fcv9B9/xrVBPz4mXFz1RNy95NYMYQdVpQAPU4mIEnwEOvTNRp3j5aN
+         Fo3MfhOSU9Fn8OmUzySga3tke271wEnHgncEimuqnQ1bWazwNyV2rXhVjGuqVwX+Qohd
+         Hi0RUb5pEJwY0R9aEX7/fkEDIV0EyNr7vfKluseDQcGA9RW+kYAhNMRfehTagJu7VF7e
+         3BAD8y2Dr1OwNXNO/KEDHOyyplAeVXqrqOZC1EJ8VMgpo/FKcaeooHf1OZ/PT1jXJgUL
+         TeMw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9+b7PT+56xfPDORQ+GdzyquUlk9i08bbZU2eDhVoYc2VX38J3NXlbU+2+s1Nym1OKBKGQxi1g0RtKsA95@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8OkLJqRsZcuoQN01GAcRjLDosMsmDqyzjMPB2kNA78zQptFvu
+	gPQmaKyC34Z9epYLI0PhFPsRHNmp80i1Nx7RcirXyBCXNR3sQv/B48dQ+WuB9hGYB09yhvlGSTu
+	eUh12yEaOy9HSKgvCbA==
+X-Google-Smtp-Source: AGHT+IHFOCtCs6k1iE35uepmQ8fkKxb0JFiQDnymiBd74U3fea8sOfyyLF0qyCnCfl97eLtQmON7Trpt1dqf47g=
+X-Received: from edyb7.prod.google.com ([2002:aa7:df87:0:b0:60e:4b0b:3d5d])
+ (user=verhaegen job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:1d4e:b0:608:f493:871e with SMTP id 4fb4d7f45d1cf-611e7c0aaf8mr1935764a12.14.1752226625150;
+ Fri, 11 Jul 2025 02:37:05 -0700 (PDT)
+Date: Fri, 11 Jul 2025 10:36:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1361302077-1752225289=:933"
-Content-ID: <0e71b6ef-a263-4169-3869-f785789a47fb@linux.intel.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250711093636.28204-1-verhaegen@google.com>
+Subject: [PATCH v2 0/4] ALSA: compress_offload: Add 64-bit safe timestamp API
+From: Joris Verhaegen <verhaegen@google.com>
+To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>, 
+	Richard Fitzgerald <rf@opensource.cirrus.com>, David Rhodes <david.rhodes@cirrus.com>, 
+	Cezary Rojewski <cezary.rojewski@intel.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	Bard Liao <yung-chuan.liao@linux.intel.com>, 
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Srinivas Kandagatla <srini@kernel.org>, 
+	Daniel Baluta <daniel.baluta@nxp.com>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Joris Verhaegen <verhaegen@google.com>, kernel-team@android.com, 
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org, 
+	sound-open-firmware@alsa-project.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The current compress offload timestamping API relies on
+struct snd_compr_tstamp, whose cumulative counters like
+copied_total are defined as __u32. On long-running high-resolution
+audio streams, these 32-bit counters can overflow,
+causing incorrect availability calculations.
 
---8323328-1361302077-1752225289=:933
-Content-Type: text/plain; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <6c0bed1f-8dc1-cb12-cf09-a337d07698de@linux.intel.com>
+This patch series introduces a parallel, 64-bit safe API to solve
+this problem while maintaining perfect backward compatibility with the
+existing UAPI. A new pointer64 operation and corresponding ioctls
+are added to allow the kernel to track counters using u64 and expose
+these full-width values to user-space.
 
-On Fri, 11 Jul 2025, Manivannan Sadhasivam wrote:
+The series is structured as follows:
 
-> On Wed, Jul 09, 2025 at 06:01:22PM GMT, Krishna Chaitanya Chundru wrote:
-> >=20
-> >=20
-> > On 7/9/2025 2:40 PM, Ilpo J=E4rvinen wrote:
-> > > On Tue, 8 Jul 2025, Manivannan Sadhasivam wrote:
-> > >=20
-> > > > On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru w=
-rote:
-> > > > > ASPM states are not being enabled back with pci_enable_link_state=
-() when
-> > > > > they are disabled by pci_disable_link_state(). This is because of=
- the
-> > > > > aspm_disable flag is not getting cleared in pci_enable_link_state=
-(), this
-> > > > > flag is being properly cleared when ASPM is controlled by sysfs.
-> > > > >=20
-> > > >=20
-> > > > A comment in pcie_config_aspm_link() says:
-> > > >=20
-> > > >   /* Enable only the states that were not explicitly disabled */
-> > > >=20
-> > > > But the function is called from both aspm_attr_store_common() and
-> > > > __pci_enable_link_state(). So I don't know if this is behavior is i=
-ntentional
-> > > > or wrong.
-> > >=20
-> > > Hi,
-> > >=20
-> > > I think it's intentional. Whether the behavior is useful is another g=
-ood
-> > > question but the current behavior aligns with the explanation in the
-> > > comment.
-> > >=20
-> > > My understanding of the situation is:
-> > >=20
-> > > pci_disable_link_state() and pci_enable_link_state() are not symmetri=
-c
-> > > despite the names, never have been (this is one of those many quirks =
-ASPM
-> > > driver has which should be eventually cleaned up, IMO).
-> > >=20
-> > > It might be appropriate to rename pci_enable_link_state() to
-> > > pci_set_default_link_state() to match the name to its functionality (=
-and
-> > > the function comment):
-> > >=20
-> > >   * pci_enable_link_state - Clear and set the default device link sta=
-te
-> > >=20
-> > > Note: "the default ... link state".
-> > >=20
-> > >=20
-> > > I've already raised this concern earlier! As you see, my comment are
-> > > not getting addressed. I'd like to see the author does one of these:
-> >
-> > I replied to your comment on v3 patch[1], and I feel instead of having
-> > new function() we can use same API to our purpose.
+Patch 1: Introduces the new internal pointer64 op, refactors the
+core logic to use it, and defines the new UAPI structs.
 
-It's not about what "feels" something. One should clearly write down why
-such conversion is correct/acceptable when it comes to existing callers=20
-if changing an existing API. The note should be such that it remains a=20
-permanent record for future (in the changelog).
+Patch 2: Exposes the SNDRV_COMPRESS_TSTAMP64 ioctl.
 
-I don't have answer to what are the expectations or intent of the existing=
-=20
-callers. Convincing a patch is fine is responsibility of the one who is=20
-submitting the patch, not reviewer's.
+Patch 3: Exposes the corresponding SNDRV_COMPRESS_AVAIL64 ioctl.
 
-Unfortunately, it is usually quite hard to figure out for existing drivers=
-=20
-we're not familiar with. I'm not saying your "feel" is necessarily wrong,=
-=20
-but the existing callers need to be properly investigated if you choose=20
-that path, not just handwaved over. It likely boils down if the=20
-->aspm_default and controlling it are useful features to have in the ASPM=
-=20
-driver as your patch would take away that ability.
+Patch 4: Implements the new .pointer64 operation in various ASoC
+drivers that support compress offload.
 
-> You replied to Ilpo, but never got an agreement. Please try to close the
-> discussions before posting next rev. If reviewers forgot to reply to your=
- query,
-> feel free to ping them in the same thread itself.
->
-> > > 1) Renames pci_enable_link_state() to pci_set_default_link_state()
-> > >=20
-> > > 1b) If pci_enable_link_state() is still needed after that, a new func=
-tion
-> > > is added to symmetrically pair with pci_disable_link_state().
-> > >=20
-> > > or alternatively,
-> > >=20
-> > > 2) Changelog justifies very clearly why this change is okay with the
-> > > existing callers. (And obviously the function comment should be alter=
-ed to
-> > > match the functionality in that case too).
-> > >=20
-> > > If approach 2 is chosen, it should be very carefully reviewed when it
-> > > comes to the callers.
-> > >=20
-> > I am in favor of approach 2 which you suggested, but lets wait for othe=
-r
-> > reviewers feedback on this. Based up on the response i will make
-> > necessary changes in v5.
-> >=20
->=20
-> I would go for (1). It is always going to be a problem to change a legacy=
- API
-> like this. We might end up causing regressions. So it is safe to rename t=
-o
-> reflect the purpose and try to come up with a new API that does what you =
-want.
-> If callers want to migrate to the new API, they can also do it in the fut=
-ure.
+This series has been tested on a Pixel 9 device. All compress offload
+use cases, including long-running playback, were verified to work
+correctly with the new 64-bit API, and no regressions were observed
+when using the legacy API.
 
-That's my recommendation as well.
+Thanks,
+Joris (George) Verhaegen
 
---=20
- i.
---8323328-1361302077-1752225289=:933--
+Signed-off-by: Joris Verhaegen <verhaegen@google.com>
+
+---
+Changes in v2:
+  - Corrected author and Signed-off-by to be consistent (Mark Brown).
+
+Joris Verhaegen (4):
+  ALSA: compress_offload: Add 64-bit safe timestamp infrastructure
+  ALSA: compress_offload: Add SNDRV_COMPRESS_TSTAMP64 ioctl
+  ALSA: compress_offload: Add SNDRV_COMPRESS_AVAIL64 ioctl
+  ASoC: codecs: Implement 64-bit pointer operation
+
+ include/sound/compress_driver.h               |   3 +
+ include/sound/soc-component.h                 |   5 +
+ include/sound/soc-dai.h                       |   6 +
+ include/uapi/sound/compress_offload.h         |  32 +++
+ sound/core/compress_offload.c                 | 210 ++++++++++++++----
+ sound/soc/codecs/cs47l15.c                    |   1 +
+ sound/soc/codecs/cs47l24.c                    |   1 +
+ sound/soc/codecs/cs47l35.c                    |   1 +
+ sound/soc/codecs/cs47l85.c                    |   1 +
+ sound/soc/codecs/cs47l90.c                    |   1 +
+ sound/soc/codecs/cs47l92.c                    |   1 +
+ sound/soc/codecs/wm5102.c                     |   1 +
+ sound/soc/codecs/wm5110.c                     |   1 +
+ sound/soc/codecs/wm_adsp.c                    |  53 ++++-
+ sound/soc/codecs/wm_adsp.h                    |   3 +
+ .../intel/atom/sst-mfld-platform-compress.c   |  17 +-
+ sound/soc/intel/atom/sst-mfld-platform.h      |   2 +
+ sound/soc/intel/atom/sst/sst_drv_interface.c  |  43 +++-
+ sound/soc/qcom/qdsp6/q6asm-dai.c              |  41 +++-
+ sound/soc/soc-component.c                     |  20 ++
+ sound/soc/soc-compress.c                      |  21 ++
+ sound/soc/soc-dai.c                           |  14 ++
+ sound/soc/sof/compress.c                      |  44 +++-
+ sound/soc/sprd/sprd-pcm-compress.c            |  28 ++-
+ sound/soc/sprd/sprd-pcm-dma.h                 |   2 +-
+ sound/soc/uniphier/aio-compress.c             |  40 +++-
+ 26 files changed, 503 insertions(+), 89 deletions(-)
+
+-- 
+2.50.0.727.gbf7dc18ff4-goog
+
 
