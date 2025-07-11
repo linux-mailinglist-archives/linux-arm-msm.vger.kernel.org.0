@@ -1,150 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-64623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE1DB021DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 18:33:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BE34B021F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 18:38:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2115F188F4EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:33:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 438983A2CF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C0C2ED161;
-	Fri, 11 Jul 2025 16:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E36B2ED865;
+	Fri, 11 Jul 2025 16:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxuNmqG4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zbs/fxqU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F415A858;
-	Fri, 11 Jul 2025 16:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540D61CDA3F;
+	Fri, 11 Jul 2025 16:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752251597; cv=none; b=tNhIqQ8NtOrsosTO3Gy/SrxjRF+NmkAPO7obKo36eyuDAA0iC+H3z7kkYS8q4TiC33mVDb2wv0tIq7nm0RZ5Tj0a3K1WNZ1z2sNjhohz7BZf0gp4k7oGerM7a6t9X5asVkPLzcmDjVMyUSAjOyE8lCMpmYQ/mXfY4lmM6PYFyuU=
+	t=1752251881; cv=none; b=oSf97JfnQQWlhvW9uj7DxTjdAr+V9OX+V4APa0If3E26BNvLKJ7TZtCFYEKMIkGcXgV/T/JMlbyCPw25K1PhDeU2DwZ7mxt1ifD5nzUG/PT2yisHHxw6WFPwi2BY5nYFwsKoyzyGBG1mP1lteb1wkV+gwfY8v0KIySvg6nWMGfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752251597; c=relaxed/simple;
-	bh=7USLu/Tu8CmztTr3/24FOEB2Dn4f9FhVd2eqi2tHmfg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Jour0LG8gvhre60CylhTVb31Uluh0eOQwvm7CFYL5qmxsyJxp4TWO+IjHsZDDXv858IatUi+Q7wT2Dwb0eQA1Ji9OHX3j4z3LhPmq2JKnYzcj+U6TVMOIkwL7uxMIa8YNUxj9cuho0n40UcBFtZVVIe9t0rBaR4ZSgOlZ/ogHdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxuNmqG4; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a5257748e1so1768067f8f.2;
-        Fri, 11 Jul 2025 09:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752251594; x=1752856394; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=A1r7lOXR2bkUYaFtDJ7CylYLTgBc/fYyMcmc/+yJZ30=;
-        b=JxuNmqG41HuQKVkjTEOY+LF6c2txrkJ1F2XAYOj6i5DEUz27lQvRFhUvB5lf2zs90f
-         P5CDeqaOmIlQ1yHHopiNpaB58KLRwgQMa/ka8N2ntSXD+mhM073OLLik7YHNaRus68CS
-         hyhP6U914C8btN8CB8OLo9MuRn4HcI96Lgn8/G2lJxYV6s7qTIuFk6InLwgmqr2NxWyu
-         G8xOWLW+XVYNKa13MoQpumsH22OIexp9sB865EHl4pG4iFtGE0t74U6l5XARKO/f06Hd
-         7snFoBjT2IhQQD73k/rd7dtD+09qnSQWWUz4qx3SexRDiF3gQGvZ04TNVwbMjZ3IvkFC
-         YsNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752251594; x=1752856394;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A1r7lOXR2bkUYaFtDJ7CylYLTgBc/fYyMcmc/+yJZ30=;
-        b=vJjHXV0VFkR2jeFvHQOmmb60SBi/aPbaNgaOS44THlrQ9hwq50yseKvcpo/irABhDY
-         oEWeMg4rEvLCz9M7FFdyW/0m4IpYJaebUNlhKFGSMGyv6lZfvN6VbM2wUU0dWAXkLq/z
-         80sgKr6uAU8rJkldvvyXSOXmroHIJeEav3g1OgaO/3rulFIIT4jcfApY19CkptJ8GOdj
-         9PgrcZdLYnIpf9vb8qiMWS2ozXGj1Q45X6vwSJljs2dL5VEFgTkwuWPDl+gRUG+SQHXW
-         u7H38HjwyddQ0mZFnys5ppwwKnMdh+z1lcgcJTDUsVOiKjbeH1we1gN7PZriHYkAqa1X
-         i6OA==
-X-Forwarded-Encrypted: i=1; AJvYcCV/osZ/qKWzy7zqZwW+ItaQosDcy5yTp5owQllEtDJ504Bn8I3gTfaJ1gCEpBRFTqTx1QsYDrSphkgDwfiS@vger.kernel.org, AJvYcCVZAGIJAQKNah6UBfFuEUb8pOow+41pKxKqwVHTwMbRMeIRuuxN1mITOR1yHL2MMQBK85IMI8U1sugENWMg@vger.kernel.org, AJvYcCXMdGMO2k2hzeyDj7UHvk67wkt/vcbVJIUjNZbMH/7l7MmbPCUSHkBKYlD04bOQnF4Fy/OJxLx9u8rV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQeQP+FYJ0hDhJ/IAE66l8QINMgqc0IjcqCTrVHrKHay+hqSIC
-	eVelkQjr0QVMHm9vylkRYRnHadVBPfsM8vgrlQbce1pDfETHeHU6CXar
-X-Gm-Gg: ASbGncsERVa2T3uuvebC6vdD0WFUyQV8t+TWUgFILMce7Zg9UZ9AKNalkaxpeIB/dcj
-	xEp5aU8Vdn3jY7FOA1nZYxaMSTSMEJaMDmLLMs0OcoBcbYWlqW7tzOz9q2Gnr2vjKUw+5Xs66A/
-	ws4Xzw9L5wRkQrJGVxONe9pOhefHGLESYd55oIU0Ee04NeYjECHMFuTvNo40qB2w3s/8wZQJTOh
-	F4ZwPRyoQdA/0D7jT2k/lCveqhvyMzKRuRj0gSN8WZ+tm4Rs7ZO8QP7G9sIYCX/7OV84sCayUTS
-	Cmi+OWsYsJPD8FoS8i8HPi8Tcgqj7xudkIX1kbY1hfGOa/WWUiop58cHxAuK8VERfAEX5y8l24l
-	WfOtFR3CEQDPwBzUJB71gcY/Qj4+hsb8ltpjQAo2buJ3eLOvVkb0=
-X-Google-Smtp-Source: AGHT+IEZlhPktMwwW0Jbf3RqoTX/NKhZqR5TJTdFaddNSu4Crn0tbA5n062K8UspEDbchBqtVVg+fw==
-X-Received: by 2002:a05:6000:40ca:b0:3a4:f786:4fa1 with SMTP id ffacd0b85a97d-3b5f2db14eamr3033408f8f.2.1752251593613;
-        Fri, 11 Jul 2025 09:33:13 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d4b5sm4969860f8f.53.2025.07.11.09.33.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 09:33:13 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Fri, 11 Jul 2025 18:32:52 +0200
-Subject: [PATCH] spi: spi-qpic-snand: simplify bad block marker duplication
+	s=arc-20240116; t=1752251881; c=relaxed/simple;
+	bh=QAZcD5rwRQEymEaXE3HeYg5QulhnM/zknP1OwbVjQO0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ndl656he8hC1Y1CEVMCM5jI0OamRgpHSSLzeRKz15wKA49x/MbUyeX5ZA4/4cJW3IH7MGF9s12P6nbHLei5J7nez/vuY2sAqsijjHKSAS+wy1USuqlS8c8ji8y2wgpa4mqXKLZ0O9HpbZ+lWwmKba9XPLbPqIxBG9TJNRS9FzOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zbs/fxqU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C8FC4CEED;
+	Fri, 11 Jul 2025 16:38:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752251880;
+	bh=QAZcD5rwRQEymEaXE3HeYg5QulhnM/zknP1OwbVjQO0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Zbs/fxqUBNGKLoaGChnrfgIXjCFT8qgS1NFYne+Dntrv03UofO6RaqUtVoGCE+qXT
+	 4LtX9qSLWq9UEYXm2ndP+LYmAv1x/QXGD3xVHV5mBSjnPpEB2JeQyWIM9zAd/dzjAr
+	 0kTk4tkpChqqlHuypQ1vg9t4JOW3VKGz5H2FExq+gJ9SFjngAv4IbeGCor1hutvXTt
+	 CptaZVwXmq8EnVrNTabapFOmexWrDoBvxj85EkBU83yo8mpowJ4QeVoFEoTAvCbELS
+	 NA40GDZsp8oDBlgqLLQnbL9JvGCF3suVqRJKzFwasbcrvuOpxcgLWBMNVGfUD7q1v8
+	 zOVHb92flLc3Q==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1uaGl3-00EwZT-Mo;
+	Fri, 11 Jul 2025 17:37:57 +0100
+Date: Fri, 11 Jul 2025 17:37:56 +0100
+Message-ID: <865xfyadjv.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	pbonzini@redhat.com,
+	chenhuacai@kernel.org,
+	mpe@ellerman.id.au,
+	anup@brainfault.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	seanjc@google.com,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	willy@infradead.org,
+	akpm@linux-foundation.org,
+	xiaoyao.li@intel.com,
+	yilun.xu@intel.com,
+	chao.p.peng@linux.intel.com,
+	jarkko@kernel.org,
+	amoorthy@google.com,
+	dmatlack@google.com,
+	isaku.yamahata@intel.com,
+	mic@digikod.net,
+	vbabka@suse.cz,
+	vannapurve@google.com,
+	ackerleytng@google.com,
+	mail@maciej.szmigiero.name,
+	david@redhat.com,
+	michael.roth@amd.com,
+	wei.w.wang@intel.com,
+	liam.merwick@oracle.com,
+	isaku.yamahata@gmail.com,
+	kirill.shutemov@linux.intel.com,
+	suzuki.poulose@arm.com,
+	steven.price@arm.com,
+	quic_eberman@quicinc.com,
+	quic_mnalajal@quicinc.com,
+	quic_tsoni@quicinc.com,
+	quic_svaddagi@quicinc.com,
+	quic_cvanscha@quicinc.com,
+	quic_pderrin@quicinc.com,
+	quic_pheragu@quicinc.com,
+	catalin.marinas@arm.com,
+	james.morse@arm.com,
+	yuzenghui@huawei.com,
+	oliver.upton@linux.dev,
+	will@kernel.org,
+	qperret@google.com,
+	keirf@google.com,
+	roypat@amazon.co.uk,
+	shuah@kernel.org,
+	hch@infradead.org,
+	jgg@nvidia.com,
+	rientjes@google.com,
+	jhubbard@nvidia.com,
+	fvdl@google.com,
+	hughd@google.com,
+	jthoughton@google.com,
+	peterx@redhat.com,
+	pankaj.gupta@amd.com,
+	ira.weiny@intel.com
+Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest page faults
+In-Reply-To: <20250709105946.4009897-17-tabba@google.com>
+References: <20250709105946.4009897-1-tabba@google.com>
+	<20250709105946.4009897-17-tabba@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250711-qpic-snand-simplify-bbm-copy-v1-1-dd2608325f72@gmail.com>
-X-B4-Tracking: v=1; b=H4sIALM8cWgC/x3MwQqDMAwA0F+RnBeIAXHsV4YHjVEDa60NDEX67
- ys7vsu7wTWbOryaG7J+zW2PFe2jAdnGuCraXA1M3FHfEh7JBD2OcUa3kD62XDhNAWVPFz5ZhJS
- IWXqoRcq62Pnv30MpP0IL7B1uAAAA
-X-Change-ID: 20250710-qpic-snand-simplify-bbm-copy-82cc0e0022c7
-To: Mark Brown <broonie@kernel.org>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
+ in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Due to the expectations of the SPINAND code, the driver duplicates
-the bad block markers during raw OOB reads.
+On Wed, 09 Jul 2025 11:59:42 +0100,
+Fuad Tabba <tabba@google.com> wrote:
+> 
+> Add arm64 architecture support for handling guest page faults on memory
+> slots backed by guest_memfd.
+> 
+> This change introduces a new function, gmem_abort(), which encapsulates
+> the fault handling logic specific to guest_memfd-backed memory. The
+> kvm_handle_guest_abort() entry point is updated to dispatch to
+> gmem_abort() when a fault occurs on a guest_memfd-backed memory slot (as
+> determined by kvm_slot_has_gmem()).
+> 
+> Until guest_memfd gains support for huge pages, the fault granule for
+> these memory regions is restricted to PAGE_SIZE.
+> 
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: James Houghton <jthoughton@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  arch/arm64/kvm/mmu.c | 82 ++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 79 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 58662e0ef13e..71f8b53683e7 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -1512,6 +1512,78 @@ static void adjust_nested_fault_perms(struct kvm_s2_trans *nested,
+>  	*prot |= kvm_encode_nested_level(nested);
+>  }
+>  
+> +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
+> +
+> +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> +		      struct kvm_s2_trans *nested,
+> +		      struct kvm_memory_slot *memslot, bool is_perm)
+> +{
+> +	bool write_fault, exec_fault, writable;
+> +	enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
+> +	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+> +	struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
+> +	struct page *page;
+> +	struct kvm *kvm = vcpu->kvm;
+> +	void *memcache;
+> +	kvm_pfn_t pfn;
+> +	gfn_t gfn;
+> +	int ret;
+> +
+> +	ret = prepare_mmu_memcache(vcpu, true, &memcache);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (nested)
+> +		gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
+> +	else
+> +		gfn = fault_ipa >> PAGE_SHIFT;
+> +
+> +	write_fault = kvm_is_write_fault(vcpu);
+> +	exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+> +
+> +	if (write_fault && exec_fault) {
+> +		kvm_err("Simultaneous write and execution fault\n");
+> +		return -EFAULT;
+> +	}
 
-It has been implemented by using two if statements, and due to the
-opposite conditions one of conditional codepaths always runs. Since
-the effect of both codepaths is the same, remove the if statements
-and use a single line solution instead.
+I don't think we need to cargo-cult this stuff. This cannot happen
+architecturally (data and instruction aborts are two different
+exceptions, so you can't have both at the same time), and is only
+there because we were young and foolish when we wrote this crap.
 
-Also add a note about why the duplication is required.
+Now that we (the royal We) are only foolish, we can save a few bits by
+dropping it. Or turn it into a VM_BUG_ON() if you really want to keep
+it.
 
-No functional changes intended.
+> +
+> +	if (is_perm && !write_fault && !exec_fault) {
+> +		kvm_err("Unexpected L2 read permission error\n");
+> +		return -EFAULT;
+> +	}
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+Again, this is copying something that was always a bit crap:
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index b711c8be42c1f76029497b0c17d00cd8e52f5aa2..94c4d76cee34420d1dc3894aadad0086c6f22d96 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -597,10 +597,16 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
+- it's not an "error", it's a permission fault
+- it's not "L2", it's "stage-2"
+
+But this should equally be turned into an assertion, ideally in a
+single spot. See below for the usual untested hack.
+
+Thanks,
+
+	M.
+
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index b92ce4d9b4e01..c79dc8fd45d5a 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1540,16 +1540,7 @@ static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
  
- 	bbpos = mtd->writesize - ecc_cfg->cw_size * (num_cw - 1);
+ 	write_fault = kvm_is_write_fault(vcpu);
+ 	exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+-
+-	if (write_fault && exec_fault) {
+-		kvm_err("Simultaneous write and execution fault\n");
+-		return -EFAULT;
+-	}
+-
+-	if (is_perm && !write_fault && !exec_fault) {
+-		kvm_err("Unexpected L2 read permission error\n");
+-		return -EFAULT;
+-	}
++	VM_BUG_ON(write_fault && exec_fault);
  
--	if (snandc->data_buffer[bbpos] == 0xff)
--		snandc->data_buffer[bbpos + 1] = 0xff;
--	if (snandc->data_buffer[bbpos] != 0xff)
--		snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
-+	/*
-+	 * TODO: The SPINAND code expects two bad block marker bytes
-+	 * at the beginning of the OOB area, but the OOB layout used by
-+	 * the driver has only one. Duplicate that for now in order to
-+	 * avoid certain blocks to be marked as bad.
-+	 *
-+	 * This can be removed once single-byte bad block marker support
-+	 * gets implemented in the SPINAND code.
-+	 */
-+	snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
+ 	ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
+ 	if (ret) {
+@@ -1616,11 +1607,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+ 	VM_BUG_ON(write_fault && exec_fault);
  
- 	memcpy(op->data.buf.in, snandc->data_buffer + bbpos, op->data.nbytes);
+-	if (fault_is_perm && !write_fault && !exec_fault) {
+-		kvm_err("Unexpected L2 read permission error\n");
+-		return -EFAULT;
+-	}
+-
+ 	/*
+ 	 * Permission faults just need to update the existing leaf entry,
+ 	 * and so normally don't require allocations from the memcache. The
+@@ -2035,6 +2021,9 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
+ 		goto out_unlock;
+ 	}
  
++	VM_BUG_ON(kvm_vcpu_trap_is_permission_fault(vcpu) &&
++		  !write_fault && !kvm_vcpu_trap_is_exec_fault(vcpu));
++
+ 	if (kvm_slot_has_gmem(memslot))
+ 		ret = gmem_abort(vcpu, fault_ipa, nested, memslot,
+ 				 esr_fsc_is_permission_fault(esr));
 
----
-base-commit: 7d61715c58a39edc5f74fc7366487726fc223530
-change-id: 20250710-qpic-snand-simplify-bbm-copy-82cc0e0022c7
-
-Best regards,
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+Without deviation from the norm, progress is not possible.
 
