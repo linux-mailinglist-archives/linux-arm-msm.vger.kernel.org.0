@@ -1,238 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-64611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B370AB01E44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:50:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58771B01E70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:58:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F17B05A585D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:50:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1153178468
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:58:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEEAE8BEC;
-	Fri, 11 Jul 2025 13:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1C62DCF49;
+	Fri, 11 Jul 2025 13:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W0vKWX0Q"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DOwjTDiV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A572D3A6A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F8D2D949C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752241841; cv=none; b=IjUp5fEJF7R+JmWHVH0o91AYErWw0nS8bVUX7YYGFcvZ7CMRiAnm/nhSOvDYWqAWi7uREqs7iDCKtA0L9sa213FG71zRms5V5tm43bLC8+CaWn2cWhDvkTF8rmNiX3l++63NOQc93IQslgUGa1Rmo5AC7QD8p9Z1FpG0SmWhBZc=
+	t=1752242312; cv=none; b=PEBZLDU6kgTQ4mOqRT96DJeLRzFY6h8Lzt09yIUsQ1dTRXK8nbhv6mhaeh4oJYgy8NtG9FyUypLJHTYrcUkieC3lzBD1GtR6OxmpKcIVK4g2d7cGiS6iudHzXtwBH+2OkGcjYQl6N0USJWX0bTZCG9AqSvX4c6uCOtSWmrtqDbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752241841; c=relaxed/simple;
-	bh=xrOfrea3ktIO3rH/cRZjG/WzXdNS8Fe/7C22LVDHtd0=;
+	s=arc-20240116; t=1752242312; c=relaxed/simple;
+	bh=pNqonM4UVtrsALbVQxE7BjqrmBap83H9yb8p9qwz7o4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q0MbLBHEsOxzDJkzkIsMQc7s9RjQoaUprwLHs1HCnM9GXRe7c7xkFuaG480VGgEEchuasu6MJbaRRVDJ1SR9kMAGdmDYxv1J/+8+RQUjvrA0GsFq4fR/En0J5CxoYksrJnumB6wjV1eEaP+OqRz12i+EhvFvKYMA72C2Q+dir5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W0vKWX0Q; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-748e81d37a7so1351785b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 06:50:39 -0700 (PDT)
+	 To:Cc:Content-Type; b=QHu3P5nYaHzlNELY+bJxe9hIkMltmfe02gIXpuDHeH46YhIx+X5K6adLz0y381vvIxCycA+xyl05C1OhYbko2aPnaGRBvcKEh38LqFok5p0eOoEoB/gjthOhTvqDL+7tZy8WfKmLQVK7pzIUVXMX+XrmDYvjoEbLdRpSSZuJEl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DOwjTDiV; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b34a78bb6e7so1746971a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 06:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752241839; x=1752846639; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mxCChrglHn+Uqy0YUudJl4m6M4rjCL8xQf7aFXlmf3g=;
-        b=W0vKWX0QDjMc7M4E53btXqi/fZKT2AHHqAsDH6LDM9lbB8fLYgy8j2G6+5U/AGT94V
-         Sk6W6Vcwz+Akc4BP4VHttEyrl6+yPHtQcpriU5nTXRZ7ZbefLorI46b4WDHdeHfJhzEw
-         R/VQi+fW772BQpPzEh3MCc7ccYGQmV1/Iy65lDxQW5kLZo1EHrt5ArUKnHf6R8ogoltc
-         eHZre9nr6FTEhOaOwftpkA/3b0EAQoGW3c+WSDdUeBacPFt42GXD7j7Ka4EXQaCASk8M
-         lK/vgype0Da1q4BMLMlV+fLD/sOM1yYcYKrfX2WbkePnngQBQTDZm5yZQ9/ddgI3P3eY
-         qbIw==
+        d=google.com; s=20230601; t=1752242310; x=1752847110; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pNqonM4UVtrsALbVQxE7BjqrmBap83H9yb8p9qwz7o4=;
+        b=DOwjTDiV/nNBIE5obEmvtiPRS955V0t1VfTftQX9So+5sPYBiTaYcaSq+zj3bLy6bE
+         sFYvscgXurxNNTkDDf332Mr2nk2KHg7XsMGgGKlw4MtHLYMyhJSc77b4ac0+2cuVQuB+
+         RkPTB78ukfB1BtwxUtUK1ckCsZeMKm8FLGYX/PSO1aK+/PPnbMZJg0ClQ6qy5qr+8rej
+         gvvhs/3dE2YdVRLb4aSssWk2ax6uHd12V4p0pp3PWJOjHvPbBzt78q0TTzazeBlfufyR
+         pp2oPCBQWkBgwDDiVVcgimBWrhEM/Yx6LRDddFOZkt6Olj9MaPCcJSeREn499F4wV/KX
+         cXkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752241839; x=1752846639;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mxCChrglHn+Uqy0YUudJl4m6M4rjCL8xQf7aFXlmf3g=;
-        b=Ag1lk5iPJOqPl3VRaveE502/NTRfSjTte4xZ8qaonsRrBYtNSl20G1PBlaEyiYxnsn
-         klzRKYb7+9y+6sILVtLlZHq9CiCHYMthThiBTRpm6CPNoW7pN0n+ffak5SAW+Cb9GyD3
-         XkppFOSEmsJyuVXwpxcoQB/1NlOG186nxgMuOuMuJhdjO9I/dlkgPlaN4DRmtkCj0Vp7
-         eUQyDDGrdVgb7/KAyrhEiWz4X7UOKIVcF80aw+XsercZsczwfiwxyf6wBDN6MMaSH0C5
-         jszHh8sND36ZU5YN6Vkdq9Tich9I0S7GkjM61PL9C6XuGSlxNq9FuWTZUo/x8jXsIGcr
-         x21w==
-X-Forwarded-Encrypted: i=1; AJvYcCW+Rg/TVhNPKM6S6Bxb8jpS8EH0r6L+wbs/NxM73hCZhVtLTOdnGRuaxf0DU1PS7SAPGk8TjSZWeClzrZKc@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBn+EYYcGm3wifHKRPFCGRFlK2Gwmp9Zaj5mcmQl0Vi0ZHY3F8
-	QSJGeeyXOtHtmtd9K9PyrvzvaEuHWQ3kQBnne/SrnAYcEOPmxJR5qJVRJd3jpx3ToovEKgXJnUk
-	zEGPNNZxc5J2MeVzluQyYPGfPfNzFyUUKWCcV8ppuOw==
-X-Gm-Gg: ASbGncuCdNcevTnY/PVkcq0N0rQDX8toP6pZKXDHxNxjS7psiIm95ZZRZzSdjvQcGs+
-	DMQj/CnD5kq8c02mvf5n88aENWKqhch2TFRLN2Cei37hTT1cxFjsSeuJGbcF0lFqv5BAXNWH+Hs
-	xepR1VU8pqGEBfUHFoddDtfQtw5lznDPY/iLir474EzWj65palDt2PjVJ7mTOZ9+wAKuuV1FwqI
-	TGX7m3A7KxJ0dvj7xRxie2pyuJgvvUAvCvLSPRR
-X-Google-Smtp-Source: AGHT+IF9w1zlsOy9Tpc/VqUpX5hlsohRMIl3W8B9IgIpmh4707Cf+Roh6PhUrMsx1N8++dq63Ov8Ydg2FFN95JGpX3E=
-X-Received: by 2002:a05:6a00:856:b0:748:fcfa:8bd5 with SMTP id
- d2e1a72fcca58-74ee0bb022amr4951233b3a.3.1752241839246; Fri, 11 Jul 2025
- 06:50:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752242310; x=1752847110;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pNqonM4UVtrsALbVQxE7BjqrmBap83H9yb8p9qwz7o4=;
+        b=goAuyxI+8eA2dXMVJFVFxWxrq34qvEoiSpr9miPvLjGtIxbSwdhwyNVvtsTSOHpV9q
+         C1T2AMBE0q/3RE9lvF4fE6MkAkxYVP51tuF0iChj9lvGnMFmNFi9fItA5jz7KBbtGdhB
+         IMQhl7WFH6bDdb56E/3zR8ZmJKuvuzq70BXrH4m5Oe3t3hNC1nU+KfkPVX7q3u1DO7Ex
+         sfzoJgRx24deNRhunIV0LD4m53weFJJctlHzUm2vk0+MVq202jWON90W042NncsS3JQa
+         Xje+gEjgwmu0f4KSk+EahMmtvPW8w9YcASl4/OcFROjfMDiETkpke3YJjXq7BS6XeH+5
+         PuSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX3zdm64hJrB9aNe2X/wt5OKB3vuISRT7oEjj5XorlQhOLuoq/gADhXss4IwzhkMmHIf059OUrOSQ6e/sJB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQCTIJZi07qTwj8nv88NRg37xwof9sa0TLiBxrVu5I/gTmyBAN
+	gE0tu9Gt5PuPBCQhB0uBCqx0HYHoHCAlfex3JFVibffmCAbexczsWxuW34S4/vatz4nanM2cqSc
+	ozJv/XE4YkAJvGDVXbIaQ2rL/ipu3ED/Eq7kpcM5U
+X-Gm-Gg: ASbGncv1nf+mySFZnA8cVc8DbM6SxBi0vdJCKgnCN1gMHm7IgS9Fh6K2BS3eQ0asH2X
+	ek6GzxXb8VlmjcvfLoeIkGbbXXixrx9MEAODWN0b9Xx1niLhiArR3b5NiQeyQPbmENQt86hEESq
+	FImNKNxSJUibvUFmbTzP5VXACqwSPof6mww5EcV3g1d/QTmW22zVA0j3wuHy21/+Ul3CINzkhuV
+	kagJl7ftUTTK3NBv4hOOb511ReueV4BCV8Czv8K
+X-Google-Smtp-Source: AGHT+IF9vpsS88cqwJvceZ3AVWYOHULHoLV6jnQ0fxFPUTnJrLpeVWrilV12HX6w7fKkYy/KsZQkRWej43wmqe/0mho=
+X-Received: by 2002:a17:90b:33c2:b0:313:2754:5910 with SMTP id
+ 98e67ed59e1d1-31c4cb8aa2dmr5577396a91.15.1752242308018; Fri, 11 Jul 2025
+ 06:58:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250611-trace-noc-v10-0-a83b5c63da34@quicinc.com> <20250611-trace-noc-v10-1-a83b5c63da34@quicinc.com>
-In-Reply-To: <20250611-trace-noc-v10-1-a83b5c63da34@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Fri, 11 Jul 2025 14:50:27 +0100
-X-Gm-Features: Ac12FXz5suXDSfb0reqEF8K7TSk9o2sFELW1ViZ5ykT-xvY6SdObq4JpNg1MVng
-Message-ID: <CAJ9a7Vhs=5pXu4JvqeAbLBbV97x4xwVP6ag4oiK5sbJntwNNqA@mail.gmail.com>
-Subject: Re: [PATCH v10 1/2] dt-bindings: arm: Add device Trace Network On
- Chip definition
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, kernel@oss.qualcomm.com, 
-	linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250711082441.4193295-1-verhaegen@google.com> <aHEEu1eSSGRhITmW@vaman>
+In-Reply-To: <aHEEu1eSSGRhITmW@vaman>
+From: George Verhaegen <verhaegen@google.com>
+Date: Fri, 11 Jul 2025 14:58:01 +0100
+X-Gm-Features: Ac12FXwkr5vfJuzXyUzX28ecPpQ4ARo3qP5rhcHUhMh4j4kcitfjBXfbRa88hKs
+Message-ID: <CAAntYmKea1p=ao3OOWb=1Q+BXdyo1SCm9qGb_JMC5ry5DQVt-Q@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] ALSA: compress_offload: Add 64-bit safe timestamp API
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Charles Keepax <ckeepax@opensource.cirrus.com>, 
+	Richard Fitzgerald <rf@opensource.cirrus.com>, David Rhodes <david.rhodes@cirrus.com>, 
+	Cezary Rojewski <cezary.rojewski@intel.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	Bard Liao <yung-chuan.liao@linux.intel.com>, 
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Srinivas Kandagatla <srini@kernel.org>, 
+	Daniel Baluta <daniel.baluta@nxp.com>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	kernel-team@android.com, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@opensource.cirrus.com, 
+	linux-arm-msm@vger.kernel.org, sound-open-firmware@alsa-project.org, 
+	linux-arm-kernel@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 11 Jun 2025 at 11:43, Yuanfang Zhang <quic_yuanfang@quicinc.com> wrote:
->
-> Add a new coresight-tnoc.yaml file to describe the bindings required to
-> define Trace Network On Chip (TNOC) in device trees. TNOC is an
-> integration hierarchy which is a hardware component that integrates the
-> functionalities of TPDA and funnels. It collects trace form subsystems
-> and transfers to coresight sink.
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-tnoc.yaml          | 113 +++++++++++++++++++++
->  1 file changed, 113 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..9d1c93a9ade3ff14ede4a8d1481782776cf47be9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
-> @@ -0,0 +1,113 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tnoc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Trace Network On Chip - TNOC
-> +
-> +maintainers:
-> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> +
-> +description: >
-> +  The Trace Network On Chip (TNOC) is an integration hierarchy hardware
-> +  component that integrates the functionalities of TPDA and funnels.
-> +
-> +  It sits in the different subsystem of SOC and aggregates the trace and
-> +  transports it to Aggregation TNOC or to coresight trace sink eventually.
-> +  TNOC embeds bridges for all the interfaces APB, ATB, TPDA and NTS (Narrow
-> +  Time Stamp).
-> +
-> +  TNOC can take inputs from different trace sources i.e. ATB, TPDM.
-> +
-> +  Note this binding is specifically intended for Aggregator TNOC instances.
-> +
-> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
-> +select:
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        enum:
-> +          - qcom,coresight-tnoc
-> +  required:
-> +    - compatible
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^tn(@[0-9a-f]+)$"
-> +
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tnoc
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  clocks:
-> +    items:
-> +      - description: APB register access clock
-> +
-> +  in-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    patternProperties:
-> +      '^port(@[0-9a-f]{1,2})?$':
-> +        description: Input connections from CoreSight Trace Bus
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +  out-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    additionalProperties: false
-> +
-> +    properties:
-> +      port:
-> +        description:
-> +          Output connection to CoreSight Trace Bus
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - in-ports
-> +  - out-ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    tn@109ab000  {
-> +      compatible = "qcom,coresight-tnoc", "arm,primecell";
-> +      reg = <0x109ab000 0x4200>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      in-ports {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        port@0 {
-> +          reg = <0>;
-> +
-> +          tn_ag_in_tpdm_gcc: endpoint {
-> +            remote-endpoint = <&tpdm_gcc_out_tn_ag>;
-> +          };
-> +        };
-> +      };
-> +
-> +      out-ports {
-> +        port {
-> +          tn_ag_out_funnel_in1: endpoint {
-> +            remote-endpoint = <&funnel_in1_in_tn_ag>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +...
->
-> --
-> 2.34.1
->
+On Fri, 11 Jul 2025 at 13:34, Vinod Koul <vkoul@kernel.org> wrote:
+> In your testing when did you observe the overflow condition?
 
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+I observed an overflow after ~3.1 hours.
+I used a stream with bitrate =3D 3072 kbps.
+So the field copied_total in struct snd_compr_tstamp
+overflows after 4294967295=C3=B7(3072000/8)=C3=B760=C3=B760=3D ~3.10689 hou=
+rs.
+
+> Please share patches for tinycompress support too, we need those to test
+> this
+
+I didn't make changes to tinycompress. The overflow happens in the
+kernel file compress_offload.c. As a test, I let it run for more than
+3.1 hours and observed that the overflow no longer occurs.
+The overflow is in
+stream->runtime->total_bytes_transferred =3D tstamp->copied_total
 
