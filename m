@@ -1,129 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-64485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34770B01172
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 05:00:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 669EFB01223
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 06:28:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0489F1C811F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 03:01:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CCF3548212
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 04:27:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA3F19E81F;
-	Fri, 11 Jul 2025 03:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5091A1991D4;
+	Fri, 11 Jul 2025 04:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BipYl5Zw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EM9K4lNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB65C19AD89
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 03:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BE91865EB;
+	Fri, 11 Jul 2025 04:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752202821; cv=none; b=pmVUQRmL+XH7tHEPe2+dkGAjF7E9hAqvdgoF2VNFpiT6KEEmA2llQ+65qnNdeB0zYpPU4SjkL0r2GQdlZl4s7OGdolU6DpMl/mfqlv4Xyg6+f9rTdSpue307g0c6GVId0epKpl24onunziTiNp6hNhK6fiIjRUjChP48o2CJzes=
+	t=1752208099; cv=none; b=jcw5MU9AjlKIAoGXyqz4VnOGM66evX6xD1u8fBjf2idG5xkM6ppB95Y9Lz92b+MQesXRnSAVrFQGXAc3OquMDhTG+8RXkiufLIMZG9v1VT+cW9EkED8KnHQXOdt3qCY2t2dqXlm+CN2RD2iBWo9/h/krRFkcX21DKVvKjqR0yVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752202821; c=relaxed/simple;
-	bh=5MIvJ0dgsrFZQooch+SFPSiVUKGE2pGyg4740J8aJX0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D/QFfghFtHH/3Q/gel/p8bUtpZJajPNsVNPboN+jpjGq0ve53AP65KbZGkHy/q/GSARMElJomyjOWJyZWjpUa8Rwbft0vAAbVIxXzBzylj99Iuox6idWXon5IUFaHx47HzEFbGrQxOexFIhUK/SbMi6i0ZcgZMyzmVSlDijL478=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BipYl5Zw; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4537edf2c3cso16814045e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 20:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752202818; x=1752807618; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PItV10s0cZSW+yN+a8jyJUy2gpJRDMCrOerQQhZoaU8=;
-        b=BipYl5ZwCMkqSFqVnqRGFrqXP7lFCUjIYj+xiVYE513PcboaZxuwHUNVao5IQsXYKE
-         R0cPwOJX8Ustpl88t0Q1Dh56XSS9o6+T7tgLnQYj0UNq9mem468DDHEY1xGg2NVHUUQ+
-         ywvKxH3orTrHCMuT6tCnh1dY0MVE190bZrSZMbmsIW12l5Kn8OjbD0jsTlOv9wWaflEP
-         L1HyeTG8w6rS3yPBRKbpUh7k/R28iVbIZv8xoSoR2pDfxBAWlnAVKLEWO0VeF6C+q9Tc
-         4OqcL2uqrrkXAD8z2XrZ8Gk1pZJ8ZB2ZoCXTH7wtkuHumxG5AtAu4QdEtp4BpwULo1tJ
-         Gvww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752202818; x=1752807618;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PItV10s0cZSW+yN+a8jyJUy2gpJRDMCrOerQQhZoaU8=;
-        b=tyELHt+ByY65ke5p9Aeg/pIR7uw1npMZW8UXgjuY6gef2x1JiYOoWDlfuGx5zT3hWz
-         nSLVkCzwUdplQj8H+gsgWonrvtLUe3RDX7svpZPeWrWyS92zGmHVh3p89IN9es2mSFSJ
-         kX2dokoaPBBjYok5B8I/rghYFmB7gG5/y1bdX0FNpcz9KbP3A/JlYkeOhqCWU5Q0tTff
-         uT+Q24ONh74B/RyyTZFt9sIQVKNS9Ul6iwQUJKXFVDssQM3fKDqA0euZW4HITliliCvP
-         lA93wlxp6x0zTnX7a0hjzjDyVijXHl5H7DrZfscqO3pbErk8YIz7BNDpR/n37VXTrddN
-         Wtsg==
-X-Forwarded-Encrypted: i=1; AJvYcCV+IpPCL1oT2cxC33V0TKT6mITSY69kqNjKZYY+saK2x/ZukaEY61tAoBrdr2PSLGp130DqZ83idSconEA+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwE4ukXH+MBwpVTq3r05Gj3Omrt0BtiQQ4BikFvu01/MRBFXgXO
-	1P05f/nESpy0DTBVjNkgjAQ3Bt1eIkhcIYQOr1Qxin47bsw3IOihHixtXxdgu6Yiz+Y=
-X-Gm-Gg: ASbGncu1vVfbk6iZyR0Xxl2h3bFkTOZb4icttJwmp3mcMp8ETcAdd8rdyiH2v5JLIii
-	43cUtt8I9CfpUDb7JePByxPdwCjnqZxYGIgS11tV7HNKyfQwDsXs/1uPaNUh93BG6jf3rOnHc3l
-	BlgWmw4lNgfA0u9zABZrsBdJg8lMfpd5+CAmzLIZttkCbu9L/o9Tsg7kHB+VR8HuP3iM45XznXX
-	5rAwS0PR5by76gTT8V832UCQWcR8g/w2ZRWGjAXsrgR/VKK4Q74fd64JqGelTnsaW5PjZKuqfap
-	9PWC1bO4ha/QqCWKH7iuencxONS2uI6ff05EDg9Ep7/TZUsyOs1Up6nGy5KPkfS1kaI/JKRVMt6
-	gR/GimtRhnhd8CK9g4sL0UoAQwKV5eA==
-X-Google-Smtp-Source: AGHT+IGu2ldXw3cTzJ/uXsfrw6SXkpbJlU3IpHW7dkiNBEJvGWLqmXfnAmpjdfy8ipaz837wikLWnQ==
-X-Received: by 2002:a05:600c:628e:b0:450:cff7:62f9 with SMTP id 5b1f17b1804b1-454ec2769e7mr8969525e9.22.1752202818181;
-        Thu, 10 Jul 2025 20:00:18 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7213:c700:e4ad:f2d9:9dd9:cbf2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d50fa9b4sm75424355e9.27.2025.07.10.20.00.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 20:00:17 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Fri, 11 Jul 2025 04:00:12 +0100
-Subject: [PATCH v2 3/3] MAINTAINERS: add Qualcomm PM4125 audio codec to
- drivers list
+	s=arc-20240116; t=1752208099; c=relaxed/simple;
+	bh=0C/vTM5o8IziGLnZ32LREb0cwoermYkw/D2NJ31Q1Kw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gPJE4nzPNS4wXeMpVFjgNGxahsrPzCQpYQisfdDZmMz+pedMRKIth4PXDo0XKylTCMgGoHa2H/RGU5eJMx4av5DRlN14UR2eQvIeeDkJIywx4EpIg24P0+3LF3wFrEMwzCfSJuGanbi3UGs2Mu8mzqY+hNQaTL4fRXMwN8a0qjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EM9K4lNx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05D6C4CEF0;
+	Fri, 11 Jul 2025 04:28:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752208096;
+	bh=0C/vTM5o8IziGLnZ32LREb0cwoermYkw/D2NJ31Q1Kw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EM9K4lNx63NPSpJcWku7gT+TNpc/STC2mPEwXLxkY6CNZFu3oHUeQpQJTPJ7yh/BG
+	 vVfKwUW1YnCt9l2SWBhwIDcq+fOWLtf/jz4y6wBiYzK84HKnNGG5tZbLMQZsNM+0d4
+	 +CC4CQnXB2QZK6cvSWydVEhZVdXu1X3ZAcxvZO9UKHOhNPtyvjfgfQv7JMO1PSXsH5
+	 RpPiUuRMM898YgxNMagM1cykHlL+9D64GaMlIpKxmst2VCpRURptimLoFJQDj7L+I8
+	 3HuxEKFFuqgwiynVx34jdQCS+x6kY/OUwMnhPreAFRpj6BjIbIacn0k+eputxVO9cW
+	 OwmD1qzHwTpRw==
+Date: Fri, 11 Jul 2025 09:58:05 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+Message-ID: <irnkdlrmlozp7joydgnawfuivl2nnuxsb2t4osgxzbtyrfzd3n@7dhzjcd42aiw>
+References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
+ <20250609-mhi_bw_up-v4-6-3faa8fe92b05@qti.qualcomm.com>
+ <qo6mb3qlt3xpuvhepwcv6be4wd53neee2t6buzk4tdiy22xsub@vu7lykp3rnu2>
+ <226bab3a-54e5-94ad-9d84-0b82f9dc4e2f@linux.intel.com>
+ <2a18cf9e-1dd2-4e09-81f4-eb1d07324c8e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250711-pm4125_audio_codec_v1-v2-3-13e6f835677a@linaro.org>
-References: <20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org>
-In-Reply-To: <20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
- Alexey Klimov <alexey.klimov@linaro.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2a18cf9e-1dd2-4e09-81f4-eb1d07324c8e@oss.qualcomm.com>
 
-Since new audio codec driver is added the get_maintainers script
-should catch the new files.
+On Wed, Jul 09, 2025 at 06:01:22PM GMT, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 7/9/2025 2:40 PM, Ilpo Järvinen wrote:
+> > On Tue, 8 Jul 2025, Manivannan Sadhasivam wrote:
+> > 
+> > > On Mon, Jun 09, 2025 at 04:21:27PM GMT, Krishna Chaitanya Chundru wrote:
+> > > > ASPM states are not being enabled back with pci_enable_link_state() when
+> > > > they are disabled by pci_disable_link_state(). This is because of the
+> > > > aspm_disable flag is not getting cleared in pci_enable_link_state(), this
+> > > > flag is being properly cleared when ASPM is controlled by sysfs.
+> > > > 
+> > > 
+> > > A comment in pcie_config_aspm_link() says:
+> > > 
+> > >   /* Enable only the states that were not explicitly disabled */
+> > > 
+> > > But the function is called from both aspm_attr_store_common() and
+> > > __pci_enable_link_state(). So I don't know if this is behavior is intentional
+> > > or wrong.
+> > 
+> > Hi,
+> > 
+> > I think it's intentional. Whether the behavior is useful is another good
+> > question but the current behavior aligns with the explanation in the
+> > comment.
+> > 
+> > My understanding of the situation is:
+> > 
+> > pci_disable_link_state() and pci_enable_link_state() are not symmetric
+> > despite the names, never have been (this is one of those many quirks ASPM
+> > driver has which should be eventually cleaned up, IMO).
+> > 
+> > It might be appropriate to rename pci_enable_link_state() to
+> > pci_set_default_link_state() to match the name to its functionality (and
+> > the function comment):
+> > 
+> >   * pci_enable_link_state - Clear and set the default device link state
+> > 
+> > Note: "the default ... link state".
+> > 
+> > 
+> > I've already raised this concern earlier! As you see, my comment are
+> > not getting addressed. I'd like to see the author does one of these:
+> > 
+> Hi llpo,
+> 
+> I replied to your comment on v3 patch[1], and I feel instead of having
+> new function() we can use same API to our purpose.
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+You replied to Ilpo, but never got an agreement. Please try to close the
+discussions before posting next rev. If reviewers forgot to reply to your query,
+feel free to ping them in the same thread itself.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 41d95e7c60c629338fbab8e6b001029de3c4695b..3ef80be4f2b6dc07cda7a6418eddb7a07ff28962 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20221,6 +20221,8 @@ F:	sound/soc/codecs/lpass-va-macro.c
- F:	sound/soc/codecs/lpass-wsa-macro.*
- F:	sound/soc/codecs/msm8916-wcd-analog.c
- F:	sound/soc/codecs/msm8916-wcd-digital.c
-+F:	sound/soc/codecs/pm4125-sdw.c
-+F:	sound/soc/codecs/pm4125.*
- F:	sound/soc/codecs/wcd-clsh-v2.*
- F:	sound/soc/codecs/wcd-mbhc-v2.*
- F:	sound/soc/codecs/wcd9335.*
+> > 1) Renames pci_enable_link_state() to pci_set_default_link_state()
+> > 
+> > 1b) If pci_enable_link_state() is still needed after that, a new function
+> > is added to symmetrically pair with pci_disable_link_state().
+> > 
+> > or alternatively,
+> > 
+> > 2) Changelog justifies very clearly why this change is okay with the
+> > existing callers. (And obviously the function comment should be altered to
+> > match the functionality in that case too).
+> > 
+> > If approach 2 is chosen, it should be very carefully reviewed when it
+> > comes to the callers.
+> > 
+> I am in favor of approach 2 which you suggested, but lets wait for other
+> reviewers feedback on this. Based up on the response i will make
+> necessary changes in v5.
+> 
+
+I would go for (1). It is always going to be a problem to change a legacy API
+like this. We might end up causing regressions. So it is safe to rename to
+reflect the purpose and try to come up with a new API that does what you want.
+If callers want to migrate to the new API, they can also do it in the future.
+
+- Mani
 
 -- 
-2.47.2
-
+மணிவண்ணன் சதாசிவம்
 
