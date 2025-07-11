@@ -1,256 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-64610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94E4FB01E3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B370AB01E44
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:50:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D75235A353A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:50:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F17B05A585D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 13:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4EAC2D46A4;
-	Fri, 11 Jul 2025 13:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEEAE8BEC;
+	Fri, 11 Jul 2025 13:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ex0NQL1v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W0vKWX0Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9656B210F53;
-	Fri, 11 Jul 2025 13:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A572D3A6A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 13:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752241802; cv=none; b=Vg4k10njNvbhY/Ac2a/HJxKC9jHHPUmrh34ff74Oz+T3GsaVM3WJ9Dp3OimefWFU/kP19mFQv2g/3l0hrR6C9wocRgADwQV1qnYwCovzxzcUIhBYIg6dzHUwyYACei0bPGbhWinsHxYjowUdNtoe9Bd+/LZRAP2qWm6esQlvaGs=
+	t=1752241841; cv=none; b=IjUp5fEJF7R+JmWHVH0o91AYErWw0nS8bVUX7YYGFcvZ7CMRiAnm/nhSOvDYWqAWi7uREqs7iDCKtA0L9sa213FG71zRms5V5tm43bLC8+CaWn2cWhDvkTF8rmNiX3l++63NOQc93IQslgUGa1Rmo5AC7QD8p9Z1FpG0SmWhBZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752241802; c=relaxed/simple;
-	bh=Q9f2v4IJA+QGsJHQoinYJy5bvAk8yXzuvhOFwXDXv4o=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q+TO6zAiTbrMDuwMRJN7S1tj4A7QYU2+4vcjBP8iXBRaX7Vz+JOF86c7KvzoxrR2EfDmBXV7PdZX557MkcbHz3LJsA338a9t6Vu0lSYkUg0cYd37jI4FnSFec74hjBV8t4PDQU2dYl9RGpv7FqiDvUOALEO0HMhfxDycbaGL5dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ex0NQL1v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45ABC4CEF0;
-	Fri, 11 Jul 2025 13:50:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752241802;
-	bh=Q9f2v4IJA+QGsJHQoinYJy5bvAk8yXzuvhOFwXDXv4o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ex0NQL1vDhdncgmiYXCmU3DpofZgoGGw6WTDF5RxZE365iiYnABDMrI9dBtvTOeap
-	 EKpYixCy2oRwA+dAD22F2baw9hJnxCvQ/2Yg9RmKVWN3xbZvXr+ip6k3OpT+C4QE8C
-	 I6bnQEF0ColAZ0V2qDktz0DiAMUae8l0V6XsWz7n52LLK1JHmbNq9a9J6U3qIiQmcH
-	 5PpAE0BDJaO1wd9KA11DtoHUYWe/x+rjhT3c2VkXwEPkyenoGojQEWkybS4cpEzJNN
-	 ayGOQpWP06L/0hoOrUPBCG7U4iD/rjZ/TZneO9vjZfTKkfC5hytOZUPpDV31FOVDIC
-	 pVndZ3UqPtGeA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1uaE8U-00EtR4-Ty;
-	Fri, 11 Jul 2025 14:49:59 +0100
-Date: Fri, 11 Jul 2025 14:49:56 +0100
-Message-ID: <86a55aalbv.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: "Roy, Patrick" <roypat@amazon.co.uk>, "Fuad Tabba" <tabba@google.com>
-Cc: 	"ackerleytng@google.com" <ackerleytng@google.com>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"amoorthy@google.com" <amoorthy@google.com>,
-	"anup@brainfault.org"
-	<anup@brainfault.org>,
-	"aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>,
-	"brauner@kernel.org" <brauner@kernel.org>,
-	"catalin.marinas@arm.com"
-	<catalin.marinas@arm.com>,
-	"chao.p.peng@linux.intel.com"
-	<chao.p.peng@linux.intel.com>,
-	"chenhuacai@kernel.org"
-	<chenhuacai@kernel.org>,
-	"david@redhat.com" <david@redhat.com>,
-	"dmatlack@google.com" <dmatlack@google.com>,
-	"fvdl@google.com"
-	<fvdl@google.com>,
-	"hch@infradead.org" <hch@infradead.org>,
-	"hughd@google.com" <hughd@google.com>,
-	"ira.weiny@intel.com"
-	<ira.weiny@intel.com>,
-	"isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>,
-	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>,
-	"james.morse@arm.com"
-	<james.morse@arm.com>,
-	"jarkko@kernel.org" <jarkko@kernel.org>,
-	"jgg@nvidia.com" <jgg@nvidia.com>,
-	"jhubbard@nvidia.com"
-	<jhubbard@nvidia.com>,
-	"jthoughton@google.com" <jthoughton@google.com>,
-	"keirf@google.com" <keirf@google.com>,
-	"kirill.shutemov@linux.intel.com"
-	<kirill.shutemov@linux.intel.com>,
-	"kvm@vger.kernel.org"
-	<kvm@vger.kernel.org>,
-	"kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-	"liam.merwick@oracle.com" <liam.merwick@oracle.com>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"mail@maciej.szmigiero.name"
-	<mail@maciej.szmigiero.name>,
-	"mic@digikod.net" <mic@digikod.net>,
-	"michael.roth@amd.com"
-	<michael.roth@amd.com>,
-	"mpe@ellerman.id.au" <mpe@ellerman.id.au>,
-	"oliver.upton@linux.dev" <oliver.upton@linux.dev>,
-	"palmer@dabbelt.com"
-	<palmer@dabbelt.com>,
-	"pankaj.gupta@amd.com" <pankaj.gupta@amd.com>,
-	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>,
-	"pbonzini@redhat.com"
-	<pbonzini@redhat.com>,
-	"peterx@redhat.com" <peterx@redhat.com>,
-	"qperret@google.com" <qperret@google.com>,
-	"quic_cvanscha@quicinc.com"
-	<quic_cvanscha@quicinc.com>,
-	"quic_eberman@quicinc.com"
-	<quic_eberman@quicinc.com>,
-	"quic_mnalajal@quicinc.com"
-	<quic_mnalajal@quicinc.com>,
-	"quic_pderrin@quicinc.com"
-	<quic_pderrin@quicinc.com>,
-	"quic_pheragu@quicinc.com"
-	<quic_pheragu@quicinc.com>,
-	"quic_svaddagi@quicinc.com"
-	<quic_svaddagi@quicinc.com>,
-	"quic_tsoni@quicinc.com"
-	<quic_tsoni@quicinc.com>,
-	"rientjes@google.com" <rientjes@google.com>,
-	"seanjc@google.com" <seanjc@google.com>,
-	"shuah@kernel.org" <shuah@kernel.org>,
-	"steven.price@arm.com"
-	<steven.price@arm.com>,
-	"suzuki.poulose@arm.com" <suzuki.poulose@arm.com>,
-	"vannapurve@google.com" <vannapurve@google.com>,
-	"vbabka@suse.cz"
-	<vbabka@suse.cz>,
-	"viro@zeniv.linux.org.uk" <viro@zeniv.linux.org.uk>,
-	"wei.w.wang@intel.com" <wei.w.wang@intel.com>,
-	"will@kernel.org"
-	<will@kernel.org>,
-	"willy@infradead.org" <willy@infradead.org>,
-	"xiaoyao.li@intel.com" <xiaoyao.li@intel.com>,
-	"yilun.xu@intel.com"
-	<yilun.xu@intel.com>,
-	"yuzenghui@huawei.com" <yuzenghui@huawei.com>
-Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest page faults
-In-Reply-To: <20250711095937.22365-1-roypat@amazon.co.uk>
-References: <20250709105946.4009897-17-tabba@google.com>
-	<20250711095937.22365-1-roypat@amazon.co.uk>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1752241841; c=relaxed/simple;
+	bh=xrOfrea3ktIO3rH/cRZjG/WzXdNS8Fe/7C22LVDHtd0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q0MbLBHEsOxzDJkzkIsMQc7s9RjQoaUprwLHs1HCnM9GXRe7c7xkFuaG480VGgEEchuasu6MJbaRRVDJ1SR9kMAGdmDYxv1J/+8+RQUjvrA0GsFq4fR/En0J5CxoYksrJnumB6wjV1eEaP+OqRz12i+EhvFvKYMA72C2Q+dir5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W0vKWX0Q; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-748e81d37a7so1351785b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 06:50:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752241839; x=1752846639; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mxCChrglHn+Uqy0YUudJl4m6M4rjCL8xQf7aFXlmf3g=;
+        b=W0vKWX0QDjMc7M4E53btXqi/fZKT2AHHqAsDH6LDM9lbB8fLYgy8j2G6+5U/AGT94V
+         Sk6W6Vcwz+Akc4BP4VHttEyrl6+yPHtQcpriU5nTXRZ7ZbefLorI46b4WDHdeHfJhzEw
+         R/VQi+fW772BQpPzEh3MCc7ccYGQmV1/Iy65lDxQW5kLZo1EHrt5ArUKnHf6R8ogoltc
+         eHZre9nr6FTEhOaOwftpkA/3b0EAQoGW3c+WSDdUeBacPFt42GXD7j7Ka4EXQaCASk8M
+         lK/vgype0Da1q4BMLMlV+fLD/sOM1yYcYKrfX2WbkePnngQBQTDZm5yZQ9/ddgI3P3eY
+         qbIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752241839; x=1752846639;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mxCChrglHn+Uqy0YUudJl4m6M4rjCL8xQf7aFXlmf3g=;
+        b=Ag1lk5iPJOqPl3VRaveE502/NTRfSjTte4xZ8qaonsRrBYtNSl20G1PBlaEyiYxnsn
+         klzRKYb7+9y+6sILVtLlZHq9CiCHYMthThiBTRpm6CPNoW7pN0n+ffak5SAW+Cb9GyD3
+         XkppFOSEmsJyuVXwpxcoQB/1NlOG186nxgMuOuMuJhdjO9I/dlkgPlaN4DRmtkCj0Vp7
+         eUQyDDGrdVgb7/KAyrhEiWz4X7UOKIVcF80aw+XsercZsczwfiwxyf6wBDN6MMaSH0C5
+         jszHh8sND36ZU5YN6Vkdq9Tich9I0S7GkjM61PL9C6XuGSlxNq9FuWTZUo/x8jXsIGcr
+         x21w==
+X-Forwarded-Encrypted: i=1; AJvYcCW+Rg/TVhNPKM6S6Bxb8jpS8EH0r6L+wbs/NxM73hCZhVtLTOdnGRuaxf0DU1PS7SAPGk8TjSZWeClzrZKc@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBn+EYYcGm3wifHKRPFCGRFlK2Gwmp9Zaj5mcmQl0Vi0ZHY3F8
+	QSJGeeyXOtHtmtd9K9PyrvzvaEuHWQ3kQBnne/SrnAYcEOPmxJR5qJVRJd3jpx3ToovEKgXJnUk
+	zEGPNNZxc5J2MeVzluQyYPGfPfNzFyUUKWCcV8ppuOw==
+X-Gm-Gg: ASbGncuCdNcevTnY/PVkcq0N0rQDX8toP6pZKXDHxNxjS7psiIm95ZZRZzSdjvQcGs+
+	DMQj/CnD5kq8c02mvf5n88aENWKqhch2TFRLN2Cei37hTT1cxFjsSeuJGbcF0lFqv5BAXNWH+Hs
+	xepR1VU8pqGEBfUHFoddDtfQtw5lznDPY/iLir474EzWj65palDt2PjVJ7mTOZ9+wAKuuV1FwqI
+	TGX7m3A7KxJ0dvj7xRxie2pyuJgvvUAvCvLSPRR
+X-Google-Smtp-Source: AGHT+IF9w1zlsOy9Tpc/VqUpX5hlsohRMIl3W8B9IgIpmh4707Cf+Roh6PhUrMsx1N8++dq63Ov8Ydg2FFN95JGpX3E=
+X-Received: by 2002:a05:6a00:856:b0:748:fcfa:8bd5 with SMTP id
+ d2e1a72fcca58-74ee0bb022amr4951233b3a.3.1752241839246; Fri, 11 Jul 2025
+ 06:50:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: roypat@amazon.co.uk, tabba@google.com, ackerleytng@google.com, akpm@linux-foundation.org, amoorthy@google.com, anup@brainfault.org, aou@eecs.berkeley.edu, brauner@kernel.org, catalin.marinas@arm.com, chao.p.peng@linux.intel.com, chenhuacai@kernel.org, david@redhat.com, dmatlack@google.com, fvdl@google.com, hch@infradead.org, hughd@google.com, ira.weiny@intel.com, isaku.yamahata@gmail.com, isaku.yamahata@intel.com, james.morse@arm.com, jarkko@kernel.org, jgg@nvidia.com, jhubbard@nvidia.com, jthoughton@google.com, keirf@google.com, kirill.shutemov@linux.intel.com, kvm@vger.kernel.org, kvmarm@lists.linux.dev, liam.merwick@oracle.com, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, mail@maciej.szmigiero.name, mic@digikod.net, michael.roth@amd.com, mpe@ellerman.id.au, oliver.upton@linux.dev, palmer@dabbelt.com, pankaj.gupta@amd.com, paul.walmsley@sifive.com, pbonzini@redhat.com, peterx@redhat.com, qperret@google.com, quic_cvanscha@quicinc.com, quic_eberman@quicinc.co
- m, quic_mnalajal@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, quic_svaddagi@quicinc.com, quic_tsoni@quicinc.com, rientjes@google.com, seanjc@google.com, shuah@kernel.org, steven.price@arm.com, suzuki.poulose@arm.com, vannapurve@google.com, vbabka@suse.cz, viro@zeniv.linux.org.uk, wei.w.wang@intel.com, will@kernel.org, willy@infradead.org, xiaoyao.li@intel.com, yilun.xu@intel.com, yuzenghui@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20250611-trace-noc-v10-0-a83b5c63da34@quicinc.com> <20250611-trace-noc-v10-1-a83b5c63da34@quicinc.com>
+In-Reply-To: <20250611-trace-noc-v10-1-a83b5c63da34@quicinc.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Fri, 11 Jul 2025 14:50:27 +0100
+X-Gm-Features: Ac12FXz5suXDSfb0reqEF8K7TSk9o2sFELW1ViZ5ykT-xvY6SdObq4JpNg1MVng
+Message-ID: <CAJ9a7Vhs=5pXu4JvqeAbLBbV97x4xwVP6ag4oiK5sbJntwNNqA@mail.gmail.com>
+Subject: Re: [PATCH v10 1/2] dt-bindings: arm: Add device Trace Network On
+ Chip definition
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, kernel@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 11 Jul 2025 10:59:39 +0100,
-"Roy, Patrick" <roypat@amazon.co.uk> wrote:
-> 
-> 
-> Hi Fuad,
-> 
-> On Wed, 2025-07-09 at 11:59 +0100, Fuad Tabba wrote:> -snip-
-> > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
-> > +
-> > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > +                     struct kvm_s2_trans *nested,
-> > +                     struct kvm_memory_slot *memslot, bool is_perm)
-> > +{
-> > +       bool write_fault, exec_fault, writable;
-> > +       enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
-> > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> > +       struct page *page;
-> > +       struct kvm *kvm = vcpu->kvm;
-> > +       void *memcache;
-> > +       kvm_pfn_t pfn;
-> > +       gfn_t gfn;
-> > +       int ret;
-> > +
-> > +       ret = prepare_mmu_memcache(vcpu, true, &memcache);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       if (nested)
-> > +               gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
-> > +       else
-> > +               gfn = fault_ipa >> PAGE_SHIFT;
-> > +
-> > +       write_fault = kvm_is_write_fault(vcpu);
-> > +       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> > +
-> > +       if (write_fault && exec_fault) {
-> > +               kvm_err("Simultaneous write and execution fault\n");
-> > +               return -EFAULT;
-> > +       }
-> > +
-> > +       if (is_perm && !write_fault && !exec_fault) {
-> > +               kvm_err("Unexpected L2 read permission error\n");
-> > +               return -EFAULT;
-> > +       }
-> > +
-> > +       ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
-> > +       if (ret) {
-> > +               kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
-> > +                                             write_fault, exec_fault, false);
-> > +               return ret;
-> > +       }
-> > +
-> > +       writable = !(memslot->flags & KVM_MEM_READONLY);
-> > +
-> > +       if (nested)
-> > +               adjust_nested_fault_perms(nested, &prot, &writable);
-> > +
-> > +       if (writable)
-> > +               prot |= KVM_PGTABLE_PROT_W;
-> > +
-> > +       if (exec_fault ||
-> > +           (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
-> > +            (!nested || kvm_s2_trans_executable(nested))))
-> > +               prot |= KVM_PGTABLE_PROT_X;
-> > +
-> > +       kvm_fault_lock(kvm);
-> 
-> Doesn't this race with gmem invalidations (e.g. fallocate(PUNCH_HOLE))?
-> E.g. if between kvm_gmem_get_pfn() above and this kvm_fault_lock() a
-> gmem invalidation occurs, don't we end up with stage-2 page tables
-> refering to a stale host page? In user_mem_abort() there's the "grab
-> mmu_invalidate_seq before dropping mmap_lock and check it hasnt changed
-> after grabbing mmu_lock" which prevents this, but I don't really see an
-> equivalent here.
+On Wed, 11 Jun 2025 at 11:43, Yuanfang Zhang <quic_yuanfang@quicinc.com> wrote:
+>
+> Add a new coresight-tnoc.yaml file to describe the bindings required to
+> define Trace Network On Chip (TNOC) in device trees. TNOC is an
+> integration hierarchy which is a hardware component that integrates the
+> functionalities of TPDA and funnels. It collects trace form subsystems
+> and transfers to coresight sink.
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-tnoc.yaml          | 113 +++++++++++++++++++++
+>  1 file changed, 113 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9d1c93a9ade3ff14ede4a8d1481782776cf47be9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
+> @@ -0,0 +1,113 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tnoc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Trace Network On Chip - TNOC
+> +
+> +maintainers:
+> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> +
+> +description: >
+> +  The Trace Network On Chip (TNOC) is an integration hierarchy hardware
+> +  component that integrates the functionalities of TPDA and funnels.
+> +
+> +  It sits in the different subsystem of SOC and aggregates the trace and
+> +  transports it to Aggregation TNOC or to coresight trace sink eventually.
+> +  TNOC embeds bridges for all the interfaces APB, ATB, TPDA and NTS (Narrow
+> +  Time Stamp).
+> +
+> +  TNOC can take inputs from different trace sources i.e. ATB, TPDM.
+> +
+> +  Note this binding is specifically intended for Aggregator TNOC instances.
+> +
+> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,coresight-tnoc
+> +  required:
+> +    - compatible
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^tn(@[0-9a-f]+)$"
+> +
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tnoc
+> +      - const: arm,primecell
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: apb_pclk
+> +
+> +  clocks:
+> +    items:
+> +      - description: APB register access clock
+> +
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    patternProperties:
+> +      '^port(@[0-9a-f]{1,2})?$':
+> +        description: Input connections from CoreSight Trace Bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +  out-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    additionalProperties: false
+> +
+> +    properties:
+> +      port:
+> +        description:
+> +          Output connection to CoreSight Trace Bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - in-ports
+> +  - out-ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    tn@109ab000  {
+> +      compatible = "qcom,coresight-tnoc", "arm,primecell";
+> +      reg = <0x109ab000 0x4200>;
+> +
+> +      clocks = <&aoss_qmp>;
+> +      clock-names = "apb_pclk";
+> +
+> +      in-ports {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        port@0 {
+> +          reg = <0>;
+> +
+> +          tn_ag_in_tpdm_gcc: endpoint {
+> +            remote-endpoint = <&tpdm_gcc_out_tn_ag>;
+> +          };
+> +        };
+> +      };
+> +
+> +      out-ports {
+> +        port {
+> +          tn_ag_out_funnel_in1: endpoint {
+> +            remote-endpoint = <&funnel_in1_in_tn_ag>;
+> +          };
+> +        };
+> +      };
+> +    };
+> +...
+>
+> --
+> 2.34.1
+>
 
-Indeed. We have a similar construct in kvm_translate_vncr() as well,
-and I'd definitely expect something of the sort 'round here. If for
-some reason this is not needed, then a comment explaining why would be
-welcome.
-
-But this brings me to another interesting bit: kvm_translate_vncr() is
-another path that deals with a guest translation fault (despite being
-caught as an EL2 S1 fault), and calls kvm_faultin_pfn(). What happens
-when the backing store is gmem? Probably nothin
-
-I don't immediately see why NV and gmem should be incompatible, so
-something must be done on that front too (including the return to
-userspace if the page is gone).
-
-Thanks,
-
-	M.
-
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
 -- 
-Without deviation from the norm, progress is not possible.
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
