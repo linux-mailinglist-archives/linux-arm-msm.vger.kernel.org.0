@@ -1,180 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-64500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1185B014AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:29:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C336BB01531
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:51:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37662166882
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 07:29:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B42B91892E86
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 07:52:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE3A81EE03B;
-	Fri, 11 Jul 2025 07:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70FC41F4261;
+	Fri, 11 Jul 2025 07:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="LQiCoQTv"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="0EYSHf0R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6B81F2B88
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 07:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80801C5F2C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 07:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752218936; cv=none; b=WNO/DKPTfttvRWSUPRiOwLBcE4XGZVjQtNd6vQLJmY1WPvbnKKBTRscWMi9mTRl+fo8qFkpSs9jFtWFokv5PjALHHabQ6hdDFwUHR4HW2/keLUi5k9M36DIGdWA/+yzOfVZcsYTdFNOwa24cPpwradEElWMguemI6+aiUJTh/Zk=
+	t=1752220313; cv=none; b=h7kSeTnOSzPfsRB5wb/cDZOmRg1+Kc7XwiGfLfc3w1jyui22GHPyBzHk+wyPPExhWgkfxztz85lHYqXiOWPq02pMwh1xTbe24z8ouCX375sBirvEeMrChk1uqXO7nuDS5IoHyUppJbA2px+h57qrp5VgwEuXYWqIhYryW8DpJFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752218936; c=relaxed/simple;
-	bh=kQ8IKCP1kcQ/lXs1y++kiYaNah/YKFW/72xoS7GShJk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PRurPXY0WWbxRvtUZWabiDjkRJP7+rh3fmjSevnndkouYnMaAEOxxzEzwQ57ES6Y0G6/NW4rbFSLTNwrx9/KSGvat0gwHuqeOJQ+gKDbfuVXj7UaQC5QjExYXvqMQ7lWKSiDaALQx9SCLommpey0cwEu1nkjYUA17/f4moSUh1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=LQiCoQTv; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae223591067so294510566b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 00:28:54 -0700 (PDT)
+	s=arc-20240116; t=1752220313; c=relaxed/simple;
+	bh=xPBWnGeT+ZkowyBG+TGuWUGOrJimbpN1WNzJXeQmpqs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MAF5xeV0imQXxmFr/eysrPLIwJR2k/vhtAH5SSEHY46PDy37sru3oqiq5eqVdSXAywhC+k2oF5x9MqyH/H79JD5lnEHJhYv+su5BeCWCY+5zw3iRo4ndIZm7r/7ewVyKezst++llhdjr9oReN+nZSYKUf3kdsZQQX2GZV5WSDMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=0EYSHf0R; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-553b584ac96so1782611e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 00:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752218933; x=1752823733; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FtgfnZbVJ4jCikDvmiJRy1HnHbQOBcOZj3V5tl+w2H4=;
-        b=LQiCoQTvfebSXbPEw8KLNL2/V0JzXJWcgFFRYb/sTvbyTGCHRwz3H8tqynFGdaNWGE
-         +VZqHRUllJIW4YoLGeuPHTFPAG0DS+eGVB/mlZBMIKEnNPAhvAvYnzatiJ6HDq4ryGU2
-         TZu9ibkIJLSIFDa9Z5Hq1Gn38bprxrqGb9Qf+dKkF3/ZIa93BaFb91dm1l+8k+J815TU
-         4HSU37e8CZR1Vtp9TNrGXo+wunxniYv0z2QzDC4g6M64gTjBlSzm2bXtnuHdXszxyDop
-         U7XtIefm8JCl6JTcg295o89h+ch6PlsmUQ/j+vzHg7YraaqQeCXOiHcLxyj2uE89w1/m
-         INxw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752220310; x=1752825110; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xPBWnGeT+ZkowyBG+TGuWUGOrJimbpN1WNzJXeQmpqs=;
+        b=0EYSHf0RK26TIXN5nXPLeMqiNndHySiX3asGO19cLnTiOjrdN/ewzDEqwxdKkzvIZC
+         XJ+x4qnBMVG4GmR6ootSLjZH8NpDqUJuJfuMf7oXvddLn1rUz07atY+UubP5ZU3gZusI
+         AzLGZFQJ8rPQK+zTfHuxUN1U4/04WBTkcx5/4T+KrO6oKozM4/z0vmtF7RsFgy0B7ddp
+         uWL1zQjDQQgy1S/lm3et9yiGfVJEh2UR6KlKXoRjJKC3/eaSc9EUYJRzQH378njuT+w+
+         kmo0jnZl4DuzhTcLXLKG7C0qYjMH4DJdQQ2MfHv9DpCvDHbs60lSpJSnu3d4nng7rEBG
+         UCLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752218933; x=1752823733;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1752220310; x=1752825110;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FtgfnZbVJ4jCikDvmiJRy1HnHbQOBcOZj3V5tl+w2H4=;
-        b=tZ+8Tn0pola93Cx2auPW0Hnt06y6y3F4j+Ss3dyBrPV9H33hVMVYoAaEHMIm2Gh6zt
-         FS6Dn1GIfNWJlfptjrnEjcS081KxGj3QRAL6MbNXF+s2ScMqtCQN3+KFyIiIffUq/DgY
-         JxOGyGlBr3XxvYfnxPGLd4eFbO814jDpA2718Aq/JSOh6IN2bp57fx9EavxcnuYF9Qdh
-         wah5b34tGasQpGAkZeZd2gtUT+3pkfc+g230cQOfyjV1aJT6bKkbwrzivvrdZbt64MJb
-         wgyEbLuIwdgHlOJfgRzg1dMQZXYb04PZ1+K+sfIBcqwWsYUrfIcujJqtdEHz/eDCzzAB
-         A0oA==
-X-Forwarded-Encrypted: i=1; AJvYcCV9dfbEVmrRsFMcXvI/Y+5M4WIwdhD/gEnI2T8Su0EVpi8vNYQKaNaXBA3VDf4QheYJ+C8nfLy/w1cC0P8q@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB0EkURMPZ0U3/ekNr4Eqdf0tLr2UDSozHuEUukxqqurNFzo2W
-	wxdiUkRa638MVKGbB/BhaLKcFHHcWIOtRZqVufD2d88jUIiEUUvfg3VrSb96VH2fMqQ=
-X-Gm-Gg: ASbGncu2xMcz30jewx0FOcEckvgesxnwn4vGd9gXP9K5qJ4tuwlZat0zEmsxRa9IVxL
-	e/ZpbfprvWJZKYc2V8KDATAT2aFTZeVIY6QRkkveHcA6oHMLEqoGaE6nwHQL+D89wx/WclFkacN
-	TztRpG10WVrAO5y4ZD+kaWpWEfaVKby4sr0usuG7dsH2Ma6rkWluLxSLUIYQ8ZJA+ZK7e8kAJPM
-	1kYeTdB/Cy809c2/IYVND+mHxSndxIrcz51a5VLJsjqbIX7KQgv9bq5g+ouqtl4BfklDk1flgdv
-	N1MQKdW4DmmodgzuX4NwnX/VHMI/NnOIzApOfa/KH8nyF0b0V40MjqotL7XYcaEyWfmbo1qatnw
-	5cwWnUbJTthHvGh8h4LrAUxUAD8EFqGCh/9rWQImjKSzE8bc8VSSATNmzkrDoA+lwqgJTRJ42pX
-	9unoE=
-X-Google-Smtp-Source: AGHT+IE4RqDwQnKxSkBGyHw2mBgwanclnLP3DidAK0ZxdxP5CEZTBm7HXPRru7shMe6CbBsINHQt8A==
-X-Received: by 2002:a17:907:86a1:b0:ae0:b7ef:1c11 with SMTP id a640c23a62f3a-ae6fbe13d96mr236893366b.5.1752218932779;
-        Fri, 11 Jul 2025 00:28:52 -0700 (PDT)
-Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7e90c1dsm252600966b.4.2025.07.11.00.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 00:28:52 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 11 Jul 2025 09:28:42 +0200
-Subject: [PATCH v2 4/4] regulator: qcom-rpmh: add support for pm7550
- regulators
+        bh=xPBWnGeT+ZkowyBG+TGuWUGOrJimbpN1WNzJXeQmpqs=;
+        b=dPNPRWjhvI3jQYzOR9aEJL5qIC8TR8fY9YMbQpETWg/C55GKMPlS9JX2mmZ0vQEE2I
+         KSUk/UgF2VAomToghpmpTpFGOG7jtETqA9QHMeAb+L3xED8wM8G7Gdadx/6s/PH3ilxu
+         mNvV9D4E8xV6gA95GTX9wYTPmYIZ2/t46NuNBgODr17OtFn7dZs9fQqJmdyW8b5icMhj
+         B0/PrmGWwZdMEhz5xCgOUYj72PaFhf3icDEvkjTaWV9CuCQ4mJ7MYG+FF6ATXURNdEqd
+         48M9qyiKgc38ud03lsExrMxdVNwbhN1A3jCYg++tYbSvzP3TIjQEvcdMUUkiluaZnRgV
+         Tppw==
+X-Forwarded-Encrypted: i=1; AJvYcCX5LCiqoGkDLXtVKyBxGX+05tTnmUSe+sHhJmjP45LY6CuFkARt3ZqCiBTGjdjHkciSjaaHHzJzDt29ApvW@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOXj86iBAHYAYQ4fKqOsoYFUa7EPJFHVpCFh8xenKp03GulFAi
+	9gPyRIc1LJa5WC2Wc+Es4El7j4aV1BaEJcaqQpJH9IQ8k7zmMJXsKnkWdkIApvg6v29FxGBCxFG
+	ywY6t/mMnmshEyLhV4X5Nl4ynvjDNioQQb3ytUwWIcA==
+X-Gm-Gg: ASbGncvRHdwQ4Co2D7LTuFClVlKStBQcGPk9LsqcDtQrHRgOq2IhwjAD4zJ7xWZAwu3
+	HJUk0pJkSH9ULCxFMdKTgJVXSn3fnaZPNF0Nh7bUz5k8WifmrpXw1AEcyPcvHd7G2qhPEHIbcW4
+	VI5Rv3zntdx4bZ8mjmbNgMuu6x3olaDeDjhqdsckb1qkNJAhMl6ms5xJCpYI/8pZToKtI6CQNEU
+	GYz81QOkG2NzbdBWgb3GAqkImUPGw3MfdcIkA==
+X-Google-Smtp-Source: AGHT+IGPyUWmLfi01YzuGstUS2Vbkw4PQMxBgxEyG73Fs26b9n6ZiV02FI5SvQ43Jmygm3NL3xJAyCrUFc/JGRtIixg=
+X-Received: by 2002:ac2:4bcb:0:b0:553:acbf:e003 with SMTP id
+ 2adb3069b0e04-55a057dc13dmr388356e87.13.1752220309800; Fri, 11 Jul 2025
+ 00:51:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250711-pm7550-pmr735b-rpmh-regs-v2-4-bca8cc15c199@fairphone.com>
-References: <20250711-pm7550-pmr735b-rpmh-regs-v2-0-bca8cc15c199@fairphone.com>
-In-Reply-To: <20250711-pm7550-pmr735b-rpmh-regs-v2-0-bca8cc15c199@fairphone.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752218928; l=3725;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=kQ8IKCP1kcQ/lXs1y++kiYaNah/YKFW/72xoS7GShJk=;
- b=KOd9dBkJzHtkQ8A9OJhiSKHmuP4YxkBjjri2daBn9r3wQ9FigHGRSP94pooZgXyLZO2ieBYZ1
- PHLqMUPp4WtCIoPAI8gZYwGIza/w6b5JNijsa9BEKJEYqFiO+BK6Bvm
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+References: <20250625152839.193672-1-brgl@bgdev.pl> <42dd44ef-cd6f-4dce-bd40-6f5cb32c5fbb@oss.qualcomm.com>
+In-Reply-To: <42dd44ef-cd6f-4dce-bd40-6f5cb32c5fbb@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 11 Jul 2025 09:51:38 +0200
+X-Gm-Features: Ac12FXzYGxuxHuUsoBRUpadwCLcatnVpepQxQPlM_RsnnT6km9D2BJ7BVbgWLlk
+Message-ID: <CAMRc=McshVar8j80CbSTyQTs0MLdX9JCHyVu3xTMZQc36-6ugA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115: add debug UART pins
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add RPMH regulators exposed by Qualcomm Technologies, Inc. PM7550 PMIC.
-It has 6 FTS525 (FT-SMPS) and 23 LDOs with 3 different types.
-L1-L11 are LDO515 LV NMOS, L12-L13 are LDO515 MV PMOS, L14-L23 are
-LDO512 MV PMOS.
+On Fri, Jun 27, 2025 at 5:09=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 6/25/25 5:28 PM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > We should not rely on the bootloader to set up the pinmux of the debug
+> > UART port. Let's add pin definitions for uart4 to tlmm and bind them to
+> > the relevant device node.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Konrad
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- drivers/regulator/qcom-rpmh-regulator.c | 38 +++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+We're late into rc5 so gentle ping, any chance we could get this
+queued for v6.17?
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 7b1743d51fd145a44f98dd8e605b4ca410046654..109f0aae09b1df431d2e14d45a64d115e87cdec4 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1462,6 +1462,40 @@ static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
- 	{}
- };
- 
-+static const struct rpmh_vreg_init_data pm7550_vreg_data[] = {
-+	RPMH_VREG("smps1", "smp%s1",  &pmic5_ftsmps525,    "vdd-s1"),
-+	RPMH_VREG("smps2", "smp%s2",  &pmic5_ftsmps525,    "vdd-s2"),
-+	RPMH_VREG("smps3", "smp%s3",  &pmic5_ftsmps525,    "vdd-s3"),
-+	RPMH_VREG("smps4", "smp%s4",  &pmic5_ftsmps525,    "vdd-s4"),
-+	RPMH_VREG("smps5", "smp%s5",  &pmic5_ftsmps525,    "vdd-s5"),
-+	RPMH_VREG("smps6", "smp%s6",  &pmic5_ftsmps525,    "vdd-s6"),
-+	RPMH_VREG("ldo1",  "ldo%s1",  &pmic5_nldo515,      "vdd-l1"),
-+	RPMH_VREG("ldo2",  "ldo%s2",  &pmic5_nldo515,      "vdd-l2-l3"),
-+	RPMH_VREG("ldo3",  "ldo%s3",  &pmic5_nldo515,      "vdd-l2-l3"),
-+	RPMH_VREG("ldo4",  "ldo%s4",  &pmic5_nldo515,      "vdd-l4-l5"),
-+	RPMH_VREG("ldo5",  "ldo%s5",  &pmic5_nldo515,      "vdd-l4-l5"),
-+	RPMH_VREG("ldo6",  "ldo%s6",  &pmic5_nldo515,      "vdd-l6"),
-+	RPMH_VREG("ldo7",  "ldo%s7",  &pmic5_nldo515,      "vdd-l7"),
-+	RPMH_VREG("ldo8",  "ldo%s8",  &pmic5_nldo515,      "vdd-l8"),
-+	RPMH_VREG("ldo9",  "ldo%s9",  &pmic5_nldo515,      "vdd-l9-l10"),
-+	RPMH_VREG("ldo10", "ldo%s10", &pmic5_nldo515,      "vdd-l9-l10"),
-+	RPMH_VREG("ldo11", "ldo%s11", &pmic5_nldo515,      "vdd-l11"),
-+	RPMH_VREG("ldo12", "ldo%s12", &pmic5_pldo515_mv,   "vdd-l12-l14"),
-+	RPMH_VREG("ldo13", "ldo%s13", &pmic5_pldo515_mv,   "vdd-l13-l16"),
-+	RPMH_VREG("ldo14", "ldo%s14", &pmic5_pldo,         "vdd-l12-l14"),
-+	RPMH_VREG("ldo15", "ldo%s15", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo16", "ldo%s16", &pmic5_pldo,         "vdd-l13-l16"),
-+	RPMH_VREG("ldo17", "ldo%s17", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo18", "ldo%s18", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo19", "ldo%s19", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo20", "ldo%s20", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo21", "ldo%s21", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo22", "ldo%s22", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("ldo23", "ldo%s23", &pmic5_pldo,         "vdd-l15-l17-l18-l19-l20-l21-l22-l23"),
-+	RPMH_VREG("bob",   "bob%s1",  &pmic5_bob,          "vdd-bob"),
-+	{}
-+};
-+
- static const struct rpmh_vreg_init_data pmr735a_vreg_data[] = {
- 	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps520, "vdd-s1"),
- 	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps520, "vdd-s2"),
-@@ -1679,6 +1713,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.compatible = "qcom,pm7325-rpmh-regulators",
- 		.data = pm7325_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pm7550-rpmh-regulators",
-+		.data = pm7550_vreg_data,
-+	},
- 	{
- 		.compatible = "qcom,pmr735a-rpmh-regulators",
- 		.data = pmr735a_vreg_data,
-
--- 
-2.50.1
-
+Bartosz
 
