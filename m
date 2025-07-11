@@ -1,251 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-64534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23BB2B0188F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:45:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 579A7B018A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:47:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D9B65A6CAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:45:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 121F2766F19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C8BC27E7C0;
-	Fri, 11 Jul 2025 09:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85C427E7C0;
+	Fri, 11 Jul 2025 09:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="I1DSOq+Q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LBkOykTQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827327E1D0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE18327F75A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752227125; cv=none; b=ZKmg0jBl74d03m93uMPrMqpDoX2MzaWCnkpmgzd2Zrsx1Koq865vVsUgxkbdAVzVKcCc4CsRLzfcmmjeSoPFFE5m0EF05BgQr2j12aiCjZR9DSSYVPIRqU7SuUbm5WGYqHrgfv1cXhMiBXVM928u0gY4Nc+I3jTms5DYouLJMs4=
+	t=1752227214; cv=none; b=knZb43UBrEed3a7yRhwts+udn8y0fuky1Z1ycQNCnv+O17fXGQsvGv885uhwxgTOYrexvNVAFJx+Hc41MTFRT98CnbD3vNeUn7DPGaey12S5PmOtxlCMaukz0HhmM7xabUlIyoqpKY65USix+OblE/xgvfTa74ejBgtqZcame2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752227125; c=relaxed/simple;
-	bh=G9mm78zXYI6piKO+tCuvJ8phdn2YIo88+qdAXqWDekI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KyvIhRje3F0aRdD4U7WiU+OB/++q7EzviCJqthmnESJPoKvDJlfdaJXh21UKnpwR7krLHXXeQrTzW19Oq3M2QNotskd4PoqXBaaC6g6V2s+X+W3eAUnJPa0vKNbyfJALjGJbvhU4lcSAgcLKH2O0IW6D/XY3pbjw9lcTwbwWPyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=I1DSOq+Q; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752227122;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=QSYtK8W1hoFX+G4/TI9sDJE2SYg5NnfEH2SkGUJResc=;
-	b=I1DSOq+QkfOnENKMliOjc9PT7CveWQ0ahzbDcYT5vDUVftvfbcixqrkNxCqDIsiTm/hgx6
-	D4FBenxW1zTpCYKVBo0cfonTdDcTGrHxCBZZGQ8h1kRHCP5d/4kofOQIiy3xN55D8wa3vW
-	kcH38YZXNnd5bqjwBJkfZzlYNUGmhmA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-k1oYvAqSP9CbF1x5bnkOCg-1; Fri, 11 Jul 2025 05:45:20 -0400
-X-MC-Unique: k1oYvAqSP9CbF1x5bnkOCg-1
-X-Mimecast-MFC-AGG-ID: k1oYvAqSP9CbF1x5bnkOCg_1752227119
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-451d5600a54so15081425e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:45:20 -0700 (PDT)
+	s=arc-20240116; t=1752227214; c=relaxed/simple;
+	bh=HuW2pT/0HarWrByaQEmc/Jp6pjnS4B+RKVraBlZJ3rw=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=thOVHf4iv+9NliFtdNrqyGYpjIjbv7QzPpO3uzoXA6r1oOR7eOpYhLtiz6b/+3gklhAJ+EtktCYSEVPY+6xHhpakNEobeAGavwK5A/NBfbLrTJg4RDxZ0h4ZGXXUefvju6usbV29LTEDgoRiyjz/GZOKy5eMzTams/uNhfNYjOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LBkOykTQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56B1X72t021740
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:46:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=ATZoXdNnNaxyXAtjJqDGpuE+
+	oZunLIWGEwXy6GAu+YM=; b=LBkOykTQ517WtDPLynFhTBmR+cXyAjAdSSulfmQB
+	wd1u3wUe6xotCGJxFa+/5dFErdV12m4tzEu+hWf2czDtUCwK1EbwHT7MaX1YlxQH
+	gFhw6WUR449QVR6+DqgnczNFS9ACTZYBMZg0DI8d2pAky7Byad3XXyb57c8UFTKz
+	7AvxJC7fWjrIVb9CYhAdOji1ALq1RGFPoexBGI1Wd288MRUBwTm0uZBlN8gH07NR
+	4kZuAXwBdzDIeQ7IBHANLxmLGqd00wC5alSFqJ/wkjUn4E/lVBQYJfBf3QgZGMej
+	Z5n+4llyCZ6NPVdDCIBMN3Ow/cTKxWYNJxzJOBaLeCfeIQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47r9b1949j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:46:51 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d44d773e23so415974285a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:46:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752227119; x=1752831919;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QSYtK8W1hoFX+G4/TI9sDJE2SYg5NnfEH2SkGUJResc=;
-        b=DZPTHkMMmvrUPzTUafK5f/vZBMVA9swlnFy4+ZLZIwAN6SDcr2Dhr/RgvRhCshF4WT
-         +F5IuTMK5+1DUlXkQLizJQ2CgAeR8mYnYi8S+HZWQVjUmPlwKkg9Sxi0BTCaZfA+/SkH
-         VFai0vhxCP/vkCedWuGNt0jLGdhhFJMHb9xDuamyeFX6UOEYm6XK1xjrYUCA2rB13QHQ
-         RiJn3JrmUJN281n7uNTrUNVwCelHbeaR19FNfiO+VdZw65ucxAoi2lWBiCIKydTw9cLo
-         iyv6xtmSl7tW9eTbw9Q6K1ex99ZHfSGqzETW5tfcj/qIM+g/4IFKONhro45iXrWrqx8e
-         c+Yg==
-X-Forwarded-Encrypted: i=1; AJvYcCVcyeHXnyWDdnFF0YQaT9i07HGd6tGvpZrRx70JdStYWL2zjJeN2F3tBRR5TEMGR31VjhijZMaYtfRXrbnt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8rbQj5yCeghhGF/5Bkq6ChJeHFh9cFO99TeD0P1V3Nknzo/Bu
-	n5alZsTnHRww/X62qY2IsbKjHOMlgSnGDfiimrcSGTM1jyf9/vMG2Y4tTVN9+UYutdtBU90a4MQ
-	k79wHluvUgEqO3ofr3I3tOe2d/owhm75eKL3hPyFipNKhLiZ6GePsmDNQt7/enmKo08I=
-X-Gm-Gg: ASbGncuPtnO1g2MDfFhFVHsJF93zRzu5Vcv77mJIqzPvH5wX1AsjOoVplWgjzbjxKBb
-	03nMpdAUDnaQSF8v6hKM8Xr7eWebZjg2BIZsHHCvBSAB/LQDFB3ieeAnI6xYhCf2+gnju5AafR1
-	jR6RxafbxDyRlRJo6OHeJud8cWaWneqIY1nNGP4MSySwFQvhlcwb2jS5RmbXP7rXlfKrsa0vcNI
-	e5v/0d7b4jl0CLKxYclY6Ruq/jxqT1O4Gknn3MPCKlns+nEZ/MdfdiBVIOlRGGQh3C+cdQa4OK5
-	hCng3c0L/JCTsBPX2oBh6ARHKBvMlEZLWK0V0CKVOuhwJoZcOqAX2gSetJdwHGixyha/CQZ59CL
-	ClJ6xcNPGQGNv4K1UVVu6PMKDxnsgCNT/VPyA2ChDCenxMKpLE9zK4dwpqAaeKGZFVpc=
-X-Received: by 2002:a05:600c:46c3:b0:453:8bc7:5cbb with SMTP id 5b1f17b1804b1-454ec281d0amr20339235e9.25.1752227118943;
-        Fri, 11 Jul 2025 02:45:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFnas8XgQ3IWLS2hIV11hHrPJlB9u2ohUWXcGE0uQdIEF9JiXqxZYBzaTwnR729ZNAjccDGg==
-X-Received: by 2002:a05:600c:46c3:b0:453:8bc7:5cbb with SMTP id 5b1f17b1804b1-454ec281d0amr20338625e9.25.1752227118391;
-        Fri, 11 Jul 2025 02:45:18 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f3c:3a00:5662:26b3:3e5d:438e? (p200300d82f3c3a00566226b33e5d438e.dip0.t-ipconnect.de. [2003:d8:2f3c:3a00:5662:26b3:3e5d:438e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d50df0cdsm84339815e9.25.2025.07.11.02.45.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jul 2025 02:45:17 -0700 (PDT)
-Message-ID: <6fc1edd4-8a3c-4cba-8779-461a16b5126e@redhat.com>
-Date: Fri, 11 Jul 2025 11:45:15 +0200
+        d=1e100.net; s=20230601; t=1752227210; x=1752832010;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ATZoXdNnNaxyXAtjJqDGpuE+oZunLIWGEwXy6GAu+YM=;
+        b=ohfaC/9dUk4JXBU9eQULGjkqSGYW7dNTguZNu1kTiEcN4RXldRlXJY0xPCo3SZHrE0
+         ld6pKuR4sGdx0ETy+Wwo3H7HO7tWlg61O+xLy0+xah/S9xS2hkOVS8bwGY2mG7cTK6tN
+         X96LK1hmOpD5TjPMvgEbjvL49mdi6fxaX8MJu0f3VAfqrzQdRc47nmXZNtLxh/ludYOy
+         XaPBU8en/+iQymKgbnHdyeiiee7uPHlB95BQx71HGDlbTaVfuPBr7tJFle+CvY3Pplq+
+         810xF/kRtuB30dm6NQ4EFEJO6htr7UpZhyYvXVOxdMtW7Lp1TooDPrJzK/nrLNvTskxO
+         3AIg==
+X-Forwarded-Encrypted: i=1; AJvYcCUSpKSsvTg93ntZ7upGNJwWANrQS7lwoBDetJ0imhUJoCk9LkYSXxKql3weR5Yf1GcbK25BnnoPM4cexlXJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwP3sv3vx5kWXBxUSyGwa9mm250rIBPa88ZrOgFG0lkeL3VqASd
+	90URoHCIDhjA8+bkOQkmODICT4lB0Zm+XNWDVRHovsjxkoM8xUqNDYC2r1R37XpMac1/9K6+wTm
+	mPm/qbLeaClfLDuAGGwJmj4bNVljdE9omg2E7Rcp+4idQ29WAx7oYf6skiU8+5LIKuWbb
+X-Gm-Gg: ASbGncvRiaesMCasdMMyJABnnL9VB2Z3A/THA8nTDb3bRXV6fHcpdKrCVPxPROJr23U
+	zbHewWhuAt/4E4imzjKaRKldy/XiONRBqNsguBUGFJD6UbBJaU+ofsk0e+LdTwaq5wXwgiuBE4F
+	CazmBhum9MYZVFb1BUxU6VB0pK+38YZSMvHbGMAJc0L4DaUWAYaHaTaIjqT5BaEsyqMj2RAiUyL
+	GjOcd+52Pwl2jGy39ukoSurWGf+ywge1ufhx1kol22yGxW6FnT8P2UOfHxQS+yPGrse4R81t/TG
+	gyRR7rLOOnyZFDd6Aq3VIh56e0cnQ0bSKhZkZncYcPnreT7g1OqozL4uuA8gJRewVGUmYw+I290
+	=
+X-Received: by 2002:a05:620a:31a2:b0:7d0:98a1:7aba with SMTP id af79cd13be357-7ddea41d1e9mr368838685a.17.1752227210108;
+        Fri, 11 Jul 2025 02:46:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7dH4ueW7+zpcjRQZF85NJn1oiRAb/07wOYpI2qElOIbdc6wayA7eF3OJ5SuSb53AzTOBFpg==
+X-Received: by 2002:a05:620a:31a2:b0:7d0:98a1:7aba with SMTP id af79cd13be357-7ddea41d1e9mr368836285a.17.1752227209637;
+        Fri, 11 Jul 2025 02:46:49 -0700 (PDT)
+Received: from trex (153.red-79-144-197.dynamicip.rima-tde.net. [79.144.197.153])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454dd43915dsm42327755e9.7.2025.07.11.02.46.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jul 2025 02:46:49 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Fri, 11 Jul 2025 11:46:44 +0200
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+        bryan.odonoghue@linaro.org, quic_vgarodia@quicinc.com,
+        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
+        robh@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 4/7] media: venus: hfi_plat_v4: Add capabilities for
+ the 4XX lite core
+Message-ID: <aHDdhDQz+BW51a2c@trex>
+References: <20250708180530.1384330-1-jorge.ramirez@oss.qualcomm.com>
+ <20250708180530.1384330-5-jorge.ramirez@oss.qualcomm.com>
+ <7d50318e-1189-15aa-8c26-9c522c3194c4@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 14/20] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250709105946.4009897-1-tabba@google.com>
- <20250709105946.4009897-15-tabba@google.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250709105946.4009897-15-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7d50318e-1189-15aa-8c26-9c522c3194c4@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=dYuA3WXe c=1 sm=1 tr=0 ts=6870dd8b cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=Ki5fnJvzvo7yLsyA0quaxQ==:17
+ a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=tNaucEZ5xaPZ5W2ib1AA:9
+ a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDA2OCBTYWx0ZWRfX8eBjjgrQhChZ
+ W6zex3fk/7hezStxtIHLfMC5LHoLw80BhprYRkTPiOkDDWxc/DIaq2RTmjsWUMEYiSsjLjATQ/A
+ Vm+NWEN7e7ZH/o8IKaDHJnNYnikNepUhPnQ0lgHShmjhuUmF4W58KJX7je5Kj7xCWAghNJOjPcR
+ Niu1v+Ujq67Kve6beLL2Te7CGYuFKCEZWyAUaMPv+rYJLvuOTplHDRopjgLHoxgoPzl1AuatXv3
+ 2PokhTewj9P2MN0cjLR8XQ1c4lx57sgIVJ6ltFnpoV+xL6bOXGOKZkxwqdzH9PCgfFFmPdrOOj9
+ jyfngunNnA6WNdiEcwfX3bktAmdmRCZul1u8SxRDh1oXVdexo9HW7qy6VCYJv5VzumQnKYpVT/B
+ K6xjbHwjaKic2FDYxsOtvTij/5PhG2CErsdI83RPW7F//O4EsgVkrwr1/i+WcXphT9x1/Pjh
+X-Proofpoint-GUID: sjl8NdD60WmiNBQhvW9ttxl7jklVlYrq
+X-Proofpoint-ORIG-GUID: sjl8NdD60WmiNBQhvW9ttxl7jklVlYrq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_03,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110068
 
-On 09.07.25 12:59, Fuad Tabba wrote:
-> Enable host userspace mmap support for guest_memfd-backed memory when
-> running KVM with the KVM_X86_DEFAULT_VM type:
+On 10/07/25 14:51:08, Dikshita Agarwal wrote:
 > 
-> * Define kvm_arch_supports_gmem_mmap() for KVM_X86_DEFAULT_VM: Introduce
->    the architecture-specific kvm_arch_supports_gmem_mmap() macro,
->    specifically enabling mmap support for KVM_X86_DEFAULT_VM instances.
->    This macro, gated by CONFIG_KVM_GMEM_SUPPORTS_MMAP, ensures that only
->    the default VM type can leverage guest_memfd mmap functionality on
->    x86. This explicit enablement prevents CoCo VMs, which use guest_memfd
->    primarily for private memory and rely on hardware-enforced privacy,
->    from accidentally exposing guest memory via host userspace mappings.
 > 
-> * Select CONFIG_KVM_GMEM_SUPPORTS_MMAP in KVM_X86: Enable the
->    CONFIG_KVM_GMEM_SUPPORTS_MMAP Kconfig option when KVM_X86 is selected.
->    This ensures that the necessary code for guest_memfd mmap support
->    (introduced earlier) is compiled into the kernel for x86. This Kconfig
->    option acts as a system-wide gate for the guest_memfd mmap capability.
->    It implicitly enables CONFIG_KVM_GMEM, making guest_memfd available,
->    and then layers the mmap capability on top specifically for the
->    default VM.
-> 
-> These changes make guest_memfd a more versatile memory backing for
-> standard KVM guests, allowing VMMs to use a unified guest_memfd model
-> for both private (CoCo) and non-private (default) VMs. This is a
-> prerequisite for use cases such as running Firecracker guests entirely
-> backed by guest_memfd and implementing direct map removal for non-CoCo
-> VMs.
-> 
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->   arch/x86/include/asm/kvm_host.h | 9 +++++++++
->   arch/x86/kvm/Kconfig            | 1 +
->   arch/x86/kvm/x86.c              | 3 ++-
->   3 files changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> index 4c764faa12f3..4c89feaa1910 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -2273,9 +2273,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
->   #ifdef CONFIG_KVM_GMEM
->   #define kvm_arch_has_private_mem(kvm) ((kvm)->arch.has_private_mem)
->   #define kvm_arch_supports_gmem(kvm)  ((kvm)->arch.supports_gmem)
-> +
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> + */
-> +#define kvm_arch_supports_gmem_mmap(kvm)		\
-> +	(IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&	\
-> +	 (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
->   #else
->   #define kvm_arch_has_private_mem(kvm) false
->   #define kvm_arch_supports_gmem(kvm) false
-> +#define kvm_arch_supports_gmem_mmap(kvm) false
->   #endif
->   
->   #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-> index df1fdbb4024b..239637b663dc 100644
-> --- a/arch/x86/kvm/Kconfig
-> +++ b/arch/x86/kvm/Kconfig
-> @@ -47,6 +47,7 @@ config KVM_X86
->   	select KVM_GENERIC_HARDWARE_ENABLING
->   	select KVM_GENERIC_PRE_FAULT_MEMORY
->   	select KVM_GENERIC_GMEM_POPULATE if KVM_SW_PROTECTED_VM
-> +	select KVM_GMEM_SUPPORTS_MMAP
->   	select KVM_WERROR if WERROR
+> On 7/8/2025 11:35 PM, Jorge Ramirez-Ortiz wrote:
+> > Populate the HFI v4 lite capability set used by the AR50_LITE video
+> > core.
+> > 
+> > These capabilities define the supported codec formats and operational
+> > limits specific to this streamlined VPU variant.
+> > 
+> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> > ---
+> >  .../platform/qcom/venus/hfi_platform_v4.c     | 165 +++++++++++++++---
+> >  1 file changed, 145 insertions(+), 20 deletions(-)
+> > 
+> > diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> > index c8e0f8040649..4b7271468ec4 100644
+> > --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> > +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> > @@ -245,25 +245,149 @@ static const struct hfi_plat_caps caps[] = {
+> >  	.num_fmts = 4,
+> >  } };
+> >  
+> > +static const struct hfi_plat_caps caps_lite[] = {
+> > +{
+> > +	.codec = HFI_VIDEO_CODEC_H264,
+> > +	.domain = VIDC_SESSION_TYPE_DEC,
+> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> > +	.num_caps = 7,
+> > +	.pl[0] = { HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
+> > +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
+> > +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
+> > +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
+> > +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
+> > +	.num_pl = 5,
+> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
+> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
+> > +	.num_fmts = 4,
+> > +}, {
+> > +	.codec = HFI_VIDEO_CODEC_HEVC,
+> > +	.domain = VIDC_SESSION_TYPE_DEC,
+> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> > +	.num_caps = 7,
+> > +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
+> > +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
+> > +	.num_pl = 2,
+> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
+> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
+> > +	.num_fmts = 4,
+> > +}, {
+> > +	.codec = HFI_VIDEO_CODEC_VP9,
+> > +	.domain = VIDC_SESSION_TYPE_DEC,
+> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> > +	.num_caps = 7,
+> > +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
+> > +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
+> > +	.num_pl = 2,
+> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
+> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
+> > +	.num_fmts = 4,
+> > +}, {
+> > +	.codec = HFI_VIDEO_CODEC_H264,
+> > +	.domain = VIDC_SESSION_TYPE_ENC,
+> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> > +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
+> > +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
+> > +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
+> > +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
+> > +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
+> > +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
+> > +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
+> > +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
+> > +	.num_caps = 15,
+> > +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
+> > +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
+> > +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
+> > +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
+> > +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
+> > +	.num_pl = 5,
+> > +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
+> > +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
+> > +	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
+> 10 bit encoder is not supported on AR50 LITE.
+> > +	.num_fmts = 4,
+> > +}, {
+> > +	.codec = HFI_VIDEO_CODEC_HEVC,
+> > +	.domain = VIDC_SESSION_TYPE_ENC,
+> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
+> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
+> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+> > +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
+> > +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
+> > +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
+> > +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
+> > +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
+> > +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
+> > +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
+> > +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
+> > +	.num_caps = 15,
+> > +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
+> > +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
+> > +	.num_pl = 2,
+> > +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
+> > +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
+> > +	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
+> > +	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
+> 10 bit encoder is not supported on AR50 LITE.
 
-Given the error, likely we want to limit to 64BIT.
+ok
 
-select KVM_GMEM_SUPPORTS_MMAP if X86_64
-
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+Jorge
 
