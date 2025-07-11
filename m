@@ -1,340 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-64622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A63B8B020D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 17:48:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CE1DB021DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 18:33:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F0BF7B7F8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 15:47:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2115F188F4EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:33:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 573962ED14B;
-	Fri, 11 Jul 2025 15:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C0C2ED161;
+	Fri, 11 Jul 2025 16:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRsE8SKp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxuNmqG4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259A02AE6D;
-	Fri, 11 Jul 2025 15:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F415A858;
+	Fri, 11 Jul 2025 16:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752248920; cv=none; b=glIicKLHMNQXz2gMwjbrKocTji3BBxXmfiJoydIC7YuirPQ8nF5xtW5t/63km8zFN2rTcUM5ZhuD8WEAwg4dhbtCjwVThbSr0850S+QdlR2nAziOsixlZY/qLGVYk+2pSVHqMy66T3ZNkVeMk+y/BGUA1GzjIg/NFxlB0h5spRc=
+	t=1752251597; cv=none; b=tNhIqQ8NtOrsosTO3Gy/SrxjRF+NmkAPO7obKo36eyuDAA0iC+H3z7kkYS8q4TiC33mVDb2wv0tIq7nm0RZ5Tj0a3K1WNZ1z2sNjhohz7BZf0gp4k7oGerM7a6t9X5asVkPLzcmDjVMyUSAjOyE8lCMpmYQ/mXfY4lmM6PYFyuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752248920; c=relaxed/simple;
-	bh=u63lEDvAa2xXiWgVwZDeRuuCP1rwH/atFPBESKHWgbc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lvSxanpG+QGthv37L+uQy4C0MompMnX6hEfU3brJumN4n83a5CabCm4AeitFPp2/ZPWXofkF//MYFv9O+CvIfeJstI5KYlw/cpN+FIFlgGNfYgCr1sgbani1ie7FkLg5LAZXUQLM90yq9z0UNPpDsLR1os4Qqfqrht4AB7YkGvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRsE8SKp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B473C4CEED;
-	Fri, 11 Jul 2025 15:48:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752248919;
-	bh=u63lEDvAa2xXiWgVwZDeRuuCP1rwH/atFPBESKHWgbc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=WRsE8SKpfPbjanj3BjB/2NO1pGJpohX6P/OJ7hG0D62uZ7xa92WyCZxbmWWoZWnT3
-	 tk+4Y+Yl9uOS9df9S2WAL7h5TuiH3S9s70ob3U/DG/LFrRYODAjf5bxKisMW9/Hl12
-	 498XPPkBcbRcjdHpTLBpu7o+YpAvXWjp8V1aStaRo8u6bh9RRHSSFBGIpT6BnlB+l3
-	 XkiP+93ZKx9TFoPgwY+R1ixdhK07q3E8KvqzuqGGgIJti27m+pGBzovKonTtQfb+l5
-	 j31iA052jOXmJbXDTRUHuLVAK2G64qOJgP9h/v6gTwp3qvjI8kue5rID1pmJH+bf7a
-	 /yzCEJwQcCelA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1uaFzI-00EvfQ-K6;
-	Fri, 11 Jul 2025 16:48:36 +0100
-Date: Fri, 11 Jul 2025 16:48:35 +0100
-Message-ID: <867c0eafu4.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <tabba@google.com>
-Cc: "Roy, Patrick" <roypat@amazon.co.uk>,
-	"ackerleytng@google.com" <ackerleytng@google.com>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"amoorthy@google.com" <amoorthy@google.com>,
-	"anup@brainfault.org" <anup@brainfault.org>,
-	"aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>,
-	"brauner@kernel.org" <brauner@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-	"chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
-	"chenhuacai@kernel.org" <chenhuacai@kernel.org>,
-	"david@redhat.com" <david@redhat.com>,
-	"dmatlack@google.com" <dmatlack@google.com>,
-	"fvdl@google.com" <fvdl@google.com>,
-	"hch@infradead.org" <hch@infradead.org>,
-	"hughd@google.com" <hughd@google.com>,
-	"ira.weiny@intel.com" <ira.weiny@intel.com>,
-	"isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>,
-	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>,
-	"james.morse@arm.com" <james.morse@arm.com>,
-	"jarkko@kernel.org" <jarkko@kernel.org>,
-	"jgg@nvidia.com" <jgg@nvidia.com>,
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>,
-	"jthoughton@google.com" <jthoughton@google.com>,
-	"keirf@google.com" <keirf@google.com>,
-	"kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	"kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-	"liam.merwick@oracle.com" <liam.merwick@oracle.com>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"mail@maciej.szmigiero.name" <mail@maciej.szmigiero.name>,
-	"mic@digikod.net" <mic@digikod.net>,
-	"michael.roth@amd.com" <michael.roth@amd.com>,
-	"mpe@ellerman.id.au" <mpe@ellerman.id.au>,
-	"oliver.upton@linux.dev" <oliver.upton@linux.dev>,
-	"palmer@dabbelt.com" <palmer@dabbelt.com>,
-	"pankaj.gupta@amd.com" <pankaj.gupta@amd.com>,
-	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>,
-	"pbonzini@redhat.com" <pbonzini@redhat.com>,
-	"peterx@redhat.com" <peterx@redhat.com>,
-	"qperret@google.com" <qperret@google.com>,
-	"quic_cvanscha@quicinc.com" <quic_cvanscha@quicinc.com>,
-	"quic_eberman@quicinc.com" <quic_eberman@quicinc.com>,
-	"quic_mnalajal@quicinc.com" <quic_mnalajal@quicinc.com>,
-	"quic_pderrin@quicinc.com" <quic_pderrin@quicinc.com>,
-	"quic_pheragu@quicinc.com" <quic_pheragu@quicinc.com>,
-	"quic_svaddagi@quicinc.com" <quic_svaddagi@quicinc.com>,
-	"quic_tsoni@quicinc.com" <quic_tsoni@quicinc.com>,
-	"rientjes@google.com" <rientjes@google.com>,
-	"seanjc@google.com" <seanjc@google.com>,
-	"shuah@kernel.org" <shuah@kernel.org>,
-	"steven.price@arm.com" <steven.price@arm.com>,
-	"suzuki.poulose@arm.com" <suzuki.poulose@arm.com>,
-	"vannapurve@google.com" <vannapurve@google.com>,
-	"vbabka@suse.cz" <vbabka@suse.cz>,
-	"viro@zeniv.linux.org.uk" <viro@zeniv.linux.org.uk>,
-	"wei.w.wang@intel.com" <wei.w.wang@intel.com>,
-	"will@kernel.org" <will@kernel.org>,
-	"willy@infradead.org" <willy@infradead.org>,
-	"xiaoyao.li@intel.com" <xiaoyao.li@intel.com>,
-	"yilun.xu@intel.com" <yilun.xu@intel.com>,
-	"yuzenghui@huawei.com" <yuzenghui@huawei.com>
-Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest page faults
-In-Reply-To: <CA+EHjTz-MWYUKA6dbcZGvt=rRXnorrpJHbNLq-Kng5q7yaLERA@mail.gmail.com>
-References: <20250709105946.4009897-17-tabba@google.com>
-	<20250711095937.22365-1-roypat@amazon.co.uk>
-	<86a55aalbv.wl-maz@kernel.org>
-	<CA+EHjTz-MWYUKA6dbcZGvt=rRXnorrpJHbNLq-Kng5q7yaLERA@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1752251597; c=relaxed/simple;
+	bh=7USLu/Tu8CmztTr3/24FOEB2Dn4f9FhVd2eqi2tHmfg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Jour0LG8gvhre60CylhTVb31Uluh0eOQwvm7CFYL5qmxsyJxp4TWO+IjHsZDDXv858IatUi+Q7wT2Dwb0eQA1Ji9OHX3j4z3LhPmq2JKnYzcj+U6TVMOIkwL7uxMIa8YNUxj9cuho0n40UcBFtZVVIe9t0rBaR4ZSgOlZ/ogHdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxuNmqG4; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a5257748e1so1768067f8f.2;
+        Fri, 11 Jul 2025 09:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752251594; x=1752856394; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A1r7lOXR2bkUYaFtDJ7CylYLTgBc/fYyMcmc/+yJZ30=;
+        b=JxuNmqG41HuQKVkjTEOY+LF6c2txrkJ1F2XAYOj6i5DEUz27lQvRFhUvB5lf2zs90f
+         P5CDeqaOmIlQ1yHHopiNpaB58KLRwgQMa/ka8N2ntSXD+mhM073OLLik7YHNaRus68CS
+         hyhP6U914C8btN8CB8OLo9MuRn4HcI96Lgn8/G2lJxYV6s7qTIuFk6InLwgmqr2NxWyu
+         G8xOWLW+XVYNKa13MoQpumsH22OIexp9sB865EHl4pG4iFtGE0t74U6l5XARKO/f06Hd
+         7snFoBjT2IhQQD73k/rd7dtD+09qnSQWWUz4qx3SexRDiF3gQGvZ04TNVwbMjZ3IvkFC
+         YsNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752251594; x=1752856394;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A1r7lOXR2bkUYaFtDJ7CylYLTgBc/fYyMcmc/+yJZ30=;
+        b=vJjHXV0VFkR2jeFvHQOmmb60SBi/aPbaNgaOS44THlrQ9hwq50yseKvcpo/irABhDY
+         oEWeMg4rEvLCz9M7FFdyW/0m4IpYJaebUNlhKFGSMGyv6lZfvN6VbM2wUU0dWAXkLq/z
+         80sgKr6uAU8rJkldvvyXSOXmroHIJeEav3g1OgaO/3rulFIIT4jcfApY19CkptJ8GOdj
+         9PgrcZdLYnIpf9vb8qiMWS2ozXGj1Q45X6vwSJljs2dL5VEFgTkwuWPDl+gRUG+SQHXW
+         u7H38HjwyddQ0mZFnys5ppwwKnMdh+z1lcgcJTDUsVOiKjbeH1we1gN7PZriHYkAqa1X
+         i6OA==
+X-Forwarded-Encrypted: i=1; AJvYcCV/osZ/qKWzy7zqZwW+ItaQosDcy5yTp5owQllEtDJ504Bn8I3gTfaJ1gCEpBRFTqTx1QsYDrSphkgDwfiS@vger.kernel.org, AJvYcCVZAGIJAQKNah6UBfFuEUb8pOow+41pKxKqwVHTwMbRMeIRuuxN1mITOR1yHL2MMQBK85IMI8U1sugENWMg@vger.kernel.org, AJvYcCXMdGMO2k2hzeyDj7UHvk67wkt/vcbVJIUjNZbMH/7l7MmbPCUSHkBKYlD04bOQnF4Fy/OJxLx9u8rV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQeQP+FYJ0hDhJ/IAE66l8QINMgqc0IjcqCTrVHrKHay+hqSIC
+	eVelkQjr0QVMHm9vylkRYRnHadVBPfsM8vgrlQbce1pDfETHeHU6CXar
+X-Gm-Gg: ASbGncsERVa2T3uuvebC6vdD0WFUyQV8t+TWUgFILMce7Zg9UZ9AKNalkaxpeIB/dcj
+	xEp5aU8Vdn3jY7FOA1nZYxaMSTSMEJaMDmLLMs0OcoBcbYWlqW7tzOz9q2Gnr2vjKUw+5Xs66A/
+	ws4Xzw9L5wRkQrJGVxONe9pOhefHGLESYd55oIU0Ee04NeYjECHMFuTvNo40qB2w3s/8wZQJTOh
+	F4ZwPRyoQdA/0D7jT2k/lCveqhvyMzKRuRj0gSN8WZ+tm4Rs7ZO8QP7G9sIYCX/7OV84sCayUTS
+	Cmi+OWsYsJPD8FoS8i8HPi8Tcgqj7xudkIX1kbY1hfGOa/WWUiop58cHxAuK8VERfAEX5y8l24l
+	WfOtFR3CEQDPwBzUJB71gcY/Qj4+hsb8ltpjQAo2buJ3eLOvVkb0=
+X-Google-Smtp-Source: AGHT+IEZlhPktMwwW0Jbf3RqoTX/NKhZqR5TJTdFaddNSu4Crn0tbA5n062K8UspEDbchBqtVVg+fw==
+X-Received: by 2002:a05:6000:40ca:b0:3a4:f786:4fa1 with SMTP id ffacd0b85a97d-3b5f2db14eamr3033408f8f.2.1752251593613;
+        Fri, 11 Jul 2025 09:33:13 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d4b5sm4969860f8f.53.2025.07.11.09.33.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jul 2025 09:33:13 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Fri, 11 Jul 2025 18:32:52 +0200
+Subject: [PATCH] spi: spi-qpic-snand: simplify bad block marker duplication
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: tabba@google.com, roypat@amazon.co.uk, ackerleytng@google.com, akpm@linux-foundation.org, amoorthy@google.com, anup@brainfault.org, aou@eecs.berkeley.edu, brauner@kernel.org, catalin.marinas@arm.com, chao.p.peng@linux.intel.com, chenhuacai@kernel.org, david@redhat.com, dmatlack@google.com, fvdl@google.com, hch@infradead.org, hughd@google.com, ira.weiny@intel.com, isaku.yamahata@gmail.com, isaku.yamahata@intel.com, james.morse@arm.com, jarkko@kernel.org, jgg@nvidia.com, jhubbard@nvidia.com, jthoughton@google.com, keirf@google.com, kirill.shutemov@linux.intel.com, kvm@vger.kernel.org, kvmarm@lists.linux.dev, liam.merwick@oracle.com, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, mail@maciej.szmigiero.name, mic@digikod.net, michael.roth@amd.com, mpe@ellerman.id.au, oliver.upton@linux.dev, palmer@dabbelt.com, pankaj.gupta@amd.com, paul.walmsley@sifive.com, pbonzini@redhat.com, peterx@redhat.com, qperret@google.com, quic_cvanscha@quicinc.com, quic_eberman@quicinc.co
- m, quic_mnalajal@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, quic_svaddagi@quicinc.com, quic_tsoni@quicinc.com, rientjes@google.com, seanjc@google.com, shuah@kernel.org, steven.price@arm.com, suzuki.poulose@arm.com, vannapurve@google.com, vbabka@suse.cz, viro@zeniv.linux.org.uk, wei.w.wang@intel.com, will@kernel.org, willy@infradead.org, xiaoyao.li@intel.com, yilun.xu@intel.com, yuzenghui@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250711-qpic-snand-simplify-bbm-copy-v1-1-dd2608325f72@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALM8cWgC/x3MwQqDMAwA0F+RnBeIAXHsV4YHjVEDa60NDEX67
+ ys7vsu7wTWbOryaG7J+zW2PFe2jAdnGuCraXA1M3FHfEh7JBD2OcUa3kD62XDhNAWVPFz5ZhJS
+ IWXqoRcq62Pnv30MpP0IL7B1uAAAA
+X-Change-ID: 20250710-qpic-snand-simplify-bbm-copy-82cc0e0022c7
+To: Mark Brown <broonie@kernel.org>
+Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Fri, 11 Jul 2025 15:17:46 +0100,
-Fuad Tabba <tabba@google.com> wrote:
-> 
-> Hi Marc,
-> 
-> On Fri, 11 Jul 2025 at 14:50, Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > On Fri, 11 Jul 2025 10:59:39 +0100,
-> > "Roy, Patrick" <roypat@amazon.co.uk> wrote:
-> > >
-> > >
-> > > Hi Fuad,
-> > >
-> > > On Wed, 2025-07-09 at 11:59 +0100, Fuad Tabba wrote:> -snip-
-> > > > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
-> > > > +
-> > > > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > > > +                     struct kvm_s2_trans *nested,
-> > > > +                     struct kvm_memory_slot *memslot, bool is_perm)
-> > > > +{
-> > > > +       bool write_fault, exec_fault, writable;
-> > > > +       enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
-> > > > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> > > > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> > > > +       struct page *page;
-> > > > +       struct kvm *kvm = vcpu->kvm;
-> > > > +       void *memcache;
-> > > > +       kvm_pfn_t pfn;
-> > > > +       gfn_t gfn;
-> > > > +       int ret;
-> > > > +
-> > > > +       ret = prepare_mmu_memcache(vcpu, true, &memcache);
-> > > > +       if (ret)
-> > > > +               return ret;
-> > > > +
-> > > > +       if (nested)
-> > > > +               gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
-> > > > +       else
-> > > > +               gfn = fault_ipa >> PAGE_SHIFT;
-> > > > +
-> > > > +       write_fault = kvm_is_write_fault(vcpu);
-> > > > +       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> > > > +
-> > > > +       if (write_fault && exec_fault) {
-> > > > +               kvm_err("Simultaneous write and execution fault\n");
-> > > > +               return -EFAULT;
-> > > > +       }
-> > > > +
-> > > > +       if (is_perm && !write_fault && !exec_fault) {
-> > > > +               kvm_err("Unexpected L2 read permission error\n");
-> > > > +               return -EFAULT;
-> > > > +       }
-> > > > +
-> > > > +       ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
-> > > > +       if (ret) {
-> > > > +               kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
-> > > > +                                             write_fault, exec_fault, false);
-> > > > +               return ret;
-> > > > +       }
-> > > > +
-> > > > +       writable = !(memslot->flags & KVM_MEM_READONLY);
-> > > > +
-> > > > +       if (nested)
-> > > > +               adjust_nested_fault_perms(nested, &prot, &writable);
-> > > > +
-> > > > +       if (writable)
-> > > > +               prot |= KVM_PGTABLE_PROT_W;
-> > > > +
-> > > > +       if (exec_fault ||
-> > > > +           (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
-> > > > +            (!nested || kvm_s2_trans_executable(nested))))
-> > > > +               prot |= KVM_PGTABLE_PROT_X;
-> > > > +
-> > > > +       kvm_fault_lock(kvm);
-> > >
-> > > Doesn't this race with gmem invalidations (e.g. fallocate(PUNCH_HOLE))?
-> > > E.g. if between kvm_gmem_get_pfn() above and this kvm_fault_lock() a
-> > > gmem invalidation occurs, don't we end up with stage-2 page tables
-> > > refering to a stale host page? In user_mem_abort() there's the "grab
-> > > mmu_invalidate_seq before dropping mmap_lock and check it hasnt changed
-> > > after grabbing mmu_lock" which prevents this, but I don't really see an
-> > > equivalent here.
-> >
-> > Indeed. We have a similar construct in kvm_translate_vncr() as well,
-> > and I'd definitely expect something of the sort 'round here. If for
-> > some reason this is not needed, then a comment explaining why would be
-> > welcome.
-> >
-> > But this brings me to another interesting bit: kvm_translate_vncr() is
-> > another path that deals with a guest translation fault (despite being
-> > caught as an EL2 S1 fault), and calls kvm_faultin_pfn(). What happens
-> > when the backing store is gmem? Probably nothin
-> 
-> I'll add guest_memfd handling logic to kvm_translate_vncr().
-> 
-> > I don't immediately see why NV and gmem should be incompatible, so
-> > something must be done on that front too (including the return to
-> > userspace if the page is gone).
-> 
-> Should it return to userspace or go back to the guest?
-> user_mem_abort() returns to the guest if the page disappears (I don't
-> quite understand the rationale behind that, but it was a deliberate
-> change [1]): on mmu_invalidate_retry() it sets ret to -EAGAIN [2],
-> which gets flipped to 0 on returning from user_mem_abort() [3].
+Due to the expectations of the SPINAND code, the driver duplicates
+the bad block markers during raw OOB reads.
 
-Outside of gmem, racing with an invalidation (resulting in -EAGAIN) is
-never a problem. We just replay the faulting instruction.  Also,
-kvm_faultin_pfn() never fails outside of error cases (guest accessing
-non-memory, or writing to RO memory). So returning to the guest is
-always the right thing to do, and userspace never needs to see any of
-that (I ignore userfaultfd here, as that's a different matter).
+It has been implemented by using two if statements, and due to the
+opposite conditions one of conditional codepaths always runs. Since
+the effect of both codepaths is the same, remove the if statements
+and use a single line solution instead.
 
-With gmem, you don't really have a choice. Whoever is in charge of the
-memory told you it can't get to it, and it's only fair to go back to
-userspace for it to sort it out (if at all possible).
+Also add a note about why the duplication is required.
 
-So when it comes to VNCR faults, the behaviour should be the same,
-given that the faulting page *is* a guest page, even if this isn't a
-stage-2 mapping that we are dealing with.
+No functional changes intended.
 
-I'd expect something along the lines of the hack below, (completely
-untested, as usual).
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/spi/spi-qpic-snand.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-Thanks,
-
-	M.
-
-diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-index 5b191f4dc5668..98b1d6d4688a6 100644
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -1172,8 +1172,9 @@ static u64 read_vncr_el2(struct kvm_vcpu *vcpu)
- 	return (u64)sign_extend64(__vcpu_sys_reg(vcpu, VNCR_EL2), 48);
- }
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index b711c8be42c1f76029497b0c17d00cd8e52f5aa2..94c4d76cee34420d1dc3894aadad0086c6f22d96 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -597,10 +597,16 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
  
--static int kvm_translate_vncr(struct kvm_vcpu *vcpu)
-+static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *gmem)
- {
-+	struct kvm_memory_slot *memslot;
- 	bool write_fault, writable;
- 	unsigned long mmu_seq;
- 	struct vncr_tlb *vt;
-@@ -1216,9 +1217,21 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu)
- 	smp_rmb();
+ 	bbpos = mtd->writesize - ecc_cfg->cw_size * (num_cw - 1);
  
- 	gfn = vt->wr.pa >> PAGE_SHIFT;
--	pfn = kvm_faultin_pfn(vcpu, gfn, write_fault, &writable, &page);
--	if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
--		return -EFAULT;
-+	memslot = gfn_to_memslot(vcpu->kvm, gfn);
-+	*gmem = kvm_slot_has_gmem(memslot);
-+	if (!*gmem) {
-+		pfn = __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRITE : 0,
-+					&writable, &page);
-+		if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
-+			return -EFAULT;
-+	} else {
-+		ret = kvm_gmem_get_pfn(vcpu->kvm, memslot, gfn, &pfn, &page, NULL);
-+		if (ret) {
-+			kvm_prepare_memory_fault_exit(vcpu, vt->wr.pa, PAGE_SIZE,
-+						      write_fault, false, false);
-+			return ret;
-+		}
-+	}
+-	if (snandc->data_buffer[bbpos] == 0xff)
+-		snandc->data_buffer[bbpos + 1] = 0xff;
+-	if (snandc->data_buffer[bbpos] != 0xff)
+-		snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
++	/*
++	 * TODO: The SPINAND code expects two bad block marker bytes
++	 * at the beginning of the OOB area, but the OOB layout used by
++	 * the driver has only one. Duplicate that for now in order to
++	 * avoid certain blocks to be marked as bad.
++	 *
++	 * This can be removed once single-byte bad block marker support
++	 * gets implemented in the SPINAND code.
++	 */
++	snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
  
- 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
- 		if (mmu_invalidate_retry(vcpu->kvm, mmu_seq))
-@@ -1292,14 +1305,14 @@ int kvm_handle_vncr_abort(struct kvm_vcpu *vcpu)
- 	if (esr_fsc_is_permission_fault(esr)) {
- 		inject_vncr_perm(vcpu);
- 	} else if (esr_fsc_is_translation_fault(esr)) {
--		bool valid;
-+		bool valid, gmem = false;
- 		int ret;
+ 	memcpy(op->data.buf.in, snandc->data_buffer + bbpos, op->data.nbytes);
  
- 		scoped_guard(read_lock, &vcpu->kvm->mmu_lock)
- 			valid = kvm_vncr_tlb_lookup(vcpu);
- 
- 		if (!valid)
--			ret = kvm_translate_vncr(vcpu);
-+			ret = kvm_translate_vncr(vcpu, &gmem);
- 		else
- 			ret = -EPERM;
- 
-@@ -1309,6 +1322,14 @@ int kvm_handle_vncr_abort(struct kvm_vcpu *vcpu)
- 			/* Let's try again... */
- 			break;
- 		case -EFAULT:
-+		case -EIO:
-+			/*
-+			 * FIXME: Add whatever other error cases the
-+			 * GMEM stuff can spit out.
-+			 */
-+			if (gmem)
-+				return 0;
-+			fallthrough;
- 		case -EINVAL:
- 		case -ENOENT:
- 		case -EACCES:
 
+---
+base-commit: 7d61715c58a39edc5f74fc7366487726fc223530
+change-id: 20250710-qpic-snand-simplify-bbm-copy-82cc0e0022c7
+
+Best regards,
 -- 
-Without deviation from the norm, progress is not possible.
+Gabor Juhos <j4g8y7@gmail.com>
+
 
