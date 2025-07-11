@@ -1,247 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-64525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AD06B01854
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:41:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84435B01837
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 11:40:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E136D7B17B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:37:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD95916E3A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 09:40:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C666C1F3B85;
-	Fri, 11 Jul 2025 09:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ECE927B4EB;
+	Fri, 11 Jul 2025 09:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CT7VU5KF"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="YnF55Iyr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3661252292
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C312D279DC5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 09:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752226749; cv=none; b=Qa0CRYyePXtbI1c0Ey9aD9ZWW7TBgOKABhV6uiM+lU5byDmdKk3g2MID53Pc6Hrh2+gULTz2mf3KeIdcsIzSlxNSD6rp3FuPatb+3bomqeEa70WA0j57TcHultsGfDrvqJwqdg7NqoHnrFVx/hBQu7HaTIBczG4kdItiCSDuSfw=
+	t=1752226795; cv=none; b=TJSkVfY0mVXFRaVxj9Qvc/vBv425IPVMqqY5S5EfUAXfBRcoIfZr/ZrtTguuA9EDp1F1hQ/PvmbEQsU3ygzLikUR/Ln93F2GcZ05NN8/A4rdH8+CJ0tgFJ9Z3cjG/Eym4GwEso429LnapgBmdYr9G7ILd8UlcHzXySj08EUtoP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752226749; c=relaxed/simple;
-	bh=vY/001+f5o8pVVDfNEyy6yYui6CQQ2+0NkOOLOagp5Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uCZaFGesQBjx9xdR6J9HxxGSoKQL5ZWBHR6rrEvzVahMWk7PL/BBq9VT+oZnOwgYwf5L+zzKCnWdgxvdFHAAnd0PnqrYez2MsFJUUGfzc6yhVraNGvMdU4ed8v8mFt01hAG0Dk0g1wyI8q27ty8SFwC0W2KoYmQ7NHAUxUxxUwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=CT7VU5KF; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752226746;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=wQecZyWmWsgHDALYGnZ4BgAt7aKBzE7knExhR/Vkoxc=;
-	b=CT7VU5KFMxkVYCdPdmm5lom+9jmJ69BWOEAKBhWo2/LxAeJlSWoQJaJMQhnwSlh9o2wsZa
-	uohvALNaWjQ++REALwPrQ3gSDqfkBSJh9ODGNLKAY56WJ/EkHjkq9f22BjodzuKRfYv1dp
-	Ulri6OEUGTvjBj22P6Sr6YxDdj0JoPs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-nuctk2yrMc6cqYUI6H2aoQ-1; Fri, 11 Jul 2025 05:39:02 -0400
-X-MC-Unique: nuctk2yrMc6cqYUI6H2aoQ-1
-X-Mimecast-MFC-AGG-ID: nuctk2yrMc6cqYUI6H2aoQ_1752226741
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-45311704cdbso12018215e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:39:02 -0700 (PDT)
+	s=arc-20240116; t=1752226795; c=relaxed/simple;
+	bh=pGQpbekutr1+Uf+KF67JGtP7oLUb+5ENqzKXL2RpdgY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r3jnnpVZAIYZZmgVXnvrqj8a6E9R+UYQatrAd2y6zIK2qPKKxNU9f8/ws8DTzpoDnzC0M3rDLqBMbXCXzZzMwkbjrtaWJH/FH4DKx/ijaA/ZnI7PkZ9kcSiD7VZRKKjqKAkNSVD9jxY99XAGej8h1Gq69116hdT2Rokbl0vDHew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=YnF55Iyr; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-558fa0b2cc8so1606714e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 02:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752226792; x=1752831592; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pGQpbekutr1+Uf+KF67JGtP7oLUb+5ENqzKXL2RpdgY=;
+        b=YnF55Iyr+f1TQQBbW+4dbQpbrWbGMYN1qe48O6u6eLvCyjKF7Apae2xFP0GknxCzpx
+         yEqV86rbbOVvww8lcw8A9ML6J4FOTGrf9pd+F14XixhNimXWJJ2oYAuV/gw3fQ5sOZ1x
+         jx5OLZSMCgXc0PgXDo5FS4tv+dta7z4+2zzQ+5ca3eMVV0sNxlhsyXdX8KXH2H6mcGv3
+         tVQpzyrTzm2Ih8dViGm3M0HblxcHo0FKsvSaqhJwRy25FDDbl7bB/Wyk+KvUXOX2eqJn
+         MZEXQ9tuhKMFVI2a6dzFz/fG28TyrWWyb5cbGvMB+4SgOl9CxUk8FfHnxHJA+rA1yInY
+         Nwnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752226741; x=1752831541;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wQecZyWmWsgHDALYGnZ4BgAt7aKBzE7knExhR/Vkoxc=;
-        b=GYG6/SeDHOYNJYn0jyQnF1ofIVShutwIIUTavlNKn+RYam03ABxVLH9ZxYuEKOtVq5
-         jNNXL+G+3wgjgFN333PL/2YkJW+u7UF3+eGa2/ODy7XEVnoYaVJCcj8CDgtr4xgPtjVQ
-         9d5Q9xJ997cHdgotSVZn3o1Br32CjZD2Ye+o9BUYg5L1sUodLpEuuru+WWvKaMIKAlLK
-         oMgqWNqR0rQgjiEcBUzigjzxUmJXMThruyxehhK9UmAuuJbbUVXXe7YPv1+Im9T8KvQl
-         B8wErOvO0JCXfwdgLYBcZObev5eC4YQrIXzF1owAFF724Am4OJYjtUhCJrmQRbEogy84
-         BlOw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDw4jKCf2TleOTroEBZczhKTxW5tdM+aB6l2PvS5nv/X4H44kTGQiVK9O0PMnZkyIFiCfy5vpyCfLM3GBU@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIVVUU3CZMNitIq/egtlYAqWXpqJ2OFlKnZ980E75wfGsPbRh3
-	IDaFxC/G85NhQSkIaRGPpBTHh7y5MYQ1fNVsKn7zJOlimCx65hCKWqFK7tOTHM0fcSd1GXfi5y6
-	dHZYXldDAzVS0O/5hUHJ9oDGjhzDk/Kipy3CI+Gsoqkr1ugFDHGedRVJtsdMQtgt0jLU=
-X-Gm-Gg: ASbGncvSEJpmjGr1n10ViatM0P9QeIa5jYbC7cIkMaY6HSyhP3F8d3kiJtSBrPcsfP0
-	OaY7RGQ9G6NYpg+jO65854QBcrvhGHugl4wW43t1/nFAFzShZH9BaHgNMA/Oc50JupfH8smJVP4
-	GAKlJRHjGwb5xyD2dHoJllo4mkWSKZRI/a6pFbUOxAxGl81k3y+5rSQtXOD9KjnP3lw2PtPyt8F
-	iFEvWH5jDs69xCuzdB8gK0h+SiGRTZgispj0Npz2wQTOMnga2ycJtnDUfD5zPIpflUnKTLsNePq
-	Q1I1P7AltxZNmD3jEbQ7m+kanMglhYipmuORRv4LZ3wI0qK4BN2gVyK0pps57XNdY7Mrr7fKYSv
-	f3i7XyeP5HbV6MhEmW0J5YBA/1sSCtcr/yGKQkpS0OSMH34l3Xi7mbhW9VN9oq6PqDl0=
-X-Received: by 2002:a05:600c:4ecf:b0:453:dda:a52e with SMTP id 5b1f17b1804b1-454ec27e3b9mr16495405e9.33.1752226741154;
-        Fri, 11 Jul 2025 02:39:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExWIvCiETlaLEh+tomf4x2EEMzXLfA9UvWDVsAMK1xk9DaBUTK6aJcyWeSpLnlgw09g/FhNA==
-X-Received: by 2002:a05:600c:4ecf:b0:453:dda:a52e with SMTP id 5b1f17b1804b1-454ec27e3b9mr16494695e9.33.1752226740563;
-        Fri, 11 Jul 2025 02:39:00 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f3c:3a00:5662:26b3:3e5d:438e? (p200300d82f3c3a00566226b33e5d438e.dip0.t-ipconnect.de. [2003:d8:2f3c:3a00:5662:26b3:3e5d:438e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454dd54115bsm42810775e9.31.2025.07.11.02.38.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jul 2025 02:39:00 -0700 (PDT)
-Message-ID: <f76653bf-c170-4d21-b7cf-b1d2eb8f723e@redhat.com>
-Date: Fri, 11 Jul 2025 11:38:57 +0200
+        d=1e100.net; s=20230601; t=1752226792; x=1752831592;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pGQpbekutr1+Uf+KF67JGtP7oLUb+5ENqzKXL2RpdgY=;
+        b=Cvd7poknuZKpSQjPOFZEb6jB1Zo+cZJ9nI1n2EPGaTGrPMgV/+Hc+TZsZ1QRssyH9t
+         LsSCqfLuUgB8pqHVJj62tsLcy2yjELkByFE1tcMEcqukBi1cbnDkiHdyQAPoB3prAXZW
+         A8fU0cMnp35pY7Hamc1dQAAJO+a5R0lQKbGM1m39yb3wPg1RP1I8lL24M8YifygkKdV1
+         tVYleI2fRaN2J4oS4U3Of+dkW0dXxwzclXLHgi9tZFt2DB34zXoRWwW7ftNE+ww2IsN1
+         n/DdATU4obEeKIJGnlkg0J2us0RFtSUvfPjwBUxK6ppOZO5CnP2WnUOJdJclrEgQMD58
+         JSxA==
+X-Forwarded-Encrypted: i=1; AJvYcCVfBQF91jC2i6Z4HXUlPSxAxYUoNfqBfoht4mDlYr++aXb8JnfJlwLwirhZBNYGfdKo3qeEX7ylKNlHCkRv@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcIvsfyeYU03MKlfuH4NSSyyow2VeAA/7GpPTKWFJGgOiQG9PJ
+	4Gb4djp8fxDZ2slNpdncsrde6Bxu9/KrGV7nnjNz0pMEmkQQmwKQRwz68oETMvJhh7aKiZILql1
+	IMpaCVwDUNhklpTn7f4zGO0vJx5op+7KJ88lkYdhPAA==
+X-Gm-Gg: ASbGnctCP6hoqDLFEC05BkEGo29jYVJR8OZ3KVAwKPjyUz8Xb1lo41qles9kWdbkLQm
+	S5ztNHxxfEZqEmmjviElGy6hI065HslQ112kYRtq5tpjZzBel2GGwZC6/8KPUtipnxpFElEj0ct
+	0GE52L7OfE1o+JrXSxUzJnAjAFHlwzYe3TJpc5RZASoC6fmiLJ/KaySXRCAZvfbRRd2S7mWxGjy
+	FESml9iDIp9cvz2FzIeMPbX1ewQlNEewZO/5Dr4pa+YdQuB
+X-Google-Smtp-Source: AGHT+IEFk4At+JNCjXR8Uv2tek5dQDztaiCpOCt16GcwngGIlLiBnZEyMFdRM1jzv3F2PaNLrKmME9qrl+gtzXvZYmI=
+X-Received: by 2002:a05:6512:10ca:b0:553:2375:c6ea with SMTP id
+ 2adb3069b0e04-55a04625e5dmr712182e87.50.1752226791849; Fri, 11 Jul 2025
+ 02:39:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 11/20] KVM: x86/mmu: Allow NULL-able fault in
- kvm_max_private_mapping_level
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250709105946.4009897-1-tabba@google.com>
- <20250709105946.4009897-12-tabba@google.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250709105946.4009897-12-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org> <20250707-pci-pwrctrl-perst-v1-1-c3c7e513e312@kernel.org>
+In-Reply-To: <20250707-pci-pwrctrl-perst-v1-1-c3c7e513e312@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 11 Jul 2025 11:39:40 +0200
+X-Gm-Features: Ac12FXzo6YM4ZlaH08l4154uUlIyN8MLpDwn2Iir1feRC033f3iJ5476U0K0Xzg
+Message-ID: <CAMRc=Me5992+A0UhR3BA0+oRBepb94k2TWGDiY1Wdwh_9cC-eA@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/3] PCI/pwrctrl: Move pci_pwrctrl_init() before
+ turning ON the supplies
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Brian Norris <briannorris@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 09.07.25 12:59, Fuad Tabba wrote:
-> From: Ackerley Tng <ackerleytng@google.com>
-> 
-> Refactor kvm_max_private_mapping_level() to accept a NULL kvm_page_fault
-> pointer and rename it to kvm_gmem_max_mapping_level().
-> 
-> The max_mapping_level x86 operation (previously private_max_mapping_level)
-> is designed to potentially be called without an active page fault, for
-> instance, when kvm_mmu_max_mapping_level() is determining the maximum
-> mapping level for a gfn proactively.
-> 
-> Allow NULL fault pointer: Modify kvm_max_private_mapping_level() to
-> safely handle a NULL fault argument. This aligns its interface with the
-> kvm_x86_ops.max_mapping_level operation it wraps, which can also be
-> called with NULL.
-> 
-> Rename function to kvm_gmem_max_mapping_level(): This reinforces that
-> the function's scope is for guest_memfd-backed memory, which can be
-> either private or non-private, removing any remaining "private"
-> connotation from its name.
-> 
-> Optimize max_level checks: Introduce a check in the caller to skip
-> querying for max_mapping_level if the current max_level is already
-> PG_LEVEL_4K, as no further reduction is possible.
-> 
-> Suggested-by: Sean Christoperson <seanjc@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+On Mon, Jul 7, 2025 at 8:18=E2=80=AFPM Manivannan Sadhasivam <mani@kernel.o=
+rg> wrote:
+>
+> To allow pwrctrl core to parse the generic resources such as PERST# GPIO
+> before turning on the supplies.
+>
+> Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 > ---
->   arch/x86/kvm/mmu/mmu.c | 17 ++++++++---------
->   1 file changed, 8 insertions(+), 9 deletions(-)
-> 
-> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> index bb925994cbc5..495dcedaeafa 100644
-> --- a/arch/x86/kvm/mmu/mmu.c
-> +++ b/arch/x86/kvm/mmu/mmu.c
-> @@ -4467,17 +4467,13 @@ static inline u8 kvm_max_level_for_order(int order)
->   	return PG_LEVEL_4K;
->   }
->   
-> -static u8 kvm_max_private_mapping_level(struct kvm *kvm,
-> -					struct kvm_page_fault *fault,
-> -					int gmem_order)
-> +static u8 kvm_gmem_max_mapping_level(struct kvm *kvm, int order,
-> +				     struct kvm_page_fault *fault)
->   {
-> -	u8 max_level = fault->max_level;
->   	u8 req_max_level;
-> +	u8 max_level;
->   
-> -	if (max_level == PG_LEVEL_4K)
-> -		return PG_LEVEL_4K;
-> -
-> -	max_level = min(kvm_max_level_for_order(gmem_order), max_level);
-> +	max_level = kvm_max_level_for_order(order);
->   	if (max_level == PG_LEVEL_4K)
->   		return PG_LEVEL_4K;
->   
-> @@ -4513,7 +4509,10 @@ static int kvm_mmu_faultin_pfn_private(struct kvm_vcpu *vcpu,
->   	}
->   
->   	fault->map_writable = !(fault->slot->flags & KVM_MEM_READONLY);
-> -	fault->max_level = kvm_max_private_mapping_level(vcpu->kvm, fault, max_order);
-> +	if (fault->max_level >= PG_LEVEL_4K) {
-> +		fault->max_level = kvm_gmem_max_mapping_level(vcpu->kvm,
-> +							      max_order, fault);
-> +	}
 
-Could drop {}
-
-Acked-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
