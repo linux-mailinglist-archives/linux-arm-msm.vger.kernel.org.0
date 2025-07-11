@@ -1,242 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-64615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36898B01EDD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:18:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6310B01F19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 16:25:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94C51CA7964
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:18:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 593603A93AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 14:24:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8AB2E4246;
-	Fri, 11 Jul 2025 14:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E97AA2E718A;
+	Fri, 11 Jul 2025 14:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ldasQLkh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edeIEV48"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B4F2DE714
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 14:18:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7D42E7173;
+	Fri, 11 Jul 2025 14:25:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752243506; cv=none; b=sW1pCA3uCxsZUeKMhssH2utCZaEj79BCHvwvHSjOmhDsS9kkMAD98bGy+LM8ymkVq/Lg2YFEwge4mHPu5WEY8Hd9UJXy0IeElZDtNlgx23NoPZYLZkvWO8/N++yaaMXO/mkLsNCXt1jllEQ7yBG90DrqpldRExlNtCMsQGKMeps=
+	t=1752243917; cv=none; b=IkMIfOuwQS2tlWi/SwwW/gVTfxD3+3F99ATU5j57U71TjS4VPoqWzRargYDyWTcm4ZXKRe+QWn1sJwuvmWLuIEteNMcclzYD8KUZecHE/jclOmGE99iUU/k4TsfmyGjCcxDVurR5TE57A7n5hLYmgcfryMA54cvLSFN548DIENo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752243506; c=relaxed/simple;
-	bh=EeHQX3xHa/SasShpS2hysO5j+FP/KZl3ZrefBTI2Wdo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UcPi771laZ0yKeHmQBfwcP2fU8NMlsBB9EmC7O0f0OfTiNpmeiiBEMCx/DKoDuLeBsLJpsQYNhqHP44pPNFIIwVZgXirMSYjDWOWyxOXOy+3xKbvXAGAPpR3nO1AoNN585XFenJ2JX5sNGKCknCtnos3JiivYW+kmphY6rwZ9bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ldasQLkh; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso167641cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 07:18:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752243504; x=1752848304; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SPqXh8MG6l1A7ppi1PWLeVr8JkzkP6r8TXr4WFndhco=;
-        b=ldasQLkhO4TyYirnq5XDRizAfGHZLV5GfU7p/n1Ya7DvaJOh+wFbgrcd1jGnwyrl2o
-         yN2THmb7Lj47WQ8lZyw3N4R78QrYHqxFUyrMnaNQRoHgRnEn0vbR/lG84DSduTtMcbXL
-         ozeaUSMkhJfWroWFCm7cp2c9OIHltm/5EWz9xbwQtIK6qQdOU5xofYGlV/F/QyeKEUV9
-         l7egifHXu5aZlnE8VP2BIXHhzuW2ptjyXTEKDawWMy3hH8rMkDLq1JGNC2E65AHAo6q4
-         hkipXEq0hmIxycCMyxoI+G3XVjDAZKuHRbIMqPpyZZOBBpRMi1O8/Z7dYa63vXpmi+vU
-         joJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752243504; x=1752848304;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SPqXh8MG6l1A7ppi1PWLeVr8JkzkP6r8TXr4WFndhco=;
-        b=IiXW1TY/+Hl7/lO2KIM66wRDjfaAkryNFewsoeE+IdehwwUc2sMKjGX4ye2I2LagLA
-         Ymuc+sqihJrpRs0OcW+DpwBsVlk0mgHdW+g92F/R4CR0wBXDI4tQff74YKWvWuy7bC0P
-         Fq0v9KxLwGbvYrfFl/bAtEBIvHg0nuhFJ44OnAayzc4c7hWI01mbeK+Y8nCGS9GPMkwZ
-         UaeaJZQcEBQ9CkNRI5PdOE6vC765qCX2HC0LmLCtJK5pd5cbv1b5GsNLuoEy2WWkcH2w
-         AtVQ898WE71w4IHgW5fcKdkxnxoB4qu85iMbRQBTTXn9xUaL9h9Mnd87HEotQKVSOJpN
-         tv1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWtUkueQmK+jP/prdGtP1w7dHOsi1Vn6irpfDxnUGmOQqhUAXZgVQ04YZWopj8oWSOJWXYicOEPMfLh0DnF@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYZ9RJnVEVoGDfVr12dn7mP0Chl7+xvmADIpMJ1bP8pRD1mH9L
-	AOPK9eHsVjeueGV56QEYEN6+6txGrsRjOigx+uMVuN+kNIiUt+A4M5i737tu9vyOyZxWER8lvg6
-	Nc9kZkTjC4EL806lZidXi1bzuE7ALluBYmqQA0Fbu
-X-Gm-Gg: ASbGnctUUxa7djx18E9+uSWalLH6sIgOMu6se5X4sxEbfSlv0UiJQcNaHVhuYvj0Qn7
-	A1TLQfLkvD/KVKHKn+QcZwhnjDLz4FNycZrDWUO7WxSvy6KSyE3q6YGm51w6+cFcaX2HDT0rleu
-	ZeXbqGr3ZMM1SVXaO+xIK5r2eSQE2yutml6ZDppHpgJlZu7r4QhNwPmqHobmYln1F9oqc3eZHWf
-	CZ2QV8=
-X-Google-Smtp-Source: AGHT+IFB29LZRp6S9EJ4JwmCmEMzaf7JXF7ZrEyQ3VcuzP+ZF9XJDCj3TztBCcGyfvrNcJcm+eOBHyX3XQUVn4sD0j4=
-X-Received: by 2002:a05:622a:49:b0:4a9:d263:d983 with SMTP id
- d75a77b69052e-4a9fbf49438mr3728031cf.22.1752243503244; Fri, 11 Jul 2025
- 07:18:23 -0700 (PDT)
+	s=arc-20240116; t=1752243917; c=relaxed/simple;
+	bh=mT92Yf1qT91lUyIxzQhq7R8nLdUDilbEyTBw9eze26A=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NUnUz006SYhTpNarmnCSJ5LepOMjG1mUlAogQnzPZiBONN3o7KjL8Mny3V+giDT82cPjngmm16t38GLEazYqzrorfrdHhkCtDTSUiay17B6OXJVy8ZOzdPXintyOAAKDskVmGu1Yds50SDrUKTRWlNsCHDZZ4D/WD4/fKd5Jwws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edeIEV48; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E4DC4CEED;
+	Fri, 11 Jul 2025 14:25:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752243917;
+	bh=mT92Yf1qT91lUyIxzQhq7R8nLdUDilbEyTBw9eze26A=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=edeIEV488UPbnlYE7PWZZWbOmUSjBS8wRFsDqD2aTeIr9m6LdZ1lnxG0DXFJfuWbC
+	 RAeA8al1VK+smMmAmWqjBJHhW2SiWIivOLgMN6pc8f+CjbIVb6pT3Vmo/86DsQ61k6
+	 HhG59iKQMRWFDYchTY3Ww8GkWetdZfZl0OtMaBxLvgvaYtI+3LlXyzcVcLDsx7dQHO
+	 cppRrvXep/BfaFomrHZYAeUE5EKIbZk7lkuSJ0SLUATy9GRT/uMO7nZdbbkMTgJQuI
+	 YztNfC/M8HWkcoo3G/HvumY4fM/4fahY2Ian2ggRB0c/t50Ln7XVfVLqXgWvmyyzhZ
+	 XvuUi2yw1HLvg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1uaEgc-00Eu7B-9D;
+	Fri, 11 Jul 2025 15:25:14 +0100
+Date: Fri, 11 Jul 2025 15:25:13 +0100
+Message-ID: <868qkuajp2.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	pbonzini@redhat.com,
+	chenhuacai@kernel.org,
+	mpe@ellerman.id.au,
+	anup@brainfault.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	seanjc@google.com,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	willy@infradead.org,
+	akpm@linux-foundation.org,
+	xiaoyao.li@intel.com,
+	yilun.xu@intel.com,
+	chao.p.peng@linux.intel.com,
+	jarkko@kernel.org,
+	amoorthy@google.com,
+	dmatlack@google.com,
+	isaku.yamahata@intel.com,
+	mic@digikod.net,
+	vbabka@suse.cz,
+	vannapurve@google.com,
+	ackerleytng@google.com,
+	mail@maciej.szmigiero.name,
+	david@redhat.com,
+	michael.roth@amd.com,
+	wei.w.wang@intel.com,
+	liam.merwick@oracle.com,
+	isaku.yamahata@gmail.com,
+	kirill.shutemov@linux.intel.com,
+	suzuki.poulose@arm.com,
+	steven.price@arm.com,
+	quic_eberman@quicinc.com,
+	quic_mnalajal@quicinc.com,
+	quic_tsoni@quicinc.com,
+	quic_svaddagi@quicinc.com,
+	quic_cvanscha@quicinc.com,
+	quic_pderrin@quicinc.com,
+	quic_pheragu@quicinc.com,
+	catalin.marinas@arm.com,
+	james.morse@arm.com,
+	yuzenghui@huawei.com,
+	oliver.upton@linux.dev,
+	will@kernel.org,
+	qperret@google.com,
+	keirf@google.com,
+	roypat@amazon.co.uk,
+	shuah@kernel.org,
+	hch@infradead.org,
+	jgg@nvidia.com,
+	rientjes@google.com,
+	jhubbard@nvidia.com,
+	fvdl@google.com,
+	hughd@google.com,
+	jthoughton@google.com,
+	peterx@redhat.com,
+	pankaj.gupta@amd.com,
+	ira.weiny@intel.com
+Subject: Re: [PATCH v13 17/20] KVM: arm64: Enable host mapping of shared guest_memfd memory
+In-Reply-To: <20250709105946.4009897-18-tabba@google.com>
+References: <20250709105946.4009897-1-tabba@google.com>
+	<20250709105946.4009897-18-tabba@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250709105946.4009897-17-tabba@google.com> <20250711095937.22365-1-roypat@amazon.co.uk>
- <86a55aalbv.wl-maz@kernel.org>
-In-Reply-To: <86a55aalbv.wl-maz@kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 11 Jul 2025 15:17:46 +0100
-X-Gm-Features: Ac12FXwgQHu30_kYr5OEcOlHvsbWxMi7kgse2dUFQjfHWptAQiWGsqT7tOy6s0Q
-Message-ID: <CA+EHjTz-MWYUKA6dbcZGvt=rRXnorrpJHbNLq-Kng5q7yaLERA@mail.gmail.com>
-Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest
- page faults
-To: Marc Zyngier <maz@kernel.org>
-Cc: "Roy, Patrick" <roypat@amazon.co.uk>, "ackerleytng@google.com" <ackerleytng@google.com>, 
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "amoorthy@google.com" <amoorthy@google.com>, 
-	"anup@brainfault.org" <anup@brainfault.org>, "aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>, 
-	"brauner@kernel.org" <brauner@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, 
-	"chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>, 
-	"chenhuacai@kernel.org" <chenhuacai@kernel.org>, "david@redhat.com" <david@redhat.com>, 
-	"dmatlack@google.com" <dmatlack@google.com>, "fvdl@google.com" <fvdl@google.com>, 
-	"hch@infradead.org" <hch@infradead.org>, "hughd@google.com" <hughd@google.com>, 
-	"ira.weiny@intel.com" <ira.weiny@intel.com>, "isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>, 
-	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>, "james.morse@arm.com" <james.morse@arm.com>, 
-	"jarkko@kernel.org" <jarkko@kernel.org>, "jgg@nvidia.com" <jgg@nvidia.com>, 
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "jthoughton@google.com" <jthoughton@google.com>, 
-	"keirf@google.com" <keirf@google.com>, 
-	"kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>, 
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>, 
-	"liam.merwick@oracle.com" <liam.merwick@oracle.com>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
-	"mail@maciej.szmigiero.name" <mail@maciej.szmigiero.name>, "mic@digikod.net" <mic@digikod.net>, 
-	"michael.roth@amd.com" <michael.roth@amd.com>, "mpe@ellerman.id.au" <mpe@ellerman.id.au>, 
-	"oliver.upton@linux.dev" <oliver.upton@linux.dev>, "palmer@dabbelt.com" <palmer@dabbelt.com>, 
-	"pankaj.gupta@amd.com" <pankaj.gupta@amd.com>, 
-	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
-	"peterx@redhat.com" <peterx@redhat.com>, "qperret@google.com" <qperret@google.com>, 
-	"quic_cvanscha@quicinc.com" <quic_cvanscha@quicinc.com>, 
-	"quic_eberman@quicinc.com" <quic_eberman@quicinc.com>, 
-	"quic_mnalajal@quicinc.com" <quic_mnalajal@quicinc.com>, 
-	"quic_pderrin@quicinc.com" <quic_pderrin@quicinc.com>, 
-	"quic_pheragu@quicinc.com" <quic_pheragu@quicinc.com>, 
-	"quic_svaddagi@quicinc.com" <quic_svaddagi@quicinc.com>, 
-	"quic_tsoni@quicinc.com" <quic_tsoni@quicinc.com>, "rientjes@google.com" <rientjes@google.com>, 
-	"seanjc@google.com" <seanjc@google.com>, "shuah@kernel.org" <shuah@kernel.org>, 
-	"steven.price@arm.com" <steven.price@arm.com>, "suzuki.poulose@arm.com" <suzuki.poulose@arm.com>, 
-	"vannapurve@google.com" <vannapurve@google.com>, "vbabka@suse.cz" <vbabka@suse.cz>, 
-	"viro@zeniv.linux.org.uk" <viro@zeniv.linux.org.uk>, "wei.w.wang@intel.com" <wei.w.wang@intel.com>, 
-	"will@kernel.org" <will@kernel.org>, "willy@infradead.org" <willy@infradead.org>, 
-	"xiaoyao.li@intel.com" <xiaoyao.li@intel.com>, "yilun.xu@intel.com" <yilun.xu@intel.com>, 
-	"yuzenghui@huawei.com" <yuzenghui@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
+ in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Hi Marc,
-
-On Fri, 11 Jul 2025 at 14:50, Marc Zyngier <maz@kernel.org> wrote:
+On Wed, 09 Jul 2025 11:59:43 +0100,
+Fuad Tabba <tabba@google.com> wrote:
+> 
+> Enable host userspace mmap support for guest_memfd-backed memory on
+> arm64. This change provides arm64 with the capability to map guest
+> memory at the host directly from guest_memfd:
+> 
+> * Define kvm_arch_supports_gmem_mmap() for arm64: The
+>   kvm_arch_supports_gmem_mmap() macro is defined for arm64 to be true if
+>   CONFIG_KVM_GMEM_SUPPORTS_MMAP is enabled. For existing arm64 KVM VM
+>   types that support guest_memfd, this enables them to use guest_memfd
+>   with host userspace mappings. This provides a consistent behavior as
+>   there are currently no arm64 CoCo VMs that rely on guest_memfd solely
+>   for private, non-mappable memory. Future arm64 VM types can override
+>   or restrict this behavior via the kvm_arch_supports_gmem_mmap() hook
+>   if needed.
+> 
+> * Select CONFIG_KVM_GMEM_SUPPORTS_MMAP in arm64 Kconfig.
+> 
+> * Enforce KVM_MEMSLOT_GMEM_ONLY for guest_memfd on arm64: Compile and
+>   runtime checks are added to ensure that if guest_memfd is enabled on
+>   arm64, KVM_GMEM_SUPPORTS_MMAP must also be enabled. This means
+>   guest_memfd-backed memory slots on arm64 are currently only supported
+>   if they are intended for shared memory use cases (i.e.,
+>   kvm_memslot_is_gmem_only() is true). This design reflects the current
+>   arm64 KVM ecosystem where guest_memfd is primarily being introduced
+>   for VMs that support shared memory.
 >
-> On Fri, 11 Jul 2025 10:59:39 +0100,
-> "Roy, Patrick" <roypat@amazon.co.uk> wrote:
-> >
-> >
-> > Hi Fuad,
-> >
-> > On Wed, 2025-07-09 at 11:59 +0100, Fuad Tabba wrote:> -snip-
-> > > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
-> > > +
-> > > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > > +                     struct kvm_s2_trans *nested,
-> > > +                     struct kvm_memory_slot *memslot, bool is_perm)
-> > > +{
-> > > +       bool write_fault, exec_fault, writable;
-> > > +       enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
-> > > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> > > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> > > +       struct page *page;
-> > > +       struct kvm *kvm = vcpu->kvm;
-> > > +       void *memcache;
-> > > +       kvm_pfn_t pfn;
-> > > +       gfn_t gfn;
-> > > +       int ret;
-> > > +
-> > > +       ret = prepare_mmu_memcache(vcpu, true, &memcache);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       if (nested)
-> > > +               gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
-> > > +       else
-> > > +               gfn = fault_ipa >> PAGE_SHIFT;
-> > > +
-> > > +       write_fault = kvm_is_write_fault(vcpu);
-> > > +       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> > > +
-> > > +       if (write_fault && exec_fault) {
-> > > +               kvm_err("Simultaneous write and execution fault\n");
-> > > +               return -EFAULT;
-> > > +       }
-> > > +
-> > > +       if (is_perm && !write_fault && !exec_fault) {
-> > > +               kvm_err("Unexpected L2 read permission error\n");
-> > > +               return -EFAULT;
-> > > +       }
-> > > +
-> > > +       ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
-> > > +       if (ret) {
-> > > +               kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
-> > > +                                             write_fault, exec_fault, false);
-> > > +               return ret;
-> > > +       }
-> > > +
-> > > +       writable = !(memslot->flags & KVM_MEM_READONLY);
-> > > +
-> > > +       if (nested)
-> > > +               adjust_nested_fault_perms(nested, &prot, &writable);
-> > > +
-> > > +       if (writable)
-> > > +               prot |= KVM_PGTABLE_PROT_W;
-> > > +
-> > > +       if (exec_fault ||
-> > > +           (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
-> > > +            (!nested || kvm_s2_trans_executable(nested))))
-> > > +               prot |= KVM_PGTABLE_PROT_X;
-> > > +
-> > > +       kvm_fault_lock(kvm);
-> >
-> > Doesn't this race with gmem invalidations (e.g. fallocate(PUNCH_HOLE))?
-> > E.g. if between kvm_gmem_get_pfn() above and this kvm_fault_lock() a
-> > gmem invalidation occurs, don't we end up with stage-2 page tables
-> > refering to a stale host page? In user_mem_abort() there's the "grab
-> > mmu_invalidate_seq before dropping mmap_lock and check it hasnt changed
-> > after grabbing mmu_lock" which prevents this, but I don't really see an
-> > equivalent here.
->
-> Indeed. We have a similar construct in kvm_translate_vncr() as well,
-> and I'd definitely expect something of the sort 'round here. If for
-> some reason this is not needed, then a comment explaining why would be
-> welcome.
->
-> But this brings me to another interesting bit: kvm_translate_vncr() is
-> another path that deals with a guest translation fault (despite being
-> caught as an EL2 S1 fault), and calls kvm_faultin_pfn(). What happens
-> when the backing store is gmem? Probably nothin
+> Reviewed-by: James Houghton <jthoughton@google.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  arch/arm64/include/asm/kvm_host.h | 4 ++++
+>  arch/arm64/kvm/Kconfig            | 1 +
+>  arch/arm64/kvm/mmu.c              | 8 ++++++++
+>  3 files changed, 13 insertions(+)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index d27079968341..bd2af5470c66 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -1675,5 +1675,9 @@ void compute_fgu(struct kvm *kvm, enum fgt_group_id fgt);
+>  void get_reg_fixed_bits(struct kvm *kvm, enum vcpu_sysreg reg, u64 *res0, u64 *res1);
+>  void check_feature_map(void);
+>  
+> +#ifdef CONFIG_KVM_GMEM
+> +#define kvm_arch_supports_gmem(kvm) true
+> +#define kvm_arch_supports_gmem_mmap(kvm) IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP)
+> +#endif
+>  
+>  #endif /* __ARM64_KVM_HOST_H__ */
+> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+> index 713248f240e0..28539479f083 100644
+> --- a/arch/arm64/kvm/Kconfig
+> +++ b/arch/arm64/kvm/Kconfig
+> @@ -37,6 +37,7 @@ menuconfig KVM
+>  	select HAVE_KVM_VCPU_RUN_PID_CHANGE
+>  	select SCHED_INFO
+>  	select GUEST_PERF_EVENTS if PERF_EVENTS
+> +	select KVM_GMEM_SUPPORTS_MMAP
+>  	help
+>  	  Support hosting virtualized guest machines.
+>  
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 71f8b53683e7..b92ce4d9b4e0 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -2274,6 +2274,14 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+>  	if ((new->base_gfn + new->npages) > (kvm_phys_size(&kvm->arch.mmu) >> PAGE_SHIFT))
+>  		return -EFAULT;
+>  
+> +	/*
+> +	 * Only support guest_memfd backed memslots with mappable memory, since
+> +	 * there aren't any CoCo VMs that support only private memory on arm64.
+> +	 */
+> +	BUILD_BUG_ON(IS_ENABLED(CONFIG_KVM_GMEM) && !IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP));
+> +	if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
+> +		return -EINVAL;
+> +
+>  	hva = new->userspace_addr;
+>  	reg_end = hva + (new->npages << PAGE_SHIFT);
+>  
 
-I'll add guest_memfd handling logic to kvm_translate_vncr().
+Honestly, I don't see the point in making CONFIG_KVM_GMEM a buy in. We
+have *no* configurability for KVM/arm64, the only exception being the
+PMU support, and that has been a pain at every step of the way.
 
-> I don't immediately see why NV and gmem should be incompatible, so
-> something must be done on that front too (including the return to
-> userspace if the page is gone).
+Either KVM is enabled, and it comes with "batteries included", or it's
+not. Either way, we know exactly what we're getting, and it makes
+reproducing problems much easier.
 
-Should it return to userspace or go back to the guest?
-user_mem_abort() returns to the guest if the page disappears (I don't
-quite understand the rationale behind that, but it was a deliberate
-change [1]): on mmu_invalidate_retry() it sets ret to -EAGAIN [2],
-which gets flipped to 0 on returning from user_mem_abort() [3].
+Thanks,
 
-[1] https://lore.kernel.org/all/20210114121350.123684-4-wangyanan55@huawei.com/
-[2] https://elixir.bootlin.com/linux/v6.16-rc5/source/arch/arm64/kvm/mmu.c#L1690
-[3] https://elixir.bootlin.com/linux/v6.16-rc5/source/arch/arm64/kvm/mmu.c#L1764
+	M.
 
-Cheers,
-/fuad
-
-
-> Thanks,
->
->         M.
->
-> --
-> Without deviation from the norm, progress is not possible.
+-- 
+Without deviation from the norm, progress is not possible.
 
