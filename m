@@ -1,154 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-64482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAAE3B0115E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 04:49:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF56BB0116D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 05:00:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B392718951BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 02:49:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B13667AD98A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jul 2025 02:58:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBEB4191F74;
-	Fri, 11 Jul 2025 02:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EDD7195808;
+	Fri, 11 Jul 2025 03:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BaSP2puf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b1f7YijG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1227B155C87;
-	Fri, 11 Jul 2025 02:49:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713563595E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 03:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752202176; cv=none; b=GYsXip40EdihTEawTUt4CJikCldBfwZ3fFyugCcc0sqN6pWGp9NI36ru6D//iXhcDeSsj+7nXCyWITZ+g3sw2G69IhujcbZG0Gh0oWE0brw83SgyvA7X/U9PKWnsDcfNAMLR8xeJCLaC3GZ7aN4RVCZgou1rzS8WLt3g8Su1CNE=
+	t=1752202818; cv=none; b=CO8wGoWKhJ6eFqgU31TPn9d6LdhrDOaCc7/ZMf4RkZNKeSD+nA4uKGt4IQ2Qmzf7SlUUjkT+51k8gW0+FdSCQNXjh0POSJ5qUkFtJ2Ls4lGUCQH2YZdf5CQDxKoz0Jo3hDPyTMEcWtc8APQspAK3cv40QTcj3SujjlzXYvYQaN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752202176; c=relaxed/simple;
-	bh=LLjZv6YaeoDc4SEEKroZA66mxOHL4zJDsp3M43OYKV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P88a4e3KHQpXwrQGidu+doHFf54XBsGEP/QF29MqqjSCODrjYTZOCsZQI7FBZ6CKg6bkiINizbxoRbt3RRECt4ZSYEFslRADxQTsQ2Ezx9oKkPQwuoT+Vj/89hVWBAIAcdFS6zarcp/1O3ckVP022JIrfurjBeHzjvAk0XVt1Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BaSP2puf; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752202175; x=1783738175;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LLjZv6YaeoDc4SEEKroZA66mxOHL4zJDsp3M43OYKV4=;
-  b=BaSP2pufH6pDRl6JL1M6inJpBfoffZWis7MO2Y77g8XWU77Um1Py+Rxh
-   g6czriBWNyKoEku5sIJ5OyydR++7KwgL4Q9HayerUf5bzKFHqt9dJIew0
-   vzoSX4/2mTO6ERGcX6MaqQa7j9YM1GT53LR7MUeveXyOL0eBDm3EJtSuf
-   nz9mjs2/LtxUcDTvEcfhGHEKPIeExxnm3b25WQwthAfeiMWhr38OPEOfD
-   oz9AKbFYcAQy9WtcVB5TK/3FgdPANSn7ldkn4xowuvnD+JCm+VYjXgsdV
-   kWVJQtl8OQMjMIvbzJ8O1VlFTTFpmkW/vmy6Yv4kVMRprgHoFBUHeeJCX
-   w==;
-X-CSE-ConnectionGUID: mYhOt9fsQjmB5yPECn2oJw==
-X-CSE-MsgGUID: KIVOvhvpTvu0CDILKFeyeg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="53604569"
-X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; 
-   d="scan'208";a="53604569"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2025 19:49:35 -0700
-X-CSE-ConnectionGUID: diX3w/CCSQOd3a1b8DOe9A==
-X-CSE-MsgGUID: 6Z1BSWOoSwiK5I6R6DFClw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; 
-   d="scan'208";a="161817339"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 10 Jul 2025 19:49:28 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ua3pG-0005l9-01;
-	Fri, 11 Jul 2025 02:49:26 +0000
-Date: Fri, 11 Jul 2025 10:48:44 +0800
-From: kernel test robot <lkp@intel.com>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Elliot Berman <elliotb317@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, Stephen Boyd <swboyd@chromium.org>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	Andre Draszik <andre.draszik@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-samsung-soc@vger.kernel.org, Wei Xu <xuwei5@hisilicon.com>
-Subject: Re: [PATCH v10 01/10] power: reset: reboot-mode: Add device tree
- node-based registration
-Message-ID: <202507111052.smU9DwLS-lkp@intel.com>
-References: <20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85@oss.qualcomm.com>
+	s=arc-20240116; t=1752202818; c=relaxed/simple;
+	bh=Yn7aK+Gtg5vwN2OrZxJqZteeXqHgSbdBnyyQjvw/fCQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KeqOt1soF+e4pA/dfkrR+YV7uFRiviq49b6WxgXRCncdrhtZuthfO8bomR8/9l22iQF0yjFYNGujqKYGpMyUCqQqpRAUg13G4h2ndJ9UCeSRVmBRyXJ1iqMUzoAKp2lnZhBVNrK8bwy2ws24vBYRbDOCTDXy9fpgHsuR+TvswXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b1f7YijG; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-453398e90e9so12237035e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jul 2025 20:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752202815; x=1752807615; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S9fO9S6Ip3l6OJZpBg21f9D1VRI+E3BXOK5zK8Ozazs=;
+        b=b1f7YijGnkeQMb/SbLyQmbcc+GbdxnqAHu6gElkGLjJs2q6qN1+WTEBPD5k03+Pm4m
+         gdXpgRnY0v0GXLx2R4Do2pIj53Rgt0syOiVzY6c/rs1P4AFYsxZ2UiRWY5segtu5Khej
+         CeO1AwMjMEG1pfpJ2JZgnJkT/lqfRaR8StErd9qIZzRwTL1bHjrd68qay/b9IK2UMhRm
+         Qwx0YXQr75dA7JtTKIGi/GkJYsKmkZrxYAE07D6yYXL+cw7ZUSv/S5vAtQ2cA17xoWsV
+         n4DeyeWRqhC5cJGpLcVcTqj0BullTWlRNrYzA53X8aebsKzKlec1sbOXcvUcV9KpE2vS
+         Z1pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752202815; x=1752807615;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S9fO9S6Ip3l6OJZpBg21f9D1VRI+E3BXOK5zK8Ozazs=;
+        b=oXmFV1QLnL03DcTPI/avKY4cB90bG0p3+4x9Se4Bo+KFvI5Qt0g0KLsIyL4K2p/ABX
+         vkJQIO6iQBnQi3OXYgFIgRcSDl5+ouMXvAIN2clzpdYvnAtO1WZ7SvYJ8iXbH8EZIb3Y
+         gZumDBGfo0u/m8whhUjq2k+n3BVE42iO9oEK5U+dLUjH3If1bRV4a0hV4FX9sJZPPjAh
+         4KFbQppSbyzvZM32ksQ1ATMMiyZI48eIdO4D+0NG9yThvrYUPJWXwVRfNUhMZ9zW5ULI
+         F1F87ExIr8liUcmAT5hTbTWrEE2WEpG04OUAI353FdiaqcyrE8M4NR7rVUscZt2oUIUx
+         Xoow==
+X-Forwarded-Encrypted: i=1; AJvYcCXV707WhurdNL5u/V27aeYETtBJyiZBp9GZOzEq18xl5LXAXBR+eNAtcvAVjfIR3dJIjvDRuhtYkcQGaaHu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx65FMejVjJvoI5a+B2Nu8LiwA4nydajay3sfYeFEmxco0bdW9F
+	Yavqwwmdm7HqEo6AWpwqSDDtmiA17pGUCca5SQBmJpVnCPWDel28Y5372qIFAzkIaZQ=
+X-Gm-Gg: ASbGncvcWS4hc0MZu8NofSUAL0wTBSC9iZ4nLEj08VHdCmcl2Pxswapv0HwbBthRpvc
+	Dsr3EIAn0kkA34NicQtGLeibTNUEXcs5CO05Ax9NiXpIX2ACml1o3so8QwXeXHXeNbV7IDiOPL7
+	2pzeHVAAFyF9ZcCdkh++h5edV+dx8oAdnj3SZRjBu3/ea79bzGUxDgPi9Viaxb59B0MQFihjUWC
+	3DEqNFvlQb7pyOYOe60Cvruu2n+Bfm57n05HsF4yu2IRw1L4To3sT7bAbMOwUIHp/K26Us8a4Gz
+	dQjcD5rtOjh6bbj797OTM/IJjGle3hNpouFnOJ9KDmamNTv9khJcy8QsT9HqepkZJ4V0obJOPq9
+	caNow4nsi1W2uTsenbVL2gJvobuo+1w==
+X-Google-Smtp-Source: AGHT+IH4CmNtUhkTrPRG8gJIFlT89/SoRuA9SyoLr/hOCP51o6IZKBdDkgR+lzOVlTMC+QOF7LL07A==
+X-Received: by 2002:a05:600c:6297:b0:43c:f6c6:578c with SMTP id 5b1f17b1804b1-454ec26a7aemr10802535e9.15.1752202814695;
+        Thu, 10 Jul 2025 20:00:14 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7213:c700:e4ad:f2d9:9dd9:cbf2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d50fa9b4sm75424355e9.27.2025.07.10.20.00.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 20:00:14 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH v2 0/3] Add PM4125 audio codec driver
+Date: Fri, 11 Jul 2025 04:00:09 +0100
+Message-Id: <20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADp+cGgC/4WNQQqDMBBFryKzbkqcGItdeY8iISRTHWgTSVppE
+ e/e6AW6fA/++ytkSkwZrtUKiRbOHEMBPFXgJhtGEuwLA0rUssVWzM+mRm3s23M0LnpyZqmFRGc
+ vVknpvYOynRPd+XN0b0PhifMrpu9xs9S7/Vfco4I0dkq5Bjsr+wcHm+I5phGGbdt+IrmLeLsAA
+ AA=
+X-Change-ID: 20250626-pm4125_audio_codec_v1-02ca7a300ddc
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
+ Alexey Klimov <alexey.klimov@linaro.org>
+X-Mailer: b4 0.14.2
 
-Hi Shivendra,
+PMICs like PM4125 have in-built audio codec IC. The series here
+adds support for this codec driver: DT bindings and codec driver
+itself that consists mainly of two parts: soundwire devices and
+codec part itself.
 
-kernel test robot noticed the following build warnings:
+This audio codec can be found on platforms like QCM2290 and
+on Qualcomm QRB2210 RB1 board.
 
-[auto build test WARNING on 58ba80c4740212c29a1cf9b48f588e60a7612209]
+We are working on this together with Srini
+(srinivas.kandagatla@oss.qualcomm.com or srini@kernel.org).
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shivendra-Pratap/power-reset-reboot-mode-Add-device-tree-node-based-registration/20250710-172104
-base:   58ba80c4740212c29a1cf9b48f588e60a7612209
-patch link:    https://lore.kernel.org/r/20250710-arm-psci-system_reset2-vendor-reboots-v10-1-b2d3b882be85%40oss.qualcomm.com
-patch subject: [PATCH v10 01/10] power: reset: reboot-mode: Add device tree node-based registration
-config: riscv-randconfig-002-20250711 (https://download.01.org/0day-ci/archive/20250711/202507111052.smU9DwLS-lkp@intel.com/config)
-compiler: riscv64-linux-gcc (GCC) 12.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250711/202507111052.smU9DwLS-lkp@intel.com/reproduce)
+This driver also has a bit limited support for concurrent playback,
+since line out path is connected to left input channel.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507111052.smU9DwLS-lkp@intel.com/
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
+Changes in v2:
 
-All warnings (new ones prefixed by >>):
+-- added rxclk dapm widget, fixed/changed RX1/RX2 widgets;
+-- added comment for pm4125_wd_handle_irq();
+-- registers access permission routines have been reworked;
+-- changed pm4125_sdw_* functions to static inline;
+-- cleaned a bit pm4125_{rx,tx}_sdw_channels;
+-- got rid of most of hardcoded magic numbers (for the remaining regs+values I don't have documentation);
+-- updated commit messages;
+-- pm4125_tx_sdw_ports has been updated;
+-- removed of_match_ptr() and OF ifdef;
+-- removed couple of pm_runtime_mark_last_busy() calls;
+-- removed swap_gnd_mic;
+-- removed __pm4125_codec_enable_micbias_pullup();
+-- reordered sequence of calls in pm4125_probe() to make it a bit more logical;
+-- removed excessive regulator_bulk_free() and in error path in _probe();
+-- re-aligned for 100-chars length;
+-- removed of_node_get(), replaced with of_node_put();
+-- corrected some dev_err() messages;
+-- corrected some comments;
+-- removed legacy "WCD" from stream_name, replaced with "PM4125";
+-- removed null callbacks from struct wcd_mbhc_cb;
+-- removed "HPH Type" and "HPH{L,R} Impedance";
+-- pm4125_codec_enable_micbias() has been updated;
+-- pm4125_micbias_control() and pm4125_codec_enable_adc have been implemented;
+-- pm4125_codec_enable_dmic() has been updated;
+-- cleaned struct pm4125_priv;
+-- some rework to pm4125_handle_post_irq() and pm4125_regmap_irq_chip;
+-- updated Kconfig+Makefile (to make things be in sorting order);
+-- new patch: adding new files to MAINTAINERS file;
 
->> drivers/power/reset/reboot-mode.c:15: warning: "pr_fmt" redefined
-      15 | #define pr_fmt(fmt)     "reboot-mode: " fmt
-         | 
-   In file included from include/asm-generic/bug.h:28,
-                    from arch/riscv/include/asm/bug.h:83,
-                    from include/linux/bug.h:5,
-                    from arch/riscv/include/asm/current.h:13,
-                    from include/linux/sched.h:12,
-                    from include/linux/ratelimit.h:6,
-                    from include/linux/dev_printk.h:16,
-                    from include/linux/device.h:15,
-                    from drivers/power/reset/reboot-mode.c:6:
-   include/linux/printk.h:397: note: this is the location of the previous definition
-     397 | #define pr_fmt(fmt) fmt
-         | 
+For dt bindings:
+-- I think all requested comments from Krzysztof were implemented;
+-- squashed qcom,spmi-pmic change into previous patch to avoid warnings on dtbs check;
 
+Not done:
+-- Mark suggested to look at reimplementing this as a child mfd device from
+MFD PMIC without device tree description.
 
-vim +/pr_fmt +15 drivers/power/reset/reboot-mode.c
+- Link to v1: https://lore.kernel.org/r/20250626-pm4125_audio_codec_v1-v1-0-e52933c429a0@linaro.org
 
-    13	
-    14	#define PREFIX "mode-"
-  > 15	#define pr_fmt(fmt)	"reboot-mode: " fmt
-    16	
+---
+Alexey Klimov (3):
+      dt-bindings: sound: add bindings for pm4125 audio codec
+      ASoC: codecs: add new pm4125 audio codec driver
+      MAINTAINERS: add Qualcomm PM4125 audio codec to drivers list
 
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |    4 +-
+ .../bindings/sound/qcom,pm4125-codec.yaml          |  134 ++
+ .../devicetree/bindings/sound/qcom,pm4125-sdw.yaml |   79 +
+ MAINTAINERS                                        |    2 +
+ sound/soc/codecs/Kconfig                           |   18 +
+ sound/soc/codecs/Makefile                          |    8 +
+ sound/soc/codecs/pm4125-sdw.c                      |  546 ++++++
+ sound/soc/codecs/pm4125.c                          | 1767 ++++++++++++++++++++
+ sound/soc/codecs/pm4125.h                          |  314 ++++
+ 9 files changed, 2871 insertions(+), 1 deletion(-)
+---
+base-commit: 2ae2aaafb21454f4781c30734959cf223ab486ef
+change-id: 20250626-pm4125_audio_codec_v1-02ca7a300ddc
+
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Alexey Klimov <alexey.klimov@linaro.org>
+
 
