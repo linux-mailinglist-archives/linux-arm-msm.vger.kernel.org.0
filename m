@@ -1,242 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-64678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 334C9B028C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 03:02:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D755FB02989
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 08:06:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 597BB5A4324
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 01:02:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 029084A7BA8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 06:06:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FB8222AE65;
-	Sat, 12 Jul 2025 00:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965BD21504E;
+	Sat, 12 Jul 2025 06:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JvtJ3mq5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5gyPcv4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC0D226D03
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jul 2025 00:58:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639E92A8C1;
+	Sat, 12 Jul 2025 06:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752281940; cv=none; b=DFtQpoN94daG71XulVndkfXyehRrh8PMG5sDqA45K4WRFaD8e3kDQc/XIEH/3bI7xPpIYqjQTJx379ZvpNMP/t4zjnCSX6GYwDv7KeKhvjVouwCAaOD4v5iBQc2vXlDvzzBaNGg4Ansx8sMMM7817i3xLv4oGLcAE/beDK0UY6A=
+	t=1752300410; cv=none; b=VRFdtUqcDFSYOP09tdoBsfz3W7LORE0jMaFqF8YK8DhbMaVnJ4pkMfQTV7oJmpw4siF5D7LwFUtFWtDSS7tzypajaINPWD8ifponsFY9wc5hk6B6J/WkRTocm3UObLbdGWX1H6aCvlxmpYodqiAdYTBUg3TvA31LIT6JlmAi9Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752281940; c=relaxed/simple;
-	bh=cVrxZLsPS+6RQHt1ufzsG9tg+vHQCxscM1KTv98juZc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZFBPs63eOiT8DlkP6gPXtS1dkZOgfcNCHfthTcvBTJ5LUXXs4ZQLAGUQbpXHNDEPgrNBPv88EkrYJ5+LIBYapHNQ+wKkFf9q3Y5rvSkB3dDPZfLsyvNsYV8SZ4i4imvw8LJe2KK9ruDgJanK7mOA2qOxbPUK1Og4ZF2r9E9aQLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JvtJ3mq5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BN2mCJ021740
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jul 2025 00:58:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	brzXIsHemnuaxFgKGlGWJGmC5q7fHaCKN6Y5ci5Sa70=; b=JvtJ3mq5keG3hAtJ
-	S++6Zgv9QIInRxQqSVkuRzN1cACQbPbAWzx+nPqub3t9a7tRHb/5pwzBc7welOst
-	H/hqXh1CpgpTghBSEq/dl/uH286XyFxYYMNrVJS96V/nBgKqEI7yfAZXbIjbx2iD
-	FWFWQViAYlBoegE+SswzcErnGbGVdUQQcAb+WIWqxqqUZmcBTOd0OcwjSdwMzL0o
-	hJCC8ApOP6lDFA2K7dY/nFbzn9wSo+/BHo7uDw8xTJHxkB9P/COgqJ5Uo9cbbG8p
-	C6ThQxA4FCafGJb5SnRivWPE+/Evf6MgM420CiPIixrLTpzsmRCvtP3/ES4cU4RG
-	3T8irA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47r9b1b8ts-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jul 2025 00:58:57 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-31315427249so2419254a91.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jul 2025 17:58:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752281936; x=1752886736;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=brzXIsHemnuaxFgKGlGWJGmC5q7fHaCKN6Y5ci5Sa70=;
-        b=XOFPPQKiQzLmo31C2b/Y2ug2DUJkj1TC1euzx7MC6YROQOsMubBmgq7JDh2cPIdU6t
-         /D7p4MFCPlCH7f+k9lOplL85shZ1Rzg+UL84Dva6tLNiZSjt2zrXjFetdm0Zn+dZxPZc
-         d/QBmMqNXJXp0GK7DZjmm8pOs5G2RNxq8v7HCWBegJmQp6YJcGm2z1ZHBxwROlExdaUF
-         YK1gW8Cw67I5OVZCws8o+DxDrT5pGjJzjBzfuyVQ3H/hyBvz0GqVNmFn8XcOz4Q1PB38
-         GF2FVsPoHD7fTdRc4sbgm/dky/GKA3S424EyAlOcXiycuSWUE3SuF1a8VXpMUURq/iLU
-         10bg==
-X-Gm-Message-State: AOJu0Yw1L8JpClKFeO25IYaXiAya0oQTCs4ZjfhR/gdz5imZhtB7eNmQ
-	q2TT1qI0Du+iCZvGwq3JR8+72IEHi9zzI40oIBeCLsJPOO7TWgTJgibpYXLObwNkAl2X8cL2xLM
-	zhqAK3aKwoQzPZ/D8a2i1HZ8AFWe/EixHAls5YoatNFUydQH+XrZawZz3vsEQ1xBWocLD9RpfZR
-	42
-X-Gm-Gg: ASbGnctYx64hr8nKKmDL83pEZmj+SOpKkCuFJJQUMe0iLE453U5rsYGdyiAcoRLnkdy
-	pnwHBx/4FmGhDyZzf+Wey/x4eE2a01G1bejzzIsCaPN93ayG07ycfztet930JkXNHQvtSTRcVJ6
-	ZMhJv3YYazMPRgbLb6bCmnpDk5GxF2Jo8fuzaMwBt6wnDoT2pmpPFhk2DocaA5lPS99h3o//8IU
-	vJmOqg/G4c4CtdhNzXoPNWAAPrxiLySxX2/FN7soSnYFcxXJH7KvKDdA0hw7wv35YTOZXTonpgn
-	h8Q0bEiPDqHtQO3mXFtLakiwhZp9lyYJwri4lWseQUJ2vtkcmCSHvpPk1DZgdlAOK6kYf4VQMVM
-	O/JdHv0J/DDkd5/7hKAjmSzIB
-X-Received: by 2002:a17:90b:33d1:b0:31c:15d9:8a8 with SMTP id 98e67ed59e1d1-31c50d5dfc7mr5338685a91.1.1752281936289;
-        Fri, 11 Jul 2025 17:58:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvo9hbWXSjbIaLy6V9BoL7KWqzJCvsi54CA7ay9HQd27IGhLWtKXupp2h3sOg371TH9ZnR9w==
-X-Received: by 2002:a17:90b:33d1:b0:31c:15d9:8a8 with SMTP id 98e67ed59e1d1-31c50d5dfc7mr5338667a91.1.1752281935841;
-        Fri, 11 Jul 2025 17:58:55 -0700 (PDT)
-Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c23006d72sm5202274a91.1.2025.07.11.17.58.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 17:58:55 -0700 (PDT)
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Date: Fri, 11 Jul 2025 17:58:24 -0700
-Subject: [PATCH 19/19] drm/msm/dp: Log connected and link_ready for event
- handling
+	s=arc-20240116; t=1752300410; c=relaxed/simple;
+	bh=Pj2+Mf6ySJm9B6A0tlW9JzZnu0lIjQkDWpiuO8IR1fo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GTcl/53c316DO//YIpGql8t5EkPJcVdbB9v7pzmS8bJkSxdTwzd28UgDZ99Qz2QRD/YEmETkp533NfeRGKeRD+am7LsFKfCYKLYwJ8zDuHzndGJ/aHX9t7G8Mnm4CK7nft/9X/6FFtTpUGmCtWr0up4R+wbJFzTSrsskx1b4t/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5gyPcv4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BC1C4CEEF;
+	Sat, 12 Jul 2025 06:06:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752300409;
+	bh=Pj2+Mf6ySJm9B6A0tlW9JzZnu0lIjQkDWpiuO8IR1fo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=k5gyPcv4D7BsHC5mVFyOp/kw3AZQ4vsfYywRBT2K0j+MJhQdhZtk4cAGkMNYX0k8z
+	 Ln+hOdGnPdB7l30BUNJqJwwdVS56o/AhEsRN88W6jxrY7L+ZtPyyJ72Lu2tMhb4eBu
+	 jkFRyZrx+pZMSbpm8QMcn42AY/lmBMnEh9lbw9M7fJvQwKZ4E+fG+xDMijr6GXXvvh
+	 RHL89kt/cIdWkgsN2AhCzaTMPR3KlO2VCnb8oYYbyjbnBGNLfXB07IWbYrbK3ZGnqg
+	 7f3Ia80ttTaKNV/kOWIFvk9vtBEn6S6c0yFE+XavHMPaqYJjo6z6SfFPDHHgWMOLGM
+	 G/U1yi3kvD95w==
+Date: Sat, 12 Jul 2025 11:36:40 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 0/3] PCI/pwrctrl: Allow pwrctrl framework to control
+ PERST# GPIO if available
+Message-ID: <ga3jrhlgjiyhbxu75ockavatday3fcmfckybqeqqxljt4pevxk@wiwyvfwh7kgc>
+References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
+ <aG3IWdZIhnk01t2A@google.com>
+ <kj6kilhjynygioxyo7iogvgwqbr7tluryir3f7vqeowk6wd6qn@sop5ubotfcug>
+ <aHGmllch_efdWgsW@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250711-hpd-refactor-v1-19-33cbac823f34@oss.qualcomm.com>
-References: <20250711-hpd-refactor-v1-0-33cbac823f34@oss.qualcomm.com>
-In-Reply-To: <20250711-hpd-refactor-v1-0-33cbac823f34@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Yongxing Mou <quic_yongmou@quicinc.com>
-X-Mailer: b4 0.15-dev-a9b2a
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752281905; l=4119;
- i=jessica.zhang@oss.qualcomm.com; s=20230329; h=from:subject:message-id;
- bh=cVrxZLsPS+6RQHt1ufzsG9tg+vHQCxscM1KTv98juZc=;
- b=FuqweivJeealXfSD8xy2eFBqVIbs56G1r5I9+i1Cn2gvrrUFh80/4K/TytFcQpIvOJpGHGp+J
- QErTeVZWORFBk8y5k9LYBtXb1jKvneKx5O1SPg+6mgQKvSpGhB4WYQ7
-X-Developer-Key: i=jessica.zhang@oss.qualcomm.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Authority-Analysis: v=2.4 cv=dYuA3WXe c=1 sm=1 tr=0 ts=6871b351 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=ZRSb5Y5lcQKK3ktpWfgA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEyMDAwNSBTYWx0ZWRfX+lJ14M2TUqQD
- v0Xp8ex5OF+pn1HEcMTFBSSp/DBDNX00UYnAKQ9RXIyJYglra8DXRAo788rpT2xWy6TQEMvg8Gm
- muEjo196zZ9wotnkyqYw14GHIFIJlh7WKI9XhO421ppdxo3I6CccntTgpc8BWLAPTxqxdFVtv9u
- V7YQi1JTgC6tJ4H+hMDnSSjX9bS+ChfDuPpyBIfJ4thTeUcA+uTmwy8KeUCI0Rvs3qez1OuBHI6
- K58dFPpCO79Q50qGrNOx5nIL4U/4ynfmbdTpOH+zU26qb82+gtlzct6HGF9shefIqSA6cf6pwzA
- bWcp8K2V2KMWhuXhWLPnmUxYpWf76ITEdNUgsAip0Gj6zgnpY7Ps7rRY0K13+Owz4BTEwv+v0Ch
- b9oAZVw2SOWdlft86KfhrXo8UhhZHNm2B3T1W4qFbZENMGVxXIhk4U/+K8rvh/WDFQbQM7vg
-X-Proofpoint-GUID: WdLAWzQMpobnWjde_dqMqW3pklMnnlEm
-X-Proofpoint-ORIG-GUID: WdLAWzQMpobnWjde_dqMqW3pklMnnlEm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-11_07,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
- mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507120005
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aHGmllch_efdWgsW@google.com>
 
-Add the connected and link_ready states to the debug logs for [un]plug
-and HPD IRQ handling.
+On Fri, Jul 11, 2025 at 05:04:38PM GMT, Brian Norris wrote:
+> Hi,
+> 
+> On Wed, Jul 09, 2025 at 12:18:29PM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Jul 08, 2025 at 06:39:37PM GMT, Brian Norris wrote:
+> > > On Mon, Jul 07, 2025 at 11:48:37PM +0530, Manivannan Sadhasivam wrote:
+> > > > Hi,
+> > > > 
+> > > > This series is an RFC to propose pwrctrl framework to control the PERST# GPIO
+> > > > instead of letting the controller drivers to do so (which is a mistake btw).
+> > > > 
+> > > > Right now, the pwrctrl framework is controlling the power supplies to the
+> > > > components (endpoints and such), but it is not controlling PERST#. This was
+> > > > pointed out by Brian during a related conversation [1]. But we cannot just move
+> > > > the PERST# control from controller drivers due to the following reasons:
+> > > > 
+> > > > 1. Most of the controller drivers need to assert PERST# during the controller
+> > > > initialization sequence. This is mostly as per their hardware reference manual
+> > > > and should not be changed.
+> > > > 
+> > > > 2. Controller drivers still need to toggle PERST# when pwrctrl is not used i.e.,
+> > > > when the power supplies are not accurately described in PCI DT node. This can
+> > > > happen on unsupported platforms and also for platforms with legacy DTs.
+> > > > 
+> > > > For this reason, I've kept the PERST# retrieval logic in the controller drivers
+> > > > and just passed the gpio descriptors (for each slot) to the pwrctrl framework.
+> > > 
+> > > How sure are we that GPIOs (and *only* GPIOs) are sufficient for this
+> > > feature? I've seen a few drivers that pair a GPIO with some kind of
+> > > "internal" reset too, and it's not always clear that they can/should be
+> > > operated separately.
+> > > 
+> > > For example, drivers/pci/controller/dwc/pci-imx6.c /
+> > > imx_pcie_{,de}assert_core_reset(), and pcie-tegra194.c's
+> > > APPL_PINMUX_PEX_RST. The tegra case especially seems pretty clear that
+> > > its non-GPIO "pex_rst" is resetting an endpoint.
+> > > 
+> > 
+> > Right. But GPIO is the most commonly used approach for implementing PERST# and
+> > it is the one supported on the platform I'm testing with. So I just went with
+> > that. For sure there are other methods exist and the PCIe spec itself doesn't
+> > define how PERST# should be implemented in a form factor. It merely defines
+> > PERST# as an 'auxiliary signal'. So yes, other form of PERST# can exist. But for
+> > the sake of keeping this proposal simple, I'm considering only GPIO based
+> > PERST# atm.
+> 
+> Hmm, OK. A simple start is fine, but I'm pointing out this will quickly
+> show its limitations.
+> 
 
-Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 38 ++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+I don't disagree :)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 32e1ee40c2c3..6cff87e4ad9a 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -543,7 +543,9 @@ static int msm_dp_display_usbpd_attention_cb(struct device *dev)
- 	rc = msm_dp_link_process_request(dp->link);
- 	if (!rc) {
- 		sink_request = dp->link->sink_request;
--		drm_dbg_dp(dp->drm_dev, "sink_request=%d\n", sink_request);
-+		drm_dbg_dp(dp->drm_dev, "sink_request=%d connected=%d\n",
-+			   sink_request, dp->msm_dp_display.connected);
-+
- 		if (sink_request & DS_PORT_STATUS_CHANGED)
- 			rc = msm_dp_display_handle_port_status_changed(dp);
- 		else
-@@ -562,8 +564,10 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
- 
- 	mutex_lock(&dp->event_mutex);
- 
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d connected=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected,
-+			dp->msm_dp_display.link_ready);
- 
- 	if (dp->msm_dp_display.link_ready) {
- 		mutex_unlock(&dp->event_mutex);
-@@ -585,8 +589,9 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
- 		pm_runtime_put_sync(&pdev->dev);
- 	}
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d connected=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected);
- 	mutex_unlock(&dp->event_mutex);
- 
- 	/* uevent will complete connection part */
-@@ -615,8 +620,11 @@ static int msm_dp_hpd_unplug_handle(struct msm_dp_display_private *dp, u32 data)
- 
- 	mutex_lock(&dp->event_mutex);
- 
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d connected=%d, link_ready=%d, sink_count=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected,
-+			dp->msm_dp_display.link_ready,
-+			dp->link->sink_count);
- 
- 	if (!dp->msm_dp_display.link_ready) {
- 		mutex_unlock(&dp->event_mutex);
-@@ -641,8 +649,9 @@ static int msm_dp_hpd_unplug_handle(struct msm_dp_display_private *dp, u32 data)
- 	/* signal the disconnect event early to ensure proper teardown */
- 	msm_dp_display_handle_plugged_change(&dp->msm_dp_display, false);
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d connected=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected);
- 
- 	/* uevent will complete disconnection part */
- 	pm_runtime_put_sync(&pdev->dev);
-@@ -655,8 +664,10 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	/* irq_hpd can happen at either connected or disconnected state */
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d connected=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected,
-+			dp->msm_dp_display.link_ready);
- 
- 	if (dp->msm_dp_display.link_ready != dp->msm_dp_display.connected) {
- 		/* wait until connect/disconnect handling is completed */
-@@ -667,8 +678,9 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
- 
- 	msm_dp_display_usbpd_attention_cb(&dp->msm_dp_display.pdev->dev);
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d connected=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->msm_dp_display.connected);
- 
- 	mutex_unlock(&dp->event_mutex);
- 
+> > Also, Tegra platforms are not converted to use pwrctrl framework and I don't
+> > know if the platform maintainers are interested in it or not. But if they start
+> > using it, we can tackle this situation by introducing a callback that
+> > asserts/deasserts PERST# (yes, callbacks are evil, but I don't know any other
+> > sensible way to support vendor specific PERST# implementations).
+> 
+> IMO, it's pretty fair game to at least account for things people are
+> doing in upstream drivers today, even if they aren't wholly ready to
+> adopt the new thing. It's harder to gain new users when you actively
+> don't support things you know the users need.
+> 
+> > Oh and do take a look at pcie-brcmstb driver, which I promised to move to
+> > pwrctrl framework for another reason. It uses multiple callbacks per SoC
+> > revisions for toggling PERST#. So for these usecases, having a callback in
+> > 'struct pci_host_bridge' would be a good fit and I may introduce it after this
+> > series gets in.
+> 
+> Sure. I think there are plenty of drivers that will need it. And that's
+> why I brought it up.
+> 
+> But if that's a "phase 2" thing, so be it.
+> 
+> > > > This will allow both the controller drivers and pwrctrl framework to share the
+> > > > PERST# (which is ugly but can't be avoided). But care must be taken to ensure
+> > > > that the controller drivers only assert PERST# and not deassert when pwrctrl is
+> > > > used. I've added the change for the Qcom driver as a reference. The Qcom driver
+> > > > is a slight mess because, it now has to support both new DT binding (PERST# and
+> > > > PHY in Root Port node) and legacy (both in Host Bridge node). So I've allowed
+> > > > the PERST# control only for the new binding (which is always going to use
+> > > > pwrctrl framework to control the component supplies).
+> > > > 
+> > > > Testing
+> > > > =======
+> > > > 
+> > > > This series is tested on Lenovo Thinkpad T14s laptop (with out-of-tree patch
+> > > > enabling PCIe WLAN card) and on RB3 Gen2 with TC9563 switch (also with the not
+> > > > yet merged series [2]). A big take away from this series is that, it is now
+> > > > possible to get rid of the controversial {start/stop}_link() callback proposed
+> > > > in the above mentioned switch pwrctrl driver [3].
+> > > 
+> > > This is a tiny bit tangential to the PERST# discussion, but I believe
+> > > there are other controller driver features that don't fit into the
+> > > sequence model of:
+> > > 
+> > > 1. start LTSSM (controller driver)
+> > > 2. pwrctrl eventually turns on power + delay per spec
+> > > 3. pwrctrl deasserts PERST#
+> > > 4. pwrctrl delays a fixed amount of time, per the CEM spec
+> > > 5. pwrctrl rescans bus
+> > > 
+> > > For example, tegra_pcie_dw_start_link() notes some cases where it needs
+> > > to take action and retry when the link doesn't come up. Similarly, I've
+> > > seen drivers with retry loops for cases where the link comes up, but not
+> > > at the expected link rate. None of this is possible if the controller
+> > > driver only gets to take care of #1, and has no involvement in between
+> > > #3 and #5.
+> > > 
+> > 
+> > Having this back and forth communication would make the pwrctrl driver a lot
+> > messier. But I believe, we could teach pwrctrl driver to detect link up (similar
+> > to dw_pcie_wait_for_link()) and if link didn't come up, it could do retry and
+> > other steps with help from controller drivers. But these things should be
+> > implemented only when platforms like Tegra start to show some love towards
+> > pwrctrl.
+> 
+> Never mind the lack of love you feel here :)
+> But I'm actively looking at drivers that don't yet fit into what pwrctrl
+> supports, and I'd like them to use pwrctrl someday instead of
+> reinventing the wheel.
+> 
+
+I'm not against supporting these controller drivers/platforms in pwrctrl. It's
+just that I do not want to implement solutions now without having users. But I'm
+glad that you are bringing these up. I'm adding these to my pwrctrl/todo list.
+
+> You're arguing against more callbacks, and start_link()-like
+> functionality, but I'm pretty sure some of these things are necessities,
+> if you're trying to abstract power control away from controller drivers.
+> 
+
+Well, that's my personal preference. These days I feel (mostly after spending my
+time as a maintainer of PCI controller drivers) that callbacks are evil and they
+pay way for 'midlayers'. But having said that, I myself implemented callbacks
+whereever I felt that no other options were possible. And here also, I'm just
+claiming that this series avoids the '{start/stop}_link' callbacks which was
+hated by many (including me) as it ties the Qcom switch driver implementing
+these callbacks to be tied to a specific platform.
+
+> Again, maybe this is a problem to be solved later. But I think you're
+> kidding yourself that pwrctrl is ready as-is, and that you can avoid
+> these kinds of callbacks.
+> 
+
+No, I never claimed that pwrctrl is perfect and it would solve all the PCI power
+issues. But I'm happy that it atleast solves a couple of issues and allows me to
+address the rest of them. We had been talking about a framework like this for
+several years without any upstream solution. But now we finally have one and I'm
+merely trying to make use of it to address issues.
+
+- Mani
 
 -- 
-2.50.1
-
+மணிவண்ணன் சதாசிவம்
 
