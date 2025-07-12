@@ -1,116 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-64683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDDE4B02A49
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 11:35:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD9E2B02BCE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 18:07:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A0963A4675
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 09:35:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31F3F4A64F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jul 2025 16:06:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E744E273D9D;
-	Sat, 12 Jul 2025 09:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7135B2857FC;
+	Sat, 12 Jul 2025 16:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ge0qYzln"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="S+j6qs76"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B048332C85;
-	Sat, 12 Jul 2025 09:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3DC31F1906;
+	Sat, 12 Jul 2025 16:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752312938; cv=none; b=OhPca0DV1GN2rDQYoLKgd8mEcCb7BzTH08OuYwhY5VtlwHHpINxadv3zYf50/FbpOn/6TYmp8tlgt3hMYAjbcTKnxHezBv94nhDCSdDLB5ZzV419j/2pfb588nvQQLCrm05j83EWMBFDeoZodXCaxGe3w4tNVlV53FYEp+J9l3o=
+	t=1752336401; cv=none; b=FDJHd2cJAy6WfvXwt+azAy6qyFlStFjajXIMTPblbD6NzfD2aPMB8SJpHxDwwJqLvZEPKfJ6xUAlHpGsd6EYJMakJ7J0EmQymgaAR4fDjhUT4a8IS/yNjrcPrqyJQOHgapmNC5jCRCEqw4ykRSex0SCPdWo4UougPPxqI44Wn0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752312938; c=relaxed/simple;
-	bh=s7cj6oQ/BwxZRbAJNXkKJ5U3lAZkjlVFoTQUXhnxDU4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ftllAb80POgVgUtM28H197KhQt2AGhjIGVO0wC2vxTrRkvUF+1HxG+1NP2iGhythf8EhkdOc+LedbziE882RtLW0JnpEHHVtiQgC4i3URO2AmDK3iSwBB3o7MMh21WxIsjpKcgcDh1w1d63S9UrQvPqNJWGirCfpQ3P61iRvEmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ge0qYzln; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCDFC4CEEF;
-	Sat, 12 Jul 2025 09:35:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752312938;
-	bh=s7cj6oQ/BwxZRbAJNXkKJ5U3lAZkjlVFoTQUXhnxDU4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ge0qYzlnIYod4rhihkSfZD4ko+Zfwd285rO3xx6MFDFopsXEmAzxZk4y8kUb7p5bz
-	 NoH3sJU09ss7eDPcX0nI/XutJaWC5u2uzHholnqK20XB64GB/AuwkMmqbGT50z/3ET
-	 weq8vk33lsZdhItHh6IEgA6Brae0ppGkQ+/w/NDyRuJFYNDRh9wm+/WvEGZx/XRkzi
-	 xEdusyZDWLymZabqIHnCjCBR2bIU5cNrDIwuvtLdRM36e4yr4NuqIFKIs1hWymlieF
-	 Js97lk0OQzyOHYVmLLPukwlqvCm40w/OxWDENmp5MVJNqObf54eVY8A9HwLt9h23PU
-	 sPYGY1BBZTjiw==
-Date: Sat, 12 Jul 2025 15:05:28 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
-	ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
-	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
- __pci_enable_link_state()
-Message-ID: <qay63njqf7z7mchizt5sm66i67rvxxxicikxmfuvllmmxfy7ek@mulnjvde5q7w>
-References: <604ffae3-1bfc-0922-b001-f3338880eb21@linux.intel.com>
- <20250711230013.GA2309106@bhelgaas>
+	s=arc-20240116; t=1752336401; c=relaxed/simple;
+	bh=8QMnezUr6RcxdJ1mE8flllbSLTsIaWjyZOkrmVf3mMc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZNndaR2cidav9kuNPuCa2zsynIqtDEzI7xYzBVrUuldiF/ry9HuV7OXkbLdFd6iYzP72shTsaa2vZRdlgZtOYD7P3G4bqE4YXLPw97QWQcKP76uBElenxFvZD5FGXtNChhO+NAcTYADz1DsxPmloXSeg3iiBLKYGXRmueF4+Qns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=S+j6qs76; arc=none smtp.client-ip=220.197.31.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=yFk0YyJvli1XN+U/jjkn0xB8ubUiOgd+hURsOqBNf9A=;
+	b=S+j6qs763V46bHzoyxwgydQT5N0u4ktlfIpn1OKSgRh5nwt7hFgfhQQleZ64pn
+	mdWlwlSBdXqDssSuyxqXbTVW/VBnwirbYVaOu1b+bgbFd0K7ZnRCeQZx0xesnmns
+	Fg1C8l2sQsnxjonA9XQ2BThELeyWA4v9Mpuq3YDgtN8ME=
+Received: from [IPV6:240e:b8f:919b:3100:7981:39b4:a847:709a] (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgCHkby7h3JoR4ilAA--.23899S2;
+	Sun, 13 Jul 2025 00:05:17 +0800 (CST)
+Message-ID: <470742a6-861e-498e-9da4-1fa213969c7e@163.com>
+Date: Sun, 13 Jul 2025 00:05:18 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250711230013.GA2309106@bhelgaas>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+To: Manivannan Sadhasivam <mani@kernel.org>,
+ Bjorn Helgaas <helgaas@kernel.org>
+Cc: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>,
+ Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+ linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+ qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+ quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
+ Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+References: <604ffae3-1bfc-0922-b001-f3338880eb21@linux.intel.com>
+ <20250711230013.GA2309106@bhelgaas>
+ <qay63njqf7z7mchizt5sm66i67rvxxxicikxmfuvllmmxfy7ek@mulnjvde5q7w>
+Content-Language: en-US
+From: Hans Zhang <18255117159@163.com>
+In-Reply-To: <qay63njqf7z7mchizt5sm66i67rvxxxicikxmfuvllmmxfy7ek@mulnjvde5q7w>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:QCgvCgCHkby7h3JoR4ilAA--.23899S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tw1ftFy5uw13Zr43KF1kuFg_yoW8uFW8pF
+	Wrtr9aka1kAF97Cw12yw1UJFyFyw4SyryYk348Xw1UAF45uasrGr4UtrWruF9xXrWxWw4Y
+	vr4jgF1Dua4q9a7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UiZ2-UUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/1tbiWwuIo2hyg6ZSywAAsd
 
-On Fri, Jul 11, 2025 at 06:00:13PM GMT, Bjorn Helgaas wrote:
-> On Fri, Jul 11, 2025 at 04:38:48PM +0300, Ilpo Järvinen wrote:
+
+
+On 2025/7/12 17:35, Manivannan Sadhasivam wrote:
+>> We only have two callers of this (pcie-qcom.c and vmd.c, both in
+>> drivers/pci/), so it's not clear to me that it needs to be in
+>> include/linux/pci.h.
+>>
+>> I'm a little dubious about it in the first place since I don't think
+>> drivers should be enabling ASPM states on their own, but pcie-qcom.c
+>> and vmd.c are PCIe controller drivers, not PCI device drivers, so I
+>> guess we can live with them for now.
+>>
+>> IMO the "someday" goal should be that we get rid of aspm_policy and
+>> enable all the available power saving states by default.  We have
+>> sysfs knobs that administrators can use if necessary, and drivers or
+>> quirks can disable states if they need to work around hardware
+>> defects.
+>>
 > 
-> > +++ b/include/linux/pci.h
-> > @@ -1826,8 +1826,8 @@ static inline int pcie_set_target_speed(struct pci_dev *port,
-> >  #ifdef CONFIG_PCIEASPM
-> >  int pci_disable_link_state(struct pci_dev *pdev, int state);
-> >  int pci_disable_link_state_locked(struct pci_dev *pdev, int state);
-> > -int pci_enable_link_state(struct pci_dev *pdev, int state);
-> 
-> AFAICT there's no caller of this at all.  Why do we keep it?
+> Yeah, I think the default should be powersave and let the users disable it for
+> performance if they want.
 > 
 
-I'm just working on a series to convert the ath{10/11/12}k drivers to use this
-API instead of modifying LNKCTL register directly:
+Dear Bjorn and Mani,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/wireless/ath/ath12k/pci.c#n961
+Perhaps I don't think so. At present, our company's testing team has 
+tested quite a few NVMe SSDS. As far as I can remember, the SSDS from 
+two companies have encountered problems and will hang directly when 
+turned on. We have set CONFIG_PCIEASPM_POWERSAVE=y by default. When 
+encountering SSDS from these two companies, we had to add 
+"pcie_aspm.policy=default" in the cmdline, and then the boot worked 
+normally. Currently, we do not have a PCIe protocol analyzer to analyze 
+such issues. The current approach is to modify the cmdline. So I can't 
+prove whether it's a problem with the Root Port of our SOC or the SSD 
+device.
 
-> > -int pci_enable_link_state_locked(struct pci_dev *pdev, int state);
-> 
-> We only have two callers of this (pcie-qcom.c and vmd.c, both in
-> drivers/pci/), so it's not clear to me that it needs to be in
-> include/linux/pci.h.
-> 
-> I'm a little dubious about it in the first place since I don't think
-> drivers should be enabling ASPM states on their own, but pcie-qcom.c
-> and vmd.c are PCIe controller drivers, not PCI device drivers, so I
-> guess we can live with them for now.
-> 
-> IMO the "someday" goal should be that we get rid of aspm_policy and
-> enable all the available power saving states by default.  We have
-> sysfs knobs that administrators can use if necessary, and drivers or
-> quirks can disable states if they need to work around hardware
-> defects.
-> 
+Here I agree with Bjorn's statement that sometimes the EP is not 
+necessarily very standard and there are no hardware issues. Personally, 
+I think the default is default or performance. When users need to save 
+power, they should then decide whether to configure it as powersave or 
+powersupersave. Sometimes, if the EP device connected by the customer is 
+perfect, they can turn it on to save power. But if the EP is not 
+perfect, at least they will immediately know what caused the problem.
 
-Yeah, I think the default should be powersave and let the users disable it for
-performance if they want.
+I wonder if there are others who have encountered similar problems as 
+well. If I say anything wrong, please point it out. Thank you.
 
-- Mani
+Best regards,
+Hans
 
--- 
-மணிவண்ணன் சதாசிவம்
 
