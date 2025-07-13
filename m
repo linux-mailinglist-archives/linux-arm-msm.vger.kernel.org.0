@@ -1,129 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-64710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64CB3B02FF1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6F42B0303A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:43:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25B647A4087
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:33:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 517637B29EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:42:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94FD31EF39F;
-	Sun, 13 Jul 2025 08:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EA1B254873;
+	Sun, 13 Jul 2025 08:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o01Y+j/Q"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="xbxAcRYU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E8081E;
-	Sun, 13 Jul 2025 08:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8C022A4CC
+	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 08:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752395693; cv=none; b=T09k8auGf5iW29fh91cVWIQbwg144M3wVOxx8DtH/w8xiJSLSge8FdnoSxftwUcyEwk2sZYO6NVfutl9LeDBgOYzmjaDgcg3TVKAY7duajy2Dzu5bA/ZlnAyhBWfBbGXk+T1OVyRhUmG7TgbwhCXrInPAcX6X+3HjTDvvqpEgAY=
+	t=1752396207; cv=none; b=Kp3gdp7c/qPg6zhZ6gaWFPwmgLOg7hn+ix7LwVZYM6VQDtIrcmmOZBbpzKBNRf7RyyxGQBIJgQ3rF9HOlEHDG1J+cmFF5vBtLe+/KvOIjXhs8aF7ZHYSKUov0h+ShObvzBZ2UrFzOJF7K3auClHi7Q7Qj3hkmB788r68atcsGc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752395693; c=relaxed/simple;
-	bh=I0ovE260u/gC1Up9amFDoKnv8ENJK4Lp5nCpuguLc8I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sVNHvEWH/LXrhFg+k5eq8XMf/RiRyg4CBOduVsi2UBFUMkhtPXgji3kGx263VfCOGL1oc0fe/2tBEZ8OlseE8hz53ccccWj09Iw7W8etST/varquTgQ9OVg3sI5ulZsPIQR0tYfkCoDTWzvMTmWik7aBWjR4aJuBWFVu0wJe/sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o01Y+j/Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8E1C4CEE3;
-	Sun, 13 Jul 2025 08:34:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752395692;
-	bh=I0ovE260u/gC1Up9amFDoKnv8ENJK4Lp5nCpuguLc8I=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=o01Y+j/QO7DPCyhRI+BNpv1/fcPAnRTbIzzkdgMlxXFdD9JEWXJ2YhIYH/fwi/5cM
-	 H5Si5YOoGTPTI3WNxN/7qam/iRaskRodl0/ZBrXMQDSL7uGtm9f6yoQ3hziQTnz4DM
-	 UEPz2qDHVRbWB85ltXTCSBYZtMGT2F8doXi0YEg16/pEf+wFd0RHCGd15YaB4ILrAy
-	 4oFpWwuov1bfyX6h0k5DG9yQIjTBcsZpJxrV74KP7d6fYuggzsN5yHpdQj34etHgGl
-	 +/etx1Fa4jTJmc3jtgc1PWLpirsYbn3ZLkVQAqx6d5y5uHrkQcJuvutRjEWuVJists
-	 b8PdogeY7+9Fw==
-Message-ID: <c9887764-8085-4abe-9188-9690ea8b5191@kernel.org>
-Date: Sun, 13 Jul 2025 10:34:47 +0200
+	s=arc-20240116; t=1752396207; c=relaxed/simple;
+	bh=teFEt5VYoV+y5Dd7IIHlSpW2pgBGTG1QedDMUy1wx8U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tTJNDgpSwmrQ8WiPIvdalZevsrpUcV+e2J34B3UWk5yVqK69UtJaARzpW6Qxv0Fn1uaDBum4TkVuQCPs/7jP5xGWbuNKyBYsXG4LMmD7xb/P5Bgwp0wYcqAcLoBN0UFSvESekASMEnVh4lm2S2aVwAUk0gF+a9MR1/EQvbaEYcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=xbxAcRYU; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5562838ce68so3153637e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 01:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752396204; x=1753001004; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=teFEt5VYoV+y5Dd7IIHlSpW2pgBGTG1QedDMUy1wx8U=;
+        b=xbxAcRYUidJVofzk3N9o884D0j/xmj+1Mntya2TAmL5rMyomrvxwJYe8GFF9QKNOyZ
+         aQm2gAUmEih5QTagIMA8js6hCnpRco1TlffNb8gj8FayfHQPFfTNyCjjcdys2QPf3rzU
+         vn2qkQnvFTeeR+p8NjRiWsbcItVACaTrshEo9DgFf78b/Mm1irZ11p4QoJvtnXHT7EEU
+         H+XN30jyWGbDDDfnZtlhZCjjV6OumnoxLLDHMfUOywy/A0AYdcypMslyi1WoLXqtQyvH
+         /w4BBM+XMlPz8rvOi28k43tNGgtElv7T4G+rCLF1osJbtqnjhPa6efNGPsggMiVwKATG
+         2cPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752396204; x=1753001004;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=teFEt5VYoV+y5Dd7IIHlSpW2pgBGTG1QedDMUy1wx8U=;
+        b=hnOjLP07GOVLXb+xXsK7eLpRY2n3KrV1zUtuVfTSI2fXIaCX1Xn5aMwrMjuqG6oEE9
+         151LHJzkqIRnDp+iVuMArZFZeC4qURqOY0FQzgNTuVHMHWvUP3pxQUNBbZ7my34MovCL
+         D6MAL1KV4LVChcoiRoD05vkotbVngijBNih8sSPG+HGGddBQEIxaCCPaTYYyLGw7Mjjl
+         coSQJNopDEUSamtI77/pRMOE4FRxSgW9WboV2XFuwEidfuptgUelhABt0Ani3aRYNFi6
+         TWT4XpbgkDpTzOVA+FkaUzLpg2WkwWCqLx9dtEYLA7sQzLlPa59sT+ahVJxzQ/PwPa9s
+         bEwg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlZ0oMpU+IQ7luBzyWZrPTWQeOIv4oNPOjI9iA+WEttea/0/BFjbyIBePt4qn2sSpNPaWArBaMuCghXbbi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3UNWMspj7lxESIOtI8XFjy2WcxNhv7gL2HLcaDt4sd3h1hiaf
+	j/MFw/0EQa0RoLG3B8lUqOJg38qEipTSTe/nvKlsWzvdZGEDfNpGnfh5si+93GLDfbYFmI3kFPk
+	xV5fXfuYsU/LX1MeYDrJK9EmWr9IoUpzrJzf4IXG6Cg==
+X-Gm-Gg: ASbGncsSfEIHBT+7NHnLgJdvfMz4iYdOyC3yfwc5SVOrIqukg/I3fLDCE0t6ZcmxHfX
+	1ZC3q2k4tDrG3S1yWFsbvkAfyxusr66DnGWGEugEtxsU9RRZ9JG9SWvXlC1YwwaawZNbTP9E1uk
+	bHIcrVg+piXJjR333OyUSmjqpVkuQxYc78zpWCQsY7sobLZzEYkDzef7GK/VOplCxIPeu7QnYO2
+	ZYxyKG0bgpkxeSsxSm7ZaVWLZHSX8qjfm2iWv2ZV78dTqx6LA==
+X-Google-Smtp-Source: AGHT+IHBAbCKD5IYxg9QHbex64TGGdl/hyMZx/O9ZBosB5HyqtSevaVoy0zG6SyjrmS/Wv0vBuuPHSN0g6Rcj3+48Xc=
+X-Received: by 2002:a05:6512:1114:b0:553:d884:7922 with SMTP id
+ 2adb3069b0e04-55a04668194mr2741453e87.48.1752396203838; Sun, 13 Jul 2025
+ 01:43:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] dt-bindings: interconnect: Add EPSS L3 compatible
- for QCS8300 SoC
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Sibi Sankar
- <quic_sibis@quicinc.com>, Odelu Kukatla <quic_okukatla@quicinc.com>,
- Mike Tipton <mdtipton@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250711102540.143-1-raviteja.laggyshetty@oss.qualcomm.com>
- <20250711102540.143-2-raviteja.laggyshetty@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250711102540.143-2-raviteja.laggyshetty@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org>
+ <20250709-pinctrl-gpio-pinfuncs-v2-8-b6135149c0d9@linaro.org> <CACRpkdYfRv-B=p61tVThFkjoqDGfcqOjmHxmj4wv-NYyky2-kg@mail.gmail.com>
+In-Reply-To: <CACRpkdYfRv-B=p61tVThFkjoqDGfcqOjmHxmj4wv-NYyky2-kg@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Sun, 13 Jul 2025 10:43:12 +0200
+X-Gm-Features: Ac12FXyIRZr_PZFqMr5GkGp0O9WQSutVaydnaLLulDe-fCJJJZygxCd1lTC-X0M
+Message-ID: <CAMRc=Me561DEHio+zN6oX9oqD6ue7z-y9E+cO_7_Z3L4taQd_A@mail.gmail.com>
+Subject: Re: [PATCH v2 08/12] pinctrl: qcom: use generic pin function helpers
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Sean Wang <sean.wang@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mips@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/07/2025 12:25, Raviteja Laggyshetty wrote:
-> Add Epoch Subsystem (EPSS) L3 interconnect provider binding for
-> QCS8300 SoC. As the EPSS hardware in QCS8300 and SA8775P are same,
-> added a family-level compatible for SA877P SoC. This shared fallback
-> compatible allows grouping of SoCs with similar hardware, reducing
-> the need to explicitly list each variant in the driver match table.
-> 
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> ---
+On Fri, Jul 11, 2025 at 8:37=E2=80=AFPM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
+>
+> On Wed, Jul 9, 2025 at 4:39=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Use the existing infrastructure for storing and looking up pin function=
+s
+> > in pinctrl core. Remove hand-crafted callbacks.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Needless to say I'm a big fan of this patch set and it seems only
+> this patch 8/12 has outstanding comments.
+>
+> Do you think you can do a quick iteration of it or does it require
+> a lot of time?
+>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I don't want to rush it. Let's make it v6.18 material as I want the
+changes to spend some more time in next and not break anything. It
+affects literally all qualcomm platforms after all.
 
-Best regards,
-Krzysztof
+> I am tempted to simply apply patches 1-7 to make your life
+> easier past v6.17, should I do this?
+>
+
+Yes, please, they carry no functional change, it will be less baggage
+for the future.
+
+Bart
 
