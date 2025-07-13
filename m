@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-64709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F60DB02FEA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:31:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64CB3B02FF1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:35:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC26117FD50
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:31:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25B647A4087
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:33:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D4361EB5C2;
-	Sun, 13 Jul 2025 08:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94FD31EF39F;
+	Sun, 13 Jul 2025 08:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pt99lK3h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o01Y+j/Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E521E1DF0;
-	Sun, 13 Jul 2025 08:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E8081E;
+	Sun, 13 Jul 2025 08:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752395492; cv=none; b=T5VuADKmh5eFyAvnpFbXB7yjjKX4AxkyywAj5UXpZU6aSF0Fyu8nsOVXtN0qNhxA7U+qw166oQqgx+kpAMsPsvrMOT09ZoKFTIzXEKQEthuKhO5Oxau7ehaPpGOcDTT/qhrSDA5PjJH/QxIfGoOOz8U0scx0e/BKtrw3ycK/JqE=
+	t=1752395693; cv=none; b=T09k8auGf5iW29fh91cVWIQbwg144M3wVOxx8DtH/w8xiJSLSge8FdnoSxftwUcyEwk2sZYO6NVfutl9LeDBgOYzmjaDgcg3TVKAY7duajy2Dzu5bA/ZlnAyhBWfBbGXk+T1OVyRhUmG7TgbwhCXrInPAcX6X+3HjTDvvqpEgAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752395492; c=relaxed/simple;
-	bh=6Zf/t+1GVnyk+GotW7/Ks3e1/HCM0lAbM4b8kI6lusA=;
+	s=arc-20240116; t=1752395693; c=relaxed/simple;
+	bh=I0ovE260u/gC1Up9amFDoKnv8ENJK4Lp5nCpuguLc8I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TrY3n0SW7hyLyMy355ol/e3P2NEn1UoI7OMVCboWYWRae0l2Sm7NZxaudbu5Su2QjZt4Q06v/KpMnouEcBajZiaNgspl92e9chJi21vjUz2g6p6RDYqiF2QgizB4aXFoME1EmCejYGh5+CBvUiImNs6I9WRE05wxv/aQPWP8fH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pt99lK3h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BE9C4CEE3;
-	Sun, 13 Jul 2025 08:31:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sVNHvEWH/LXrhFg+k5eq8XMf/RiRyg4CBOduVsi2UBFUMkhtPXgji3kGx263VfCOGL1oc0fe/2tBEZ8OlseE8hz53ccccWj09Iw7W8etST/varquTgQ9OVg3sI5ulZsPIQR0tYfkCoDTWzvMTmWik7aBWjR4aJuBWFVu0wJe/sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o01Y+j/Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8E1C4CEE3;
+	Sun, 13 Jul 2025 08:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752395491;
-	bh=6Zf/t+1GVnyk+GotW7/Ks3e1/HCM0lAbM4b8kI6lusA=;
+	s=k20201202; t=1752395692;
+	bh=I0ovE260u/gC1Up9amFDoKnv8ENJK4Lp5nCpuguLc8I=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pt99lK3hrHeG1pTCQ8g9j7GudCH8J+RKZHazmGAge+fTKGFn0jBzigfTcYK9/7jof
-	 yag9abuXwe9CrkrOpPOK1I0suKG+IG92TdzIe9Yi9VT5leqzrRbgvzxdFy8+k2Rppv
-	 Bogm8NrkLwnUPrr0GngAKE2V3VANB3UYWSxN6rMLlhtdNBZaF1cKquV354wnypIE2B
-	 zF0mq4T+dNMZeSVO7FIJHhGQ3Vqy/BOtUenzCktO2TEw1WNMQRgb86nUBltJjxvVVH
-	 fmy4roCUoLqkTKMafpjYQwrYTH7JnMfdSc5AfGStNxEFIeK4I3uiAtWXMsuZ6I+EEp
-	 BwXAxN3FPrNIg==
-Message-ID: <eba89d81-1dbb-4eed-8ad9-b49761aab49b@kernel.org>
-Date: Sun, 13 Jul 2025 10:31:21 +0200
+	b=o01Y+j/QO7DPCyhRI+BNpv1/fcPAnRTbIzzkdgMlxXFdD9JEWXJ2YhIYH/fwi/5cM
+	 H5Si5YOoGTPTI3WNxN/7qam/iRaskRodl0/ZBrXMQDSL7uGtm9f6yoQ3hziQTnz4DM
+	 UEPz2qDHVRbWB85ltXTCSBYZtMGT2F8doXi0YEg16/pEf+wFd0RHCGd15YaB4ILrAy
+	 4oFpWwuov1bfyX6h0k5DG9yQIjTBcsZpJxrV74KP7d6fYuggzsN5yHpdQj34etHgGl
+	 +/etx1Fa4jTJmc3jtgc1PWLpirsYbn3ZLkVQAqx6d5y5uHrkQcJuvutRjEWuVJists
+	 b8PdogeY7+9Fw==
+Message-ID: <c9887764-8085-4abe-9188-9690ea8b5191@kernel.org>
+Date: Sun, 13 Jul 2025 10:34:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/15] arm64: dts: qcom: x1e80100: Add MIPI CSI PHY
- nodes
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH V2 1/3] dt-bindings: interconnect: Add EPSS L3 compatible
+ for QCS8300 SoC
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org
-References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
- <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-8-0bc5da82f526@linaro.org>
- <ddea072c-c495-4414-a497-a2851211934e@kernel.org>
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Sibi Sankar
+ <quic_sibis@quicinc.com>, Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Mike Tipton <mdtipton@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250711102540.143-1-raviteja.laggyshetty@oss.qualcomm.com>
+ <20250711102540.143-2-raviteja.laggyshetty@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,39 +108,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ddea072c-c495-4414-a497-a2851211934e@kernel.org>
+In-Reply-To: <20250711102540.143-2-raviteja.laggyshetty@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/07/2025 10:28, Krzysztof Kozlowski wrote:
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> index 41245e8592f78edf141141f2f5b7c5b841318f46..e385d6f329616360e089ba352be450c9eca6aab6 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> @@ -5244,6 +5244,94 @@ cci1_i2c1: i2c-bus@1 {
->>  			};
->>  		};
->>  
->> +		csiphy0: csiphy@ace4000 {
+On 11/07/2025 12:25, Raviteja Laggyshetty wrote:
+> Add Epoch Subsystem (EPSS) L3 interconnect provider binding for
+> QCS8300 SoC. As the EPSS hardware in QCS8300 and SA8775P are same,
+> added a family-level compatible for SA877P SoC. This shared fallback
+> compatible allows grouping of SoCs with similar hardware, reducing
+> the need to explicitly list each variant in the driver match table.
 > 
-> phy@
-> 
-> git grep csi.*phy@
-> git grep phy@
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> ---
 
-... although we do have ethernet-phy@ and usb-phy@ accepted, so it could
-also be csi-phy@. Up to you.
-
-> 
->> +			compatible = "qcom,x1e80100-mipi-csi2-combo-phy";
-> 
-> You should clearly express where the bindings are. I see only short
-> remark about some driver in v7 changelog, but you have here a weak
-> dependency, because this should not be accepted before the bindings
-> reach their maintainer and qcom maintainers need to be able to check on
-> that.
-
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
