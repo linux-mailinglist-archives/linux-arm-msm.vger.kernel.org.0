@@ -1,177 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-64722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF9C1B03209
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 18:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B6338B03215
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 18:28:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 182CA1787D9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 16:09:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DFC116A520
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 16:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A02A27FD4B;
-	Sun, 13 Jul 2025 16:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2D9C27FD5A;
+	Sun, 13 Jul 2025 16:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v5hRAdQ1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nLMdBwCr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086D927877D
-	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 16:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7376427877D;
+	Sun, 13 Jul 2025 16:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752422967; cv=none; b=loLEg3AV2lKJd+/BNsOG9hqJUggsde0LcfwFpnxSZkPKmlQ9J1rdvrg4x8Z3FlwjW9EV+Rtd13NxdFi2KYj2RMjT0oXfrnmDyrNV/2ACqlpywP15sjviBeyKTCtprzqClDZYAKDaKYODKU62H3kecNBYuqWz/R84pmKHc0vVUkU=
+	t=1752424091; cv=none; b=ssHSyWnE+LFO5DvfTnd4N5srCaMi7NurTjiaYJ10SCRrMml4zwDLSrOPt4Hdyf9EkCy0Ms9GthNThz6NcG3CWx/ozfB/IcQbmJuD+PSDA4pA+im1od1j2wByokoWZ+qVPCFkfbMj313mETskHoZ4hV+rAjXTes9+3aM0/70S5Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752422967; c=relaxed/simple;
-	bh=KRmk3NsGgVD0LMF5wEKWU3R43QFvlORAzL53r7et8Sk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e6IKRWa+d7vbz+nWGJDapBpxoAICrVpGmAlVZrG7rrhn8fJRKhfORv58VcmI9i5275SCsCr1Yi7KmoeBQguMYRdw9K2m+ENfRUVexrtVyCIogkLlTcNoYfmB27UMJlRh0TkGZLOEuwepvLQC3/nkyp0TQiwdVj03esZsbtR3JYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v5hRAdQ1; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-455b00339c8so14153505e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 09:09:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752422962; x=1753027762; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Rhba6lHhtD1VINr4iXPUASGWwdiuWX3glc/gMg4zgjM=;
-        b=v5hRAdQ1M5mp6Zq73IZ7fTE6RsstjPBsaTOFI/WLLpPRNqylGAtGFWqonysxRK/jo8
-         2aKNmvj00SN/5MVN6NJWqVTFcjD8TnD+2YCpnwfkp40+FKxT9nuSRR+AmLRpWcLl4moq
-         6pYgnye4xChuGCNF2MmvcIzsii4tW9onDNBba8TGHPwzhGM4d906coiFVVwOaCX97PTn
-         pvbJbVbSnNZsuSIvXMJijfIZJw/gz2/b9UWOtXISQrX9QtSOBBsArg2UtoZIal7nr+42
-         mK+aS8bnja18jQxxZ9ouH0VPq1uYisQoTdYLQlDDvYh6OzrqTVwtM9xtITDpR4ER4NH7
-         Kmsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752422962; x=1753027762;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rhba6lHhtD1VINr4iXPUASGWwdiuWX3glc/gMg4zgjM=;
-        b=k8MF2IjW1IS0WH0MUUemSLgbDrvwW+R3ORmPcIBmHChucySb/xgfzVKjGpMwZ2mG9Y
-         X/VGgVb4turxkoiF/O0V159hofkZHmUNxhbZuHnhtYZQerr0qdkbs6e3B/RLjh7HFw2a
-         76yx6Ru+yxS31vwbeYzfyIQKk5/bTBIXLj83xBqOyUEDTW+c/V3f3K321jk2Cale0sQD
-         JmcLENKlFw50sKdmXJ9KrBi4jF22j6Mf61OSOjO1uJoUF/BkcjHt32HRDfOnliehmcFa
-         0if8BCFhUCTPI4mAXuRpF+wuKuBuK5f0i5dxinHECY2eTGdLL0af04rfQxd4HRl2Lqgm
-         5bxg==
-X-Forwarded-Encrypted: i=1; AJvYcCVEkwHzzopHUM0ACRs547Hr/qecn7OFJ9oH5c8Dj3zzO+6vlypam3jkrMmZWSnf6XYtxRffZBoDD9jpCsYW@vger.kernel.org
-X-Gm-Message-State: AOJu0YytWldH33ZgDVz7yB6+qb56GNnb1fRyxqGY47+B/dl4mHvMaXxV
-	K5+BGrBg5uJeHa9K5jwNBV6nnFtUhv+ipSxTbwV8tpYxvySyYzA62zfNCGtWu950rqM=
-X-Gm-Gg: ASbGnctVKJxnmlM1rqY5kNzpSverq6ViobFUwtyaZaFXsGDpGR0qC7xWAIqDAuWIij2
-	5Ekcz0exBK1maiKnFTz0/DIaypPHm9ooqlbQyIYAJMYI79u75lvuw/5jG0FMdGhoAEy969ouAf/
-	1TS/G42Un/HLr07RR3hsBMZ2BQGP8GH6pG/K8rb8Jek7z2kr8FlrOhKufDq+PmWhgIOBUhOH38y
-	uOIeM23ZIY6d4xX76Wruo+gJ0nijATs8cePOqfp7lk7LKF4XkZdKd77RvgJxh6yDli5Ds/pEweD
-	oIoZ1maEMbv35Et/VP7DjrjpvmFzG3+koWi58C2s3wUAsOLvdoUFQKk/7cp+dnsc+GyZj69Joi/
-	qNqwMdHMjk7fFnQWdyL4JTMVgVo/htRkiMrvXzOJRBTq3aSCH84/Qgms8+VlL
-X-Google-Smtp-Source: AGHT+IHRfMcJZ1kG+n5978iWlkkPgMANVyQONUJ0QtigPrdAhXAs7eN2xp9KoLqBx3H87ZSTp3kuUA==
-X-Received: by 2002:a05:600c:3f0c:b0:456:1006:5401 with SMTP id 5b1f17b1804b1-4561006660amr32350185e9.5.1752422962278;
-        Sun, 13 Jul 2025 09:09:22 -0700 (PDT)
-Received: from mai.linaro.org (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4561976784dsm11426405e9.18.2025.07.13.09.09.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jul 2025 09:09:20 -0700 (PDT)
-Date: Sun, 13 Jul 2025 18:09:17 +0200
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Cc: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-	rui.zhang@intel.com, lukasz.luba@arm.com,
-	david.collins@oss.qualcomm.com, stefan.schmidt@linaro.org,
-	quic_tsoni@quicinc.com, konrad.dybcio@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
-	dmitry.baryshkov@oss.qualcomm.com
-Subject: Re: [PATCH v6 0/5] thermal: qcom-spmi-temp-alarm: Add support for
- new TEMP_ALARM subtypes
-Message-ID: <aHPaLZ46BCdM2lRA@mai.linaro.org>
-References: <20250710224555.3047790-1-anjelique.melendez@oss.qualcomm.com>
+	s=arc-20240116; t=1752424091; c=relaxed/simple;
+	bh=ifpdTOGwI1rhrSXr9K9a0r6Seeyr+cw10DFMmHo8Udg=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=imbcuwzITuOVUSAuoJqFe6nSdskfGZM7LGOsk/PNJsIooUGiEeHgXTiYA/rcz9IyyfmkKG5HJ0l49eGRngG/OMNy0/fgvuzuxzKGLyQ7LNwGyexjs6KdEKk1vG5KlR0PDte+7HwIc2f8Jw7bkNcsNNhBEikBdUBraO6zVwjUg6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nLMdBwCr; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752424090; x=1783960090;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=ifpdTOGwI1rhrSXr9K9a0r6Seeyr+cw10DFMmHo8Udg=;
+  b=nLMdBwCrcCyfEcUO8sh5hRgaIxVWWpNaOq4YUkyA6uScEptMyQqS43To
+   4AL3hjH2AoVteXgbGqq3WgrN/02vpYRKscl9bBtIP6JMM3joFOtDRPmHZ
+   oF30Imre+fBLwhOypqmGzWS+A9aq/78jZNNVsqJyUy9hgaBPx5C4+HcbO
+   zo8YXswuVappgTfy2DgE/OXq4CKib77yeoqCuanZ/0HgeZfy838RkTNZQ
+   cnMPPCqZ5HB6asXn7MRP6qhLDttUVbj1vGx1XvQFvvphlqzxbaCMHtAfN
+   tLaW4wpAJ9IqG4/jpH0NYPRTtcYl7M9vi7FCI2Ju87NcYn75/kdrykwnk
+   w==;
+X-CSE-ConnectionGUID: UdyUvBp3TbS4V2RkqbqTjw==
+X-CSE-MsgGUID: +aW+LTBtRnCt5Xra9lRjsA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54344672"
+X-IronPort-AV: E=Sophos;i="6.16,308,1744095600"; 
+   d="scan'208";a="54344672"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 09:28:09 -0700
+X-CSE-ConnectionGUID: gK+e7tQVQIOInWqljWHVmA==
+X-CSE-MsgGUID: aLHxtV24T2WZICr7KJ1bcA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,308,1744095600"; 
+   d="scan'208";a="160767417"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.175])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 09:28:01 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Sun, 13 Jul 2025 19:27:57 +0300 (EEST)
+To: Manivannan Sadhasivam <mani@kernel.org>
+cc: Bjorn Helgaas <helgaas@kernel.org>, 
+    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+    Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+    Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
+    linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+    linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
+    linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
+    qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+    quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+    Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/11] PCI/ASPM: Clear aspm_disable as part of
+ __pci_enable_link_state()
+In-Reply-To: <qay63njqf7z7mchizt5sm66i67rvxxxicikxmfuvllmmxfy7ek@mulnjvde5q7w>
+Message-ID: <9543b1eb-5bd2-bea1-742f-60cbc28bb365@linux.intel.com>
+References: <604ffae3-1bfc-0922-b001-f3338880eb21@linux.intel.com> <20250711230013.GA2309106@bhelgaas> <qay63njqf7z7mchizt5sm66i67rvxxxicikxmfuvllmmxfy7ek@mulnjvde5q7w>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1313851053-1752424077=:951"
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1313851053-1752424077=:951
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250710224555.3047790-1-anjelique.melendez@oss.qualcomm.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Thu, Jul 10, 2025 at 03:45:50PM -0700, Anjelique Melendez wrote:
-> Add support in the qcom-spmi-temp-alarm driver for the new PMIC
-> TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE. The GEN2 rev 2
-> subtype provides greater flexibility in temperature threshold
-> specification by using an independent register value to configure
-> each of the three thresholds. The LITE subtype utilizes a simplified
-> set of control registers to configure two thresholds: warning and
-> shutdown. While at it refactor the qcom-spmi-temp-alarm driver to limit
-> code reuse and if/else statements when deciphering between TEMP_ALARM 
-> peripheral subtypes. 
-> 
-> Also add support to avoid a potential issue on certain versions of
-> the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
-> is disabled.
-> 
-> This patch series is a continuation of older series from 7/2024
-> (https://lore.kernel.org/all/20240729231259.2122976-1-quic_amelende@quicinc.com/)
-> but current series has been reworked to address the change in thermal framework to
-> update .set_trip_temp() callback function variables
-> (https://lore.kernel.org/all/8392906.T7Z3S40VBb@rjwysocki.net/)
-> 
-> Changes since v5:
->   - Updated variable names to use stage2 instead of s2 in patch 1/5
->   - Added overtemp_stage enum for more clarity when reading back specific
->     temperature threshold in patch 2/5
->   - Updated temp alarm data subtype identification order in patch 4/5
->   - link: https://lore.kernel.org/all/20250620001918.4090853-1-anjelique.melendez@oss.qualcomm.com/
-> Changes since v4:
->   - Removed the unnecessary thresh member of the qpnp_tm_chip struct in patch 2/5
->   - Updated order of logic to limit acquiring and releasing lock within
->     qpnp_tm_init() in patch 3/5
->   - Fixed misuse of signed vs unsigned integers in patches 4/5 and 5/5
->   - Added Dmitry's reviewed-by tag in patch 5/5
->   - link: https://lore.kernel.org/all/20250528235026.4171109-1-anjelique.melendez@oss.qualcomm.com/
-> Changes since v3:
->   - Updated order of logic and made dig revision a local variable in patch 1/5
->   - Updated Locking Logic in patches 3/5, 4/5, 5/5
->   - link: https://lore.kernel.org/all/20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com/
-> Changes since v2:
->   - Updated function name to include "gen1" in patch 2/5
->   - Added Dmitry's reviewed-by tag in patch 2/5
->   - link: https://lore.kernel.org/all/20250225192429.2328092-1-anjelique.melendez@oss.qualcomm.com/
-> Changes since v1:
->   - Remove unnecessary moving of code
->   - Added new v2 patch 3/5 add a preparation patch to v1 patch 2/5
->   - Updated temp alarm data function names to be consistently named
->   - link: https://lore.kernel.org/all/20250213210403.3396392-1-anjelique.melendez@oss.qualcomm.com/
-> 
-> 
-> Anjelique Melendez (4):
->   thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW
->     subtype
->   thermal: qcom-spmi-temp-alarm: Prepare to support additional Temp
->     Alarm subtypes
->   thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
->     peripherals
->   thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
-> 
-> David Collins (1):
->   thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
-> 
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 596 +++++++++++++++++---
->  1 file changed, 520 insertions(+), 76 deletions(-)
-> 
-> -- 
+On Sat, 12 Jul 2025, Manivannan Sadhasivam wrote:
+> On Fri, Jul 11, 2025 at 06:00:13PM GMT, Bjorn Helgaas wrote:
+> > On Fri, Jul 11, 2025 at 04:38:48PM +0300, Ilpo J=C3=A4rvinen wrote:
+> >=20
+> > > +++ b/include/linux/pci.h
+> > > @@ -1826,8 +1826,8 @@ static inline int pcie_set_target_speed(struct =
+pci_dev *port,
+> > >  #ifdef CONFIG_PCIEASPM
+> > >  int pci_disable_link_state(struct pci_dev *pdev, int state);
+> > >  int pci_disable_link_state_locked(struct pci_dev *pdev, int state);
+> > > -int pci_enable_link_state(struct pci_dev *pdev, int state);
+> >=20
+> > AFAICT there's no caller of this at all.  Why do we keep it?
+> >=20
+>=20
+> I'm just working on a series to convert the ath{10/11/12}k drivers to use=
+ this
+> API instead of modifying LNKCTL register directly:
+>=20
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/d=
+rivers/net/wireless/ath/ath12k/pci.c#n961
 
-Applied, thanks
+Great. I assume but "this API" you meant disable/enable link state that=20
+are real pair unlike the current pci_enable_link_state()?
 
+Did ath1xk need to do some hw specific register updates when changing ASPM=
+=20
+state?
 
--- 
+I tried to do similar conversion in r8169 (and actually also ath1xk too)=20
+but it was a while ago already. If I understood the code correctly, r8169=
+=20
+seems to write some HW specific registers when changing ASPM state so I=20
+would have likely need to add some ops for it to play nice with state=20
+changes not originating from the driver itself but from the ASPM driver,=20
+which is where the work then stalled.
 
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> > > -int pci_enable_link_state_locked(struct pci_dev *pdev, int state);
+> >=20
+> > We only have two callers of this (pcie-qcom.c and vmd.c, both in
+> > drivers/pci/), so it's not clear to me that it needs to be in
+> > include/linux/pci.h.
+> >=20
+> > I'm a little dubious about it in the first place since I don't think
+> > drivers should be enabling ASPM states on their own, but pcie-qcom.c
+> > and vmd.c are PCIe controller drivers, not PCI device drivers, so I
+> > guess we can live with them for now.
+> >=20
+> > IMO the "someday" goal should be that we get rid of aspm_policy and
+> > enable all the available power saving states by default.  We have
+> > sysfs knobs that administrators can use if necessary, and drivers or
+> > quirks can disable states if they need to work around hardware
+> > defects.
+>=20
+> Yeah, I think the default should be powersave and let the users disable i=
+t for
+> performance if they want.
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+I'm certainly not against improvements in this front, but I think we need=
+=20
+to get rid off custom ASPM disable code from the drivers first.
+
+--=20
+ i.
+
+--8323328-1313851053-1752424077=:951--
 
