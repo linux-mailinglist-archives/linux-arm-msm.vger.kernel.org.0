@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D45FB02FC5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:15:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A22DB02FCD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 10:18:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 493003A431E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:15:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C3C11A603C7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jul 2025 08:19:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C29E139D;
-	Sun, 13 Jul 2025 08:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBBF51E47CC;
+	Sun, 13 Jul 2025 08:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="npXwOfPR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CQtCRigC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00238F4A
-	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 08:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DA51D86C6
+	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 08:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752394530; cv=none; b=DoHqAIJRUqTCKurL8oTD0nK67tBoFzLnWAoFmSpsfb/lOe66kt/cCcTQ87F7luE5R9W7t+TvlGyVIlZ07qtrZYXN9eUbRCyv6T5gaq4FlUHE1sl+avOSIPRURY0I3onKFBWRW+/HN8xJTs9Z161qkA1n9s/XIIwC0/UUj8ASTgY=
+	t=1752394732; cv=none; b=bCVt5xmHgEt4fdQYxZHUJiP0vYRHgrN+tUDf4TVR2QpUfJm1Y5ka5Z2cEi+4Iza34GiWCPoFPSueMz8WuNL8+nNiU6o+XdRPj+DnD3FIcS47GcbYrhTwgzPVD2ju9K7KC3ULR71zaPt32fc4tbXtOpSk+r6eAF4O/0Jd1wsRDo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752394530; c=relaxed/simple;
-	bh=vttOkDs56yPTVYl/8jktfR2NbnPG7uR/DNn09oaUX28=;
+	s=arc-20240116; t=1752394732; c=relaxed/simple;
+	bh=KTmZ/6BZ/O4t61ihZqvtmbZeWoMlVti8WkWApvDe3mw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bAe0lCF08+lNODfMCZlSDyEURdr2ukKgM56XPQXZX8EAOJuWFi3QZI1/G065bPMxa3g+Y24M8Pua4SsOOZK4Ks6ZroVEnFGDYaxbb3ujznDFxnUSqGyuEG0fsaPREfCc3B+ktMKiqJ5jTjRvrObeLNPFhb0S208KgapGGVYM1C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=npXwOfPR; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:Content-Type; b=kXcTQabqPJdpIy36aywpNd4LpNbXmiBqe6U6ESzCllGgZVf9oaZi8e/cQPkDvhCdsCCP0BEiwX5olf1U0f1AUer8P50EgRffMZYU+WCYnIcENzPf6Y+qSarh+eyrW0MwUZRKsGgdEJM82AiKYW8pyv0XIoyiOl466UxVxodemXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CQtCRigC; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a4eb4acf29so221514f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 01:15:28 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45611d82f2eso471555e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 01:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752394527; x=1752999327; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1752394729; x=1752999529; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rZqk7kl0+iqHzktYNZZ/CDyHkx8iXY+hbYXd+b6DxSA=;
-        b=npXwOfPRcqO8Zm8M65PEY3/uMjRVbopRlHJg5e7/BsHf5CborhDhPk4HZQ62x4fQwZ
-         Q+3owlKIdGmCCqhX7Yn8sx5KBSgyTILkqaUMd6+HX8BF4GVfjg42CHgIh2C999ZKQFnR
-         anzH7WJrg2lCYMBTPxFoaLZIKYLIKFUXu/QbKNe2in/XRN9HVtEoNisulZGRppvki5rS
-         Qlz2LsxFHetot8qz+NQh9JGAW10noJYfNsEt3psc35m87U5sck60x9lVqLGkILgdL8ka
-         vanF2+a0UAUYU7fvSnaOS6aCP2hXq3nqEVc9BXMmhP4Z0C+2AOCdnfqOdu2qEfiukT9Q
-         Zvqw==
+        bh=KTmZ/6BZ/O4t61ihZqvtmbZeWoMlVti8WkWApvDe3mw=;
+        b=CQtCRigCoGzZegg8BdCZNFvYEy567+kPtQicDfHVcQl5FD3XqRVqDHfd5e1jis6Xuv
+         ypaD9hYBNajWMsYpveWe3O/5iX5jD6ba0uv5qvLnUfbNXTqnpQRFPLieWARagqx2Asu1
+         UOTGWs3g9ukDhzs7YtdVBlYJO5obiI5VqQa+367xw1vLOhTgU3nA15w3/AyegviGnQar
+         ezkoukjyCrUMLbQlmFR8zi0hev9xVNs60XtZT/bJ6H3HR5rcgKf/LUcwYDPopheZl2cR
+         NI226esjEJ4fK8Fz9CmKtLquVmXRZUqqFJjMk86MxwbwS5svxEGJH3OgSuXW/poi45s9
+         ijsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752394527; x=1752999327;
+        d=1e100.net; s=20230601; t=1752394729; x=1752999529;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rZqk7kl0+iqHzktYNZZ/CDyHkx8iXY+hbYXd+b6DxSA=;
-        b=YVkeQ7D8MstiJVq6Zte9v7/nIV8FTAwNOvg+72V5FLLMmOgA/qDAiJs+H74dTV3p/K
-         lHBfGEojgrxO7Aw5woo2e8xi1p6Dm4xulZZYfjdNCoRcUNYjsxSp+cjfsFb1tIh5dN9V
-         +xW3CraBlLyG8voYNQHwsP0MQUsJHQphTm//RL3BRUPGW8/ypTAS7taaHNss8566zi9Q
-         FAD+D2da4XL9cI61v0QhBJu9NqYpa+YUHq+QVPaFflSGSX0HACNAic7+Mkzpd+a/LWXF
-         DklPDrG/a5g2Utz0qCdgZIpdIA9I6ditoXy2i4YqeqrgeVLbe5X4QkdvJ9og8mXr4rIh
-         hiMw==
-X-Gm-Message-State: AOJu0YxdrmOKlHrtChCDFHsmLZf4g8h8fldiE74zRWBcblOpZOpgPQgp
-	d6Lp6rT1Q2tllU3rhgD5YCr12zNroSmUsgbbVpCOLoi6/9uE2PqxeVSSuLIRvLPpW2s=
-X-Gm-Gg: ASbGncsYLnSmUTdsm7D6PYxJhk3Ocye/jG+hsWlZ4iRsH860VKmAQyaduawnzP3PPpt
-	IUm4Tzx5mz5lZzNgPEZjdT/X/a6txS93jJTdXF/2HXsMWktDlxpY5vJ5YVNg9HHk1xhgUvMs/FJ
-	YrqST+nkRNGjnshJ06GFBHvS8uFVhM33mURuB2z+ybmY7lsWqdY2o0gy3ZqW13wg9ZZJeQsveO/
-	PCeMn9enYpQo1QWy/wDf+8lsYVNhfuP78hlYhxiUCtWBBmk82qhvEr8vORHVkfmqeMNIxsljV4I
-	UWzZXRvdSATPx873l92bPO2YIerbvwCzs6VXYtipSscNKy9W0EI9K34K+r+tvWjXEXf5oGPT7iV
-	CFPtLOe2thzmP3aI4x4PO0Bp9dl1CpGcpCBKV8E8xeRntodZALZS9
-X-Google-Smtp-Source: AGHT+IGdUGte7uXEneQEdBIBq7W4vXJUZevCvhpIqCepwSuDSON9ol1D6QYcIdwDspBHZs33bH2Iuw==
-X-Received: by 2002:a05:6000:2006:b0:3a5:7991:fee with SMTP id ffacd0b85a97d-3b5f2e6c69amr2490271f8f.14.1752394526971;
-        Sun, 13 Jul 2025 01:15:26 -0700 (PDT)
+        bh=KTmZ/6BZ/O4t61ihZqvtmbZeWoMlVti8WkWApvDe3mw=;
+        b=Ee2vZhPUgJrOUgmP9j3RcqDcAWfe1kbw/5gs6bmQ2jld1ibEdW+9VZPsjkxXHZButA
+         /4HG3P5xCLIot5B1K7nsr/Z65StVT6uUydhLXt3XUCrtKBcOXx+b0jeomHNzFdQGlwtn
+         UKOfDZkle4SpMj6ak4zN8VZ2iEd4FfzLdE6LrTv+gCcUI5otoDu84PWp1O4WrI59zm9M
+         XuOYs+oDJ2bVuObE/VxDZCm5DexGayK2PgngHgzdKYhrcfrYssFqjKCVhHQnz7Jkd4hc
+         MRpcTx9uuoOTZ6C/yS7Fk+iKPbX4OwpWzODWtz3geUCDHquHTQki3AVM7RfMZ8hcJmX4
+         CtUg==
+X-Gm-Message-State: AOJu0Yx8EZKj03CgaNMqU1+Ua2WJGzWVyRj7loHsMi/IFkpmw5lrjYix
+	L8JEpaXq4UyFeD5OT9avAjIwholDKxhqR8+ChilcaSgZLJQOizgQtMFYA1AQy7KZyFw=
+X-Gm-Gg: ASbGncsJjXjxgexcuLXcFtZ0wnJB+gUgDuJ5DsRZci/FU48QnEVUg5etXgWkcvLrSnu
+	ODohpIq+vES+dBnf6efTSYgjWVdrX09QGSf7FtEMy+MG9SHD8ERPZAoZ4A+gh08SCNRjr3vUEB9
+	/7mT3NrSxk7sltvy64aS7OJHdODXDtaZgS1kHDnWe/0M7czDQsrjPSv6GesPlv2xFS+LmlaiE/n
+	YRpFeEYlkmMqwJde7+qBG2TZpY4BIQhpFOcRxGTZQ4726PL1naLQL62Oab4mRn8BKwfP8q0Nixm
+	vRsByfALWla/y2joyyIokK6TgAHcjSDNfOF2NphG+CuqGXyUqP6j52Sgn6CvMrsfcySYewr9Y7i
+	/PVRtg56jSVYjVOMTF+X2L/w4e/pAu3KMPlV+Yry+Ww==
+X-Google-Smtp-Source: AGHT+IGJGvm/pOF+GzVK/oWRlBC1xVudzXCD3nMUix4t2bX5U3lxlPgjlOfgtdzq6ruR1sMUg/Zasw==
+X-Received: by 2002:a05:600c:4714:b0:43b:c825:6cde with SMTP id 5b1f17b1804b1-454f4254765mr33922905e9.3.1752394729286;
+        Sun, 13 Jul 2025 01:18:49 -0700 (PDT)
 Received: from [192.168.1.110] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d571sm9335350f8f.57.2025.07.13.01.15.24
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4560394e061sm40251575e9.31.2025.07.13.01.18.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Jul 2025 01:15:26 -0700 (PDT)
-Message-ID: <f4fd544b-bd5e-49eb-83d9-290f77e503ef@linaro.org>
-Date: Sun, 13 Jul 2025 10:15:23 +0200
+        Sun, 13 Jul 2025 01:18:48 -0700 (PDT)
+Message-ID: <3376b0fb-f3c6-464a-9c35-30a3f589b856@linaro.org>
+Date: Sun, 13 Jul 2025 10:18:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 01/15] dt-bindings: media: qcom,x1e80100-camss: Assign
- correct main register bank to first address
+Subject: Re: [PATCH v7 02/15] dt-bindings: media: qcom,x1e80100-camss: Convert
+ from inline PHY definitions to PHY handles
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -97,7 +97,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-media@vger.kernel.org
 References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
- <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-1-0bc5da82f526@linaro.org>
+ <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-2-0bc5da82f526@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -144,45 +144,19 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
  vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
  2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-1-0bc5da82f526@linaro.org>
+In-Reply-To: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-2-0bc5da82f526@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/07/2025 14:57, Bryan O'Donoghue wrote:
-> The first register bank should be the 'main' register bank, in this case
-> the CSID wrapper register is responsible for muxing PHY/TPG inputs directly
-> to CSID or to other blocks such as the Sensor Front End.
-> 
-> commit f4792eeaa971 ("dt-bindings: media: qcom,x1e80100-camss: Fix isp unit address")
+> We currently do not have an upstream user of the x1e CAMSS schema which
 
-I have next from few days ago and I don't have this commit.
+On first glance there is, in Linus tree:
 
-> assigned the address to the first register bank "csid0" whereas what we
-> should have done is retained the unit address and moved csid_wrapper to be
-> the first listed bank.
+git grep qcom,x1e80100-camss
+drivers/media/platform/qcom/camss/camss.c
 
-This is confusing. Did that commit change entries in the binding?
-
-
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../devicetree/bindings/media/qcom,x1e80100-camss.yaml       | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> index b075341caafc1612e4faa3b7c1d0766e16646f7b..2438e08b894f4a3dc577cee4ab85184a3d7232b0 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> @@ -21,12 +21,12 @@ properties:
->  
->    reg-names:
->      items:
-> +      - const: csid_wrapper
-
-Anyway, this is ABI break, so needs some sort of explanation in the
-commit msg. We don't break ABI for cleanup reasons, unless it wasn't
-released yet etc.
+If this wasn't released mention it.
 
 Best regards,
 Krzysztof
