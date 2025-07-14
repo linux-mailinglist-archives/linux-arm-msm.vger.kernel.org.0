@@ -1,161 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-64749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81906B03636
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 07:44:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6BEDB036AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B41DE174972
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 05:43:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F067C189B5B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 06:13:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A339D2253FE;
-	Mon, 14 Jul 2025 05:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A70F921930A;
+	Mon, 14 Jul 2025 06:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dvUBoQwG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALsZpZ5N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269F52248B5;
-	Mon, 14 Jul 2025 05:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D04222574;
+	Mon, 14 Jul 2025 06:13:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752471742; cv=none; b=t9Z15x4TdNUw5fFqdYoz9mdGnVw/DCDC8VHFvetQ1UBr8piqWYcZ37Q6V3DkQU3ZOAskKvJSjy9l+vp3DSohVBLxGDLq8YGY0yekNumwzo7Exk67Lc9Jgf6QsVAtMW7EYM40OTqtyWwVJnPWPLmPfowcGLrpC8Uw/KY0Yyu554I=
+	t=1752473593; cv=none; b=Nt/+GU5MnS8zaxSM8ywnGkMAKTq4dYnp+qSclkY87/qMpn+otLns/xyBoANR6rG88CxFe7U4xBXeBIUMQGLDcvCzJsV8QPvWcMNqqkNxz027n2Ybt4TCg3xDYEKkgCF67PzQLECLjYkMqH7AG1k8skVbRE+bkTjuNceelmwUkFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752471742; c=relaxed/simple;
-	bh=fqbvJrI+IqfMhJ+F7o57qQrzaEQaz/fr4Y4MbPwJQwQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=caxe3wiTSO0uB7UV8OL9BjCNN5joL9w0g8PzPQ50LaUX6Q4oD/7juWrNdMumm56rkOTDVa16QIvEBbmInSCq/Iz72zb7/uYwhXnDOehM9riAswJaVG1obN6H9HgCfXI3BO1+QeXfoVgvB/pJmkX7WRdLZFTPO3Oe/YdgWj77NMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dvUBoQwG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56DMeVD6031774;
-	Mon, 14 Jul 2025 05:42:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JTuVMqUgMolS7Y4hFP5zBBuVyicnV/EiH2vJSZ4JifE=; b=dvUBoQwGVO9IXAEp
-	VNd/YDQHy8BU3ZH7xCNe4xWJfNfTX8dk14+iNWfcIYXG59qC1ioL1fWwRD0qQpSm
-	CwPCJngWm1kXbf6zpkXfNIzVZ2Zy6eh1eewH4tRTn63Mi4NVX+hY1yUTcLhqNKaU
-	Glsskx80DZQbl0bN8l9pHkRER3UnZk3j0aBNxGfpwyIrNL5XV8CMrbJHAzz+Rmdm
-	vHSpXPMQoHlI2P58tqnbT829ovUIWdT7wF9mjFHJsiGT04Kt7xEL2A/UrAe54fjQ
-	p872LDr5Zf5cPeNJE7x9oau0thgVgCYmV/jV76k1hddyl9Sd22xOIj1oF4gGG3Q9
-	szpfGw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47v56a1w7r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Jul 2025 05:42:14 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56E5gD6H007150
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Jul 2025 05:42:13 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Sun, 13 Jul 2025 22:42:09 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Ling Xu
-	<quic_lxu5@quicinc.com>
-Subject: [PATCH v7 4/4] misc: fastrpc: add support for gdsp remoteproc
-Date: Mon, 14 Jul 2025 11:11:33 +0530
-Message-ID: <20250714054133.3769967-5-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250714054133.3769967-1-quic_lxu5@quicinc.com>
-References: <20250714054133.3769967-1-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1752473593; c=relaxed/simple;
+	bh=K6rTZa+mjUsFCcLD5fAui8r+wQYrBXhnTQ2dLU8CeRU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k/VDA0grBrMvshtcQ1hdjGI9Gd/6mVK5X/WdZjK9v5oFRhm/9D4Q4+6EsUjrlRSFWNSIIm54UWIpAa+0onJzeiXqZAXNeoaGT1nlZQKqwH6zkdscxH75WBDbmZdFY1aptYbO1oeVLHpCO2eRS8b0zwnIAlnea9endxOiKjMIvHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ALsZpZ5N; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60c3aafae23so10396899a12.1;
+        Sun, 13 Jul 2025 23:13:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752473590; x=1753078390; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vvozbmvdghn0xuJhVjwu4pQc8eFowQW5vD9wXdzvh2E=;
+        b=ALsZpZ5Nwk0QPl9HEVXg0BgXgV/0oGOnzEJeNal2xZfLiTqtprh8NIc+B9yAZo3Iyw
+         8RY7AeH/stuMCjEmmJBgcQNCDqXHEmAro34tjiskjt9cEYBFJwvbf7XgPG0ChQca3Fp1
+         5nyF2HY1O19gIFwAV0iPuQVzMwWmV1ELLeVifNIiilV/LbQuRNHTAQOYlfeEPsHCaDJn
+         I+6gq0/NE/ae8enM3WsoDcD1N04Zua/PHYgx6iL4E1d11pz3fYmMtOmCeSiojBnqO8U9
+         rgvjfmvMU3pd6JG0ooHR70qlHpOQvXaATLeJs8Rd2oeSPIjF28ACBmEUxwortIYxArWK
+         4Wlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752473590; x=1753078390;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vvozbmvdghn0xuJhVjwu4pQc8eFowQW5vD9wXdzvh2E=;
+        b=AX6KyacYKSsVmXSsn1BHeRqRMO2e7ZoQqLm0Q8MrjJ+MZXX3V3wqTVJlU4Un+cDXdh
+         0eHqOHe/iQKkWsA+P2wbl7XcS+tkxhMVmMKg5LCzRnAUK42krHN2Y4GYyhOM2TDn2dLq
+         +UkMql3hcqNxciNdjOES1jV+4T+goxrEyMrifUPxxW2d7Rh+SP7+EGGxStORcgQXvH+1
+         maimu5sfHNrUgdPBuueHHQdDHvFemDemJnziN7vCmgfZ8LU3rU4gDpCaEmIApDy+DTr/
+         FurycAhOqC3uVdiMEfDp5CLGRclM4iGZ5k4V9uiA9xpB5SgqMpJgFFXV2ht6awEJhWZK
+         AOkw==
+X-Forwarded-Encrypted: i=1; AJvYcCUP9cCEGBtIfr4mj8xq/Eb9LeEOYHuQaWg7DecbOSeLyjmdGBsu89NKvBfOe5Mpxy2p0WMa5X3eB2OQ@vger.kernel.org, AJvYcCUStQ+kZD3RgEiqCqamDPHN0+V8U//75gB5aBA/VFf/8TxBwYmlbFOrNTmcls2xSkxfzTkJbh1izJUn@vger.kernel.org, AJvYcCUu/1mhYdj5sMEGBzzl15XoaiyAFFWhgEjtWzX76d2pShQ/mNzScoB3zBJvqR/9LZq31mqppD0IV70=@vger.kernel.org, AJvYcCVstpNyGdvuY73VnuNsfHVFZp+Ibrgrdw6r36tXAZ6bHdgKEM8rbl+dffkiBgU4ZIz3E4mae5bxw5CYU5w=@vger.kernel.org, AJvYcCW0SyBXuZZvd/xJRQljFHmZZeK27WVLgdkeC50Y0Ub2vYEcwxbkffKOuPuFt/NDDMfwKU0qSkr3+OOeV0V3zg==@vger.kernel.org, AJvYcCW9KUj+JjF5ly7puv2tvDzq8+x1Op4tL9Qp0opokzItOLrzzOp8nZDLBSMKCFsv8iGwfAi2VpTAbRT/@vger.kernel.org, AJvYcCWCJTujwin9rvVzkB2+pYTryRkQpYeQHH7hj/ZAtqaa7ztVx09K4xQ05d8TrssfdLgBtpiikUwl6k0mJaas@vger.kernel.org, AJvYcCWVojriAO944z+btF5GTxaZUZCinYblWnzszeAL3ErTaCzTc4dmv9W51Pv3w/UOIkrUDJwcXKXnKsMlID1S@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHYB1+qM4aL9I+xyEElR/MdHfEasVuCVboe38WY1xF0F4jbRQb
+	PJhr5OJpS0nyaUrTHjE5Xs4BO1IeOKlW234I8ekBlgq7OXfOqlDGmcfE
+X-Gm-Gg: ASbGncsVzO3u2eRRPkqHSExy4M7lF3/AqBCyho/g29LYpWj7iPq7+3VHbuJ8XUz5zUh
+	XvbjJPk9jXCfIQMiqT4i+CEEISiQpedpCb9vyjf4+7DDhq3Jmr1V5+R9ShnnbGf8lPp9ovCVb0V
+	GYnbTFIeLu6NoJa8NB/aWSzV8nXEtD8QXaTDsjm4Gqp6HfiEMSBw0ai8XTXG1R/XJDWQIlXTcAX
+	+fSzIIeS5RrvTPZ8v5iGi2aYialOjERouHKAYIZ0FmgAYr0nhCdDUo3ukisQ2vqqTlQsWm852eH
+	0qrys1fbQfL7XFpn13BhNOrFlQ2Mm06BX3zlOngHXilZmyDqgE5qIF902v/whLdVa5ROZxTfdHb
+	5a30NVO/tm5Y+56IaMLVGLbeVXbKPIfOCHJ6CsLZkQrLFCOQKU5vR7qFhQU5KyQZ7j5UtkII022
+	eawnCCt9xeeqWy3IrLPLA+zA==
+X-Google-Smtp-Source: AGHT+IHhpjs0q3mi1BpnwNvryChqNwp5/Dw+yK56vrj/BWwwZ/DXYC0z9I3eOOpItRqe5sk1H/USWg==
+X-Received: by 2002:a17:906:9f86:b0:ae3:a4a6:a32e with SMTP id a640c23a62f3a-ae6e253ddf4mr1701256366b.29.1752473589912;
+        Sun, 13 Jul 2025 23:13:09 -0700 (PDT)
+Received: from [192.168.0.124] (ip-37-248-155-42.multi.internet.cyfrowypolsat.pl. [37.248.155.42])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8294bc2sm766171566b.135.2025.07.13.23.13.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Jul 2025 23:13:09 -0700 (PDT)
+Message-ID: <ee0d148e-71cd-4136-b3cb-145566abdfbe@gmail.com>
+Date: Mon, 14 Jul 2025 08:13:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pcTelH7Z3AxyqpRXOf8xKJsrUjrFkbZA
-X-Authority-Analysis: v=2.4 cv=X7BSKHTe c=1 sm=1 tr=0 ts=687498b6 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=VHSkhjcgKWVwXbDC_XQA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: pcTelH7Z3AxyqpRXOf8xKJsrUjrFkbZA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDAzMSBTYWx0ZWRfX7hUDKWU96jcy
- G246zzdfHBcFvsBE11rM3UCa++bu8uL2tDdOjjImunhtH8Kvo7valmDr0ul/Kq1BrAbYv/B1sGK
- NIIZ0nkS0VDK177ePO77hUK6OiIrMkkLhA1jzXkaer7tS9DgyMcqX/aCTtjFDSVtB0ET8HzERJF
- cgYRlY0wj6+RR141NBuYrVweAHJtUQCcHfYWI1wQ8j8NmS5Zyk+Fw7hLI3NVv+61i7j9QPYHbyJ
- PMpdTdqLLk7SL/7+4V8kHiKyOpDJflLUykP3LhKY5lzK7mguIbrGPxVhh7/dhmjfJfCrtLjqk6J
- OrfSRzwEbGF4HOMj+AFeNaeTxcWsHiDOc6+WPb+K3ifVcTZBKPspXB8odtuzNWAFo8dgZDcgEo0
- wHo0RSRiNvC3LXszPp3zI7eip0TOq7mUM1x/vW7mZVWmlk0W35JbR5Bc3eVXXUiCG4P/ngGX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_01,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 mlxscore=0 lowpriorityscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507140031
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/14] Various dt-bindings for SM7635 and The Fairphone
+ (Gen. 6) addition
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>, Thomas Gleixner
+ <tglx@linutronix.de>, Jassi Brar <jassisinghbrar@gmail.com>,
+ Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-mmc@vger.kernel.org
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+ <aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com>
+Content-Language: en-US
+From: Artur Weber <aweber.kernel@gmail.com>
+In-Reply-To: <aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Some platforms (like sa8775p) feature one or more GPDSPs (General
-Purpose DSPs). Similar to other kinds of Hexagon DSPs, they provide
-a FastRPC implementation, allowing code execution in both signed and
-unsigned protection domains. Extend the checks to allow domain names
-starting with "gdsp" (possibly followed by an index).
+On 6/30/25 23:59, Bjorn Andersson wrote:
+> On Wed, Jun 25, 2025 at 11:22:55AM +0200, Luca Weiss wrote:
+>> Document various bits of the SM7635 SoC in the dt-bindings, which don't
+>> really need any other changes.
+>>
+>> Then we can add the dtsi for the SM7635 SoC and finally add a dts for
+>> the newly announced The Fairphone (Gen. 6) smartphone.
+>>
+>> Dependencies:
+>> * The dt-bindings should not have any dependencies on any other patches.
+>> * The qcom dts bits depend on most other SM7635 patchsets I have sent in
+>>    conjuction with this one. The exact ones are specified in the b4 deps.
+>>
+> 
+> Very nice to see the various patches for this platform on LKML!
+> 
+> 
+> Can you please use the name "milos" in compatibles and filenames instead
+> of sm7635.
+Hi, small half-related question - does this mean that future Qualcomm
+SoC additions should use the codename for compatibles instead of the
+model number as well?
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+I was working on SM7435 (parrot) patches a while back; when I get around
+to submitting those, will I have to use "parrot" or "sm7435" in the
+compatibles?
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 85b6eb16b616..d05969de406e 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -27,6 +27,7 @@
- #define MDSP_DOMAIN_ID (1)
- #define SDSP_DOMAIN_ID (2)
- #define CDSP_DOMAIN_ID (3)
-+#define GDSP_DOMAIN_ID (4)
- #define FASTRPC_MAX_SESSIONS	14
- #define FASTRPC_MAX_VMIDS	16
- #define FASTRPC_ALIGN		128
-@@ -2249,6 +2250,8 @@ static int fastrpc_get_domain_id(const char *domain)
- 		return MDSP_DOMAIN_ID;
- 	else if (!strncmp(domain, "sdsp", 4))
- 		return SDSP_DOMAIN_ID;
-+	else if (!strncmp(domain, "gdsp", 4))
-+		return GDSP_DOMAIN_ID;
- 
- 	return -EINVAL;
- }
-@@ -2323,13 +2326,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	case ADSP_DOMAIN_ID:
- 	case MDSP_DOMAIN_ID:
- 	case SDSP_DOMAIN_ID:
--		/* Unsigned PD offloading is only supported on CDSP */
-+		/* Unsigned PD offloading is only supported on CDSP and GDSP */
- 		data->unsigned_support = false;
- 		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
- 		if (err)
- 			goto err_free_data;
- 		break;
- 	case CDSP_DOMAIN_ID:
-+	case GDSP_DOMAIN_ID:
- 		data->unsigned_support = true;
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
- 		err = fastrpc_device_register(rdev, data, true, domain);
--- 
-2.34.1
-
+Best regards
+Artur
 
