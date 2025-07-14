@@ -1,53 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-64764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9F10B03749
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:41:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79FA4B03756
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:45:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45B5C176F83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 06:41:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C25B417725B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 06:45:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB8D225779;
-	Mon, 14 Jul 2025 06:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF11D1F3FC6;
+	Mon, 14 Jul 2025 06:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sRvj2oOb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33C534CF9;
-	Mon, 14 Jul 2025 06:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A184D1CD1F;
+	Mon, 14 Jul 2025 06:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752475270; cv=none; b=Bq5RulJbYXUO7Eg19MM6KKV8QKcakckFdKK2uUPrWrFAMK3uGIwAVfzU8jJVzyEeWtNrHmPcY3+ZlwofAJ37xaYbDt/RKUKiebj/ENxi9Aehn3pyEx0UW/5PcCNodd/3eEtNjpvyb1vV3a2ecVvCGOdm4vU0IbFE8aLOQsfsAdM=
+	t=1752475546; cv=none; b=C10lATh0OiMZUCjNu36A8iwXBAfe2Zg3fYPuWv3H+ZX8RysevLQqMbsfe9Zcx+CZ2+0/3MKmizPw6TpJVf6HcAgRei4aI7UztqiAjHUTl0XCxNo/sbQ5BnUJTk33qqOz/ZvYhIdJRb9Wt8S8OtevfUF1l4E3zLrp2+n3y4TMvRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752475270; c=relaxed/simple;
-	bh=5ATHMX9AThV1+HT52RPqloerGobaOpiT9IMioipvwzU=;
+	s=arc-20240116; t=1752475546; c=relaxed/simple;
+	bh=Qy1hfqEo2dMgMv0YIqJ7mPsIFK2YG8agMEQFgBf9GCg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YGUjcoBBMe4ujOZoj/U/Bu/SK0g5bB0mWO33YUXEGWN2sRSTQPS43EudvOFOL/Y9DwnYUHZd4K+L6T4ZttHnznTAIRbr8UcHE+b1R/9g9xBs1bPV4TV/9vUxwWYoauVg8zXuw0AKwEjqJuHw5SweKwq2cZqzEgg+I0hgxPTQfJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBF2C4CEED;
-	Mon, 14 Jul 2025 06:41:09 +0000 (UTC)
-Date: Mon, 14 Jul 2025 08:41:06 +0200
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH v7 01/15] dt-bindings: media: qcom,x1e80100-camss: Assign
- correct main register bank to first address
-Message-ID: <20250714-overjoyed-celadon-crocodile-4bec3a@krzk-bin>
-References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
- <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-1-0bc5da82f526@linaro.org>
- <f4fd544b-bd5e-49eb-83d9-290f77e503ef@linaro.org>
- <6ca1b24b-5f9d-48e7-9afd-7dac47b486b1@linaro.org>
- <03ba99cb-18ef-48eb-9504-cbce752c85fd@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xj0TuueYaE97eqRP6BpoVqcgF6+63d8XxJo7+p33zZcTkK08MnLwFaeuwVHjM14/JUWXUw4gLWJ3Ir+6yHcwuJdBJCDPw2Ahg5Ma3qJpMJnyfK4PMsUPX48tGlJ90kfRFXOjYdZtDkTZs0jcTpnqaz25sC/bZnfEsnbHN2EZpi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sRvj2oOb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E441C4CEED;
+	Mon, 14 Jul 2025 06:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752475546;
+	bh=Qy1hfqEo2dMgMv0YIqJ7mPsIFK2YG8agMEQFgBf9GCg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sRvj2oObA6+JGOF4oIOjLEOKy+uoSWaXh5DELylrWEk4SoiumxqOXvVtQX4eRZAO7
+	 XTJSjWGErNxiF2JDcd1ZsrtprHphsXbd74GpHtv2jkmjiSBNXylRjG2LY2r6mv22Vc
+	 oqamtRF8KJWqfmmut8fm37FF2hb+HQrGO83xiEz8EAxa726EzOXXBfYtDiSLk92UTR
+	 OIvRIJDdJ52NaJIk0beldr+KdhC23hdp8ckuG0PIxQHcxAOOcfd4or6QBNya7Kkfov
+	 5FWurEZP8iK1OJRFay50oll0n4j3GZ3NGA3VYfaLEMT35mAD7uPOuo+IvoQDTiWN6D
+	 XAfw6xU1LZhNw==
+Date: Mon, 14 Jul 2025 08:45:43 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/5] dt-bindings: arm: Add CoreSight QMI component
+ description
+Message-ID: <20250714-impressive-spiked-chicken-9fe06e@krzk-bin>
+References: <20250711094031.4171091-1-quic_jinlmao@quicinc.com>
+ <20250711094031.4171091-2-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,37 +64,61 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <03ba99cb-18ef-48eb-9504-cbce752c85fd@linaro.org>
+In-Reply-To: <20250711094031.4171091-2-quic_jinlmao@quicinc.com>
 
-On Sun, Jul 13, 2025 at 11:34:18AM +0200, Krzysztof Kozlowski wrote:
-> On 13/07/2025 11:12, Bryan O'Donoghue wrote:
-> > On 13/07/2025 09:15, Krzysztof Kozlowski wrote:
-> >> On 11/07/2025 14:57, Bryan O'Donoghue wrote:
-> >>> The first register bank should be the 'main' register bank, in this case
-> >>> the CSID wrapper register is responsible for muxing PHY/TPG inputs directly
-> >>> to CSID or to other blocks such as the Sensor Front End.
-> >>>
-> >>> commit f4792eeaa971 ("dt-bindings: media: qcom,x1e80100-camss: Fix isp unit address")
-> >>
-> >> I have next from few days ago and I don't have this commit.
-> > 
-> > https://gitlab.freedesktop.org/linux-media/media-committers/-/commit/1da245b6b73436be0d9936bb472f8a55900193cb
-> > 
-> >>> assigned the address to the first register bank "csid0" whereas what we
-> >>> should have done is retained the unit address and moved csid_wrapper to be
-> >>> the first listed bank.
-> >>
-> >> This is confusing. Did that commit change entries in the binding?
-> > Fixed the unit address.
-> > 
-> > What we _should_ have done is put csid_wrapper as the first entry.
+On Fri, Jul 11, 2025 at 02:40:27AM -0700, Mao Jinlong wrote:
+> Add new coresight-qmi.yaml file describing the bindings required
+> to define qmi node in the device trees.
 > 
-> That's different problem then. The commit fixed only DTC warning and it
-> was perfectly fine from that point of view. I would not refer it,
-> because it just makes impression that commit was not correct or even
-> complete.
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-qmi.yaml      | 65 +++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
+> new file mode 100644
+> index 000000000000..601c865fe4d7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-qmi.yaml
+> @@ -0,0 +1,65 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-qmi.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm coresight QMI(Qualcomm Messaging Interface) component
+> +
+> +description: |
+> +  Qualcomm Messaging Interface (QMI) is an interface that clients can
+> +  use to send, and receive, messages from a remote entity. The coresight
+> +  QMI component is to configure QMI instance ids and service ids for different
+> +  remote subsystem connections. Coresight QMI driver uses the ids to init
 
-BTW, you have here also checkpatch warnings.
+So driver... Driver stuff is not accepted in the bindings.
+
+> +  the qmi connections. Other coresight drivers call the send qmi request
+> +  function when connection is established.
+> +
+> +maintainers:
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,coresight-qmi
+
+Don't send new versions while discussion is still going.
+
+There is no need for this binding at all, it is not a coresight device.
+
+> +
+> +patternProperties:
+> +  '^conns(-[0-9]+)?$':
+
+Drop, why do you keep enforcing the node names? Look at other bindings.
+
 
 Best regards,
 Krzysztof
