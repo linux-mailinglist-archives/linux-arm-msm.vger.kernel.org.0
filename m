@@ -1,88 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-64891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2999CB04C6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 01:38:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B010B04C7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 01:40:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52BF44A6875
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 23:38:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40821189CAD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 23:41:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02ABA279347;
-	Mon, 14 Jul 2025 23:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B394277CA3;
+	Mon, 14 Jul 2025 23:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e4zaRps/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HZv3y7C7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC0261574
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C4B2528F3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752536331; cv=none; b=sBBUbWWsqwDz/G8nYKN6zDRYKfjeIO8d5awV99i1otRY169qI5kMk5iUfgmLDtxm3/Oz61mf833cSs4H+hQuuStCoCQv1s4+PuF7wRqzSt2XCfv5XRBQmtT3NwGfcJs3H7ZY36kA95eSZHmzd6Uplk7VebhOQMnjt5bUnjrjphQ=
+	t=1752536451; cv=none; b=m9/aIub4UFFt6L1k78v1JJ8ihhO0uTT3OuOIGG6a2AI6JygVpl6sqagHoPNkfjeURaRnBBQ0GTQiMtt4jBaHo6TfzmVK3+56H80Ye1YY0gwbhCWnInuRrGp6m+W76CS5qzJ6bvrwAIBq4CvqpTKV4E+1NjNB8P2zQ6/YD62D2Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752536331; c=relaxed/simple;
-	bh=BLc/nG6tbTXqBWHXJq4nAE9fz1qrAgmKgywiVncJEsI=;
+	s=arc-20240116; t=1752536451; c=relaxed/simple;
+	bh=f0Dnyo9xoPNSPclRBPVIGihMLC9tyDlqpv7KrDQI2Ow=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FbrYHdAl1X3MB5oPqj+jzGsRmLYBgsf/9RY8Rtz8KpvMjiAehL4WSvUchcvIbqW/Z6SnXS9oGDtUbocc5oyr5LJikZ29HHF5RTEPM1hwnYSEIFyCXnHdWk4ga/lm87/EpSv/mSD1twN5KHfKutzRk1yZkmbQ5M7Be6jl/cdWvu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e4zaRps/; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=AC1M1S+3fFWJTT/mQlnAhzk2Nubn9P963DOW1zkdkGEn5rqeZqkY5VAFjxqMYL8ujoJEgVGAuHRiA0I8nPf9TJ91vJnawEj8PfPkCsJjmESpy8loApp/QnntYZKH+WrGXAvUy7x5IffFw2LgqbDMtZXliUHGOenBunLDJXbfhDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HZv3y7C7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EGRV6M029629
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:38:49 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EGS9n0023283
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:40:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wn0uaTpQJ5msTA4q2mSIBqQxq96F8xnwcsNT4npFJ10=; b=e4zaRps/oaXdJY+l
-	UdQ8DEc0Nne1nK1lwtaLfJAWHqyiLQziUU3CzDFUCkUNeWV8JnAqLF4ZqflmU+qO
-	IaCyiN56c5pDiAQOpJ9+b1AfDTRlfBvVfWpbwY4pCP7ODxRyQwipwVImtiZyO5Zq
-	u1YEOXKa37KH6sh1j/GqAfCY8nztz+Om9WIHf6FDuC7FPCXsgZo6i3zcB6Z7X9e6
-	T4s9AwHPkBTS9WDnUgqpGgWpprpKj9V+ypnQ0HV7+q4MgprRJMUwYBkd+zMuSwgG
-	+3J1azNHufa9RQ/26fQCJmsfd6flX7m+fE3a6H1KmT5/jvGkrb+aWNHeMwONjcg8
-	7N0xIQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dq0x76-1
+	yXi+Vfo70q22tr3GBwXIimObUqUqXmPUkoh91UkH8FU=; b=HZv3y7C7URS8ZUn+
+	Q1l4TUF1kw5kagXw4WUZfSNvS7sEH6cH4tMAmlGHSxeK3AQvLkLxaOvVQLvhxsQQ
+	11SOhCFMg8n5LLQgMv0hXA4PwOdZfxiLcmSyV61eLT5xcUVz4T40Ct12OW8jClhO
+	E/43i6bMC0e8sDtwPYlx/AaMGHACnkPV15N65NdIRsgFvJD/8bpeCmJBheRIseiO
+	FNEJHjiUDRZxt/s/CoH2bv9Et/s2nKRt7zWL0N3D/cMfJbpT1ONitwigWwB7cvoG
+	gemzBK00GFqnmAnkhnPAq0NI8dWAwHtjVdz6vvlfIfNLa+WN9+m6xzsVfC8XIP8u
+	PMVdMQ==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dp8x1p-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:38:49 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ab77393308so4076041cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 16:38:49 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:40:48 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6fabbaa1937so16845726d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 16:40:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752536328; x=1753141128;
+        d=1e100.net; s=20230601; t=1752536447; x=1753141247;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wn0uaTpQJ5msTA4q2mSIBqQxq96F8xnwcsNT4npFJ10=;
-        b=pxCgL6V6OdiYshJPthxEgEpgfRsfpE6n4KgB96a+GmMMkKsoTk1UiCz1H6oKo2BZL5
-         oSRVRuTkuT/Vui6PstwlmpriJvRz7EEnz7Xd09UpZ4MszcidE9tE1J6Zdj7pca9uIMh3
-         6SJCiJwBXbyS92rc9nv8y+vgakAmUzrXpdgRAj2arnJ9PmxiTnaQIK5OMFNPwOSPvS7u
-         FF7FYf3M0vX5CecZ724XcYnsuBlzo4i3OuSiVchSh77Fv6kArIecldYoQqCdYpNPY577
-         r8xYPKOGi7/RiMRzHL9nT6heksXpQsqDLILKd697bcLLw221lid0ebENvFlToz7dlsqv
-         r70w==
-X-Forwarded-Encrypted: i=1; AJvYcCWSifyLUvA6+rlWEC2Ym3+EOA6uedV3mo2a+LaL1YXOErjfQslyEzVu1ElxiU/egrFgmynJxJJinxxW3w8Y@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCOTFltzg+e1Fvd0KCSL3f4Wax1/ZndrLzEgnsVNiUd52EIl55
-	BXqjXXdtCCsVXQb6O4ovIdsjziK8WdYo2cA+5RsSuT/9vSswS7tKQIZtoZzBJ1o3eQ7eIJ4VmYg
-	6EdMBnYBATd1YnWV5Ro3n3SB4AE82gIBrqBXS/6YVXLEn3jh75P/dCuYjZZuCx/R34D7R
-X-Gm-Gg: ASbGncsuGemCK0jtPgjb7E5QYJY9+VfvJoyR51gvzHupECSO0/5v0uOIFU1ie5m5rXw
-	m5w3YyZmRUuaM2ZA1a0TIdUTdEbq/l9XQuU2bNyLs8a9n88JhM5lGzeKlpY7LSzHMhhFAguGN/s
-	/d6zu3bINqSoWvLFlcvmxS+Ymookajr3MV9Jigp26X3yFt2JomzWKji6UG3Q2QezEWOYhvpEQt/
-	6RMjY38LXiWypqCED1IbECuUk9BKVHuBG9oxRES8umd7lXqZlxXOzYKLpcqT7v/pb8s4DLjem4Z
-	xgC+KdyHYB8byj4mH78J8ahEg4KmIDThtLsazztKP3w38e/TF4ZxAH3136PcyaDl6LpEwaxqUPW
-	Q7NSiGWKx6zB4iH+oklCd
-X-Received: by 2002:a05:620a:261e:b0:7d0:9ded:31e0 with SMTP id af79cd13be357-7dde704afd4mr776223585a.0.1752536327964;
-        Mon, 14 Jul 2025 16:38:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6vgTUK9cbHU9/fu7xu5UC9MgWnhvrvZKB6D6M0lFax9GG6pjPJlqFz9LcPg7nXnR+3oUNPg==
-X-Received: by 2002:a05:620a:261e:b0:7d0:9ded:31e0 with SMTP id af79cd13be357-7dde704afd4mr776220285a.0.1752536327341;
-        Mon, 14 Jul 2025 16:38:47 -0700 (PDT)
+        bh=yXi+Vfo70q22tr3GBwXIimObUqUqXmPUkoh91UkH8FU=;
+        b=dO4N/lZ0ypEQ0XRpjc3RcCqJFRgFVfq0Y4Z50Z9To5TZonZX4nfFC5RsNfAuGehyn5
+         HE1/3Awvrt4ja7FOKYEwuLUdDwUSuMh1/eLG8sg+Xsu4FFTxsvGcgP4m1ZbdmOaK5z5N
+         Pi40uk+gJF30gU3arB8MCbO3n1fKWRP5kCy9NHz6EnSNfTslhSBFnjT6zmKY2OtIUugo
+         Jeo0KUXqAojog+Pz6Bp+SWhizC17TEig0/Qj4gtA3WJsOkT3U4VUw/Bxmh/AfbS62F7p
+         HA90SnOa7aJW7B1Kh9bZ8vdqq3DM+s/9+NfNbgdAEDlqvvB+xVQeYvzuurS+b/ry9P31
+         JyCw==
+X-Forwarded-Encrypted: i=1; AJvYcCXJsJKpMd4ytCE6GKwp/fbXXiZvqZICh6yG79Eaa4VwcTMooQaf3JEtp3wlIyNfDB7q9ZZY81sSShatTSB/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyW39bUX8Cbjq61Cdn4ubNnWW5saQOXaqvA3+bk+lwbPymBDZvr
+	r+GeF0c9qJ43VtqQ8clrr7xRrRQ38ERgg9C0AK1vZuJMl7k2RpxbkuzskJpnJklCcqTe5y+tXCz
+	SC5Y00LSRRyrGTZRvzJTYZeZyyqXCYkrsGgYAYqUNnQovVS3QOB4vrJobRlJWT4D1pgR8Vmk2mv
+	8w
+X-Gm-Gg: ASbGncuNj/kJi3mdba5oWDb0gbJ3H+K5B0RYApDvfkAg3+JcBg1AtoxyjVa8FRgbZC1
+	qzvuNlJq6X7drx5fBZgaANMwZnd9RR753GK09vIN5hj0r8CLHzui7HxrIqPnALXXU7UGJBlM6sb
+	ctwPKeiIeZvEHCXXtOypfv8qgCMUy53rO20DcPZNRVNe0CzE4FAfObtsHHOpGu1vynPBMYYgjxB
+	InSDuLzCcKyQLrDS3TJBuZWs5SBRLbJZKDFO28EsVK5Gg6Im4GhxP3vTdaZpw71KScyAaAo4+CC
+	txx2pwaOsdgCCK/d/ONXE4vZiAxgHPPtjZEhXkCldbQPXNUp38sVXHojNGLbr7SRCGb1ENqssXS
+	CtlbitCCEOMaGfkeqGd1u
+X-Received: by 2002:a05:620a:d86:b0:7d3:f0a1:2f3e with SMTP id af79cd13be357-7dde99530b9mr793274285a.2.1752536446973;
+        Mon, 14 Jul 2025 16:40:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEND06f7E/xldG2SwiZSQTbgDcvn/Jbw/7eu/cnbVCi9unjwVVB7Y5X5mBj0MZNrcNpy8/YbQ==
+X-Received: by 2002:a05:620a:d86:b0:7d3:f0a1:2f3e with SMTP id af79cd13be357-7dde99530b9mr793272685a.2.1752536446427;
+        Mon, 14 Jul 2025 16:40:46 -0700 (PDT)
 Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8316b60sm887600966b.184.2025.07.14.16.38.43
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e829d061sm909166966b.142.2025.07.14.16.40.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 16:38:46 -0700 (PDT)
-Message-ID: <c379aad4-96f6-4134-8b90-0f1eec8001a3@oss.qualcomm.com>
-Date: Tue, 15 Jul 2025 01:38:41 +0200
+        Mon, 14 Jul 2025 16:40:45 -0700 (PDT)
+Message-ID: <5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com>
+Date: Tue, 15 Jul 2025 01:40:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,99 +91,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] Various dt-bindings for SM7635 and The Fairphone
- (Gen. 6) addition
-To: Artur Weber <aweber.kernel@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-        Luca Weiss <luca.weiss@fairphone.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        Thomas Gleixner
- <tglx@linutronix.de>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
- <aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com>
- <ee0d148e-71cd-4136-b3cb-145566abdfbe@gmail.com>
+Subject: Re: [PATCH] drm/ci: Remove sdm845/cheza jobs
+To: rob.clark@oss.qualcomm.com, Doug Anderson <dianders@chromium.org>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Helen Koike <helen.fornazier@gmail.com>,
+        Vignesh Raman <vignesh.raman@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20250629135843.30097-1-robin.clark@oss.qualcomm.com>
+ <92314f06-e6a8-4882-a31c-914438d7761d@oss.qualcomm.com>
+ <CACSVV01AUOp7vZ7kLt+gwxvfv4CYLtAQg6MhUccygbi1NpVJMg@mail.gmail.com>
+ <aaaa42ed-989e-43ee-8d45-2908f52e8584@oss.qualcomm.com>
+ <d323ceed-19e2-4b17-b97e-0833f132be16@oss.qualcomm.com>
+ <CAD=FV=VV_xvcWwdpi88wSYWXyftUP5eP-SQVkgEBRQgfwDN+zg@mail.gmail.com>
+ <CACSVV01PkDKWSRq4eQCJGFePKmSKmFdkNFt2PSC4w+r1U9nZuw@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ee0d148e-71cd-4136-b3cb-145566abdfbe@gmail.com>
+In-Reply-To: <CACSVV01PkDKWSRq4eQCJGFePKmSKmFdkNFt2PSC4w+r1U9nZuw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDE2OCBTYWx0ZWRfX/OOzgAR2m5Xw
- 4NBhRUpE+lITN2OzNV9/WJcJyANzd5G638zWihCCdK5o5BEVDid2k5IeKXhl5RxcLUfBn0ZWtUV
- JMTD3/lTg0jq2zp0hq9TzsS1brWhxJLbNhFE4XV1PhWCjZifpyOZ1h7xXqQyXmChe50PdoQVh/C
- V8ip2OsAWWzYUDv8ol28LfuMIT+Dij6SPAxqKo3YACoD0lJlaeTjuxrCz5m5Fyjqj/brIvoTY6L
- fI5M+DA8iV0YfykSD1GFsMfEKlOzGG0VAQQdeg7oxQbezV2GidQbGTq037B6/dkaPyFYrs2KsFp
- EfVfAzTGui4g7xe3NvAPOHSeEBodUR7TXiJvJzuZnCdss6q9CfBe+/BSKzLzpQ3Vl80gullVWIU
- bVGktMlUP6ELAO0ONWr3D74n1eh1MmFHOOJxBEN9Ojzj1o9ZkNOsFb3BvIzEXy2uZbBg2B/N
-X-Proofpoint-ORIG-GUID: OzLQXC60zATpCNvSqL8ntXPLC3cdG2R5
-X-Proofpoint-GUID: OzLQXC60zATpCNvSqL8ntXPLC3cdG2R5
-X-Authority-Analysis: v=2.4 cv=MpZS63ae c=1 sm=1 tr=0 ts=68759509 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=ySytLBbe-S1-HUGBodAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDE2OSBTYWx0ZWRfX+ZpNxCL34Qs8
+ m4GjbUjMapdTBYG+Ck4zz+GUKhT+WauMDJTwqauZyI8UWLueQbL7uc12+qSKoxp4//BCtp+7qjw
+ fQLm2io8vPzf4PJxroM7WhfyU+gXDHokr1lELp9y1V+qX+OVOGlvhz5I6lpjVbOqQstaof+a+aS
+ abkVDQimi/ronAAiXdwiPUU+0/3RtY72jI46/259qE8BRzc1gBtdXDGkO9pKia94lllMWuATGg+
+ Bhkqo2ORdgoAheoHALiKjvRjIbqtm9GqPAr9Vsnxu3dChI+HfVMnx0qaYQF9Q5yEAAdfCBdZTTv
+ cd5Bjwo4peGpQZZ7Fbk7A7YUX9dSKAP78NYgpqB1bhBUPZ6jalo5sEG7mLRXHX35gFkYYDtPLn2
+ QNbyhD7XUCHbIlXP4cqG5aFSGr2HRlS+DR/yrHxsdxBQN/IRSuCysY9tUIkje1tt/BYBSt8U
+X-Proofpoint-GUID: 34W8EIwm-78GzrOCvM_R8TZ2o4qHCNLt
+X-Proofpoint-ORIG-GUID: 34W8EIwm-78GzrOCvM_R8TZ2o4qHCNLt
+X-Authority-Analysis: v=2.4 cv=Y+r4sgeN c=1 sm=1 tr=0 ts=68759580 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=dRXE1jWJAAAA:8 a=cm27Pg_UAAAA:8
+ a=EUspDBNiAAAA:8 a=Jp5PGaZ2n-Q8juSPBdEA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=I84_JwFgYcz8Gf5-qaVM:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-14_03,2025-07-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 adultscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507140168
+ clxscore=1015 mlxlogscore=999 phishscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507140169
 
-On 7/14/25 8:13 AM, Artur Weber wrote:
-> On 6/30/25 23:59, Bjorn Andersson wrote:
->> On Wed, Jun 25, 2025 at 11:22:55AM +0200, Luca Weiss wrote:
->>> Document various bits of the SM7635 SoC in the dt-bindings, which don't
->>> really need any other changes.
->>>
->>> Then we can add the dtsi for the SM7635 SoC and finally add a dts for
->>> the newly announced The Fairphone (Gen. 6) smartphone.
->>>
->>> Dependencies:
->>> * The dt-bindings should not have any dependencies on any other patches.
->>> * The qcom dts bits depend on most other SM7635 patchsets I have sent in
->>>    conjuction with this one. The exact ones are specified in the b4 deps.
->>>
+On 7/14/25 10:08 PM, Rob Clark wrote:
+> On Mon, Jul 14, 2025 at 12:56 PM Doug Anderson <dianders@chromium.org> wrote:
 >>
->> Very nice to see the various patches for this platform on LKML!
+>> Hi,
 >>
+>> On Mon, Jun 30, 2025 at 9:15 AM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
+>>>
+>>> On 6/30/2025 9:26 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 30-Jun-25 15:46, Rob Clark wrote:
+>>>>> On Mon, Jun 30, 2025 at 3:34 AM Konrad Dybcio
+>>>>> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 29-Jun-25 15:58, Rob Clark wrote:
+>>>>>>> These runners are no more.  So remove the jobs.
+>>>>>>>
+>>>>>>> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+>>>>>>> ---
+>>>>>>
+>>>>>> Do we have anyone using cheza at all anymore then?
+>>>>>
+>>>>> Probably not
+>>>>
+>>>> Adding +Doug +Akhil +Jessica, if we don't have any users, we may
+>>>> get rid of it upstream, as it never made it to the outside-outside
+>>>> world..
+>>>>
+>>>> Konrad
+>>>
+>>> I am not aware of anyone using Cheza boards within Qcom. So it is fine
+>>> with me if you plan to remove the DT bits.
 >>
->> Can you please use the name "milos" in compatibles and filenames instead
->> of sm7635.
-> Hi, small half-related question - does this mean that future Qualcomm
-> SoC additions should use the codename for compatibles instead of the
-> model number as well?
+>> As far as I'm aware, anyone at Google who had a cheza gave it to Rob
+>> to put in his lab. If Rob says nobody is using it then I'm 99.9%
+>> certain that nobody at Google is using it anymore. There were a very
+>> small number of external developers who were given a cheza prototype
+>> but I can't quite imagine any of them still using it.
 > 
-> I was working on SM7435 (parrot) patches a while back; when I get around
-> to submitting those, will I have to use "parrot" or "sm7435" in the
-> compatibles?
+> If it helps, this is what the batteries looked like when we pulled the
+> cheza's out of the CI farm:
+> 
+> https://photos.app.goo.gl/Eh8EJhqBhKUuYfiH8
+> 
+> ;-)
 
-If possible, please rename it to "netrani".
+Spicy!
+
+Thanks for confirming folks
 
 Konrad
 
