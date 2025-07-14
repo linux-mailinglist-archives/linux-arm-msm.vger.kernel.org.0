@@ -1,92 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-64855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43086B046A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 19:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 143FBB046A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 19:37:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4C491A62F5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 17:37:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E1221A63E43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 17:37:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC82D2673A9;
-	Mon, 14 Jul 2025 17:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 163BF269B01;
+	Mon, 14 Jul 2025 17:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbV+buNG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIZm+rgF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0626925F97D;
-	Mon, 14 Jul 2025 17:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0CC267AED;
+	Mon, 14 Jul 2025 17:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752514589; cv=none; b=WAivO5e+dfjINA6vK5Ybwv6eAoZHTo3FOpbhZceQ1jfYv0dFcPiPPXPpRAV9EFyIsep6cLpkb8cJ0LiXsgnD07/cBiFxjtbfgE54STwMZ9Y1f21T91Ix61LqNPC4ZhMftaVZfZDVqp3kfSzDYk+IvtTKNucnmFXRwXIcY6zTso0=
+	t=1752514593; cv=none; b=ExjJSvdb4N5pyv5Z4VcojRYTT8WmWTQISEdViLZu9qLkM0nlCr6ymMns/zAU8Yr2fsuwRGTr1mXMQLT8WNuXNe3tVcLozmXVfx3dLaQIwscYfypAziuXFtWRbdtSCZ3U/wyHvHdT4jesQ+iD+5rV+k7BRHR8GFFxv7/kNvXtQzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752514589; c=relaxed/simple;
-	bh=WfsKXVJyKGBvrBPYu2BcjrGMJIbk4VCvgUzrDGZK53E=;
+	s=arc-20240116; t=1752514593; c=relaxed/simple;
+	bh=E3C8b0Zc4N5eu3Cs++FMCzsi17JZrq6nsRV8z5BcgcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jZ1duc18b3sxrzF1N+EJr8fkO2sJMS+A+s9y0OhcPpejjFbPQNDRCewZcx08t+PabJVy1ZU7dmyh7xxU5MPQ3rtt7P3U+Mf1chBeA+kEWK6SXQVRAk+Bs3tW8UJ0G9PJbQC11cljEABesUFPzUOFQXN8OD2PK8kK3OxAmbYImxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbV+buNG; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:Content-Type; b=YL72sanBm1PoNAJ+jN7K4x4uqeWHxU93kRhz5hdgqSVVEpe5TS6kx0BH//3vWsfEzFDz0JAiWOnGp7hptg/SyOyYfDC9aSg9DAsrtVCG27TFVmRnngs22r8fDo3ZvkzVYfmxfyj1+eWkC+I+CP3k7AOtCJcBjTnn8UpVZdkrfFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIZm+rgF; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a4fb9c2436so2772283f8f.1;
-        Mon, 14 Jul 2025 10:36:27 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-451d54214adso31302725e9.3;
+        Mon, 14 Jul 2025 10:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752514586; x=1753119386; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752514590; x=1753119390; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wp/9FJf0itBzRi4wdHtyABmcjqnv5WaOUuSEUpWjg7g=;
-        b=LbV+buNG7WWMKQ5ofOX57vEm86OBDNhHnh3t/gUP1SoqXc0FaspCYLZEpaNDwAcSpe
-         fiofjx7cLHFypVUWw/iQj7I2QxQbAZHQ9dhoi9cpxXWNVvnKNzLaH6b5xOK0BsV1ysNW
-         wT0omS3FE8s7aXNM4ZY4l6SGXdE1AHOhz3d3DbGZBo4/OiqFvPmILuJ37DgFSmnCCKqt
-         bELAUOl+3OVrAdt37NrVE5f2Vi/Oo2yTx9PQ8IuUrqR9j2OXj+7QzUBetYoKPnHCbF7m
-         qZQRIfOue7RitcZWYYu4SKfh9QUn46bxf51mpJ8KXteXM3c+4rSecs5z1CzVWJpYNCiw
-         hpKA==
+        bh=mVrg1vBYWFvGiJ05D7/0fai3Jew1968JhRVyvMTn93U=;
+        b=ZIZm+rgFS6CzTZduD5GW70+fU76gVhKHcDwjOxmy3dyMBfpXEcjtEwf520pT0gQ8ax
+         aRtl/u4XokqEqMeTwiPNgwLZRe/sAGvXWK5Sq/FEzIWdnBfBTnzvJBuWJD21cRkUbjJx
+         f0JmK1U7dnYWTrnDbXOacgZad61Fdt6OmBlueFGE+tHO3Me/tYCCZ60Q1012o8ukHpmf
+         XZGZJ5+HH/rruOCPFe0sr+Jydd1ZkH14gJ426z7N5HF8h+qCJvOITxSXSmlwiGNqTj/r
+         UwCFgPOuzt9ab6NzVrZV7SQYQWQSWCCp4YMqUUZIk1i53VTkY4bqyJ+fnFbHK9J/oaS5
+         NV1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752514586; x=1753119386;
+        d=1e100.net; s=20230601; t=1752514590; x=1753119390;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Wp/9FJf0itBzRi4wdHtyABmcjqnv5WaOUuSEUpWjg7g=;
-        b=PrXfY/IpETDuY/DIGMIcvJWtJw7QhOvhSC17m5LxbLk2/c6Y6Xn67AYJztRZVsIjfm
-         YETBMgWHwc9LMZbbGWpybH0a7P3Bwhl8pHyOTH30//nrBzULFTw4M88QMqqZ2zZkqZkT
-         9hLI1lGLDRy+xsxcUAxAtjJ+nM/ty9ZjeSMF0C1RK+xq8m0dgVajAt1NguDydoiGfc+v
-         LuHoGXWX9gwcSh6+VEfuB0WJz576SrzEZk717hx9Ymun4VMwO10IplMf/sXtMa4lfm7p
-         GgiacNW46+wMi6WPeqH7v6soCwZr2JEuKkFY25eu7guj7vN/O1UeaiEJVnGjXX+jnlHo
-         HUlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzkrvV3ueEui3DfBwghI/L27IRNj6uA0Jo9YaRTpPDRxWb8Xt+QfEnVMLxSqk03/kaufZZDzvMTM+7bg6h@vger.kernel.org, AJvYcCXUfmxVmGOIxlEhfCmhe+m9+HkUycNlZ7rDgw/EdhOmqvx1V5vXpoSQQ4Fn3oCQy21DUfaBDLh/u8k0@vger.kernel.org, AJvYcCXXfUa0qB2Oy7qow+KymbQKdzB193oRqVaLvd4NltRtQZcUBLTfgTv7DPIFuabkUsR8uFjfrrcNw9OkdcrRYA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBSY5jBVmAEvW1QpZdya8/jd3M1+fPCAt3EvtGpZn4ZSbt8Cgv
-	TUQwXiJAyBgpR+2sxgzOd665f7Yd7/RcwYlTEGgmXFeiDVqsGPDJR4HL
-X-Gm-Gg: ASbGncvVQtAbwJoryMDJBt12+Eg2Ly8JL2Mj0TkCssUbZ1LkQC1f/UWA2YtRb18umAv
-	mv4/IYenSqRC8rfGtKNcVrv1MKhE5iNG8cezNIQvpWqGDPy3JGHJ8c/fVVWkVupqskpXukrPR7s
-	J8lVp8Z3mBVznY/wVJpsUhJRhjjAwaq1FV8Oxv7eQwEbRw9rJip3CLR3vBQCJMtpXCdJgGHQUgf
-	XfgQ6UesvneqAsvZWzq7AcP77wkQmrzH7KyChkteAYf6+kJ0ApI9Wn6Imd6YQNXzvuFBShJiyQz
-	LfxW7RB0PUOf3Czdt93QUwh9CB2P+UxAkHrruKvO/pZynAc8wVNUMMxjHloR8YKIcSLAH95YDUJ
-	7G+wLnBWY2cCYuyH6QpLubwumTjBNjb2YI7I=
-X-Google-Smtp-Source: AGHT+IFWbQgqrB3G2gTde3RY/C4Kg+J//8ZmNXMoD/ZO1cqQ1rI6IBsnRuGz97pwsS7RiZMx8g3jnA==
-X-Received: by 2002:a05:6000:240e:b0:3a4:e5ea:1ac0 with SMTP id ffacd0b85a97d-3b5f187a4a8mr13297156f8f.5.1752514586015;
-        Mon, 14 Jul 2025 10:36:26 -0700 (PDT)
+        bh=mVrg1vBYWFvGiJ05D7/0fai3Jew1968JhRVyvMTn93U=;
+        b=EsKJb4JoOo4k3eWW99rqIwgw9rIdpABVzRZGKmkMHImGGJ6VLIU07rie+EmjWOAA+7
+         bxk4YdNUNczdbR5lYgNgXUUjIxPUG1e+eFRklKbyIHaOBVtUdoK8uRq5s3QyFz9mbg4x
+         mMtH/Xy/AJ6J5PNzkq/5VChBnfD/y3xqI+hEt6l+60xc0wVYwBrxbL4iQynAUSANWYCa
+         iiIN3wxw4GQ36AW9RXIFEdUGGpUpHLEQZgFiDo8jCat+5vYqBAHCBrFRtttFi0Bb6pK7
+         PptrjokMrNrTxSN7mH59vauASt0rD06wvt8QhSqS6CxXSf0W5kCTyLG2YJqm1h3UAgX7
+         BMcA==
+X-Forwarded-Encrypted: i=1; AJvYcCUP1pOd3+3Sq3hWEFqAqOrPXP3B/9evJULdAQCd68hfIUpBHQ7gEfX3lb6hRDFU0WBL4gRYUCH7Fh/4yDzh@vger.kernel.org, AJvYcCXIDDVHqPDqgrQVwB4gPy13EaCP8Rz0TA+wDbRC3gyTRPFi0C1yzQ0YYJoGASF3zKrSA/dkFV4Ex9Ubw8vv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0iznpt5+Zk8ggrqeIGumG3AMXzyu2f3a2CMcxFQE7nYONT1bp
+	L5Hqfgj1fNDTSil/8aOY3eTfXtSFKhVGJVUJaUGfAgfxXFMlxKzjQ/kGO6ZZE1MRiqI=
+X-Gm-Gg: ASbGncuIOu/GJw2tH0+KadftbF1Hf2SzXcTrWDgAWbUz8GDFUho2bzkcpojy6Prvijr
+	9ZC5pJoYX2vFiw7++2M9UefqLfMp0DbGeXG2ymmrstO2qLyzKbXNXyaa9ln8Ou+yA2GEVE1eIa1
+	xSLbh6LjXX6uOy1f+MeEc3/lDNQ+1JjwC5a3JikOwy5FHSktADXYqzvsU7o9pQJfE+mvmCR4I1f
+	JbvHP2jUUU9aa6lZwiRTv2Ey8GRqYc5lRchupdETopQBTnhbYnJPPr9g1oXLgqXkQY968ian5oN
+	F3MjEayziSO80i73YQlBiHpQ7el2SQ/nuD1kcS3QpMRaqHMOJEzzvLtxSI0Z7fbz/x7ItAyqzQi
+	higK3qWHbaMdxKtdEixAcMBn3ImxduWwNi3g=
+X-Google-Smtp-Source: AGHT+IGyn6xDb8CNs3L8feS6EkmrXlEgjMNLym6zhKfAH/hoOxnUCWhRvqfHLAyzr2nC2UrZ4j7oMg==
+X-Received: by 2002:adf:9d82:0:b0:3a4:dd02:f724 with SMTP id ffacd0b85a97d-3b5f18d2bd0mr9882720f8f.43.1752514588858;
+        Mon, 14 Jul 2025 10:36:28 -0700 (PDT)
 Received: from alarm (92.40.201.95.threembb.co.uk. [92.40.201.95])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d872sm13152531f8f.60.2025.07.14.10.36.24
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d872sm13152531f8f.60.2025.07.14.10.36.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 10:36:25 -0700 (PDT)
+        Mon, 14 Jul 2025 10:36:28 -0700 (PDT)
 From: Dale Whinham <daleyo@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
+	Konrad Dybcio <konradybcio@kernel.org>
 Cc: =?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
 	Dale Whinham <daleyo@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/9] dt-bindings: arm: qcom: Document Microsoft Surface Pro 11
-Date: Mon, 14 Jul 2025 18:35:37 +0100
-Message-ID: <20250714173554.14223-2-daleyo@gmail.com>
+Subject: [PATCH 3/9] firmware: qcom: scm: allow QSEECOM on Surface Pro 11
+Date: Mon, 14 Jul 2025 18:35:39 +0100
+Message-ID: <20250714173554.14223-4-daleyo@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250714173554.14223-1-daleyo@gmail.com>
 References: <20250714173554.14223-1-daleyo@gmail.com>
@@ -99,29 +95,26 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+Enables access to EFI variables on this machine.
 
-Add the compatible for the Qualcomm X1-based Microsoft Surface Pro 11,
-using its Denali codename.
-
-Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+Tested-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 Signed-off-by: Dale Whinham <daleyo@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ drivers/firmware/qcom/qcom_scm.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 6260839fe972..2b02619e665f 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1135,6 +1135,7 @@ properties:
-               - dell,xps13-9345
-               - hp,omnibook-x14
-               - lenovo,yoga-slim7x
-+              - microsoft,denali
-               - microsoft,romulus13
-               - microsoft,romulus15
-               - qcom,x1e80100-crd
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index fc4d67e4c4a6..595c9c100af1 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1995,6 +1995,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "lenovo,yoga-slim7x" },
+ 	{ .compatible = "microsoft,arcata", },
+ 	{ .compatible = "microsoft,blackrock" },
++	{ .compatible = "microsoft,denali", },
+ 	{ .compatible = "microsoft,romulus13", },
+ 	{ .compatible = "microsoft,romulus15", },
+ 	{ .compatible = "qcom,sc8180x-primus" },
 -- 
 2.50.1
 
