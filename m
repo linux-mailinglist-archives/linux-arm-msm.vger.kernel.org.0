@@ -1,168 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-64751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F3E8B0370B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B0847B03717
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:31:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7AA93A9561
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 06:26:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13F313A491A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 06:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F32F221280;
-	Mon, 14 Jul 2025 06:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F4892248A4;
+	Mon, 14 Jul 2025 06:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0POggvS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XhAP8100"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5021FC3;
-	Mon, 14 Jul 2025 06:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED88BE4A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 06:31:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752474418; cv=none; b=G1U86XErbS+3pLGRfAcvi5/TwqmuJ2UqDj+bjMt+1rT/jW9PDpC24J+w1eHIVDDt0nbzbgvfNPSKipxqBd301KgJbLe96xPPx3KnlcYneVTb3AbOwVMgKeHMPZjK+bF+PyDs7MPDxq9N6pzEWSa8NlOSSgEit7mXHo+Hb0maKEQ=
+	t=1752474682; cv=none; b=icRnBL105rPGm9BahPdie5srwoqOwFPsBPK+GAI09QWjPe+diRA7nB8urzNbkrrWIuVoIxvKZdE/+bxPErkMcyGOq4Q59WxUOnHl4kDHLTbs0hqQTbaUrEMfA8KPWqKI1ZV+0PzDR+XCgWu0CUl4QfWPGtLaVfiDO2Owb2AQiqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752474418; c=relaxed/simple;
-	bh=zVmVzXltQlDJ32txnUs+a3Lm/yVkDxzngaGt7p+cC7Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o3owGoKCrFbfFZjzyKjQdkiAlr4j/OY/rj92GZ83opQ7vF3HHWPQ/1YZGjrZpWgbd3veoV+E3On/JQY2So4cbsc5Pm2L7Ev4N8rCQ+DkQIhymbjUQdcll9C/FAnaS73IKZbOfTusfwU1/Owvb13KCU4013e/FxljbzNCf8jkNFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0POggvS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17453C4CEED;
-	Mon, 14 Jul 2025 06:26:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752474417;
-	bh=zVmVzXltQlDJ32txnUs+a3Lm/yVkDxzngaGt7p+cC7Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=j0POggvSPFvZsKOEKrDId+1rKUQB6YQ68pKyYVPORgSwCVilVmZyaaxncXu5pQjaR
-	 hD8NFRB1dajiXVrNVZDa/Bd4rBA5NQ0im/Ms70cdhetKdN0YMvzEIx2Q0FsFDkI4fu
-	 5ULK0T1t1+fwOthZtRQ0fWugdpP3XJ67itxOBkn844h1eaEyslV7qFL6YD09KPZgKz
-	 MwycQ+tPtW97wx4KfMoaYJsF85W2AJNeEu4T/9dqg3A3vDU+jbbPnPOx4HLpGWh0bX
-	 n+yYgCBHwU3NpwDa/rzy60jgRMhkXFMh68ZpuLkooz28qmLrEOGOlLmrASSPrvCEH1
-	 T/GnwzvhXLUXA==
-Message-ID: <888a7598-38d9-4640-9823-2b073da006f4@kernel.org>
-Date: Mon, 14 Jul 2025 08:26:47 +0200
+	s=arc-20240116; t=1752474682; c=relaxed/simple;
+	bh=+wPOWYKwugoIf8mklL3U53Tn8gBLZL7yLlWIIj4mpnw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fH2kBL0m/DTXQE7TAxQrWrsdFar68LGvlWnkrYx5QOnnR1vjdhufSZixoRUhcfjcizZ1OTyyL7JNrv3hHTE601apsd0it3R1LFoi9uyoDboPWceI26gzzvR3HfkE8BQdlbxHk/7tdXjCdDsxhGthq0vGmXZD/XjAQOQGBFM4qLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XhAP8100; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56DNphtw004347
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 06:31:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=0wqXPJCmIO0vUREoCEbzWcWX5UzhT3+oWJ/
+	3YK7SaqA=; b=XhAP8100rPlBQ50pSDQ+lHvfwHFkb6Xjs//lS5nBhJig58p/NQJ
+	tLektCMGsNISv8FI8PfXqecQ+u4Pis2ZpCbAJSVmqnmYkBqjDTC4NaO5YeUT9LOv
+	X7IL5F9NZiMGzHYaloCMbUYTs742r+5JcwtHEvznLVre9IGhylOVRKq6JTP+clin
+	6a9t0Y5scbsiznIU8VK/reUGVNp57qeFf76jimiVkyw9g7PxR7mnTAvuztGjA2w8
+	bGJR4GY5vYU8a7JX1AoRrCVOMmXiPanziqGoIdLxKTHoaKHfqYMSo07NToSbKnsR
+	ejmjqQhn/3ZqPeH9tSgeCJtvO/A28TfyQow==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxauh43-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 06:31:18 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2356ce66d7cso68799075ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Jul 2025 23:31:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752474678; x=1753079478;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0wqXPJCmIO0vUREoCEbzWcWX5UzhT3+oWJ/3YK7SaqA=;
+        b=VzoNfhWc62sbEmR5VAQj8BF2t1Jp5Dqgz4JKq98z/QkYNsyW3PT8GoqzHYDlHEuv8o
+         /nwRhIIrowmTAnhTQwq53+x5PTSe7k5jli5rZrcJvp2BBe09pHQaCIDSrpyRYdSjTvtv
+         dDRFRSRjSLKj7Dd/AE3VmiMFqiCJgHrKKraasDUAvE8vnOWl1JTWpoAjPaxlBLl/uyC+
+         x6bUTgZUkAW+aBPkiAj9CSl+LSsZh+1FThEuFxOkrkdcNODKQnI20UEU0IWxoIuMwRUI
+         8w/JxKvjD7rRWkmdPEgyxvQPu9T8TZO03Vkft5HuyZREVxLIWz3kmHckVzEJcwbMc6Ut
+         VrIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVIwFgVaCRfToH7YSh18OyHMDRUsvobibFQaUgLB3wl9/rcEeJ3h1gPFjoeAB9sTB2DR+U3XD6SFPtUg+E2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGP0VXedjERujD0b0rusuPLOn7th9IOldlRNE89XzXJcvZJw7a
+	U4I0eY452tnsAoBm0NNoeOhktVJnUO6IdxsQgaotVDursACHSgorhaIDmdB8XcFdeUn4nzI96ah
+	I6mW/6t+9C+SAncp7uqK+You08J9PpPhH0axuIA3zhjL1ec/fE3aEY5qC+j44Ip0fAxHQ
+X-Gm-Gg: ASbGncuxmC+0D97ScVlHA6GCpffFyj7FZsy1hyIKbrol+U6bheLF6Bw4ERgfDNifDi4
+	lYSG/ELoXhDMBRI/Ba6bHtWdzTNGZjiz4rgwmcCrFh0UHds+cwIHGS6hV0yHWgn/F5xnFIr+5xI
+	d34/g3AWcxjmRnveco0u5MuzEPXFT+3qx7EkiWtful2jodmXFPaxocgeVLW7A6TjQZA/2q9lRCK
+	fWAxMJYz0ckXZ13B+s4vUzVKJ3IJNE7+JMrUUtbc0PzPLa+8Pv210m0qL2TG08U+dVoSYwsskJu
+	Cn/uhTyx85u99fW921+7156Kg5D9PcESFOHPMEbEW9+y/Lt3NB2BCZtPjFOOzjq4PL1YM7eZxfX
+	m8d6p79fY0mYxRe5hzoRL
+X-Received: by 2002:a17:902:e54d:b0:235:f078:4746 with SMTP id d9443c01a7336-23dee263c53mr150587495ad.42.1752474677609;
+        Sun, 13 Jul 2025 23:31:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPLKAuifJqLzIISS3WOtiE7PpBWt3Y0U9Des4cLciVFaSNQhBO1Bz9VSSEWj3nEmc8jMwwxA==
+X-Received: by 2002:a17:902:e54d:b0:235:f078:4746 with SMTP id d9443c01a7336-23dee263c53mr150587005ad.42.1752474677123;
+        Sun, 13 Jul 2025 23:31:17 -0700 (PDT)
+Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de4334005sm86138255ad.158.2025.07.13.23.31.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Jul 2025 23:31:16 -0700 (PDT)
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Jie Gan <quic_jiegan@quicinc.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 RESEND 00/10] coresight: ctcu: Enable byte-cntr function for TMC ETR
+Date: Mon, 14 Jul 2025 14:30:59 +0800
+Message-Id: <20250714063109.591-1-jie.gan@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] Various dt-bindings for SM7635 and The Fairphone
- (Gen. 6) addition
-To: Artur Weber <aweber.kernel@gmail.com>,
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- Luca Weiss <luca.weiss@fairphone.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>,
- Das Srinagesh <quic_gurus@quicinc.com>, Thomas Gleixner
- <tglx@linutronix.de>, Jassi Brar <jassisinghbrar@gmail.com>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Ulf Hansson <ulf.hansson@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-mmc@vger.kernel.org
-References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
- <aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com>
- <ee0d148e-71cd-4136-b3cb-145566abdfbe@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <ee0d148e-71cd-4136-b3cb-145566abdfbe@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: ozTs6DqdMK_9WObBUvs-kwWGFz6NvkSP
+X-Proofpoint-ORIG-GUID: ozTs6DqdMK_9WObBUvs-kwWGFz6NvkSP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDAzNyBTYWx0ZWRfX7RscXotmca+T
+ 6wSQIbIGp1SxbaCI9doTQoFHhMBOAN4DpaHdbZf5xWjNAK7kZoySGnWAtQOmxiRnD0nnItewX2T
+ oRmBPQBSPJbK/Mo8IMKyDSzlS9p3f2buKoZW4QKeGtE/xU2gjL/WhxJOPYQOcoXwdwaZxHghf7B
+ kgoUwoa3dMdXiqEFxZ6O5ZqzjdIDON5JDzs1v6hEq/lN/GzUvuJEesg1t5JUCDPJ/epOiEDWn+x
+ KPam7voIE2PgkBo5zlAE8EkLuRuio0LLp5xXttPsz1R0aEii2ZNjys9TG+XUFNspizgSCsaXUU3
+ Q1w83XAfCm2Ds4fDO1j+3V9zzFSdBGs2kNhlnp8lIJDQ6TLzJyYJzy37GKfSvbZqoWFMMqJELJA
+ ZSHdcyfVDn147uSnAv735vQBzIgq09xDbMoxpbDA28XrIu9Ni2iwekNIdZgj5XK468IK0gyj
+X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=6874a436 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=nBcv9sv72UtkhE4thMQA:9 a=1OuFwYUASf3TG4hYMiVC:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-14_01,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507140037
 
-On 14/07/2025 08:13, Artur Weber wrote:
-> On 6/30/25 23:59, Bjorn Andersson wrote:
->> On Wed, Jun 25, 2025 at 11:22:55AM +0200, Luca Weiss wrote:
->>> Document various bits of the SM7635 SoC in the dt-bindings, which don't
->>> really need any other changes.
->>>
->>> Then we can add the dtsi for the SM7635 SoC and finally add a dts for
->>> the newly announced The Fairphone (Gen. 6) smartphone.
->>>
->>> Dependencies:
->>> * The dt-bindings should not have any dependencies on any other patches.
->>> * The qcom dts bits depend on most other SM7635 patchsets I have sent in
->>>    conjuction with this one. The exact ones are specified in the b4 deps.
->>>
->>
->> Very nice to see the various patches for this platform on LKML!
->>
->>
->> Can you please use the name "milos" in compatibles and filenames instead
->> of sm7635.
-> Hi, small half-related question - does this mean that future Qualcomm
-> SoC additions should use the codename for compatibles instead of the
-> model number as well?
-> 
-> I was working on SM7435 (parrot) patches a while back; when I get around
-> to submitting those, will I have to use "parrot" or "sm7435" in the
-> compatibles?
+The byte-cntr function provided by the CTCU device is used to count the
+trace data entering the ETR. An interrupt is triggered if the data size
+exceeds the threshold set in the BYTECNTRVAL register. The interrupt
+handler counts the number of triggered interruptions.
 
-The problem is I don't think something like "Parrot" exists. You might
-be referring to DTS nicknames, but that is something entirely else and
-does not necessarily represent one die. The die name is entirely different.
+Based on this concept, the irq_cnt can be used to determine whether
+the etr_buf is full. The ETR device will be disabled when the active
+etr_buf is nearly full or a timeout occurs. The nearly full buffer will
+be switched to background after synced. A new buffer will be picked from
+the etr_buf_list, then restart the ETR device.
 
-I don't know how community is supposed to figure out the names... I
-guess Bjorn and Konrad can just disclose them for you.
+The byte-cntr reading functions can access data from the synced and
+deactivated buffer, transferring trace data from the etr_buf to userspace
+without stopping the ETR device.
 
-Best regards,
-Krzysztof
+The byte-cntr read operation has integrated with the file node tmc_etr,
+for example:
+/dev/tmc_etr0
+/dev/tmc_etr1
+
+There are two scenarios for the tmc_etr file node with byte-cntr function:
+1. BYTECNTRVAL register is configured and byte-cntr is enabled -> byte-cntr read
+2. BYTECNTRVAL register is reset or byte-cntr is disabled -> original behavior
+
+Shell commands to enable byte-cntr reading for etr0:
+echo 0x10000 > /sys/bus/coresight/devices/ctcu0/irq_val
+echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+cat /dev/tmc_etr0
+
+Reset the BYTECNTR register for etr0:
+echo 0 > /sys/bus/coresight/devices/ctcu0/irq_val
+
+Changes in V3 resend:
+1. rebased on next-20250711.
+Link to V3 - https://lore.kernel.org/all/20250624060438.7469-1-jie.gan@oss.qualcomm.com/
+
+Changes in V3:
+1. The previous solution has been deprecated.
+2. Add a etr_buf_list to manage allcated etr buffers.
+3. Add a logic to switch buffer for ETR.
+4. Add read functions to read trace data from synced etr buffer.
+Link to V2 - https://lore.kernel.org/all/20250410013330.3609482-1-jie.gan@oss.qualcomm.com/
+
+Changes in V2:
+1. Removed the independent file node /dev/byte_cntr.
+2. Integrated the byte-cntr's file operations with current ETR file
+   node.
+3. Optimized the driver code of the CTCU that associated with byte-cntr.
+4. Add kernel document for the export API tmc_etr_get_rwp_offset.
+5. Optimized the way to read the rwp_offset according to Mike's
+   suggestion.
+6. Removed the dependency of the dts patch.
+Link to V1 - https://lore.kernel.org/all/20250310090407.2069489-1-quic_jiegan@quicinc.com/
+
+Jie Gan (10):
+  coresight: core: Refactoring ctcu_get_active_port and make it generic
+  coresight: core: add a new API to retrieve the helper device
+  dt-bindings: arm: add an interrupt property for Coresight CTCU
+  coresight: ctcu: enable byte-cntr for TMC ETR devices
+  coresight: tmc: add etr_buf_list to store allocated etr_buf
+  coresight: tmc: add create/delete functions for etr_buf_node
+  coresight: tmc: add prepare/unprepare functions for byte-cntr
+  coresight: tmc: add a switch buffer function for byte-cntr
+  coresight: tmc: add read function for byte-cntr
+  arm64: dts: qcom: sa8775p: Add interrupts to CTCU device
+
+ .../testing/sysfs-bus-coresight-devices-ctcu  |   5 +
+ .../bindings/arm/qcom,coresight-ctcu.yaml     |  17 ++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   5 +
+ drivers/hwtracing/coresight/Makefile          |   2 +-
+ drivers/hwtracing/coresight/coresight-core.c  |  54 ++++
+ .../coresight/coresight-ctcu-byte-cntr.c      | 102 +++++++
+ .../hwtracing/coresight/coresight-ctcu-core.c | 113 ++++++--
+ drivers/hwtracing/coresight/coresight-ctcu.h  |  49 +++-
+ drivers/hwtracing/coresight/coresight-priv.h  |   4 +
+ .../hwtracing/coresight/coresight-tmc-core.c  |  70 ++++-
+ .../hwtracing/coresight/coresight-tmc-etr.c   | 270 ++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-tmc.h   |  29 ++
+ 12 files changed, 688 insertions(+), 32 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-ctcu
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu-byte-cntr.c
+
+-- 
+2.34.1
+
 
