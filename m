@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32B99B04202
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:42:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A9BFB0420F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:43:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 678CB3B1DDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:42:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1492E4A2BDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:43:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEC925744D;
-	Mon, 14 Jul 2025 14:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9451A258CD8;
+	Mon, 14 Jul 2025 14:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q40qDfwz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tYsinFTu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402062571BE
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 14:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4D62580CA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 14:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752504144; cv=none; b=mcZmJNVc4dRjGRWvH+9OyRjpg8ze9palW1+0wMFndNTZx3Qzrk3efct2PwYBVSIdzcZm+TtZREo+YKd0j7if6Q7WuVBuNrIguDpdMBCOQsVsjcuarPUBSiAbS5TDptExsjCglS/XH+kSpt08iorGd5BpDJW3ThrYWUBXnAp22Ho=
+	t=1752504213; cv=none; b=nYHLkIObPYVhtezkXJ8Xz4YhKM3LPQ1iNEgiJxmPp4aicitbomy0BnJrcJFi4nFzs4uxwaDfSraXFpufoXuUmCI5sj9eUGhY25Y5uKZaYSZd5m56TpNIz2kbOrTr1vaTuAny4/HBuDv8QxGiyzgoO2RDoyOKgqsZ3IVGIi6MHts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752504144; c=relaxed/simple;
-	bh=I7Pxnln1BUjfe7HcY5t1QvJulXfLwXmFHrmFWRkwVbs=;
+	s=arc-20240116; t=1752504213; c=relaxed/simple;
+	bh=+NdErqoSXalIYrtUeTTaieZr8gJQiDPFDzFk2W/aqPI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pXh9aJEDDvZVIDeAAdSk7CnPvCDVMbZIQ6+qVSxiB68z87f37QKD8jAuN7hEKB1gmTAPiCQ+50CrDUQM0cA6zsy+Unu41qmSpUqXOrUApzhnzEUXja7/HUtawj7ilVwUP1z+Uyuo+W6ioascpiTNEf6dTHf/noy+KTRtUxLno8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q40qDfwz; arc=none smtp.client-ip=209.85.221.65
+	 In-Reply-To:Content-Type; b=HAvSIOI1JHI2qGUXRpsEVFfesqLfcyaQ7ZNEpb3oXbaQLWiA0S14D4WRQRF//ZNDh4ObKH7QJ/eRqGSmoXLyPJ3R6qWdDmge6hrKUpEOkfaFGMcnqR8PiFPM5VRrug1OmpO05+KQjjM2bRRW71kTW6aKylnvo7SEDsExy92UJMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tYsinFTu; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so3223153f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 07:42:23 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-455fdfb5d04so12197485e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 07:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752504142; x=1753108942; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1752504210; x=1753109010; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YgT/ZO8DO6Wf1bRdrDifcHYIjUyKTX9Eo/tSV9XIcEY=;
-        b=q40qDfwzSIA14x1r/J2rEkv6K1gxFsLR9g71YzjpsE6p6yyKnDL03XaUeaipq9qbtE
-         sPSscV7zXPXPszZUWxrwFO2bmGXSxRHADAfkUMipJq5vD+gKVUVDzVPI9fX/tAosqAyW
-         9e5VLaDKcTtGFlDJLH8CG+W2sj1fsnVEj5yJP9PqvcMk7KH+2MaeMRSgKRJTsyh0zky+
-         UQSSKm0HPvwQ5EQnxzpi449raR24hCiotmch5uSmR6aZCoU72L4RvO+Y88A/q9YeQpQp
-         eFi3WaqKBvxd/WWVjVI8UX/00lhKz8RDu8qhZo1MfAoQrPkssUCcWq3FDos4k6BkosUC
-         bk0Q==
+        bh=Tkk2ePHatcopmrnLKR6jR3UX6aWlk9GOwUaArm5vOU8=;
+        b=tYsinFTusDPSHTHilP5txIO4lvaxYHJfjN716cxYVJWRH3CwBCjd5ydxPxKwpFURoz
+         DOnwaWkbjaImpLAFrEHcegwJgeVN7NUCAl0mnpkwJOVFFUlopnyhDFawnyLKq0C4e19Y
+         AGTe+KMx31RfXzXmZUBsOxTSygheh08XpUwe11MbZrweRZYS/3bU6MlgXl5uvcZRiG17
+         ac9eeVgabDZQjEzJa/kqLaRskFPRMwM0NDzjR+hz8xQTRVlv9n3iaXestxq6PVe6H0mD
+         bSRYY5BlEanyr2J+X/oXVvdFC/Jd07Yl1jhKbtAhkyIoZ1mHynNGnBSNE0MuysM1kCxB
+         +ydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752504142; x=1753108942;
+        d=1e100.net; s=20230601; t=1752504210; x=1753109010;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YgT/ZO8DO6Wf1bRdrDifcHYIjUyKTX9Eo/tSV9XIcEY=;
-        b=A3mSWXQp2sM7b9+KQ0RrEyUnE5lm5vvusE2Vws5bHd2dhgjEVCG3cX90sqlcDdTUyO
-         W7BfYa0G1kb1FnPN/bd2f8xoTnbvknySQL51vuWYwnFRwqqsO/0vKk+yKWIS5HBHdPot
-         6hLmX7vgdvnHjZ8URpugUSQ1HHYq0xAGkV0SZ+JvyomCKBiHA4MHxYF9UuY3k+cKe7Ap
-         ttkBEQyMRfwDyGvS95KXa+jqO3MRE2DHhBcqhCHJu9ipmHAOin2nlv2hEYi48+InOMFa
-         wDxTub0AzwXHZu0RevSfPvs6sqj+53MrQwJGqfC/3avUr8MY+JeS6F+rs0COMyejElFQ
-         5bXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUItz04Wu0i13lvXCEYMkUvVVyZTMUQn4Rx7Btl4/x6xL5PfyPHIuvp5rPZ1HpS20FaGS/zzVDLppQh1tl1@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywnxu3cwFuY5Jo09ZKE9FNf+64i1FZrVFJ0Uf0qHM+vcYbVBZG+
-	JnkrKPJBaVmN02JaKASYxxMBifcMIrqQD6w0KiAQbnoCCdbIm/AeUX1nKnaXW0ruNjM=
-X-Gm-Gg: ASbGncuWIJvgb+5TxAP5OaOPo+K1NCq4aILjSVDr0Ql1QMDjR/3oLjGWWziweLVt/qX
-	qsVTfZFMvsQvZAkeCQ7ZfIoGZOR/EuXq8nlqQBLpy1BfnN4Ry7LP7I1BXMrrR6zTHnBRtfgm2H7
-	XXE/Rs6ADrgHWbhaigh0DXgT0Yid+wSMdJ+ow039ZL5/2V0PitbDExvCk9MXFeVgUfBSeq3uHqi
-	dhPTIAry+tqzTSxLgv4/bJmbG+ZMSZ4xk5cWnCkPND9ofMpmdegRZ/Vdwqaqtd3byrATJhos5oC
-	qxvL3vQsLBfuZAQvCKaQUeVThIdCzvoRljKAFekg7btqBUzcHhf/yPBHCd5vxKzwHUiuRiuAOB/
-	9nE+m1QSyKx1+I0TPZz98/MJhNRc/+AAJJibJGVrrOiLWBlt4oMNutNry4VtyKPg=
-X-Google-Smtp-Source: AGHT+IEi60GCx6StklZNLN6fInXr5r58gDpnVQSjnfRk5TaJycuEkJOCyklDv2cd+DxYgwPBiYqnHQ==
-X-Received: by 2002:a05:6000:240d:b0:3a5:6860:f47f with SMTP id ffacd0b85a97d-3b5f1c67c67mr12717295f8f.6.1752504141614;
-        Mon, 14 Jul 2025 07:42:21 -0700 (PDT)
+        bh=Tkk2ePHatcopmrnLKR6jR3UX6aWlk9GOwUaArm5vOU8=;
+        b=k6b12IIdGT0OJg6QQBXjcXcF76yMFbKjH4eBeLoFwVRIzgHRhpyRetPiv+YKsMDP+X
+         dOihsXtBcg0bIZtAg+W9ZRSskfUkxbEpfM7uBWwjzO6m91llD0oqV6m+gVu1tw3kdv1y
+         +W2ks7bpJKmzicjUZTYEnPY8QFptoDDqkS28aYG7uuZ5Pfg5oYw2tKNywtZdIBOnkLo9
+         eCRbjJD69lxRno+XI7yUW07KByJOomB6u6ilbxK4lWZPy9hqFdG3CR7iWt8etUIU8LIZ
+         OgG9ovKhS1A6HesuVhgPmw+K1AM9cBHsR7RuFgn/dumANL3bhPGberV+xghLhV34VBpO
+         XQlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCViIQXjbOFKQLIuqK8fQpivhaUXTpjOH6BmYgKMy5HXYQiSdtn1qJwJqY7jWUq6eg2FrnipAgzqL5Fg31qe@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnV9r9wJ6kAicKWAQtzUvbMZ2CePmSTyWL1FL3Af2AeVNwWdmL
+	DlQPMs1WcPtdRk2kRPLlc5LavikZatlRvAV44KmRE8/JvX14LZdvuqICGXsRD5RGZ0M=
+X-Gm-Gg: ASbGncsYjcxmPhjlU+VU1lh76JGiwSV/9RGPppIi/y3SgQ2AZXGgVCTfZJmxgw0vbvN
+	+VaXNt2+Z7thZlKsurOySzF1dBKJi8GHqnwo8k/O/MRlq47sWLs9/To+HiaQG5yhTYZPHNXTm9R
+	uCRyGOYj1Cy1OwNHXHPuVl0BV04B8YN7T9gEoMgEEnuxqYi9wSGfPCEtXroLwd5RLpvx+IRZA+K
+	AOn0X/PSrwH+p5Yr4ZqS8WA3FmYTb9RUOcltc3j0ydNfsejWMbvwNGN29LriOCAutaj9AhefgJ0
+	XNmiszPxjvqTJUZ94nYuwxwFCxJ6TsSuXE/HJ6MDKq5Thwg9Ct6lh0p7YID1fr5VwzxfsA8+HB/
+	uzXOS2lOnEPwfQftXbl2YU+h/YrvByDGoQC/uGdEZwMSA+x9OzzdIBlCbwCgfwYo=
+X-Google-Smtp-Source: AGHT+IEtm3tvKJdmPSDwmiLwsHPDpBMJTkK2dAnaXapIl0i2sB2r0hRgPP5EDIr3l5jWUsMP16oQfg==
+X-Received: by 2002:a05:600c:3e0e:b0:456:2379:c238 with SMTP id 5b1f17b1804b1-4562379c49fmr14225815e9.17.1752504210032;
+        Mon, 14 Jul 2025 07:43:30 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e26ee3sm12845397f8f.96.2025.07.14.07.42.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d5103c2asm171484605e9.33.2025.07.14.07.43.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 07:42:21 -0700 (PDT)
-Message-ID: <01080f5f-f3e6-4989-ac84-766c030dda35@linaro.org>
-Date: Mon, 14 Jul 2025 15:42:19 +0100
+        Mon, 14 Jul 2025 07:43:29 -0700 (PDT)
+Message-ID: <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
+Date: Mon, 14 Jul 2025 15:43:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom: Add MIPI CSI2 C-PHY/DPHY
- Combo schema
+Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
 To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -92,27 +91,28 @@ Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-1-74acbb5b162b@linaro.org>
- <8ed5eeee-78a2-4b26-989f-03676a9e5da7@linaro.org>
+ <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <8ed5eeee-78a2-4b26-989f-03676a9e5da7@linaro.org>
+In-Reply-To: <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 14/07/2025 15:13, Vladimir Zapolskiy wrote:
+On 14/07/2025 15:16, Vladimir Zapolskiy wrote:
+>> +#define DEBUG
 > 
-> There is no ports at all, which makes the device tree node unusable,
-> since you can not provide a way to connect any sensors to the phy.
+> Still under debugging?..
 
-data-ports should go from sensor to the consumer of the data camss/csid 
-not to the PHY.
+oops thanks.
 
-Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
-Documentation/devicetree/bindings/phy/mediatek,mt8365-csi-rx.yaml
-
-https://lore.kernel.org/linux-media/20240220-rk3568-vicap-v9-12-ace1e5cc4a82@collabora.com/
+> Well, the phy should be a multimedia device, and this driver is not
+> the one, thus you can not use it to connect sensors and put the IP
+> into a media pipeline.
+Ah no, I don't agree.
+Please see my previous email.
 
 ---
 bod
+
 
