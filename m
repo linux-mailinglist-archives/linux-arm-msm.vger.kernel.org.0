@@ -1,108 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-64815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7DBFB03EFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:49:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9EA3B03F1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 15:00:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 330101897A9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 12:49:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2700189DC41
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 13:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC026238149;
-	Mon, 14 Jul 2025 12:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32A8B1F4615;
+	Mon, 14 Jul 2025 13:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vowa25Dy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ym3ywdOh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5F61FAC4B;
-	Mon, 14 Jul 2025 12:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01151134A8;
+	Mon, 14 Jul 2025 13:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752497359; cv=none; b=Kqiit943OhWEidzjSXS0kPjbOyAetB4zeFG1IspcAElxTbd+N33YFKt7axDikRbI/VO2jIXWZgcmPVDmP3kd9ZE2v2u3l+g7y8MRsMbdoYTOBym2k5GHPw1rqUIrTJwp9mFbjpLujv91k0d9/dpZAZa9qtE/HHN0jSSrOKu7oO0=
+	t=1752498012; cv=none; b=DKIpsCwa931BnEnT83EekkSCOIjDIMAmd+tFumS2z4Bu9tuiCiNgiBTjkXoJML3iosZtNXmFNsezblwCM2h8Skb5xkFr3W/cRZu973+8hNqXu0v1vkGP99dhEMpLXVt3Acec16tYVHG3WOt0g5h8WhBqZT9Xd5RZ8WsqUR0ZGUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752497359; c=relaxed/simple;
-	bh=N/f33CMuyRsXcRqpNJ4vLf0/iLZImvju1Ttk7ZPo+h0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=IQTVOFlUQ9lFp2PH5kr+YoH01YkVlWh43nH7/bSMCNWjgRKoKbfwyVnnPCOGK10nLgVdH9o5NHJ/IOfy21xm1tRGOKq53Jb453AUAJBB3al4x9p6LrS2noCcuSRLfLhRogIVpgYForqUUzKL6vb1Szf5x/Xk4YbFc7b0UySAmUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vowa25Dy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FD8C4CEF4;
-	Mon, 14 Jul 2025 12:49:15 +0000 (UTC)
+	s=arc-20240116; t=1752498012; c=relaxed/simple;
+	bh=BtCeJNubMO+s3Yq8nd4vAdChWR7E6XXazpcsl4bjxHY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ImdbSwWF3qTa4uffhEuSco/Z02ZVLA9V/s0s6PaGtNLopcvZN7obLp8r8EDriMhDLZtcvl0Jj29Pi0PMkmnKUwk5KfYAMt3M1VBVqv/AKXej4bDBCECb+1qh1YaOqrFBlKfHAVv1tfuhGEGKNmnF5muoJqxCSM3Puux8ozxMGAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ym3ywdOh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868A6C4CEED;
+	Mon, 14 Jul 2025 13:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752497358;
-	bh=N/f33CMuyRsXcRqpNJ4vLf0/iLZImvju1Ttk7ZPo+h0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Vowa25Dyn4V4MtBTE6oPxFRnat/0qvi5nuhad4OSsQmMyoi/kr7GyCyTptTELd1Yt
-	 +wsIy8b/raueJ0wEnmuHhQGQz5M1WvzAcFdnyNNqX2MWMU6yl7TyAaaJ4UMk0m/U1D
-	 wZoXCBBay6R5Mt18mqlOc3edy7oXqvwrfSs0ozKJw5Zf2yfi13BtR2s0WZs2cJ8rAC
-	 scaC3QR4OZgeYlAFMVgk2d3Bl614J1TD0Q/jVfBwEKZW8nRPuLXGxcZlHh8pa5tM9D
-	 6p4H/AbO8JCgoA0o+9WyX2qH8ZZDiixYzTahWnM5F1ArJ0Jfijsc0FSVug+f74XHP7
-	 J2yR9YO0gTHnw==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250711-pm7550-pmr735b-rpmh-regs-v2-0-bca8cc15c199@fairphone.com>
-References: <20250711-pm7550-pmr735b-rpmh-regs-v2-0-bca8cc15c199@fairphone.com>
-Subject: Re: [PATCH v2 0/4] Add RPMh regulator support for PM7550 & PMR735B
-Message-Id: <175249735528.52337.17952107558438792594.b4-ty@kernel.org>
-Date: Mon, 14 Jul 2025 13:49:15 +0100
+	s=k20201202; t=1752498009;
+	bh=BtCeJNubMO+s3Yq8nd4vAdChWR7E6XXazpcsl4bjxHY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ym3ywdOhV85Irh4xn4QTr6jmQGs5Ssi+OI8p6w9nsz0V96ENAy9pUOZ/WnhM1JONt
+	 qnZ5nGI5fDuO9XNSXps4nz3Ev5an/sTriBjHbZGvoxN4HsJzXWYAkX2D9NPjigSdns
+	 TprTkiXHSYg+w/MhqAdwjE03XYENZaUX6bLxIHD7XzSE6P5NGMTLUbvuhDq3vcH/i+
+	 x0KHRuHZjrXA+13KUi3CZM4IJ1GmQ4OSch0FaoycTAW+ZgKQzs3b4/zowQ45sXWtp1
+	 pRk8yisKCS9wPy0O4jp7Y/Qpv/8nYF+hcZNFF45ROCNNH0PQRTpzUlYhHdsJx9IQRD
+	 2YujQGZ+T+U2w==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1ubImq-000000002KX-27E9;
+	Mon, 14 Jul 2025 15:00:04 +0200
+Date: Mon, 14 Jul 2025 15:00:04 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Abel Vesa <abel.vesa@linaro.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint reader
+Message-ID: <aHT_VIKk1kvMgoM4@hovoldconsulting.com>
+References: <20250714-x1e80100-crd-fp-v2-1-3246eb02b679@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-cff91
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250714-x1e80100-crd-fp-v2-1-3246eb02b679@linaro.org>
 
-On Fri, 11 Jul 2025 09:28:38 +0200, Luca Weiss wrote:
-> Document and add support for the regulators on PM7550 and PMR735B, which
-> can be paired with the Milos SoC.
+On Mon, Jul 14, 2025 at 01:48:15PM +0200, Stephan Gerhold wrote:
+> The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
+> multiport controller on eUSB6. All other ports (including USB super-speed
+> pins) are unused.
 > 
+> Set it up in the device tree together with the NXP PTN3222 repeater.
 > 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+> Changes in v2:
+> - Describe all PHYs, also the unused ones (Johan)
+> - Put #phy-cells property last (Johan)
+> - Sort supplies alphabetically (Johan)
+> - Johan suggested dropping output-low, but together with bias-disable this
+>   would leave the line temporarily floating until the driver probes.
+>   Perhaps dropping bias-disable would be better since it shouldn't make a
+>   difference for output-only GPIOs(?), but for now keep it as-is to match
+>   all other X1E devices.
+> - Drop defconfig patch since Bjorn sent a different one that was applied
+> - Link to v1: https://lore.kernel.org/r/20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/4] regulator: dt-bindings: qcom,rpmh: Add PM7550 compatible
-      commit: 729ff4a936c6f3faba78aaa8bc4291b6477c6576
-[2/4] regulator: dt-bindings: qcom,rpmh: Add PMR735B compatible
-      commit: 20a01de0808364c26836cc8f47ed3b59a40a927d
-[3/4] regulator: qcom-rpmh: add support for pmr735b regulators
-      commit: 28758434900ff4c4dce4e104fb5982ef3c0141ba
-[4/4] regulator: qcom-rpmh: add support for pm7550 regulators
-      commit: 3aa47d2ec83316c24e1ed15a492b331802dc6a69
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
