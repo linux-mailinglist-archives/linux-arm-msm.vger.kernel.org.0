@@ -1,174 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-64863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1070B0470A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 20:01:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 692A1B04782
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 20:50:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2034F1A68028
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 18:02:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 246FD3A45B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 18:49:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D516026B754;
-	Mon, 14 Jul 2025 18:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60EFF25E471;
+	Mon, 14 Jul 2025 18:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HF+RSwUp"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Qyu7Fvom"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CB726B740
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 18:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B882253A7;
+	Mon, 14 Jul 2025 18:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752516093; cv=none; b=Iho6QjL3WO0XFEvkbQpp97QzSLmT1cf0NKPXMEzzP9ob5BsL0DQCnDSqlgMvaiV9kelpCn6ngrCFR2Cg9YDjZsFYYRUgtm9ODTJmtj4jLYWDMdk8UECFlmMyLqaiAROJo9zr8OV6caXvNJcqhYXG7WcRfgkL25Gd55DKPgrq8ss=
+	t=1752519002; cv=none; b=asdlwW0ppdWc1DFZmiMfvq57cvfZVBvEEeH34lqOgj7tGhuTLm48EQAjc4yThDTxpYlqNaxn4DxBf/Z8HgZApYJh8KqjPytPbZUKh/j0ilxQWZebsJyJdp+73esp64BNwAoDqG89c4cEPzQImCGme3Lh+a9zeu2vKK2lBhUvEUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752516093; c=relaxed/simple;
-	bh=yYfHim4ZDFsrzpHA8cLfOnvj8+CGJU7yGqRzG3SbZzk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PEBtVv030nVEPMLS5gJK/MuEkq19kHgyQXtHNg4X7RgqXk2f2B6yVlG20W+RW0Aupm2bQS5Bzw1WTlKtyyn062o74r5setLVAQNQtfZ3KYlF6qEPtMUL9w8VVlsoCnFP9DJZsSIz0JwuG+XBgFVNDtVn/LOc9gXDFIjkJyiox+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HF+RSwUp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EADlYB030625
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 18:01:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y5ZBXTqzHXuAvDGIfilsaUyxXa/bYRbG9rx5ykQkTbM=; b=HF+RSwUp/EgXlHd9
-	gyyTeKNzuTRGgR0oHINPP9k7S6F3ECx30/ImVYKxKwLSd5wIF4eKvb22PT+MnsFQ
-	OyBl7TZ+F8pK48/6ft18wwCV5q5XFWx+3JPcvlRDRRI/DBUX4qaPj4znoO+uiAyf
-	aoHK/lZvSjl81rsyXqp36icQdq4sgJFJdG+wsseRQ/c88N6DHgQsxct8cpRuGowu
-	cmssQU07Uu3teZLew6P1PQtW1UhbLijuRW5agtSE4XX/8Xpzx8xPRK964AHmhoJF
-	Ns7uDjVjhYttRR+IMVRZs5JzwnNEd1z07msJSKUXnA9Yc9lmwZTpdpbeHwA/ZVaM
-	LIa8jA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ug37wky9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 18:01:31 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ab5f8c7bf5so47075871cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 11:01:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752516090; x=1753120890;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y5ZBXTqzHXuAvDGIfilsaUyxXa/bYRbG9rx5ykQkTbM=;
-        b=QN3+H4SSkD1L8j0IcEND+DfGLtHQeO7XZkn3CslDk43BCaQvrDNEHyQWmUmO/YLILQ
-         Q1BtUjoHTokpYBtwMHOjV0JOiFxWTeKTvYKCYQXgi5Zg/PiRryn7DLTLBuw9cD59fkH5
-         RDBvm+qMv9OEWYNBIVm4YeglMGtn2wIS26szpBDoLmm1XEBQWUSnSjDAka522hih/sqe
-         2HzUAhYi4xenLYzhJyemjTU0HqPRsdKpBc0MwrAu966Uo/QenR8MvrMlqOvUTlBZqwHl
-         1q1eT4LPhSQwlDa/VtAidGYS/89IKBjc7mzQs2nHlYjiTfQ7bABisYBgJ1KG3zSf1KG+
-         +Ylw==
-X-Gm-Message-State: AOJu0Yz//lg2iBmAgPkvp8RoxGF6ooelWEIgECziSYfGt9ouxO/sNXFS
-	LVAEFkOs/kvpFBan3m7My+2Vov+svjDkpDrR1hf14+qw84mcPgA/PCKwRA0EmJ3kytlH/STjSgI
-	66l2zT/ih6atWGWoZo8ZJevtmREv9q/sohdYCOO2bHJ2cgYyGEMSETOJj8DZWmpa7zV9L
-X-Gm-Gg: ASbGnctq92yeYyQ/5jWUFOGTv0WFMOYRarzZODt76S7ffc6O/gVyL2nsEic1yxgs/Kj
-	txo5tTRY1JaHgPugnRlI1IYLnTUwrRy4WeYOCv81f0gO9nx5F9gRiv1O0MvgnPI97HmLALmwTQD
-	L8H7obXrrqh7EfNgreQSVq11uShrbquvrwwKPs9dHx2x0bShL/7yrb8MVqgEM+GwNrABf3lsKqc
-	q1VcpU5HISOYVag6YWZq9G03xSZn4woIIsPCHtVhssR/MQkz2PUMqFw7aYGdtokBALycPGhITby
-	tUMMWXCJ8z4oY0HUYRHdzMJ1odOw0yXfbvhbAy4cC/c3fCZvW5GiTPfqTIHGBtsodMM=
-X-Received: by 2002:ac8:59d5:0:b0:4a4:3147:41d6 with SMTP id d75a77b69052e-4aa35ca9258mr223138771cf.15.1752516090061;
-        Mon, 14 Jul 2025 11:01:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6b0MscWvlE92Cx4CvPn9GtRvi5uuB/soRmkMj+d2LknE/jSNBX63NnRPdRCVgx58ZHm0dOQ==
-X-Received: by 2002:ac8:59d5:0:b0:4a4:3147:41d6 with SMTP id d75a77b69052e-4aa35ca9258mr223138121cf.15.1752516089476;
-        Mon, 14 Jul 2025 11:01:29 -0700 (PDT)
-Received: from [192.168.1.17] ([120.60.67.95])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab659238a1sm16999381cf.17.2025.07.14.11.01.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 11:01:28 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Date: Mon, 14 Jul 2025 23:31:05 +0530
-Subject: [PATCH 2/2] PCI: qcom: Move qcom_pcie_icc_opp_update() to notifier
- callback
+	s=arc-20240116; t=1752519002; c=relaxed/simple;
+	bh=g/hdVwW4OrDEpaJ2jeOYNUGdpDfpOP3FpqeHfrFX5Q4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UmD3g2W6W3ID2nclMWzHVmTZZXoCPuMIvMnvjsxZenJfoyn8SPjKbTlmofPQLHVK5t7BF+L2Z+pFDShaMZKRXQEEFIvuIMcxWFdu3PgZtRAY3x/jT2j52f37GSfFDtOtb6E3S84xih/dowvfIMI0sNOC9rjulMdEzP3FXqOhg0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Qyu7Fvom; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752519001; x=1784055001;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=g/hdVwW4OrDEpaJ2jeOYNUGdpDfpOP3FpqeHfrFX5Q4=;
+  b=Qyu7FvomqSBeaQc4dV6s/XpHySGK/WmhngPKChdZIiyzTemp/mHHxUQ+
+   wkUT1zRxuQOKWgJCeK80t6lJiUIreM8+T5JWn7zymnULEGtL+GoMKPYr0
+   3CqmBSR5DTzhVd7QgK+90ybNOQv4pHatS+yVpHACHiWFDXQkXDv/0oMMK
+   K8Kbs9EsFFNY32IQ+5PBcEjgCQ8Kv0JZ2Y/UYY6/yt4xurj9wpw9GCuro
+   9B6tiLWAtdmNdOI0CzGppga0ZVaVlnIRjjd7fvaCyaIiFaKQsmXhTTEB8
+   8TyR3yuCDTQ80rNQUbuKhpYD2F+SpgDF5nwxT7zHdtRDtnsYKH0Zx9I+L
+   Q==;
+X-CSE-ConnectionGUID: 4XeZdS7fQ8SsdQOuRx6g3A==
+X-CSE-MsgGUID: Ochzz3YvRC6TT4cjvcy6gA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="66171359"
+X-IronPort-AV: E=Sophos;i="6.16,311,1744095600"; 
+   d="scan'208";a="66171359"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2025 11:50:00 -0700
+X-CSE-ConnectionGUID: n6iP6M2LTgWMCXmgik1TTw==
+X-CSE-MsgGUID: LOJAA0uFQLidXjoFjsHfaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,311,1744095600"; 
+   d="scan'208";a="156651276"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by fmviesa007.fm.intel.com with ESMTP; 14 Jul 2025 11:49:54 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1ubOFM-0009EJ-1n;
+	Mon, 14 Jul 2025 18:49:52 +0000
+Date: Tue, 15 Jul 2025 02:49:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sumit Garg <sumit.garg@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Apurupa Pattapu <quic_apurupa@quicinc.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc: oe-kbuild-all@lists.linux.dev, Harshal Dev <quic_hdev@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
+	linux-doc@vger.kernel.org,
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v6 09/12] tee: add Qualcomm TEE driver
+Message-ID: <202507150221.oWiaX1I9-lkp@intel.com>
+References: <20250713-qcom-tee-using-tee-ss-without-mem-obj-v6-9-697fb7d41c36@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250714-aspm_fix-v1-2-7d04b8c140c8@oss.qualcomm.com>
-References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
-In-Reply-To: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1182;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=yYfHim4ZDFsrzpHA8cLfOnvj8+CGJU7yGqRzG3SbZzk=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBodUXrO3trMEg0+C+vhl63y9bSQVTvQNfatUqV/
- rJgpFgFBx+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaHVF6wAKCRBVnxHm/pHO
- 9VnuB/47R1Dng3M1Ke4uwnMr0UQjqG3/ZNtbTVSJYxDpdS2wzb2CVQ+q6TouVKl/a61XG4nsJ6e
- T2oNSkjXVsyKJM+uztQHO2AWQsUYXbASssBrsGW7UA3SzUhShsraVkdCNT3xhqmjovjjzyvkhNx
- Eu2iT2PjZoZ4haWGAtlTssdd1hrTSJMboaZJDjYxg+8d2tppPQsAKeK6OxxGlVGr6944XwlMPHy
- 6jBNSR9zl89jTMNR61WXou9UKyNiTuZXuQJm+6RFOYLm9gQdAW1MErD4B+Ah4gJfhgnUg2sFyog
- axxNQORipXla0p65sa1aSwcNGyK0ap9RdpsU3xNUZu0qqUu3
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDExNCBTYWx0ZWRfX0IVjEJy8Fu2q
- d9SIMKBiw8Dn3FBff40QVkmpEvJCulyuVVvztMDtMxM+0SxwUmCiFPcesEIPOb3BrNjM3j8Mdb3
- yCErQF/jKfWu/zDIEVtMriwzU84a8zdRFdDOhNafrFCHShZKtBlhNcuy4hSbE75FT0ZLXddTjKQ
- abGkp0t3gwcWA1TMnzVukTCwuMGNfCUna1nkf2d7kiu4L4IcQDjEmV29vCkqqvNdWvAM90jwp7I
- LXcX/izk/FP0fid4FU17kSa2cCNYnhaXt+y8notI3k7eTcyy8dZbNm6KZ0t26rGG/0tl+wRAHI3
- J/YaQz0qo1kHSJNDwQfpI0CWk/YqeVVL7tGfyHTFxJMhvAxMpsfKmDZKEEX3HNthGhKwBDWGq53
- +RPxz89NI2yCXIFlRJtkitpRwcH/gl74riCBBTLzsdj0gDSJ0u07gV1Yq81gdLG8/aYW4h/c
-X-Proofpoint-GUID: erof9PsOynSdD4VJoViuICYRdczYPwmb
-X-Authority-Analysis: v=2.4 cv=SZT3duRu c=1 sm=1 tr=0 ts=687545fb cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=fXYZ39HhpiwvwaHYBd8ing==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=0RnmVqfoT97TjDMFmf8A:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: erof9PsOynSdD4VJoViuICYRdczYPwmb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_02,2025-07-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 mlxlogscore=821 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 spamscore=0 suspectscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507140114
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250713-qcom-tee-using-tee-ss-without-mem-obj-v6-9-697fb7d41c36@oss.qualcomm.com>
 
-It allows us to group all the settings that need to be done when a PCI
-device is attached to the bus in a single place.
+Hi Amirreza,
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+kernel test robot noticed the following build errors:
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index b4993642ed90915299e825e47d282b8175a78346..b364977d78a2c659f65f0f12ce4274601d20eaa6 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1616,8 +1616,6 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_lock_rescan_remove();
- 		pci_rescan_bus(pp->bridge->bus);
- 		pci_unlock_rescan_remove();
--
--		qcom_pcie_icc_opp_update(pcie);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
-@@ -1765,6 +1763,7 @@ static int pcie_qcom_notify(struct notifier_block *nb, unsigned long action,
- 	switch (action) {
- 	case BUS_NOTIFY_BIND_DRIVER:
- 		qcom_pcie_enable_aspm(pdev);
-+		qcom_pcie_icc_opp_update(pcie);
- 		break;
- 	}
- 
+[auto build test ERROR on 835244aba90de290b4b0b1fa92b6734f3ee7b3d9]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Amirreza-Zarrabi/tee-allow-a-driver-to-allocate-a-tee_device-without-a-pool/20250714-085215
+base:   835244aba90de290b4b0b1fa92b6734f3ee7b3d9
+patch link:    https://lore.kernel.org/r/20250713-qcom-tee-using-tee-ss-without-mem-obj-v6-9-697fb7d41c36%40oss.qualcomm.com
+patch subject: [PATCH v6 09/12] tee: add Qualcomm TEE driver
+config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20250715/202507150221.oWiaX1I9-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250715/202507150221.oWiaX1I9-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507150221.oWiaX1I9-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from drivers/tee/qcomtee/qcomtee.h:12,
+                    from drivers/tee/qcomtee/async.c:8:
+   drivers/tee/qcomtee/qcomtee_msg.h: In function 'qcomtee_msg_num_ib':
+>> drivers/tee/qcomtee/qcomtee_msg.h:172:16: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
+     172 |         return FIELD_GET(QCOMTEE_MASK_IB, counts);
+         |                ^~~~~~~~~
+--
+   In file included from drivers/tee/qcomtee/qcomtee.h:12,
+                    from drivers/tee/qcomtee/core.c:14:
+   drivers/tee/qcomtee/qcomtee_msg.h: In function 'qcomtee_msg_num_ib':
+>> drivers/tee/qcomtee/qcomtee_msg.h:172:16: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
+     172 |         return FIELD_GET(QCOMTEE_MASK_IB, counts);
+         |                ^~~~~~~~~
+   drivers/tee/qcomtee/core.c: In function 'qcomtee_object_user_init':
+   drivers/tee/qcomtee/core.c:303:17: warning: function 'qcomtee_object_user_init' might be a candidate for 'gnu_printf' format attribute [-Wsuggest-attribute=format]
+     303 |                 object->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
+         |                 ^~~~~~
+   drivers/tee/qcomtee/core.c: In function 'qcomtee_prepare_msg':
+   drivers/tee/qcomtee/core.c:417:26: error: implicit declaration of function 'copy_from_user' [-Wimplicit-function-declaration]
+     417 |                 else if (copy_from_user(ptr, u[i].b.uaddr, u[i].b.size))
+         |                          ^~~~~~~~~~~~~~
+   drivers/tee/qcomtee/core.c: In function 'qcomtee_update_args':
+   drivers/tee/qcomtee/core.c:496:26: error: implicit declaration of function 'copy_to_user' [-Wimplicit-function-declaration]
+     496 |                 else if (copy_to_user(u[i].b.uaddr, ptr, u[i].b.size))
+         |                          ^~~~~~~~~~~~
+--
+   In file included from drivers/tee/qcomtee/qcomtee.h:12,
+                    from drivers/tee/qcomtee/user_obj.c:10:
+   drivers/tee/qcomtee/qcomtee_msg.h: In function 'qcomtee_msg_num_ib':
+>> drivers/tee/qcomtee/qcomtee_msg.h:172:16: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
+     172 |         return FIELD_GET(QCOMTEE_MASK_IB, counts);
+         |                ^~~~~~~~~
+   drivers/tee/qcomtee/user_obj.c: In function 'qcomtee_cb_params_from_args':
+   drivers/tee/qcomtee/user_obj.c:449:29: error: implicit declaration of function 'copy_to_user' [-Wimplicit-function-declaration]
+     449 |                         if (copy_to_user(params[i].u.ubuf.uaddr, u[i].b.addr,
+         |                             ^~~~~~~~~~~~
+   drivers/tee/qcomtee/user_obj.c: In function 'qcomtee_cb_params_to_args':
+   drivers/tee/qcomtee/user_obj.c:526:29: error: implicit declaration of function 'copy_from_user' [-Wimplicit-function-declaration]
+     526 |                         if (copy_from_user(u[i].b.addr, params[i].u.ubuf.uaddr,
+         |                             ^~~~~~~~~~~~~~
+
+
+vim +/FIELD_GET +172 drivers/tee/qcomtee/qcomtee_msg.h
+
+   169	
+   170	static inline unsigned int qcomtee_msg_num_ib(u32 counts)
+   171	{
+ > 172		return FIELD_GET(QCOMTEE_MASK_IB, counts);
+   173	}
+   174	
 
 -- 
-2.45.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
