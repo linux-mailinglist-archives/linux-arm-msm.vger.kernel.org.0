@@ -1,189 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-64770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13637B0385D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 09:54:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57E0EB038B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 10:05:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 28FA47A3745
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 07:52:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24F2A17AF08
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 08:05:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9784238145;
-	Mon, 14 Jul 2025 07:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98D8623AB8B;
+	Mon, 14 Jul 2025 08:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TwX35vB/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZgZvm7Ec"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0A02367C1;
-	Mon, 14 Jul 2025 07:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680F723A9B1;
+	Mon, 14 Jul 2025 08:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752479634; cv=none; b=r/JUUtIYylbTy4zAwnJFUvC1pRA+6EKUv+Mgxy0Z3N8R+/MDT0y5XkSETn8UxQZBpgkQCQ5ADCNI2YHRMDGPjVsHZxybeIVHNEbcZJpT3gB6cOD0TbfYg/XTXC0N1KgESf89KoSRF7rBMyssvprRCtSZtSnajfLzV3spwRpM8J8=
+	t=1752480293; cv=none; b=fBHWBNG0ij6jdCxJfP0lBmSXsLJGFRCYnLQ28evUNgTrBCqS7Vu/dUGXvPHY+7Q2xyu+cpk9ruiNL8vtInOGdAwKxR/XIawzwiuZbxW8Qfr7VlTm5GIu28TZN46w+uDzVQFVxSebwdqsgo72+EHkzkgKYJIGJNXahyGw59a+eG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752479634; c=relaxed/simple;
-	bh=EE8kkr0IUnVlW8ESpxc+h5LTHH6HWh4qrxPV2gmwsFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2RyeITcKkU207naqoA7UP9g6qeRhP6VCS7LiOc0zol0n5WO/At69Io2XkWXL1T/j6/kHwD9fWrRBYWCyEqfzLV88L+6YF79yNvuGxRqoYEnS61c51tWmRR2g1q9OCnyTXBO9iljAW4xP7myPVfS0HQJd5AhNYGTOFTng8dAUak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TwX35vB/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E67UfU005596;
-	Mon, 14 Jul 2025 07:53:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=8DaG+iuqFRR
-	b030i84DyWG+I1gLa9mmVPm7qSytIl8E=; b=TwX35vB/V6AjnE9y10lag1mSsp3
-	FB9IwOY039LdestoXN07vSBbtLTsWckqP6aWLFp5fSl857KPGNEzimCwIsN8oKs8
-	uTzdaOW6tNPTjgk69XRJOMbyD8ACEzvgar/KlyRNzJa5aTOFBYGxX9zuKEekUJIj
-	cMuHN5ZvyEyuZbSxoV/aznQ7pGMG6bWJYNAQvy3vPfmQJmJO79wAXKuNht0jE12w
-	HlI1T5S/rKlx+GmdGdH3XYLHzhEc/ocNpa/SUi8Rc0JhMzOTqZm1Wj+hmxIMvsTe
-	3qLyfFweomY2BQn79qsJn9Okpx47Cat+EDYA5jf+cDSV7SH0UNdu5RGyGeA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47vvb0ra79-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Jul 2025 07:53:42 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56E7rcjq007494;
-	Mon, 14 Jul 2025 07:53:39 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 47ugskv3sp-1;
-	Mon, 14 Jul 2025 07:53:39 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56E7rcv3007481;
-	Mon, 14 Jul 2025 07:53:39 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 56E7rc6d007499;
-	Mon, 14 Jul 2025 07:53:39 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id D8D2D571872; Mon, 14 Jul 2025 13:23:38 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, bvanassche@acm.org, avri.altman@wdc.com,
-        ebiggers@google.com, neil.armstrong@linaro.org,
-        konrad.dybcio@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V5 3/3] ufs: ufs-qcom: Enable QUnipro Internal Clock Gating
-Date: Mon, 14 Jul 2025 13:23:36 +0530
-Message-ID: <20250714075336.2133-4-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250714075336.2133-1-quic_nitirawa@quicinc.com>
-References: <20250714075336.2133-1-quic_nitirawa@quicinc.com>
+	s=arc-20240116; t=1752480293; c=relaxed/simple;
+	bh=H9kiQECWZOW5ov4j9VoAQjWYSxSJ36A7Y3M4vXz83Ng=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lkDf3E3gMa9FLCIi3SGpLJhWzzgFYe59uxdCIcT+jo8FdiWj4BvF3M+qN07zsHDixcGeNR7YFakCUO7TLqNaQ4lHeTaOevNd4gkGJEALrinwhUiFRIQWQQuGLndgdgrllT8xVvnFVi4B+taAimMjkSdteSbgO0zyZXPEfZAIUD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZgZvm7Ec; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E3DC4CEED;
+	Mon, 14 Jul 2025 08:04:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752480292;
+	bh=H9kiQECWZOW5ov4j9VoAQjWYSxSJ36A7Y3M4vXz83Ng=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ZgZvm7EcBxADHZBQMVcToBi9IJWjthwxrTPdhAE/knyvKBJkroL+lV5qMFJz3wrMA
+	 A4HmA7y1rIf2i3QUgaAIRSXmQ17NnpT5FPyZD7vFLnZ26kC0OFnn43mERJBs9ofwwr
+	 yOdUqvtFjlg4wqotMBl7ccKC+oxc3HTqi/dDF/o8sWlbaN9EkXlRQiEFciSxWkUj2e
+	 jJ3KGix/mc3uzs3L2NXz/xJfFpFgPBgXN6sY6fu173EQiCxvi2dpQTytSHVvGfUI7x
+	 oWdb7O+ohBYxSP05RYHuFCVU/FozUF11ITg+lSUa6b5aZemek9hMYIh4815xVVzdNC
+	 CqzORr7Fxyliw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1ubEB7-00FR6s-FO;
+	Mon, 14 Jul 2025 09:04:49 +0100
+Date: Mon, 14 Jul 2025 09:04:48 +0100
+Message-ID: <8634az9p0f.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	pbonzini@redhat.com,
+	chenhuacai@kernel.org,
+	mpe@ellerman.id.au,
+	anup@brainfault.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	seanjc@google.com,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	willy@infradead.org,
+	akpm@linux-foundation.org,
+	xiaoyao.li@intel.com,
+	yilun.xu@intel.com,
+	chao.p.peng@linux.intel.com,
+	jarkko@kernel.org,
+	amoorthy@google.com,
+	dmatlack@google.com,
+	isaku.yamahata@intel.com,
+	mic@digikod.net,
+	vbabka@suse.cz,
+	vannapurve@google.com,
+	ackerleytng@google.com,
+	mail@maciej.szmigiero.name,
+	david@redhat.com,
+	michael.roth@amd.com,
+	wei.w.wang@intel.com,
+	liam.merwick@oracle.com,
+	isaku.yamahata@gmail.com,
+	kirill.shutemov@linux.intel.com,
+	suzuki.poulose@arm.com,
+	steven.price@arm.com,
+	quic_eberman@quicinc.com,
+	quic_mnalajal@quicinc.com,
+	quic_tsoni@quicinc.com,
+	quic_svaddagi@quicinc.com,
+	quic_cvanscha@quicinc.com,
+	quic_pderrin@quicinc.com,
+	quic_pheragu@quicinc.com,
+	catalin.marinas@arm.com,
+	james.morse@arm.com,
+	yuzenghui@huawei.com,
+	oliver.upton@linux.dev,
+	will@kernel.org,
+	qperret@google.com,
+	keirf@google.com,
+	roypat@amazon.co.uk,
+	shuah@kernel.org,
+	hch@infradead.org,
+	jgg@nvidia.com,
+	rientjes@google.com,
+	jhubbard@nvidia.com,
+	fvdl@google.com,
+	hughd@google.com,
+	jthoughton@google.com,
+	peterx@redhat.com,
+	pankaj.gupta@amd.com,
+	ira.weiny@intel.com
+Subject: Re: [PATCH v13 16/20] KVM: arm64: Handle guest_memfd-backed guest page faults
+In-Reply-To: <CA+EHjTyJGWJ0Pj-jPjriFjy3JHpVUa0PW0vQz4o8UPdLbMV7pg@mail.gmail.com>
+References: <20250709105946.4009897-1-tabba@google.com>
+	<20250709105946.4009897-17-tabba@google.com>
+	<865xfyadjv.wl-maz@kernel.org>
+	<CA+EHjTyJGWJ0Pj-jPjriFjy3JHpVUa0PW0vQz4o8UPdLbMV7pg@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0T95tdQOax3-IbWnxWvgJ6sW7nzDC9w9
-X-Authority-Analysis: v=2.4 cv=B8e50PtM c=1 sm=1 tr=0 ts=6874b787 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=qOmeOml8TDbB3g6YpnoA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 0T95tdQOax3-IbWnxWvgJ6sW7nzDC9w9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA0NSBTYWx0ZWRfX74wabtBR6Izc
- Qdr6vAkv75mHMCUb94X8uV6fn4pBdIY1+euM8FCKziNOKpZTthgc9PAILTK8/ggKNZJuHnjJlvx
- cjm2uN+V5+HujDCt2E3JrxsWmk0IekFFBa2jB+e/X8gb6oQGTvbIWw1nuQpxG2MFPv4WBOSjkJg
- xIRQIR9+AZNfIUaYEychFM5XEkAnK7OXR7AUJjAfI3DbsZuTiCWzbJ1aBcAnzLtBJ2Q1RDKNZIv
- z11pm/1/TpJT5hliDEezTnsJ2LA3fI0owNhO2XM3GB7OQjoflagcpgHGj7A1r+kQNRVjYGrDBP/
- ufiNpOuCmutyRfdVGO+NpRA0Svzh2R3U/MUyJh4ZdRhK0O4hu8N+n36q69Rg8zjeZQRlWIjlKSf
- P1bJb3ZuJggvoh0syYwll3P0ysjWNeM5FvgsA1SOePVJyo6GHukPxpgTc/0JUNLrjcICFPmh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_01,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 bulkscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
- adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507140045
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
+ in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Enable internal clock gating for Qualcomm UFS host controller by
-setting the following attributes to 1 during host controller
-initialization:
-- DL_VS_CLK_CFG
-- PA_VS_CLK_CFG_REG
-- DME_VS_CORE_CLK_CTRL.DME_HW_CGC_EN
+On Mon, 14 Jul 2025 08:42:00 +0100,
+Fuad Tabba <tabba@google.com> wrote:
+> 
+> Hi Marc,
+> 
+> 
+> On Fri, 11 Jul 2025 at 17:38, Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On Wed, 09 Jul 2025 11:59:42 +0100,
+> > Fuad Tabba <tabba@google.com> wrote:
+> > >
+> > > Add arm64 architecture support for handling guest page faults on memory
+> > > slots backed by guest_memfd.
+> > >
+> > > This change introduces a new function, gmem_abort(), which encapsulates
+> > > the fault handling logic specific to guest_memfd-backed memory. The
+> > > kvm_handle_guest_abort() entry point is updated to dispatch to
+> > > gmem_abort() when a fault occurs on a guest_memfd-backed memory slot (as
+> > > determined by kvm_slot_has_gmem()).
+> > >
+> > > Until guest_memfd gains support for huge pages, the fault granule for
+> > > these memory regions is restricted to PAGE_SIZE.
+> > >
+> > > Reviewed-by: Gavin Shan <gshan@redhat.com>
+> > > Reviewed-by: James Houghton <jthoughton@google.com>
+> > > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > > ---
+> > >  arch/arm64/kvm/mmu.c | 82 ++++++++++++++++++++++++++++++++++++++++++--
+> > >  1 file changed, 79 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > > index 58662e0ef13e..71f8b53683e7 100644
+> > > --- a/arch/arm64/kvm/mmu.c
+> > > +++ b/arch/arm64/kvm/mmu.c
+> > > @@ -1512,6 +1512,78 @@ static void adjust_nested_fault_perms(struct kvm_s2_trans *nested,
+> > >       *prot |= kvm_encode_nested_level(nested);
+> > >  }
+> > >
+> > > +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
+> > > +
+> > > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> > > +                   struct kvm_s2_trans *nested,
+> > > +                   struct kvm_memory_slot *memslot, bool is_perm)
+> > > +{
+> > > +     bool write_fault, exec_fault, writable;
+> > > +     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
+> > > +     enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+> > > +     struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
+> > > +     struct page *page;
+> > > +     struct kvm *kvm = vcpu->kvm;
+> > > +     void *memcache;
+> > > +     kvm_pfn_t pfn;
+> > > +     gfn_t gfn;
+> > > +     int ret;
+> > > +
+> > > +     ret = prepare_mmu_memcache(vcpu, true, &memcache);
+> > > +     if (ret)
+> > > +             return ret;
+> > > +
+> > > +     if (nested)
+> > > +             gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
+> > > +     else
+> > > +             gfn = fault_ipa >> PAGE_SHIFT;
+> > > +
+> > > +     write_fault = kvm_is_write_fault(vcpu);
+> > > +     exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+> > > +
+> > > +     if (write_fault && exec_fault) {
+> > > +             kvm_err("Simultaneous write and execution fault\n");
+> > > +             return -EFAULT;
+> > > +     }
+> >
+> > I don't think we need to cargo-cult this stuff. This cannot happen
+> > architecturally (data and instruction aborts are two different
+> > exceptions, so you can't have both at the same time), and is only
+> > there because we were young and foolish when we wrote this crap.
+> >
+> > Now that we (the royal We) are only foolish, we can save a few bits by
+> > dropping it. Or turn it into a VM_BUG_ON() if you really want to keep
+> > it.
+> 
+> Will do, but if you agree, I'll go with a VM_WARN_ON_ONCE() since
+> VM_BUG_ON is going away [1][2]
+> 
+> [1] https://lore.kernel.org/all/b247be59-c76e-4eb8-8a6a-f0129e330b11@redhat.com/
+> [2] https://lore.kernel.org/all/20250604140544.688711-1-david@redhat.com/T/#u
 
-This change is necessary to support the internal clock gating mechanism
-in Qualcomm UFS host controller. This is power saving feature and hence
-driver can continue to function correctly despite any error in enabling
-these feature.
+Ah, sure. We've never seen these anyway in any situation other than
+"I've mutated this kernel so badly it's closer to a hamster".
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h |  9 +++++++++
- 2 files changed, 30 insertions(+)
+Thanks,
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index dfdc52333a96..4bbe4de1679b 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -558,11 +558,32 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-  */
- static void ufs_qcom_enable_hw_clk_gating(struct ufs_hba *hba)
- {
-+	int err;
-+
-+	/* Enable UTP internal clock gating */
- 	ufshcd_rmwl(hba, REG_UFS_CFG2_CGC_EN_ALL, REG_UFS_CFG2_CGC_EN_ALL,
- 		    REG_UFS_CFG2);
+	M.
 
- 	/* Ensure that HW clock gating is enabled before next operations */
- 	ufshcd_readl(hba, REG_UFS_CFG2);
-+
-+	/* Enable Unipro internal clock gating */
-+	err = ufshcd_dme_rmw(hba, DL_VS_CLK_CFG_MASK,
-+			     DL_VS_CLK_CFG_MASK, DL_VS_CLK_CFG);
-+	if (err)
-+		goto out;
-+
-+	err = ufshcd_dme_rmw(hba, PA_VS_CLK_CFG_REG_MASK,
-+			     PA_VS_CLK_CFG_REG_MASK, PA_VS_CLK_CFG_REG);
-+	if (err)
-+		goto out;
-+
-+	err = ufshcd_dme_rmw(hba, DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-+			     DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-+			     DME_VS_CORE_CLK_CTRL);
-+out:
-+	if (err)
-+		dev_err(hba->dev, "hw clk gating enabled failed\n");
- }
-
- static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 0a5cfc2dd4f7..e0e129af7c16 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -24,6 +24,15 @@
-
- #define UFS_QCOM_LIMIT_HS_RATE		PA_HS_MODE_B
-
-+/* bit and mask definitions for PA_VS_CLK_CFG_REG attribute */
-+#define PA_VS_CLK_CFG_REG      0x9004
-+#define PA_VS_CLK_CFG_REG_MASK GENMASK(8, 0)
-+
-+/* bit and mask definitions for DL_VS_CLK_CFG attribute */
-+#define DL_VS_CLK_CFG          0xA00B
-+#define DL_VS_CLK_CFG_MASK GENMASK(9, 0)
-+#define DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN             BIT(9)
-+
- /* QCOM UFS host controller vendor specific registers */
- enum {
- 	REG_UFS_SYS1CLK_1US                 = 0xC0,
---
-2.48.1
-
+-- 
+Without deviation from the norm, progress is not possible.
 
