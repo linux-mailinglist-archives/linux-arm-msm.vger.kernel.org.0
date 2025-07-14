@@ -1,160 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-64840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EA42B04360
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 17:19:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACD10B04373
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 17:20:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 249BC18867C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 15:17:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A5D34E2203
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 15:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0081A25D527;
-	Mon, 14 Jul 2025 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79837261584;
+	Mon, 14 Jul 2025 15:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p0G2je50"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KtpXOjqF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8D823BF9B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 15:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956A8260578
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 15:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752506181; cv=none; b=lvenaDhD59eLrExNqO3+T5m6JNDLwZ0Y+o+wAmi/M2AV29suKMVa+u0GLKK5QharaRGjLbSXNKqC30+0k9IgSyOVE40rgsMVH5cU2X+jjCFi8zDAOpxsaEbPqFg67DuwvRwSBdUy+rWA121/WNE0QiYHxQDna6FSNv7Ik3MSfKM=
+	t=1752506227; cv=none; b=q69cDRVeWOxbPtb2oZfA7QzJxROeERf9LjNjRhjraQwYdeDawm/4m5FGgwDaZW4ZoB1P5Q6beByP+4+P4M9eAg3NdyopNu3jtv5c6F7KqCH1cEgiwclohojifkPSaIA8t98Oh4obrxuGkpxUxyy0DxfiNDuCxxMVrw/M6At66M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752506181; c=relaxed/simple;
-	bh=5SEmN81j++cDBIFvkv9n2aotAYscERc+zZaDKLuEifk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HBCcbrrRG6VETL8R3DWvNA6K4dTJf6SSq17mgksRkIPl3TA0e/8c1Wpz2VEb9j8/JDozXbwlXeCIliG47d9PkAtzlEXuXPv87fwsnOco1R6Qux9lVytpHrmuWkuHMzWOQcDeHlofxGPlVfSJB0QO/FzRkHpKlMzZktYKyo89XKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p0G2je50; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1752506227; c=relaxed/simple;
+	bh=yhMu5T6hzBLMdh1uAFjKTy5PMnMnoPVoGkdLGs7pRlk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dzJvlQ9CaJCvL6hgndqyjaDdzzSC9xic87cn0ZaHUX3PLfyQAavIzrxPM4ZBhfzhhXkAU54WDcDfH2C0rQyhEg5pl4Xnx3HPG/HbHKpiw7DEvwhhSZA1Ji2caBUfi4NH+K1su4duqW0bO3E5y40GuCFSESq+4PZp1FTVgB0jrIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KtpXOjqF; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3b60565d5f4so65738f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 08:16:19 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-455fddfa2c3so21975495e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 08:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752506178; x=1753110978; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=k7sCtPxfaMjoFSfs4MFDmQ8NiKqG4DUPOXp+rPZHPqE=;
-        b=p0G2je50+cYBQD0Pkj3Omw7zDOKtrMxY+oUSCdma8ej/fpywNMvN34RvQlbwJcRpy5
-         REXJS4MM9pSRRHMKQowQcDjJexhYvMB2qq2b7U5uRZJzQXg8H7Ih02D+OEPjEYINbuD3
-         gwlUKLyOEWZkl2n38RbZw7cxjs/RmY5rwys8cdMfziBI9In/kju5YFSrG0CrR4CdoWw1
-         78QLLQ1fL0J4IS0GevGBxBqLxFXMC2dAwn0NDSqL6F8RXC6wOc8UlTVxX7GNPko6TJ8J
-         5uK0CEP3up5CuYuXYJEmOaHwpYw73BJlT61g9/+aXpIztgeMFlk3eJ5nkp2HPKTo3GdT
-         q0bw==
+        d=linaro.org; s=google; t=1752506224; x=1753111024; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xCjJs+mAQ+eyQ0cHltxO4UYluhIlp5Nf/WChKLF+U7U=;
+        b=KtpXOjqFHopRdm0ZMSLVrZJhmkzxVMzQ9+qU6MtRv8/VcP6gEP8Oni3zy6l+Hr1fjT
+         bckbB1+ZTiGUQ3l1PEbxzZ4Eq6/IvNmrrKbsqZcAtNgTMRxlic4fMRgwZdXIQsWcEdvw
+         R4bvAQcZLdAEiMxPyT6P5+LgueyJgQdzfD8JNlyttiDK+KIK09iwRgi1ZsduNt8p//dY
+         cA8CWv501am2lnfdk/4ASV0Mgt4EsoiZ4GB7CKRtMzDkddosdwd4JL7rt2MbBb80gL2o
+         XX8uvibz7RCnpCzhnYn/4ut8WbV2hpa1C8wLyl9TB12Xpcb2aChJnEBiwwuhPrvFGG2n
+         opEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752506178; x=1753110978;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k7sCtPxfaMjoFSfs4MFDmQ8NiKqG4DUPOXp+rPZHPqE=;
-        b=W60apsmOv9v/5W4QcCieB9HK4/NmQ+zFCXXd69jYr6TzZ+bhtCOmPjR/snaTk9bETK
-         vtfpycr24WsPHuGA2CDYKidX7nojWT8V7NbCt6lE2GelkCDafm7KLZzCG6rqqe2srIMw
-         4dqgRdTVYKo9noTjwEmrLU4OSUua3aUD0tCgUmx4Vrx2fsYeTSdaXa3TAouazBUU97L3
-         VFqAmnlc1H0bwXLea75Jlotbd7ysR0oKwP6VRtDQFBzIpUfp2/BazUd3zOF8DglbZ65w
-         hrqOFws9ocA228f8tTQIPSI2VVfMPqQf9v2lhPqtaxeQ4WgINo/vwZIUSkBDti3Nt0iM
-         BE0A==
-X-Forwarded-Encrypted: i=1; AJvYcCVjKtW3AWjqs4zRS6GCecnWB4LvC4CPzia+VyDuj1inR2E1I3rSvPY8Kf4O/p8c6nlSxUQAug6vMYPdUVPZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YypZo7BKsCy+1YtJMfI2lPssFP4vxBYs84uImWjtCyyNrjMrTd/
-	QGFubBdEuVdJo+ZdOkJf3mXU+kP3Go6LCu824E8Z337PFb8ls6Dd1BTpdf9nArkPFW0=
-X-Gm-Gg: ASbGncsSFvKDS5cvZTwTHgIZ5S2BuXWWEa9Js0+T7E4ksxE2rdVOMLRRZPj4P+VlCGY
-	CzmcWA7bNyaMAX1yEn5r7c82Zuj5x/YRHUqBaobhzcoAwbpIosS1bz6mxUk2j8HUUg/uN9A2/MD
-	OtnVOhqdlxTOFhoVG9SArnQDcP98iQ8pUgjED0GxMDKBsDgHTljPwfKMYwtWiMDIX6oTXtzXr32
-	8dCeVlaMYqeptOoV5WLibfk+ICFlohGr8yLZxALHErhhkPRTAQ/4ZRyKVxVB+SRrspPf+KOOOFb
-	5gqyxagJdjl8kNoj4FgoywGOTZ71Q8UCr3sSOvQlXnvYfiVhiLpcBMiYEVulp1uMn/HqxDJxkRM
-	l5dCwrKx6AUdpkstP4uB4qWywNeF507Xmabk=
-X-Google-Smtp-Source: AGHT+IHpL4WiPXA7lF0M3FZSr+pRwaq/mQ+o86j3tdbjJ+F9gQ68S3X3x2/bhMtUi+hXfsOAWMSEsg==
-X-Received: by 2002:a05:6000:410b:b0:3a5:7875:576 with SMTP id ffacd0b85a97d-3b5f1890dc7mr3123868f8f.1.1752506177716;
-        Mon, 14 Jul 2025 08:16:17 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8dc2464sm12970388f8f.38.2025.07.14.08.16.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 08:16:17 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: bryan.odonoghue@linaro.org,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH] media: iris: MAINTAINERS: Document actual maintainership by Bryan O'Donoghue
-Date: Mon, 14 Jul 2025 17:16:10 +0200
-Message-ID: <20250714151609.354267-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1752506224; x=1753111024;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xCjJs+mAQ+eyQ0cHltxO4UYluhIlp5Nf/WChKLF+U7U=;
+        b=dzD2hlCavMumCdf/hm5T9oZ3WxLd0UAEic8WBZGhfKhsLd5wJmT3KadPh+01hmtWfp
+         FS/1lAbXl4RZ54Qxc95Qmk9BxP8n8q9Lg8gi0qGd+rnZH6Ly6CJF8afuq5UzI24Zw9P2
+         e6ErXYMI7491FhVYf/3isN08AeE0EyX+6e8wAX/U0qqLjdS4KWO0N3R+HAl96OVcJLmg
+         Iwc0ufbR0JD+aONcbgWae2hcO8YSo0wGrDphUUrngrMS8M7f4ofqwltZzar8HtXFmYwK
+         4GOdN9aCVX6FE3eg01svILTI3GmgL3N4ZRslagH3NGibxPyka4giMFvGwb+F/Vd5p2l7
+         djEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcarL+R56sthOF1CiKB4ONEZITBfF7bR6LNsmQQE7rCTa0lL0vKwuxLRZg5t6XidMgshEECb29BXkc7BmL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXzPMBklIy5nZoBjczOAwC/Bsw3ujkoJJ5MzES6P8+23Rfb8XD
+	ocH5wOCgYK0Nd3eEq4tI1RBlmtGz8JSd5X4ZmZWdCW6f3wQBaTZkyf2wqqAixF6Vqas=
+X-Gm-Gg: ASbGncvt7PY2RKjmN8xjHMEAcbcUXZQU72KMaf98mrp67qEdZAhpuQ0NNh9xHRn1xYx
+	7qm4Xdw3JZbMfrMNTZ2G2SGpGD55ryYTQcfdmObk3U8mbC0DaNOqSxJnYXUycjsqYqtPfm7/DDU
+	bHPF3Hr1NmDkq029WbjVUy+awajynwFDSHNA+xW03gw+4TZiS/Hz+DCzfiTF5gqF1Wwci035hSU
+	y3A1cGFZJscG1/uNgPyLmPkQ23KXC0lIBcRVgC66tNgillzDGWv7Qfg8zM9lzOI4sHftxn3KUP4
+	2eqOPZGgfnaceJx1A1FzGxGEUtZtKnsMovhB2fijq04KORW2vnza5a+bEsYAYILHSg5jzB133/J
+	mrjoOvAgd7k6oVfXx2V0RY5PNx8D0Xsa09ver6IUON6IusTv88PmHmBhaVdzOOuI=
+X-Google-Smtp-Source: AGHT+IEpin0kK7Y62+zwW4eiqts/4lq2fhVPTieQctRVVCnIYpoH+CSOCtblJicWaiIjBRT5U9/Y+A==
+X-Received: by 2002:a05:600c:c096:b0:441:a715:664a with SMTP id 5b1f17b1804b1-455e7890b03mr75864705e9.20.1752506223867;
+        Mon, 14 Jul 2025 08:17:03 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454dd540b52sm135696755e9.28.2025.07.14.08.17.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Jul 2025 08:17:03 -0700 (PDT)
+Message-ID: <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
+Date: Mon, 14 Jul 2025 16:17:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1945; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=5SEmN81j++cDBIFvkv9n2aotAYscERc+zZaDKLuEifk=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBodR85KovBs9Byw5IM3Ko1TPG7MkwoC4nasQNwZ
- S91rcu8eeGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaHUfOQAKCRDBN2bmhouD
- 175eD/0QEl43ZipiEU/g+okr5EbElD01rJ7qQvSMis8Mzn0HeZVPm/S+WFVVLhiUE0OTyMSH1TR
- JvNkX8tLNPBQI+kuh9q5vDEEtIfhbZYF7DG7n1EWPoykST725tMcdVKdTO4ayNbGO9uD4ZOggMT
- r5567tq+S+D5it9prHYoCMVd5O7W6ScHnrpRUsUk9lEtIvdZYaG5ZOq2/iG3acmPVrifkmmeB4e
- 4eMtljOXC5fFo4H6xRSGDfXvTpVpfk3gzgwoSkmvXKGaMTC82HsEYXH//6Odwhm0tnB6vRNXnZ2
- cqs3xT7bwdOPyDho38csJuTju8d8CvM7uqQoP/T8KT+KrXdyi0DFpb3/dNgBdp09HT3Pk+QHLIq
- SCtHzRejs5v2DOm6k7ZR8WjT6Cxd0B5yIQ8/zCVYKe/SyUy2h8cuY0UQKuDfpLkUmdW6fMX7dmZ
- CRyfueVtw1CkZ4aHRgpwv3OOdDE9ZsvyRz93acmJX3rQaHB6+ecPGNlLX/Zz/oi6y12aWlJsnWK
- lbhKQaOHI4gSOEsYHlUuyXVl4w4HoALVKqeQcEJcpfSH0fN2I/+eRcTbc6w6AaxjcDwHaxmo0X6
- Aij1ssTPItb/AEQ1Xr0EiYwlWanzHEsZB3Pj+q/uHqMZbP7vVUkGkbCbbkDdCy9CBDyBy2LstEG +8Ee1VYHQcguHNA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
+To: Vladimir Zapolskiy <vz@mleia.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
+ <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
+ <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Bryan O'Donoghue reviews and applies patches for both Iris and Venus
-Qualcomm SoC video codecs (visible in git log as his Signed-off-by and
-in pull requests like [1]), so he is de facto the maintainer responsible
-for the code.  Reflect this actual state my changing his entry from
-reviewer to maintainer and moving the entry to alphabetical position by
-first name.
+On 14/07/2025 15:58, Vladimir Zapolskiy wrote:
+> 
+> This proposed device node scheme does not solve the known and already
+> discussed technical issue expectedly, namely there is no given way
+> to describe a combo mode hardware configuration, when two independant
+> sensors are wired to the same CSIPHY. This is an unsolvable problem
+> with this design.
 
-[1] https://lore.kernel.org/linux-media/20250630121704.260831-1-bod@kernel.org/T/#u
+I think that is genuinely something we should handle in camss-csid.c 
+maybe with some meta-data inside of the ports/endpoints..
 
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Sensors are conneced to CSIPHY IP blocks, CSIPHY is connected to CSID.
+My understanding of best practice is data-endpoints go into the consumer 
+not the PHY.
+
+These are PHYs with their own SoC pins and voltage rails. They should 
+look like other PHYs in qcom and across DT, IMO.
+
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 40831ae42296..f56e40d9b3c7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20678,10 +20678,10 @@ F:	Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
- F:	drivers/regulator/vqmmc-ipq4019-regulator.c
- 
- QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
-+M:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
- M:	Vikash Garodia <quic_vgarodia@quicinc.com>
- M:	Dikshita Agarwal <quic_dikshita@quicinc.com>
- R:	Abhinav Kumar <abhinav.kumar@linux.dev>
--R:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
- L:	linux-media@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-@@ -20750,9 +20750,9 @@ F:	Documentation/devicetree/bindings/usb/qcom,pmic-*.yaml
- F:	drivers/usb/typec/tcpm/qcom/
- 
- QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
-+M:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
- M:	Vikash Garodia <quic_vgarodia@quicinc.com>
- M:	Dikshita Agarwal <quic_dikshita@quicinc.com>
--R:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
- L:	linux-media@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
--- 
-2.43.0
-
+bod
 
