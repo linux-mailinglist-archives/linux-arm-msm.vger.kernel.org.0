@@ -1,82 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C48CB0414F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:19:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32B99B04202
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:42:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5BAB18936FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:18:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 678CB3B1DDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:42:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03F5025A2A2;
-	Mon, 14 Jul 2025 14:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEC925744D;
+	Mon, 14 Jul 2025 14:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EpD1CUUy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q40qDfwz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45891FBE8A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 14:16:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402062571BE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 14:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752502613; cv=none; b=h2P71AFyPtLqFmbFFN/w3BfuVQ2Btmr5pwhi5HxGC3Z1UomOOp3R4rBmd8biNlo2cn2FBPxkjlecgJKxEAHHP35mosAg9zc3oPFRia2hKn+2g08TN7NSRj/5L6DNxaW7ibGbRmvEunC2sEOOBbCltuDTeALz98riCowVsKE/S4E=
+	t=1752504144; cv=none; b=mcZmJNVc4dRjGRWvH+9OyRjpg8ze9palW1+0wMFndNTZx3Qzrk3efct2PwYBVSIdzcZm+TtZREo+YKd0j7if6Q7WuVBuNrIguDpdMBCOQsVsjcuarPUBSiAbS5TDptExsjCglS/XH+kSpt08iorGd5BpDJW3ThrYWUBXnAp22Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752502613; c=relaxed/simple;
-	bh=Lq4V4cI9f+RGqhTnj9OGNLQCB5/+4U22BJ53BLS03q4=;
+	s=arc-20240116; t=1752504144; c=relaxed/simple;
+	bh=I7Pxnln1BUjfe7HcY5t1QvJulXfLwXmFHrmFWRkwVbs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZG2O37rO+2i1YRCmdzfMD77kZfMP0ma+ULRQ0bK1REY5U9HNlsA8KVTO3JPJxw11vo81rJJgGVpRqqdrq0O7tcNPLhJoU/CgyTf8TuGvVbwk5EiVpu9zuKJeslnsBQT0WmWxIsoJnhGaftDLlqmU5dArG70r/3MzY+w/dbnbLBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EpD1CUUy; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:Content-Type; b=pXh9aJEDDvZVIDeAAdSk7CnPvCDVMbZIQ6+qVSxiB68z87f37QKD8jAuN7hEKB1gmTAPiCQ+50CrDUQM0cA6zsy+Unu41qmSpUqXOrUApzhnzEUXja7/HUtawj7ilVwUP1z+Uyuo+W6ioascpiTNEf6dTHf/noy+KTRtUxLno8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q40qDfwz; arc=none smtp.client-ip=209.85.221.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-558f7fc9d7fso182489e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 07:16:50 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so3223153f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 07:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752502609; x=1753107409; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1752504142; x=1753108942; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cI2qt4NB/mo+O9FErgJgDmsE0AmvcZBo4EL9xQ0SmF0=;
-        b=EpD1CUUyhZcbiDg21XQm6OUmXg9nVFV7t0dcqQht5lnyyyL58ut77Pwj8dVUG+Q3x/
-         kaIKK6WP3copDX8eyMGkX5eTXdZJMiPPZD7/z8iV/NW0/rzMpqeRM+lCDPoIu+ZTnF0w
-         JOVKOSBFFpK9uQ1JMUzlGKOI2VezXDI7gNP6sfaYAEpeJJpFO1szhh6rgNltAZzJL7RO
-         LfN6Qm5EdEHYNZE0cLIAE+emD327dc1tK/GP4LSPM/oxMDtYt7k0I/Mbfo3vybEW4Gda
-         DiDsdj9FDnqfK0HQPOB/fJGj304NiQBcD4pz6HljL+RxZIp+2YFBGODGLlFVuuTW3H04
-         okcA==
+        bh=YgT/ZO8DO6Wf1bRdrDifcHYIjUyKTX9Eo/tSV9XIcEY=;
+        b=q40qDfwzSIA14x1r/J2rEkv6K1gxFsLR9g71YzjpsE6p6yyKnDL03XaUeaipq9qbtE
+         sPSscV7zXPXPszZUWxrwFO2bmGXSxRHADAfkUMipJq5vD+gKVUVDzVPI9fX/tAosqAyW
+         9e5VLaDKcTtGFlDJLH8CG+W2sj1fsnVEj5yJP9PqvcMk7KH+2MaeMRSgKRJTsyh0zky+
+         UQSSKm0HPvwQ5EQnxzpi449raR24hCiotmch5uSmR6aZCoU72L4RvO+Y88A/q9YeQpQp
+         eFi3WaqKBvxd/WWVjVI8UX/00lhKz8RDu8qhZo1MfAoQrPkssUCcWq3FDos4k6BkosUC
+         bk0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752502609; x=1753107409;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1752504142; x=1753108942;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cI2qt4NB/mo+O9FErgJgDmsE0AmvcZBo4EL9xQ0SmF0=;
-        b=FuBcE/hdUTj6OyHL8XqJJqKfl/9dGfK6+2Nz5Et0RtUwm8mTqcLqm5lFjdw/6n3kpN
-         +LO80KaYDA4tr4IZ9MO1ys/yjOaV3dqKnmm7WlkY9W8hrORePM5RhCuz9NCi7YvLmvQa
-         Yzbb7dIGCsQ0uTTgx65I3hCVdkEFKSS0ZuaTJ06gYpD0AicP+HhFY4dpVId48bQSW5b8
-         s1nkQ5aBPOHRXLuJfy9kdCtT1xWeTkFVE0YsiInb02+9sxq2YOwCCgApP+omeNaPN8cX
-         f07WJD4Qfh0xoJ7WEJ8x1nZHVrKg7qSepVd46Q9yrRHH1YD6MgGz3QTh2NL4AIVduSH2
-         6Mkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZzIRM3knAHETlDfMDY7woBVJ7JALaca2j2ujI6IB+DBvnYW5E5a0eyGzcDEWC36jrJQq7l/MtzCxRD1H0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvI2schvzTc0V1xDomU5o7tv5rssMY8YmPCtPjMZjvbEEzsPKu
-	KBiTCt4AGrFz4b5o1QMAWI7ijUOTsKAQ0389gstLzF7/llCHw5BxolkDrU6gRoCZdiVSMUFbH2k
-	BH4RS
-X-Gm-Gg: ASbGncs5ys1NeolTnRJhxBx9uzo7pKDuLkBmDS38fqhIDszAYnDdGRuKluUcKN6l5ka
-	GWE0wngVR72VlAGoRf6jIgqZQB3Y/yYpOWaCp1Ua2HjR0eB58QQywXmZwTpVBBdAkAgeYOXQjOe
-	qVXaahONUYqZIHrB+8wtESJSaBDUtq1gJSa3yFEcWthLNgnI5XU1bAko1If7bqUZGIhpPAIcd0W
-	W8veAPHLmmS4azPDMeoosIp+4BvKGu31+tHhHwp9l3l0f2FLWJyi3PpJgGYsmSMAmPYyoKqmWna
-	MMhYlPJZrmxMGGuqlV0a44o5fTyIgkYxgKIXKnRnc6yam3H3boiPyCuJtTS8PZ/voeupC9iRdG6
-	badgrUecBFfKB07/I1JoYkIzNNz9Lpbj+0hK3XpDB5cO9L4Ta8uAIcbUhtSMekAD201rdhEl61n
-	J9
-X-Google-Smtp-Source: AGHT+IGTRrIlX7t9ZryRjbDW/jQgLD10lUwwmpwKvz9xBujx9a/Ky++DAJpYUrrJvDtsrPqoHdxBsQ==
-X-Received: by 2002:a05:6512:1293:b0:558:f60d:d4a1 with SMTP id 2adb3069b0e04-55a048faf48mr1262310e87.5.1752502608759;
-        Mon, 14 Jul 2025 07:16:48 -0700 (PDT)
-Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55943b60737sm1957066e87.156.2025.07.14.07.16.47
+        bh=YgT/ZO8DO6Wf1bRdrDifcHYIjUyKTX9Eo/tSV9XIcEY=;
+        b=A3mSWXQp2sM7b9+KQ0RrEyUnE5lm5vvusE2Vws5bHd2dhgjEVCG3cX90sqlcDdTUyO
+         W7BfYa0G1kb1FnPN/bd2f8xoTnbvknySQL51vuWYwnFRwqqsO/0vKk+yKWIS5HBHdPot
+         6hLmX7vgdvnHjZ8URpugUSQ1HHYq0xAGkV0SZ+JvyomCKBiHA4MHxYF9UuY3k+cKe7Ap
+         ttkBEQyMRfwDyGvS95KXa+jqO3MRE2DHhBcqhCHJu9ipmHAOin2nlv2hEYi48+InOMFa
+         wDxTub0AzwXHZu0RevSfPvs6sqj+53MrQwJGqfC/3avUr8MY+JeS6F+rs0COMyejElFQ
+         5bXw==
+X-Forwarded-Encrypted: i=1; AJvYcCUItz04Wu0i13lvXCEYMkUvVVyZTMUQn4Rx7Btl4/x6xL5PfyPHIuvp5rPZ1HpS20FaGS/zzVDLppQh1tl1@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywnxu3cwFuY5Jo09ZKE9FNf+64i1FZrVFJ0Uf0qHM+vcYbVBZG+
+	JnkrKPJBaVmN02JaKASYxxMBifcMIrqQD6w0KiAQbnoCCdbIm/AeUX1nKnaXW0ruNjM=
+X-Gm-Gg: ASbGncuWIJvgb+5TxAP5OaOPo+K1NCq4aILjSVDr0Ql1QMDjR/3oLjGWWziweLVt/qX
+	qsVTfZFMvsQvZAkeCQ7ZfIoGZOR/EuXq8nlqQBLpy1BfnN4Ry7LP7I1BXMrrR6zTHnBRtfgm2H7
+	XXE/Rs6ADrgHWbhaigh0DXgT0Yid+wSMdJ+ow039ZL5/2V0PitbDExvCk9MXFeVgUfBSeq3uHqi
+	dhPTIAry+tqzTSxLgv4/bJmbG+ZMSZ4xk5cWnCkPND9ofMpmdegRZ/Vdwqaqtd3byrATJhos5oC
+	qxvL3vQsLBfuZAQvCKaQUeVThIdCzvoRljKAFekg7btqBUzcHhf/yPBHCd5vxKzwHUiuRiuAOB/
+	9nE+m1QSyKx1+I0TPZz98/MJhNRc/+AAJJibJGVrrOiLWBlt4oMNutNry4VtyKPg=
+X-Google-Smtp-Source: AGHT+IEi60GCx6StklZNLN6fInXr5r58gDpnVQSjnfRk5TaJycuEkJOCyklDv2cd+DxYgwPBiYqnHQ==
+X-Received: by 2002:a05:6000:240d:b0:3a5:6860:f47f with SMTP id ffacd0b85a97d-3b5f1c67c67mr12717295f8f.6.1752504141614;
+        Mon, 14 Jul 2025 07:42:21 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e26ee3sm12845397f8f.96.2025.07.14.07.42.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 07:16:48 -0700 (PDT)
-Message-ID: <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
-Date: Mon, 14 Jul 2025 17:16:46 +0300
+        Mon, 14 Jul 2025 07:42:21 -0700 (PDT)
+Message-ID: <01080f5f-f3e6-4989-ac84-766c030dda35@linaro.org>
+Date: Mon, 14 Jul 2025 15:42:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,9 +82,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom: Add MIPI CSI2 C-PHY/DPHY
+ Combo schema
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
@@ -94,136 +92,27 @@ Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-1-74acbb5b162b@linaro.org>
+ <8ed5eeee-78a2-4b26-989f-03676a9e5da7@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <8ed5eeee-78a2-4b26-989f-03676a9e5da7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/10/25 19:16, Bryan O'Donoghue wrote:
-> Add a new MIPI CSI2 driver in D-PHY mode initially. The entire set of
-> existing CAMSS CSI PHY init sequences are imported in order to save time
-> and effort in later patches.
+On 14/07/2025 15:13, Vladimir Zapolskiy wrote:
 > 
-> In-line with other PHY drivers the process node name is omitted from the
-> compat string while the soc name is included.
-> 
-> At the moment we follow the assignment of lane positions - the bitmap of
-> physical input lanes to logical lane numbers as a linear list per the
-> existing DPHY @lanes data-member.
-> 
-> This is fine for us in upstream since we also map the lanes contiguously
-> but, our hardware can support different lane mappings so we should in the
-> future extend out the DPHY structure to capture the mapping.
-> 
-> The Qualcomm 3PH class of PHYs can do both D-PHY and C-PHY mode. For now only
-> D-PHY is supported.
-> 
-> In porting some of the logic over from camss-csiphy*.c to here its also
-> possible to rationalise some of the code.
-> 
-> In particular use of regulator_bulk and clk_bulk as well as dropping the
-> seemingly useless and unused interrupt handler.
-> 
-> The PHY sequences and a lot of the logic that goes with them are well proven
-> in CAMSS and mature so the main thing to watch out for here is how to get
-> the right sequencing of regulators, clocks and register-writes.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   MAINTAINERS                                        |  11 +
->   drivers/phy/qualcomm/Kconfig                       |  11 +
->   drivers/phy/qualcomm/Makefile                      |   6 +
->   drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c | 491 +++++++++++++++++++++
->   drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c     | 281 ++++++++++++
->   drivers/phy/qualcomm/phy-qcom-mipi-csi2.h          | 101 +++++
->   6 files changed, 901 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1ef99240a57ed1ad0d4501998970c7c3b85d3b81..69519e2d6dfb65771a3245735283645bb50a249a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -20536,6 +20536,17 @@ S:	Maintained
->   F:	Documentation/devicetree/bindings/media/qcom,*-iris.yaml
->   F:	drivers/media/platform/qcom/iris/
->   
-> +QUALCOMM MIPI CSI2 PHY DRIVER
-> +M:	Bryan O'Donoghue <bod@kernel.org>
-> +L:	linux-phy@lists.infradead.org
-> +L:	linux-media@vger.kernel.org
-> +L:	linux-arm-msm@vger.kernel.org
-> +S:	Supported
-> +F:	Documentation/devicetree/bindings/phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml
-> +F:	drivers/phy/qualcomm/phy-qcom-mipi-csi2*.c
-> +F:	drivers/phy/qualcomm/phy-qcom-mipi-csi2*.h
-> +F:	include/dt-bindings/phy/phy-qcom-mipi-csi2*
-> +
->   QUALCOMM NAND CONTROLLER DRIVER
->   M:	Manivannan Sadhasivam <mani@kernel.org>
->   L:	linux-mtd@lists.infradead.org
-> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> index ef14f4e33973cff4103d8ea3b07cfd62d344e450..d0ab70827519c2b046d0fb03c14bb4d8ae2ec9a1 100644
-> --- a/drivers/phy/qualcomm/Kconfig
-> +++ b/drivers/phy/qualcomm/Kconfig
-> @@ -28,6 +28,17 @@ config PHY_QCOM_EDP
->   	  Enable this driver to support the Qualcomm eDP PHY found in various
->   	  Qualcomm chipsets.
->   
-> +config PHY_QCOM_MIPI_CSI2
-> +	tristate "Qualcomm MIPI CSI2 PHY driver"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on OF
-> +	depends on COMMON_CLK
-> +	select GENERIC_PHY
-> +	select GENERIC_PHY_MIPI_DPHY
-> +	help
-> +	  Enable this to support the MIPI CSI2 PHY driver found in various
-> +	  Qualcomm chipsets.
-> +
->   config PHY_QCOM_IPQ4019_USB
->   	tristate "Qualcomm IPQ4019 USB PHY driver"
->   	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-> index 3851e28a212d4a677a5b41805868f38b9ab49841..67013d27cb0387b9d65dcbe030ea6e5eaaabbe91 100644
-> --- a/drivers/phy/qualcomm/Makefile
-> +++ b/drivers/phy/qualcomm/Makefile
-> @@ -5,6 +5,12 @@ obj-$(CONFIG_PHY_QCOM_EDP)		+= phy-qcom-edp.o
->   obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
->   obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
->   obj-$(CONFIG_PHY_QCOM_M31_USB)		+= phy-qcom-m31.o
-> +
-> +phy-qcom-mipi-csi2-objs			+= phy-qcom-mipi-csi2-core.o \
-> +					   phy-qcom-mipi-csi2-3ph-dphy.o
-> +
-> +obj-$(CONFIG_PHY_QCOM_MIPI_CSI2)	+= phy-qcom-mipi-csi2.o
-> +
->   obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
->   
->   obj-$(CONFIG_PHY_QCOM_QMP_COMBO)	+= phy-qcom-qmp-combo.o phy-qcom-qmp-usbc.o
-> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..1a99efee88cc94ec0d29a335cd29f88af8a00c02
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
-> @@ -0,0 +1,491 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * camss-phy_qcom_mipi_csi2-3ph-1-0.c
-> + *
-> + * Qualcomm MSM Camera Subsystem - CSIPHY Module 3phase v1.0
-> + *
-> + * Copyright (c) 2011-2015, The Linux Foundation. All rights reserved.
-> + * Copyright (C) 2016-2025 Linaro Ltd.
-> + */
-> +#define DEBUG
+> There is no ports at all, which makes the device tree node unusable,
+> since you can not provide a way to connect any sensors to the phy.
 
-Still under debugging?..
+data-ports should go from sensor to the consumer of the data camss/csid 
+not to the PHY.
 
-Well, the phy should be a multimedia device, and this driver is not
-the one, thus you can not use it to connect sensors and put the IP
-into a media pipeline.
+Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
+Documentation/devicetree/bindings/phy/mediatek,mt8365-csi-rx.yaml
 
--- 
-Best wishes,
-Vladimir
+https://lore.kernel.org/linux-media/20240220-rk3568-vicap-v9-12-ace1e5cc4a82@collabora.com/
+
+---
+bod
 
