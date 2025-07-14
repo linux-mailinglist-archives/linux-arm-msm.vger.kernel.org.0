@@ -1,291 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-64849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64690B04564
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 18:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 376CEB0457D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 18:31:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CF031894DA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:22:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B23471A633AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:31:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 322F7260566;
-	Mon, 14 Jul 2025 16:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3880260566;
+	Mon, 14 Jul 2025 16:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZNCyfc9s"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KquCpFec"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1972E36F0;
-	Mon, 14 Jul 2025 16:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309172459D7;
+	Mon, 14 Jul 2025 16:31:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752510112; cv=none; b=oH7X59znjKMsM0IEF0u1vh1jxtLOm5mFPHx3OG6a8x9P8JXR324GqvhozROm1X2xL+6TMZ3dNgGk4NKBTifrta5CCYKov3W51mEjzUAjVVVAEbWEk5u63Kv9l/mOW165Ek0j3p2u3PnTvKZ0g2OnEBHv3n0TP9FUuprU8zzeiAc=
+	t=1752510667; cv=none; b=ZUHsN1DGJjqAc08Y1TB8x6i2WTCVfg3SjEuOKuqNhhrnutVLWNC11z44EzkXqE1zlUE44IOp5UqsLwsLypG5tUe4u2hgSkiqYoM/wOhuUJWE0EhqhdhTkYn0mWk7CwG9oTFUA+pUD1xJQaOxGAKARCAErlqh4FZDGPbPH+VhgZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752510112; c=relaxed/simple;
-	bh=YcV3byt1U7frnFLmxCgCgYh1+h2W/do8oYP1fwRldHg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=E2l8VVulDxu3BBvuw7O+XOrjGRsO9oHSNl9CMuZ+oAXMDJ2RvZlR1Dg/flJX3ofmsZ/vvnuWMSMA7J7mm05KGxHD6MAjk5kxBGdsB0aN9K+QfhGA/4MUvsitASe0e2F0wElV7qiBzXYfnuG33jUUqQg3uNyR2Gb/gAV+9xvNzus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZNCyfc9s; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1752510667; c=relaxed/simple;
+	bh=tFfM0hDJcCZvahEFei2hiOVroZttDJK94ipLxDSFX5k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bU++GnVkKBtm8amB2KzOuP2v1B42MGPHLa8FWricy9+W3iXgVVw5+znpnwZ9Xp0jgyI7cS1/KRmwVXFGbVRz9SYpCmjNkJCCZkKpf8WOx7PvBXfKL6to5B6xvWxW8oVRp7YBZjCsYdUck0o9ihUO4aWO9TVxUlkV9mwYiOxy7WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KquCpFec; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EA3DAF004347;
-	Mon, 14 Jul 2025 16:21:45 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EGROpC022077;
+	Mon, 14 Jul 2025 16:31:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LAj7hQQ8Nx+fzicQ6zVl4CM3vrP5r4QvIDVJMdtHIOU=; b=ZNCyfc9stRj8lyAy
-	vUJKA42nIJYIDSJVIaRXiIRHJcrGj2+3bp5Et17cq/WdTYmLPdsp042/p+HRKUTj
-	emNCXUKNDwEBIzpjr0wHNSMJfulV/C6P4sCqXDRGqjODzFHCKuNpER9YcLGeIXm7
-	HRcDjJhCxMM/v2isly9w9ZIjhkIZaN9DnSSwR4phI+Y1f88Ogkc3EBcfSGShzqsg
-	Nuy2/Ljt+mYQUaF2CygbDrQRuaMVFUK5m7C1RtBm+z4frM1NB9t1aSUIe/GttD23
-	WX+jARXTojaSLMExWFsRVmDH2wIb3ydZHWBZNdSGm5yAhkrsbfllZPLw8Ly1vMg2
-	olrZZA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxaw8f2-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=mxi7SiBD/iDWVc8EiXp2B8
+	FLdd1L3Gj3MaiaDSYI2w4=; b=KquCpFeciof4tZmb80oa60D/Z5X5Wxn0iTF1Zw
+	8Nw7g6CnpH/ly88nlbgJGdn/xKc+Oz2cm3dJDDxnt44h85VAjB0zmrUSWSD+kR22
+	BaPEzzQ9dCxArBP9ZEY/AIvfuotRSkua4pwOopD/1CHrCxCVUHrztj0VOq+YBQIK
+	9fC4Pk3+Wo+pM/Lcf60cZBlm1SOwxMTBomdfqo7nJAQr5MToj2lR+XHKpILrBdbV
+	i957cKOZn3QO53j//bYJIlisPoVbHtFAaIvigvHbp7cmK6vbBINu4XTKxcCtAMq4
+	Tc+PFJTuZWRKHO6mn3ltYJtW1AyhuG+nHtuMqvZf0Fi/B4xQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dp808k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Jul 2025 16:21:45 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56EGLiNT010025
+	Mon, 14 Jul 2025 16:31:01 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56EGV1KD002087
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Jul 2025 16:21:44 GMT
-Received: from [10.216.21.210] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 14 Jul
- 2025 09:21:38 -0700
-Message-ID: <1c73b530-4f1a-4c45-91aa-b44efb8a8c1e@quicinc.com>
-Date: Mon, 14 Jul 2025 21:51:35 +0530
+	Mon, 14 Jul 2025 16:31:01 GMT
+Received: from hu-yabdulra-ams.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Mon, 14 Jul 2025 09:30:59 -0700
+From: Youssef Samir <quic_yabdulra@quicinc.com>
+To: <mani@kernel.org>, <jeff.hugo@oss.qualcomm.com>, <quic_carlv@quicinc.com>,
+        <quic_thanson@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <youssef.abdulrahman@oss.qualcomm.com>
+Subject: [PATCH v2] bus: mhi: host: Detect events pointing to unexpected TREs
+Date: Mon, 14 Jul 2025 18:30:39 +0200
+Message-ID: <20250714163039.3438985-1-quic_yabdulra@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/8] serial: qcom-geni: Enable PM runtime for serial
- driver
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <psodagud@quicinc.com>, <djaggi@quicinc.com>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_arandive@quicinc.com>, <quic_mnaresh@quicinc.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
- <20250606172114.6618-8-quic_ptalari@quicinc.com>
- <d6cr4elhrbh27lmlcv5xzuel75uvsgi7klxjkevm7vg4jcbawe@5ojgetrxkag5>
- <f87807c9-5249-4d97-ab89-898b7d8d260d@quicinc.com>
- <tt2crsexdnhlotlo3z5uxyta6jrnnvom7aqwsjvopwueazbuih@2l4h6xjpwlar>
-Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <tt2crsexdnhlotlo3z5uxyta6jrnnvom7aqwsjvopwueazbuih@2l4h6xjpwlar>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: whO25QWW1XtLX8Pa9ilH4_kqFqnB9VgI
-X-Proofpoint-ORIG-GUID: whO25QWW1XtLX8Pa9ilH4_kqFqnB9VgI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDEwMCBTYWx0ZWRfXx3vtgFj/kqSA
- rMMFipLSMaKBvpgU0UE4OOO8HDAKg+4JmSSx8HnRDCHiPHZoke73zbj0SQ3LOJ6DCSEfoCD2iFd
- BA0Ezho6IqKPCuzSG/Gg2igFFhTYSIa7KJavlHY07dlp6IhgGHHa/Xw5OEhtA6FjstBzrB0XVXN
- JvlFiwEc0cludmTU2Yuq6hiw3Nn0wgmtt66vAcAMFgqoRccYrZVA4Mx7sBe7Nk0syBH2DFncI0E
- 0iC/FPMmpup18AMby1w5h+jLYavNk+pZ9w7/KniYJfTB3HIDZoiL5F+TsTLG+iO5/2EDVL/jxzK
- dAYalyf1gf3OJ5ubvQr4w5Sh7TbKQIuWmG26MN8f0NjiqPZCBSwcRrqfq/HtuQNCG0BDArDZ4EP
- kCcq7qrAhhDEuNdX9cTfc5ZZ3mlVxFBM9i2LQNvUjrVic0TqBo+0/HfaEBzZEcHlhwwIV6sq
-X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=68752e99 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=_aAx1oFUeGpnLRK6imAA:9 a=QEXdDO2ut3YA:10
- a=-_B0kFfA75AA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDEwMSBTYWx0ZWRfX6f2w6LLz2Sth
+ L/7YRZt3oIidiuK+aIBqUqqlJdsv0NBEXzZgle8UL7Ja3N/PUYt2vcsKkd7n08G8odb6fMpfm54
+ trDKYLWlW4LApNLfNrbDTuDqHBd1Vu21xFXxNGBYiOq8nLDY42+GtZAcvkjtpcwqKDsiaXBk/I7
+ OwkRMylNqiPMk66w/lmAcDE9mScfJzbYSaiRbZbUzTZclq6TtNHSolChTumc0dxu5JMwf1ydUtk
+ 3w8YWn5erA4jU1q5qve87MLhAMFkR4HOuR37cnykbrv9Ht9fhfNNDUo4mB8eKAI6crKicnETBDJ
+ b2p6cRcw0umlYroTsUSX+2mhJDaf06TdxbdX5fGNuVJjJUhhHGpYBmro/71gzSAb0Myt/Upc1eh
+ x41RmYq1bBV2hZxdsnz5XIn0HbVE6wMkxUQrj49OtDbvdc5WKYIwsQOg3+qEpIEwCss499Pp
+X-Proofpoint-GUID: TLh2fF-fhecPJMxj10FkaN0nWhzkUbXC
+X-Proofpoint-ORIG-GUID: TLh2fF-fhecPJMxj10FkaN0nWhzkUbXC
+X-Authority-Analysis: v=2.4 cv=Y+r4sgeN c=1 sm=1 tr=0 ts=687530c5 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=ztyKLzQp5aFZxASnXIYA:9 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-14_01,2025-07-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ clxscore=1015 mlxlogscore=999 phishscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507140100
+ definitions=main-2507140101
 
-Hi Dmitry/Bjorn/Krzysztof,
+When a remote device sends a completion event to the host, it contains a
+pointer to the consumed TRE. The host uses this pointer to process all of
+the TREs between it and the host's local copy of the ring's read pointer.
+This works when processing completion for chained transactions, but can
+lead to nasty results if the device sends an event for a single-element
+transaction with a read pointer that is multiple elements ahead of the
+host's read pointer.
 
-Thank you for review.
+For instance, if the host accesses an event ring while the device is
+updating it, the pointer inside of the event might still point to an old
+TRE. If the host uses the channel's xfer_cb() to directly free the buffer
+pointed to by the TRE, the buffer will be double-freed.
 
-On 7/1/2025 4:42 PM, Dmitry Baryshkov wrote:
-> On Mon, Jun 30, 2025 at 10:40:25AM +0530, Praveen Talari wrote:
->> Hi Bjorn,
->>
->> Thank you for review.
->>
->> On 6/17/2025 9:23 PM, Bjorn Andersson wrote:
->>> On Fri, Jun 06, 2025 at 10:51:13PM +0530, Praveen Talari wrote:
->>>> Add Power Management (PM) runtime support to Qualcomm GENI
->>>> serial driver.
->>>>
->>>
->>> Doesn't this have impact on the behavior outside of your
->>> project? Or is the transition from qcom_geni_serial_pm() to explicit
->>> RPM merely moving code around?
->>>
->>> Seems like this deserves to not be hidden in a middle of a patch series.
->>>
->>>> Introduce necessary callbacks and updates to ensure seamless
->>>> transitions between power states, enhancing overall power
->>>> efficiency.
->>>>
->>>
->>> This commit message fails to state why we need runtime PM support in the
->>> driver.
->>
->> Introduce PM runtime support to the Qualcomm GENI serial driver to enable
->> better power efficiency and modularity across diverse resource control
->> mechanisms, including Linux and firmware-managed systems.
->>
->> As part of this enhancement, the existing qcom_geni_serial_pm() logic to
->> use standard PM runtime APIs such as pm_runtime_resume_and_get() and
->> pm_runtime_put_sync(). Power state transitions are now handled through
->> the geni_serial_resources_on() and geni_serial_resources_off() functions.
->>
->> Is it fine?
->> Please guide me/correct me if needed
-> 
-> Please start by stating out the problem that you are trying to solve.
-> There is no actual issue description in your patch.
+This behavior was observed on an ep that used drivers/bus/mhi/ep/ without
+'commit 6f18d174b73d ("bus: mhi: ep: Update read pointer only after buffer is written")'.
+Where the device updated the events ring pointer before updating the event
+contents, so it left a window where the host was able to access the stale
+data the event pointed to, before the device had the chance to update them.
+The usual pattern was that the host received an event pointing to a TRE
+that is not immediately after the last processed one, so it got treated as
+if it was a chained transaction, processing all of the TREs in between the
+two read pointers.
 
-I hope this commit describes the actual problem.
+This patch aims to harden the host by ensuring transactions where the event
+points to a TRE that isn't local_rp + 1 are chained.
 
-The GENI serial driver currently handles power resource management
-through calls to the statically defined geni_serial_resources_on() and
-geni_serial_resources_off() functions. This approach reduces modularity
-and limits support for platforms with diverse power management 
-mechanisms, including resource managed by firmware.
+Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+---
+Changes in v2:
+- Update the commit message
+- Link to v1: https://lore.kernel.org/mhi/20250521163110.571893-1-quic_yabdulra@quicinc.com/
+---
+ drivers/bus/mhi/host/main.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Improve modularity and enable better integration with platform-specific
-power management, introduce support for runtime PM. Use
-pm_runtime_resume_and_get() and pm_runtime_put_sync() within the
-qcom_geni_serial_pm() callback to control resource power state 
-transitions based on UART power state changes.
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index aa8a0ef697c7..57dc9c5c0d84 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -602,7 +602,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 	{
+ 		dma_addr_t ptr = MHI_TRE_GET_EV_PTR(event);
+ 		struct mhi_ring_element *local_rp, *ev_tre;
+-		void *dev_rp;
++		void *dev_rp, *next_rp;
+ 		struct mhi_buf_info *buf_info;
+ 		u16 xfer_len;
+ 
+@@ -621,6 +621,16 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 		result.dir = mhi_chan->dir;
+ 
+ 		local_rp = tre_ring->rp;
++
++		next_rp = local_rp + 1;
++		if (next_rp >= tre_ring->base + tre_ring->len)
++			next_rp = tre_ring->base;
++		if (dev_rp != next_rp && !MHI_TRE_DATA_GET_CHAIN(local_rp)) {
++			dev_err(&mhi_cntrl->mhi_dev->dev,
++				"Event element points to an unexpected tre\n");
++			break;
++		}
++
+ 		while (local_rp != dev_rp) {
+ 			buf_info = buf_ring->rp;
+ 			/* If it's the last TRE, get length from the event */
+-- 
+2.25.1
 
-Thanks,
-Praveen Talari
-> 
->>
->> Thanks,
->> Praveen Talari
->>>
->>> Also, start your commit message with a problem description, per
->>> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
->>>
->>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
->>>> ---
->>>> v5 -> v6
->>>> - added reviewed-by tag in commit
->>>> - added __maybe_unused to PM callback functions to avoid
->>>>     warnings of defined but not used
->>>> ---
->>>>    drivers/tty/serial/qcom_geni_serial.c | 33 +++++++++++++++++++++++----
->>>>    1 file changed, 29 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->>>> index b6fa7dc9b1fb..3691340ce7e8 100644
->>>> --- a/drivers/tty/serial/qcom_geni_serial.c
->>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
->>>> @@ -1686,10 +1686,10 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
->>>>    		old_state = UART_PM_STATE_OFF;
->>>>    	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
->>>> -		geni_serial_resources_on(uport);
->>>> +		pm_runtime_resume_and_get(uport->dev);
->>>>    	else if (new_state == UART_PM_STATE_OFF &&
->>>>    		 old_state == UART_PM_STATE_ON)
->>>> -		geni_serial_resources_off(uport);
->>>> +		pm_runtime_put_sync(uport->dev);
->>>>    }
->>>> @@ -1827,9 +1827,11 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>>>    		return ret;
->>>>    	}
->>>> +	pm_runtime_enable(port->se.dev);
->>>
->>> Any reason not to use devm_pm_runtime_enable() and avoid the
->>> two pm_runtime_disable() below?
->>>
->>> Regards,
->>> Bjorn
->>>
->>>> +
->>>>    	ret = uart_add_one_port(drv, uport);
->>>>    	if (ret)
->>>> -		return ret;
->>>> +		goto error;
->>>>    	if (port->wakeup_irq > 0) {
->>>>    		device_init_wakeup(&pdev->dev, true);
->>>> @@ -1839,11 +1841,15 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>>>    			device_init_wakeup(&pdev->dev, false);
->>>>    			ida_free(&port_ida, uport->line);
->>>>    			uart_remove_one_port(drv, uport);
->>>> -			return ret;
->>>> +			goto error;
->>>>    		}
->>>>    	}
->>>>    	return 0;
->>>> +
->>>> +error:
->>>> +	pm_runtime_disable(port->se.dev);
->>>> +	return ret;
->>>>    }
->>>>    static void qcom_geni_serial_remove(struct platform_device *pdev)
->>>> @@ -1855,9 +1861,26 @@ static void qcom_geni_serial_remove(struct platform_device *pdev)
->>>>    	dev_pm_clear_wake_irq(&pdev->dev);
->>>>    	device_init_wakeup(&pdev->dev, false);
->>>>    	ida_free(&port_ida, uport->line);
->>>> +	pm_runtime_disable(port->se.dev);
->>>>    	uart_remove_one_port(drv, &port->uport);
->>>>    }
->>>> +static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device *dev)
->>>> +{
->>>> +	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
->>>> +	struct uart_port *uport = &port->uport;
->>>> +
->>>> +	return geni_serial_resources_off(uport);
->>>> +}
->>>> +
->>>> +static int __maybe_unused qcom_geni_serial_runtime_resume(struct device *dev)
->>>> +{
->>>> +	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
->>>> +	struct uart_port *uport = &port->uport;
->>>> +
->>>> +	return geni_serial_resources_on(uport);
->>>> +}
->>>> +
->>>>    static int qcom_geni_serial_suspend(struct device *dev)
->>>>    {
->>>>    	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
->>>> @@ -1901,6 +1924,8 @@ static const struct qcom_geni_device_data qcom_geni_uart_data = {
->>>>    };
->>>>    static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
->>>> +	SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
->>>> +			   qcom_geni_serial_runtime_resume, NULL)
->>>>    	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
->>>>    };
->>>> -- 
->>>> 2.17.1
->>>>
-> 
 
