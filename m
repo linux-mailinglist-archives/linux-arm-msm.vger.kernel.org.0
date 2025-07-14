@@ -1,156 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-64829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A510DB040B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 15:56:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07ECEB04122
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 16:14:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0A5D4A3207
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 13:55:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4423E3A4E21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 14:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C6A12580E7;
-	Mon, 14 Jul 2025 13:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECCA2255F5E;
+	Mon, 14 Jul 2025 14:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SBGh9rXO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U4TgVQW4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE3A2561D1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 13:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB67253F1B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 14:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752501327; cv=none; b=DtCSfjQsBQPG073aBr9GPn74ZtGn/VwY+3FqVhR6HxFr/xSUu9aCGcDqt6bLuQrxZYgwdKmAM5xjEP4z30jIUYaydrCRG59iC69khji5dqBa0f2WM5wFtt0wmCXuqcrc5UyKlqqs6pbAR4qLwmjH9Pz8I3Lke6qR/i0L8gDCfVs=
+	t=1752502439; cv=none; b=W5AYYexHsvQe/JEkeduRfo0+G+wjvnI8b5CEn0dTA+KPaufcgN6HYlIsyLfn5lW+18/DRPjp9TnAwHQEWoWZ3Hltq1UEiBoQyKd9FHMPaBByLhRw1JF3l0Zwgrh6WD4dv8QM2+MWwpmTk1NEn/u0xik8xNHBjc2NbFGxlCf9QP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752501327; c=relaxed/simple;
-	bh=U6vdEfe7eEqqK6fH9n+kZgrS8otaRD5ZuF4/mbw7luQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mLigNeZGko8taTr+i3GCyK3vNNqJDB11NeAudwZzYiml2f39alVgIQYD+wAdmWqz+vhYIEYqWlhx96IBp8CYFoSflLx6IFs1o8ycw9widtw9gXGxpJP10AlMkR7oLppMT5ak/kZYhAWoceA9ht4p/5xsmYLMiJ2vFjiXdwiO6p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SBGh9rXO; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1752502439; c=relaxed/simple;
+	bh=wCIdKtNSrC0FHDfQjLImfojsGLriWqqzsA7IN5oCePM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qmcsAX2+O/huvP1gkfnqzlXIsUUiRiuvYVKxDty1TrmShnQgXioZgPsnM6MEcw6PLR8bhDX7fEbjItTP/w+G5wXiYd7iyQpT7uufI9MtCAGZRHW/ndtRmfp0ZT4ApkfeHO2Dzt3kG50hmLaz9OaW/qU6AGCZaJ258e+Q4u00z6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U4TgVQW4; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a4ebbfb18fso226180f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 06:55:25 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-553b7a3af9aso272866e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 07:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752501324; x=1753106124; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I+exwkn5+6FAjeomS833hx9Nw5MjZVYQZmpGmTX5gKo=;
-        b=SBGh9rXOP90CU41ouXO8LYNqxvxziYHUlIphXb3ZJc/gXGIKBiQo/Q2RiqMbTZRfOu
-         0tFDmH1qbeqlPomXi0p4g5O+j69xk729+IFFSb/tcK7+/0wxsi5pA4KoSaIiq1f+KVc5
-         nRF/g0jkH+6eMxvUByiDDAcvc9uWiA7iLIe5+9GyYRJNaajYaQmXWaP8iufRu9rYxKaV
-         d5C2RrqxrLcfxk9pmD+ifwKJANwsdLIeQfgXwXXjDLOB5zsrwtIIKfY5ghcysldGTMWf
-         lphDBFoOb94tl7YzcwJRgUtXbhq7Su3RK6pxAXY2f7P+snvPNGYwiIvjlpZJMKZKInX4
-         4kpg==
+        d=linaro.org; s=google; t=1752502435; x=1753107235; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OiyN54HqkGhaI3X2oE54WY0+m9go1W47ITpgZXXs7J0=;
+        b=U4TgVQW4o4706aj+htZpqRSmaNX2SHB+0VSeQkNVAWvrmY8FXCHT2rtlbBOrXzSOiS
+         WfcxnOIjuCjAJ/yubGqQHIwHRFQDXxdbvibYbIXJKCzyN8DOLIaYzGjboJxupGEnLxHb
+         tvz2Stl9Yxh5XprlP019NdEgnsLiNHOiI/TqfSXLRQsHoAcwdG1xwR/STBIBZTzfEX4n
+         rR9YtkKibR4Ll7Ev6dbHW+NL8r6GJsLYbwLhehx3qiyvKLEejOHBp3cg5pthx4W76rNe
+         FQj4Zj68II0XnadD2u0fbjdDCJE4SecWqp14e+NjnXuY0nhCgxB3BdZrvCZvbbiFyrzH
+         VobQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752501324; x=1753106124;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I+exwkn5+6FAjeomS833hx9Nw5MjZVYQZmpGmTX5gKo=;
-        b=vwDiZieVtqkHiP517I7B8jq2pbNU3Gpl72OpgYBeNKM7IBNKcr4wEo1M49r9Qr+0Ia
-         WPJQx5iS50RraDaGCu+jz7T3Bi7LYRf8m4PaUpVi6ABWNjK5G9qibaCaPos/UixhueCl
-         6Om7LZo0lqIxkSnTVk55sX0AyB2gM7P15lM5Drub7be7dbEdttR7mnisX6MjyeCu3ubb
-         O3tk2vxh/WzjZGQ1UW/+q9PZlnQyw7TXRMu1C6JPOn6gbZPXhl4+m4gRwcwH28lee4qs
-         Zgm7HIfwY29aDy2oDNxP911/oteQxYhYKNq+5KSvxXUw6Es5nlDDoGAmM4h7Zu4rwKrm
-         SofQ==
-X-Gm-Message-State: AOJu0Yw8BMOeuX1GXdkmsVrhKz6l8VFhhvJOHI5Sa87qUUdvxeMgtrxW
-	NmJ+YkGiS8jYOeDYYXuE0tHZRZiHQ+6dqe/9kgK/RtvYFuDjPgdxJ6nBUs2ikYbetSM=
-X-Gm-Gg: ASbGncvFbXt5Hxj+/zBq/gUCyyBDiupgmoSYVwnHeogrfrD3UFdJ91q66c55BfUKCqd
-	SbErOFoVAwHb2SrXMsVK7X6tBAa6aq0HGtWfCzpvDNFvAcB9RaOftXSdBs5sHBocdeIOm0VC8zn
-	XFAeaaUQCLmFmk9XnBPUOK5TT37ssT8vLFjEq7ZSSKFZrFEPYeNtjRW8IzfU0z82FULZsf1bd2B
-	DY7ZNXeKYd71ZW0ly3s7f1XicEQNLYDKa9xEbKQwShwiL5InkgmnfbCjV0XOsHkpT2ETtKgjEMW
-	Ga7ELHx1UhN0VA0AKZKGUghllBkZOu3kPBr+9l8g34dDwt0wTFuqBu6I73BPiL21t5bt4MEZNE1
-	c2n2XKfIrL/fXy6vQeik060bneLjstDUb+VGr
-X-Google-Smtp-Source: AGHT+IGN5F9lGSNHk8ElMvikHLrdDkpF4jgTQ1Islu28FbyWWuuZDHETIrYK9F7PtGhmec77qA9Pug==
-X-Received: by 2002:a05:6000:26c8:b0:3a5:324a:89b5 with SMTP id ffacd0b85a97d-3b5f2e39d5cmr3318899f8f.8.1752501323841;
-        Mon, 14 Jul 2025 06:55:23 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d5037fa0sm172291575e9.7.2025.07.14.06.55.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 06:55:23 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 14 Jul 2025 15:55:16 +0200
-Subject: [PATCH DO NOT MERGE RFC 3/3] arm64: dts: qcom: sm8750-qrd: Enable
- Iris codec
+        d=1e100.net; s=20230601; t=1752502435; x=1753107235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OiyN54HqkGhaI3X2oE54WY0+m9go1W47ITpgZXXs7J0=;
+        b=jwMwQpX898O95IwK1UtYUoCzkMFDIrxFgxhb9AQVYCR+PUN2DFrJ4sDxO+f0nFtSOJ
+         6tYdMV5xeGI73NhvdWPWvAZxCajlTJ1ULRZX9na95g3JqkkFyyTir89Ykxe2DqdF8vZO
+         V5qkLhekjS8wV4+V52XqbyILH1OHmFtpmn03LxTpJwxGz2f9VikZbuyqjJB49CjtHJqm
+         Dyfd4dy17f3bDEsIElc0d3fyhpZGj8FuGm3DCUuuTETlF6N25FDIv2bRTW6cI/PF7Ze6
+         BXE2cxZCGEeTpr5pn6FWekxJhMJcUqRPQ+Pt3meJ1pkFbeMj2UM0ivS8E5SbdJBFPxVZ
+         lvZA==
+X-Forwarded-Encrypted: i=1; AJvYcCXLnuXKe0LgjS4dOedpMakWDJiyeolcp6ZB9IjjObj1ALHSEVM5/wik9RFsaXxKC5LCGqeQFPlmMluxkvx4@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoatSm9HSwhxDa6ypqXwC7ZtQA+YMjh9BmYNonmOKWi+77L29D
+	S7DWxMiIQVLl+GQJbdoOy2viDMoWItR/u570bl21U01XopNy1FDa2xEsQBrK/xo9R3LZFjHkuar
+	x9EvS
+X-Gm-Gg: ASbGncsfxjm/un7HkXs2quZ7qcaujhC7ryHOAXJRUih4buEvr9V6gKS1SDzUGjToUmj
+	BIC4pn6CxSO/vB9hK5O1gjvd/RQm5OSkJsp7S/yU/DKhN4hn05d7il54Zwh3+wrqJgLdaNCQZgf
+	SKmNPWQWj0jR5aC8uNmeeBYLg2WVyg612sgyGkmSWeczOoPPJOcmhKUyDa1i3kNaqPhGiZYcj4r
+	/fE8AL3Z1i8EqAQjsLcgBRMvvQzAz7RSzmrU5kKNVhdWpMOPROgffM9L7RWwbWyZkDsgMQ12B6o
+	+SVmkRPRGhZ381S/qfC3BHLVbtP9KLb7RCeAq0NV5HXl6y0Cf6zHGSXwDmAnsM4YhHsAjyPi+4z
+	B0Dvp4sQZ31E5TzHQrOyW4EoPbxQzhW5w+CnLOJenceQRdYUdaCxFTF3Fg1Wj3YEMvrExV4/jJu
+	a6
+X-Google-Smtp-Source: AGHT+IGC8Q7q44pTIG5Hqdyx76e0tz+NV3O/Al80pmn7k0s9+o2E96eS2uXy7hjZVJc9Tqvik/DEmQ==
+X-Received: by 2002:a05:651c:b21:b0:32b:3b00:406b with SMTP id 38308e7fff4ca-3306ce94988mr4877941fa.4.1752502435259;
+        Mon, 14 Jul 2025 07:13:55 -0700 (PDT)
+Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32fab8ed35bsm15350211fa.84.2025.07.14.07.13.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Jul 2025 07:13:54 -0700 (PDT)
+Message-ID: <8ed5eeee-78a2-4b26-989f-03676a9e5da7@linaro.org>
+Date: Mon, 14 Jul 2025 17:13:48 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250714-b4-sm8750-iris-dts-v1-3-93629b246d2e@linaro.org>
-References: <20250714-b4-sm8750-iris-dts-v1-0-93629b246d2e@linaro.org>
-In-Reply-To: <20250714-b4-sm8750-iris-dts-v1-0-93629b246d2e@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom: Add MIPI CSI2 C-PHY/DPHY
+ Combo schema
+Content-Language: ru-RU
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1068;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=U6vdEfe7eEqqK6fH9n+kZgrS8otaRD5ZuF4/mbw7luQ=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBodQxGbTWyaBxv/bqgY3HAsANB+pukY8Z3ub2VP
- 4vdlxGG4DiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaHUMRgAKCRDBN2bmhouD
- 1yV0D/9gB7OmVyXChYn29CO2NYuNH5pe0JjHhmEkdRJ3iD1A3A0++uh0PZhDN+ZfWM5KpzruI4Q
- r1qEvS6v8hlopbc3b4wL4lYUBN3za0+gSiu9SZwJ0TL4uwPE3hnAaal1AZBuAAdXZcGxC8FPFVI
- Euxygw8myqhoqgJaMWz1ZjPT0qIPthIeYh6TgBnARiaQP2wcm4pmbDycupyIBYFoCAw+zj2SKpJ
- j9GK29ylES2ahY9DXJ+aZufjvUH4NU+KCatbpjNmJVvKNJrJugw5y7JJZFwhgola5XQValMCZqF
- dHBT3vQ2vx/2lR/zR1JuNgpxz9cIQlGRDKiqHB30v1FeDdEYLutIm3nTlxYpw3b0SK/4IQo0epx
- mStP009nY9h0q5AUxfVtTwFG6rixOXBDm4o1rGkFI1Xee+UEkF6jYbcxX1CxuV0A6HlSgPEuLwr
- Gce+Dv3EJL+NYWONsNxg2bm2RWG0gPy/gQIndX9lWno44+sGCgB0RKTkggLDUtLznCqvsv29WVy
- HPsofWkUOIWIwjykuz63MwUj1rS56q7ti2221j5MM0q0wOhY5r7wpsDBRVi79ecK70zTdGwelRK
- i6CAfNIErAumfSkM01HUyR67QJW+r2vFEhVFce4/FQeXQJx0gJrq8yV5eMlR6kV6gKEVb3zatIB
- j93F+A2KrfoSaVw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-1-74acbb5b162b@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250710-x1e-csi2-phy-v1-1-74acbb5b162b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable on SM8750 QRD the Iris video codec for accelerated video
-encoding/decoding.
+On 7/10/25 19:16, Bryan O'Donoghue wrote:
+> Add a base schema initially compatible with x1e80100 to describe MIPI CSI2
+> PHY devices.
+> 
+> The hardware can support both C-PHY and D-PHY modes. The CSIPHY devices
+> have their own pinouts on the SoC as well as their own individual voltage
+> rails.
+> 
+> The need to model voltage rails on a per-PHY basis leads us to define
+> CSIPHY devices as individual nodes.
+> 
+> Two nice outcomes in terms of schema and DT arise from this change.
+> 
+> 1. The ability to define on a per-PHY basis voltage rails.
+> 2. The ability to require those voltage.
+> 
+> We have had a complete bodge upstream for this where a single set of
+> voltage rail for all CSIPHYs has been buried inside of CAMSS.
+> 
+> Much like the I2C bus which is dedicated to Camera sensors - the CCI bus in
+> CAMSS parlance, the CSIPHY devices should be individually modelled.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   .../phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml     | 95 ++++++++++++++++++++++
+>   1 file changed, 95 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e0976f012516452ae3632ff4732620b5c5402d3b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml
+> @@ -0,0 +1,95 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MIPI CSI2 Combo PHY
+> +
+> +maintainers:
+> +  - Bryan O'Donoghue <bod@kernel.org>
+> +
+> +description:
+> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2 sensors
+> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and D-PHY
+> +  modes.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,x1e80100-mipi-csi2-combo-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  clocks:
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    items:
+> +      - const: camnoc_axi
+> +      - const: cpas_ahb
+> +      - const: csiphy
+> +      - const: csiphy_timer
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  vdda-0p8-supply:
+> +    description: Phandle to a 0.8V regulator supply to a PHY.
+> +
+> +  vdda-1p2-supply:
+> +    description: Phandle to 1.2V regulator supply to a PHY.
+> +
+> +  phy-type:
+> +    description: D-PHY or C-PHY mode
+> +    enum: [ 10, 11 ]
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#phy-cells"
+> +  - clocks
+> +  - clock-names
+> +  - vdda-0p8-supply
+> +  - vdda-1p2-supply
+> +  - phy-type
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+> +    #include <dt-bindings/phy/phy.h>
+> +
+> +    csiphy0: csiphy@ace4000 {
+> +        compatible = "qcom,x1e80100-mipi-csi2-combo-phy";
+> +        reg = <0x0ace4000 0x2000>;
+> +        #phy-cells = <0>;
+> +
+> +        clocks = <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
+> +                 <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +                 <&camcc CAM_CC_CSIPHY0_CLK>,
+> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>;
+> +        clock-names = "camnoc_axi",
+> +                      "cpas_ahb",
+> +                      "csiphy",
+> +                      "csiphy_timer";
+> +
+> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
+> +
+> +        power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +
+> +        vdda-0p8-supply = <&vreg_l2c_0p8>;
+> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
+> +
+> +        phy-type = <PHY_TYPE_DPHY>;
+> +    };
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+There is no ports at all, which makes the device tree node unusable,
+since you can not provide a way to connect any sensors to the phy.
 
----
-
-Do not merge because firmware (hard-coded in the driver) is not released.
-
-For Rob's bot reports:
-
-qcom,sm8750-videocc bindings and clock headers dependency (will fail
-build):
-https://lore.kernel.org/all/20241206-sm8750_videocc-v1-0-5da6e7eea2bd@quicinc.com/
-
-qcom,sm8750-iris bindings:
-https://lore.kernel.org/r/20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org
----
- arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-index 13c7b9664c89cffb68a1f941c16b30074816af8b..369623f8e4c921e99532d5e22fe9f0049746ebaf 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-@@ -813,6 +813,10 @@ vreg_l7n_3p3: ldo7 {
- 	};
- };
- 
-+&iris {
-+	status = "okay";
-+};
-+
- &pm8550_flash {
- 	status = "okay";
- 
-
--- 
-2.43.0
-
+--
+Best wishes,
+Vladimir
 
