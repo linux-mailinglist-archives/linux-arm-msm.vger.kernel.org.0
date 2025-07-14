@@ -1,218 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-64803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8AFCB03DAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 13:48:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 607C0B03DBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 13:54:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE5D0189F23C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 11:49:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B00C53B4991
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 11:53:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 980FC246BD8;
-	Mon, 14 Jul 2025 11:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F3822E3718;
+	Mon, 14 Jul 2025 11:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iw9K/rvI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oOuXmr1Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B485623BF9C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 11:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D38A927
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 11:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752493719; cv=none; b=P0g0sYOjA0lJpbTVN1e+bz1E8qdgw0SAwt2gvWZPVIDy2DcR07lMLIkj792rcsdsn/Wv+DwEck8bTQWzPlS6eL4NwhIL31jEwV7WVPmkUL2vZHm/7O1NrTgUuIqFO0aQWNz8mMRpRJnzkxgsI7fal+hXNq22fkPi5t/uKbhzxlc=
+	t=1752494059; cv=none; b=DuSiOIxK5p09/zPIbUpbITMd6UkKMaP6fgJnw5HRrX+kdJerdh7J2byhjMPUJAYHwcwZPGhvw5rqc9knSDy4rVoKTjYMk2sX4TlFbL0pcRILmNg1Id9sZdJKgERgvKXz5mg4p7Jo4RG/rUznrd1wtEl69hTz3XLPr7lAGP05p/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752493719; c=relaxed/simple;
-	bh=tna5dLV3FkoihwjhvnZRfnme1kg+1D1J5pP0OU+C7tA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UvXP5i5cYPOFdLcSqM56dWGLrkoewA9nV7Wp9M1hd981d0qqbaCpsmfSC6ZEa2vzCJyYas+/pcW1w6Bg0beFUYmXfKcxvhnPAzqOoqY4pfvAGfz1H+H2SEq5Ba0Wk0/OphS/uIF/FlxBFWR7A2M/badHj5LdZoy5if31lpOJ3Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iw9K/rvI; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4560add6cd2so11905865e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 04:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752493715; x=1753098515; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xrXb2WAM/2BOo1nQIRcq6S4LqmZekvDumGZAiTpraHg=;
-        b=iw9K/rvIhiwy8ON8i6+U5d6xEHXmRqsU/0mgJIyMT2BMrwQLFmthJHTtP3G4+8kMiQ
-         fGHU6BoiiJ3CG9Zh8xjML7sunkjBuOrW8oSRfJwVJ+poWQc0hIuMhHQOhKOg0lCph4Sx
-         kFbwyC3BZUN6w4qOwUYfLqxntmu34jdFlI7R3UWfb7Q1oiouubXNv+mTSw79ikz0wB5Z
-         lbRvZ52/sesDidcDafrw+ZaykAbBAASvpb+7TkBJVFGJrxVnHCgRz7iITP5H6/G+reBv
-         g1FfUY8mawixHrsJe/sFnfwDx2EoJgCsmbkw5r+WkdqJkVP6SGn74UG/2BFoRJLlxQ4z
-         vjBg==
+	s=arc-20240116; t=1752494059; c=relaxed/simple;
+	bh=io3i8HDndx+x0sFqGWThvlRejp7JwKPia7uR/FwM/rU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=igHRcRPhFHXRi5pt70PbzH65L8VdlI0/V+BtrCkEO+kJWIHG3HExCJ9yUUP72qMutZB1rD6v2PpzeUdbwoj3MhWhOVuF5epJQ6olBb8g0UsaiwuAVKCMm/VxmH0WfwcT+/90Nk7L46DiBA0QXwa4qHUwfRkO8MVU6/FPsFQfuuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oOuXmr1Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EA6WZw024162
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 11:54:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=hhDlRlYOa9A7BFK+SQrOUTc/
+	kbhd6bQStxsgEEh3z6E=; b=oOuXmr1YZQG3vBqx4ELGnIL9QUhw4NibIF2ljHCz
+	Dxyjkpt5JPwMheuwKa+VuBzdY+vR/yfC4ZaMpNm6RBxjpq5Ie0rlCzliDD8GQMrH
+	6Ao3NBx29YnpRG8DZqT3qeqquMes+il3p+jwhxGuIknfvBlO97s5wIh8DTf6J4rz
+	lXUnXi0yRBSYAIedN8svvxx5ZEDLJUJyErfN6ZLNWUIFLnpqYeACMO4w61Fpijm5
+	mfnHtPZDdsUovD5Sh8PkbjOlhhd9vHy1xXDtlj6AeUfrGNewxAiPFKvvqBHRfXDZ
+	uui5qAo8Or9l/Im/3cNTO3eITm1vDxF3CDSeUN1Z6H5efA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufvbch86-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 11:54:16 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c790dc38b4so703413785a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 04:54:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752493715; x=1753098515;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xrXb2WAM/2BOo1nQIRcq6S4LqmZekvDumGZAiTpraHg=;
-        b=nnxbaWY+JC0n9jH7pL5gLVNV5zEJrZP6JRx8UziqcKhMzXUQB51E6hIZ1Sjxckwjen
-         VwHeOu1LD1fyjykxR/mAf2JvaJ2vx3nriaWSoal+d+BwN0ARkwsC5VQCIB1zWVOB0U3s
-         tmaisDySqElWc59+2Ma7HaTmmhAItrNFjhqM+veSbVlMsrr8bgdhavJqHW+QEpQu2RS3
-         TEMdQQBrHGYh1l4B1IQAZim7W+5ZYueZnD0bAaFaGQeUsFfpwh8Vab1obLv/tZbGDrRy
-         jp1rCB8B3i6VjVvFkRwEtWoEYOVyURNyjLbNJ+CNNpKbqbxc8GXEx1rUgthS/m24q8ZM
-         I5qQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPYgAeEyiTMWyG8hbgqsAZes7XxBXf82DDRhF81qfP3SUN8zzzyxsmYtvdERufORH4JHEV/nBNzdfvNZPa@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiGgmp4cbQuvwu708ivGYntjbYX4mJNkjM44WfMHF7yo5fxOY3
-	D1CkOjNlM4oSB7F7MFFoiWUttk3jGZGtw50tzbkz+QxTix8do2hL72+xFzVWxet0IIU=
-X-Gm-Gg: ASbGncvlRSWg6Zm0H5C9iM4t9aJmtsKQFnvM5TzsTehVgOfaYHbfE6MVupv1raIp/Aw
-	pHhKO3DHsnSel3pPka3SGy7jBh/ruLsh4K9nj/ynC4NqYHcv4g/6vZ/wBGBQnmRBRMpBz3tUH48
-	ZKX+mvZqy1kLFrOBNR/mW1WxD8SP7+ihu2bbgqY256SdLZ/SnmN624QKn0oSMj1qJyLvBt2JTm5
-	2KlGvapzuclh32Xy2ViUA53OuwVIswioNQOei+57Ot97L4hdNQMIit9KXicfdIVyIOfAQF6gVfc
-	my4DwJmueQUQP9/1K4CCq0nB/liS5qoZIU7573uDYpCF+EzxDdgKIwtJ6faRMyBVkSIa9+d3gNV
-	hBwGQ7tmeCSpSrY2iNxle/bE7JMslxSU+GdeYZQ==
-X-Google-Smtp-Source: AGHT+IF6yDHqORZ0MamyNX03OxUZYY8wce9Taz/nJCLQrMm/ptKAPpdbWmWfdS3FD0biNI03MzGk2A==
-X-Received: by 2002:a05:600d:7:b0:43c:f509:2bbf with SMTP id 5b1f17b1804b1-454db8d8cd6mr133757405e9.15.1752493714879;
-        Mon, 14 Jul 2025 04:48:34 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:c96e:1862:d33d:f504])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8bd1a2bsm12426359f8f.14.2025.07.14.04.48.33
+        d=1e100.net; s=20230601; t=1752494055; x=1753098855;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hhDlRlYOa9A7BFK+SQrOUTc/kbhd6bQStxsgEEh3z6E=;
+        b=O8S5THFghCvUOoTnTdExxNymivFafYqLB9m/7JaZ+VfEShFVSFYYREdz/FcXOJNqKo
+         nbw9jUnxY2E7xVotNBwhEK2FHXgRM8AO/c21y1zSheWi0m6gO2stSqb63UOvfJWnjQop
+         q6o0c/oiMoNNXvTp2klrR3d/9oI0oM0t1ay+YMaoyfVt+OD+3OJ9WuYYTT1mBtF6CwwH
+         GOY0FQB+h1g1X5FrR5rlBvqwIAy9TWEr3VyR+VpnRnV1AlaBi1KFN84/5ZAWNxQ3lWq/
+         MghKqEmfh/Ps3fsYHqkO0aaGrMloVVWFb99/enN4VmGuvdWcVJ33x7GFQhtv/Hej/o5s
+         kZVw==
+X-Forwarded-Encrypted: i=1; AJvYcCXBt8UR0cM6lXbq2vcHYBBCwEBY5bgoNSxzm2OuxLWA7YS7C/WoSMqKWGOO4iSe0XGs3qr8bG3fmftbH8Se@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/xiIx/apWMFZUWm3LrBrcYgDZp28AN+xE9ouzQBslSBL1u32f
+	1CicIxEIELs8JXUUHjg89FGm/cR5YAECf4fIK8TqWafj3IJ2ZypN7EGm7Xea2LeIjE+BBrzKLua
+	pxskPbJchu0FxOyAak6doZrBSAciMROx48RzZEXd9WWYUPskskgjmBard5eNvBnzPOhtg
+X-Gm-Gg: ASbGncsO5kqKOi/PhgT8xXyQgHHT6lYHjqz3Zk6KahW3YWBcR6SLJxBE2FCoeXGIvJq
+	oPVEN6Wg3jwGLEtg5uXXVK3KAvtPP7B4v+5qUbEpuFfL4UGbh/lHxiNyUeQYUCZAjp+2RsDPKZ2
+	VaXkXLty3QH8IX4nzwV+V63Tnyhc6FMHhZ+XqlPqt5Rb5ZeJm0eTuHIqNM09pM8TG1oIQKqCzDN
+	z8WIuJdJgk4eEOq8dnciUWb3FmkUo09rlQEp3x5nFrc3LeJm8U05nvtLBu9Vh/QJZPLfIlcl7Yf
+	8uM0Lxl+TEZm1GjWWbA1Zk/sdPPwU/+QBqJ3qOREPvhSQAQ/4TWF+ZjBs0gXhU/apOHcoDS1Y2+
+	6TB9RhpT+RhBbbnXunwfD1VlAjLDbM0FFZ98zRtUFyJVljSMWk1rd
+X-Received: by 2002:a05:620a:d86:b0:7d3:a7d9:1120 with SMTP id af79cd13be357-7dc99b9fb23mr2424125285a.24.1752494055350;
+        Mon, 14 Jul 2025 04:54:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMqZJV+7lQmgWTt4eaASnArEGjHjj4zcLu7wtF2nr7er4jJuci6OVCbQumR6y+apIH309lGw==
+X-Received: by 2002:a05:620a:d86:b0:7d3:a7d9:1120 with SMTP id af79cd13be357-7dc99b9fb23mr2424119485a.24.1752494054766;
+        Mon, 14 Jul 2025 04:54:14 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55943b602ffsm1897581e87.147.2025.07.14.04.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 04:48:34 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 14 Jul 2025 13:48:15 +0200
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
- fingerprint reader
+        Mon, 14 Jul 2025 04:54:13 -0700 (PDT)
+Date: Mon, 14 Jul 2025 14:54:12 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Yongxing Mou <quic_yongmou@quicinc.com>
+Subject: Re: [PATCH 18/19] drm/msm/dp: Move link training to atomic_enable()
+Message-ID: <cofa377vptj7on637u3c3mnxndplcmaegsb5h6idinz5wrvm6s@toylno4uapq4>
+References: <20250711-hpd-refactor-v1-0-33cbac823f34@oss.qualcomm.com>
+ <20250711-hpd-refactor-v1-18-33cbac823f34@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250714-x1e80100-crd-fp-v2-1-3246eb02b679@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAH/udGgC/2WNQQrCMBBFr1Jm7UiSmhpdeQ/pIqbTdkCaMpFQK
- b27seDK5Xvw318hkTAluFYrCGVOHKcC5lBBGP00EHJXGIwyJ621xUWTU1opDNJhP6NzxoXgL+e
- uaaCsZqGel714bwuPnF5R3vtB1l/7a7m/VtaokELzsLb2hmx9e/LkJR6jDNBu2/YB7sgUfK8AA
- AA=
-X-Change-ID: 20241115-x1e80100-crd-fp-8828cca97d66
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250711-hpd-refactor-v1-18-33cbac823f34@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA2OSBTYWx0ZWRfX6eMfXAi2MHrF
+ ru+zmbrybqiyFRwu0eODIfZy8LxkeeX7o6qcLD7gG+axSu2BWVbrXc0AMP2iIchFYjjJxE5pJRX
+ wuR1t6BuO0YY1b6UX1iQbFU4cNIMsJUiZYjNxxBt+TCim5ZxaQPmVCoW1q7EzsGFXma7Q/SKC0c
+ 5V5f+NOFXekEbWEWhtJc03GfZWEMfDuIQDRtZOu3Dbzl8eiMCMVQ7bfanYsPrp3z4uRxje7R7x8
+ gBtUgG4ARBuCRaDeHhnjKUSAWQpiWubz7Wpt1xejx/k7g5vl4Bhpwvpkjv2xCaUYpon0b42CIqr
+ RARi+YUWn1s6iGv5RZ+qmqVppMzuq8z2jRhrap86QiQyIobu0WUbRAV8DIYv9yb+qTu4yTA2lMc
+ Bn532IFUFAtTRirksSRNyX9z6NEvoPfvwSFkICLniWGHZYPj2TJAnpkN3zobiGN/C/kg+Kmu
+X-Proofpoint-GUID: E51f2R3zRYexdja_ruFwK8gDgKazWMSy
+X-Authority-Analysis: v=2.4 cv=RPSzH5i+ c=1 sm=1 tr=0 ts=6874efe8 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=kAOSIj3XOs-WuWg9PYUA:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: E51f2R3zRYexdja_ruFwK8gDgKazWMSy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-14_01,2025-07-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
+ clxscore=1015 suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507140069
 
-The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
-multiport controller on eUSB6. All other ports (including USB super-speed
-pins) are unused.
+On Fri, Jul 11, 2025 at 05:58:23PM -0700, Jessica Zhang wrote:
+> Currently, the DP link training is being done during HPD. Move
+> link training to atomic_enable() in accordance with the atomic_enable()
+> documentation.
+> 
+> In addition, don't disable the link until atomic_post_disable() (as part
+> of the dp_ctrl_off[_link_stream]() helpers).
+> 
+> Since the link training is moved to a later part of the enable sequence,
+> change the bridge detect() to return true when the display is physically
+> connected instead of when the link is ready.
 
-Set it up in the device tree together with the NXP PTN3222 repeater.
+These two parts should be patch #2 in the series.
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
-Changes in v2:
-- Describe all PHYs, also the unused ones (Johan)
-- Put #phy-cells property last (Johan)
-- Sort supplies alphabetically (Johan)
-- Johan suggested dropping output-low, but together with bias-disable this
-  would leave the line temporarily floating until the driver probes.
-  Perhaps dropping bias-disable would be better since it shouldn't make a
-  difference for output-only GPIOs(?), but for now keep it as-is to match
-  all other X1E devices.
-- Drop defconfig patch since Bjorn sent a different one that was applied
-- Link to v1: https://lore.kernel.org/r/20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org
----
- arch/arm64/boot/dts/qcom/x1-crd.dtsi | 64 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+> 
+> Finally, call the plug/unplug handlers directly in hpd_notify() instead
+> of queueing them in the event thread so that they aren't preempted by
+> other events.
+> 
+> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++-------
+>  drivers/gpu/drm/msm/dp/dp_drm.c     |  6 +++---
+>  2 files changed, 11 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 87f2750a99ca..32e1ee40c2c3 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -410,11 +410,6 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+>  	msm_dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>  
+>  	msm_dp_link_reset_phy_params_vx_px(dp->link);
+> -	rc = msm_dp_ctrl_on_link(dp->ctrl);
+> -	if (rc) {
+> -		DRM_ERROR("failed to complete DP link training\n");
+> -		goto end;
+> -	}
+>  
+>  	msm_dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
+>  
+> @@ -1561,6 +1556,12 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  		force_link_train = true;
+>  	}
+>  
+> +	rc = msm_dp_ctrl_on_link(msm_dp_display->ctrl);
+> +	if (rc) {
+> +		DRM_ERROR("Failed link training (rc=%d)\n", rc);
+> +		dp->connector->state->link_status = DRM_LINK_STATUS_BAD;
+> +	}
+> +
+>  	msm_dp_display_enable(msm_dp_display, force_link_train);
+>  
+>  	rc = msm_dp_display_post_enable(dp);
+> @@ -1706,7 +1707,7 @@ void msm_dp_bridge_hpd_notify(struct drm_bridge *bridge,
+>  		return;
+>  
+>  	if (!msm_dp_display->link_ready && status == connector_status_connected)
+> -		msm_dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+> +		msm_dp_hpd_plug_handle(dp, 0);
+>  	else if (msm_dp_display->link_ready && status == connector_status_disconnected)
+> -		msm_dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+> +		msm_dp_hpd_unplug_handle(dp, 0);
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-crd.dtsi b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-index c9f0d505267081af66b0973fe6c1e33832a2c86b..730b27c878fc7bebc9d8c0d055cbd7e635140d83 100644
---- a/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-@@ -1016,6 +1016,27 @@ retimer_ss0_con_sbu_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	eusb6_repeater: redriver@4f {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x4f>;
-+
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+
-+		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb6_reset_n>;
-+		pinctrl-names = "default";
-+
-+		#phy-cells = <0>;
-+	};
-+};
-+
- &i2c7 {
- 	clock-frequency = <400000>;
- 
-@@ -1466,6 +1487,14 @@ edp_reg_en: edp-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	eusb6_reset_n: eusb6-reset-n-state {
-+		pins = "gpio184";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	hall_int_n_default: hall-int-n-state {
- 		pins = "gpio92";
- 		function = "gpio";
-@@ -1747,3 +1776,38 @@ &usb_1_ss2_dwc3_hs {
- &usb_1_ss2_qmpphy_out {
- 	remote-endpoint = <&retimer_ss2_ss_in>;
- };
-+
-+&usb_mp {
-+	/* Only second port is used with USB 2.0 maximum speed */
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy0 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy1 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb6_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy0 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy1 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
-+};
+This chunk should be separated from this patch. I'd ask to drop
+EV_HPD_PLUG_INT / EV_HPD_UNPLUG_INT completely and call DRM functions
+all over the place instead. You can do it in a single patch, which comes
+after this one.
 
----
-base-commit: 0672fe83ed07387afb88653ab3b5dae4c84cf3ce
-change-id: 20241115-x1e80100-crd-fp-8828cca97d66
+>  }
 
-Best regards,
 -- 
-Stephan Gerhold <stephan.gerhold@linaro.org>
-
+With best wishes
+Dmitry
 
