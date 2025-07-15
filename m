@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-65108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5253DB069F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 01:40:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62895B069FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 01:40:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 691E54A0FC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 23:40:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBD0A1AA1975
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 23:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5A6E78F54;
-	Tue, 15 Jul 2025 23:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2C62571C3;
+	Tue, 15 Jul 2025 23:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IaYCSLOO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ke/TAz21"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101912D6401
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5262BE645
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752622801; cv=none; b=ESuFkboReYx+HeN5r21ktzHAc41Wu4DjQONmad6wJfj0IinBqahzoJRxB+XRwuQScRghfOxkit9OapubQ6bhPaA/YypO1I5kg9Cs2kB7AyGCDIJMHRl6eKKxvS89HXHJT7GpJgY5/BzmNQVZ+/cuGS29KMHawHWGN9JiOmktiYs=
+	t=1752622851; cv=none; b=DeBejUi6V7tkI4IPe+Go9MzZwdKUL3nG0ro3svOn5DspblRKYMTAPhgTqAjjlJztAkFVonbhd6AP2NA4C57bNihg6qNk6Htjy/7416rfsX70gpHSIYpKnHrjX4cH9KxWdjl39gAlg5Foxe295ur2NbiP1G4TLos+JRaXozuTzWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752622801; c=relaxed/simple;
-	bh=svz0OAuyUwTJj9o6zAsDikYQeCg6mNOHNGiQpMViUMM=;
+	s=arc-20240116; t=1752622851; c=relaxed/simple;
+	bh=LrPqnDq/SpvFDLZ7HSbGNtZeDMrK/0XptXrDEMlwKiM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rWY1RGW8pGrh/Er2wgL7cN6/BHun1s1xtc4dtOPgZU6uKh8wfMa5AQnyiEa1SbmKMpbWZzAnmvj0H3+YxaxE8wJJ0JnbwE4qlxxIfl8aAplEgvdq0qoNs/knGoFW/6hnpLA3/osbPfi6eRKtupO4L+50kKMLo0SmYalb0TMYj8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IaYCSLOO; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=QAXu1tMEfF9IMD+zEc/mEWSaxTFnaVFRRvqG7v6EK0N8IOF4zhh78iWCnux/Itm9B/AfdfQcgPLA6y+dXQVD/LmpJeooXCssOQ3QkBEnbROwtRwQN8Gp524YPnq0GM9AhRRxcyDIHJZIXZVI9x6HvXFk/bk7AqO3Ui0WD6MPgqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ke/TAz21; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FGDDUD025752
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:39:59 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FGDEqK003273
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:40:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RJPlRCoQzcnkdT0dHLtH3H9tpyaccIIMXOn4F1lvVCg=; b=IaYCSLOOLEaD7LrN
-	c+4qWtRQIwr9PbsPWTZao3TgCymOOJOmZECQEhAnPDrIM6rlecqc/gzA17hAKjgG
-	VnhgYvgvLRa2DAyMv+gUj9QQYFILDfXiW0q473s1UBcR5ZBMr21PyVcIC2rIwF2I
-	KxhYX+8Rwkw+YSCi65/ugOgmCrDQgtCjd2k7eYoGmr95nqmJy1CocCi99FtNEwcN
-	tCEaPdzpnNh/A4frAfIW7sxs3lu/eXagbkYSXErqXrjFbUHH2N/1fZKxpjpPMeMA
-	A/2Gduk5qR2x0fRKHt4IMfd83iPC1GzodJsnGj1EF+85DhqkHvzacrNWyUGxfZNz
-	Y/Ug2Q==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsy1ntx-1
+	U74p2NgokusBYICtX+RuOyJ/0ZE3xSV0oX91XuR8eNw=; b=ke/TAz21O+HjjcTw
+	SlaGcYjyLsajIpFyU7Kq9fVWzI3pBXIM6yDYkXoxirJwGLy7GDuH8qe2gnv36SLj
+	bYX/XvAqfgI+fFsaoZYzEZKMc/RWLn3Y3c8TywRYqs0gj/YU1o+i0dP/fwn7TmCT
+	+ZTsAmrJXfPnC/r3o2GgR0c2TgEh8fY9r9A4pcrpE1K/SKhwLBC0UUYb4Ke8Rg9v
+	EDLGheYUGiKpQr5+csF761XIFOPc8FKjuYp6QksIhTSRHy9kpdtjfXJ7Q0VBg9Uo
+	8wn4Qv/GuhdrigYlzJDhJMsOisF0/lBB64aMTbhakpLFjeIq7gBCXdrNbWbwXjy2
+	zf82xA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5drmthq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:39:59 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b31bd4c3359so3369950a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 16:39:59 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 23:40:49 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3132c8437ffso9864127a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 16:40:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752622798; x=1753227598;
+        d=1e100.net; s=20230601; t=1752622848; x=1753227648;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RJPlRCoQzcnkdT0dHLtH3H9tpyaccIIMXOn4F1lvVCg=;
-        b=DY6RaJmb8//KqRClAbRN39HQodiYDfiZWcJhPyX6dNywy0IrbYuFwtkXiSWq2y5nh9
-         bUGJAZ7iu6CHc5i7BoZMmCOCjxhagALl9ZJ+cwt53+0AolhJKv5MGzVrYvj+fhNVnkxu
-         IjvBzoPklxzIauQhUQzPP9vxIkv4IkLWJFARpWwvqfKinIt7gJ5m9TYfdV5sbsB3KNbs
-         pZcVqV90BRHwzTGxLVRUzUDO+8BSXGx+FbAnNUaVzhH03ERP4pobswRpNLwqomf2wLz4
-         HyCIPmtVmiJu/QjDtzL9xLoBwidw5OK6t4oLRxSfYKD/RvuqUAzVPCW71oaWpvi5QCap
-         8QLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZ9mdZtKubW29sz7/om8uwtC9f5GZomVsirDWuwAi8KPJ6JOe0xowFnGTpUzQgD7TW+rLbH6KjpkxeUqiR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzATbpg99909TMpRUvWwwpM+oje0LCyDMS7tgxK6Z3jq4lpuJsp
-	f3Xh42IDAcARhV9JEIESO9OZsGsnDudHQO1GAQvtkR8DktsXHdbr+w0uhMVFsme5SHZbWK0AeJV
-	h8UhrNT8gSv4q4jlDfGGZLTmEaftCs69NGvJOztbz3mg88BrWHqpnbk7WBE5dhDGeUysB
-X-Gm-Gg: ASbGncvBsBF6kNMUlMR0NWpuUaNkAW/ZWyH5QqH8ZbVI887OpxqZyLWy7CHWy7LaSh7
-	ZEGD+eHKZfVqgNvMY46jTuK81KdFllaNKbLEV9VqgddJP9FCnIS+1mJamDpQ6X7zYv2/5BPmLoR
-	4y8/109MwZNjIvK0j6KEoaZL5hb4AS3FmJx8kUM/i73O3xRz+WhpgpJyIEgxdjg0zxEtfMFuK9o
-	jXO4fdptiXzuR9M5P1nYICpmG2OdVo5n0MgcKSANqNR5DaWOO/pTrRAH4X/6WTSw9rzz7+3BhxF
-	XYUnukAEEnEwDEplVIYuOlDH+OD90w8D77vz7ru0rzpOYSO57HkjZ17tq4albJOWZh7raR7D0wc
-	cB2YRznDlHTQp57LqF1chTQ==
-X-Received: by 2002:a17:903:8cc:b0:23e:1a6e:171e with SMTP id d9443c01a7336-23e25789d06mr7514995ad.51.1752622798189;
-        Tue, 15 Jul 2025 16:39:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFf12jj/HXthN2xljhqv21Hmol41Hu+5CcS5uDGOfODnO8leUZVdIm61q3dSm6XrZYdYl3Kww==
-X-Received: by 2002:a17:903:8cc:b0:23e:1a6e:171e with SMTP id d9443c01a7336-23e25789d06mr7514655ad.51.1752622797749;
-        Tue, 15 Jul 2025 16:39:57 -0700 (PDT)
+        bh=U74p2NgokusBYICtX+RuOyJ/0ZE3xSV0oX91XuR8eNw=;
+        b=W/MOZ5Gl3UeJ3OJldQF1uOzmAeQIOC2pEn+YlX3axpda85d21myN4MziHm4j3Rfg8J
+         rajsHFxQlD2dR7fjNF2vStGj4hF5BmGo5tHZQmLDTq81/zajP3nf4+YQsC8BweIqL8Kg
+         Jz0lzUHkReypExX4uNXPBjUtNjm5fuop+wL6QGkrZXaISUvf/Pny5teQOk4gEfrQO2xe
+         x9JSLxuC4K2wOoSLv4xlKBOuxe8E2TPWL7gBnfSHcaL/3WuTPE2h8CJn6VR6NOFDgvXn
+         jCdEH/koD2bsvtThfOkfgOKtf4c3ghRlsHKq6bwSVvwtMatnottHMSIX89qqlI2LSaGI
+         TCTg==
+X-Gm-Message-State: AOJu0YzLMNArMQX1oS12Wr8aVNcdEcMhxHR/YP1yWCfvtydwyIksMpzn
+	wePoROYUlcSqFH52v7v0cewrmgdrW87ZEnYVkioYhrKAwM/vQH8qcOdKeL6mDxt0UMypm5zCN6g
+	t2JQf1n9t2ftZNm+FxNIeNeweTs4jv+CQqWLrwUxP4s9MIQbYunWqQgbgMnkIF1gMTMaf
+X-Gm-Gg: ASbGnct69GkhkGG1QQPAkvAvPEbdUqOMK0uv89yge6aooVvosxwerkj5F8P5tsZWCv8
+	VoL98oXgN0joP1eXps142vK1KtaN5fJZNIDxcEgjFvF5Sg0JTackrPuyGlUPOjlDuVost3lQgSe
+	zwaaTKFkj+4qFPtd+B8UT+0J7ULieBWxBe9fYvLlCCRvQEshhL9K8FWRIPwu5qUEpeWtuPD77PK
+	5JU+3+x/vNGFJ2YSoiFSnRTK9oXHmfnIrhe6A4Nal3Y7quLxUxangQJ5A+unbImuUELjobdCOiL
+	wTysWoENi3cy0ozFYJBR6xM5UT4tLUOrhYgq1rYWStoHZ7CBFunGjPnA2BcQur904DNn6KkyYed
+	PECuwmuaSrycoGjX/vz10sQ==
+X-Received: by 2002:a17:90b:4f47:b0:2ff:6167:e92d with SMTP id 98e67ed59e1d1-31c9f489b00mr504217a91.32.1752622848216;
+        Tue, 15 Jul 2025 16:40:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTTJbpQZuVeL9T10AqTmZygZig9Img276JHEdkFxvJJ/A1KoaAeYTrUG70jqOz6RxoHxwmBA==
+X-Received: by 2002:a17:90b:4f47:b0:2ff:6167:e92d with SMTP id 98e67ed59e1d1-31c9f489b00mr504193a91.32.1752622847720;
+        Tue, 15 Jul 2025 16:40:47 -0700 (PDT)
 Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de4333e6csm118928995ad.162.2025.07.15.16.39.55
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe6c5660sm12492300a12.48.2025.07.15.16.40.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jul 2025 16:39:57 -0700 (PDT)
-Message-ID: <03f4b74e-9231-43f7-aac1-b2ec1b6cf8ed@oss.qualcomm.com>
-Date: Tue, 15 Jul 2025 16:39:53 -0700
+        Tue, 15 Jul 2025 16:40:47 -0700 (PDT)
+Message-ID: <5ff344a4-cbc5-45a6-9258-9d51c73c24e0@oss.qualcomm.com>
+Date: Tue, 15 Jul 2025 16:40:44 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,76 +89,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: Initialize crtc_state to NULL in
- dpu_plane_virtual_atomic_check()
-To: Nathan Chancellor <nathan@kernel.org>,
+Subject: Re: [PATCH] drm/msm/dpu: correct dpu_plane_virtual_atomic_check()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, llvm@lists.linux.dev,
-        patches@lists.linux.dev, stable@vger.kernel.org
-References: <20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org>
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        kernel test robot <lkp@intel.com>
+References: <20250715-msm-fix-virt-atomic-check-v1-1-9bab02c9f952@oss.qualcomm.com>
 Content-Language: en-US
 From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-In-Reply-To: <20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org>
+In-Reply-To: <20250715-msm-fix-virt-atomic-check-v1-1-9bab02c9f952@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDIxOSBTYWx0ZWRfX0GxKm2/3IUFf
- rpN3+VpyJuA2IvkMImER5jgvTFkClXhhm7U/IH+XpeVqXAJkZANyPBMnFhDF6g8L4moVdTZRrEG
- KvQn/r24baP3/JmJ7D5gWohW109RDIF9oztjvzaCzULi8n+fjRylJ6wvmGGE4/QVt4FsXuTDw8v
- z29bK9LMHtAZ6zKRh4qHHp8BDHtRvUCgk/MPjvvFs1w30FutSNscRs5Atan+WYIi07omMqQZ/+1
- fi3jBW0rLchnqifaLUGrQ3cHAKh/OoVlfzacmuUlFhISQv3B9hOvX0nYggOFHeTmWbLhuyzHrq4
- 7E/ksgfJhfSLZTxsGqvRO4k2wJxnbCa4lDYyw1ZaVpTfv3KRSB6+V0/SxqD/tzKUyH9QOF/Q2yQ
- ZfbW0NrnTCWCdyO90Zbh76l55qwccyM5HnVvYNpglbP6cbdGKFhBjRAiCYpWBKldocf/YMGs
-X-Proofpoint-GUID: IdhINB2wmMcrb4FZlQLgP6oqhvUuh29V
-X-Proofpoint-ORIG-GUID: IdhINB2wmMcrb4FZlQLgP6oqhvUuh29V
-X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=6876e6cf cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=5QVS9psdCSE4z-izM1AA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-ORIG-GUID: efluuDxWG19tvoj-Li4cs2geSqbsJGYS
+X-Authority-Analysis: v=2.4 cv=D4xHKuRj c=1 sm=1 tr=0 ts=6876e701 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8
+ a=EUspDBNiAAAA:8 a=kWyCMJcj1dDTDgwf64UA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: efluuDxWG19tvoj-Li4cs2geSqbsJGYS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDIxOSBTYWx0ZWRfXwBeTqlxERxmL
+ t1WvPsJvtwuYXCS+/7a/5Q5eTDj/PG5R/358B2Obnz66h8Ffu4wHaxk8nQRjDZCfsHr6VMqJ1BX
+ 368/abvIwG+t2S39fdC1F4z969JXrV0th2gGAOuTZMc/w9kd6Uk4wmN4DkdM31YT6Gj2YHn/oMF
+ u08LqxWGJPZelovHhNaNNqtDzqiw0qEU/2+rumk8a1/BCjWXenbIBHRb4rhl3Pxtr1EjqQPMRhI
+ 3+E6+BTofWw2WskwHw8chpIdOk2Sr2qFzfJAjzLwR8LeKPjkxGzm0grYroDbSb4+vrzJfUsdYtK
+ II/7Z+EboUK6/QGErKWLSepg8LQtyJJbF6fBhNY6i0NlmOBadIPsSAQZLYKm1f/hNgEDq4NAiZm
+ 4k/FaI2RdhAutK2goi2NaTI3wfzGhCiPUxBQG3FF55TsDO9llssOhqMvzG3SMmeFE1LaH1m0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-15_05,2025-07-15_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507150219
+ adultscore=0 mlxlogscore=845 impostorscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507150219
 
 
 
-On 7/15/2025 4:27 PM, Nathan Chancellor wrote:
-> After a recent change in clang to expose uninitialized warnings from
-> const variables and pointers [1], there is a warning around crtc_state
-> in dpu_plane_virtual_atomic_check():
+On 7/15/2025 10:28 AM, Dmitry Baryshkov wrote:
+> Fix c&p error in dpu_plane_virtual_atomic_check(), compare CRTC width
+> too, in addition to CRTC height.
 > 
->    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1145:6: error: variable 'crtc_state' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->     1145 |         if (plane_state->crtc)
->          |             ^~~~~~~~~~~~~~~~~
->    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1149:58: note: uninitialized use occurs here
->     1149 |         ret = dpu_plane_atomic_check_nosspp(plane, plane_state, crtc_state);
->          |                                                                 ^~~~~~~~~~
->    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1145:2: note: remove the 'if' if its condition is always true
->     1145 |         if (plane_state->crtc)
->          |         ^~~~~~~~~~~~~~~~~~~~~~
->     1146 |                 crtc_state = drm_atomic_get_new_crtc_state(state,
->    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1139:35: note: initialize the variable 'crtc_state' to silence this warning
->     1139 |         struct drm_crtc_state *crtc_state;
->          |                                          ^
->          |                                           = NULL
-> 
-> Initialize crtc_state to NULL like other places in the driver do, so
-> that it is consistently initialized.
-> 
-> Cc: stable@vger.kernel.org
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2106
-> Fixes: 774bcfb73176 ("drm/msm/dpu: add support for virtual planes")
-> Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Fixes: 8c62a31607f6 ("drm/msm/dpu: allow using two SSPP blocks for a single plane")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202507150432.U0cALR6W-lkp@intel.com/
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
@@ -168,26 +148,23 @@ Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 421138bc3cb7..30ff21c01a36 100644
+> index 01171c535a27c8983aab6450d6f7a4316ae9c4ee..c722f54e71b03b78f3de82fec4f2d291d95bbba3 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1136,7 +1136,7 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
->   	struct drm_plane_state *old_plane_state =
->   		drm_atomic_get_old_plane_state(state, plane);
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(plane_state);
-> -	struct drm_crtc_state *crtc_state;
-> +	struct drm_crtc_state *crtc_state = NULL;
->   	int ret;
->   
->   	if (IS_ERR(plane_state))
+> @@ -1162,7 +1162,7 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>   	if (!old_plane_state || !old_plane_state->fb ||
+>   	    old_plane_state->src_w != plane_state->src_w ||
+>   	    old_plane_state->src_h != plane_state->src_h ||
+> -	    old_plane_state->src_w != plane_state->src_w ||
+> +	    old_plane_state->crtc_w != plane_state->crtc_w ||
+>   	    old_plane_state->crtc_h != plane_state->crtc_h ||
+>   	    msm_framebuffer_format(old_plane_state->fb) !=
+>   	    msm_framebuffer_format(plane_state->fb))
 > 
 > ---
-> base-commit: d3deabe4c619875714b9a844b1a3d9752dbae1dd
-> change-id: 20250715-drm-msm-fix-const-uninit-warning-2b93cef9f1c6
+> base-commit: 8290d37ad2b087bbcfe65fa5bcaf260e184b250a
+> change-id: 20250715-msm-fix-virt-atomic-check-ae38fcfd9e08
 > 
 > Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
-> 
 
 
