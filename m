@@ -1,173 +1,2123 @@
-Return-Path: <linux-arm-msm+bounces-65046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE117B05C8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:33:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0712DB05C90
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:33:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EAF331C24EB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 13:31:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 316497ACF09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 13:29:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 854652E7BA5;
-	Tue, 15 Jul 2025 13:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC282E9739;
+	Tue, 15 Jul 2025 13:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="K2BGU8cB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2cSA3mT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBD42E2F12;
-	Tue, 15 Jul 2025 13:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586038; cv=pass; b=Dx8ubmTLNHSSLNPfzctarrQBI53ZSnStkHoOBDBx8VcPm463pkvaAhykwlHeThmZDciieiCnMClYCD+/u1DK333OrP5iefW0a+Co2vMZoaeXDJl6OCBcsY02RRjb4itWGp38TuVbNqi66MWFR2TKYZIwL2NaGhfLurF9Px6jsEY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586038; c=relaxed/simple;
-	bh=nZ8L4CNPFWLdv3DnqHL3TaBlkT7ADo8ZfSs7NvwAMPY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OceNyGOl05LNVbQQvbVj5eFVnC2CiiJ+Za03jeXRKeGVzHfcablzcb4vjZYfWDhTVKF8wkQpQttQob+dkwl2D/lRwtd7JtCZVfW0U70GGVa0sbNTpikNuiZKq1MadyaWD3mpxR3mNrhvXyoWQ60GkIP3y9Ip3RvVRnMSD4BbFwk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=K2BGU8cB; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1752585934; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=iS8ydypJ5Ytea+qvuAIEasiV3zxEFaxKCuidthawyGncohprwE+IyNB7RvXvm2+00iqj2xIeQQT/mBiqdbi/UtwNxpNmKUxa/NcWp19/Qj7gM0d9BxTkO7y8NZixVv+Vre8lQ/bTPlF4i3W5wpNdvgLMqzKKELWtVYVnw52rIdw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1752585934; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=khWqCIhyOZuc5K6Or8KOBVZRXHfT5Uql8gBWeLi0Yps=; 
-	b=j3SrtF1361SUCcdQZ9ZraZxDLOnB2hbduI/8yP+1ryWIIUvUhTvbt6JEHIo4y6HGghGBUlXK4arXBDMR+ZW5n/y6zyDk9xUobsGaOlJ19moCu0CuCA3qfekMqeypx106ksmn/Ru+HR4+45pZYuG0FEtEUSFO3w10OWSX3cVO2KU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1752585934;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Reply-To;
-	bh=khWqCIhyOZuc5K6Or8KOBVZRXHfT5Uql8gBWeLi0Yps=;
-	b=K2BGU8cBPn31wLpVvwj1Z4IFsUiSDA83EWM15n+b1C8kesw+QALaSdmpEDcWOQUU
-	aPuF0fkD4fspDBCB/zXzND588GJsf6hNeLsV0WOIB9LwRa33S+e1jpQo8+pPTGjdKNz
-	/ctWi6ynB9OQGpv9PYTSWDSPRZg+EYTB41F/vdic=
-Received: by mx.zohomail.com with SMTPS id 1752585931663919.1784462606722;
-	Tue, 15 Jul 2025 06:25:31 -0700 (PDT)
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-To: Manivannan Sadhasivam <mani@kernel.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Matthew Leung <quic_mattleun@quicinc.com>,
-	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Yan Zhen <yanzhen@vivo.com>,
-	Sujeev Dias <sdias@codeaurora.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Siddartha Mohanadoss <smohanad@codeaurora.org>,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: kernel@collabora.com,
-	stable@vger.kernel.org
-Subject: [PATCH v2 3/3] bus: mhi: keep device context through suspend cycles
-Date: Tue, 15 Jul 2025 18:25:09 +0500
-Message-Id: <20250715132509.2643305-4-usama.anjum@collabora.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250715132509.2643305-1-usama.anjum@collabora.com>
-References: <20250715132509.2643305-1-usama.anjum@collabora.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC732E972C;
+	Tue, 15 Jul 2025 13:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752586015; cv=none; b=h13awvJ3uvv9/YiaXw9y1K62g7BWr1OU2Fz/Xug3HIcg6JX8eyOlZh8qo9PescF5gGLmq3ZofNDhOfjf5EM2UGQqtssqHoHDWrC5cqoWc0Ac1sCaNyRUIPKkAag3F9WWzlg9OyI7FWCB1SsoSkipBUSoXZdJRLiL+5Iknrn10VQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752586015; c=relaxed/simple;
+	bh=sC8vJMhvpQvCDQFzWFNH2MzQ3d4vxhJwtFi6LHK3rSo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Nbuw5a9bdknn3O+FE3DxCpZf46ahpOgsMdCtp0T0NJYeUFACWWtvNleXwu6I4gxPqddi99S7FXaJVCr0ROiBWTSIRrFStaG8Q0ftf3YzZT1Hzv1iGdLi0VMcB55pwHB7H8HKSWHVVMPszVd/n6J1XvYmne/X/RZ9q2LUsIv4Bn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2cSA3mT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5469FC4CEE3;
+	Tue, 15 Jul 2025 13:26:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752586015;
+	bh=sC8vJMhvpQvCDQFzWFNH2MzQ3d4vxhJwtFi6LHK3rSo=;
+	h=From:Date:Subject:To:Cc:From;
+	b=F2cSA3mT+oeMSD61rFYIXp4+Swd7YGQanyuJH0KCDYpwfBTo0DUkcAeF58b9Aw57I
+	 49GAULXgofYVBqqXPNkIXvC+rbiZJzcle1eSaFi55iYGS13V9DLi16JbmA7NHsDfik
+	 mpmtStp8sUTfIhpwNfD6D5hzzSDs3kxZzU6XRreoevGEy2s5TGerv/EowaanB+yG5f
+	 UCkIOzdn4zXzxUNFG+R2BiuoTICBkRKnosYp7ac2usPSqk/5tV0t+s9+xbqS4qJBkd
+	 WefWsVPl8+1LaWJAfmBQFvxpmvS3DBwtA8ACd+Y5QXlSA38dbI021GJqSElnWw+n/j
+	 qhQbjUPS4LF7w==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Tue, 15 Jul 2025 15:26:46 +0200
+Subject: [PATCH] arm64: dts: qcom: Remove sdm845-cheza boards
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABVXdmgC/x3MTQqAIBBA4avIrBOykH6uEhFpo85GQyUi6e5Jy
+ 2/xXoGEkTDBzApEvChR8BWiYaDd7i1yOqqhazvZDkLyHE7S3IZweLIub9rhs3MldD8qY6ZeKqj
+ tGdHQ/X+X9X0/9lRa9mcAAAA=
+X-Change-ID: 20250715-topic-goodnight_cheza-b1c38bff935b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752586010; l=48432;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=nL7/P4CISDBCm5jYLRzU8q2+2zA1YsJiQ52IpXna5fE=;
+ b=l8nP2WuLR+zXa6XjCgqqKEntt2NCJjvNEgtdRYPWsX6V/adks/csN0m07f6XLNnjj1hBAeGTu
+ Dii9cWi2J4vBh0Ci8E0rxrlkPScX7FqJGs6B/Ic65jeIh6NjV2rQHes
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Don't deinitialize the device context while going into suspend or
-hibernation cycles. Otherwise the resume may fail if at resume time, the
-memory pressure is high and no dma memory is available. At resume, only
-reset the read/write ring pointers as rings may have stale data.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+Cheza was a prototype board, used mainly by the ChromeOS folks, whose
+former efforts on making linux-arm-msm better we greatly appreciate.
 
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+There are close to zero known-working devices at this point in time
+(see the link below) and it was never productized.
+
+Remove it to ease maintenance burden.
+
+Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Changes since v1:
-- Cc stable and fix tested on tag
-- Add logic to reset rings at resume
----
- drivers/bus/mhi/host/init.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/Makefile            |    3 -
+ arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
+ arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
+ arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------------
+ 5 files changed, 1983 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 46ed0ae2ac285..6513012311ce3 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -474,6 +474,24 @@ static int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
- 	return ret;
- }
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 4bfa926b6a0850c3c459bcba28129c559d50a7cf..67546d46dfacd1517c5bf67710a40cc40048b3cd 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -231,9 +231,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-motorola-ocean.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-sargo.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
  
-+static void mhi_reset_dev_rings(struct mhi_controller *mhi_cntrl)
-+{
-+	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
-+	struct mhi_cmd *mhi_cmd = mhi_cntrl->mhi_cmd;
-+	struct mhi_ring *ring;
-+	int i;
-+
-+	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
-+		ring = &mhi_event->ring;
-+		ring->rp = ring->wp = ring->base;
-+	}
-+
-+	for (i = 0; i < NR_OF_CMD_RINGS; i++, mhi_cmd++) {
-+		ring = &mhi_cmd->ring;
-+		ring->rp = ring->wp = ring->base;
-+	}
-+}
-+
- int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- {
- 	u32 val;
-@@ -1133,9 +1151,13 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	mutex_lock(&mhi_cntrl->pm_mutex);
- 
--	ret = mhi_init_dev_ctxt(mhi_cntrl);
--	if (ret)
--		goto error_dev_ctxt;
-+	if (!mhi_cntrl->mhi_ctxt) {
-+		ret = mhi_init_dev_ctxt(mhi_cntrl);
-+		if (ret)
-+			goto error_dev_ctxt;
-+	} else {
-+		mhi_reset_dev_rings(mhi_cntrl);
-+	}
- 
- 	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, BHIOFF, &bhi_off);
- 	if (ret) {
-@@ -1212,8 +1234,6 @@ void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl)
- {
- 	mhi_cntrl->bhi = NULL;
- 	mhi_cntrl->bhie = NULL;
+ sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts b/arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts
+deleted file mode 100644
+index bd7c25bb8d35b191aac2997b4e4c9e637384aa79..0000000000000000000000000000000000000000
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts
++++ /dev/null
+@@ -1,238 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+-/*
+- * Google Cheza board device tree source
+- *
+- * Copyright 2018 Google LLC.
+- */
 -
--	__mhi_deinit_dev_ctxt(mhi_cntrl);
- }
- 
- void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
-@@ -1239,6 +1259,7 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
- 	}
- 
- 	mhi_deinit_dev_ctxt(mhi_cntrl);
-+	__mhi_deinit_dev_ctxt(mhi_cntrl);
- }
- EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
- 
+-/dts-v1/;
+-
+-#include "sdm845-cheza.dtsi"
+-
+-/ {
+-	model = "Google Cheza (rev1)";
+-	compatible = "google,cheza-rev1", "qcom,sdm845";
+-
+-	/*
+-	 * FIXED REGULATORS (not in sdm845-cheza.dtsi) - parents above children
+-	 */
+-
+-	/*
+-	 * NOTE: Technically pp3500_a is not the exact same signal as
+-	 * pp3500_a_vbob (there's a load switch between them and the EC can
+-	 * control pp3500_a via "en_pp3300_a"), but from the AP's point of
+-	 * view they are the same.
+-	 */
+-	pp3500_a:
+-	pp3500_a_vbob: pp3500-a-vbob-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "vreg_bob";
+-
+-		/*
+-		 * Comes on automatically when pp5000_ldo comes on, which
+-		 * comes on automatically when ppvar_sys comes on
+-		 */
+-		regulator-always-on;
+-		regulator-boot-on;
+-		regulator-min-microvolt = <3500000>;
+-		regulator-max-microvolt = <3500000>;
+-
+-		vin-supply = <&ppvar_sys>;
+-	};
+-
+-	pp3300_dx_edp: pp3300-dx-edp-regulator {
+-		/* Yes, it's really 3.5 despite the name of the signal */
+-		regulator-min-microvolt = <3500000>;
+-		regulator-max-microvolt = <3500000>;
+-
+-		vin-supply = <&pp3500_a>;
+-	};
+-};
+-
+-/* FIXED REGULATOR OVERRIDES (modifications to sdm845-cheza.dtsi) */
+-
+-/*
+- * L19 and L28 technically go to 3.3V, but most boards have old AOP firmware
+- * that limits them to 3.0, and trying to run at 3.3V with that old firmware
+- * prevents the system from booting.
+- */
+-&src_pp3000_l19a {
+-	regulator-min-microvolt = <3008000>;
+-	regulator-max-microvolt = <3008000>;
+-};
+-
+-&src_pp3300_l22a {
+-	/delete-property/regulator-boot-on;
+-	/delete-property/regulator-always-on;
+-};
+-
+-&src_pp3300_l28a {
+-	regulator-min-microvolt = <3008000>;
+-	regulator-max-microvolt = <3008000>;
+-};
+-
+-&src_vreg_bob {
+-	regulator-min-microvolt = <3500000>;
+-	regulator-max-microvolt = <3500000>;
+-	vin-supply = <&pp3500_a_vbob>;
+-};
+-
+-/*
+- * NON-REGULATOR OVERRIDES
+- * (modifications to sdm845-cheza.dtsi) - alphabetized by dtsi label
+- */
+-
+-/* PINCTRL - board-specific pinctrl */
+-
+-&tlmm {
+-	gpio-line-names = "AP_SPI_FP_MISO",
+-			  "AP_SPI_FP_MOSI",
+-			  "AP_SPI_FP_CLK",
+-			  "AP_SPI_FP_CS_L",
+-			  "UART_AP_TX_DBG_RX",
+-			  "UART_DBG_TX_AP_RX",
+-			  "",
+-			  "FP_RST_L",
+-			  "FCAM_EN",
+-			  "",
+-			  "EDP_BRIJ_IRQ",
+-			  "EC_IN_RW_ODL",
+-			  "",
+-			  "RCAM_MCLK",
+-			  "FCAM_MCLK",
+-			  "",
+-			  "RCAM_EN",
+-			  "CCI0_SDA",
+-			  "CCI0_SCL",
+-			  "CCI1_SDA",
+-			  "CCI1_SCL",
+-			  "FCAM_RST_L",
+-			  "",
+-			  "PEN_RST_L",
+-			  "PEN_IRQ_L",
+-			  "",
+-			  "RCAM_VSYNC",
+-			  "ESIM_MISO",
+-			  "ESIM_MOSI",
+-			  "ESIM_CLK",
+-			  "ESIM_CS_L",
+-			  "AP_PEN_1V8_SDA",
+-			  "AP_PEN_1V8_SCL",
+-			  "AP_TS_I2C_SDA",
+-			  "AP_TS_I2C_SCL",
+-			  "RCAM_RST_L",
+-			  "",
+-			  "AP_EDP_BKLTEN",
+-			  "AP_BRD_ID1",
+-			  "BOOT_CONFIG_4",
+-			  "AMP_IRQ_L",
+-			  "EDP_BRIJ_I2C_SDA",
+-			  "EDP_BRIJ_I2C_SCL",
+-			  "EN_PP3300_DX_EDP",
+-			  "SD_CD_ODL",
+-			  "BT_UART_RTS",
+-			  "BT_UART_CTS",
+-			  "BT_UART_RXD",
+-			  "BT_UART_TXD",
+-			  "AMP_I2C_SDA",
+-			  "AMP_I2C_SCL",
+-			  "AP_BRD_ID3",
+-			  "",
+-			  "AP_EC_SPI_CLK",
+-			  "AP_EC_SPI_CS_L",
+-			  "AP_EC_SPI_MISO",
+-			  "AP_EC_SPI_MOSI",
+-			  "FORCED_USB_BOOT",
+-			  "AMP_BCLK",
+-			  "AMP_LRCLK",
+-			  "AMP_DOUT",
+-			  "AMP_DIN",
+-			  "AP_BRD_ID2",
+-			  "PEN_PDCT_L",
+-			  "HP_MCLK",
+-			  "HP_BCLK",
+-			  "HP_LRCLK",
+-			  "HP_DOUT",
+-			  "HP_DIN",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "BT_SLIMBUS_DATA",
+-			  "BT_SLIMBUS_CLK",
+-			  "AMP_RESET_L",
+-			  "",
+-			  "FCAM_VSYNC",
+-			  "",
+-			  "AP_SKU_ID1",
+-			  "EC_WOV_BCLK",
+-			  "EC_WOV_LRCLK",
+-			  "EC_WOV_DOUT",
+-			  "",
+-			  "",
+-			  "AP_H1_SPI_MISO",
+-			  "AP_H1_SPI_MOSI",
+-			  "AP_H1_SPI_CLK",
+-			  "AP_H1_SPI_CS_L",
+-			  "",
+-			  "AP_SPI_CS0_L",
+-			  "AP_SPI_MOSI",
+-			  "AP_SPI_MISO",
+-			  "",
+-			  "",
+-			  "AP_SPI_CLK",
+-			  "",
+-			  "RFFE6_CLK",
+-			  "RFFE6_DATA",
+-			  "BOOT_CONFIG_1",
+-			  "BOOT_CONFIG_2",
+-			  "BOOT_CONFIG_0",
+-			  "EDP_BRIJ_EN",
+-			  "",
+-			  "USB_HS_TX_EN",
+-			  "UIM2_DATA",
+-			  "UIM2_CLK",
+-			  "UIM2_RST",
+-			  "UIM2_PRESENT",
+-			  "UIM1_DATA",
+-			  "UIM1_CLK",
+-			  "UIM1_RST",
+-			  "",
+-			  "AP_SKU_ID2",
+-			  "SDM_GRFC_8",
+-			  "SDM_GRFC_9",
+-			  "AP_RST_REQ",
+-			  "HP_IRQ",
+-			  "TS_RESET_L",
+-			  "PEN_EJECT_ODL",
+-			  "HUB_RST_L",
+-			  "FP_TO_AP_IRQ",
+-			  "AP_EC_INT_L",
+-			  "",
+-			  "",
+-			  "TS_INT_L",
+-			  "AP_SUSPEND_L",
+-			  "SDM_GRFC_3",
+-			  "",
+-			  "H1_AP_INT_ODL",
+-			  "QLINK_REQ",
+-			  "QLINK_EN",
+-			  "SDM_GRFC_2",
+-			  "BOOT_CONFIG_3",
+-			  "WMSS_RESET_L",
+-			  "SDM_GRFC_0",
+-			  "SDM_GRFC_1",
+-			  "RFFE3_DATA",
+-			  "RFFE3_CLK",
+-			  "RFFE4_DATA",
+-			  "RFFE4_CLK",
+-			  "RFFE5_DATA",
+-			  "RFFE5_CLK",
+-			  "GNSS_EN",
+-			  "WCI2_LTE_COEX_RXD",
+-			  "WCI2_LTE_COEX_TXD",
+-			  "AP_RAM_ID1",
+-			  "AP_RAM_ID2",
+-			  "RFFE1_DATA",
+-			  "RFFE1_CLK";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts b/arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts
+deleted file mode 100644
+index 2b7230594ecbc18b3bb37b929fa91ff4a888bf84..0000000000000000000000000000000000000000
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts
++++ /dev/null
+@@ -1,238 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+-/*
+- * Google Cheza board device tree source
+- *
+- * Copyright 2018 Google LLC.
+- */
+-
+-/dts-v1/;
+-
+-#include "sdm845-cheza.dtsi"
+-
+-/ {
+-	model = "Google Cheza (rev2)";
+-	compatible = "google,cheza-rev2", "qcom,sdm845";
+-
+-	/*
+-	 * FIXED REGULATORS (not in sdm845-cheza.dtsi) - parents above children
+-	 */
+-
+-	/*
+-	 * NOTE: Technically pp3500_a is not the exact same signal as
+-	 * pp3500_a_vbob (there's a load switch between them and the EC can
+-	 * control pp3500_a via "en_pp3300_a"), but from the AP's point of
+-	 * view they are the same.
+-	 */
+-	pp3500_a:
+-	pp3500_a_vbob: pp3500-a-vbob-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "vreg_bob";
+-
+-		/*
+-		 * Comes on automatically when pp5000_ldo comes on, which
+-		 * comes on automatically when ppvar_sys comes on
+-		 */
+-		regulator-always-on;
+-		regulator-boot-on;
+-		regulator-min-microvolt = <3500000>;
+-		regulator-max-microvolt = <3500000>;
+-
+-		vin-supply = <&ppvar_sys>;
+-	};
+-
+-	pp3300_dx_edp: pp3300-dx-edp-regulator {
+-		/* Yes, it's really 3.5 despite the name of the signal */
+-		regulator-min-microvolt = <3500000>;
+-		regulator-max-microvolt = <3500000>;
+-
+-		vin-supply = <&pp3500_a>;
+-	};
+-};
+-
+-/* FIXED REGULATOR OVERRIDES (modifications to sdm845-cheza.dtsi) */
+-
+-/*
+- * L19 and L28 technically go to 3.3V, but most boards have old AOP firmware
+- * that limits them to 3.0, and trying to run at 3.3V with that old firmware
+- * prevents the system from booting.
+- */
+-&src_pp3000_l19a {
+-	regulator-min-microvolt = <3008000>;
+-	regulator-max-microvolt = <3008000>;
+-};
+-
+-&src_pp3300_l22a {
+-	/delete-property/regulator-boot-on;
+-	/delete-property/regulator-always-on;
+-};
+-
+-&src_pp3300_l28a {
+-	regulator-min-microvolt = <3008000>;
+-	regulator-max-microvolt = <3008000>;
+-};
+-
+-&src_vreg_bob {
+-	regulator-min-microvolt = <3500000>;
+-	regulator-max-microvolt = <3500000>;
+-	vin-supply = <&pp3500_a_vbob>;
+-};
+-
+-/*
+- * NON-REGULATOR OVERRIDES
+- * (modifications to sdm845-cheza.dtsi) - alphabetized by dtsi label
+- */
+-
+-/* PINCTRL - board-specific pinctrl */
+-
+-&tlmm {
+-	gpio-line-names = "AP_SPI_FP_MISO",
+-			  "AP_SPI_FP_MOSI",
+-			  "AP_SPI_FP_CLK",
+-			  "AP_SPI_FP_CS_L",
+-			  "UART_AP_TX_DBG_RX",
+-			  "UART_DBG_TX_AP_RX",
+-			  "BRIJ_SUSPEND",
+-			  "FP_RST_L",
+-			  "FCAM_EN",
+-			  "",
+-			  "EDP_BRIJ_IRQ",
+-			  "EC_IN_RW_ODL",
+-			  "",
+-			  "RCAM_MCLK",
+-			  "FCAM_MCLK",
+-			  "",
+-			  "RCAM_EN",
+-			  "CCI0_SDA",
+-			  "CCI0_SCL",
+-			  "CCI1_SDA",
+-			  "CCI1_SCL",
+-			  "FCAM_RST_L",
+-			  "FPMCU_BOOT0",
+-			  "PEN_RST_L",
+-			  "PEN_IRQ_L",
+-			  "FPMCU_SEL_OD",
+-			  "RCAM_VSYNC",
+-			  "ESIM_MISO",
+-			  "ESIM_MOSI",
+-			  "ESIM_CLK",
+-			  "ESIM_CS_L",
+-			  "AP_PEN_1V8_SDA",
+-			  "AP_PEN_1V8_SCL",
+-			  "AP_TS_I2C_SDA",
+-			  "AP_TS_I2C_SCL",
+-			  "RCAM_RST_L",
+-			  "",
+-			  "AP_EDP_BKLTEN",
+-			  "AP_BRD_ID1",
+-			  "BOOT_CONFIG_4",
+-			  "AMP_IRQ_L",
+-			  "EDP_BRIJ_I2C_SDA",
+-			  "EDP_BRIJ_I2C_SCL",
+-			  "EN_PP3300_DX_EDP",
+-			  "SD_CD_ODL",
+-			  "BT_UART_RTS",
+-			  "BT_UART_CTS",
+-			  "BT_UART_RXD",
+-			  "BT_UART_TXD",
+-			  "AMP_I2C_SDA",
+-			  "AMP_I2C_SCL",
+-			  "AP_BRD_ID3",
+-			  "",
+-			  "AP_EC_SPI_CLK",
+-			  "AP_EC_SPI_CS_L",
+-			  "AP_EC_SPI_MISO",
+-			  "AP_EC_SPI_MOSI",
+-			  "FORCED_USB_BOOT",
+-			  "AMP_BCLK",
+-			  "AMP_LRCLK",
+-			  "AMP_DOUT",
+-			  "AMP_DIN",
+-			  "AP_BRD_ID2",
+-			  "PEN_PDCT_L",
+-			  "HP_MCLK",
+-			  "HP_BCLK",
+-			  "HP_LRCLK",
+-			  "HP_DOUT",
+-			  "HP_DIN",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "BT_SLIMBUS_DATA",
+-			  "BT_SLIMBUS_CLK",
+-			  "AMP_RESET_L",
+-			  "",
+-			  "FCAM_VSYNC",
+-			  "",
+-			  "AP_SKU_ID1",
+-			  "EC_WOV_BCLK",
+-			  "EC_WOV_LRCLK",
+-			  "EC_WOV_DOUT",
+-			  "",
+-			  "",
+-			  "AP_H1_SPI_MISO",
+-			  "AP_H1_SPI_MOSI",
+-			  "AP_H1_SPI_CLK",
+-			  "AP_H1_SPI_CS_L",
+-			  "",
+-			  "AP_SPI_CS0_L",
+-			  "AP_SPI_MOSI",
+-			  "AP_SPI_MISO",
+-			  "",
+-			  "",
+-			  "AP_SPI_CLK",
+-			  "",
+-			  "RFFE6_CLK",
+-			  "RFFE6_DATA",
+-			  "BOOT_CONFIG_1",
+-			  "BOOT_CONFIG_2",
+-			  "BOOT_CONFIG_0",
+-			  "EDP_BRIJ_EN",
+-			  "",
+-			  "USB_HS_TX_EN",
+-			  "UIM2_DATA",
+-			  "UIM2_CLK",
+-			  "UIM2_RST",
+-			  "UIM2_PRESENT",
+-			  "UIM1_DATA",
+-			  "UIM1_CLK",
+-			  "UIM1_RST",
+-			  "",
+-			  "AP_SKU_ID2",
+-			  "SDM_GRFC_8",
+-			  "SDM_GRFC_9",
+-			  "AP_RST_REQ",
+-			  "HP_IRQ",
+-			  "TS_RESET_L",
+-			  "PEN_EJECT_ODL",
+-			  "HUB_RST_L",
+-			  "FP_TO_AP_IRQ",
+-			  "AP_EC_INT_L",
+-			  "",
+-			  "",
+-			  "TS_INT_L",
+-			  "AP_SUSPEND_L",
+-			  "SDM_GRFC_3",
+-			  "",
+-			  "H1_AP_INT_ODL",
+-			  "QLINK_REQ",
+-			  "QLINK_EN",
+-			  "SDM_GRFC_2",
+-			  "BOOT_CONFIG_3",
+-			  "WMSS_RESET_L",
+-			  "SDM_GRFC_0",
+-			  "SDM_GRFC_1",
+-			  "RFFE3_DATA",
+-			  "RFFE3_CLK",
+-			  "RFFE4_DATA",
+-			  "RFFE4_CLK",
+-			  "RFFE5_DATA",
+-			  "RFFE5_CLK",
+-			  "GNSS_EN",
+-			  "WCI2_LTE_COEX_RXD",
+-			  "WCI2_LTE_COEX_TXD",
+-			  "AP_RAM_ID1",
+-			  "AP_RAM_ID2",
+-			  "RFFE1_DATA",
+-			  "RFFE1_CLK";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts b/arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts
+deleted file mode 100644
+index 1ba67be08f81ade184bc49ca3c1dde743c22c8cb..0000000000000000000000000000000000000000
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts
++++ /dev/null
+@@ -1,174 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+-/*
+- * Google Cheza board device tree source
+- *
+- * Copyright 2018 Google LLC.
+- */
+-
+-/dts-v1/;
+-
+-#include "sdm845-cheza.dtsi"
+-
+-/ {
+-	model = "Google Cheza (rev3+)";
+-	compatible = "google,cheza", "qcom,sdm845";
+-};
+-
+-/* PINCTRL - board-specific pinctrl */
+-
+-&tlmm {
+-	gpio-line-names = "AP_SPI_FP_MISO",
+-			  "AP_SPI_FP_MOSI",
+-			  "AP_SPI_FP_CLK",
+-			  "AP_SPI_FP_CS_L",
+-			  "UART_AP_TX_DBG_RX",
+-			  "UART_DBG_TX_AP_RX",
+-			  "BRIJ_SUSPEND",
+-			  "FP_RST_L",
+-			  "FCAM_EN",
+-			  "",
+-			  "EDP_BRIJ_IRQ",
+-			  "EC_IN_RW_ODL",
+-			  "",
+-			  "RCAM_MCLK",
+-			  "FCAM_MCLK",
+-			  "",
+-			  "RCAM_EN",
+-			  "CCI0_SDA",
+-			  "CCI0_SCL",
+-			  "CCI1_SDA",
+-			  "CCI1_SCL",
+-			  "FCAM_RST_L",
+-			  "FPMCU_BOOT0",
+-			  "PEN_RST_L",
+-			  "PEN_IRQ_L",
+-			  "FPMCU_SEL_OD",
+-			  "RCAM_VSYNC",
+-			  "ESIM_MISO",
+-			  "ESIM_MOSI",
+-			  "ESIM_CLK",
+-			  "ESIM_CS_L",
+-			  "AP_PEN_1V8_SDA",
+-			  "AP_PEN_1V8_SCL",
+-			  "AP_TS_I2C_SDA",
+-			  "AP_TS_I2C_SCL",
+-			  "RCAM_RST_L",
+-			  "",
+-			  "AP_EDP_BKLTEN",
+-			  "AP_BRD_ID0",
+-			  "BOOT_CONFIG_4",
+-			  "AMP_IRQ_L",
+-			  "EDP_BRIJ_I2C_SDA",
+-			  "EDP_BRIJ_I2C_SCL",
+-			  "EN_PP3300_DX_EDP",
+-			  "SD_CD_ODL",
+-			  "BT_UART_RTS",
+-			  "BT_UART_CTS",
+-			  "BT_UART_RXD",
+-			  "BT_UART_TXD",
+-			  "AMP_I2C_SDA",
+-			  "AMP_I2C_SCL",
+-			  "AP_BRD_ID2",
+-			  "",
+-			  "AP_EC_SPI_CLK",
+-			  "AP_EC_SPI_CS_L",
+-			  "AP_EC_SPI_MISO",
+-			  "AP_EC_SPI_MOSI",
+-			  "FORCED_USB_BOOT",
+-			  "AMP_BCLK",
+-			  "AMP_LRCLK",
+-			  "AMP_DOUT",
+-			  "AMP_DIN",
+-			  "AP_BRD_ID1",
+-			  "PEN_PDCT_L",
+-			  "HP_MCLK",
+-			  "HP_BCLK",
+-			  "HP_LRCLK",
+-			  "HP_DOUT",
+-			  "HP_DIN",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "BT_SLIMBUS_DATA",
+-			  "BT_SLIMBUS_CLK",
+-			  "AMP_RESET_L",
+-			  "",
+-			  "FCAM_VSYNC",
+-			  "",
+-			  "AP_SKU_ID0",
+-			  "EC_WOV_BCLK",
+-			  "EC_WOV_LRCLK",
+-			  "EC_WOV_DOUT",
+-			  "",
+-			  "",
+-			  "AP_H1_SPI_MISO",
+-			  "AP_H1_SPI_MOSI",
+-			  "AP_H1_SPI_CLK",
+-			  "AP_H1_SPI_CS_L",
+-			  "",
+-			  "AP_SPI_CS0_L",
+-			  "AP_SPI_MOSI",
+-			  "AP_SPI_MISO",
+-			  "",
+-			  "",
+-			  "AP_SPI_CLK",
+-			  "",
+-			  "RFFE6_CLK",
+-			  "RFFE6_DATA",
+-			  "BOOT_CONFIG_1",
+-			  "BOOT_CONFIG_2",
+-			  "BOOT_CONFIG_0",
+-			  "EDP_BRIJ_EN",
+-			  "",
+-			  "USB_HS_TX_EN",
+-			  "UIM2_DATA",
+-			  "UIM2_CLK",
+-			  "UIM2_RST",
+-			  "UIM2_PRESENT",
+-			  "UIM1_DATA",
+-			  "UIM1_CLK",
+-			  "UIM1_RST",
+-			  "",
+-			  "AP_SKU_ID1",
+-			  "SDM_GRFC_8",
+-			  "SDM_GRFC_9",
+-			  "AP_RST_REQ",
+-			  "HP_IRQ",
+-			  "TS_RESET_L",
+-			  "PEN_EJECT_ODL",
+-			  "HUB_RST_L",
+-			  "FP_TO_AP_IRQ",
+-			  "AP_EC_INT_L",
+-			  "",
+-			  "",
+-			  "TS_INT_L",
+-			  "AP_SUSPEND_L",
+-			  "SDM_GRFC_3",
+-			  /*
+-			   * AP_FLASH_WP_L is crossystem ABI. Rev3 schematics
+-			   * call it BIOS_FLASH_WP_R_L.
+-			   */
+-			  "AP_FLASH_WP_L",
+-			  "H1_AP_INT_ODL",
+-			  "QLINK_REQ",
+-			  "QLINK_EN",
+-			  "SDM_GRFC_2",
+-			  "BOOT_CONFIG_3",
+-			  "WMSS_RESET_L",
+-			  "SDM_GRFC_0",
+-			  "SDM_GRFC_1",
+-			  "RFFE3_DATA",
+-			  "RFFE3_CLK",
+-			  "RFFE4_DATA",
+-			  "RFFE4_CLK",
+-			  "RFFE5_DATA",
+-			  "RFFE5_CLK",
+-			  "GNSS_EN",
+-			  "WCI2_LTE_COEX_RXD",
+-			  "WCI2_LTE_COEX_TXD",
+-			  "AP_RAM_ID0",
+-			  "AP_RAM_ID1",
+-			  "RFFE1_DATA",
+-			  "RFFE1_CLK";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+deleted file mode 100644
+index b7e514f81f92810b39d128483d10d29878aad431..0000000000000000000000000000000000000000
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ /dev/null
+@@ -1,1330 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+-/*
+- * Google Cheza device tree source (common between revisions)
+- *
+- * Copyright 2018 Google LLC.
+- */
+-
+-#include <dt-bindings/input/input.h>
+-#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+-#include "sdm845.dtsi"
+-
+-/* PMICs depend on spmi_bus label and so must come after SoC */
+-#include "pm8005.dtsi"
+-#include "pm8998.dtsi"
+-
+-/ {
+-	aliases {
+-		bluetooth0 = &bluetooth;
+-		serial1 = &uart6;
+-		serial0 = &uart9;
+-		wifi0 = &wifi;
+-	};
+-
+-	chosen {
+-		stdout-path = "serial0:115200n8";
+-	};
+-
+-	backlight: backlight {
+-		compatible = "pwm-backlight";
+-		pwms = <&cros_ec_pwm 0>;
+-		enable-gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
+-		power-supply = <&ppvar_sys>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&ap_edp_bklten>;
+-	};
+-
+-	/* FIXED REGULATORS - parents above children */
+-
+-	/* This is the top level supply and variable voltage */
+-	ppvar_sys: ppvar-sys-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "ppvar_sys";
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
+-
+-	/* This divides ppvar_sys by 2, so voltage is variable */
+-	src_vph_pwr: src-vph-pwr-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "src_vph_pwr";
+-
+-		/* EC turns on with switchcap_on_l; always on for AP */
+-		regulator-always-on;
+-		regulator-boot-on;
+-
+-		vin-supply = <&ppvar_sys>;
+-	};
+-
+-	pp5000_a: pp5000-a-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "pp5000_a";
+-
+-		/* EC turns on with en_pp5000_a; always on for AP */
+-		regulator-always-on;
+-		regulator-boot-on;
+-		regulator-min-microvolt = <5000000>;
+-		regulator-max-microvolt = <5000000>;
+-
+-		vin-supply = <&ppvar_sys>;
+-	};
+-
+-	src_vreg_bob: src-vreg-bob-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "src_vreg_bob";
+-
+-		/* EC turns on with vbob_en; always on for AP */
+-		regulator-always-on;
+-		regulator-boot-on;
+-		regulator-min-microvolt = <3600000>;
+-		regulator-max-microvolt = <3600000>;
+-
+-		vin-supply = <&ppvar_sys>;
+-	};
+-
+-	pp3300_dx_edp: pp3300-dx-edp-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "pp3300_dx_edp";
+-
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-
+-		gpio = <&tlmm 43 GPIO_ACTIVE_HIGH>;
+-		enable-active-high;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&en_pp3300_dx_edp>;
+-	};
+-
+-	/*
+-	 * Apparently RPMh does not provide support for PM8998 S4 because it
+-	 * is always-on; model it as a fixed regulator.
+-	 */
+-	src_pp1800_s4a: pm8998-smps4 {
+-		compatible = "regulator-fixed";
+-		regulator-name = "src_pp1800_s4a";
+-
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <1800000>;
+-
+-		regulator-always-on;
+-		regulator-boot-on;
+-
+-		vin-supply = <&src_vph_pwr>;
+-	};
+-
+-	/* BOARD-SPECIFIC TOP LEVEL NODES */
+-
+-	gpio-keys {
+-		compatible = "gpio-keys";
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&pen_eject_odl>;
+-
+-		switch-pen-insert {
+-			label = "Pen Insert";
+-			/* Insert = low, eject = high */
+-			gpios = <&tlmm 119 GPIO_ACTIVE_LOW>;
+-			linux,code = <SW_PEN_INSERTED>;
+-			linux,input-type = <EV_SW>;
+-			wakeup-source;
+-		};
+-	};
+-
+-	panel: panel {
+-		compatible = "innolux,p120zdg-bf1";
+-		power-supply = <&pp3300_dx_edp>;
+-		backlight = <&backlight>;
+-		no-hpd;
+-
+-		panel_in: port {
+-			panel_in_edp: endpoint {
+-				remote-endpoint = <&sn65dsi86_out>;
+-			};
+-		};
+-	};
+-};
+-
+-&cpufreq_hw {
+-	/delete-property/ interrupts-extended; /* reference to lmh_cluster[01] */
+-};
+-
+-&psci {
+-	/delete-node/ power-domain-cpu0;
+-	/delete-node/ power-domain-cpu1;
+-	/delete-node/ power-domain-cpu2;
+-	/delete-node/ power-domain-cpu3;
+-	/delete-node/ power-domain-cpu4;
+-	/delete-node/ power-domain-cpu5;
+-	/delete-node/ power-domain-cpu6;
+-	/delete-node/ power-domain-cpu7;
+-	/delete-node/ power-domain-cluster;
+-};
+-
+-&cpus {
+-	/delete-node/ domain-idle-states;
+-};
+-
+-&cpu_idle_states {
+-	little_cpu_sleep_0: cpu-sleep-0-0 {
+-		compatible = "arm,idle-state";
+-		idle-state-name = "little-power-down";
+-		arm,psci-suspend-param = <0x40000003>;
+-		entry-latency-us = <350>;
+-		exit-latency-us = <461>;
+-		min-residency-us = <1890>;
+-		local-timer-stop;
+-	};
+-
+-	little_cpu_sleep_1: cpu-sleep-0-1 {
+-		compatible = "arm,idle-state";
+-		idle-state-name = "little-rail-power-down";
+-		arm,psci-suspend-param = <0x40000004>;
+-		entry-latency-us = <360>;
+-		exit-latency-us = <531>;
+-		min-residency-us = <3934>;
+-		local-timer-stop;
+-	};
+-
+-	big_cpu_sleep_0: cpu-sleep-1-0 {
+-		compatible = "arm,idle-state";
+-		idle-state-name = "big-power-down";
+-		arm,psci-suspend-param = <0x40000003>;
+-		entry-latency-us = <264>;
+-		exit-latency-us = <621>;
+-		min-residency-us = <952>;
+-		local-timer-stop;
+-	};
+-
+-	big_cpu_sleep_1: cpu-sleep-1-1 {
+-		compatible = "arm,idle-state";
+-		idle-state-name = "big-rail-power-down";
+-		arm,psci-suspend-param = <0x40000004>;
+-		entry-latency-us = <702>;
+-		exit-latency-us = <1061>;
+-		min-residency-us = <4488>;
+-		local-timer-stop;
+-	};
+-
+-	cluster_sleep_0: cluster-sleep-0 {
+-		compatible = "arm,idle-state";
+-		idle-state-name = "cluster-power-down";
+-		arm,psci-suspend-param = <0x400000F4>;
+-		entry-latency-us = <3263>;
+-		exit-latency-us = <6562>;
+-		min-residency-us = <9987>;
+-		local-timer-stop;
+-	};
+-};
+-
+-&cpu0 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&little_cpu_sleep_0
+-			   &little_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu1 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&little_cpu_sleep_0
+-			   &little_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu2 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&little_cpu_sleep_0
+-			   &little_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu3 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&little_cpu_sleep_0
+-			   &little_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu4 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&big_cpu_sleep_0
+-			   &big_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu5 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&big_cpu_sleep_0
+-			   &big_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu6 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&big_cpu_sleep_0
+-			   &big_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&cpu7 {
+-	/delete-property/ power-domains;
+-	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&big_cpu_sleep_0
+-			   &big_cpu_sleep_1
+-			   &cluster_sleep_0>;
+-};
+-
+-&lmh_cluster0 {
+-	status = "disabled";
+-};
+-
+-&lmh_cluster1 {
+-	status = "disabled";
+-};
+-
+-/*
+- * Reserved memory changes
+- *
+- * Putting this all together (out of order with the rest of the file) to keep
+- * all modifications to the memory map (from sdm845.dtsi) in one place.
+- */
+-
+-/*
+- * Our mpss_region is 8MB bigger than the default one and that conflicts
+- * with venus_mem and cdsp_mem.
+- *
+- * For venus_mem we'll delete and re-create at a different address.
+- *
+- * cdsp_mem isn't used on cheza right now so we won't bother re-creating it; but
+- * that also means we need to delete cdsp_pas.
+- */
+-/delete-node/ &venus_mem;
+-/delete-node/ &cdsp_mem;
+-/delete-node/ &cdsp_pas;
+-/delete-node/ &gpu_mem;
+-
+-/* Increase the size from 120 MB to 128 MB */
+-&mpss_region {
+-	reg = <0 0x8e000000 0 0x8000000>;
+-};
+-
+-/* Increase the size from 2MB to 8MB */
+-&rmtfs_mem {
+-	reg = <0 0x88f00000 0 0x800000>;
+-};
+-
+-/ {
+-	reserved-memory {
+-		venus_mem: memory@96000000 {
+-			reg = <0 0x96000000 0 0x500000>;
+-			no-map;
+-		};
+-	};
+-};
+-
+-&qspi {
+-	status = "okay";
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data0>, <&qspi_data1>;
+-	pinctrl-1 = <&qspi_sleep>;
+-
+-	flash@0 {
+-		compatible = "jedec,spi-nor";
+-		reg = <0>;
+-
+-		/*
+-		 * In theory chip supports up to 104 MHz and controller up
+-		 * to 80 MHz, but above 25 MHz wasn't reliable so we'll use
+-		 * that for now.  b:117440651
+-		 */
+-		spi-max-frequency = <25000000>;
+-		spi-tx-bus-width = <2>;
+-		spi-rx-bus-width = <2>;
+-	};
+-};
+-
+-
+-&apps_rsc {
+-	/delete-property/ power-domains;
+-
+-	regulators-0 {
+-		compatible = "qcom,pm8998-rpmh-regulators";
+-		qcom,pmic-id = "a";
+-
+-		vdd-s1-supply = <&src_vph_pwr>;
+-		vdd-s2-supply = <&src_vph_pwr>;
+-		vdd-s3-supply = <&src_vph_pwr>;
+-		vdd-s4-supply = <&src_vph_pwr>;
+-		vdd-s5-supply = <&src_vph_pwr>;
+-		vdd-s6-supply = <&src_vph_pwr>;
+-		vdd-s7-supply = <&src_vph_pwr>;
+-		vdd-s8-supply = <&src_vph_pwr>;
+-		vdd-s9-supply = <&src_vph_pwr>;
+-		vdd-s10-supply = <&src_vph_pwr>;
+-		vdd-s11-supply = <&src_vph_pwr>;
+-		vdd-s12-supply = <&src_vph_pwr>;
+-		vdd-s13-supply = <&src_vph_pwr>;
+-		vdd-l1-l27-supply = <&src_pp1025_s7a>;
+-		vdd-l2-l8-l17-supply = <&src_pp1350_s3a>;
+-		vdd-l3-l11-supply = <&src_pp1025_s7a>;
+-		vdd-l4-l5-supply = <&src_pp1025_s7a>;
+-		vdd-l6-supply = <&src_vph_pwr>;
+-		vdd-l7-l12-l14-l15-supply = <&src_pp2040_s5a>;
+-		vdd-l9-supply = <&src_pp2040_s5a>;
+-		vdd-l10-l23-l25-supply = <&src_vreg_bob>;
+-		vdd-l13-l19-l21-supply = <&src_vreg_bob>;
+-		vdd-l16-l28-supply = <&src_vreg_bob>;
+-		vdd-l18-l22-supply = <&src_vreg_bob>;
+-		vdd-l20-l24-supply = <&src_vreg_bob>;
+-		vdd-l26-supply = <&src_pp1350_s3a>;
+-		vin-lvs-1-2-supply = <&src_pp1800_s4a>;
+-
+-		src_pp1125_s2a: smps2 {
+-			regulator-min-microvolt = <1100000>;
+-			regulator-max-microvolt = <1100000>;
+-		};
+-
+-		src_pp1350_s3a: smps3 {
+-			regulator-min-microvolt = <1352000>;
+-			regulator-max-microvolt = <1352000>;
+-		};
+-
+-		src_pp2040_s5a: smps5 {
+-			regulator-min-microvolt = <1904000>;
+-			regulator-max-microvolt = <2040000>;
+-		};
+-
+-		src_pp1025_s7a: smps7 {
+-			regulator-min-microvolt = <900000>;
+-			regulator-max-microvolt = <1028000>;
+-		};
+-
+-		vdd_qusb_hs0:
+-		vdda_hp_pcie_core:
+-		vdda_mipi_csi0_0p9:
+-		vdda_mipi_csi1_0p9:
+-		vdda_mipi_csi2_0p9:
+-		vdda_mipi_dsi0_pll:
+-		vdda_mipi_dsi1_pll:
+-		vdda_qlink_lv:
+-		vdda_qlink_lv_ck:
+-		vdda_qrefs_0p875:
+-		vdda_pcie_core:
+-		vdda_pll_cc_ebi01:
+-		vdda_pll_cc_ebi23:
+-		vdda_sp_sensor:
+-		vdda_ufs1_core:
+-		vdda_ufs2_core:
+-		vdda_usb1_ss_core:
+-		vdda_usb2_ss_core:
+-		src_pp875_l1a: ldo1 {
+-			regulator-min-microvolt = <880000>;
+-			regulator-max-microvolt = <880000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vddpx_10:
+-		src_pp1200_l2a: ldo2 {
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-
+-			/* TODO: why??? */
+-			regulator-always-on;
+-		};
+-
+-		pp1000_l3a_sdr845: ldo3 {
+-			regulator-min-microvolt = <1000000>;
+-			regulator-max-microvolt = <1000000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vdd_wcss_cx:
+-		vdd_wcss_mx:
+-		vdda_wcss_pll:
+-		src_pp800_l5a: ldo5 {
+-			regulator-min-microvolt = <800000>;
+-			regulator-max-microvolt = <800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vddpx_13:
+-		src_pp1800_l6a: ldo6 {
+-			regulator-min-microvolt = <1856000>;
+-			regulator-max-microvolt = <1856000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1800_l7a_wcn3990: ldo7 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1200_l8a: ldo8 {
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1248000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1800_dx_pen:
+-		src_pp1800_l9a: ldo9 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1800_l10a: ldo10 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1000_l11a_sdr845: ldo11 {
+-			regulator-min-microvolt = <1000000>;
+-			regulator-max-microvolt = <1048000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vdd_qfprom:
+-		vdd_qfprom_sp:
+-		vdda_apc1_cs_1p8:
+-		vdda_gfx_cs_1p8:
+-		vdda_qrefs_1p8:
+-		vdda_qusb_hs0_1p8:
+-		vddpx_11:
+-		src_pp1800_l12a: ldo12 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vddpx_2:
+-		src_pp2950_l13a: ldo13 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <2960000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1800_l14a: ldo14 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1800_l15a: ldo15 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp2700_l16a: ldo16 {
+-			regulator-min-microvolt = <2704000>;
+-			regulator-max-microvolt = <2704000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1300_l17a: ldo17 {
+-			regulator-min-microvolt = <1304000>;
+-			regulator-max-microvolt = <1304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp2700_l18a: ldo18 {
+-			regulator-min-microvolt = <2704000>;
+-			regulator-max-microvolt = <2960000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		/*
+-		 * NOTE: this rail should have been called
+-		 * src_pp3300_l19a in the schematic
+-		 */
+-		src_pp3000_l19a: ldo19 {
+-			regulator-min-microvolt = <3304000>;
+-			regulator-max-microvolt = <3304000>;
+-
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp2950_l20a: ldo20 {
+-			regulator-min-microvolt = <2704000>;
+-			regulator-max-microvolt = <2960000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp2950_l21a: ldo21 {
+-			regulator-min-microvolt = <2704000>;
+-			regulator-max-microvolt = <2960000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp3300_hub:
+-		src_pp3300_l22a: ldo22 {
+-			regulator-min-microvolt = <3304000>;
+-			regulator-max-microvolt = <3304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			/*
+-			 * HACK: Should add a usb hub node and driver
+-			 * to turn this on and off at suspend/resume time
+-			 */
+-			regulator-boot-on;
+-			regulator-always-on;
+-		};
+-
+-		pp3300_l23a_ch1_wcn3990: ldo23 {
+-			regulator-min-microvolt = <3000000>;
+-			regulator-max-microvolt = <3312000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vdda_qusb_hs0_3p1:
+-		src_pp3075_l24a: ldo24 {
+-			regulator-min-microvolt = <3088000>;
+-			regulator-max-microvolt = <3088000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp3300_l25a_ch0_wcn3990: ldo25 {
+-			regulator-min-microvolt = <3304000>;
+-			regulator-max-microvolt = <3304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1200_hub:
+-		vdda_hp_pcie_1p2:
+-		vdda_hv_ebi0:
+-		vdda_hv_ebi1:
+-		vdda_hv_ebi2:
+-		vdda_hv_ebi3:
+-		vdda_mipi_csi_1p25:
+-		vdda_mipi_dsi0_1p2:
+-		vdda_mipi_dsi1_1p2:
+-		vdda_pcie_1p2:
+-		vdda_ufs1_1p2:
+-		vdda_ufs2_1p2:
+-		vdda_usb1_ss_1p2:
+-		vdda_usb2_ss_1p2:
+-		src_pp1200_l26a: ldo26 {
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp3300_dx_pen:
+-		src_pp3300_l28a: ldo28 {
+-			regulator-min-microvolt = <3304000>;
+-			regulator-max-microvolt = <3304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		src_pp1800_lvs1: lvs1 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-		};
+-
+-		src_pp1800_lvs2: lvs2 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-		};
+-	};
+-
+-	regulators-1 {
+-		compatible = "qcom,pm8005-rpmh-regulators";
+-		qcom,pmic-id = "c";
+-
+-		vdd-s1-supply = <&src_vph_pwr>;
+-		vdd-s2-supply = <&src_vph_pwr>;
+-		vdd-s3-supply = <&src_vph_pwr>;
+-		vdd-s4-supply = <&src_vph_pwr>;
+-
+-		src_pp600_s3c: smps3 {
+-			regulator-min-microvolt = <600000>;
+-			regulator-max-microvolt = <600000>;
+-		};
+-	};
+-};
+-
+-edp_brij_i2c: &i2c3 {
+-	status = "okay";
+-	clock-frequency = <400000>;
+-
+-	sn65dsi86_bridge: bridge@2d {
+-		compatible = "ti,sn65dsi86";
+-		reg = <0x2d>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&edp_brij_en &edp_brij_irq>;
+-
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
+-
+-		enable-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
+-
+-		vpll-supply = <&src_pp1800_s4a>;
+-		vccio-supply = <&src_pp1800_s4a>;
+-		vcca-supply = <&src_pp1200_l2a>;
+-		vcc-supply = <&src_pp1200_l2a>;
+-
+-		clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-		clock-names = "refclk";
+-
+-		no-hpd;
+-
+-		ports {
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			port@0 {
+-				reg = <0>;
+-				sn65dsi86_in: endpoint {
+-					remote-endpoint = <&mdss_dsi0_out>;
+-				};
+-			};
+-
+-			port@1 {
+-				reg = <1>;
+-				sn65dsi86_out: endpoint {
+-					remote-endpoint = <&panel_in_edp>;
+-				};
+-			};
+-		};
+-	};
+-};
+-
+-ap_pen_1v8: &i2c11 {
+-	status = "okay";
+-	clock-frequency = <400000>;
+-
+-	digitizer@9 {
+-		compatible = "wacom,w9013", "hid-over-i2c";
+-		reg = <0x9>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&pen_irq_l>, <&pen_pdct_l>, <&pen_rst_l>;
+-
+-		vdd-supply = <&pp3300_dx_pen>;
+-		vddl-supply = <&pp1800_dx_pen>;
+-		post-power-on-delay-ms = <100>;
+-
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <24 IRQ_TYPE_LEVEL_LOW>;
+-
+-		hid-descr-addr = <0x1>;
+-	};
+-};
+-
+-amp_i2c: &i2c12 {
+-	status = "okay";
+-	clock-frequency = <400000>;
+-};
+-
+-ap_ts_i2c: &i2c14 {
+-	status = "okay";
+-	clock-frequency = <400000>;
+-
+-	touchscreen@10 {
+-		compatible = "elan,ekth3500";
+-		reg = <0x10>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&ts_int_l &ts_reset_l>;
+-
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
+-
+-		vcc33-supply = <&src_pp3300_l28a>;
+-
+-		reset-gpios = <&tlmm 118 GPIO_ACTIVE_LOW>;
+-	};
+-};
+-
+-&gpu {
+-	status = "okay";
+-};
+-
+-&ipa {
+-	qcom,gsi-loader = "modem";
+-	status = "okay";
+-};
+-
+-&lpasscc {
+-	status = "okay";
+-};
+-
+-&mdss {
+-	status = "okay";
+-};
+-
+-&mdss_dsi0 {
+-	status = "okay";
+-	vdda-supply = <&vdda_mipi_dsi0_1p2>;
+-
+-	ports {
+-		port@1 {
+-			endpoint {
+-				remote-endpoint = <&sn65dsi86_in>;
+-				data-lanes = <0 1 2 3>;
+-			};
+-		};
+-	};
+-};
+-
+-&mdss_dsi0_phy {
+-	status = "okay";
+-	vdds-supply = <&vdda_mipi_dsi0_pll>;
+-};
+-
+-/*
+- * Cheza fw does not properly program the GPU aperture to allow the
+- * GPU to update the SMMU pagetables for context switches.  Work
+- * around this by dropping the "qcom,adreno-smmu" compat string.
+- */
+-&adreno_smmu {
+-	compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
+-};
+-
+-&mss_pil {
+-	status = "okay";
+-
+-	iommus = <&apps_smmu 0x781 0x0>,
+-		 <&apps_smmu 0x724 0x3>;
+-};
+-
+-&pm8998_pwrkey {
+-	status = "disabled";
+-};
+-
+-&qupv3_id_0 {
+-	status = "okay";
+-	iommus = <&apps_smmu 0x0 0x3>;
+-};
+-
+-&qupv3_id_1 {
+-	status = "okay";
+-	iommus = <&apps_smmu 0x6c0 0x3>;
+-};
+-
+-&sdhc_2 {
+-	status = "okay";
+-
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&sdc2_clk &sdc2_cmd &sdc2_data &sd_cd_odl>;
+-
+-	vmmc-supply = <&src_pp2950_l21a>;
+-	vqmmc-supply = <&vddpx_2>;
+-
+-	cd-gpios = <&tlmm 44 GPIO_ACTIVE_LOW>;
+-};
+-
+-&spi0 {
+-	status = "okay";
+-};
+-
+-&spi5 {
+-	status = "okay";
+-
+-	tpm@0 {
+-		compatible = "google,cr50";
+-		reg = <0>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&h1_ap_int_odl>;
+-		spi-max-frequency = <800000>;
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <129 IRQ_TYPE_EDGE_RISING>;
+-	};
+-};
+-
+-&spi10 {
+-	status = "okay";
+-
+-	cros_ec: ec@0 {
+-		compatible = "google,cros-ec-spi";
+-		reg = <0>;
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <122 IRQ_TYPE_LEVEL_LOW>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&ec_ap_int_l>;
+-		spi-max-frequency = <3000000>;
+-		wakeup-source;
+-
+-		cros_ec_pwm: pwm {
+-			compatible = "google,cros-ec-pwm";
+-			#pwm-cells = <1>;
+-		};
+-
+-		i2c_tunnel: i2c-tunnel {
+-			compatible = "google,cros-ec-i2c-tunnel";
+-			google,remote-bus = <0>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-		};
+-	};
+-};
+-
+-#include <arm/cros-ec-keyboard.dtsi>
+-#include <arm/cros-ec-sbs.dtsi>
+-
+-&uart6 {
+-	status = "okay";
+-
+-	pinctrl-0 = <&qup_uart6_4pin>;
+-
+-	bluetooth: bluetooth {
+-		compatible = "qcom,wcn3990-bt";
+-		vddio-supply = <&src_pp1800_s4a>;
+-		vddxo-supply = <&pp1800_l7a_wcn3990>;
+-		vddrf-supply = <&src_pp1300_l17a>;
+-		vddch0-supply = <&pp3300_l25a_ch0_wcn3990>;
+-		max-speed = <3200000>;
+-	};
+-};
+-
+-&uart9 {
+-	status = "okay";
+-};
+-
+-&ufs_mem_hc {
+-	status = "okay";
+-
+-	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
+-
+-	vcc-supply = <&src_pp2950_l20a>;
+-	vcc-max-microamp = <600000>;
+-};
+-
+-&ufs_mem_phy {
+-	status = "okay";
+-
+-	vdda-phy-supply = <&vdda_ufs1_core>;
+-	vdda-pll-supply = <&vdda_ufs1_1p2>;
+-};
+-
+-&usb_1 {
+-	status = "okay";
+-
+-	/* We'll use this as USB 2.0 only */
+-	qcom,select-utmi-as-pipe-clk;
+-};
+-
+-&usb_1_dwc3 {
+-	/*
+-	 * The hardware design intends this port to be hooked up in peripheral
+-	 * mode, so we'll hardcode it here.  Some details:
+-	 * - SDM845 expects only a single Type C connector so it has only one
+-	 *   native Type C port but cheza has two Type C connectors.
+-	 * - The only source of DP is the single native Type C port.
+-	 * - On cheza we want to be able to hook DP up to _either_ of the
+-	 *   two Type C connectors and want to be able to achieve 4 lanes of DP.
+-	 * - When you configure a Type C port for 4 lanes of DP you lose USB3.
+-	 * - In order to make everything work, the native Type C port is always
+-	 *   configured as 4-lanes DP so it's always available.
+-	 * - The extra USB3 port on SDM845 goes to a USB 3 hub which is then
+-	 *   sent to the two Type C connectors.
+-	 * - The extra USB2 lines from the native Type C port are always
+-	 *   setup as "peripheral" so that we can mux them over to one connector
+-	 *   or the other if someone needs the connector configured as a gadget
+-	 *   (but they only get USB2 speeds).
+-	 *
+-	 * All the hardware muxes would allow us to hook things up in different
+-	 * ways to some potential benefit for static configurations (you could
+-	 * achieve extra USB2 bandwidth by using two different ports for the
+-	 * two connectors or possibly even get USB3 peripheral mode), but in
+-	 * each case you end up forcing to disconnect/reconnect an in-use
+-	 * USB session in some cases depending on what you hotplug into the
+-	 * other connector.  Thus hardcoding this as peripheral makes sense.
+-	 */
+-	dr_mode = "peripheral";
+-
+-	/*
+-	 * We always need the high speed pins as 4-lanes DP in case someone
+-	 * hotplugs a DP peripheral.  Thus limit this port to a max of high
+-	 * speed.
+-	 */
+-	maximum-speed = "high-speed";
+-
+-	/*
+-	 * We don't need the usb3-phy since we run in highspeed mode always, so
+-	 * re-define these properties removing the superspeed USB PHY reference.
+-	 */
+-	phys = <&usb_1_hsphy>;
+-	phy-names = "usb2-phy";
+-};
+-
+-&usb_1_hsphy {
+-	status = "okay";
+-
+-	vdd-supply = <&vdda_usb1_ss_core>;
+-	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+-	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+-
+-	qcom,imp-res-offset-value = <8>;
+-	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
+-	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
+-	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
+-};
+-
+-&usb_2 {
+-	status = "okay";
+-};
+-
+-&usb_2_dwc3 {
+-	/* We have this hooked up to a hub and we always use in host mode */
+-	dr_mode = "host";
+-};
+-
+-&usb_2_hsphy {
+-	status = "okay";
+-
+-	vdd-supply = <&vdda_usb2_ss_core>;
+-	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+-	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+-
+-	qcom,imp-res-offset-value = <8>;
+-	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_22_8_MA>;
+-};
+-
+-&usb_2_qmpphy {
+-	status = "okay";
+-
+-	vdda-phy-supply = <&vdda_usb2_ss_1p2>;
+-	vdda-pll-supply = <&vdda_usb2_ss_core>;
+-};
+-
+-&wifi {
+-	status = "okay";
+-
+-	vdd-0.8-cx-mx-supply = <&src_pp800_l5a >;
+-	vdd-1.8-xo-supply = <&pp1800_l7a_wcn3990>;
+-	vdd-1.3-rfa-supply = <&src_pp1300_l17a>;
+-	vdd-3.3-ch0-supply = <&pp3300_l25a_ch0_wcn3990>;
+-};
+-
+-/* PINCTRL - additions to nodes defined in sdm845.dtsi */
+-
+-&qspi_cs0 {
+-	bias-disable;		/* External pullup */
+-};
+-
+-&qspi_clk {
+-	bias-disable;		/* Rely on Cr50 internal pulldown */
+-};
+-
+-&qspi_data0 {
+-	bias-disable;		/* Rely on Cr50 internal pulldown */
+-};
+-
+-&qspi_data1 {
+-	bias-pull-down;
+-};
+-
+-&qup_i2c3_default {
+-	drive-strength = <2>;
+-
+-	/* Has external pullup */
+-	bias-disable;
+-};
+-
+-&qup_i2c11_default {
+-	drive-strength = <2>;
+-
+-	/* Has external pullup */
+-	bias-disable;
+-};
+-
+-&qup_i2c12_default {
+-	drive-strength = <2>;
+-
+-	/* Has external pullup */
+-	bias-disable;
+-};
+-
+-&qup_i2c14_default {
+-	drive-strength = <2>;
+-
+-	/* Has external pullup */
+-	bias-disable;
+-};
+-
+-&qup_spi0_default {
+-	drive-strength = <2>;
+-	bias-disable;
+-};
+-
+-&qup_spi5_default {
+-	drive-strength = <2>;
+-	bias-disable;
+-};
+-
+-&qup_spi10_default {
+-	drive-strength = <2>;
+-	bias-disable;
+-};
+-
+-&qup_uart9_rx {
+-	drive-strength = <2>;
+-	bias-pull-up;
+-};
+-
+-&qup_uart9_tx {
+-	drive-strength = <2>;
+-	bias-disable;
+-};
+-
+-/* PINCTRL - board-specific pinctrl */
+-&pm8005_gpios {
+-	gpio-line-names = "",
+-			  "",
+-			  "SLB",
+-			  "";
+-};
+-
+-&pm8998_adc {
+-	channel@4d {
+-		reg = <ADC5_AMUX_THM1_100K_PU>;
+-		label = "sdm_temp";
+-	};
+-
+-	channel@4e {
+-		reg = <ADC5_AMUX_THM2_100K_PU>;
+-		label = "quiet_temp";
+-	};
+-
+-	channel@4f {
+-		reg = <ADC5_AMUX_THM3_100K_PU>;
+-		label = "lte_temp_1";
+-	};
+-
+-	channel@50 {
+-		reg = <ADC5_AMUX_THM4_100K_PU>;
+-		label = "lte_temp_2";
+-	};
+-
+-	channel@51 {
+-		reg = <ADC5_AMUX_THM5_100K_PU>;
+-		label = "charger_temp";
+-	};
+-};
+-
+-&pm8998_gpios {
+-	gpio-line-names = "",
+-			  "",
+-			  "SW_CTRL",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "",
+-			  "CFG_OPT1",
+-			  "WCSS_PWR_REQ",
+-			  "",
+-			  "CFG_OPT2",
+-			  "SLB";
+-};
+-
+-&tlmm {
+-	/*
+-	 * pinctrl settings for pins that have no real owners.
+-	 */
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&bios_flash_wp_r_l>,
+-		    <&ap_suspend_l_deassert>;
+-
+-	pinctrl-1 = <&bios_flash_wp_r_l>,
+-		    <&ap_suspend_l_assert>;
+-
+-	/*
+-	 * Hogs prevent usermode from changing the value. A GPIO can be both
+-	 * here and in the pinctrl section.
+-	 */
+-	ap-suspend-l-hog {
+-		gpio-hog;
+-		gpios = <126 GPIO_ACTIVE_LOW>;
+-		output-low;
+-	};
+-
+-	ap_edp_bklten: ap-edp-bklten-state {
+-		pins = "gpio37";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
+-	};
+-
+-	bios_flash_wp_r_l: bios-flash-wp-r-l-state {
+-		pins = "gpio128";
+-		function = "gpio";
+-		bias-disable;
+-	};
+-
+-	ec_ap_int_l: ec-ap-int-l-state {
+-	       pins = "gpio122";
+-	       function = "gpio";
+-	       bias-pull-up;
+-	};
+-
+-	edp_brij_en: edp-brij-en-state {
+-		pins = "gpio102";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
+-	};
+-
+-	edp_brij_irq: edp-brij-irq-state {
+-		pins = "gpio10";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-pull-down;
+-	};
+-
+-	en_pp3300_dx_edp: en-pp3300-dx-edp-state {
+-		pins = "gpio43";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
+-	};
+-
+-	h1_ap_int_odl: h1-ap-int-odl-state {
+-		pins = "gpio129";
+-		function = "gpio";
+-		bias-pull-up;
+-	};
+-
+-	pen_eject_odl: pen-eject-odl-state {
+-		pins = "gpio119";
+-		function = "gpio";
+-		bias-pull-up;
+-	};
+-
+-	pen_irq_l: pen-irq-l-state {
+-		pins = "gpio24";
+-		function = "gpio";
+-
+-		/* Has external pullup */
+-		bias-disable;
+-	};
+-
+-	pen_pdct_l: pen-pdct-l-state {
+-		pins = "gpio63";
+-		function = "gpio";
+-
+-		/* Has external pullup */
+-		bias-disable;
+-	};
+-
+-	pen_rst_l: pen-rst-l-state {
+-		pins = "gpio23";
+-		function = "gpio";
+-		bias-disable;
+-		drive-strength = <2>;
+-
+-		/*
+-		 * The pen driver doesn't currently support
+-		 * driving this reset line.  By specifying
+-		 * output-high here we're relying on the fact
+-		 * that this pin has a default pulldown at boot
+-		 * (which makes sure the pen was in reset if it
+-		 * was powered) and then we set it high here to
+-		 * take it out of reset.  Better would be if the
+-		 * pen driver could control this and we could
+-		 * remove "output-high" here.
+-		 */
+-		output-high;
+-	};
+-
+-	qspi_sleep: qspi-sleep-state {
+-		pins = "gpio90", "gpio91", "gpio92", "gpio95";
+-
+-		/*
+-		 * When we're not actively transferring we want pins as GPIOs
+-		 * with output disabled so that the quad SPI IP block stops
+-		 * driving them. We rely on the normal pulls configured in
+-		 * the active state and don't redefine them here. Also note
+-		 * that we don't need the reverse (output-enable) in the
+-		 * normal mode since the "output-enable" only matters for
+-		 * GPIO function.
+-		 */
+-		function = "gpio";
+-		output-disable;
+-	};
+-
+-	sdc2_clk: sdc2-clk-state {
+-		pins = "sdc2_clk";
+-		bias-disable;
+-
+-		/*
+-		 * It seems that mmc_test reports errors if drive
+-		 * strength is not 16.
+-		 */
+-		drive-strength = <16>;
+-	};
+-
+-	sdc2_cmd: sdc2-cmd-state {
+-		pins = "sdc2_cmd";
+-		bias-pull-up;
+-		drive-strength = <16>;
+-	};
+-
+-	sdc2_data: sdc2-data-state {
+-		pins = "sdc2_data";
+-		bias-pull-up;
+-		drive-strength = <16>;
+-	};
+-
+-	sd_cd_odl: sd-cd-odl-state {
+-		pins = "gpio44";
+-		function = "gpio";
+-		bias-pull-up;
+-	};
+-
+-	ts_int_l: ts-int-l-state {
+-		pins = "gpio125";
+-		function = "gpio";
+-		bias-pull-up;
+-	};
+-
+-	ts_reset_l: ts-reset-l-state {
+-		pins = "gpio118";
+-		function = "gpio";
+-		bias-disable;
+-		drive-strength = <2>;
+-	};
+-
+-	ap_suspend_l_assert: ap-suspend-l-assert-state {
+-		pins = "gpio126";
+-		function = "gpio";
+-		bias-disable;
+-		drive-strength = <2>;
+-		output-low;
+-	};
+-
+-	ap_suspend_l_deassert: ap-suspend-l-deassert-state {
+-		pins = "gpio126";
+-		function = "gpio";
+-		bias-disable;
+-		drive-strength = <2>;
+-		output-high;
+-	};
+-};
+-
+-&venus {
+-	status = "okay";
+-
+-	video-firmware {
+-		iommus = <&apps_smmu 0x10b2 0x0>;
+-	};
+-};
+
+---
+base-commit: 0be23810e32e6d0a17df7c0ebad895ba2c210fc4
+change-id: 20250715-topic-goodnight_cheza-b1c38bff935b
+
+Best regards,
 -- 
-2.39.5
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
