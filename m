@@ -1,99 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-64962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDBB0B05481
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 10:16:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1EC3B054D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 10:26:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 42ECB7B0400
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 08:15:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 331C316E9AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 08:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4385D2652B6;
-	Tue, 15 Jul 2025 08:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 353BE275AF9;
+	Tue, 15 Jul 2025 08:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFsEITw8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout1.hostsharing.net (bmailout1.hostsharing.net [83.223.95.100])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231162405F9;
-	Tue, 15 Jul 2025 08:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABBB226CF3;
+	Tue, 15 Jul 2025 08:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752567392; cv=none; b=USyVDv+a6c1ywE1kIRGCPt62IeELUQ2x15sBtEvJf8cNHR000tUgqDTSFmHg6iUnsoCX2jJBuroNaCPAVI9zMnGtChEEnJOH0I16o8041v+LvY7uIfvCv8GZVj9EB8NbtOuoSB9JR/bsK9lzwvYGmwZJ9RDjF/JJ4wZHxoLQ898=
+	t=1752567945; cv=none; b=hGsC4t8rU02IkIZ0zm/OKyhNOuaSYVVoeE3e8d8toXBGCLYW3OWF6EJK/x5yMIWqoFh1k60wgeWuvH2qU8clyW+lrZeaNO6x4DsWV/R32iQ0NS0+c1Hb3pKFowGp3GzBd3oUXYfkq9gvXCij3GeU9KHkCnVC8YZyH6cGq0yTpgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752567392; c=relaxed/simple;
-	bh=49FlX1avA+FOW1F2dbzHOqWjJIKmKe/jaMgbW4rSOXM=;
+	s=arc-20240116; t=1752567945; c=relaxed/simple;
+	bh=CT/ySEHmoi7t5ttFqMkPrQJrOpjCy+zqLCrrkqiKek4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EFpBwnCjkD8V4XY2g646O1XoFG3vlP2syhx4ls3fX/X6K4q//Mkd2TndOXqCzVK/xl+7BwHXKX4bOCLiYlH5neFdgir9R0uVFktBTI3TtdnVMIuUBZG6rDX0QJcd/utbPtzXgKHtxrbU99ntGZRDhHmHOwt/CwV8zGZEcWHA8lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.95.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout1.hostsharing.net (Postfix) with ESMTPS id 5578C2C06843;
-	Tue, 15 Jul 2025 10:16:27 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 20CD4390420; Tue, 15 Jul 2025 10:16:27 +0200 (CEST)
-Date: Tue, 15 Jul 2025 10:16:27 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
-	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	Niklas Cassel <cassel@kernel.org>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH v5 1/4] PCI/ERR: Add support for resetting the Root Ports
- in a platform specific way
-Message-ID: <aHYOW3P0wvHo5a1j@wunner.de>
-References: <20250715-pci-port-reset-v5-0-26a5d278db40@oss.qualcomm.com>
- <20250715-pci-port-reset-v5-1-26a5d278db40@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=D9CoD231qPTP+KtOypZTObbaKFPVWA45jynW2kNWLZMARnAnuLcPjF85VfcTWwF8CniQGgi0jDaNKLwf9+0yHFxwip4IyO9k8ws02XZzCeq97Ny5Buhm4mGYe7E0OOMfQXvhRX3bziB4zzjDwoJDAzaNzB8YX4Llr4p30Y71Pxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LFsEITw8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1F3C4CEF5;
+	Tue, 15 Jul 2025 08:25:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752567944;
+	bh=CT/ySEHmoi7t5ttFqMkPrQJrOpjCy+zqLCrrkqiKek4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LFsEITw8fzmoDsqqRTqB58xZBl4jCq34CiNcEY5vW8wJ6IDfxEF37EzrNzZ5++4Ke
+	 T6ChFXZ4u9n/vfNWVfRY+YRYHYWmUlVDXN05N7mrnPEJCImkaE7kNLVzEYxFDt6F2D
+	 2BbDSldlgYEb2b/tTd1kvGJs66HIGSJKhakks5YfqRLPovJYDy0RSHefd41WJ3xMIs
+	 PNw5z1LsIeHZKttaj2vyCOlIC1ABMICqEjJJcz8L+i0S6otpxeUhLJXD5FaSnAFwJA
+	 lUSZyDKrk4QhD5JbX6UssQeHIMr9ZRLYGshm/TN55NB9vaF/jQJ0iKyrsLWbAPZz1u
+	 Nr0CqX72zTR1w==
+Date: Tue, 15 Jul 2025 10:25:42 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Robert Mader <robert.mader@collabora.com>
+Subject: Re: [PATCH v2 0/4] media: i2c: IMX355 for the Pixel 3a
+Message-ID: <20250715-fine-adamant-myna-bf6e6e@krzk-bin>
+References: <20250714210227.714841-6-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250715-pci-port-reset-v5-1-26a5d278db40@oss.qualcomm.com>
+In-Reply-To: <20250714210227.714841-6-mailingradian@gmail.com>
 
-On Tue, Jul 15, 2025 at 01:29:18PM +0530, Manivannan Sadhasivam wrote:
-> --- a/drivers/pci/pci.c
-> +++ b/drivers/pci/pci.c
-> @@ -4964,7 +4964,19 @@ void pci_reset_secondary_bus(struct pci_dev *dev)
->  
->  void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
->  {
-> +	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
-> +	int ret;
-> +
-> +	if (host->reset_root_port) {
-> +		ret = host->reset_root_port(host, dev);
-> +		if (ret)
-> +			pci_err(dev, "Failed to reset Root Port: %d\n", ret);
-> +
-> +		return;
-> +	}
-> +
+On Mon, Jul 14, 2025 at 05:02:28PM -0400, Richard Acayan wrote:
+> This adds support for the IMX355 in devicetree and adds support for the
+> Pixel 3a front camera.
+> 
+> This depends on https://lore.kernel.org/r/20250630224158.249726-2-mailingradian@gmail.com
+> because the GPIOs would go right next to the charging, if sorted
+> alphabetically.
+> 
+> Changes since v1 (20250630225944.320755-7-mailingradian@gmail.com):
 
-There used to be a pci_is_root_bus() check here:
+If doing this, please use lore links. It's one click for me. Above is
+not, needs multiple steps to recover the discussion.
 
-https://lore.kernel.org/r/20250524185304.26698-2-manivannan.sadhasivam@linaro.org/
+Or just use b4...
 
-Thanks,
+Best regards,
+Krzysztof
 
-Lukas
 
