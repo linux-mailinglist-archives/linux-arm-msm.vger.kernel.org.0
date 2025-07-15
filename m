@@ -1,88 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90797B0615E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:38:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B16ECB0618E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:43:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32637504722
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:31:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0D691C82618
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:37:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82C8826B769;
-	Tue, 15 Jul 2025 14:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFEF2248B5;
+	Tue, 15 Jul 2025 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JIKczXHS"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="EDaNcNLd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB41226772C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DA41FF1B4;
+	Tue, 15 Jul 2025 14:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752589698; cv=none; b=jDtWa/GhOysf4md2KNqSAsDTtr+1R2ixZ3xfPe3RleeYpDAYdqybs87A3LkDSAf+Bk2qJ57s6YoMW6n4TP8gZdI1NJKDsLJ2/g9Ga5Pl1KykjZ8/g7ru7meMKP7b7CBdxi3NTkANPMp85i56Avu77ceTroIvqofdioGGF12Nsws=
+	t=1752590134; cv=none; b=OVsQ0NjinU65lmQbovJZb6nzsmpPTdbJLwYnY5CEY0ve/BLAV6h6UL+J33m8AjWw+lHerZhgd6zksPvc7Lkl3umcijiIasdQuqpc1QtFYOQMueBfdBkCRO9l1vlg9qvVdAqCim/SCMydXlEWuT5wYBMP5L1QHdExBfTbQ4cuEzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752589698; c=relaxed/simple;
-	bh=TDZRt8vujcFrXp8325zzooIkVrGQbAyR33qzAjuGeA8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZHG9V1Q5sE4F6GlwTsjxhs5RSMj07B1dG946JXX5j1X8l+koabuOdMXdBTtyqtWoG/xkniVG+X7pueez87nq4CwSFTWUeVJVGtT0TFsnRR4Dika1k0iG/V5RCQDoO1te10RjjX5gAf8IRsLXelcMLcYqbDQjMgwnUGMLJbeTmfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JIKczXHS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56F8RK98007444
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1752590134; c=relaxed/simple;
+	bh=dgu36HNp6Ey5tbWJzea7xTs+Q7Z2LXx/xuvpNQ1pA7w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XFLV8SeGAcEyEUxXjxLR8ywrUkflVF66YumYWtEgqDzvb7JkPH/4wdHX3f80TqY1FuvTrXJJycaO+S1pdtNhJrPWC3/KfnTjxHQOh08rYLX06lWPZkxYU/BTv0Yvs9Hj+eyhpGEQnG9ivLxOl9jJ0av54RwzQBqMRS87XFo2+2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=EDaNcNLd; arc=none smtp.client-ip=185.132.182.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FE4gGV025660;
+	Tue, 15 Jul 2025 16:34:36 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QSFaumHypqTTcwYiUvNp2N7DCB9NOl0z0cIbJaXbtxA=; b=JIKczXHSlYwtlPo5
-	cfnuvh/3aWstmsfCfxtrFNwRlmSJrHb5eHVszCxvCXypRM/xDPbPi+Es7MQTchC1
-	GV8K31gkctCkl11tTx8S3GEl3rTOgUVRDkYFQLhD7lX6lriblaOJ3yjofDRJ8VR3
-	r55ceWb/LF5YJ0w5VGKRfM8ejWQws5GD3qk8N4cimU1ji3+fDxOp831a2Z0u2efL
-	VrXOGCP25xmJMiRj6vIM7I1494tD2QopXMhvOcEkjWxRXtRE+33ADCIMfIQDyndj
-	vtp8jyKxYy/PA0G2U3btLeOUluk9q2+I70nmamTxRTE2DVXt1X1CkaYoh4eCi7kj
-	DXkE9Q==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufut8dxh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:15 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7df5870c8b1so51052585a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 07:28:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752589695; x=1753194495;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSFaumHypqTTcwYiUvNp2N7DCB9NOl0z0cIbJaXbtxA=;
-        b=q3CYmb5gm/XCtplgO2k9yQ7WezYyfN8ywhlUXNYabvNtRN+Hjw60Hk4nOanCwD5eEb
-         omht+iQ5W0P7GxtUQefsdDK7C9zmZCUu90v932wDU46D79II1tEBjPwLuCiJEW5aOhff
-         GiZZ0Ds3wku+X0jXAhDspvBi+VgsFvdxiVBh9iKM3EQ+2IUsemJh8qutVXCcslKJar2r
-         m0m6MryyXegK6h1tG5vYFiduFK+FpxLburoIgs/25z2c+s1zuhAIrTbl7CUVT0gWQSOT
-         t0AJAm9yrmagQlSdAzfmJZXf1y5nt8SSFTua+MrjYg/S+Cvf4A5O2enDUWgYCcwBlCns
-         2GOA==
-X-Forwarded-Encrypted: i=1; AJvYcCVq77gvoMK8y9rqfPtBuL5z4lXAVo6xmDAFc04+/1BI5upQ+3uQ4YQUkhy04iifFCqmKsWhKKY1HT4Tayxv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3jyctUpsIBCBSAWfuu6ggTmTBenNstNL9iYfeVajYN3Hq23HS
-	MD2xbJP0MFxU5Mbn4NVBqggMKaMiyIKYFOvN/td0utWyYR5nLejwADu7PgoHwl0zRXetQ0NjjU9
-	0+nBcDmiELGI7/CNlA2jjKDcKAvaMEoMM5FSw+Qr9J/1TryMksPRRnkitdCjXU2K/kMyW
-X-Gm-Gg: ASbGncuyYbp/Q1WP7l18Kjp2Hi5NlZAPpE45RafzAce8rQzBoHJQxVgqqHAfsEoi/yt
-	4GyxLWfGZ+NVjjQuFfROCPcOyzoRGPA5pOXQqrIxN5f4VcEsbHwVaNgqVE2oDPlZgcsCXdS0JJa
-	DKGIiIUFDGVYlhqLSJEFjZahL6+ggjd1uRKTQhnHSgm8XSExR501Dm0J/gV6gFDntqvNu5SvMqD
-	aoNisktCJI2KoyNNJGZyqE8QNFH90XByyL32UeOlZPa6bZZvd1dpTDWBq23N/QqEn7PgAQL5sZ1
-	3be0a2yroz8mmx/4Ptsp78iY6fDm4wXtBDQiBG0hV9PNNiHJO0WhFcMRQIJnAF3hkV+9iaJ9oBC
-	lx2VHKbby0dtB92v2/9aB
-X-Received: by 2002:a05:620a:454b:b0:7e1:5c99:28ff with SMTP id af79cd13be357-7e33c710490mr98812085a.5.1752589694702;
-        Tue, 15 Jul 2025 07:28:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKtfxTcgBGxnij43dQLyyxr09RRQ186qIQ25P+J4kz26uLidPi1uYyo+f55faQ4w2EfKpO5A==
-X-Received: by 2002:a05:620a:454b:b0:7e1:5c99:28ff with SMTP id af79cd13be357-7e33c710490mr98809685a.5.1752589693998;
-        Tue, 15 Jul 2025 07:28:13 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9734c06sm7386643a12.51.2025.07.15.07.28.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jul 2025 07:28:13 -0700 (PDT)
-Message-ID: <6220dea5-32e6-4ee3-ae83-96405362783e@oss.qualcomm.com>
-Date: Tue, 15 Jul 2025 16:28:09 +0200
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	dgu36HNp6Ey5tbWJzea7xTs+Q7Z2LXx/xuvpNQ1pA7w=; b=EDaNcNLd5XIOq7Sr
+	WEFVM9cWVQkLDtI+tD5DoTxUM1/PjExjGSx895DC4+l386R7fL28nPGPptNoSqxq
+	eAdz2y9fmkQPer6/hLzzgavwPgIVa+JQIJbEd2TgJiw2sMrN3uCfIma3AeiVT9+y
+	GKX/c3E236Qy1buK2A4KGTLtvfS5A0A9SI+WYNctil/EZO1NOz59AVfITTfdHEHc
+	xZZL0kRPox+X+93cIKfd+woucWbm2t4V3Ecc6BfuuUZBQMZy7qhUG7ZnWmvUrscN
+	6rWp21CgMYxQ+5IhN3Lzaq1gzMSuLq6lcYk1SnIt2d1VE1Enh8n7zGKsmnWkq6tp
+	muaJoA==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 47ud4mp9pr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Jul 2025 16:34:36 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id B01FE40045;
+	Tue, 15 Jul 2025 16:31:51 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id E1DE1BAFFBB;
+	Tue, 15 Jul 2025 16:29:28 +0200 (CEST)
+Received: from [10.130.74.78] (10.130.74.78) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 15 Jul
+ 2025 16:29:27 +0200
+Message-ID: <1df0432a-b950-4baf-93f1-25ced11ab243@foss.st.com>
+Date: Tue, 15 Jul 2025 16:29:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,77 +67,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Remove sdm845-cheza boards
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>
-References: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
- <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
+Subject: Re: [PATCH 6/9] drm/stm/dw_mipi_dsi-stm: convert from round_rate() to
+ determine_rate()
+To: Brian Masney <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Shawn Guo
+	<shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix
+ Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Clark
+	<robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav
+ Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang
+	<jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>, Stephen Boyd <sboyd@kernel.org>
+CC: <dri-devel@lists.freedesktop.org>, <imx@lists.linux.dev>,
+        <linux-clk@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-sunxi@lists.linux.dev>
+References: <20250710-drm-clk-round-rate-v1-0-601b9ea384c3@redhat.com>
+ <20250710-drm-clk-round-rate-v1-6-601b9ea384c3@redhat.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=e7gGSbp/ c=1 sm=1 tr=0 ts=6876657f cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=z3venpNmMx4ABpSws_cA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: LcO_GqXjxn0qNUtTnEtZGh_bqIkmHP1c
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEzMiBTYWx0ZWRfX4qZKwweIgdIU
- DK7TdCZiBVN879Y6sUxaiwOqNB1yTPsf0iKfS6NXgOduUj9Wjzeicd0ddyQkZvXyucT0x3Xxwsc
- kW/e9bu/BFNllCPoBUl+YqjRUK/L6kC/ydT4U8TuPtERJL7MTfNAHQnMRG1lbrc6tGGzTpMdcQH
- yYCrsDC2F3vxT0niQkGfQJ1ufxLPQZiltR5oXvW6YPpUJiMNCMw/fPmg97FpKn26N0gfTNErVLL
- O0lfYii4Nth0C258efHaYAYeVBz4cfoBdSHsljlTF077FTn+DxHO9IRRt3iZ2ylTE6d98OOT43f
- qWYYRuRl3nBtQQUdTohkSCrlBtuLcQx7zWGY2xZyN7uAgUKoYSTTeUwmtUptIJuR9Wx/8+c5cOJ
- QTaYWvOBoHpt+PGsoz0T7ocI/3OCxGR4e+9F9iLDmzscw3eWqITN7+GgD+kRNVi6TQg7aMKX
-X-Proofpoint-ORIG-GUID: LcO_GqXjxn0qNUtTnEtZGh_bqIkmHP1c
+From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+In-Reply-To: <20250710-drm-clk-round-rate-v1-6-601b9ea384c3@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SHFCAS1NODE2.st.com (10.75.129.73) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
- phishscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
- malwarescore=0 mlxlogscore=782 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507150132
 
-On 7/15/25 3:45 PM, Krzysztof Kozlowski wrote:
-> On 15/07/2025 15:26, Konrad Dybcio wrote:
->> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>
->> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
->> former efforts on making linux-arm-msm better we greatly appreciate.
->>
->> There are close to zero known-working devices at this point in time
->> (see the link below) and it was never productized.
->>
->> Remove it to ease maintenance burden.
->>
->> Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com/
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile            |    3 -
->>  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
->>  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
->>  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
->>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------------
->>  5 files changed, 1983 deletions(-)
-> 
-> What about compatible bindings? If this is the last user, it should be
-> dropped as well (second patch).
 
-My understanding was that bindings are generally good to stay..
 
-That said, since there is quite literally no more devices and I don't
-imagine Google randomly deciding to build another batch in 10 years,
-I can submit a removal too, if you wish
+On 7/10/25 19:43, Brian Masney wrote:
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
 
-Konrad
+Hi Brian,
+
+Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+
+Thanks !
+
+Best regards,
+Raphaël
+
 
