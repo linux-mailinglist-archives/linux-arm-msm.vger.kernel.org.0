@@ -1,169 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-64894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA22BB04CB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 02:13:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDF74B04CFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 02:34:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E70616E853
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 00:13:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 449CD3B2DB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 00:32:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90110262A6;
-	Tue, 15 Jul 2025 00:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A591DFF0;
+	Tue, 15 Jul 2025 00:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M0IleP0s"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QgUwGKpF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D54A21
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 00:13:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A75156F5E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 00:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752538388; cv=none; b=DSUZMWKLcNHDDKsX7vJsXd9IYOlgCLCijug8joPyyXnRT7KAFuNo4vuJYL8Ucv9g34g6jN6i06P93gjfAr4fQ5FsfDHWP++5/GCWauu8y4L9RaIoK5W2Q2bZ+q8A6ibeji/HbtCCMv6bDuxm5jYPY5ssrX68AYpoywU1qZuzh2U=
+	t=1752539501; cv=none; b=BPQLDqRwjD9pLRuzMswPHDM83/9F7S/lBMYQ2YGS3JYSDvfXyrB03o1qF1Ma5QRWzWuC7HQ7HvFoCXoxE0LfaUA7eZWUfis/clGJgCM8Ri5/VQ+R8UXXBLopcpTSSb0mrE0muoHnr/4uJW4ss6rdtOBLi/6iVhuVNnOvOxxd03c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752538388; c=relaxed/simple;
-	bh=Rtl+kg8lua8MhwuqM/aGV9rwRAtERpeCerUyDwG5VV0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jAd88ncmZFg/WrXkVBLe4OIH9bBDiwD6/fE2zB9WZQ2MNKkSDO6iKa6C4A2QgeTgq5XzT/32Orek3PeVojlkm26BOQvPAQvPUIrcErcftCvVmigtEW2c8yQeNHbGEMD1CSNJzqB9ox4o/SsOjgQASFmqR8Y3FmaS6zp21FsIKK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M0IleP0s; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a4fb9c2436so2936292f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 17:13:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752538384; x=1753143184; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wjjlBO5McvqWYarNTItF1TpVtLRk0nuxtxgk1AQtFqQ=;
-        b=M0IleP0sgw16y9WgCJk1fMPr3BfjtpxZ9QmUcTNtm/VRqp4gqZG9O76aHOKECZ8k1g
-         Z6mYeaB9lc3GJVhWOB2wTR/W9jCl81CnBaiEml18OL3SrESnG+UTr8bTk18qv/vWdIiw
-         eZqVN9ghaFBKJw4cSXv2p3pMPuu3h0Z476pppv5gdofex5H+T1nXCRGzGmIq8k94QDv0
-         MgsFJyI29O5frBN76AC2ZLJH9wGRH3qYHo6SXTOYOjweA4s5yNB3pc5fNKH+cVaHBYUM
-         zIDIwToO9+TGghAO3AVcNdr2ZrhRu6uHjkB7ADCPea+r/10nu/VlR+axewJMzoa+HIt+
-         Q7Dg==
+	s=arc-20240116; t=1752539501; c=relaxed/simple;
+	bh=9/TsGKT1IXLxbvzNiG5O5+4dsI1PzU9V68WuEAXh/OI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=afFED6eK+hV9fj+A7wt10tRT/h4WUj8Na2H5KwHc/tyG8ADHd/njJmxqQ1MElHsxxM/ldnm44txMnR8y7Iy4w13SAVqSGm5uILM4ZFyaCTaZWd0JRzxTnLD7KfOK5M6ugIAnZChO0M/qhGJ1zyVH3/5+QEL6FqxS67ZPvP6XC8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QgUwGKpF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EIL5ac028415
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 00:31:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=rnWWSbqyVPN78Z8y5QMVj8G1tTsX+qJi/k8zbVH/95E=; b=Qg
+	UwGKpFM6pGFgwuXYzYWR7HqPmzzi3rx7A5CthiwYTuMJlJiV4LrbHOfooHRQScl2
+	8JxBTgYse/tvM0f066IhNrPMr15v4Hj5sPdDbK+5mUxfqRCbG2S4YZcGuYkMHlGY
+	Zng4NOYL/3sJfff6e1A5MWwaDmN3ELtXm125lUJlq9y5FdydcBcoQkXl+PEagNCn
+	7L4uwjIIa+ytk70peZfbo6P3BlPe4vTA8sqxPrW61ooNo00IG91odp1MLv7Cletf
+	mtKghUn1yo5Ib9flW+5PrCuZzZsZeOXwJBK7Hq/x2a6sbS8YwFiUx4NpXQM/JzuU
+	318dLvQqsyLKVnbTowSw==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufut66qj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 00:31:38 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-40b4c0b616fso4556201b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 17:31:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752538384; x=1753143184;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wjjlBO5McvqWYarNTItF1TpVtLRk0nuxtxgk1AQtFqQ=;
-        b=QY6Os1Ug+FXQHgLxNby4Wq+vfeNiVgLbs9ebeo1RhkVOU9VhwB2r7YsH1lKRdk7HcF
-         YR+x+wxUUJWKNuYPF6o9Yussg1VVwYal4DXS/tIg3iEFffLjTJQ9zRdj1aF09rnx/L8B
-         zwOlrSshVH7duXxEWFbS4Vg1TmdCivoHIirPnCfpyrEYz0OM2CEGdRMIhZ3vgKjFRJL0
-         TS9SL5Ikg6+Z6sQIdCiEymG68I0oIg55MCrF1/lHYZHj2T7Lx9baIX+iwAMCBsBHxL0d
-         zCISwJfbOzeK2QJe+wv2Lc0w4cBqu1CMlqDqyCSxu3Bzh6hDA2VpweWZDMWU0X92eN6q
-         OCVw==
-X-Forwarded-Encrypted: i=1; AJvYcCXidqkrUZYNV1D2XfwZ+ggcJX6hzpqF2br63BQtMLJBcqnxZJ0Bq7Cf/qF/Bf/ULFEgknXwb03mVp6Y08CY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfJfII1iDH4MAHBJI1eVn+UZUjtihD4mOu3VHFXh9ChuHIz5Va
-	lZxB+sOe/nko7WHcwO4+u3LmpbpgiALnDN0KUy+hsiYGvn1mdfZxBMq4uIYsaPPHiJk=
-X-Gm-Gg: ASbGncvnQAPv4n7vcHuPc5plSCWFW1o9kzD2bG7agAWGsDn/Vsw/Ty4Ahx4c6OXbEdq
-	9pUsQ7mOP0omDq/3lh0cqTtyFIBaYD/7zbKfvrjpA/KS13RQ9H5/nf2mi7P/EPawoWwciCuv6Ha
-	DLeROndoYyrSi1/WrneMFCT7lJLsZZfWG+K/2usOHWTSX0nu6NTBg/GPaQnoBOM5deGDkZlFK4r
-	7a8MHD41VA5rwYRp/b8CUuxJ37sQ3k++v0qvwkqZwqs0taMTNKmo3H53q+a9/KIbN+N+vPRMQiI
-	j9JgNa0364nt+7ief94uAYt20kXQKSLtkaBZV4fa1fJRxjibLpn7FNZHz3zMQzTO4Fem88joiYb
-	ifhyqww0NgrtTvFy6Z5gi9ZtdYh6Nloug1Jaam2HrJGdrrRiRsdM7ETb7bUq6C8Y=
-X-Google-Smtp-Source: AGHT+IFJd4axtAtvmY0ckIvQbLgd8yggih4zpyTmoTOUg1GtduaU49kxIVWw0qgHHk8eix9/zHH8ow==
-X-Received: by 2002:a05:6000:e0a:b0:3a4:e841:b236 with SMTP id ffacd0b85a97d-3b5f18cebeemr10550712f8f.33.1752538383914;
-        Mon, 14 Jul 2025 17:13:03 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e211dcsm13335901f8f.84.2025.07.14.17.13.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 17:13:03 -0700 (PDT)
-Message-ID: <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
-Date: Tue, 15 Jul 2025 01:13:01 +0100
+        d=1e100.net; s=20230601; t=1752539498; x=1753144298;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rnWWSbqyVPN78Z8y5QMVj8G1tTsX+qJi/k8zbVH/95E=;
+        b=vASvI8Up3Da8zBVLVFFPMDQNBR9JAdtuE6Ka9TXu6bv6Uh/8N37ZiCnkKO5LRt7dLK
+         SM/11MCW3j57ObzySHoCs82ce1U+P0pmxWPQx+WRTDbkO6GwYGbe7t2kNr1Ph3RY9CXn
+         uiZjTbYiKtcq+LSavbjS3q92w0oR8sKj6+lcsTLCNKqvOuQSS5tejLhuvMPaJSUtmHbB
+         Sqcn6Barj/TuGtlxaU104StHnPVRAkAG299pTCU4+AGrbNzlYWIw8+vXRNt17u3buIPF
+         DiZcysZ2KJKuk74WZfua6z3wF2l5zW+n/URfN07tkZcfQucleMnEb0s2ClPDhQR75Pj0
+         gcUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzjP/shFk4IwALIvyMOMXhDudiP4V2/lE19IWkEQvEL0FbFf2kC/RcycpaVtqAHCx3LFnVvXPLKxfQjzuH@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIrsiSQGJzo56aNjkGyfZFujtYcf/1uud+yiTQBxMg316hNv1z
+	HL7XXz87r4M3rh0oROIqDUZciC9J1jmKuNZQGSttUUjo3vAknMe05S3i6/SLUncHnp+rdgS2PO9
+	A6A4JQ3GDBiKPC0/6RUblYt9XZRRBAj4ncyU7zUArYo3KDXagJpthr1cIlC+pC+mujkjiQ726VD
+	lWOLBNWAKSBCvgcrOnRhcxZ7YqKUrw4dO+JZ1ydiB+xGw=
+X-Gm-Gg: ASbGncukK7weZZNHva8YGRUCr3IDrcd2bdKXLNpUoLoGw4pa2ITzHb3teO6KYdx1Cj6
+	fPVM2EaRO8q7h3JG5GXnTb0PmTp9yQQRoANO38aGwi4VMsibz4PrkDYBCmNpI1PJfCZArSSmFZl
+	4alurAV/VxV3aJ0cj4nqYHqk/LFyXTDm8fVvUR+BPLpqpjTU19Dh9+
+X-Received: by 2002:a05:6808:1b20:b0:41b:2876:a93b with SMTP id 5614622812f47-41b7a364efcmr1243727b6e.6.1752539497902;
+        Mon, 14 Jul 2025 17:31:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVe0q7vgkIseEjo0dk13NCUfajh6E6wM7UZk0jmXnLOcEYFwaSqyd5OwR2la8d/TxAac8+t4HrvknpzfBER2Q=
+X-Received: by 2002:a05:6808:1b20:b0:41b:2876:a93b with SMTP id
+ 5614622812f47-41b7a364efcmr1243707b6e.6.1752539497369; Mon, 14 Jul 2025
+ 17:31:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
- <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
- <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
- <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
- <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
- <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250714230813.46279-1-mcanal@igalia.com>
+In-Reply-To: <20250714230813.46279-1-mcanal@igalia.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Mon, 14 Jul 2025 17:31:26 -0700
+X-Gm-Features: Ac12FXyhqSGe2MJwwTijBSGs8N0ketRONbFjQxi_2j2xnDRBqZcf9njzSpvOAUE
+Message-ID: <CACSVV02kLAg9t31HNCy5zL3xAJ3j2MRp9zn1P1FiVE0tz5SMyQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Remove unused global fault counter
+To: =?UTF-8?B?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        kernel-dev@igalia.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=e7gGSbp/ c=1 sm=1 tr=0 ts=6875a16a cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=V2sgnzSHAAAA:8 a=m9oiR8dIFG-smg8RVMEA:9 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22 a=Z31ocT7rh6aUJxSkT1EX:22
+X-Proofpoint-GUID: NRqnkAhpyED1M_d07PjtBL53zAH79ZZ-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDAwMyBTYWx0ZWRfX/hgbkFxp2fg1
+ uM4bcr8jeIJ2H9zEsk/Dujv/QraQiOMsbK+56fIM85gpjOrOGW3eyVcqJrs7WcT+277hdMI8k3N
+ IAeaMQOGEXwIkU2AwY9K4jEExiYkre8YC49IApImjG6afNqb063OMSANFPdoMqxVxCeykrapT2M
+ 5knc1gPIuC/LGHvL/WBvBnxQGOaRrV3Cfw7l5B+GdskbypMHpak4AKtuCRiJ1Rfw4TTa9TdBhyi
+ gmZGZbbtV1R7lEe5T9s7LgxiLWkzcJe6ZCq69zgkbal1bk+YvhPQm11hlL4yovnWaZQpG7+XZBA
+ GaslT9OI5CCxYmZtoVzLgAJ4EnOP+PbMpDOYNhWi/n8xQESjjjlfSsREFEy84JzJhl7OczT4KpH
+ kNO1f2TEsbI4Cr4PhfPJvF8X7nX6Hrz1pc2BiioQO0hXG1sh1wIm11yZv33XnFyh0UwU1+3B
+X-Proofpoint-ORIG-GUID: NRqnkAhpyED1M_d07PjtBL53zAH79ZZ-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-14_03,2025-07-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507150003
 
-On 14/07/2025 16:30, Vladimir Zapolskiy wrote:
->>
->> I think that is genuinely something we should handle in camss-csid.c
->> maybe with some meta-data inside of the ports/endpoints..
->>
-> 
-> This is a CSIPHY property, a CSIPHY hardware configuration and a wiring
-> of sensors to a CSIPHY. Where is the relation to CSID here? There is no.
+On Mon, Jul 14, 2025 at 4:08=E2=80=AFPM Ma=C3=ADra Canal <mcanal@igalia.com=
+> wrote:
+>
+> The global fault counter is no longer used since commit 12578c075f89
+> ("drm/msm/gpu: Skip retired submits in recover worker"). Additionally,
+> with commit eab7766c79fd ("drm/msm: Remove vram carveout support"), all
+> supported devices now have a defined virtual memory address space, which
+> eliminates the need for a global fault counter.
 
-All the PHY really needs to know is the # of lanes in aggregate, which 
-physical lanes to map to which logical lanes and the pixel clock.
+Hmm, I think commit 12578c075f89 ("drm/msm/gpu: Skip retired submits
+in recover worker") was wrong, now that you point it out.  We could
+still have situations where we get a fault after the faulting process
+has ended.  In that case get_pid_task() would return NULL.
 
-We should add additional support to the Kernel's D-PHY API parameters 
-mechanism to support that physical-to-logical mapping but, that's not 
-required for this series or for any currently know upstream user of CAMSS.
+BR,
+-R
 
-> Please share at least a device tree node description, which supports
-> a connection of two sensors to a single CSIPHY, like it shall be done
-> expectedly.
-&camss {
-     port@0 {
-         csiphy0_lanes01_ep: endpoint0 {
-             data-lanes = <0 1>;
-             remote-endpoint = <&sensor0_ep>;
-         };
-
-         csiphy0_lanes23_ep: endpoint0 {
-             data-lanes = <2 3>;
-             remote-endpoint = <&sensor1_ep>;
-         };
-      };
-};
-
-&csiphy0 {
-     status = "okay";
-
-     vdda-0p8-supply = <&vreg_0p8>;
-     vdda-1p2-supply = <&vreg_1p2>;
-     phy-mode = <PHY_TYPE_DPHY>;
-};
-
-sensor0 {
-     compatible = "manufacturer,sensor0";
-     port {
-         sensor0_ep: endpoint {
-             data-lanes = <0 1>;
-             remote-endpoint = <&csiphy0_lanes01_ep>;
-         };
-     };
-};
-
-sensor1 {
-     compatible = "manufacturer,sensor1";
-     port {
-         sensor1_ep: endpoint {
-             data-lanes = <0 1>;
-             remote-endpoint = <&csiphy1_lanes23_ep>;
-         };
-     };
-};
-
----
-bod
+>
+> Hence, remove the global faults counter. While here, s/unusuable/unusable=
+.
+>
+> Signed-off-by: Ma=C3=ADra Canal <mcanal@igalia.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  5 +----
+>  drivers/gpu/drm/msm/msm_gpu.c           | 23 +++++++++++------------
+>  drivers/gpu/drm/msm/msm_gpu.h           |  6 ------
+>  3 files changed, 12 insertions(+), 22 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/ms=
+m/adreno/adreno_gpu.c
+> index f1230465bf0d..5bb00b9c998a 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -416,10 +416,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm=
+_context *ctx,
+>                 *value =3D 0;
+>                 return 0;
+>         case MSM_PARAM_FAULTS:
+> -               if (vm)
+> -                       *value =3D gpu->global_faults + to_msm_vm(vm)->fa=
+ults;
+> -               else
+> -                       *value =3D gpu->global_faults;
+> +               *value =3D vm ? to_msm_vm(vm)->faults : 0;
+>                 return 0;
+>         case MSM_PARAM_SUSPENDS:
+>                 *value =3D gpu->suspend_count;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.=
+c
+> index c317b25a8162..3d5a76d2901c 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -463,6 +463,7 @@ static void recover_worker(struct kthread_work *work)
+>         struct drm_device *dev =3D gpu->dev;
+>         struct msm_drm_private *priv =3D dev->dev_private;
+>         struct msm_gem_submit *submit;
+> +       struct msm_gem_vm *vm;
+>         struct msm_ringbuffer *cur_ring =3D gpu->funcs->active_ring(gpu);
+>         char *comm =3D NULL, *cmd =3D NULL;
+>         int i;
+> @@ -482,20 +483,18 @@ static void recover_worker(struct kthread_work *wor=
+k)
+>
+>         /* Increment the fault counts */
+>         submit->queue->faults++;
+> -       if (submit->vm) {
+> -               struct msm_gem_vm *vm =3D to_msm_vm(submit->vm);
+>
+> -               vm->faults++;
+> +       vm =3D to_msm_vm(submit->vm);
+> +       vm->faults++;
+>
+> -               /*
+> -                * If userspace has opted-in to VM_BIND (and therefore us=
+erspace
+> -                * management of the VM), faults mark the VM as unusuable=
+.  This
+> -                * matches vulkan expectations (vulkan is the main target=
+ for
+> -                * VM_BIND)
+> -                */
+> -               if (!vm->managed)
+> -                       msm_gem_vm_unusable(submit->vm);
+> -       }
+> +       /*
+> +        * If userspace has opted-in to VM_BIND (and therefore userspace
+> +        * management of the VM), faults mark the VM as unusable. This
+> +        * matches vulkan expectations (vulkan is the main target for
+> +        * VM_BIND)
+> +        */
+> +       if (!vm->managed)
+> +               msm_gem_vm_unusable(submit->vm);
+>
+>         get_comm_cmdline(submit, &comm, &cmd);
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.=
+h
+> index b2a96544f92a..88d8ddef616b 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -226,12 +226,6 @@ struct msm_gpu {
+>         /* does gpu need hw_init? */
+>         bool needs_hw_init;
+>
+> -       /**
+> -        * global_faults: number of GPU hangs not attributed to a particu=
+lar
+> -        * address space
+> -        */
+> -       int global_faults;
+> -
+>         void __iomem *mmio;
+>         int irq;
+>
+> --
+> 2.50.0
+>
 
