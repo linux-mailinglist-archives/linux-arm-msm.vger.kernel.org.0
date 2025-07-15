@@ -1,88 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB368B04C81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 01:42:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA22BB04CB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 02:13:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 43F804A6DCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jul 2025 23:42:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E70616E853
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 00:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48AE5279787;
-	Mon, 14 Jul 2025 23:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90110262A6;
+	Tue, 15 Jul 2025 00:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cOogs6hZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M0IleP0s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1B32528F3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D54A21
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 00:13:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752536515; cv=none; b=sxCTYUYIGY7Zdz9UnoKkgf3jQ/I7Je4VdaqkcHu2dro2DnAqVDgBaqLk/N0mwt3LiDlV54Nq4qONUzNahHTJQR2dNZ4gi/zcgAmqrxMKuk9L1yCoi4ViCorNdEo0MbeLiNPs5jaE12ySMGrHji8B3TGxOkZx0e3X1DrUco9VaTY=
+	t=1752538388; cv=none; b=DSUZMWKLcNHDDKsX7vJsXd9IYOlgCLCijug8joPyyXnRT7KAFuNo4vuJYL8Ucv9g34g6jN6i06P93gjfAr4fQ5FsfDHWP++5/GCWauu8y4L9RaIoK5W2Q2bZ+q8A6ibeji/HbtCCMv6bDuxm5jYPY5ssrX68AYpoywU1qZuzh2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752536515; c=relaxed/simple;
-	bh=ey7rY+Bde2mCktXqa3uo8y+vyr6TGOt6Ny2N+VLQwmI=;
+	s=arc-20240116; t=1752538388; c=relaxed/simple;
+	bh=Rtl+kg8lua8MhwuqM/aGV9rwRAtERpeCerUyDwG5VV0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O+j2ZraVgpnDjYA4PTT4zi7WZAEbHC2vrgFyuMlpyUm7Vd3UGGp3dy0VRFKn529V0hNAQmpQdepSiyyUF1/v9RwPFfWOBfHMpv5rizD1wy6mdhGj0YOGbeBjyxTYgKvuHqv2etgmFqbRWkV/IXQzP1bo4V5PExhXrZabVZo2Fic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cOogs6hZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EKIe5d009120
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:41:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VeRYeb70rL7zEXLABWVIX1u+Q+tiztEJvNfdb8INwvs=; b=cOogs6hZKzC35kE+
-	Ei4d7dTfIKS+kLdyr+YXzjV1e202w3IiHFk7GE3C9VkxfXBMI0lxvB/6Qpx7IVzt
-	lYV/5Zajz8+aDwtACN2aqgFjv79iTXy5Nxu/bquJKGEClJhaZOWYVqb2EB0npdin
-	KdHoXwtCPj1aKqKs7J7ga6LYjBVCCHop2A5pYCglBzg+HqB8mZlKex0lenxeruFd
-	/BWqWEJc87yXcuDNlXNKmUxFTMywZXgss+ULgcLGVvIufxHpbBeJ5kEHex9k8ltB
-	++86XwX1XNNcDyBgc0ytgON0ZWCLsyQBeUMkpYCxjpDVFh2hjgqPnby6i9SGi8BO
-	QWjg2A==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufut63x9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:41:51 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6fb030f541bso17286386d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 16:41:51 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=jAd88ncmZFg/WrXkVBLe4OIH9bBDiwD6/fE2zB9WZQ2MNKkSDO6iKa6C4A2QgeTgq5XzT/32Orek3PeVojlkm26BOQvPAQvPUIrcErcftCvVmigtEW2c8yQeNHbGEMD1CSNJzqB9ox4o/SsOjgQASFmqR8Y3FmaS6zp21FsIKK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M0IleP0s; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a4fb9c2436so2936292f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 17:13:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752538384; x=1753143184; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wjjlBO5McvqWYarNTItF1TpVtLRk0nuxtxgk1AQtFqQ=;
+        b=M0IleP0sgw16y9WgCJk1fMPr3BfjtpxZ9QmUcTNtm/VRqp4gqZG9O76aHOKECZ8k1g
+         Z6mYeaB9lc3GJVhWOB2wTR/W9jCl81CnBaiEml18OL3SrESnG+UTr8bTk18qv/vWdIiw
+         eZqVN9ghaFBKJw4cSXv2p3pMPuu3h0Z476pppv5gdofex5H+T1nXCRGzGmIq8k94QDv0
+         MgsFJyI29O5frBN76AC2ZLJH9wGRH3qYHo6SXTOYOjweA4s5yNB3pc5fNKH+cVaHBYUM
+         zIDIwToO9+TGghAO3AVcNdr2ZrhRu6uHjkB7ADCPea+r/10nu/VlR+axewJMzoa+HIt+
+         Q7Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752536511; x=1753141311;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1752538384; x=1753143184;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VeRYeb70rL7zEXLABWVIX1u+Q+tiztEJvNfdb8INwvs=;
-        b=isI/v0prwN6WmmH7Tsjoe9bgtXv4gsqwWYomP3Ztx0zrl/KNRq4rlMO6qj6/9QpR8o
-         VrpMY8d3yaKqyQur6pT6uZ/jC9KBAXQtnsgq4qBr3dxanxKVVHomg9u9/8Svr+/UYMy5
-         5Oj6b7iYchVbBkEltmuSgVrLsnx0+ehkhT+i6VcLYTQeyJ5Tigh4uoBJzxi9+MpEoUhI
-         bZ3nUpbwG8xnGEwI76/uJ4YtwRorTExX76jqxGcDxi3DbcLakQEp/p+k4KexWsOEWSQP
-         H3yOjGeoqEZJ7U/Mwwhv9cew/DswLx/I4kTrvNkHRPloSXyIpIBC/MD4HfvEugawRstv
-         /9WQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW/7V11bH0b1LVD5ZtNsKDo+KaoIm4grZogEe76XJ1W20WKS0tL4G3VnNjDmwwhFExER3199+UNBaogBCrs@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmXR6dLIAmepJXIGFM4vCjCxw2hTQDV8zhPro1XJUlYWts5CHR
-	Bt+5Kky5hm42EpQwyJPPwCOStgNIaLpwI9xif0ygIBkYJgTmyFXGwAjRL+pxC4ANdTDUQ3Pn8ZN
-	l5JqdbzMzXrHkw+UFs/ZQtHRr5+DJ2euS6arjpwnw66wA76AGc7yZQRcmQZ+QMEVzjIE+
-X-Gm-Gg: ASbGncv4xKke8Bfb8DvILvwIrqTkAwEkJYqIY40lQIGi7rTupQv4KXMhtC+8jtQQGa6
-	vSTQMLvnAZUTQTdS6m2CdeqrdGKGH7vF/KKaYcMXksdF7YdyuVjq+qKz89ENX8v34uPRnIZOl07
-	gkR6jqBlI2kh0XDYJ5xYxvNcYdL9YqV39lMKM7LZLXvE4+3g+ZIxJs8Lx5Vip0PFqaGFcLUQiSL
-	PuanwwuWLi2clRsUY4F3AeYAng0WNFB+kZlRc0s5otQkqX3NNII6kef95I9dOWXecmlfSRQm9cX
-	2PKTqkVuxHRFR1ka9hesOpaE2X0PrHCuDjHn9bme4NeyNZRmsvZHbKBfQSa1kxQF71CEPKDtGV1
-	gXtxkYI4XdEOkP6DXGere
-X-Received: by 2002:a05:620a:d86:b0:7d3:f0a1:2f3e with SMTP id af79cd13be357-7dde99530b9mr793406485a.2.1752536510682;
-        Mon, 14 Jul 2025 16:41:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEG7XfqmPDJb/D49KYu7FtbuASdqoalUiWXMFW7Y9kAKQLdst5o2Dt8cMYPxnLj3lAeTolOpQ==
-X-Received: by 2002:a05:620a:d86:b0:7d3:f0a1:2f3e with SMTP id af79cd13be357-7dde99530b9mr793403785a.2.1752536510136;
-        Mon, 14 Jul 2025 16:41:50 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7e91d10sm893953766b.5.2025.07.14.16.41.47
+        bh=wjjlBO5McvqWYarNTItF1TpVtLRk0nuxtxgk1AQtFqQ=;
+        b=QY6Os1Ug+FXQHgLxNby4Wq+vfeNiVgLbs9ebeo1RhkVOU9VhwB2r7YsH1lKRdk7HcF
+         YR+x+wxUUJWKNuYPF6o9Yussg1VVwYal4DXS/tIg3iEFffLjTJQ9zRdj1aF09rnx/L8B
+         zwOlrSshVH7duXxEWFbS4Vg1TmdCivoHIirPnCfpyrEYz0OM2CEGdRMIhZ3vgKjFRJL0
+         TS9SL5Ikg6+Z6sQIdCiEymG68I0oIg55MCrF1/lHYZHj2T7Lx9baIX+iwAMCBsBHxL0d
+         zCISwJfbOzeK2QJe+wv2Lc0w4cBqu1CMlqDqyCSxu3Bzh6hDA2VpweWZDMWU0X92eN6q
+         OCVw==
+X-Forwarded-Encrypted: i=1; AJvYcCXidqkrUZYNV1D2XfwZ+ggcJX6hzpqF2br63BQtMLJBcqnxZJ0Bq7Cf/qF/Bf/ULFEgknXwb03mVp6Y08CY@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfJfII1iDH4MAHBJI1eVn+UZUjtihD4mOu3VHFXh9ChuHIz5Va
+	lZxB+sOe/nko7WHcwO4+u3LmpbpgiALnDN0KUy+hsiYGvn1mdfZxBMq4uIYsaPPHiJk=
+X-Gm-Gg: ASbGncvnQAPv4n7vcHuPc5plSCWFW1o9kzD2bG7agAWGsDn/Vsw/Ty4Ahx4c6OXbEdq
+	9pUsQ7mOP0omDq/3lh0cqTtyFIBaYD/7zbKfvrjpA/KS13RQ9H5/nf2mi7P/EPawoWwciCuv6Ha
+	DLeROndoYyrSi1/WrneMFCT7lJLsZZfWG+K/2usOHWTSX0nu6NTBg/GPaQnoBOM5deGDkZlFK4r
+	7a8MHD41VA5rwYRp/b8CUuxJ37sQ3k++v0qvwkqZwqs0taMTNKmo3H53q+a9/KIbN+N+vPRMQiI
+	j9JgNa0364nt+7ief94uAYt20kXQKSLtkaBZV4fa1fJRxjibLpn7FNZHz3zMQzTO4Fem88joiYb
+	ifhyqww0NgrtTvFy6Z5gi9ZtdYh6Nloug1Jaam2HrJGdrrRiRsdM7ETb7bUq6C8Y=
+X-Google-Smtp-Source: AGHT+IFJd4axtAtvmY0ckIvQbLgd8yggih4zpyTmoTOUg1GtduaU49kxIVWw0qgHHk8eix9/zHH8ow==
+X-Received: by 2002:a05:6000:e0a:b0:3a4:e841:b236 with SMTP id ffacd0b85a97d-3b5f18cebeemr10550712f8f.33.1752538383914;
+        Mon, 14 Jul 2025 17:13:03 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e211dcsm13335901f8f.84.2025.07.14.17.13.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 16:41:49 -0700 (PDT)
-Message-ID: <3ae51350-61a8-422c-8e39-32ea6d8b2e9a@oss.qualcomm.com>
-Date: Tue, 15 Jul 2025 01:41:46 +0200
+        Mon, 14 Jul 2025 17:13:03 -0700 (PDT)
+Message-ID: <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
+Date: Tue, 15 Jul 2025 01:13:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,86 +82,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] sound: soc: qcom: qdsp6: q6dsp-lpass-clocks: convert
- from round_rate() to determine_rate()
-To: Brian Masney <bmasney@redhat.com>
-Cc: Support Opensource <support.opensource@diasemi.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Oder Chiou <oder_chiou@realtek.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Maxime Ripard <mripard@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org
-References: <20250710-sound-clk-round-rate-v1-0-4a9c3bb6ff3a@redhat.com>
- <20250710-sound-clk-round-rate-v1-4-4a9c3bb6ff3a@redhat.com>
- <c321ed9f-7906-4a92-9202-efb46343ee91@oss.qualcomm.com>
- <CABx5tqJzEMUXz0Cbo5siCnwKp2MVON_oGgMnGkb_cg1zv8k5nw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
+ <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
+ <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
+ <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
+ <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CABx5tqJzEMUXz0Cbo5siCnwKp2MVON_oGgMnGkb_cg1zv8k5nw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=e7gGSbp/ c=1 sm=1 tr=0 ts=687595bf cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8
- a=ICpbbQuAY509VL3I2goA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-GUID: RijkHANGhsa6Frwm7Uhn4Yo5DGRC1t5X
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDE2OSBTYWx0ZWRfXzyw0ExBcR+u8
- D67LsuNJxUokq1TREGNLpKCCzpm4Mw2k4D20qDysvvXb4wwOMR8thxOKjcFu9zq9h8o97odAudP
- f7mvIF5BJJ5+JL0uAcAE+JXMYVUohiWDcNOJX6NtA0fiuRG25jDV3Zm4d7w/CHX1yr19paKrN4o
- 5uAwmTF6Zfi7/dxMkaHnTTD1I4jPZlx3unwdb98YkE4MjY+a0claxCHB4qcz34c4Odt05DwjL28
- A9IUHHB4rrNoVryp0RzLCG3s7EFG3fOG3uRTp0oTIaixAAer0+ZWr/ZY93PSBHXA5QdhxLYSrs5
- R8gMiSgQpZwKZbVBXfbkCkCWUMtzLnVWnmCxGyKct4OoTDnApjHcuCQ2VdoF8w7uNCCjlN+TKKU
- oPqwPH5iWtDnx1rCD4k0WXDznmsQlTApKy7zump+HvP1eaSpDAvg8wucXIZWwVFjeS5xCco8
-X-Proofpoint-ORIG-GUID: RijkHANGhsa6Frwm7Uhn4Yo5DGRC1t5X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_03,2025-07-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
- phishscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
- malwarescore=0 mlxlogscore=815 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507140169
+In-Reply-To: <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 7/14/25 10:39 PM, Brian Masney wrote:
-> Hi Konrad,
-> 
-> On Thu, Jul 10, 2025 at 12:09 PM Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
->> On 7/10/25 5:51 PM, Brian Masney wrote:
->>> The round_rate() clk ops is deprecated, so migrate this driver from
->>> round_rate() to determine_rate() using the Coccinelle semantic patch
->>> on the cover letter of this series.
->>>
->>> Signed-off-by: Brian Masney <bmasney@redhat.com>
->>> ---
+On 14/07/2025 16:30, Vladimir Zapolskiy wrote:
 >>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> I think that is genuinely something we should handle in camss-csid.c
+>> maybe with some meta-data inside of the ports/endpoints..
 >>
->> come to think of it, there are a lot of drivers that can not
->> do any rate rounding - perhaps we could introduce a NOP implementation
->> in the clk core that we could reference, instead of copypasting
->> int foo(...) { "return 0" }?
 > 
-> I'll look at that for a second round of cleanup once all of the
-> round_rates have been removed from the tree. From what I recall about
-> the ~200 or so round_rate implementations in the kernel tree, there
-> were maybe only 5 or so that cover this noop case. QC seemed to have
-> the most from what I recall.
-> 
-> It wouldn't be hard to make a Coccinelle script to look for the noop
-> determine_rate() implementations.
+> This is a CSIPHY property, a CSIPHY hardware configuration and a wiring
+> of sensors to a CSIPHY. Where is the relation to CSID here? There is no.
 
-Thanks!
+All the PHY really needs to know is the # of lanes in aggregate, which 
+physical lanes to map to which logical lanes and the pixel clock.
 
-Konrad
+We should add additional support to the Kernel's D-PHY API parameters 
+mechanism to support that physical-to-logical mapping but, that's not 
+required for this series or for any currently know upstream user of CAMSS.
+
+> Please share at least a device tree node description, which supports
+> a connection of two sensors to a single CSIPHY, like it shall be done
+> expectedly.
+&camss {
+     port@0 {
+         csiphy0_lanes01_ep: endpoint0 {
+             data-lanes = <0 1>;
+             remote-endpoint = <&sensor0_ep>;
+         };
+
+         csiphy0_lanes23_ep: endpoint0 {
+             data-lanes = <2 3>;
+             remote-endpoint = <&sensor1_ep>;
+         };
+      };
+};
+
+&csiphy0 {
+     status = "okay";
+
+     vdda-0p8-supply = <&vreg_0p8>;
+     vdda-1p2-supply = <&vreg_1p2>;
+     phy-mode = <PHY_TYPE_DPHY>;
+};
+
+sensor0 {
+     compatible = "manufacturer,sensor0";
+     port {
+         sensor0_ep: endpoint {
+             data-lanes = <0 1>;
+             remote-endpoint = <&csiphy0_lanes01_ep>;
+         };
+     };
+};
+
+sensor1 {
+     compatible = "manufacturer,sensor1";
+     port {
+         sensor1_ep: endpoint {
+             data-lanes = <0 1>;
+             remote-endpoint = <&csiphy1_lanes23_ep>;
+         };
+     };
+};
+
+---
+bod
 
