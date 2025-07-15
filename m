@@ -1,53 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-65037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30C5BB05A62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:38:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B74CDB05A66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:40:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 565D04E7FE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 12:38:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD0A43BB9A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 12:39:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DDA12E03E6;
-	Tue, 15 Jul 2025 12:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40A3A2E03F5;
+	Tue, 15 Jul 2025 12:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ta6Ybp+5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t/WMW3aj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FDC1EDA09;
-	Tue, 15 Jul 2025 12:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114AE2D836A;
+	Tue, 15 Jul 2025 12:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752583105; cv=none; b=syYFKoORxZoQyZ+3XMx1iVtUCqh9om53zQOJnWX5OqkHiT6KZw5Cl+4fLEbzr71YfUTW4DObwhL+k7/tudvnLGPdlqMMCeClnrBD+frBAShiYQrjIwxiDoCHWwnGRr+S5bLt+BO9hjGfxWQYYBo1QqKl9r8OA768iMx3oQYsizE=
+	t=1752583199; cv=none; b=k3BqvNIU2P8jrzhSt30P2umlgr0P1aK+tkMTjV6ZjCsKgCctOrMxOVaRhi72M4i0lHo3Ar/Sl9zPBzWlCO/LuQmBndgIFUSv9IPwfGvRcBM4O1XgXneobk+QlnInVPRnKMS7RIebzfhjes1CHsjE43b5RfVsDbEyF/JfpJhbyig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752583105; c=relaxed/simple;
-	bh=gMdl43/0bMuiZDFZdXVaO2ZI3Rf0NtBZ9KAPxIt6tNs=;
+	s=arc-20240116; t=1752583199; c=relaxed/simple;
+	bh=+pu90pMOXbQaEW9Hm/kqWZt7Rsk1N7XL4gsFDUuXDgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TK16BQZWWynGD4kTqS4wokKo3VMlgblgxCKOVWss+zCwQhraUQy8NUDhgvflhUFpkPXB0cu+N1NyJMB96yZIVuLArCiNQRfKDP/B1VF329R2UG1nlvtWfxDeyjIoX+4vmC4vsX4ZFq5drFhwSsHPjreBvv1RkkpOBs17PFotlKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ta6Ybp+5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D421C4CEE3;
-	Tue, 15 Jul 2025 12:38:24 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=j52FALudz+9qrUJdAZqmM/4aY9F+/q+A8SF84vbmvAxZLrBYw67uuC4tmKH699CdARh9W3h3kj4H8iPd4lpbUnKSCzs1QV2dgj/iSC++w6vcHqkBjQNKb0LTCGFFXr4OCdzRT9kWOvj2XXQ0/MYWDWV3RAV15aqzMx2Y4GDxGUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t/WMW3aj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3954EC4CEE3;
+	Tue, 15 Jul 2025 12:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752583105;
-	bh=gMdl43/0bMuiZDFZdXVaO2ZI3Rf0NtBZ9KAPxIt6tNs=;
+	s=k20201202; t=1752583198;
+	bh=+pu90pMOXbQaEW9Hm/kqWZt7Rsk1N7XL4gsFDUuXDgo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ta6Ybp+5ZGZoiwIBSSjQQyLrXmiGjzZJFt4ku+MWt3JHYPaR1L/VuwDJUhkoazfvI
-	 OtRkxFOAc5xQeUgBZY4VTsF7o4I95UfO/5HwfWQ9huaLnKyKgj6V7j/b+AIvZiSfAs
-	 XPUBUC3No8i9wZiW5lPqwKq3HyHR8+6I+D/0siuODGLllyMLcPX/e7jLdYS+eV572f
-	 o1fnowKHCk+9gp5FkmNbRGWAJyR4q8j7HYPn++3UwoUMxOXY3V443Ynq541bujK+Ne
-	 dhOxmfOwn8L795bpGYslwf8sM5xdxAqfZgoCtmbE99tDWV43VBkixuBiVXn40KhfNP
-	 IIMrBHsPyXWew==
-Date: Tue, 15 Jul 2025 18:08:21 +0530
+	b=t/WMW3ajNFuEcGUS5cLW97Lm53LVFFJGyl6fCTT6uNS0KVjzfi73bLTLwGMrtIqbd
+	 2PD7zzl5wx41pkiTd4E1MbCoFbyq6mYN3ZMrbph1XW/ogXdlYh6BhAPgbe7Q8370IR
+	 QKKBvE9KcMVo7ez+Q61Lzj4C2+Wwdpj6EPFzjelBoTzO9VLP0NncA/0T4XLsnaNRC8
+	 QYa33a6PxhIwcQAh6jnQMFtto5x9qx43OsmRQTlDbjSrz1E0l7StRXb1ihPod8JFl7
+	 V+ZEtH41mxOGUgbsh+sZfjco3/H7VWG5NALXVHS/aWhARrQUp7PWLIA9WePeMzJel7
+	 N9m+GRxBcgPDg==
+Date: Tue, 15 Jul 2025 18:09:55 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: George Verhaegen <verhaegen@google.com>
-Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+To: Takashi Iwai <tiwai@suse.de>
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Joris Verhaegen <verhaegen@google.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
 	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	David Rhodes <david.rhodes@cirrus.com>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
@@ -67,12 +68,12 @@ Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
 	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org,
 	sound-open-firmware@alsa-project.org,
 	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v1 0/4] ALSA: compress_offload: Add 64-bit safe timestamp
+Subject: Re: [PATCH v2 0/4] ALSA: compress_offload: Add 64-bit safe timestamp
  API
-Message-ID: <aHZLvVnNiBcqXdXG@vaman>
-References: <20250711082441.4193295-1-verhaegen@google.com>
- <aHEEu1eSSGRhITmW@vaman>
- <CAAntYmKea1p=ao3OOWb=1Q+BXdyo1SCm9qGb_JMC5ry5DQVt-Q@mail.gmail.com>
+Message-ID: <aHZMG2XnCLoBuf9T@vaman>
+References: <20250711093636.28204-1-verhaegen@google.com>
+ <aHD7/9MZbcOmn+08@opensource.cirrus.com>
+ <8734b2hpcu.wl-tiwai@suse.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,21 +82,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAAntYmKea1p=ao3OOWb=1Q+BXdyo1SCm9qGb_JMC5ry5DQVt-Q@mail.gmail.com>
+In-Reply-To: <8734b2hpcu.wl-tiwai@suse.de>
 
-On 11-07-25, 14:58, George Verhaegen wrote:
-> On Fri, 11 Jul 2025 at 13:34, Vinod Koul <vkoul@kernel.org> wrote:
+On 11-07-25, 14:41, Takashi Iwai wrote:
+> On Fri, 11 Jul 2025 13:56:47 +0200,
 
-> > Please share patches for tinycompress support too, we need those to test
-> > this
+> > Would it not be slightly simpler to just update all the in kernel
+> > bits to use 64-bit and then only convert to 32-bit for the
+> > existing 32-bit IOCTLs? Why do we need 32-bit callbacks into the
+> > drivers for example?
 > 
-> I didn't make changes to tinycompress. The overflow happens in the
-> kernel file compress_offload.c. As a test, I let it run for more than
-> 3.1 hours and observed that the overflow no longer occurs.
-> The overflow is in
-> stream->runtime->total_bytes_transferred = tstamp->copied_total
+> Right, it's a usual pattern to have only the 64bit ops in the kernel
+> driver side while providing the 32bit stuff converted in the core
+> layer.  Having two different ops are rather confusing and
+> superfluous after conversions.
+> 
+> If there are tons of users for this API, it'd be needed to convert
+> gradually, and eventually drop the 32bit ops at the end.  But in this
+> case, there doesn't seem so many relevant drivers, hence the
+> conversion can be done in a shot as done in your patch 4.
 
-You need to add support for new ioctl in tinycompress too
+I agree we should do that. Kernel can be 64bit only while we keep
+maintaining the 32bit ioctls, cant drop that one
 
 -- 
 ~Vinod
