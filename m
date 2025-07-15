@@ -1,60 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-64982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD8B9B05604
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 11:14:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD74FB05628
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 11:20:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4DAA27B3C89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 09:12:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF7B4176EDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 09:20:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06C5B2D5424;
-	Tue, 15 Jul 2025 09:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D55C92D640D;
+	Tue, 15 Jul 2025 09:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aOgvB81X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d4e/gA/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF733277CB0;
-	Tue, 15 Jul 2025 09:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9CE2D6401;
+	Tue, 15 Jul 2025 09:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752570837; cv=none; b=hJUN3UaH4h8ukI1/4Eg5MxJpeDmO/qqsPOrTZPAGJxbVMsjN8s6dwvIWycxrb37stOdKBuB6wttmfUce4zMbCiykfWr+Q0N79Fnw5u+LIfp+wbPS2GHaXbTnlbW+GUtflVAe1NCL99jg4qjkzBv2cu49XKl64gYDLXTBwaUMbKs=
+	t=1752571208; cv=none; b=Z0dFEtEWpdcoU7VDSX1vnuYtXkuhfuW9JTh2uwsxsVgSO/ceYqhGI9W3lF7/S7zLGpBwX3aZee/KzUOeb8615ptbhQUnq3jyarkTs5zOOoTMifPJVXo+QqKBnK/u1As9wJsf7pf/SbNj4YVFwm+tULJunZWay+z4/xQmjlg1oXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752570837; c=relaxed/simple;
-	bh=l/RGES8DH2ekgRfnlC6sXT+q0PRN/1KSbMb1r4knNYw=;
+	s=arc-20240116; t=1752571208; c=relaxed/simple;
+	bh=zMX0HnJ6CCzw8b9lVKy3uhSYJilLYoAhgM5/FrM5H9A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L1/TbnVp0qmL5M2FJaAaw8XR7kmgB0zl8UL+NwZlSGbLDdIRzSGhmFrEjSvnKU8VmITglEzzJq1cKspRr9aBeqsIaT/IBDoB3jmBizD6REdPOnqVye1Ztf4TbU8qNgDvZpc5a8Vs8xiRE6IX72gnvRE2aj2AzKcMvMJ8RvxJnuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aOgvB81X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73666C4CEE3;
-	Tue, 15 Jul 2025 09:13:53 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8RQ/jVyhF/70LUqW9XWXIcenC1dtg8+HNv+LCEXPIyMcH3eJyjW9jEKEPDOP0ko+pJ+2Ihp8tx+NJl0RbwujxU5ly+xO6e/FB2EHy0PNIbwdvCbYndVWsdnS5kb4Gngd0P5FzswV2of4rFNGW0N7dbwgG+KD8yc61yJrdqByGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d4e/gA/X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA07C4CEE3;
+	Tue, 15 Jul 2025 09:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752570837;
-	bh=l/RGES8DH2ekgRfnlC6sXT+q0PRN/1KSbMb1r4knNYw=;
+	s=k20201202; t=1752571208;
+	bh=zMX0HnJ6CCzw8b9lVKy3uhSYJilLYoAhgM5/FrM5H9A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aOgvB81X6Jde2+HwT/fcT7T/nuc63d/Pw6RVWTKk2CeseGr+70BE9fiDk4wL4MOF1
-	 ErFvboJavhDjunHVR/Bd+3dhUrWNKSiw5mi+8kUUcexHrjBGxMRlPVxkqnByzSQXja
-	 aARC2own7LhuZwsOI/FmdmUKly86e2F6nfD/pYSQf6ZSOD9wlDdkm9oN5QDin1XByE
-	 e2KzmxJzuYph66syHkdU+wrTowRli0f6ZtS7Wq7a7VReHedJL9iSOQzE49hhXbIYJq
-	 WOkWyT8yTlRay32Rx898BMWVfAxKH+ZX/LbuavAeJaQ0Wf7bXM0TBfZfPS+thNp95w
-	 gnh3y7yEfCg4g==
-Date: Tue, 15 Jul 2025 14:43:48 +0530
+	b=d4e/gA/XYvMMld3wapT7zeY1Gk0uwHEwJggXKWAa4A9zBaFmlJPabx3x1jsbR3yNJ
+	 R0GpKskCbOugdis7UiMYxXYnDrOzn/3/1+OUIOLoEdjOIsos0z6JrQcMUjNzQlKcre
+	 lz1944BNZHo8Y5XDm7f+ywdeXXcX700tfufNkwNk7XQYX5eOLTKfsLSCzXqjpCFC03
+	 HjshEiqu1EwEsrzoU5vhtsQruoimF/UqS2FUcQbB60aU0ppgJ5dVZrk8/XJB8ZaWpR
+	 hMimgMsxb0vHBX51jmnVu+jjDPdCVfJnQ9diGWXPuuv61GKkWjTE8KGEJ1K7gGO+Hq
+	 zs+q6/TELjheg==
+Date: Tue, 15 Jul 2025 14:49:56 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Johan Hovold <johan@kernel.org>
+To: Lukas Wunner <lukas@wunner.de>
 Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Helgaas <bhelgaas@google.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof Wilczy??ski <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	Niklas Cassel <cassel@kernel.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
 	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] PCI: qcom: Move qcom_pcie_icc_opp_update() to
- notifier callback
-Message-ID: <jkv4rbx324gzndmzfmjkkft7kmukz6eukjwg4rdgmfpmxj5cjn@ewhc3wfdcqx3>
-References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
- <20250714-aspm_fix-v1-2-7d04b8c140c8@oss.qualcomm.com>
- <aHYIjEbOhM4xvavJ@hovoldconsulting.com>
+Subject: Re: [PATCH v5 1/4] PCI/ERR: Add support for resetting the Root Ports
+ in a platform specific way
+Message-ID: <tfpszamhfxx62vclkfxqfuuda24ps6e4yti7fgywycznpwfj5l@22nggkft2mph>
+References: <20250715-pci-port-reset-v5-0-26a5d278db40@oss.qualcomm.com>
+ <20250715-pci-port-reset-v5-1-26a5d278db40@oss.qualcomm.com>
+ <aHYOW3P0wvHo5a1j@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,38 +69,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aHYIjEbOhM4xvavJ@hovoldconsulting.com>
+In-Reply-To: <aHYOW3P0wvHo5a1j@wunner.de>
 
-On Tue, Jul 15, 2025 at 09:51:40AM GMT, Johan Hovold wrote:
-> On Mon, Jul 14, 2025 at 11:31:05PM +0530, Manivannan Sadhasivam wrote:
-> > It allows us to group all the settings that need to be done when a PCI
-> > device is attached to the bus in a single place.
+On Tue, Jul 15, 2025 at 10:16:27AM GMT, Lukas Wunner wrote:
+> On Tue, Jul 15, 2025 at 01:29:18PM +0530, Manivannan Sadhasivam wrote:
+> > --- a/drivers/pci/pci.c
+> > +++ b/drivers/pci/pci.c
+> > @@ -4964,7 +4964,19 @@ void pci_reset_secondary_bus(struct pci_dev *dev)
+> >  
+> >  void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
+> >  {
+> > +	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+> > +	int ret;
+> > +
+> > +	if (host->reset_root_port) {
+> > +		ret = host->reset_root_port(host, dev);
+> > +		if (ret)
+> > +			pci_err(dev, "Failed to reset Root Port: %d\n", ret);
+> > +
+> > +		return;
+> > +	}
+> > +
 > 
-> This commit message should be amended so that it makes sense on its own
-> (e.g. without Subject).
+> There used to be a pci_is_root_bus() check here:
 > 
-> > @@ -1616,8 +1616,6 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
-> >  		pci_lock_rescan_remove();
-> >  		pci_rescan_bus(pp->bridge->bus);
-> >  		pci_unlock_rescan_remove();
-> > -
-> > -		qcom_pcie_icc_opp_update(pcie);
-> >  	} else {
-> >  		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
-> >  			      status);
-> > @@ -1765,6 +1763,7 @@ static int pcie_qcom_notify(struct notifier_block *nb, unsigned long action,
-> >  	switch (action) {
-> >  	case BUS_NOTIFY_BIND_DRIVER:
-> >  		qcom_pcie_enable_aspm(pdev);
-> > +		qcom_pcie_icc_opp_update(pcie);
-> 
-> I guess you should also drop the now redundant
-> qcom_pcie_icc_opp_update() call from probe()?
+> https://lore.kernel.org/r/20250524185304.26698-2-manivannan.sadhasivam@linaro.org/
 > 
 
-Oops. This got sneaked in. I removed it locally but eventually lost the change
-while rebasing. Will remove it in next version. This API just bails out if the
-link is not up. So no reason to call it here also now.
+Right. I forgot to include that series, but somehow managed to remember the
+s/slot/root_port change.
+
+Will incorporate in next revision, thanks!
 
 - Mani
 
