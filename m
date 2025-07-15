@@ -1,170 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-65062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1008DB0629C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 17:16:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC632B062D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 17:26:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D937A561B22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:12:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F7393BECA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:25:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B15A0211A19;
-	Tue, 15 Jul 2025 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DFCF23A58B;
+	Tue, 15 Jul 2025 15:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ElfxlvT0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="INCUKD2R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A5D202C49
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 15:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64903231C9F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 15:26:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752592341; cv=none; b=DHBgPMrrOQLZU3TG7hYR0P+UPb52qCEg/iu5lqgpuelhQKDJdlqWXp889o4G8B3RNk3k9Ds8OgCoEXzPdiGAR1DzsMfcCzI0fG1AtEshkvxuV9YOFFyRcWo8RDpiW5w3STVGVLhxzBL6/X+c7uwiunlNiCN/TPe/2hICOZF7n/k=
+	t=1752593162; cv=none; b=rheAv7SL5u6QJyz1ybJvq/6rWa0NeHf7wIVHImQ5St6p5PwM+sEc4JeCe5mLLffpnY/WZrbwhzcxpS51s98MghEmJgrfeW521L6Qi/dxc03I2frjep4ZBW/cXSjB0MDV4KSwv5torjGc5beEfyn+6Hqe08QkwbMKF9E319Z7GGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752592341; c=relaxed/simple;
-	bh=C7Bt6ty4O6b5hObsfJEEwxiNOyTN1VXF/4lKT7wSu18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U8MUADERqEucyVS66wnE4IEWd+cfOYGP2Dv1G/ZD+Ptxy8YpwuNTNcmKWnH5dvYwJrr9HpiXDSRFGwfYV6J+ZfoLMFBZ0hXDSdgGx2qzvS+vT1GtkwTIWn4HHQQrpN365bI6QWit5D5kCWtniuNT4aqsgshCMBxL/b6E4LrBJHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ElfxlvT0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FCjFrx007463
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 15:12:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/8/GQmYozt0hkVdJKNP3dY4c
-	27MmXYLwdf8DyqAf4/8=; b=ElfxlvT0VzYDBYqLPcqcx5u7gpdJm/0FYmMwnBnG
-	y+B4eho5GQ38s7gyWa5V2do3XLCADnVdKyNIdYEaRxCT0C1n6voidTAPb/dJ8PNM
-	cQjD55+s9FTC8E0DR8gaP1UR/8u1e6FZJsdhUG9oFq65KyWJvm1FKx/OIVGZhCDY
-	GqP34VrlblGX7kQjhS4nxUIVXBXKFZ9NLggE072UbjrSEaUUDqK9bPvusCTM1sc8
-	TYWch1G+ETibhGOgFvTa8N8/FWEZDaZpp8bAT7BoxZ0ifVXNJ6WcBNJaKwt99/uv
-	EPvODnurcR0dUiYP2bhTrorQpVZq/UucSCwyWS482wIFPA==
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com [209.85.166.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w58ykjtk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 15:12:18 +0000 (GMT)
-Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-875b64cccd6so1073901939f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 08:12:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752592337; x=1753197137;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1752593162; c=relaxed/simple;
+	bh=xomn5vf15i0z+t9ioTU3UzRFpGuVxbhdf3uhcQIlnKQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JSK1yg5Uw8wm8jtpZxndHy3n6BfUls2Lk7iYo5KOhEQghFaO3n44Qw8RcTdJhJagDzfet8Kx3WTD+2gY+YLN/Nbg5oDaBfH4kprYRs3qHq39ND7y+U8rzgHjZ/aECXOrxRkTtV0/Q4sidr/KphBg7IsaxtBTKPO3oSZok85lO9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=INCUKD2R; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-32f474ded39so5320241fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 08:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752593158; x=1753197958; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/8/GQmYozt0hkVdJKNP3dY4c27MmXYLwdf8DyqAf4/8=;
-        b=cdDXenHR0p8TF6tCaDvYMN864moPs1oCc55DcnH1WKEyfQ/751hwfH5jypzybeeMep
-         sTmPOduM+GOR+ARfjWfBrZrX2jjA/ravFg1m5J1ZXM1k9AmnsKtKKu+uZfR7F9imMpiF
-         sznjSoGs5gMveCS97j9BqY0SIMjUA88OSXktCRnR5QYHBwbp4NhIthZvsRRKQVW31O8L
-         9UEd4/JZZYGUKu9FA1NcMHx+gil+SQ6ekOS2zwqpZ9/3VujdJw7A4jUcQ9cLHcNrIKGe
-         wRBlXDo765fO8a4Fm7gqFsxyiGR2IaN3WG8FB9Q1/OKCiILfjO9qRCoUdUzmRTKDo6I/
-         wGew==
-X-Forwarded-Encrypted: i=1; AJvYcCU8rwWRjJkJFSZyZzrfA4i6ZFjtMWlex97RtCclcoR4WbZakU3Xh1F8C3HXcwVZBF7OHg3x87b9TtnLZL+K@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKpBVXeFMNc8r/kyueJ7jIoDI+XfCwIZOjLlnXIPEn3pbBx0KN
-	7mvhI9ARp7o9JWRsvZA1OjntWFboPWInVHEykRPHsfY3zi6LUVRuiTy8ZWh52CvWlSoFjsjvMFX
-	46GUCEq5/ds5rRUZ+lyGXwaYqvWZQbuLwLb9Ym4HWJUnsJHScCRA1Q+4iJxyDTrdvffts
-X-Gm-Gg: ASbGncsokkvBm2/Pmt8dvfQJOzMTaCuN9FQ9vFdK7uq6C3SwyDipKRcuG2hKVTH/vBi
-	Xj4nJfIca8ah1MdeyBbaJZkOdIJrCwdR2n2EfbtQ3iA99A/ep5F/KlBVzWuYmkpAyy6XHQdzvWI
-	/TlILChk9LmFs+B0luqRb7lYKVsrnb3wGsFrwG50ylRbEt3Lh3zOGi/g4lv4wAN+4xjgUZC+YTF
-	9n6WE1ouLbh1K1c0A9CNESZ8aA9heTNlkU1Yg49AGIAh4iBOliG6yNGz9DQCGXFTxCDx0qTM04F
-	xA/f/vBCDoL2mC7dmV2hSdnh1MKDtb0DmYAylqJNrIsDz7uRVpaXeXa3cTZm6Pi6U3ukj+CO7BF
-	waT8u/L2Loxmj2X85KTKR7zcjLlRl8lVc7iLAMQ5oxqouPZMpsOit
-X-Received: by 2002:a05:6e02:b23:b0:3e0:5042:6a0e with SMTP id e9e14a558f8ab-3e253317f2fmr190550695ab.14.1752592336618;
-        Tue, 15 Jul 2025 08:12:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuCcHGzu/NV0coaNVvZvnyxMM3fWdvavBShiCcBGZwVBVkpyKA9SgxNyTJ8HCuKA2VAmYM7Q==
-X-Received: by 2002:a05:6e02:b23:b0:3e0:5042:6a0e with SMTP id e9e14a558f8ab-3e253317f2fmr190549775ab.14.1752592336031;
-        Tue, 15 Jul 2025 08:12:16 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5593c7f380dsm2345658e87.83.2025.07.15.08.12.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 08:12:15 -0700 (PDT)
-Date: Tue, 15 Jul 2025 18:12:13 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Brian Masney <bmasney@redhat.com>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yannick Fertre <yannick.fertre@foss.st.com>,
-        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
-        Philippe Cornu <philippe.cornu@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>, Stephen Boyd <sboyd@kernel.org>,
-        dri-devel@lists.freedesktop.org, imx@lists.linux.dev,
-        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 3/9] drm/msm/disp/mdp4/mdp4_lvds_pll: convert from
- round_rate() to determine_rate()
-Message-ID: <tkqu2zt5yulnngwvda462fhmkmtmtjnwieruel6lfjr475h7ld@47goit7jldgk>
-References: <20250710-drm-clk-round-rate-v1-0-601b9ea384c3@redhat.com>
- <20250710-drm-clk-round-rate-v1-3-601b9ea384c3@redhat.com>
+        bh=eB2l8LirDQ3/3m1OWxvQpzeiYtShAHkpkyBAu7GfeKM=;
+        b=INCUKD2Rum6bpZZroqjDiQqKUyo8UjiuohCG+3ffjJrc7jcz5oOHLF3QMEjOBibaP9
+         CwBtP6LPc0fGwU/DcbGNxkRrdI4SqAXxhdpJcqZIazglFamVfYuaP4V0knnFx9CObU3L
+         ekLhZSuwbAeJ9GCk8/ky2PW28ZUXf8kLuS3OxJe4sT2Xn2FU7al9A4dgEN+QKfO/Nv29
+         qHyBT/WqI5jvmzRd07+SQuIYAE/RJ5/iJaNQDZPbO38x0BdTgylNrfQ5Boci6nD3gEC1
+         tY8PW+SJdYIVQpuzOcrvv8mnsr27wb2CH14iMGb1WMqeMSi/h49HGV6mMzfFrbKjP6bj
+         q9Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752593158; x=1753197958;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eB2l8LirDQ3/3m1OWxvQpzeiYtShAHkpkyBAu7GfeKM=;
+        b=PVM5dPX+yHx1RO9GjdVZHV6QMwWywKdNxj6QC+/aO9KvjBiQY2o/P5qsigtPS3iCwm
+         K+0ZFGiHXPKcNOuurOB79gjReyQWPRnjMyfJNQafmmm7/y4D/AXawb4O2Ztf0Izs7CAY
+         kIdScYlw40IzF2MMG7+jQ8g8910MZHZUFTjGKoMzhu+Y0YsUwABfUm25KMf/sA1cm+cd
+         2A2YrNk8yio1sQmW2Wv+qkTh+MIsZNOUSTh7TS2P2A3bCySy5hgNbT7C7ZMkzZklIvge
+         55eLMSCQpPqqdwvDDgZ3im5R5i5BTO9/kFPt1VVPS8pIAs+f/w4SUX0PcOP+8A5JwPzR
+         vMFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUOW/g7hdrwwkji7ZtuF0M/Zv/87PBlZt/0wL2xJRkDlULGkE/fHk5m6/hsjg76XhPQ8Ypgf8h9M8Cu66MB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4F2/rpkGBo5KfqGfmtVhNsW9roNiaFvmU3cGLM2Pu5MwYPQjM
+	Y/Pct/grPNWNZSmV9Nnxp0e0Kjt0U5mFNWhsizImajeulSm9nEAv2hJrt0MEvyVUUso=
+X-Gm-Gg: ASbGnctbOtPjuDXMDoog3tGXRRWbVETseCsfspDNhf9okr/7n2axublpeayAgXK2sof
+	VNrLCLmgsac0lWcEzRs53c/f85W5thTiXEAJSFQQGw/4FhpIw10/UdB1G8OpDuk+UGyVpITpbda
+	k7n/+UHVq8tqa9qnHlK6aglTjodVo9rk9MSuOASu3yRPS7Y032jyClX0bnJN2E/jRh/bfdmmdV8
+	uVEzDrG6gEEkgvLZtUpTxvHU21uLGH9k5TzAjg3mg7pAW03sd4VkfulcXWsAkyYN/YmXKWL5YVx
+	b/zi9UCOypYBIY2FcUOpl/xUDEVrCpRo4OTN7YVHv0jNymJqoaQgwVNKDcdiEUfWhB1ISNt5bVM
+	h/9u0u2+p9Uq/2Jv9op6mskDfhO/qaBvqDh9DiLQ/OhaqFAo/4Q0ZwMRT9P5C4UFGIta3ntqeQC
+	KO
+X-Google-Smtp-Source: AGHT+IF3dqduT8P/WO27MvTE1kRxqSG27mj6p5eykY25Cj569ar5Hr43W9KJDXWVN/vPeuVB83X8RQ==
+X-Received: by 2002:a2e:b8d6:0:b0:32a:89bb:f8d9 with SMTP id 38308e7fff4ca-330873bdd0fmr2972821fa.6.1752593158292;
+        Tue, 15 Jul 2025 08:25:58 -0700 (PDT)
+Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32fa2913ca3sm19146791fa.18.2025.07.15.08.25.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Jul 2025 08:25:57 -0700 (PDT)
+Message-ID: <a58f2e68-41fa-4bed-9282-deb5e5435f4f@linaro.org>
+Date: Tue, 15 Jul 2025 18:25:55 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250710-drm-clk-round-rate-v1-3-601b9ea384c3@redhat.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEzOSBTYWx0ZWRfXzS70x98NnQqb
- f/ugkMcAx1xUIyZAoyfddkdRzpAqHmM2B38AMdITsLGn14TwH9AmNYguNHFUwn4Kie1v/erNB3t
- /L64i+DyP5e7nb6/8YkuYvx3yIqvSi0KODrjJdXhZLUoYAm2rvYvKJioBAitKoJFeuPT39tEp5W
- 8+TaJF+3sTSJuhz3lzrCv5hsP/Joy+5IioG7LaE3L9lLKeC890n6RUfRQn0U7WHCgx//ovYwwir
- q5W63sUqeaVSBPyw+Bef9+he5J/gLuxPphN7AU+vaCoL9Ceo1CYvmjSZzI8liDWFaKIpRhoVcV5
- wcXN8N+fNCZLvfWshBpTa2v/n+Kt2W1cCXKET2hLIO3H+psditJ09RL0RvH3JL0Z5dJRt9FHhAr
- xOenbO8PJaOSeos+4NrfffLvwcSRk+H4xZ3CiGH2pLchOxHKg1LXrDOv4/1F/2VGVaWcbY+x
-X-Proofpoint-GUID: aoEpfL7of7_rEsjxWqxDVEfJ0t6P1tLq
-X-Proofpoint-ORIG-GUID: aoEpfL7of7_rEsjxWqxDVEfJ0t6P1tLq
-X-Authority-Analysis: v=2.4 cv=Or9Pyz/t c=1 sm=1 tr=0 ts=68766fd2 cx=c_pps
- a=WjJghted8nQMc6PJgwfwjA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=oBXrOfH6mq4iYN50PBoA:9
- a=CjuIK1q_8ugA:10 a=CtjknkDrmJZAHT7xvMyn:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-15_04,2025-07-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=958 bulkscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507150139
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 00/15] Add dt-bindings and dtsi changes for CAMSS on
+ x1e80100 silicon
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bryan O'Donoghue <bod.linux@nxsw.ie>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
+ <9361e954-e2c9-41c6-be4c-12b0e4f367f5@linaro.org>
+ <ae0a309f-7e52-4d3c-8f26-989f22da5b07@linaro.org>
+ <GbVC82h7wSXQsAJh8XybKorKYy9wupjQLndjf_uYNXOZnk1UqS_tT4Yg9gzf8X3Kn55Mt5bXfcFrHtyMoFZ4-A==@protonmail.internalid>
+ <a4ebdf5c-8d4f-4994-afd9-22c8d889fe97@linaro.org>
+ <4281887a-e7c0-43bc-9e72-96f0e432c58f@nxsw.ie>
+ <f753f088-474b-41bb-82d3-6684bea2f87e@linaro.org>
+ <85c1a702-1a3a-4145-8f2b-240d61d6e72a@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <85c1a702-1a3a-4145-8f2b-240d61d6e72a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 10, 2025 at 01:43:04PM -0400, Brian Masney wrote:
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
+On 7/15/25 16:22, Bryan O'Donoghue wrote:
+> On 15/07/2025 14:08, Vladimir Zapolskiy wrote:
+>>>> It's quite easy, sensors are not connected to CSIDs. Moreover data flows
+>>>> from any sensor can be processed on any CSID, there is no static
+>>>> hardware
+>>>> links, which are attempted to be introduced.
+>>>
+>>> This statement is not correct.
+>>
+>> Please elaborate, what statement above is not correct?
 > 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> ---
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+> "static hardware links, which are attempted to be introduced"
+> 
+> No such static hardware link is being attempted to be introduced, that
+> statement is incorrect or a misunderstanding of the intention.
+> 
+>>
+>>> The port@ in CAMSS pertains to the camss-csiphy device not to the
+>>> camss-csid device, so there is no hard link to any specific CSID in the
+>>> dts scheme here.
+>>
+>> And here it's just a confirmation that my statement above is correct,
+>> so please be consistent, and especially in any kind of accusations like
+>> you've just given above.
+> 
+> Sorry Vlad I don't see much basis litigating this further.
+> 
+> I've been very clear, I think we should have standalone CSIPHYs, there's
+> no reason to bury them inside of the CAMSS block - see CCI.
+
+I've never insisted on embedded CSIPHY device tree nodes under CAMSS
+device tree node, and I don't argue with it, it's kind of a red herring.
+
+Can you please write this comment on the relevant series discussion?
+
+https://lore.kernel.org/all/bed8c29c-1365-4005-aac7-1635a28295bf@linaro.org/
+
+> There's a clear way to do endpoints established from sensor to consumer,
+> there's no reason to give that data to the above CSIPHY driver, it has
+> no "use case" for it.
+
+Please don't ignore a different opinion shared by Konrad or me:
+
+https://lore.kernel.org/linux-media/427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com/
+
+It's unclear why this particular device tree properties are going to be
+added into some different device tree node. Since somebody made an effort
+to spot and discuss it, please share your brought effort as well.
+
+Unfortunately your series does not look technically correct due to the
+given reason, there should be a mitigation, and the defence in form of
+"it's been done always this (presumably wrong) way and shall be continued
+to be done this (presumably wrong) way" is barely acceptable.
+
+> Its unfortunate we've done parallel work but, I'd ask you at this point
+
+Reaching this point was not a coincidence, unfortunately.
+
+> to rebase your multiple sensor work on the proposed CSIPHY series here
+> and for drivers/phy.
 > 
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Please note that the technical discussion of this series has just started,
+so there is little sense to rebase anything else on top of incomplete work.
 
-Please take this via the drm-misc tree (I assume the rest is going to be
-merged that way).
+The practice of "don't look, don't see" shall not be normalized among
+Linux kernel maintainers.
 
 -- 
-With best wishes
-Dmitry
+Best wishes,
+Vladimir
 
