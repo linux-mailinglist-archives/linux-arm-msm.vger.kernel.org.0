@@ -1,282 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-65050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12FEAB06139
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:35:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90797B0615E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:38:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B634A502F77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:26:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32637504722
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:31:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A9AE2857CD;
-	Tue, 15 Jul 2025 14:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82C8826B769;
+	Tue, 15 Jul 2025 14:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BPRxkXAy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JIKczXHS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5BF2853F8;
-	Tue, 15 Jul 2025 14:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB41226772C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752589271; cv=none; b=PZymYf0nTZsI/5YbHOzJ4It16OgZA19HA+1HjyjwqmIw0H6IIvCKTzkuaj/RuNjPoazcONw5LYd+GJKvD6PWav3WhJhOLPc5wKyyt/Dj+4utdS64acrOCEDlh/+2hb13hxDzF2aa1Iqxk9ARB+aGJZmzzXvhUamUsGIQc9MBCSc=
+	t=1752589698; cv=none; b=jDtWa/GhOysf4md2KNqSAsDTtr+1R2ixZ3xfPe3RleeYpDAYdqybs87A3LkDSAf+Bk2qJ57s6YoMW6n4TP8gZdI1NJKDsLJ2/g9Ga5Pl1KykjZ8/g7ru7meMKP7b7CBdxi3NTkANPMp85i56Avu77ceTroIvqofdioGGF12Nsws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752589271; c=relaxed/simple;
-	bh=G7l//qGdXYPqxEASGJgJ2nJDbecOqNR6zMbP4pmekmI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F8MRvIvo2vgWHgPAhn4fvBlZIN/9XLm9QJG+HPWeo9G5ehxdnwIn8PX3tX6VM3A/VeC9WiB0xpZE+M3WfORVmudaugMPCdk49evXEFJFP3Rurut+rodlXOJq1HwjDodEVPD3IOpzsowUh37HEAnv3lRkruBjmwjc4n5LPddP7d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BPRxkXAy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 259E8C4CEFA;
-	Tue, 15 Jul 2025 14:21:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752589271;
-	bh=G7l//qGdXYPqxEASGJgJ2nJDbecOqNR6zMbP4pmekmI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=BPRxkXAy4avJ7lkPrwOdhgVDNXTOkUcLn6x2SrTuKEac80l0VDI3/+Y4FQOR+BKFE
-	 Gp9/omtL02JYojbJPlD6MCeiP6gJvVa8Y+FigNi1DvL04ddWq3eLBz9xPyqGSfP/8t
-	 7fogamvophjaLFCnTjfo3f6It80bs113w7x/adWHhDyBC0RFf8aG6RiFW5j1ht9xLV
-	 ktW8WilrIycmDXvvKrkvoyPNkj3E11Zqbrbqs7k1s/VMpPVr+/VONi90OOzF7gJUqI
-	 gxz7B8gAw596nRaJxobNaxwSeay3xvr20UZPwVvDB6OnBNLHu6D+qMqXb3/MfOw8pN
-	 /cicgn5DgRcaQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A013C83F22;
-	Tue, 15 Jul 2025 14:21:11 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 15 Jul 2025 19:51:07 +0530
-Subject: [PATCH v6 4/4] PCI: dw-rockchip: Add support to reset Root Port
- upon link down event
+	s=arc-20240116; t=1752589698; c=relaxed/simple;
+	bh=TDZRt8vujcFrXp8325zzooIkVrGQbAyR33qzAjuGeA8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZHG9V1Q5sE4F6GlwTsjxhs5RSMj07B1dG946JXX5j1X8l+koabuOdMXdBTtyqtWoG/xkniVG+X7pueez87nq4CwSFTWUeVJVGtT0TFsnRR4Dika1k0iG/V5RCQDoO1te10RjjX5gAf8IRsLXelcMLcYqbDQjMgwnUGMLJbeTmfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JIKczXHS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56F8RK98007444
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QSFaumHypqTTcwYiUvNp2N7DCB9NOl0z0cIbJaXbtxA=; b=JIKczXHSlYwtlPo5
+	cfnuvh/3aWstmsfCfxtrFNwRlmSJrHb5eHVszCxvCXypRM/xDPbPi+Es7MQTchC1
+	GV8K31gkctCkl11tTx8S3GEl3rTOgUVRDkYFQLhD7lX6lriblaOJ3yjofDRJ8VR3
+	r55ceWb/LF5YJ0w5VGKRfM8ejWQws5GD3qk8N4cimU1ji3+fDxOp831a2Z0u2efL
+	VrXOGCP25xmJMiRj6vIM7I1494tD2QopXMhvOcEkjWxRXtRE+33ADCIMfIQDyndj
+	vtp8jyKxYy/PA0G2U3btLeOUluk9q2+I70nmamTxRTE2DVXt1X1CkaYoh4eCi7kj
+	DXkE9Q==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufut8dxh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:28:15 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7df5870c8b1so51052585a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 07:28:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752589695; x=1753194495;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QSFaumHypqTTcwYiUvNp2N7DCB9NOl0z0cIbJaXbtxA=;
+        b=q3CYmb5gm/XCtplgO2k9yQ7WezYyfN8ywhlUXNYabvNtRN+Hjw60Hk4nOanCwD5eEb
+         omht+iQ5W0P7GxtUQefsdDK7C9zmZCUu90v932wDU46D79II1tEBjPwLuCiJEW5aOhff
+         GiZZ0Ds3wku+X0jXAhDspvBi+VgsFvdxiVBh9iKM3EQ+2IUsemJh8qutVXCcslKJar2r
+         m0m6MryyXegK6h1tG5vYFiduFK+FpxLburoIgs/25z2c+s1zuhAIrTbl7CUVT0gWQSOT
+         t0AJAm9yrmagQlSdAzfmJZXf1y5nt8SSFTua+MrjYg/S+Cvf4A5O2enDUWgYCcwBlCns
+         2GOA==
+X-Forwarded-Encrypted: i=1; AJvYcCVq77gvoMK8y9rqfPtBuL5z4lXAVo6xmDAFc04+/1BI5upQ+3uQ4YQUkhy04iifFCqmKsWhKKY1HT4Tayxv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3jyctUpsIBCBSAWfuu6ggTmTBenNstNL9iYfeVajYN3Hq23HS
+	MD2xbJP0MFxU5Mbn4NVBqggMKaMiyIKYFOvN/td0utWyYR5nLejwADu7PgoHwl0zRXetQ0NjjU9
+	0+nBcDmiELGI7/CNlA2jjKDcKAvaMEoMM5FSw+Qr9J/1TryMksPRRnkitdCjXU2K/kMyW
+X-Gm-Gg: ASbGncuyYbp/Q1WP7l18Kjp2Hi5NlZAPpE45RafzAce8rQzBoHJQxVgqqHAfsEoi/yt
+	4GyxLWfGZ+NVjjQuFfROCPcOyzoRGPA5pOXQqrIxN5f4VcEsbHwVaNgqVE2oDPlZgcsCXdS0JJa
+	DKGIiIUFDGVYlhqLSJEFjZahL6+ggjd1uRKTQhnHSgm8XSExR501Dm0J/gV6gFDntqvNu5SvMqD
+	aoNisktCJI2KoyNNJGZyqE8QNFH90XByyL32UeOlZPa6bZZvd1dpTDWBq23N/QqEn7PgAQL5sZ1
+	3be0a2yroz8mmx/4Ptsp78iY6fDm4wXtBDQiBG0hV9PNNiHJO0WhFcMRQIJnAF3hkV+9iaJ9oBC
+	lx2VHKbby0dtB92v2/9aB
+X-Received: by 2002:a05:620a:454b:b0:7e1:5c99:28ff with SMTP id af79cd13be357-7e33c710490mr98812085a.5.1752589694702;
+        Tue, 15 Jul 2025 07:28:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKtfxTcgBGxnij43dQLyyxr09RRQ186qIQ25P+J4kz26uLidPi1uYyo+f55faQ4w2EfKpO5A==
+X-Received: by 2002:a05:620a:454b:b0:7e1:5c99:28ff with SMTP id af79cd13be357-7e33c710490mr98809685a.5.1752589693998;
+        Tue, 15 Jul 2025 07:28:13 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9734c06sm7386643a12.51.2025.07.15.07.28.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Jul 2025 07:28:13 -0700 (PDT)
+Message-ID: <6220dea5-32e6-4ee3-ae83-96405362783e@oss.qualcomm.com>
+Date: Tue, 15 Jul 2025 16:28:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Remove sdm845-cheza boards
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>
+References: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
+ <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250715-pci-port-reset-v6-4-6f9cce94e7bb@oss.qualcomm.com>
-References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
-In-Reply-To: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
-To: Bjorn Helgaas <bhelgaas@google.com>, 
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
- Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
- Heiko Stuebner <heiko@sntech.de>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
- Niklas Cassel <cassel@kernel.org>, 
- Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- mani@kernel.org, Lukas Wunner <lukas@wunner.de>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6494;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=qm+3CMghWKFd+O3bZU1o020L8vQ/E6aH1MlFdMAO6mw=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBodmPUEht58g/m1MEl9CiEJpYG+gEPLb6qZmkLg
- 17gt0+/UWKJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaHZj1AAKCRBVnxHm/pHO
- 9bcvCACog/qU6v0/olHy9NV34E/7u439Cz/PsWLzz23mGRR95QAEtPckJ29Y1ReoXl9kRlBdEId
- s/ovkySUmIURZga8nOC7zVHFfFr23wBEF97zAJgyYKqRATv2x3wb2/OleIMcB6PgDH5arice5yO
- ZpIK7nMHSLoiqFBcPhdxbb/niu6d86Zqohw9mWyqObF9PweBctF/wXkvdg5Bh8JXyiOEH5VEQnK
- W69HHb4lv+/0WcQBvHfMuzFtzYb0wfcSLKzvzn1r9p48kJvfNjL1QdGxDHa8CXYybbkaWtgDvUX
- i0JqWYZjdOHMBKHRC9J+wqRHnGJyk238VRQsipjpNPJN4rxk
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+X-Authority-Analysis: v=2.4 cv=e7gGSbp/ c=1 sm=1 tr=0 ts=6876657f cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=z3venpNmMx4ABpSws_cA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: LcO_GqXjxn0qNUtTnEtZGh_bqIkmHP1c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEzMiBTYWx0ZWRfX4qZKwweIgdIU
+ DK7TdCZiBVN879Y6sUxaiwOqNB1yTPsf0iKfS6NXgOduUj9Wjzeicd0ddyQkZvXyucT0x3Xxwsc
+ kW/e9bu/BFNllCPoBUl+YqjRUK/L6kC/ydT4U8TuPtERJL7MTfNAHQnMRG1lbrc6tGGzTpMdcQH
+ yYCrsDC2F3vxT0niQkGfQJ1ufxLPQZiltR5oXvW6YPpUJiMNCMw/fPmg97FpKn26N0gfTNErVLL
+ O0lfYii4Nth0C258efHaYAYeVBz4cfoBdSHsljlTF077FTn+DxHO9IRRt3iZ2ylTE6d98OOT43f
+ qWYYRuRl3nBtQQUdTohkSCrlBtuLcQx7zWGY2xZyN7uAgUKoYSTTeUwmtUptIJuR9Wx/8+c5cOJ
+ QTaYWvOBoHpt+PGsoz0T7ocI/3OCxGR4e+9F9iLDmzscw3eWqITN7+GgD+kRNVi6TQg7aMKX
+X-Proofpoint-ORIG-GUID: LcO_GqXjxn0qNUtTnEtZGh_bqIkmHP1c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 mlxlogscore=782 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507150132
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+On 7/15/25 3:45 PM, Krzysztof Kozlowski wrote:
+> On 15/07/2025 15:26, Konrad Dybcio wrote:
+>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>
+>> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
+>> former efforts on making linux-arm-msm better we greatly appreciate.
+>>
+>> There are close to zero known-working devices at this point in time
+>> (see the link below) and it was never productized.
+>>
+>> Remove it to ease maintenance burden.
+>>
+>> Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com/
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile            |    3 -
+>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
+>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
+>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
+>>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------------
+>>  5 files changed, 1983 deletions(-)
+> 
+> What about compatible bindings? If this is the last user, it should be
+> dropped as well (second patch).
 
-The PCIe link may go down in cases like firmware crashes or unstable
-connections. When this occurs, the PCIe Root Port must be reset to restore
-the functionality. However, the current driver lacks link down handling,
-forcing users to reboot the system to recover.
+My understanding was that bindings are generally good to stay..
 
-This patch implements the `reset_root_port` callback for link down handling
-for Rockchip DWC PCIe host controller. In which, the RC is reset,
-reconfigured and link training initiated to recover from the link down
-event.
+That said, since there is quite literally no more devices and I don't
+imagine Google randomly deciding to build another batch in 10 years,
+I can submit a removal too, if you wish
 
-This also by extension fixes issues with sysfs initiated bus resets. In
-that, currently, when a sysfs initiated bus reset is issued, the endpoint
-device is non-functional after (may link up with downgraded link status).
-With the link down handling support, a sysfs initiated bus reset works as
-intended. Testing conducted on a ROCK5B board with an M.2 NVMe drive.
-
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-[mani: rebased on top of the new version of reset_root_port series]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/Kconfig            |  1 +
- drivers/pci/controller/dwc/pcie-dw-rockchip.c | 91 ++++++++++++++++++++++++++-
- 2 files changed, 90 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index ce04ee6fbd99cbcce5d2f3a75ebd72a17070b7b7..01e2650242ccc345bdd0568d08219527f00ed395 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -348,6 +348,7 @@ config PCIE_ROCKCHIP_DW_HOST
- 	depends on OF
- 	select PCIE_DW_HOST
- 	select PCIE_ROCKCHIP_DW
-+	select PCI_HOST_COMMON
- 	help
- 	  Enables support for the DesignWare PCIe controller in the
- 	  Rockchip SoC (except RK3399) to work in host mode.
-diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-index 93171a3928794915ad1e8c03c017ce0afc1f9169..8f1a34c5fbabaacbd9624048ca4c4f8dc29f2171 100644
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -23,6 +23,7 @@
- #include <linux/reset.h>
- 
- #include "../../pci.h"
-+#include "../pci-host-common.h"
- #include "pcie-designware.h"
- 
- /*
-@@ -84,6 +85,9 @@ struct rockchip_pcie_of_data {
- 	const struct pci_epc_features *epc_features;
- };
- 
-+static int rockchip_pcie_rc_reset_root_port(struct pci_host_bridge *bridge,
-+				       struct pci_dev *pdev);
-+
- static int rockchip_pcie_readl_apb(struct rockchip_pcie *rockchip, u32 reg)
- {
- 	return readl_relaxed(rockchip->apb_base + reg);
-@@ -257,6 +261,7 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
- 					 rockchip);
- 
- 	rockchip_pcie_enable_l0s(pci);
-+	pp->bridge->reset_root_port = rockchip_pcie_rc_reset_root_port;
- 
- 	return 0;
- }
-@@ -448,6 +453,7 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
- 	struct dw_pcie *pci = &rockchip->pci;
- 	struct dw_pcie_rp *pp = &pci->pp;
- 	struct device *dev = pci->dev;
-+	struct pci_dev *port;
- 	u32 reg;
- 
- 	reg = rockchip_pcie_readl_apb(rockchip, PCIE_CLIENT_INTR_STATUS_MISC);
-@@ -456,6 +462,14 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
- 	dev_dbg(dev, "PCIE_CLIENT_INTR_STATUS_MISC: %#x\n", reg);
- 	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm(rockchip));
- 
-+	if (reg & PCIE_LINK_REQ_RST_NOT_INT) {
-+		dev_dbg(dev, "hot reset or link-down reset\n");
-+		for_each_pci_bridge(port, pp->bridge->bus) {
-+			if (pci_pcie_type(port) == PCI_EXP_TYPE_ROOT_PORT)
-+				pci_host_handle_link_down(port);
-+		}
-+	}
-+
- 	if (reg & PCIE_RDLH_LINK_UP_CHGED) {
- 		if (rockchip_pcie_link_up(pci)) {
- 			dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-@@ -537,8 +551,8 @@ static int rockchip_pcie_configure_rc(struct platform_device *pdev,
- 		return ret;
- 	}
- 
--	/* unmask DLL up/down indicator */
--	val = HIWORD_UPDATE(PCIE_RDLH_LINK_UP_CHGED, 0);
-+	/* unmask DLL up/down indicator and hot reset/link-down reset irq */
-+	val = HIWORD_UPDATE(PCIE_RDLH_LINK_UP_CHGED | PCIE_LINK_REQ_RST_NOT_INT, 0);
- 	rockchip_pcie_writel_apb(rockchip, val, PCIE_CLIENT_INTR_MASK_MISC);
- 
- 	return ret;
-@@ -689,6 +703,79 @@ static int rockchip_pcie_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static int rockchip_pcie_rc_reset_root_port(struct pci_host_bridge *bridge,
-+					    struct pci_dev *pdev)
-+{
-+	struct pci_bus *bus = bridge->bus;
-+	struct dw_pcie_rp *pp = bus->sysdata;
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
-+	struct device *dev = rockchip->pci.dev;
-+	u32 val;
-+	int ret;
-+
-+	dw_pcie_stop_link(pci);
-+	clk_bulk_disable_unprepare(rockchip->clk_cnt, rockchip->clks);
-+	rockchip_pcie_phy_deinit(rockchip);
-+
-+	ret = reset_control_assert(rockchip->rst);
-+	if (ret)
-+		return ret;
-+
-+	ret = rockchip_pcie_phy_init(rockchip);
-+	if (ret)
-+		goto disable_regulator;
-+
-+	ret = reset_control_deassert(rockchip->rst);
-+	if (ret)
-+		goto deinit_phy;
-+
-+	ret = rockchip_pcie_clk_init(rockchip);
-+	if (ret)
-+		goto deinit_phy;
-+
-+	ret = pp->ops->init(pp);
-+	if (ret) {
-+		dev_err(dev, "Host init failed: %d\n", ret);
-+		goto deinit_clk;
-+	}
-+
-+	/* LTSSM enable control mode */
-+	val = HIWORD_UPDATE_BIT(PCIE_LTSSM_ENABLE_ENHANCE);
-+	rockchip_pcie_writel_apb(rockchip, val, PCIE_CLIENT_HOT_RESET_CTRL);
-+
-+	rockchip_pcie_writel_apb(rockchip, PCIE_CLIENT_RC_MODE, PCIE_CLIENT_GENERAL_CON);
-+
-+	ret = dw_pcie_setup_rc(pp);
-+	if (ret) {
-+		dev_err(dev, "Failed to setup RC: %d\n", ret);
-+		goto deinit_clk;
-+	}
-+
-+	/* unmask DLL up/down indicator and hot reset/link-down reset irq */
-+	val = HIWORD_UPDATE(PCIE_RDLH_LINK_UP_CHGED | PCIE_LINK_REQ_RST_NOT_INT, 0);
-+	rockchip_pcie_writel_apb(rockchip, val, PCIE_CLIENT_INTR_MASK_MISC);
-+
-+	ret = dw_pcie_start_link(pci);
-+	if (ret)
-+		goto deinit_clk;
-+
-+	/* Ignore errors, the link may come up later */
-+	dw_pcie_wait_for_link(pci);
-+	dev_dbg(dev, "Root Port reset completed\n");
-+	return ret;
-+
-+deinit_clk:
-+	clk_bulk_disable_unprepare(rockchip->clk_cnt, rockchip->clks);
-+deinit_phy:
-+	rockchip_pcie_phy_deinit(rockchip);
-+disable_regulator:
-+	if (rockchip->vpcie3v3)
-+		regulator_disable(rockchip->vpcie3v3);
-+
-+	return ret;
-+}
-+
- static const struct rockchip_pcie_of_data rockchip_pcie_rc_of_data_rk3568 = {
- 	.mode = DW_PCIE_RC_TYPE,
- };
-
--- 
-2.45.2
-
-
+Konrad
 
