@@ -1,142 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-65057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B16ECB0618E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:43:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 486B5B0618F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:43:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0D691C82618
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:37:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36F08922C68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:33:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFEF2248B5;
-	Tue, 15 Jul 2025 14:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 089E628506E;
+	Tue, 15 Jul 2025 14:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="EDaNcNLd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W2v2bzED"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DA41FF1B4;
-	Tue, 15 Jul 2025 14:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1612121638D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 14:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752590134; cv=none; b=OVsQ0NjinU65lmQbovJZb6nzsmpPTdbJLwYnY5CEY0ve/BLAV6h6UL+J33m8AjWw+lHerZhgd6zksPvc7Lkl3umcijiIasdQuqpc1QtFYOQMueBfdBkCRO9l1vlg9qvVdAqCim/SCMydXlEWuT5wYBMP5L1QHdExBfTbQ4cuEzg=
+	t=1752589819; cv=none; b=XQmvLKGV718fZuWnucHnYczIA9Los8k9U1dvieAsnALSwRF4LHycfL1HcVJYtE9WwthuYWamfpMEgR2WNjZhIs/JVk6t9Ws25sDaj/lqPPcntZVGRZC+oh3lHnNJK9Uo4IDW43FweGjf+uMSOQmj4Fj2CNOQIWuJvLeugFWFSqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752590134; c=relaxed/simple;
-	bh=dgu36HNp6Ey5tbWJzea7xTs+Q7Z2LXx/xuvpNQ1pA7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XFLV8SeGAcEyEUxXjxLR8ywrUkflVF66YumYWtEgqDzvb7JkPH/4wdHX3f80TqY1FuvTrXJJycaO+S1pdtNhJrPWC3/KfnTjxHQOh08rYLX06lWPZkxYU/BTv0Yvs9Hj+eyhpGEQnG9ivLxOl9jJ0av54RwzQBqMRS87XFo2+2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=EDaNcNLd; arc=none smtp.client-ip=185.132.182.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
-Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FE4gGV025660;
-	Tue, 15 Jul 2025 16:34:36 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	dgu36HNp6Ey5tbWJzea7xTs+Q7Z2LXx/xuvpNQ1pA7w=; b=EDaNcNLd5XIOq7Sr
-	WEFVM9cWVQkLDtI+tD5DoTxUM1/PjExjGSx895DC4+l386R7fL28nPGPptNoSqxq
-	eAdz2y9fmkQPer6/hLzzgavwPgIVa+JQIJbEd2TgJiw2sMrN3uCfIma3AeiVT9+y
-	GKX/c3E236Qy1buK2A4KGTLtvfS5A0A9SI+WYNctil/EZO1NOz59AVfITTfdHEHc
-	xZZL0kRPox+X+93cIKfd+woucWbm2t4V3Ecc6BfuuUZBQMZy7qhUG7ZnWmvUrscN
-	6rWp21CgMYxQ+5IhN3Lzaq1gzMSuLq6lcYk1SnIt2d1VE1Enh8n7zGKsmnWkq6tp
-	muaJoA==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 47ud4mp9pr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Jul 2025 16:34:36 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id B01FE40045;
-	Tue, 15 Jul 2025 16:31:51 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id E1DE1BAFFBB;
-	Tue, 15 Jul 2025 16:29:28 +0200 (CEST)
-Received: from [10.130.74.78] (10.130.74.78) by SHFDAG1NODE2.st.com
- (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 15 Jul
- 2025 16:29:27 +0200
-Message-ID: <1df0432a-b950-4baf-93f1-25ced11ab243@foss.st.com>
-Date: Tue, 15 Jul 2025 16:29:27 +0200
+	s=arc-20240116; t=1752589819; c=relaxed/simple;
+	bh=FdL1/HKNTpO4kdE7n4NKm5VaVSkDlbNs48yc+1QgZas=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PlvvoMhQQVdb86vuTRXuShh1yjyZ4yPR/8BBp5lgDy/fUK6tQ1mrJa0KcRjmd78vohxUP7TAXHlC8HAuhFnfsPD9nUhyv8B7GkvDA8CJfVCIPhCdGbOD3mvjgCKxwM8hJBkuDtIe9WiVTcECeeR5M0o2Zvub5i5Qxyd9//uj4NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W2v2bzED; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-71824fe4661so9526547b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 07:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752589817; x=1753194617; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4+7Su+tXNXtNlViREf/FpByOQe19DRJ2WhD/byKGrG8=;
+        b=W2v2bzED3A9ejC4TfbgBBjzjno/K1PhLK2E7O3e0SPUbLWqTR9Evxz9A+K/rXmm1Gp
+         Et22K0hwMJdya3IKeHHsXW3hPwxvGaAhOYHBmyAS8ncFcpUbQerWd0RUW9AbdeTrB6sG
+         QOUikyYzPsid/y34PVziDdUyKm1BoNauuudY42lVMegWroSPQOo3Qkr6ygEYUTk7hnPm
+         kY02nYoNhhonMX9fIknHS1fRHnqETyvy/jv6p/jTCFbethMcmYb0L5oWZWuzyDkW6sow
+         OmLBsjvk6glkP806VpmbDr5DbkxrIKVAvgata5YVlC/7rRECoPR3Rnlb3ulchSSzVxCG
+         mZKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752589817; x=1753194617;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4+7Su+tXNXtNlViREf/FpByOQe19DRJ2WhD/byKGrG8=;
+        b=RlUWBfaTju04c3fGpEKlZufYw5ORnUZJLs/5+OUL8e/l/mL0qnQMeePkQTAf4gKSch
+         KE0BIIysx+NGzfWW5wweGk5QDN4LhV/CK9blosDEbh7AtJXDuT/v7+6IEmKDyO5B1+yh
+         cgeFTk8lsZMwW8L86nV362McACfdCeiTpE6lyu6y2iVaQ4fDLuQkzB3xAy3LNHBcRPDA
+         fUQ9+9zipfokHD7n34fDIZFWgHgGOpBzoj8EPrG8k+O0XOmTzxrHjyCSjqEMvXANc15M
+         7vkVu7IMkq2+t16pRyzqaCNwXWrVDsjrAUuKPVCII62xuDB0UvX3IRlv+zNeqQj/t+/d
+         +eAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFPMQbVkyWKGmwnJPYXA+HhIwUYIAB9MPiDbUZdT+YyBZ5J3n6iFND9umY+seCSyT04TqikPrmb8758ddI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yynz0rHxXQ/MPHoJgYuGJBimbRe4OJvs59H6XupmVQw77uAuZ9e
+	HFsrQ3ziQ8kE0crAzPuXBAH4Jv9h4ZeBRUUmB2i3UiQCdS4aRhGdmZHo8MDK48Jmd8ysDYMOA9w
+	OuNI2qL7W+kGef5ey4Tq3hMx8DIDUOQbvw8wKnOR0hg==
+X-Gm-Gg: ASbGnctLSslHHnBZUN+ChVVgKZP/j23F3Bua1k6uG6uAw5fWg9O1VGwuW+2x13SAhSK
+	Zdkdl06Ff3Fs+CHdszoYWvonTH+vQ2Z1/2FZpzy64ZBDM7wx6Sqa5B05B9Wz48Wt2TRJmFMd8MA
+	a9kqPurq8WvIdyGkJw+kCI2ici3OzRdDylotPGCW0gyoJ67v81ppMKKMZsesXJR2NO3JSNLfSTM
+	Je6NMLL
+X-Google-Smtp-Source: AGHT+IGBzBhoCXe5OGunO7xvl2ZbN7LRPwWWQsLELIyQWERT2XuyowSM7Ti1rVh+eETJFMAPU2ltq9fvUbOvfY7jIrI=
+X-Received: by 2002:a05:690c:9:b0:718:2387:4544 with SMTP id
+ 00721157ae682-71823874737mr49946387b3.12.1752589816638; Tue, 15 Jul 2025
+ 07:30:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] drm/stm/dw_mipi_dsi-stm: convert from round_rate() to
- determine_rate()
-To: Brian Masney <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Shawn Guo
-	<shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix
- Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Clark
-	<robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav
- Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang
-	<jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Yannick Fertre <yannick.fertre@foss.st.com>,
-        Philippe Cornu <philippe.cornu@foss.st.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>, Stephen Boyd <sboyd@kernel.org>
-CC: <dri-devel@lists.freedesktop.org>, <imx@lists.linux.dev>,
-        <linux-clk@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>
-References: <20250710-drm-clk-round-rate-v1-0-601b9ea384c3@redhat.com>
- <20250710-drm-clk-round-rate-v1-6-601b9ea384c3@redhat.com>
-Content-Language: en-US
-From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-In-Reply-To: <20250710-drm-clk-round-rate-v1-6-601b9ea384c3@redhat.com>
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com> <20250713-sm7635-fp6-initial-v2-10-e8f9a789505b@fairphone.com>
+In-Reply-To: <20250713-sm7635-fp6-initial-v2-10-e8f9a789505b@fairphone.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 15 Jul 2025 16:29:40 +0200
+X-Gm-Features: Ac12FXwmHbA2nWRNuYQwrZTMO008mwPCFYz6i2upkNA2qncGOOVsk9AzGvxKlLM
+Message-ID: <CAPDyKFo77_0n0SefZ0N3osbSM=0tXW_rsjd9P4WaqoZAwyaTGg@mail.gmail.com>
+Subject: Re: [PATCH v2 10/15] dt-bindings: mmc: sdhci-msm: document the Milos
+ SDHCI Controller
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Thomas Gleixner <tglx@linutronix.de>, Jassi Brar <jassisinghbrar@gmail.com>, 
+	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, ~postmarketos/upstreaming@lists.sr.ht, 
+	phone-devel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-mmc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SHFCAS1NODE2.st.com (10.75.129.73) To SHFDAG1NODE2.st.com
- (10.75.129.70)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
 
-
-
-On 7/10/25 19:43, Brian Masney wrote:
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
+On Sun, 13 Jul 2025 at 10:07, Luca Weiss <luca.weiss@fairphone.com> wrote:
 >
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Document the SDHCI Controller on the Milos SoC.
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
 > ---
-
-Hi Brian,
-
-Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-
-Thanks !
-
-Best regards,
-Raphaël
-
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 2b2cbce2458b70b96b98c042109b10ead26e2291..6f3fee4929ea827fd75e59f31527f96b79b2cca8 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -42,6 +42,7 @@ properties:
+>                - qcom,ipq5424-sdhci
+>                - qcom,ipq6018-sdhci
+>                - qcom,ipq9574-sdhci
+> +              - qcom,milos-sdhci
+>                - qcom,qcm2290-sdhci
+>                - qcom,qcs404-sdhci
+>                - qcom,qcs615-sdhci
+>
+> --
+> 2.50.1
+>
 
