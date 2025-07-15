@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-64929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E91DB05214
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 08:45:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FF01B0523F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 08:53:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E76F8560E6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 06:45:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 610364E2F75
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 06:53:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76F5726E6EA;
-	Tue, 15 Jul 2025 06:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B9AE26FA6A;
+	Tue, 15 Jul 2025 06:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lFQf0uOE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uuHIrnti"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A182525CC7A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 06:44:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE55B26E708
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 06:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752561889; cv=none; b=LaJi1DdISFMxYqXbSiMEN/wKvSAH7oTQ9Sh4PXYzy880z3dO+aoSh9dUSCT27KZhY/+6gyBM5wM3A+SCSEy3H+vv1J7V83NOCQHqZts8uZZKAvx2QyMHMOKy/H1v7TGmNcIzR6bl0dR+joSl8srVe3xZArfxQ6t08cTHKmM1rw8=
+	t=1752562414; cv=none; b=cGLjH9G6tQTZPe1G2IXsQUokpXuR+hhnL9jX77AfIR7cDhP0thSGR5VCk37NVX2355C1GmBLg1RThfHf0T5n6IX+xL6rTaX7724kkkb1jQm2UNyppeAimGq4LmfHtD6Sp89GvFWI/vZt5C+mUcKM+afSa3s9LZfK2FDq7BVNJWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752561889; c=relaxed/simple;
-	bh=R/9lqfE5mzB7t5nTZk7gl/4huV9onD2mkEXutUdkvJA=;
+	s=arc-20240116; t=1752562414; c=relaxed/simple;
+	bh=7Pgt3265MUvv0KO/DG+JIDcgier23nzqYxB6scwqRbM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kc3cU34GA+EDA26UkgvbgUNOFbZqrzY7TFIEQejWVDYLei8koZxrVbtxuRMC8UrFM2I0ULfihssCR+QFQwIc3TLrGi4HjcFcbW247D/wSZNQOBnS5q+m20JmQVZjt+gwxRdFzUAqZfdbraIANYwrM9iYXSWV5E8Y4uHNm+VI/WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lFQf0uOE; arc=none smtp.client-ip=209.85.221.44
+	 In-Reply-To:Content-Type; b=UjTzcPLCvZ9Qg0AE1bFnZRCTa6mB5Lt2dJgotU7uQgzjim3/DrFCqepQCKQUiuV+2cNXEQm+rFK0GI6jKsge+ORo34USpM06h8HDaycaxbhZh7/IEcx42+uFKpj3JK1q6QpyR0qwvwTsrnoR6LexmVuPfi6U/DIkFTy6zVIoxhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uuHIrnti; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a577ab8c34so499628f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:44:46 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-32f18065b70so4035091fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jul 2025 23:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752561885; x=1753166685; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ig/rHW7suI4HX7zb1V3+gnBiDUNJyG608kAWJVhPdJc=;
-        b=lFQf0uOE29EkDzRg4v1TuOjNxjXQM7FaAiFwUjl4kqRc6KCj5GcNRY8ZixlJQvwBQj
-         2woXfgML7NsaF2LeojmtBEyDWAIPVnQ9NUx5ORPfOBodPInCnRrm+khOvNikPV2JsAMY
-         lxxso1GzX6C3Aas+y2v1potII0B/PmCGwFkqF0HEg66Tw3QFJjL9sm4TMD05//En4S5h
-         A6osPHKZWcYDseR0yc9JaIfGbYaxIkNlejEqwlHBkdax+ZNMmyEFR1lguJ80aIjx7Coj
-         Ly2b0uZv/qXZR56S3Ud8yzZLAPOBjaMmOLjbrcwNz35UHTqHgX2/jAEy6qPu4CHuGy6g
-         LrbA==
+        d=linaro.org; s=google; t=1752562410; x=1753167210; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IvcOD4Cn8eI42dR9/vuoZROCEodBzgnn8pqK2R/ysOA=;
+        b=uuHIrntiXVwd0zUT0sDuSkjZTDDfill65Dx/43o8Euv00KMBwcesYrjIW+Bj6IvBCj
+         cS3/biyblTHaHzV+U7KF6UB9+XDUhLgvSVuYyajNSp08ATXYEQekD6gjiA0yLAUiH/s7
+         B9iVIDYM3+2IgEkrWxw4M52ulWQmHyLaxXsNbVorPffNIGEPTaKHx7t9/US+h6m+3nUc
+         a3IEuD7NJ4Wc9pF5Lks5n356u0yRHXqkW5SNo9kgxeNGDWGCEwWCdaUOr7yR7jsmpmrn
+         ogp6alvjQAhdMgKEp1qpWoWyReXbv+eylOhrPJPvN9B2tekORXKjITTKwdT4QuWlKHvt
+         1JWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752561885; x=1753166685;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ig/rHW7suI4HX7zb1V3+gnBiDUNJyG608kAWJVhPdJc=;
-        b=dwM0MFCebD8fgmn4i3+vWBGuYAzGfjjTGOhIoXbe9i6+EIqgV43bw2BXVuV9tG9HY5
-         DkjMhoIlwhAYzD0YV6I6CegN79iADnWTSVoW93bBAdBNCUQlSX3zdSfLgPYsGrwnBRCQ
-         5IF1iZeOzQT/yRF0s6ycOJJjhRrWSQ1/AsoFlsH9zTt/3z8N4dMKVWJN9KHGs+81yzan
-         A9GG3W9jSWWI+BNNM4kb+3yBL5A7u37MNCJRW+yUQENWw6iNMHnnmH+ZNF9oKBeY3PfQ
-         DvLOjL278tsx8WEarO9jW5jhd9970JHEUtuvX67igF7sZ/J9Vp56HFTVkQunckt+4Fhf
-         Qncg==
-X-Forwarded-Encrypted: i=1; AJvYcCU+0huJvw/8GFJLZ2h0igJKqvSAnGW7+ONaiCnCbryAiiX4MVisIygzsl5A/8ozT0oBatJCsZa1e04HVMpA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxh/ssC+j0ftjpi7e0cnew03zT9406bte5hl7HZpczt1jGo5jq3
-	htn+vH5CKIy2c3dJ3pPCDXW5gPnVtTIckv2AMj/OKl50V+TPQiLsFf0BGxMjv6c5IR8=
-X-Gm-Gg: ASbGncvgIYf7Dm/Fjl7FwVykPdojkC7eE1v82tq6Jtxdkn4n1lr36i4AVRrxWa+3T64
-	TdOGoqoOkjljwM0094DCX5ZTzcTtoBnTYr5Xqa2GyKj8xMt8tCY25pgFTsn/0vYS3dVb3SUSNKe
-	moppNSNdGZTW9+7Ql00t/HMJ1RRhBne7mWdOdvwEX9VqV4yZXPxAR1iRR00K9BuGqcs+wYJw+9e
-	cclbAzMX4L1yL/UUaKNeRGgmsipzvuqLueGlpQTnpSAD1BXR6L26pNWh0G3mnxbggwEl2XhzdJu
-	wEKS1AVQHY29uuxM0fZ/udB6wdTXeGY7g1FVSNvuFK2H9ASs1PyBw24ytJdT26Xy5tL2feGZ70B
-	u/r5MOho3BCJhqsP9+3I6X0UnrUvvz9cBQBqHeAs3KA==
-X-Google-Smtp-Source: AGHT+IE4JpMnkWKgqq2q8I05VmCT/NPVZVUKz5H2a4yK1ZgVEja7568Iz0K3v1/RVrSCTQYtYxMCUw==
-X-Received: by 2002:a05:600c:3512:b0:453:c39:d0b1 with SMTP id 5b1f17b1804b1-45629123a98mr1762745e9.2.1752561884848;
-        Mon, 14 Jul 2025 23:44:44 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8dc2464sm14599412f8f.38.2025.07.14.23.44.43
+        d=1e100.net; s=20230601; t=1752562410; x=1753167210;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IvcOD4Cn8eI42dR9/vuoZROCEodBzgnn8pqK2R/ysOA=;
+        b=it+OXxrtmwK1T3/1YADDWS9Oo7sir9eCuRrd1wPRKRYb+DzbUT/XSpFPQqUWg1U/y4
+         jOmtHiT5KnT0VzqxevMkgH4r2MqRvWpE6dptL3m+zY02lxqhIiUMdHjv95IWbqFENU0L
+         psf5ZoV2ZIID/gl3G3ZnOeiJB+j4zELwiekPXpPu0JN4lQ8EEkNO3uyweVuj2dR2luLf
+         C/utxBEB7+eEammLax87sdgkb+EzgDQOHVXw3G9z0b1B5tgOwZWjV3hiF9Ps3jYRUGKA
+         kBF8ZbVLaAlw8F57Ns92Ns2pnZN9L+uD/1kEKDE397pTRSFT5Rd2BK1fijpnUFhP/mmh
+         uGZA==
+X-Forwarded-Encrypted: i=1; AJvYcCW30OJVBjbAxXkCo0ofH9qM9QHCa8n/P7zQ7tcPTLioP3czuSvIXl8Wh/T4PyLg8csQpcL0Su3H8CZg3JWI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLotOXKp42j4/SPXHDujh3ZdnsXeJkfqXd8dz9GLxzHJ43cDVh
+	9fdHmv+tuDFXS2byJQ+EJ3meOknobyfbf3PFEj+8s3n5UHirJQc/20eDDf6IlYHEPM8=
+X-Gm-Gg: ASbGnctotiu37iujCyO7MXdEF5b++xjuaBxMzVqZlqpZAWceyLo4uo86D2L8pi9zPwq
+	lHn5GEv43MSmA03OoZhHbxaAAhRYARBxi7Ah1hNSB6t8vTG9bts/saswk3eZKCqyrD/kLKQLgQf
+	EcnejYF1Cc2izWGYUNu2msLRZqJCOgKnmaTZZcRpLUqqHDB+0Zi4PM5tGb+A52KbQGU9k0bIWJg
+	UNlB8sQz8c30LralbRSYt2NLUMI0UZUu4w9vqUlozNwl2kVP/lo2d1h5VeTnNm1ix5pj9WbiiXm
+	Nw9oCXwPA/qLiF5l7Wzl++UtWgRWeBmka+FjLXeFdrIryStF9G3eOPnUpyHyKW3wbYrWEXuzMgf
+	Kwu4l86Ez4rNltMxfRoJWNqRLES/AW4/n1hnDCOWGnFLVB2RX4ABmbqf+to1SFPiElN0Bux3BVx
+	es
+X-Google-Smtp-Source: AGHT+IFodu1HnNtyzy2FJlD/fynnVpnoIvnN8l+K4AJ3AsUd4f17BT9WXmpIiPUMoelKfh8FHowKUQ==
+X-Received: by 2002:a05:6512:32c1:b0:549:8fd0:ddaa with SMTP id 2adb3069b0e04-55a1fc78578mr60358e87.0.1752562409993;
+        Mon, 14 Jul 2025 23:53:29 -0700 (PDT)
+Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55943b8abfasm2204780e87.255.2025.07.14.23.53.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 23:44:44 -0700 (PDT)
-Message-ID: <b83cc20b-44d2-4635-a540-7a9c0d36cdb5@linaro.org>
-Date: Tue, 15 Jul 2025 08:44:42 +0200
+        Mon, 14 Jul 2025 23:53:29 -0700 (PDT)
+Message-ID: <9361e954-e2c9-41c6-be4c-12b0e4f367f5@linaro.org>
+Date: Tue, 15 Jul 2025 09:53:27 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,106 +83,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: iris: MAINTAINERS: Document actual maintainership
- by Bryan O'Donoghue
-To: Vikash Garodia <quic_vgarodia@quicinc.com>, bryan.odonoghue@linaro.org,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Hans Verkuil <hverkuil@xs4all.nl>
-References: <20250714151609.354267-2-krzysztof.kozlowski@linaro.org>
- <8772c48f-348b-8a68-2099-562a29b9dd8d@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <8772c48f-348b-8a68-2099-562a29b9dd8d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v7 00/15] Add dt-bindings and dtsi changes for CAMSS on
+ x1e80100 silicon
+Content-Language: ru-RU
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/07/2025 07:51, Vikash Garodia wrote:
+On 7/11/25 15:57, Bryan O'Donoghue wrote:
+> v7:
 > 
-> On 7/14/2025 8:46 PM, Krzysztof Kozlowski wrote:
->> Bryan O'Donoghue reviews and applies patches for both Iris and Venus
->> Qualcomm SoC video codecs (visible in git log as his Signed-off-by and
->> in pull requests like [1]), so he is de facto the maintainer responsible
->> for the code.  Reflect this actual state my changing his entry from
->> reviewer to maintainer and moving the entry to alphabetical position by
->> first name.
+> - Reimagine the PHYs as individual nodes.
+>    A v1 of the schmea and driver for the CSI PHY has been published with
+>    some review feedback from Rob Herring and Konrad Dybcio
 > 
-> NAK.
+>    https://lore.kernel.org/r/20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org
 > 
-> The roles and responsibilities are well agreed by media maintainer(Hans), with
-> Bryan part of that discussion, w.r.t code contributions to iris and sending
-> patches to media tree. The only reason Bryan post the patches is that Hans wants
-> single PR for patches across Qualcomm media drivers (Camss/Videoss)
-
-That's the maintainer role, so Bryan is the maintainer. I am documenting
-actual status and your NAK is naking what? That Bryan cannot handle patches?
-
-Sorry, this is already happening.
-
-Your push back here is odd, impolite and really disappointing. You
-actually should be happy that person outside wants to care about this
-driver...
-
-> Hi Hans,
+>    Both the clock name changes from Rob and OPP changes suggested by Konrad
+>    are _not_ yet present in this submission however stipulating to those
+>    changes, I think publishing this v7 of the CAMSS/DT changes is warranted.
 > 
-> Incase you would like to split sending PRs, as the contributions for Venus/Iris
-> would be significantly higher, let us know, we can pick that up separately.
+>    Its important to publish a whole view of changes for reviewers without
+>    necessarily munging everything together in one sprawling series.
+> 
+>    TL;DR I moved the PHY driver to its own series review comments there
+>    are not reflected here yet but "shouldn't" have a big impact here.
+> 
+> - Having separate nodes in the DT for the PHYS allows for switching on PHYs
+>    as we do for just about every other PHYs.
+>    &csiphyX {
+>        status = "okay";
+>    };
+> 
+>    We just list phys = <> in the core dtsi and enable the PHYs we want in
+>    the platform dts.
+> 
+> - The level of code change in CAMSS itself turns out to be quite small.
+>    Adding the PHY structure to the CSIPHY device
+>    Differentiating the existing camss.c -> camss-csiphy.c init functions
+>    A few new function pointers to facilitate parallel support of legacy
+>    and new PHY interfaces.
+> 
+> - A key goal of this updated series is both to introduce a new PHY method
+>    to CAMSS but to do it _only_ for a new SoC while taking care to ensure
+>    that legacy CAMSS-PHY and legacy DT ABI continues to work.
+> 
+>    This is a key point coming from the DT people which I've slowly imbibed
+>    and hopefully succeeded in implementing.
+> 
+> - In addition to the CRD both T14s and Slim7x are supported.
+>    I have the Inspirion14 working and the XPS but since we haven't landed
+>    the Inspirion upstream yet, I've chosen to hold off on the XPS too.
+> 
+> - There is another proposal on the list to make PHY devices as sub-devices
+>    
+>    I believe having those separate like most of our other PHYs
+>    is the more appropriate way to go.
+> 
+>    Similarly there is less code change to the CAMSS driver with this change.
+> 
+>    Finally I believe we should contine to have endpoints go from the sensor
+>    to CAMSS not the PHY as CAMSS' CSI decoder is the consumer of the data
+>    not the PHY.
+> 
 
-Considering quality of the code you sent as Iris upstreaming, you are
-not there yet.
+1. This is an incorrect assumption, unfortunately it was not discussed
+previously for whatever reason, good news now it gets a discussion under
+drivers/phy changeset.
 
-https://lore.kernel.org/all/1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com/
+2. The whole new changes for legacy/new CSIPHY support is not present
+in v1-v6 of this changeset, it just appears out of nowhere in the v7,
+and since it is broken it should be removed from v8 expectedly.
 
-Please learn, read how the process works, what is the responsibility of
-maintainers first.
+It's a pity to realize that instead of providing any review comments
+for the CSIPHY support series sent to you one month ago a lot of time
+is wastefully burnt on a broken by design change development.
 
-
-Best regards,
-Krzysztof
+-- 
+Best wishes,
+Vladimir
 
