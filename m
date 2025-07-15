@@ -1,134 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-65047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A44B05D98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:45:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1715AB05F13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:00:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 478B71895FD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 13:40:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C7F54A7A30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 13:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0801E2EA472;
-	Tue, 15 Jul 2025 13:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A260F2EE5E9;
+	Tue, 15 Jul 2025 13:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WYThkK26"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SPjXCguF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB62E49B3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 13:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723C22EBDD5;
+	Tue, 15 Jul 2025 13:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586421; cv=none; b=cvKI6sFbiB+MU/6ZWoaAsWYb93kN1kMq8bL+HHLGcV6dXubDl/U2lrakb2ltSDNdWz0fIHvqzc3EHIHz0QDb9/8zc5Fa6UfElJtVdsaMbnMG4gsPYLH9ZHR2pvRRcXBp8zLBi1LeXJYovsR2uwzccHQMtMSt1nDGxi9uxVQbQEM=
+	t=1752587147; cv=none; b=k3nMKhvMgMu5l2r1qMBcj7KrqRNlnilUBHo/cPK28ypO9xajPgeBu7S0YTUp1/ZmFVDKPoWtSoaKQOnG7BqhAnWUexj121zJIGZY8NBQ7yPrLHg0iSiRVku5Gw3nnuIGW6skIQH2+Kf1dm3hBO0LsVVySXsMCIyqwjJcZmtQz8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586421; c=relaxed/simple;
-	bh=rzsle0lYd4q3WFkhEa4uKuNyg+mZnvPoF11bTF7RytI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=apbQb6sJR/hxur31M61ZGZF74U/eDHLzSGicPzhVkoPbcmxg4jZ+zAr7L95b/8CFVcXQYghJi0HPwhBL8xAkXSAuoI9z2yRtnxkzCoIqe2+2jatqWg0NCLBFB7jOqniBp9vHZv8TyLwkmpRTycTtuYvzjoLYDpPLsLkNNxQJBgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WYThkK26; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4561a4a8bf2so21985985e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 06:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752586418; x=1753191218; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z+O2OICZ/PuWhWK3KhlIFVSdYJvPOM1EVW/PgJZfT+M=;
-        b=WYThkK26Z7Ql11GhNHA5izeyQuY5s7b6yi7lhD7yjRlPbvptZHkgeNewrwPcS+pYVw
-         1l1BkwnX00vGRAHEjAovJeF8otaJMtVvU9BZw4/8htpxshpNf1o6zLtJHBvnxOFkW/kU
-         IEMmuSNhu1vsXhTCVi8yXzGGMfDoosNrVZHb4s/K6CjmLsma/rhqmrBBwPw3ElsDaDUB
-         Ud7XP6E2Wh3j88qZKLEgtwfWjNWhyqP8xb+cF2QxPzwcMjywc1lYD/4rDfyzTCJAwk/r
-         zer7cd/bykVGOFHOsxCc66QExUyhYNIJdO3ZhDqAbrhPZDH+cV5c5IHpI7pHLTvDbf+y
-         MOCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752586418; x=1753191218;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+O2OICZ/PuWhWK3KhlIFVSdYJvPOM1EVW/PgJZfT+M=;
-        b=bSbq0uTfnhH805EgcSCqO3y/Ht1tA2Q5gbva+deTDbu1NMoaaq9gJG1qOm+9rWnkxS
-         64/uZgzWZJP7mZLd/oNNwv6dPTXH/PhXRPrDv/b8rkF04/266Hq4QR6/m8yLzeLcmVM+
-         O2xxO4E127BZQ+cYWGN2k66W1B/sYTAMe8mSEEVDb0/1rsh4JTmx/0O3vxeUMy6XjJTJ
-         GpQTLrq9b2r4FOqksSZq13ov0cgdyVsBy5dha6mDj0pzXx8OPxahi4Sg0KHBRHx0YLId
-         WsX7vkP48QHaIMmvVS5JDt6dUvmvtsn8PZYXoZfl/UpFeYccO5Fv1rbxwoNgKL3AekBL
-         yhNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrJrNCpK6KqJYIewKF5JiH/2JcpRP3EbTzGvi32Mba2QAX0lVkXplA4P83DHUUePC2L7mZF9cDzspQkx9y@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuMpOPQfwYe+zcwwJtCsLz8Qrp0eB3Qio/YDi8/v6Owi8+Km+E
-	0Du9NP2ZXbwCUGIVIUsjOFqzU3t287OaWDYanZ6FqEDwOxA1rQIfIHJrsXMqwlDAREc=
-X-Gm-Gg: ASbGnctUFmWLiUTmM7Er4+sWWCIxGeky+I6m1usjw8HiwIWEOd/pTqfdOPRnJe6Cb4u
-	7bW1eLdeS/FmwTTd3erTpBSBHmQtoiruW605DNFwk19bXTu5LjfxjM8phyQ1TuumNVNuoZztWHU
-	EyUls405scyWm/58nEf29oFvt44s4lZqtrxhJ4MOD5S30mv6nmBgJ5YSBh8NUlkojg6BZndqr43
-	aIUYPNQ5hAo8PGmHtGEjDKcF6eJxxRoJSQXYvDBEYpk+C64VrRHukPv40M0L3Et5qyPHHxYxJS1
-	VLqiICl4aiRdzaFJaBr4v0x9zX2TeQotzNXGYAluettkO30UNpqukcVwIeUmjRLPnhFCZzEQhH2
-	PPW1fpoMjVWstrNeiy5NJ/lpCnzE++lSCCtKvJSo9adPZ1wo9Xxzqoon/VRMf
-X-Google-Smtp-Source: AGHT+IENtk1fZji7615Bpw3kcLK5xTHsi34/FWdDqEiS6WLHvSySQx5nMasrQRvOYBkeNVG7ZeVurg==
-X-Received: by 2002:a05:600c:4e51:b0:455:eda0:8a8e with SMTP id 5b1f17b1804b1-455eda08c8dmr128078735e9.27.1752586418167;
-        Tue, 15 Jul 2025 06:33:38 -0700 (PDT)
-Received: from mai.linaro.org (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d50ded8csm199491555e9.20.2025.07.15.06.33.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 06:33:37 -0700 (PDT)
-Date: Tue, 15 Jul 2025 15:33:35 +0200
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-To: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Cc: linux-kernel@vger.kernel.org, tglx@linutronix.de,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH] thermal: Use dev_fwnode()
-Message-ID: <aHZYrxabtU-7l2FB@mai.linaro.org>
-References: <20250611104348.192092-1-jirislaby@kernel.org>
- <20250611104348.192092-20-jirislaby@kernel.org>
+	s=arc-20240116; t=1752587147; c=relaxed/simple;
+	bh=c61cukCCE+iFMnCrU5/1E0WmJOuboDJr6x7dl7s5RLg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GHc/pVddWnM4EDhqfqlBeytka4RXJ/6ajxNZlwDrsvXsn6E4jl8CA0VJY4Bigz5BQUS5qDWV55US0rCLoPICmuyDyzYCv8obGRJ13tU9rvFbwdyZMSyleFuCwZZnxXsOVNnt73CXKl6LYXkFU1a0YVADfQZsqPA7kxmrL4ke1yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SPjXCguF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9002FC4CEF1;
+	Tue, 15 Jul 2025 13:45:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752587147;
+	bh=c61cukCCE+iFMnCrU5/1E0WmJOuboDJr6x7dl7s5RLg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SPjXCguFe+6vInM/Ezipc3e5jd3egpbbnqxhrimoV2+62CZ+uqugkshS+JYxrTzNA
+	 9JJn3/BLgQFyjBmD92wE8V5X54gAkbELvLjI3f69rWVEOup1k5iNvsgckAbMfNqxfo
+	 h3C+ZtoPyk5c1ZschoCBycXa4GQOrOwNHIdrUC0TNaIHyWIGtMc6kuFE3qkjE1kWk7
+	 8yYOxiaLK0pBIo/EhSGfK5DVwc89e3jEdXeFssC2p6itJnjILcAPJR6vRfu7O8pNaE
+	 Km5GaQ4LemnOg9KHG4UewOAt8oc+ZhuV0x0k0RRVkrLkhYgfPfuq8V51Qsy7/D8mAl
+	 m6v2t9c8NHwWw==
+Message-ID: <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
+Date: Tue, 15 Jul 2025 15:45:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250611104348.192092-20-jirislaby@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Remove sdm845-cheza boards
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 11, 2025 at 12:43:48PM +0200, Jiri Slaby (SUSE) wrote:
-> irq_domain_create_simple() takes fwnode as the first argument. It can be
-> extracted from the struct device using dev_fwnode() helper instead of
-> using of_node with of_fwnode_handle().
+On 15/07/2025 15:26, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> So use the dev_fwnode() helper.
+> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
+> former efforts on making linux-arm-msm better we greatly appreciate.
 > 
-> Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Zhang Rui <rui.zhang@intel.com>
-> Cc: Lukasz Luba <lukasz.luba@arm.com>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-tegra@vger.kernel.org
+> There are close to zero known-working devices at this point in time
+> (see the link below) and it was never productized.
+> 
+> Remove it to ease maintenance burden.
+> 
+> Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com/
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
-> Cc: linux-pm@vger.kernel.org
-> ---
+>  arch/arm64/boot/dts/qcom/Makefile            |    3 -
+>  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
+>  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
+>  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------------
+>  5 files changed, 1983 deletions(-)
 
-Applied, thanks
+What about compatible bindings? If this is the last user, it should be
+dropped as well (second patch).
 
--- 
-
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Best regards,
+Krzysztof
 
