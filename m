@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-64985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86098B0562D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 11:21:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02470B05662
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 11:33:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F386189D063
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 09:21:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 42E71561045
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 09:33:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B77B2D5A18;
-	Tue, 15 Jul 2025 09:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A0A26E71A;
+	Tue, 15 Jul 2025 09:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ok2RS/FI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="idt4IPX1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B292D541B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 09:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D90BA42
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 09:33:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752571243; cv=none; b=Tp/6SXua6iHHRwXpNbPTLB5Od6mLSms6W3B4G+Qd2y7ge/pMUutHHzwAcAAzVLlQdLN40n1ahXYJZPn//KT4SRTW1/JEbLdrVl2pwS9tm51VB1U3OU7EQOPB5ZM/zU83SOMIaQx7isPE7oi73b9vcHSj2UDhZ3wW+GO4Qp/jm1I=
+	t=1752571983; cv=none; b=F+I80Mv2JwSi541WGQgM4v/5W+CLEyf9XqVeVYd2Tj48lj2bcO8sD2HNhQpLlryt7C5Vk14ETR6V2NCFFei2kjipxuIwNJKzjOZpdg3/mkGeRw1ihRbO+adduU6EUOHKtlGzAY0Pik3qdpyWiKo8FWJTQGnwVi2sK56pxBeT5GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752571243; c=relaxed/simple;
-	bh=OemvodW9GzFSWJ4bb89tBFPOUPsA8BlJ18STvzza4Fc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sZtUDbsclZyv31wRixtkkDauTHT1CXm2rMY65i+pryTGeo6BVy7e7mxzfa5Ety+VacrIoP5BUxlqaGdxv5o0ysuG26wJxJOAObHjmSXPjLBG2LxZQ4Buk/gcHefJvwtmcE6G0XJrXEJOSbmtrLndcdym3XabwXv9IP2ca+HpImM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ok2RS/FI; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1752571983; c=relaxed/simple;
+	bh=XlX30uvNi0+08PXyWI9YmJs8eShmHqEEMc9JhnTOSjA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RBvs/XSjUzTLOynRp048gPDWq4wopKpV5pQE9T7TlecrXnLCkITPIGXFsdMYHh8bS/24MXshCG2LgH9sUuQ5QtEPAtUgGMueUp0DXlREtEqfnKDlueimHFdS/yf80OuAlDjyrW6zH+aeR0Cw3HdTwXZ1mg/DPHWZ8VXpqYJaAHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=idt4IPX1; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a4e749d7b2so795136f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 02:20:41 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a4f64cdc2dso758778f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 02:33:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752571239; x=1753176039; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1752571980; x=1753176780; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
+         :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1E/qonGhUcmwHnVeNtDrr44q90xBTvb4uBQ3BxXBTvY=;
-        b=ok2RS/FIDrJGBfNuBD6DGC5YqZsfn1bZcsCAZEmiWSemWmdmYlaYSsdFbzZK30tIqO
-         A/JExKxdLfweTLalMrBZi5DI+d1B1SktnBHQKPlDqeb7QAjmnRhADGuBijA7KTqh8LdS
-         fjdwUuI0F19w2vuKgbobHVky3qU6ySux/iJl2p7D+gkLN88UAymH+pZ695ed+fi2iGAH
-         Q0YZGf5Ow84AGKfPTqQZQVPDrdqgWeiSQM5SzpgGmvPq3IYzK11FgkqTqzEvRZrIDvoC
-         mya9wBHywCE4A9plUT9qGKeTXFg+ieeiVcz/1vK0s0xE1PU4rUPvzXvKUTdUmX8gkLWC
-         eJ1g==
+        bh=0jJME/khjaXQwKsx8AR3T7NhPGSZ++gvfi/UHBNBTFo=;
+        b=idt4IPX1MZJHhog3vsjpcY15TtUh20wqP4ZiTEmYUNBjWQ4XYopMDZXUJ3d+E9ZII/
+         q5Y0OpdmZb9yWrUOgNbxU6IW/eJlXC1gDH6INQeMJOvfMa1yUbA49pymbjxmFSj1dLag
+         CZ4cdYBfin/YT32NGG9AXT2o5S7V0Ji+aN5jlcphPvuFMxg9/pQChgaGuqDZNOHqlJuB
+         qGpyYFjp7aYMT0zvS/zaqeEf5x08RkPT+x0lOcn/MgcjfjdIigV8sH8T1IwUwSxfeAc7
+         gdORSka/YvQsC2pWFwdGGDvvLMnGJ7iWAGczcDPQjHU7EDAjWT18aHvvKYLFbNfPk+/l
+         BfTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752571239; x=1753176039;
+        d=1e100.net; s=20230601; t=1752571980; x=1753176780;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
+         :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1E/qonGhUcmwHnVeNtDrr44q90xBTvb4uBQ3BxXBTvY=;
-        b=UDDEsXF+FFdhtXH7bFDKHmGfL8r+eEwFNq2/US2C9OUom7emPbzHn02Hx8Qkqc/PTi
-         FVq2aqQMi9I9DfraY+ozu/d4Wm0p7z75BHhxD0R8aTPCfP2BdVVJpB/vUFbV9uDJXGeV
-         8D+SxFRb3dYt9N2s4Ok6J/LBDZ8TGFCf6G9kj1B5LSS4qNzBR1aYaE8xyxy4ubwyZjdq
-         y+lYZ1uCapzeIeYlgO2aJYA4zY1Eix/30qFJDh/22eG3At+nDw0tsbKE+TtDIrS7Vkfg
-         Qxd8lKqYtBNIp+PyCPJ3YrzCx9mbm0IDyXNf4xM12xOrjOTFuoVfalOckzLq6EetPdT+
-         g3Qg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2FVUMGLy9EUHW62wS3uAorVvZM8wu888qstQkvdeld4OUASTMbMPWlrZuCrOBfN/khAJJ7tA/Bd8FzD0O@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFLrmXgzhQT0DxFzB5q/Rn1O/a6qvqwEhqtuHLiE0YUFt47lw6
-	LiRkMo3bvVTqrSh+/NhusDbhdpWXKwXPU7RnszJVw5G4bUWfZHC/LGPYazqo3xiF9r8=
-X-Gm-Gg: ASbGnctPV3RcHuvU1g6JHWlMcj5PtB2ygmlJEkLXD/pSuSL67PBgcghnIAZotR3qpbD
-	Odj5ENSb+36bo9xk0jGLRVWOH9j901lo35M1upy080Nxlkz86uPl13tLfKk9scRcGDOZ7l46p8d
-	6tK55G2FJPVemObdJlOlnyOgZRjqqW/auA6hRgPHW7NhHpJdaPkA2ohdaLsZidMxYoxeR0Fj7uq
-	Ze7VwUbBt5jbbopgE+0nXfv9/EzuOnuFhN5aDtxNSVyeZ7NhCWQBTb+sjhtxeEKULYjBWI5HzEg
-	x7tPWu5PEuWDgeWX1k5HJaN+KpWYGFtNtEfdPnhGWfa7lL3hnukS1eLJlXkCkKhtg3DLwV2kCAX
-	wJTQoeoGnOx3QOWLwkgb0zw6U7zT4AwilPxFQo57JaQ==
-X-Google-Smtp-Source: AGHT+IFgIrYKr5kPaWqOLL/LuDRPX4sYpz05RkS2bwD3IMEJN9VB46qV3MMA7UHaEpKlBugRNoBDJw==
-X-Received: by 2002:a05:600c:8207:b0:455:f59e:fdab with SMTP id 5b1f17b1804b1-45629191380mr4115915e9.5.1752571239496;
-        Tue, 15 Jul 2025 02:20:39 -0700 (PDT)
+        bh=0jJME/khjaXQwKsx8AR3T7NhPGSZ++gvfi/UHBNBTFo=;
+        b=ZkEp8EGf3WEL594UeioDUov7zH2W5NtfRC1yDhEmPEi3bAJklLPsbfkv1TKbOsqyIq
+         qOaLP8d9BQeCh20bgsjFbCvgbWkO2JCjMhVYdYwR/7hWnOhFdz8XVLYdH+E7VE3cWrn8
+         PqES+aztPGvLPP9vaLXFpgt0DobMrCVuoiusGWvDNEOUw69a3eZIg0HPfJyp19Jesk5z
+         OXCIQkWfeBpUOXKoAjfyFjjvYJtlX+GBjzv5cHh64bQ4Xflwvd+dWPxrZ+E1p9IAybZf
+         iviiTIdqvF5U5HrHJaBNRhuobW/thgXxMT/rLCp4bFZYg4dVtPVkGzKRinS77oTOo3Ik
+         TTgA==
+X-Gm-Message-State: AOJu0YyrDNy5ZLNnWjElYIRRpUkgT2rZD2+77SQ6fIOD0DePGF+1c6dE
+	7opFlIgrkj3SQpgsyrniB9kGZoVJD4bilnDqoONQH6lUvEUumApwfb7hNvf6RA/8Buk=
+X-Gm-Gg: ASbGncua5c9dKCewNqa99MzQkEAiJcCA/sSijMDtsIEbRd9iwuBBWCsXmsp/rd+WdyT
+	uEdrPzqO7RgQ+N5wuG68zKn2q3Lezv0hf6AHgR7IKk96gWVZerfiD1uTQBH1epsI4gU4AvnN4Ug
+	JeD5EFROnhaEfDBpxlY1LMXkJjSk3n8z6rXWGvJcnILtkTwU9p7reLM2QopSNJ15hUl6cu9DS6Y
+	W2/48hdZl8kx+ujeARW3TtpqmxlqDj66o23eoLKWcjLqOyfrq/ElJ/OEW5AQz2myZru2DIIkwIV
+	5bXrg3XJpZshnxDLF4weAazW+ZPUerHqzDTsYlSkkItWpG8449oepwp5pFsNFWmlQvVace+Yqze
+	GBCHsRQ6C7x8DDC0e8LAISldmTfrkb4kRU868uD58dA==
+X-Google-Smtp-Source: AGHT+IEQlBlRNnKUL+sVTdwMNTFRhe00dUVaelMbSdO6rnFWbfQZsfNCT+9BwuX/7wATZB7qeJ/7Mw==
+X-Received: by 2002:a05:6000:2483:b0:3a4:f8a9:a03e with SMTP id ffacd0b85a97d-3b60b2bd879mr307360f8f.3.1752571979682;
+        Tue, 15 Jul 2025 02:32:59 -0700 (PDT)
 Received: from [192.168.1.110] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e14e82sm14696167f8f.71.2025.07.15.02.20.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d867sm14870582f8f.61.2025.07.15.02.32.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jul 2025 02:20:38 -0700 (PDT)
-Message-ID: <c70fd6c6-1a65-41ee-b0e1-f6c792867009@linaro.org>
-Date: Tue, 15 Jul 2025 11:20:37 +0200
+        Tue, 15 Jul 2025 02:32:59 -0700 (PDT)
+Message-ID: <5dd36649-821c-450e-bdcc-871735d10059@linaro.org>
+Date: Tue, 15 Jul 2025 11:32:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,20 +82,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: iris: MAINTAINERS: Document actual maintainership
- by Bryan O'Donoghue
+Subject: Re: [PATCH RFC 1/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
+To: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250714-b4-sm8750-iris-dts-v1-0-93629b246d2e@linaro.org>
+ <20250714-b4-sm8750-iris-dts-v1-1-93629b246d2e@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>, bryan.odonoghue@linaro.org,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Hans Verkuil <hverkuil@xs4all.nl>
-References: <20250714151609.354267-2-krzysztof.kozlowski@linaro.org>
- <8772c48f-348b-8a68-2099-562a29b9dd8d@quicinc.com>
- <b83cc20b-44d2-4635-a540-7a9c0d36cdb5@linaro.org>
- <a4dfc82b-79df-3e3c-0964-a99db222c6e6@quicinc.com>
- <4f79424f-0005-4978-8c6d-6b726ee7e4ab@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -142,48 +136,33 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
  vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
  2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <4f79424f-0005-4978-8c6d-6b726ee7e4ab@linaro.org>
+In-Reply-To: <20250714-b4-sm8750-iris-dts-v1-1-93629b246d2e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/07/2025 09:06, Krzysztof Kozlowski wrote:
-> On 15/07/2025 09:00, Vikash Garodia wrote:
->>
->> On 7/15/2025 12:14 PM, Krzysztof Kozlowski wrote:
->>> On 15/07/2025 07:51, Vikash Garodia wrote:
->>>>
->>>> On 7/14/2025 8:46 PM, Krzysztof Kozlowski wrote:
->>>>> Bryan O'Donoghue reviews and applies patches for both Iris and Venus
->>>>> Qualcomm SoC video codecs (visible in git log as his Signed-off-by and
->>>>> in pull requests like [1]), so he is de facto the maintainer responsible
->>>>> for the code.  Reflect this actual state my changing his entry from
->>>>> reviewer to maintainer and moving the entry to alphabetical position by
->>>>> first name.
->>>>
->>>> NAK.
->>>>
->>>> The roles and responsibilities are well agreed by media maintainer(Hans), with
->>>> Bryan part of that discussion, w.r.t code contributions to iris and sending
->>>> patches to media tree. The only reason Bryan post the patches is that Hans wants
->>>> single PR for patches across Qualcomm media drivers (Camss/Videoss)
->>>
->>> That's the maintainer role, so Bryan is the maintainer. I am documenting
->>> actual status and your NAK is naking what? That Bryan cannot handle patches?
->> I would say, you are reading too much into it, i updated what we have discussed
->> and agreed upon the different roles for managing venus and iris drivers.
-> 
-> Reading too much? Bryan HANDLES THE PATCHES.
-> 
-> That's it.
-> 
-> There is nothing "too much here".
-> 
-> Person handling the patches IS the maintainer. Full stop.
+On 14/07/2025 15:55, Krzysztof Kozlowski wrote:
+> +
+> +		videocc: clock-controller@aaf0000 {
+> +			compatible = "qcom,sm8750-videocc";
+> +			reg = <0x0 0x0aaf0000 0x0 0x10000>;
+> +			clocks = <&bi_tcxo_div2>,
+> +				 <&gcc GCC_VIDEO_AHB_CLK>;
+> +			power-domains = <&rpmhpd RPMHPD_MMCX>;
 
-Based on email you forwarded to me and some more feedback I got, I think
-I understood what would be the solution to satisfy your point of not
-changing existing entry and solve my problem of maintainer handling
-patches not being listed anywhere as maintainer. I will solve it v2.
+This is incomplete, need second power domain and I did not check against
+qcom,sm8750-videocc schema before sending. I will send a v2 a bit later
+(maybe some reviews pop up).
+
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sm8750-pdc", "qcom,pdc";
+>  			reg = <0x0 0x0b220000 0x0 0x10000>, <0x0 0x164400f0 0x0 0x64>;
+> 
+
 
 Best regards,
 Krzysztof
