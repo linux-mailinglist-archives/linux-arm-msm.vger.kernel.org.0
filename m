@@ -1,103 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-64913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-64914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7555B04F76
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 05:47:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6551CB04F9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 05:58:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3FAA51888FF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 03:47:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 934521701F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 03:58:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7117F2727FF;
-	Tue, 15 Jul 2025 03:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D2F62D1F68;
+	Tue, 15 Jul 2025 03:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgLhBWlZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/sTA9Kw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4323E22083;
-	Tue, 15 Jul 2025 03:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726265FEE6;
+	Tue, 15 Jul 2025 03:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752551247; cv=none; b=Zlyy8v+gcORVabX1UQQFQE4twme0N9KLY314mDEpuSOryArn5uQc7KKYtWIAQ1F6XXpKs+ojt7F5SxQPMfhmvBhCbmY3VGZpSGGqFEMqhzPPjScZBVVd770qbdMx07G0YR3vWFjdHKTY+HoHokIjbT1BZhtlE+hHEgjnnsF2JAg=
+	t=1752551899; cv=none; b=DqHYFa3WyG4Igir/a8mxunvSVBF983uCJNDAXzC91GwERi4ddcrI3wIxq4WbYeXKX1V0uWP47zU+F0Qa8oI4bcbFIH8v0Yy1L2baWhal4EMjFkEnN7TYsY3uYchbIi8RUiGJkgu9HA2RwHxBQIH8J18+LzdWRBVtZ2u99ViN5y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752551247; c=relaxed/simple;
-	bh=12yOS5w3zvP7gRZYvJwK3Olm8xl1UxeySSyPh3qCq0U=;
+	s=arc-20240116; t=1752551899; c=relaxed/simple;
+	bh=snS6BZ8HZz24We5fag4B3dSbIWRbSM9y5G7CZL/J244=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rXmnMYQmLp3awChJzK/aAW6D3O9oQQOEqb8WRxCRxnJCd+a/F2+owwQhLjIFChzpR2SBGiHBqXO2mLg/lX7n1h5fo+4ct3IOQb1szzEtOwiPhS3pwpmqY6mGUh7KCb7j/jxyG3O8KXQOUOaNXvji7b9or0kL/PAYBA8364c0lAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgLhBWlZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96D2C4CEE3;
-	Tue, 15 Jul 2025 03:47:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=K5n7dBVM/Qr70Lm4a1mpuXP9Ye+Zj+vm0894cI8bWHYokb2aAVgnfCIPlJr9Mi90FQi9Qmtc/IxBXEM3wmW07/pSCai9z6u1GZRiS+K0W6NCGrlNNQzLz+HShGUitcV33kO9pDzHI73LQj9qT2CgyqeaZsDsKc0wmNiMdF5rNXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/sTA9Kw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B51C4CEE3;
+	Tue, 15 Jul 2025 03:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752551246;
-	bh=12yOS5w3zvP7gRZYvJwK3Olm8xl1UxeySSyPh3qCq0U=;
+	s=k20201202; t=1752551896;
+	bh=snS6BZ8HZz24We5fag4B3dSbIWRbSM9y5G7CZL/J244=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sgLhBWlZ2Mauehpu8aGzF9KrmtJoSurEm8hH2749q20I71P40MH0aPd/WfsQhYz6N
-	 +G/YTFIuA3n8eLcLCCahDqqRuuVuNS57Op6cc63aLSR2h9e1poed9vzmfjpGfB5+0V
-	 YbGk7le0pFjUfR+Z98zX+QYEHL4IITqH5lr4JhxdZHujOLur/MDcu0PqmIVoMiE38p
-	 fn6c08VISRiUbo36RksMMtq01q44GRaSziX4ubdWgkpSBP2AERljiam43mw9o1nueD
-	 aPoCF2PSnSRQ8mVP2NikcGARYWGyR0w6tCZnhaArAxjfwp/MWg7unRzXu5GXkA3p56
-	 pHCTFhMnlr/Lw==
-Date: Mon, 14 Jul 2025 22:47:25 -0500
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] media: dt-bindings: qcom,sm8550-iris: Add SM8750
- video codec
-Message-ID: <20250715034725.GA1691-robh@kernel.org>
-References: <20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org>
- <20250714-sm8750-iris-v1-1-3006293a5bc7@linaro.org>
+	b=K/sTA9KwqEUrXXDZYklF8VnNxmdOPw8goczIE4sXEzG2qhnzSAb9iBjBhZ+HvO1i4
+	 rhmlWqxZuoPPiQhb8j3c6f34JmINVL8nTLb4wvappIaqFCHZJCGfd31HnxaSUDAq3z
+	 47IuO48BFzuwxeBb55pkMEgL1gzvAUNlxqbPhp/EFO8h17JmfCZrnYF453YHiqr0iu
+	 93yuCsPHgKeSlrKeRl25EiyJGZEDYm6Pq55WQtILT3CoqJf8JZ4ePBsIUxhAJWxkXz
+	 4HukDBWKNUY7jK+A4OLFYSdp8gjxTgw4uMZNjdyqW9FzK3awXDsKQfguzEpqdGQCtd
+	 Wh322C07qKVNg==
+Date: Mon, 14 Jul 2025 22:58:16 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Dale Whinham <daleyo@gmail.com>
+Cc: devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	=?iso-8859-1?B?Suly9G1l?= de Bretagne <jerome.debretagne@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH 1/9] dt-bindings: arm: qcom: Document Microsoft Surface
+ Pro 11
+Message-ID: <175255189553.19950.4639359444626134883.robh@kernel.org>
+References: <20250714173554.14223-1-daleyo@gmail.com>
+ <20250714173554.14223-2-daleyo@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250714-sm8750-iris-v1-1-3006293a5bc7@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250714173554.14223-2-daleyo@gmail.com>
 
-On Mon, Jul 14, 2025 at 03:41:16PM +0200, Krzysztof Kozlowski wrote:
-> Add binding for Qualcom SM8750 Iris video codec, which comes with
-> significantly different powering up sequence than previous SM8650, thus
-> different clocks and resets.  For consistency keep existing clock and
-> clock-names naming, so the list shares common part.
+
+On Mon, 14 Jul 2025 18:35:37 +0100, Dale Whinham wrote:
+> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Add the compatible for the Qualcomm X1-based Microsoft Surface Pro 11,
+> using its Denali codename.
+> 
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> Signed-off-by: Dale Whinham <daleyo@gmail.com>
 > ---
->  .../bindings/media/qcom,sm8750-iris.yaml           | 186 +++++++++++++++++++++
->  1 file changed, 186 insertions(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..e767ebae7c4022d406d61a7bf606b8d878d8632e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
-> @@ -0,0 +1,186 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,sm8750-iris.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SM8750 SpC Iris video encoder and decoder
 
-SpC? Or SoC...
-
-With that defined or fixed,
-
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 
