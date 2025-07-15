@@ -1,239 +1,306 @@
-Return-Path: <linux-arm-msm+bounces-65033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FECBB059B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:16:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 129E2B05A2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 14:31:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA30C5640A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 12:16:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C8D61A644E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 12:31:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B788F253B71;
-	Tue, 15 Jul 2025 12:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEBE52E03F5;
+	Tue, 15 Jul 2025 12:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h9qVqk3l"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DwxDrtjT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004722DA748
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C13C2DEA72
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752581757; cv=none; b=m3MIjJi2Bq3HceFhM4e+RhB4O45rymo8pxjl7J4UeRxyHHGGUJjA0zlZAdQhz2NHlhhdb7qwKlBvQhirsVFco1ZPwyePgK1WRKLljt+dO5M5gbGwGX9Vb2iZDIAywEOhho/nrS7rtEPA+yfaS1zQj73KhDXuZKhpyvxUMKNzsnQ=
+	t=1752582654; cv=none; b=ZD0mC/ldlUaeBxKUMwYMrcSaFN3iVcQmX/kRRqixQ8wnrB2M81+kh/YHYssTt/P7lpzAAGtmHRorZ/pZBA+cfT7JRK5sX3tzqPJERqDLyBJjCh0SWOPW7mCviB08WMYjfJZUQCbq+6UXu+98T4oZciBbk8S1mg9GSQYbODq187I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752581757; c=relaxed/simple;
-	bh=RPMIJ06lYpZki9x4OGNT38hsLl9ZRqJRngOVBfL0TkA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EJvEB7S08RqIipm0dTLwVrEDARuXsBMjTLdvAa0Aub2hiG33OGrAG+O+3LrYpzOK9BHM43c1Ap/d/wrru9cJTPQi5RcWsFU52pIXabIydcRk34f0Pxia0Jr4X7QTapQRFc+Rpn9ug0lQmX8JO7DSGqK8s8wB390Y6NkVWgMudb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h9qVqk3l; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1752582654; c=relaxed/simple;
+	bh=WWk+Zz38J+A0lk1NwBDagUK+UNQd7WE179Tt+YtBOkQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JEtJXTuL8jmMxisI1EeLcnA+FTMLkKAVm6yKb7vcvGuElE672fS2SQDnwnnziUGkT5H+O7SxEgJASJ7inwjIaVYjGnJ1YLNPqxPaVEO2zt/Yd+cwNLA7PgShiGHTItH5DcBDE9gutHN4nT8UNOLoe+VFehKKKlSj+07tcfulwW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DwxDrtjT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FBXKqL005440
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:15:54 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56F7OJWL022925
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:30:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gkoL4vyOl+pm49lYyaV0Bkhtxl6H70tCk4Yr8IITAC0=; b=h9qVqk3lN/9/R4G/
-	xDSWD+gcL/0teQzBvkGmlmpNLb1kGet1GQ9gmDdVTyDUxVTIZwf5GcpX+nqBp71k
-	XdXNUHXjdUlNv/8NJ2D87SkibXiAs6D3NY5q8m4qAViswwF+AhxL9Z03eFQqUj9h
-	CU/pWDB6AyodpnOoOZBakz3QdEQ9kVlaGHEM5tyOz10cMtzczMkEiPiiT+5CJIy/
-	avwCwSvDPn2ScB51myfnMWqs25hmkRfjJlfwIXQnmP2drsyYCHqeF+u7at2RUI+P
-	6AN1ZAhRLcS3f2mThwQ9pEcOnk9WumLIuW5TZKdaJN1SKZ9jtsn0AucOGIZZyNUg
-	hiSw1w==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wfca1dh5-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=vll9rDGne1AoSKyOm+L2Rpgh
+	eag73S1w5wXI4BU9WhU=; b=DwxDrtjTDCkY5VX8gp/sJ39WjfO+PJz5zmZ3sdhs
+	bqPA1uVnPIfEGLII9VqnUxlDXxM+khrFIunyiqghfsq28KBM9j/Za8BjUDIxul8G
+	y3kalwZbIxpwc78o8OVFaws9iUfb5e++dQRBgIeCCvWlZM/PyLPVs1PuBVz0oFfS
+	UKT9cR+v00aMD4SH6pyc0oB64Pc4uwGWDwv3jUYuUtQ4ZHu8LhckZP1s8FfY3cjL
+	F0KndfTafhNhO5ZjJ2ysX5ZaS0BXwu46dIuxUno9cYp3TwKAtZBfASCMMjvCHUAg
+	0G1CpBW1m3EW0pcWn7XujoNnP8ws5GH0VgALSm0X8IOn5w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxb07aw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:15:54 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e33e133f42so7691785a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 05:15:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 12:30:50 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3121cffd7e8so4267671a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 05:30:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752581754; x=1753186554;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gkoL4vyOl+pm49lYyaV0Bkhtxl6H70tCk4Yr8IITAC0=;
-        b=AH6mLlY7YwWT3ROuzbrbselc+2DOy7jtFhzkFqX7eaNDPHvwiq0lvrqI9tqcj+upY0
-         C8NAfCmqagXR6CGFYouEqctEoFUuwDZDCDdCb9clscA5z1koIPDgeLfS40S4b0sxBSvC
-         C0zN08Be8JhibcoNdRQ/90+Ohjm1r8i9MReUNrru3RCjuK1z9dIiwViyIqg7aWOPl+Pm
-         J5P/Byk+zLxZwL5n/LfY8Asx2MqacjFvVPNpMJbtCm5XZKG62DY/TWnP+EWenCPKfrhG
-         3r9X+DNToM1OSGTEKO0IH1Mrk7mF8UlLPTwn+yPo5eZAMiyMjHvdtmthD/MwT9hzqSpz
-         +auQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU79uJy1v9KU5iZpL7l2UAB3n4yOUTMkT5MH4W6qOH5JMrY1HsLC+fxeP4b3fa0ceStAtmgPL5pOZ/OU7Nd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyoekr2/lSel0NJAYPK5JKWeXhycxvdjLHui3WYX5eID3UHVfWH
-	8+kU0zd+8y8fTvw5493Ycs2jJto25ZBWIlaTkXxgvaqN4lRXpY+GNYuFfJ2Ifz26h4Mj9HIdVev
-	8wQASB1GLCVHAu2bsNzTGs6txkilzNdYrK2oxKXT7SX8PoKehvdnZh9QDGxyyY1qiIV0A
-X-Gm-Gg: ASbGncspdYJbmT/XaFo++8px8bhypnaWbcZaGzdnyO7ihRGpsM6kOFqIhfxa/NveNri
-	VYPsG/VshQn6BLiGOPMvybbZ72HCajNduEzwtbt2G6HdslRCX044EfMYetFaNVtvcQhB/eXhmhA
-	0EVxLeR3yY3NsRNMTv2ls1IRYG6jKhILxqFI7Sq1xqmg2C/LiVjNYwHtVhCpb4pMRtwKpa90oQD
-	E3pZM0a6tikETSqsVJgbmFU8qBO/Q6dF63b1C4O8JLfSK5LqLwhcTs5pGWMHjl+s0o+Jxj+T2jY
-	vz+Y/AV+9fRW1uP/BHaakULBxtm6JZJUT0i4GCElMwOqY/X5gGRIjoTJaNxjmFYj4sc9iwthoWv
-	gAGbZWKLgFTvb2fFRnoRr
-X-Received: by 2002:a05:620a:63c8:b0:7e3:3029:44c with SMTP id af79cd13be357-7e33c738190mr61809785a.7.1752581753386;
-        Tue, 15 Jul 2025 05:15:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNC0tHGCHaMZe1NNLu7kUu5qixnVltKqW5yasSjlLUM9Lwlg4TzACxjlKTv9RGFtYvhko0XQ==
-X-Received: by 2002:a05:620a:63c8:b0:7e3:3029:44c with SMTP id af79cd13be357-7e33c738190mr61807285a.7.1752581752766;
-        Tue, 15 Jul 2025 05:15:52 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7e91cc0sm976035566b.26.2025.07.15.05.15.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jul 2025 05:15:52 -0700 (PDT)
-Message-ID: <bffc8478-4de9-4a9b-9248-96a936f20096@oss.qualcomm.com>
-Date: Tue, 15 Jul 2025 14:15:49 +0200
+        d=1e100.net; s=20230601; t=1752582649; x=1753187449;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vll9rDGne1AoSKyOm+L2Rpgheag73S1w5wXI4BU9WhU=;
+        b=MD197/aavL10jSxREM7l6w33aOvExuRwiOWfIurqMgIneBvpJ4Y1vCds9Glq1eGcQj
+         x3quuLQEjX3koa2A47xLJBULsc+9Jgd+9iq5phQ34unU/Uq8VvqWJhOkqHyC0cP656Gg
+         1/di5PV5unemhTxb89cnEJ77VfoPuuPCXLD5XnCw2kUJfyVSNirhwRVJryBK6s0LTh/d
+         /rAYdqjHteu1UC6kstM994mzYS7EjJ/EhjEqPhk121h/IRLAnT68pZARa6r5XWSta89k
+         f5E+pOiSrit7kQoZdodff8PMmwH5KKDRwTS9zGNZF6j2G31qL/2nha3Z7Kb+juvCP/Rr
+         JFLg==
+X-Forwarded-Encrypted: i=1; AJvYcCXAFiM2gQb50G+3dQaB5UmU+MPLIzfBUNcK9pAdBE4GHir81pShGWX+C8+ptuqWdpYu0wJ43HQwwWNH/Jv/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4z5bJ8elBUY8g22beaSOfY4/nxkXwB9v77P1cvwoGzyxJuf4Z
+	kmplWaLZiBL+Skx8dojDwviMTz8FGrwq1JtmnhppU3+2x2vDXXKp8VLIVXEcB4e31X+jkNZBUUy
+	o/EYCOl+OHjU7as6RGF0AN5UC2CGNLJTRkp1Psxa1PUpkvMct5Rca08Wyuv3LBcjFaCkYxkg0/Q
+	vyPZmt9sryPkn4F6+KlYygont99412gxdeNqq8SdnKHf0=
+X-Gm-Gg: ASbGncv63XNnMolZ2rDtHoDfa1J5ahsQ1O3v80VTb4+q7gcNPhJ+AJqsmc2PPHcHTUD
+	d9unMzlaQ6RcJ1VeHMk63awwig3XRe/RoUIp4z8bdAycBISUm2apbtyyMAkwvrz/nUTdSqqnedi
+	ZEihqzmidY10LSfRTRlg==
+X-Received: by 2002:a17:90b:57ee:b0:311:ef19:824d with SMTP id 98e67ed59e1d1-31c4f48b04fmr24534268a91.2.1752582649349;
+        Tue, 15 Jul 2025 05:30:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+QKgmUT1LtI1tPLIsEldlE+Xv3jc/Myv45x2YTeyCk85wFHdk/rhiwhDMhBYh15+FloJ3fZb+aHNfPlztF/k=
+X-Received: by 2002:a17:90b:57ee:b0:311:ef19:824d with SMTP id
+ 98e67ed59e1d1-31c4f48b04fmr24534218a91.2.1752582648728; Tue, 15 Jul 2025
+ 05:30:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Prakash Gupta <quic_guptap@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
+References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
+ <20250606172114.6618-8-quic_ptalari@quicinc.com> <d6cr4elhrbh27lmlcv5xzuel75uvsgi7klxjkevm7vg4jcbawe@5ojgetrxkag5>
+ <f87807c9-5249-4d97-ab89-898b7d8d260d@quicinc.com> <tt2crsexdnhlotlo3z5uxyta6jrnnvom7aqwsjvopwueazbuih@2l4h6xjpwlar>
+ <1c73b530-4f1a-4c45-91aa-b44efb8a8c1e@quicinc.com>
+In-Reply-To: <1c73b530-4f1a-4c45-91aa-b44efb8a8c1e@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Tue, 15 Jul 2025 15:30:37 +0300
+X-Gm-Features: Ac12FXx7o0vm61CvNFB6-j5iSJHx1nZh9qdvCU2mn-91NnumjNpXsNKHazRHWZE
+Message-ID: <CAO9ioeVLPnqxL6Vz+GOFuqkiT8NcxW3buCP6Q81-rR72MwRxhQ@mail.gmail.com>
+Subject: Re: [PATCH v6 7/8] serial: qcom-geni: Enable PM runtime for serial driver
+To: Praveen Talari <quic_ptalari@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <f5ebf0d6-2f0b-45cc-b99a-b786e5df9edc@linaro.org>
- <5qsgbqml367yq6g5vb4lotrzulojqhi5zlwwribze373a63qrn@rxi4kwyt66m2>
- <4f38058d-a2f1-4ac5-b234-228cfb2e85ff@kernel.org>
- <1ad2ca1e-1d57-4ad8-a057-ab0d804f1d49@oss.qualcomm.com>
- <7da769b4-88e9-401f-bb21-0ff123818b9c@kernel.org>
- <6840d462-8269-4359-a6e5-d154842b62db@oss.qualcomm.com>
- <af0da28c-3ca0-41dc-aaa4-572723ea74bf@linaro.org>
- <klhvgzizub33f46buqsog54wqksqp24a5tijwyv355l2ao2imo@wdkojfebc6s2>
- <e1a6e75a-2a5d-44a2-8bbc-140eb86d1806@linaro.org>
- <2hh3zkdwgqbdurpr4tibr3gjat6arwl3dd3gxakdaagafwjdrm@aj5em4tbsjen>
- <6c6f6bc9-7c34-4961-8b5e-e6d02c4b2f6d@linaro.org>
- <25c64712-960a-50b4-e7fa-398e4bf809ef@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <25c64712-960a-50b4-e7fa-398e4bf809ef@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDExMSBTYWx0ZWRfX9t0JoGmlMx6G
- oBeH4fnT4hVK7V89HB2tvkW8hB5d43scAiuvpXL+EQKCpQ4simgpuyJNqqSNJFSdlWYXF0PSaz4
- us7JScUwmiTuM8MhbF9vp8J2mzuxU5vWtbUcC3G5GgNeArjwaqFRPOzNK5udcu2RuwWvYop+4LS
- pfeuwZPBw68YqsZvl3cf8Hfb/Xwiisd8j9D6AAzTvyia1eZN2Y0PDDeLonBSTLOOjbWyIXv2eAe
- e0qbUmQV9IKhkuilLi09TUY+9M6gqOT5ew/nY7pIXfMpj6/DX8VlrRWpDs2uGDAkF2JHrQ8QgYo
- ylP7BIjT7gV6F5eiJA8fzpDL/D/3+PtU4QTaXjSv0R3oZNkMoN7dJwmNolp31k55O+qQi/lzsjM
- KyxjtvM9XpN3j1p0D8XgNUFnbfxbVv4+EJrB/JU2rjnXyO35KvTeO9MDTgxZN0H042bFYf74
-X-Proofpoint-GUID: BzvKp6s92jyaK3SPjRAJcABTgoSxfyIM
-X-Authority-Analysis: v=2.4 cv=SeX3duRu c=1 sm=1 tr=0 ts=6876467a cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=j_YMfRGaDDqHtg2ur-kA:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: BzvKp6s92jyaK3SPjRAJcABTgoSxfyIM
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+        devicetree@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
+        quic_shazhuss@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: LaH66F5h8qS44QuxDlItyWAXgGXC7gJV
+X-Proofpoint-ORIG-GUID: LaH66F5h8qS44QuxDlItyWAXgGXC7gJV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDExNCBTYWx0ZWRfX1Ef2r7hK1jAe
+ mPI37wFPhr64zWz50CEUTmUptL8ZA0HUF1EVo74rHALYGFdj/asePdf+w0pWw2Nk298aTdOC7lx
+ tPgIT8xWFHhr4+UrIwAuMkx0q9IeGgoYEir9kyGFRNoGZYP2rG9qwwpherKuRKiZ/iOeG3oYG6n
+ fV7Rj0XEn6JtZawgZhxPArGSNEjPcS3tErgKzelHmT9gkkGncrLXEkNojkqst0qwU7E+EH7E66a
+ N9Pxo1UdLX+R6msRAtE0F5+SJIjehfRcFCMsVPS1yVLRrkYeN0Ce2cqGuV7G/lqnzvrGTgV/D3Y
+ 27pxdQEvCPYUb4m8T2CmvX2e2IhztN9/mSxEVbGcrm2NzH7QagwRhCKAhFwx5v0OoIA4fTt2CSZ
+ iuAZ4DgenWNuf5BxHNIctq30MMV4DAT+SqFLtIhjrv6OuME5LED4kLR2F57e0y3F5LehiXZ5
+X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=687649fa cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=U3XR-vgVohVsxwl5X4IA:9
+ a=QEXdDO2ut3YA:10 a=-_B0kFfA75AA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-15_03,2025-07-14_01,2025-03-28_01
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 clxscore=1015 adultscore=0
- suspectscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507150111
+ definitions=main-2507150114
 
-On 7/10/25 8:18 PM, Prakash Gupta wrote:
-> 
-> 
-> On 7/5/2025 4:14 AM, Bryan O'Donoghue wrote:
->> On 04/07/2025 17:45, Dmitry Baryshkov wrote:
->>> What about instead:
->>>
->>> - keep IOMMU entries as is
->> ack
->>
->>> - Add iommu-maps, mapping the non-pixel SID
->>> - In future expand iommu-maps, describing the secure contexts?
->>
->> Interesting, we are _adding_ so that's not an ABI break and if I'm
->> reading the documentation right, there's no hard rule on what iommu-map
->> defines i.e. nothing to preclude us from encoding the information we
->> want here.
->>
->> This might work.
->>
->> drivers/pci/controller/dwc/pcie-qcom.c::qcom_pcie_config_sid_1_9_0()
->>
->> You can register your platform device to the SID map you parse.
-> 
-> I see few limitations with using iommu-map here, some of these are
-> listed in [1]
-> 
-> 1. We can't specify SMR mask with iommu-map.
-> 2. We can't specify different iommu-addresses range for specific contexts.
-> 3. The secure CB support [2] would require vmid information associated
-> with per context. I think this can't be provided with iommu-map.
+On Mon, 14 Jul 2025 at 19:21, Praveen Talari <quic_ptalari@quicinc.com> wrote:
+>
+> Hi Dmitry/Bjorn/Krzysztof,
+>
+> Thank you for review.
+>
+> On 7/1/2025 4:42 PM, Dmitry Baryshkov wrote:
+> > On Mon, Jun 30, 2025 at 10:40:25AM +0530, Praveen Talari wrote:
+> >> Hi Bjorn,
+> >>
+> >> Thank you for review.
+> >>
+> >> On 6/17/2025 9:23 PM, Bjorn Andersson wrote:
+> >>> On Fri, Jun 06, 2025 at 10:51:13PM +0530, Praveen Talari wrote:
+> >>>> Add Power Management (PM) runtime support to Qualcomm GENI
+> >>>> serial driver.
+> >>>>
+> >>>
+> >>> Doesn't this have impact on the behavior outside of your
+> >>> project? Or is the transition from qcom_geni_serial_pm() to explicit
+> >>> RPM merely moving code around?
+> >>>
+> >>> Seems like this deserves to not be hidden in a middle of a patch series.
+> >>>
+> >>>> Introduce necessary callbacks and updates to ensure seamless
+> >>>> transitions between power states, enhancing overall power
+> >>>> efficiency.
+> >>>>
+> >>>
+> >>> This commit message fails to state why we need runtime PM support in the
+> >>> driver.
+> >>
+> >> Introduce PM runtime support to the Qualcomm GENI serial driver to enable
+> >> better power efficiency and modularity across diverse resource control
+> >> mechanisms, including Linux and firmware-managed systems.
+> >>
+> >> As part of this enhancement, the existing qcom_geni_serial_pm() logic to
+> >> use standard PM runtime APIs such as pm_runtime_resume_and_get() and
+> >> pm_runtime_put_sync(). Power state transitions are now handled through
+> >> the geni_serial_resources_on() and geni_serial_resources_off() functions.
+> >>
+> >> Is it fine?
+> >> Please guide me/correct me if needed
+> >
+> > Please start by stating out the problem that you are trying to solve.
+> > There is no actual issue description in your patch.
+>
+> I hope this commit describes the actual problem.
+>
+> The GENI serial driver currently handles power resource management
+> through calls to the statically defined geni_serial_resources_on() and
+> geni_serial_resources_off() functions. This approach reduces modularity
+> and limits support for platforms with diverse power management
+> mechanisms, including resource managed by firmware.
+>
+> Improve modularity and enable better integration with platform-specific
+> power management, introduce support for runtime PM. Use
+> pm_runtime_resume_and_get() and pm_runtime_put_sync() within the
+> qcom_geni_serial_pm() callback to control resource power state
+> transitions based on UART power state changes.
 
-FWIW iommu-map should probably be evolved to support passing more
-than one cell of iommu_spec in general.. For us specifically, it's
-only a matter of time before some platform's PCIe controller
-requires* we pass a non-zero SMR mask (unless we should be doing
-that already somewhere..)
+LGTM
 
-(* we can obviously do the masking manually and put the effective
-values in dt, but "eeh")
+>
+> Thanks,
+> Praveen Talari
+> >
+> >>
+> >> Thanks,
+> >> Praveen Talari
+> >>>
+> >>> Also, start your commit message with a problem description, per
+> >>> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+> >>>
+> >>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> >>>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> >>>> ---
+> >>>> v5 -> v6
+> >>>> - added reviewed-by tag in commit
+> >>>> - added __maybe_unused to PM callback functions to avoid
+> >>>>     warnings of defined but not used
+> >>>> ---
+> >>>>    drivers/tty/serial/qcom_geni_serial.c | 33 +++++++++++++++++++++++----
+> >>>>    1 file changed, 29 insertions(+), 4 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> >>>> index b6fa7dc9b1fb..3691340ce7e8 100644
+> >>>> --- a/drivers/tty/serial/qcom_geni_serial.c
+> >>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> >>>> @@ -1686,10 +1686,10 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
+> >>>>                    old_state = UART_PM_STATE_OFF;
+> >>>>            if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
+> >>>> -          geni_serial_resources_on(uport);
+> >>>> +          pm_runtime_resume_and_get(uport->dev);
+> >>>>            else if (new_state == UART_PM_STATE_OFF &&
+> >>>>                     old_state == UART_PM_STATE_ON)
+> >>>> -          geni_serial_resources_off(uport);
+> >>>> +          pm_runtime_put_sync(uport->dev);
+> >>>>    }
+> >>>> @@ -1827,9 +1827,11 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+> >>>>                    return ret;
+> >>>>            }
+> >>>> +  pm_runtime_enable(port->se.dev);
+> >>>
+> >>> Any reason not to use devm_pm_runtime_enable() and avoid the
+> >>> two pm_runtime_disable() below?
+> >>>
+> >>> Regards,
+> >>> Bjorn
+> >>>
+> >>>> +
+> >>>>            ret = uart_add_one_port(drv, uport);
+> >>>>            if (ret)
+> >>>> -          return ret;
+> >>>> +          goto error;
+> >>>>            if (port->wakeup_irq > 0) {
+> >>>>                    device_init_wakeup(&pdev->dev, true);
+> >>>> @@ -1839,11 +1841,15 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+> >>>>                            device_init_wakeup(&pdev->dev, false);
+> >>>>                            ida_free(&port_ida, uport->line);
+> >>>>                            uart_remove_one_port(drv, uport);
+> >>>> -                  return ret;
+> >>>> +                  goto error;
+> >>>>                    }
+> >>>>            }
+> >>>>            return 0;
+> >>>> +
+> >>>> +error:
+> >>>> +  pm_runtime_disable(port->se.dev);
+> >>>> +  return ret;
+> >>>>    }
+> >>>>    static void qcom_geni_serial_remove(struct platform_device *pdev)
+> >>>> @@ -1855,9 +1861,26 @@ static void qcom_geni_serial_remove(struct platform_device *pdev)
+> >>>>            dev_pm_clear_wake_irq(&pdev->dev);
+> >>>>            device_init_wakeup(&pdev->dev, false);
+> >>>>            ida_free(&port_ida, uport->line);
+> >>>> +  pm_runtime_disable(port->se.dev);
+> >>>>            uart_remove_one_port(drv, &port->uport);
+> >>>>    }
+> >>>> +static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device *dev)
+> >>>> +{
+> >>>> +  struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+> >>>> +  struct uart_port *uport = &port->uport;
+> >>>> +
+> >>>> +  return geni_serial_resources_off(uport);
+> >>>> +}
+> >>>> +
+> >>>> +static int __maybe_unused qcom_geni_serial_runtime_resume(struct device *dev)
+> >>>> +{
+> >>>> +  struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+> >>>> +  struct uart_port *uport = &port->uport;
+> >>>> +
+> >>>> +  return geni_serial_resources_on(uport);
+> >>>> +}
+> >>>> +
+> >>>>    static int qcom_geni_serial_suspend(struct device *dev)
+> >>>>    {
+> >>>>            struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+> >>>> @@ -1901,6 +1924,8 @@ static const struct qcom_geni_device_data qcom_geni_uart_data = {
+> >>>>    };
+> >>>>    static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
+> >>>> +  SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
+> >>>> +                     qcom_geni_serial_runtime_resume, NULL)
+> >>>>            SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
+> >>>>    };
+> >>>> --
+> >>>> 2.17.1
+> >>>>
+> >
 
-Perhaps that can even be done without messing up backwards
-compatiblity (treat it as pseudocode, def incomplete):
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 7043acd971a0..bca54035f90e 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -2068,9 +2068,12 @@ int of_map_id(const struct device_node *np, u32 id,
-               const char *map_name, const char *map_mask_name,
-               struct device_node **target, u32 *id_out)
- {
-+       const char *cells_prop_name __free(kfree);
-        u32 map_mask, masked_id;
-+       u32 cell_count;
-        int map_len;
-        const __be32 *map = NULL;
-+       int ret;
- 
-        if (!np || !map_name || (!target && !id_out))
-                return -EINVAL;
-@@ -2084,7 +2087,15 @@ int of_map_id(const struct device_node *np, u32 id,
-                return 0;
-        }
- 
--       if (!map_len || map_len % (4 * sizeof(*map))) {
-+       cells_prop_name = kasprintf(GFP_KERNEL, "#%s-cells", map_name);
-+       if (!cells_prop_name)
-+               return -EINVAL;
-+
-+       ret = of_property_read_u32(np, cells_prop_name, &cell_count);
-+       if (ret)
-+               return ret;
-+
-+       if (!map_len || map_len % ((2 + cell_count + 1) * sizeof(*map))) {
-                pr_err("%pOF: Error: Bad %s length: %d\n", np,
-                        map_name, map_len);
-                return -EINVAL;
-@@ -2106,7 +2117,7 @@ int of_map_id(const struct device_node *np, u32 id,
-                u32 id_base = be32_to_cpup(map + 0);
-                u32 phandle = be32_to_cpup(map + 1);
-                u32 out_base = be32_to_cpup(map + 2);
--               u32 id_len = be32_to_cpup(map + 3);
-+               u32 id_len = be32_to_cpup(map + cell_count - 1);
- 
-                if (id_base & ~map_mask) {
-                        pr_err("%pOF: Invalid %s translation - %s-mask (0x%x) ignores id-base (0x%x)\n",
 
-Konrad
+-- 
+With best wishes
+Dmitry
 
