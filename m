@@ -1,148 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-65066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79D57B063E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 18:05:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 773B7B063F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 18:11:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 806103BB48B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:05:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE1A5580FEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 16:11:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 581E7231C9F;
-	Tue, 15 Jul 2025 16:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCD1244675;
+	Tue, 15 Jul 2025 16:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UMJijqwX"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ODfRGHmV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D5C1E5B7B;
-	Tue, 15 Jul 2025 16:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855A1E531;
+	Tue, 15 Jul 2025 16:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752595550; cv=none; b=agmp/Jf+NOXt7wQO264vvSU1My4y0LP5u3uFBQvx0+5ZTgIAJvJ7XLzLFwvoElhyeag3Cf6f/yFe+4SJpu3Rh0gEN02F1iwFyzZZwshrgEWVqkDqS9KiphQR5qTwq4PwVtcB7JpwHZv7DhyPyiGxT0iqdraIXLIUn0CkkWOlE0M=
+	t=1752595878; cv=none; b=eu2ivj+WK5vXbYIaR/AwsAEE+p0IOs+njpKy3ah6Plhke7aQ3t1XAwVJAESo0CeRTUWVzhYgKqqG7uHLbFq0owkhEWT0F3Y7+/VvxpNN0Tndhsa9ZVkR/PuiAv8gv6eSbX0OPcm3P8N4S6stAfpsWYc59tVal2bW4ysi4tDKTfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752595550; c=relaxed/simple;
-	bh=WFFV8yh7Bx2YrgdBMFx0okBQoJwCRLLW0Ltk2ac7NYY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pbLRgosAnTuKjb1h5xC3MBMhU0qh/GahoCb1pQI0l9zP1d/Qn3IyQdna/t7+V3531aYu8jjYPhylJLRxe8LE54FvoRG2Zjc0JefTyll+q/xftBrnEHUQM4qbcRQ3qb5vUGK3eg+hvG8bZmL0o9Bh65rwjd6wa5F3DQ5qwcTP0jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UMJijqwX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FCYnfY026500;
-	Tue, 15 Jul 2025 16:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=B9hPFpJcL+weohiKr5gDxt
-	HHHe8VIYpAWEbMdLK+px0=; b=UMJijqwX9N5g+ObzKyJKtQIvvRtoTkPYm0Z0dL
-	/4wWUKsSnM6uZ7hH43/2/VvTWb6RDm/lhUZkYjocDdc7cD2Pxdhz0Z/grVRyHPPY
-	urVbw9H4SbF3TwGcu/4vPKRIdWEmeGhgGbqbyO2a0ZDuNMFI4D9+Ojm+YIWz9WcJ
-	cuT5dy1qw68RJ++M/bjuN0WEu49gPwtfL1M6qbpmcCruGmUwnODAw14RafN0Je1n
-	wW3lDtWtnnNfR7jdXHyc7xrmT9uSJswuiJxCnSXerY2tkYGM5eLUaPn/q5JfU3mg
-	Yy9i7kSBocn79SUhB8J+pWNz6xOmK0wUQ2xVDNcL+3QHs5yQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5drksb5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Jul 2025 16:05:42 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56FG5fcU011956
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Jul 2025 16:05:41 GMT
-Received: from hu-pkambar-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Tue, 15 Jul 2025 09:05:38 -0700
-From: Palash Kambar <quic_pkambar@quicinc.com>
-To: <mani@kernel.org>, <James.Bottomley@HansenPartnership.com>,
-        <martin.petersen@oracle.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>,
-        Palash Kambar
-	<quic_pkambar@quicinc.com>
-Subject: [PATCH] ufs: ufs-qcom: disable lane clocks during phy hibern8
-Date: Tue, 15 Jul 2025 21:35:24 +0530
-Message-ID: <20250715160524.3088594-1-quic_pkambar@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1752595878; c=relaxed/simple;
+	bh=W1FxY2LQyxW9luHSm4uqpnhlsWmPi0NucBNEMNKiBF8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LH8nzsHSJ+p3gormBnlbWKgvQYfYjBMMHQrvG2jEMeo3alrC4msq7hXu93L3pGpV1M0RGtKwQwIZ9K1muz2X9Mg2klh2fYFMsZztvlJU81POyFhppFN28Xqb/n7aMuffHvnEgH1nomHEMuL8H1NpUk+ijKCMw83m0mewhwQ7k2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ODfRGHmV; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=GvQGktnNuBb1IGeKgMGp3Rcb/7Zn8h0jHyNUODU0m00=; b=ODfRGHmV9MJX4YJYUCCVnudbA5
+	YERP7upcSGyk05MSctJqnDfrOTPzN3Ycnfcd8ZLjeuC/JtTz9QWa8JgSf1/TmwVC0eHJTfhNLMMwr
+	hBYllKmpG4Cw9IV2Bu+64iu/kIet/Qg5anpC/Lly/qdOnap2yZHBlga9YzyE6AyvMHBs=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1ubiFB-001bby-FC; Tue, 15 Jul 2025 18:11:01 +0200
+Date: Tue, 15 Jul 2025 18:11:01 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v3 1/3] net: phy: qcom: Add PHY counter support
+Message-ID: <e4b01f45-c282-4cc9-8b31-0869bdd1aae1@lunn.ch>
+References: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
+ <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wcqqyxC9JNACcl2OL9s-Swhd-pQDp5p4
-X-Authority-Analysis: v=2.4 cv=D4xHKuRj c=1 sm=1 tr=0 ts=68767c56 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=qBOcMjo_XwzxJe9kIfcA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: wcqqyxC9JNACcl2OL9s-Swhd-pQDp5p4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDE0OCBTYWx0ZWRfX0ihsGZISHTBn
- fGGeTFvFY29UVg9Bsx5VWbGVKEejZda2Wl3kTbQ7Y6Hgj7ZFp0YzHWHarnBuX1flZmGv/X04OJO
- o0FlASxsobAGY5jlWuiKcXkv2C8dVpjcznfTYMzfEOwICZEVF+hvCKEqdoxtt2XuO1M11v07Q3U
- iBfm7QTtZyjLJbWxl8OTk/MzBUa0Q2PgkoF4lPvoJmpYwFkEg0+5QUb9r/JWOYjgGDjij9ilfsN
- xU50zUooLvsD+10LQBZYEjioG9Q7yEKm0osOXQbvstHN2ATNS5GTiudqc8IkWLzahusSr5R3iDz
- juj3iRov0eyGThczmFwml2UqI06dQJTL58+qFSJLJiBOaA/Fy2QIu4fWFVmlKMug2ijt4M9yi4f
- gta4EmIQmJ/weGt9Y+gQvmhaNyfl1uMrbpgeKjWdXeqfgAOKj+5M0DZrwCPARpCEXB6m3a/Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-15_04,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=659 impostorscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 mlxscore=0
- priorityscore=1501 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507150148
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
 
-The UFS lane clocks ensure that the PHY is adequately powered and
-synchronized before initiating the link. Currently, these clocks
-remain enabled even after the link enters the Hibern8 state and
-are only turned off during runtime or system suspend.
+> +int qcom_phy_update_stats(struct phy_device *phydev,
+> +			  struct qcom_phy_hw_stats *hw_stats)
+> +{
+> +	int ret;
+> +	u32 cnt;
+> +
+> +	/* PHY 32-bit counter for RX packets. */
+> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_15_0);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	cnt = ret;
+> +
+> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_31_16);
+> +	if (ret < 0)
+> +		return ret;
 
-Modify the behavior to disable the lane clocks immediately after
-the link transitions to Hibern8, thereby reducing the power
-consumption.
+Does reading QCA808X_MMD7_CNT_RX_PKT_15_0 cause
+QCA808X_MMD7_CNT_RX_PKT_31_16 to latch?
 
-Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Sometimes you need to read the high part, the low part, and then
+reread the high part to ensure it has not incremented. But this is
+only needed if the hardware does not latch.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 318dca7fe3d7..50e174d9b406 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1141,6 +1141,13 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 	case PRE_CHANGE:
- 		if (on) {
- 			ufs_qcom_icc_update_bw(host);
-+			if (ufs_qcom_is_link_hibern8(hba)) {
-+				err = ufs_qcom_enable_lane_clks(host);
-+				if (err) {
-+					dev_err(hba->dev, "enable lane clks failed, ret=%d\n", err);
-+					return err;
-+				}
-+			}
- 		} else {
- 			if (!ufs_qcom_is_link_active(hba)) {
- 				/* disable device ref_clk */
-@@ -1166,6 +1173,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 			if (ufshcd_is_hs_mode(&hba->pwr_info))
- 				ufs_qcom_dev_ref_clk_ctrl(host, true);
- 		} else {
-+			if (ufs_qcom_is_link_hibern8(hba))
-+				ufs_qcom_disable_lane_clks(host);
-+
- 			ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MIN][0][0].mem_bw,
- 					    ufs_qcom_bw_table[MODE_MIN][0][0].cfg_bw);
- 		}
--- 
-2.34.1
-
+	Andrew
 
