@@ -1,50 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-65090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DA5AB06705
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 21:38:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29712B067DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 22:43:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CBEF4E6893
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 19:37:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39CAB1AA67FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 20:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FB5A279910;
-	Tue, 15 Jul 2025 19:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D591C273D9C;
+	Tue, 15 Jul 2025 20:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=adomerle.pw header.i=@adomerle.pw header.b="stWIe/UT";
-	dkim=permerror (0-bit key) header.d=adomerle.pw header.i=@adomerle.pw header.b="YgRWi9Mr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k5Iwa94N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.adomerle.pw (mail.adomerle.pw [185.125.100.172])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C7E19CCF5;
-	Tue, 15 Jul 2025 19:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.100.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3C319ABC3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 20:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752608275; cv=none; b=Y/m+gW3Sb0qL62lNCYBwBU5PXss1jqFC9qoTBZ2rJPlGQDwX7zjO4nDzvjjYuI2WOI9SH6dfOkpCZXJuMEwfyE3YEjZ1g35OT0ZlC1cloCjdks1ld5p87d3jb7t1fZRVCc7hrHt7gB1DR0Awn105F+Gkp7zkiLNCg9angFnw9Ac=
+	t=1752612187; cv=none; b=j7YtbhhXTR687xBjAdUrzbmOyDPLOIVUaf/u1N8/GANivEjQw4XkOf15CNxJbufTHuxRZEfzQLa4MEp9LN1kjY/eBhIuSPdzFeqLy51k/m06LU2Tijj7Rm3LMEsZTz02AhguHqjA4OzhCu9Rf2YUnX/fyvVWz6KpuWzl4xz5MI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752608275; c=relaxed/simple;
-	bh=2E5K0Uumqiga4LpRxHq8vS+GbVv2yKHJ93bnP1ib5aQ=;
+	s=arc-20240116; t=1752612187; c=relaxed/simple;
+	bh=096GrYtNxo6MX6U8gE4TUzx3MesHCK40ZyzYd0x2VMU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WdnTK1oa7RZ2yn1g2EW9DZOGmqQ0jpbtK0uKGK7r0pUm9s2MYLRIMtdsnKwOPuggm9wguTIpLFjaNzh62eUw8wHVLr1i/HDZXoGwAAJ/fwvYknxzt8JwqxbD/e16hgnzmPSJoqjLFaP1nGbYcplrzbSjSI59q3xMFOZLU0bktwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adomerle.pw; spf=pass smtp.mailfrom=adomerle.pw; dkim=pass (2048-bit key) header.d=adomerle.pw header.i=@adomerle.pw header.b=stWIe/UT; dkim=permerror (0-bit key) header.d=adomerle.pw header.i=@adomerle.pw header.b=YgRWi9Mr; arc=none smtp.client-ip=185.125.100.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adomerle.pw
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adomerle.pw
-DKIM-Signature: v=1; a=rsa-sha256; s=202506r; d=adomerle.pw; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1752608259; bh=nKkiuhTdwFVu7pDYCp/hO2p
-	vX3R4CyflLRRoDtiQreA=; b=stWIe/UTlZaXABkqj/jLoQxJhZ+IxszPi/JklJyrFM2K5oyZTm
-	On4OXzbI3NXZs6jyiXk0d8XvLjJsHuCM9uRk/0oiFqte701Y9WLUVL/WoMP3EO1ZmjxSXuZRqMx
-	Y4FF4p8RPHmw3YYT7aAU8D6Qy2PvUEBd2BNcxo9PXoM2dpz5bsKkmA8jW//ti+4bAJ1Zhiaw+mm
-	0rIaMywnhB87EDi+9ryEd+mCBwi7DP/n553TgqnpPwRFBRivaxX2BcpVo38+So5QUI5wy5ACUIv
-	BOYAl3YmR/7czocrOcUwg/cMGr/paLtz2G82XK7P6BiIbgkZ8gWOw6xispeQm4w+vuw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202506e; d=adomerle.pw; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1752608259; bh=nKkiuhTdwFVu7pDYCp/hO2p
-	vX3R4CyflLRRoDtiQreA=; b=YgRWi9Mrt398qGPtCReD0jj9pvP9jR35dgFJCmbDmBvCiVi2J3
-	3WUlvzm9LikuSr3o+scJpGm0WEFbBtFvzbAA==;
-Message-ID: <493da354-2c86-452b-b343-c9ecd3ff84e3@adomerle.pw>
-Date: Tue, 15 Jul 2025 23:37:37 +0400
+	 In-Reply-To:Content-Type; b=F6G8AkjHnm4Oy3p982j9Kix+GIxIwCpTLpI6mFJnh8tJUwWf9no4BTT9k7za48fWA+ObEC4h4sZxVOg9Mi2y8EcxgJd9CgW/vlVdoI/YtltUlANcoj3uHoPARwm4OShDXVqd/jRJwhF8ZWkb3R/HL/QFUMWtMnXaMQf8j/6xSco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k5Iwa94N; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FGDLPK024983
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 20:43:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fkdWocIkXBnxpO5dQBPXK4H2mvwJNbJbFXsendZvKaI=; b=k5Iwa94NWUInC8zZ
+	BapKetQfFK6Yx+tx04cvoFX93fEYS/PzStxgNPA9P5fxHdPHJAAyJ8KoQ7MjcmnR
+	URy6upAJF+q7DUraovzA4BjipFDQh6YgPKiSUmsL5YN4hYwkVgIhoVjsdjs0K6sz
+	aCBy9vAd0ssVT50GuQVeJYDGkRuhMqz2GYP3fIVoCQWzpJKZmOe7lByhF7Uz0PiN
+	BUI/XBbyeaJ6sDS8dBMkrSwxu6imp6g7MKljbxYyrsZwBIveW3KLGnEudJpxxc6V
+	uoSYgBlinL1UYdPIfUaUwFEm8iJC0fWvYngvIxkF4KgfiNBPLPvxNdjw7cxcbT0X
+	/k2xsw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w58ymdnh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 20:43:04 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2369dd58602so56279255ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 13:43:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752612183; x=1753216983;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fkdWocIkXBnxpO5dQBPXK4H2mvwJNbJbFXsendZvKaI=;
+        b=hvw2Ry5i1zoKONgtC7JlFJZ+iJ0uvUYT+bNKH1EAJTLConbpp/x4LcTdDbpXDLgQKr
+         uKKz49dN9lLxMyOFgk6cbUReEhslUQIui/QUVf7M+iWuFJNg8eil62Ofgjum57DazM5D
+         vsTS+H2VcNJnEDoXtURbcunJCckaUgOMEFVW5DDgJp3AlPYW/h1+Qh4hZEB2z3BreZGR
+         HG0V2zq2wxyGXkfStx8VILsF4Sz/6knDpr4qJ0xc72EK2whVQCgO7BWsJr5UpsItekPy
+         ARwRXVC536m2mnQWhOpNDImj7eaUjNQpq2hZQunfGaxk9m3GrIrInRlLURkLZemIyorE
+         kQSw==
+X-Forwarded-Encrypted: i=1; AJvYcCUHOCw31b39WSmIdZJhXTLCtVCRmJsXqYgnuqphsJNltcKZswektQ80SwpIuJl21aveRPF39vQEsBdGuSdj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNUsrdPEJDu2+rWYMkle0A5K+4opu3yCPJNY+Rhi/NHYLsF/gC
+	QrPPP7rQobhpHvJXAQcwIW6eGeyMMDiDE3IVXJTFRvM8lqb1t/ey+rK80sCLSSTXeQzJktBflKm
+	CD2IuOcQloDIUrLAXi8S9yXI6B/NTkYOEKihwsrqcy2es1O9O7LZq5/zN9L/5zEtfwgjE
+X-Gm-Gg: ASbGncvEmfEn2tKQBHcLXBwjPrtQ5yyCNSZ3zcedZux8+NaF/jP3vs2uqnZmO2HG5eS
+	liz+zw7GKIXj2GagYPBL+M+bYlDCty30whYxKyJCL3G/sEtQtCa5BcK+4P+bS5AkMjCufv/1+R/
+	VgLJwE88aW0kSjls/Tl9KfpWLyoLlWCoWOVMpr9fMgjThoANCmlskFbEe0VxQXkPXlMKvdOipoH
+	mHxKxZUrVU/wcqS9KRN4Ck629BraOvlVwllR1WKfDRkF948ddZbdbXw3nUxSWCg87RnWy8DN4O3
+	D9MHKe202QIt7HXaBFWcrbX55Pls6eODdRbAnKryi6xtOOemwk4I2EnUA4851vhUlZkNgZwnajT
+	ysbfrbRI=
+X-Received: by 2002:a17:902:d2c5:b0:235:7c6:ebdb with SMTP id d9443c01a7336-23e2566b0bfmr2209195ad.10.1752612183437;
+        Tue, 15 Jul 2025 13:43:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIhbMmyIr7zVej/BKQltO0GntSzucFDQVsI2picZ5pOCxWjfJ0K47v2K6Z0XZyvBH35dVG/w==
+X-Received: by 2002:a17:902:d2c5:b0:235:7c6:ebdb with SMTP id d9443c01a7336-23e2566b0bfmr2208645ad.10.1752612182871;
+        Tue, 15 Jul 2025 13:43:02 -0700 (PDT)
+Received: from [10.73.114.202] (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c9f2a2549sm31776a91.42.2025.07.15.13.43.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Jul 2025 13:43:02 -0700 (PDT)
+Message-ID: <fae42c03-c58d-4ed6-8570-ae4b147b1d43@oss.qualcomm.com>
+Date: Tue, 15 Jul 2025 13:43:00 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,52 +90,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: sm8250-xiaomi-pipa: Drop nonexistent
- hardware
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Luka Panio <lukapanio@gmail.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20250715185636.21758-1-me@adomerle.pw>
- <uvw7usijkllom6cox4fkhrxpckqf7gk65b4hn244hpmj62utyt@zlbxwwmj5t6u>
+Subject: Re: [PATCH v5 3/4] dt-bindings: PCI: qcom,pcie-sa8255p: Document ECAM
+ compliant PCIe root complex
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: linux-pci@vger.kernel.org, will@kernel.org, lpieralisi@kernel.org,
+        kw@linux.com, robh@kernel.org, bhelgaas@google.com,
+        andersson@kernel.org, mani@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_ramkri@quicinc.com, quic_shazhuss@quicinc.com,
+        quic_msarkar@quicinc.com, quic_nitegupt@quicinc.com
+References: <20250715181630.GA2469794@bhelgaas>
 Content-Language: en-US
-From: Arseniy Velikanov <me@adomerle.pw>
-In-Reply-To: <uvw7usijkllom6cox4fkhrxpckqf7gk65b4hn244hpmj62utyt@zlbxwwmj5t6u>
+From: Mayank Rana <mayank.rana@oss.qualcomm.com>
+In-Reply-To: <20250715181630.GA2469794@bhelgaas>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDE5MSBTYWx0ZWRfXypQEf6EjQU1p
+ NbvWVwJzBSSxaQmPNvMLL3qOpqkSzWO+iHfTAIYpxI27OWvpNnr75tIbZH/spBcGjs0Oyj4BIRW
+ CT9MuVbw1rXbgzpSJIjKKdLN0h3ohPX8Tol21nAiZfGec3q9/o6JIML525NFX1lOOn66izhpscT
+ VKvxj7RJZ2r2EsRaJql/E6/wb/W2yZOvZdy7nGHJBL4uFoGs1OEKPjwEhlsUhvlaAQ8sHTZ9XKv
+ HiE6UuFwysZTFM5/+hpvzGC9AXW14lb8pXVxxpEB552cMfljB9UhmAq68CoxcR/Vmdek1760clK
+ xkDHYAtaYY0IDjUfwvixW5KB1t8QN1iO7kUYCdRaRccrQTBD7RafSYjX9sqX/UbvhCarsCDynmJ
+ by3aFJAiJlhHgJPh38n5Db4KFESSpE8AS0uihy6ZcxMI/JjLQGY/BjxJ1HzErRse8UPYR3sU
+X-Proofpoint-GUID: a0SMjtEg74jo-s01uFHuvuTqDDqFsqOJ
+X-Proofpoint-ORIG-GUID: a0SMjtEg74jo-s01uFHuvuTqDDqFsqOJ
+X-Authority-Analysis: v=2.4 cv=Or9Pyz/t c=1 sm=1 tr=0 ts=6876bd58 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=LFZAdqBXG_KN2Z8UtmoA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_05,2025-07-15_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507150191
 
 
-On 15.07.2025 23:22, Dmitry Baryshkov wrote:
-> On Tue, Jul 15, 2025 at 10:56:36PM +0400, Arseniy Velikanov wrote:
->> PM8009 was erroneously added since this device doesn't actually have it.
->> It triggers a big critical error at boot, so we're drop it.
-> Might it be that there are different SKUs?
-Well, while it's in dts, but it was disabled in the kernel config:
-https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/pipa-t-oss/arch/arm64/configs/vendor/pipa_user_defconfig#L413
 
-Maybe they just forgot to remove it from dts (I still don't understand 
-why it is displayed in i2cdetect though).
->
->> Also it looks like the fuel gauge is not connected to the battery,
->> it reports nonsense info. Downstream kernel uses pmic fg.
-> Separate commit, please.
->
->> PMIC fuel-gauge driver uses mixed stats about dual-cell battery,
->> so I combined it into one.
+On 7/15/2025 11:16 AM, Bjorn Helgaas wrote:
+> On Mon, Jun 16, 2025 at 03:42:58PM -0700, Mayank Rana wrote:
+>> Document the required configuration to enable the PCIe root complex on
+>> SA8255p, which is managed by firmware using power-domain based handling
+>> and configured as ECAM compliant.
 >>
->> Fixes: 264beb3cbd0d ("arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial device tree")
->>
->> Signed-off-by: Arseniy Velikanov <me@adomerle.pw>
-> Please remove empty line between tags (i.e. between Fixes and SoB).
->
+>> Signed-off-by: Mayank Rana <mayank.rana@oss.qualcomm.com>
+>> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 >> ---
->>   .../boot/dts/qcom/sm8250-xiaomi-pipa.dts      | 95 +------------------
->>   1 file changed, 5 insertions(+), 90 deletions(-)
+>>   .../bindings/pci/qcom,pcie-sa8255p.yaml       | 122 ++++++++++++++++++
+>>   1 file changed, 122 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
 >>
->
----
-Kind regards,
-Arseniy.
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
+>> new file mode 100644
+>> index 000000000000..88c8f012708c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
+>> @@ -0,0 +1,122 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pci/qcom,pcie-sa8255p.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SA8255p based firmware managed and ECAM compliant PCIe Root Complex
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <andersson@kernel.org>
+>> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> +
+>> +description:
+>> +  Qualcomm SA8255p SoC PCIe root complex controller is based on the Synopsys
+>> +  DesignWare PCIe IP which is managed by firmware, and configured in ECAM mode.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,pcie-sa8255p
+>> +
+>> +  reg:
+>> +    description:
+>> +      The Configuration Space base address and size, as accessed from the parent
+>> +      bus. The base address corresponds to the first bus in the "bus-range"
+>> +      property. If no "bus-range" is specified, this will be bus 0 (the
+>> +      default).
+> 
+> Do you mind if I add "ECAM" to this description, e.g.,
+>    The base address and size of the ECAM area for accessing PCI
+>    Configuration Space, as accessed from the parent bus.
+> 
+> I think having the "ECAM" keyword would make this easier to grep for.
+I agree that it helps clarify the intended usage. Please help with 
+updating the description.
+
+Regards,
+Mayank
+
 
 
