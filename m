@@ -1,81 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC632B062D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 17:26:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8327B06361
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 17:46:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F7393BECA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:25:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D4D61AA5265
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jul 2025 15:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DFCF23A58B;
-	Tue, 15 Jul 2025 15:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01B121E3762;
+	Tue, 15 Jul 2025 15:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="INCUKD2R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rUsfWUs5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64903231C9F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 15:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA19D224F6;
+	Tue, 15 Jul 2025 15:46:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752593162; cv=none; b=rheAv7SL5u6QJyz1ybJvq/6rWa0NeHf7wIVHImQ5St6p5PwM+sEc4JeCe5mLLffpnY/WZrbwhzcxpS51s98MghEmJgrfeW521L6Qi/dxc03I2frjep4ZBW/cXSjB0MDV4KSwv5torjGc5beEfyn+6Hqe08QkwbMKF9E319Z7GGU=
+	t=1752594360; cv=none; b=DG+dvNHMpFLupsPhIyeKgUDaS6btCmgInqFkslP9MFbvXgpGShDf1qDe6zrm6cv8CAs+9xgwiXOvtDYsBC7BoMNbgDXZAO+pv2lWLHCU+MqHw4ynAH0obCpo2QObNLkipABOVuKwbekBr1La2ufOi2gA/OQM7U+Sm3FPVupN/LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752593162; c=relaxed/simple;
-	bh=xomn5vf15i0z+t9ioTU3UzRFpGuVxbhdf3uhcQIlnKQ=;
+	s=arc-20240116; t=1752594360; c=relaxed/simple;
+	bh=KY4UxgFLKxX/JaJycNQHiOkF3p/e01MVSDyrqmdbemM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JSK1yg5Uw8wm8jtpZxndHy3n6BfUls2Lk7iYo5KOhEQghFaO3n44Qw8RcTdJhJagDzfet8Kx3WTD+2gY+YLN/Nbg5oDaBfH4kprYRs3qHq39ND7y+U8rzgHjZ/aECXOrxRkTtV0/Q4sidr/KphBg7IsaxtBTKPO3oSZok85lO9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=INCUKD2R; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-32f474ded39so5320241fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jul 2025 08:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752593158; x=1753197958; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eB2l8LirDQ3/3m1OWxvQpzeiYtShAHkpkyBAu7GfeKM=;
-        b=INCUKD2Rum6bpZZroqjDiQqKUyo8UjiuohCG+3ffjJrc7jcz5oOHLF3QMEjOBibaP9
-         CwBtP6LPc0fGwU/DcbGNxkRrdI4SqAXxhdpJcqZIazglFamVfYuaP4V0knnFx9CObU3L
-         ekLhZSuwbAeJ9GCk8/ky2PW28ZUXf8kLuS3OxJe4sT2Xn2FU7al9A4dgEN+QKfO/Nv29
-         qHyBT/WqI5jvmzRd07+SQuIYAE/RJ5/iJaNQDZPbO38x0BdTgylNrfQ5Boci6nD3gEC1
-         tY8PW+SJdYIVQpuzOcrvv8mnsr27wb2CH14iMGb1WMqeMSi/h49HGV6mMzfFrbKjP6bj
-         q9Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752593158; x=1753197958;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eB2l8LirDQ3/3m1OWxvQpzeiYtShAHkpkyBAu7GfeKM=;
-        b=PVM5dPX+yHx1RO9GjdVZHV6QMwWywKdNxj6QC+/aO9KvjBiQY2o/P5qsigtPS3iCwm
-         K+0ZFGiHXPKcNOuurOB79gjReyQWPRnjMyfJNQafmmm7/y4D/AXawb4O2Ztf0Izs7CAY
-         kIdScYlw40IzF2MMG7+jQ8g8910MZHZUFTjGKoMzhu+Y0YsUwABfUm25KMf/sA1cm+cd
-         2A2YrNk8yio1sQmW2Wv+qkTh+MIsZNOUSTh7TS2P2A3bCySy5hgNbT7C7ZMkzZklIvge
-         55eLMSCQpPqqdwvDDgZ3im5R5i5BTO9/kFPt1VVPS8pIAs+f/w4SUX0PcOP+8A5JwPzR
-         vMFw==
-X-Forwarded-Encrypted: i=1; AJvYcCUOW/g7hdrwwkji7ZtuF0M/Zv/87PBlZt/0wL2xJRkDlULGkE/fHk5m6/hsjg76XhPQ8Ypgf8h9M8Cu66MB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4F2/rpkGBo5KfqGfmtVhNsW9roNiaFvmU3cGLM2Pu5MwYPQjM
-	Y/Pct/grPNWNZSmV9Nnxp0e0Kjt0U5mFNWhsizImajeulSm9nEAv2hJrt0MEvyVUUso=
-X-Gm-Gg: ASbGnctbOtPjuDXMDoog3tGXRRWbVETseCsfspDNhf9okr/7n2axublpeayAgXK2sof
-	VNrLCLmgsac0lWcEzRs53c/f85W5thTiXEAJSFQQGw/4FhpIw10/UdB1G8OpDuk+UGyVpITpbda
-	k7n/+UHVq8tqa9qnHlK6aglTjodVo9rk9MSuOASu3yRPS7Y032jyClX0bnJN2E/jRh/bfdmmdV8
-	uVEzDrG6gEEkgvLZtUpTxvHU21uLGH9k5TzAjg3mg7pAW03sd4VkfulcXWsAkyYN/YmXKWL5YVx
-	b/zi9UCOypYBIY2FcUOpl/xUDEVrCpRo4OTN7YVHv0jNymJqoaQgwVNKDcdiEUfWhB1ISNt5bVM
-	h/9u0u2+p9Uq/2Jv9op6mskDfhO/qaBvqDh9DiLQ/OhaqFAo/4Q0ZwMRT9P5C4UFGIta3ntqeQC
-	KO
-X-Google-Smtp-Source: AGHT+IF3dqduT8P/WO27MvTE1kRxqSG27mj6p5eykY25Cj569ar5Hr43W9KJDXWVN/vPeuVB83X8RQ==
-X-Received: by 2002:a2e:b8d6:0:b0:32a:89bb:f8d9 with SMTP id 38308e7fff4ca-330873bdd0fmr2972821fa.6.1752593158292;
-        Tue, 15 Jul 2025 08:25:58 -0700 (PDT)
-Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32fa2913ca3sm19146791fa.18.2025.07.15.08.25.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jul 2025 08:25:57 -0700 (PDT)
-Message-ID: <a58f2e68-41fa-4bed-9282-deb5e5435f4f@linaro.org>
-Date: Tue, 15 Jul 2025 18:25:55 +0300
+	 In-Reply-To:Content-Type; b=WHiQYs5qoXNiNaQPhYYQsLPwctJIdmOfoEQO5skq0uHwB4J9d+cgzGYFiesYo9V7W/1oH5IpAtQ6fb6+e4GukL/hP/9V3wFNNn3gZhr/19VmYB0vijTiq9gZHsh/dI7W2mJDWNgIE2duJP+Z4Buigq13A0kbCKU0TZDgaSky4k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rUsfWUs5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887E2C4CEF1;
+	Tue, 15 Jul 2025 15:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752594360;
+	bh=KY4UxgFLKxX/JaJycNQHiOkF3p/e01MVSDyrqmdbemM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rUsfWUs5P6bU9WLL7LWgSQYtPzteeEhfRlqETGsg9HeOh9GZfj686CUYU9d79+7qj
+	 B9l8JE+rajWcfmBfuE7hnNVhwtvDDGm84rYPNjVUNIU90am+lKWqrkm+xwmLryucaT
+	 V3yqAJgp+QcX7lTDsp5i3uRGjfCKRHjSsmoReFM9iUrcw5pC/qz9jUjFnFyh5+Sf8a
+	 CMSeSwfb8AnRQElwgO/OihrPVIAqRDxLS4AiFoJy2D8+io1ykHxSk1DCkKfZenbEgT
+	 q16SJvj8BK/Vnoajr1RLzz2ZHwiqLj3fzdp1Pc8DxmvhzAyssKgzgMwnWQ22eY8qjj
+	 HrQPT+zuqk0Sw==
+Message-ID: <b0e229db-0fc5-46e0-a6d9-876ba77a8b0f@kernel.org>
+Date: Tue, 15 Jul 2025 17:45:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,102 +50,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/15] Add dt-bindings and dtsi changes for CAMSS on
- x1e80100 silicon
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bryan O'Donoghue <bod.linux@nxsw.ie>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: Remove sdm845-cheza boards
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org>
- <9361e954-e2c9-41c6-be4c-12b0e4f367f5@linaro.org>
- <ae0a309f-7e52-4d3c-8f26-989f22da5b07@linaro.org>
- <GbVC82h7wSXQsAJh8XybKorKYy9wupjQLndjf_uYNXOZnk1UqS_tT4Yg9gzf8X3Kn55Mt5bXfcFrHtyMoFZ4-A==@protonmail.internalid>
- <a4ebdf5c-8d4f-4994-afd9-22c8d889fe97@linaro.org>
- <4281887a-e7c0-43bc-9e72-96f0e432c58f@nxsw.ie>
- <f753f088-474b-41bb-82d3-6684bea2f87e@linaro.org>
- <85c1a702-1a3a-4145-8f2b-240d61d6e72a@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <85c1a702-1a3a-4145-8f2b-240d61d6e72a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>
+References: <20250715-topic-goodnight_cheza-v1-1-68b67d60c272@oss.qualcomm.com>
+ <f6fb3492-7e92-4893-8088-8e1353905ad3@kernel.org>
+ <6220dea5-32e6-4ee3-ae83-96405362783e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <6220dea5-32e6-4ee3-ae83-96405362783e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7/15/25 16:22, Bryan O'Donoghue wrote:
-> On 15/07/2025 14:08, Vladimir Zapolskiy wrote:
->>>> It's quite easy, sensors are not connected to CSIDs. Moreover data flows
->>>> from any sensor can be processed on any CSID, there is no static
->>>> hardware
->>>> links, which are attempted to be introduced.
+On 15/07/2025 16:28, Konrad Dybcio wrote:
 >>>
->>> This statement is not correct.
+>>> Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b53dc059@oss.qualcomm.com/
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/Makefile            |    3 -
+>>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
+>>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
+>>>  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
+>>>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------------
+>>>  5 files changed, 1983 deletions(-)
 >>
->> Please elaborate, what statement above is not correct?
+>> What about compatible bindings? If this is the last user, it should be
+>> dropped as well (second patch).
 > 
-> "static hardware links, which are attempted to be introduced"
-> 
-> No such static hardware link is being attempted to be introduced, that
-> statement is incorrect or a misunderstanding of the intention.
-> 
->>
->>> The port@ in CAMSS pertains to the camss-csiphy device not to the
->>> camss-csid device, so there is no hard link to any specific CSID in the
->>> dts scheme here.
->>
->> And here it's just a confirmation that my statement above is correct,
->> so please be consistent, and especially in any kind of accusations like
->> you've just given above.
-> 
-> Sorry Vlad I don't see much basis litigating this further.
-> 
-> I've been very clear, I think we should have standalone CSIPHYs, there's
-> no reason to bury them inside of the CAMSS block - see CCI.
+> My understanding was that bindings are generally good to stay..
 
-I've never insisted on embedded CSIPHY device tree nodes under CAMSS
-device tree node, and I don't argue with it, it's kind of a red herring.
 
-Can you please write this comment on the relevant series discussion?
+Is there another user, like other projects? If not, we don't need them.
+There is no benefit in documenting something if no one uses it.
 
-https://lore.kernel.org/all/bed8c29c-1365-4005-aac7-1635a28295bf@linaro.org/
-
-> There's a clear way to do endpoints established from sensor to consumer,
-> there's no reason to give that data to the above CSIPHY driver, it has
-> no "use case" for it.
-
-Please don't ignore a different opinion shared by Konrad or me:
-
-https://lore.kernel.org/linux-media/427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com/
-
-It's unclear why this particular device tree properties are going to be
-added into some different device tree node. Since somebody made an effort
-to spot and discuss it, please share your brought effort as well.
-
-Unfortunately your series does not look technically correct due to the
-given reason, there should be a mitigation, and the defence in form of
-"it's been done always this (presumably wrong) way and shall be continued
-to be done this (presumably wrong) way" is barely acceptable.
-
-> Its unfortunate we've done parallel work but, I'd ask you at this point
-
-Reaching this point was not a coincidence, unfortunately.
-
-> to rebase your multiple sensor work on the proposed CSIPHY series here
-> and for drivers/phy.
-> 
-
-Please note that the technical discussion of this series has just started,
-so there is little sense to rebase anything else on top of incomplete work.
-
-The practice of "don't look, don't see" shall not be normalized among
-Linux kernel maintainers.
-
--- 
-Best wishes,
-Vladimir
+Best regards,
+Krzysztof
 
