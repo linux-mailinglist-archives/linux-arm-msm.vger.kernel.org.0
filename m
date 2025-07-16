@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-65120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 907BCB06BFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:07:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3509B06C09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:11:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9AA2179930
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 03:07:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0BF0188C620
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 03:11:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F202279DC8;
-	Wed, 16 Jul 2025 03:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AACE272811;
+	Wed, 16 Jul 2025 03:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f/Cm3yBO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpB1X5pa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C242797BD;
-	Wed, 16 Jul 2025 03:06:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067BD17A317
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 03:11:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752635188; cv=none; b=kMQrb+JKpbL4aOJglROAkbeg4geLIp1RwfZSYHA3n0LW8EGCe49EwAqFDsZcd3XnQEHNhbSVeR+JxLl5XRChA2/HuNG2Ma4dRGGdKu15BocdrCon17oytWPemDergXwTTVnjzEtkL0aBNFxPAatuN87bMxRtk2H/WDqEii4NMvg=
+	t=1752635463; cv=none; b=uusZ9nMjzoLKHRYjuRHDhXBk6NrCTd23fx9Ia6YgjA00GgQXcOdQ8qVTodSQ2+gGG9Gty3XBQ5tQ6O4+SEPqWAwVfpXnYK0vQVwna6EZYMlubCO7T+Xrt68/wWw/lSz38eRlQXHK6s2j46NTP27weksd3LV10b0oh8jViPAWPPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752635188; c=relaxed/simple;
-	bh=dCp/UCpr4GavL9cgZvFa6YTICidgQ0aooqsKTZtkXtY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=VBgCvFtvfbRxr/rc58y6Yf+reaZ/T/VE/fT6mcNcaxW3sMPUW7HRcYXcaHNhUy59xB6wsQtfU6DxCguFQ/mAz5yWczKMk/BGZ6pQsh3Eb3Y2Xe84x+0ZwM+hCpskRLe3IPq1jfh5mgt6XfAAaXyh1ixFJ54MwUEScPV8TFrZd/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f/Cm3yBO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FGDU72008226;
-	Wed, 16 Jul 2025 03:06:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=YM4m4LvwJpEIvXehHnO+Z9
-	OI4GIz8l3zpiUHNdqZPDw=; b=f/Cm3yBOnsfQ6nHMxBkcHS7dIXey6ipeM8VvhD
-	Z7wACvSWrDQIYXTzoIic2mkFuK8SFbzqy5bRf3hDc34/w9IRyhOEta2Fi1cHTE30
-	bwGyhpLhwObsKIuxzkpElmuJe2LO7n49Sx6t2Hwau9eLy2hP8GNhY4FddCmDzg94
-	iS4bwn9M2eSEeSaJq4kNpb6bwddwQEkbPV90BzblV5ah8IQx8Hy+c6sOoFZt2aBU
-	JT/xGbx+H44eYK5m04BwdsZN0gbpvH4Y52y7DTCjH+aZa25ENoLwQVBtfvYeXXYm
-	YkOP2ic+5zOjOnxEX5J4O+oolQ4gzCaGpSO8o0ESNdR9vIhg==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wnh5tfqd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 03:06:13 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56G36BsF018523;
-	Wed, 16 Jul 2025 03:06:11 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 47ugsmhveh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 03:06:11 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56G36BuD018518;
-	Wed, 16 Jul 2025 03:06:11 GMT
-Received: from cse-cd01-lnx.ap.qualcomm.com (cse-cd01-lnx.qualcomm.com [10.64.75.209])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 56G36ANd018476
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 03:06:11 +0000
-Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id CC98F2122F; Wed, 16 Jul 2025 11:06:09 +0800 (CST)
-From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>,
-        Tingguo Cheng <quic_tingguoc@quicinc.com>
-Subject: [PATCH v1 1/1] arm64: dts: qcom: qcs615: Set LDO12A regulator to HPM to avoid boot hang
-Date: Wed, 16 Jul 2025 11:06:01 +0800
-Message-Id: <20250716030601.1705364-1-ziyue.zhang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1752635463; c=relaxed/simple;
+	bh=nBjyQ5BHE+tuIIT/DAP5dnbdYgNuHRwX1DkTrChMN78=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BRO0V3eeznVRpdH3ydiJCVu1ctqLeqwuVYRvAcExYcV32BqMGnLQ13HZ8gWI/Fh5lm+jxjUtCq3uJ5EZd7tLw6jnSBOmmdqkRzzb7f9pV2ZoL6lknfbSRPpt1iIse7qwtgN5pgMwdh15JZaLjEeVkCqw2O2o8TOgb3gXPTSM+LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpB1X5pa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804C5C4CEE3;
+	Wed, 16 Jul 2025 03:11:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752635462;
+	bh=nBjyQ5BHE+tuIIT/DAP5dnbdYgNuHRwX1DkTrChMN78=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WpB1X5pa1J3JbdHTgn1GJBt5blAM5v2CUyNGVKi060YI+nsdXp/mciQWgfLVPkc7+
+	 6kqMIwnCVmiO09jRtCoLWsNAr1iWj89E1E/QoL74HW6AdxonjTuXxbsOy7tuctEtxT
+	 Wuv46/bBMKH2ogbSFhz6fjoZkeMm0yk7h6PEPNtgPOoAPQCEl0HGC2KZsfvGopTszV
+	 OnVgoHQpJAK1n+giwOEsr8TP+izDk1K4gccHX6Ej5hN6VFiWDXOHMrzLfc0cv8w0cV
+	 cDb+LgAWejKUSfs+mnjJ9kr1r8euH0JxPsEARqT2q4I01ErT+7nhG/sTW7nYN3mBpq
+	 eRFi1RxvY8ZwQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lijuan Gao <quic_lijuang@quicinc.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Ayushi Makhija <quic_amakhija@quicinc.com>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Kyle Deng <quic_chunkaid@quicinc.com>,
+	Lijuan Gao <lijuan.gao@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Wenmeng Liu <quic_wenmliu@quicinc.com>
+Subject: [GIT PULL] Qualcomm Arm64 DeviceTree updates for v6.17
+Date: Tue, 15 Jul 2025 22:10:57 -0500
+Message-ID: <20250716031059.76348-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,76 +86,239 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=dKimmPZb c=1 sm=1 tr=0 ts=68771725 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=ae3z3FTj68mGPq7uMvUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 7NYoC0pDTzXfesvzBybFEgEklgYO2ZeW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDAyNyBTYWx0ZWRfX4X0cQHxWGj4q
- XkHVzEkBuBdsXGMEXqODLnR88M2hLK0mJhINAZRZElv6t4uDforEm+VsJYzGlBLvUE/TJa/WWDX
- hBKLk1NRS3bViNMvPHJ3XK9TGsxLQRjWHeSN6jhxznkGcA++ugD77/FDblJaFbkyRzSHmGTl90r
- cRQIXWCmGFBfU9yGbMBPd3i4UNibvsYTWANWfPr6jjA6S4dEikj8SOKaNm7mp55NxFbLfzzXP9y
- i8W2IWQr5XclWKUCNhk15iYMPCwRaDHX6xGu8sSuqmZvLrQmaNKKZRy1Ewam2DubGOOjmHAQkJE
- GzzhULZka8tL60ubAKB6lAKhcs/BRV0oB1gGGDyhQxxOr2Fv+HxqzYlF4Qf7aEo6sfvo6HRnvrK
- iU834tHm81vV03X6uPCBONwSNVnv96Jkbv6sazs0dz8U9oNsZlD8M056w1uvvQhxZuyvQgxn
-X-Proofpoint-ORIG-GUID: 7NYoC0pDTzXfesvzBybFEgEklgYO2ZeW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 mlxlogscore=999 mlxscore=0 spamscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160027
 
-On certain platforms (e.g., QCS615), consumers of LDO12A—such as PCIe,
-UFS, and eMMC—may draw more than 10mA of current during boot. This can
-exceed the regulator's limit in Low Power Mode (LPM), triggering current
-limit protection and causing the system to hang.
 
-To address this, there are two possible approaches:
-a) Set the regulator's initial mode to High Performance Mode (HPM) in
-   the device tree.
-b) Keep the default LPM setting and have each consumer driver explicitly
-   set its current load.
+The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
 
-Since some regulators are shared among multiple consumers, and setting
-the current must be coordinated across all of them, we will initially
-adopt option a by setting the regulator to HPM. We can later migrate to
-option b when the timing is appropriate and all consumer drivers are
-ready.
+  Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
 
-Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
----
-This patch follows a suggestion from Bjorn Andersson regarding USB
-regulator handling where each consumer is expected to explicitly set its
-current load.
-Link: https://lore.kernel.org/linux-arm-msm/37fc7aa6-23d2-4636-8e02-4957019121a3@quicinc.com/
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index a6652e4817d1..7639635c67c4 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -166,7 +166,7 @@ vreg_l12a: ldo12 {
- 			regulator-name = "vreg_l12a";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1890000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 			regulator-allow-set-load;
- 			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
- 						   RPMH_REGULATOR_MODE_HPM>;
--- 
-2.34.1
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-6.17
 
+for you to fetch changes up to 7de0d60f6345e701ca8b9a05fe2faa03ad868ccf:
+
+  arm64: dts: qcom: sm8150: Drop unrelated clocks from PCIe hosts (2025-07-03 15:58:23 -0500)
+
+----------------------------------------------------------------
+Qualcomm Arm64 DeviceTree updates for v6.17
+
+79b896e7da7e arm64: dts: qcom: msm8976-longcheer-l9360: Add initial device tree
+6516961352a1 arm64: dts: qcom: Add support for X1-based Asus Zenbook A14
+
+The DB410c D3 camera mezzanine is converted to an overlay.
+
+On MSM8976 SDC2 pinctrl definitions are introduced and BLSP DMA
+controller is marked to be managed by another entity.
+
+Add camera subsystem on the QCM2290 platform.
+
+Add and enable remoteproc and related devices on QCS615.
+
+Add and enable Video encoder/decoder on QCS8300 and SA8775P.
+Also on SA8775P add CPU OPP tables for scaling DDR/L3 bandwidth based on
+CPU frequency, add L3 interconnect definitions, DSI and video
+encoder/decoder support.
+
+Enable the SLPI remoteproc on SDM850-based Lenovo Yoga C630.
+
+On SM6350, add the video clock controller, APR and some audio related
+services.
+
+Describe the camera subsystem on SM8550 and add Iris video
+encoder/decoder node for SM8650.
+
+On SM8750 introduce UFS and Soundwire support, enable these and describe
+the sound hardware on MTP and QRD.
+
+Add camera clock controller on SC8180X.
+
+On X Elite, for the Dell XPS13, add WiFi and Bluetooth pwrseq and enable
+the fingerprint sensor. For HP Omnibook X14  USB1 SS1 SBU mux and do
+some misc cleanup.
+
+Replace the thermal zones inherited from X Elite with X Plus-specific
+ones.
+
+Add missing interrupts and clean up unrelated clocks for PCIe
+controllers across a variety of platforms.
+
+----------------------------------------------------------------
+Aleksandrs Vinarskis (4):
+      arm64: dts: qcom: x1e80100-dell-xps-9345: Add WiFi/BT pwrseq
+      arm64: dts: qcom: Add support for X1-based Asus Zenbook A14
+      arm64: dts: qcom: x1-asus-zenbook: fixup GPU nodes
+      arm64: dts: qcom: x1-asus-zenbook: support sound
+
+André Apitzsch (4):
+      arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
+      dt-bindings: arm: qcom: Add MSM8976 BQ Aquaris X5 Plus
+      arm64: dts: qcom: msm8976: Add sdc2 GPIOs
+      arm64: dts: qcom: msm8976-longcheer-l9360: Add initial device tree
+
+Ayushi Makhija (2):
+      arm64: dts: qcom: sa8775p: add Display Serial Interface device nodes
+      arm64: dts: qcom: sa8775p-ride: add anx7625 DSI to DP bridge nodes
+
+Bartosz Golaszewski (1):
+      arm64: dts: qcom: sm6115: add debug UART pins
+
+Bjorn Andersson (2):
+      arm64: dts: qcom: x1e80100-dell-xps13-9345: Enable fingerprint sensor
+      Merge branch '20250512-sc8180x-camcc-support-v4-2-8fb1d3265f52@quicinc.com' into arm64-for-6.17
+
+Dmitry Baryshkov (1):
+      arm64: dts: qcom: sdm850-lenovo-yoga-c630: enable sensors DSP
+
+Eugen Hristev (1):
+      arm64: dts: qcom: sm8750: Trivial stray lines removal
+
+Jagadeesh Kona (1):
+      arm64: dts: qcom: sa8775p: Add CPU OPP tables to scale DDR/L3
+
+Jens Glathe (3):
+      arm64: dts: qcom: x1e80100-hp-x14: add usb-1-ss1-sbu-mux
+      arm64: dts: qcom: x1e80100-hp-x14: remove unused i2c buses
+      arm64: dts: qcom: x1e80100-hp-x14: amend order of nodes
+
+Jie Gan (2):
+      arm64: dts: qcom: qcs615: fix a crash issue caused by infinite loop for Coresight
+      arm64: dts: qcom: qcs615: disable the CTI device of the camera block
+
+Konrad Dybcio (5):
+      arm64: dts: qcom: x1p42100: Fix thermal sensor configuration
+      arm64: dts: qcom: sdm845: Expand IMEM region
+      arm64: dts: qcom: sc7180: Expand IMEM region
+      arm64: dts: qcom: sc8180x: Drop unrelated clocks from PCIe hosts
+      arm64: dts: qcom: sm8150: Drop unrelated clocks from PCIe hosts
+
+Krzysztof Kozlowski (3):
+      arm64: dts: qcom: sm8750: Add Soundwire nodes
+      arm64: dts: qcom: sm8750-mtp: Add sound (speakers, headset codec, dmics)
+      arm64: dts: qcom: sm8750-qrd: Add sound (speakers, headset codec, dmics)
+
+Kyle Deng (1):
+      arm64: dts: qcom: qcs615: Add mproc node for SEMP2P
+
+Lijuan Gao (4):
+      arm64: dts: qcom: qcs615: Add IMEM and PIL info region
+      arm64: dts: qcom: qcs615: add ADSP and CDSP nodes
+      arm64: dts: qcom: qcs615-ride: enable remoteprocs
+      arm64: dts: qcom: sa8775p: Correct the interrupt for remoteproc
+
+Loic Poulain (1):
+      arm64: dts: qcom: qcm2290: Add CAMSS node
+
+Luca Weiss (2):
+      arm64: dts: qcom: sm6350: Add video clock controller
+      arm64: dts: qcom: sm6350: add APR and some audio-related services
+
+Manivannan Sadhasivam (13):
+      arm64: dts: qcom: sm8150: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sm8250: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sm8350: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sa8775p: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sc7280: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sdm845: Add missing MSI and 'global' IRQs
+      arm64: dts: qcom: msm8996: Add missing MSI SPI interrupts
+      arm64: dts: qcom: msm8998: Add missing MSI and 'global' IRQs
+      arm64: dts: qcom: ipq8074: Add missing MSI and 'global' IRQs
+      arm64: dts: qcom: ipq6018: Add missing MSI and 'global' IRQs
+      arm64: dts: qcom: sc8180x: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sar2130p: Add 'global' PCIe interrupt
+      arm64: dts: qcom: x1e80100: Add missing 'global' PCIe interrupt
+
+Maulik Shah (1):
+      arm64: dts: qcom: Add QMP handle for qcom_stats
+
+Neil Armstrong (1):
+      arm64: dts: qcom: sm8650: add iris DT node
+
+Nitin Rawat (3):
+      arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 SoC
+      arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 MTP
+      arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 QRD board
+
+Pengyu Luo (1):
+      arm64: dts: qcom: sm8650: remove unused reg
+
+Raviteja Laggyshetty (1):
+      arm64: dts: qcom: sa8775p: add EPSS l3 interconnect provider
+
+Satya Priya Kakitapalli (3):
+      dt-bindings: clock: qcom: Add missing bindings on gcc-sc8180x
+      dt-bindings: clock: Add Qualcomm SC8180X Camera clock controller
+      arm64: dts: qcom: Add camera clock controller for sc8180x
+
+Stephan Gerhold (1):
+      arm64: dts: qcom: apq8016-sbc-d3-camera: Convert to DT overlay
+
+Vikash Garodia (4):
+      arm64: dts: qcom: qcs8300: add video node
+      arm64: dts: qcom: qcs8300-ride: enable video
+      arm64: dts: qcom: sa8775p: add support for video node
+      arm64: dts: qcom: sa8775p-ride: enable video
+
+Vladimir Zapolskiy (2):
+      arm64: dts: qcom: sm8250: enable camcc clock controller by default
+      arm64: dts: qcom: qrb5165-rb5-vision-mezzanine: remove camcc status property
+
+Wenmeng Liu (1):
+      arm64: dts: qcom: sm8550: Add support for camss
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    5 +
+ .../bindings/clock/qcom,sc8180x-camcc.yaml         |   67 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   10 +-
+ ...ne.dts => apq8016-sbc-d3-camera-mezzanine.dtso} |   12 +-
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |   20 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi              |   40 +-
+ .../boot/dts/qcom/msm8976-longcheer-l9360.dts      |  490 +++++++
+ arch/arm64/boot/dts/qcom/msm8976.dtsi              |   38 +
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |   54 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |   20 +-
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi              |  103 ++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |   12 +
+ arch/arm64/boot/dts/qcom/qcs615.dtsi               |  148 ++
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |    4 +
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi              |   71 +
+ .../dts/qcom/qrb5165-rb5-vision-mezzanine.dtso     |    4 -
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi         |  238 ++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |  515 ++++++-
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi             |   12 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |   10 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   14 +-
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              |   70 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   50 +-
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |    6 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |    9 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               |   73 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |   28 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |   19 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |   12 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |    1 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  211 +++
+ arch/arm64/boot/dts/qcom/sm8650-hdk.dts            |    4 +
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts            |    4 +
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts            |    4 +
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               |   97 +-
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts            |  233 +++
+ arch/arm64/boot/dts/qcom/sm8750-qrd.dts            |  243 ++++
+ arch/arm64/boot/dts/qcom/sm8750.dtsi               |  230 ++-
+ arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi  | 1496 ++++++++++++++++++++
+ .../boot/dts/qcom/x1e80100-asus-zenbook-a14.dts    |   37 +
+ .../boot/dts/qcom/x1e80100-dell-xps13-9345.dts     |  203 ++-
+ .../boot/dts/qcom/x1e80100-hp-omnibook-x14.dts     |   98 +-
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             |   20 +-
+ .../boot/dts/qcom/x1p42100-asus-zenbook-a14.dts    |  141 ++
+ arch/arm64/boot/dts/qcom/x1p42100.dtsi             |  556 ++++++++
+ include/dt-bindings/clock/qcom,gcc-sc8180x.h       |   10 +
+ include/dt-bindings/clock/qcom,sc8180x-camcc.h     |  181 +++
+ 47 files changed, 5758 insertions(+), 165 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
+ rename arch/arm64/boot/dts/qcom/{apq8016-sbc-d3-camera-mezzanine.dts => apq8016-sbc-d3-camera-mezzanine.dtso} (89%)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8976-longcheer-l9360.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
+ create mode 100644 include/dt-bindings/clock/qcom,sc8180x-camcc.h
 
