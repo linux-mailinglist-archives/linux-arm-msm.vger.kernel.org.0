@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9E4B0745B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:11:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09321B07462
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:12:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B9DA17B40D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:10:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CEEB163FA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AC7B2F4A1F;
-	Wed, 16 Jul 2025 11:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6EC22F2C5E;
+	Wed, 16 Jul 2025 11:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qtKmqmAd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IZsg76rE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE552F3C1B;
-	Wed, 16 Jul 2025 11:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688752EFDB4;
+	Wed, 16 Jul 2025 11:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752664193; cv=none; b=qfj/2HkFIEURpf2DoCLVfz6febv5iPX3b6I5x0xwi2aiMPwTVf1GNqRMUHTGoTWwP1bKhWj7VMGE1P1P6CPquY4kgC+HQp209X0/V29R3nJoensW4Wdg1PYnd9v3vu2kLBSSFGzWUn6P14jiIvG1hflRWwrDD/jkxtWiwVJSAAY=
+	t=1752664315; cv=none; b=Ld2huMR55nHWIeuZGLiiO7/+lbHcXgA+OqZu+PvGKmZe12oQPLwF6jVU6sZY9PXyGUqbu0HY6J8lVvGZewnS5go23TBTby11MBsQn0XXWXuVif1qN1xicpW4wa8fipz8AufgMarcS4ONosBOhIDBwTFjYyMA5geFLxRoLaSrQJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752664193; c=relaxed/simple;
-	bh=SXvV+xvahJ4GlG8CRCNdvVkYEyzFzMwxAQUNJL7bRZI=;
+	s=arc-20240116; t=1752664315; c=relaxed/simple;
+	bh=697QA1przeJV2t+/GGj0NAeCDBvL3eZlT7aC+lc3IWA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MxNR8aL0XY93oiruzwvo4FEIw6+k0xErrUZhBxityUKssBjayrDonzWG1vIoT3UeMRqVhKKe/llMSCs4IqMcmV/E+/p/8JfUcygBxZnXFZYQ33P/0GyxM/IPyGQrCV93WXPiU0Ov5PJ2Y1V3zCD3nLlLnxT+2Fsr7820aqRXStQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qtKmqmAd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C9AC4CEF0;
-	Wed, 16 Jul 2025 11:09:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=R18CX0OSps45/Ggw5tBE6B05Mys2bMi7KTm6QkZ9lxvkVKZrlMilamv+iN4iXPqPpU07hSihcVjvfhg7xDs5rESWucu9M+20K+YbmOb1v9Ypl52cMveK25Q6SZEnIucCkuGrayTNB8OEX5S/QkyiD+0PnLfyJVVv6CFknEYA87c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IZsg76rE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342DFC4CEF0;
+	Wed, 16 Jul 2025 11:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752664193;
-	bh=SXvV+xvahJ4GlG8CRCNdvVkYEyzFzMwxAQUNJL7bRZI=;
+	s=k20201202; t=1752664315;
+	bh=697QA1przeJV2t+/GGj0NAeCDBvL3eZlT7aC+lc3IWA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qtKmqmAdez4vwr0Rsi6fZPLXRyv5t1M15zq2EMIs2vbwbWis4/fiEH7A3HVblZT5j
-	 VWfyvV6NXvQJr7dU6SDgm2sjM3eZu5uWa7hGYVh3HOncl0/vuJpG+7uKmyrG1kI15f
-	 ae7CQGmXPCTOO6eTm1tmaxmlZp9J9dMCeDL+61vshwnk7MiEUTestjGuuHEBM2Z+DI
-	 F4uU4noufcLJQ8gNZZ4P3fNBKrW2Trr2QbmvHqL2WHbtocPMhgile7M49YNQit4Ew+
-	 zwohLyMtPOR4H060qp8kGXd9HBcLOequ+albWIw1SReQExXH7ASlEUvrw41cGA2FjI
-	 m2yS6FGYo6BXA==
-Message-ID: <571d4df6-620f-4bac-95c6-5ad9a4088e5e@kernel.org>
-Date: Wed, 16 Jul 2025 13:09:47 +0200
+	b=IZsg76rEeZkQf4mXOkydJr/P7FWiQ3lUeZvXeZES3U3FwVjWcrAqEDs1nXyYvF6lu
+	 rFQ5Htw8N7bwJVe5CLsEKI5IOsdjIlda8IyOwmX1OCxyHtY2bHHNVrAmYnH9hM8r+1
+	 z0/P1upllnmTKIEKCjGM9UbWUgJFuNoe+vjUa5HLdQD0wroJL/60yClXO0MbHMzVV+
+	 4/IZDayCZElbrAbDStekuhTrxtQ3QiuxLcL8VXdv7hXAwjZdjYAwc3S4WIzz+fPTut
+	 8NrFskj3Oj+GWZBvVv8fK/BPTK3sQYgQ3U3QdTBJhdSmY28bhqFoTG/TXEfsw1rWxL
+	 yskVRA0yVBbXA==
+Message-ID: <616c7739-5c05-4a32-a80b-8ecdd23e5be0@kernel.org>
+Date: Wed, 16 Jul 2025 13:11:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] MAINTAINERS: Remove sdm845-cheza device trees
+Subject: Re: [PATCH v2 2/4] dt-bindings: arm: qcom: Remove sdm845-cheza
 To: Konrad Dybcio <konradybcio@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -63,7 +63,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
- <20250716-topic-goodnight_cheza-v2-4-6fa8d3261813@oss.qualcomm.com>
+ <20250716-topic-goodnight_cheza-v2-2-6fa8d3261813@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,38 +109,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250716-topic-goodnight_cheza-v2-4-6fa8d3261813@oss.qualcomm.com>
+In-Reply-To: <20250716-topic-goodnight_cheza-v2-2-6fa8d3261813@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 16/07/2025 12:16, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Cheza was a prototype board, used for developing Snapdragon platform
-> support on ChromeOS.
+> Cheza was a prototype board, used mainly by the ChromeOS folks.
 > 
-> Since almost none are left in existence, and none are left in use, the
-> device trees for that family of devices are being removed.
+> Almost no working devices are known to exist, and the small amount of
+> remaining ones are not in use anymore.
 > 
-> Clean up the maintainers entry with it.
+> Remove the compatible strings reserved for it, as, quite frankly, Cheza
+> is no more.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  MAINTAINERS | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5efcdb5537f52b84a57505857399af70f0fa7e45..1458ff091a864e539c554ef9e915331c44c87370 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3071,7 +3071,6 @@ ARM/QUALCOMM CHROMEBOOK SUPPORT
->  R:	cros-qcom-dts-watchers@chromium.org
->  F:	arch/arm64/boot/dts/qcom/sc7180*
->  F:	arch/arm64/boot/dts/qcom/sc7280*
-> -F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 3 ---
+>  1 file changed, 3 deletions(-)
 
-This should be squashed with first patch, otherwise you have warnings
-for unmatched patterns (and this is not bisectable patchset).
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
