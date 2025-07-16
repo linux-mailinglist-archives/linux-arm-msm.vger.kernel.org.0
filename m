@@ -1,443 +1,361 @@
-Return-Path: <linux-arm-msm+bounces-65240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB8F8B075BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 14:34:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E97B075DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 14:39:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F800508196
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:34:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6090F1893101
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:40:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF6F2F5481;
-	Wed, 16 Jul 2025 12:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 613002F5081;
+	Wed, 16 Jul 2025 12:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pzi1MKKd"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lrYvOd7X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EE12F5337
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 12:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A32B19CC37;
+	Wed, 16 Jul 2025 12:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752669220; cv=none; b=sR/NKBAJv6mtejsMUa/J5/k+541X2oL4bi8q7Otg8Bu6Z1WlCs229vvDG4F8Pqgsvs3g2vy47Om7ABzCni8yEEAIovY7+rZzyjgn8H1hmUYecWR0yoPbD36Hy3+UKfNLLsIdUvgOewTOiedD0tItDxUexNHmXYUQ3ez7JmGNC/s=
+	t=1752669582; cv=none; b=sYXQavXuUrDQeUrI7Vxym4ZsDQ53HHDP1+8qOrfnm+ZaqFKL98tdR5kAQYfvAfHacMMdhwyZvicZ/tjt//8IxF1nomBx2DcKvP3XjIoYYgaMG4lSLKyTCrH+CCjq7m6yQdCbgAi/4Y1uN85vyAy0SL5FBl4lFii5mGMsslQobvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752669220; c=relaxed/simple;
-	bh=nupn9pkX0zqAeVFf9lC6kwIRN70I1W/PW+o1yKDGOLo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WblHZXOi2JoRUB9lL/uaPFlgMUqF28KgQXtF/7VC0rQbv9u5v8OR14a16WgtKGF1Na9JiMuuKpAud4/b3QCOY14VRSeA7j75EJMDie+D8KhrlYJ841XBODGKV/omJNdArOmPNIq3irnddWwh0fu0ORALYJtOrqr5tIyRiDVaIJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pzi1MKKd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56G6HwpS007841
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 12:33:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=TD3zJuWoo4A
-	9skdFDbNfZ3ei/LYBXk6PfYZIRRq0xcU=; b=pzi1MKKdLr/IYL9BWW32tdK3v6f
-	dxW15QlipkIqKCazfMlxy8qdbg1W+4CLu9++t0z2xBFYwY3dWMUmI2kvRw6j3AK0
-	Lpnm/i2wBpwQTw76SaFUvyjO0lpkUU/Ixwov5/2oj91JdmlB/YFn0IxvVQqegKjd
-	3PUe+tZ+U5FQU7jZ7HndNx2xGmE6H6TBb9bECS0BCCRnVb/CwSpCWC29RBrPsohY
-	e7RSus2DYHr9X70PzrOQHy10Tgt8ZAbapyiBZBnd7+FjRGZrAF/JA8GSXRlDfzpi
-	UBNSfQzBM6ia7uShqskltXC0ZjE40xWPfVRDscMErJj09Ogz4ovekQEt6wQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wnh5v2aj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 12:33:38 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ab5f8c7bf5so99358881cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 05:33:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752669216; x=1753274016;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TD3zJuWoo4A9skdFDbNfZ3ei/LYBXk6PfYZIRRq0xcU=;
-        b=idYp8oDtzqgwPsj/GGgGxrpTVUDpTQsuDBz3VFpQUrGiUKyoHv42RbkhdgMftHFRl6
-         5DmOOUhQWy2y0lgLZVpcSivrFFnCpBFqykIyjehXyM9JxRUI6huYIjNRAecXNb1M4GAl
-         +kr05h19lWVTsEWkUtGZRasDyXsdX4IbobDnFmnA6uuw4jq+LhPUmVPj8vxoU8QhL+6u
-         WJIYNG002Y874+nYBWYA7x1Pkny+io3lT4tfa51FZf1p/ZbaN+YhgMZlRGNyu5wGrfXr
-         AE/5Ulf2mX/tXor590NvicDmRVn9BbRzyjiyUVzA+4PUiz0wk2q8rf/VCcGhmF7vCJ1r
-         DsQw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ0ZcRvdL6vkeWNcrNlpkTwDRm3TQVofXhbHoiaoGcJAOzggJ9Pe6y95Kq0+AukSrsbanD22XlH/r7NA8k@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdFj53glESVk7CtySYAKjDBIsQiDLZDkvGlDOl/LtENP18VX+t
-	vR2AzmSy7DS/XRaNVvRjQMIR3LdwHXtfGvUNmsSB0M6sBWlEfJwdvh73+wUI4C7deZ9BFC6UepT
-	e7VcyJnlXGFzROIAf5WY62oWQ1keSvj720HrOnmwzcJ8uaExyqwyd5B4jfNwmCbkXKXiQ
-X-Gm-Gg: ASbGncskT0YoVGmMJh/+sWCVFOfYMWqAiPQQe7KqdyRB7sQRWwWVCBpd8cHjgFU6Unb
-	LAuiou2FOUQ+m7nHTfoHo9vgq7T/eCWxGvB5DlVQPggp7XvjNvyVn24seSfiCv3gVeWz2vlDCa6
-	CiiNO9LVDKInkzxxj5xcE8wZ93kPwzTm++AOKckmylFeUymie4xJQHN8kSG0TBUU3najDvwgdca
-	P2o2ITZa3C3aPiGyeDwWsq/Lc6uQHXbCxVzFrrPHN/vRL40tfHdPRWL+dnq7JwSCQaxRXvHaBzS
-	gEYjf9uWOg0ZlUEU6N4CCkuW2FpBv911jn/lkf2ln6DrIKYdIFXOIA==
-X-Received: by 2002:ac8:7d8d:0:b0:4ab:609f:d7cc with SMTP id d75a77b69052e-4ab93d8cfafmr38118611cf.32.1752669215620;
-        Wed, 16 Jul 2025 05:33:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVpHx0DzaSsSRDkIyaIEAGNk3vJ+sQ0pU3HKYg2BJTARwronXrjlbyX/uMeFsjk3qP+ckwCg==
-X-Received: by 2002:ac8:7d8d:0:b0:4ab:609f:d7cc with SMTP id d75a77b69052e-4ab93d8cfafmr38117991cf.32.1752669215018;
-        Wed, 16 Jul 2025 05:33:35 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e89c739sm19453335e9.32.2025.07.16.05.33.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 05:33:34 -0700 (PDT)
-From: srinivas.kandagatla@oss.qualcomm.com
-To: broonie@kernel.org
-Cc: lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, srini@kernel.org,
-        linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, neil.armstrong@linaro.org,
-        krzysztof.kozlowski@linaro.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH 5/5] ASoC: codecs: wcd-common: move status_update callback to common
-Date: Wed, 16 Jul 2025 13:33:23 +0100
-Message-ID: <20250716123323.5831-6-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250716123323.5831-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20250716123323.5831-1-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1752669582; c=relaxed/simple;
+	bh=cHjkb9Opsdc3THxe/4NAVACMMW673IYb7HqjRSyKF7I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lg3X7n7MZJ5SHMMzU8fXcsYrmryQawaVTc8aXmf3Oaer6TWsR3RVso04LjNHFVjtzntWfn+hLonzOHFY8q6nD5Yf71eSm3AuAJKoAcIdzxcq5pjkPdSNW60NSyC1O35QpEM/rAnIGPpiEUfKI9AotpbBV9yQ4Z6Qu2q+Y1WS6pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lrYvOd7X; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752669580; x=1784205580;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cHjkb9Opsdc3THxe/4NAVACMMW673IYb7HqjRSyKF7I=;
+  b=lrYvOd7XnBoMIDT5PlcwT5mkhC6pG73AemiKlDseMgqi4b8C1bX8PauI
+   tkcoE9W6iQOpH/+dUVG5BozL+LLAmqXdtKjwR56Lgd/ye3/8fg+S53uKs
+   7z+RjdAlSIBXw/MsW9JWpzj90Ey0g5dnm13G+KNaodF36rMtwmzmYlw5p
+   KdvDeq7Y9n+Fm0H1yTuqjGD4giQrFB7UexZZza75ZActgHdnSwPFrnjdQ
+   uz4m1OekCUAK+rB2WAVVpu7bSDxskcUtD/unn0KFIU6YmPz/Yg5u2kNd7
+   fg0Skyyb4N8BWBgyDH3RvAJ4nX/CxYWqcLJY+6Tj6Hm85C1uw/TWXH6fo
+   A==;
+X-CSE-ConnectionGUID: Txktgtc6T42JbFoNe8DfcQ==
+X-CSE-MsgGUID: r2uJznPZSReni1cT16Vayw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="65482604"
+X-IronPort-AV: E=Sophos;i="6.16,316,1744095600"; 
+   d="scan'208";a="65482604"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 05:39:39 -0700
+X-CSE-ConnectionGUID: mvq7H6+oQaikv0WazwLfTg==
+X-CSE-MsgGUID: aqXX1s79TyCTOFMuOZuDyw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,316,1744095600"; 
+   d="scan'208";a="158047006"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 05:39:25 -0700
+Message-ID: <c8b74572-3ed3-4a93-8433-1207e59f56e7@intel.com>
+Date: Wed, 16 Jul 2025 20:39:21 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dKimmPZb c=1 sm=1 tr=0 ts=68779c22 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=Wb1JkmetP80A:10 a=sWKEhP36mHoA:10 a=EUspDBNiAAAA:8 a=lLZ5r3BOYuU-AXZT-04A:9
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: r40klgjk60CfVlE9P3RcZTddH5reMpZ6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDExMiBTYWx0ZWRfXxKAehBzOnSbC
- LnF+cuXyaO6/vgqNIfzwDXW3WZ0OPzanPmqx6SMaC1+kYEXZXS1IUdMelLpeypTHLYf5xj8c4ix
- 6h6+UB8IFtUDdZr/sShPZjkl5K+6SKPYRK3myI1G7v96YwfYMUQlw8Asc4W7yUQ0PTQFFTWztMN
- s8j4ydshyRfJZvdG6074hs06E053NP0On5qXt/iLj6psZIHUyMhtOVc7z/uM/3B/7cb40kPuXMI
- RK2bwPVjwwruBOebRk7mk6nUO1rem79TtVii19WbR8j+dXEN5NXVSasezO3epMyiLTqcp+bQ21p
- EzES73NK/5UinCyaEEOn0TKo9G4LuiRGz2t+wRYS9GyljsdpPrenlTy74NeK2a6mpix5IxvPUyT
- eU2IVlWHSHIOsUi6y7FZ+C1hf/i0ZVHMmWutKOMdnavIpLJdjI049uNak1zHKnTncsXMJUKk
-X-Proofpoint-ORIG-GUID: r40klgjk60CfVlE9P3RcZTddH5reMpZ6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-16_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 mlxlogscore=999 mlxscore=0 spamscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160112
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 02/21] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+ CONFIG_KVM_GENERIC_GMEM_POPULATE
+To: Fuad Tabba <tabba@google.com>, David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com,
+ viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
+ akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-3-tabba@google.com>
+ <a4091b13-9c3b-48bf-a7f6-f56868224cf5@intel.com>
+ <CA+EHjTy5zUJt5n5N1tRyHUQN6-P6CPqyC7+6Zqhokx-3=mvx+A@mail.gmail.com>
+ <418ddbbd-c25e-4047-9317-c05735e02807@intel.com>
+ <778ca011-1b2f-4818-80c6-ac597809ec77@redhat.com>
+ <6927a67b-cd2e-45f1-8e6b-019df7a7417e@intel.com>
+ <CA+EHjTz7C4WgS2-Dw0gywHy+zguSNXKToukPiRfsdiY8+Eq6KA@mail.gmail.com>
+ <47395660-79ad-4d22-87b0-c5bf891f708c@redhat.com>
+ <fa1ccce7-40d3-45d2-9865-524f4b187963@intel.com>
+ <f7a54cc4-1017-4e32-85b8-cf74237db935@redhat.com>
+ <CA+EHjTzOqCpcaNU4caddh6N3bCO0GvrOoZ+rMApdRh4=+BEXNA@mail.gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <CA+EHjTzOqCpcaNU4caddh6N3bCO0GvrOoZ+rMApdRh4=+BEXNA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+On 7/16/2025 8:24 PM, Fuad Tabba wrote:
+> On Wed, 16 Jul 2025 at 13:14, David Hildenbrand <david@redhat.com> wrote:
+>>
+>> On 16.07.25 14:01, Xiaoyao Li wrote:
+>>> On 7/16/2025 7:15 PM, David Hildenbrand wrote:
+>>>> On 16.07.25 13:05, Fuad Tabba wrote:
+>>>>> On Wed, 16 Jul 2025 at 12:02, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>>>>>>
+>>>>>> On 7/16/2025 6:25 PM, David Hildenbrand wrote:
+>>>>>>> On 16.07.25 10:31, Xiaoyao Li wrote:
+>>>>>>>> On 7/16/2025 4:11 PM, Fuad Tabba wrote:
+>>>>>>>>> On Wed, 16 Jul 2025 at 05:09, Xiaoyao Li<xiaoyao.li@intel.com> wrote:
+>>>>>>>>>> On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+>>>>>>>>>>> The original name was vague regarding its functionality. This
+>>>>>>>>>>> Kconfig
+>>>>>>>>>>> option specifically enables and gates the kvm_gmem_populate()
+>>>>>>>>>>> function,
+>>>>>>>>>>> which is responsible for populating a GPA range with guest data.
+>>>>>>>>>> Well, I disagree.
+>>>>>>>>>>
+>>>>>>>>>> The config KVM_GENERIC_PRIVATE_MEM was introduced by commit
+>>>>>>>>>> 89ea60c2c7b5
+>>>>>>>>>> ("KVM: x86: Add support for "protected VMs" that can utilize private
+>>>>>>>>>> memory"), which is a convenient config for vm types that requires
+>>>>>>>>>> private memory support, e.g., SNP, TDX, and KVM_X86_SW_PROTECTED_VM.
+>>>>>>>>>>
+>>>>>>>>>> It was commit e4ee54479273 ("KVM: guest_memfd: let
+>>>>>>>>>> kvm_gmem_populate()
+>>>>>>>>>> operate only on private gfns") that started to use
+>>>>>>>>>> CONFIG_KVM_GENERIC_PRIVATE_MEM gates kvm_gmem_populate()
+>>>>>>>>>> function. But
+>>>>>>>>>> CONFIG_KVM_GENERIC_PRIVATE_MEM is not for kvm_gmem_populate() only.
+>>>>>>>>>>
+>>>>>>>>>> If using CONFIG_KVM_GENERIC_PRIVATE_MEM to gate
+>>>>>>>>>> kvm_gmem_populate() is
+>>>>>>>>>> vague and confusing, we can introduce KVM_GENERIC_GMEM_POPULATE
+>>>>>>>>>> to gate
+>>>>>>>>>> kvm_gmem_populate() and select KVM_GENERIC_GMEM_POPULATE under
+>>>>>>>>>> CONFIG_KVM_GENERIC_PRIVATE_MEM.
+>>>>>>>>>>
+>>>>>>>>>> Directly replace CONFIG_KVM_GENERIC_PRIVATE_MEM with
+>>>>>>>>>> KVM_GENERIC_GMEM_POPULATE doesn't look correct to me.
+>>>>>>>>> I'll quote David's reply to an earlier version of this patch [*]:
+>>>>>>>>
+>>>>>>>> It's not related to my concern.
+>>>>>>>>
+>>>>>>>> My point is that CONFIG_KVM_GENERIC_PRIVATE_MEM is used for selecting
+>>>>>>>> the private memory support. Rename it to KVM_GENERIC_GMEM_POPULATE is
+>>>>>>>> not correct.
+>>>>>>>
+>>>>>>> It protects a function that is called kvm_gmem_populate().
+>>>>>>>
+>>>>>>> Can we stop the nitpicking?
+>>>>>>
+>>>>>> I don't think it's nitpicking.
+>>>>>>
+>>>>>> Could you loot into why it was named as KVM_GENERIC_PRIVATE_MEM in the
+>>>>>> first place, and why it was picked to protect kvm_gmem_populate()?
+>>>>>
+>>>>> That is, in part, the point of this patch. This flag protects
+>>>>> kvm_gmem_populate(), and the name didn't reflect that. Now it does. It
+>>>>> is the only thing it protects.
+>>>>
+>>>> I'll note that the kconfig makes it clear that it depends on
+>>>> KVM_GENERIC_MEMORY_ATTRIBUTES -- having support for private memory.
+>>>>
+>>>> In any case, CONFIG_KVM_GENERIC_PRIVATE_MEM is a bad name: what on earth
+>>>> is generic private memory.
+>>>
+>>> "gmem" + "memory_attribute" is the generic private memory.
+>>>
+>>> If KVM_GENERIC_PRIVATE_MEM is a bad name, we can drop it, but not rename
+>>> it to CONFIG_KVM_GENERIC_GMEM_POPULATE.
+>>>
+>>>> If CONFIG_KVM_GENERIC_GMEM_POPULATE is for some reason I don't
+>>>> understand yet not the right name, can we have something that better
+>>>> expresses that is is about KVM .. GMEM ... and POPULATE?
+>>>
+>>> I'm not objecting the name of CONFIG_KVM_GENERIC_GMEM_POPULATE, but
+>>> objecting the simple rename. Does something below look reasonable?
+>>>> ---
+>>> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+>>> index 2eeffcec5382..3f87dcaaae83 100644
+>>> --- a/arch/x86/kvm/Kconfig
+>>> +++ b/arch/x86/kvm/Kconfig
+>>> @@ -135,6 +135,7 @@ config KVM_INTEL_TDX
+>>>            bool "Intel Trust Domain Extensions (TDX) support"
+>>>            default y
+>>>            depends on INTEL_TDX_HOST
+>>> +       select KVM_GENERIC_GMEM_POPULATE
+>>>            help
+>>>              Provides support for launching Intel Trust Domain Extensions
+>>> (TDX)
+>>>              confidential VMs on Intel processors.
+>>> @@ -158,6 +159,7 @@ config KVM_AMD_SEV
+>>>            depends on CRYPTO_DEV_SP_PSP && !(KVM_AMD=y && CRYPTO_DEV_CCP_DD=m)
+>>>            select ARCH_HAS_CC_PLATFORM
+>>>            select KVM_GENERIC_PRIVATE_MEM
+>>> +       select KVM_GENERIC_GMEM_POPULATE
+>>>            select HAVE_KVM_ARCH_GMEM_PREPARE
+>>>            select HAVE_KVM_ARCH_GMEM_INVALIDATE
+>>>            help
+>>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+>>> index 755b09dcafce..359baaae5e9f 100644
+>>> --- a/include/linux/kvm_host.h
+>>> +++ b/include/linux/kvm_host.h
+>>> @@ -2556,7 +2556,7 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
+>>>     int kvm_arch_gmem_prepare(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
+>>> int max_order);
+>>>     #endif
+>>>
+>>> -#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
+>>> +#ifdef CONFIG_KVM_GENERIC_GMEM_POPULATE
+>>>     /**
+>>>      * kvm_gmem_populate() - Populate/prepare a GPA range with guest data
+>>>      *
+>>> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+>>> index 49df4e32bff7..9b37ca009a22 100644
+>>> --- a/virt/kvm/Kconfig
+>>> +++ b/virt/kvm/Kconfig
+>>> @@ -121,6 +121,10 @@ config KVM_GENERIC_PRIVATE_MEM
+>>>            select KVM_GMEM
+>>>            bool
+>>>
+>>> +config KVM_GENERIC_GMEM_POPULATE
+>>> +       bool
+>>> +       depends on KVM_GMEM && KVM_GENERIC_MEMORY_ATTRIBUTES
+>>> +
+>>>     config HAVE_KVM_ARCH_GMEM_PREPARE
+>>>            bool
+>>>            depends on KVM_GMEM
+>>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+>>> index b2aa6bf24d3a..befea51bbc75 100644
+>>> --- a/virt/kvm/guest_memfd.c
+>>> +++ b/virt/kvm/guest_memfd.c
+>>> @@ -638,7 +638,7 @@ int kvm_gmem_get_pfn(struct kvm *kvm, struct
+>>> kvm_memory_slot *slot,
+>>>     }
+>>>     EXPORT_SYMBOL_GPL(kvm_gmem_get_pfn);
+>>>
+>>> -#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
+>>> +#ifdef CONFIG_KVM_GENERIC_GMEM_POPULATE
+>>>     long kvm_gmem_populate(struct kvm *kvm, gfn_t start_gfn, void __user
+>>> *src, long npages,
+>>>                           kvm_gmem_populate_cb post_populate, void *opaque)
+>>>     {
+>>>
+>>>
+>>
+>> $ git grep KVM_GENERIC_PRIVATE_MEM
+>> arch/x86/kvm/Kconfig:   select KVM_GENERIC_PRIVATE_MEM if KVM_SW_PROTECTED_VM
+>> arch/x86/kvm/Kconfig:   select KVM_GENERIC_PRIVATE_MEM if INTEL_TDX_HOST
+>> arch/x86/kvm/Kconfig:   select KVM_GENERIC_PRIVATE_MEM
+>> include/linux/kvm_host.h:#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
+>> virt/kvm/Kconfig:config KVM_GENERIC_PRIVATE_MEM
+>> virt/kvm/guest_memfd.c:#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
+>>
+>>
+>> Why should we leave KVM_GENERIC_PRIVATE_MEM around when there are no other users?
+>>
 
-Soundwire update_status, bus_config and interrupt callbacks for wcd937x,
-wcd938x, wcd939x soundwire codecs are exactly identlical, move them to
-common driver to remove this duplicate code.
+If we don't want KVM_GENERIC_PRIVATE_MEM, we can further clean it up 
+with another patch:
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- sound/soc/codecs/wcd-common.c  | 46 ++++++++++++++++++++++++++++++++++
- sound/soc/codecs/wcd-common.h  | 10 ++++++++
- sound/soc/codecs/wcd937x-sdw.c | 28 +++------------------
- sound/soc/codecs/wcd938x-sdw.c | 41 +++---------------------------
- sound/soc/codecs/wcd939x-sdw.c | 42 +++----------------------------
- 5 files changed, 67 insertions(+), 100 deletions(-)
+------8<-----------
+diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+index 3f87dcaaae83..12afc877c677 100644
+--- a/arch/x86/kvm/Kconfig
++++ b/arch/x86/kvm/Kconfig
+@@ -46,7 +46,8 @@ config KVM_X86
+         select HAVE_KVM_PM_NOTIFIER if PM
+         select KVM_GENERIC_HARDWARE_ENABLING
+         select KVM_GENERIC_PRE_FAULT_MEMORY
+-       select KVM_GENERIC_PRIVATE_MEM if KVM_SW_PROTECTED_VM
++       select KVM_GENERIC_MEMORY_ATTRIBUTES if KVM_SW_PROTECTED_VM
++       select KVM_GMEM if KVM_SW_PROTECTED_VM
+         select KVM_WERROR if WERROR
 
-diff --git a/sound/soc/codecs/wcd-common.c b/sound/soc/codecs/wcd-common.c
-index 0c1ffa015403..2592e8ed2d13 100644
---- a/sound/soc/codecs/wcd-common.c
-+++ b/sound/soc/codecs/wcd-common.c
-@@ -9,9 +9,14 @@
- #include <linux/printk.h>
- #include <linux/component.h>
- #include <linux/pm_runtime.h>
-+#include <linux/soundwire/sdw.h>
-+#include <linux/soundwire/sdw_type.h>
-+#include <linux/regmap.h>
- 
- #include "wcd-common.h"
- 
-+#define SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(m) (0xE0 + 0x10 * (m))
-+
- int wcd_get_micb_vout_ctl_val(struct device *dev, u32 micb_mv)
- {
- 	/* min micbias voltage is 1V and maximum is 2.85V */
-@@ -89,5 +94,46 @@ const struct component_ops wcd_sdw_component_ops = {
- };
- EXPORT_SYMBOL_GPL(wcd_sdw_component_ops);
- 
-+int wcd_update_status(struct sdw_slave *slave, enum sdw_slave_status status)
-+{
-+	struct regmap *regmap = dev_get_regmap(&slave->dev, NULL);
-+
-+	if (regmap && status == SDW_SLAVE_ATTACHED) {
-+		/* Write out any cached changes that happened between probe and attach */
-+		regcache_cache_only(regmap, false);
-+		return regcache_sync(regmap);
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(wcd_update_status);
-+
-+int wcd_bus_config(struct sdw_slave *slave, struct sdw_bus_params *params)
-+{
-+	sdw_write(slave, SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(params->next_bank), 0x01);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(wcd_bus_config);
-+
-+int wcd_interrupt_callback(struct sdw_slave *slave, struct irq_domain *slave_irq,
-+		unsigned int wcd_intr_status0, unsigned int wcd_intr_status1,
-+		unsigned int wcd_intr_status2)
-+{
-+	struct regmap *regmap = dev_get_regmap(&slave->dev, NULL);
-+	u32 sts1, sts2, sts3;
-+
-+	do {
-+		handle_nested_irq(irq_find_mapping(slave_irq, 0));
-+		regmap_read(regmap, wcd_intr_status0, &sts1);
-+		regmap_read(regmap, wcd_intr_status1, &sts2);
-+		regmap_read(regmap, wcd_intr_status2, &sts3);
-+
-+	} while (sts1 || sts2 || sts3);
-+
-+	return IRQ_HANDLED;
-+}
-+EXPORT_SYMBOL_GPL(wcd_interrupt_callback);
-+
- MODULE_DESCRIPTION("Common Qualcomm WCD Codec helpers driver");
- MODULE_LICENSE("GPL");
-diff --git a/sound/soc/codecs/wcd-common.h b/sound/soc/codecs/wcd-common.h
-index deb78241236b..0cb6365bea4b 100644
---- a/sound/soc/codecs/wcd-common.h
-+++ b/sound/soc/codecs/wcd-common.h
-@@ -6,11 +6,16 @@
- #ifndef __WCD_COMMON_H__
- #define __WCD_COMMON_H___
- 
-+#include <linux/device.h>
-+#include <linux/soundwire/sdw.h>
-+
- #define WCD_MIN_MICBIAS_MV	1000
- #define WCD_DEF_MICBIAS_MV	1800
- #define WCD_MAX_MICBIAS_MV	2850
- #define WCD_MAX_MICBIAS		4
- 
-+
-+
- struct wcd_sdw_ch_info {
- 	int port_num;
- 	unsigned int ch_mask;
-@@ -32,5 +37,10 @@ struct wcd_common {
- extern const struct component_ops wcd_sdw_component_ops;
- int wcd_get_micb_vout_ctl_val(struct device *dev, u32 micb_mv);
- int wcd_dt_parse_micbias_info(struct wcd_common *common);
-+int wcd_update_status(struct sdw_slave *slave, enum sdw_slave_status status);
-+int wcd_bus_config(struct sdw_slave *slave, struct sdw_bus_params *params);
-+int wcd_interrupt_callback(struct sdw_slave *slave, struct irq_domain *slave_irq,
-+		unsigned int wcd_intr_status0, unsigned int wcd_intr_status1,
-+		unsigned int wcd_intr_status2);
- 
- #endif /* __WCD_COMMON_H___  */
-diff --git a/sound/soc/codecs/wcd937x-sdw.c b/sound/soc/codecs/wcd937x-sdw.c
-index 59c353cafd31..1878d67e3fa1 100644
---- a/sound/soc/codecs/wcd937x-sdw.c
-+++ b/sound/soc/codecs/wcd937x-sdw.c
-@@ -112,19 +112,6 @@ int wcd937x_sdw_hw_params(struct wcd937x_sdw_priv *wcd,
- }
- EXPORT_SYMBOL_GPL(wcd937x_sdw_hw_params);
- 
--static int wcd9370_update_status(struct sdw_slave *slave, enum sdw_slave_status status)
--{
--	struct wcd937x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
+  config KVM
+@@ -95,7 +96,7 @@ config KVM_SW_PROTECTED_VM
+  config KVM_INTEL
+         tristate "KVM for Intel (and compatible) processors support"
+         depends on KVM && IA32_FEAT_CTL
+-       select KVM_GENERIC_PRIVATE_MEM if INTEL_TDX_HOST
++       select KVM_GMEM if INTEL_TDX_HOST
+         select KVM_GENERIC_MEMORY_ATTRIBUTES if INTEL_TDX_HOST
+         help
+           Provides support for KVM on processors equipped with Intel's VT
+@@ -158,7 +159,8 @@ config KVM_AMD_SEV
+         depends on KVM_AMD && X86_64
+         depends on CRYPTO_DEV_SP_PSP && !(KVM_AMD=y && CRYPTO_DEV_CCP_DD=m)
+         select ARCH_HAS_CC_PLATFORM
+-       select KVM_GENERIC_PRIVATE_MEM
++       select KVM_GMEM
++       select KVM_GENERIC_MEMORY_ATTRIBUTES
+         select KVM_GENERIC_GMEM_POPULATE
+         select HAVE_KVM_ARCH_GMEM_PREPARE
+         select HAVE_KVM_ARCH_GMEM_INVALIDATE
+diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+index 9b37ca009a22..67c626b1a637 100644
+--- a/virt/kvm/Kconfig
++++ b/virt/kvm/Kconfig
+@@ -116,11 +116,6 @@ config KVM_GMEM
+         select XARRAY_MULTI
+         bool
+
+-config KVM_GENERIC_PRIVATE_MEM
+-       select KVM_GENERIC_MEMORY_ATTRIBUTES
+-       select KVM_GMEM
+-       bool
 -
--	if (wcd->regmap && status == SDW_SLAVE_ATTACHED) {
--		/* Write out any cached changes that happened between probe and attach */
--		regcache_cache_only(wcd->regmap, false);
--		return regcache_sync(wcd->regmap);
--	}
--
--	return 0;
--}
--
- /*
-  * Handle Soundwire out-of-band interrupt event by triggering
-  * the first irq of the slave_irq irq domain, which then will
-@@ -135,18 +122,9 @@ static int wcd9370_interrupt_callback(struct sdw_slave *slave,
- 				      struct sdw_slave_intr_status *status)
- {
- 	struct wcd937x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
--	struct irq_domain *slave_irq = wcd->slave_irq;
--	u32 sts1, sts2, sts3;
--
--	do {
--		handle_nested_irq(irq_find_mapping(slave_irq, 0));
--		regmap_read(wcd->regmap, WCD937X_DIGITAL_INTR_STATUS_0, &sts1);
--		regmap_read(wcd->regmap, WCD937X_DIGITAL_INTR_STATUS_1, &sts2);
--		regmap_read(wcd->regmap, WCD937X_DIGITAL_INTR_STATUS_2, &sts3);
--
--	} while (sts1 || sts2 || sts3);
- 
--	return IRQ_HANDLED;
-+	return wcd_interrupt_callback(slave, wcd->slave_irq, WCD937X_DIGITAL_INTR_STATUS_0,
-+				WCD937X_DIGITAL_INTR_STATUS_1, WCD937X_DIGITAL_INTR_STATUS_2);
- }
- 
- static const struct reg_default wcd937x_defaults[] = {
-@@ -979,7 +957,7 @@ static const struct regmap_config wcd937x_regmap_config = {
- };
- 
- static const struct sdw_slave_ops wcd9370_slave_ops = {
--	.update_status = wcd9370_update_status,
-+	.update_status = wcd_update_status,
- 	.interrupt_callback = wcd9370_interrupt_callback,
- };
- 
-diff --git a/sound/soc/codecs/wcd938x-sdw.c b/sound/soc/codecs/wcd938x-sdw.c
-index e43d6ac1c913..9636501c90ac 100644
---- a/sound/soc/codecs/wcd938x-sdw.c
-+++ b/sound/soc/codecs/wcd938x-sdw.c
-@@ -19,8 +19,6 @@
- #include <sound/soc-dapm.h>
- #include "wcd938x.h"
- 
--#define SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(m) (0xE0 + 0x10 * (m))
--
- static const struct wcd_sdw_ch_info wcd938x_sdw_rx_ch_info[] = {
- 	WCD_SDW_CH(WCD938X_HPH_L, WCD938X_HPH_PORT, BIT(0)),
- 	WCD_SDW_CH(WCD938X_HPH_R, WCD938X_HPH_PORT, BIT(1)),
-@@ -141,44 +139,13 @@ int wcd938x_sdw_set_sdw_stream(struct wcd938x_sdw_priv *wcd,
- }
- EXPORT_SYMBOL_GPL(wcd938x_sdw_set_sdw_stream);
- 
--static int wcd9380_update_status(struct sdw_slave *slave,
--				 enum sdw_slave_status status)
--{
--	struct wcd938x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
--
--	if (wcd->regmap && (status == SDW_SLAVE_ATTACHED)) {
--		/* Write out any cached changes that happened between probe and attach */
--		regcache_cache_only(wcd->regmap, false);
--		return regcache_sync(wcd->regmap);
--	}
--
--	return 0;
--}
--
--static int wcd9380_bus_config(struct sdw_slave *slave,
--			      struct sdw_bus_params *params)
--{
--	sdw_write(slave, SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(params->next_bank),  0x01);
--
--	return 0;
--}
--
- static int wcd9380_interrupt_callback(struct sdw_slave *slave,
- 				      struct sdw_slave_intr_status *status)
- {
- 	struct wcd938x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
--	struct irq_domain *slave_irq = wcd->slave_irq;
--	u32 sts1, sts2, sts3;
--
--	do {
--		handle_nested_irq(irq_find_mapping(slave_irq, 0));
--		regmap_read(wcd->regmap, WCD938X_DIGITAL_INTR_STATUS_0, &sts1);
--		regmap_read(wcd->regmap, WCD938X_DIGITAL_INTR_STATUS_1, &sts2);
--		regmap_read(wcd->regmap, WCD938X_DIGITAL_INTR_STATUS_2, &sts3);
--
--	} while (sts1 || sts2 || sts3);
- 
--	return IRQ_HANDLED;
-+	return wcd_interrupt_callback(slave, wcd->slave_irq, WCD938X_DIGITAL_INTR_STATUS_0,
-+				WCD938X_DIGITAL_INTR_STATUS_1, WCD938X_DIGITAL_INTR_STATUS_2);
- }
- 
- static const struct reg_default wcd938x_defaults[] = {
-@@ -1176,9 +1143,9 @@ static const struct regmap_config wcd938x_regmap_config = {
- };
- 
- static const struct sdw_slave_ops wcd9380_slave_ops = {
--	.update_status = wcd9380_update_status,
-+	.update_status = wcd_update_status,
- 	.interrupt_callback = wcd9380_interrupt_callback,
--	.bus_config = wcd9380_bus_config,
-+	.bus_config = wcd_bus_config,
- };
- 
- static int wcd9380_probe(struct sdw_slave *pdev,
-diff --git a/sound/soc/codecs/wcd939x-sdw.c b/sound/soc/codecs/wcd939x-sdw.c
-index 2b0aa2108f33..8bc89401beb9 100644
---- a/sound/soc/codecs/wcd939x-sdw.c
-+++ b/sound/soc/codecs/wcd939x-sdw.c
-@@ -21,8 +21,6 @@
- #include <sound/soc-dapm.h>
- #include "wcd939x.h"
- 
--#define SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(m) (0xE0 + 0x10 * (m))
--
- static const struct wcd_sdw_ch_info wcd939x_sdw_rx_ch_info[] = {
- 	WCD_SDW_CH(WCD939X_HPH_L, WCD939X_HPH_PORT, BIT(0)),
- 	WCD_SDW_CH(WCD939X_HPH_R, WCD939X_HPH_PORT, BIT(1)),
-@@ -186,29 +184,6 @@ int wcd939x_sdw_set_sdw_stream(struct wcd939x_sdw_priv *wcd,
- }
- EXPORT_SYMBOL_GPL(wcd939x_sdw_set_sdw_stream);
- 
--static int wcd9390_update_status(struct sdw_slave *slave,
--				 enum sdw_slave_status status)
--{
--	struct wcd939x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
--
--	if (wcd->regmap && status == SDW_SLAVE_ATTACHED) {
--		/* Write out any cached changes that happened between probe and attach */
--		regcache_cache_only(wcd->regmap, false);
--		return regcache_sync(wcd->regmap);
--	}
--
--	return 0;
--}
--
--static int wcd9390_bus_config(struct sdw_slave *slave,
--			      struct sdw_bus_params *params)
--{
--	sdw_write(slave, SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(params->next_bank),
--		  0x01);
--
--	return 0;
--}
--
- /*
-  * Handle Soundwire out-of-band interrupt event by triggering
-  * the first irq of the slave_irq irq domain, which then will
-@@ -219,18 +194,9 @@ static int wcd9390_interrupt_callback(struct sdw_slave *slave,
- 				      struct sdw_slave_intr_status *status)
- {
- 	struct wcd939x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
--	struct irq_domain *slave_irq = wcd->slave_irq;
--	u32 sts1, sts2, sts3;
--
--	do {
--		handle_nested_irq(irq_find_mapping(slave_irq, 0));
--		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_0, &sts1);
--		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_1, &sts2);
--		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_2, &sts3);
--
--	} while (sts1 || sts2 || sts3);
- 
--	return IRQ_HANDLED;
-+	return wcd_interrupt_callback(slave, wcd->slave_irq, WCD939X_DIGITAL_INTR_STATUS_0,
-+			WCD939X_DIGITAL_INTR_STATUS_1, WCD939X_DIGITAL_INTR_STATUS_2);
- }
- 
- static const struct reg_default wcd939x_defaults[] = {
-@@ -1363,9 +1329,9 @@ static const struct regmap_config wcd939x_regmap_config = {
- };
- 
- static const struct sdw_slave_ops wcd9390_slave_ops = {
--	.update_status = wcd9390_update_status,
-+	.update_status = wcd_update_status,
- 	.interrupt_callback = wcd9390_interrupt_callback,
--	.bus_config = wcd9390_bus_config,
-+	.bus_config = wcd_bus_config,
- };
- 
- static int wcd9390_probe(struct sdw_slave *pdev, const struct sdw_device_id *id)
--- 
-2.50.0
+  config KVM_GENERIC_GMEM_POPULATE
+         bool
+         depends on KVM_GMEM && KVM_GENERIC_MEMORY_ATTRIBUTES
+
+>> @fuad help me out, what am I missing?
+> 
+> I'm not sure. Splitting it into two patches, one that introduces
+> CONFIG_KVM_GENERIC_GMEM_POPULATE followed by one that drops
+> CONFIG_KVM_GENERIC_PRIVATE_MEM ends up with the same result.
+
+Not really the same result.
+
+The two-step patches I proposed doesn't produce the below thing of this 
+original patch. It doesn't make sense to select 
+KVM_GENERIC_GMEM_POPULATE for KVM_SW_PROTECTED_VM from the name.
+
+diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+index 2eeffcec5382..df1fdbb4024b 100644
+--- a/arch/x86/kvm/Kconfig
++++ b/arch/x86/kvm/Kconfig
+@@ -46,7 +46,7 @@ config KVM_X86
+  	select HAVE_KVM_PM_NOTIFIER if PM
+  	select KVM_GENERIC_HARDWARE_ENABLING
+  	select KVM_GENERIC_PRE_FAULT_MEMORY
+-	select KVM_GENERIC_PRIVATE_MEM if KVM_SW_PROTECTED_VM
++	select KVM_GENERIC_GMEM_POPULATE if KVM_SW_PROTECTED_VM
+  	select KVM_WERROR if WERROR
+
+> Cheers,
+> /fuad
+> 
+> 
+>> --
+>> Cheers,
+>>
+>> David / dhildenb
+>>
 
 
