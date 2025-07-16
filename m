@@ -1,149 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-65274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3091CB0793F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 17:12:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27A62B07919
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 17:08:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25918189C92A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 15:06:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 288563B63BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 15:08:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3082027510F;
-	Wed, 16 Jul 2025 15:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F24E264605;
+	Wed, 16 Jul 2025 15:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RR+mmuEQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z+AsWQSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B4D263F4A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431A8223301;
+	Wed, 16 Jul 2025 15:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752678349; cv=none; b=N2RqQZbXV1nDl+j52jHqsACo+hus0vrIZ43dMVAiHzZn4gdj2tPDhOUJr8PQT15vdHIoDGjaoex33jFsH0+kqqT3WpbCOjNg5y2R0MlkG8tzW+NWDKDQuVDxK1CKvro72qR71gJUPqtCNYqO9/i0oqTAgvEjY8xuC5QbUg1uu3w=
+	t=1752678504; cv=none; b=eSvl9Wxw5ZxB06gFgydNh3aQTFfP5SJkcZ+eRn9cN95d2OhRHPrMfxVY6w+xB5MZQhcrREa9PsQerenA02b4oYnJCcli8tjpJRxWpsWudNuBAeGYQJ7+z+bb30F4Yz3X88XUdkjJV7V/mKXyOEE31deTxoqpWUItxuyN+gr4mn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752678349; c=relaxed/simple;
-	bh=95w6sP0+FjuUfliHxwFbWeg38I0fErD/c2V5092cCqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uwvD+lpkHD+deMwaHtCWN8aSp6pOVAKkAs2t90GJFbaon0+m7eSt3nDb1XoKEZ6K/rLOhXVyS9n5Aw6yiTksQ4dp4nnbIojMrhCElyKLNor06Pi6Ui3EWz0DRn1QP6TMNViMYl7ttilQkuYOywPlc+BLpzIK8NgnhrZAoX7SzyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RR+mmuEQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GCrUg0014553
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:05:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=c0YU6WYevdund5tkdGQl5yQ7
-	OWFC47cHfSxZE2himRo=; b=RR+mmuEQzniwxLrkWdZWkEJngba+lUUiGn3haPIV
-	vTIneCiat6EpBqaSeP4lljKwLY5vu1KLVq1akKgQNUcEnwXzKYSl9zBuVSuwYRzl
-	WkOzIxlmjuO8otdIcWnFY9AQbLle9+g/+hhHQtC3zRMCr6Mu508qIbTBhdtRw7gh
-	kT+LfEuoI4DHvSHIipdtHRLTuH8+emmgxKu8d0fwk70NZiTRQEyfnFwFuUboC+ag
-	4ZwL3G4zompsNNXIL1ehq+uHxO6t1RH3fr4ee5wqvkAXmXke8t2qinDPQs5m/ih0
-	U40ReDZ/wRvWrh2ZPW0baojWecqJHaY17YlVOJnV31K1Mw==
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com [209.85.166.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dyqbef-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:05:46 +0000 (GMT)
-Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-87595d00ca0so659796439f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 08:05:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752678346; x=1753283146;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c0YU6WYevdund5tkdGQl5yQ7OWFC47cHfSxZE2himRo=;
-        b=fZ815E/8aBxidHEBI7dabh50cxmOvMkMgRuODojcEQmb823vfhyEYivjrOOeMWch1N
-         m54CNFz9JfkHyC8Fmags1Sq0/32KPgitgkeoEdmg9dhz3rFozvj9WesiXrf3/qiAyXA7
-         nztNO5AZ/Vmoe3ZqT417gPs5biKjjgsTpHwW0zdQ1kZ5HeR2BlyD9/aq/dAc4vDERwBi
-         FWJPPgl0EN+wcBMA+BpE/uaJYYiRiNV0FeEnobp8irnCyeKGj/0NcMXwTzBH7uzeTypP
-         DBkOqrU1P7hjEntv7PuYCb3JDB2JVDPy/HCz0v7yDJxuB393irPnUTYewrkzn3Fl7I9I
-         1oBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUD9HcsSbg68z5yH/yj/2KLgPjca59IX5ycdYcpslTHUvSUNXhuP7wslKTQl7Id6AC8kDZQRtplTYM1otU6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfBCGYov/KygR+zr4QHYAS96ETDtYKmwVH1HWn56/y4XPbRCI+
-	mDxeTywjo4AX6fEQw7ngwL2jq5bpYLP/iUt6ehlX76cp/ziJFk6zaTxlhlEh8qIdmfjBVEPNqEG
-	E/y2AYROGrRMGHKfpkSBcnxiR92UD/74Ku3kwu2so5XQfHnc4lt9JM5X4nkF0196bLm9P
-X-Gm-Gg: ASbGncvtxhN528N+z23aHwFVtLT0urcVrEmGly/IOaOOOyurXPixupR/IRAfC0K5R3H
-	k144xDcAJRYhnZBDdlCBuyTan3tvtcusx3aATQ6BAtAo6n0qIbOArQCeBjoe166A/M3YkG41sAk
-	c6sBQpH0zEmbBx7R9i3tvgE+PvrH5u8MHNTC1TGkjC26KJoE9VKP7aBaUuyZnEurCeeJMJIwUvj
-	ZKClkGQVKC5p38kmem0IH4KkYyWJrAB5l7sFzcLBv/NkoUjyb79W4VN5wuAU1HEQgw5/4MD5Nrk
-	Xrbf4LlVHegkE4Yj8sRtoKmi7ZFdF02OXZFJ7AimmusrZnj1LDx3LFIgCg1GyF1CBAfnthz44dZ
-	364giBvFKdf+uERs/iobkLca81+hxrvLLzCFmnVl5fAUkMVv3aQx5
-X-Received: by 2002:a05:6e02:2687:b0:3dc:8423:5440 with SMTP id e9e14a558f8ab-3e2821f490amr29394235ab.0.1752678343423;
-        Wed, 16 Jul 2025 08:05:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiQxVLfGJyjdQolHfpUghz4La4xIzw45yLU/Cq1KVO6NC9WigSlhiSYSteODSSlYkMMHWrdQ==
-X-Received: by 2002:a05:6e02:2687:b0:3dc:8423:5440 with SMTP id e9e14a558f8ab-3e2821f490amr29393835ab.0.1752678342895;
-        Wed, 16 Jul 2025 08:05:42 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55943b60f14sm2710525e87.155.2025.07.16.08.05.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 08:05:41 -0700 (PDT)
-Date: Wed, 16 Jul 2025 18:05:39 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ling Xu <quic_lxu5@quicinc.com>
-Cc: srini@kernel.org, amahesh@qti.qualcomm.com, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
-        konradybcio@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
-        quic_kuiw@quicinc.com, ekansh.gupta@oss.qualcomm.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v9 4/5] misc: fastrpc: Cleanup the domain names
-Message-ID: <vvojztwx4bus6tpgcj5s2uzy6pfrmoj6msdjmh2kq3ym57e7pz@nxnob4fffyzk>
-References: <20250716132836.1008119-1-quic_lxu5@quicinc.com>
- <20250716132836.1008119-5-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1752678504; c=relaxed/simple;
+	bh=xvi2l5ghTTIH9EH2CKcJOVCwTnyTxxYJYjbF2qW34Qg=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WMBQ9N45+0c9L+0hSwRokFFbdD+iZ4k2ffNVz84cHwqUqv2m88nYZXPnx7kilEjWuARq2e0DK+tkqnVhHKcO5BIUVf6gP/UOlxcG4xXrLrceLe6ebi13vuCCU6mMInfCnK7R5bny9bammBNPsr8Z0Vy+6HTVzj6UB1vzyuLCWII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z+AsWQSg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B090BC4CEE7;
+	Wed, 16 Jul 2025 15:08:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752678503;
+	bh=xvi2l5ghTTIH9EH2CKcJOVCwTnyTxxYJYjbF2qW34Qg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Z+AsWQSgn+VNalO3vBtg1zgV1GNqZj5ciXVkdEQbSthGfUjxN86sNtKDAoznNEOKI
+	 JURIJX2yZ6BWvVhkNmv9AunldjcdZefjGBQkI/0GoLCm2OFJ1oqHyTLiXd3SkhBaHW
+	 AhJ9EWNooUGxK0weNO/NYszgtXei1Gwahih6kZlJtUjYkd0uucFkuQTET7lAVTUYlh
+	 tcQBfS2bmSE5FU8b/B67/D8ueukaYykW6QMU81Mv65sK03YFyMJqyz3lUKlEJN8POq
+	 sP6QCPymMY0XdHc/l21pfal0J/fgt/XaxLMq/riK5wrPnti54scUOL7LdsigipPfPP
+	 lS4UCDsHGjGMQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1uc3k4-00GJsc-9y;
+	Wed, 16 Jul 2025 16:08:20 +0100
+Date: Wed, 16 Jul 2025 16:08:19 +0100
+Message-ID: <86v7ns897g.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: David Hildenbrand <david@redhat.com>,
+	kvm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	pbonzini@redhat.com,
+	chenhuacai@kernel.org,
+	mpe@ellerman.id.au,
+	anup@brainfault.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	seanjc@google.com,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	willy@infradead.org,
+	akpm@linux-foundation.org,
+	xiaoyao.li@intel.com,
+	yilun.xu@intel.com,
+	chao.p.peng@linux.intel.com,
+	jarkko@kernel.org,
+	amoorthy@google.com,
+	dmatlack@google.com,
+	isaku.yamahata@intel.com,
+	mic@digikod.net,
+	vbabka@suse.cz,
+	vannapurve@google.com,
+	ackerleytng@google.com,
+	mail@maciej.szmigiero.name,
+	michael.roth@amd.com,
+	wei.w.wang@intel.com,
+	liam.merwick@oracle.com,
+	isaku.yamahata@gmail.com,
+	kirill.shutemov@linux.intel.com,
+	suzuki.poulose@arm.com,
+	steven.price@arm.com,
+	quic_eberman@quicinc.com,
+	quic_mnalajal@quicinc.com,
+	quic_tsoni@quicinc.com,
+	quic_svaddagi@quicinc.com,
+	quic_cvanscha@quicinc.com,
+	quic_pderrin@quicinc.com,
+	quic_pheragu@quicinc.com,
+	catalin.marinas@arm.com,
+	james.morse@arm.com,
+	yuzenghui@huawei.com,
+	oliver.upton@linux.dev,
+	will@kernel.org,
+	qperret@google.com,
+	keirf@google.com,
+	roypat@amazon.co.uk,
+	shuah@kernel.org,
+	hch@infradead.org,
+	jgg@nvidia.com,
+	rientjes@google.com,
+	jhubbard@nvidia.com,
+	fvdl@google.com,
+	hughd@google.com,
+	jthoughton@google.com,
+	peterx@redhat.com,
+	pankaj.gupta@amd.com,
+	ira.weiny@intel.com
+Subject: Re: [PATCH v14 15/21] KVM: arm64: Refactor user_mem_abort()
+In-Reply-To: <CA+EHjTz=4PbF9yVQPO-ucjSq=n4fC+-QP_HGpWO4Wa1273fXtw@mail.gmail.com>
+References: <20250715093350.2584932-1-tabba@google.com>
+	<20250715093350.2584932-16-tabba@google.com>
+	<39a217c1-29a9-4497-b3b6-bc0459e75a91@redhat.com>
+	<CA+EHjTz=4PbF9yVQPO-ucjSq=n4fC+-QP_HGpWO4Wa1273fXtw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250716132836.1008119-5-quic_lxu5@quicinc.com>
-X-Proofpoint-ORIG-GUID: EQckY5ByIRHrPLrjHP-z3Hk8nGgEchCl
-X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=6877bfca cx=c_pps
- a=WjJghted8nQMc6PJgwfwjA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=7U_eyDcXjddG1dUirncA:9 a=CjuIK1q_8ugA:10 a=CtjknkDrmJZAHT7xvMyn:22
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDEzNiBTYWx0ZWRfX00xXQDNteE+u
- dITaFTr7ZgYiFil82y9/OF+bC4qT4sUPd9T9LpUNxTI7/wnNx3XtPD4l3mIKb9yTS4VUT8gUPLG
- OC7cFGQrWx9U3ogpzXZy90g1ki+oxSy3Ch0tE4qIWtVPFv2N3YZQsMMu5CEZpRUdzpfJfVv4T1b
- GzEKpfXcrqG/ZK2aPEgIsc9IK4iQV3zKePAd7CeJSk8rHCqtj7R+O0bnQMV83bAMbgg4gS4nUKH
- IVtxS6TMnZgYD0+5W2dLUvVomxC7s1zM/pohQoqVUC9OWKonXze8HuSMa7h9MYXYE8pOxZoukVa
- Jo5pBVKi2sCbaQfG1/NICjyUU8SgiRWEogg7xk7SK/ot4yyVMWANS2IzchOuDS5wkcAhrCOly4T
- 4HXmUgwcZdfcO+qhsH/k0VxFd2ymv4BRCVlosp7as8dHyb5K8N2g/U4Wey6xnWJO0zJhIaU2
-X-Proofpoint-GUID: EQckY5ByIRHrPLrjHP-z3Hk8nGgEchCl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_02,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
- priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160136
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, david@redhat.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
+ in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Wed, Jul 16, 2025 at 06:58:35PM +0530, Ling Xu wrote:
-> Currently the domain ids are added for each instance of domains, this is
-> totally not scalable approach. Clean this mess and create domain ids for
-> only domains not its instances.
+On Wed, 16 Jul 2025 12:26:13 +0100,
+Fuad Tabba <tabba@google.com> wrote:
 > 
-> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c | 36 ++++++++++++++++++++----------------
->  1 file changed, 20 insertions(+), 16 deletions(-)
+> On Wed, 16 Jul 2025 at 11:36, David Hildenbrand <david@redhat.com> wrote:
+
+[...]
+
+> > A note that on the KVM arm next tree
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git/log/?h=next
+> >
+> > there are some user_mem_abort() changes. IIUC, only smaller conflicts.
 > 
+> Thanks for the heads up. I can work with Marc and Oliver to resolve
+> any conflicts once we get there.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Yup. Ideally, a stable branch, based on an -rc tag, would do the trick
+and allow us to solve the conflicts ahead of this hitting -next. We
+can either take that in the kvmarm tree, or from the main kvm repo.
 
+Thanks,
+
+	M.
 
 -- 
-With best wishes
-Dmitry
+Without deviation from the norm, progress is not possible.
 
