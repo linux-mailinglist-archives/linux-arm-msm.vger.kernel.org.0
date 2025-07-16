@@ -1,176 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-65153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0130AB06ED6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:20:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38988B06EE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:27:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93A297B3B98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:18:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80FC61A65E79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:27:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D36C289355;
-	Wed, 16 Jul 2025 07:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ACDA2882C1;
+	Wed, 16 Jul 2025 07:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="0V5sUMnq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AuQvSUEZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7367E28468C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BEA80B;
+	Wed, 16 Jul 2025 07:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752650402; cv=none; b=WKlgXIVLwuMr3KTzfLm/qIPxpZ3bSppi1MFh8SqQTMJSeEHIXaiYUU41Z9j4hvoFC082ECI4i4pBKMFp+TbhZix1kenwRYCqzVi4fZ6+N20AvcKD1F4fbFrX9PHLUOl+CBmmPG7kbfZlAuN4/ctXRSw4LqYe1BQU/gocWv7NyoY=
+	t=1752650817; cv=none; b=OvWWWdeAxaO1FnBsKjxIvJQiMWIiNwkFuIrbmGYFhFRlWoR/4fStHwgOT4Gwd1jm0xl2fCn/2SwsYrV+q+SZb/QOEPloJpTAOVJ0FcYftVox+IdmmyzDZuwE4oXnvj+g/7tbDbF5saVhW5QRXzjR9b6BHgcf7pf/r8af6lxccPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752650402; c=relaxed/simple;
-	bh=sLBjAxUF8f0bVLkAa+0Ov5QiRQzZ9hdeQ4tEfeTn6QY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=j5FOqtLrX4BvvRrTod1Bur/dPTOtgn2lP4mCFsUg0GZ/PF3VndkqdkqKGlIZWI0A1SP+1MXTCfGvJliBv4qf1Pw/HhdsoU3IibcHPgI/8ZbHhDYdOgAqH20QIaWpA9NvgSjWhK4BGAeRHuf02JTcQns2z/W2EFdPahbasr9sSPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=0V5sUMnq; arc=none smtp.client-ip=209.85.208.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-60dffae17f3so9737993a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 00:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752650399; x=1753255199; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vpS7uKmXirtt0SzgMZ5d4QPt02O2nNF9SJVnwbn9UkU=;
-        b=0V5sUMnq6XUZ59pl5vKImk9+DasmiDKM+skGK+YgqapvslnmUAp5U3auvJnNo0nNqZ
-         SKDEMEIrZJwv3nufAaO/eSi8+UEpN1RGqa29qtRpdYL4rEi9GOxxMN/SGZxSsfnllwQR
-         d9PXqQ+Ex65ejoCoH5WKIzRehKdOqqA/mAhfsEY5ey93h1e2EAnYPfEFU7q9uduKLUrp
-         BQ1Ai6vFMqD69WumxHe8c6MwikXyKW+2HF1XuApOG7XZ4faB4gK/fz4AseCAFayKIP4M
-         lxHGzwHYP+xLJJiZho2i9gu24NQlo7C2S6MQeD8rS0lcAQ5UImXhgSEsqoQAErP1+JVP
-         1WTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752650399; x=1753255199;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vpS7uKmXirtt0SzgMZ5d4QPt02O2nNF9SJVnwbn9UkU=;
-        b=mWHK4XuPmxJw8VzhRIMSiY9qVKoSG2ppK66063UhR0XLELU80BzjdjfQ1h4d3xl2/c
-         o9HqFc+2FGtQ3UFVVp7VAJEduH2ElCz4xPg9/saiagflN82zjpXLMbIBFaHqJbfNnVGO
-         Vqk4rFzSmAQ4F/bP+aLzOAK4S1steDdxY6fCgnb3gadifzblIB9cSwUspLG+OSi19St0
-         oxcEruxt+3IyJmXNtW7GlG6Uj3rW1NCB3YjgKDHJjfNOKvuLbzOHC4zwHBGgTg93FFKn
-         SrlpkTFuzqqvwXalZAdahs9gV9/TV5HvanwGBowy3MQ+MyvEZHJv4h5DzQNZv4aJNb7S
-         S/XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUVlYsNGxmcIJUAacoa78vdlzeK0C800yXd88lThLkPvdV7zYCZMlQjOG25EjqzD3am7jkMVqoJ7b8Prc0p@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJZpj/Dshdcr2OWCtqXh4680M1C6D2xKeNibuB43F8fRju06kX
-	jdzrhKP3RFZ0kY6C5j11L5imbr9xlBcX14NqbsMDytQpwDrUCMfJUQqSGYQLQC2+MA4=
-X-Gm-Gg: ASbGnctVoDIChyMzvY4gtNHAvwNE8Y4uNib9Xiuqfhw41QO6bRrHtxG5N8nrAXNXERZ
-	md0lXGY2WIzRgKO1tLKA7cI4COLviXTttsDHQFs3h6/S4IHuSgP+RXrYhxZTzcotMwmLnuE1hhi
-	f/i1wJS42/9aNYpvJZkN1nRdAZqKwZOpNaj3MZhybbO3Eh0kecaakjAqf+c0a3k0ZOQcELKIq1l
-	w0vjO8kuC9fIXd06rJQBrQiNW3Q1qU2TB5JQXZAcxmq0xSR9WEGrMejJ4Uzt4r1sL1FhDZuA9MA
-	jOHCYyeAhtMtM0IpFj4OdrAEEYoL4Pruo0nMzJ+bfg7XYIjBFhsd2dbe4ocpyKUNljrZLqruciW
-	OehVZeoTZZOMj4qfqmR6bHFMIQM5Fx6IoSSg78hh9KmaIcWFR5RloGAw=
-X-Google-Smtp-Source: AGHT+IFx3m1lBU1VkWxih9GukzBwademENkA6wKJQrA2d11n7XWBx80BohXOxpWjVJdh9pJ5agT4FA==
-X-Received: by 2002:a17:906:6a25:b0:ae6:b006:1be with SMTP id a640c23a62f3a-ae9cdda3d41mr149340266b.5.1752650398619;
-        Wed, 16 Jul 2025 00:19:58 -0700 (PDT)
-Received: from localhost (212095005088.public.telering.at. [212.95.5.88])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7ee459asm1162633266b.52.2025.07.16.00.19.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 00:19:58 -0700 (PDT)
+	s=arc-20240116; t=1752650817; c=relaxed/simple;
+	bh=r1PQD6nD4pyjJ1Pi4gRFFijXmP3ecaPtaCinH8IuMHc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SIMQ7OgC0SMryIMeYsQWK/WpJUYJUQDvFUQMxESpTvO/0rkCP15/YhBkDUnHFmywZCe3eweE7b5blmdMQ9cyS+rPWQ3hMHfa4FLiKTw7y1Py51VoEl3MOc8Zr+05HARBRr6iq8NsBQzgLeVpALU2nrbOxA9JgPO+M2l1bO1+AM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AuQvSUEZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56G5sBWU024588;
+	Wed, 16 Jul 2025 07:26:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Y+xBnG3A0ZWzm693I0w1sXLH1FieiMMxSWP430Dc1M0=; b=AuQvSUEZFczPQqwV
+	BuEyrtb3ozVWWzQfZ2/bJeCMQ0JcFkbvT2MyatgYTEyOHq247gJfBjHnqZhWdNsy
+	A+Me2g0Dg339liKfDhagY4qIzlGDA2oq85YXNSaupQ9w+fJ5XlWUvpUZjODK4A4g
+	3vlyYzM71zgLDlZSpBTEKLQ0lzF21UcZxXXF2ZlbevEJ5pd4lM3m3KGoizC/0d6I
+	sblv96dKjO0w2zTjqWQMuw6ouLW+OWB59gH4NNwYNzcoGQEaO/OPriDkzcHggI0v
+	vkPKAcI6nQcsc9QO9hRJSjQwc1XvHtNEwno6UGYsSMgZAQ0SmU2VTWM51FXRxN4c
+	df7Nlg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dpdurb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Jul 2025 07:26:48 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56G7Qm8O005140
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Jul 2025 07:26:48 GMT
+Received: from [10.216.39.173] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 16 Jul
+ 2025 00:26:45 -0700
+Message-ID: <1b7e724a-fa91-11b7-3ee8-d97ed930d6ad@quicinc.com>
+Date: Wed, 16 Jul 2025 12:56:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 16 Jul 2025 09:19:56 +0200
-Message-Id: <DBDAPORDD5IM.1BHXPK225E2PP@fairphone.com>
-Subject: Re: [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4
- smartphone
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Luca Weiss" <luca.weiss@fairphone.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Felipe Balbi" <balbi@kernel.org>, "Srinivas Kandagatla"
- <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
- <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
- <tiwai@suse.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Wesley Cheng" <quic_wcheng@quicinc.com>,
- "Stephan Gerhold" <stephan.gerhold@linaro.org>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski@linaro.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-sound@vger.kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
-In-Reply-To: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 11/25] media: iris: Fix missing LAST flag handling during
+ drain
+Content-Language: en-US
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil
+	<hverkuil@xs4all.nl>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        "Vedang
+ Nagar" <quic_vnagar@quicinc.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
+ <20250704-iris-video-encoder-v1-11-b6ce24e273cf@quicinc.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250704-iris-video-encoder-v1-11-b6ce24e273cf@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA2NiBTYWx0ZWRfX+XbCfmZ86eh7
+ nXoxS8mYe0PPpkop90INBf0Zc5Av/fZQR0jbd5unGk+HSE26jGLb2BzBcDkL4QXEln9793FcTj3
+ o9FG4so2Fv28l3n9P6niv7Dm0E+no+tc8N5qshPXdPvtXbOrmwkPXxoBOQ3XkWJE7MYUJeGEACR
+ 9eq13aLsDPvoNgnhTGfxMsRSDJsBJ0+3qIV7J3gmNlDDvqH19DOskU6LIzBqk1HS+8nOkm+mrL5
+ I9HIyRk8E9WVHuhpHHcfpddwaTfPJEFwF6a7AtrOJG/PYPjCh7iIc5OfXWcPa9X6wrjOpEZKZVt
+ FbuwKZHZP2gmFHKW3v1QdqzzK98IkSwSuLzjgXJppeORUyDd0I8vbgpCcXt/dc7lvgRE/vXgG3f
+ Dl3oTTMNjbiNz9Kcvl8tfoKHwp4ODiZn1pBlTe4IVvLFarAH7K9u729ALoOUxHD2VSDCMktE
+X-Proofpoint-GUID: 1-tsxHVbqSsMhqwsXLitC-jWTM2UayCx
+X-Proofpoint-ORIG-GUID: 1-tsxHVbqSsMhqwsXLitC-jWTM2UayCx
+X-Authority-Analysis: v=2.4 cv=Y+r4sgeN c=1 sm=1 tr=0 ts=68775438 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
+ a=KpRsr4bm_Dgpwk9YamYA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=830 phishscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507160066
 
-Hi all,
 
-On Thu May 1, 2025 at 8:48 AM CEST, Luca Weiss wrote:
-> Since the series for the USB sound offloading driver was finally merged,
-> we can add the sm6350 dts and enable it on Fairphone 4.
->
-> A few devicetree binding bits have also been missing in that series, so
-> there's some extra patches for the basics in this series.
->
-> Depends on:
-> - For qcom,sm8250.yaml & sm8250.c:
->   https://lore.kernel.org/linux-arm-msm/20250425-fp5-dp-sound-v3-0-7cb451=
-80091b@fairphone.com/T/
-> - For dts:
->   https://lore.kernel.org/linux-arm-msm/20250321-sm6350-apr-v1-1-7805ce7b=
-4dcf@fairphone.com/
->
-> Devicetree patches go through qcom
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+
+On 7/4/2025 1:23 PM, Dikshita Agarwal wrote:
+> Improve drain handling by ensuring the LAST flag is attached to final
+> capture buffer when drain response is received from the firmware.
+> 
+> Previously, the driver failed to attach the V4L2_BUF_FLAG_LAST flag when
+> a drain response was received from the firmware, relying on userspace to
+> mark the next queued buffer as LAST. This update fixes the issue by
+> checking the pending drain status, attaching the LAST flag to the
+> capture buffer received from the firmware (with EOS attached), and
+> returning it to the V4L2 layer correctly.
+> 
+> Fixes: d09100763bed ("media: iris: add support for drain sequence")
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
-> Changes in v2:
-> - Move num-hc-interrupters prop to sm6350.dtsi (Konrad)
-> - Sort cpu & codec nodes correctly (Konrad)
-> - Remove usb-soc-be prop as it's no longer needed (Wesley)
-> - Pick up tags
-> - Link to v1: https://lore.kernel.org/r/20250425-fp4-usb-audio-offload-v1=
--0-f90f571636e4@fairphone.com
->
-> ---
-> Luca Weiss (5):
->       ASoC: dt-bindings: qcom,q6afe: Document q6usb subnode
->       ASoC: dt-bindings: qcom,sm8250: Add Fairphone 4 sound card
->       ASoC: qcom: sm8250: Add Fairphone 4 soundcard compatible
->       arm64: dts: qcom: sm6350: Add q6usbdai node
->       arm64: dts: qcom: sm7225-fairphone-fp4: Enable USB audio offload su=
-pport
+>  drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c | 4 +---
+>  drivers/media/platform/qcom/iris/iris_state.c             | 2 +-
+>  drivers/media/platform/qcom/iris/iris_state.h             | 1 +
+>  3 files changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> index 8d1ce8a19a45ebb2b29457e0fef7d72c1c0d9785..2a96458833835422d30c9386d15cc1e4fb226e3d 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> @@ -416,8 +416,6 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
+>  			inst->flush_responses_pending++;
+>  
+>  		iris_inst_sub_state_change_drain_last(inst);
+> -
+> -		return;
+>  	}
+>  
+>  	if (iris_split_mode_enabled(inst) && pkt->stream_id == 0) {
+> @@ -462,7 +460,7 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
+>  		timestamp_us = (timestamp_us << 32) | timestamp_lo;
+>  	} else {
+>  		if (pkt->stream_id == 1 && !inst->last_buffer_dequeued) {
+> -			if (iris_drc_pending(inst)) {
+> +			if (iris_drc_pending(inst) || iris_drain_pending(inst)) {
+>  				flags |= V4L2_BUF_FLAG_LAST;
+>  				inst->last_buffer_dequeued = true;
+>  			}
+> diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
+> index a21238d2818f9606871953bd0bee25382cca0474..d1dc1a863da0b0b1af60974e9ed2ef68ea225cdd 100644
+> --- a/drivers/media/platform/qcom/iris/iris_state.c
+> +++ b/drivers/media/platform/qcom/iris/iris_state.c
+> @@ -252,7 +252,7 @@ bool iris_drc_pending(struct iris_inst *inst)
+>  		inst->sub_state & IRIS_INST_SUB_DRC_LAST;
+>  }
+>  
+> -static inline bool iris_drain_pending(struct iris_inst *inst)
+> +bool iris_drain_pending(struct iris_inst *inst)
+>  {
+>  	return inst->sub_state & IRIS_INST_SUB_DRAIN &&
+>  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
+> diff --git a/drivers/media/platform/qcom/iris/iris_state.h b/drivers/media/platform/qcom/iris/iris_state.h
+> index e718386dbe0402417f408d8fc696a33e5c7f23b3..b09fa54cf17eeee0c9ae254588964ad959c82c80 100644
+> --- a/drivers/media/platform/qcom/iris/iris_state.h
+> +++ b/drivers/media/platform/qcom/iris/iris_state.h
+> @@ -141,5 +141,6 @@ int iris_inst_sub_state_change_drc_last(struct iris_inst *inst);
+>  int iris_inst_sub_state_change_pause(struct iris_inst *inst, u32 plane);
+>  bool iris_allow_cmd(struct iris_inst *inst, u32 cmd);
+>  bool iris_drc_pending(struct iris_inst *inst);
+> +bool iris_drain_pending(struct iris_inst *inst);
+>  
+>  #endif
+> 
 
-All dependencies for the patches have been applied already, so this
-series can land as well!
-
-Devicetree patches go through qcom, the rest through their trees.
-
-Regards
-Luca
-
->
->  .../devicetree/bindings/sound/qcom,q6afe.yaml      | 13 ++++++++
->  .../devicetree/bindings/sound/qcom,sm8250.yaml     |  1 +
->  arch/arm64/boot/dts/qcom/sm6350.dtsi               | 11 +++++++
->  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 36 ++++++++++++++++=
-++++++
->  sound/soc/qcom/sm8250.c                            |  1 +
->  5 files changed, 62 insertions(+)
-> ---
-> base-commit: 393d0c54cae31317deaa9043320c5fd9454deabc
-> change-id: 20250425-fp4-usb-audio-offload-e5d7fb55d283
-> prerequisite-change-id: 20250321-sm6350-apr-15f3e7e4e5ca:v1
-> prerequisite-patch-id: 69859554c94de52068406dab0d2869ca26072c78
-> prerequisite-change-id: 20240809-fp5-dp-sound-b3768f3019bd:v3
-> prerequisite-patch-id: 2d8997a2be02cfddf3a054c79e7eb308a6d06710
-> prerequisite-patch-id: 1b7c8f00ab50ae71c0221868578b9c1dfe939e4d
-> prerequisite-patch-id: 4fd0673c4d35c1fefce63ec5785ff5ea67cc3d3a
-> prerequisite-patch-id: f5ec3a893de19900f62dc691d83986f1104914b0
-> prerequisite-patch-id: fce7573c39e768f7a09c002064b6159b8e91161a
->
-> Best regards,
-
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
