@@ -1,177 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-65140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D5F9B06DA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:09:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25D23B06DB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:12:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99F864A1E73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 06:09:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4CAF4E14D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 06:11:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8286B28751D;
-	Wed, 16 Jul 2025 06:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16CC7280328;
+	Wed, 16 Jul 2025 06:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZE0otUxH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fTAMTiJV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D7228643D;
-	Wed, 16 Jul 2025 06:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0838634A;
+	Wed, 16 Jul 2025 06:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752646147; cv=none; b=fIIow6bhx19THDQW3o6RRaofHMdIFFZKMwqbItfAw2ax+yo4dCMU0G2rKPnWfgfjc44Ecy53sfJecNkbTzHeeCO9Wlb2NE3fOD0qUVaoZHqmbZY9x2IYgQFyACypDkMcKYrXVAYF6tSzBZ0D8VddXjRNDtU7Dg1qS9RhW3JcTJs=
+	t=1752646297; cv=none; b=WG1bFVSgHJuPwHoJUIVDPVMSZu7wyfIvCdeZc5aOSMvlrDgo3d6ougpbqrFicoIx03/9f+VguQbSPr4Se0IR9YB+ajA2enAlbAOzaDCLNZL+mwXGswRlHci2bb58MciiEKLACmrF0WkCdFM5GYDvmvvRh69X+pujPDTNkPagpBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752646147; c=relaxed/simple;
-	bh=WXik5hm0YBezPzduWKdaaPdlhUv2rICd8xQLuIP16Ok=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mu4X3SWSm/qwcyOkItO1kwb1pmh3uVLSsXjgOK++IATeHa49T8VEcvYL2k/Zg33NOX/REFLTFXJhHg/35ey35uOHHxt2VfSbcB2GjrabPQuK7yUrpZA5H/gpK3mQlCfEMf45KX/+o3Xdms0bVmVZDxMR+35fiTmDtFRmE8tkza4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZE0otUxH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56G5oUUi014550;
-	Wed, 16 Jul 2025 06:09:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sGWMYfKYXHBTO6nQiM4Oenkg/Zl+chXD+X/m7Iz33oU=; b=ZE0otUxHuyk55pOC
-	qfm+q/UCrVVHk9MRFH97RHnm8fRFnLBV99jgr+7luG47Hw1z2YKaRXCXrOTh1b65
-	iHWaMEZsAalsrKCDnKagEciGyydsY/NfQcBec8C+FF3WoBEbtw+I+vcuWV6AGUrl
-	d9WDhzTVo1PmyH+8ZE6UsLwI9gXBG6yaDx9Xz9W6D8X4NPAV1BixR7ol5B7bzmAa
-	SAeZ3DuvYYFO1iYnsYVqx6KTXRajDO/0xSJsfH0bzZbU2VTreXmEFtoVg4LIiT/9
-	n0Oy2oSHh4Tm/t+LHATvXsDPowQ3aBUMcRqHWLt2CXJvWBuAvegnvsoJLXXUUWc7
-	VDgyBw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dynkv5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 06:08:59 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56G68xTh031062
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 06:08:59 GMT
-Received: from [10.50.25.16] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 15 Jul
- 2025 23:08:56 -0700
-Message-ID: <b755aa4f-0083-29f8-f846-fa9523c660b1@quicinc.com>
-Date: Wed, 16 Jul 2025 11:38:52 +0530
+	s=arc-20240116; t=1752646297; c=relaxed/simple;
+	bh=c6u/3ojwb9CcAkBXSLSNnkBgcofV6SgyFH8EacCPr78=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AwkFyAmXdUUQZeHHTELdtHl7Z4bcKXGnv1nKGi7DwXFUQojjlU7RMYPcMdSk51whzMaV6kgJqATjV50rlNvYuiyUDcA+LJXl6FuBxuz8btPIZ13kAuOueQXU+FbZNlfhT1ksqH6NkEbaBJ5x9qOmHdpbcWT00zP+2jXMSFOu3EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fTAMTiJV; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752646295; x=1784182295;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=c6u/3ojwb9CcAkBXSLSNnkBgcofV6SgyFH8EacCPr78=;
+  b=fTAMTiJVn7eXm+TyO/qsha9FcFUX9ynPteJouS2QI7tQxhcgSAomZeBG
+   npHi3LxUOivrrj9lySIU3XM9Yfpw6webnw2LcCon75hE1klO7WSCia6P/
+   h+iQZ56PbESbV8BSHRjU3pz8R4CwFS7wiFAxft43XDVefS/QJwaYGmVbW
+   ypLvymmvbBJlMf4pmwgRGy81VYGIBW8CCcN+H4zx3nh5SCVtttNutz4w+
+   aFsrLEQBe78BWOwVBVqYDs2hC/wTh8TekZm4JWVOo8P0DCG2VlX+e817R
+   oS6LZAxaJgcjw8t3KLWfNA1NQcy0X63kvMMSfPaWy8C7/3QEQHlothV7Y
+   Q==;
+X-CSE-ConnectionGUID: 5qlWqEjdTritck37yZCYHw==
+X-CSE-MsgGUID: Pv0+YFOeRFylb9xP9BUHGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="80329667"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="80329667"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 23:11:24 -0700
+X-CSE-ConnectionGUID: jZPozQdBTsOjGre4uRsADw==
+X-CSE-MsgGUID: jcMR3HMmTvCVSp7FSE7gIQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="188386724"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 23:10:59 -0700
+Message-ID: <eb9d39b4-0de8-4abb-b0f7-7180dc1aaee5@intel.com>
+Date: Wed, 16 Jul 2025 14:10:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 04/25] media: iris: Fix buffer timestamp handling
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 09/21] KVM: guest_memfd: Track guest_memfd mmap
+ support in memslot
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-10-tabba@google.com>
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        "Vedang
- Nagar" <quic_vnagar@quicinc.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
- <20250704-iris-video-encoder-v1-4-b6ce24e273cf@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250704-iris-video-encoder-v1-4-b6ce24e273cf@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250715093350.2584932-10-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Dt-EGGMuhEJZ9ZSGwpHQCKT-RfsgFqeN
-X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=687741fb cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=sEUFuLeS8ZX_1iLzen0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA1MiBTYWx0ZWRfX2vsSadzaq8fc
- bRHRcytcAtQ9GDMN/ugW/x/NoKnbcoKc7elaOcUTG6v3HAjvofgJBEBzV3rdo3h/q7vTU3A34p0
- cwQgPSGwFCxIYsc9n5ztlrS3CTcKJJZZXo0OQyCvIphlR9t7m6DeInd6BDXdciwYGE8VzqjStHJ
- 78BaVAdoXczkvivv+WrOQZJ6gPq5XOtoXrkr/Bqjh/wSUwqzny0qnKyff/SHOlUmeb30REPQbAf
- 9xJ2RJ4vafTpsH1Rt3jib5OndchdfnAaktJPWq5EVQElAMwGjFmcXeHENzo28Dq2Zg8E2/5Uuze
- YOVYY66YrU64pq7eVrp7Zk7h3eO2TY+XEvhVPyFHA6s9nqzksmGC4tQ4pxGMjetAnrAfiiJG9fw
- xl+uKULRgh5uojL2pHoPmBjEKpnLaYRNL0CVc3eJAxouMXX3gdHprqwyPtrYUeGQJcoyLywT
-X-Proofpoint-GUID: Dt-EGGMuhEJZ9ZSGwpHQCKT-RfsgFqeN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
- priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160052
 
+On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+> Add a new internal flag, KVM_MEMSLOT_GMEM_ONLY, to the top half of
+> memslot->flags. This flag tracks when a guest_memfd-backed memory slot
+> supports host userspace mmap operations. It's strictly for KVM's
+> internal use.
 
-On 7/4/2025 1:23 PM, Dikshita Agarwal wrote:
-> The internal driver logic operates with timestamps in microseconds
-> while the buffer timestamp received by vb2 is in nanosecond, this
-> mismatch in units causing issue in buffer handling.
-> Update the timestamp handling logic by converting the buffer timestamp
-> to microseconds before using it internally in driver for all the
-> timestamp assignments, comparisons, and metadata handling.
+I would expect some clarification of why naming it with 
+KVM_MEMSLOT_GMEM_ONLY, not something like KVM_MEMSLOT_GMEM_MMAP_ENABLED
+
+There was a patch to check the userspace_addr of the memslot refers to 
+the same memory as guest memfd[1], but that patch was dropped. Without 
+the background that when guest memfd is mmapable, userspace doesn't need 
+to provide separate memory via userspace_addr, it's hard to understand 
+and accept the name of GMEM_ONLY.
+
+[1] https://lore.kernel.org/all/20250513163438.3942405-9-tabba@google.com/
+
+> This optimization avoids repeatedly checking the underlying guest_memfd
+> file for mmap support, which would otherwise require taking and
+> releasing a reference on the file for each check. By caching this
+> information directly in the memslot, we reduce overhead and simplify the
+> logic involved in handling guest_memfd-backed pages for host mappings.
 > 
-> Fixes: 17f2a485ca67 ("media: iris: implement vb2 ops for buf_queue and firmware response")
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Shivank Garg <shivankg@amd.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Suggested-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->  drivers/media/platform/qcom/iris/iris_buffer.c | 6 +++---
->  drivers/media/platform/qcom/iris/iris_vdec.c   | 1 +
->  2 files changed, 4 insertions(+), 3 deletions(-)
+>   include/linux/kvm_host.h | 11 ++++++++++-
+>   virt/kvm/guest_memfd.c   |  2 ++
+>   2 files changed, 12 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-> index 9f664c241149362d44d3a8fa65e2266f9c2e80e0..809ce77744f996c23dc07ef9ecb3e8e92b709850 100644
-> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
-> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-> @@ -579,14 +579,14 @@ iris_helper_find_buf(struct iris_inst *inst, u32 type, u32 idx)
->  		return v4l2_m2m_dst_buf_remove_by_idx(m2m_ctx, idx);
->  }
->  
-> -static void iris_get_ts_metadata(struct iris_inst *inst, u64 timestamp_ns,
-> +static void iris_get_ts_metadata(struct iris_inst *inst, u64 timestamp_us,
->  				 struct vb2_v4l2_buffer *vbuf)
->  {
->  	u32 mask = V4L2_BUF_FLAG_TIMECODE | V4L2_BUF_FLAG_TSTAMP_SRC_MASK;
->  	u32 i;
->  
->  	for (i = 0; i < ARRAY_SIZE(inst->tss); ++i) {
-> -		if (inst->tss[i].ts_ns != timestamp_ns)
-> +		if (inst->tss[i].ts_us != timestamp_us)
->  			continue;
->  
->  		vbuf->flags &= ~mask;
-> @@ -653,7 +653,7 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
->  	}
->  
->  	state = VB2_BUF_STATE_DONE;
-> -	vb2->timestamp = buf->timestamp;
-> +	vb2->timestamp = buf->timestamp * NSEC_PER_USEC;
->  	v4l2_m2m_buf_done(vbuf, state);
->  
->  	return 0;
-> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-> index d670b51c5839d1fad54d34f373cf71d5f3973a96..05340e201e6538b9599387cdd57814005b904e76 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-> @@ -561,6 +561,7 @@ iris_vdec_vb2_buffer_to_driver(struct vb2_buffer *vb2, struct iris_buffer *buf)
->  	buf->data_size = vb2->planes[0].bytesused - vb2->planes[0].data_offset;
->  	buf->flags = vbuf->flags;
->  	buf->timestamp = vb2->timestamp;
-> +	do_div(buf->timestamp, NSEC_PER_USEC);
->  	buf->attr = 0;
->  
->  	return 0;
-> 
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index 9ac21985f3b5..d2218ec57ceb 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -54,7 +54,8 @@
+>    * used in kvm, other bits are visible for userspace which are defined in
+>    * include/uapi/linux/kvm.h.
+>    */
+> -#define KVM_MEMSLOT_INVALID	(1UL << 16)
+> +#define KVM_MEMSLOT_INVALID			(1UL << 16)
+> +#define KVM_MEMSLOT_GMEM_ONLY			(1UL << 17)
+>   
+>   /*
+>    * Bit 63 of the memslot generation number is an "update in-progress flag",
+> @@ -2536,6 +2537,14 @@ static inline void kvm_prepare_memory_fault_exit(struct kvm_vcpu *vcpu,
+>   		vcpu->run->memory_fault.flags |= KVM_MEMORY_EXIT_FLAG_PRIVATE;
+>   }
+>   
+> +static inline bool kvm_memslot_is_gmem_only(const struct kvm_memory_slot *slot)
+> +{
+> +	if (!IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP))
+> +		return false;
+> +
+> +	return slot->flags & KVM_MEMSLOT_GMEM_ONLY;
+> +}
+> +
+>   #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+>   static inline unsigned long kvm_get_memory_attributes(struct kvm *kvm, gfn_t gfn)
+>   {
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 07a4b165471d..2b00f8796a15 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -592,6 +592,8 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+>   	 */
+>   	WRITE_ONCE(slot->gmem.file, file);
+>   	slot->gmem.pgoff = start;
+> +	if (kvm_gmem_supports_mmap(inode))
+> +		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+>   
+>   	xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL);
+>   	filemap_invalidate_unlock(inode->i_mapping);
 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
