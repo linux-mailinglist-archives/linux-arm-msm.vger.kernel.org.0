@@ -1,134 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-65132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61EEFB06D2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:25:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EB70B06D2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:28:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD7911784C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:25:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 342ED167BC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:28:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C81D229B77C;
-	Wed, 16 Jul 2025 05:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2672218858;
+	Wed, 16 Jul 2025 05:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QLpCJykx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="snDUiCqG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD21264F99;
-	Wed, 16 Jul 2025 05:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B62134BD;
+	Wed, 16 Jul 2025 05:28:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752643500; cv=none; b=jWaRvfpEiO0wzoIbW+8CtShLuqrqalYoq11DVgybm8ZzLggQIj0amJCktDc4vFtEos3/GsDGH4rkRJ8TwNBkFseUdbd3yYEm5ixVr6xBmMk+rZ+nB06+/tVN7g7hfeLLkRcM9DDVdbU2reXBLTGQc3MVQvnyYZ+maAB+uiQYrvQ=
+	t=1752643691; cv=none; b=TBttkvJltxmPVPpyvgnjUE9YUONj7kzTW8pBAJ8EFWKI/FFgJDKL9CF45bTD4Ta9981LZ84h1qbFzndjJ84MPb1PsDb9NAEhcOudLsgTiWONn7CYykyaeD2Pi+zPP/idoFfvY2J8JJcpaBOuqtPCpFyMiTtvlT5CpGemeomXJwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752643500; c=relaxed/simple;
-	bh=858M61+pTJeW4vVadFBhzBuGsh9DKhlYXvrOJHC8eC0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S62xMrz+vmzdRW6X6mP5XOhOc8Qo4V5rp9n/+m2pKbMNSiY/NQnNrtXvLpeBWlag91lfDPkD6Rdwv2CmLH4baBZdWySv9nPGZFhXlkonXURNlU3eolynZpywIum2QZmDhEHn7ye+M/tlA2y9DLwb2TGGD+ec44ZE9J51DrvcOkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QLpCJykx; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752643499; x=1784179499;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=858M61+pTJeW4vVadFBhzBuGsh9DKhlYXvrOJHC8eC0=;
-  b=QLpCJykxPAb4Xorb5L2UiuCsgYQkYwZQGFHYbp3dEqSoZOkxprkPJ59j
-   ayuVXYuH4g/emyoIkCXUoxB0IfpSjiJeFMcb7m/7LIm4cKu4kcLgOsvRv
-   rRMuRhG6fnIESisKUL+6xNJvP4E1oWnGqbGwrzLEB2WEjqiQdn2I2UStl
-   NXwdAQzOGlTgqNGoM1KF4qJdr/S8Ibf4NoqjiCmH+6Cb6w/QcsCTkxsXy
-   CIOeYlEUggopdD5AD8QgTYhd43aSLLb7bhgAPVVEJWgjl1wnWfpqSYaFt
-   LM7cfmTFPI56Uqc3gC2glnLKEsT0t7UbWUerrskIy6kNpN7HiGGrcf+Vv
-   Q==;
-X-CSE-ConnectionGUID: Jq7z9b3iSum07/1tLW6dMw==
-X-CSE-MsgGUID: 4Og3PbmxQgeIhRNpGRG+1g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54967859"
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="54967859"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:24:59 -0700
-X-CSE-ConnectionGUID: 6SeRMSYwQBueRNOE00WnsQ==
-X-CSE-MsgGUID: mGk2KYScRM+1zZJqkDYI4Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="161723805"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:24:43 -0700
-Message-ID: <1b4badaa-8336-464e-89d3-b5d94f8487df@intel.com>
-Date: Wed, 16 Jul 2025 13:24:37 +0800
+	s=arc-20240116; t=1752643691; c=relaxed/simple;
+	bh=9O93w4B7Hk3WGCGlAA9pG4sEPSW2m4KxTBY8MylOZhc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m652hWgBH2gWfd4Q8k/jYqrt4G2QDIz5ymZ/s+YuX8PaXvvKMhBohiwMpNBT2Zn0DBG9pMkjn27Oio3BHwZa/LHGtq9WFrh6gi7S3TUFUxJjAbo9VovwXwzToGpsp2Kw9jT78nJeVNSFrx6eN1GRIkZcDTbnz9V2xNKzgXuhfaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=snDUiCqG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C45CC4CEF0;
+	Wed, 16 Jul 2025 05:28:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752643691;
+	bh=9O93w4B7Hk3WGCGlAA9pG4sEPSW2m4KxTBY8MylOZhc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=snDUiCqGE+4XXcQLWm/p/ERjkuprsYJajXTwWYRWhl5hSBejuJQE3owYtndGtd8dR
+	 hTOUC6D+02JdAsXgjIGpjlq1uTi/RqkrP09ikXZwedX7j9KcDZqSts109BBGzPUZIN
+	 xnjk+CxPQh8IByACuK3UtXzvt32iJWAehnvwKoS4Cxm3cZ5gUSLmnWAwWjadV01Ljx
+	 PXiUnU+E28VNZBr/HK7uxyApsaiTx7gJEMVOuvYKn9VMeJBw++Qs4rriwhD9iLNxZ6
+	 /LSTs8WrbSoyhR7+zPHSWaLra3IwnAnP+5QUQWzgb285U9b54BwNOjO0Ycnh3S5NU7
+	 DdZeHw6p/xZGg==
+Date: Wed, 16 Jul 2025 10:58:01 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan@kernel.org>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH 2/2] PCI: qcom: Move qcom_pcie_icc_opp_update() to
+ notifier callback
+Message-ID: <kyu4bpuqvmc3iyqekmqvbpxqpbbxbq7df725dcpiu3dnvcztyy@yyqwm2uqjobj>
+References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
+ <20250714-aspm_fix-v1-2-7d04b8c140c8@oss.qualcomm.com>
+ <b2f4be6c-93d9-430b-974d-8df5f3c3b336@oss.qualcomm.com>
+ <jdnjyvw2kkos44unooy5ooix3yn2644r4yvtmekoyk2uozjvo5@atigu3wjikss>
+ <55f2e014-044c-4021-8b01-99bdf2a0fd7f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 07/21] KVM: Fix comment that refers to kvm uapi header
- path
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250715093350.2584932-1-tabba@google.com>
- <20250715093350.2584932-8-tabba@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250715093350.2584932-8-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <55f2e014-044c-4021-8b01-99bdf2a0fd7f@oss.qualcomm.com>
 
-On 7/15/2025 5:33 PM, Fuad Tabba wrote:
-> The comment that points to the path where the user-visible memslot flags
-> are refers to an outdated path and has a typo.
+On Tue, Jul 15, 2025 at 12:45:36PM GMT, Konrad Dybcio wrote:
+> On 7/15/25 12:36 PM, Manivannan Sadhasivam wrote:
+> > On Tue, Jul 15, 2025 at 11:54:48AM GMT, Konrad Dybcio wrote:
+> >> On 7/14/25 8:01 PM, Manivannan Sadhasivam wrote:
+> >>> It allows us to group all the settings that need to be done when a PCI
+> >>> device is attached to the bus in a single place.
+> >>>
+> >>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> >>> ---
+> >>>  drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
+> >>>  1 file changed, 1 insertion(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>> index b4993642ed90915299e825e47d282b8175a78346..b364977d78a2c659f65f0f12ce4274601d20eaa6 100644
+> >>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>> @@ -1616,8 +1616,6 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+> >>>  		pci_lock_rescan_remove();
+> >>>  		pci_rescan_bus(pp->bridge->bus);
+> >>>  		pci_unlock_rescan_remove();
+> >>> -
+> >>> -		qcom_pcie_icc_opp_update(pcie);
+> >>>  	} else {
+> >>>  		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
+> >>>  			      status);
+> >>> @@ -1765,6 +1763,7 @@ static int pcie_qcom_notify(struct notifier_block *nb, unsigned long action,
+> >>>  	switch (action) {
+> >>>  	case BUS_NOTIFY_BIND_DRIVER:
+> >>>  		qcom_pcie_enable_aspm(pdev);
+> >>> +		qcom_pcie_icc_opp_update(pcie);
+> >>
+> >> So I assume that we're not exactly going to do much with the device if
+> >> there isn't a driver for it, but I have concerns that since the link
+> >> would already be established(?), the icc vote may be too low, especially
+> >> if the user uses something funky like UIO
+> >>
+> > 
+> > Hmm, that's a good point. Not enabling ASPM wouldn't have much consequence, but
+> > not updating OPP would be.
+> > 
+> > Let me think of other ways to call these two APIs during the device addition. If
+> > there are no sane ways, I'll drop *this* patch.
 > 
-> Update the comment to refer to the correct path.
+> Would it be too naive to assume BUS_NOTIFY_ADD_DEVICE is a good fit?
+
+BUS_NOTIFY_ADD_DEVICE is not currently a good fit as ASPM link state
+initialization happen after all the devices are enumerated for the slot. This is
+something to be fixed in the PCI core and would allow us to use
+BUS_NOTIFY_ADD_DEVICE.
+
+I talked to Bjorn H and we both agreed that this needs to be revisited. But I'm
+just worrried that until this happens, we cannot upstream the ASPM fix and not
+even backport it to 6.16/16.
+
+So maybe we need to resort to this patch as an interim fix if everyone agrees.
+
+> Do
+> ASPM setting need to be reapplied after the PCIe device is reset? (well
+> I would assume there are probably multiple levels of "reset" :/)
 > 
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Reviewed-by: Shivank Garg <shivankg@amd.com>
-> Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+I'm assuming that you are referring to link down reset here. PCI core takes care
+of saving both the endpoint as well as Root Port config space when that happens
+and restores them afterwards.
 
-> ---
->   include/linux/kvm_host.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 9c654dfb6dce..1ec71648824c 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -52,7 +52,7 @@
->   /*
->    * The bit 16 ~ bit 31 of kvm_userspace_memory_region::flags are internally
->    * used in kvm, other bits are visible for userspace which are defined in
-> - * include/linux/kvm_h.
-> + * include/uapi/linux/kvm.h.
->    */
->   #define KVM_MEMSLOT_INVALID	(1UL << 16)
->   
+- Mani
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
