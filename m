@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B62B3B06D18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:20:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B40EAB06D1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:21:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7F21D7A5849
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:18:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB2FF3B5FF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:20:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 109B42459F7;
-	Wed, 16 Jul 2025 05:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25D86221FB1;
+	Wed, 16 Jul 2025 05:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Mt1XOtJm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jF6mB9jG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FDE2E36F7;
-	Wed, 16 Jul 2025 05:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820F31C9DE5;
+	Wed, 16 Jul 2025 05:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752643204; cv=none; b=g9//+coVs98J45+NYq854yjp2J6bbLh+KgKB8rJkhYlk1jdoS8s9tOjadlJim93zwemk92lF/cAZP3F+j/oMR5ToBnX+oON/vuUQax0hr1l4K1CTX/pB6mYcy9VcMksatAO+7bB2lZHAIijxIivY4iY4Q3r7gGJXdGgwE7wJiso=
+	t=1752643270; cv=none; b=my8ZjJOBAj/55Zu9uSvRmIV3brKCsFWaY4M8cL7uGcjPrp6nivGWNUJWnrq/y6fUflNl4BS/GbyZD1Lf8P43R9AOcLxDOx80H5psUrlqIagA9uqNfCuoFyWVw1weXvR8PY414Som5U+HK+kv8R0v5Q+b8S4DTnWyzkGz5WeQrWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752643204; c=relaxed/simple;
-	bh=W2eSQz3/U70QncMcreVKrezT3oPQBWS/gjJVMRVfvv0=;
+	s=arc-20240116; t=1752643270; c=relaxed/simple;
+	bh=Apgo83F8MuVmzXAF0LEpW/4FYIKirQ4fPrx9SMVQndM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hMTF6WcirbXKhoy4Oh01dsz7GrH9NTGLNMHiVIjwl3xM7Jf7Cn8SPQxKAgh1MA/5JbpKEjnN6j5WpqblUlh563sU/xHmv21WSUQtB+fdsg1RtHPNu+USLnOOR9G5POZt8e1D3ut6z2kO/jv8G1mshgJEbPR2aR4MlgdDjQQKpOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Mt1XOtJm; arc=none smtp.client-ip=192.198.163.8
+	 In-Reply-To:Content-Type; b=eQ7iyZqyn9/QDzFEdhAYZLZWqJcAXCAfdgrZzNENzyo7EjIA/QYG6v5CRj26vqsP2ORLnOguIOo2frpWGuPOhLGJIYbkoymdQIUPo/h75WJ4SK8H8dLr1x+oWDGPyHpp60V2csxHVCn553Ql5rGqA3tDgBL9yYnfb7gXE6Yt0Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jF6mB9jG; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752643202; x=1784179202;
+  t=1752643268; x=1784179268;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=W2eSQz3/U70QncMcreVKrezT3oPQBWS/gjJVMRVfvv0=;
-  b=Mt1XOtJm1105XNzT1vkaRpReqGtGPSla5C9w2+VETLROsuRMeSLzmx7v
-   7OtBIZnuwk8zRhBgMhRKp4sHm4po2srhJ8oo7R140BN8HJdL0+zN+2JGs
-   4kY/e0fdscKzYXQEdi0CQHNMEE8ASNVSH5YMnfAcoAQZpRVBAP7OD6m0G
-   7gsCBM7UTGlI+R6bX6QcoNFH6i2f1ixvGyDLvhpT0l7hZ5XkxI9s2TIR1
-   ReySRiZFNab3gSVrCmQgqkL47tGQUiAYVURr0mKHQOvGm2iLdkX5U3T6b
-   s9E6wR9h0p6VdPHA9avolvvKIxDcEUHu/F5nMdV4ULiApUTJiOL5EhNWf
-   g==;
-X-CSE-ConnectionGUID: EHRKXgmLQ3C/1bDAz5nOvg==
-X-CSE-MsgGUID: S4HP7VwERTiQKFcUy11VTg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="72450098"
+  bh=Apgo83F8MuVmzXAF0LEpW/4FYIKirQ4fPrx9SMVQndM=;
+  b=jF6mB9jGTuCLWccG228CC+m5KpMWT3ya06z7xeWNZ70bjSE1vD5Z0yPp
+   yZrCD1WUKrBllrRl8Rh9+ZzTug7ZHZKQsafhAwdKcGEYUkUVYzjdLNQyC
+   DSKIfy4yiIv2IrGFTawiI98HoiiLpGuiZwndyFYzJXO8DxokTEwrxQ7BF
+   HEa76Y+IEtSqidexsIChZc6d0COnDW0GdelennKZy2fu2GohZPn+yaT5/
+   myZvK65HyQJcwvhipOiMxWYK0Y/MCG6EyiCOehYpeZWE1Jf0ai3EsW5en
+   LawZcUe/x3Z6lNkIe5vYDvEYEBLWmIImU+nuxG7yFfelr/nJ8/Iay6JeC
+   Q==;
+X-CSE-ConnectionGUID: SIin9SRLShaUCegqHjG9Xg==
+X-CSE-MsgGUID: BVsj3A/6SdC42KoIXTn8Mw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="66231115"
 X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="72450098"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:20:01 -0700
-X-CSE-ConnectionGUID: m+SBZprZQ0mmFQ4+BMJn9A==
-X-CSE-MsgGUID: 5+2SXlobSu6omTtrpsqscQ==
+   d="scan'208";a="66231115"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:21:08 -0700
+X-CSE-ConnectionGUID: JrehOHLgSSSyzMf3ngGZWg==
+X-CSE-MsgGUID: 0tdzYC4vSRiiC/1Tr1aoiw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="156804739"
+   d="scan'208";a="194544482"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:19:45 -0700
-Message-ID: <a59d0d9b-0850-4969-8e87-89440fcb6d30@intel.com>
-Date: Wed, 16 Jul 2025 13:19:42 +0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:20:54 -0700
+Message-ID: <b3a76a74-3d7d-46ef-8636-fb06d4feb684@intel.com>
+Date: Wed, 16 Jul 2025 13:20:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,8 +67,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 05/21] KVM: Rename kvm_slot_can_be_private() to
- kvm_slot_has_gmem()
+Subject: Re: [PATCH v14 06/21] KVM: Fix comments that refer to slots_lock
 To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
@@ -92,33 +91,22 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
  jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
  ira.weiny@intel.com
 References: <20250715093350.2584932-1-tabba@google.com>
- <20250715093350.2584932-6-tabba@google.com>
+ <20250715093350.2584932-7-tabba@google.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250715093350.2584932-6-tabba@google.com>
+In-Reply-To: <20250715093350.2584932-7-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 7/15/2025 5:33 PM, Fuad Tabba wrote:
-> Rename kvm_slot_can_be_private() to kvm_slot_has_gmem() to improve
-> clarity and accurately reflect its purpose.
+> Fix comments so that they refer to slots_lock instead of slots_locks
+> (remove trailing s).
 > 
-> The function kvm_slot_can_be_private() was previously used to check if a
-> given kvm_memory_slot is backed by guest_memfd. However, its name
-> implied that the memory in such a slot was exclusively "private".
-> 
-> As guest_memfd support expands to include non-private memory (e.g.,
-> shared host mappings), it's important to remove this association. The
-> new name, kvm_slot_has_gmem(), states that the slot is backed by
-> guest_memfd without making assumptions about the memory's privacy
-> attributes.
-> 
+> Reviewed-by: David Hildenbrand <david@redhat.com>
 > Reviewed-by: Ira Weiny <ira.weiny@intel.com>
 > Reviewed-by: Gavin Shan <gshan@redhat.com>
 > Reviewed-by: Shivank Garg <shivankg@amd.com>
 > Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> Co-developed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
 > Signed-off-by: Fuad Tabba <tabba@google.com>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
