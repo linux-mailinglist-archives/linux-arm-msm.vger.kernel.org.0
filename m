@@ -1,154 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-65180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C010B070F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:52:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 854D5B070F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:52:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 675E83AFAD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:52:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DCE63B3043
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:52:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE882EF9BA;
-	Wed, 16 Jul 2025 08:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B542EF671;
+	Wed, 16 Jul 2025 08:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EhgAfZRR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GLwLjflv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC6D2EF657;
-	Wed, 16 Jul 2025 08:52:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46322E88B5;
+	Wed, 16 Jul 2025 08:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752655923; cv=none; b=ay5BDtHzbzWG01jWi+GZWj1lLcRaYt7Jmh828fbkaTN/Rfm0W6gEmzRzoABdXEFVAh/psXUUFXnl8ssZ4Mps25etxWsHwjBOlKvAePwfqi8fr4xUCxOkouWlb/VNHxV6MoPO22zvHOgHMCkR3JnnEFyM04RDD7eRIIq36MODa9U=
+	t=1752655964; cv=none; b=Dfiq/Vbdu25Izq6dBYCTFW/l2M1dvXCiXLPZ1A8pzgEgmaIzVX5PcC+xMX5i7pEW95eY5dYZdxPwxFGoxabNvwf/TM/IxK9palRibluHm+QwTo1LlL2J8IA0uV0+h6ZIKswkq1NBPeGc/bmPyIs1jkASSTbdBMdytYfiGkAX/XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752655923; c=relaxed/simple;
-	bh=ba3xsj1JR3uFQUlvWu1s2ut631oLcsVyu+jMgQ1S/Lc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d4bCQNv6nPHtW+FwYLkU1A9i5P8n3Zv1sYzROZI0dwv+5p0dLMCyGNoRM26q6QNb+31od6ey6g/wXHPhOTxu8p/Sceg+nxOqmOXv6WSrbmXLKrW6ifZKt30BVyecpLGzpBYbz17OlFy0Dk0/dKXqIb7p0QfO8WI4SboNRdHRJ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EhgAfZRR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56G63FEf003267;
-	Wed, 16 Jul 2025 08:51:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=l7zH9aHo2OyEeykd42T8XtnZ
-	JrdxgBFY+gGnZRd9f0g=; b=EhgAfZRRXGGPormE1j1jJqh34OwPuFLtLNnCPLuh
-	3/YRxjAN8Vi0DlpO9liJO3P/0sXNRb3MguCFjZTcswP98CQWE3EKfooYBpeyEggq
-	1rCiDMQz0ZZUEOL9Z1T8LASo5bqGYSCbGF5+CbKccpkg9z/BWwznLMyzAmWIgSAC
-	5OM/L2CB2t8Y+MwlRz0Bn4oloPR3n7isk1kEGtBJsfxLpxAjkoTvnO+D6RMhfBTl
-	LW617ItISXiFQwIjXs8v+sz3ucTZ3gsoDVblIyVNLugaXwY9UBBZWWJjVPqda1lf
-	WZd7w6LAs1N9dQk8+ch8bdGLrCFoQ6bUsAuC1XgO1EgmOw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5drp4na-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 08:51:53 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56G8pqV2005751
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 08:51:52 GMT
-Received: from hu-sayalil-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Wed, 16 Jul 2025 01:51:49 -0700
-From: Sayali Lokhande <quic_sayalil@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>
-Subject: [PATCH V4 2/2] arm64: dts: qcom: qcs8300-ride: Enable SDHC1 node
-Date: Wed, 16 Jul 2025 14:21:25 +0530
-Message-ID: <20250716085125.27169-3-quic_sayalil@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250716085125.27169-1-quic_sayalil@quicinc.com>
-References: <20250716085125.27169-1-quic_sayalil@quicinc.com>
+	s=arc-20240116; t=1752655964; c=relaxed/simple;
+	bh=94kf4M+XD6NApSPBMCDqmsn2ygZAgx+ZZdELWr26Y9s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LO/fa8uzNn29HpRWoDdoVbYC3/mNZknfrXF8nKpXWIlJk9zQptTegNFQR2hH0WVXRmGjZzK5qP2Fi5HbSqgmIsw9rLJuS/svwpBcJ1sviqPEmeBBWDK/81tXiHj4cKn38ZTEAy+2hboiLLoGMVa1889TPUS/c7htXR179TGvH/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GLwLjflv; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752655963; x=1784191963;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=94kf4M+XD6NApSPBMCDqmsn2ygZAgx+ZZdELWr26Y9s=;
+  b=GLwLjflvStxM1HxaZI9WXUq6OVE9PhQka6J/3EuqwweyTTeK6bIo4PRx
+   wXsHBBUDrs602N/vWZHRyHVjIyWVXYAXlw2ph82E+/KjwYcLP9Sz8wMxw
+   dDlL9XrAWAOV4E5yRzA+pNkHVVEGoEsMzeN+OHiYRra0eqwWv6oM/Xbty
+   mRgbKugEGu283TswETlkp7Zn5yhCQ9i8yx82yVpJ2qL0FZ8d6qFSFXBA8
+   Es1VPfMPSAyVQqzTIPQHh/LqV7uFqEvXHMxAvQdq1rPH3QjYz9nGnkciq
+   zpp3lMIp25/u5E3X3AGznjMZIFWjYUbqIcktYm1wEg1rvQe5L4uUpTZO0
+   A==;
+X-CSE-ConnectionGUID: 0Dwb0hK8RHyzRvlVU/P+Rw==
+X-CSE-MsgGUID: petg+5MFQr+nV0LxdLjm3g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="55013966"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="55013966"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 01:52:42 -0700
+X-CSE-ConnectionGUID: v3EhzNgHRDyuDzMapsSL+g==
+X-CSE-MsgGUID: pr/19EOUSoCs0Cadba9NhQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="157534744"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 01:52:27 -0700
+Message-ID: <47bc83a0-5b5b-4f00-a6d2-1e5b4486f94f@intel.com>
+Date: Wed, 16 Jul 2025 16:52:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uu1G1_LjOtlH4Jfn7OFIOCOOvId6Q9TY
-X-Authority-Analysis: v=2.4 cv=D4xHKuRj c=1 sm=1 tr=0 ts=68776829 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=_IW4Oi3bjg1409mID4wA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: uu1G1_LjOtlH4Jfn7OFIOCOOvId6Q9TY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA3OSBTYWx0ZWRfX3PUBfn5QH/cA
- mGIybfBa4uZC+siUIzz6urL8sx3zeSr3E/T5sYbJRiWiNWr95sfikYgns8Rs4myXyzzSeWVZ/je
- 6YNY1XFYoZx23KtEV2kWL/USWIwX8gUpQskspOgjbN0VSwUahTsXQMVOJn9u/FI6ekCjfpvXeVL
- tWPujLoxKPaeC+rzEr8t4AQOuF30CxD8ZNIjYNyAgp7yQXiYxDP3dUy7KyXPyquWtpY84J8IEF4
- 5D12Dr/u93ACUTeyB8XYjypHC7bBReU64q+b2/1VpgKaXNOfS7cIM8A2O3Qi0Ffi+MZyw3Mxq+y
- bqCcpO2rwC1X7qeXLkmuk6hkxvO8E+cd0cNwVZQJocVqzvkFFAAjJkVwYJVAv1B4HQuiExmbXt9
- Ij+svbTGjdXePh/M/Q9yJYFoVnk3itgXMkUabpF0VHvMnFQGrCapWsYVQg58Kz21piou+Sv/
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=761 impostorscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 mlxscore=0
- priorityscore=1501 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160079
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 09/21] KVM: guest_memfd: Track guest_memfd mmap
+ support in memslot
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com,
+ viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
+ akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-10-tabba@google.com>
+ <eb9d39b4-0de8-4abb-b0f7-7180dc1aaee5@intel.com>
+ <CA+EHjTw8Pezyut+pjpRyT9R5ZWvjOZUes27SHJAEeygCOV_HQA@mail.gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <CA+EHjTw8Pezyut+pjpRyT9R5ZWvjOZUes27SHJAEeygCOV_HQA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable sdhc1 support for qcs8300 ride platform.
+On 7/16/2025 4:21 PM, Fuad Tabba wrote:
+> Hi Xiaoyao,
+> 
+> On Wed, 16 Jul 2025 at 07:11, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>>
+>> On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+>>> Add a new internal flag, KVM_MEMSLOT_GMEM_ONLY, to the top half of
+>>> memslot->flags. This flag tracks when a guest_memfd-backed memory slot
+>>> supports host userspace mmap operations. It's strictly for KVM's
+>>> internal use.
+>>
+>> I would expect some clarification of why naming it with
+>> KVM_MEMSLOT_GMEM_ONLY, not something like KVM_MEMSLOT_GMEM_MMAP_ENABLED
+>>
+>> There was a patch to check the userspace_addr of the memslot refers to
+>> the same memory as guest memfd[1], but that patch was dropped. Without
+>> the background that when guest memfd is mmapable, userspace doesn't need
+>> to provide separate memory via userspace_addr, it's hard to understand
+>> and accept the name of GMEM_ONLY.
+> 
+> The commit message could have clarified this a bit more. Regarding the
+> rationale for the naming, there have been various threads and live
+> discussions in the biweekly guest_memfd meeting . Instead of rehashing
+> the discussion here, I can refer you to a couple [1, 2].
 
-Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+I don't object the name. Just want the clarification in commit message 
+and even better add comment in code. That will be truly helpful for 
+future readers.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 8c166ead912c..9c37a0f5ba25 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -17,6 +17,7 @@
- 
- 	aliases {
- 		serial0 = &uart7;
-+		mmc0 = &sdhc_1;
- 	};
- 
- 	chosen {
-@@ -332,6 +333,26 @@
- 	status = "okay";
- };
- 
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc1_state_on>;
-+	pinctrl-1 = <&sdc1_state_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	bus-width = <8>;
-+	mmc-ddr-1_8v;
-+	mmc-hs200-1_8v;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+	vmmc-supply = <&vreg_l8a>;
-+	vqmmc-supply = <&vreg_s4a>;
-+
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+
-+	status = "okay";
-+};
-+
- &tlmm {
- 	ethernet0_default: ethernet0-default-state {
- 		ethernet0_mdc: ethernet0-mdc-pins {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> [1] https://docs.google.com/document/d/1M6766BzdY1Lhk7LiR5IqVR8B8mG3cr-cxTxOrAosPOk/edit?tab=t.0#heading=h.a15es1buok51
+> [2] https://lore.kernel.org/all/aFwChljXL5QJYLM_@google.com/
+> 
+> Thanks,
+> /fuad
+> 
+>> [1] https://lore.kernel.org/all/20250513163438.3942405-9-tabba@google.com/
+>>
+>>> This optimization avoids repeatedly checking the underlying guest_memfd
+>>> file for mmap support, which would otherwise require taking and
+>>> releasing a reference on the file for each check. By caching this
+>>> information directly in the memslot, we reduce overhead and simplify the
+>>> logic involved in handling guest_memfd-backed pages for host mappings.
+>>>
+>>> Reviewed-by: Gavin Shan <gshan@redhat.com>
+>>> Reviewed-by: Shivank Garg <shivankg@amd.com>
+>>> Acked-by: David Hildenbrand <david@redhat.com>
+>>> Suggested-by: David Hildenbrand <david@redhat.com>
+>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>> ---
+>>>    include/linux/kvm_host.h | 11 ++++++++++-
+>>>    virt/kvm/guest_memfd.c   |  2 ++
+>>>    2 files changed, 12 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+>>> index 9ac21985f3b5..d2218ec57ceb 100644
+>>> --- a/include/linux/kvm_host.h
+>>> +++ b/include/linux/kvm_host.h
+>>> @@ -54,7 +54,8 @@
+>>>     * used in kvm, other bits are visible for userspace which are defined in
+>>>     * include/uapi/linux/kvm.h.
+>>>     */
+>>> -#define KVM_MEMSLOT_INVALID  (1UL << 16)
+>>> +#define KVM_MEMSLOT_INVALID                  (1UL << 16)
+>>> +#define KVM_MEMSLOT_GMEM_ONLY                        (1UL << 17)
+>>>
+>>>    /*
+>>>     * Bit 63 of the memslot generation number is an "update in-progress flag",
+>>> @@ -2536,6 +2537,14 @@ static inline void kvm_prepare_memory_fault_exit(struct kvm_vcpu *vcpu,
+>>>                vcpu->run->memory_fault.flags |= KVM_MEMORY_EXIT_FLAG_PRIVATE;
+>>>    }
+>>>
+>>> +static inline bool kvm_memslot_is_gmem_only(const struct kvm_memory_slot *slot)
+>>> +{
+>>> +     if (!IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP))
+>>> +             return false;
+>>> +
+>>> +     return slot->flags & KVM_MEMSLOT_GMEM_ONLY;
+>>> +}
+>>> +
+>>>    #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+>>>    static inline unsigned long kvm_get_memory_attributes(struct kvm *kvm, gfn_t gfn)
+>>>    {
+>>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+>>> index 07a4b165471d..2b00f8796a15 100644
+>>> --- a/virt/kvm/guest_memfd.c
+>>> +++ b/virt/kvm/guest_memfd.c
+>>> @@ -592,6 +592,8 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+>>>         */
+>>>        WRITE_ONCE(slot->gmem.file, file);
+>>>        slot->gmem.pgoff = start;
+>>> +     if (kvm_gmem_supports_mmap(inode))
+>>> +             slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+>>>
+>>>        xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL);
+>>>        filemap_invalidate_unlock(inode->i_mapping);
+>>
 
 
