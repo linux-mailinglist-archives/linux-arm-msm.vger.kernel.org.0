@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-65263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 193C7B077E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 16:23:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96182B077ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 16:23:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F5401C2087F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 14:22:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C74B1C25A08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 14:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6F82223DE9;
-	Wed, 16 Jul 2025 14:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5FF1C5D44;
+	Wed, 16 Jul 2025 14:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="C0weJCt3"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="WBo7xE1i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2737F1C2335
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 14:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236C1D61AA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 14:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752675715; cv=none; b=SfO1RpuzWL0kh7uk9qZBUJmEQuSXM8947ADb523y3KTvXzWU+K4mVFy2GF7kkGvn/dOg174hb1BALjfK11L5FvL36NZGO8YaaP46I2eaPxEe9HhqcLBEvPJ5RoZ7yt8xTFFBal+3VKlQzq6bAjo3aeiap6GBhwOXq6N33I76CC4=
+	t=1752675726; cv=none; b=R4Mv3zFu8kpRY/lHhKEqZLAw06K7CbG07+p0NEi6DFHmPEYEI2bWlRFD7U25WliOoZDrPUDD+9DNT8rDgTBuSbvr/jyVszjHq5cAOxVHPSPAuxwjyAUtcs72hbVwZMFI7+V1pzdy4PZyuGXdxh0bAmy5zpNiyJ3DzH7DCCKx384=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752675715; c=relaxed/simple;
-	bh=b5WU0cXHr7v+e7BT5Ibw9679ejdgncNvKBhfc/UOLmY=;
+	s=arc-20240116; t=1752675726; c=relaxed/simple;
+	bh=qaZ1U+EgInwMaLZWb6rGxEaSX9h3KvSTvEqAi3ZlncE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fc7i4tGIgWHGxzFCv3oCPTm1+woZFZF8Qm4Nxc+M+KZmXtD+Al7xRBlI1Melhugv/9Ah+qqAPviaMJdeGFV237/yF7HEvkn8R9/CckfkfPqeC8V6aGj61lGpRS/gaBvAUbiBqo7L3/uVGMwEeWHk8SFUmstTwJ0bJH7ckyWNn7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=C0weJCt3; arc=none smtp.client-ip=209.85.214.181
+	 To:Cc:Content-Type; b=Z+8fk4UwvcEIyU67scGZEIoCKu9UvYMzWxYJQhN4vTx2cUwnO4MfQklY+xxDFkJgFNzaOgSXI/BXAuw/F1KJkEuugeicl93DcImyPTb0UKptQeHNt0ZSavIhM9Z6Jaof7QC0BiYNqC2ht6JY/dsk5eQ8muU+g20CGb07+FE/prc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=WBo7xE1i; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-23dea2e01e4so76287565ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:21:53 -0700 (PDT)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2352400344aso60592345ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:22:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1752675708; x=1753280508; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1752675724; x=1753280524; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iRgANhiZNBnDfTk3Cs6H1fGZwr7ZYCqusPX7KWdZOuI=;
-        b=C0weJCt38dB9cVd2YJeazsDLnFdjy5rfq45drAFRjOg3MuccYU9xxtnFmLjTSLKXKD
-         NpO6ifW5adadc1cZOFNZQmCj0doY3XO+UBQe59vgfiQEmEQOHNjdvrTBNrZpXJgz1quq
-         VaQxMAy/pAfochemRJZbFgBfov5OHJJ+wmjCs=
+        bh=Mz5RRhyfwITv33oCf/7iVVV0cKwknfvfP+MVHktAv/o=;
+        b=WBo7xE1ivf6G6ItX1SwfpS0fPH79RS7eWvu/YvQM1NFRoMcwH1u8C1MYrWEM6zulhw
+         1AjuyA7hHu4sNm34kgqGdVKhFkTzKw9iI8FrIp92OUE7i6ETa1xl+yIBCLhsRWlthUoT
+         0lB1kmVs8xH5Y15h+8x9qyWX/dWdOZlcLc+Rs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752675708; x=1753280508;
+        d=1e100.net; s=20230601; t=1752675724; x=1753280524;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iRgANhiZNBnDfTk3Cs6H1fGZwr7ZYCqusPX7KWdZOuI=;
-        b=jU3b3RhDbNJTNB0ssGtwsV8+bE0bq/XEXa+1iIpjMjVkINgjQ/3jPZc6QVno3Hxrei
-         QHxdY6hyLmAceZqq0k36XTvu5E7fNF3yEeBigPL5YBxDVqrrUjDiLVQ1d4pWQY0FG6of
-         OZRanoLbQvZt8tLqc1FqSpY3Nh5sPp37BS2PxLZ7hDEtRQ7GnmdtWSqufnqC8RspLUdv
-         EkuA4O+qGuDbB5MHN2CIIexTFw8UFD+jFVmYgkQ6vLBZwSnn776w3KR9LvSu3dzQIa0Z
-         E1BhJtrxJwUsGiYR+o1sJQCZVwJYiR5XxFs6aBuflWqOyrlFSygWurzZb58PNx6932fz
-         xKtA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2w9mLJjOaczzydpadoOFG0O3m533YeVJBgsUAjyWkoEpxYnv+tKd/Tpk5VijG5HNqdD4VX62sAm+eQcQY@vger.kernel.org
-X-Gm-Message-State: AOJu0YySpPtmpap5gnvs2nDcBiqRszebsdvLBsbPspMP5SUYnMGvOgDB
-	AJFOuF4ULc/f/xjbRQh7JYnuEdkzZLnhL/asT+ob22H/lWjOh/OYmql9wiP8LQWHnjcONhE3+DA
-	7nR8=
-X-Gm-Gg: ASbGncuJ76AA0GHt3/TAPjRLxSHygFCSuR+LKNadY/9QUw/NY6bzFoyt89Di06qsAOU
-	FpqGL2K9Bb7TP2teWQDfk+LWil39kK6ekMM3qeBMHN7fTu04KdUM+MYks+H+CiGZ/dlJMCjhEt9
-	Sc2FeuIwEADh9dvcY/tTU96ZGcpaWySOwho3vcuEf4CR1SuaALdfJ9jmI2UdI0nI0IRPwwCVCgL
-	zhMpTL7XDCIwR9rPJ4LpIUP0h7Am+zCDsy9n3L3/Jxj2nrj91I0h4ESI32udt9yykKwontqU3WN
-	wrshDBUrW+ZsEHwtN/I52gIihFIny0519rpIGShZhs2bPXFMTXNQZNGHfrMcK/Wvm3K1jxK1wXh
-	TVO2hb17AEG4QGgyf3rMIPgZTNfGyY4XGAAkQgOFgiGCo9WUZxsFLPHgstqcVfg==
-X-Google-Smtp-Source: AGHT+IHfKJdRzi65wsrlbGG9fjokYDxAKl9eXbXsrgV6iCX9CLUNHWwmQ/EIGsFxNeUpOsLdtXY16g==
-X-Received: by 2002:a17:903:228a:b0:235:e942:cb9c with SMTP id d9443c01a7336-23e2566aa35mr46783805ad.5.1752675708404;
-        Wed, 16 Jul 2025 07:21:48 -0700 (PDT)
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com. [209.85.216.51])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de42ad295sm126634165ad.81.2025.07.16.07.21.46
+        bh=Mz5RRhyfwITv33oCf/7iVVV0cKwknfvfP+MVHktAv/o=;
+        b=ZbCmVf4KIMUoHka8qVV6FBa9QCVMHDsG3FFi+L69Le4W0kkDKJpvx/iBGhm4rTNcPq
+         0uylE/5J+Z99/5F4LQfge9TDImKUCK2SxxTXj8DgAJ2C3UTClNVP487f1pQ3Qyo6poc0
+         eypQDfyQyk9zj4BKTxkZKjThrgipHfI0bD8CAzPxZOVbKIVnUTfyZhfHHi6ZyPokerOI
+         TlrzCbl+RoXyoTE/vT0zDBdFaKAE8UvseSu4E2N4OkN4BJwl9laBFlBZ4Zer6wpuI3gc
+         /8pH6Dn1uaPqU2kuP5eiIN97GQexgtUsH9Jj7Np9u0rNTXShwOfr1xeT5/N4XoURGcPX
+         E3lA==
+X-Forwarded-Encrypted: i=1; AJvYcCW/OWQMSmGaQC5hNuBFmGdDjPffpsCIBU9phYKI1VawYA2IgIAuTXmx4O7TkeD5YWyqiQ/RK+P4mn+sNh2A@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJprACEshMpcdUG4NSoszs7FM93iqzaVxPoWeohLTXQkeHfDyi
+	3gL9jBFHIZkZh+SofwAQ397I1LAHWBVoqPk9wKtntCv3IaogBa9twI+bjwX4tP2R5iBfKG15fYz
+	fE7A=
+X-Gm-Gg: ASbGncsTwAE1VpkGU0aQG2vBbC6Mtmy79P1cg1BPUemN6UUIsmPsp1IjE+ZF4ixmvtq
+	uYK/v6SYR0CKiaWT0bQ8YEkIsooLLmrAHSFp0dyo9iUwjEmG54XzFT4odcYdnyfRRfxjLrOhkVF
+	bQGHgYLO67j6dDxogeK+gf3g4zR+Axa2WxLnczTLwxanv7O8770o7lDf0deN+JZUTBewKu5Eq+q
+	3h1TnCdPI1p9ERVci9TQMHX7WfZE7dnrTG4ltUQne0rGdNgW1p3GwwUaPcpjGMrAK+CCLaxxpnv
+	DcsJc5nQHVu26WfXHMtpuhP2nMRrAe1y8/utOAg+X8s/vmvD8kY2ENYy+WLjSoxINd/dEFRDbk4
+	vW0k9AWc2C0evD4AQxPqJViZ3MOs4MbrPbymQDNCylrDPwa7LRSVKm1uhm1QlrhD97A==
+X-Google-Smtp-Source: AGHT+IFPr3kpmB2YQzvQPHx5Oovdn4AOzkVv5B6jONqMSEy5Nk81bMFCGpXifDYw4HYsq+soxwtPqQ==
+X-Received: by 2002:a17:902:e550:b0:235:e8da:8d6 with SMTP id d9443c01a7336-23e24f363a0mr48647365ad.2.1752675724177;
+        Wed, 16 Jul 2025 07:22:04 -0700 (PDT)
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com. [209.85.215.177])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de4322776sm127519755ad.132.2025.07.16.07.21.53
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 07:21:46 -0700 (PDT)
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3137c20213cso6375242a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:21:46 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUL3KcVmIi0GpuZQ43sB3SIy9MG3lgNu0uUDlBYxFzSysEVWJTGbu8jwRImaFP0RIZvsALrksyC8gwmu4jQ@vger.kernel.org
-X-Received: by 2002:a17:90a:d2c8:b0:312:1c83:58f7 with SMTP id
- 98e67ed59e1d1-31c9f2e1b97mr3914439a91.0.1752675705212; Wed, 16 Jul 2025
- 07:21:45 -0700 (PDT)
+        Wed, 16 Jul 2025 07:22:03 -0700 (PDT)
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b3bdab4bf19so3700379a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:21:53 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU8afmlMtSC/ZHJ67u6/Q72iy9Jp5H8cypf0yO7md/8nIPhDDZbQootlBAwY2otKlItAc2uI0rGiNHJMamm@vger.kernel.org
+X-Received: by 2002:a17:90b:1646:b0:2fe:85f0:e115 with SMTP id
+ 98e67ed59e1d1-31c9e77cfe5mr4368025a91.26.1752675712704; Wed, 16 Jul 2025
+ 07:21:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,14 +85,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
- <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
-In-Reply-To: <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
+ <20250716-topic-goodnight_cheza-v2-2-6fa8d3261813@oss.qualcomm.com>
+In-Reply-To: <20250716-topic-goodnight_cheza-v2-2-6fa8d3261813@oss.qualcomm.com>
 From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 16 Jul 2025 07:21:32 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wn4C-cs1y3obzxdtdYcSM44m=AJVnb+Pn3kaaos2ng5Q@mail.gmail.com>
-X-Gm-Features: Ac12FXw3qS1FXk204atE8vfiTTzOmf0rWggWMgrUTIEYVKUJNOkL9pqvkeQi0pU
-Message-ID: <CAD=FV=Wn4C-cs1y3obzxdtdYcSM44m=AJVnb+Pn3kaaos2ng5Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Remove sdm845-cheza boards
+Date: Wed, 16 Jul 2025 07:21:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wj=J0-3rpjEsdLzgHzY3nXw0CWaCTHfbkNnu5H=VCPgQ@mail.gmail.com>
+X-Gm-Features: Ac12FXzTw0wKAIsfrwSNsVdCEfNSNshL9d8ykTsLQev02btB00hc45WqX4Wa3pM
+Message-ID: <CAD=FV=Wj=J0-3rpjEsdLzgHzY3nXw0CWaCTHfbkNnu5H=VCPgQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] dt-bindings: arm: qcom: Remove sdm845-cheza
 To: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -112,25 +112,18 @@ cros-qcom-dts-watchers <cros-qcom-dts-watchers@chromium.org> wrote:
 >
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 >
-> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
-> former efforts on making linux-arm-msm better we greatly appreciate.
+> Cheza was a prototype board, used mainly by the ChromeOS folks.
 >
-> There are close to zero known-working devices at this point in time
-> (see the link below) and it was never productized.
+> Almost no working devices are known to exist, and the small amount of
+> remaining ones are not in use anymore.
 >
-> Remove it to ease maintenance burden.
+> Remove the compatible strings reserved for it, as, quite frankly, Cheza
+> is no more.
 >
-> Link: https://lore.kernel.org/linux-arm-msm/5567e441-055d-443a-b117-ec16b=
-53dc059@oss.qualcomm.com/
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile            |    3 -
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 -----
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 -----
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 ----
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1330 --------------------=
-------
->  5 files changed, 1983 deletions(-)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 3 ---
+>  1 file changed, 3 deletions(-)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
