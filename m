@@ -1,222 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-65127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB6D9B06CED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:06:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 895E8B06CF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:08:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECEEA5663AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:06:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C50951AA58F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E93E11D90DD;
-	Wed, 16 Jul 2025 05:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8639421D590;
+	Wed, 16 Jul 2025 05:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1jONwPB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jM1EtteE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC31811CA9;
-	Wed, 16 Jul 2025 05:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A503597E;
+	Wed, 16 Jul 2025 05:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752642375; cv=none; b=hsjk3WrQO4JmzQHYA+nmCuAQ14twbBAA7G1oAn6UPq1G+UzQ1QfMEVsqAwsyzUHD0WteUwE4pUbvBKTYgrHCXPt6Cfd3vTRBmCwt8G/VH52582BHw3ArUlBsGUIpaeKgsgMzs/UeCFkd+E4QgEBZW0LenGHmuxvLit6nST39/5c=
+	t=1752642480; cv=none; b=q5GIL0RNI0zf6Ut3IA55H4KiwbwzztT6R2Z2dsp1Re5TBfI2K92BdBFqwnHg7d4+gHNTvOKQGk5hfUeEUpDSzm0g+6lRgk6pwZqq+f1SMgUjZbL39W8mkQgZCQCFYe5y8UqJQVCG1O2nWug8Qlv7qD31HQJp7ScTdu9DU5JCZow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752642375; c=relaxed/simple;
-	bh=CTmVn5puh9AqZ7nUWiS0Yw0f6SqZbMRAbF3CgIDV0kU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ucPJld0vWwiL5/gvJmLq3+9y2UW39BtjuqX2FqQ/vO00oFY3IoCHcBR8TA1Q9TULPviJIXdr1a+JoQos7WvV0uviI06nKLGBXSDvpw4DPR0xZCpz7c3u7rhBdt+2KKhtPOaGKkGHO3reAIrNI58g/GJq4/WJrJTzn+S6Y8LBGTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1jONwPB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92A5C4CEF0;
-	Wed, 16 Jul 2025 05:06:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752642375;
-	bh=CTmVn5puh9AqZ7nUWiS0Yw0f6SqZbMRAbF3CgIDV0kU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=x1jONwPBZhQwilY1jRcBQiyRmTCDiyA0/KxwkXGj7W2mXKcSoQx675bwn4DcmhLrN
-	 NryIN7p09VCCNplqQvKvK358qFGi9HqcECQg272qZVvZJgSvQBS3PgGpDOBDgzal0Q
-	 XqAWPhlwHp3HcFu1T7RG0Ny5p5DX0P5ed6dSkxwY=
-Date: Wed, 16 Jul 2025 07:06:11 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Cc: heikki.krogerus@linux.intel.com, lumag@kernel.org,
-	neil.armstrong@linaro.org, johan+linaro@kernel.org,
-	quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] usb: typec: ucsi: ucsi_glink: Increase buffer size to
- support UCSI v2
-Message-ID: <2025071600-configure-ambush-c139@gregkh>
-References: <20250716005224.312155-1-anjelique.melendez@oss.qualcomm.com>
+	s=arc-20240116; t=1752642480; c=relaxed/simple;
+	bh=QMCcgS8H6b0NTyUy16oi1nPFHtz7ibymTuYgq5x4YN8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XtQr7+CBqD6KgfLJZ6kgFbNi0q9pFxYJqqpdBqVPaLsh8POKFCA6zhuzWf4MFUwTkkNalLMidoRZjM1MuCCd5bYRi9C3mYL88kiYftQrV7OElRGYeoK7MtU7guNxaf4xGn2PXrFW/6nRrbjhsnuTjaObnXIwPJGKMEUyDeplE28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jM1EtteE; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752642479; x=1784178479;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=QMCcgS8H6b0NTyUy16oi1nPFHtz7ibymTuYgq5x4YN8=;
+  b=jM1EtteEzY1kUERXKxWzh9JLBzjQl0+Df2Cy76CEFstoRjP/SaxbFSSv
+   ori2/W9mbRgwyUwDGy/DIdh6dmcEYFj772Zw+/PScJH8O1g5xExbx4VV6
+   4Ev/ddL/Fu5mAzZHMQpSUiK74YpbsrDFePO95bdBhs5USRJp6Vd53+3uY
+   cSutS1PrNip55IqnBQctEnIroA9FnkQqTHz2lrnv5puDBHWXxJwKL4Qrd
+   T6jzV/pWK1wJJNFPlvg9AuqsBkD/pQM3ncx8+tbHkoIz5JUwwS47hnNYA
+   dWVCIS920Cu78BK2QlIItaUMDjRgZq+G9iqoT/XXB4KQP7Wa4OJXIpG5f
+   A==;
+X-CSE-ConnectionGUID: pww3+7DITD+g0E2rlJ7Pvg==
+X-CSE-MsgGUID: EgkvVJuKTPaUbFZxc0DSvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="55026216"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="55026216"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:07:57 -0700
+X-CSE-ConnectionGUID: 42ThZuFZT06jHaEFVlQWfw==
+X-CSE-MsgGUID: /IlBCgamRSmR6+bWLAGcGg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="188408979"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:07:43 -0700
+Message-ID: <83d124c1-2d1d-4ba4-a72b-82a008a97301@intel.com>
+Date: Wed, 16 Jul 2025 13:07:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250716005224.312155-1-anjelique.melendez@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 03/21] KVM: Introduce kvm_arch_supports_gmem()
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-4-tabba@google.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250715093350.2584932-4-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 15, 2025 at 05:52:24PM -0700, Anjelique Melendez wrote:
-> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
-> This makes the total buffer size increase from 48 bytes to 528 bytes.
-> Update the buffer size to support this increase.
+On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+> Introduce kvm_arch_supports_gmem() to explicitly indicate whether an
+> architecture supports guest_memfd.
 > 
-> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-> ---
-> Changes since v1:
->  - Defined buf size in terms of other UCSI defines
->  - Removed UCSI_BUF_SIZE and used the explicit v1 or v2 buffer size macros
->  - Removed Qualcomm copyright
->  - link: https://lore.kernel.org/all/20250624222922.2010820-1-anjelique.melendez@oss.qualcomm.com/
-> ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 58 ++++++++++++++++++++++++-----
->  1 file changed, 48 insertions(+), 10 deletions(-)
+> Previously, kvm_arch_has_private_mem() was used to check for guest_memfd
+> support. However, this conflated guest_memfd with "private" memory,
+> implying that guest_memfd was exclusively for CoCo VMs or other private
+> memory use cases.
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 8af79101a2fc..2918c88e54d2 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -16,10 +16,10 @@
->  
->  #define PMIC_GLINK_MAX_PORTS		3
->  
-> -#define UCSI_BUF_SIZE                   48
-> +#define UCSI_BUF_V1_SIZE               (UCSI_MESSAGE_OUT + (UCSI_MESSAGE_OUT - UCSI_MESSAGE_IN))
-> +#define UCSI_BUF_V2_SIZE               (UCSIv2_MESSAGE_OUT + (UCSIv2_MESSAGE_OUT - UCSI_MESSAGE_IN))
->  
->  #define MSG_TYPE_REQ_RESP               1
-> -#define UCSI_BUF_SIZE                   48
->  
->  #define UC_NOTIFY_RECEIVER_UCSI         0x0
->  #define UC_UCSI_READ_BUF_REQ            0x11
-> @@ -32,13 +32,25 @@ struct ucsi_read_buf_req_msg {
->  
->  struct ucsi_read_buf_resp_msg {
->  	struct pmic_glink_hdr   hdr;
-> -	u8                      buf[UCSI_BUF_SIZE];
-> +	u8                      buf[UCSI_BUF_V1_SIZE];
-> +	u32                     ret_code;
+> With the expansion of guest_memfd to support non-private memory, such as
+> shared host mappings, it is necessary to decouple these concepts. The
+> new kvm_arch_supports_gmem() function provides a clear way to check for
+> guest_memfd support.
+> 
+> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Shivank Garg <shivankg@amd.com>
+> Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   arch/x86/include/asm/kvm_host.h |  4 +++-
+>   include/linux/kvm_host.h        | 11 +++++++++++
+>   virt/kvm/kvm_main.c             |  4 ++--
+>   3 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> index acb25f935d84..bde811b2d303 100644
+> --- a/arch/x86/include/asm/kvm_host.h
+> +++ b/arch/x86/include/asm/kvm_host.h
+> @@ -2277,8 +2277,10 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
+>   
+>   #ifdef CONFIG_KVM_GMEM
+>   #define kvm_arch_has_private_mem(kvm) ((kvm)->arch.has_private_mem)
+> +#define kvm_arch_supports_gmem(kvm) kvm_arch_has_private_mem(kvm)
+>   #else
+>   #define kvm_arch_has_private_mem(kvm) false
+> +#define kvm_arch_supports_gmem(kvm) false
+>   #endif
+>   
+>   #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
+> @@ -2331,7 +2333,7 @@ enum {
+>   #define HF_SMM_INSIDE_NMI_MASK	(1 << 2)
+>   
+>   # define KVM_MAX_NR_ADDRESS_SPACES	2
+> -/* SMM is currently unsupported for guests with private memory. */
+> +/* SMM is currently unsupported for guests with guest_memfd private memory. */
 
-What is the endian-ness of ret_code as it comes from the device?
+Please don't change the comment.
 
-> +};
-> +
-> +struct ucsi_v2_read_buf_resp_msg {
-> +	struct pmic_glink_hdr   hdr;
-> +	u8                      buf[UCSI_BUF_V2_SIZE];
->  	u32                     ret_code;
->  };
->  
->  struct ucsi_write_buf_req_msg {
->  	struct pmic_glink_hdr   hdr;
-> -	u8                      buf[UCSI_BUF_SIZE];
-> +	u8                      buf[UCSI_BUF_V1_SIZE];
-> +	u32                     reserved;
+As below, it checks kvm_arch_has_private_mem(). Nothing to do with 
+guest_memfd.
 
-What is "reserved" for?  What is it set to?  Where is it tested to
-ensure it is set properly?
+Otherwise,
 
-> +};
-> +
-> +struct ucsi_v2_write_buf_req_msg {
-> +	struct pmic_glink_hdr   hdr;
-> +	u8                      buf[UCSI_BUF_V2_SIZE];
->  	u32                     reserved;
->  };
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-And for all of these structures, are you sure there are not "holes" in
-them?  As you are using sizeof(), don't they need to be packed?
-
->  
-> @@ -72,7 +84,7 @@ struct pmic_glink_ucsi {
->  	bool ucsi_registered;
->  	bool pd_running;
->  
-> -	u8 read_buf[UCSI_BUF_SIZE];
-> +	u8 read_buf[UCSI_BUF_V2_SIZE];
-
-Why is this one just v2 and not also v1?
-
->  };
->  
->  static int pmic_glink_ucsi_read(struct ucsi *__ucsi, unsigned int offset,
-> @@ -131,8 +143,9 @@ static int pmic_glink_ucsi_read_message_in(struct ucsi *ucsi, void *val, size_t
->  static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned int offset,
->  					const void *val, size_t val_len)
->  {
-> -	struct ucsi_write_buf_req_msg req = {};
-> +	struct ucsi_v2_write_buf_req_msg req = {};
->  	unsigned long left;
-> +	size_t len;
->  	int ret;
->  
->  	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
-> @@ -142,7 +155,18 @@ static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned i
->  
->  	reinit_completion(&ucsi->write_ack);
->  
-> -	ret = pmic_glink_send(ucsi->client, &req, sizeof(req));
-> +	if (!ucsi->ucsi->version || ucsi->ucsi->version >= UCSI_VERSION_2_1) {
-> +		/* If UCSI version is unknown, use the maximum buffer size */
-> +		len = sizeof(req);
-> +	} else {
-> +		/*
-> +		 * If UCSI V1, buffer size should be UCSI_BUF_V1_SIZE so update
-> +		 * len accordingly
-> +		 */
-> +		len = sizeof(struct ucsi_write_buf_req_msg);
-> +	}
-> +
-> +	ret = pmic_glink_send(ucsi->client, &req, len);
->  	if (ret < 0) {
->  		dev_err(ucsi->dev, "failed to send UCSI write request: %d\n", ret);
->  		return ret;
-> @@ -216,12 +240,26 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
->  
->  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
->  {
-> -	const struct ucsi_read_buf_resp_msg *resp = data;
-> +	const struct ucsi_v2_read_buf_resp_msg *resp = data;
-> +	u32 ret_code, buffer_len;
-> +
-> +	if (!ucsi->ucsi->version || ucsi->ucsi->version >= UCSI_VERSION_2_1) {
-> +		/* If UCSI version is unknown, use the maximum buffer size */
-> +		ret_code = resp->ret_code;
-
-No endian change?
-
-> +		buffer_len = UCSI_BUF_V2_SIZE;
-
-Shouldn't you warn about this?  Doesn't the version have to be set?
+>   # define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_has_private_mem(kvm) ? 1 : 2)
+>   # define kvm_arch_vcpu_memslots_id(vcpu) ((vcpu)->arch.hflags & HF_SMM_MASK ? 1 : 0)
+>   # define kvm_memslots_for_spte_role(kvm, role) __kvm_memslots(kvm, (role).smm)
 
 
-> +	} else {
-> +		/*
-> +		 * If UCSI V1, use UCSI_BUF_V1_SIZE buffer size and
-> +		 * update ret_code offset accordingly
-> +		 */
-> +		ret_code = ((struct ucsi_read_buf_resp_msg *)data)->ret_code;
-
-Are you sure the buffer was that big?  Where was that checked?
-
-> +		buffer_len = UCSI_BUF_V1_SIZE;
-> +	}
->  
-> -	if (resp->ret_code)
-> +	if (ret_code)
->  		return;
->  
-> -	memcpy(ucsi->read_buf, resp->buf, UCSI_BUF_SIZE);
-> +	memcpy(ucsi->read_buf, resp->buf, buffer_len);
-
-Where is the length checked against the "real" length of the buffer
-passed in here?  What happens if the device lies?
-
-thanks,
-
-greg k-h
 
