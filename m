@@ -1,81 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A3C5B071A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:29:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5A89B071B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:30:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9279E5017B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:28:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3B4D5019D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:30:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DC362F199B;
-	Wed, 16 Jul 2025 09:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56A962701CE;
+	Wed, 16 Jul 2025 09:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BrHThjfg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WkwyGBm7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E59E291C0B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 09:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7FD1FF1D1;
+	Wed, 16 Jul 2025 09:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658134; cv=none; b=XuZtVPlKsyD5dEDJ5hgyrJd20CMqmQsPWHDWeYfHghYxcnZTyX4VbRuNNqkxLwxVM9k/WqrxHy1Nfzkxg9ptWO4LDzRK+4vbgU3tm/d1vXSlje809eTsrR3Oece114Hd6BWG1hOuE+I75Es9sIMw5tXM5MQOeW4QedjhjGMcseA=
+	t=1752658231; cv=none; b=tW4pJJBjvyGPb5BEq4o+LzWUrAEuzWdRrFaShy+5dubwmoLptQ3OnYzf4EQpuUKJIaFXuNlVq09U+RtK4EHBn1im5SYSLimqMBQxxdYbZXnoyGgr4Vv71ClkL66P58d6c531oBA91rnNEXATiThcVta+mVllIeBMD+1c310tKVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658134; c=relaxed/simple;
-	bh=NCkP6yoCyLaOCvE5S2DmDKGtHd6haaVn/d7UWFUaoO8=;
+	s=arc-20240116; t=1752658231; c=relaxed/simple;
+	bh=Z5OZHZ/QiPo9fjqm12jkNALzwHX2Vgg0cuzZsmOo4tw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l2LMq7qtQUR79ed8ej4R76nhOqqE8vuTv286AYgmUzxjUFie/dzO6Dq5Iw6wUYseDS5K0N95NSQik1OPgytFsCR0hLun+seL2xZj3EuZmjkl+n8U0MUShwUdUyWBb8MMDPKReozmkoxv1JNvfDLaf8c1adZ9NAieFkuqWxX0ScE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BrHThjfg; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ae6daf1c878so110356766b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 02:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752658131; x=1753262931; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+qxW1re6yvLk1X4gDMz7zxFCiH3GRYXCvI3tRZnObA=;
-        b=BrHThjfgrBJsOBKz/nTyBiqmnzjMRj/xff2C2YjHsqODdv99Aal9+P2yoSKmd4xsAL
-         83DeH/u08B168gfo4n7YkwO9MB2HDnNr+jvzv+nkheyBAIJAb9hRtP6qgKn06rT/4S9Q
-         j+WuFVEvLvdiH+tVuqd+RTjeGP06IQeWAPus2Hbe1e+ajYouRP3YeJWPjGSambafSJvF
-         PaEEng/eFDw3Re32k3hJAim9+2Y89wY6cEZd041dDf0ny8w9sO1wJbkhh+lqpu1qj5LO
-         759754i1Qin2qFu/grQXmIo9KRIUP6o2VjpnUJEu4eN+Y0BF3IiMEQtwiCUOc3cSPvZz
-         ZILQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752658131; x=1753262931;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2+qxW1re6yvLk1X4gDMz7zxFCiH3GRYXCvI3tRZnObA=;
-        b=ltzdmG1vLMKWUuhOS2+1eNf0sKyX4cFiVWMV89NZkBUOT2QWENc1ypFRGBegWl+2VV
-         ZN/iBsOWlyl0GiYajbgsFgapwvlKRXzE1e0uj4LnSBbbLyezf66K03LFvOvIdkQjGwyu
-         Oze+UVuKsOxMMYnvYKdV8bK5EnTPLcihkH5QOaFtO5zbOCHY/EIbPsqPuYdQfsh+V65t
-         MREInQZ1BpVwchgePMC95xGZUZACeM528sIKOBlgWwCKsLXI38dR1j36oROhGDRPFZsi
-         cMAo/H+LJyNU3yPoYoW5JSuimpSvC0OPx94TPpc00huBNe6hoGHg20Pq7nftx15yYL3R
-         TM8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUYUY8yUXQ6aI5RevLXg1mgNvOu41dMEEcHuEGyEpct8j+g/lFtMg9Z1cV5lHBrZKSjojWur+jhd60nOmZB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqcqmF4H0XFMkjGduz9J3gzVhZliZwdMp2XoDD0ch/N0t471DG
-	wZbwmFUAYLF8BFH+ZNQJriSMgalKnVzz/V/yz8aQBpd6dFt7wdOwq26V6w5f17z/L8s=
-X-Gm-Gg: ASbGncta0cMGTxJszqcd8Vt++NlbX7rivvM+s8ITZg6rmAHNb1dsFa7kX4x9mUWLcGA
-	QpBppZSisEv9vBV6ZpXqEGePlzU2XscHQaJjUGQP0B9ahmqxbmC6Gzu3J/qU8v/7AwVDc13eBSI
-	lnMB3r744hQ/G3wjEatRegWOUAZxCcJzLB/RIWkmnYTxKc0E+Ru4kibPfbJj5gejmanm6OUWCZW
-	w6D+UM6N9CU1L2eg08b72QJUN00Sw6xprTlfKjeXlCIEqp4AE6V8xzImdN2C3T3J0gnuFUoc2/b
-	IbHpNsXc03aocM+ArAT65ty7GtMc5vDeIW1nVxyP3h+XU4JbAwDtyDgJ6VZqboBF9aJSYNBVbLH
-	lS2QqnqzSHgbkYM62pX5BlULQLZAZscpGsMecUvc9RQ==
-X-Google-Smtp-Source: AGHT+IGlIMXkItAaY/OzwYeDTLiEVh96gQhVFE/zkYpq8e+AFXOVR0zsqmJ1KwqIO8MEqpD4mEx42Q==
-X-Received: by 2002:a17:907:c0e:b0:ae0:cff8:5717 with SMTP id a640c23a62f3a-ae9c99c9c1emr91082566b.4.1752658130473;
-        Wed, 16 Jul 2025 02:28:50 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7ee4652sm1176638566b.53.2025.07.16.02.28.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 02:28:49 -0700 (PDT)
-Message-ID: <d4c39f2c-9f95-4e65-87a3-78173b39adf1@linaro.org>
-Date: Wed, 16 Jul 2025 11:28:48 +0200
+	 In-Reply-To:Content-Type; b=NF66B/iew1Wtgwa9q2CpwvpnBmkuOaFfpePyPE0WxpkJAH9CH8NqhC6rfluyXCru2xnNVso68bavU7KKkylVLuDfVm1hsrpe7pKSZj1yf4A2bfk0oC0SUdB1xHw1XUjRfm0aIZdsavsBVWt+T/iRKAy5uCVHE5D3zsc+K7bctI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WkwyGBm7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9E6C4CEF0;
+	Wed, 16 Jul 2025 09:30:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752658230;
+	bh=Z5OZHZ/QiPo9fjqm12jkNALzwHX2Vgg0cuzZsmOo4tw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WkwyGBm7yDTxCWgTfA3co9NABSMbk80frYatWh+KlCCl90Ur3L+Jw+w49WHk3iwNY
+	 okbz8KOjKKEFji3XFAtxp1wCWgeLdzgUjMuJpy+GOBA2GzWF3IginYYCRBjMEtCqgG
+	 Z2FucSlak4/M7lG/urwOmphv24fWdywAhsRbUzCWYyBbFBK+7ALpD/SrBNsRfURLyi
+	 5UpnB+ng4abhGTTBF/kd0zQhWHNyD1Uj9/V80hZfOyv9vY+lUiNufgw57clDOMVhBe
+	 UKWeTNVhmbTMNkeqPJyBBiKier9Qw7cvG702XVcqaTiOdsneCHYHsPfhyNKiHlAJqE
+	 gcE2ANnmPUHtA==
+Message-ID: <604a5823-c563-4d37-ab14-e3164f3b1cd8@kernel.org>
+Date: Wed, 16 Jul 2025 11:30:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,22 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] media: iris: Add support for SM8750 (VPU v3.5)
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org>
- <20250714-sm8750-iris-v1-3-3006293a5bc7@linaro.org>
- <7b0a984f-b62a-ac4d-74bf-a6e839c59272@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Document HAMOA-IOT-EVK board
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
+ <20250716-hamoa_initial-v1-1-f6f5d0f9a163@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -108,196 +71,92 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  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
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <7b0a984f-b62a-ac4d-74bf-a6e839c59272@quicinc.com>
+ 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 a/A=
+In-Reply-To: <20250716-hamoa_initial-v1-1-f6f5d0f9a163@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/07/2025 11:10, Dikshita Agarwal wrote:
+On 16/07/2025 11:08, Yijie Yang wrote:
+> Document the device tree binding for a new board named "EVK" based on
+> the Qualcomm Hamoa-IoT platform.
 > 
+> The "hamoa" name refers to a family of SoCs that share the same silicon
+> die but are offered in multiple speed bins. The specific SoC used in
+> this board is the x1e80100, which represents one such bin within the
+> Hamoa family.
 > 
-> On 7/14/2025 7:11 PM, Krzysztof Kozlowski wrote:
->> Add support for SM8750 Iris codec with major differences against
->> previous generation SM8650:
->>
->> 1. New clocks and new resets, thus new power up and power down
->>    sequences,
->>
->> 2. New WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0 register programmed
->>    during boot-up
->>
+> Although "qcom,hamoa-iot-evk" is introduced as the board-specific
+> compatible, the fallback compatible remains "qcom,x1e80100" to preserve
+> compatibility with existing in-kernel drivers and software that already
+> depend on this identifier.
+> 
+> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index ae43b35565808ed27cd8354b9a342545c4a98ed6..83b09ec1100ca03044c832212a99e65cc1177985 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -100,8 +100,8 @@ description: |
+>          sm8550
+>          sm8650
+>          sm8750
+> -        x1e78100
+> -        x1e80100
+> +        x1e78100 # hamoa
+> +        x1e80100 # hamoa
 
 
-
-Please kindly trim the replies from unnecessary context. It makes it
-much easier to find new content.
+Huh? Why, no drop.
 
 
->> +struct iris_platform_data sm8750_data = {
->> +	.get_instance = iris_hfi_gen2_get_instance,
->> +	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
->> +	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
->> +	.vpu_ops = &iris_vpu35_ops,
->> +	.set_preset_registers = iris_set_sm8550_preset_registers,
->> +	.icc_tbl = sm8550_icc_table,
->> +	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
->> +	.clk_rst_tbl = sm8750_clk_reset_table,
->> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8750_clk_reset_table),
->> +	.bw_tbl_dec = sm8550_bw_table_dec,
->> +	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
->> +	.pmdomain_tbl = sm8550_pmdomain_table,
->> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
->> +	.opp_pd_tbl = sm8550_opp_pd_table,
->> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
->> +	.clk_tbl = sm8750_clk_table,
->> +	.clk_tbl_size = ARRAY_SIZE(sm8750_clk_table),
->> +	/* Upper bound of DMA address range */
->> +	.dma_mask = 0xe0000000 - 1,
->> +	.fwname = "qcom/vpu/vpu35_4v.mbn",
-> Could you clarify where this firmware has been merged? Also, it appears
-> that the naming convention hasn't been followed.
+>          x1p42100
+>  
+>    There are many devices in the list below that run the standard ChromeOS
+> @@ -1162,6 +1162,11 @@ properties:
+>                - qcom,x1p42100-crd
+>            - const: qcom,x1p42100
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,hamoa-iot-evk
 
+Don't duplicate entries. Look how this file is organized.
 
-I mentioned in the DTS patchset but not here, so I will add it in the
-cover letter - firmware is not released. About the name I cannot
-comment, that's the name I got from qcom. Happy to use whatever name you
-prefer.
-
-
-
->> +static int iris_vpu35_power_on_hw(struct iris_core *core)
->> +{
->> +	int ret;
->> +	u32 val;
->> +
->> +	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
->> +	if (ret)
->> +		return ret;
->> +
->> +	/* Switch GDSC to SW control */
->> +	writel(0x0, core->reg_base + WRAPPER_CORE_POWER_CONTROL);
-> GDSCs have been transitioned from HW_CTRL to HW_CTRL_TRIGGER, placing them
-> under software control by default, what is the need of doing this?
->> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_CORE_POWER_STATUS,
->> +				 val, val & BIT(1), 200, 2000);
-
-
-The need comes from differences between this and previous generation,
-mostly based on downstream sources. I think the hardware just did not
-boot up without it.
-
-You need to fix your email client to add line breaks around your
-replies, because it is very difficult to spot them. It's close to
-impossible...
-
-
->> +	if (ret)
->> +		goto err_disable_power;
->> +
->> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_CLK);
->> +	if (ret)
->> +		goto err_gdsc;
->> +
->> +	ret = iris_prepare_enable_clock(core, IRIS_HW_FREERUN_CLK);
->> +	if (ret)
->> +		goto err_disable_axi_clk;
->> +
->> +	ret = iris_prepare_enable_clock(core, IRIS_HW_CLK);
->> +	if (ret)
->> +		goto err_disable_hw_free_clk;
->> +
->> +	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
->> +	if (ret)
->> +		goto err_disable_hw_clk;
->> +
->> +	return 0;
->> +
->> +err_disable_hw_clk:
->> +	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
->> +err_disable_hw_free_clk:
->> +	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
->> +err_disable_axi_clk:
->> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
->> +err_gdsc:
->> +	writel(BIT(0), core->reg_base + WRAPPER_CORE_POWER_CONTROL);
->> +err_disable_power:
->> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
->> +
->> +	return ret;
->> +}
->> +
->> +static void iris_vpu35_power_off_hw(struct iris_core *core)
->> +{
->> +	u32 val = 0, value, i;
->> +	int ret;
->> +
->> +	if (iris_vpu3x_hw_power_collapsed(core))
->> +		goto disable_power;
->> +
->> +	value = readl(core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->> +	if (value)
->> +		writel(CORE_CLK_RUN, core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->> +
->> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
->> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
->> +					 val, val & 0x400000, 2000, 20000);
->> +		if (ret)
->> +			goto disable_power;
->> +	}
->> +
->> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
->> +				 val, val & BIT(0), 200, 2000);
-> what are you polling here for?
-
-
-This is not different than existing code. I don't understand why you are
-commenting on something which is already there.
-
->> +	if (ret)
->> +		goto disable_power;
->> +
->> +	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
-> Could you share the reference for this sqeunece, this looks half-cooked.
-> Would recommend following Hardware programmin guide(HPG) for this.
-
-
-Why? Look at existing code. It's the same.
-
-I think I responded to all your comments - it barely possible to spot
-them in the quote.
 
 Best regards,
 Krzysztof
