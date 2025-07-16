@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E654B07457
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:10:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A71A2B07459
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:10:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02C091C24404
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:10:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8CC6516AF49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3D82F3C10;
-	Wed, 16 Jul 2025 11:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74B9A2F4325;
+	Wed, 16 Jul 2025 11:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iauYOuFr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9370MmE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D1B2F2376;
-	Wed, 16 Jul 2025 11:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C862F1FE1;
+	Wed, 16 Jul 2025 11:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752664124; cv=none; b=u7/FZlJ9ek6viB6rMRc10ztLznNFKgmUHBOBaZiynNU3qXXomJ8OEn61gYAT1u5LEG/KuMnEajCOTeeD7uYCA2A7Oq1uY5G/Ae7CP3z/O88fR35Jt3YZqshQV0i0grdPaRlUzBrANvglvRy7vpgPFCIo02acXR/rlZtdhbJeam8=
+	t=1752664145; cv=none; b=gWSqkBdSebOvHyYNA638HrLr+EhTdIt7si3XFBaziXaAdYesXZHd4tUbtVh5mNQM5dGx0lA7oJ8sAN8XAD/he6A+xTFgBXiV39OA76jYrb9kYJ6WFzqa7+Yzy0A3fw9fvd78jS5D9bK++4S7vf1Gi8jVveqMCgeGWR4tZ2LStWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752664124; c=relaxed/simple;
-	bh=AyAmWhiQdDWqGJGGeRk5g3QD0etWwWAjv7mp1B+BvMo=;
+	s=arc-20240116; t=1752664145; c=relaxed/simple;
+	bh=sHjdraUARsVWVZBGA5coEHjXWQVtdwaBp0GEW28hRn0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j3H2vQ1OUyIqs9xnN7/6REPsXpUTvMBq2ArEeQi+qHWPA/R+ShEJjk4nkJsIJbMwNsXBlN/gAKxo+Xo00i0SyuShTk8j/W6GSedMb4NMyvCRifEtrAOmufq3jY25hU8WFNz7ouyuz/Vcnp6+ls5R70ukCjsIVmTYqJv74nlIjH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iauYOuFr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C451C4CEF0;
-	Wed, 16 Jul 2025 11:08:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eeKBO5D0/8kpQugO5VHLN+o0ko7AaS/DGUF7Fsw+bRGvgcAKLewiFIsQsZY9GIj3iN+CbOXo4zJJ2zUPTEeNwJ+RM/4VGNx13IomaS2WS2YdxB5UftzsBKghBC1SGVxte2BzKZjrS8GZiSvyN4PNg3ltTEjAOO6SAr01dHdgSoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9370MmE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105CEC4CEF0;
+	Wed, 16 Jul 2025 11:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752664124;
-	bh=AyAmWhiQdDWqGJGGeRk5g3QD0etWwWAjv7mp1B+BvMo=;
+	s=k20201202; t=1752664144;
+	bh=sHjdraUARsVWVZBGA5coEHjXWQVtdwaBp0GEW28hRn0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iauYOuFr4AmtjhZPqZqG7YLdGrRT/yvD+wToU8zXoAFc4qJU86qYMtEXScBELOjiw
-	 FXeWi0Q2UViZ9Nj4e+kJdmkUhvuX8V0ghzKjDC/p3uQiNngxhSn6flVBGT51tYFLup
-	 Fq8zzjwUOG5NrgGhEmwS7ajXC1bB4GPz8LwdNXF1mymltCbH0ghQls63VaC/SYRb1x
-	 Mtu1AvtmzB3IbNFONvwWrmk50gc3osyEt4YBYkX/3rbl3n7f9MDowPPxLIrs8ChWr7
-	 EBg8VsovENvLP7UOrdxLcNxGI2/i/dCYa7M/HYX3a/Pn+xLFVMknilgc7vgJk7a3EJ
-	 fIJ7wjrs3qlnw==
-Message-ID: <878eff53-85a4-4aa5-84ff-74c774d5149b@kernel.org>
-Date: Wed, 16 Jul 2025 13:08:38 +0200
+	b=i9370MmE4onzDAHbdbG+eM9s+llGM6I5tmz00ihHxlTthE4Yslrhe2KH4shuLMvDj
+	 gpSwd7FFL/diVxGq4hxVcVgeJ9+WWiWTawQln+aLIjlNZBwWLrVqgiyHmd3h+qVllx
+	 e597REE0ePkOOIAxfJoNd2VQOOIt8ovocv/BlL7rBqSj62dPjtRyp+hKJETV1LtTTH
+	 pyIUNHN50KUWdI17juUtRIJLVeSu1TpZYBQWOwqLUNQSGCzTKOd/QJaUpNPpSnsNlh
+	 I/jXOx35DunuAcUs54P2JoFY6d/IM1HHJFnWk4/ZGgc8SdyoXjoZlfEoRhMXhc/CBV
+	 x/u42v1IZ7klQ==
+Message-ID: <8fb39195-05ac-4166-a254-ec773853b9ba@kernel.org>
+Date: Wed, 16 Jul 2025 13:08:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Remove sdm845-cheza boards
+Subject: Re: [PATCH v2 3/4] dt-bindings: arm-smmu: Remove sdm845-cheza
+ specific entry
 To: Konrad Dybcio <konradybcio@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -63,7 +64,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
- <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
+ <20250716-topic-goodnight_cheza-v2-3-6fa8d3261813@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,22 +110,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
+In-Reply-To: <20250716-topic-goodnight_cheza-v2-3-6fa8d3261813@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 16/07/2025 12:16, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
-> former efforts on making linux-arm-msm better we greatly appreciate.
+> The firmware on SDM845-based Cheza boards did not provide the same
+> level of feature support for SMMUs (particularly around the Adreno
+> GPU integration).
 > 
-> There are close to zero known-working devices at this point in time
-> (see the link below) and it was never productized.
+> Now that Cheza is being removed from the kernel (almost none exist at
+> this point in time), retire the entry as well.
 > 
-> Remove it to ease maintenance burden.
+> Most notably, it's not being marked as deprecated instead, as there is
+> no indication that any more of those ~7 year old devboards will be
+> built.
 > 
-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
