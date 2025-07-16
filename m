@@ -1,165 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-65219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D618B0743A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E654B07457
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:10:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8BD51AA623C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:06:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02C091C24404
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:10:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 893AF2F2736;
-	Wed, 16 Jul 2025 11:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3D82F3C10;
+	Wed, 16 Jul 2025 11:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="07w/j5tE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iauYOuFr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00D02F2359
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 11:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D1B2F2376;
+	Wed, 16 Jul 2025 11:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752663949; cv=none; b=LuHNv8NfrvGKA+ESQXEmQl61bY0QA01VK2DpS9UJOQ+ElOu3ELzKncE8Mrro22V+CvfoeosXO9VIbty4e+skq0poa/AGomr0NuF97KZtRXM8QZpso8pz73tLP5XVqxz3MLzHbLJCGpVs7puhIPpLxGxe6rk2mmSIUIu+dAxFAuM=
+	t=1752664124; cv=none; b=u7/FZlJ9ek6viB6rMRc10ztLznNFKgmUHBOBaZiynNU3qXXomJ8OEn61gYAT1u5LEG/KuMnEajCOTeeD7uYCA2A7Oq1uY5G/Ae7CP3z/O88fR35Jt3YZqshQV0i0grdPaRlUzBrANvglvRy7vpgPFCIo02acXR/rlZtdhbJeam8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752663949; c=relaxed/simple;
-	bh=Q0um87P4/3R8smq76yisAQlQe7fLie4Eoep5/bLrQas=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n8wRxqIXNzccoPxyWHCmnuW3YAuOJALeniksJ1e/FyK/fzHtNpmFj7WydIxgP8UaVUhK9HKIsOunQxCnMuU+QxhLjT2KexflXinc4qoA0OKwG/yi045ySaFKumWS4WQqbErpqcCqeIVobDgmP0BmwVMxv2f9N8bHqDa1zkY4PgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=07w/j5tE; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4ab86a29c98so410461cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 04:05:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752663947; x=1753268747; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q0um87P4/3R8smq76yisAQlQe7fLie4Eoep5/bLrQas=;
-        b=07w/j5tEZvCLYvQbr/F7+UBXMz7LerwAsuDbCx5TniG3MWGv2K/CgtAGYnwtf2H+v8
-         /GhgOk4mK25qr6EjsVhDNY1wfCRCdkpusaUKPiYL+TQX+M0YVGM1mj9S9GwlJwQ9Wq0p
-         Vn1zG/9fj/lrUg+S+yXHmEg+S30XPVrGpxiHR7NZqQacEV8A7SUABEO2KUXRWTkjEG1a
-         cVz5soh76/FR20fmb0mqoe9CaHGyxT9vqZIdkG3yHY1CUJJPyWtX2r8YX1k5xWQxxUkU
-         jiKHja7hRFwKyVfKIvLIO7WTjSSg1UkuRtUVVhhnb2FPDhpgec6Fr3QqF+NxnIhur4WX
-         vbvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752663947; x=1753268747;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q0um87P4/3R8smq76yisAQlQe7fLie4Eoep5/bLrQas=;
-        b=slE6tZih3fU5vPZwc3rN6keKIxiHK8VZxiTr1EP/SImkB1nho3bSS4o+o665Tl0Bt5
-         J0KO+j6XxpkMPYgIpe/JXdOqh4LX65HMXKATERelQwN8lM9uW4G1eWfgwaa24oaNaPld
-         KXQncK8fIcxgy/PJgnK6p6UwR84RGQXar+Emw3qcKfkAELAfao0qqW7sKONJRyv+Ma/K
-         +qXqkwR2UWCQpBj4an9T9A+j7OeLOqNL3JFvG9rdU+Ft/1FaXITSQo1CkaSvKVZHGgQR
-         xiU2543IRWGbEa7FE0bfufhdPdgKX8a+dFX0JZnVf9CGptZuSLKOQj5lKeHDX2CgpAtE
-         NvAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVj095Lad0yz90aWN8mnovgf68QsW19ZIO4yFTYyO6qQn1PxKLTF378H6Pi08KmkHAFRFISAEuYx3SQpeOc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/n1X9nNyRzeHGG/cinaTdwIrjqVKgPuip+2nvb8PY+xIxfV/K
-	NUNfuQgpC/4iLF+5v3i+Ih7S22toGgDXgpMi3obTr458aZwcJ/ndmXw6tHLJZgsg+CAvFJqUo6Q
-	RxJw3GfmQ6YnV0PfbvHwc2KVntl2Qf2CQO9FkhrT5
-X-Gm-Gg: ASbGncurroUk+p+W82l5/RQKPiXHvXIvpJOM+4k7tfJWp/Ggtp2N9pqsXWc333xqGki
-	Pr4H9nX+Eid9sGjmcvgMVGCO4dwbOkJM6dJDl5ZwS0lK6P3EB9aOsy9FJtNFBvVT05gDydGuibF
-	Pp41CbuNWqGlc52usmPLF9rIbg70HqRi2kTOsWuWQC9d9TJWKYb7QLFmRSxaZ8PIbJGCtl90Ntk
-	uq5+n1H5DbfeBZcEH3DRvfAjRDdAHuLOmE9
-X-Google-Smtp-Source: AGHT+IG34MfGj/Zl62zVn178UZKzeSI18O6et/oIgJa6CLuO77Ce5w+YXMKKyouWv/4JvQ+6pdezBz48FGUKIecZjcI=
-X-Received: by 2002:a05:622a:1aa0:b0:4a9:b6e1:15a with SMTP id
- d75a77b69052e-4ab954d8746mr2391171cf.24.1752663946223; Wed, 16 Jul 2025
- 04:05:46 -0700 (PDT)
+	s=arc-20240116; t=1752664124; c=relaxed/simple;
+	bh=AyAmWhiQdDWqGJGGeRk5g3QD0etWwWAjv7mp1B+BvMo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j3H2vQ1OUyIqs9xnN7/6REPsXpUTvMBq2ArEeQi+qHWPA/R+ShEJjk4nkJsIJbMwNsXBlN/gAKxo+Xo00i0SyuShTk8j/W6GSedMb4NMyvCRifEtrAOmufq3jY25hU8WFNz7ouyuz/Vcnp6+ls5R70ukCjsIVmTYqJv74nlIjH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iauYOuFr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C451C4CEF0;
+	Wed, 16 Jul 2025 11:08:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752664124;
+	bh=AyAmWhiQdDWqGJGGeRk5g3QD0etWwWAjv7mp1B+BvMo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iauYOuFr4AmtjhZPqZqG7YLdGrRT/yvD+wToU8zXoAFc4qJU86qYMtEXScBELOjiw
+	 FXeWi0Q2UViZ9Nj4e+kJdmkUhvuX8V0ghzKjDC/p3uQiNngxhSn6flVBGT51tYFLup
+	 Fq8zzjwUOG5NrgGhEmwS7ajXC1bB4GPz8LwdNXF1mymltCbH0ghQls63VaC/SYRb1x
+	 Mtu1AvtmzB3IbNFONvwWrmk50gc3osyEt4YBYkX/3rbl3n7f9MDowPPxLIrs8ChWr7
+	 EBg8VsovENvLP7UOrdxLcNxGI2/i/dCYa7M/HYX3a/Pn+xLFVMknilgc7vgJk7a3EJ
+	 fIJ7wjrs3qlnw==
+Message-ID: <878eff53-85a4-4aa5-84ff-74c774d5149b@kernel.org>
+Date: Wed, 16 Jul 2025 13:08:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250715093350.2584932-1-tabba@google.com> <20250715093350.2584932-3-tabba@google.com>
- <a4091b13-9c3b-48bf-a7f6-f56868224cf5@intel.com> <CA+EHjTy5zUJt5n5N1tRyHUQN6-P6CPqyC7+6Zqhokx-3=mvx+A@mail.gmail.com>
- <418ddbbd-c25e-4047-9317-c05735e02807@intel.com> <778ca011-1b2f-4818-80c6-ac597809ec77@redhat.com>
- <6927a67b-cd2e-45f1-8e6b-019df7a7417e@intel.com>
-In-Reply-To: <6927a67b-cd2e-45f1-8e6b-019df7a7417e@intel.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 16 Jul 2025 12:05:09 +0100
-X-Gm-Features: Ac12FXwLnudqPBETDUTkvUad_Ou8IyTTedPM6CDydpNfw0kKmZr9XGnTtqO-hwY
-Message-ID: <CA+EHjTz7C4WgS2-Dw0gywHy+zguSNXKToukPiRfsdiY8+Eq6KA@mail.gmail.com>
-Subject: Re: [PATCH v14 02/21] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Remove sdm845-cheza boards
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Joerg Roedel <joro@8bytes.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
+ <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250716-topic-goodnight_cheza-v2-1-6fa8d3261813@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 16 Jul 2025 at 12:02, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->
-> On 7/16/2025 6:25 PM, David Hildenbrand wrote:
-> > On 16.07.25 10:31, Xiaoyao Li wrote:
-> >> On 7/16/2025 4:11 PM, Fuad Tabba wrote:
-> >>> On Wed, 16 Jul 2025 at 05:09, Xiaoyao Li<xiaoyao.li@intel.com> wrote:
-> >>>> On 7/15/2025 5:33 PM, Fuad Tabba wrote:
-> >>>>> The original name was vague regarding its functionality. This Kconfig
-> >>>>> option specifically enables and gates the kvm_gmem_populate()
-> >>>>> function,
-> >>>>> which is responsible for populating a GPA range with guest data.
-> >>>> Well, I disagree.
-> >>>>
-> >>>> The config KVM_GENERIC_PRIVATE_MEM was introduced by commit
-> >>>> 89ea60c2c7b5
-> >>>> ("KVM: x86: Add support for "protected VMs" that can utilize private
-> >>>> memory"), which is a convenient config for vm types that requires
-> >>>> private memory support, e.g., SNP, TDX, and KVM_X86_SW_PROTECTED_VM.
-> >>>>
-> >>>> It was commit e4ee54479273 ("KVM: guest_memfd: let kvm_gmem_populate()
-> >>>> operate only on private gfns") that started to use
-> >>>> CONFIG_KVM_GENERIC_PRIVATE_MEM gates kvm_gmem_populate() function. But
-> >>>> CONFIG_KVM_GENERIC_PRIVATE_MEM is not for kvm_gmem_populate() only.
-> >>>>
-> >>>> If using CONFIG_KVM_GENERIC_PRIVATE_MEM to gate kvm_gmem_populate() is
-> >>>> vague and confusing, we can introduce KVM_GENERIC_GMEM_POPULATE to gate
-> >>>> kvm_gmem_populate() and select KVM_GENERIC_GMEM_POPULATE under
-> >>>> CONFIG_KVM_GENERIC_PRIVATE_MEM.
-> >>>>
-> >>>> Directly replace CONFIG_KVM_GENERIC_PRIVATE_MEM with
-> >>>> KVM_GENERIC_GMEM_POPULATE doesn't look correct to me.
-> >>> I'll quote David's reply to an earlier version of this patch [*]:
-> >>
-> >> It's not related to my concern.
-> >>
-> >> My point is that CONFIG_KVM_GENERIC_PRIVATE_MEM is used for selecting
-> >> the private memory support. Rename it to KVM_GENERIC_GMEM_POPULATE is
-> >> not correct.
-> >
-> > It protects a function that is called kvm_gmem_populate().
-> >
-> > Can we stop the nitpicking?
->
-> I don't think it's nitpicking.
->
-> Could you loot into why it was named as KVM_GENERIC_PRIVATE_MEM in the
-> first place, and why it was picked to protect kvm_gmem_populate()?
+On 16/07/2025 12:16, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Cheza was a prototype board, used mainly by the ChromeOS folks, whose
+> former efforts on making linux-arm-msm better we greatly appreciate.
+> 
+> There are close to zero known-working devices at this point in time
+> (see the link below) and it was never productized.
+> 
+> Remove it to ease maintenance burden.
+> 
 
-That is, in part, the point of this patch. This flag protects
-kvm_gmem_populate(), and the name didn't reflect that. Now it does. It
-is the only thing it protects.
 
-Cheers,
-/fuad
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
