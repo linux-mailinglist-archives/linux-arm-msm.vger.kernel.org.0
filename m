@@ -1,187 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-65154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38988B06EE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:27:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8596CB06F1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:37:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80FC61A65E79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:27:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA59C1A6613A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:38:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ACDA2882C1;
-	Wed, 16 Jul 2025 07:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC75328C01F;
+	Wed, 16 Jul 2025 07:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AuQvSUEZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnym7igX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BEA80B;
-	Wed, 16 Jul 2025 07:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987312798E3;
+	Wed, 16 Jul 2025 07:37:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752650817; cv=none; b=OvWWWdeAxaO1FnBsKjxIvJQiMWIiNwkFuIrbmGYFhFRlWoR/4fStHwgOT4Gwd1jm0xl2fCn/2SwsYrV+q+SZb/QOEPloJpTAOVJ0FcYftVox+IdmmyzDZuwE4oXnvj+g/7tbDbF5saVhW5QRXzjR9b6BHgcf7pf/r8af6lxccPY=
+	t=1752651466; cv=none; b=D5xXw9yj/tGcfs+JOFPUVQ8YL5u8Mkm8pJsi1mVTHlghz6nhpAnmbRJH9s47eJH/aQjZodqZSlCWwo5ElZ5RIMAjtxsxrDZoHWfil8nGQDa5s9vecdzPYv6lxdD83WUk6GQQWDXtkutnHDZtdELaEo5/5/ZOQfE5BeJeBG7+Bz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752650817; c=relaxed/simple;
-	bh=r1PQD6nD4pyjJ1Pi4gRFFijXmP3ecaPtaCinH8IuMHc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SIMQ7OgC0SMryIMeYsQWK/WpJUYJUQDvFUQMxESpTvO/0rkCP15/YhBkDUnHFmywZCe3eweE7b5blmdMQ9cyS+rPWQ3hMHfa4FLiKTw7y1Py51VoEl3MOc8Zr+05HARBRr6iq8NsBQzgLeVpALU2nrbOxA9JgPO+M2l1bO1+AM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AuQvSUEZ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56G5sBWU024588;
-	Wed, 16 Jul 2025 07:26:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y+xBnG3A0ZWzm693I0w1sXLH1FieiMMxSWP430Dc1M0=; b=AuQvSUEZFczPQqwV
-	BuEyrtb3ozVWWzQfZ2/bJeCMQ0JcFkbvT2MyatgYTEyOHq247gJfBjHnqZhWdNsy
-	A+Me2g0Dg339liKfDhagY4qIzlGDA2oq85YXNSaupQ9w+fJ5XlWUvpUZjODK4A4g
-	3vlyYzM71zgLDlZSpBTEKLQ0lzF21UcZxXXF2ZlbevEJ5pd4lM3m3KGoizC/0d6I
-	sblv96dKjO0w2zTjqWQMuw6ouLW+OWB59gH4NNwYNzcoGQEaO/OPriDkzcHggI0v
-	vkPKAcI6nQcsc9QO9hRJSjQwc1XvHtNEwno6UGYsSMgZAQ0SmU2VTWM51FXRxN4c
-	df7Nlg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dpdurb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 07:26:48 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56G7Qm8O005140
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 07:26:48 GMT
-Received: from [10.216.39.173] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 16 Jul
- 2025 00:26:45 -0700
-Message-ID: <1b7e724a-fa91-11b7-3ee8-d97ed930d6ad@quicinc.com>
-Date: Wed, 16 Jul 2025 12:56:42 +0530
+	s=arc-20240116; t=1752651466; c=relaxed/simple;
+	bh=yGP6R1fUpqjMKaOhGv9QgOWRpk5/gFx/qaZbVqUJ1nE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=etZHz3b4bDVrwndH4PpzYegidlQW0xQ8UIKrr/HLoMIIYvzeRX57dMTE2AZuJhFpt3kqD3eIvrvtlO1202fdyYubFqzwJMxGMu21u2G4B64JKUpPJ+fu2yDkXBpsVEqsFqTR6VScIziSiKSi7MDynZNwQ7E7hV/SJKtlMhjkiKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnym7igX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F68C4CEF0;
+	Wed, 16 Jul 2025 07:37:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752651466;
+	bh=yGP6R1fUpqjMKaOhGv9QgOWRpk5/gFx/qaZbVqUJ1nE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qnym7igXoqGrtlNDLg6WqxZ+RhchA59gIBwhtKVvib30Yb/OSbr+TFQb/Ox9tjLA/
+	 age6eD1B7/telUP+Gc40pFntE+7GTyNCKlosmvawWQf9QHcg59kyZF5C1Wm8oUFZYr
+	 L/nTPFVDcrJ2rNUvKNEqhnEcRUKFjE/mHBRNHyAjyeljUcyaXp2z0TKd9sIHujfyY9
+	 XzOF7VA/O8DxgmMx9Wa4xLqQXYw9NH8wmFRsgjQwK2ZBTaaoZxG9IMfZzLwz/HaI8m
+	 svQI9NaYncSBL5DdidjWbiNs3s+7slZe4RoZBxps1ire0yYcmn7O+A9YTw3D/dLQq8
+	 tq0ASGKthk50A==
+Date: Wed, 16 Jul 2025 09:37:43 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+	kernel@oss.qualcomm.com, Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Subject: Re: [PATCH v6 2/9] dt-bindings: pinctrl:
+ qcom,sc7280-lpass-lpi-pinctrl: Document the clock property
+Message-ID: <20250716-fancy-aloof-hedgehog-50302f@krzk-bin>
+References: <20250715180050.3920019-1-quic_pkumpatl@quicinc.com>
+ <20250715180050.3920019-3-quic_pkumpatl@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 11/25] media: iris: Fix missing LAST flag handling during
- drain
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        "Vedang
- Nagar" <quic_vnagar@quicinc.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
- <20250704-iris-video-encoder-v1-11-b6ce24e273cf@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250704-iris-video-encoder-v1-11-b6ce24e273cf@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA2NiBTYWx0ZWRfX+XbCfmZ86eh7
- nXoxS8mYe0PPpkop90INBf0Zc5Av/fZQR0jbd5unGk+HSE26jGLb2BzBcDkL4QXEln9793FcTj3
- o9FG4so2Fv28l3n9P6niv7Dm0E+no+tc8N5qshPXdPvtXbOrmwkPXxoBOQ3XkWJE7MYUJeGEACR
- 9eq13aLsDPvoNgnhTGfxMsRSDJsBJ0+3qIV7J3gmNlDDvqH19DOskU6LIzBqk1HS+8nOkm+mrL5
- I9HIyRk8E9WVHuhpHHcfpddwaTfPJEFwF6a7AtrOJG/PYPjCh7iIc5OfXWcPa9X6wrjOpEZKZVt
- FbuwKZHZP2gmFHKW3v1QdqzzK98IkSwSuLzjgXJppeORUyDd0I8vbgpCcXt/dc7lvgRE/vXgG3f
- Dl3oTTMNjbiNz9Kcvl8tfoKHwp4ODiZn1pBlTe4IVvLFarAH7K9u729ALoOUxHD2VSDCMktE
-X-Proofpoint-GUID: 1-tsxHVbqSsMhqwsXLitC-jWTM2UayCx
-X-Proofpoint-ORIG-GUID: 1-tsxHVbqSsMhqwsXLitC-jWTM2UayCx
-X-Authority-Analysis: v=2.4 cv=Y+r4sgeN c=1 sm=1 tr=0 ts=68775438 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=KpRsr4bm_Dgpwk9YamYA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 mlxlogscore=830 phishscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 impostorscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
- bulkscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507160066
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250715180050.3920019-3-quic_pkumpatl@quicinc.com>
 
+On Tue, Jul 15, 2025 at 11:30:43PM +0530, Prasad Kumpatla wrote:
+> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> 
+> Document the clock property in sc7280 LPASS LPI pinctrl node.
+> Clock settings required for Audioreach solution, ensuring
+> proper initialization and synchronization of the LPASS LPI
+> hardware.
 
+I really wanted to see here documentation explaining the change from the
+hardware point of view - why hardware was working fine without the
+clocks so far? Or maybe it wasn't working at all? Something changed?
+Where the clocks always there in the hardware/firmware or not?
 
-On 7/4/2025 1:23 PM, Dikshita Agarwal wrote:
-> Improve drain handling by ensuring the LAST flag is attached to final
-> capture buffer when drain response is received from the firmware.
-> 
-> Previously, the driver failed to attach the V4L2_BUF_FLAG_LAST flag when
-> a drain response was received from the firmware, relying on userspace to
-> mark the next queued buffer as LAST. This update fixes the issue by
-> checking the pending drain status, attaching the LAST flag to the
-> capture buffer received from the firmware (with EOS attached), and
-> returning it to the V4L2 layer correctly.
-> 
-> Fixes: d09100763bed ("media: iris: add support for drain sequence")
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c | 4 +---
->  drivers/media/platform/qcom/iris/iris_state.c             | 2 +-
->  drivers/media/platform/qcom/iris/iris_state.h             | 1 +
->  3 files changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> index 8d1ce8a19a45ebb2b29457e0fef7d72c1c0d9785..2a96458833835422d30c9386d15cc1e4fb226e3d 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> @@ -416,8 +416,6 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
->  			inst->flush_responses_pending++;
->  
->  		iris_inst_sub_state_change_drain_last(inst);
-> -
-> -		return;
->  	}
->  
->  	if (iris_split_mode_enabled(inst) && pkt->stream_id == 0) {
-> @@ -462,7 +460,7 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
->  		timestamp_us = (timestamp_us << 32) | timestamp_lo;
->  	} else {
->  		if (pkt->stream_id == 1 && !inst->last_buffer_dequeued) {
-> -			if (iris_drc_pending(inst)) {
-> +			if (iris_drc_pending(inst) || iris_drain_pending(inst)) {
->  				flags |= V4L2_BUF_FLAG_LAST;
->  				inst->last_buffer_dequeued = true;
->  			}
-> diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
-> index a21238d2818f9606871953bd0bee25382cca0474..d1dc1a863da0b0b1af60974e9ed2ef68ea225cdd 100644
-> --- a/drivers/media/platform/qcom/iris/iris_state.c
-> +++ b/drivers/media/platform/qcom/iris/iris_state.c
-> @@ -252,7 +252,7 @@ bool iris_drc_pending(struct iris_inst *inst)
->  		inst->sub_state & IRIS_INST_SUB_DRC_LAST;
->  }
->  
-> -static inline bool iris_drain_pending(struct iris_inst *inst)
-> +bool iris_drain_pending(struct iris_inst *inst)
->  {
->  	return inst->sub_state & IRIS_INST_SUB_DRAIN &&
->  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
-> diff --git a/drivers/media/platform/qcom/iris/iris_state.h b/drivers/media/platform/qcom/iris/iris_state.h
-> index e718386dbe0402417f408d8fc696a33e5c7f23b3..b09fa54cf17eeee0c9ae254588964ad959c82c80 100644
-> --- a/drivers/media/platform/qcom/iris/iris_state.h
-> +++ b/drivers/media/platform/qcom/iris/iris_state.h
-> @@ -141,5 +141,6 @@ int iris_inst_sub_state_change_drc_last(struct iris_inst *inst);
->  int iris_inst_sub_state_change_pause(struct iris_inst *inst, u32 plane);
->  bool iris_allow_cmd(struct iris_inst *inst, u32 cmd);
->  bool iris_drc_pending(struct iris_inst *inst);
-> +bool iris_drain_pending(struct iris_inst *inst);
->  
->  #endif
-> 
+Best regards,
+Krzysztof
 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
