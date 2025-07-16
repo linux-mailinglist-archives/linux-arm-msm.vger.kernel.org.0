@@ -1,224 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-65204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92E68B07340
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:22:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14FDFB07345
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:25:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E885583302
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:21:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 43E3C5610A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:25:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF72F2F4A05;
-	Wed, 16 Jul 2025 10:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B922F0036;
+	Wed, 16 Jul 2025 10:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kocVL4lD"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TAE/TH9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5A82F49FE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 10:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31254219311
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 10:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752661233; cv=none; b=JmYfsvfRV0zZDfdaaP9111F9VGC9/2tb9QUClS5D+KS5nPEu0D9tbVm1NWFDuejyBGF4apWxlIpHoyc0XuRNnwH/dcbgMJSyaDMZMhuoiKClRZY18JSY6AtwJNjVvptwgenaSoyer+Rhl13+ZgsGuB+04t29YlEr2VPaIKeriuk=
+	t=1752661513; cv=none; b=tu7nBbygtgpu3/6O/NfubjUg0ZJmcGR2z+zNRKQT4azCSI0Tz5E1G87P1JtnwyB+H3qpPR6V2+YNja78odM49ihN4Ukii5KsDQFYPjNXgRC/97/PaPp/hhQZaFkC1BEyssceRPUbLjTQ4RHnzlO3EDSu/auf6NdhLYT7nm+qn+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752661233; c=relaxed/simple;
-	bh=6o5+SL+Zq5F1zkR7Vc2JwC60QUKnyWgSt56nFJJhGIg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nfRr5dsdIt4/IEbWQBtWLFqZbzOUKxbJR7HH/FcSBazAP5hk7kKKklSF9tW5l8DZFZxZ5Y0SKM6XBrZTsqMx3bFJvVGySs/IFgIc1RKPpVorlwZWE4GFUSIsIhRfNmIxpqIutaYsPgryLcVjIE6VN5YLy17JfcPPz7Wc/EohtRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kocVL4lD; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-748feca4a61so3680792b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 03:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752661231; x=1753266031; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yE7s53Z2C1xLVTq+sUbquydW2QufgfeXOwWrYj8BYEY=;
-        b=kocVL4lDhYOw8HRJ3uovJ5lwwdJqsRdsOji+K8BUBxHFbVKBvalGdJFpnoGPyoFs/3
-         eq1QzbtC5482+jZZzKPkWKiza60/lDEeKI9FuHdIYzkrIVZ9mfCfF2myzD0x3CyNfOW2
-         88T4uLUAVZyvW1fgqWfGGMiEbn+dL3/3RjewpG7ux8c+xcGjSbUP845cln+SsOstKdr1
-         BPYD8S0gmDF33j806FoTqcaWriuy816c+jJgxzCIVuEZ41oHNkaR9LKYHvH95Ywh/Yhu
-         yKWpArxoa/yuK2EiPXP/EBpUbFDfY7D8K9KWOdZi+14lKsXqviFMjqxvA1731gffNoFW
-         cqgQ==
+	s=arc-20240116; t=1752661513; c=relaxed/simple;
+	bh=IasktCdfZwSD9de0kshHopspYwUyLF8x/PWEZuCW+uQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fJ/WuhLxTZ++nC0vOjzNRHWtWt+NkuQ5YwzV/BwHIBjkq+W8A+wicNRddslT3Z/HcTjvzYbKUMSy3UX3XjGESij8wO7CpXQAkHrQAcnI/9FpgMFFr2OnSX2i+7W8slNRAjZBACzg14HzDbU96ePl08V+5pZ/5fsdsFjgABjfchI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TAE/TH9/; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1752661511;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=ojPiTGB0uO1S92U6FwE1qmBlbBFxe92SbIqLgPjYfxw=;
+	b=TAE/TH9/pHUenigWgjUXrZm5GRwDNhyLR77NrPnHM1rSzAQiD7Tz2tDT4Q5CWDzWGVR86J
+	bZ4znWKoEiZi73iRyG+PgmSxjRPkCaDigzEqSQb8qfjcJe0nftjauUJADKaOMUSt7v327P
+	e1Ew/QvFbqD3vw7Zm0YL5o7JvAaGVZk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-195-aWFXPNHTNnKaY0_Bbae_Tw-1; Wed, 16 Jul 2025 06:25:10 -0400
+X-MC-Unique: aWFXPNHTNnKaY0_Bbae_Tw-1
+X-Mimecast-MFC-AGG-ID: aWFXPNHTNnKaY0_Bbae_Tw_1752661509
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4538f375e86so55443105e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 03:25:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752661231; x=1753266031;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yE7s53Z2C1xLVTq+sUbquydW2QufgfeXOwWrYj8BYEY=;
-        b=KH+EJjiNnfm4JWmHU/tb/VlAYx7AFv3/9My5twHsKPnSAGtm2uEpbJFAaH2pdg1ONm
-         cHCZ3WvYqHqfls6Qoy6+BhgTB4n3IR2/9pOvLcGcqAAb5kxiW3bzHdn0P/mYjVW1DEnC
-         MLaSh4qT50WizCSGjgOiCRbyD6EAXgaIdB81sx5v3Cv52aC9DBiWvCnTl5PpB3f4/vEe
-         812EiFTDQFJr3YOnJmzR46tKjZfIOnCkqmRsbm7j3fkdwXK3BlMVvjmuuxsx3MfSeuS1
-         DVA1HQVH5WkeBUKANjVGOOmKEo16cPRCl1eex4HDbz0nB6USIwDbhXLMZlxex3WL/RKf
-         JJgg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2QvQTlL6ZRG771nq85Wk+n34b+nzedFXiRsnN/spxYZniuksmbSm6hOFa30PYD4ox/03Kf71kj4YZmZon@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+3pYRGgZrEPFYahQL3sT8/EyusHQpe9wemztgIYoC7Q2dYPVc
-	ZN2AJUHrc1KD6q+GEMUTvkI+Ix/lCgngnmC+9yxjlPrdrFGlx2l5B2tVY3XxvOXRWpi9uhcSK0g
-	uW9kfQwPnJuKbHVPg7gbnZn7iE+hvfadcMOiAoGUGcA==
-X-Gm-Gg: ASbGncu+hCIgDfOtEnYMOkVGtsG9NQvk4QxoTme+zxcnB2rwaUo4ucHPttDTmEEXcQO
-	Lh1lK2b9RBT0bbnn346LJ8gBv83HRVmhcAq6BMpuV6lbvB6umg0G4Fhu8nYuEimOe/lAKkquP8A
-	dk7UoRPARDcP7ttVh+nJieLafliwv5OCnNUX9Xtb2OxlHFhoGh4TEZbSrJGN4rQEvCaYyvoxctJ
-	AouIkiw1ELPAD5vk4Y0HjO9hqKT0eO6/9Q53dM=
-X-Google-Smtp-Source: AGHT+IEJfkGlROyu9Urq3ipL4Dbt8kv9P0xUk3Y2bWsJERuyYfUiMSGv/EVjUwE4Kw1m9p08wVXMdS7ntVU1yq9lKEg=
-X-Received: by 2002:a05:6a00:99f:b0:74e:b9fd:4a3f with SMTP id
- d2e1a72fcca58-75722869e6dmr2716478b3a.10.1752661231203; Wed, 16 Jul 2025
- 03:20:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752661509; x=1753266309;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ojPiTGB0uO1S92U6FwE1qmBlbBFxe92SbIqLgPjYfxw=;
+        b=ilc2MzXYXiEokYEhNQ7BVX9c8C6eskZI1oE0Jl4SuJG36pdEagLv8GG/c6/rWuiC36
+         MQEejq/66FP7G9Yhvn1a4GAPF31hwTIEqwjgj+himml1yO7gpFO+3bMswnTKf6NKdhap
+         TXgjSh+FUjI4Eua2CYj7MbG4cenQ13EHDkD/PDQcQBC/Tq+yyETCt2Vm9vpu2KC4LiyI
+         DEWo4+ZSULYpV2Aw2Teqsz8ySNm7GPmdtgx4EvVQGN9ofR98s7YAQcsK2zT1K2HhnNPn
+         XzTcKlqSHKel8jcIZjB8plDCEpnfFmQ2DL6LSHe2EbCnZIN/T61D96QCB8jyWot62Uem
+         Zvfw==
+X-Forwarded-Encrypted: i=1; AJvYcCWoioa7KC6zGC4R4NXJ9qvqbl0qTExVP4B7vsHoLz2InNBxZi48E6axGtNe1Q34EMZ+RAxHk3eF+c78jPIi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKeoPPAAFVqbwY5/cd1gsFwgaWPhqJgmIWHbsjhcaBksEyfin8
+	AhfqFI82gx19yOKhdq/4g9PSE5M7tHmsOcjFZPdBZY21Ept1/UmddrkG/ZA5F7tD5mqPDxx/3hG
+	jLMFVOTHb7WuLQXN2IAdCwmTvvYFbzO2zVCeZFYCDk3/sgJ5X6nn1wzUdnCmmvAfh/vk=
+X-Gm-Gg: ASbGncti4zJHjQDWFocZKLMQ1MVHMqEKVLy9b09fvueFkwjWATC612VIcjFUF5gGm6j
+	eY4pA4JJeODSLPADIExUv6B/xhe3mKWDkURREPfV1r9KZqmCfXjgdG0pqjjFKYEJLtWu2iw0IWg
+	pViT2rm19Bs5v2Jxcr2Z6iGMNfhM/ajaSOkRd3kPtZuGrDZ29i2lKCQg84GqYegrswG00/qIBH2
+	g3BkZBzeKijwNGUXS6TGT2vSB/wphg+vtojtJcVlWN8LCmhAEaiU5clnBP/F2Cx0/fNj414BZBz
+	0w0COYKrmLh6Noy+xOcfif+0d+ngfvZYa4GOR+jTsEsPJqCokIABN+26Q4972DqDB7iEtEsHoh3
+	qjCs69Skgb65AKADGSAR/18v/rSDU8Z/IFG/An0s4Lka3pVJdsCAE9b24QBOvv8QAyHE=
+X-Received: by 2002:a05:600c:c042:b0:43d:745a:5a50 with SMTP id 5b1f17b1804b1-4562e5893f7mr13757145e9.19.1752661508731;
+        Wed, 16 Jul 2025 03:25:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcxKB+PIip+FbZHyjFofyMfWBEFGOv/h9k5JBC6DcPQY+RjH+NEnKUQ+3Rz4fuDqwtShJzsQ==
+X-Received: by 2002:a05:600c:c042:b0:43d:745a:5a50 with SMTP id 5b1f17b1804b1-4562e5893f7mr13756875e9.19.1752661508192;
+        Wed, 16 Jul 2025 03:25:08 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f1d:ed00:1769:dd7c:7208:eb33? (p200300d82f1ded001769dd7c7208eb33.dip0.t-ipconnect.de. [2003:d8:2f1d:ed00:1769:dd7c:7208:eb33])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e7f363asm16820645e9.7.2025.07.16.03.25.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 03:25:07 -0700 (PDT)
+Message-ID: <778ca011-1b2f-4818-80c6-ac597809ec77@redhat.com>
+Date: Wed, 16 Jul 2025 12:25:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250714063109.591-1-jie.gan@oss.qualcomm.com> <20250714063109.591-2-jie.gan@oss.qualcomm.com>
-In-Reply-To: <20250714063109.591-2-jie.gan@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 16 Jul 2025 11:20:18 +0100
-X-Gm-Features: Ac12FXz-xYQrg0Cua4muCLaPsoupDwBUZISKjIA1TU9xkJsYijMrosZo4H6_Ghk
-Message-ID: <CAJ9a7VjyWtopbnTirRnd4-486PrdQH00cvUR0kcPde2hxCUH-A@mail.gmail.com>
-Subject: Re: [PATCH v3 RESEND 01/10] coresight: core: Refactoring
- ctcu_get_active_port and make it generic
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
-	Mao Jinlong <quic_jinlmao@quicinc.com>, Jie Gan <quic_jiegan@quicinc.com>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 02/21] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+ CONFIG_KVM_GENERIC_GMEM_POPULATE
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com,
+ viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
+ akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-3-tabba@google.com>
+ <a4091b13-9c3b-48bf-a7f6-f56868224cf5@intel.com>
+ <CA+EHjTy5zUJt5n5N1tRyHUQN6-P6CPqyC7+6Zqhokx-3=mvx+A@mail.gmail.com>
+ <418ddbbd-c25e-4047-9317-c05735e02807@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ g3eXuA==
+Organization: Red Hat
+In-Reply-To: <418ddbbd-c25e-4047-9317-c05735e02807@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 16.07.25 10:31, Xiaoyao Li wrote:
+> On 7/16/2025 4:11 PM, Fuad Tabba wrote:
+>> On Wed, 16 Jul 2025 at 05:09, Xiaoyao Li<xiaoyao.li@intel.com> wrote:
+>>> On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+>>>> The original name was vague regarding its functionality. This Kconfig
+>>>> option specifically enables and gates the kvm_gmem_populate() function,
+>>>> which is responsible for populating a GPA range with guest data.
+>>> Well, I disagree.
+>>>
+>>> The config KVM_GENERIC_PRIVATE_MEM was introduced by commit 89ea60c2c7b5
+>>> ("KVM: x86: Add support for "protected VMs" that can utilize private
+>>> memory"), which is a convenient config for vm types that requires
+>>> private memory support, e.g., SNP, TDX, and KVM_X86_SW_PROTECTED_VM.
+>>>
+>>> It was commit e4ee54479273 ("KVM: guest_memfd: let kvm_gmem_populate()
+>>> operate only on private gfns") that started to use
+>>> CONFIG_KVM_GENERIC_PRIVATE_MEM gates kvm_gmem_populate() function. But
+>>> CONFIG_KVM_GENERIC_PRIVATE_MEM is not for kvm_gmem_populate() only.
+>>>
+>>> If using CONFIG_KVM_GENERIC_PRIVATE_MEM to gate kvm_gmem_populate() is
+>>> vague and confusing, we can introduce KVM_GENERIC_GMEM_POPULATE to gate
+>>> kvm_gmem_populate() and select KVM_GENERIC_GMEM_POPULATE under
+>>> CONFIG_KVM_GENERIC_PRIVATE_MEM.
+>>>
+>>> Directly replace CONFIG_KVM_GENERIC_PRIVATE_MEM with
+>>> KVM_GENERIC_GMEM_POPULATE doesn't look correct to me.
+>> I'll quote David's reply to an earlier version of this patch [*]:
+> 
+> It's not related to my concern.
+> 
+> My point is that CONFIG_KVM_GENERIC_PRIVATE_MEM is used for selecting
+> the private memory support. Rename it to KVM_GENERIC_GMEM_POPULATE is
+> not correct.
 
-On Mon, 14 Jul 2025 at 07:31, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
->
-> Remove ctcu_get_active_port from CTCU module and add it to the core
-> framework.
->
-> The port number is crucial for the CTCU device to identify which ETR
-> it serves. With the port number we can correctly get required parameters
-> of the CTCU device in TMC module.
->
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> ---
->  drivers/hwtracing/coresight/coresight-core.c  | 24 +++++++++++++++++++
->  .../hwtracing/coresight/coresight-ctcu-core.c | 19 +--------------
->  drivers/hwtracing/coresight/coresight-priv.h  |  2 ++
->  3 files changed, 27 insertions(+), 18 deletions(-)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-> index 1accd7cbd54b..5297a5ff7921 100644
-> --- a/drivers/hwtracing/coresight/coresight-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-core.c
-> @@ -580,6 +580,30 @@ struct coresight_device *coresight_get_sink(struct coresight_path *path)
->  }
->  EXPORT_SYMBOL_GPL(coresight_get_sink);
->
-> +/**
-> + * coresight_get_port_helper: get the in-port number of the helper device
-> + * that is connected to the csdev.
-> + *
+It protects a function that is called kvm_gmem_populate().
 
-As written this looks at all connections, not just those that are
-helpers. That is fine, so perhaps rename as such.
+Can we stop the nitpicking?
 
-e.g. coresight_get_in_port_dest
-
-and name the input parameters src , dest respectively.
-
-> + * @csdev: csdev of the device that is connected to helper.
-> + * @helper: csdev of the helper device.
-> + *
-> + * Return: port number upson success or -EINVAL for fail.
-
-sp: upon/upson
-
-> + */
-> +int coresight_get_port_helper(struct coresight_device *csdev,
-> +                             struct coresight_device *helper)
-> +{
-> +       struct coresight_platform_data *pdata = helper->pdata;
-> +       int i;
-> +
-> +       for (i = 0; i < pdata->nr_inconns; ++i) {
-> +               if (pdata->in_conns[i]->src_dev == csdev)
-> +                       return pdata->in_conns[i]->dest_port;
-> +       }
-> +
-> +       return -EINVAL;
-> +}
-> +EXPORT_SYMBOL_GPL(coresight_get_port_helper);
-> +
->  u32 coresight_get_sink_id(struct coresight_device *csdev)
->  {
->         if (!csdev->ea)
-> diff --git a/drivers/hwtracing/coresight/coresight-ctcu-core.c b/drivers/hwtracing/coresight/coresight-ctcu-core.c
-> index c6bafc96db96..28ea4a216345 100644
-> --- a/drivers/hwtracing/coresight/coresight-ctcu-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-ctcu-core.c
-> @@ -118,23 +118,6 @@ static int __ctcu_set_etr_traceid(struct coresight_device *csdev, u8 traceid, in
->         return 0;
->  }
->
-> -/*
-> - * Searching the sink device from helper's view in case there are multiple helper devices
-> - * connected to the sink device.
-> - */
-> -static int ctcu_get_active_port(struct coresight_device *sink, struct coresight_device *helper)
-> -{
-> -       struct coresight_platform_data *pdata = helper->pdata;
-> -       int i;
-> -
-> -       for (i = 0; i < pdata->nr_inconns; ++i) {
-> -               if (pdata->in_conns[i]->src_dev == sink)
-> -                       return pdata->in_conns[i]->dest_port;
-> -       }
-> -
-> -       return -EINVAL;
-> -}
-> -
->  static int ctcu_set_etr_traceid(struct coresight_device *csdev, struct coresight_path *path,
->                                 bool enable)
->  {
-> @@ -147,7 +130,7 @@ static int ctcu_set_etr_traceid(struct coresight_device *csdev, struct coresight
->                 return -EINVAL;
->         }
->
-> -       port_num = ctcu_get_active_port(sink, csdev);
-> +       port_num = coresight_get_port_helper(sink, csdev);
->         if (port_num < 0)
->                 return -EINVAL;
->
-> diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-> index 33e22b1ba043..07a5f03de81d 100644
-> --- a/drivers/hwtracing/coresight/coresight-priv.h
-> +++ b/drivers/hwtracing/coresight/coresight-priv.h
-> @@ -156,6 +156,8 @@ void coresight_remove_links(struct coresight_device *orig,
->  u32 coresight_get_sink_id(struct coresight_device *csdev);
->  void coresight_path_assign_trace_id(struct coresight_path *path,
->                                    enum cs_mode mode);
-> +int coresight_get_port_helper(struct coresight_device *csdev,
-> +                             struct coresight_device *helper);
->
-rename here too
-
->  #if IS_ENABLED(CONFIG_CORESIGHT_SOURCE_ETM3X)
->  int etm_readl_cp14(u32 off, unsigned int *val);
-> --
-> 2.34.1
->
-
-regards
-
-Mike
 -- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Cheers,
+
+David / dhildenb
+
 
