@@ -1,215 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-65279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B097B07967
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 17:18:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F03BB07959
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 17:16:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 352591AA309A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 15:13:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96A9F58334F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 15:15:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 155D6275AE0;
-	Wed, 16 Jul 2025 15:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E0531D5CFB;
+	Wed, 16 Jul 2025 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e+gLK6Uh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QUHsk7sR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B42F1A238C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9342291C3B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752678806; cv=none; b=Ot14+/eJ/TxLbjQMM7vrSsODmN2ny4Qae6VcJBQ29My7lphpERmgMtLbWNjy+QsQj7fh4EPoXfJRALAgHA7NHEXus7i5huosy7fLrlmqJUxmoQsKFCSbhdRZYfDdjt86WGwD3gNtEu34vU0xbO5PTreKqWdTFaT9AWTFFVLqyi8=
+	t=1752678949; cv=none; b=mBuFjF+dXw+tvbIumlnz3Obu9MpZOQYI97VOBEDqMCRYYv2KycxLDHNJkygxzV2neYjh/+Hu0Wl2+svKpjukvOON7lmm7asok1h9dt1a7alRc33mxX3Uh3ptlru/ZtCNgzL2vc2Krbk2YrQz9aR7n0YmFu+zdIZSwFSJ2K/XPHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752678806; c=relaxed/simple;
-	bh=LVR9w/dUpPReGresRYLtdEMlsGIW7JaY3/r6knRbqZ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Su4GONFaWuGUlmjojnbIkkFNyIFcTz2mbsYwQJXDG3Y90ojk6YwZYp0tplj6YuZcSn7tLJI2aqA5jGAkWcwyXzedJccu/EcZPE7N/g7lb/zzNgqK5EENEHfiy9lljMeXqRhBLvV763PT+4n/IoYLYL61ZiVyAlqzORm/kGLuTTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e+gLK6Uh; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1752678949; c=relaxed/simple;
+	bh=3fiJEtG0OZw7lMsiKQs4Z8Qo7rCMvsROE29oSVR+jLw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nUbfxLCN3ahw+FeiW1nKlpUkRsJ+wZsH8keRLq0n9PY+fwUUIF0qKXR+/u5RCz4iqbeOc72HLn2rcO3XxJomdclxUmKEx5cISFLlh41Mu6BjzX54C7nzxP/7ENXdqrdewdXR1VxmrcY51CbS0WlNHDzStbfJBTVajlOzBrmMq9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QUHsk7sR; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GD2iH8022694
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:13:23 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GDC3Ji015317
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:15:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CtwVruHuIm50LWxWnF3hYBprC3Esh5tU1YhwYPkVmYU=; b=e+gLK6UhreOYA2Aa
-	xtkjKj494E6LYe80ZfIfNJyd3pt+AB4+S7gZ7K48X6MuljSxX99DeoPz0Ng5tQsi
-	UgPgvZB3nmwhm2oOQ8iA/aot5exJoX856ekXbPOZskao02kIRkA3+87oSBXiL9W+
-	ALRrom7w1/khEkQayc0zVpCbCfQhHr/5oS2UJLakYyEse7cQ9IGDpkY5UC7ClauY
-	uDIHQMEI/UotXcNnxnk+AC6CowmPYRbHxAhgx+EgLPib2wPXDCtoBhlde2JGfI2p
-	o+GxVJLBBIkK9C2jTdxQuqqfUMqZgPcmXqigR/VsYLajTcSNQvbM5AxpZND/kLXS
-	EOxzbw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wkrun6hq-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=VtVpGvVZrct32JIcBjOhQXZk+GPq1hNjUqV
+	+7EdjMl0=; b=QUHsk7sR5rim9L/y3GkRbdMOhD+zJW9W9mtfQqyptdjIaHI4RMM
+	M4QqcAo3xIPUJ804M7FIc41mYCNILyutNmy93flIWCurMt29wHDVnZTzD5pQKndv
+	SGVWVA2uji7qR8XhdLJ+kE7HqH2ATwzVx6XQwpRfVkqM4a+CYa/M6yfA3HahbwIS
+	9jvOt93xV2SH15v3PL1nPZi08yFnMHLzmAoFgNkHdlMe9jalQ9EuB3gUy9JoNL+R
+	RkDdWj7EHjT1YBa7axlWL0KUohZMRTkimwbENBYWyMF3fmsjaFKpRfil92X4+VZv
+	QXjIEBD4ncA5OjdlVaEAgEjyYX5uVPU7nRQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dyqcqc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:13:23 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b31bd4c3359so3800728a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 08:13:23 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 15:15:45 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-235196dfc50so54385ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 08:15:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752678803; x=1753283603;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CtwVruHuIm50LWxWnF3hYBprC3Esh5tU1YhwYPkVmYU=;
-        b=NSdoQN2cKFYmVd5VSMBaULXnywF6d9sFqawwNgAXx4TbUTclG+maiqM5F+sItWmy5Y
-         LAuiF5lB0B0VeQJusuO0KWOX7l4nKPRfdRlyTSwGdvzdBG0zbB5juFM0N+ok1EiSc4eh
-         fZHNJenIibVCN/tCCpdItfoqunCK2VxLakzpVI9V59kTOVyW6OK4hditNOBeMnztjmpC
-         vOxfMlZ+d+KFYBhvIgcajNBoHHzKng6OanbDP5YSi/uTaL9MVM5Pzb1aNp7CDG7/W3RH
-         hj7fZjBujLYEWwVsjas0RjdL3nNo8fodTDoHVZxMwC9xIbm/6ZjvZQCe8XAp8E32/D7E
-         yvYw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDsuLUCvqy0GpFemGCJL+cnGjycWCqiRRcRl9ye9RLYcpdMCNK8iaZdpPRxHBgeevf5jTFjGnc12prhhjd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNqD5vHszpJ5UrxXccnAtsn465rIriMuowIa8OL7okH7KgJXgd
-	Uo4J0uDSvznwGj8N7Qsp4CEg4w4XUI8+/7lc3qzSx7zuw//dgdZ67tAt25CoGkwt18oiy7R+YvJ
-	poQtpsTCKNNW3Je8iG/JSsGeBHFEUCdEaC/2N8emzI4yUj5B2rG4Kl8VQGur/xfSXvYsg
-X-Gm-Gg: ASbGnctO6Iy2GqqGUHPMTA4EDE/QmVLFDl1r049jtx7AynFQRqnwcsmN4uPZpMkSPVs
-	xaknrssmQaO8JuR46ui8urQo/tINf/k4Fhkb7sRlq0F6ktVoTslYG9UmB00z0UYJwhq1Ypc8c0b
-	KNKTIP2bDAf8tivky7en5RkBTm4tpB3i0fjK3nWcCDfiv3m4ytRv1QLGArHgADt8yvW1/NZXCfh
-	CQWM7hzI+itpKwHpnGEyjGfI+zTqaIPjEBj5yeFlkGPZ7dUGbDj/rDexOgowahjayYGgAS/2mWP
-	S6Z40R2WvABo/2X3/mCX2X5Sw32V2XuDUrn02gVvUbvvsK5Eq/QL6zlAq9JZ1oDVZ85j4X5atlW
-	Vw7fIEiRQlzVB/d7nI80=
-X-Received: by 2002:a17:90b:530f:b0:312:1ae9:153a with SMTP id 98e67ed59e1d1-31c9f4b4161mr3809053a91.25.1752678802561;
-        Wed, 16 Jul 2025 08:13:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEblc3jY+0h7Aosh+m7nUh8Q/00sNNYAVcErrYvNH3JTZ8WRCcrDKpFARGnKRnqDBN3kK5TlQ==
-X-Received: by 2002:a17:90b:530f:b0:312:1ae9:153a with SMTP id 98e67ed59e1d1-31c9f4b4161mr3809025a91.25.1752678801982;
-        Wed, 16 Jul 2025 08:13:21 -0700 (PDT)
-Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c9f1ba96bsm1582569a91.7.2025.07.16.08.13.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 08:13:21 -0700 (PDT)
-Message-ID: <833ce5f1-51b2-4d4c-a839-38989ea10344@oss.qualcomm.com>
-Date: Wed, 16 Jul 2025 08:13:20 -0700
+        d=1e100.net; s=20230601; t=1752678945; x=1753283745;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VtVpGvVZrct32JIcBjOhQXZk+GPq1hNjUqV+7EdjMl0=;
+        b=w7UZ6AaCEtAuma1J2R17e/rhqzC39SwrwffHLKjzD6ZxYDvdETdxf/izk9nUl3w04S
+         hsTPkmu6HgmryG6yMvGWo7cSzN5SmPEbjsjs0GfUulxSsXtgIZsw/06Zm5tMmWAoQwtC
+         dcaolhRcBHDAcyLAp5b+ZG9DbmWy+7X0tu5k0Cf9kaQvigbsnbo0qZ24wZw2UyTCrbA0
+         cmQjwVaS4GXsAYSPWpoSjmy+MaVWrIJSpmtmTyhVkUv9NdimtrTfnd4GgJyqgD2PFDHe
+         ISlE582zqd5fnbJQDRBwUH9Ea0s7wEIrsLk0LnMdUicSC6COW71POK7sjY114khhEwzi
+         qUyQ==
+X-Gm-Message-State: AOJu0YyLsNbGiP3O37fE1SBuuEEFZQNH0Di0sUpfx8AS+r2QZDyPny8c
+	Gg8ywy+Xuweet9mNiHc/ZL2As8ToY2RkQxtdgTxBa8X6Ydddd5RyfpCt8prFr2E2M5CQlKgP0LI
+	d1Z7oKLlvxYh9ZAZIOQOA/48pA8VARoReZnRRFbHSIV/HK111OATa8uH+YBAwlYLfu3vo
+X-Gm-Gg: ASbGncsL0lCitl3L8GX14s+pcidnv5hpTVyHNwLtZx7N2r2m5hLfl5kJNRLSQfUUFUL
+	NCNRvmo2wfjvIXWGyRFfyLtomvk8DoFGHFTGnTNuZGz3dBDDocCy9vEEng+Pj25Epfgf8cgL14o
+	N9sLsXqbnF/nL6ZxifM+tkZzSh9rLXY/XNzWCogHhsNqktqXKm2nmudrHnW2/ZP5I2DPmigVP9E
+	cT7SO4TvKj7oDyHpGSS769UL6JQv49JiLdhaYhD67BxTp3GWi2cwRf/HXER6ZWRxNhmoghl/Cb3
+	j8x94jwxtIp5o/rIP+oNhp/FB2t7XMtEIgSWCJ2cVnZ0+86D3VBExHJ6K+PpOHWY6SUxXvkDC2M
+	ex/8Dy683Dzdr+VtcL37foJZ7YKvrGgS+n8bMcHDhmlIdJgghijSFFCYXwwQg
+X-Received: by 2002:a17:903:950:b0:234:5ea1:6041 with SMTP id d9443c01a7336-23e1a43e5b2mr121925115ad.10.1752678944893;
+        Wed, 16 Jul 2025 08:15:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEx4lYicAxy/akPMh6VffbDUsZkyKqrnhemzyMQuz11i7usIVNVimaeetdH9/tTmv63a9jbew==
+X-Received: by 2002:a17:903:950:b0:234:5ea1:6041 with SMTP id d9443c01a7336-23e1a43e5b2mr121924305ad.10.1752678944243;
+        Wed, 16 Jul 2025 08:15:44 -0700 (PDT)
+Received: from hu-pankpati-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23de42ad9efsm132769455ad.58.2025.07.16.08.15.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Jul 2025 08:15:43 -0700 (PDT)
+From: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+To: djakov@kernel.org, lumag@kernel.org, a39.skl@gmail.com, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
+        raviteja.laggyshetty@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Add interconnect support for Glymur SoC
+Date: Wed, 16 Jul 2025 20:45:33 +0530
+Message-Id: <20250716151535.4054172-1-pankaj.patil@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] wifi: ath12k: Fix endianness handling in QMI
-To: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250716075100.1447352-1-alexander.wilhelm@westermo.com>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20250716075100.1447352-1-alexander.wilhelm@westermo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 5sAUePz_hmZkr67DhXRP9cgxl8d9E9_V
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDEzNyBTYWx0ZWRfX3NoR0xY3eiFn
- 6+7xInx6xAZ/SEGCRNNbsXXjqC0b4aRq/+sh9Iiblofup/7EqxyHSnVu4udhBO304P0Firv6GRS
- hZFN6RFyNxKkGRhwONgj+vPKJlo98icy8IWJtrgVsfb6g51GjgAyZEwFh87ouGn4uq91U6hrnlS
- HrBGIoc17ysTdd++0PNCoy//wxhVv5r5KZoWxzZ/91wjiPnCeBzAHH8PbsPc6zHgm1dQzrvpBQZ
- c9Bv4d7BtXJ40TdXvKPsECZN5IQFwN71ikorUknUj0Xzm9umeptq4ASDJxYAB1fBiG6dZlLDKst
- 1ZdEIePkAeiBPeXORRkyd9SxrviGZxurJu9vgsksYjXalCExRVsquEiaj9OBFS2znruZcxi0mL+
- 3o/2rKZF4AXSdjKySnCDAsKMdO6oYl191o6B3HXpgbjV1PhiuEnKQ3OxsSxSkBR0nLP5kdNw
-X-Authority-Analysis: v=2.4 cv=WqUrMcfv c=1 sm=1 tr=0 ts=6877c193 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=bi_AWBljq3a5P2oXxVQA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-ORIG-GUID: 5sAUePz_hmZkr67DhXRP9cgxl8d9E9_V
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: g9QyloDbEeZjhIY-q42zeTYhn0N0XwJm
+X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=6877c221 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Wb1JkmetP80A:10 a=kNru7P6y79U7mb-8zXEA:9 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDEzOCBTYWx0ZWRfX5tO3dYlqNJHK
+ sRx4Zj9h3EbTvyCH5X1yK+WQFjqAXDlLdhWUDaHVGul8ev3dHKjNWblbrxh30AAWlfbBA1dJ5bG
+ v/qR+9/jleme2J/Dn2+wXOT1WFmWxoHcYukOUKnBT+PbmjEZBzaOZqcmwp7UHyAnVvturiLJj/o
+ abhgK2+aL8sWbDqU0n3J6w3wZ15kREP9taMdvr4is0CNeoUHxcHHmlVhZDRVkUrb35yKm1vElAK
+ AhYDuIHGTu3epqUnRdeM+wJoNt1WqN/9mjE+s9DBmjWZ0ENltgb13Pyr5u9wEjouFEGOvDvfivY
+ T+cNpH9/9fKfGcYPNvCl4alid66LRU4WpwZZ/xWWRsYI7eRG9OdCr+j5a0CEMh8jyX3TdOvZpM8
+ CtpDg3djQaJjHVe4SQPauqb3KV4bzdFr+AV3BFyS2NgObWutA8cJCA6EJdLNWy7lS3rqI7GC
+X-Proofpoint-GUID: g9QyloDbEeZjhIY-q42zeTYhn0N0XwJm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-16_02,2025-07-16_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 spamscore=0 classifier=spam authscore=0
+ adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 clxscore=1011 mlxlogscore=915
+ priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
  authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507160137
+ engine=8.19.0-2505280000 definitions=main-2507160138
 
-On 7/16/2025 12:50 AM, Alexander Wilhelm wrote:
-> Fix endianness handling in QMI firmware transfer on big-endian
-> platforms. Without this fix, the firmware download fails due to
-> misinterpreted data structures exchanged between the host and the
-> wireless module.
-> 
-> The issue occurs during early bring-up on big endian systems, where QMI
-> messages are not correctly parsed by the driver, leading to failed
-> initialization sequences. Ensure all relevant fields are properly
-> converted between CPU and little-endian format in request and response
-> messages, as expected by the firmware. Attached logs showing the failure
-> before the fix:
-> 
->     ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
->     ath12k_pci 0001:01:00.0: boot pci_mem 0xcd4148e9
->     ath12k_pci 0001:01:00.0: pci probe 17cb:1109 17cb:1109
->     ath12k_pci 0001:01:00.0: pci tcsr_soc_hw_version major 2 minor 0
->     ath12k_pci 0001:01:00.0: request MSI one vector
->     ath12k_pci 0001:01:00.0: MSI vectors: 1
->     ath12k_pci 0001:01:00.0: msi base data is 0
->     ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
->     ath12k_pci 0001:01:00.0: boot firmware request ath12k/QCN9274/hw2.0/firmware-2.bin size 15134776
->     ath12k_pci 0001:01:00.0: found fw timestamp 1722934582
->     ath12k_pci 0001:01:00.0: found m3 image ie (421880 B)
->     ath12k_pci 0001:01:00.0: found fw image ie (7229440 B)
->     ath12k_pci 0001:01:00.0: found dualmac fw image ie (7483392 B)
->     ath12k_pci 0001:01:00.0: found firmware features ie (1 B)
->     ath12k_pci 0001:01:00.0: features
->     ath12k_pci 0001:01:00.0: using fw api 2
->     ath12k_pci 0001:01:00.0: dualmac fw selected for board id: 1005
->     ath12k_pci 0001:01:00.0: Assign MSI to user: MHI, num_vectors: 3, user_base_data: 0, base_vector: 0
->     ath12k_pci 0001:01:00.0: Number of assigned MSI for MHI is 3, base vector is 0
->     ath12k_pci 0001:01:00.0: Assign MSI to user: CE, num_vectors: 1, user_base_data: 0, base_vector: 0
->     ath12k_pci 0001:01:00.0: Assign MSI to user: DP, num_vectors: 1, user_base_data: 0, base_vector: 0
->     ath12k_pci 0001:01:00.0: irq:18 group:0
->     ath12k_pci 0001:01:00.0: irq:18 group:1
->     ath12k_pci 0001:01:00.0: irq:18 group:2
->     ath12k_pci 0001:01:00.0: irq:18 group:3
->     ath12k_pci 0001:01:00.0: irq:18 group:4
->     ath12k_pci 0001:01:00.0: irq:18 group:5
->     ath12k_pci 0001:01:00.0: irq:18 group:6
->     ath12k_pci 0001:01:00.0: irq:18 group:7
->     ath12k_pci 0001:01:00.0: pci after request_irq msi_ep_base_data 0
->     ath12k_pci 0001:01:00.0: cookie:0x0
->     ath12k_pci 0001:01:00.0: WLAON_WARM_SW_ENTRY 0x2
->     ath12k_pci 0001:01:00.0: WLAON_WARM_SW_ENTRY 0x2
->     ath12k_pci 0001:01:00.0: soc reset cause:0
->     ath12k_pci 0001:01:00.0: MHISTATUS 0xff04
->     ath12k_pci 0001:01:00.0: pci link_ctl 0x0000 L0s 0 L1 0
->     ath12k_pci 0001:01:00.0: pci reg 0x3164 instance 0x11 read val 0x11
->     ath12k_pci 0001:01:00.0: setting mhi state: INIT(0)
->     ath12k_pci 0001:01:00.0: setting mhi state: POWER_ON(2)
->     ath12k_pci 0001:01:00.0: mhi notify status reason UNKNOWN
->     ath12k_pci 0001:01:00.0: mhi notify status reason MHI_CB_EE_MISSION_MODE
->     ath12k_pci 0001:01:00.0: qmi wifi fw qmi service connected
->     ath12k_pci 0001:01:00.0: phy capability resp valid 1 num_phy 2 valid 1 board_id 84934656 valid 1 single_chip_mlo_support 0
->     ath12k_pci 0001:01:00.0: intra device MLO is disabled hence skip QMI MLO cap
-> 
-> Alexander Wilhelm (11):
->   wifi: ath12k: fix endianness handling in QMI host capability request
->   wifi: ath12k: fix endianness handling in QMI phy capability response
->   wifi: ath12k: fix endianness handling in QMI firmware indication
->   wifi: ath12k: fix endianness handling in QMI firmware memory indication
->   wifi: ath12k: fix endianness handling in QMI respond firmware memory
->   wifi: ath12k: fix endianness handling in QMI firmware capabilities
->   wifi: ath12k: fix endianness handling in QMI bdf download
->   wifi: ath12k: fix endianness handling in QMI firmware m3 info
->   wifi: ath12k: fix endianness handling in QMI firmware wlan mode
->   wifi: ath12k: fix endianness handling in QMI wlan configuration
->   wifi: ath12k: fix endianness handling in QMI response
-> 
->  drivers/net/wireless/ath/ath12k/qmi.c | 149 ++++++++++++++------------
->  drivers/net/wireless/ath/ath12k/qmi.h | 106 +++++++++---------
->  include/linux/soc/qcom/qmi.h          |   4 +-
->  3 files changed, 136 insertions(+), 123 deletions(-)
-> 
+Add interconnect dt-bindings and driver support for Qualcomm Glymur SoC.
 
-Frankly I'm shocked that the low-level QMI encode/decode is not doing the
-endian conversion. Since the Qualcomm internal tool that generates the data
-structures has always generated structs with cpu endianess (i.e. u8, u16, u32,
-etc) I just assumed that endian conversion was handled at a low level.
+Raviteja Laggyshetty (2):
+  dt-bindings: interconnect: document the RPMh Network-On-Chip
+    interconnect in Glymur SoC
+  interconnect: qcom: add glymur interconnect provider driver
 
-So should this issue be pushed down to the QMI encode/decode rather than foist
-it upon every client's read & write?
+ .../interconnect/qcom,glymur-rpmh.yaml        |   84 +
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/glymur.c            | 2259 +++++++++++++++++
+ drivers/interconnect/qcom/glymur.h            |  185 ++
+ .../interconnect/qcom,glymur-rpmh.h           |  205 ++
+ 6 files changed, 2744 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,glymur-rpmh.yaml
+ create mode 100644 drivers/interconnect/qcom/glymur.c
+ create mode 100644 drivers/interconnect/qcom/glymur.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,glymur-rpmh.h
 
-/jeff
+-- 
+2.34.1
+
 
