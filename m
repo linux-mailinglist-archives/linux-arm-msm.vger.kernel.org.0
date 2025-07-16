@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD485B06D47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:37:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B45B3B06D5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:41:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBC573B7A61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:37:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E073B500F25
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 05:40:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AEA12E7199;
-	Wed, 16 Jul 2025 05:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59C4A2E7F0E;
+	Wed, 16 Jul 2025 05:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QNuKN/kl"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eSaF8QKC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A711720C00C;
-	Wed, 16 Jul 2025 05:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728848CFC;
+	Wed, 16 Jul 2025 05:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752644249; cv=none; b=WLgfxbPKoJj9CMakgmsyrqm9LJOHWTMQRrIFEPnQUl2KIYMYjcOer9j7ZgKEVb2OuvwNucerHjrcYYI3fqN4SVsm+U/Eg+QXKn/aQSb358ObGhKQV4TjZnfa2Vrjg3sNLOJooj7LV7BfZCn+siuNrxyIL2yG7Zf8sgatlod+LjA=
+	t=1752644447; cv=none; b=gQcLI50AUTmaxVTuOV1K66yW6Pxn129sISzsB438I8dlPZAerUgnPfhdQsoVcAXKYDAcaalvaUAEePGtFB2gMRnI8bK+irwfLOcy/yYK3ewRADbKTajijnGGNUeFlKucErTa26Y7JwOqyc83c1Puacvxeppdnwmk8nGZvEvUPXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752644249; c=relaxed/simple;
-	bh=EBbcboKUANeM3+VhB8+AVSQYjjl9Q2rxibruR9G9DtY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KdlRMQrlO+fJI3fQkrT8oBH8CgF8uac3QgHzdzWlUaDqxZJBNYggho+rwU6g5qmje6wG0wVw5Vd/nCeAM80lU+Y8lGXSb3ysWTRtQbz1QqqY0OCQZZsOR2wP7tYn/ixyuOiPPfoUlV/QI2l8eVbpK1JDyo/jZEciduoOGXzbsmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QNuKN/kl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FGDHrZ031181;
-	Wed, 16 Jul 2025 05:37:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C/95ZRIkxvITzEEU2AdWOtsZUy1NgjSXTTdVFZEdbn4=; b=QNuKN/klFQ303H+U
-	49Mc/9JwNatFV6uk4p6INvaAz9RrCVXpmIKTieaoSfWycIxdBBDcmIyQqPU22RbM
-	t0rB+SDJH4mB3WfeAfxxis2gWt6AcLMmfEjoZcPkN2Te7exRw4i5gw0mb0AOVZqW
-	1mycJuYFSb8um5qGF8hZ03qZdW2yqyJweyyTxrs3GX/7c7A3CuLVEsCaIGrUpuVV
-	6L3rXJlJYcI2qhkz9tOhWcR9/vQecKmq7ZM4M2WP+O4kd21a5bTkbeQyPDfmHo51
-	Y1AQWxdVqXcsigxbYwTSYMfVahE3hFjfS1FtRwj7AdSQD1dnlF2XCRoJY77I4WBh
-	g9DR/g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufutahg9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 05:37:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56G5bMin031389
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Jul 2025 05:37:22 GMT
-Received: from [10.218.37.122] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 15 Jul
- 2025 22:37:18 -0700
-Message-ID: <989518a6-5626-4724-a9e9-eadc081f5d67@quicinc.com>
-Date: Wed, 16 Jul 2025 11:07:14 +0530
+	s=arc-20240116; t=1752644447; c=relaxed/simple;
+	bh=6iNgYxoqxx120NDW9X1toiGHqvZp6/FTcvKcQv2ACAo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eVPyg6TaLPVH5Konxq5ySj2O5Hc3p79/pChq97D9wlr1zn1cFuHQiTiiIZhOU7EQcl/XsP/pqypAVFj63nRRhFxMFU17mNFvlXcyKIQVETHvd6dsM5IKwxdxc9+EBSKPjeD/IGqOqxWRWpP/8N0ZMCOHBWuQiha3OgWsaQ50rdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eSaF8QKC; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752644444; x=1784180444;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=6iNgYxoqxx120NDW9X1toiGHqvZp6/FTcvKcQv2ACAo=;
+  b=eSaF8QKCczFrzEUuXk0aXXFxNfQ6LJ18+jYBHCC0Guzriy78AKPDQVcd
+   F2Qx2JB35NwqlCQ4r0m44JFCURZwC3EPlaqs2z/eqpt7KWfqvcm93VkYF
+   vWjt4BZL1cNCQNcNaVmPC0MGkN5z0dbTWbP/lZczpsMd5Q7zcgS3rFDWy
+   2h2qHUfygnvfIX/Jj8R1k5djhVkXRvX/89l46Mxex4QNSrV5uMPxEMqyU
+   4+x/M3SllrxPOZtT7FW5lhAH12KpRi88BjaeSSf+wf8Q9XkuJdM5LV9Ko
+   WSS1LZqi/mWamQQHs6Ju6Q9/YQC2JarhJKoqtIT9heM4rboUrD5w+SmSl
+   Q==;
+X-CSE-ConnectionGUID: 1QOTKKc2Q5abNAzbGGcHPw==
+X-CSE-MsgGUID: qgVCUzLdTwOmaINtOa897g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="66325483"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="66325483"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:40:43 -0700
+X-CSE-ConnectionGUID: Oos/aMvwSTGdgishWHK1Pg==
+X-CSE-MsgGUID: E5t7ldu8TNOtPDSeoiR4uA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
+   d="scan'208";a="157215046"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 22:40:23 -0700
+Message-ID: <e1470c54-fe2b-4fdf-9b4b-ce9ef0d04a1b@intel.com>
+Date: Wed, 16 Jul 2025 13:40:20 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,97 +67,149 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: ep: Fix chained transfer handling in read path
-To: Sumit Kumar <quic_sumk@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>,
-        Alex Elder <elder@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_akhvin@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_vbadigan@quicinc.com>,
-        Sumit Kumar
-	<sumk@qti.qualcomm.com>, <stable@vger.kernel.org>,
-        Akhil Vinod
-	<akhvin@qti.qualcomm.com>
-References: <20250709-chained_transfer-v1-1-2326a4605c9c@quicinc.com>
+Subject: Re: [PATCH v14 08/21] KVM: guest_memfd: Allow host to map guest_memfd
+ pages
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250715093350.2584932-1-tabba@google.com>
+ <20250715093350.2584932-9-tabba@google.com>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250709-chained_transfer-v1-1-2326a4605c9c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250715093350.2584932-9-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=e7gGSbp/ c=1 sm=1 tr=0 ts=68773a93 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8
- a=VwQbUJbxAAAA:8 a=9xu2jfKr8A-WS2Z9FkgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: s2S1uq_Yhylj3Yzx1twvWWzTToqG7YAg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA0OCBTYWx0ZWRfXzU8C3RSF+D4E
- u9KJkeKnZubVjgan0D2lEe0OEoqwotd7nlA0B4jNEphq8LAXJYPb25TN6ZYcLYTVdJ3krtG3zBs
- ELhkKtX98mgzm82KOP6nyWJvFrV1A/MEfbRQVr6ZNkX0ntJmLcyblM9KHxOTdkTHz2tWpALnpfJ
- EfUWBi4JKML+cXMFLMwfM4EH7xvOs7vvHwZXBCWxWZEFFN5QUmYJqCa1vXuomAqYmkuOuJ3ssWV
- JJme6PLZdc6siWTbcHqwjtWKUcbMW2+nCu7V1l0PXMX48YUTJQNW3bWVmzG5ceaHyY1C4H0+LIY
- SA9rOeWZtjIsUQ0pN2vollq5FOvJTCaLINkS0VWBvGs3Io9BgnJNLgBe/eEw7AETrMvJYPTmSne
- DNrDM5PGdB8FRUGy8CZcUG8lqn76kg/6urB3DQW0FmCyU9IhK47ogEBcaM9WF/8AadBYnwSN
-X-Proofpoint-ORIG-GUID: s2S1uq_Yhylj3Yzx1twvWWzTToqG7YAg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
- phishscore=0 bulkscore=0 impostorscore=0 clxscore=1011 adultscore=0
- malwarescore=0 mlxlogscore=637 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507160048
 
+On 7/15/2025 5:33 PM, Fuad Tabba wrote:
+> Introduce the core infrastructure to enable host userspace to mmap()
+> guest_memfd-backed memory. This is needed for several evolving KVM use
+> cases:
+> 
+> * Non-CoCo VM backing: Allows VMMs like Firecracker to run guests
+>    entirely backed by guest_memfd, even for non-CoCo VMs [1]. This
+>    provides a unified memory management model and simplifies guest memory
+>    handling.
+> 
+> * Direct map removal for enhanced security: This is an important step
+>    for direct map removal of guest memory [2]. By allowing host userspace
+>    to fault in guest_memfd pages directly, we can avoid maintaining host
+>    kernel direct maps of guest memory. This provides additional hardening
+>    against Spectre-like transient execution attacks by removing a
+>    potential attack surface within the kernel.
+> 
+> * Future guest_memfd features: This also lays the groundwork for future
+>    enhancements to guest_memfd, such as supporting huge pages and
+>    enabling in-place sharing of guest memory with the host for CoCo
+>    platforms that permit it [3].
+> 
+> Therefore, enable the basic mmap and fault handling logic within
+> guest_memfd. However, this functionality is not yet exposed to userspace
+> and remains inactive until two conditions are met in subsequent patches:
+> 
+> * Kconfig Gate (CONFIG_KVM_GMEM_SUPPORTS_MMAP): A new Kconfig option,
+>    KVM_GMEM_SUPPORTS_MMAP, is introduced later in this series. 
 
+Well, KVM_GMEM_SUPPORTS_MMAP is actually introduced by *this* patch, not 
+other patches later.
 
-On 7/9/2025 4:03 PM, Sumit Kumar wrote:
-> From: Sumit Kumar <sumk@qti.qualcomm.com>
+> This
+>    option gates the compilation and availability of this mmap
+>    functionality at a system level. 
+
+Well, at least from this patch, it doesn't gate the compilation.
+
+> While the code changes in this patch
+>    might seem small, the Kconfig option is introduced to explicitly
+>    signal the intent to enable this new capability and to provide a clear
+>    compile-time switch for it. It also helps ensure that the necessary
+>    architecture-specific glue (like kvm_arch_supports_gmem_mmap) is
+>    properly defined.
 > 
-> The current implementation of mhi_ep_read_channel, in case of chained
-> transactions, assumes the End of Transfer(EOT) bit is received with the
-> doorbell. As a result, it may incorrectly advance mhi_chan->rd_offset
-> beyond wr_offset during host-to-device transfers when EOT has not yet
-> arrived. This can lead to access of unmapped host memory, causing
-> IOMMU faults and processing of stale TREs.
+> * Per-instance opt-in (GUEST_MEMFD_FLAG_MMAP): On a per-instance basis,
+>    this functionality is enabled by the guest_memfd flag
+>    GUEST_MEMFD_FLAG_MMAP, which will be set in the KVM_CREATE_GUEST_MEMFD
+>    ioctl. This flag is crucial because when host userspace maps
+>    guest_memfd pages, KVM must *not* manage the these memory regions in
+>    the same way it does for traditional KVM memory slots. The presence of
+>    GUEST_MEMFD_FLAG_MMAP on a guest_memfd instance allows mmap() and
+>    faulting of guest_memfd memory to host userspace. Additionally, it
+>    informs KVM to always consume guest faults to this memory from
+>    guest_memfd, regardless of whether it is a shared or a private fault.
+>    This opt-in mechanism ensures compatibility and prevents conflicts
+>    with existing KVM memory management. This is a per-guest_memfd flag
+>    rather than a per-memslot or per-VM capability because the ability to
+>    mmap directly applies to the specific guest_memfd object, regardless
+>    of how it might be used within various memory slots or VMs.
 > 
-> This change modifies the loop condition to ensure rd_offset remains behind
-> wr_offset, allowing the function to process only valid TREs up to the
-> current write pointer. This prevents premature reads and ensures safe
-> traversal of chained TREs.
+> [1] https://github.com/firecracker-microvm/firecracker/tree/feature/secret-hiding
+> [2] https://lore.kernel.org/linux-mm/cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com
+> [3] https://lore.kernel.org/all/c1c9591d-218a-495c-957b-ba356c8f8e09@redhat.com/T/#u
 > 
-> Fixes: 5301258899773 ("bus: mhi: ep: Add support for reading from the host")
-> Cc: stable@vger.kernel.org
-> Co-developed-by: Akhil Vinod <akhvin@qti.qualcomm.com>
-> Signed-off-by: Akhil Vinod <akhvin@qti.qualcomm.com>
-> Signed-off-by: Sumit Kumar <sumk@qti.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Shivank Garg <shivankg@amd.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->   drivers/bus/mhi/ep/main.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/linux/kvm_host.h | 13 +++++++
+>   include/uapi/linux/kvm.h |  1 +
+>   virt/kvm/Kconfig         |  4 +++
+>   virt/kvm/guest_memfd.c   | 73 ++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 91 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index b3eafcf2a2c50d95e3efd3afb27038ecf55552a5..2e134f44952d1070c62c24aeca9effc7fd325860 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -468,7 +468,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index 1ec71648824c..9ac21985f3b5 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -740,6 +740,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
+>   }
+>   #endif
 >   
->   			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
->   		}
-> -	} while (buf_left && !tr_done);
-> +	} while (buf_left && !tr_done && mhi_chan->rd_offset != ring->wr_offset);
->   
->   	return 0;
->   
-> 
-> ---
-> base-commit: 4c06e63b92038fadb566b652ec3ec04e228931e8
-> change-id: 20250709-chained_transfer-0b95f8afa487
-> 
-> Best regards,
+> +/*
+> + * Returns true if this VM supports mmap() in guest_memfd.
+> + *
+> + * Arch code must define kvm_arch_supports_gmem_mmap if support for guest_memfd
+> + * is enabled.
+
+It describes the similar requirement as kvm_arch_has_private_mem and 
+kvm_arch_supports_gmem, but it doesn't have the check of
+
+	&& !IS_ENABLED(CONFIG_KVM_GMEM)
+
+So it's straightforward for people to wonder why.
+
+I would suggest just adding the check of !IS_ENABLED(CONFIG_KVM_GMEM) 
+like what for kvm_arch_has_private_mem and kvm_arch_supports_gmem. So it 
+will get compilation error if any ARCH enables CONFIG_KVM_GMEM without 
+defining kvm_arch_supports_gmem_mmap.
+
+
+> + */
+> +#if !defined(kvm_arch_supports_gmem_mmap)
+> +static inline bool kvm_arch_supports_gmem_mmap(struct kvm *kvm)
+> +{
+> +	return false;
+> +}
+> +#endif
+> +
 
