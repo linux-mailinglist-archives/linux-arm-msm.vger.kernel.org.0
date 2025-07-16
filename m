@@ -1,118 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-65324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22F84B08062
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 00:18:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81E46B080F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 01:25:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEFBB18918CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 22:18:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A15797A9554
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 23:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48F62ECD38;
-	Wed, 16 Jul 2025 22:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94D8E2EF9A1;
+	Wed, 16 Jul 2025 23:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dSjrje0n"
+	dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b="odPNkQCs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.atl.tools (mail.atl.tools [49.12.87.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A257729292F;
-	Wed, 16 Jul 2025 22:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6243128A3F5;
+	Wed, 16 Jul 2025 23:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.87.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752704284; cv=none; b=qSNhi3ty/JAAFh/AlvNx4IkXjFmFEndIjnGft96hL7vT9BdxfBR4DcxE9CMus3mIef5CN8IF0tk0xBZNurE3ImX8N8ZPpMyj6Npcvx0vuExlHzWfOq+4TpcSNvLqekT8cKjaPCQ9yrNmVR0Ne1DQowzutqe13sY9rpsLqoHtYdg=
+	t=1752708321; cv=none; b=jkJmp6YZMzJXZoNrhvEU2naQzR+qhWK5FnYiO/LJ2hv3B0N/JUJgot6M0/z2dnjSQbzIYHd3LNG8GlwrzxLlL2BYrlFQM8YN25C63z5gYw9dXtaRFmc+r1x3D/eWvx9viBIwuIbtTvc7XvXaQofESj3nj0g1rydPcaWK7fuMtQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752704284; c=relaxed/simple;
-	bh=s0XeFi4M45UhztDB8nNFt5fpQOlFtgg3p1lNOevOBQE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c9wGcUpnxutB9mxXD9quDYBJBXfy4qKZ964iv36u6ITtZGKCFCN16J+dBp3jka0amoqPR3MiBH0blX5wU5PhuhAldnQ9xgB4upv5lehj75nwN0yFT+VrUUEqD3xuy8G5ll4BtdAdmQ4daCKsXft19rXFNvNEO8Y69SRaXbdxRTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dSjrje0n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CDFC4CEE7;
-	Wed, 16 Jul 2025 22:18:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752704284;
-	bh=s0XeFi4M45UhztDB8nNFt5fpQOlFtgg3p1lNOevOBQE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dSjrje0nyo4eij7hffvPVv094KgbCYp0h+Y3Lqdg2Lv+F0ADlh3f/IdqIBQUaA8CS
-	 QhFbg01H0sNSO2dTFqM+t0DFc5Jc7X600UrED+s7FuNEgn7xDlYqeTM+UNbPSdgwU3
-	 QCO1clzQ5EwyOhig2arFjvGn4c2nFzwz1HOrbKMLwccQXLX4LMYrlVnFxqz1Oe9Qyk
-	 Qntl4kNlsH+O52IvS64roJOznAf94vTtfSEbaJv1S6qp00bMKohj5483Sm+qd5akKG
-	 FzLlQaJyuWEH0gF/9ixrZ8Y6WyGkxuljlacOgEPvMTKAafFEmg0hFeH1X/BvAPwuLI
-	 3BuQ8KJ0GMMTw==
-Date: Thu, 17 Jul 2025 00:17:59 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: forbidden405@outlook.com
-Cc: Stephan Gerhold <stephan.gerhold@kernkonzept.com>, 
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH] i2c: qup: jump out of the loop in case of timeout
-Message-ID: <7up54twtzt2ljricy6pf4xfggi5ztcuspr3tysb43rqreminrc@tjqmujuglhnl>
-References: <20250616-qca-i2c-v1-1-2a8d37ee0a30@outlook.com>
+	s=arc-20240116; t=1752708321; c=relaxed/simple;
+	bh=9WzX3FFOenXx0/BJv8oQVqLXl1SIENq9vmB/gJLwCSU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EhJyksIBqxyivzobIniBXM21TxEQpdk0hb7E3heEnJpX5YW94fOFk3p2FrAHNVDH+lsfurJ3P9Qsf2fUOb9fHTGG/rkWd6JoWn5qZxOxzS2qZta8wYVZKMWPm3Jd6Nvpko9kPEe8KjIQT2NAXjj4eUpQG94MrTIlngCSgFC38oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atl.tools; spf=pass smtp.mailfrom=atl.tools; dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b=odPNkQCs; arc=none smtp.client-ip=49.12.87.235
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atl.tools
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atl.tools
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DB1E12AAD9;
+	Wed, 16 Jul 2025 23:17:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atl.tools; s=dkim;
+	t=1752707845; h=from:subject:date:message-id:to:cc:mime-version:
+	 content-transfer-encoding; bh=Z3ilcqrD4PmYjpiXrPEU+gqpYLCmyZ/DdRrTlI3A5V8=;
+	b=odPNkQCsEbqkZp1kFI5hidalm0OxWEFJjzP4/jL25LtoqBwwONwjeR4MLKONnDUredynWF
+	ob6KinIkjM48+IgxUJ3dZPEewzz6nvkxOPasVY7Wz1/a88TD8eslF/ZOEOBlYDC6whUIhZ
+	adw/VDZHZCC9CbujnH0BsIiYdS1BqhjqN7KMmC3E7Iemu9TL+eFHyWt/YpgSiwut4QlDQQ
+	po0sPUazEfHkLijCbprVj/nmBqcfKiwgNSDEhnxZYJdlqRBk0X8Ci9OM31bWVZ/N/uCT3h
+	42mR3JfRd2/lxdZFT0D5zSL7ShwveGf0BdHz8a4Byi9fl2E2oSIgz8hUKr1A2g==
+From: Violet <violet@atl.tools>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/2] arm64: dts: qcom: add initial support for Samsung Galaxy S22
+Date: Wed, 16 Jul 2025 23:17:08 +0000
+Message-ID: <20250716231710.99983-1-violet@atl.tools>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250616-qca-i2c-v1-1-2a8d37ee0a30@outlook.com>
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Jun 16, 2025 at 12:01:10AM +0800, Yang Xiwen via B4 Relay wrote:
-> From: Yang Xiwen <forbidden405@outlook.com>
-> 
-> Original logic only sets the return value but doesn't jump out of the
-> loop if the bus is kept active by a client. This is not expected. A
-> malicious or buggy i2c client can hang the kernel in this case and
-> should be avoided. This is observed during a long time test with a
-> PCA953x GPIO extender.
-> 
-> Fix it by changing the logic to not only sets the return value, but also
-> jumps out of the loop and return to the caller with -ETIMEDOUT.
-> 
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+Changes in v6:
+- Remove debug features (bootargs, etc) that slipped in the v5 DTS
+- Format and organize nodes correctly based on existing DTS, 
+ move "status = "okay";" to the bottom always
+- Solve "ddr_device_type" and "qcom,rmtfs-mem" warnings, the rest are
+ from existing SoC .dtsi
+- Disable buttons, ufs and other features for later revision
 
-I think you also need:
+Signed-off-by: Violet <violet@atl.tools>
 
-Fixes: fbfab1ab0658 ("i2c: qup: reorganization of driver code to remove polling for qup v1")
+Violet (2):
+  dt-bindings: arm: qcom: document r0q board binding
+  arm64: dts: qcom: add initial support for Samsung Galaxy S22
 
-> ---
->  drivers/i2c/busses/i2c-qup.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index 3a36d682ed57..5b053e51f4c9 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -452,8 +452,10 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
->  		if (!(status & I2C_STATUS_BUS_ACTIVE))
->  			break;
->  
-> -		if (time_after(jiffies, timeout))
-> +		if (time_after(jiffies, timeout)) {
->  			ret = -ETIMEDOUT;
-> +			break;
-> +		}
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 145 ++++++++++++++++++
+ 3 files changed, 147 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
 
-Well spotted Yang! I think this was the original idea, as well.
-Merged to i2c/i2c-host-fixes.
+-- 
+2.50.1
 
-Andi
-
->  
->  		usleep_range(len, len * 2);
->  	}
-> 
-> ---
-> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-> change-id: 20250615-qca-i2c-d41bb61aa59e
-> 
-> Best regards,
-> -- 
-> Yang Xiwen <forbidden405@outlook.com>
-> 
-> 
 
