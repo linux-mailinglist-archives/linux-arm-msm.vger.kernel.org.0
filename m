@@ -1,220 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-65214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AC13B073D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:45:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFBC3B07404
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 12:53:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3BDAD5838B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:45:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0FF05055CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:52:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A8E62C327F;
-	Wed, 16 Jul 2025 10:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6293E2F2C6B;
+	Wed, 16 Jul 2025 10:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="egHqAbpZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9zpFARf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F012E36F4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 10:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777EB2F2C6A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 10:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752662742; cv=none; b=hOMenaZ9Tdsq5WtXC6ghXi+5C7ClH/+zr/IBEtdvrrFiXQ7+m4GJtwaKvtJ8xz0qJQDYbik66KQ7WtuTnhZDo52HcZ3D91LfMgtrzMM23WZLVgrnvoSHZra2FSgqFmlZvrkmpcZ69h/FtCIYTOYP4QBAqDGLidm9Hm7SDY37sZU=
+	t=1752663201; cv=none; b=MahY3d5OIhmreciGBOkuVhqRYGTQNgHslemE2X6nI2FRdAPfeX/0UWGYEdlIpr084tI9Bfc5WVMXy+/FLp/AaIXISK9yRgEC//hUR8/Re17redQaJa8jBGKNqF4ZX9W6CSISnMzmtVj/8vbbud/CslA3iEkgF5BU0KzXE++tjrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752662742; c=relaxed/simple;
-	bh=Jg8QPqxN63wSXCahEjtlcVGTOkL8YAVvkPtplpcfZiQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t42nXGYKn7Cb0p2lfo+EdflRnYDduhmyTZ9YowBkOlj8CBcUl8urW4jkFCW+gyUKGziBBdihDraTpoMugDF9DJEGHEfco44dMKh3mOToSX3h/A93XuymJGPtuLm+LVoukQQsiocuppQ7z5twL+QjyMSHwwbbN4uXq7+ZrYqoTh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=egHqAbpZ; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1752663201; c=relaxed/simple;
+	bh=uXkQwXePVkjKmDB6B3sdrREQ8QLpKEcUmjYTykYPIl8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cLb220LkttFSLZyc6/VDY4r784kckAKkI29LrOo3lWU6FoxixZZeEbiUSL7vwkjyLVetPYGVx3TVwWw1AxtVX0AMgsn2uBWga1Kqc49p6VL0mDRBC6fXQ2s6o/3Y+JUKPwjQQp3hXDM+cmjd6cpEg55p9Pd1dhGXR510Bb6IJEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9zpFARf; arc=none smtp.client-ip=209.85.128.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-74b54af901bso4161286b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 03:45:39 -0700 (PDT)
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-451d54214adso43199085e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 03:53:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752662739; x=1753267539; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=am+nIE1F4DSrpycFS2I1Wo9UrAjSnMRHqnP7j+RzKjs=;
-        b=egHqAbpZwGfEIC/5qqwI4JZrPCkQv5oeOWpXTW20+bZc3F63eR9g3lpWq/A/aMYthQ
-         X/0hCx0/W4XgEWkn5TBsjKgI8qB20H1JyeaU5E2DxBj4Jij5Aeb5EcK724F0i7+3KpTu
-         rIHbdCjkSM6Ekb3+IlVup5AdOUn7RbPCrGsQLu1KVHn4f5DV8uq2xvPqgNQHJHw4amLC
-         WV5ES4xQ7+yePmy1+zi8uear383c+WI7DMq3jFg/3hJ5XJIs0LeZNI9QzCWGys5TlL/j
-         0xk7sfH8sK7wtw+Vulsy276SGPwIYzc6ILbrrle2m03sanK5vhOMCmiP3NR4IAwQEd8+
-         MoSQ==
+        d=linaro.org; s=google; t=1752663197; x=1753267997; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8CW2/O0TzBqschJZP93TpDVHYIZvXtSrznuz3Stcnpw=;
+        b=S9zpFARf5kagB7hbUoIGHG6WPHLiDLA1UTGYVWEaIJ/6GPEEHNjc9ApxHhX9BVVmro
+         nspEE61Sa0YaF4OtBDAVBd3kISi+8FAMUOrPx8m7lu3NX8LgXQ8dkzvI8kutnvdUpoS2
+         b4pTDxSOsvoD7k6vgq3UNP/WoXcACH4NOEsCIK0okDEJt0iohwK5QWQZAKnG5OUxCJ0O
+         danbwAadC26xPonWZ8DU3eUqIoT4jggPUHo1vP7+CzahAIH5DrfoEp2u1zHyUQJbd/um
+         fX5cxyqHWrJP050ruBwUxdJiooPQATQpzCrEPmg4w82sZa4Q1RkZQhEwp+dI+mfZRWTM
+         dm5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752662739; x=1753267539;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=am+nIE1F4DSrpycFS2I1Wo9UrAjSnMRHqnP7j+RzKjs=;
-        b=A9gstqShY/uaQvSX/f7n6vuZf0/7b7BzQ25aP9c/HJ/UWSZHQr65Tco8ZXs0/XyY3K
-         GWzqCBpHXJB1hezE/6g7eG7D6KzT/cQpeZjg+P1iIhF07EwTAB1yLrfXgx1l49LB9OgV
-         dieRyZhGgdJZNXAUWWBSxZUohGKXGP5XZzezgVCODP73H6Nn9W1KY7nhP78NJCDxpvG5
-         Pw9QxteWSnA8RKxqsVGKFDI0i+WQq62IwS6Rg3rYaW3jIgPWcuYfR2XfbsaBw0Qs6VaS
-         koJQo+NkNEAfC8lHSSBGJfBUetmwP1Ls+0LBVp6c5fFam5TviEkGhlMwYltu8Xf7FFMf
-         wOLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV2uOcV1/ZzbXwe7dXDFeL+hVFOvIcUw0SNRIOOcabWcLRUlVmprKPwDQWhi/FOfanOx8XF+X12fHHBCI0J@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxkE3k25cT/2nDJ6paOmrhscTJUgsKOjJI2KAaG1U4zEtK47D6
-	KojWG7c2f5FNG+lFMn/1TWjjK+UD6TZEer5v3ov2IyGOtHtnCq9uyQxZNk5dZLMO3K+63jUZ/fE
-	DfSofY/Moy/XmMEQIcuv9oytq1rLOz1HjhSvKYaAgLPEzGQd76zW8
-X-Gm-Gg: ASbGncsx9/qQ4fJIQcJhTGLFTWKsXuT2+3JZvnC2zS4HFLPLvAlud7/zLNJb+12na5L
-	7Sgqa1MaydWckHsaiZ3rszDlaLzvC8mGZPqQNlOcgigOiA+807bI1xkc47OhFmRn5RLMHHuyMrT
-	iAOdlHOZUCPdDMK1KQlX8CkYM71yWsyYDImNMOEMs0LWoWJGFuhaBkdFwOlkLUJ2MAH8NfWWIi0
-	u6hL+UahJzNzp2HpyingnRD7oH40SLVPBR99MU=
-X-Google-Smtp-Source: AGHT+IEGtieAB4UoSqjXN+Sg8qQxmS8F/1OUpyt87e81VvxutU4sB4qMtakTi8T2flz3Qyim3gB60CfRRRoknOXfGGQ=
-X-Received: by 2002:a05:6a00:4644:b0:746:298e:4ed0 with SMTP id
- d2e1a72fcca58-756ea1de0c1mr3849454b3a.13.1752662739230; Wed, 16 Jul 2025
- 03:45:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752663197; x=1753267997;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8CW2/O0TzBqschJZP93TpDVHYIZvXtSrznuz3Stcnpw=;
+        b=EcaRjSehPTdPTUX+yQxieO2CGGSElrEhdoD6ZN8R8Bbcvo5eLaqNB2Fh3dS7/b43ZZ
+         u7LwuMZQ7YFf1wgYUN2IPi/JD022wqvGKFDSWSDWGyYlYOsIU4+T5s5Sqzbr2wFbP0NE
+         z+gIYLsnrE7um58gMxDXUDzUvJo+qD0W9DtZyFVauYk3ocragqtsb1wGfmiw6/w2GhPL
+         N6Hg/ivUJLTbLHBDvBIFaywPZjXFZm1q+1erKrxrjr+TFnKYuo8FBPclB2mxcHngAXoH
+         Z9i1LZN0BHGZKBNDJfI+cpvdDioDVIbYNiqUT3bb6ngP15SF4DBRyD5lac0CDwoXt/yZ
+         kkfA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfOaytHf0HMVD9m/jqWHAWgYlMVEHd6EeKynrSUedIDNR/o4L7dxmI0OrcSFNt88mqEC3hm8kbyLIhfT9I@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyd9i6N6pyCMAbqT5bjrcs/1Op+74yywx86VRFtqZCFGGfvVVeN
+	/Dil5QDrucNicYbF2BF5uh1gOSZmfqMGiHMj8aMBFIKXeEE6j0p2gve24DQPoWvMiSLmDDta3ZO
+	3ooNFI4oQVb/r
+X-Gm-Gg: ASbGncsG3lPrYbU3g6KvFZiWgbpV7sWLTeZHeDVToIvPhBMwhgBG/Y2MHvBv2T5+dKP
+	NUtmkkyQTko+XgiqlknGQ4kvMQv6wh6PpO8O0cSbCA2333ydG0QUAH0th0I36cJunUo67kMUQWj
+	1MgW1UFFtM0cBQj0PScS4oR1Uecx1ajVC7uWq9IzC349OC0NFo0EmMSPl+dJNOuQaj0NDyuo5aS
+	qgO1mnjs9zXPduEczOqw3z078oJ3DOhSkDtSdZIdQkqsK2n+nppuUfOwBo7+jFUcPlhzUeIXBmY
+	WEcQ6K1XcrWz06hiTHd3lw0AVHWp3S6lOppnCV/ZEQnUuEGTgoYNaf7ZW3ryvmvnKhw+t1PO278
+	ogt0YE6gO1hKLYCpuKsId3rKxvdR+PpSazeGQamADrNKFs30VQjK8+MtM9+A1vO0=
+X-Google-Smtp-Source: AGHT+IEUeJJ3NfX00M2OD8gjxuXAAcmIdfAZqCKGjvqb2/EEjyffgUkLner7WOBZzioDHf2iP0fReA==
+X-Received: by 2002:a05:600c:19c7:b0:450:d386:1afb with SMTP id 5b1f17b1804b1-4562dfe6e65mr24230655e9.9.1752663196643;
+        Wed, 16 Jul 2025 03:53:16 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8dc21e7sm17523816f8f.36.2025.07.16.03.53.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 03:53:16 -0700 (PDT)
+Message-ID: <a2681844-a96a-465a-a48d-49e1ede526c6@linaro.org>
+Date: Wed, 16 Jul 2025 11:53:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250703130453.4265-1-quic_jinlmao@quicinc.com>
- <20250703130453.4265-3-quic_jinlmao@quicinc.com> <20250703141905.GE1039028@e132581.arm.com>
- <0e7ae7d1-4877-4e8a-a0fb-0fda5cc03cf2@quicinc.com>
-In-Reply-To: <0e7ae7d1-4877-4e8a-a0fb-0fda5cc03cf2@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 16 Jul 2025 11:45:27 +0100
-X-Gm-Features: Ac12FXxbhbcdL16ZxrAYI1cGIXwRPQphg69YtVhrS7_0hd4B1XJVA6e6Ekha30Y
-Message-ID: <CAJ9a7ViQ2A9FQV=fxzhu1DkZEBdiAvAijb6OjOeJriNio1nX6w@mail.gmail.com>
-Subject: Re: [PATCH v8 2/2] coresight: Add label sysfs node support
-To: Jinlong Mao <quic_jinlmao@quicinc.com>
-Cc: Leo Yan <leo.yan@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] Add Dell Inspiron 7441 / Latitude 7455
+ (X1E-80-100)
+To: Val Packett <val@packett.cool>
+Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250716003139.18543-1-val@packett.cool>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250716003139.18543-1-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 16/07/2025 01:26, Val Packett wrote:
+> Since v3[1]:
+> 
+> - Applied R-b tags
+> - Skipping the eDP panel ID patch now since it's been applied
+> - Fixed the last remaining '-names before -0' order issue
+> - Changed usb_mp: keep the unused PHYs enabled in the DT
+>    (to let them go to sleep), like how it is done for the XPS
+> 
+> [1]: https://lore.kernel.org/all/20250706205723.9790-2-val@packett.cool/
+> 
+> Bryan O'Donoghue (2):
+>    dt-bindings: arm: qcom: Add Dell Inspiron 14 Plus 7441
+>    arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455
+> 
+> Val Packett (2):
+>    dt-bindings: arm: qcom: Add Dell Latitude 7455
+>    firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude
+>      7455
+> 
+>   .../devicetree/bindings/arm/qcom.yaml         |    2 +
+>   arch/arm64/boot/dts/qcom/Makefile             |    4 +
+>   arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi   | 1666 +++++++++++++++++
+>   .../x1e80100-dell-inspiron-14-plus-7441.dts   |   52 +
+>   .../dts/qcom/x1e80100-dell-latitude-7455.dts  |   53 +
+>   drivers/firmware/qcom/qcom_scm.c              |    2 +
+>   6 files changed, 1779 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
+> 
 
-On Wed, 16 Jul 2025 at 03:43, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
->
->
->
-> On 2025/7/3 22:19, Leo Yan wrote:
-> > On Thu, Jul 03, 2025 at 09:04:53PM +0800, Mao Jinlong wrote:
-> >
-> > [...]
-> >
-> >> +static ssize_t label_show(struct device *dev,
-> >> +            struct device_attribute *attr, char *buf)
-> >> +{
-> >> +
-> >> +    const char *str;
-> >> +    int ret = 0;
-> >
-> > No need to init ret to 0.
-> >
-> >> +    ret = fwnode_property_read_string(dev_fwnode(dev), "label", &str);
-> >> +    if (ret == 0)
-> >> +            return scnprintf(buf, PAGE_SIZE, "%s\n", str);
-> >> +    else
-> >> +            return ret;
-> >> +}
-> >> +static DEVICE_ATTR_RO(label);
-> >> +
-> >>   static struct attribute *coresight_sink_attrs[] = {
-> >>      &dev_attr_enable_sink.attr,
-> >> +    &dev_attr_label.attr,
-> >>      NULL,
-> >>   };
-> >>   ATTRIBUTE_GROUPS(coresight_sink);
-> >>
-> >>   static struct attribute *coresight_source_attrs[] = {
-> >>      &dev_attr_enable_source.attr,
-> >> +    &dev_attr_label.attr,
-> >>      NULL,
-> >>   };
-> >>   ATTRIBUTE_GROUPS(coresight_source);
-> >>
-> >> +static struct attribute *coresight_link_attrs[] = {
-> >> +    &dev_attr_label.attr,
-> >> +    NULL,
-> >> +};
-> >> +ATTRIBUTE_GROUPS(coresight_link);
-> >> +
-> >> +static struct attribute *coresight_helper_attrs[] = {
-> >> +    &dev_attr_label.attr,
-> >> +    NULL,
-> >> +};
-> >> +ATTRIBUTE_GROUPS(coresight_helper);
-> >> +
-> >
-> > This change adds a 'label' entry for source, link, helper, and sink
-> > components, but the documentation has only updated for three components:
-> > CTI, funnel, and TPDM.
-> >
-> > Should we also update the documentation for all relevant components,
-> > such as ETM, ETR, etc.?
-> >
-> > Additionally, patch 01 is missing the update to the ETM yaml file for
-> > the new property. I checked patch v4 [1], which includes a change to
-> > etm.yaml, but this change was dropped since v5. I briefly read the
-> > v4 discussion thread and didn't see any mention of removing the ETM
-> > related change. Did you see any particular issue when add label for
-> > ETM devices?
-> >
-> > Overall, this series is fine for me. Just please ensure that all
-> > relevant components are covered for completeness.
-> >
-> > Thanks,
-> > Leo
-> >
->
-> I will update all coresight docs.
->
-> Thanks
-> Jinlong Mao
->
-> > [1] https://patchwork.kernel.org/project/linux-arm-msm/cover/20240703122340.26864-1-quic_jinlmao@quicinc.com/
-> >
-> >>   const struct device_type coresight_dev_type[] = {
-> >>      [CORESIGHT_DEV_TYPE_SINK] = {
-> >>              .name = "sink",
-> >> @@ -390,6 +420,7 @@ const struct device_type coresight_dev_type[] = {
-> >>      },
-> >>      [CORESIGHT_DEV_TYPE_LINK] = {
-> >>              .name = "link",
-> >> +            .groups = coresight_link_groups,
-> >>      },
-> >>      [CORESIGHT_DEV_TYPE_LINKSINK] = {
-> >>              .name = "linksink",
-> >> @@ -401,6 +432,7 @@ const struct device_type coresight_dev_type[] = {
-> >>      },
-> >>      [CORESIGHT_DEV_TYPE_HELPER] = {
-> >>              .name = "helper",
-> >> +            .groups = coresight_helper_groups,
-> >>      }
-> >>   };
-> >>   /* Ensure the enum matches the names and groups */
-> >> --
-> >> 2.17.1
-> >>
-> >> _______________________________________________
-> >> CoreSight mailing list -- coresight@lists.linaro.org
-> >> To unsubscribe send an email to coresight-leave@lists.linaro.org
->
+Just tested on the 14p this updated version seems to work just about 
+fine - or no worse than previous.
 
-Revisiting this - the label DT attribute is purely optional, and
-provides context for the hardware instance.
-This code as written appears to add a "label" file to all devices,
-irrespective of if the label is set in the DT.or not, with blank
-labels where  the attribute is not present.
-The visibility of the sysfs attribute should be controlled so that it
-only appears if label is present in the DT.
-
-Mike
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
