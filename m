@@ -1,129 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-65151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C847B06EAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:16:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11345B06ECC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 09:19:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6F3A87B1BD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:14:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87AB57B0AEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 07:17:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E23328AAE9;
-	Wed, 16 Jul 2025 07:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C36264F99;
+	Wed, 16 Jul 2025 07:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="hBxU0FI6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rF9CvnPI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D23328A1D1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 07:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC87F256C6D;
+	Wed, 16 Jul 2025 07:19:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752650149; cv=none; b=IDJgIqBDXVW+UBw9lfqgzzKmAjLuEugRJggfUZh4juwkSyAUmUWHp3IvHgnY1r0uQVDytVOAy+2tfIEbyrneV7ytUR3pPiJKXgbXl1Lz/fE0tmZsi6Kqh8BvqWWxGW+9r/16ksHcU+T06wVPRgZ1ULRhonJmexCkWZCaU+ninPo=
+	t=1752650340; cv=none; b=YDR2GC0gXXxPqznEJ4nPiSHnoD8ueLjASNjojcIznSaS8QTCSwwXMldLdNQZCZKW2lZWWFMaYDnN3r9VsYyrm7exhIEg+eEDG2+mpV6JLraZhKsJx5UbpTF4O+6K1ey9+69eGMg5zujfJtWk2f3g6yTJR/DGtBM/qk/LlgnT1lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752650149; c=relaxed/simple;
-	bh=24Tb/LcZcpuEpFKIVKeMZB7NBtNKQTvEKsUhXdnCMXk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=UVJpiWlP+byTDOik7Bgj5v+LWJI7WACqvJVW61ZFZ/ZbgfWqhxvgPTWu+UNnBbUVpvtZG+s8Td6rvS8/7yLGaSU/he/1nQXdMUUok0Cov3uGn1L+TCNYcD7/zwzJ1adpnO5QWvK9RdTT0Oxsnm9FO/bX6xXyHDvreDD6cq1bYmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=hBxU0FI6; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-60867565fb5so10186435a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 00:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752650146; x=1753254946; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YfsjryOJJcheH9NBkSyCY8ER+5hEKLpu3+/ZdvPKIxw=;
-        b=hBxU0FI6N4QyvB9ewq8YRKB58MORaqNgkMrhXYVmffHaIufzTUqBkT5pO9I8Vk7sVE
-         72DJEvKxWuMuruygEKXhPttCZprFXvvhq/onoRMHK+fYnYSdR6nPotsCmeUcjpu33+bd
-         SW28QC5rr8OhHWCFj3WjkAJEGVQuEzcaVWEhBawOZVZlR+TlMUybSl/eA9k/dkb7sQRp
-         vyD6PszlSyymICoMdafqoXUgi8embFU2wiMtp/1pOQPcBf2u9Tk23JVIss5JvzxQV6mt
-         KJUfr4UHgNhJfILhy5Y8HbMlMt+GiPBTPhOc2IfkdHjiCHrZcmqSCCKB6RzVlswHxfOU
-         Elyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752650146; x=1753254946;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YfsjryOJJcheH9NBkSyCY8ER+5hEKLpu3+/ZdvPKIxw=;
-        b=SZ2bQyLXsU2o0a1u76z5uxHL/iCD+203pAi6NyvtGzbmq3pEGOnUeSIgA/b1NXeod1
-         BHdT49KWnh3E0/hwmEjlAhMDBDHH1+TKFPjlX36ZQ0598QKEnP4zrya8BgXB0z0PirYr
-         7WouLbbNl5AzWicd8ERgIgv2VjMJfwBtPMJnoZlFoWznIWvTigA9Tc9wG1OtEJx3sP33
-         EfFvI3I8j3QKALGoSCPotIDSzsiAKKJny1PyxVkBusY1mf67/Ak2J23zfRwBw+gHShUa
-         7+twtpDSXdNsDbXxkcqSO/e3tJIdUXbwUgTC10Fs3yxkKjPnPnHiTC3zP91EKMgJARz1
-         TnLA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7NGS+qWQI4bjfFr9iAoFEqtPl+p0m2h+z5D19LK2RnTrcfUqao1XbdNH+EEYB4yTpnvre2fNi3ATIkC1t@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWQBPQG+sy3A9nOWgWaOi0VHwTeFN7Adz2g0RfhuukLAcuJXai
-	rhSaE07FbTGORdcPhdwG1uL0F6we0+ctayl5ibnh896m23/hVlzXfeMKglSW5JcSp3A=
-X-Gm-Gg: ASbGncsv85nVHysrTaYmuCpw7d2SzAyAZLZopo+w16oiEsPksx1stre9CpKK/E2jKqY
-	wvNlW813orp91tIvjn6vlFv4R+9ALGyd/THWpMIdn0E2S+GznUP19xQve7+uX98q9aAbfIar3gm
-	ifp8Up8m4Dih4H58GMRgkSuevO6Y8BXuZ4FkccS0BjNkgMVKBX2B9TCdozzu1ASWwqnYMEs8RgM
-	fqwF2ZnF3085YNIrbuaAFI/hoEDbE3LltOLYA04Ni99OIYKsDcWpez3a+I7gu5CU3LEoV0cJoEJ
-	x2/AEI8MdXXvGchrDbz01R2P6YECF0FnjRo0N57vsKjzJgUoWpogZrVKzwHxWFfLOSaXXe+xohX
-	rIy6CbwLJ9+f0dlbMAJ7Rm7X9LfGN/5KYH3aWeLSUXqFHLvI3GUQ57+c=
-X-Google-Smtp-Source: AGHT+IHh6O0xWZNdSmDIs+XRRgBqO1v1bLel1oaIRd2A4zdKO7Ksr9kC4ZbOvvs8AVHwGMBGLMFLbg==
-X-Received: by 2002:a05:6402:2343:b0:606:9211:e293 with SMTP id 4fb4d7f45d1cf-61281ebe084mr1668193a12.9.1752650145562;
-        Wed, 16 Jul 2025 00:15:45 -0700 (PDT)
-Received: from localhost (212095005088.public.telering.at. [212.95.5.88])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c976ec04sm8197036a12.60.2025.07.16.00.15.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 00:15:45 -0700 (PDT)
+	s=arc-20240116; t=1752650340; c=relaxed/simple;
+	bh=ft9NQ3VgWxxomwjuMEIjAFvCizB7sBVk+rQ5QVmSgk4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RnFa4c3yrdCOzlET9mBiyRM0xnKM8e8Q12hO8WytqMaZWUvmy9IgjlSDzL7sxcUtsslGFl1B3aiYEuQlYvRTHdjEnAeCmZl6FN8ggXArNnjorSkuMc/xoJobD2g+v31LjIiugcPRYIPbIqEVBB5BM8Ba7Ei42RqS4A34CBT42UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rF9CvnPI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A1CC4CEF0;
+	Wed, 16 Jul 2025 07:18:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752650340;
+	bh=ft9NQ3VgWxxomwjuMEIjAFvCizB7sBVk+rQ5QVmSgk4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rF9CvnPI38e1mLuhLYgfICUzIGSzoemT9H1BkbWJK9IMG2n8HZ7IYrRGK+ds20qht
+	 SnFkGhmMsVeZsdKU7pfY/qKzAEhEOgeG8+8014/4ONQTib76gY54pgDldKCVWl5rTQ
+	 yH8YFVwZx+16s4cIGvJd2YTqfECB4n5ZDAOdYu2bgFH2/jFXhUu5B39sgArdv9lczz
+	 ugTuyIzSeXXoeNMIJBA/KC7xecgX2ETgBnkyFI54xwsVa0OAjfERv4EfNj2sYdMZaA
+	 +OzehTgdXJhlPeYDoTyNHejp6JGhz23gl7Ui4Ulp5oBMSg3n22wQGZg25DxlrU4hiB
+	 sBd35yZWOzETw==
+Date: Wed, 16 Jul 2025 12:48:45 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 2/2] PCI: qcom: Move qcom_pcie_icc_opp_update() to
+ notifier callback
+Message-ID: <itpv65wevbe62cvqpypw34u2htaycnk66msaguufynrpt2iqwj@z6m4bjp4ws7r>
+References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
+ <20250714-aspm_fix-v1-2-7d04b8c140c8@oss.qualcomm.com>
+ <b2f4be6c-93d9-430b-974d-8df5f3c3b336@oss.qualcomm.com>
+ <jdnjyvw2kkos44unooy5ooix3yn2644r4yvtmekoyk2uozjvo5@atigu3wjikss>
+ <eccae2e8-f158-4501-be21-e4188e6cbd84@oss.qualcomm.com>
+ <qg4dof65dyggzgvkroeo2suhhnvosqs3dnkrmsqpbf4z67dcht@ltzirahk2mxd>
+ <ead761e1-2b48-4b9d-90cc-f63463a97f60@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 16 Jul 2025 09:15:43 +0200
-Message-Id: <DBDAMGN9UQA0.J6KJJ48PLJ2L@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Luca Weiss" <luca.weiss@fairphone.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- "Krzysztof Kozlowski" <krzk@kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <stable@vger.kernel.org>
-Subject: Re: [PATCH 0/3] Fixes/improvements for SM6350 UFS
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250314-sm6350-ufs-things-v1-0-3600362cc52c@fairphone.com>
-In-Reply-To: <20250314-sm6350-ufs-things-v1-0-3600362cc52c@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ead761e1-2b48-4b9d-90cc-f63463a97f60@quicinc.com>
 
-Hi Bjorn,
+On Wed, Jul 16, 2025 at 12:23:54PM GMT, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 7/16/2025 12:16 PM, Manivannan Sadhasivam wrote:
+> > On Wed, Jul 16, 2025 at 10:24:23AM GMT, Krishna Chaitanya Chundru wrote:
+> > > 
+> > > 
+> > > On 7/15/2025 4:06 PM, Manivannan Sadhasivam wrote:
+> > > > On Tue, Jul 15, 2025 at 11:54:48AM GMT, Konrad Dybcio wrote:
+> > > > > On 7/14/25 8:01 PM, Manivannan Sadhasivam wrote:
+> > > > > > It allows us to group all the settings that need to be done when a PCI
+> > > > > > device is attached to the bus in a single place.
+> > > > > > 
+> > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > > > > ---
+> > > > > >    drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
+> > > > > >    1 file changed, 1 insertion(+), 2 deletions(-)
+> > > > > > 
+> > > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > index b4993642ed90915299e825e47d282b8175a78346..b364977d78a2c659f65f0f12ce4274601d20eaa6 100644
+> > > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > @@ -1616,8 +1616,6 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+> > > > > >    		pci_lock_rescan_remove();
+> > > > > >    		pci_rescan_bus(pp->bridge->bus);
+> > > > > >    		pci_unlock_rescan_remove();
+> > > > > > -
+> > > > > > -		qcom_pcie_icc_opp_update(pcie);
+> > > > > >    	} else {
+> > > > > >    		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
+> > > > > >    			      status);
+> > > > > > @@ -1765,6 +1763,7 @@ static int pcie_qcom_notify(struct notifier_block *nb, unsigned long action,
+> > > > > >    	switch (action) {
+> > > > > >    	case BUS_NOTIFY_BIND_DRIVER:
+> > > > > >    		qcom_pcie_enable_aspm(pdev);
+> > > > > > +		qcom_pcie_icc_opp_update(pcie);
+> > > > > 
+> > > > > So I assume that we're not exactly going to do much with the device if
+> > > > > there isn't a driver for it, but I have concerns that since the link
+> > > > > would already be established(?), the icc vote may be too low, especially
+> > > > > if the user uses something funky like UIO
+> > > > > 
+> > > > 
+> > > > Hmm, that's a good point. Not enabling ASPM wouldn't have much consequence, but
+> > > > not updating OPP would be.
+> > > > 
+> > > > Let me think of other ways to call these two APIs during the device addition. If
+> > > > there are no sane ways, I'll drop *this* patch.
+> > > > 
+> > > How about using enable_device in host bridge, without pci_enable_device
+> > > call the endpoints can't start the transfers. May be we can use that.
+> > > 
+> > 
+> > Q: Who is going to call pci_enable_device()?
+> > A: The PCI client driver
+> > 
+> > This is same as relying on BUS_NOTIFY_BIND_DRIVER notifier.
+> > 
+> userspace can enable device using sysfs[1] without attaching
+> any kernel drivers.
+> 
 
-On Fri Mar 14, 2025 at 10:17 AM CET, Luca Weiss wrote:
-> Fix the order of the freq-table-hz property, then convert to OPP tables
-> and add interconnect support for UFS for the SM6350 SoC.
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> Luca Weiss (3):
->       arm64: dts: qcom: sm6350: Fix wrong order of freq-table-hz for UFS
->       arm64: dts: qcom: sm6350: Add OPP table support to UFSHC
->       arm64: dts: qcom: sm6350: Add interconnect support to UFS
+But that's not a common usecase. Even so, we cannot insist users to write to the
+sysfs knob to let ASPM/OPP work without a driver.
 
-Could you please pick up this series? Konrad already gave his R-b a
-while ago.
+- Mani
 
-Regards
-Luca
-
->
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 49 ++++++++++++++++++++++++++++--=
-------
->  1 file changed, 39 insertions(+), 10 deletions(-)
-> ---
-> base-commit: eea255893718268e1ab852fb52f70c613d109b99
-> change-id: 20250314-sm6350-ufs-things-53c5de9fec5e
->
-> Best regards,
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
