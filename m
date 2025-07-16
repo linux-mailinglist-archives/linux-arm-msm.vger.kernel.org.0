@@ -1,155 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-65174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40566B07099
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:31:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 652AFB070A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 10:34:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1C781881192
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:31:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA898562187
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 08:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2243F2EA749;
-	Wed, 16 Jul 2025 08:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E702EE975;
+	Wed, 16 Jul 2025 08:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m+ije0PC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ykd+c+i0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715AB2749DB;
-	Wed, 16 Jul 2025 08:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A072951CB;
+	Wed, 16 Jul 2025 08:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752654700; cv=none; b=s62OwU1deixQT2mQL8iiRGRS4JtNNE+57dOfWX5TfRcXSfno/7JuXAS0N9v9JFLqxgtazDH0dx3Zes+reZf+q+T4Bj7a4AfRdhswA0FSZLUtKTHWxPauk7BVua7O0aaEM5MGifEnVGJsj07hw/NIXkcTbSzTO6WPbTjyowdLjEg=
+	t=1752654839; cv=none; b=cHfRfRzSsrrL9xx80F0ugRJAzCrmoB7sEpwNvHyxnZ9Bz4pu2+z4kaO2ykeZCNCVIfM3KGnW4Ix0AZb/JQt3/wuIxtTFXbRdwTHRxSL5LA2JNyBvk3aG4AcJaPiK1v7cxRJRmlgXgs4XgSw/XhsVSEbksCFHnx/5w3+G3LB5wmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752654700; c=relaxed/simple;
-	bh=M8tEAX0g/+FHjCYjptDJd+fCfcSOLCtDuZhA2so9Vs8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jhExvWQqqFt0hyF4XSVL8X5Mpdwagncqo6hpDld6+nKQ2xxLP6w0j+Z96pu/g56sPRYtFpehKAu3O77HrpAJ8IFy0Ngb/s9ADGrQDD5wRNo3GuwKhIu/r7LiY78IKspZOChBdl85Y7SsxxEhZxTgUOM3ltlGZwjkLsIiJZKlnH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m+ije0PC; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752654698; x=1784190698;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=M8tEAX0g/+FHjCYjptDJd+fCfcSOLCtDuZhA2so9Vs8=;
-  b=m+ije0PCXiTk3aCEYB1z5NPshRBpc/6hI16sqSR023mTZisrBMD34m6X
-   /YdlJRY/JByZJiyL+l0eIjpRaiXzZDapQAm83UE+gjAZhu4TrmjNlOwy+
-   nScbY49kke/0VMigr2jZNb8zHbFhApL+ztSz/MAyYKW0kU/nKfJJTBBXY
-   imoNjMgECJ+IsOE697hWKQ7p4js9thiWuqGn40yRsCkUFyscskP7lb+Vi
-   LB0EQMu+P1w/yXlxF8FhnmeX7mU6G+fineinWjNyr46Y98L7Hm8HLg00o
-   dGSjauY7IdZrBo5bKBh/diT/t0CwZjB6rG9BdG0GLJ2vSKk7WtvaPFFnv
-   w==;
-X-CSE-ConnectionGUID: XP0hD86kRMGdbkfQ4MUwGA==
-X-CSE-MsgGUID: 6KPrFpDFQwqlxgoK5x9yGg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="65955342"
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="65955342"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 01:31:33 -0700
-X-CSE-ConnectionGUID: nVOQ/N/PSSSwhIizbLv+DA==
-X-CSE-MsgGUID: O80dBXWoQ8GoQDCI749OMQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; 
-   d="scan'208";a="162986525"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 01:31:18 -0700
-Message-ID: <418ddbbd-c25e-4047-9317-c05735e02807@intel.com>
-Date: Wed, 16 Jul 2025 16:31:15 +0800
+	s=arc-20240116; t=1752654839; c=relaxed/simple;
+	bh=gQCajo6V3qiKVw+aPxI0VqerSi9B9AAulC3YPoNSIMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y/C5HxSnf7UBS6phd4+XnkdweWioXZcXG9+pjGF43Pa0OItinSwGafhPpmQvZC2EZ9ucI+2mF/zhxxz030suRC5VWNSmch83Ut9PPBzaDwuIfE64eSbRsGOxKLb8RLP5TcW0cnY3OTH4jwFq052WtWWGiB9uVBuNhd0QYMudmIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ykd+c+i0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC53C4CEF0;
+	Wed, 16 Jul 2025 08:33:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752654839;
+	bh=gQCajo6V3qiKVw+aPxI0VqerSi9B9AAulC3YPoNSIMU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ykd+c+i0RieXzf1p25bkk9iaQhsd1fEnEgo9vUCJHkWsewfZGEMKs/x0RqvNsQips
+	 nqKpQWFgVl6wk/Q1Jut5Nttlh3uzjhtR+KVRu04C8CihSmVfmbl0TkhV1wQz8wx3/N
+	 FIUVEP3KrBKNn1cciUSj9nlSk5ucxWzjxt16/A6kdlDO0exZzMjxNwLPPTuhp5HXD2
+	 AcDQmakg9ZrgKmrr+la2xZTeK4he3nHwgiNJBrij24bEtxI1vesW6geX0xVfOPFmXV
+	 WZWf5Qm0DbH6jw9c8hq1h/myR/lUuml7do+Hg8KCslLF/W33gnb4olKecixEaKejXM
+	 v496Xkq0fvQhQ==
+Date: Wed, 16 Jul 2025 10:33:56 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: qcom,pmic-glink: Add
+ qcom,subsys-restart property
+Message-ID: <20250716-functional-loutish-peccary-dcb4c6@krzk-bin>
+References: <20250716004004.311001-1-anjelique.melendez@oss.qualcomm.com>
+ <20250716004004.311001-2-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 02/21] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
- CONFIG_KVM_GENERIC_GMEM_POPULATE
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
- mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com,
- viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
- akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250715093350.2584932-1-tabba@google.com>
- <20250715093350.2584932-3-tabba@google.com>
- <a4091b13-9c3b-48bf-a7f6-f56868224cf5@intel.com>
- <CA+EHjTy5zUJt5n5N1tRyHUQN6-P6CPqyC7+6Zqhokx-3=mvx+A@mail.gmail.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <CA+EHjTy5zUJt5n5N1tRyHUQN6-P6CPqyC7+6Zqhokx-3=mvx+A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250716004004.311001-2-anjelique.melendez@oss.qualcomm.com>
 
-On 7/16/2025 4:11 PM, Fuad Tabba wrote:
-> On Wed, 16 Jul 2025 at 05:09, Xiaoyao Li<xiaoyao.li@intel.com> wrote:
->> On 7/15/2025 5:33 PM, Fuad Tabba wrote:
->>> The original name was vague regarding its functionality. This Kconfig
->>> option specifically enables and gates the kvm_gmem_populate() function,
->>> which is responsible for populating a GPA range with guest data.
->> Well, I disagree.
->>
->> The config KVM_GENERIC_PRIVATE_MEM was introduced by commit 89ea60c2c7b5
->> ("KVM: x86: Add support for "protected VMs" that can utilize private
->> memory"), which is a convenient config for vm types that requires
->> private memory support, e.g., SNP, TDX, and KVM_X86_SW_PROTECTED_VM.
->>
->> It was commit e4ee54479273 ("KVM: guest_memfd: let kvm_gmem_populate()
->> operate only on private gfns") that started to use
->> CONFIG_KVM_GENERIC_PRIVATE_MEM gates kvm_gmem_populate() function. But
->> CONFIG_KVM_GENERIC_PRIVATE_MEM is not for kvm_gmem_populate() only.
->>
->> If using CONFIG_KVM_GENERIC_PRIVATE_MEM to gate kvm_gmem_populate() is
->> vague and confusing, we can introduce KVM_GENERIC_GMEM_POPULATE to gate
->> kvm_gmem_populate() and select KVM_GENERIC_GMEM_POPULATE under
->> CONFIG_KVM_GENERIC_PRIVATE_MEM.
->>
->> Directly replace CONFIG_KVM_GENERIC_PRIVATE_MEM with
->> KVM_GENERIC_GMEM_POPULATE doesn't look correct to me.
-> I'll quote David's reply to an earlier version of this patch [*]:
-
-It's not related to my concern.
-
-My point is that CONFIG_KVM_GENERIC_PRIVATE_MEM is used for selecting 
-the private memory support. Rename it to KVM_GENERIC_GMEM_POPULATE is 
-not correct.
-
-Current code uses CONFIG_KVM_GENERIC_PRIVATE_MEM to gate 
-kvm_gmem_populate() because kvm_gmem_populate() requires both gmem and 
-memory attributes support and CONFIG_KVM_GENERIC_PRIVATE_MEM can ensure 
-it. But CONFIG_KVM_GENERIC_PRIVATE_MEM was not only for gating 
-kvm_gmem_populate().
-
->>> I'm curious what generic means in this name?
->> That an architecture wants to use the generic version and not provide
->> it's own alternative implementation.
->>
->> We frequently use that term in this context, see GENERIC_IOREMAP as one
->> example.
-> [*]https://lore.kernel.org/all/b6355951-5f9d-4ca9-850f-79e767d8caa2@redhat.com/
+On Tue, Jul 15, 2025 at 05:40:03PM -0700, Anjelique Melendez wrote:
+> Add new "qcom,subsys-restart" property to enable subsystem restart (SSR)
+> notifications.
 > 
-> Thanks,
-> /fuad
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml         | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> index 4c9e78f29523..90011096894e 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> @@ -49,6 +49,10 @@ properties:
+>    '#size-cells':
+>      const: 0
+>  
+> +  qcom,subsys-restart:
+> +    description: If property is specified subsystem restart (SSR) notifications will be enabled.
+
+
+Please wrap according to Linux coding style... if this stays, because
+this all sounds like Linux notificatons, so an OS property.
+
+The commit msg explains nothing - just repeats this. You need to
+describe the hardware and the reasons behind this change - WHY you are
+doing things - in terms of hardware.
+
+Best regards,
+Krzysztof
 
 
