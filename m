@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954ECB07E30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 21:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3DB8B07E36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 21:42:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B2571C42E7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 19:42:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1DBF11C43073
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 19:42:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3102D780B;
-	Wed, 16 Jul 2025 19:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CDD52D94AF;
+	Wed, 16 Jul 2025 19:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnUMonS0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mV8HDASu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFFD2BE05B;
-	Wed, 16 Jul 2025 19:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CE72D948C;
+	Wed, 16 Jul 2025 19:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752694865; cv=none; b=FBRwhfoBtTd2ksRPlSemDPulZSPyNHhSlohDZ28XT+rgayR6AilGQAdPSh1ga8PZRtLJHdVA85CIyu02Usq8yLL5qIlyaO6vXlnqnMxops6oNA02jSQMPTsPi9Stwgd1qgZShKyJJ253uKrihgDmRv9jCZSOa4go5vKUARljSI8=
+	t=1752694867; cv=none; b=hxJolIUeJYcG28RQTD0n3bG2r4UtiL21O1TK3fAjKEDdSH9ipIqb+lhYRTYNX1fS1lJLpVSAG5m0gphcRmuDEV+UWWZ7PZ1TQns8pXmFDXdBgTuiRMZa9vwHm43oRGA7ZXWcN2vtzVv/4zMKIJiD5TwXrxU5n8imedTrGg/VYZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752694865; c=relaxed/simple;
-	bh=gHdLQkmSWRZSESATjXbEaiCKRX4QclamIOc4vL9QijI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lck8X1IDjAVvAt6/dT+0HkAT5kGxkh8nLli0JPKpZboG8QsdDVxF6yB6uTEDXuP/IqDn7AGa8IxvRKF2/BhZRBEP3JSa1qSvRj4CPtCYBI9cLrpS56dBP16OXliUd1WbGb1QomY8Bb0dCX0XTqGhZnhylQbxvH978DX97ycFPlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnUMonS0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C03C4CEF4;
-	Wed, 16 Jul 2025 19:41:04 +0000 (UTC)
+	s=arc-20240116; t=1752694867; c=relaxed/simple;
+	bh=JoaDugOdEsm6VBigNN/aseb7gg+U/Aam2Vgxf86pNuA=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=l+3oCXcodYLqyY+aF3Ge8xOSW1GPkxO3PCQgHlE3nOA9ZfzJWL2T8hsQxM3AAdJrp2zgaUkN8i+d/5WN5lqtKUfswVMKfr0pRkZ1kXJ9+40MNzw1WT7yf0s+w3v1X4MWYqCmUmGVLO/n4rdKim/MkuIO66peHenbTm7rFW5a2vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mV8HDASu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575A3C4CEF5;
+	Wed, 16 Jul 2025 19:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752694865;
-	bh=gHdLQkmSWRZSESATjXbEaiCKRX4QclamIOc4vL9QijI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WnUMonS0pQ17SBtj5WkWm5pEXvkW1CP5imnE7YXe/83gamJn8Bd0YAMOZru5qYmaH
-	 aZUaPQW09emcm0kvZfBjP3nA2sI1B2qMh93YUNQp2e8q0NdvQHp3oNym9WPa6hzg8q
-	 VnXV1XlcppowGZQNcABxTHtelX33sMbVCAUaBQ/ODaeGwn1xAyxCevOKb4yaXFuxJp
-	 rSnIBAen9ed8vwQZUgWrkCL9976kbGmgaabCPD6Z+FcdOl1/AGh+ZbNitr89zFVhNE
-	 7empT/1UQQFSYlPKkPKxVc6ClglCNjInRGa5l9STmiWRido4cH1YU4fIKEbANj089L
-	 mfT5dly07/eYg==
+	s=k20201202; t=1752694866;
+	bh=JoaDugOdEsm6VBigNN/aseb7gg+U/Aam2Vgxf86pNuA=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=mV8HDASufuwUDcE3p2CRvepyTKumUHXwNHCBMkO426SZZTUorFDUNHhRXsGy546AA
+	 +Eg/NtEpPJkMKk+jucdWZJROfeLOqCntB2XdtlP9ZWBIoIS7gxro9SGP0quyV2866H
+	 LI92IZlqdBOAp6kcSAsFluSDwwQHMYrtJyH4+74aVdXOpcyogA0auK/eC0yZ3HxOsa
+	 51+2K+iwh9BuhIhFY7c8vxJ3KUGxuxg2vq83rnCW/bDFUxfPHpFSiUDSOYaab/WRbu
+	 fKnVjMe31y95bRYLopAR4GGLTfBcG/nRPfDC/LSSG+VXG2F9satHindBTE/3T3ypen
+	 DraYk+Djg5VPQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm850-lenovo-yoga-c630: add routing for second USB connector
-Date: Wed, 16 Jul 2025 14:40:54 -0500
-Message-ID: <175269485295.105136.5238464720097426068.b4-ty@kernel.org>
+	daniel.lezcano@linaro.org,
+	rafael@kernel.org,
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	quic_srichara@quicinc.com,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	George Moussalem <george.moussalem@outlook.com>
+Subject: Re: [PATCH v9 0/6] Add support for IPQ5018 tsens
+Date: Wed, 16 Jul 2025 14:40:55 -0500
+Message-ID: <175269485291.105136.1922330001182021659.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250608-c630-ports-v1-1-e4951db96efa@oss.qualcomm.com>
-References: <20250608-c630-ports-v1-1-e4951db96efa@oss.qualcomm.com>
+In-Reply-To: <DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+References: <20250228051521.138214-1-george.moussalem@outlook.com> <DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +70,34 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 08 Jun 2025 19:16:05 +0300, Dmitry Baryshkov wrote:
-> On Lenovo Yoga C630 second (left) Type-C port is not connected to the
-> SoC directly. Instead it has a USB hub, which also powers on the onboard
-> USB camera. Describe these signal lines properly.
+On Fri, 28 Feb 2025 09:11:33 +0400, George Moussalem wrote:
+> IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
+> and 1 interrupt. There is no RPM present in the soc to do tsens early
+> enable. Adding support for the same here.
 > 
+> Last patch series sent by Qualcomm dates back to Sep 22, 2023.
+> Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
+> and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
+> confirmed this SoC is still active, I'm continuing the efforts to send
+> patches upstream for Linux kernel support.
+> https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sdm850-lenovo-yoga-c630: add routing for second USB connector
-      commit: 6ee9ad0a58f9caec8e959bb1f01752b6ca0784d9
+[1/6] dt-bindings: nvmem: Add compatible for IPQ5018
+      (no commit info)
+[2/6] dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+      (no commit info)
+[3/6] thermal: qcom: tsens: update conditions to strictly evaluate for IP v2+
+      (no commit info)
+[4/6] thermal: qcom: tsens: add support for tsens v1 without RPM
+      (no commit info)
+[5/6] thermal: qcom: tsens: Add support for IPQ5018 tsens
+      (no commit info)
+[6/6] arm64: dts: qcom: ipq5018: Add tsens node
+      commit: 767d6b3ecc292c83442ca84e5e22e38adea9733d
 
 Best regards,
 -- 
