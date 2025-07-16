@@ -1,352 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-65225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22588B074C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:28:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DCCEB074CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 13:30:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68AA6173375
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:28:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8102F1C255A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jul 2025 11:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3F5C2F49E5;
-	Wed, 16 Jul 2025 11:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9008928E594;
+	Wed, 16 Jul 2025 11:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="O1SNgBkR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QKsyTiP9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4962F49EF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 11:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C071BEC2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 11:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752665213; cv=none; b=dDQwwNe+ryoIPc6Fa/cJwUCzg47hj02J/zOhFV8ch8QmbCC7ODlGt8Qf/+t81d2oXCidVeJr1vY10iDFjURdW9MUCjA+C+jr49YQDFx7orn1BJYyQy6rqAQAhJVga8huU29ANhwJ1+04HyTme5LdIvnxdkzU40PaYuWQSOsgcSA=
+	t=1752665440; cv=none; b=jd9JqzPYbjcKD9Q8c7lerOHBCw/c16OR5kp+OZWrKtaijs0SEZREt9YPjDHJCwIi17HDQ+EPvuRIMqfm0LHZe8I7em4Z2ezfqwpKiNRPFLzjzEWMZve2nIeyDUJY/jmdefljcUANjfGxsxSttAVr41yYB+XRADd4ldpT7vtyY+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752665213; c=relaxed/simple;
-	bh=mr+dFXLc7EQJb50d41UfRH1OK6wdQGe/ptcoS9odC9I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=knpKnRZcZ35hHf2HDlwGdyqfXDojG8bAhp6+BqcsBt9ZLdk4x2ASgk0D59mrzmzpJtDdS9kxNHDOKNLmen10J2eKhoboo4lJjTA+jOa+5JEBcnW7+fVFCnikeQb3dUQGnq5VG8skASAxHmbidlN7/5tQ9Q4oA6ShP7cWhC9VsNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=O1SNgBkR; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso420661cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 04:26:51 -0700 (PDT)
+	s=arc-20240116; t=1752665440; c=relaxed/simple;
+	bh=+ECop3VKmF5vBzMl7LnvNjLQmkqlhgXLNF0rFI01PpI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b4iOR2I1iocSRLI4ozWiGE4zBgOZyspHyl4cnLNTLppqB44lb63ZCXbnZaFRea0attCksdC0eodQqjMO0ZDpgKvnHFKnls1xKX34B6w4KcEfo56UU+b5HzqKwsOnPOnGZed6+D8c7lKYdjHkLtagAllhVtvNyaSBFKKWFbqwvFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QKsyTiP9; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ae3521a124cso123600766b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 04:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752665211; x=1753270011; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=t5R7kWnWuNP4kHs3y3gQRpYRuK0llaSxBMJsJPZN3qQ=;
-        b=O1SNgBkRbNw8rp+HScNXfWLOgN4e/GkH+t6fdZjs4AmUxf+1YyLB0kdjpDLDJGbecE
-         Pw42nm+kOEmJ+x8hTd7zsM0oU5WFcEvvDZ04qLh6IF9ajzVyZoJbUWOSUowLB8KKGKLr
-         cxV1Pj4KHfwO0ClgdxxelxfhRPraufvDj5ZqOfHm2aHaCvQvoZrBnCUywV60K2juPwiY
-         mCl8ACpoaJnCYLIO1ldp6sNpNgLSekg3PybRZVZ8cZEEC78mxo13u/WWppCblYkRWI+r
-         pAlj02FKz+ezidQbkKSwL4Ds07I3i+egD4LewoGQNWBYA5Db4YzbzuD2R5Zk9+yUxv9p
-         Dw/g==
+        d=linaro.org; s=google; t=1752665437; x=1753270237; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wxt2TkBp//2+Tyvblq5rA5SGBeO4yjsxI6SfU9mxpsM=;
+        b=QKsyTiP9c/VRdL886wRva3NvDLET7hBD5Y3snoJVp6htHWEvWMoVjdHZQubcRC5Ags
+         CvH9+CRyPKgBckwm1iZR4iGlNAzUhrQuR83mbz/JA97cFji19r9JZ5Z0XpD1mwwAYJWC
+         puODNmFZJTCNd6W8TBW6JoWIOdamimnm8Npdd7rqKG1Z0bFRCwXqp+j39XfSkuKXIt8q
+         MfGJ0Fg/48C69vJ5IDtzOUWerka2XEPX7NY8ocpKcxbzwPSCYelWZqxArkP7eKENCD9B
+         n95iA3/ae4axjdC7udb7NI/cWlaQRNzFy3Ojf35vVUny0LWhorwaLQ94q2uLTtw+selB
+         EA+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752665211; x=1753270011;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1752665437; x=1753270237;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=t5R7kWnWuNP4kHs3y3gQRpYRuK0llaSxBMJsJPZN3qQ=;
-        b=aw10n4zEqmTuwrdYa0C4c5gQNgcKSGklfYZwx2xlHcFmDK+4LhFmFIb9konOHTssSY
-         gL84Y6mSRdHdEZj8t5VUQWF/T+HYV0AnltYY8u4C14Infy2SU2hexDDw8BAfWlGh+pQt
-         htgZfopbMaZGgexIRyN7rya55C0+Al6wL70wk3FK5ws0+GqcVOBNPBnzies7R/+/pn0c
-         YHbJ9Q/mkrdn7wUb/CQsCxE297ekIBklkHnuWmZVzdgwKmDWmPPSnxCRkpKGWPmiVG+K
-         JgcJx4yZlUiZ1ot4nyXbu2yfCQhD/YwcLxJ4+8Tm1Q6pBaItFr6g4/RcAtk3L2lxJVT8
-         kxmw==
-X-Forwarded-Encrypted: i=1; AJvYcCUlB4iVS/ZfJycUEB5c8fKZm06d4LMiqnMRpX2eqdmbYmOkbJx4HLW7NZ+ND/O6YCgIzd02cenQu0CuY9Qn@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRMGaAlCJvnlquyVzK6yuWLfZjjh/kYipaJqyO92hx1/HieHBz
-	sVtjRUJfpSGm1ysHIRutO0gn5Kx59SFdkEEJMN+O/jFxsTnMSyFVAwEJSsnTgJjlQEfFgiKC3XJ
-	5PzwID8KzxPhEFWrG32IwCVGo9JmiZLPh1+ILlpZ+
-X-Gm-Gg: ASbGnctfFp7baNbzN+87gxd6yvi+mbubo194dHGcJZudhOOKRtRae2s6WOz+p0FAjWw
-	PqODGavZmMVJfOr/ah+2KqdE7ejj6VzRoeGVdEefcB8HXOSBzMjMrKMqczvi/n6RXixxdWKQ1u8
-	b/xIQZy4t2Eugp/QgJ6uNos1tPzJpfHlv2nVcqXHL7axuRTdKzN20ka2GqsoWdv01eCBItbHv3Z
-	yOH8+LnVaxdFO1CJFmLILZOhlJduYUabpeg
-X-Google-Smtp-Source: AGHT+IHaGYFlj+5UQCP3ycOWBKRQbIDwdhMKRPNIGN5Zyy7RYQr7ya7fA0vyRBNNF6bOnwvE+TY/1VOezg6wIMY0dnM=
-X-Received: by 2002:a05:622a:a28d:b0:4a7:26d2:5a38 with SMTP id
- d75a77b69052e-4ab97e14cb6mr1763881cf.19.1752665210038; Wed, 16 Jul 2025
- 04:26:50 -0700 (PDT)
+        bh=wxt2TkBp//2+Tyvblq5rA5SGBeO4yjsxI6SfU9mxpsM=;
+        b=KPyxH+3Wrd8QDQehaq27FdzzGwP4dH1C8RIJXWleNtPhE+/stjcvUAajcMYrNPGKWB
+         DPqTEdOjXVrEqTLRdKMvvASOamjTSxl9CDXM/KVUMO0q87Lktf90tvWNTsOzv4kkUPrJ
+         vAe65e/XMyP58EJ2iYOHgrb3lFSCKRio3GAWuAB6pY8/tXsFpypVuziCHFib0+rFusPR
+         TsIe/QKuaVqYtcI3Vm76RGorFfyXSDCRjYloQ4TzbvhaVC3aOas15uley/3JfWVMNy4P
+         8/LDmQXvGpUAAjy1PzI8swC/jv7gxNcTCRpryMRM1QP6rxhl0MWlwY0j9S5TIYXlmgx2
+         UhgA==
+X-Gm-Message-State: AOJu0YxhUPfg8viU/Wl1d3fs9shDWM7oVSE8eTT8FyMjCAT2lFsbpBWo
+	dXWTJ+eJ9dwB5l4sjJiqIWYXN9DNIxY0HspCmVkzDqYrbrHL7VrjirSMUWDYSHX9aRU=
+X-Gm-Gg: ASbGnctBQnSPmIh8igkDl80aHQ4Zzoy5LLkirfdwmYssmc7krnQyrKfGZi1x8T0n611
+	4stct6udxM2c9Igww+XU1p4HtkyM6Ne6FqLY8O+bDZoslJPA/EQ5GhGoZgeW4u1M9m4+saW4iQ6
+	gWG7TazCbnVkq0UBibgqnHxl7Bc86qg6p5q6DQn9JaAvEI4+vZ8+hQrWIHS8tIUEH/wcVG1djk+
+	lP2lmrl/YWVio+y/N2v1EXlizMOjO1FMK+KVhrD1SbCd7ATKbBaTZyKed/3aqC3lMrPvpMcoU+j
+	WApDUQ73RgNMtfWVLM/Plzqowd0QQ+Xwgvl/fFgm0jNxDWzyx7siwWZUaKX1A61GVbAMz1JWwTG
+	ofI0HzhjI8gaqT/xlO6kP2W0gqvvBKrg+91NUqD64yw==
+X-Google-Smtp-Source: AGHT+IGKb/yMmo+6HqAi38Y/JYq4pgPKYjhxTqfALfSBgriOhZiBnQk9t+lWqsa4UOBxEFVK4YE0eQ==
+X-Received: by 2002:a17:907:971e:b0:add:fc26:bef7 with SMTP id a640c23a62f3a-ae9c9ae8531mr105371866b.10.1752665436954;
+        Wed, 16 Jul 2025 04:30:36 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.222.89])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e826469asm1161311966b.85.2025.07.16.04.30.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 04:30:36 -0700 (PDT)
+Message-ID: <0debb9a2-2687-4622-ab05-0a3c276f2482@linaro.org>
+Date: Wed, 16 Jul 2025 13:30:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250715093350.2584932-1-tabba@google.com> <20250715093350.2584932-16-tabba@google.com>
- <39a217c1-29a9-4497-b3b6-bc0459e75a91@redhat.com>
-In-Reply-To: <39a217c1-29a9-4497-b3b6-bc0459e75a91@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 16 Jul 2025 12:26:13 +0100
-X-Gm-Features: Ac12FXyf7dM4gwpjCXZKsFe03i-IhUXKmydFOHr4OJpO94k0Jnlho20N3Z_JVzU
-Message-ID: <CA+EHjTz=4PbF9yVQPO-ucjSq=n4fC+-QP_HGpWO4Wa1273fXtw@mail.gmail.com>
-Subject: Re: [PATCH v14 15/21] KVM: arm64: Refactor user_mem_abort()
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250714-b4-sm8750-iris-dts-v1-0-93629b246d2e@linaro.org>
+ <20250714-b4-sm8750-iris-dts-v1-1-93629b246d2e@linaro.org>
+ <5dd36649-821c-450e-bdcc-871735d10059@linaro.org>
+ <15b8b9e0-a211-4102-9b68-994c8ab50a7a@linaro.org>
+ <b5a68138-4eca-4bdd-8f72-d80236b02c0a@oss.qualcomm.com>
+ <ec0f64c3-bd08-4944-817e-f5f67c317b94@linaro.org>
+ <4be1ebb7-1dc7-49e0-aa5d-621f023b3853@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCaBdQXwUJFpZbKgAKCRAbk0N9O0Fim07TD/92Vcmzn/jaEBcq
+ yT48ODfDIQVvg2nIDW+qbHtJ8DOT0d/qVbBTU7oBuo0xuHo+MTBp0pSTWbThLsSN1AuyP8wF
+ KChC0JPcwOZZRS0dl3lFgg+c+rdZUHjsa247r+7fvm2zGG1/u+33lBJgnAIH5lSCjhP4VXiG
+ q5ngCxGRuBq+0jNCKyAOC/vq2cS/dgdXwmf2aL8G7QVREX7mSl0x+CjWyrpFc1D/9NV/zIWB
+ G1NR1fFb+oeOVhRGubYfiS62htUQjGLK7qbTmrd715kH9Noww1U5HH7WQzePt/SvC0RhQXNj
+ XKBB+lwwM+XulFigmMF1KybRm7MNoLBrGDa3yGpAkHMkJ7NM4iSMdSxYAr60RtThnhKc2kLI
+ zd8GqyBh0nGPIL+1ZVMBDXw1Eu0/Du0rWt1zAKXQYVAfBLCTmkOnPU0fjR7qVT41xdJ6KqQM
+ NGQeV+0o9X91X6VBeK6Na3zt5y4eWkve65DRlk1aoeBmhAteioLZlXkqu0pZv+PKIVf+zFKu
+ h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
+ vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <4be1ebb7-1dc7-49e0-aa5d-621f023b3853@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 16 Jul 2025 at 11:36, David Hildenbrand <david@redhat.com> wrote:
->
-> On 15.07.25 11:33, Fuad Tabba wrote:
-> > Refactor user_mem_abort() to improve code clarity and simplify
-> > assumptions within the function.
-> >
-> > Key changes include:
-> >
-> > * Immediately set force_pte to true at the beginning of the function if
-> >    logging_active is true. This simplifies the flow and makes the
-> >    condition for forcing a PTE more explicit.
-> >
-> > * Remove the misleading comment stating that logging_active is
-> >    guaranteed to never be true for VM_PFNMAP memslots, as this assertion
-> >    is not entirely correct.
-> >
-> > * Extract reusable code blocks into new helper functions:
-> >    * prepare_mmu_memcache(): Encapsulates the logic for preparing and
-> >      topping up the MMU page cache.
-> >    * adjust_nested_fault_perms(): Isolates the adjustments to shadow S2
-> >      permissions and the encoding of nested translation levels.
-> >
-> > * Update min(a, (long)b) to min_t(long, a, b) for better type safety and
-> >    consistency.
-> >
-> > * Perform other minor tidying up of the code.
-> >
-> > These changes primarily aim to simplify user_mem_abort() and make its
-> > logic easier to understand and maintain, setting the stage for future
-> > modifications.
-> >
-> > Reviewed-by: Gavin Shan <gshan@redhat.com>
-> > Reviewed-by: Marc Zyngier <maz@kernel.org>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >   arch/arm64/kvm/mmu.c | 110 +++++++++++++++++++++++--------------------
-> >   1 file changed, 59 insertions(+), 51 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index 2942ec92c5a4..b3eacb400fab 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -1470,13 +1470,56 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
-> >       return vma->vm_flags & VM_MTE_ALLOWED;
-> >   }
-> >
-> > +static int prepare_mmu_memcache(struct kvm_vcpu *vcpu, bool topup_memcache,
-> > +                             void **memcache)
-> > +{
-> > +     int min_pages;
-> > +
-> > +     if (!is_protected_kvm_enabled())
-> > +             *memcache = &vcpu->arch.mmu_page_cache;
-> > +     else
-> > +             *memcache = &vcpu->arch.pkvm_memcache;
-> > +
-> > +     if (!topup_memcache)
-> > +             return 0;
-> > +
-> > +     min_pages = kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu);
-> > +
-> > +     if (!is_protected_kvm_enabled())
-> > +             return kvm_mmu_topup_memory_cache(*memcache, min_pages);
-> > +
-> > +     return topup_hyp_memcache(*memcache, min_pages);
-> > +}
-> > +
-> > +/*
-> > + * Potentially reduce shadow S2 permissions to match the guest's own S2. For
-> > + * exec faults, we'd only reach this point if the guest actually allowed it (see
-> > + * kvm_s2_handle_perm_fault).
-> > + *
-> > + * Also encode the level of the original translation in the SW bits of the leaf
-> > + * entry as a proxy for the span of that translation. This will be retrieved on
-> > + * TLB invalidation from the guest and used to limit the invalidation scope if a
-> > + * TTL hint or a range isn't provided.
-> > + */
-> > +static void adjust_nested_fault_perms(struct kvm_s2_trans *nested,
-> > +                                   enum kvm_pgtable_prot *prot,
-> > +                                   bool *writable)
-> > +{
-> > +     *writable &= kvm_s2_trans_writable(nested);
-> > +     if (!kvm_s2_trans_readable(nested))
-> > +             *prot &= ~KVM_PGTABLE_PROT_R;
-> > +
-> > +     *prot |= kvm_encode_nested_level(nested);
-> > +}
-> > +
-> >   static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >                         struct kvm_s2_trans *nested,
-> >                         struct kvm_memory_slot *memslot, unsigned long hva,
-> >                         bool fault_is_perm)
-> >   {
-> >       int ret = 0;
-> > -     bool write_fault, writable, force_pte = false;
-> > +     bool topup_memcache;
-> > +     bool write_fault, writable;
-> >       bool exec_fault, mte_allowed;
-> >       bool device = false, vfio_allow_any_uc = false;
-> >       unsigned long mmu_seq;
-> > @@ -1488,6 +1531,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >       gfn_t gfn;
-> >       kvm_pfn_t pfn;
-> >       bool logging_active = memslot_is_logging(memslot);
-> > +     bool force_pte = logging_active;
-> >       long vma_pagesize, fault_granule;
-> >       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> >       struct kvm_pgtable *pgt;
-> > @@ -1498,17 +1542,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >               fault_granule = kvm_vcpu_trap_get_perm_fault_granule(vcpu);
-> >       write_fault = kvm_is_write_fault(vcpu);
-> >       exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> > -     VM_BUG_ON(write_fault && exec_fault);
-> > -
-> > -     if (fault_is_perm && !write_fault && !exec_fault) {
-> > -             kvm_err("Unexpected L2 read permission error\n");
-> > -             return -EFAULT;
-> > -     }
-> > -
-> > -     if (!is_protected_kvm_enabled())
-> > -             memcache = &vcpu->arch.mmu_page_cache;
-> > -     else
-> > -             memcache = &vcpu->arch.pkvm_memcache;
-> > +     VM_WARN_ON_ONCE(write_fault && exec_fault);
-> >
-> >       /*
-> >        * Permission faults just need to update the existing leaf entry,
-> > @@ -1516,17 +1550,10 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >        * only exception to this is when dirty logging is enabled at runtime
-> >        * and a write fault needs to collapse a block entry into a table.
-> >        */
-> > -     if (!fault_is_perm || (logging_active && write_fault)) {
-> > -             int min_pages = kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu);
-> > -
-> > -             if (!is_protected_kvm_enabled())
-> > -                     ret = kvm_mmu_topup_memory_cache(memcache, min_pages);
-> > -             else
-> > -                     ret = topup_hyp_memcache(memcache, min_pages);
-> > -
-> > -             if (ret)
-> > -                     return ret;
-> > -     }
-> > +     topup_memcache = !fault_is_perm || (logging_active && write_fault);
-> > +     ret = prepare_mmu_memcache(vcpu, topup_memcache, &memcache);
-> > +     if (ret)
-> > +             return ret;
-> >
-> >       /*
-> >        * Let's check if we will get back a huge page backed by hugetlbfs, or
-> > @@ -1540,16 +1567,10 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >               return -EFAULT;
-> >       }
-> >
-> > -     /*
-> > -      * logging_active is guaranteed to never be true for VM_PFNMAP
-> > -      * memslots.
-> > -      */
-> > -     if (logging_active) {
-> > -             force_pte = true;
-> > +     if (force_pte)
-> >               vma_shift = PAGE_SHIFT;
-> > -     } else {
-> > +     else
-> >               vma_shift = get_vma_page_shift(vma, hva);
-> > -     }
-> >
-> >       switch (vma_shift) {
-> >   #ifndef __PAGETABLE_PMD_FOLDED
-> > @@ -1601,7 +1622,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >                       max_map_size = PAGE_SIZE;
-> >
-> >               force_pte = (max_map_size == PAGE_SIZE);
-> > -             vma_pagesize = min(vma_pagesize, (long)max_map_size);
-> > +             vma_pagesize = min_t(long, vma_pagesize, max_map_size);
-> >       }
-> >
-> >       /*
-> > @@ -1630,7 +1651,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >        * Rely on mmap_read_unlock() for an implicit smp_rmb(), which pairs
-> >        * with the smp_wmb() in kvm_mmu_invalidate_end().
-> >        */
-> > -     mmu_seq = vcpu->kvm->mmu_invalidate_seq;
-> > +     mmu_seq = kvm->mmu_invalidate_seq;
-> >       mmap_read_unlock(current->mm);
-> >
-> >       pfn = __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRITE : 0,
-> > @@ -1665,24 +1686,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >       if (exec_fault && device)
-> >               return -ENOEXEC;
-> >
-> > -     /*
-> > -      * Potentially reduce shadow S2 permissions to match the guest's own
-> > -      * S2. For exec faults, we'd only reach this point if the guest
-> > -      * actually allowed it (see kvm_s2_handle_perm_fault).
-> > -      *
-> > -      * Also encode the level of the original translation in the SW bits
-> > -      * of the leaf entry as a proxy for the span of that translation.
-> > -      * This will be retrieved on TLB invalidation from the guest and
-> > -      * used to limit the invalidation scope if a TTL hint or a range
-> > -      * isn't provided.
-> > -      */
-> > -     if (nested) {
-> > -             writable &= kvm_s2_trans_writable(nested);
-> > -             if (!kvm_s2_trans_readable(nested))
-> > -                     prot &= ~KVM_PGTABLE_PROT_R;
-> > -
-> > -             prot |= kvm_encode_nested_level(nested);
-> > -     }
-> > +     if (nested)
-> > +             adjust_nested_fault_perms(nested, &prot, &writable);
-> >
-> >       kvm_fault_lock(kvm);
-> >       pgt = vcpu->arch.hw_mmu->pgt;
-> > @@ -1953,6 +1958,9 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
-> >               goto out_unlock;
-> >       }
-> >
-> > +     VM_WARN_ON_ONCE(kvm_vcpu_trap_is_permission_fault(vcpu) &&
-> > +                     !write_fault && !kvm_vcpu_trap_is_exec_fault(vcpu));
-> > +
-> >       ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
-> >                            esr_fsc_is_permission_fault(esr));
-> >       if (ret == 0)
->
->
-> A note that on the KVM arm next tree
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git/log/?h=next
->
-> there are some user_mem_abort() changes. IIUC, only smaller conflicts.
-
-Thanks for the heads up. I can work with Marc and Oliver to resolve
-any conflicts once we get there.
-
-Cheers,
-/fuad
+On 15/07/2025 12:50, Konrad Dybcio wrote:
+>>>>>> +				 <&gcc GCC_VIDEO_AHB_CLK>;
+>>>>>> +			power-domains = <&rpmhpd RPMHPD_MMCX>;
+>>>>>
+>>>>> This is incomplete, need second power domain and I did not check against
+>>>>> qcom,sm8750-videocc schema before sending. I will send a v2 a bit later
+>>>>> (maybe some reviews pop up).
+>>>>
+>>>> Heh, no. The DTS here is correct. The videocc bindings are not correct
+>>>> (and that's not my patch).
+>>>
+>>> Well, you want two power domains here in either case..
+>> Are you sure? My point was one is correct and downstream confirms that
+>> in their bindings (which is a poor argument, I know). Which one would be
+>> the second? MM? We don't have such...
+> 
+> Historically clock controllers used a pair of CX/MX, with CX powering
+> the "meat" and MX powering the PLLs (& retention logic, IIUC).
+> Over time, CX was split into multiple usecase-specific domains (like
+> GFX), and we now have MMCX (or MM_CX - multimedia CX) for multimedia
+> hw specifically
+> 
+> In the downstream tree you're looking at, sun-regulators.dtsi aliases
+> VDD_MMCX_LEVEL as VDD_MM_LEVEL for $reasons, which is admittedly a
+> little confusing
+> 
+> MX has similarly been split into MXA (MX-Always [on]) and MXC
+> (MX-Collapsible). For Venus, you want the latter, as the hardware is
+> not crucial to the functioning of the SoC (the connection is of course
 
 
-> --
-> Cheers,
->
-> David / dhildenb
->
+OK, so the binding is correct - the second entry is the MXC power
+domain. I'll fix this in v2. Thanks.
+
+
+Best regards,
+Krzysztof
 
