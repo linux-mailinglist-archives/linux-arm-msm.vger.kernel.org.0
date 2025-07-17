@@ -1,120 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-65437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB881B08A6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:21:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4829BB08A8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:31:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 613661C23A51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:21:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 122363A78DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:31:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70AB528FAA8;
-	Thu, 17 Jul 2025 10:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E8C528A1F1;
+	Thu, 17 Jul 2025 10:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBob1YaS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PMzAIZPT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB14A1E1DE9;
-	Thu, 17 Jul 2025 10:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E371F5413;
+	Thu, 17 Jul 2025 10:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752747689; cv=none; b=r31ZOiLvNDvEkdunCO9Y42mLeSpM2enCX9f9c/VSbDajePqZFprQPO+ouR8EVhrfUqcTzJ1vMqq11+UFkh4A95prZhM5Rz0RKGJW+HO6wajnjUvV0ynmiBVhckCHPKEJ3y7ZXdS6FVwikpWNKojdZzD0J6fKpXTY4bTxCW24iZ8=
+	t=1752748297; cv=none; b=LXNl7MHMyQ8H+8baUrhChSxWdcy2xHyWRKCR4/H3xDh+pRSP2Bop/R0Duy1DqZEPZblsuC23gFLt9zWpycphumKvuHJCNddr/Mrn+zWfXBQ90WfQHkxgYJx4DfWgBmKoDaaZ9UMG84UfF9nKaUSM+1W5usDDYFesc41QDr5ftPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752747689; c=relaxed/simple;
-	bh=VDEvp4nPa1fTYguPdURxWsEZGCTUTGn8gTFvVXSjEEk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WLaKDBA1r9z/3bEzGd2v/0o+Wh37lZnUr333J/oXMvNnM+zSKtyja3HIRvPEYzsLJeCnMqHl94WwkduMiwrOf+u7dR1aS5n14yjpDEzjRTBWqps+bUgYehJndUpW0M/zIAB3uOkZ3sSbndqBflamAuVdNIsuNZAQc4Ely1uteUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBob1YaS; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-454f428038eso7264465e9.2;
-        Thu, 17 Jul 2025 03:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752747686; x=1753352486; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=R0SDQOrTuS1H9lUpxF+kJGVHmuSWWz5UnyQqpeF3N/I=;
-        b=nBob1YaSc3ZTAenMoDx6NhsnYxh+/vBrt4imCCpZt4ot79LbaFCJQBmJmR1jk+9ZyP
-         Fo9mLivzHSm7OPi8fOnjzbj1mM3Iy2NH+InvqXifsD0JMmd/pZmLwMvG7PFT49xlXHZD
-         LLKS2uQ8pLALsNbVStTXuDWDCPFJL+bIP7Ioj9JMu//vkN/88V01EE8d5mgCkCztod3C
-         cOf8zdiBALOLTUsDpxPg7PoXhkEF7z1tjovJLxQCbRgy1PYGBLZqTKFSmsWkVFA22i1V
-         17HSWizIbdHIa8bT0fQjsVHDIffEF7ubLZyZ40kVY4vpEv/0gFSxA+m3sTmHV6a8W4Fk
-         QfEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752747686; x=1753352486;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R0SDQOrTuS1H9lUpxF+kJGVHmuSWWz5UnyQqpeF3N/I=;
-        b=GV6fC4Fkdk5Q6hVNif4mTkSTmzzIG3vJVoY7WwrbyuTKsYsAA3B5pZpprRwSw8Busm
-         ZcfJHgl/N+S9Mnag6l5AS+6A7QWrvtgGURxI1CXG+qYqFi5PW5kpo2OU/uGVCkst9J00
-         sc4KQ6+Xu1VhAWJ6+id79WTu4FhDBtkdPNWWpkTP/HNAtrGqpZC03M5jGQZ78frnMfn/
-         OpCY4Cjmr6FKIWhB5Vp+ztqt+rRhLJbYVMqLLoxINENNlY9QH9OMAtROAD6+qAsJbLBG
-         WJNAnwGIdN6PsZ8saG0tWFId+gqahEQS1r8y9EUMMwxGEQoG6EgwaifZmbvn1VqrTIvi
-         9uFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUi1HQk0uHx0UcQng+/+f3B9zt/X3e1ruVXY2l51yn97QYY9Fvz6slTAgE1L4ziBrpc1MtTfOwMIFFfQ39/fQ==@vger.kernel.org, AJvYcCXCiOtjNyX/HnqL+niZEgxEeTUVUQWE8C2Tv1oasETZAHdm4/6I+sCA8FwPwDTFsuCVSgDcH5Vb0j+UdRNk@vger.kernel.org, AJvYcCXSYJhTrpAwohWwel96wp5YNC7qjBZXS2eQg17MNYwVuZtcDb0gfJ/cJmwyuEqOxd8WW5XdW6zfjXMm@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/P1J76jyxMyJBbhiyEp7g4PAek7kToCLe6jYjXlPzmJNtL2mi
-	zX3iIwoWJSfV+rL58IhS4CBLwaz0VFjDfGzAew0go1X0MzAHKZXS1siJUPL1R/PXdMokYRolmyQ
-	sJnAWUaoKJ+HhQyphZSX0CH95YjBRVPV45CDYbg==
-X-Gm-Gg: ASbGnctpcdoE7edXPhQ80DCmiI99B3EghYxYofnZofuYSjDLmV87+6qbd2AjmgT3Es4
-	GK/5VFaF8j2IfDo2zYIsFDHSbMDl4Twcj+HorFBzCVkTAKfLPjyE9qYblJVjMw5Ae3tIRkwkTDy
-	3KYvO3pjTfZvTf9K/yojMoFPt7unaXvBbschiy6Vcu+j3TBlpJPAZ7dYAWDf3Oa829ugKTb2HKa
-	U3wa4+5qg6kRbhPIQ==
-X-Google-Smtp-Source: AGHT+IFv6PBDOX156MvNUaV8Z5aPrBU4/FhLTnO0xFtNzvyAZYCODnCC9mUWUFf0SytFNxDo8Gj6Wf3YhC7QoNI3akg=
-X-Received: by 2002:a05:600c:a009:b0:456:13d8:d141 with SMTP id
- 5b1f17b1804b1-456389d8690mr7082975e9.27.1752747685756; Thu, 17 Jul 2025
- 03:21:25 -0700 (PDT)
+	s=arc-20240116; t=1752748297; c=relaxed/simple;
+	bh=GEF0Iea9tdt8h2xZCwTe5vufEO4aXfoWH9l3WAh+Oz4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oh6n5SK48nAZtD+DqPsui5gQqKr9ACsn0NxptoRyZYATyYlCz4Qi2bxzdleLZpRu3aA75dO4YlwiokdIw+cUgjstYeQYoWYatDRO091zPuAS1MJiCFN5otdDztPprfulJ30kk2j17K+1zRXe3zgA+JAqHeZj9FdQFGLp+Mbytj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PMzAIZPT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B58EC4CEE3;
+	Thu, 17 Jul 2025 10:31:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752748295;
+	bh=GEF0Iea9tdt8h2xZCwTe5vufEO4aXfoWH9l3WAh+Oz4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PMzAIZPTr+EmY4y6vQDBLndTvsjtdW2C/Q37l47c2JiNuLSMKT9BgZRlUw63VrlMc
+	 o6KoeKskW/7c4OjpccPNJAK+abKpRVqfzcLSQrnpSuC0gu2HKt2y6abARAnv0/ESi6
+	 e/3h3CYaFvb6yK7PXocCosZMbF0BZ+zRUVP+3BxoIB+a4/rNVqQWeX8ocYwS8Cid8b
+	 qySdiZSO14+KSkjzDUnZx3d+Xo4AkNFu4O7bBMj8NmEzKmgfLTEpVzYcFw+7I5QH9o
+	 Yy7d9U055qgdEqcwFMdnAeRh5UkwaILFQitu1p5ms2/lYH4Hl5qHnTW8NHji091BM9
+	 Cg904INvymVcw==
+Date: Thu, 17 Jul 2025 16:01:23 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+	Bjorn Helgaas <helgaas@kernel.org>, ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
+References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
+ <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
+ <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250630205514.14022-1-alex.vinarskis@gmail.com>
-In-Reply-To: <20250630205514.14022-1-alex.vinarskis@gmail.com>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Thu, 17 Jul 2025 12:21:14 +0200
-X-Gm-Features: Ac12FXxvNJ0B0zaGN1T4nR7wK4g-_GSIvgNfz6hKS1s0YPdaG7xpe40EqrOql8w
-Message-ID: <CAMcHhXoNFnAhSoOzTQ0quHJd6=CbZYEsozcSxTJaiYXWWQ6Ayw@mail.gmail.com>
-Subject: Re: [PATCH v1 0/2] X1E HBR3 fixes
-To: Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
 
-On Mon, 30 Jun 2025 at 22:55, Aleksandrs Vinarskis
-<alex.vinarskis@gmail.com> wrote:
->
-> It appears during initial series to enable HBR3 earlier this year [1]
-> few devices were left out, add them.
->
-> [1] https://lore.kernel.org/all/20250226231436.16138-1-alex.vinarskis@gmail.com/
->
-> Aleksandrs Vinarskis (2):
->   arm64: dts: qcom: x1-crd: Enable HBR3 on external DPs
->   arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Enable HBR3 on
->     external DPs
->
->  arch/arm64/boot/dts/qcom/x1-crd.dtsi                        | 3 +++
->  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 2 ++
->  2 files changed, 5 insertions(+)
->
-> --
+On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
 
-Hi,
+[...]
 
-I've noticed this was reviewed some time ago, but was not included in
-for upcoming 6.17. Perhaps it was forgotten?
+> > @@ -16,6 +16,8 @@
+> >  #include "mhi.h"
+> >  #include "debug.h"
+> >  
+> > +#include "../ath.h"
+> > +
+> >  #define ATH12K_PCI_BAR_NUM		0
+> >  #define ATH12K_PCI_DMA_MASK		36
+> >  
+> > @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+> >  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> >  
+> >  	/* disable L0s and L1 */
+> > -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> > -				   PCI_EXP_LNKCTL_ASPMC);
+> > +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> 
+> Not always, but sometimes seems the 'disable' does not work:
+> 
+> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
+> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
+> 
+> 
+> >  
+> >  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+> >  }
+> > @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+> >  {
+> >  	if (ab_pci->ab->hw_params->supports_aspm &&
+> >  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> > -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> > -						   PCI_EXP_LNKCTL_ASPMC,
+> > -						   ab_pci->link_ctl &
+> > -						   PCI_EXP_LNKCTL_ASPMC);
+> > +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
+> 
+> always, the 'enable' is not working:
+> 
+> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
+> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
+> 
 
-Thanks in advance,
-Alex
+Interesting! I applied your diff and I never see this issue so far (across 10+
+reboots):
 
-> 2.48.1
->
+[    3.758239] ath12k_pci_power_up 1475: link_ctl 0x42
+[    3.758315] ath12k_pci_power_up 1480: link_ctl 0x40
+[    4.383900] ath12k_pci_start 1180: link_ctl 0x40
+[    4.384026] ath12k_pci_start 1185: link_ctl 0x42
+
+Are you sure that you applied all the 6 patches in the series and not just the
+ath patches? Because, the first 3 PCI core patches are required to make the API
+work as intended.
+
+> 
+> >  }
+> >  
+> >  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
+> > 
+> 
+> In addition, frequently I can see below AER warnings:
+> 
+> [  280.383143] aer_ratelimit: 30 callbacks suppressed
+> [  280.383151] pcieport 0000:00:1c.0: AER: Correctable error message received from
+> 0000:00:1c.0
+> [  280.383177] pcieport 0000:00:1c.0: PCIe Bus Error: severity=Correctable, type=Data Link
+> Layer, (Transmitter ID)
+> [  280.383184] pcieport 0000:00:1c.0:   device [8086:7ab8] error status/mask=00001000/00002000
+> [  280.383193] pcieport 0000:00:1c.0:    [12] Timeout
+> 
+
+I don't see any AER errors either.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
