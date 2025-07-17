@@ -1,150 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-65392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE3F1B0858F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:55:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 069AAB085D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:01:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40AEA581234
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:55:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 286CE560DAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:00:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D0A21C9F6;
-	Thu, 17 Jul 2025 06:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CEFB219313;
+	Thu, 17 Jul 2025 06:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="gdcGCMAm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cECTN+eV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f68.google.com (mail-ed1-f68.google.com [209.85.208.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8815921B8F5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823422185AC;
+	Thu, 17 Jul 2025 06:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752735308; cv=none; b=EtVO6xDe+ahEahDA7utPteGZYH9boqhersuSn/lVKIInHaRfFzRF8u3E12cL4dvZVcfVKEDynkZ7y/mssWGS+1FH4/xpTGUfYWfLPltWO6v6F4uZg+wZDoCoqdVgT6Sv0Ei7CYt6KbrcyaVo5+YQl58vq31GzqKE45maouylDyI=
+	t=1752735589; cv=none; b=m4/7BZ46i5f1MOAZi0IlfGCJdJIfD1bTKTspeKwTUOR40d4GRYiUuSMeJVu3ubehWWw3l5VkwtVFkUfYA+Ifa1ZAeBxowt6MT+wjDT4YHeiHjbsohSbv07ngAO+sug6nJszvm8Gji3NuLpSQkmhToYOfYNTCWpgBsm4Q9bRyWQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752735308; c=relaxed/simple;
-	bh=ofhA9RZIk4qK/ObGD/C/ec3J4PZjgTsyOWqBjcz8540=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=neN+JDTP9RWQsWR+9pugpPZJyGqahrELoBI0SlZHCCU5PkpNis9d6uivTNmC85x4raF7+/TahgRI88UIYINwxa4TlXwLVpyLWMjA0GuyiB8NWn2imnEaqVofoO3ci9e+pPcZgmg4LAOjvKuDlLtuoEL9ba4u7q6Tj9fkroB1WJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=gdcGCMAm; arc=none smtp.client-ip=209.85.208.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f68.google.com with SMTP id 4fb4d7f45d1cf-60768f080d8so1121271a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:55:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752735304; x=1753340104; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rYbV51/nzoj2zUAYRNyGSsBe1Ra4KqNdW7VDa67aLhY=;
-        b=gdcGCMAmu3HA+GnekioSysSrnvPwDpese0Q5M64y5W7j5+kGoBTPvzz0h9f0r4nFIc
-         cywpXh4YmbVgLa7FlSmDvAm291eWV27XshYC3bt0/gTXLjZc6FAhhNIPv1/H7ZKNmLxI
-         xTWJuoR2iZCwmrPNOFMCDSrW+roskgHYwp1szf9ziVlvgzd+AkPutt+ha6tTi9FACsFa
-         n3ykVCzILQIXkZDL6Lq1QsenzRQwN7G/bSpD51GXFrGUhgK1HX8Po1boroa5fHoazqzF
-         AtFKiwrsTul+kGMUYXePLerDC2MdQ+rhTpxKy41SVbkqcf7cD6b+RlJIn0WrTWzRKm3i
-         AtkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752735304; x=1753340104;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rYbV51/nzoj2zUAYRNyGSsBe1Ra4KqNdW7VDa67aLhY=;
-        b=cto2HdcVo3QpnIF1PtuC3hZg2ENVzpP50W6VHme30+4Vjso5IyaHE14N3zTMGTF971
-         kWhs6fn7TGS1enQ0sP8dS1Treqa3+Z7n8RnVWJLcRUS3STV76pQ5zhpLRSEbT3PaWNt+
-         BCtQbegB/pdfNoKVLYA1aXPAC6CLSOM+tyUeh5kwDLCJDU5eVLyHOsf81TVK1OciWiyI
-         4LJ5aAvH8cTJdDoPZwlxpcLKGMoVGw1VFfc33jHxg1zwlN8rVP5KazMzbDZXFU6Wl0Zu
-         5Rpvjfq3lhHHEM4gUkT2AmO7o/qYiEIBT4K3SuRsuFhZktu0QAmgFAtUZCxr+A6WVGvh
-         dYrA==
-X-Forwarded-Encrypted: i=1; AJvYcCUcpNEvZPKqp0quYzp6cC4bIxIZUohQDUV7PsbbcMN3ZHazKKuyo+yCZ1ibfdJ7tar3b7i7GMgP2cJJuZl8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX8E9vJYuTsDCXffw0Z1KL25KLXA6VxqCMRgESWfu4IuIdX7Yx
-	JLanViIP7Gpa/il/AQBM75KcUP4dKJWm7DGvdlaQ4z7AMJnAyW0zyGeELazCz4QwTM0=
-X-Gm-Gg: ASbGncsTGxrEkQETIefm6W4LJchrq5lmKVlEjiIJdldL1AtHeYUGsYUbzt1lpWCJYdU
-	gA9k0U1yNnIjcVP4fwEXaTJ4hnc9xpof9reU5wBOqRjSeocE4lkwetsn6ayn6Qy3OGal/qjey1F
-	rdw8eTA5YKechTEWxhmhuLt00q0UWTnV3tDLSx4/vlZhwpeTYGy4h+Y2hvSWKu2LgwOrQZ7FfY6
-	WAO9rwGaHp6A1V3+W/4J9HPnD3V8kmCd7af+vqCOBdBBJLifeqJxVAuyuGTBT6uC7lnp0Zwpj8J
-	JbkzQv1nrnJnNLHxGpiyvBto4fE/pfbN46G3pZOpXwazOaUiTUAA1zlD/minW1oO/x0KShKoiEF
-	upCg75ZFeGhQg7CtwqSUpxxXgvLnUCCWjAlxKp4zkzKAiW7+/iFuG4uIzlmx15SgOYlID
-X-Google-Smtp-Source: AGHT+IGCMa79Ak/KZtDl4v+vAe363Fk1VViVdgQtd6Y0WVZGvhTIykL9Hsq6Biw3grMwr05Z3oUtyg==
-X-Received: by 2002:a05:6402:d0e:b0:607:ea0c:6590 with SMTP id 4fb4d7f45d1cf-61285bd4fcfmr4635510a12.24.1752735303707;
-        Wed, 16 Jul 2025 23:55:03 -0700 (PDT)
-Received: from otso.local (212095005146.public.telering.at. [212.95.5.146])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-612477e1d2bsm4688882a12.34.2025.07.16.23.55.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 23:55:03 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 17 Jul 2025 08:54:46 +0200
-Subject: [PATCH 3/3] dt-bindings: soc: qcom,rpmh-rsc: Remove double colon
- from description
+	s=arc-20240116; t=1752735589; c=relaxed/simple;
+	bh=WfQDUZl8/0uR3HB4LyHO328cyXvBUlw0A/UhOlJxz1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PieC6B5ENhjhj4R1iyRvC78g4bTw6VUfhkaw1HIbqWlQ7+OyA9smpa+WWei/rhK36kmiiZ/HXqEg9iOpxjl7fO7F50X0vfGmcA8mPCNaUYEnQ6kCktHC410vY+3re0olfapb22PRrZnPyAj1kCKLeLM1fDSWkAKLchfw9/317EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cECTN+eV; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752735589; x=1784271589;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=WfQDUZl8/0uR3HB4LyHO328cyXvBUlw0A/UhOlJxz1U=;
+  b=cECTN+eVmQPVhXT/U2vkMof1i90qD/D23SrCoISImNpDAxAqykWtphGJ
+   AMCD+kLBwmMG9jlI8L6A4GVmeeXPd/ALBe7UYhl7D07i9s/ov3crmTNwU
+   c2DiPQ/nQ6R6vhZqrk6Y9RVmarwqo27olu4qQJkWPeHRO+tKTCawDLqhD
+   mmB5tuZHpvbpG4itzJol3Tir0YVkXuB6Ahe8Dt2Qy+AesuolkdciN2079
+   xho9XS9em/AymwAS6aoMtLxRU3pKA1U4tC8+cNR+I/gw7fzNModzXkAun
+   J/uND1BJ1SQNs1iwTo94CZQk+VDhmiupBd6zx6elRcVuIkHeUvbp1AzIm
+   Q==;
+X-CSE-ConnectionGUID: onUM6+B2T7OIMYyxrxvWJQ==
+X-CSE-MsgGUID: BqEkDFFhR3uduD0WAO17XQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="57608558"
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
+   d="scan'208";a="57608558"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2025 23:59:48 -0700
+X-CSE-ConnectionGUID: xCcATFy/QTatTT5/uaWjQw==
+X-CSE-MsgGUID: ZIXncjgcTTumw+1qNYHO7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
+   d="scan'208";a="188654912"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 16 Jul 2025 23:59:42 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1ucIah-000DGd-10;
+	Thu, 17 Jul 2025 06:59:39 +0000
+Date: Thu, 17 Jul 2025 14:59:26 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>
+Cc: oe-kbuild-all@lists.linux.dev, linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org, ath12k@lists.infradead.org,
+	ath11k@lists.infradead.org, ath10k@lists.infradead.org,
+	ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <202507171411.xOxUslAs-lkp@intel.com>
+References: <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-bindings-double-colon-v1-3-c04abc180fcd@fairphone.com>
-References: <20250717-bindings-double-colon-v1-0-c04abc180fcd@fairphone.com>
-In-Reply-To: <20250717-bindings-double-colon-v1-0-c04abc180fcd@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
- Martin Botka <martin.botka@somainline.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
- Robert Marko <robert.markoo@sartura.hr>, Shawn Guo <shawn.guo@linaro.org>, 
- Vinod Koul <vkoul@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- krishna Lanka <quic_vamslank@quicinc.com>, Iskren Chernev <me@iskren.info>, 
- Loic Poulain <loic.poulain@oss.qualcomm.com>, 
- Imran Shaik <quic_imrashai@quicinc.com>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Ajit Pandey <quic_ajipan@quicinc.com>, Danila Tikhonov <danila@jiaxyga.com>, 
- David Wronek <david@mainlining.org>, Jens Reidel <adrian@travitia.xyz>, 
- Priya Kakitapalli <quic_skakitap@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Georgi Djakov <djakov@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-pm@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752735293; l=1085;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=ofhA9RZIk4qK/ObGD/C/ec3J4PZjgTsyOWqBjcz8540=;
- b=VJbUUQ0rCnBxTbImTmB/hVXOv7XbLDUVYLoJsKSS+TR2gyz2+Ol258xtVReyF40biRSlSSPz2
- pmPtDCH1uODDNHkEuJpdy7Eb/+p1eRmo+VM2KO//CPgIZeIXd7ORQSJ
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
 
-No double colon is necessary in the description. Fix it.
+Hi Manivannan,
 
-Reported-by: Rob Herring <robh@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250625150458.GA1182597-robh@kernel.org/
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+kernel test robot noticed the following build errors:
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-index 036562eb5140c78c10d845fd6efe42470b41895c..26d9bc773ec5cd42c147c776d2865fa2b435bc24 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-@@ -28,7 +28,7 @@ description: |
-     SLEEP   - Triggered by F/W
-     WAKE    - Triggered by F/W
-     CONTROL - Triggered by F/W
--  See also:: <dt-bindings/soc/qcom,rpmh-rsc.h>
-+  See also: <dt-bindings/soc/qcom,rpmh-rsc.h>
- 
-   The order in which they are described in the DT, should match the hardware
-   configuration.
+[auto build test ERROR on 19272b37aa4f83ca52bdf9c16d5d81bdd1354494]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-ASPM-Fix-the-behavior-of-pci_enable_link_state-APIs/20250716-205857
+base:   19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+patch link:    https://lore.kernel.org/r/20250716-ath-aspm-fix-v1-4-dd3e62c1b692%40oss.qualcomm.com
+patch subject: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state() APIs to enable/disable ASPM states
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20250717/202507171411.xOxUslAs-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250717/202507171411.xOxUslAs-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507171411.xOxUslAs-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from drivers/net/wireless/ath/main.c:22:
+   drivers/net/wireless/ath/ath.h: In function 'ath_pci_aspm_state':
+>> drivers/net/wireless/ath/ath.h:346:26: error: 'PCIE_LINK_STATE_L0S' undeclared (first use in this function)
+     346 |                 state |= PCIE_LINK_STATE_L0S;
+         |                          ^~~~~~~~~~~~~~~~~~~
+   drivers/net/wireless/ath/ath.h:346:26: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/net/wireless/ath/ath.h:348:26: error: 'PCIE_LINK_STATE_L1' undeclared (first use in this function)
+     348 |                 state |= PCIE_LINK_STATE_L1;
+         |                          ^~~~~~~~~~~~~~~~~~
+--
+   In file included from drivers/net/wireless/ath/ath9k/common.h:19,
+                    from drivers/net/wireless/ath/ath9k/ath9k.h:29,
+                    from drivers/net/wireless/ath/ath9k/beacon.c:18:
+   drivers/net/wireless/ath/ath9k/../ath.h: In function 'ath_pci_aspm_state':
+>> drivers/net/wireless/ath/ath9k/../ath.h:346:26: error: 'PCIE_LINK_STATE_L0S' undeclared (first use in this function)
+     346 |                 state |= PCIE_LINK_STATE_L0S;
+         |                          ^~~~~~~~~~~~~~~~~~~
+   drivers/net/wireless/ath/ath9k/../ath.h:346:26: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/net/wireless/ath/ath9k/../ath.h:348:26: error: 'PCIE_LINK_STATE_L1' undeclared (first use in this function)
+     348 |                 state |= PCIE_LINK_STATE_L1;
+         |                          ^~~~~~~~~~~~~~~~~~
+--
+   In file included from drivers/net/wireless/ath/carl9170/../regd.h:23,
+                    from drivers/net/wireless/ath/carl9170/carl9170.h:61,
+                    from drivers/net/wireless/ath/carl9170/main.c:47:
+   drivers/net/wireless/ath/carl9170/../ath.h: In function 'ath_pci_aspm_state':
+>> drivers/net/wireless/ath/carl9170/../ath.h:346:26: error: 'PCIE_LINK_STATE_L0S' undeclared (first use in this function)
+     346 |                 state |= PCIE_LINK_STATE_L0S;
+         |                          ^~~~~~~~~~~~~~~~~~~
+   drivers/net/wireless/ath/carl9170/../ath.h:346:26: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/net/wireless/ath/carl9170/../ath.h:348:26: error: 'PCIE_LINK_STATE_L1' undeclared (first use in this function)
+     348 |                 state |= PCIE_LINK_STATE_L1;
+         |                          ^~~~~~~~~~~~~~~~~~
+--
+   In file included from drivers/net/wireless/ath/ath6kl/../regd.h:23,
+                    from drivers/net/wireless/ath/ath6kl/wmi.c:24:
+   drivers/net/wireless/ath/ath6kl/../ath.h: In function 'ath_pci_aspm_state':
+>> drivers/net/wireless/ath/ath6kl/../ath.h:346:26: error: 'PCIE_LINK_STATE_L0S' undeclared (first use in this function)
+     346 |                 state |= PCIE_LINK_STATE_L0S;
+         |                          ^~~~~~~~~~~~~~~~~~~
+   drivers/net/wireless/ath/ath6kl/../ath.h:346:26: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/net/wireless/ath/ath6kl/../ath.h:348:26: error: 'PCIE_LINK_STATE_L1' undeclared (first use in this function)
+     348 |                 state |= PCIE_LINK_STATE_L1;
+         |                          ^~~~~~~~~~~~~~~~~~
+--
+   In file included from drivers/net/wireless/ath/ath10k/core.h:25,
+                    from drivers/net/wireless/ath/ath10k/mac.h:11,
+                    from drivers/net/wireless/ath/ath10k/mac.c:9:
+   drivers/net/wireless/ath/ath10k/../ath.h: In function 'ath_pci_aspm_state':
+>> drivers/net/wireless/ath/ath10k/../ath.h:346:26: error: 'PCIE_LINK_STATE_L0S' undeclared (first use in this function)
+     346 |                 state |= PCIE_LINK_STATE_L0S;
+         |                          ^~~~~~~~~~~~~~~~~~~
+   drivers/net/wireless/ath/ath10k/../ath.h:346:26: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/net/wireless/ath/ath10k/../ath.h:348:26: error: 'PCIE_LINK_STATE_L1' undeclared (first use in this function)
+     348 |                 state |= PCIE_LINK_STATE_L1;
+         |                          ^~~~~~~~~~~~~~~~~~
+
+
+vim +/PCIE_LINK_STATE_L0S +346 drivers/net/wireless/ath/ath.h
+
+   340	
+   341	static inline int ath_pci_aspm_state(u16 lnkctl)
+   342	{
+   343		int state = 0;
+   344	
+   345		if (lnkctl & PCI_EXP_LNKCTL_ASPM_L0S)
+ > 346			state |= PCIE_LINK_STATE_L0S;
+   347		if (lnkctl & PCI_EXP_LNKCTL_ASPM_L1)
+ > 348			state |= PCIE_LINK_STATE_L1;
+   349	
+   350		return state;
+   351	}
+   352	
 
 -- 
-2.50.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
