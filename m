@@ -1,136 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-65370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EE40B0844A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:36:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB61BB08485
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:05:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28A2E1A650BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 05:36:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FA7F1A65FF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:05:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39A9C7263B;
-	Thu, 17 Jul 2025 05:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56BE42046B3;
+	Thu, 17 Jul 2025 06:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dE3bGRf8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZLV2ZRl3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAFB4689;
-	Thu, 17 Jul 2025 05:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EA8200112
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752730575; cv=none; b=IigXpn5V7tBG3zKndD56pk6gUPnfYgukdw9JsWj/QNtIRXxyelXzEoF2E/slUA5d6AuujRqI0xF6GRCYU8DgxXju0eM7rWXAkSmb2o/5a5Dc+ICIoO06y0r3TifMj3i14DTexzI6tLBl1FpDd01ChR6vrVJxhQZkgfrb6VnatD0=
+	t=1752732292; cv=none; b=aAzeDSm2/P4YgvRLxe9au+f4UPTSShddaHQyBen7jC+Dz3lruTQCNZ3TbudK4+VTt4anNMSPsxEQ+XxZDqyPvwvc80kEda++ooWL0z2LT9ohTt+YzOZBrBke1abrBgGM+mP/uQGnXQi+wfoYEsa95K0bD1nKFkUjWJSgw3NRaUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752730575; c=relaxed/simple;
-	bh=FEmlEcSayOIHsQNQPyzw+jI8YB/J7gFPYA1NgXXjKwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IbAHel5iun8BehjDiPoEmXDtDLEt+Z3ZWKe02IJEBq/+xdEmV9RCm+FYVWceJKn90GqceqBojjXyx5G1/kqVAmD3jbzHD3SsIzLDYdbGF7Z6qIgYgmpFuYqKvCNROnGSDuHsd4sZnX5xtGF2AZwuF9zxgALHe3LOYuMQAQIwYtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dE3bGRf8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H4Xolt021709;
-	Thu, 17 Jul 2025 05:36:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1752732292; c=relaxed/simple;
+	bh=/eI8FTCpncUNzSRdBop7/8qiRihLxNb69wVgieMvvy4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pmAJso3B3EXKwGoUMQ2g2y8ZzHWhQm11JlEwlK2S/6I1jCvnsr6R7fN5WSHHjLWpVI6gGZLtdTnVJbCagJQD98jI9fEWNhKg6P761QS4L5GPGG4vPAeotbQdqOdE3zObGQICKQYBcL49fzK0vZ9HqStxUcV8dXx8ky1qqtidruU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZLV2ZRl3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H4Y7ml028124
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:04:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pJZ+0E9soK2DsOvwW41J5kJoGn76x716XyaTvcDEhqw=; b=dE3bGRf8sGA2L0fS
-	ovXARM2mGg1368Q++AYCK95sjn8tSLBqOtyv3DWKvNw87FniF+CQMm7QfYCXOIZL
-	96HEDS/Z7vq/7TwQ5WMI7tVKxtN7AXCY12xN8RdgoAQPbbHmUVcCBU4x3kXlZhhW
-	1UYy6MH6hhtmjhLAWKs6vYpry7TsuhILic+w5vq3w8uEgMjFmujLjzXuoG44K+Go
-	7b8740KeuGskzwQ+RCMWkxug+1lmsVF6yQxkO4CR1V1lX9BGJtIG/ED56TM8idtZ
-	W83xvjKfputJHCBgs3rSGLa6td6Y18A4NXDngxZDBwsoKwizOfZwZFiMmSlEIdmI
-	9AK+dA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufu8e7rm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 05:36:01 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56H5a0wD012740
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 05:36:00 GMT
-Received: from [10.216.39.173] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 16 Jul
- 2025 22:35:57 -0700
-Message-ID: <841a9087-f3cb-870f-5d33-77ad1b0eef28@quicinc.com>
-Date: Thu, 17 Jul 2025 11:05:54 +0530
+	ectNLSsr0geVGNTSYPuw96/Hkm3S5cAjwHokocTaqA8=; b=ZLV2ZRl3Rg7wgDRP
+	QHagA1gAAS0/iFZO9Pv79mBwHopjmEYU0EToYHuzp8p1PzSAidNDCf+daY/1orXP
+	JeuHLrQ2nzP7Rpax4gt0jUBmdfykWeQhIqslBIaugLjmfkJcKgCMoo6r1NJhtw5z
+	nTUm90E1rgRpXDRchNCkFkmSDv4kXGiYAWDas9VRLAS4OGFe5AI7G7/aZk1V9i6I
+	TyixfZRUj/uJgX8ocsO2BXwG6sfFQT4pe4kQNOFclCgkwQVSQUJ4YMH4Yh/EgPlL
+	MscWNr3p1StnFBB6AD2afK2e1e/JpqFQaVaWYAnV4aeGoFq4m/ly29TS5/zjvZqY
+	JClcIA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wnh5xqdk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:04:49 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-74b29ee4f8bso636704b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:04:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752732289; x=1753337089;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ectNLSsr0geVGNTSYPuw96/Hkm3S5cAjwHokocTaqA8=;
+        b=jC+sZCQJ74b9Qj6fvamkzjuH1z/0zET+Tr/JacmgNrVNA4HLaHdtyqrzId5AEfUhIl
+         6rP2ZjMpyl31Q+agZPNeH8a27UDMUFtZw1im03v/xKkgxg6rfayRTXw5Rv1rWykbQtvD
+         78He3Jq6f6xdlxsZCJPknkSulZIs23u1YaCNyzh383+f/bQrHXvo4BssjUjvNBkcqMVM
+         yfpdqiWkVKeq8PhJMGg5bavr5wMTyN99futENuinSE/2N8RhY+H4dSe5nZRoQg/A7jXo
+         WIHr1/R8L76DWShCf/Tw7jpsUSq9U1TIraHuJPUhv2R8iA36Vb+gOzkuCvqHC3WUPqno
+         gVGw==
+X-Forwarded-Encrypted: i=1; AJvYcCXJw82FBG3qBMP+9XUaTAQMZH77+p4MCccgeE7LY7ARqVQDMw+VMPJ87HkHQTWBLQpZnrOtW2SGbdVFz8kw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyFK9tpkc1CKOC9aRT4eLONem+x+xQG80TuoioAr3dPCnlAxBE
+	WluXGhZ+Y+bFc+DuI6vn4gNAiMBDb805SeshdvQ4mNqVXusGjT4qLSpYMBzHGB9/2yO/j5+7vhl
+	WFcVaa5716a4z4Q40rKIOTYDHECQ/fHAhGSgccM1AfVs2tqkwX5q4t+E5C2JhyTfzWvWw
+X-Gm-Gg: ASbGncuSoXPeDiNgXLpsO1xZyY0Acd7AL4voLxbJKi4MwQQfK01HBPdb4wmtcmb1my7
+	N8r9QgGBvEbJGJQB4mEGRUcyqtclQMtFAZHc8xfXnDLpBLn46XIFO3OF3MedAHUTLyKnXRUsXhl
+	0e7Nhk8jixf81amK3MZHxFA62Cx8zzI72LzuKLEOhYRLJZx1GmabPAZZOswQSVYdLWp6jO3jP+K
+	wHhE9Ch6HrP7hkYN7BaGVaKcShr0gir7KqSSCGiAmqveUvjRnw9LLvSg0EY/MOol8sEfN93hy+U
+	XccRHpPWwLF9DhHJ8Xad+3nhlrSqTT0P1O1tYb02u6djWJj/A4zJ5ojO+Wjr
+X-Received: by 2002:a05:6a00:1945:b0:736:5f75:4a3b with SMTP id d2e1a72fcca58-75722869626mr7421080b3a.7.1752732288322;
+        Wed, 16 Jul 2025 23:04:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyCadxiKqAnRGrg3kJEgXbKAZ6HS0QuHqlNsqoAGcHtBpNmUUMpDgDD0/MOYYxsR7Y2b2Q5w==
+X-Received: by 2002:a05:6a00:1945:b0:736:5f75:4a3b with SMTP id d2e1a72fcca58-75722869626mr7421020b3a.7.1752732287518;
+        Wed, 16 Jul 2025 23:04:47 -0700 (PDT)
+Received: from [10.216.10.110] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9dd73c3sm14960668b3a.7.2025.07.16.23.04.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 23:04:47 -0700 (PDT)
+Message-ID: <617d207c-995a-4375-bd5d-2e1e5c459bba@oss.qualcomm.com>
+Date: Thu, 17 Jul 2025 11:34:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 00/25] Enable H.264/H.265 encoder support and fixes in
- common code
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V6 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+        konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
+        rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
+        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+        quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
+        stephan.gerhold@linaro.org
+References: <20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com>
+ <20250509110959.3384306-5-jishnu.prakash@oss.qualcomm.com>
+ <20250511140418.33171ca3@jic23-huawei>
+ <ff19780e-5bbd-4074-9db3-b4f27922a093@oss.qualcomm.com>
+ <20250628173112.63d9334e@jic23-huawei>
+ <5b55acbf-065d-4383-a816-82561bf91273@oss.qualcomm.com>
+ <20250713143149.60763b52@jic23-huawei>
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        "Vedang
- Nagar" <quic_vnagar@quicinc.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <20250713143149.60763b52@jic23-huawei>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA0NyBTYWx0ZWRfX3BM5acTuXAvV
- tiFLYrEYtfpCmXteEVMhMKPMsp64Z2FpgehlLQiJBu921R45QLRdbW94xnaFb/FENrizQK2DEej
- fuChMAmh6xoIxH3ILbpP8F1VAHX9Jj300LlWDeXnQ4xTruYvvCDZXlASpkifJxqznaCaKiQtAW3
- Osn+Z6Awd3xaRQH2heqJb2lu+l2KntXV/VAGmoICYALUIeh44Hd1pC74PZ5wgMm4zJ/p17UBhoj
- 5WCMv/ZPlqQWC5mdFQQA6e9TWzLRyEGB5O6LmOJ5WN6Z3AK7FZRlMIz+ou0Uq3Sihv134Nwk3jh
- TB5BXDf36LjRcX1I31m36xIygdnjOYRXBl/Urhg90VVS9wOgyOKmSkaub7qZmuoYY8QgYDY/FI/
- niWk/qndsukFHskXMG/jx5dpk/X+4CYmq6DRK3kL70PfZNM9KmSOS9xvppBn0TJF5WHi/lXx
-X-Proofpoint-ORIG-GUID: 6lpaXJ_rJyZ6BKl_DTnzk40Ex9EPc3Xx
-X-Proofpoint-GUID: 6lpaXJ_rJyZ6BKl_DTnzk40Ex9EPc3Xx
-X-Authority-Analysis: v=2.4 cv=f59IBPyM c=1 sm=1 tr=0 ts=68788bc1 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=fSTb7FvrLMLh5MOGqSAA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Authority-Analysis: v=2.4 cv=dKimmPZb c=1 sm=1 tr=0 ts=68789281 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=rjtObUXQbTieMrY6Fj4A:9
+ a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: qCcxkBa3Jwe-PMZvmrX15KtourkUpGms
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA1MCBTYWx0ZWRfXwM/tLvs3fFxz
+ nhCyuk0qoo2u6FgJlZABnKMTtZ9gIJ4oK+h2xCYdVMAbVNKHCSQ6NZ1iwuRgs16eH1EqnOLeDmJ
+ kJproUhYrCj/j4Q5LaQPwDPvGXsVtNE/IGMACCrQKOU4RACU14I1ecpIwr49pU5raDB8rth3f6/
+ GjiRYqSOpcfsy9jWeViOeVGGQHgf1ULcQqYVLkivfzS4WcxHodk8gNsQoOjgUyaZiXd/EG5cdDX
+ Q7xwAj5nKwbr6x/OoLDyuMLHHsyvqeUXqPm4eft4kgRxANTkRYGgIgQzuBUPjxb7w6tvzOkuPOs
+ a8lvCedB8haafg3fpVYRbuaV9PfNTmtSm82p1ot501NEYf1ZhOI6q6Dmpdi4O4RwSTE+GGtdduC
+ 0Fb2qZOYBXextCIR71ekrrEHbjEohp5904XhBNDKhQUXUWOXAUJPYyalEO1hAe2v9YQUMoGz
+X-Proofpoint-ORIG-GUID: qCcxkBa3Jwe-PMZvmrX15KtourkUpGms
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=533 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170047
+ malwarescore=0 clxscore=1015 mlxlogscore=765 mlxscore=0 spamscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507170050
 
+Hi Jonathan,
 
-On 7/4/2025 1:23 PM, Dikshita Agarwal wrote:
-> Hi All,
+On 7/13/2025 7:01 PM, Jonathan Cameron wrote:
+> On Thu, 10 Jul 2025 12:14:13 +0530
+> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 > 
-> This patch series adds support for H.264 and H.265 encoder in iris 
-> driver and includes a few fixes and cleanup in the common code that were 
-> identified during encoder bring-up process.
+>> Hi Jonathan,
+>>
+>> On 6/28/2025 10:01 PM, Jonathan Cameron wrote:
+>>>
+>>>   
+>>>>>> +	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
+>>>>>> +				{ 15, 100, 200, 300, 400, 500, 600, 700,
+>>>>>> +				  1000, 2000, 4000, 8000, 16000, 32000,
+>>>>>> +				  64000, 128000 },    
+>>>>> Andy often points this out, but I'll do it this time. Fixed numbers (typically power of 2)
+>>>>> elements per line make it much easier to see which element is which in these arrays.
+>>>>> Reduce the indent a little to allow that here.    
+>>
+>> ...
+>>
+>>>>>
+>>>>> It was never worth bothering with release until we had devm managed form but
+>>>>> now we do the code complexity cost is low enough to make it reasonable.
+>>>>>     
+>>>>>> +	indio_dev->name = pdev->name;    
+>>>>>
+>>>>> Just to check.  Does that end up as a part number or similar?    
+>>>>
+>>>> I printed this name and it appeared like this:
+>>>>
+>>>> indio_dev->name: c426000.spmi:pmic@0:adc@9000
+>>>>
+>>>> It only gets the DT node names, which are generic, there are 
+>>>> no part numbers in this name.  
+>>> I thought it might be something along those lines.
+>>>
+>>> indio_dev->name should be the part number so hard code it rather than
+>>> getting it from the pdev->name
+>>>   
+>>
+>> Actually there would be more than one PMIC which can function as the master PMIC
+>> for Gen3 ADC functionality, so I don't think I can simply hard code a name here
+>> based on PMK8550, if we want to keep the part number correct.
+>>
+>> Since we can't get the part number directly from the DT node names, we
+>> could try one of the following ways to add it:
+>>
+>> 1. Add a devicetree property for the part number
+>>    This would be simple, but I'm not sure if this is the best way, 
+>>    if the below method looks good.
+> Nope as if you need a part number, that's should be via the compatible.
+>>
+>> 2. Add a string in the compatible property for the part number.
+>>    This means updating the compatible from "qcom,spmi-adc5-gen3"
+>>    to something like this for PMK8550:
+>>
+>>    compatible = "qcom,pmk8550-adc5-gen3", "qcom,spmi-adc5-gen3";
+>>
+>>    and then extracting the part number from the first string.
 > 
-> The changes include:
-> - Enabling support for H.264 and H.265 encoding.
-> - Fixes and improvements in shared componenets used by both encoder and 
-> decoder paths.
-> - Ensuring compatibility and stability with the existing decoder flow.
+> Do it via a compatible lookup + data in relevant tables rather
+> than messing with string break up.  Sometimes we'll get the
+> part number of the fallback compatible but I don't really care.
+> However, see below - I think spmi-adc5-gen3 is effectively the
+> part number for the IP. It just happens to be inside a PMIC
+> that has another name.
 > 
-> All patches have been tested with v4l2-compliance, v4l2-ctl and 
-> Gstreamer on SM8250 and SM8550 for encoder, at the same time ensured 
-> that the existing decoder functionality remains uneffected.
+>>
+>> Please let me know which method you would prefer.
+>>
+>> In addition, does the below string look fine, to assign to
+>> indio_dev->name for PMK8550?
+>>
+>> pmk8550_adc
+> 
+> That's ok, though given it's an ADC anyway, pmk8550 should be sufficient
+> for this IIO specific name.
+> If it makes no practical difference what PMIC it is for this driver
+> then simply use spmi-adc5-gem3 or something along those lines.
+> So kind of a generic part number for the IP rather than specifics of
+> which PMIC it is implemented in.
 > 
 
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # X1E80100
+Thanks for your confirmation. Your above statement is true here, the
+exact PMIC used here does not make any practical difference for the driver's
+functionality, so I'll use the generic part name "spmi-adc5-gen3" for this IP.
+
+Thanks,
+Jishnu
+
+> Jonathan
+> 
+> 
+
 
