@@ -1,403 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-65479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D4EB08D91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:54:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35466B08D9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:55:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 683023AC3B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:53:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63F8A1C26015
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:55:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8231E2D780B;
-	Thu, 17 Jul 2025 12:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80DEE2D541B;
+	Thu, 17 Jul 2025 12:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mhez8Far"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hrMlycHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866202C375E;
-	Thu, 17 Jul 2025 12:54:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014062C375E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 12:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752756848; cv=none; b=ucoPOBE5T04j3tR/rnNVrwyjF3MxwujCBCBqZMnVKtI2CUQxptIS9C4FhNvS3tiQIfaZdk19EieZpAhb2nzOy/AoTzp6TOF42v5iTjYlQtVR6hCHQp7kzlR6Gzzf/FfOyhUz+mcnS6n7hLmU84aTTATtpCSql6XcnzFuUyPLVeU=
+	t=1752756864; cv=none; b=JYUenYeRg19EQr9zompFOtn7TSJv9Jur4rXkRR3a9rSGk2l9fBrDqxyKSB82qxX+mSjM/kEOi6ojy1eRRZHiawyxzqVl+EY/bJYO1uuFicSRRUZkQ/1NX+aYzf7Twra4volP1ZU9iWxALbgrqOEZjaNexCi2R8WwbzGb1TdZN4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752756848; c=relaxed/simple;
-	bh=yQ5BZ28L+kzhtOXUSxEHXE7RYtw78ZcuuxL/A2WIhYw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dCjdlMcTEuHeTzHHJXBKzSdchERs8oHmDjAeydyxHO7zz5bXWpo5KWAk/rLO6zmvOvDY70ZxEaM3eVQLNAOx2r8NoL6YyHFezZIL+n/Y6EwqUgGe8mRFNt506j7rIgWmtuCiZr7GaV3We/RnJNklu0D1F/xu96/ZjL3BOxyfV5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mhez8Far; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HBQHZw030393;
-	Thu, 17 Jul 2025 12:53:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1752756864; c=relaxed/simple;
+	bh=z+X8A9P+G8blqjkqdD7ikKkiAkXVI7kyhvLjlBrrHu4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CgMYSITUAWGMB9YoWxFMS1Jzp37s2smk1AFrCpSRS+kpwePo1RbfW16HDrY2lnyvR9lqwetwFsMB3RkLp9vLWT9+cz0WVhPzqyVH/JzqZV36BYE4DV8ZWGLL+dOWNbBAs8rt79pZcq2XcmWJ4G+WIC7TVpRes5LZmX9zt48o74s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hrMlycHp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HBZZKW015664
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 12:54:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eKH30b7BMC6pPxd1XOUXuJlcdzMn1Xji0dDCwsMpuMo=; b=Mhez8FarNqxY2lX+
-	QQXRXEE4+r3zM5Gjg4xP12wBQcUOMCM07FEogFSh3Vjmg6Xvw21jg4LGuoGbu9DZ
-	ottkb+oZ4SwS/IpepXHTfxOuUlempd+RIy6STLax18UudyAlrYVWPNVXsAAidiD6
-	hMztDDMpYFV0TG6stErQd2MfM7+ESalnuXucOLQirlCD6wdDghKQIyD3c83WEhyj
-	9e6BL94F363tHK0THNayns7zqO+S8yuAQEDOkDNHg+OXVpE1xWUTxyK4GkloIlZX
-	AnUSi/HDovgyA7Q4YoqZyQ7FttyQdta4uNE96VcgeiHZ5LGp90esGJ8Php6ceGj8
-	y2dUyQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47x8x7mh93-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 12:53:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56HCrtuX002077
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 12:53:55 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Thu, 17 Jul 2025 05:53:54 -0700
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v9 2/2] coresight: Add label sysfs node support
-Date: Thu, 17 Jul 2025 05:53:42 -0700
-Message-ID: <20250717125343.3820505-3-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20250717125343.3820505-1-quic_jinlmao@quicinc.com>
-References: <20250717125343.3820505-1-quic_jinlmao@quicinc.com>
+	vY8+U+AdtRViJLGrgNvdoFy3geTUrpbdX4fYqj2cMJg=; b=hrMlycHpVroEaQWv
+	kvr7GMs0/d5F2a2bWEpuQjEeAcymkwr8AR7f+kkqFutISuf8c5VOhdsnRDiij3MU
+	xv8/AXzwFDEz5wgcKNOcRdr7io0UYfSSN66IhgRHw5aqREFiV4/eTgYhOa+IBuwE
+	tHWBE0qnQaZKQYbyuOkiBsaCk97Zx21Mx/6TCTrTmH0kzGFgCbZc1Eq4UlFwXnjx
+	RVDECAhnZ7ndwfDBS8a/87WusyGFWL1AFqGT56KzR3lifZ0k1AtBAknaHJ/mQO5H
+	sLoEPrFCkGytbPijhTLD3NnnSu7k1YKo9x2Q83p72Evc/4AkyuGuZzq/eM5AZyGC
+	R2SApg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dytn61-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 12:54:22 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ab5e4f4600so1701441cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 05:54:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752756861; x=1753361661;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vY8+U+AdtRViJLGrgNvdoFy3geTUrpbdX4fYqj2cMJg=;
+        b=rW30XexRFoEbYwYZ1j/i8KP6e79M8y0sZ4NYflXnMEFzqktz3PvXXofFEvjcCcyhCT
+         cebs7JQSesBNW3Nakn4hkaNp6BmM2qmNDHVY3G08OKpaD30KNrKcujxbBrgYSOz+rVwv
+         zM/86Xon5a3u51ScL8mJX1r9j1oglNa/euVVtnev+CzvtFn9K0Zy/wKqt04RhXsZPIdQ
+         udg1UL/qS5P+aBXy3mOyVAku43jpqoZ6TOADbCo9wlVT/jblgXrPuzCk5nIvO7N5uO8k
+         JnDaoTFDT+1KFhkSTk/MPFMua452p4qXI7+heTruAxPbr/DDcF0yJlYYSyTiNvHisnsy
+         yVsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVouvjp2uLAiL2uXGBye6Kw4viv2LwXA+d4PwT8bwFO3Lga7RWzTlArJJIexGMqDaGttvF1FlHvY1unLhjn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxj3im21qBJwRANU+bkJjeGhx3zJ1/WARtSFNnoJCnyI96Fdgeq
+	YbfHsHwQANijVM0vbgqhvggnnoTg3D1qUzki12UxNNlwGIKxGXZMF1eK+qECxNegJWQtAZgCfV2
+	/PezuymVP7rphE52vJVq+HLAijOD/6POJplcSMOVY17WQuCfByPWCRGBJFhf7fvDPnB40
+X-Gm-Gg: ASbGncvrI6PTv/fC72A33nYBuKxc5u0oGHkctYPgP4pEzWXGbffFq/QmheOYoJf1t8g
+	i8nIT35d/tj3YOAIy1ozKW8KcYqOgIAnK9O834WrpkepO336HWDNQjtSUNRIQleEwgm+9QJzjgb
+	z1UIhdMY4g0QzX5KxAB5YkPInamTj1Ru/lpt78C6jbkAkvjzRf3Aokp8pfHB49d/QxeDq/bN08p
+	96crfZFNWfFZKh9flqmHBUk2IVZJ9mtWFgonpdaN8zG4klvSvWT1O4Cyo7cWdm8bn95nrROIXzx
+	vWhoOtoOoxvc/D6sM8OkqSPahGKSqCsOaGIODWz/2j2UfhGTmhw2phpxHrqhubY/D1ERbF9ELr8
+	nLFmnGnIggP0zwIEqsfJD
+X-Received: by 2002:a05:620a:2949:b0:7d5:d01f:602 with SMTP id af79cd13be357-7e342b68dd0mr446381885a.14.1752756860532;
+        Thu, 17 Jul 2025 05:54:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIHZdErHUxcQSzMlX3jaAJn024q0jCOwgH+lHrqH9oe6WV/+qWTPGrVNeWc8ZrO5OBCGW2Tg==
+X-Received: by 2002:a05:620a:2949:b0:7d5:d01f:602 with SMTP id af79cd13be357-7e342b68dd0mr446379985a.14.1752756860098;
+        Thu, 17 Jul 2025 05:54:20 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e82dedc0sm1354487066b.160.2025.07.17.05.54.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Jul 2025 05:54:19 -0700 (PDT)
+Message-ID: <e1335aff-00b4-4505-bcf5-0eb8f2974a75@oss.qualcomm.com>
+Date: Thu, 17 Jul 2025 14:54:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDExMyBTYWx0ZWRfX+Sj+H+ADN44L
- d5pieJ5SQN97zatfruJw+jttsfqVQ/2Ywxtfik94kWNtJXg2DsLZlC8DlQtxNPTOfoZyhZu4bi4
- gXQHof02ujnU9ysi3y7MT0MfpIDYYuDZIqlxnqgy/2DI8om9wSH+I8Bv1s14pkoBs54XzlB5fNw
- wilgLf9+7HPhAKKjC+37oPxSNmAdnQjGfJAk+7yhSEuUsjbENvbDnt/1CFRAXHnPrII56DO3L89
- SmEHOmGVPCCoQjOWKTvb+xPxKL3+H90P8hWK2cuHlCODOQIs4ELipYMJYSwHR4JRutyKYpUNmsf
- z2HbkN8ofxgzAL9E7NK3kbthigW8+NAMz4o2IbvgTBu9Q/xObT23kCbo+N8Vg7ZZXY1M8QfaOrA
- o3kUeGwBtj9mCh4jBhLqezxjJIFouZmMdtH1aafQIt7Y5btrvVkMGLNRYtZCBFQACwx63euj
-X-Proofpoint-GUID: NMkHASZxKmoPe39pxl4Noh8c99PFPcVj
-X-Proofpoint-ORIG-GUID: NMkHASZxKmoPe39pxl4Noh8c99PFPcVj
-X-Authority-Analysis: v=2.4 cv=N9YpF39B c=1 sm=1 tr=0 ts=6878f264 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=3H110R4YSZwA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=7CQSdrXTAAAA:8 a=TYLdrY_46NNtcs5PGGUA:9 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22 a=a-qgeE7W1pNrGK8U0ZQC:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] media: qcom: camss: tpg: Add TPG support for
+ SA8775P
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20250717-lemans_tpg-v2-0-a2538659349c@quicinc.com>
+ <20250717-lemans_tpg-v2-3-a2538659349c@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250717-lemans_tpg-v2-3-a2538659349c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 7p9Io9AMzXsMMdF_5v8uq0lGckm-4NMh
+X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=6878f27e cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=pSl5WCw3oxHEiR9bIskA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDExMyBTYWx0ZWRfX3QP+VuVeBt40
+ HHup+q+TiNNgtjhtQEdi67RPsEiaJINcQadU7Xt8w10wjh+NidRtTLgXbp3t/xhoqWwf5C/jGFh
+ jHP0aAq7srXtf5sve731yq+w9JOLbO+WdQ1wzrU/vj67S0kN6nIfC2xniQbeIG4oQE7lkTpwKBX
+ Af1aLeQ1Hli4KDOtMWydEHzr1IT9DD+LZ0w1KmxMTxA/vpSZVkfGu2t2lAzFNxvsCjd8ouIHPAc
+ KHpE1J9PNbDJnuXEfKHkHSzc8NsC48MGn2j+mq+dEwSGtKIlTYRKkX+mvOpt5erV39sXhmj10Zo
+ AgWE6G8BFwtDX2zfwjOMOpe01O1lp6GiJZCZi3wOr6q4EoHWWWOwfWUWhLrP+N4hjWJCxaAOiGh
+ tff5s4p5aKcnhKAQgUx2gqw7LJ5JCCy8H1XHjYukb9+RD/bJ0L4Hi9NFk9QqcjEb0XdwO+Ga
+X-Proofpoint-GUID: 7p9Io9AMzXsMMdF_5v8uq0lGckm-4NMh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-17_01,2025-07-17_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0 impostorscore=0
- phishscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170113
+ adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
+ priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507170113
 
-For some coresight components like CTI and TPDM, there could be
-numerous of them. From the node name, we can only get the type and
-register address of the component. We can't identify the HW or the
-system the component belongs to. Add label sysfs node support for
-showing the intuitive name of the device.
+On 7/17/25 5:20 AM, Wenmeng Liu wrote:
+> Add support for TPG found on SA8775P.
+> 
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> ---
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
----
- .../testing/sysfs-bus-coresight-devices-cti   |  6 ++
- .../sysfs-bus-coresight-devices-dummy-source  |  6 ++
- .../testing/sysfs-bus-coresight-devices-etb10 |  6 ++
- .../testing/sysfs-bus-coresight-devices-etm3x |  6 ++
- .../testing/sysfs-bus-coresight-devices-etm4x |  6 ++
- .../sysfs-bus-coresight-devices-funnel        |  6 ++
- .../testing/sysfs-bus-coresight-devices-stm   |  6 ++
- .../testing/sysfs-bus-coresight-devices-tmc   |  6 ++
- .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++
- .../testing/sysfs-bus-coresight-devices-trbe  |  6 ++
- drivers/hwtracing/coresight/coresight-sysfs.c | 71 ++++++++++++++++++-
- 11 files changed, 129 insertions(+), 2 deletions(-)
+[...]
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-index a97b70f588da..55367bbc696f 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-@@ -239,3 +239,9 @@ Date:		March 2020
- KernelVersion:	5.7
- Contact:	Mike Leach or Mathieu Poirier
- Description:	(Write) Clear all channel / trigger programming.
-+
-+What:           /sys/bus/coresight/devices/<cti-name>/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-index 0830661ef656..9a11bd5b15cc 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-@@ -13,3 +13,9 @@ KernelVersion:	6.14
- Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
- Description:	(R) Show the trace ID that will appear in the trace stream
- 		coming from this trace entity.
-+
-+What:           /sys/bus/coresight/devices/dummy_source<N>/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etb10 b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etb10
-index 9a383f6a74eb..ff1f89795188 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etb10
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etb10
-@@ -19,6 +19,12 @@ Description:	(RW) Disables write access to the Trace RAM by stopping the
- 		into the Trace RAM following the trigger event is equal to the
- 		value stored in this register+1 (from ARM ETB-TRM).
- 
-+What:           /sys/bus/coresight/devices/<memory_map>.etb/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-+
- What:		/sys/bus/coresight/devices/<memory_map>.etb/mgmt/rdp
- Date:		March 2016
- KernelVersion:	4.7
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm3x b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm3x
-index 271b57c571aa..743f26619c69 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm3x
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm3x
-@@ -251,6 +251,12 @@ KernelVersion:	4.4
- Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
- Description:	(RO) Holds the cpu number this tracer is affined to.
- 
-+What:           /sys/bus/coresight/devices/<memory_map>.[etm|ptm]/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-+
- What:		/sys/bus/coresight/devices/<memory_map>.[etm|ptm]/mgmt/etmccr
- Date:		September 2015
- KernelVersion:	4.4
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm4x b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm4x
-index a0425d70d009..e6a584a4b040 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm4x
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-etm4x
-@@ -329,6 +329,12 @@ Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
- Description:	(RW) Access the selected single show PE comparator control
- 		register.
- 
-+What:           /sys/bus/coresight/devices/etm<N>/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-+
- What:		/sys/bus/coresight/devices/etm<N>/mgmt/trcoslsr
- Date:		April 2015
- KernelVersion:	4.01
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-index d75acda5e1b3..5578fa5f6f02 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-@@ -10,3 +10,9 @@ Date:		November 2014
- KernelVersion:	3.19
- Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
- Description:	(RW) Defines input port priority order.
-+
-+What:           /sys/bus/coresight/devices/<memory_map>.funnel/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-stm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-stm
-index 53e1f4815d64..c3a81978e30b 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-stm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-stm
-@@ -51,3 +51,9 @@ KernelVersion:	4.7
- Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
- Description:	(RW) Holds the trace ID that will appear in the trace stream
- 		coming from this trace entity.
-+
-+What:           /sys/bus/coresight/devices/<memory_map>.stm/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tmc b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tmc
-index 339cec3b2f1a..9554f4f453a3 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tmc
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tmc
-@@ -107,3 +107,9 @@ Contact:	Anshuman Khandual <anshuman.khandual@arm.com>
- Description:	(RW) Current Coresight TMC-ETR buffer mode selected. But user could
- 		only provide a mode which is supported for a given ETR device. This
- 		file is available only for TMC ETR devices.
-+
-+What:           /sys/bus/coresight/devices/<memory_map>.tmc/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index a341b08ae70b..e6d935e83042 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -272,3 +272,9 @@ KernelVersion	6.15
- Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
- Description:
- 		(RW) Set/Get the enablement of the individual lane.
-+
-+What:           /sys/bus/coresight/devices/<tpdm-name>/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-trbe b/Documentation/ABI/testing/sysfs-bus-coresight-devices-trbe
-index ad3bbc6fa751..2a5868ba3d6b 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-trbe
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-trbe
-@@ -12,3 +12,9 @@ Contact:	Anshuman Khandual <anshuman.khandual@arm.com>
- Description:	(Read) Shows if TRBE updates in the memory are with access
- 		and dirty flag updates as well. This value is fetched from
- 		the TRBIDR register.
-+
-+What:           /sys/bus/coresight/devices/trbe<cpu>/label
-+Date:           Jul 2025
-+KernelVersion   6.17
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
-index feadaf065b53..f7a0c9056854 100644
---- a/drivers/hwtracing/coresight/coresight-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-sysfs.c
-@@ -7,6 +7,7 @@
- #include <linux/device.h>
- #include <linux/idr.h>
- #include <linux/kernel.h>
-+#include <linux/property.h>
- 
- #include "coresight-priv.h"
- #include "coresight-trace-id.h"
-@@ -371,17 +372,81 @@ static ssize_t enable_source_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(enable_source);
- 
-+static ssize_t label_show(struct device *dev,
-+		struct device_attribute *attr, char *buf)
-+{
-+
-+	const char *str;
-+	int ret;
-+
-+	ret = fwnode_property_read_string(dev_fwnode(dev), "label", &str);
-+	if (ret == 0)
-+		return scnprintf(buf, PAGE_SIZE, "%s\n", str);
-+	else
-+		return ret;
-+}
-+static DEVICE_ATTR_RO(label);
-+
-+static umode_t label_is_visible(struct kobject *kobj,
-+				   struct attribute *attr, int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+
-+	if (attr == &dev_attr_label.attr) {
-+		if (fwnode_property_present(dev_fwnode(dev), "label"))
-+			return attr->mode;
-+		else
-+			return 0;
-+	}
-+
-+	return attr->mode;
-+}
-+
- static struct attribute *coresight_sink_attrs[] = {
- 	&dev_attr_enable_sink.attr,
-+	&dev_attr_label.attr,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(coresight_sink);
-+
-+static struct attribute_group coresight_sink_group = {
-+	.attrs = coresight_sink_attrs,
-+	.is_visible = label_is_visible,
-+};
-+__ATTRIBUTE_GROUPS(coresight_sink);
- 
- static struct attribute *coresight_source_attrs[] = {
- 	&dev_attr_enable_source.attr,
-+	&dev_attr_label.attr,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(coresight_source);
-+
-+static struct attribute_group coresight_source_group = {
-+	.attrs = coresight_source_attrs,
-+	.is_visible = label_is_visible,
-+};
-+__ATTRIBUTE_GROUPS(coresight_source);
-+
-+static struct attribute *coresight_link_attrs[] = {
-+	&dev_attr_label.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group coresight_link_group = {
-+	.attrs = coresight_link_attrs,
-+	.is_visible = label_is_visible,
-+};
-+__ATTRIBUTE_GROUPS(coresight_link);
-+
-+static struct attribute *coresight_helper_attrs[] = {
-+	&dev_attr_label.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group coresight_helper_group = {
-+	.attrs = coresight_helper_attrs,
-+	.is_visible = label_is_visible,
-+};
-+__ATTRIBUTE_GROUPS(coresight_helper);
- 
- const struct device_type coresight_dev_type[] = {
- 	[CORESIGHT_DEV_TYPE_SINK] = {
-@@ -390,6 +455,7 @@ const struct device_type coresight_dev_type[] = {
- 	},
- 	[CORESIGHT_DEV_TYPE_LINK] = {
- 		.name = "link",
-+		.groups = coresight_link_groups,
- 	},
- 	[CORESIGHT_DEV_TYPE_LINKSINK] = {
- 		.name = "linksink",
-@@ -401,6 +467,7 @@ const struct device_type coresight_dev_type[] = {
- 	},
- 	[CORESIGHT_DEV_TYPE_HELPER] = {
- 		.name = "helper",
-+		.groups = coresight_helper_groups,
- 	}
- };
- /* Ensure the enum matches the names and groups */
--- 
-2.25.1
+> +static int tpg_stream_on(struct tpg_device *tpg)
+> +{
+> +	struct tpg_testgen_config *tg = &tpg->testgen;
+> +	struct v4l2_mbus_framefmt *input_format;
+> +	const struct tpg_format_info *format;
+> +	u8 lane_cnt = tpg->res->lane_cnt;
+> +	u8 i;
+> +	u8 dt_cnt = 0;
+> +	u32 val;
+> +
+> +	/* Loop through all enabled VCs and configure stream for each */
+> +	for (i = 0; i < tpg->res->vc_cnt; i++) {
+> +		input_format = &tpg->fmt[MSM_TPG_PAD_SRC + i];
+> +		format = tpg_get_fmt_entry(tpg->res->formats->formats,
+> +					   tpg->res->formats->nformats,
+> +					   input_format->code);
+> +
+> +		val = (input_format->height & 0xffff) << TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT;
+> +		val |= (input_format->width & 0xffff) << TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH;
+> +		writel_relaxed(val, tpg->base + TPG_VC_m_DT_n_CFG_0(i, dt_cnt));
+> +
+> +		val = format->data_type << TPG_VC_m_DT_n_CFG_1_DATA_TYPE;
+> +		writel_relaxed(val, tpg->base + TPG_VC_m_DT_n_CFG_1(i, dt_cnt));
+> +
+> +		val = (tg->mode - 1) << TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE;
+> +		val |= 0xBE << TPG_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD;
+> +		val |= format->encode_format << TPG_VC_m_DT_n_CFG_2_ENCODE_FORMAT;
+> +		writel_relaxed(val, tpg->base + TPG_VC_m_DT_n_CFG_2(i, dt_cnt));
+> +
+> +		writel_relaxed(0xA00, tpg->base + TPG_VC_n_COLOR_BARS_CFG(i));
+> +
+> +		writel_relaxed(0x4701, tpg->base + TPG_VC_n_HBI_CFG(i));
+> +		writel_relaxed(0x438, tpg->base + TPG_VC_n_VBI_CFG(i));
 
+Please provide context for the magic numbers> +
+> +		writel_relaxed(0x12345678, tpg->base + TPG_VC_n_LSFR_SEED(i));
+> +
+> +		/* configure one DT, infinite frames */
+> +		val = i << TPG_VC_n_CFG0_VC_NUM;
+> +		val |= 0 << TPG_VC_n_CFG0_NUM_FRAMES;
+> +		writel_relaxed(val, tpg->base + TPG_VC_n_CFG0(i));
+> +	}
+> +
+> +	writel_relaxed(1, tpg->base + TPG_TOP_IRQ_MASK);
+> +
+> +	val = 1 << TPG_CTRL_TEST_EN;
+> +	val |= 0 << TPG_CTRL_PHY_SEL;
+> +	val |= (lane_cnt - 1) << TPG_CTRL_NUM_ACTIVE_LANES;
+> +	val |= 0 << TPG_CTRL_VC_DT_PATTERN_ID;
+> +	val |= (tpg->res->vc_cnt - 1) << TPG_CTRL_NUM_ACTIVE_VC;
+> +	writel_relaxed(val, tpg->base + TPG_CTRL);
+
+You want the last writel here (and in _off()) to *not* be relaxed,
+so that all the prior accesses would have been sent off to the hw
+
+[...]
+
+> +static u32 tpg_hw_version(struct tpg_device *tpg)
+> +{
+> +	u32 hw_version;
+> +	u32 hw_gen;
+> +	u32 hw_rev;
+> +	u32 hw_step;
+> +
+> +	hw_version = readl_relaxed(tpg->base + TPG_HW_VERSION);
+> +	hw_gen = (hw_version >> HW_VERSION_GENERATION) & 0xF;
+> +	hw_rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
+> +	hw_step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+
+FIELD_GET()
+
+> +	dev_dbg(tpg->camss->dev, "tpg HW Version = %u.%u.%u\n",
+> +		hw_gen, hw_rev, hw_step);
+
+dev_dbg_once()
+
+[...]
+
+> +static int tpg_reset(struct tpg_device *tpg)
+> +{
+> +	writel_relaxed(0, tpg->base + TPG_CTRL);
+> +	writel_relaxed(0, tpg->base + TPG_TOP_IRQ_MASK);
+> +	writel_relaxed(1, tpg->base + TPG_TOP_IRQ_CLEAR);
+> +	writel_relaxed(1, tpg->base + TPG_IRQ_CMD);
+> +	writel_relaxed(1, tpg->base + TPG_CLEAR);
+
+similar comment as before
+
+Konrad
 
