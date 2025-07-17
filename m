@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-65459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8939B08D27
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:39:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C493EB08D38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:42:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4C304A205F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:39:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 073F24A2F05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:42:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEC822D1309;
-	Thu, 17 Jul 2025 12:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A3252C324F;
+	Thu, 17 Jul 2025 12:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WnPwXVvf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DPyNOge+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C423C29ACF3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 12:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA91928C013
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 12:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752755938; cv=none; b=OTW7+XoOzeN87DdjhXXsAi31gSM6SYSopsitrJiPIBP0VaOwpCphnlHOdRk95eTrGdIJoR+jzOIWB0VOrBNjIj2s8GJ7wrZTkKN5ILEsEFE+Y6/GkOIrC9tT6SbAqJMt7ukajbvGTbv5qO1fJ79pCgf9tx1V8SnCrieL7C3TaII=
+	t=1752756170; cv=none; b=ZNRWuQevGtE01B952jodA3OaRAuGGZ4BnlgExd9gDVEpYT3XOCVvvPJv2kLxpxsY++k+oXfKtoTGe5yQR9DSNAythpKCK7nMdCbDqeG2oN/lsQfCxrdYmB+2FTb8ZcQISOQUfxTSNnQc7ghHH7x1vMAiwbVbq5NGyY5oGUEAAlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752755938; c=relaxed/simple;
-	bh=RcIkhs+PWG65kpyVBx3jeSr4dOMJSG7K3RPmTlULAM8=;
+	s=arc-20240116; t=1752756170; c=relaxed/simple;
+	bh=OZYUXAYzaRzvYvMUS71g1+eKsdGQGkgm3EOyIA1/yzs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZeylPXgwgM2Mg2IFbZU/8p6aEOocpMJS0t4W8mjf0wioHnMfOYN7gMfrZQ8r2o5O0aCa4/vtcjnI3t4cd4vlQFq0yWcPmXtwLTewO3B8MHOUzWRKjnze9m0nPKK4WBWZ/A43430toBZluIjvs/imFLLHUgIeRXsjfyeGvQ/lKeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WnPwXVvf; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=in3vyn+IW5Oo2ThT6O0ICLbPiGMTLhp99c/b84SDBWQ6QnLuO1mEhYKuje39AldheZhAuunD4ZcbMuZvZodsYajPTfB+NtusyQvB/+Q/Ql8Nqy1EsrrEUyjjfuKxIHRN7uqtbmMBzT02GCFE2Ex8aF65cdWWehwAxqerjC2WeRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DPyNOge+; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-60c733792e9so142920a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 05:38:56 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a4f72cba73so1238273f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 05:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752755935; x=1753360735; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PX/ctpdQl7UzXj5LfUq23XzYmkmTNHChay0GALh9u58=;
-        b=WnPwXVvfY6h+po1aV2YFiSKx5GfcwIAw0pIAfetzWnBrdm5uQT5Q9ZtQrmNitmL8hG
-         EtawJ10RjlhMNm1LS+eW68bl6s3vhHTLJNAzgB1DUtYPQjLFmMvrFbtUXEFL/Ikhzi+5
-         JfZjqXCKpkQT4Pm92FOGWyJO8L0gQNdZ/T8xgM9KHvbbdiK/v1OkggBD4DsbXHW5AIM0
-         cpXIRW6PIqY3wnF7Xoz8e9Gez2J2UFsGPWmYditCyQwUXS62Y3geO+R/1DaGqOrtWZ8p
-         l/InhhlnyX098vjUKxcL1HgJGIRe2YsIHnJ1GqkCwPKE+wpHd7aE0P6ekCPvBYwM68yi
-         uvUA==
+        d=linaro.org; s=google; t=1752756166; x=1753360966; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dfoA6CywfL7tG4Hi/bgag6f/cRVej422YcCYw2Pdqgk=;
+        b=DPyNOge+nuUqSKGxPbmX1S8boemP4ojaSCQLyRWGr8mqAVpuJ+RWPzYiz3mmWXBNir
+         E64ZnpEOzLSga0SDr+vY+wmgvtzRiNyoOYerHVC3E+MXj9rLP6f5US/NB0Z2P58k8+T1
+         1KWtgG9hsbPW+lU1yNay8CR/mxSLd+h3iGcPvVKiihuHECfxl0vT49t7pVHyguImZ78G
+         j1dnL1kytvOWBFdtM1NYCU9fY2ybAsIaOLrGOa+rYilTHXHLkNKRgxSSHfsBZoOc3EI3
+         q03r9kcGCeFmeKGtYN9ZRjhGQF1nvemMLWPrW7Q/jlXITnaCZ8DScW9HkS79ZkSLP6OX
+         cfVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752755935; x=1753360735;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PX/ctpdQl7UzXj5LfUq23XzYmkmTNHChay0GALh9u58=;
-        b=SZxRbaiK4qKSWht39t/w93jrN+ZaY6/2ieYybrd1Aw9AAd0FHY9HJpOqW+roFqe0OJ
-         pU4oYNdFxEpNalHLa6y8BgF4a0NMcQG9992qBda0xgggHRUlY+k6zuOb8+doi96oTg07
-         HXbFaC198RraEz8KHmoV40a3lk7ZQEiG0YJRfTfIV2DJLt8j1sKCzMNzb33SMy7f3LFP
-         eK6QpTtlsb/vuvJ14f/XxveVt6SPypizdqYZDPytTvb5GHeJANYwpPzQEnbxFlwcENWG
-         FkEks6WAVFENNTN/mkEjpEkPUWnn3Os2+5l9F/N5l6Tmf6j0IJItA1bwB3zRpcFoe4L2
-         T1YA==
-X-Forwarded-Encrypted: i=1; AJvYcCX59RVdjtZ60bz+uf7RcQwDGKyMCFig3Do5rmiC2J2jEA88oGO6LppusNFOAX5EwNQXcsYZrV9RRoFcA7WR@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxLUQCeFU7bk0kiKuYmOQG56EzwhX3pWa1BD4Sxdl7at2oAPaY
-	Im1MweTgzR+7Jw69dBNJxpNYjYc1E7lm+DZJy53QyPMgfnHL1dCI4IiEBw7h2zp4nhQ=
-X-Gm-Gg: ASbGncuTRq+X1i0138OJ+V7SNQn5FsMqXFpodg5CDTNhPvccXrMqcq/GBegvW0JyIm+
-	RyUsoyjgqjxkRpY/3gECvS1hHLlpZuOncIwkMIdTquvXUqVCRxG76KEb9nidp33+UiMmZmZ9uzo
-	LLeleXqeRnFh0QrYq6CeZVgRD6z4tyLvnONjhDUBQkR9LdqQBzQPLKO89mSZwZHndUZXQoHCu9g
-	NYVXfenCDG239XViT1y0umEqCEIKNemGvwvuFKYf0sjjM32I/P6mTwT2ZSoVeMp+hUQ+lVxOO7Q
-	3px4lVREqBcWYPqYuCzlBLs7BmWXHaxTeGY7jMn77Hmqx/4C/kcRTjS8PsNUP4NeByreJw6fKdR
-	YdCvOTnB+XCezHrZu3oAaf8WbLGw5E0PnWUUfh9Nc0g==
-X-Google-Smtp-Source: AGHT+IHBsoW2HU+lEGBR1Fois9YmUVZiOCT0jmQwPz4gVuNgeF3eU03AINq+XO3PZqrCmU8VrnkGmw==
-X-Received: by 2002:a05:6402:270d:b0:608:c773:8b3 with SMTP id 4fb4d7f45d1cf-612823bb47amr2098900a12.7.1752755935011;
-        Thu, 17 Jul 2025 05:38:55 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611e21c724csm9068233a12.61.2025.07.17.05.38.53
+        d=1e100.net; s=20230601; t=1752756166; x=1753360966;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dfoA6CywfL7tG4Hi/bgag6f/cRVej422YcCYw2Pdqgk=;
+        b=As5iArHCUcuY6IX4+lpBYlCmn71TtaoRjLFIb/eo0JRA7LKsaOIHek2FknxnOk5XSV
+         qYGgEKKbaACXdJOHMd0ZOqIoaXiG3Eqo3lSoeW1EjWs6fx9zSlMIWfGGN0gf20fmNd0O
+         mnRYO3MOH/zvPjc1UCV/lAIb741PfhZ8jL4UYQLlkbgYtTtyxKnxLuzQ6sdvsaVDL0Xa
+         X9KgpySoEbIpjYyuoMSPDFghJ+n7/cUSG+HsGQr0AuzRkI+3wOMhLPJXdLQnfKpKtv4C
+         fG9uNe0uv+D7Y5jCrhe3EBbO8tT6sc5XYNvhL/hyYym6AbtG7ugfrSHWDZluY5DPE15q
+         JZDg==
+X-Forwarded-Encrypted: i=1; AJvYcCWtbX8p8BhtWXGU47fvkRnjpcU68ppRfdpBHI8F0A1nMf5+oi8jVPllY8J6cWspgmNCOVXa0ovtZKBpUNa9@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoQjDeGx7jkuHzHwpWYbOQgK8smoZHE+g8p3ymoYMZgW9ulxiO
+	0G8Yy/ERi7BHWjRDVWH8PgvQiuQiq9bnCjLZegIfB2yg4uFu9Li5+a4dsXJfI3rv5SPJC38vd0H
+	lGVlSV7sGcw==
+X-Gm-Gg: ASbGncvT5/wQatyD64KgxkxhuEG9N2qe/YSS/g4UOsq3aoIF8HBe5NssWsz2RzgVkKF
+	lGS0n0nnp74A/W0lpcEjQARTpw6kfSs1mzO6kqLreKQKPZoeNIHUZiX6K2CG697lBHHCvD7W/vJ
+	0NAo8ASmMnvTiIp3sOpSlEHOLjtcf4VhTukAq26PIZjaV6GV7Uc9Z6ZB8X6mMXIDE5IIqv1VeJd
+	6yINvItOaFbE+nR1FneiDjwLl71AU5TrfccxsJuKZ3hs7xFusrJ6YxGuFT+57vmgv3OgsoNSvpF
+	xiEoadgvWJbRv0SGjP9GX9DaK+TzkmS2rOnR1hBpMUEF0wQp8JYiXS9dy8rGieZlZAlo52sPm8/
+	Q5UtRt51bRKiRY6jxhO5UhNXPKHZqxX+IWVjuf/62TODwdXsavgaEySnmm9bM4QD6
+X-Google-Smtp-Source: AGHT+IFAl89+Tn6OBsv93yBwtKsVuwUbefA6Wy0uaJhgwTaR9IGAJphqoInS9YufOHvjO9qfvAbX5Q==
+X-Received: by 2002:a05:6000:4006:b0:3b6:d0d:79c1 with SMTP id ffacd0b85a97d-3b6139d3907mr2789762f8f.10.1752756165663;
+        Thu, 17 Jul 2025 05:42:45 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e1e332sm20788187f8f.79.2025.07.17.05.42.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 05:38:54 -0700 (PDT)
-Message-ID: <d9de2e4f-5b26-41af-bc69-327978d3d571@linaro.org>
-Date: Thu, 17 Jul 2025 14:38:52 +0200
+        Thu, 17 Jul 2025 05:42:45 -0700 (PDT)
+Message-ID: <6d43915b-756f-4ab3-accf-e0a5422db479@linaro.org>
+Date: Thu, 17 Jul 2025 13:42:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,161 +83,1012 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] media: iris: Add support for SM8750 (VPU v3.5)
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org>
- <20250714-sm8750-iris-v1-3-3006293a5bc7@linaro.org>
- <7b0a984f-b62a-ac4d-74bf-a6e839c59272@quicinc.com>
- <d4c39f2c-9f95-4e65-87a3-78173b39adf1@linaro.org>
- <1c5df071-7000-ab45-dbc6-4384d883ba24@quicinc.com>
- <a6dbca7e-4d49-49a6-987c-8cd587501c98@linaro.org>
- <3a87c37b-b392-598a-736f-bb01e4c311e1@quicinc.com>
- <f6f86227-8d26-400b-9ad6-605cee966b56@linaro.org>
- <2d5edf11-2d13-bcc7-93a9-e0a223bd6eb8@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 1/3] media: qcom: camss: Add support for TPG common
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250717-lemans_tpg-v2-0-a2538659349c@quicinc.com>
+ <20250717-lemans_tpg-v2-1-a2538659349c@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <2d5edf11-2d13-bcc7-93a9-e0a223bd6eb8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250717-lemans_tpg-v2-1-a2538659349c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 17/07/2025 14:02, Vikash Garodia wrote:
+On 17/07/2025 04:20, Wenmeng Liu wrote:
+> Add support for TPG common, unlike CSID TPG, this TPG can
+> be seen as a combination of CSIPHY and sensor.
 > 
-> On 7/17/2025 4:24 PM, Krzysztof Kozlowski wrote:
->> On 17/07/2025 12:50, Dikshita Agarwal wrote:
->>>>>>>> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
->>>>>>>> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
->>>>>>>> +					 val, val & 0x400000, 2000, 20000);
->>>>>>>> +		if (ret)
->>>>>>>> +			goto disable_power;
->>>>>>>> +	}
->>>>>>>> +
->>>>>>>> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
->>>>>>>> +				 val, val & BIT(0), 200, 2000);
->>>>>>> what are you polling here for?
->>>>>>
->>>>>>
->>>>>> This is not different than existing code. I don't understand why you are
->>>>>> commenting on something which is already there.
->>>>>
->>>>> Which code are you referring to?
->>>>
->>>> To the existing vpu33 which had Reviewed-by: Vikash Garodia
->>>> <quic_vgarodia@quicinc.com>
->>>>
->>>> You understand that everything here is the same, everything is a copy
->>>> while adding just few more things?
->>>>
->>>> My patch is not doing in this respect anything different that what you
->>>> reviewed.
->>>>
->>>
->>> It seems to have been missed in vpu33 power off sequence as well and should
->>> be fixed.
->>>
->>> Still, as mentioned earlier as well, your reference should be
->>> HPG/downstream driver of SM8750 not the previous generation (SM8650).
->>
->> Yes and partially no, because we write upstream code matching or
->> extending existing upstream driver. As you said earlier, downstream is
->> not the truth always:
->>
->> "That shouldn’t be the case. The downstream design is different, which
->> is why the driver requires the above code to move the GDSC"
->>
->> so here I built on top of SM8650 and re-iterate whatever mistakes are
->> there. The best if someone fixes VPU33 and then I rebase on top,
->> re-using fixed code as my base.
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/camss/Makefile    |   1 +
+>   drivers/media/platform/qcom/camss/camss-tpg.c | 737 ++++++++++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-tpg.h | 130 +++++
+>   drivers/media/platform/qcom/camss/camss.h     |   5 +
+>   4 files changed, 873 insertions(+)
 > 
-> You have mixed different comments made earlier.
+> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+> index 76845a456c459538b8e9f782dd58e3b59aff3ef1..e4cf3033b8798cf0ffeff85409ae4ed3559879c1 100644
+> --- a/drivers/media/platform/qcom/camss/Makefile
+> +++ b/drivers/media/platform/qcom/camss/Makefile
+> @@ -24,5 +24,6 @@ qcom-camss-objs += \
+>   		camss-vfe.o \
+>   		camss-video.o \
+>   		camss-format.o \
+> +		camss-tpg.o \
+>   
+>   obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
+> diff --git a/drivers/media/platform/qcom/camss/camss-tpg.c b/drivers/media/platform/qcom/camss/camss-tpg.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..3ef5b6dcdf2f7e8bbe442667d0fdf64ee30e2923
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-tpg.c
+> @@ -0,0 +1,737 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * camss-tpg.c
+> + *
+> + * Qualcomm MSM Camera Subsystem - TPG Module
+> + *
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_runtime.h>
+> +#include <media/media-entity.h>
+> +#include <media/v4l2-device.h>
+> +#include <media/v4l2-subdev.h>
+> +
+> +#include "camss-tpg.h"
+> +#include "camss.h"
+> +
+> +const char * const testgen_payload_modes[] = {
+> +	"Disabled",
+> +	"Incrementing",
+> +	"Alternating 0x55/0xAA",
+> +	NULL,
+> +	NULL,
+> +	"Pseudo-random Data",
+> +	"User Specified",
+> +	NULL,
+> +	NULL,
+> +	"Color bars",
+> +	NULL
+> +};
+
+This looks a bit strange.
+
+What at the NULLs about ?
+
+> +
+> +static const struct tpg_format_info formats_gen1[] = {
+> +	{
+> +		MEDIA_BUS_FMT_SBGGR8_1X8,
+> +		DATA_TYPE_RAW_8BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGBRG8_1X8,
+> +		DATA_TYPE_RAW_8BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGRBG8_1X8,
+> +		DATA_TYPE_RAW_8BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SRGGB8_1X8,
+> +		DATA_TYPE_RAW_8BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SBGGR10_1X10,
+> +		DATA_TYPE_RAW_10BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGBRG10_1X10,
+> +		DATA_TYPE_RAW_10BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGRBG10_1X10,
+> +		DATA_TYPE_RAW_10BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SRGGB10_1X10,
+> +		DATA_TYPE_RAW_10BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SBGGR12_1X12,
+> +		DATA_TYPE_RAW_12BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGBRG12_1X12,
+> +		DATA_TYPE_RAW_12BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SGRBG12_1X12,
+> +		DATA_TYPE_RAW_12BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_SRGGB12_1X12,
+> +		DATA_TYPE_RAW_12BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_Y8_1X8,
+> +		DATA_TYPE_RAW_8BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +	},
+> +	{
+> +		MEDIA_BUS_FMT_Y10_1X10,
+> +		DATA_TYPE_RAW_10BIT,
+> +		ENCODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +	},
+> +};
+> +
+> +const struct tpg_formats tpg_formats_gen1 = {
+> +	.nformats = ARRAY_SIZE(formats_gen1),
+> +	.formats = formats_gen1
+> +};
+> +
+> +const struct tpg_format_info *tpg_get_fmt_entry(const struct tpg_format_info *formats,
+> +						unsigned int nformats,
+> +						u32 code)
+> +{
+> +	unsigned int i;
+> +
+> +	for (i = 0; i < nformats; i++)
+> +		if (code == formats[i].code)
+> +			return &formats[i];
+> +
+> +	WARN(1, "Unknown format\n");
+> +
+> +	return &formats[0];
+> +}
+> +
+> +/*
+> + * tpg_set_clock_rates - Calculate and set clock rates on tpg module
+> + * @tpg: tpg device
+> + */
+> +static int tpg_set_clock_rates(struct tpg_device *tpg)
+> +{
+> +	struct device *dev = tpg->camss->dev;
+> +	int i, j;
+> +	int ret;
+> +
+> +	for (i = 0; i < tpg->nclocks; i++) {
+> +		struct camss_clock *clock = &tpg->clock[i];
+> +		u64 min_rate = 0;
+> +		long round_rate;
+> +
+> +		camss_add_clock_margin(&min_rate);
+
+Which clock is it we are setting here i.e. do we really need to care 
+about the rate at all ?
+
+> +
+> +		for (j = 0; j < clock->nfreqs; j++)
+> +			if (min_rate < clock->freq[j])
+> +				break;
+
+multi-line should be bracketed
+
+for () {
+     if(x)
+         break;
+}
+
+> +
+> +		if (j == clock->nfreqs) {
+> +			dev_err(dev,
+> +				"clock is too high for TPG\n");
+> +			return -EINVAL;
+> +		}
+> +
+> +		/* if clock is not available */
+> +		/* set highest possible tpg clock rate */
+> +		if (min_rate == 0)
+> +			j = clock->nfreqs - 1;
+
+This makes sense for a CSIPHY where the pixel rate changes but, does it 
+make sense for the TPG ?
+
+> +
+> +		round_rate = clk_round_rate(clock->clk, clock->freq[j]);
+> +		if (round_rate < 0) {
+> +			dev_err(dev, "clk round rate failed: %ld\n",
+> +				round_rate);
+> +			return -EINVAL;
+> +		}
+> +
+> +		tpg->timer_clk_rate = round_rate;
+> +
+> +		ret = clk_set_rate(clock->clk, tpg->timer_clk_rate);
+> +		if (ret < 0) {
+> +			dev_err(dev, "clk set rate failed: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_set_power - Power on/off tpg module
+> + * @sd: tpg V4L2 subdevice
+> + * @on: Requested power state
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int tpg_set_power(struct v4l2_subdev *sd, int on)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	struct device *dev = tpg->camss->dev;
+> +
+> +	if (on) {
+> +		int ret;
+> +
+> +		ret = pm_runtime_resume_and_get(dev);
+> +		if (ret < 0)
+> +			return ret;
+> +
+> +		ret = tpg_set_clock_rates(tpg);
+> +		if (ret < 0) {
+> +			pm_runtime_put_sync(dev);
+> +			return ret;
+> +		}
+> +
+> +		ret = camss_enable_clocks(tpg->nclocks, tpg->clock, dev);
+> +		if (ret < 0) {
+> +			pm_runtime_put_sync(dev);
+> +			return ret;
+> +		}
+> +
+> +		enable_irq(tpg->irq);
+
+Do we need an IRQ for the TPG ?
+
+What's the use-case for it ? I'm not necessarily asking to drop this 
+just to understand if it is really useful.
+
+> +
+> +		tpg->res->hw_ops->reset(tpg);
+> +
+> +		tpg->res->hw_ops->hw_version(tpg);
+> +	} else {
+> +		disable_irq(tpg->irq);
+> +
+> +		camss_disable_clocks(tpg->nclocks, tpg->clock);
+> +
+> +		pm_runtime_put_sync(dev);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_set_stream - Enable/disable streaming on tpg module
+> + * @sd: tpg V4L2 subdevice
+> + * @enable: Requested streaming state
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int tpg_set_stream(struct v4l2_subdev *sd, int enable)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	int ret = 0;
+> +
+> +	if (enable) {
+> +		ret = v4l2_ctrl_handler_setup(&tpg->ctrls);
+> +		if (ret < 0) {
+> +			dev_err(tpg->camss->dev,
+> +				"could not sync v4l2 controls: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	tpg->res->hw_ops->configure_stream(tpg, enable);
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * __tpg_get_format - Get pointer to format structure
+> + * @tpg: tpg device
+> + * @cfg: V4L2 subdev pad configuration
+> + * @pad: pad from which format is requested
+> + * @which: TRY or ACTIVE format
+> + *
+> + * Return pointer to TRY or ACTIVE format structure
+> + */
+> +static struct v4l2_mbus_framefmt *
+> +__tpg_get_format(struct tpg_device *tpg,
+> +		 struct v4l2_subdev_state *sd_state,
+> +		 unsigned int pad,
+> +		 enum v4l2_subdev_format_whence which)
+> +{
+> +	if (which == V4L2_SUBDEV_FORMAT_TRY)
+> +		return v4l2_subdev_state_get_format(sd_state,
+> +						    pad);
+> +
+> +	return &tpg->fmt[pad];
+> +}
+> +
+> +/*
+> + * tpg_try_format - Handle try format by pad subdev method
+> + * @tpg: tpg device
+> + * @cfg: V4L2 subdev pad configuration
+> + * @pad: pad on which format is requested
+> + * @fmt: pointer to v4l2 format structure
+> + * @which: wanted subdev format
+> + */
+> +static void tpg_try_format(struct tpg_device *tpg,
+> +			   struct v4l2_subdev_state *sd_state,
+> +			   unsigned int pad,
+> +			   struct v4l2_mbus_framefmt *fmt,
+> +			   enum v4l2_subdev_format_whence which)
+> +{
+> +	unsigned int i;
+> +
+> +	switch (pad) {
+> +	case MSM_TPG_PAD_SINK:
+> +		/* Test generator is enabled, set format on source */
+> +		/* pad to allow test generator usage */
+> +
+> +		for (i = 0; i < tpg->res->formats->nformats; i++)
+> +			if (tpg->res->formats->formats[i].code == fmt->code)
+> +				break;
+> +
+> +		/* If not found, use SBGGR8 as default */
+> +		if (i >= tpg->res->formats->nformats)
+> +			fmt->code = MEDIA_BUS_FMT_SBGGR8_1X8;
+
+If not found why set a default at all ?
+
+> +
+> +		fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+> +		fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+> +
+> +		fmt->field = V4L2_FIELD_NONE;
+> +		fmt->colorspace = V4L2_COLORSPACE_SRGB;
+> +
+> +		break;
+> +	case MSM_TPG_PAD_SRC:
+> +		/* Set and return a format same as sink pad */
+> +
+> +		*fmt = *__tpg_get_format(tpg, sd_state,
+> +					 MSM_TPG_PAD_SINK,
+> +					 which);
+> +
+> +		break;
+> +	}
+> +}
+> +
+> +/*
+> + * tpg_enum_mbus_code - Handle format enumeration
+> + * @sd: tpg V4L2 subdevice
+> + * @cfg: V4L2 subdev pad configuration
+> + * @code: pointer to v4l2_subdev_mbus_code_enum structure
+> + * return -EINVAL or zero on success
+> + */
+> +static int tpg_enum_mbus_code(struct v4l2_subdev *sd,
+> +			      struct v4l2_subdev_state *sd_state,
+> +			      struct v4l2_subdev_mbus_code_enum *code)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	struct v4l2_mbus_framefmt *format;
+> +
+> +	if (code->pad == MSM_TPG_PAD_SINK) {
+> +		if (code->index >= tpg->res->formats->nformats)
+> +			return -EINVAL;
+> +
+> +		code->code = tpg->res->formats->formats[code->index].code;
+> +	} else {
+> +		if (code->index > 0)
+> +			return -EINVAL;
+> +
+> +		format = __tpg_get_format(tpg, sd_state,
+> +					  MSM_TPG_PAD_SINK,
+> +					  code->which);
+> +
+> +		code->code = format->code;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_enum_frame_size - Handle frame size enumeration
+> + * @sd: tpg V4L2 subdevice
+> + * @cfg: V4L2 subdev pad configuration
+> + * @fse: pointer to v4l2_subdev_frame_size_enum structure
+> + * return -EINVAL or zero on success
+> + */
+> +static int tpg_enum_frame_size(struct v4l2_subdev *sd,
+> +			       struct v4l2_subdev_state *sd_state,
+> +			       struct v4l2_subdev_frame_size_enum *fse)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	struct v4l2_mbus_framefmt format;
+> +
+> +	if (fse->index != 0)
+> +		return -EINVAL;
+
+What is this test about and how does the index != 0 come to pass ?
+
+> +
+> +	format.code = fse->code;
+> +	format.width = 1;
+> +	format.height = 1;
+> +	tpg_try_format(tpg, sd_state, fse->pad, &format, fse->which);
+> +	fse->min_width = format.width;
+> +	fse->min_height = format.height;
+> +
+> +	if (format.code != fse->code)
+> +		return -EINVAL;
+
+Is EINVAL the right return value here ?
+
+> +
+> +	format.code = fse->code;
+> +	format.width = -1;
+> +	format.height = -1;
+> +	tpg_try_format(tpg, sd_state, fse->pad, &format, fse->which);
+> +	fse->max_width = format.width;
+> +	fse->max_height = format.height;
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_get_format - Handle get format by pads subdev method
+> + * @sd: tpg V4L2 subdevice
+> + * @cfg: V4L2 subdev pad configuration
+> + * @fmt: pointer to v4l2 subdev format structure
+> + *
+> + * Return -EINVAL or zero on success
+> + */
+> +static int tpg_get_format(struct v4l2_subdev *sd,
+> +			  struct v4l2_subdev_state *sd_state,
+> +			  struct v4l2_subdev_format *fmt)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	struct v4l2_mbus_framefmt *format;
+> +
+> +	format = __tpg_get_format(tpg, sd_state, fmt->pad, fmt->which);
+> +	if (!format)
+> +		return -EINVAL;
+> +
+> +	fmt->format = *format;
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_set_format - Handle set format by pads subdev method
+> + * @sd: tpg V4L2 subdevice
+> + * @cfg: V4L2 subdev pad configuration
+> + * @fmt: pointer to v4l2 subdev format structure
+> + *
+> + * Return -EINVAL or zero on success
+> + */
+> +static int tpg_set_format(struct v4l2_subdev *sd,
+> +			  struct v4l2_subdev_state *sd_state,
+> +			  struct v4l2_subdev_format *fmt)
+> +{
+> +	struct tpg_device *tpg = v4l2_get_subdevdata(sd);
+> +	struct v4l2_mbus_framefmt *format;
+> +
+> +	format = __tpg_get_format(tpg, sd_state, fmt->pad, fmt->which);
+> +	if (!format)
+> +		return -EINVAL;
+> +
+> +	tpg_try_format(tpg, sd_state, fmt->pad, &fmt->format,
+> +		       fmt->which);
+> +	*format = fmt->format;
+> +
+> +	if (fmt->pad == MSM_TPG_PAD_SINK) {
+> +		format = __tpg_get_format(tpg, sd_state,
+> +					  MSM_TPG_PAD_SRC,
+> +					  fmt->which);
+> +
+> +		*format = fmt->format;
+> +		tpg_try_format(tpg, sd_state, MSM_TPG_PAD_SRC,
+> +			       format,
+> +			       fmt->which);
+> +	}
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_init_formats - Initialize formats on all pads
+> + * @sd: tpg V4L2 subdevice
+> + * @fh: V4L2 subdev file handle
+> + *
+> + * Initialize all pad formats with default values.
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int tpg_init_formats(struct v4l2_subdev *sd,
+> +			    struct v4l2_subdev_fh *fh)
+> +{
+> +	struct v4l2_subdev_format format = {
+> +		.pad = MSM_TPG_PAD_SINK,
+> +		.which = fh ? V4L2_SUBDEV_FORMAT_TRY :
+> +			      V4L2_SUBDEV_FORMAT_ACTIVE,
+> +		.format = {
+> +			.code = MEDIA_BUS_FMT_SBGGR8_1X8,
+> +			.width = 1920,
+> +			.height = 1080
+> +		}
+> +	};
+> +
+> +	return tpg_set_format(sd, fh ? fh->state : NULL, &format);
+> +}
+> +
+> +/*
+> + * tpg_set_test_pattern - Set test generator's pattern mode
+> + * @tpg: TPG device
+> + * @value: desired test pattern mode
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int tpg_set_test_pattern(struct tpg_device *tpg, s32 value)
+> +{
+> +	return tpg->res->hw_ops->configure_testgen_pattern(tpg, value);
+> +}
+> +
+> +/*
+> + * tpg_s_ctrl - Handle set control subdev method
+> + * @ctrl: pointer to v4l2 control structure
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int tpg_s_ctrl(struct v4l2_ctrl *ctrl)
+> +{
+> +	struct tpg_device *tpg = container_of(ctrl->handler,
+> +					      struct tpg_device, ctrls);
+> +	int ret = -EINVAL;
+> +
+> +	switch (ctrl->id) {
+> +	case V4L2_CID_TEST_PATTERN:
+> +		ret = tpg_set_test_pattern(tpg, ctrl->val);
+> +		break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct v4l2_ctrl_ops tpg_ctrl_ops = {
+> +	.s_ctrl = tpg_s_ctrl,
+> +};
+> +
+> +/*
+> + * msm_tpg_subdev_init - Initialize tpg device structure and resources
+> + * @tpg: tpg device
+> + * @res: tpg module resources table
+> + * @id: tpg module id
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +int msm_tpg_subdev_init(struct camss *camss,
+> +			struct tpg_device *tpg,
+> +			const struct camss_subdev_resources *res, u8 id)
+> +{
+> +	struct device *dev = camss->dev;
+> +	struct platform_device *pdev = to_platform_device(dev);
+> +	int i, j;
+> +	int ret;
+
+Reverse Christmas tree your declarations please.
+
+> +
+> +	tpg->camss = camss;
+> +	tpg->id = id;
+> +	tpg->res = &res->tpg;
+> +	tpg->res->hw_ops->subdev_init(tpg);
+> +
+> +	/* Memory */
+> +	tpg->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+> +	if (IS_ERR(tpg->base))
+> +		return PTR_ERR(tpg->base);
+> +
+> +	/* Interrupt */
+> +	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	tpg->irq = ret;
+> +	snprintf(tpg->irq_name, sizeof(tpg->irq_name), "%s_%s%d",
+> +		 dev_name(dev), MSM_TPG_NAME, tpg->id);
+> +
+> +	ret = devm_request_irq(dev, tpg->irq, tpg->res->hw_ops->isr,
+> +			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
+> +			       tpg->irq_name, tpg);
+> +	if (ret < 0) {
+> +		dev_err(dev, "request_irq failed: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	/* Clocks */
+> +	tpg->nclocks = 0;
+> +	while (res->clock[tpg->nclocks])
+> +		tpg->nclocks++;
+> +
+> +	tpg->clock = devm_kcalloc(dev,
+> +				  tpg->nclocks, sizeof(*tpg->clock),
+> +				  GFP_KERNEL);
+> +	if (!tpg->clock)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < tpg->nclocks; i++) {
+> +		struct camss_clock *clock = &tpg->clock[i];
+> +
+> +		clock->clk = devm_clk_get(dev, res->clock[i]);
+> +		if (IS_ERR(clock->clk))
+> +			return PTR_ERR(clock->clk);
+> +
+> +		clock->name = res->clock[i];
+> +
+> +		clock->nfreqs = 0;
+> +		while (res->clock_rate[i][clock->nfreqs])
+> +			clock->nfreqs++;
+> +
+> +		if (!clock->nfreqs) {
+> +			clock->freq = NULL;
+> +			continue;
+> +		}
+> +
+> +		clock->freq = devm_kcalloc(dev,
+> +					   clock->nfreqs,
+> +					   sizeof(*clock->freq),
+> +					   GFP_KERNEL);
+> +		if (!clock->freq)
+> +			return -ENOMEM;
+> +
+> +		for (j = 0; j < clock->nfreqs; j++)
+> +			clock->freq[j] = res->clock_rate[i][j];
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * tpg_link_setup - Setup tpg connections
+> + * @entity: Pointer to media entity structure
+> + * @local: Pointer to local pad
+> + * @remote: Pointer to remote pad
+> + * @flags: Link flags
+> + *
+> + * Rreturn 0 on success
+> + */
+> +static int tpg_link_setup(struct media_entity *entity,
+> +			  const struct media_pad *local,
+> +			  const struct media_pad *remote, u32 flags)
+> +{
+> +	if (flags & MEDIA_LNK_FL_ENABLED)
+> +		if (media_pad_remote_pad_first(local))
+> +			return -EBUSY;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct v4l2_subdev_core_ops tpg_core_ops = {
+> +	.s_power = tpg_set_power,
+> +};
+> +
+> +static const struct v4l2_subdev_video_ops tpg_video_ops = {
+> +	.s_stream = tpg_set_stream,
+> +};
+> +
+> +static const struct v4l2_subdev_pad_ops tpg_pad_ops = {
+> +	.enum_mbus_code = tpg_enum_mbus_code,
+> +	.enum_frame_size = tpg_enum_frame_size,
+> +	.get_fmt = tpg_get_format,
+> +	.set_fmt = tpg_set_format,
+> +};
+> +
+> +static const struct v4l2_subdev_ops tpg_v4l2_ops = {
+> +	.core = &tpg_core_ops,
+> +	.video = &tpg_video_ops,
+> +	.pad = &tpg_pad_ops,
+> +};
+> +
+> +static const struct v4l2_subdev_internal_ops tpg_v4l2_internal_ops = {
+> +	.open = tpg_init_formats,
+> +};
+> +
+> +static const struct media_entity_operations tpg_media_ops = {
+> +	.link_setup = tpg_link_setup,
+> +	.link_validate = v4l2_subdev_link_validate,
+> +};
+> +
+> +/*
+> + * msm_tpg_register_entity - Register subdev node for tpg module
+> + * @tpg: tpg device
+> + * @v4l2_dev: V4L2 device
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +int msm_tpg_register_entity(struct tpg_device *tpg,
+> +			    struct v4l2_device *v4l2_dev)
+> +{
+> +	struct v4l2_subdev *sd = &tpg->subdev;
+> +	struct media_pad *pads = tpg->pads;
+> +	struct device *dev = tpg->camss->dev;
+> +	int ret;
+> +
+> +	v4l2_subdev_init(sd, &tpg_v4l2_ops);
+> +	sd->internal_ops = &tpg_v4l2_internal_ops;
+> +	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE |
+> +		     V4L2_SUBDEV_FL_HAS_EVENTS;
+> +	snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d",
+> +		 MSM_TPG_NAME, tpg->id);
+> +	v4l2_set_subdevdata(sd, tpg);
+> +
+> +	ret = v4l2_ctrl_handler_init(&tpg->ctrls, 1);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	tpg->testgen_mode = v4l2_ctrl_new_std_menu_items(&tpg->ctrls,
+> +							 &tpg_ctrl_ops, V4L2_CID_TEST_PATTERN,
+> +							 tpg->testgen.nmodes, 0, 0,
+> +							 tpg->testgen.modes);
+> +
+> +	if (tpg->ctrls.error) {
+> +		dev_err(dev, "Failed to init ctrl: %d\n", tpg->ctrls.error);
+> +		ret = tpg->ctrls.error;
+> +		goto free_ctrl;
+> +	}
+> +
+> +	tpg->subdev.ctrl_handler = &tpg->ctrls;
+> +
+> +	ret = tpg_init_formats(sd, NULL);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to init format: %d\n", ret);
+> +		goto free_ctrl;
+> +	}
+> +
+> +	pads[MSM_TPG_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
+> +	pads[MSM_TPG_PAD_SRC].flags = MEDIA_PAD_FL_SOURCE;
+> +
+> +	sd->entity.function = MEDIA_ENT_F_PROC_VIDEO_PIXEL_FORMATTER;
+> +	sd->entity.ops = &tpg_media_ops;
+> +	ret = media_entity_pads_init(&sd->entity, MSM_TPG_PADS_NUM, pads);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to init media entity: %d\n", ret);
+> +		goto free_ctrl;
+> +	}
+> +
+> +	ret = v4l2_device_register_subdev(v4l2_dev, sd);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to register subdev: %d\n", ret);
+> +		media_entity_cleanup(&sd->entity);
+> +		goto free_ctrl;
+> +	}
+> +
+> +	return 0;
+> +
+> +free_ctrl:
+> +	v4l2_ctrl_handler_free(&tpg->ctrls);
+> +
+> +	return ret;
+> +}
+> +
+> +/*
+> + * msm_tpg_unregister_entity - Unregister tpg module subdev node
+> + * @tpg: tpg device
+> + */
+> +void msm_tpg_unregister_entity(struct tpg_device *tpg)
+> +{
+> +	v4l2_device_unregister_subdev(&tpg->subdev);
+> +	media_entity_cleanup(&tpg->subdev.entity);
+> +	v4l2_ctrl_handler_free(&tpg->ctrls);
+> +}
+> diff --git a/drivers/media/platform/qcom/camss/camss-tpg.h b/drivers/media/platform/qcom/camss/camss-tpg.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..63fdb090481cf1297890e3cd50191f4bc103fc95
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-tpg.h
+> @@ -0,0 +1,130 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * camss-tpg.h
+> + *
+> + * Qualcomm MSM Camera Subsystem - TPG Module
+> + *
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#ifndef QC_MSM_CAMSS_TPG_H
+> +#define QC_MSM_CAMSS_TPG_H
+> +
+> +#include <linux/clk.h>
+> +#include <linux/interrupt.h>
+> +#include <media/media-entity.h>
+> +#include <media/v4l2-ctrls.h>
+> +#include <media/v4l2-device.h>
+> +#include <media/v4l2-mediabus.h>
+> +#include <media/v4l2-subdev.h>
+> +
+> +#define MSM_TPG_PAD_SINK 0
+> +#define MSM_TPG_PAD_SRC 1
+> +#define MSM_TPG_PADS_NUM 2
+> +
+> +#define DATA_TYPE_RAW_8BIT		0x2a
+> +#define DATA_TYPE_RAW_10BIT		0x2b
+> +#define DATA_TYPE_RAW_12BIT		0x2c
+> +
+> +#define ENCODE_FORMAT_UNCOMPRESSED_8_BIT	0x1
+> +#define ENCODE_FORMAT_UNCOMPRESSED_10_BIT	0x2
+> +#define ENCODE_FORMAT_UNCOMPRESSED_12_BIT	0x3
+> +#define ENCODE_FORMAT_UNCOMPRESSED_14_BIT	0x4
+> +#define ENCODE_FORMAT_UNCOMPRESSED_16_BIT	0x5
+> +#define ENCODE_FORMAT_UNCOMPRESSED_20_BIT	0x6
+> +#define ENCODE_FORMAT_UNCOMPRESSED_24_BIT	0x7
+> +
+> +#define MSM_TPG_NAME "msm_tpg"
+> +
+> +enum tpg_testgen_mode {
+> +	TPG_PAYLOAD_MODE_DISABLED = 0,
+> +	TPG_PAYLOAD_MODE_INCREMENTING = 1,
+> +	TPG_PAYLOAD_MODE_ALTERNATING_55_AA = 2,
+> +	TPG_PAYLOAD_MODE_RANDOM = 5,
+> +	TPG_PAYLOAD_MODE_USER_SPECIFIED = 6,
+> +	TPG_PAYLOAD_MODE_COLOR_BARS = 9,
+> +	TPG_PAYLOAD_MODE_NUM_SUPPORTED_GEN1 = 9, /* excluding disabled */
+> +};
+> +
+> +struct tpg_testgen_config {
+> +	enum tpg_testgen_mode mode;
+> +	const char * const*modes;
+> +	u8 nmodes;
+> +};
+> +
+> +struct tpg_format_info {
+> +	u32 code;
+> +	u8 data_type;
+> +	u8 encode_format;
+> +};
+> +
+> +struct tpg_formats {
+> +	unsigned int nformats;
+> +	const struct tpg_format_info *formats;
+> +};
+> +
+> +struct tpg_device;
+> +
+> +struct tpg_hw_ops {
+> +	void (*configure_stream)(struct tpg_device *tpg, u8 enable);
+> +
+> +	int (*configure_testgen_pattern)(struct tpg_device *tpg, s32 val);
+> +
+> +	u32 (*hw_version)(struct tpg_device *tpg);
+> +
+> +	irqreturn_t (*isr)(int irq, void *dev);
+> +
+> +	int (*reset)(struct tpg_device *tpg);
+> +
+> +	void (*subdev_init)(struct tpg_device *tpg);
+> +};
+> +
+> +struct tpg_subdev_resources {
+> +	u8 lane_cnt;
+> +	u8 vc_cnt;
+> +	const struct tpg_formats *formats;
+> +	const struct tpg_hw_ops *hw_ops;
+> +};
+> +
+> +struct tpg_device {
+> +	struct camss *camss;
+> +	u8 id;
+> +	struct v4l2_subdev subdev;
+> +	struct media_pad pads[MSM_TPG_PADS_NUM];
+> +	void __iomem *base;
+> +	void __iomem *base_clk_mux;
+
+clk_mux ?
+
+Can you please go through this list and remove anything that isn't being 
+used, don't just copy/paste existing code/structures.
 
 
-I did not mix. I used them here to show how pointless arguments you keep
-making instead of focusing on technical aspects.
-
-Once you say that, other place you say something else.
-
+> +	u32 irq;
+> +	char irq_name[30];
+> +	struct camss_clock *clock;
+> +	int nclocks;
+> +	u32 timer_clk_rate;
+> +	struct tpg_testgen_config testgen;
+> +	struct v4l2_mbus_framefmt fmt[MSM_TPG_PADS_NUM];
+> +	struct v4l2_ctrl_handler ctrls;
+> +	struct v4l2_ctrl *testgen_mode;
+> +	const struct tpg_subdev_resources *res;
+> +	const struct tpg_format *formats;
+> +	unsigned int nformats;
+> +};
+> +
+> +struct camss_subdev_resources;
+> +
+> +const struct tpg_format_info *tpg_get_fmt_entry(const struct tpg_format_info *formats,
+> +						unsigned int nformats,
+> +						u32 code);
+> +
+> +int msm_tpg_subdev_init(struct camss *camss,
+> +			struct tpg_device *tpg,
+> +			const struct camss_subdev_resources *res, u8 id);
+> +
+> +int msm_tpg_register_entity(struct tpg_device *tpg,
+> +			    struct v4l2_device *v4l2_dev);
+> +
+> +void msm_tpg_unregister_entity(struct tpg_device *tpg);
+> +
+> +extern const char * const testgen_payload_modes[];
+> +
+> +extern const struct tpg_formats tpg_formats_gen1;
+> +
+> +extern const struct tpg_hw_ops tpg_ops_gen1;
+> +
+> +#endif /* QC_MSM_CAMSS_TPG_H */
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index b5600a8b2c4b3972633d42938feec9265b44dec5..99392e3bada80a8736b2c317308e510e5a7c66ea 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -21,6 +21,7 @@
+>   #include "camss-csid.h"
+>   #include "camss-csiphy.h"
+>   #include "camss-ispif.h"
+> +#include "camss-tpg.h"
+>   #include "camss-vfe.h"
+>   #include "camss-format.h"
+>   
+> @@ -51,6 +52,7 @@ struct camss_subdev_resources {
+>   	char *interrupt[CAMSS_RES_MAX];
+>   	union {
+>   		struct csiphy_subdev_resources csiphy;
+> +		struct tpg_subdev_resources tpg;
+>   		struct csid_subdev_resources csid;
+>   		struct vfe_subdev_resources vfe;
+>   	};
+> @@ -100,6 +102,7 @@ struct camss_resources {
+>   	enum camss_version version;
+>   	const char *pd_name;
+>   	const struct camss_subdev_resources *csiphy_res;
+> +	const struct camss_subdev_resources *tpg_res;
+>   	const struct camss_subdev_resources *csid_res;
+>   	const struct camss_subdev_resources *ispif_res;
+>   	const struct camss_subdev_resources *vfe_res;
+> @@ -107,6 +110,7 @@ struct camss_resources {
+>   	const struct resources_icc *icc_res;
+>   	const unsigned int icc_path_num;
+>   	const unsigned int csiphy_num;
+> +	const unsigned int tpg_num;
+>   	const unsigned int csid_num;
+>   	const unsigned int vfe_num;
+>   	int (*link_entities)(struct camss *camss);
+> @@ -118,6 +122,7 @@ struct camss {
+>   	struct media_device media_dev;
+>   	struct device *dev;
+>   	struct csiphy_device *csiphy;
+> +	struct tpg_device *tpg;
+>   	struct csid_device *csid;
+>   	struct ispif_device *ispif;
+>   	struct vfe_device *vfe;
 > 
-> 1. Downstream GDSCs are still in HW_CTRL mode, while upstream GDSCs are migrated
-> to HW_CTRL_TRIGGER. This does not need a fix in SM8650, but in the
-> "iris_vpu35_power_on_hw" which you have added in this patch for SM8750.
-
-No one discusses this.
-
-> 
-> 2. Register write "AON_WRAPPER_MVP_NOC_LPI_CONTROL" with 0x1 is needed on both
-> SM8650 and SM8750, before polling AON_WRAPPER_MVP_NOC_LPI_STATUS in
-> "iris_vpu35_power_off_hw" function.
-> 
-> I can soon submit a patch to fix SM8650 with the missing register write, but i
-
-Great!
-
-> do not see a need to wait for it to continue your development on SM8750.
-
-
-I am not sure if you both understand how upstream development works. We
-reduce to a reasonable minimum duplicated codes and different solutions,
-so that's why my code is a copy of existing code plus new things for SM8750.
-
-The goal of upstream is not to implement SM8750 completely different.
-Please switch downstream approach to above re-usage approach.
-
-And that's why your fix is important because I am going to copy exactly
-that part of code and I should not come with different code.
-
-
-Best regards,
-Krzysztof
+---
+bod
 
