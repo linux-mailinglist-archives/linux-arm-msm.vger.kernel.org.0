@@ -1,63 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-65351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38C18B083DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:32:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D310B083DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:32:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7ABCB4A8633
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:32:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB6797B8CCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:31:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3A121507F;
-	Thu, 17 Jul 2025 04:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CBF217648;
+	Thu, 17 Jul 2025 04:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uNtWBlir"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wzq0ICaX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5A7214A6A;
-	Thu, 17 Jul 2025 04:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED42212B0A;
+	Thu, 17 Jul 2025 04:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752726684; cv=none; b=FjspDlVVAiaUhKpd6g6Vm+fxeVqbFlh6Y2DTc1Zpj4jJn2LOT8jzbc4oRO5mSe5B/8nnyg7tmjGHrjCzh09AFofPpam1juk4iXhbvHXhfMPZYqz+sT0sMP/scufLyDvJp6+7TXcDIAeNUwdX6HJtNDxds8nwpkC0DZ/H5b1prLc=
+	t=1752726685; cv=none; b=JgRRAsOZQVuIBiR4FaDWqn8emzlyWxmewZPfWjR49YT0wMabLzyXbiy6trWtrJ2TlPPYHQuunU1L9eelCHusto0RtkqKPXv5/3hFCR5NniVl1vRhbLwF3vn8a/Oo0OkTgevflj6WjYzeoeaHxZp8w6+L/FZtQMSBaWxDYFoNI6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752726684; c=relaxed/simple;
-	bh=OLNcyRBsmvv1570wOR+hb8QrNgW9ZwVyUXZaiBQ2xhI=;
+	s=arc-20240116; t=1752726685; c=relaxed/simple;
+	bh=Mf92oqIuwWyoiJCt5lF5140i3Z9UCFfKbQqNQTUEU/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tvfG1PU4a18b5gKepqBN4zEMKvIkSz2zUjuV2NfGaAS2P31HrMUM8gPqeSYMiJXKYdYJMKEasALBpAg6G5Ms+NT/z+YJZY1pFKtX6QzJIpdwaHiLeWbbwKC5EjFWx/zTnXNq1q0MoKoDYvQdlkUGE0Ovp59vBOAhdIU34FbtGHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uNtWBlir; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF52C4CEF5;
-	Thu, 17 Jul 2025 04:31:23 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qflc1tku3G9lEw9sUR4sjhdXyKvz6hbEQ0/b0cWfVVkRxIXwxWGLZqAN2bBOMebDw/yr0sfuGaEVewriGCp7v7ktk5ba0SOQkFW8YcFqFuTX8ki88RYHkDMzU06lugy58oQqkHKgeTumHkp8c8d3E1XCx4xJzdDCRmVB+TtwZFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wzq0ICaX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA94C4CEE3;
+	Thu, 17 Jul 2025 04:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1752726684;
-	bh=OLNcyRBsmvv1570wOR+hb8QrNgW9ZwVyUXZaiBQ2xhI=;
+	bh=Mf92oqIuwWyoiJCt5lF5140i3Z9UCFfKbQqNQTUEU/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNtWBlirLWMpCVbvMt8iQsV5s1XjboLugjFt5EPfvu3ZHYyxRzcvFoKrdJxwSiiMv
-	 4N4hkfGqCbwyXHtVUskPyM9TyISs6AEOZpDy/hhCMQOJIWZQbXeH0ze4fUEDtgriI+
-	 eJzUIjecCcdZRX/zJYqe1zOcJRIHATgbdY61A/kzGTJCNCRjouvST9dY7gJF1jDdKs
-	 jgkczd1er5xHY+gqKRWJ8HCteOQ6kqVMHGVMOPORQga0d0nzUj9zg5ip8FUVYdlIKX
-	 UA/F/+ycnIxMi4FwzPbPPVRVBD/n1F5TKT9ksQ46Jt7fTD2uAFRXN/g2Nr7H54oo6W
-	 ebZE+1nK4hb5Q==
+	b=Wzq0ICaXpCUeTbTvcQw0iw5Yz+F34ELaD3kk87F+Qn9R3cqpXN3jebQacd0+x5e0h
+	 SzrNTaidhaWs+Ttoha2k1loLUOhz+xdSmFpvhyoybaLOtNpTDWugLgWD8aNaSmGQKs
+	 yExgwFjt/UgbylnfkX3NX3F8dNiWUbobhyh+fAhj8uwgIwox5YipGdbyGjmp6fIb7u
+	 LeUr5XtP/lMMdolSDOMCzXtcNJRsmnYrGvA4g2rHR+lfy2/n/J+/Qcx0DXiOFAiQ/9
+	 mbnuloOzatSxPrdq/S/p8kgumc7JEHSU8wp91XdXthtwHf4vvSCRRMt6it98cZrGrZ
+	 zBOaZl/QvUcbQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Johan Hovold <johan@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Anthony Ruhier <aruhier@mailbox.org>
-Subject: Re: [PATCH v3] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add Bluetooth support
-Date: Wed, 16 Jul 2025 23:30:57 -0500
-Message-ID: <175272667117.130869.8700418579027773890.b4-ty@kernel.org>
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink: fix OF node leak
+Date: Wed, 16 Jul 2025 23:30:58 -0500
+Message-ID: <175272667131.130869.7564187694499305780.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250624-slim7x-bt-v3-1-7ada18058419@oldschoolsolutions.biz>
-References: <20250624-slim7x-bt-v3-1-7ada18058419@oldschoolsolutions.biz>
+In-Reply-To: <20250708085717.15922-1-johan@kernel.org>
+References: <20250708085717.15922-1-johan@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,18 +64,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 24 Jun 2025 08:46:00 +0200, Jens Glathe wrote:
-> To enable Bluetooth pwrseq appears to be required for the WCN7850.
-> Add the nodes from QCP, add the TODO hint for vreg_wcn_0p95 and
-> vreg_wcn_1p9
-> Add uart14 for the BT interface.
+On Tue, 08 Jul 2025 10:57:17 +0200, Johan Hovold wrote:
+> Make sure to drop the OF node reference taken when registering the
+> auxiliary devices when the devices are later released.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add Bluetooth support
-      commit: e57e7084b87bf2534078e04f9ddf377d85d55c13
+[1/1] soc: qcom: pmic_glink: fix OF node leak
+      commit: 65702c3d293e45d3cac5e4e175296a9c90404326
 
 Best regards,
 -- 
