@@ -1,109 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-65500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27FAFB08F99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 16:36:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50B9EB08FAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 16:39:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09E1C18851D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:36:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA34C1C41128
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:39:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 852432F6FBC;
-	Thu, 17 Jul 2025 14:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9C22F7CE5;
+	Thu, 17 Jul 2025 14:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="RDacqTM1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tAMGnnBw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D32ED87A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 14:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E80A17A5BE;
+	Thu, 17 Jul 2025 14:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752762972; cv=none; b=KzmATZWxpSByxjn/Dlu9DScQg5EPYXpZiyhDSHhFVEYcxSOmdw1QKXoN3l4FyTiJSu7kh1HI+xXET8nLh4LhkNh8XajFvQiU1RGY9nVhMa56a4OrFX2RvR0ZpRWNKWYDqG115TgFktLQMKFEuF8WnM227CHPbQhW6P+MRnPtAIY=
+	t=1752763169; cv=none; b=CnZdtR2bA0Mp6gr2NvUBO1DW3RTu9z2sl74WA7xV7eNWzGHzRz938sYXka2YBpl/4ywAoLqzBX0VZIkzhuqIfX8ced7oyMpPoZ0k1Q+vgADPfqyZIUX16z0SCrgVQVk8VxdIw7npD3u3i48dUw6dlJrMLorU883q+3vh2GqceuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752762972; c=relaxed/simple;
-	bh=ny1BxpwJ+gAFLsYDwALEIo5Wv2OZBJ0SHB8Cu6cHY60=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZGuJgKZ6Zqy8Z6JOLtwhyUkYXtfy+iiwIJsUu2uuXKhnJ6u5PGLSPHKHM0c8CsY61vJVx4B2PXGO0DtkPapSDmRMZoZcaCD9wzrm+cbdFsCLXBkbiRFXg28tsB1PJOjDaGLWtug/WTw5SVLtcavetzv3hlS5NDUve0r0K/VrM8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=RDacqTM1; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-55a2604ebc1so1009528e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 07:36:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1752762969; x=1753367769; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ny1BxpwJ+gAFLsYDwALEIo5Wv2OZBJ0SHB8Cu6cHY60=;
-        b=RDacqTM156otUAtjNJ6NoWDczXDxYnMU+CJ/w7Q+kpxdQLhHey+klzTxyabRC+WUEz
-         h7t2UhBJhjtIsBeLzTCw08DOXTmm01nyULxJFmBrl84oRLx7ZGh44NmlxiUsYhv6Orn9
-         Otgwkmm5J0Y3rTNgBpEXkjMlxrwjH6TV5W1hTahmZfs6U8kESbxTMbWvnlmBaY9d8pPz
-         vS6TC5KS7qd6+fjxThpW5Uvs7J3ngNKrnCW7ubeck/uySKE6H0mXKOrHbCjW49HOYFXG
-         V+ilQFXKoRBpvj5r2jmE7kuZs2tGJNygSaTc02Zt4aZS0qKtEjWeaNjH95L7o4ZpFVe7
-         mj6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752762969; x=1753367769;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ny1BxpwJ+gAFLsYDwALEIo5Wv2OZBJ0SHB8Cu6cHY60=;
-        b=XvSvBeCe2BS0E50MSXdT72utUNAveAEGc8dbkJ5sfPI82inMP0J796SKNwOZuyF4+U
-         LhF3Vx9ZMRzzZO3dWIULRP/rC+fntzSSzAuagkWKADmtH7PN1gIhzEzwWWej24lSVrFq
-         vTp27a7FPUiYaebtzOyTU58LMyxX7wywu/uJNHp93lBbtBWA7FYQ7mivHj8oM+jMlbeA
-         Jm116cuxgWn5Tiheifg49in95RcR8ba2nideiJv6kU8yobGR08i2CihgaYi38O/aBPIq
-         aey8xj7oJ8b3Kkx/CbEOqkIb1ETnF81yahjsDFZWVJ7cFEO/DkMdrVbmmZRpRQuqEkGG
-         LgNg==
-X-Forwarded-Encrypted: i=1; AJvYcCWHTAPDc8VavaS5cyv48Q9Tm+wETNInEr7/YAj/Iz1cKfLwAY1p6kQ5xzdGcIyEnzt27fBppmuOGIOw49jg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyf7BY+mPM1dmfP6R/6XAuD+UF18xdoBgEuzrBuNF/mDn+V8+3w
-	cZqTayYC7UacnmMl4A+kBXd5wVs1mB7tN4hhlzkw4FVExpabCxGztp3u5bsAo0Zw6sL+qZjqdml
-	ZJ8NYLz9FBZUeg8hl8Og9rEX3NwTU3mAlfrb9VrLYJx1ju69Vq1BS
-X-Gm-Gg: ASbGncvqyF5NLgB4zRUbQCsLmomQ/Ub8U9wMgvNmmYha2NcAoow/iAcV+bxEUSnQuRI
-	mI+b5iaEVKuc3nQQ85dkThrxaSJhvqqFY95N6xkGwlCVuRk7BToBZPbIKGScHgjuQ24FVmu1QV4
-	Pbl++NC4vlJTyeahRgFjUjh7O0mDvrNfgw4XZLBE0umwQcVFwVtUPJhFLA/HU62TUYhNbmKH36I
-	kK8pQ51nqepUExgIzaaXnUgykWoI76dvvQx1KQ=
-X-Google-Smtp-Source: AGHT+IGjl+IjWtSow0sNLT+eDGz2anPMKy3xAT4nehVSKgzWbZzJ9LXLTECN4HkXrMGqD1WGIZl2+8KPUCZyseARbVg=
-X-Received: by 2002:a05:6512:b98:b0:553:a60d:68a3 with SMTP id
- 2adb3069b0e04-55a23f0b81bmr1812465e87.2.1752762968763; Thu, 17 Jul 2025
- 07:36:08 -0700 (PDT)
+	s=arc-20240116; t=1752763169; c=relaxed/simple;
+	bh=82qjO1FcZChfrJSSYDvIcIBTha4Cb9ltZfCG1dU1NPg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YHA8R+nO+hIompVNv3+xIzyTvoi8Xk5PUHfQJ6XXKNX7zhd2u/XOWmTyqdc9wvrJji8DTlU+BW44dwAcS80WICKLRCiSxc4qIxcqgodlKLRZhkypv12iFWffLtNtMRlYBVKOFO5fVi4ZZfeMGjcLvypOdoOOZhLJ5cf6oLmJu4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tAMGnnBw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84DEC4CEE3;
+	Thu, 17 Jul 2025 14:39:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752763168;
+	bh=82qjO1FcZChfrJSSYDvIcIBTha4Cb9ltZfCG1dU1NPg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tAMGnnBwFENk5rjhI8tUHpgEU7iCQIW5qQEKiehX8vZh21ajm5CJ2QpFomoEJSNlD
+	 OXYexQtzB+xcNkgF9DProkwBHp2gnk7I4q0DVTkSS6S3AILcvGGOkTt+izjqrJoK+d
+	 4WRtS+FbPvT8PA4zq/6BGtURsYH2Li/MwD7SlotTWTXNhq58y1jZ9a7KmEkAjfbXs9
+	 +ULvDEAGaws/HFXj0G2jRN2MSQmsKcUPbC4G00POzcu9DgaSKQr0kcVfe1aAgkJ5NJ
+	 frmiyjc21Zs/4aI8X34WlElboIXTBG1HmAM6/gvnJSW+yucsovcbYXDFwkxlQ0dGXE
+	 AHBScR63tbjSQ==
+Message-ID: <19b62fb0-fb49-4a90-bff4-f5634547f2fe@kernel.org>
+Date: Thu, 17 Jul 2025 16:39:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717-fix-rpmhpd-abi-v1-0-4c82e25e3280@oss.qualcomm.com> <20250717-fix-rpmhpd-abi-v1-1-4c82e25e3280@oss.qualcomm.com>
-In-Reply-To: <20250717-fix-rpmhpd-abi-v1-1-4c82e25e3280@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 17 Jul 2025 16:35:57 +0200
-X-Gm-Features: Ac12FXw22vD-hbFh-u0btfg0jHk5nii8D4KA4wahfweHWkbcoH7xxCz4FWUk7vY
-Message-ID: <CAMRc=Mff5Yczwq=LTPNYkFAxh6D-Zt6Za9y3eLkVXfhoKdxkKg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sa8775p: fix RPMh power domain indices
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Ling Xu <quic_lxu5@quicinc.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Add glymur pinctrl driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>, andersson@kernel.org,
+ linus.walleij@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, quic_rjendra@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250716150822.4039250-1-pankaj.patil@oss.qualcomm.com>
+ <20250716150822.4039250-3-pankaj.patil@oss.qualcomm.com>
+ <e69e6128-3f50-4bd3-89bb-09d7b237a568@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <e69e6128-3f50-4bd3-89bb-09d7b237a568@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 17, 2025 at 2:51=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On SA8775P power domains device doesn't use unufied (RPMHPD_foo) ABI,
-> but it uses SoC-specific indices (SA8775P_foo). Consequently, all DSP on
-> that platform are referencing random PDs instead of the expected ones.
->
-> Correct indices used for that platform.
->
-> Fixes: df54dcb34ff2 ("arm64: dts: qcom: sa8775p: add ADSP, CDSP and GPDSP=
- nodes")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On 17/07/2025 13:52, Konrad Dybcio wrote:
+>> +static const struct msm_pinctrl_soc_data glymur_tlmm = {
+>> +	.pins = glymur_pins,
+>> +	.npins = ARRAY_SIZE(glymur_pins),
+>> +	.functions = glymur_functions,
+>> +	.nfunctions = ARRAY_SIZE(glymur_functions),
+>> +	.groups = glymur_groups,
+>> +	.ngroups = ARRAY_SIZE(glymur_groups),
+>> +	.ngpios = 250,
+> 
+> 251 (0..=250, incl. ufs reset)
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
+The binding said 238 GPIOs...
+
+> 
+> Konrad
+
+
+Best regards,
+Krzysztof
 
