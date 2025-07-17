@@ -1,437 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-65418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 293D1B087E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:29:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E6CCB087FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:34:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66063ABE04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:29:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B01E1AA541C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:34:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4771228641D;
-	Thu, 17 Jul 2025 08:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 956C72749EC;
+	Thu, 17 Jul 2025 08:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3zZO/bQw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RgwbKFlQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE85D285CAF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 08:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7711EF0B9;
+	Thu, 17 Jul 2025 08:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752740982; cv=none; b=D+/ZbJvfu89cWr7kyMv/Rz3js5iaLhRBc1cTSUpQaLLWP2OJ9uCuysCxgxSJfiWBp2+p5A+5ucZ1hceiqQqj15+Agv2btdvpHAsJfVVjGXqlvLDiDF/3QjhDs6DDJKYqJ+KyKOBBo6PC5KT0jivaasQpZBT7vA9XPfJUPc4UaRY=
+	t=1752741239; cv=none; b=S5pl5FDyaVnHFq2KHbkzAWtVQkZqRE6MGK4snC2bo4V2GW728hDP+FwQ+dHr11If+YWpZWTvEUbmzQB5hmKskClID7GQ2JH+NQ7yVgjhjPzqfOEEkhw5loJBuEpQGS9aSZTodnDTlV0SuAMnHYXoeLjc4pvhD7krenSURFGso/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752740982; c=relaxed/simple;
-	bh=UNunHUNkH+TN7AOcVml1jP+DpDLBcanyZCyw+pldQvE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=m25g90nBtEQ1CC/yE/ptOg2wdyI2a5o0qDswIQePdPPFWFKtI7OM46+9rRQLe58C9nIes/0CGovuxLJQCaDxoJqOmLClrY1fV/9yUwvM52PZFffHRoubMH4eLPu7KuXz4tSEBbhwceDmHFurZhxF/EwGIf47JA8EoPNWeNCSUyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=3zZO/bQw; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-605b9488c28so1137300a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 01:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752740978; x=1753345778; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ry2yqY4fcB8r6JNTuIg6GJi9ZBAG4EVyeQwgDvrWgsM=;
-        b=3zZO/bQwku27icG21ERWuH7SL6EIVSr/97M3536zv5kGuN1/dmzOy026I6R+otzsH5
-         Qc3mBy9t96Arvk3yWMke97BdB7dQYwy7dLrXY+o2yzK/6TtsRMtWeuxqglzwGtjGATT2
-         6i5Pu+ZOft0LFimO+QgTH34kXDKPfwFYEF8eC9FtDDjg6+SXzK4pPC1wKrHB45rr4mxU
-         6FCzOlt1ocVWLVyHshdurd8ou39ppYsquQ4CFhYJ1b4jQT9PIzZ42DrrmZvJGF/ibyrA
-         KBDCT+kQj9g+O3Eeqnyu+IUo8l6XMTJRk6O3osvzCtGUAwwlIHSERKr9/naKhneiJ7HW
-         tgcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752740978; x=1753345778;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ry2yqY4fcB8r6JNTuIg6GJi9ZBAG4EVyeQwgDvrWgsM=;
-        b=YwGWmwoegDGn62Z/b77ZHIlC+Qer234DvOwHZGu4jUffHVC5UAOY7UfvbbRfbOZsT+
-         Y1WgVof4/WqwQAvcSIKMsyDwz1WK0ywRbpj6B1HNTQIZ5uwb5FZX6XPaaTXkFhQ/QhM0
-         NvMiMarzzsQNbX3KIicoHDQOj3mZ9sw+XXF0R9umROdAIiyArjxvDgu/g8aAdl53JGwI
-         Gcbb12l3pVlrCKXDMHFvceJYcCM1RB+Pm73xshRiWyNoyp/Hp4sgxVb3DLjESn2NcahF
-         nt5glJBxp3PE7nj7WTL/fjziD7ZaweSOeTdIk65x/5SSmHKCdd3PWr+IIZuT3BSm+hxb
-         0JbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/7jFGFb6diZIb27ARmjjvhhBnYDY5KRcMtD97ZO4Dayt/itGhtN8tnFBH3IH5G2CvccznSfb3JaFIgV7+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXBj9+F6S593d8durWOnRRTZPO1L+ypXO7UppRtBH2QFqxj+x/
-	+T5IP0TeiWHgmIxKXXxbFjG3wHqiz61GMOcm5jowK5JX1cNyMQGCLbSfOIQSF+j3RIg=
-X-Gm-Gg: ASbGncugbAcp7WceQPz/uiNBMtYm9fU+0BG5Y15oEXhK6xL7bJ/iCaUpVeyNO2QIUN2
-	rJl1GrsjOdjG+3xfxI8U1fP7LENFDeYU8DGxCRzjV6djMNCQPV+AqbTTzNYvGedJrHGM5oivVPn
-	cKjuEtn/NVyzuSSx8m7lfCsVLjUmqYSHlA0iTqPKHNrKcpj6u2i9UQ9jWSfW69KUFV52iCbb1yv
-	UnLonioCTs/Kjia3rSD0EL5chWc2Oaa1W1VvwQ9PVmiqIS+ggAYZwJG9dJjcO7anmGCqFBQaSh+
-	JNS3LmLYjZKPDhnebNozDWKET//MJBsJ3B/Ii+4Cbzck7qpIit8Qja8d5pmSfkCv/Ejspe5jcjp
-	KiZVP2rcPWj25Kt5PUvAJ0ysA1vs6NV4ATtrZqC/bHAsAsiu7ZaNliDKT9cvKSXcvmXM=
-X-Google-Smtp-Source: AGHT+IE+TdhlMPh+u91g6pE8N6/1/E6+tgQ36t4anhpy9DrzlSFmbhQrj6aJo6OAcbvrAeM2GDcPYg==
-X-Received: by 2002:a05:6402:35c4:b0:608:6501:6a1f with SMTP id 4fb4d7f45d1cf-61285916635mr4613521a12.1.1752740978021;
-        Thu, 17 Jul 2025 01:29:38 -0700 (PDT)
-Received: from localhost (212095005146.public.telering.at. [212.95.5.146])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9796432sm9746425a12.73.2025.07.17.01.29.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 01:29:37 -0700 (PDT)
+	s=arc-20240116; t=1752741239; c=relaxed/simple;
+	bh=yLCrBOZm7Q9yTCeRS40yaLfmpTFicj1UCMT0A5NRQmA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DtzmL+GArHalHPuKC3Np4dtRy5bksteW4EvS78K6CJzU6eNHPAfJ2mOpsk10WNRQxCMmNA66zQk9RLHVYT2wtbScYPr9aUYRRh3DoJt8ypS44f846pmwll5WYEzavIqT0GG+1ThfnpxGkt+4ia4Rm3z+A+4QhN+/yGkdIf0yDbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RgwbKFlQ; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752741238; x=1784277238;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yLCrBOZm7Q9yTCeRS40yaLfmpTFicj1UCMT0A5NRQmA=;
+  b=RgwbKFlQNwRkttxuUiiaEJhBj2pBvwQeByE0F/0E83RlQiNjBo9+S/lD
+   tzgINOFJyFpjhtWV8yZTs/VQUvmVZfJ6pSJ/dUhHz1FO3SsyfDazgFz29
+   FREuPVbGKU0wVT1S69WHcwEaSC+zueH/oYzgYPUAjL4C5XmgemlOMWc/n
+   xEC2sGc+pt/tMzvVLJqftWezO4nEkYHymnwtgNPbWDQNuoNsazUtka0JY
+   kG4F3W4U3YZd2QegDYdNqGkY/LXu3x1gYVjLHyZeDU7lIkpu9qeXC84lI
+   goZTkFbRTSCvmvHjCmcRUyaVQUfnUDgXbilP0oo9g0QGjF4NXBqBjqNgI
+   w==;
+X-CSE-ConnectionGUID: X0Zl2uv8SfmSCywEJoeWEw==
+X-CSE-MsgGUID: An/PyB/yTt+Uoz3vG/4LVA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="66456965"
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
+   d="scan'208";a="66456965"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 01:33:58 -0700
+X-CSE-ConnectionGUID: BZcksriHRYi9EJu3ijnb3A==
+X-CSE-MsgGUID: kJOhJ3oaRfqvVgtmVOxesg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
+   d="scan'208";a="163265703"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by fmviesa004.fm.intel.com with ESMTP; 17 Jul 2025 01:33:54 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1ucK3s-000DNP-0o;
+	Thu, 17 Jul 2025 08:33:52 +0000
+Date: Thu, 17 Jul 2025 16:33:09 +0800
+From: kernel test robot <lkp@intel.com>
+To: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 11/11] wifi: ath12k: fix endianness handling in QMI
+ response
+Message-ID: <202507171640.30pUvpPv-lkp@intel.com>
+References: <20250716075100.1447352-12-alexander.wilhelm@westermo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 17 Jul 2025 10:29:35 +0200
-Message-Id: <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
- <linux-mmc@vger.kernel.org>
-Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
- <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
- <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
- Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
- <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
- "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
- <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
- Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
- "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
- <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
- "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
- "Ulf Hansson" <ulf.hansson@linaro.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
- <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
- <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
-In-Reply-To: <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250716075100.1447352-12-alexander.wilhelm@westermo.com>
 
-On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
-> On 7/13/25 10:05 AM, Luca Weiss wrote:
->> Add a devicetree description for the Milos SoC, which is for example
->> Snapdragon 7s Gen 3 (SM7635).
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->
-> [...]
->
->> +		cpu-map {
->> +			cluster0 {
->> +				core0 {
->> +					cpu =3D <&cpu0>;
->> +				};
->> +
->> +				core1 {
->> +					cpu =3D <&cpu1>;
->> +				};
->> +
->> +				core2 {
->> +					cpu =3D <&cpu2>;
->> +				};
->> +
->> +				core3 {
->> +					cpu =3D <&cpu3>;
->> +				};
->> +			};
->> +
->> +			cluster1 {
->> +				core0 {
->> +					cpu =3D <&cpu4>;
->> +				};
->> +
->> +				core1 {
->> +					cpu =3D <&cpu5>;
->> +				};
->> +
->> +				core2 {
->> +					cpu =3D <&cpu6>;
->> +				};
->> +			};
->> +
->> +			cluster2 {
->> +				core0 {
->> +					cpu =3D <&cpu7>;
->> +				};
->> +			};
->> +		};
->
-> I'm getting mixed information about the core topology..=20
->
-> What does dmesg say wrt this line?
->
-> CPU%u: Booted secondary processor 0x%010lx [0x%08x]\n
+Hi Alexander,
 
-[    0.003570] CPU1: Booted secondary processor 0x0000000100 [0x410fd801]
-[    0.004738] CPU2: Booted secondary processor 0x0000000200 [0x410fd801]
-[    0.005783] CPU3: Booted secondary processor 0x0000000300 [0x410fd801]
-[    0.007206] CPU4: Booted secondary processor 0x0000000400 [0x410fd811]
-[    0.008206] CPU5: Booted secondary processor 0x0000000500 [0x410fd811]
-[    0.009073] CPU6: Booted secondary processor 0x0000000600 [0x410fd811]
-[    0.010406] CPU7: Booted secondary processor 0x0000000700 [0x410fd811]
+kernel test robot noticed the following build warnings:
 
->
->> +	pmu-a520 {
->> +		compatible =3D "arm,cortex-a520-pmu";
->> +		interrupts =3D <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->> +	};
->> +
->> +	pmu-a720 {
->> +		compatible =3D "arm,cortex-a720-pmu";
->> +		interrupts =3D <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->> +	};
->
-> See:
->
-> 9ce52e908bd5 ("arm64: dts: qcom: sm8650: switch to interrupt-cells 4 to a=
-dd PPI partitions")
-> 2c06e0797c32 ("arm64: dts: qcom: sm8650: add PPI interrupt partitions for=
- the ARM PMUs")
+[auto build test WARNING on ath/ath-next]
+[also build test WARNING on linus/master v6.16-rc6 next-20250716]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Sure, will take a look.
+url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Wilhelm/wifi-ath12k-fix-endianness-handling-in-QMI-host-capability-request/20250716-162058
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git ath-next
+patch link:    https://lore.kernel.org/r/20250716075100.1447352-12-alexander.wilhelm%40westermo.com
+patch subject: [PATCH 11/11] wifi: ath12k: fix endianness handling in QMI response
+config: mips-randconfig-r123-20250717 (https://download.01.org/0day-ci/archive/20250717/202507171640.30pUvpPv-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 8.5.0
+reproduce: (https://download.01.org/0day-ci/archive/20250717/202507171640.30pUvpPv-lkp@intel.com/reproduce)
 
->
-> [...]
->
->> +		gcc: clock-controller@100000 {
->> +			compatible =3D "qcom,milos-gcc";
->> +			reg =3D <0x0 0x00100000 0x0 0x1f4200>;
->> +
->> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
->> +				 <&sleep_clk>,
->> +				 <0>, /* pcie_0_pipe_clk */
->> +				 <0>, /* pcie_1_pipe_clk */
->> +				 <0>, /* ufs_phy_rx_symbol_0_clk */
->> +				 <0>, /* ufs_phy_rx_symbol_1_clk */
->> +				 <0>, /* ufs_phy_tx_symbol_0_clk */
->> +				 <0>; /* usb3_phy_wrapper_gcc_usb30_pipe_clk */
->> +			protected-clocks =3D <GCC_PCIE_1_AUX_CLK>, <GCC_PCIE_1_AUX_CLK_SRC>,
->> +					<GCC_PCIE_1_CFG_AHB_CLK>, <GCC_PCIE_1_MSTR_AXI_CLK>,
->> +					<GCC_PCIE_1_PHY_RCHNG_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
->> +					<GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
->> +					<GCC_PCIE_1_PIPE_DIV2_CLK>, <GCC_PCIE_1_PIPE_DIV2_CLK_SRC>,
->> +					<GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
->
-> Does access control disallow accessing these on your prod-fused
-> device?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507171640.30pUvpPv-lkp@intel.com/
 
-Hm, taking another look, this property should probably be moved to
-device dts.
+sparse warnings: (new ones prefixed by >>)
+>> drivers/soc/qcom/pdr_interface.c:612:22: sparse: sparse: restricted __le16 degrades to integer
+   drivers/soc/qcom/pdr_interface.c:613:22: sparse: sparse: restricted __le16 degrades to integer
 
-Downstream has this in volcano.dtsi but volcano6i.dtsi (QCM6690?) and
-volcano6ip.dtsi (QCS6690?) have a /delete-property/ for this, because
-they have PCIe available.
+vim +612 drivers/soc/qcom/pdr_interface.c
 
-I don't think this has anything to do with secure boot fuses, but I
-don't think I have tried enabling these clocks on my SB-off prototype.
+fbe639b44a8275 Sibi Sankar           2020-03-12  549  
+fbe639b44a8275 Sibi Sankar           2020-03-12  550  /**
+fbe639b44a8275 Sibi Sankar           2020-03-12  551   * pdr_restart_pd() - restart PD
+fbe639b44a8275 Sibi Sankar           2020-03-12  552   * @pdr:	PDR client handle
+fbe639b44a8275 Sibi Sankar           2020-03-12  553   * @pds:	PD service handle
+fbe639b44a8275 Sibi Sankar           2020-03-12  554   *
+fbe639b44a8275 Sibi Sankar           2020-03-12  555   * Restarts the PD tracked by the PDR client handle for a given service path.
+fbe639b44a8275 Sibi Sankar           2020-03-12  556   *
+fbe639b44a8275 Sibi Sankar           2020-03-12  557   * Return: 0 on success, negative errno on failure.
+fbe639b44a8275 Sibi Sankar           2020-03-12  558   */
+fbe639b44a8275 Sibi Sankar           2020-03-12  559  int pdr_restart_pd(struct pdr_handle *pdr, struct pdr_service *pds)
+fbe639b44a8275 Sibi Sankar           2020-03-12  560  {
+fbe639b44a8275 Sibi Sankar           2020-03-12  561  	struct servreg_restart_pd_resp resp;
+a161ffe4b87772 Tom Rix               2020-08-19  562  	struct servreg_restart_pd_req req = { 0 };
+fbe639b44a8275 Sibi Sankar           2020-03-12  563  	struct sockaddr_qrtr addr;
+fbe639b44a8275 Sibi Sankar           2020-03-12  564  	struct pdr_service *tmp;
+fbe639b44a8275 Sibi Sankar           2020-03-12  565  	struct qmi_txn txn;
+fbe639b44a8275 Sibi Sankar           2020-03-12  566  	int ret;
+fbe639b44a8275 Sibi Sankar           2020-03-12  567  
+fbe639b44a8275 Sibi Sankar           2020-03-12  568  	if (IS_ERR_OR_NULL(pdr) || IS_ERR_OR_NULL(pds))
+fbe639b44a8275 Sibi Sankar           2020-03-12  569  		return -EINVAL;
+fbe639b44a8275 Sibi Sankar           2020-03-12  570  
+fbe639b44a8275 Sibi Sankar           2020-03-12  571  	mutex_lock(&pdr->list_lock);
+fbe639b44a8275 Sibi Sankar           2020-03-12  572  	list_for_each_entry(tmp, &pdr->lookups, node) {
+fbe639b44a8275 Sibi Sankar           2020-03-12  573  		if (tmp != pds)
+fbe639b44a8275 Sibi Sankar           2020-03-12  574  			continue;
+fbe639b44a8275 Sibi Sankar           2020-03-12  575  
+fbe639b44a8275 Sibi Sankar           2020-03-12  576  		if (!pds->service_connected)
+fbe639b44a8275 Sibi Sankar           2020-03-12  577  			break;
+fbe639b44a8275 Sibi Sankar           2020-03-12  578  
+fbe639b44a8275 Sibi Sankar           2020-03-12  579  		/* Prepare req message */
+26bc7a6a0beed8 Len Baker             2021-08-08  580  		strscpy(req.service_path, pds->service_path, sizeof(req.service_path));
+fbe639b44a8275 Sibi Sankar           2020-03-12  581  		addr = pds->addr;
+fbe639b44a8275 Sibi Sankar           2020-03-12  582  		break;
+fbe639b44a8275 Sibi Sankar           2020-03-12  583  	}
+fbe639b44a8275 Sibi Sankar           2020-03-12  584  	mutex_unlock(&pdr->list_lock);
+fbe639b44a8275 Sibi Sankar           2020-03-12  585  
+fbe639b44a8275 Sibi Sankar           2020-03-12  586  	if (!req.service_path[0])
+fbe639b44a8275 Sibi Sankar           2020-03-12  587  		return -EINVAL;
+fbe639b44a8275 Sibi Sankar           2020-03-12  588  
+fbe639b44a8275 Sibi Sankar           2020-03-12  589  	ret = qmi_txn_init(&pdr->notifier_hdl, &txn,
+fbe639b44a8275 Sibi Sankar           2020-03-12  590  			   servreg_restart_pd_resp_ei,
+fbe639b44a8275 Sibi Sankar           2020-03-12  591  			   &resp);
+fbe639b44a8275 Sibi Sankar           2020-03-12  592  	if (ret < 0)
+fbe639b44a8275 Sibi Sankar           2020-03-12  593  		return ret;
+fbe639b44a8275 Sibi Sankar           2020-03-12  594  
+fbe639b44a8275 Sibi Sankar           2020-03-12  595  	ret = qmi_send_request(&pdr->notifier_hdl, &addr,
+fbe639b44a8275 Sibi Sankar           2020-03-12  596  			       &txn, SERVREG_RESTART_PD_REQ,
+fbe639b44a8275 Sibi Sankar           2020-03-12  597  			       SERVREG_RESTART_PD_REQ_MAX_LEN,
+fbe639b44a8275 Sibi Sankar           2020-03-12  598  			       servreg_restart_pd_req_ei, &req);
+fbe639b44a8275 Sibi Sankar           2020-03-12  599  	if (ret < 0) {
+fbe639b44a8275 Sibi Sankar           2020-03-12  600  		qmi_txn_cancel(&txn);
+fbe639b44a8275 Sibi Sankar           2020-03-12  601  		return ret;
+fbe639b44a8275 Sibi Sankar           2020-03-12  602  	}
+fbe639b44a8275 Sibi Sankar           2020-03-12  603  
+fbe639b44a8275 Sibi Sankar           2020-03-12  604  	ret = qmi_txn_wait(&txn, 5 * HZ);
+fbe639b44a8275 Sibi Sankar           2020-03-12  605  	if (ret < 0) {
+fbe639b44a8275 Sibi Sankar           2020-03-12  606  		pr_err("PDR: %s PD restart txn wait failed: %d\n",
+fbe639b44a8275 Sibi Sankar           2020-03-12  607  		       req.service_path, ret);
+fbe639b44a8275 Sibi Sankar           2020-03-12  608  		return ret;
+fbe639b44a8275 Sibi Sankar           2020-03-12  609  	}
+fbe639b44a8275 Sibi Sankar           2020-03-12  610  
+fbe639b44a8275 Sibi Sankar           2020-03-12  611  	/* Check response if PDR is disabled */
+fbe639b44a8275 Sibi Sankar           2020-03-12 @612  	if (resp.resp.result == QMI_RESULT_FAILURE_V01 &&
+fbe639b44a8275 Sibi Sankar           2020-03-12  613  	    resp.resp.error == QMI_ERR_DISABLED_V01) {
+fbe639b44a8275 Sibi Sankar           2020-03-12  614  		pr_err("PDR: %s PD restart is disabled: 0x%x\n",
+fbe639b44a8275 Sibi Sankar           2020-03-12  615  		       req.service_path, resp.resp.error);
+fbe639b44a8275 Sibi Sankar           2020-03-12  616  		return -EOPNOTSUPP;
+fbe639b44a8275 Sibi Sankar           2020-03-12  617  	}
+fbe639b44a8275 Sibi Sankar           2020-03-12  618  
+fbe639b44a8275 Sibi Sankar           2020-03-12  619  	/* Check the response for other error case*/
+fbe639b44a8275 Sibi Sankar           2020-03-12  620  	if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+fbe639b44a8275 Sibi Sankar           2020-03-12  621  		pr_err("PDR: %s request for PD restart failed: 0x%x\n",
+fbe639b44a8275 Sibi Sankar           2020-03-12  622  		       req.service_path, resp.resp.error);
+fbe639b44a8275 Sibi Sankar           2020-03-12  623  		return -EREMOTEIO;
+fbe639b44a8275 Sibi Sankar           2020-03-12  624  	}
+fbe639b44a8275 Sibi Sankar           2020-03-12  625  
+fbe639b44a8275 Sibi Sankar           2020-03-12  626  	return 0;
+fbe639b44a8275 Sibi Sankar           2020-03-12  627  }
+9b09c0f289c5a8 Unnathi Chalicheemala 2023-09-22  628  EXPORT_SYMBOL_GPL(pdr_restart_pd);
+fbe639b44a8275 Sibi Sankar           2020-03-12  629  
 
->
-> [...]
->
->> +		usb_1: usb@a600000 {
->> +			compatible =3D "qcom,milos-dwc3", "qcom,snps-dwc3";
->> +			reg =3D <0x0 0x0a600000 0x0 0x10000>;
->
-> size =3D 0xfc_000
-
-Ack
-
->
-> [...]
->
->> +
->> +			clocks =3D <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
->> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +				 <&rpmhcc RPMH_CXO_CLK>;
->> +			clock-names =3D "cfg_noc",
->> +				      "core",
->> +				      "iface",
->> +				      "sleep",
->> +				      "mock_utmi",
->> +				      "xo";
->> +
->> +			assigned-clocks =3D <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
->> +			assigned-clock-rates =3D <19200000>, <133333333>;
->
-> Set the latter to 200000000 - your device doesn't have USB3, but the
-> next person may lose their hair about tracking down why it doesn't
-> work on theirs
-
-Ah, I think I only checked the downstream reference which was patched to
-be qcom,core-clk-rate =3D <133333333>; for FP6. The original file does
-have:
-
-  qcom,core-clk-rate =3D <200000000>;
-  qcom,core-clk-rate-disconnected =3D <133333333>;
-
->
-> [...]
->
->> +		pdc: interrupt-controller@b220000 {
->> +			compatible =3D "qcom,milos-pdc", "qcom,pdc";
->> +			reg =3D <0x0 0x0b220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
->
-> 1 per line, please
-
-Ack
-
->
->> +			interrupt-parent =3D <&intc>;
->> +
->> +			qcom,pdc-ranges =3D <0 480 40>, <40 140 11>, <51 527 47>,
->> +					  <98 609 31>, <129 63 1>, <130 716 12>,
->> +					  <142 251 5>;
->> +
->> +			#interrupt-cells =3D <2>;
->> +			interrupt-controller;
->> +		};
->> +
->> +		tsens0: thermal-sensor@c228000 {
->> +			compatible =3D "qcom,milos-tsens", "qcom,tsens-v2";
->> +			reg =3D <0x0 0x0c228000 0x0 0x1ff>, /* TM */
->> +			      <0x0 0x0c222000 0x0 0x1ff>; /* SROT */
->
-> drop the comments
->
-> the sizes are 0x1000 for both regions for both controllers
-
-Ack
-
->
->> +
->> +			interrupts =3D <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
->
-> pdc 26
-
-You mean replace <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH> with
-<&pdc 26 IRQ_TYPE_LEVEL_HIGH> (plus interrupts-extended)?
-
-I assume you got this from internal docs, but just to mention,
-volcano-thermal.dtsi contains GIC_SPI 506 (+ 507 for tsens1).
-
->
->> +				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names =3D "uplow",
->> +					  "critical";
->> +
->> +			#qcom,sensors =3D <15>;
->> +
->> +			#thermal-sensor-cells =3D <1>;
->> +		};
->> +
->> +		tsens1: thermal-sensor@c229000 {
->> +			compatible =3D "qcom,milos-tsens", "qcom,tsens-v2";
->> +			reg =3D <0x0 0x0c229000 0x0 0x1ff>, /* TM */
->> +			      <0x0 0x0c223000 0x0 0x1ff>; /* SROT */
->> +
->> +			interrupts =3D <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
->
-> pdc 27
-
-same as above
-
->
->> +				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names =3D "uplow",
->> +					  "critical";
->> +
->> +			#qcom,sensors =3D <14>;
->> +
->> +			#thermal-sensor-cells =3D <1>;
->> +		};
->> +
->> +		aoss_qmp: power-management@c300000 {
->> +			compatible =3D "qcom,milos-aoss-qmp", "qcom,aoss-qmp";
->> +			reg =3D <0x0 0x0c300000 0x0 0x400>;
->> +
->> +			interrupt-parent =3D <&ipcc>;
->> +			interrupts-extended =3D <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLI=
-NK_QMP
->> +						     IRQ_TYPE_EDGE_RISING>;
->> +
->> +			mboxes =3D <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
->> +
->> +			#clock-cells =3D <0>;
->> +		};
->> +
->> +		sram@c3f0000 {
->> +			compatible =3D "qcom,rpmh-stats";
->> +			reg =3D <0x0 0x0c3f0000 0x0 0x400>;
->> +		};
->> +
->> +		spmi_bus: spmi@c400000 {
->> +			compatible =3D "qcom,spmi-pmic-arb";
->
-> There's two bus instances on this platform, check out the x1e binding
-
-Will do
-
->
-> [...]
->
->> +		intc: interrupt-controller@17100000 {
->> +			compatible =3D "arm,gic-v3";
->> +			reg =3D <0x0 0x17100000 0x0 0x10000>,	/* GICD */
->> +			      <0x0 0x17180000 0x0 0x200000>;	/* GICR * 8 */
->
-> drop the comments please
-
-Ack
-
->
-> [...]
->
->> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
->> +			clock-names =3D "xo", "alternate";
->
-> 1 a line, please
-
-Ack
-
->
-> [...]
->
->> +		cpuss0-thermal {
->> +			thermal-sensors =3D <&tsens0 1>;
->> +
->> +			trips {
->> +				cpuss0-hot {
->> +					temperature =3D <110000>;
->> +					hysteresis =3D <1000>;
->> +					type =3D "hot";
->> +				};
->> +
->> +				cpuss0-critical {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->
-> See:
->
-> 06eadce93697 ("arm64: dts: qcom: x1e80100: Drop unused passive thermal tr=
-ip points for CPU")
->
-> (tldr drop non-critical trips for CPU)
-
-Will take a look.
-
-Regards
-Luca
-
->
-> Konrad
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
