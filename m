@@ -1,387 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-65388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3FDBB08577
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:52:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4ED4B0857E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:55:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A708F1C2494B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:52:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EBB13AA1A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:54:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A1632185BC;
-	Thu, 17 Jul 2025 06:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07CBC218AAF;
+	Thu, 17 Jul 2025 06:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JnatKgWr"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="K8wUqLUZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD22217733
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D642185AA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752735120; cv=none; b=H8p1K69b2fo4Kyl9kPZXJF7ZKTcefsaGhYCHoqzmCuLTml7yDca+OkGabEyZIdSSkNexUI+t+JWZC6bkJeDH9vh/tJVwgE30zAUur7fk1OHJVimMSRYtHKe15aj6sjXqCpgZ49ubRvx7+/2yVnX1joTG1PCjfBFk873cKSPa5rQ=
+	t=1752735299; cv=none; b=f/0eHaJ9wy55aVWymA0A9SES9PUqtj4UMPqH5csP50UFUjgCPTLEBelm+bAyFkdJfsRxCXXqdVhOo0C5ec1j81DiZGPlfRy+3yqa5V6wxq7X5E9rqP5K2US89WMd9tOdtkaSIc3I54ZLSBL0P5wKdlTngPwoytk4o+aZsFxnYsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752735120; c=relaxed/simple;
-	bh=xTfpokh+eM0H7vAUTJOWN2GUKk3IEDrRn1bH73Hrt1M=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dcEPceeIcYjsvTSQXVdRK2JqUKdR9v2fbFxOY22KsK6MHjH5cOfBzcoqv5WbDfIrp98vVkM6LMUly1J5Ju6Co6brLFYrxxFu+gTwE9E1bdjOZkLD1iBYp+gvTK8n7geuIzLFjAhjIOxPYv7I7Oe8+xJT4bU8un5xMRsP7P+lSe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JnatKgWr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H46OUd003716
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:51:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=q9sPxZbJPv/UCPRDIroL0FL6
-	33a28OgGsC/135RRF34=; b=JnatKgWrnpG0FqyRAv4PD44/v8jlAIrUHm7I5mwC
-	kVxNwKPXaSbSxYJODfnJzAFn4mg9NeLY8h9dKTRCGp0zofn/JY31K5j3QVeMi686
-	2CRiTlnpoveFrEWHFIduz6W207nAj10jqsCCqgHcNLQ+zlC9eu8hf0XgAzoYl3xq
-	JHQdSxIz1U8njPCljOtNuYm2KlDF9XFE8gcRIgtUkmhh3AEm5/olvKBR8NfPw0gI
-	GTk/ASYnFzzvC0i40ZxNMWqgdtMv2vOnmasYDA68spdP4591gUnzpM1DQFfPcd6H
-	M34z/bL0u6IxLozqB9sWd3F28Of+L60Fi3T0gRgzwDRkQA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47xsukrcef-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:51:57 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e1aeab456cso73818585a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:51:57 -0700 (PDT)
+	s=arc-20240116; t=1752735299; c=relaxed/simple;
+	bh=dxlncHAvtyo7S9r9a4Bw93GIWIXwdIGumSxNnKv+9i8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=uqJwXI1g4bSoIIRAJrtrW+TY+epb2vvwLoY6KEe/7GI35LCIU/Xhrt7vtoox/Qm0iqy3DpYvFaLP+htX5Wg6e2D+ZDuLMKbvG0ZFMTwcG75sATi8BHMm1z5bRcYv0vTatxVl+nw7UkiwWKmrrVae20WlZydV9IvO5UNB8clqN2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=K8wUqLUZ; arc=none smtp.client-ip=209.85.208.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-612b67dcb89so15998a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1752735296; x=1753340096; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WTrMaLkKQohvWqI8MgITB/gzL3ZwR7s1HNLPElehzEg=;
+        b=K8wUqLUZ8iLeK8KmcoB3ezrCrTEqzPGzfRzLkjtphiTPhb3fJ8g9Q2rt51buQdeLW/
+         Sa43YXgddOt5wekxt52GzISUk/yNYEckvqaBYQyf6bK//Uf2/7XMxhsdxW9YhPggAmIk
+         RjaaFqhTKjZuelnFw5sqdJlP/U4VB6zzkvxdrHsfrAr/tRmKxqPB0L7swO0xVm5wbQwT
+         clShcnUI2MEttfKL4NO6ZgbURlBq99jrBDPPBYyfA8xE9o88p/OtIjaJEN3k2fref+Cp
+         Dt87EiTnsP3EIXSgrt9hQX5QxOAsr5mhQ5lx4gJU1TCBg+j2h8jpitFmVgyCBO6BTHlK
+         zXKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752735117; x=1753339917;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q9sPxZbJPv/UCPRDIroL0FL633a28OgGsC/135RRF34=;
-        b=pCvNHhLiBsZS1pMfoSbfbwxAzIiyqnnwUuVFgVZZmU4KYStl0YTvYfInzA5XxdDlZ+
-         GqqI90qIooZHoW41oVTFRLyNAdZ9lTuQxl3aaRvJVwgKNGBV3Rckts5TLoXJiSbwtSSl
-         D6NJ24G4wc+Ph9XnN1gjjpnfnNaZa15rb3ulR1tvvOZHxFzSBFMnum1CvvwDDjtiSExm
-         WzYWg35tdTh8147iu6tnZecl2lP/4FtfSSJyexZwpj0+x2qeFcMDjFVE6fwUcoVU5vDv
-         TCjOtRtsVwwMddWijrBvIPYHJmTRefwlblslRdMIbHFXiOJFLptSR3FwwZ6yl445gRSb
-         CGRg==
-X-Forwarded-Encrypted: i=1; AJvYcCWWtkqRLZctrUhK7KMQec5bmP0KBgdpq3wKb9DZjpN7WyajGPN/rgdgIOnUXgPz4Sno8+1+qBVPbEWPvnrj@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6BFPNGjiQmvf4h7zhJt9qvqUV/CSH5xeCj5LmjzGcADtXlCeu
-	UQFjFK1Eux9bYJSW5Wof1OFwzYPN41defY8vkb7XnEo2zQt+0atLMOG8y/02BIKnNxP30GO5jaf
-	ps9YGa45hEdKzkNCqf2H8RurkAxMH3VJXD5iI6j6ax9n4piH58V5Jz8UID0pzPW/kXK4R
-X-Gm-Gg: ASbGncu+0xyzFnzorjJ9LdotCdPix9y4FCI0mnU7VimCzQem2feCP+006EjzuA7gJ7X
-	bU6h6mp65Xlx4q6TB3eHUJu0gxqZrz1vvegdCIuHn8ZR4pmiNUtSWOCOP0Fj4r6EGhZDBRjHpbd
-	BbZSgPDbflDZE7eSDlYctHpvO2vdB7haVyFFDv/XWJYHjpGtffEU81jaPpocY+ymB7n7NmLwn8n
-	BXcYUUcItV9r0WGT3ns4t2c9HDA0LojlwAIBX00BTy6U7LRodOaAeZ6V6WGXtYNBJzsIinqUsdI
-	zBg5fG5ShAu63jIdRahk1d9rEemJ7kWP1DiVfUbR5AsIusgesDa5TqmH3hIsPj6h4jrgKQeacZQ
-	=
-X-Received: by 2002:a05:620a:4606:b0:7e3:2b48:7a83 with SMTP id af79cd13be357-7e342b5bd3cmr750108385a.39.1752735116486;
-        Wed, 16 Jul 2025 23:51:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVfrBEr4ilxky/eDf4VZ8EjlWDAXKMdDdNkfwskeQj3T1yecsUXR+JjMCV9BPPVRtGb8bPIQ==
-X-Received: by 2002:a05:620a:4606:b0:7e3:2b48:7a83 with SMTP id af79cd13be357-7e342b5bd3cmr750102785a.39.1752735115303;
-        Wed, 16 Jul 2025 23:51:55 -0700 (PDT)
-Received: from trex (153.red-79-144-197.dynamicip.rima-tde.net. [79.144.197.153])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b612db7060sm2146179f8f.52.2025.07.16.23.51.54
+        d=1e100.net; s=20230601; t=1752735296; x=1753340096;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WTrMaLkKQohvWqI8MgITB/gzL3ZwR7s1HNLPElehzEg=;
+        b=iBjc7ovvoIaod2j2dqZNobzjc7uslLDvbGkGZ/0QhPpxnOEWkU6BqsauHhpuvjug0F
+         WZlVuLrFXSkOXVoP1LGrmvvl9Y9LMNSDor+BwN/YDLFL7ZLZZQWfx1OdFnP0bEcU3DxH
+         DMxrjeHDDN2GWfHKE1mSE0pvPHE0eNDgxBvXpJ7iOnO+kmEMU9azlsQkjhiZT4Poa+K9
+         Pv6VlKwr9ljKZiXOSQKEcX3Dxi5kPEYOtojURSd8en2/lUYMukjwWFI6RS6luIuTLY3/
+         Qk3/XnDpW/Yns15Kpbv42bkPjbKxOTPn3tRlguXIYC8WyM1O/5E1UG7My5eQ+rR3mW/P
+         Nh/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXOA8QbyyfLE11gBr50TyFgXz+GpdQ0++VjbeleWkgeiw1HD38E064oJlCkYU5eXn2nv5cIxvXakZvQ5Dhr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPEuD9LlycLOKL/VNzvhUSsDnDqJQKj4GORgOK1ghE/LmFv5s3
+	6w4QmkrxCTR/usrO+O1e+HBT0wk5BJej1KRYNYOZKjvBXh1prZHroCO1Xsxz5+cxv34=
+X-Gm-Gg: ASbGnctQ6WsdcXUB30jvpJ8DQAsXktTf15aqU1JvIEwggAqpSViXUFSTzJqsM0pc0a0
+	Zm6LRnJmRB4iYGcRWiR2MIniIpx38yvCBRe7RKyTXFouGrc5T7G/HIeKzwG6eUd81mckbwgXoku
+	K42b5G/73lAib/wxE+dI7nh83kS4mQxBrUyAhEJLYO5a6bh3EWyQHbGzQy3VR+QKby3PBG/ooVI
+	RMh/zhl/Rrs1NnFUyCLQ9DR0MyI85hevtHEzlH17c8jRfBsVQcKFz0nIHExw/8LkRa0/2pu7ghX
+	rgdzq/JKlCe2kGqoYMTX8MN4SBbd5RL6LSJGhZH1pudYpjAEXGfUAC5XSKTub5oT2lJp3AoRwjw
+	zZ9BxklKT1qM0Wa5o8+Ld4A/qyR4rS3eWx2Tdzkd5BQ5NwtqHHLpxEfxsQFgxEMqKkeqJ
+X-Google-Smtp-Source: AGHT+IEPE7jcvTZWHa1uq9a7/be6YWGVsD4XhPzTsJz+8V3TnN9RduahxJ0ofrGWhTknThJCepAl8Q==
+X-Received: by 2002:a05:6402:27ca:b0:608:6734:7744 with SMTP id 4fb4d7f45d1cf-61285916a89mr4839700a12.7.1752735296237;
+        Wed, 16 Jul 2025 23:54:56 -0700 (PDT)
+Received: from otso.local (212095005146.public.telering.at. [212.95.5.146])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-612477e1d2bsm4688882a12.34.2025.07.16.23.54.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 23:51:54 -0700 (PDT)
-From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Thu, 17 Jul 2025 08:51:53 +0200
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
-        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 2/7] media: venus: Conditionally register codec nodes
- based on firmware version
-Message-ID: <aHidibqhMyexExXJ@trex>
-References: <20250715204749.2189875-1-jorge.ramirez@oss.qualcomm.com>
- <20250715204749.2189875-3-jorge.ramirez@oss.qualcomm.com>
- <2fd0d1a7-70ee-43ac-af84-d2321c40e8f8@linaro.org>
+        Wed, 16 Jul 2025 23:54:55 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/3] Remove double colon from description in dt-bindings
+Date: Thu, 17 Jul 2025 08:54:43 +0200
+Message-Id: <20250717-bindings-double-colon-v1-0-c04abc180fcd@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2fd0d1a7-70ee-43ac-af84-d2321c40e8f8@linaro.org>
-X-Proofpoint-ORIG-GUID: VbL4dIAu7do0EXK7bA5mmHDVkXEYjzFo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA1OCBTYWx0ZWRfX9KMe0+sAYtmx
- G6X3AutlVX5ZwHwm0Scfcqxb9i0p2rF3bDuqoFKoDouZfkVbKk7x4k1qkIAsirpKLUQXn9IgsG0
- 24BBO1ohi0dnWcpTWA2e+lxGQylQcLKPoWMuV/jglGdWCApzAtrncoslDtHr0k2Wvbm/kZzUqde
- u7/R3oeL7FsU1PfiyhEIQdqABsdvZPSjFOvCYmRPIroyGUahyLv1jecsmeq7sygGGXvZH8IbTGM
- 4cVgb+P0vlABe95l9Ur2glVnluWTsVYBsob//IcrDfDyvOoqMXkskuLZ4PqGsRZEkN6v9S4pxT+
- xHywxJHYXU+cW7AqhHBsQleWYtbb4/uR/pkqidt0wDpxTguf5NILdeGzJtrhEm9Y6hvHKzP0v6K
- KhPKYn9MB9L+bxMrBoKamScsyCAsVSwo4pVLqwPr4htVkQReMRHM0GeNDrox1PZ/n9OF2Sf5
-X-Proofpoint-GUID: VbL4dIAu7do0EXK7bA5mmHDVkXEYjzFo
-X-Authority-Analysis: v=2.4 cv=JJk7s9Kb c=1 sm=1 tr=0 ts=68789d8e cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=Ki5fnJvzvo7yLsyA0quaxQ==:17
- a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=QkW7CUjfO7Dj9zUrQigA:9
- a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170058
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADOeeGgC/y2NywqDMBBFfyXMugNG8IG/UlzkMbUDOmmTWATx3
+ xtrl+fCOXeHRJEpwaB2iPThxEEK6JsC9zQyEbIvDHVVN1WnO7QsnmVK6MNqZ0IX5iDYe2290U3
+ vtIXiviI9ePt17+PFkd5ryedrBGvSKS8L50EJbRn/Fy2Mx/EFYecOOZgAAAA=
+X-Change-ID: 20250717-bindings-double-colon-8d1bda158c1b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
+ Martin Botka <martin.botka@somainline.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+ Robert Marko <robert.markoo@sartura.hr>, Shawn Guo <shawn.guo@linaro.org>, 
+ Vinod Koul <vkoul@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+ krishna Lanka <quic_vamslank@quicinc.com>, Iskren Chernev <me@iskren.info>, 
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+ Imran Shaik <quic_imrashai@quicinc.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Ajit Pandey <quic_ajipan@quicinc.com>, Danila Tikhonov <danila@jiaxyga.com>, 
+ David Wronek <david@mainlining.org>, Jens Reidel <adrian@travitia.xyz>, 
+ Priya Kakitapalli <quic_skakitap@quicinc.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Georgi Djakov <djakov@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pm@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752735293; l=6310;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=dxlncHAvtyo7S9r9a4Bw93GIWIXwdIGumSxNnKv+9i8=;
+ b=4vFdUo3rnWGztC9lQOpPPSWNfnpRHIT6umk1THV2EBX6PKhs3v0lEPSq5L+diUpMVJlkC6n3g
+ Try9PArneU4Bu8kIZhL6IqpJ6AVcuIlqKrV2w2zS0mlq+42R/vcb1Lo
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On 17/07/25 00:37:33, Bryan O'Donoghue wrote:
-> On 15/07/2025 21:47, Jorge Ramirez-Ortiz wrote:
-> > The encoding and decoding capabilities of a VPU can vary depending on the
-> > firmware version in use.
-> > 
-> > This commit adds support for platforms with OF_DYNAMIC enabled to
-> > conditionally skip the creation of codec device nodes at runtime if the
-> > loaded firmware does not support the corresponding functionality.
-> > 
-> > Note that the driver becomes aware of the firmware version only after the
-> > HFI layer has been initialized.
-> > 
-> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> > ---
-> >   drivers/media/platform/qcom/venus/core.c | 76 +++++++++++++++---------
-> >   drivers/media/platform/qcom/venus/core.h |  8 +++
-> >   2 files changed, 57 insertions(+), 27 deletions(-)
-> > 
-> > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> > index 4c049c694d9c..b7d6745b6124 100644
-> > --- a/drivers/media/platform/qcom/venus/core.c
-> > +++ b/drivers/media/platform/qcom/venus/core.c
-> > @@ -28,6 +28,15 @@
-> >   #include "pm_helpers.h"
-> >   #include "hfi_venus_io.h"
-> > +static inline bool venus_fw_supports_codec(struct venus_core *core,
-> > +					   const struct venus_min_fw *ver)
-> > +{
-> > +	if (!ver)
-> > +		return true;
-> > +
-> > +	return is_fw_rev_or_newer(core, ver->major, ver->minor, ver->rev);
-> > +}
-> > +
-> >   static void venus_coredump(struct venus_core *core)
-> >   {
-> >   	struct device *dev;
-> > @@ -103,7 +112,9 @@ static void venus_sys_error_handler(struct work_struct *work)
-> >   	core->state = CORE_UNINIT;
-> >   	for (i = 0; i < max_attempts; i++) {
-> > -		if (!pm_runtime_active(core->dev_dec) && !pm_runtime_active(core->dev_enc))
-> > +		/* Not both nodes might be available */
-> 
-> "Neither node available" the latter for preference.
+As requested by Rob[0], remove the double colons found in various
+bindings with "See also:: ".
 
-what about "One or both nodes may be unavailable" ?
+[0] https://lore.kernel.org/lkml/20250625150458.GA1182597-robh@kernel.org/
 
-> 
-> > +		if ((!core->dev_dec || !pm_runtime_active(core->dev_dec)) &&
-> > +		    (!core->dev_enc || !pm_runtime_active(core->dev_enc)))
-> 
-> Is this change about registration or is it a fix trying to sneak in under
-> the radar ?
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (3):
+      dt-bindings: clock: qcom: Remove double colon from description
+      dt-bindings: interconnect: qcom: Remove double colon from description
+      dt-bindings: soc: qcom,rpmh-rsc: Remove double colon from description
 
-I think this functionality - the ability to enable or disable individual
-encode/decode nodes based on firmware capabilities - should be standard
-across multimedia drivers.
+ Documentation/devicetree/bindings/clock/qcom,camcc-sm8250.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-qcm2290.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sdx55.yaml            | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml            | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm6125.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm6350.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm8350.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,msm8998-gpucc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,qcm2290-dispcc.yaml       | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,qdu1000-ecpricc.yaml      | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sa8775p-gcc.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7180-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml   | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7280-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml       | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sdm845-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml       | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sdx75-gcc.yaml            | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm4450-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm4450-gcc.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6115-gpucc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6125-gpucc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6350-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6375-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm6375-gpucc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm7150-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm7150-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm7150-gcc.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm7150-videocc.yaml       | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm8150-camcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml        | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,sm8650-gcc.yaml           | 2 +-
+ Documentation/devicetree/bindings/clock/qcom,x1e80100-gcc.yaml         | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml  | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sar2130p-rpmh.yaml | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sc7280-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sc8280xp-rpmh.yaml | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sm8450-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sm8550-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sm8650-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,sm8750-rpmh.yaml   | 2 +-
+ Documentation/devicetree/bindings/interconnect/qcom,x1e80100-rpmh.yaml | 2 +-
+ Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml          | 2 +-
+ 70 files changed, 70 insertions(+), 70 deletions(-)
+---
+base-commit: 4d088c49d1e49e0149aa66908c3e8722af68ed07
+change-id: 20250717-bindings-double-colon-8d1bda158c1b
 
-For example, on the AR50_LITE platform, the _current_ driver/firmware
-combo does not support encoding as it requires secure buffer handling
-which is not yet implemented in the kernel (changes to iommu, etc)
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-So, rather than disabling Venus entirely, I think it makes sense to
-expose the decoder node, which remains fully functional and unaffected
-by the secure buffer requirement.
-
-Hence this commit (so yeah, I am not trying to sneak a fix, I swear!) 
-
-> 
-> >   			break;
-> >   		msleep(10);
-> >   	}
-> > @@ -202,7 +213,8 @@ static u32 to_v4l2_codec_type(u32 codec)
-> >   	}
-> >   }
-> > -static int venus_enumerate_codecs(struct venus_core *core, u32 type)
-> > +static int venus_enumerate_codecs(struct venus_core *core, u32 type,
-> > +				  const struct venus_min_fw *ver)
-> >   {
-> >   	const struct hfi_inst_ops dummy_ops = {};
-> >   	struct venus_inst *inst;
-> > @@ -213,6 +225,9 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
-> >   	if (core->res->hfi_version != HFI_VERSION_1XX)
-> >   		return 0;
-> > +	if (!venus_fw_supports_codec(core, ver))
-> > +		return 0;
-> Its not really a codec you're checking there, its a version.
-> 
-> The name should reflect that.
-
-but the check isn't just about the firmware version: it is about whether
-the firmware in use supports a specific coded based on the firmware
-version knowledge built in the driver.
-
-so really, while the logic involves a version check, it is really about
-the codec capability.
-
-I could rename it as is_codec_enabled_by_fw() if the current naming is
-not clear.
-
-> 
-> > +
-> >   	inst = kzalloc(sizeof(*inst), GFP_KERNEL);
-> >   	if (!inst)
-> >   		return -ENOMEM;
-> > @@ -288,14 +303,14 @@ static irqreturn_t venus_isr_thread(int irq, void *dev_id)
-> >   #if defined(CONFIG_OF_DYNAMIC)
-> >   static int venus_add_video_core(struct venus_core *core, const char *node_name,
-> > -				const char *compat)
-> > +				const char *compat, const struct venus_min_fw *ver)
-> >   {
-> >   	struct of_changeset *ocs = core->ocs;
-> >   	struct device *dev = core->dev;
-> >   	struct device_node *np, *enp;
-> >   	int ret;
-> > -	if (!node_name)
-> > +	if (!node_name || !venus_fw_supports_codec(core, ver))
-> >   		return 0;
-> >   	enp = of_find_node_by_name(dev->of_node, node_name);
-> > @@ -330,11 +345,13 @@ static int venus_add_dynamic_nodes(struct venus_core *core)
-> >   	of_changeset_init(core->ocs);
-> > -	ret = venus_add_video_core(core, core->res->dec_nodename, "venus-decoder");
-> > +	ret = venus_add_video_core(core, core->res->dec_nodename, "venus-decoder",
-> > +				   core->res->dec_minfw);
-> >   	if (ret)
-> >   		goto err;
-> > -	ret = venus_add_video_core(core, core->res->enc_nodename, "venus-encoder");
-> > +	ret = venus_add_video_core(core, core->res->enc_nodename, "venus-encoder",
-> > +				   core->res->enc_minfw);
-> >   	if (ret)
-> >   		goto err;
-> > @@ -363,6 +380,9 @@ static void venus_remove_dynamic_nodes(struct venus_core *core)
-> >   #else
-> >   static int venus_add_dynamic_nodes(struct venus_core *core)
-> >   {
-> > +	WARN_ONCE(core->res->enc_minfw || core->res->dec_minfw,
-> > +		  "Feature not supported");
-> > +
-> >   	return 0;
-> >   }
-> > @@ -432,7 +452,7 @@ static int venus_probe(struct platform_device *pdev)
-> >   					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> >   					"venus", core);
-> >   	if (ret)
-> > -		goto err_core_put;
-> > +		goto err_hfi_destroy;
-> >   	venus_assign_register_offsets(core);
-> > @@ -448,19 +468,9 @@ static int venus_probe(struct platform_device *pdev)
-> >   	if (ret < 0)
-> >   		goto err_runtime_disable;
-> > -	if (core->res->dec_nodename || core->res->enc_nodename) {
-> > -		ret = venus_add_dynamic_nodes(core);
-> > -		if (ret)
-> > -			goto err_runtime_disable;
-> > -	}
-> > -
-> > -	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> > -	if (ret)
-> > -		goto err_remove_dynamic_nodes;
-> > -
-> >   	ret = venus_firmware_init(core);
-> >   	if (ret)
-> > -		goto err_of_depopulate;
-> > +		goto err_runtime_disable;
-> >   	ret = venus_boot(core);
-> >   	if (ret)
-> > @@ -474,34 +484,46 @@ static int venus_probe(struct platform_device *pdev)
-> >   	if (ret)
-> >   		goto err_venus_shutdown;
-> > -	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_DEC);
-> > +	if (core->res->dec_nodename || core->res->enc_nodename) {
-> > +		ret = venus_add_dynamic_nodes(core);
-> > +		if (ret)
-> > +			goto err_core_deinit;
-> > +	}
-> > +
-> > +	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> >   	if (ret)
-> > -		goto err_core_deinit;
-> > +		goto err_remove_dynamic_nodes;
-> > +
-> > +	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_DEC,
-> > +				     core->res->dec_minfw);
-> > +	if (ret)
-> > +		goto err_of_depopulate;
-> > -	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_ENC);
-> > +	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_ENC,
-> > +				     core->res->enc_minfw);
-> >   	if (ret)
-> > -		goto err_core_deinit;
-> > +		goto err_of_depopulate;
-> >   	ret = pm_runtime_put_sync(dev);
-> >   	if (ret) {
-> >   		pm_runtime_get_noresume(dev);
-> > -		goto err_core_deinit;
-> > +		goto err_of_depopulate;
-> >   	}
-> >   	venus_dbgfs_init(core);
-> >   	return 0;
-> > +err_of_depopulate:
-> > +	of_platform_depopulate(dev);
-> > +err_remove_dynamic_nodes:
-> > +	venus_remove_dynamic_nodes(core);
-> >   err_core_deinit:
-> >   	hfi_core_deinit(core, false);
-> >   err_venus_shutdown:
-> >   	venus_shutdown(core);
-> >   err_firmware_deinit:
-> >   	venus_firmware_deinit(core);
-> > -err_of_depopulate:
-> > -	of_platform_depopulate(dev);
-> > -err_remove_dynamic_nodes:
-> > -	venus_remove_dynamic_nodes(core);
-> >   err_runtime_disable:
-> >   	pm_runtime_put_noidle(dev);
-> >   	pm_runtime_disable(dev);
-> > diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> > index 5b1ba1c69adb..3af8386b78be 100644
-> > --- a/drivers/media/platform/qcom/venus/core.h
-> > +++ b/drivers/media/platform/qcom/venus/core.h
-> > @@ -50,6 +50,12 @@ struct bw_tbl {
-> >   	u32 peak_10bit;
-> >   };
-> > +struct venus_min_fw {
-> > +	u32 major;
-> > +	u32 minor;
-> > +	u32 rev;
-> > +};
-> 
-> I'd call this venus_firmware_version
-
-I guess you right- doing so will enable future extensibility if we need
-to do some different version checks. ok.
-
-> 
-> > +
-> >   enum vpu_version {
-> >   	VPU_VERSION_AR50,
-> >   	VPU_VERSION_AR50_LITE,
-> > @@ -92,6 +98,8 @@ struct venus_resources {
-> >   	u32 cp_nonpixel_start;
-> >   	u32 cp_nonpixel_size;
-> >   	const char *fwname;
-> > +	const struct venus_min_fw *enc_minfw;
-> > +	const struct venus_min_fw *dec_minfw;
-> 
-> and then I'd do as you have done here, indicate that the struct
-> venus_firmware_version is a *enc_min_fw_ver;
-
-ack
-
-> 
-> >   	const char *enc_nodename;
-> >   	const char *dec_nodename;
-> >   };
 
