@@ -1,66 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 456D9B08BBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:29:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91402B08BF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:51:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 61CFF17567E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 11:29:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E32A918926FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 11:51:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED91B29AB09;
-	Thu, 17 Jul 2025 11:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11B9A29ACF1;
+	Thu, 17 Jul 2025 11:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8KeEUQX"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTqXlo+A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC8228935C;
-	Thu, 17 Jul 2025 11:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E2128C013;
+	Thu, 17 Jul 2025 11:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752751794; cv=none; b=N+oh+aEd+bVHkuIQV7mnccJJNqeeBvtZdde4k4zkeuXotRiMFckj9MhE/ygs2hapYR4YKpoDChsAwj7m2VNcrDdefAKPtmZZua8Q7dTJrCdiP+6qY+y38owSBZW63O0fUljOXZDWi+G39zioVtIKWT7A40T/uFHHYLv1zi/8jRc=
+	t=1752753056; cv=none; b=eVl7/88Ao96A6n/pMtOUOgP9gQBqXAAuEfdpj9H958TIjSjgIHP6pr9jTFrZ3gVuuj4mjx7iuvlLGclq59EkXODXQTXJjvxv40xpibjZKnuOTBsl4mbHrKeCh8H67Z/XTgHRBPmO5jJZa3opXydalkztJ4CKIL6YuZxxWrlroiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752751794; c=relaxed/simple;
-	bh=1IupY/CooA5f6pTF5w5s9P710FrsORD0Fd3kcUZOJkk=;
+	s=arc-20240116; t=1752753056; c=relaxed/simple;
+	bh=x26YnKgFXiZTAWqxIvJAtnfbKzIx3/H/HKa+m9DMCJw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gcovE+t6sYcMCxFs/+RF/57ylfMQ0DPqg7lzWwk2m3XjPpGuEJzuRSg4FH40uQFekNaNhk6ifNN7krbDGl7XDkx7ww8VKfP7Ui68fX8JhXonBid3kaDOMM7c8Al1mRQBTyBoHSXdZ6HOH057UIv5K1HTHK2v2MeNbnMWbRT3pCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8KeEUQX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81258C4CEE3;
-	Thu, 17 Jul 2025 11:29:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752751794;
-	bh=1IupY/CooA5f6pTF5w5s9P710FrsORD0Fd3kcUZOJkk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=e9ukBaf5k8IFHjtzT7LJ0hKcOaDYtd9B9Gvkj8tktYu9uR3psKhhkkZeh+k50lvFPngBWuMte+JEMZ48BcwkkNlU2bm3j/4rotY4OhdOB14jmtPECjPvV11+4nwIPt0vqSJSleEUP8ASAp24s1o7Ff9UQ4N8pdAVl30/dv60tx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTqXlo+A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A1DC4CEE3;
+	Thu, 17 Jul 2025 11:50:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1752753055;
+	bh=x26YnKgFXiZTAWqxIvJAtnfbKzIx3/H/HKa+m9DMCJw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D8KeEUQXcg+1wnwbQNzAzQ/n9tnkOAg7Au4X3cFOHr7O4BvmKNAB/yHXs0QaRPvu9
-	 OXfKJmgdOGZeO8BnednyRslMU3sZhQdALSDu5F/k42bKOS2H+GlKvGro9zMHxbhbFs
-	 3FtlsoYJXdxINg3qjEGUcQUkqS6lpVGd/cSgFLbpSZGQJOC7i1MPrTdzsl67kHdCzs
-	 SZh2XGyU0SXLPyskQ+d2hNQs1C9xxmcHcSjFawNXYRFUFIrAjreR35aEbZpbXfCHYr
-	 O8KE5bgHoXe84Mvy38u4gaaeu2zWhiTD3uWSN28rke7U/AfOKhYZ8yELOR64NfuA73
-	 4oilaLZmvjm0A==
-Date: Thu, 17 Jul 2025 16:59:42 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
-	Bjorn Helgaas <helgaas@kernel.org>, ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Qiang Yu <qiang.yu@oss.qualcomm.com>
-Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
- APIs to enable/disable ASPM states
-Message-ID: <o2gqqty6lakc4iw7vems2dejh6prjyl746gnq4gny4sxdxl65v@zmqse3244afv>
-References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
- <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
- <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
- <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
- <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
+	b=wTqXlo+AEfo/4GihqL+0jf/USYAtbcf+mI+iLJAZAXq3jTjmEqMYtopDv1lnrkKYZ
+	 udnPUN/j5Ex9AS2Zxf/TR6OlRz1Z0IKp3KuF64Xb+5L1W8WAfC7V4HD2G6SxTzAU12
+	 16CLh5ba7oHf7esLyXOTn21iDUVn7o56F5cotRFE=
+Date: Thu, 17 Jul 2025 13:50:52 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Matthew Leung <quic_mattleun@quicinc.com>,
+	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Yan Zhen <yanzhen@vivo.com>, Sujeev Dias <sdias@codeaurora.org>,
+	Siddartha Mohanadoss <smohanad@codeaurora.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	kernel@collabora.com, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] bus: mhi: host: keep bhi buffer through suspend
+ cycle
+Message-ID: <2025071722-panther-legwarmer-d2be@gregkh>
+References: <20250715132509.2643305-1-usama.anjum@collabora.com>
+ <20250715132509.2643305-2-usama.anjum@collabora.com>
+ <2025071604-scandal-outpost-eb22@gregkh>
+ <9c9d0302-bbb8-468f-8be5-5a3e0015528f@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,143 +69,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
+In-Reply-To: <9c9d0302-bbb8-468f-8be5-5a3e0015528f@collabora.com>
 
-On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
+On Thu, Jul 17, 2025 at 03:00:14PM +0500, Muhammad Usama Anjum wrote:
+> Hi Greg,
 > 
-> 
-> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
-> > On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
+> On 7/16/25 2:34 PM, Greg Kroah-Hartman wrote:
+> > On Tue, Jul 15, 2025 at 06:25:07PM +0500, Muhammad Usama Anjum wrote:
+> >> When there is memory pressure, at resume time dma_alloc_coherent()
+> >> returns error which in turn fails the loading of firmware and hence
+> >> the driver crashes:
+> >>
+> >> kernel: kworker/u33:5: page allocation failure: order:7,
+> >> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+> >> kernel: CPU: 1 UID: 0 PID: 7693 Comm: kworker/u33:5 Not tainted 6.11.11-valve17-1-neptune-611-g027868a0ac03 #1 3843143b92e9da0fa2d3d5f21f51beaed15c7d59
+> >> kernel: Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
+> >> kernel: Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+> >> kernel: Call Trace:
+> >> kernel:  <TASK>
+> >> kernel:  dump_stack_lvl+0x4e/0x70
+> >> kernel:  warn_alloc+0x164/0x190
+> >> kernel:  ? srso_return_thunk+0x5/0x5f
+> >> kernel:  ? __alloc_pages_direct_compact+0xaf/0x360
+> >> kernel:  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+> >> kernel:  __alloc_pages_noprof+0x321/0x350
+> >> kernel:  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+> >> kernel:  dma_direct_alloc+0x70/0x270
+> >> kernel:  mhi_fw_load_handler+0x126/0x340 [mhi a96cb91daba500cc77f86bad60c1f332dc3babdf]
+> >> kernel:  mhi_pm_st_worker+0x5e8/0xac0 [mhi a96cb91daba500cc77f86bad60c1f332dc3babdf]
+> >> kernel:  ? srso_return_thunk+0x5/0x5f
+> >> kernel:  process_one_work+0x17e/0x330
+> >> kernel:  worker_thread+0x2ce/0x3f0
+> >> kernel:  ? __pfx_worker_thread+0x10/0x10
+> >> kernel:  kthread+0xd2/0x100
+> >> kernel:  ? __pfx_kthread+0x10/0x10
+> >> kernel:  ret_from_fork+0x34/0x50
+> >> kernel:  ? __pfx_kthread+0x10/0x10
+> >> kernel:  ret_from_fork_asm+0x1a/0x30
+> >> kernel:  </TASK>
+> >> kernel: Mem-Info:
+> >> kernel: active_anon:513809 inactive_anon:152 isolated_anon:0
+> >>     active_file:359315 inactive_file:2487001 isolated_file:0
+> >>     unevictable:637 dirty:19 writeback:0
+> >>     slab_reclaimable:160391 slab_unreclaimable:39729
+> >>     mapped:175836 shmem:51039 pagetables:4415
+> >>     sec_pagetables:0 bounce:0
+> >>     kernel_misc_reclaimable:0
+> >>     free:125666 free_pcp:0 free_cma:0
 > > 
-> > [...]
-> > 
-> >>> @@ -16,6 +16,8 @@
-> >>>  #include "mhi.h"
-> >>>  #include "debug.h"
-> >>>  
-> >>> +#include "../ath.h"
-> >>> +
-> >>>  #define ATH12K_PCI_BAR_NUM		0
-> >>>  #define ATH12K_PCI_DMA_MASK		36
-> >>>  
-> >>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
-> >>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
-> >>>  
-> >>>  	/* disable L0s and L1 */
-> >>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> >>> -				   PCI_EXP_LNKCTL_ASPMC);
-> >>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
-> >>
-> >> Not always, but sometimes seems the 'disable' does not work:
-> >>
-> >> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
-> >> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
-> >>
-> >>
-> >>>  
-> >>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
-> >>>  }
-> >>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
-> >>>  {
-> >>>  	if (ab_pci->ab->hw_params->supports_aspm &&
-> >>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
-> >>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> >>> -						   PCI_EXP_LNKCTL_ASPMC,
-> >>> -						   ab_pci->link_ctl &
-> >>> -						   PCI_EXP_LNKCTL_ASPMC);
-> >>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
-> >>
-> >> always, the 'enable' is not working:
-> >>
-> >> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
-> >> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
-> >>
-> > 
-> > Interesting! I applied your diff and I never see this issue so far (across 10+
-> > reboots):
-> 
-> I was not testing reboot. Here is what I am doing:
-> 
-> step1: rmmod ath12k
-> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
-> the issue)
-> 
-> 	sudo setpci -s 02:00.0 0x80.B=0x43
-> 
-> step3: insmod ath12k and check linkctrl
-> 
-
-So I did the same and got:
-
-[ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
-[ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
-[ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
-[ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
-
-My host machine is Qcom based Thinkpad T14s and it doesn't support L0s. So
-that's why the lnkctl value once enabled becomes 0x42. This is exactly the
-reason why the drivers should not muck around LNKCTL register manually.
-
-> > 
-> > [    3.758239] ath12k_pci_power_up 1475: link_ctl 0x42
-> > [    3.758315] ath12k_pci_power_up 1480: link_ctl 0x40
-> > [    4.383900] ath12k_pci_start 1180: link_ctl 0x40
-> > [    4.384026] ath12k_pci_start 1185: link_ctl 0x42
-> > 
-> > Are you sure that you applied all the 6 patches in the series and not just the
-> > ath patches? Because, the first 3 PCI core patches are required to make the API
-> > work as intended.
-> 
-> pretty sure all of them:
-> 
-> $ git log --oneline
-> 07387d1bc17f (HEAD -> VALIDATE-pci-enable-link-state-behavior) wifi: ath12k: dump linkctrl reg
-> dbb3e5a7828b wifi: ath10k: Use pci_{enable/disable}_link_state() APIs to enable/disable
-> ASPM states
-> 392d7b3486b3 wifi: ath11k: Use pci_{enable/disable}_link_state() APIs to enable/disable
-> ASPM states
-> f2b0685c456d wifi: ath12k: Use pci_{enable/disable}_link_state() APIs to enable/disable
-> ASPM states
-> b1c8fad998f1 PCI/ASPM: Improve the kernel-doc for pci_disable_link_state*() APIs
-> b8f5204ba4b0 PCI/ASPM: Transition the device to D0 (if required) inside
-> pci_enable_link_state_locked() API
-> 186b1bbd4c62 PCI/ASPM: Fix the behavior of pci_enable_link_state*() APIs
-> 5a1ad8faaa16 (tag: ath-202507151704, origin/master, origin/main, origin/HEAD) Add
-> localversion-wireless-testing-ath
-> 
-
-Ok!
-
+> > This is not a "crash", it is a warning that your huge memory allocation
+> > did not succeed.  Properly handle this issue (and if you know it's going
+> > to happen, turn the warning off in your allocation), and you should be
+> > fine.
+> Yes, the system is fine. But wifi/sound drivers fail to reinitialize.
 > 
 > > 
-> >>
-> >>>  }
-> >>>  
-> >>>  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
-> >>>
-> >>
-> >> In addition, frequently I can see below AER warnings:
-> >>
-> >> [  280.383143] aer_ratelimit: 30 callbacks suppressed
-> >> [  280.383151] pcieport 0000:00:1c.0: AER: Correctable error message received from
-> >> 0000:00:1c.0
-> >> [  280.383177] pcieport 0000:00:1c.0: PCIe Bus Error: severity=Correctable, type=Data Link
-> >> Layer, (Transmitter ID)
-> >> [  280.383184] pcieport 0000:00:1c.0:   device [8086:7ab8] error status/mask=00001000/00002000
-> >> [  280.383193] pcieport 0000:00:1c.0:    [12] Timeout
-> >>
+> >> In above example, if we sum all the consumed memory, it comes out
+> >> to be 15.5GB and free memory is ~ 500MB from a total of 16GB RAM.
+> >> Even though memory is present. But all of the dma memory has been
+> >> exhausted or fragmented.
 > > 
-> > I don't see any AER errors either.
+> > What caused that to happen?
+> Excessive use of the page cache occurs when user-space applications open
+> and consume large amounts of file system memory, even if those files are
+> no longer being actively read. I haven't found any documentation on limiting
+> the size of the page cache or preventing it from occupying DMA-capable
+> memory—perhaps the MM developers can provide more insight.
 > 
-> My WLAN chip is attached via a PCIe-to-M.2 adapter, maybe some hardware issue? However I
-> never saw them until your changes applied.
-> 
+> I can reproduce this issue by running stress tests that create and
+> sequentially read files. On a system with 16GB of RAM, the page cache can
+> easily grow to 10–12GB. Since the kernel manages the page cache, it's unclear
+> why it doesn't reclaim inactive cache more aggressively.
 
-I don't think it should matter. I have an Intel NUC lying around with QCA6390
-attached via M.2. Let me test this change on that and report back the result.
+It should be reclaiming this, as it's just cache, not really used
+memory.  I think something isn't tuned properly for your system, OR your
+drivers are asking for way too much memory.  Either way, the correct
+solution is NOT to have the drivers consume even more memory, that just
+makes the overall system less useful.
 
-- Mani
+good luck!
 
--- 
-மணிவண்ணன் சதாசிவம்
+greg k-h
 
