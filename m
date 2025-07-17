@@ -1,44 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-65336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69050B082D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:21:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E779B082DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:24:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3A7387A808B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 02:20:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96876174126
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 02:24:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADD1319F421;
-	Thu, 17 Jul 2025 02:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59DB61E8323;
+	Thu, 17 Jul 2025 02:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QT8pHaeZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB7C2904;
-	Thu, 17 Jul 2025 02:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3233F1E520A;
+	Thu, 17 Jul 2025 02:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752718888; cv=none; b=VueTrlcYLR2t1a4sHspxIYyGOxpcVdbhLfUHHMVNkpnQu+FnoJ0c1cS1x7OjhMpaUtDitrIY7abLUjFwRPtNt3dnElYKqMFA+P/Tu1oOHvIAM+XOede3lNLzyQoKbuGGEIxA/L9PSDUZsdK8qSdUTIlUfeg8JqOBZqff495Od8Y=
+	t=1752719047; cv=none; b=BcmyvbCghW2eP/5OZtfUFbgh00RzbaUznYsWq46Diht7atEhP1Nx0cNCurhoeD549PZFImAeNCd5F8UrRiMaQN4RNHooMHisbhv4QafMNlt3QSqoF2V2DCAkKdsjICRgQDTDbup+GMxS4RjOkqpZPsaBnCe0j0VTYZIDqNH2++g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752718888; c=relaxed/simple;
-	bh=BXBFahkK39BOEpvY5tmFn9l1LNKikZ5S4KKO3mi3tAg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jyDN7sb4IXOMd3/+uhDfMOOGV/9JzVTMZfJmko81Z6plX0FNkx7bO6zh/WqQ+fkx0QaHyXlB0uHuA1wopsAhbb/wkiu2pMy5hAN5nnE8xd5ddRkrXbtEtsB3WaPMrmRmj5SZ4FiDLs8wFZuIyaE8cj01xH9cp9IVlAQW0TqPuK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpgz7t1752718861t8873202c
-X-QQ-Originating-IP: Zl/o0y9rYQVp35UT5ekeseH22v+Sdn/qwiqeQJnkDl0=
-Received: from [127.0.0.1] ( [119.98.96.24])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 17 Jul 2025 10:20:59 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 3465737500828252999
-Message-ID: <A9DB4AE061FD8BB9+3519a519-1a29-49c1-a07d-28a0577677cc@radxa.com>
-Date: Thu, 17 Jul 2025 10:21:01 +0800
+	s=arc-20240116; t=1752719047; c=relaxed/simple;
+	bh=JLEN+HD6BNOj/WuHKqORGumCZiQrdy/bcPVmiJYTj0g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Qt4GIa5FWXZoVr5ur6SFut1s8RNUiVXcmaZT42QafoWkliShN2a2HUZtfZQYGiVbxQdEqRjzAFHgCn6QMFj07D/6kxkb8HdAapBmJDwZlnt6EEaygsCDy0g5mqbSN5hvlcq7AUB80I/IV79S6EUihqZ+PjyiiQ83E5oEhifk7F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QT8pHaeZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GGDRvM025369;
+	Thu, 17 Jul 2025 02:23:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	i+DfdxtuIvR2BzrMlwN2CJJomdoX7I//dIsC1iLbNak=; b=QT8pHaeZ6LOdpknv
+	MYT2QIHvyojdEra9Jk6wexI9SULbW5Kt7/y/1KHAVsyUxLS7RL6sClHtbKEje7x7
+	y/URPm6fqo5t0tMpK8JJvQo2la3Ri8t7a4VewJPeDZLPFOgG3Qsh4uEUUfQN1AjO
+	yQ0GzWX9hWgnPv+n1YoiplVBXip2xPpDB4YTcziTEtlQhuLIXyt7n/21eNwh9r+0
+	yhj1/WcnFCoz/BwEpdnCrN/zVKQ4p0X4LB3KLCCZEn7FMNrx00OCC98fTXb4ejUv
+	FoIxorqYBHm3Xos1KrXu+B06P8ZMW6bjo3nCCbzH5rv9v/afhDd6YrrfTYDOxEcJ
+	+c/57Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47xbsqa6j1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Jul 2025 02:23:56 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56H2Nt0E028532
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Jul 2025 02:23:55 GMT
+Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 16 Jul
+ 2025 19:23:51 -0700
+Message-ID: <77620d80-0fd6-4878-ac74-0e81022544f7@quicinc.com>
+Date: Thu, 17 Jul 2025 10:23:48 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,110 +65,239 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] drm/msm/dp: Work around bogus maximum link rate
-To: Dale Whinham <daleyo@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250714173554.14223-1-daleyo@gmail.com>
- <20250714173554.14223-7-daleyo@gmail.com>
-From: Xilin Wu <sophon@radxa.com>
+Subject: Re: [PATCH v7 3/4] misc: fastrpc: Cleanup the domain names
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <konradybcio@kernel.org>,
+        <arnd@arndb.de>, <gregkh@linuxfoundation.org>, <quic_kuiw@quicinc.com>,
+        <ekansh.gupta@oss.qualcomm.com>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>
+References: <20250714054133.3769967-1-quic_lxu5@quicinc.com>
+ <20250714054133.3769967-4-quic_lxu5@quicinc.com>
+ <p7la5xeudperckksogd2qsxjmvj2q33gud36aylrt3dlfusqnc@243j5siplhoy>
 Content-Language: en-US
-In-Reply-To: <20250714173554.14223-7-daleyo@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ling Xu <quic_lxu5@quicinc.com>
+In-Reply-To: <p7la5xeudperckksogd2qsxjmvj2q33gud36aylrt3dlfusqnc@243j5siplhoy>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: M8Zk4Li7PoFid/VxHKjo5b8QKkzFdNQQuHP1KAflGhYlWPxpwZEx9S8o
-	6ZckWVnLd7CnHqzGLZDcIThHfIKESj1IzieJBeXmbsFZlRI47qTPY9CPjfTaELz00kPtNSR
-	IuXemccbSOu6+dt0wdp0zsF2IuGpp5+Q795NFbLsPOZvSCQhJAbN6i4khFbv+P4aPkFKn1l
-	p7DIRtXYswapOzfG8s6R9PkmVGixGvWV60scONWPClLHXmtAWHxNW8zs4MiH3TEUh+TUn3T
-	foYgkAdJvOKIXb5/jPVhauIbx2ezevWHb+o9gBCzA6c5dTvDV+gmFvMgRNnG8WQ1zkQOp08
-	Qdt32gBADTGWCJiF43s6Es4Wyt/47F5ZTwiVTnyguzpGFq3si/zkMCJvBQpRJ4SjgVBdo1v
-	MxnbYlOKl4YnUcvOzzNORXtUmrfakIM7rbnMFSlvVaN4KoJGTQ4gbdfgGMf08borXrA36QH
-	AXA53yn5KDwI30ULFhb2dKuNbJKt/P0j/H+qv+Zl3hncxQkfC+OIv+Q/g4yrsffYESgQR0Y
-	OyWcOk8aZyr9z3TD2VGA0UA9JAmAv4T2kk/LyB2PDihYg6qnsyZM8ARWaHkk3iwa+l1Ml+u
-	TcYeHhCE7huLzVnDCgWMqqxSLBJeZ7wXYisTiZkdGfqPAvbh5Q8Iy3aXt6oA4hthZ5CCvqZ
-	ogIgn3SJj1zgIPZ5EHGuGkUPApTAIwXNEZ9E9Mqv8Ul8KzWLiG52LIXjViQ00dZeD3Iudvw
-	Lr3t1QAWkPS4+Zv7FBZxz+7dCoJG1HoKESNg5FmfQF3oM6PSsWk5/brJt7RDGmy1wmXusAk
-	nMyyFmzLxj1KNoLlqxK3he6Vf72wB5V9xjOIIfBG2oxTMUYuLXYEER7xYOR7jouiz8MrlKd
-	o9ZIku2FiYPPHCXD44bP4USWZGljotkTQ1PTJykGE7+ytX/TZ9npLrBBGHzVvTrSVDirkRA
-	oYWTRuL6PkXIpXdO/VvsaBlnFXYxI03UnCSOJcW/jPD7/P29+NEc/odyqN0UwhailnVZWMX
-	yUH+XekAhgg0sKDd5qZVjuZ6+G613b2NUpgGXE4Q==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=ad1hnQot c=1 sm=1 tr=0 ts=68785ebd cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=ANeK8bI-BXgzLtl00b4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-_B0kFfA75AA:10 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 1B2xP9KJXgl836DFVB0K2CuJg23qEWtn
+X-Proofpoint-GUID: 1B2xP9KJXgl836DFVB0K2CuJg23qEWtn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDAyMCBTYWx0ZWRfX2ojxT0xbwaP1
+ 692L1L21KJaCvypPoOvN7WeFGGVxbQ9dlZ8HRFbQZJV6jDez7sH4+0cAe9CgrDWR6Jls65xZWO0
+ S1CufJIjLmOlzCxveUNfJackVjevaxA2vtUtsN4LCCEgxZDMWf9JoouQSCx20lDSSwxQX79a7tv
+ dqsOUseX8wkAFe89uMgAE/fHEu+8WHwsLRvPrNu9dIZ9v3o6oc6p6t8RxhOKsVJ71KGwMNPLpRO
+ A29ix7qw8J0rGEQHYsnxauZZGvlPbFmWGIcIRPA37L7t0zQO/ypvDFhY6VceIayRjiDF7HjYvZi
+ 7g856zoOd9e+zPMyoxTLWscgI3s0ndV5E5mNN7Pge0lTpDGkGOehmSwWhnH3B7qJKhVOJRaBApD
+ NjPpr/xHBb6xzdNpDCzzW04kIZnOzYjlboMUlFht3361v61KurRb7B9cZRi6lMxfBUfMM3vi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
+ malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507170020
 
-On 2025/7/15 01:35:42, Dale Whinham wrote:
-> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+在 7/17/2025 3:28 AM, Bjorn Andersson 写道:
+> On Mon, Jul 14, 2025 at 11:11:32AM +0530, Ling Xu wrote:
+>> Currently the domain ids are added for each instance of domains, this is
+>> totally not scalable approach.
 > 
-> The OLED display in the Surface Pro 11 reports a maximum link rate of
-> zero in its DPCD, causing it to fail to probe correctly.
+> This sentence only makes sense for people in your team or participants
+> of some recent meeting or (private) mail thread of yours. When providing
+> you problem description [1], do so in a way that it makes sense to
+> people outside that bubble - and yourself next month.
 > 
-> The Surface Pro 11's DSDT table contains some XML with an
-> "EDPOverrideDPCDCaps" block that defines the max link rate as 0x1E
-> (8.1Gbps/HBR3).
+> [1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
 > 
-> Add a quirk to conditionally override the max link rate if its value
-> is zero specifically for this model.
+>> Clean this mess and create domain ids for
+>> only domains not its instances.
+>>
 > 
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> Signed-off-by: Dale Whinham <daleyo@gmail.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_panel.c | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
+> Is the "mess" that the domain is part of the ioctl, or is the mess that
+> the names of the domains are defined in an array and you prefer them to
+> be listed out in code (fastrpc_get_domain_id())?
+I already split this to 2 changes in latest patch, mess means we created domain ids
+for its instances.
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 4e8ab75c771b..b2e65b987c05 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -11,6 +11,8 @@
->   #include <drm/drm_of.h>
->   #include <drm/drm_print.h>
->   
-> +#include <linux/dmi.h>
-> +
->   #define DP_MAX_NUM_DP_LANES	4
->   #define DP_LINK_RATE_HBR2	540000 /* kbytes */
->   
-> @@ -58,6 +60,17 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
->   	if (rc)
->   		return rc;
->   
-> +	/*
-> +	 * for some reason the ATNA30DW01-1 OLED panel in the Surface Pro 11
-> +	 * reports a max link rate of 0 in the DPCD. Fix it to match the
-> +	 * EDPOverrideDPCDCaps string found in the ACPI DSDT
-> +	 */
-> +	if (dpcd[DP_MAX_LINK_RATE] == 0 &&
-> +	    dmi_match(DMI_SYS_VENDOR, "Microsoft Corporation") &&
-> +	    dmi_match(DMI_PRODUCT_NAME, "Microsoft Surface Pro, 11th Edition")) {
-> +		dpcd[1] = DP_LINK_BW_8_1;
-> +	}
-> +
-
-My Galaxy Book4 Edge with the ATNA60CL07-0 panel also reports a max link 
-rate of 0. But I think eDP v1.4 panels need a different way to retrieve 
-supported links rates, which could be found in the amdgpu [1], i915 [2] 
-and nouveau [3] drivers.
-
-[1]: 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c#n2098
-[2]: 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/i915/display/intel_dp.c#n4281
-[3]: 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/nouveau/nouveau_dp.c#n101
-
-
->   	msm_dp_panel->vsc_sdp_supported = drm_dp_vsc_sdp_supported(panel->aux, dpcd);
->   	link_info = &msm_dp_panel->link_info;
->   	link_info->revision = dpcd[DP_DPCD_REV];
-
+>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>> ---
+>>  drivers/misc/fastrpc.c      | 50 ++++++++++++++++---------------------
+>>  include/uapi/misc/fastrpc.h |  2 +-
+>>  2 files changed, 22 insertions(+), 30 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 378923594f02..85b6eb16b616 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -27,8 +27,6 @@
+>>  #define MDSP_DOMAIN_ID (1)
+>>  #define SDSP_DOMAIN_ID (2)
+>>  #define CDSP_DOMAIN_ID (3)
+>> -#define CDSP1_DOMAIN_ID (4)
+>> -#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>>  #define FASTRPC_MAX_SESSIONS	14
+>>  #define FASTRPC_MAX_VMIDS	16
+>>  #define FASTRPC_ALIGN		128
+>> @@ -106,8 +104,6 @@
+>>  
+>>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>>  
+>> -static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+>> -						"sdsp", "cdsp", "cdsp1" };
+>>  struct fastrpc_phy_page {
+>>  	u64 addr;		/* physical address */
+>>  	u64 size;		/* size of contiguous region */
+>> @@ -1723,7 +1719,6 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+>>  	uint32_t attribute_id = cap->attribute_id;
+>>  	uint32_t *dsp_attributes;
+>>  	unsigned long flags;
+>> -	uint32_t domain = cap->domain;
+>>  	int err;
+>>  
+>>  	spin_lock_irqsave(&cctx->lock, flags);
+>> @@ -1741,7 +1736,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+>>  	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
+>>  	if (err == DSP_UNSUPPORTED_API) {
+>>  		dev_info(&cctx->rpdev->dev,
+>> -			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
+>> +			 "Warning: DSP capabilities not supported\n");
+>>  		kfree(dsp_attributes);
+>>  		return -EOPNOTSUPP;
+>>  	} else if (err) {
+>> @@ -1769,17 +1764,6 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>>  		return  -EFAULT;
+>>  
+>>  	cap.capability = 0;
+>> -	if (cap.domain >= FASTRPC_DEV_MAX) {
+>> -		dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
+>> -			cap.domain, err);
+>> -		return -ECHRNG;
+>> -	}
+>> -
+>> -	/* Fastrpc Capablities does not support modem domain */
+>> -	if (cap.domain == MDSP_DOMAIN_ID) {
+>> -		dev_err(&fl->cctx->rpdev->dev, "Error: modem not supported %d\n", err);
+>> -		return -ECHRNG;
+>> -	}
+>>  
+>>  	if (cap.attribute_id >= FASTRPC_MAX_DSP_ATTRIBUTES) {
+>>  		dev_err(&fl->cctx->rpdev->dev, "Error: invalid attribute: %d, err: %d\n",
+>> @@ -2255,6 +2239,20 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+>>  	return err;
+>>  }
+>>  
+>> +static int fastrpc_get_domain_id(const char *domain)
+>> +{
+>> +	if (!strncmp(domain, "adsp", 4))
+>> +		return ADSP_DOMAIN_ID;
+>> +	else if (!strncmp(domain, "cdsp", 4))
+>> +		return CDSP_DOMAIN_ID;
+>> +	else if (!strncmp(domain, "mdsp", 4))
+>> +		return MDSP_DOMAIN_ID;
+>> +	else if (!strncmp(domain, "sdsp", 4))
+>> +		return SDSP_DOMAIN_ID;
+>> +
+> 
+> The removed code performs a string compare and you replace this with a
+> string prefix compare, but there's no motivation given to why this is
+> done.
+> 
+> I'm also wondering why cdsp1 is now in CDSP_DOMAIN_ID, is that
+> intentional? Was it wrong before? If so, that change should be done
+> alone and with a Fixes: 
+> 
+cdsp1 use cdsp0 daemon, they are two instances but one domain.
+In kernel, we just care about the domains. we just give a scalable 
+approach without adding instances for any new dsp every time.
+> Regards,
+> Bjorn
+> 
+>> +	return -EINVAL;
+>> +}
+>> +
+>>  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>  {
+>>  	struct device *rdev = &rpdev->dev;
+>> @@ -2272,15 +2270,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>  		return err;
+>>  	}
+>>  
+>> -	for (i = 0; i < FASTRPC_DEV_MAX; i++) {
+>> -		if (!strcmp(domains[i], domain)) {
+>> -			domain_id = i;
+>> -			break;
+>> -		}
+>> -	}
+>> +	domain_id = fastrpc_get_domain_id(domain);
+>>  
+>>  	if (domain_id < 0) {
+>> -		dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
+>> +		dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> @@ -2330,21 +2323,20 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>  	case ADSP_DOMAIN_ID:
+>>  	case MDSP_DOMAIN_ID:
+>>  	case SDSP_DOMAIN_ID:
+>> -		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
+>> +		/* Unsigned PD offloading is only supported on CDSP */
+>>  		data->unsigned_support = false;
+>> -		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+>> +		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
+>>  		if (err)
+>>  			goto err_free_data;
+>>  		break;
+>>  	case CDSP_DOMAIN_ID:
+>> -	case CDSP1_DOMAIN_ID:
+>>  		data->unsigned_support = true;
+>>  		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
+>> -		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+>> +		err = fastrpc_device_register(rdev, data, true, domain);
+>>  		if (err)
+>>  			goto err_free_data;
+>>  
+>> -		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+>> +		err = fastrpc_device_register(rdev, data, false, domain);
+>>  		if (err)
+>>  			goto err_deregister_fdev;
+>>  		break;
+>> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+>> index f33d914d8f46..c6e2925f47e6 100644
+>> --- a/include/uapi/misc/fastrpc.h
+>> +++ b/include/uapi/misc/fastrpc.h
+>> @@ -134,7 +134,7 @@ struct fastrpc_mem_unmap {
+>>  };
+>>  
+>>  struct fastrpc_ioctl_capability {
+>> -	__u32 domain;
+>> +	__u32 unused; /* deprecated, ignored by the kernel */
+>>  	__u32 attribute_id;
+>>  	__u32 capability;   /* dsp capability */
+>>  	__u32 reserved[4];
+>> -- 
+>> 2.34.1
+>>
 
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+Thx and BRs,
+Ling Xu
+
 
