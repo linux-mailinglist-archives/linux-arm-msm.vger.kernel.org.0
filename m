@@ -1,61 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-65348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9C99B083D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:31:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62222B083D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:31:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 58C2B3A1893
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:31:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A92EF4A855F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5108F204096;
-	Thu, 17 Jul 2025 04:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C818820C469;
+	Thu, 17 Jul 2025 04:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j9d+e/fC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDwkfBVY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287B8202F8E;
-	Thu, 17 Jul 2025 04:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973171ADFFB;
+	Thu, 17 Jul 2025 04:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752726681; cv=none; b=LQdVmJFDizfgOFOMougJJbB+f0EDFnYVP1VwatMrrFSrqLEVEmjnl4qnuHi/Ink/uH8FQOA+7U0WP/Upa/VGnMY0kS+On4LgGAuHl7UujjioJkyHc+eqAQEU/A/KCmpFMlxR24A2L6JKGOtN46W/j773g5A5n18BlNEZmqabf/E=
+	t=1752726682; cv=none; b=CDsNy6KHHYtAzXwajv4odW3a9m1W1fTPnXIfe9w1mi9YWlxTNh0G6jVnzDOJTrMPy87z6jpqrvd+AIwGiNDBnhnA5ipcr5v+HUKLS6e3YHYSqvBiwYQZ5fYAWoDcq+Z/pE/zNaqNDsSS7qHzxgNWmL0JOrOvW2tmNukZLOuAsD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752726681; c=relaxed/simple;
-	bh=X1AIyDHKzYZygSLC+V1RSG35mq5EX3DPcH+j4nQtbC4=;
+	s=arc-20240116; t=1752726682; c=relaxed/simple;
+	bh=AYiGcW5LXQG22qWNR7kIzwJHzASQsDRufP44m+rTla4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pYoJ3XE9jAoHB736EOBFwiTdjjtXf8LqCM5n+awEWl3OsUT6rc0bT9ZtvRMQ/8h//US7UTDU89+mQfIaIE7ldbzV6HOMp+RvvT7f4lNosl3Pb0qOrhFbWmIK2KN6/ku6iylZZOpVB69O1u9PI20EgscOaYGOTU68s4nSSvWrLWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j9d+e/fC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668B8C4CEE3;
-	Thu, 17 Jul 2025 04:31:20 +0000 (UTC)
+	 MIME-Version:Content-Type; b=TsFEKmd5U6ySamszcgwcvCHb/eyVvp2v92urNwl+2w8uIbo5eFijFEpAlAMArQaWraVWGuz24m8QXR9TIHgOazGY3vOvJWNFydU1EJ/H7+IPEAk/qVLDA0wWi8Km+PrrZl7wzqO+IPNRsYv0cbkk2fkixrok+mIS/fJ5/EHISH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDwkfBVY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EB3C4CEFE;
+	Thu, 17 Jul 2025 04:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752726681;
-	bh=X1AIyDHKzYZygSLC+V1RSG35mq5EX3DPcH+j4nQtbC4=;
+	s=k20201202; t=1752726682;
+	bh=AYiGcW5LXQG22qWNR7kIzwJHzASQsDRufP44m+rTla4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9d+e/fCPvOq3mTMN+Bdts/D09iov//8lVGx1GXeOq97ZsRvyaIZh+/TiRhHOVyva
-	 MYBPj7hN/xJZSwi8Nld84tC8XTFiT1ObvBkR392C21xwqq0Hz3WDjB0+8c9Pd3J2Te
-	 Du3hkzlR22uOi4IqhPu4zK9pKmi/iF9OIbeK/bJa7fgpsyZUvalBfHu068DmuNil6X
-	 bSoV0sTiytd0N+Ee56Q4EXWXEy8n3chXqgK50XR1XVoysdUihl+GRMTY3+/En2sy/k
-	 y3UZBvrETfztw15sD7GTq00MENsvNNZMdKvxJwm9zR93fecoY6MBS+dYMftJpH0Ydx
-	 nsZrQNubDzLyg==
+	b=YDwkfBVYTJ46hnyCOjVU+bDIxuPNvO/O8VpVy5s5pUxt0t39WMFCbnz/7qyH/BKmD
+	 AxCcYVuLV3YQwbr3n1npYwW+k41P+oCeBpL64M6ZtckfgJIZk4/5JbfPQgrTQ1qurj
+	 OVqRBVvvNrrJ6uKwrghFPwjFICmnD5NxXfVgwXsxXnVVX26ZFdTb8t8EjwOfj1mtAn
+	 FQ0RxP4hFKOUe0ua2xBurqFKDMynHnsjNgx7uIHJAkVxy92N5rMf1UD3vyQrRR2roc
+	 KE0rb5MpVjtZRB19R4oDJiJ1t6+FnyZeZfFVVk5IC+jV0/WkGI23VTL+cUPqUIDCO8
+	 SLrUUhgk0INHg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luo Jie <quic_luoj@quicinc.com>,
+	Lee Jones <lee@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	George Moussalem <george.moussalem@outlook.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 0/4] firmware: qcom: scm: fix potential race condition with tzmem
-Date: Wed, 16 Jul 2025 23:30:54 -0500
-Message-ID: <175272667120.130869.4406679660383581017.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/5] Add CMN PLL clock controller support for IPQ5018
+Date: Wed, 16 Jul 2025 23:30:55 -0500
+Message-ID: <175272667141.130869.3942726331849650833.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250630-qcom-scm-race-v2-0-fa3851c98611@linaro.org>
-References: <20250630-qcom-scm-race-v2-0-fa3851c98611@linaro.org>
+In-Reply-To: <20250516-ipq5018-cmn-pll-v4-0-389a6b30e504@outlook.com>
+References: <20250516-ipq5018-cmn-pll-v4-0-389a6b30e504@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,26 +73,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 30 Jun 2025 14:12:01 +0200, Bartosz Golaszewski wrote:
-> There's a race condition between the SCM call API consumers and the TZMem
-> initialization in the SCM firmware driver. The internal __scm pointer is
-> assigned - marking SCM as ready for accepting calls - before the tzmem
-> memory pool is fully initialized. While the race is unlikely to be hit
-> thanks to the SCM driver being initialized early, it still must be
-> addressed.
+On Fri, 16 May 2025 16:36:07 +0400, George Moussalem wrote:
+> The CMN PLL block of IPQ5018 supplies output clocks for XO at 24 MHZ,
+> sleep at 32KHZ, and the ethernet block at 50MHZ.
+> 
+> This patch series extends the CMN PLL driver to support IPQ5018. It also
+> adds the SoC specific header file to export the CMN PLL output clock
+> specifiers for IPQ5018. A new table of output clocks is added for the
+> CMN PLL of IPQ5018, which is acquired from the device according to the
+> compatible.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] firmware: qcom: scm: remove unused arguments from SHM bridge routines
-      commit: 23972da96e1eee7f10c8ef641d56202ab9af8ba7
-[2/4] firmware: qcom: scm: take struct device as argument in SHM bridge enable
-      commit: dc3f4e75c54c19bad9a70419afae00ce6baf3ebf
-[3/4] firmware: qcom: scm: initialize tzmem before marking SCM as available
-      commit: 87be3e7a2d0030cda6314d2ec96b37991f636ccd
-[4/4] firmware: qcom: scm: request the waitqueue irq *after* initializing SCM
-      commit: 7ab36b51c6bee56e1a1939063dd10d602fe49d13
+[1/5] clk: qcom: ipq5018: keep XO clock always on
+      commit: 693a723291d0634eaea24cff2f9d807f3223f204
+[3/5] clk: qcom: ipq-cmn-pll: Add IPQ5018 SoC support
+      commit: 25d12630561d8d0906f1f5eceb055da3af67c8c9
 
 Best regards,
 -- 
