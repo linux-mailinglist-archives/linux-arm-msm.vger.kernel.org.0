@@ -1,344 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-65376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 664A8B08508
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:35:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C51C3B08510
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:37:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEFEA1892131
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:35:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D3DC189B9E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:38:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C98A21639B;
-	Thu, 17 Jul 2025 06:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D364121767D;
+	Thu, 17 Jul 2025 06:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dCUv51YP"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="TYoW3SNH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF9C1E3DDB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7A3128819
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:37:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752734125; cv=none; b=Qri6x8CF6ASlTf8SLlft8ZKhR5H0Nl9TqhguFIPMIj4FiE7WSAArqV/3Bnw0gFFZvlasbiYauw8X6gTJOE0Lj+wgKH5qIPMnOCdCzHGEpyyA+StPawq3ho2Q9Y9/FVejyPP8v9+uY7pCA34HmsqoQhFiuH+yqxjg/OA7X2IkhRM=
+	t=1752734258; cv=none; b=sPfPCY9GNEs10CL8++HuEgK//H5rJDLIYYfCzmxr/oDFAnH49HFL3QPua4CFKMKjR7Ax5YV4YOWo113OAoOJL+Eg6NGt3NOv0ws/11h8d2fPmcYMukGOf2nq7kvPKgX+EnDFhh1wek7k1unkgoEC5fioHt8Dp1f412iXvI1LaTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752734125; c=relaxed/simple;
-	bh=KjICUAJasYp4RXSlrO0vtBThRCHLsjR26Ma8Vw9RWEA=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J0XowvL7kV3WkR0cL5pob5ekP+8ujXsdoQpL5tNCGupJo95GS2In6ZxHBVUfwfoDCHj+lS2xbonNtNfzn+dSm2BZLSGd8M0H8i8GLUFsr+TGK3pGaNQriipFXIBePZGL5fNKLU6wJBy0MrxcCWgfLfcivrMTZWwGplZM/teNaP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dCUv51YP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H47Ee5022239
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:35:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=0zBK/fau7TlkP2P+DHYdkjt7
-	NeDff+KJMEQay4LiEy0=; b=dCUv51YPQwsH2Qy3xpeWXBqMdofTqyMZixSRoE6O
-	yuGcglz6Z9K+Vv6UsH4mA7mUwplVI3uWdWrS4uf64e8ma/SkF568ZetQFIY0yXGl
-	lGCAukoGfUDQ1VGbT7vvUFXnc2dV4bfeM38cY7xvvfA9zTYMF55QtDNwdMgiRIzq
-	kdLUbyGpCk0mwXMK1A1CvBhLoSIjDm6AlKqhiekw+Qm4GqqSjlbpWY3RHltRFtWy
-	F3xOrUDqIuIRLyFMOHXiZg3r61J7FZYveIcipxNWaFbX7y595JfvxeX4ebcUSeti
-	/6fxha4MCbpeEc87RiF8zwV2fGm5ykWDzVvw/lTQFcSV1g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsy6ewt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:35:22 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-478f78ff9beso20480011cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:35:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752734121; x=1753338921;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1752734258; c=relaxed/simple;
+	bh=Zni4kW5i/r0n1MT3GlQi9RAdKp2l+BHLM9aozZDydqo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
+	 References:In-Reply-To; b=u9+XqJFa+praIzZAOkZi2xFlPXYjUOaFdidbAiY9yltuG5N4+xGTctC7XkFZl7OVHoQ68Zfo/ljG/PTRXc8444pWGv6jSrpwd6mGdWhd8rh17N4UdRwea9QCQaE5vSmA7vzye66IIMP1HINZc3dOvqq/UuwvGX4nurj8d3JZD/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=TYoW3SNH; arc=none smtp.client-ip=209.85.208.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-60700a745e5so1077592a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jul 2025 23:37:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1752734254; x=1753339054; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0zBK/fau7TlkP2P+DHYdkjt7NeDff+KJMEQay4LiEy0=;
-        b=cOgRB6ZeqZFkVEZuJ5gF+I+RhybGC2OGvk8RPkFwcatuVkXhgUTXklmCugLEvoB0/Y
-         Xx2V/wARHvlEN/+eEZORbL05GK82QH3y9ikD6c3uIn+FM1GJTlipsKm9aLujoH2e/3LN
-         /GZJUMjDpvfGJsADQyNV/wgq+5zGdgmLC2hn7NfFOmUipQGs2/BlJhtecRhuI93w9VTN
-         Qgj9s7xZpC6No/ahsj9QHok0BDVxQQCDePSSTnx46tMA+2z2hsrRhhw7AOMj76FWpvMa
-         HO/LunlNwxddbF5qWgUPwes4pjYkgsKu9FqiG+mcGHrwFwByy2ipBmDkRqdepE6abJrM
-         lt7A==
-X-Forwarded-Encrypted: i=1; AJvYcCX3NProEXVVnXuXonnis22mojmFErpUGayGwmFZu9n77GninuPNQDPi79anULybBIp3k132o8r2C31iADai@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUGwOnV/ryjxlKl1e7C3XRghKBpOuRHrlh3xpbrlblQtycfgJZ
-	6XGdQfqMeTI/oZPwftejxu5sqaqgTVzdCaUM5XF6JwRYWE51QJUsCC5TU+2G7JEL45tOPfqDAXv
-	xdx/ngdXDc//H5a0xA1hLesvTThpoIlQ8R+tAoF7lJnG7BzU4eZZu29pqmM8nydfbVGIJ
-X-Gm-Gg: ASbGncvPjRG7whmhvNJlny4CquGl5jKSJQNuDEkDHDmdS9HTUeIByD/vcNXJDZ75GOD
-	sV4hGLhBDSYS2wBQGRwpN5JUuQHw9udo/uGcaS5t/OK0qi8mU2fYyuSz7K8qZerZcEuXoFYNJit
-	ctB3pMa+tntB+fZWkX8SJbrzQ+M2TV0nTaT+rPpEFYjlPjx7vkRCSMgSYwNq+mL0pndpTuFeftH
-	UP41Iw5OXTZK6vdOOJ3QgtV2LMrNjET5CSLsqn9bzEMIah58vIc2L5W9PQL4NvL+HW+3bqG0XIA
-	O2FXH3ZBlAvWDCFiGfJOsjJXcuN8E4vCUAT+V6w8Ic7hITXx2wFuyXhqqEYvPfmJEy46eZwf8r4
-	=
-X-Received: by 2002:a05:622a:114b:b0:4ab:5f8f:54b with SMTP id d75a77b69052e-4ab90c8f5d0mr122788051cf.39.1752734120946;
-        Wed, 16 Jul 2025 23:35:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFETV8IAJ+vrQysbC2BJC79rSdua9fnjVrcKuLw5TGyOFj1bU6JvZgRf5k2DClHu4Oix5WHA==
-X-Received: by 2002:a05:622a:114b:b0:4ab:5f8f:54b with SMTP id d75a77b69052e-4ab90c8f5d0mr122787581cf.39.1752734120335;
-        Wed, 16 Jul 2025 23:35:20 -0700 (PDT)
-Received: from trex (153.red-79-144-197.dynamicip.rima-tde.net. [79.144.197.153])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45634f9d599sm12077435e9.33.2025.07.16.23.35.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 23:35:19 -0700 (PDT)
-From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Thu, 17 Jul 2025 08:35:18 +0200
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
-        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/7] media: dt-bindings: venus: Add qcm2290 dt schema
-Message-ID: <aHiZpnFhhR5O0h97@trex>
-References: <20250715204749.2189875-1-jorge.ramirez@oss.qualcomm.com>
- <20250715204749.2189875-2-jorge.ramirez@oss.qualcomm.com>
- <8a63f517-a443-48e4-9b9c-0c4b362f59f8@linaro.org>
+        bh=Zni4kW5i/r0n1MT3GlQi9RAdKp2l+BHLM9aozZDydqo=;
+        b=TYoW3SNH5iZ8nWo5x3YTIv2lAGyP2cJ6eFc+4n5U1Mm0CtpMZ2YBnGkTRUOJpuCmdH
+         Iy9Qsp2y9hjswmFtBWIDG4gENSbKZDCEFToVQNVboOnwURLu3W0Pa74dqbEnpjumkhPS
+         unFI294L37Z4DL5MyLvyngf/SYv+7LCkQ2NRVj4V7NDTkNkC2o2797jd0xMNJ4vaOIYY
+         lisKCrttO+Viw8XKylroIlqqZc8j0OP4Bzusq82RwxoWYWIc330OBtyxrAdne2CL8WZB
+         Bq7w4r/+Qp27cctQB1AQ7vcri0NsSiCIVC7shsmk0ySJZ86NsjZp69cQMGQ6UKccLAaM
+         nJsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752734254; x=1753339054;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Zni4kW5i/r0n1MT3GlQi9RAdKp2l+BHLM9aozZDydqo=;
+        b=JTVOZtcF1FnFb2I+d2/YjUxbNZmgdqLfXr2fJOuOk7t55UI6JzQxgL4eRM48essIzc
+         tqukEh4Zvo0z1bvE30oCOQkQIwWhYS2Id84bYbNT67IeG4EYMd/YN9XzOZEww2OVIeGV
+         VVVzZtFYnz0+qCD3Qfu33+BERkbJFu/xNKl6x7y8AtC5oPAeFInYsZbSrGxOGEIa5weY
+         V/xL1pbgw8zZ7i65B96dWvc538eEV1BxhKcBLoSsnOww7dNGhN/lPIAcTKtOiwxUE8qN
+         3ePNLQKCk1rENTS0LRWoLU5snmLvbxaT8ZoOfAeImVgZbl1WHf3NtUDX24I4L70R52Zt
+         PRbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUETegxelvMsrVfRZkmgaQdGsd7VD1HgO/bHwgQndb/0WoPMYK+1m+cvFdiUHHW6xttc6yDyRwNLEkr+WNw@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPKzAxYrLnJ7XWoTr6WozNZUXyo0HvVS3D2y/CJHsS3hSscHKv
+	fClx2YXeAlj00Erg4IEcYUIyQdIVdEWA8OClEw/+v1nFw3HWFUbLyYedC9qSSxiqgb4=
+X-Gm-Gg: ASbGncvXYO58x4kCImGqZVC+vvcaLeimeBLv3dMJrDXdkZ7D9HeyvsBI/vNQrUM6Cne
+	TfzlYSPDOA4uRuKbU35kNVK3P2hL57xoHgnWsv0tzqzscHS68bOUtWaLaWcz3jk9aQ33qym1Nyk
+	xLvVpSGM4F7sxW8l6HBB+Vz3sMtdKHr+JQl0QQbAEPLERhOx2eB/SxjLUzO5hgssGym6tj0ryZE
+	yHlnx8HGJPfS38PHL72IOVeNtm7iQMhjzPdoK0O2LcVK/RPk8qLEQyszkrASHwCeznCVstLACdu
+	JZUj6KlI43tq5qtqyrpaaX6oGpbKkCsW3NVs3wsVhhSoofd+h08g6fudWh8R+R4v0G5UudxWexL
+	LTotwW5seLM1H3d6f5HoMyyNBTCi8RrSTVDLZNsTCarh5yWBHXFXePklV
+X-Google-Smtp-Source: AGHT+IGz1stbTnvtFDRlGNi4Bv6lmWH+rbIuhvgmaYas5MP9Lr4lEhFJPcw6uCq9/uRql5jJ5FaC2w==
+X-Received: by 2002:a17:907:a588:b0:ae1:f1e0:8730 with SMTP id a640c23a62f3a-ae9ce1c2d25mr614526466b.57.1752734253912;
+        Wed, 16 Jul 2025 23:37:33 -0700 (PDT)
+Received: from localhost (212095005146.public.telering.at. [212.95.5.146])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8294b5fsm1285352466b.125.2025.07.16.23.37.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 23:37:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8a63f517-a443-48e4-9b9c-0c4b362f59f8@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA1NiBTYWx0ZWRfX4PoZ08pXYHv3
- 2tglPQYnyz6TMEvrjx1aamwlrH62y3hn1vKnjvtmSV3Y+pgWbKPwNWrLpp1oJb8TqxR/BEq7lun
- UjI3lqqJbXI4ORjbR+ucqfNxi+LUM9WNH4dN3ajurie1Kmh6aQONVnRXa3VUFUZ0eRt5G7GbvtU
- GFwLFsC1Fa7bAgrQl9XLIaNTkRVHXyhpgxUQYBdNO/ufze+8iwAcMI6l9Oy/SFJWN+OC9+sfgSM
- Vjajz6V1pRGUKCtkNSsV5CxWLu85F+ZQRUGHCAdPnllzURujLKyqBOU/JHjCu76s0ZrHpaq/khR
- GRzW4RKQIdjerHZcxQyu7rB93aIcxGefr6GltFrm850r//KlufVXlNtEnfbSkXeyiPqsrWoRcQ+
- dqbo9b1FxKBxGY+MeQ6X0j9oo8iFgFtl4XdurmfmrniQmH0H+ix8vHSlnw5OaWAgulb/UT26
-X-Proofpoint-GUID: zpKyfB_veDh1ZGmc7Qi37aXB90j1diHv
-X-Proofpoint-ORIG-GUID: zpKyfB_veDh1ZGmc7Qi37aXB90j1diHv
-X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=687899aa cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=Ki5fnJvzvo7yLsyA0quaxQ==:17
- a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=dNlq0QKA0UXHzezakPIA:9
- a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=sptkURWiP4Gy88Gu7hUp:22
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170056
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 17 Jul 2025 08:37:32 +0200
+Message-Id: <DBE4FRROKPLE.2O2PPHRU80073@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: arm: qcom-soc: Document new Milos and
+ Glymur SoCs
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250716162412.27471-2-krzysztof.kozlowski@linaro.org>
+ <DBE47UNGCDLE.3AZF5XENB5BEB@fairphone.com>
+ <7a552f24-50df-4c94-9bda-50712fc72485@linaro.org>
+In-Reply-To: <7a552f24-50df-4c94-9bda-50712fc72485@linaro.org>
 
-On 17/07/25 00:22:53, Bryan O'Donoghue wrote:
-> On 15/07/2025 21:47, Jorge Ramirez-Ortiz wrote:
-> > Add a schema for the venus video encoder/decoder on the qcm2290.
-> > 
-> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > ---
-> >   .../bindings/media/qcom,qcm2290-venus.yaml    | 127 ++++++++++++++++++
-> >   1 file changed, 127 insertions(+)
-> >   create mode 100644 Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> > new file mode 100644
-> > index 000000000000..0371f8dd91a3
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> > @@ -0,0 +1,127 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/media/qcom,qcm2290-venus.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm QCM2290 Venus video encode and decode accelerators
-> > +
-> > +maintainers:
-> > +  - Vikash Garodia <quic_vgarodia@quicinc.com>
-> 
-> Shouldn't you be on this list ? If you upstream a file I think you should
-> list yourself as responsible for its glory or its mess.
+On Thu Jul 17, 2025 at 8:33 AM CEST, Krzysztof Kozlowski wrote:
+> On 17/07/2025 08:27, Luca Weiss wrote:
+>> On Wed Jul 16, 2025 at 6:24 PM CEST, Krzysztof Kozlowski wrote:
+>>> Extend the schema enforcing correct SoC-block naming to cover Milos
+>>> (compatibles already accepted by some maintainers for next release) and
+>>> Glymur (posted on mailing lists [1]) SoCs.
+>>>
+>>> Link: https://lore.kernel.org/linux-devicetree/20250716152017.4070029-1=
+-pankaj.patil@oss.qualcomm.com/ [1]
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> ---
+>>>
+>>> I asked for documenting the Milos name at v2 of Milos patchset... it di=
+d
+>>> not happen and patches are already being accepted.
+>>=20
+>> Sorry about that, I seem to have missed that.
+>>=20
+>> However I did not see any dt validation errors with my milos dts or
+>> dt_binding_check on the bindings, where are these patterns relevant, in
+>> case I should touch it again in the future?
+>
+> There would not be any errors, because how these bindings are written -
+> to ignore other, unknown names.
 
-happy to do it. The MAINTAINER's file covered all the files named
-schemas/media/*venus* so my understanding was that I shouldn't.
+Ok clear, thanks for sending this patch!
 
-if you/Vikash/Dikshita could confirm I will do on v8. thanks!.
-
-> 
-> > +
-> > +description:
-> > +  The Venus AR50_LITE IP is a video encode and decode accelerator present
-> > +  on Qualcomm platforms
-> > +
-> > +allOf:
-> > +  - $ref: qcom,venus-common.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,qcm2290-venus
-> > +
-> > +  power-domains:
-> > +    maxItems: 3
-> > +
-> > +  power-domain-names:
-> > +    items:
-> > +      - const: venus
-> > +      - const: vcodec0
-> > +      - const: cx
-> > +
-> > +  clocks:
-> > +    maxItems: 6
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: core
-> > +      - const: iface
-> > +      - const: bus
-> > +      - const: throttle
-> > +      - const: vcodec0_core
-> > +      - const: vcodec0_bus
-> > +
-> > +  iommus:
-> > +    minItems: 1
-> > +    maxItems: 5
-> 
-> I'm confused to see this is still here
-> 
-> https://lore.kernel.org/linux-media/zk5cmielm4urfm22yszmjmwvi4mqvdsfthlonq6mij7rkijcsp@7evb3ejxuaj7/
-
-um, I didnt see this review comment - sorry about it Dmitry, I wished I
-had. Right, there are 5 SIDs.
-
-> 
-> I think Dima is right, what's the problem with declaring maxItems: 5
-> here ?
-
-none. will fix.
-
-> 
-> 
-> > +  interconnects:
-> > +    maxItems: 2
-> > +
-> > +  interconnect-names:
-> > +    items:
-> > +      - const: video-mem
-> > +      - const: cpu-cfg
-> > +
-> > +  operating-points-v2: true
-> > +  opp-table:
-> > +    type: object
-> > +
-> > +required:
-> > +  - compatible
-> > +  - power-domain-names
-> > +  - iommus
-> > +
-> > +unevaluatedProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > +    #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-> > +    #include <dt-bindings/interconnect/qcom,qcm2290.h>
-> > +    #include <dt-bindings/interconnect/qcom,rpm-icc.h>
-> > +    #include <dt-bindings/power/qcom-rpmpd.h>
-> 
-> Alphabetise includes for preference.
-
-um this was auto-generated by the build tool. I'll fix.
-
-> 
-> > +
-> > +    venus: video-codec@5a00000 {
-> > +        compatible = "qcom,qcm2290-venus";
-> > +        reg = <0x5a00000 0xf0000>;
-> > +        interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
-> > +
-> > +        power-domains = <&gcc GCC_VENUS_GDSC>,
-> > +                        <&gcc GCC_VCODEC0_GDSC>,
-> > +                        <&rpmpd QCM2290_VDDCX>;
-> > +        power-domain-names = "venus",
-> > +                             "vcodec0",
-> > +                             "cx";
-> > +        operating-points-v2 = <&venus_opp_table>;
-> > +
-> > +        clocks = <&gcc GCC_VIDEO_VENUS_CTL_CLK>,
-> > +                 <&gcc GCC_VIDEO_AHB_CLK>,
-> > +                 <&gcc GCC_VENUS_CTL_AXI_CLK>,
-> > +                 <&gcc GCC_VIDEO_THROTTLE_CORE_CLK>,
-> > +                 <&gcc GCC_VIDEO_VCODEC0_SYS_CLK>,
-> > +                 <&gcc GCC_VCODEC0_AXI_CLK>;
-> > +        clock-names = "core",
-> > +                       "iface",
-> > +                       "bus",
-> > +                       "throttle",
-> > +                       "vcodec0_core",
-> > +                       "vcodec0_bus";
-> > +
-> > +        memory-region = <&pil_video_mem>;
-> > +        iommus = <&apps_smmu 0x860 0x0>,
-> > +                 <&apps_smmu 0x880 0x0>,
-> > +                 <&apps_smmu 0x861 0x04>,
-> > +                 <&apps_smmu 0x863 0x0>,
-> > +                 <&apps_smmu 0x804 0xe0>;
-> 
-> You're listing five iommus.
-> 
-> I understand there's some disagreement about whether or not to list all of
-> the potential use-cases but, TBH I don't think those are good arguments.
-> 
-> Unless there's some technical prohibition I can't think of listing all five
-> maxItems:5 .. let's just do that.
-
-since the device tree should describe hardware and not policy, and the
-driver seems to be able to ignore the unused SIDs I think this is the
-right thing to do.
-
-once secure buffer support is enabled, I think migration to a child node
-model will be needed but AFAIK (please let me know if I am wrong!), this
-approach will maintain future compatibility.
-
-This sort of thing is where we are heading to:
-
-video-codec@5a00000 {
-    compatible = "qcom,qcm2290-venus";
-    reg = <0x0 0x5a00000 0x0 0xf0000>;
-    iommus = <&apps_smmu 0x860 0x0>, <&apps_smmu 0x880 0x0>;
-
-    secure-buffers {
-        iommus = <&apps_smmu 0x861 0x04>,
-                 <&apps_smmu 0x863 0x0>,
-                 <&apps_smmu 0x804 0xe0>;
-        memory-region = <&pil_video_mem>;
-    };
-};
-
-> 
-> > +
-> > +        interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
-> > +                         &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
-> > +                        <&bimc MASTER_APPSS_PROC RPM_ACTIVE_TAG
-> > +                         &config_noc SLAVE_VENUS_CFG RPM_ACTIVE_TAG>;
-> > +        interconnect-names = "video-mem",
-> > +                             "cpu-cfg";
-> > +
-> > +        venus_opp_table: opp-table {
-> > +            compatible = "operating-points-v2";
-> > +
-> > +            opp-133333333 {
-> > +                opp-hz = /bits/ 64 <133333333>;
-> > +                required-opps = <&rpmpd_opp_low_svs>;
-> > +            };
-> > +            opp-240000000 {
-> > +                opp-hz = /bits/ 64 <240000000>;
-> > +                required-opps = <&rpmpd_opp_svs>;
-> > +            };
-> > +        };
-> > +    };
-> ---
-> bod
+Regards
+Luca
 
