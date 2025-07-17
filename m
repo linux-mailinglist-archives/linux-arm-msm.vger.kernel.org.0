@@ -1,67 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-65359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5114EB083FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:34:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E87AB083F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:34:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4958D7A1357
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:32:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45B7EA47D27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 04:33:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4964921E0AF;
-	Thu, 17 Jul 2025 04:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05C2D220F2B;
+	Thu, 17 Jul 2025 04:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sbntm4fn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avoZKtDB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C01B21E08A;
-	Thu, 17 Jul 2025 04:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CE0202F70;
+	Thu, 17 Jul 2025 04:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752726693; cv=none; b=lrHGvfGkVwnFRVBHjItzvd7vKGEHBPQVW9WNCS7cM1AkB+lPzZ4b7UX527SF/vNnfifpFAVuXEqrmOSEef8jyqISBb17xtNvxPCoeexftXW2UvoyzA8WaIdEv+3FGxoUcHcjYdFtI5GHp00H0aVJ/XArI+OTr4Ech3bzX9A80xE=
+	t=1752726694; cv=none; b=aye/Ig2eNkozpnYLvctitxJHwr/zIAQ03iK/6jZbupm2kdLjgM1VwT0SPDbywjvf+MZEaTup7mYbhmsNkCGivgGnm6fp0k+t4ZgItGr08AMlP1mov98r+jcisXtH1lokj0HtQANda03pgLwYglsJu1/qWcCoAQYnVLjrVlIUbtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752726693; c=relaxed/simple;
-	bh=gkvKsxCE9vYwl89WQnYkjbibgd6wwagwBS60YSM87Jc=;
+	s=arc-20240116; t=1752726694; c=relaxed/simple;
+	bh=pIYH0KO1l0XN0H//I8Ogw8n4JPiT1JUXM0jP0Wxrr5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RFKnagr/Rczy7u8Jdk166zVj6LC7dWXyGDUaBepyr02EeKu2Aqz8bAnNIb84z8uPBSeicVS0z9xloYD5sMHZzBn9CB5PR55FsY2K/9wzyiyyBXqRQd1nm2HQ95RqFnNEvZb2tZMnXw8kfd2toKPCl2VQm68yPcty49ZoNBU9wBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sbntm4fn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2E0C4CEF9;
-	Thu, 17 Jul 2025 04:31:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=TnXsOtQl0ayJuRaMuA4Mq/QQRFlkf4gaOH50TZFG3EwvsWZLmb0x+xG1+j87ZMKEUyatw7TuQpfIVUgsk/QqnFp9M57DEsqnpQA8lExflH8LKiSdcfzHbDS/8sTv/CkyO+EgDin3B1KH71SVBY9Gn53wNoiCurK9i9k8Cmgu69k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avoZKtDB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA93FC4CEE3;
+	Thu, 17 Jul 2025 04:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752726692;
-	bh=gkvKsxCE9vYwl89WQnYkjbibgd6wwagwBS60YSM87Jc=;
+	s=k20201202; t=1752726694;
+	bh=pIYH0KO1l0XN0H//I8Ogw8n4JPiT1JUXM0jP0Wxrr5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbntm4fnJ2JrbttH8+ZANq9Z2ZXzLzpAuki1ccDzIjCuiZafwAqLas1hGVkxIStwz
-	 31r309C3JPtJqjOV1ofa/MMpj4XMudrxtaEkSSwH9LrAgV2vOyXtQUCwToPjLw7Of6
-	 0rA9grg5O6y4R7X2dkyKH/LJSwnh4AqDZN1Sjgj5fC3NTvHfTdkKqzP6IiU219rIXw
-	 koU0DE65L5CU/iZCqkbVSLFxqGkai3ZlJXQrY9A8Ma2Hwc7y+Q8ZAQqhaZzuW3s5zl
-	 rOWb8PMEtFs/krNmFPHkBWN69G3Q6InMC7qul2pYk07DdGhAA935Gt3vouekkdb0Kf
-	 agmOUNa4rpVOg==
+	b=avoZKtDBTTOQPkLgZP+ACnVzLFKdHPB26tlizxGveUmmSAtp3Nu+vk4mA1sTIdT7S
+	 EpO3oXpfL4Pu5vBJj5L+Uzjee/0WZW49PYAaPOA5ufPYbXo7cYCsCcVCU7Y24Xu9X0
+	 i/7ds+rsLSBi7pY6FdIKjSDwHEGzhhG4z9b2/mu5bqNydJ/BAahVBnqiRk7lg1Etxm
+	 fZmdnSeK7IYG0qS3ctWWBB69M0G0VvQwieHBL4zj1XPffm3/ikVikR6XooxP67lrwi
+	 i4Vch7qkju6ZmpUzggQusnsBfBEXdFh5GPTkw0n7pS45Wc48DBYFKyHQQo5gEvA3R3
+	 XC1pZMUP3VLqg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
+	Felipe Balbi <balbi@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
 Cc: ~postmarketos/upstreaming@lists.sr.ht,
 	phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	linux-usb@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/4] Add RPMh and TCSR clock support for Milos (SM7635)
-Date: Wed, 16 Jul 2025 23:31:05 -0500
-Message-ID: <175272667153.130869.16754797596854470063.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4 smartphone
+Date: Wed, 16 Jul 2025 23:31:06 -0500
+Message-ID: <175272667125.130869.1491563405757140609.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250707-sm7635-clocks-misc-v2-0-b49f19055768@fairphone.com>
-References: <20250707-sm7635-clocks-misc-v2-0-b49f19055768@fairphone.com>
+In-Reply-To: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
+References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,21 +81,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 07 Jul 2025 11:56:36 +0200, Luca Weiss wrote:
-> Add support in the RPMh and TCSR clock drivers for the Milos SoC.
+On Thu, 01 May 2025 08:48:46 +0200, Luca Weiss wrote:
+> Since the series for the USB sound offloading driver was finally merged,
+> we can add the sm6350 dts and enable it on Fairphone 4.
 > 
+> A few devicetree binding bits have also been missing in that series, so
+> there's some extra patches for the basics in this series.
 > 
+> Depends on:
+> - For qcom,sm8250.yaml & sm8250.c:
+>   https://lore.kernel.org/linux-arm-msm/20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com/T/
+> - For dts:
+>   https://lore.kernel.org/linux-arm-msm/20250321-sm6350-apr-v1-1-7805ce7b4dcf@fairphone.com/
+> 
+> [...]
 
 Applied, thanks!
 
-[1/4] dt-bindings: clock: qcom: Document the Milos RPMH Clock Controller
-      commit: 136e6393a5462502dc78c661fcf09f360c6f5d6b
-[2/4] clk: qcom: rpmh: Add support for RPMH clocks on Milos
-      commit: 4901838d2be20e00711f3b2b612acd1c7c754a88
-[3/4] dt-bindings: clock: qcom: document the Milos TCSR Clock Controller
-      commit: 5009024ad7c670066204c3153b177de20ea9d93b
-[4/4] clk: qcom: tcsrcc-sm8650: Add support for Milos SoC
-      commit: 7181c64fdd3e10e731568b2f44c3805173bd7b9c
+[4/5] arm64: dts: qcom: sm6350: Add q6usbdai node
+      commit: 30237c2bfda59e3abd7f7e92879e75bc730edfd8
+[5/5] arm64: dts: qcom: sm7225-fairphone-fp4: Enable USB audio offload support
+      commit: ddcc0ad9a9b8488d3ee0b4ca6fd9b092c462491f
 
 Best regards,
 -- 
