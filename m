@@ -1,190 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-65545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 828DDB095AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 22:28:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB0C1B095B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 22:30:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0ECE51C449B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 20:28:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F1C73A89E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 20:30:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 512A21E0E14;
-	Thu, 17 Jul 2025 20:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E0621FBCB2;
+	Thu, 17 Jul 2025 20:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZOFJ4bW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F/SLgeZb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9A8224AEF;
-	Thu, 17 Jul 2025 20:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F076FB9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 20:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752784112; cv=none; b=DxAS1/O6U/p6mES589rZb8lNw6mFeQoFEkR97hhkCi/0JnqAWmA9oz3w6xCbXGPTQwbbXf7dVoVWGH/BDX+RcrtqWdc1Mldxv16hPqJGd82YtZW7IDQURPl0dMTA8R/j4gpErfK2Y+Q0ODy40X05GKcnvjMmjX/OKErQb6t2niI=
+	t=1752784227; cv=none; b=r/3mZnlepdyzMu63dRhFfwizb2q6YxPUUP59xETGemfVBFz1yoCEhQxcCRn+zunnQvct+oNpR9PehTtLxmQ1eGXQ9AHpMHzcxGmP3f5+N+i9MJWfbCpJQ6cEoVsbdM2D+inKlVnZfA2NZUtThangRoHGyyCV+yJA/w5wC5iaT6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752784112; c=relaxed/simple;
-	bh=AmQvqcOnD0iq2PIWrxPmxKUdfFNwM12oj/nuxjFdL6c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X6nzsRaq4HcD6VH086YK7mAh47MABVVPL1l4X5Mspvn00nRVZZz21hIzZUhitIX+aQVLvPJCFO8w35AUe6tNLthidcXE2a7y08MoCNFk4mxwnZJ/rWqUObYD+Sjt2uoYDdwciiu1x47J0rZ6Xmca2RYHeXF/PxIGzEtJsQiSfLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZOFJ4bW; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-60c4521ae2cso2451209a12.0;
-        Thu, 17 Jul 2025 13:28:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752784109; x=1753388909; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FGydj71aILIamuVYXMAhah/i/gdu8v+ZS/ho+uyn49k=;
-        b=jZOFJ4bWikW39uIPE77KceyymL2wdyWTT9pB5B2+QZ5Fw+iBycfPGb29ZlLmoGsLUy
-         fDbYzzFcsNTVRsofSYobVFQIVoMJ3xfIQi4IwDmYjYGmH7s6Yh1ihDaaHFw+n3HiXfNV
-         TVGqLrKIydAa/61IsTQ7gNS3CgNtLeeznYjoEjwcGFHLbyaja8NRww9WRZqnWV+YBSeR
-         Zn/n3gdtru3TtUGWlXnUjKC6wxtdmAeoZtWOVTviPw0r0CgTxMT8GD6pxrq3pfgijwmt
-         xIIY+Dr0srvZCG8fU8YLYVh0MnvCJoIYm/cZnhiAcc5Gv8O4zxuwEqsoDUHhVTzukzRd
-         ecsg==
+	s=arc-20240116; t=1752784227; c=relaxed/simple;
+	bh=yXaZJh1s97QoYyV0dVGHOmfFM5k9la8f3WzB5GWF94k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a5RvpIAVwKiRO0Bz/7bkiUj0eXQzVG2kOtiDQywp/W9gc4K7KQ2H5bR8KRZvVshNmVlg3XCX47eOexeteO3RAN6rjxBe9e2EtwZmkXdFGbohOyPvOjf2J0vKRoh63YvL388BNpcn0d6dAN263zci435e8zflyUubS5PE+RZgoHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F/SLgeZb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HJ31l4030397
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 20:30:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CApBvgecuTLwhooPFQ9wWb7BYDsOgt6qyTee0GMRDwY=; b=F/SLgeZb6J3acNlw
+	fg3DMnKLtiYoPw1xQN1Dj2lUccY73AoQCaRtkjHlgN1g54GjeQp4O2FH1NbdM9JE
+	T0pT5l8Qm4j7P1qFBbLAu+h3Hwlt5JsOaClIESX0V6FpwFmwGOdpeZZrYY737Ess
+	UoLyNo8kAFVoikcl4Dt4qXKDRa0VY38UfHqggQ7Tq452aXCstjGyGKdY8MCADWAM
+	vsSPswkPqdagEDbVQTXYkD86IkGo9s/9DBiNWLFjepYIwdwcBj7sE2eziYNYNERr
+	SJLrs4IwZPrvatGqz02XKyrekimQ+IQwm51O50gkw+tHId+JTESk0yNIXY2Oz/44
+	t/cbeg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47x8x7nx7b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 20:30:24 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ab5e4f4600so2814831cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 13:30:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752784109; x=1753388909;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FGydj71aILIamuVYXMAhah/i/gdu8v+ZS/ho+uyn49k=;
-        b=ZmuPAB43DF0mCfaco2N9YwZ22mXVtPgLzgfX7e4VISz3SrV4HppUFI/HP/I3oPvmvM
-         rOb2g1tANASiHdXVpCdyOmszxwWILkp9ehkir/BK1I/p27lqiYXMWKYjc6CKniqmwSPm
-         IAxv+4fjxCy/liOCtxALHHlSCcaU3j6m230Vwq10L8sLYCpyAXIaIFuPS+jxejPFe9tM
-         kcNeWkkhjHKvbInm5BMg9Rs/EoiR//bie4Uk5hW220+e8qJc6ekPKvvLb+ofPebtM4W2
-         vL7sDo4gS7bAjxMDmf3NnuXpM8N3BgouVpewEtKHPDood5uZy1tzF9NA3KgXMARvo0aJ
-         vaIA==
-X-Forwarded-Encrypted: i=1; AJvYcCUHsEUZxIE3izpO/rdxGua85B0IpyfkrZvp5868hh6zj5pzVvlsSiThUNHk4V6utExNndN9eGGVkCkLi8ug@vger.kernel.org, AJvYcCVgugyx/rPCVqIzgfFYXXFwUgdNVracPTvX1GIpn6XIv7X2QhFR7RCwQa4Vy/kDTS8Cw3liFqyMQDce3zbg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwooCUeK3qT0CdY46g+AwS3wnfaMt2O/8j1eZQ7lh8lIzfhbesh
-	ZSUenoh5Qjfm1AiTJReJsFJDaKzaetiA/jeLMnXIYNiqd3n+EI0ZcUSOOwPzGGNh8GKdxgCwHmS
-	peaBccjL2JxlN3vHFiNqIZ5biXbtdbQ==
-X-Gm-Gg: ASbGncujtpvSZC+gEzD5EHaUoswkrE1Dr/RWUN4qHPkZ+jcnYNK6CQcGNT+df2S1BO4
-	3GCT4X6yLjsOumoENiMoJvcgOJ3Tuzmhse3Y7gU0Q9i4BDu1Wgv+NBfP+tZE73lOReJnCua8QFS
-	B/cA+4uSnD64cmq4XolOjNn2XfPPtE0rleO4vtTcC1RSSqA8BWppGuyS+dkHHfJtUimkPJsQd74
-	sruy5DWkZ4iAIdgJBD2t5YZqalEKBda3cfYqVE=
-X-Google-Smtp-Source: AGHT+IHGXL1UeZWOicM9mQkop2yE0ztjvDn7Io0cLaau/+RxX/PbQ5rxP/KoTTrmql+QnMO3IynXbQNQW4NQTYLDMMI=
-X-Received: by 2002:a50:d695:0:b0:60c:6a48:8047 with SMTP id
- 4fb4d7f45d1cf-612c7372b54mr112177a12.11.1752784108513; Thu, 17 Jul 2025
- 13:28:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752784224; x=1753389024;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CApBvgecuTLwhooPFQ9wWb7BYDsOgt6qyTee0GMRDwY=;
+        b=pE8YFxaONKuDxVRVlEy4fW6Nytb8LMvtk8JbJy9CGHE1bZvxHxOwxraE1Ipyp53W3k
+         RmfesU7GhGjoAEy54HcGaUifaqgL2SEeg4Nv6LCgzxUF3A4W30VVf/Kb+fnIUmQ7r2J+
+         44Cz2dyxSbthavcilTVHzWIfKkTuw4AXJxTxYmWt1pmwAUVt0A901Rb/sF/UYmlewvOD
+         MasEZ8Y5eRRp1UYcZyvwWlcaXoDkzN7X2rDhmNS2gJkUkLeuoMm42F6OelYGJVvWN4tn
+         nxHdI8yBqPNTIteKLAKD5mvPNm+/m46C4b+rcjxV6ZgnXO/xkgPesvuzqdVwVLBpf4pI
+         F2jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV44Thkp1ZOuvIUXM9dQ43ZrkejQu38kLV9+dObRZ1kLmH7bqG9JH/MEpWhrS5ngt++azH1ctIxs7sKEtBy@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx006k94pdoCp3yNBtOpJhcC7kCD9M5c+MprWH8QbHUK2bc7WgX
+	lT9ho9VcPwtUtu/YosNyMxmxuB/mlbuosTJ1x2uMFYWrks9+W0opXbP+tbOrZ8JQP7nc0TTG1LO
+	CCH2A2px/6qkJCbAjZaRoARy6UTTR23aXVJ8HwqT+7IXNzwZCcDwrsQqQcjY/fhpK6W5f
+X-Gm-Gg: ASbGncu+bGX/8AQAQJGBEnpmy3Hm3G8fzu2STlcoKWfZLBE3a9R1doTAeNqKJe3eMLc
+	VD+4i08mf8askhbtu+9SzA0kvfKvirSfHh0VOAdecFZ6+4ZzYPszOWs0lWc+UpxeTldvwJq9/ih
+	W7rrggGbd6+ohjDrRFR1LW5ohdkYnme+EBqDhBR9ZZSBCpnlpGYRhgL2G2uT93GgAvkZpfQUBkV
+	ETkYUwCYFJVIQPfbVoQMrHowkSDsJlRIDfRyY3Q5YlSUsJlVD3i6gg6sdmn6S/d1/NZE0tkY2Tk
+	NvfFeFc9ZFvSqJcZiMS5dR6UiRfxM+x2icB/uhyKObBdqwN66d4Rl0socDl4LIJnp4ELYYiUOFh
+	v2ixGdjPLxySBtBPoCpr4
+X-Received: by 2002:a05:620a:2b49:b0:7e3:3419:90d with SMTP id af79cd13be357-7e342adfc02mr464596685a.7.1752784223645;
+        Thu, 17 Jul 2025 13:30:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFh7efxMPiaABCqMznB8bM0sGwzfCMhBakRHFLmRQQii5O7L2SQZ/AT4w5DU1nWhvzljOpuBg==
+X-Received: by 2002:a05:620a:2b49:b0:7e3:3419:90d with SMTP id af79cd13be357-7e342adfc02mr464595485a.7.1752784223247;
+        Thu, 17 Jul 2025 13:30:23 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e8294013sm1420624566b.118.2025.07.17.13.30.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Jul 2025 13:30:12 -0700 (PDT)
+Message-ID: <5e3dcc7b-c929-4f2c-86d7-dd57b08eb939@oss.qualcomm.com>
+Date: Thu, 17 Jul 2025 22:30:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250714173554.14223-1-daleyo@gmail.com> <20250714173554.14223-7-daleyo@gmail.com>
- <A9DB4AE061FD8BB9+3519a519-1a29-49c1-a07d-28a0577677cc@radxa.com>
-In-Reply-To: <A9DB4AE061FD8BB9+3519a519-1a29-49c1-a07d-28a0577677cc@radxa.com>
-From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
-Date: Thu, 17 Jul 2025 22:27:51 +0200
-X-Gm-Features: Ac12FXxK_a1WSy8MtOR75-LLEFBaa3unYMUy-NNcME395brztJd9rIFyyqygTaQ
-Message-ID: <CA+kEDGGaKrYO9Pu3un_Nq_6AOZC5L9sG+CEwh2ZEzWFeHGqtEA@mail.gmail.com>
-Subject: Re: [PATCH 6/9] drm/msm/dp: Work around bogus maximum link rate
-To: Xilin Wu <sophon@radxa.com>
-Cc: Dale Whinham <daleyo@gmail.com>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sm8250-xiaomi-pipa: Drop unused
+ bq27z561
+To: Arseniy Velikanov <me@adomerle.pw>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Luka Panio <lukapanio@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <ffc3b329-6d46-41f3-9780-05369d29f9c3@adomerle.pw>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <ffc3b329-6d46-41f3-9780-05369d29f9c3@adomerle.pw>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE4MSBTYWx0ZWRfX1syj7bnjT5gx
+ oRF6QlVLuxtIgsxC/M1jL+S++hGAaSyzoVVXx+bnsQ7ihJMrT6K2j85wXyKJWqBQnRHlFV+DIu+
+ EtHj57Ap5aEk4YAywf0wXo0NfrAUYBQ8SLWsY3C+MkuKHTghpq7Rw6/+BYbCZCRbr+eYefzFbCB
+ 0CL97AeOxrXhp7Dv7T/0ABm+lP1rT0aKv+RV+4VgERYHfxZ7gZhf4oY+lGW/B1scNEj7wC2x3hp
+ OVHYA3Td8YG97eUserODaSHrxPomTd/cUfICH7Qm8cTIh+xwSaSUyaMWc5agkEiuxlH/zNb3WUF
+ 3D6XZ4XlQymosId22hBHyeOGDRNWSNz4Zr3pZxsCiCztfu9LW9Nt8uzZzUGKktgCi3O/vCsN+UY
+ +OXESGXsvLzDYIn259zfyweL/LmqHbnUYTSWzs1qMrGt+IF8nr2+oUDcfwODLZMWiv5gz6QS
+X-Proofpoint-GUID: baDbrmBwmEoioFiXiuqy-WkWAZ9iwW8l
+X-Proofpoint-ORIG-GUID: baDbrmBwmEoioFiXiuqy-WkWAZ9iwW8l
+X-Authority-Analysis: v=2.4 cv=N9YpF39B c=1 sm=1 tr=0 ts=68795d60 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=NEAV23lmAAAA:8 a=Fl1iwlySYO9TATX8aXYA:9
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-17_03,2025-07-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507170181
 
-On 2025/7/17 04:21, Xilin Wu <sophon@radxa.com> wrote :
->
-> On 2025/7/15 01:35:42, Dale Whinham wrote:
-> > From: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.com>
-> >
-> > The OLED display in the Surface Pro 11 reports a maximum link rate of
-> > zero in its DPCD, causing it to fail to probe correctly.
-> >
-> > The Surface Pro 11's DSDT table contains some XML with an
-> > "EDPOverrideDPCDCaps" block that defines the max link rate as 0x1E
-> > (8.1Gbps/HBR3).
-> >
-> > Add a quirk to conditionally override the max link rate if its value
-> > is zero specifically for this model.
-> >
-> > Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.co=
-m>
-> > Signed-off-by: Dale Whinham <daleyo@gmail.com>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_panel.c | 13 +++++++++++++
-> >   1 file changed, 13 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp=
-/dp_panel.c
-> > index 4e8ab75c771b..b2e65b987c05 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> > @@ -11,6 +11,8 @@
-> >   #include <drm/drm_of.h>
-> >   #include <drm/drm_print.h>
-> >
-> > +#include <linux/dmi.h>
-> > +
-> >   #define DP_MAX_NUM_DP_LANES 4
-> >   #define DP_LINK_RATE_HBR2   540000 /* kbytes */
-> >
-> > @@ -58,6 +60,17 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_pane=
-l *msm_dp_panel)
-> >       if (rc)
-> >               return rc;
-> >
-> > +     /*
-> > +      * for some reason the ATNA30DW01-1 OLED panel in the Surface Pro=
- 11
-> > +      * reports a max link rate of 0 in the DPCD. Fix it to match the
-> > +      * EDPOverrideDPCDCaps string found in the ACPI DSDT
-> > +      */
-> > +     if (dpcd[DP_MAX_LINK_RATE] =3D=3D 0 &&
-> > +         dmi_match(DMI_SYS_VENDOR, "Microsoft Corporation") &&
-> > +         dmi_match(DMI_PRODUCT_NAME, "Microsoft Surface Pro, 11th Edit=
-ion")) {
-> > +             dpcd[1] =3D DP_LINK_BW_8_1;
-> > +     }
-> > +
->
-> My Galaxy Book4 Edge with the ATNA60CL07-0 panel also reports a max link
-> rate of 0. But I think eDP v1.4 panels need a different way to retrieve
-> supported links rates, which could be found in the amdgpu [1], i915 [2]
-> and nouveau [3] drivers.
+On 7/16/25 8:18 PM, Arseniy Velikanov wrote:
+> On 16.07.2025 20:00, Konrad Dybcio wrote:
+>> Since it's actually onboard, it would be fair to assume it's there
+>> for a reason.. Does it also report nonsense when running a
+>> downstream build?
+> Well, as I said before (looks like i sent reply wrongly), it's disabled
+> in the vendor's kernel config:
+> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/pipa-t-oss/arch/arm64/configs/vendor/pipa_user_defconfig#L413
+> 
+> Also, pmic fuel gauge, which works with the WIP driver in our
+> close-to-mainline fork reports mixed information for a dual-cell
+> battery, instead of each cell individually, and I think
+> this is a more right way.
 
-Thanks Xilin for the sharing and pointers into 3 other drivers, that
-would explain the current limitation for Adreno GPUs. Fixing it would
-require a big contribution independent of the actual SP11 enablement.
+OK this is a more convincing answer, thanks for confirming
 
-Is it a feature planned in the short-medium term within the MSM driver?
-If not, would a quirk like [4] be acceptable upstream in the meanwhile?
-
-[4] https://github.com/JeromeDeBretagne/linux-surface-pro-11/commit/d265cfb
-
-Thanks a lot,
-J=C3=A9r=C3=B4me
-
-
-
-> [1]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/=
-drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c#n2098
-> [2]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/=
-drivers/gpu/drm/i915/display/intel_dp.c#n4281
-> [3]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/=
-drivers/gpu/drm/nouveau/nouveau_dp.c#n101
->
->
-> >       msm_dp_panel->vsc_sdp_supported =3D drm_dp_vsc_sdp_supported(pane=
-l->aux, dpcd);
-> >       link_info =3D &msm_dp_panel->link_info;
-> >       link_info->revision =3D dpcd[DP_DPCD_REV];
->
->
-> --
-> Best regards,
-> Xilin Wu <sophon@radxa.com>
+Konrad
 
