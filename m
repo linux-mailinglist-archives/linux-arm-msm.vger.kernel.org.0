@@ -1,202 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-65419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E6CCB087FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:34:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D4DFB0881C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:45:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B01E1AA541C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:34:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4DD04A7BAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:45:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 956C72749EC;
-	Thu, 17 Jul 2025 08:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C80285C8A;
+	Thu, 17 Jul 2025 08:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RgwbKFlQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z9p5phMy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7711EF0B9;
-	Thu, 17 Jul 2025 08:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EE41C7009
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 08:45:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752741239; cv=none; b=S5pl5FDyaVnHFq2KHbkzAWtVQkZqRE6MGK4snC2bo4V2GW728hDP+FwQ+dHr11If+YWpZWTvEUbmzQB5hmKskClID7GQ2JH+NQ7yVgjhjPzqfOEEkhw5loJBuEpQGS9aSZTodnDTlV0SuAMnHYXoeLjc4pvhD7krenSURFGso/Y=
+	t=1752741933; cv=none; b=ZNuidrlA6MA1ROAGczn0ECLFsnFnDZHy4wiIBe9JseS0PTRHXTr2chNjOFguqKm2lmicUf4TLEvqMVsnId4r7Sl/B1U+VC07yF/sJZxRErABcC/A0N603flQrkTc0sDxxojNl8Hb8FGZgTexNxrnaClmm3t7svybozgGt9JCUnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752741239; c=relaxed/simple;
-	bh=yLCrBOZm7Q9yTCeRS40yaLfmpTFicj1UCMT0A5NRQmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DtzmL+GArHalHPuKC3Np4dtRy5bksteW4EvS78K6CJzU6eNHPAfJ2mOpsk10WNRQxCMmNA66zQk9RLHVYT2wtbScYPr9aUYRRh3DoJt8ypS44f846pmwll5WYEzavIqT0GG+1ThfnpxGkt+4ia4Rm3z+A+4QhN+/yGkdIf0yDbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RgwbKFlQ; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752741238; x=1784277238;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yLCrBOZm7Q9yTCeRS40yaLfmpTFicj1UCMT0A5NRQmA=;
-  b=RgwbKFlQNwRkttxuUiiaEJhBj2pBvwQeByE0F/0E83RlQiNjBo9+S/lD
-   tzgINOFJyFpjhtWV8yZTs/VQUvmVZfJ6pSJ/dUhHz1FO3SsyfDazgFz29
-   FREuPVbGKU0wVT1S69WHcwEaSC+zueH/oYzgYPUAjL4C5XmgemlOMWc/n
-   xEC2sGc+pt/tMzvVLJqftWezO4nEkYHymnwtgNPbWDQNuoNsazUtka0JY
-   kG4F3W4U3YZd2QegDYdNqGkY/LXu3x1gYVjLHyZeDU7lIkpu9qeXC84lI
-   goZTkFbRTSCvmvHjCmcRUyaVQUfnUDgXbilP0oo9g0QGjF4NXBqBjqNgI
-   w==;
-X-CSE-ConnectionGUID: X0Zl2uv8SfmSCywEJoeWEw==
-X-CSE-MsgGUID: An/PyB/yTt+Uoz3vG/4LVA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="66456965"
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
-   d="scan'208";a="66456965"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 01:33:58 -0700
-X-CSE-ConnectionGUID: BZcksriHRYi9EJu3ijnb3A==
-X-CSE-MsgGUID: kJOhJ3oaRfqvVgtmVOxesg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; 
-   d="scan'208";a="163265703"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 17 Jul 2025 01:33:54 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ucK3s-000DNP-0o;
-	Thu, 17 Jul 2025 08:33:52 +0000
-Date: Thu, 17 Jul 2025 16:33:09 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 11/11] wifi: ath12k: fix endianness handling in QMI
- response
-Message-ID: <202507171640.30pUvpPv-lkp@intel.com>
-References: <20250716075100.1447352-12-alexander.wilhelm@westermo.com>
+	s=arc-20240116; t=1752741933; c=relaxed/simple;
+	bh=KeBoICQi5vCriX+lE0bMVyU8SmgjFFfJAbuXSXLwOvU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DzPujdRussuNIEc7M/2lzITQTvotGQ6CsvxFnYjJaRWvL5H+bOd+7cx0U/eXUKde1WhT4THOqR/QjG2ag9w3RvSkGyBY3foqOp05En2dJXJTtXFbPIOyB8QXggnHe9qRv10s7Ekss9lXfwJPM6kMVkrhEv/KU4m0gc8ptVfuei4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z9p5phMy; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a536ecbf6fso412946f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 01:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752741930; x=1753346730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lI0pEfmVhQWkOv8EPGMn/xg7zISwfZGg3TSb4XZEXe4=;
+        b=Z9p5phMyeHNhIDU3Bgy2gPhCpHerknLxBYm7WCG/LwPrxjMpI4USLbCyaOjiVnN2Bc
+         0akJB43+4J3uta7FFI0j6VAD1cP64fyKo/TvC47bs35lBzsSewyivPQegM6s9TIKd63z
+         zLB0zu4ZpRlUhXJHIcCrIoDgY4BSLNerw6TUyhoKJeJMG21cVl/AazO7JVwTdN92tt7v
+         099tssRKwqNSXSCtTIWnjJPEs728HkTSydhzSa/WbaKLaFxrfvfE+FWEOlo2CKKsRJqK
+         XTw3F5eThczER5JNuWtg/B8Qf9LF5GvqrgYn4O2CPnmm9LqxPQNtQaAJIFAaheUVJEwl
+         x0CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752741930; x=1753346730;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lI0pEfmVhQWkOv8EPGMn/xg7zISwfZGg3TSb4XZEXe4=;
+        b=YNQQcDP8JOpja4uvlh86fNtMY+Oy9ts1h7wDHmXwN42vSAhlZMGpvQb3P7DePNlZ+2
+         r6VaBjhyP9wXPSS41fkn9sqKzy4bAkRzqok82iA05q4JkIXcThUZMPTiojuWC7GExHi2
+         fCjc4YXXAMN46MiqbOMk4FOGB0inPBz/RNz6Zr6mxY9qpuWk6cW4sS+iiBHG8NyMp8Er
+         FyIt5mtEnXzDaS4h72RWzXvVisDPBZk2lwiFJWiXskXsvESavMd5juWQQ6vPPy7MwyJH
+         PiUZrBNHTAQblQ0mVoJpKkJFjazgJ/nKikF8p1tKHL47wJ0QEVnzYB4fvAH723BquA5S
+         g+iA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9rVI+3MLlJCj3VpPi2DvHcjXZSUlSpi8BEuuvpEyVnnfNj0r1d2yToPWAof30D2rNs4FVSrGMyC2DxPpO@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxv0m91XRj82TFrmE4YQ0o1N0/39lxgP2QnMGCDFP0i9S/WxVLk
+	evKDzT3a5WJRQ8J5J0S3kS5qkuyuPYxiIGJe9hL8So6bw+5NWvQJ4TBrvncNOpSxaxs=
+X-Gm-Gg: ASbGnctEHIFeRUbTQ0PYjBA4OABHl1iZZo0AqHqLn8z5gbG+xomUvTiOniqVsmcKBIY
+	ai6IDD5MszWuEixJ1yR5Hys6zjZWFFzPQgj3UXRqZ5P6BAc1I48leQdKhKiAi+vD2GEY0qZHRCO
+	ThjFY+JjzTaZ+sMrP4BFVEOcujCauDyEW5JGM2CWDk42MBkdhSnjp4Gm5EBhnPinoX4EHSFbNKX
+	ZjGVn9u0Usf11ul6ZWygjSpwEJ8dZkFfXTcEmnNLAQ0wVMmZmCOcd0G/z8E73z89+drFux0aAkd
+	naV602zggI+Zh8iRZ9E6rYgS68wYnaoeejnzzFihlGrhfvg99Z3u0THYC0lbBKI5+VQRWl1Aiwg
+	yQEJBWWuJoZJXbu44bXorgZAVJFPORHRo/YeLxPNvOTVWYTAWB/D46dO/DRhSU3t68yWTtT72+h
+	Ot
+X-Google-Smtp-Source: AGHT+IHynfEiO6GXy/zERfnUna5/ILOl/Jpu2n8FLydUo9tQGpFN5rGKrkj6TlP/t2+2sNcZBF+q3Q==
+X-Received: by 2002:a05:6000:250d:b0:3a5:58a5:6a83 with SMTP id ffacd0b85a97d-3b613e66eaemr1561801f8f.13.1752741929767;
+        Thu, 17 Jul 2025 01:45:29 -0700 (PDT)
+Received: from ?IPV6:2a0d:e487:37e:ce58:94c8:a752:de4:96bb? ([2a0d:e487:37e:ce58:94c8:a752:de4:96bb])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-45634f5cad3sm15783305e9.9.2025.07.17.01.45.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Jul 2025 01:45:29 -0700 (PDT)
+Message-ID: <d1e84ad9-eeea-4d0b-9f29-1dd4be49225c@linaro.org>
+Date: Thu, 17 Jul 2025 10:45:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250716075100.1447352-12-alexander.wilhelm@westermo.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/15] dt-bindings: thermal: qcom-tsens: document the
+ Milos Temperature Sensor
+To: Luca Weiss <luca.weiss@fairphone.com>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>, Thomas Gleixner
+ <tglx@linutronix.de>, Jassi Brar <jassisinghbrar@gmail.com>,
+ Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-mmc@vger.kernel.org
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+ <20250713-sm7635-fp6-initial-v2-8-e8f9a789505b@fairphone.com>
+Content-Language: en-US
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20250713-sm7635-fp6-initial-v2-8-e8f9a789505b@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Alexander,
+On 7/13/25 10:05, Luca Weiss wrote:
+> Document the Temperature Sensor (TSENS) on the Milos SoC.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 0e653bbe9884953b58c4d8569b8d096db47fd54f..94311ebd7652d42eb6f3ae0dba792872c90b623f 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -49,6 +49,7 @@ properties:
+>         - description: v2 of TSENS
+>           items:
+>             - enum:
+> +              - qcom,milos-tsens
+>                 - qcom,msm8953-tsens
+>                 - qcom,msm8996-tsens
+>                 - qcom,msm8998-tsens
+> 
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on ath/ath-next]
-[also build test WARNING on linus/master v6.16-rc6 next-20250716]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Wilhelm/wifi-ath12k-fix-endianness-handling-in-QMI-host-capability-request/20250716-162058
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git ath-next
-patch link:    https://lore.kernel.org/r/20250716075100.1447352-12-alexander.wilhelm%40westermo.com
-patch subject: [PATCH 11/11] wifi: ath12k: fix endianness handling in QMI response
-config: mips-randconfig-r123-20250717 (https://download.01.org/0day-ci/archive/20250717/202507171640.30pUvpPv-lkp@intel.com/config)
-compiler: mips-linux-gcc (GCC) 8.5.0
-reproduce: (https://download.01.org/0day-ci/archive/20250717/202507171640.30pUvpPv-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507171640.30pUvpPv-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/soc/qcom/pdr_interface.c:612:22: sparse: sparse: restricted __le16 degrades to integer
-   drivers/soc/qcom/pdr_interface.c:613:22: sparse: sparse: restricted __le16 degrades to integer
-
-vim +612 drivers/soc/qcom/pdr_interface.c
-
-fbe639b44a8275 Sibi Sankar           2020-03-12  549  
-fbe639b44a8275 Sibi Sankar           2020-03-12  550  /**
-fbe639b44a8275 Sibi Sankar           2020-03-12  551   * pdr_restart_pd() - restart PD
-fbe639b44a8275 Sibi Sankar           2020-03-12  552   * @pdr:	PDR client handle
-fbe639b44a8275 Sibi Sankar           2020-03-12  553   * @pds:	PD service handle
-fbe639b44a8275 Sibi Sankar           2020-03-12  554   *
-fbe639b44a8275 Sibi Sankar           2020-03-12  555   * Restarts the PD tracked by the PDR client handle for a given service path.
-fbe639b44a8275 Sibi Sankar           2020-03-12  556   *
-fbe639b44a8275 Sibi Sankar           2020-03-12  557   * Return: 0 on success, negative errno on failure.
-fbe639b44a8275 Sibi Sankar           2020-03-12  558   */
-fbe639b44a8275 Sibi Sankar           2020-03-12  559  int pdr_restart_pd(struct pdr_handle *pdr, struct pdr_service *pds)
-fbe639b44a8275 Sibi Sankar           2020-03-12  560  {
-fbe639b44a8275 Sibi Sankar           2020-03-12  561  	struct servreg_restart_pd_resp resp;
-a161ffe4b87772 Tom Rix               2020-08-19  562  	struct servreg_restart_pd_req req = { 0 };
-fbe639b44a8275 Sibi Sankar           2020-03-12  563  	struct sockaddr_qrtr addr;
-fbe639b44a8275 Sibi Sankar           2020-03-12  564  	struct pdr_service *tmp;
-fbe639b44a8275 Sibi Sankar           2020-03-12  565  	struct qmi_txn txn;
-fbe639b44a8275 Sibi Sankar           2020-03-12  566  	int ret;
-fbe639b44a8275 Sibi Sankar           2020-03-12  567  
-fbe639b44a8275 Sibi Sankar           2020-03-12  568  	if (IS_ERR_OR_NULL(pdr) || IS_ERR_OR_NULL(pds))
-fbe639b44a8275 Sibi Sankar           2020-03-12  569  		return -EINVAL;
-fbe639b44a8275 Sibi Sankar           2020-03-12  570  
-fbe639b44a8275 Sibi Sankar           2020-03-12  571  	mutex_lock(&pdr->list_lock);
-fbe639b44a8275 Sibi Sankar           2020-03-12  572  	list_for_each_entry(tmp, &pdr->lookups, node) {
-fbe639b44a8275 Sibi Sankar           2020-03-12  573  		if (tmp != pds)
-fbe639b44a8275 Sibi Sankar           2020-03-12  574  			continue;
-fbe639b44a8275 Sibi Sankar           2020-03-12  575  
-fbe639b44a8275 Sibi Sankar           2020-03-12  576  		if (!pds->service_connected)
-fbe639b44a8275 Sibi Sankar           2020-03-12  577  			break;
-fbe639b44a8275 Sibi Sankar           2020-03-12  578  
-fbe639b44a8275 Sibi Sankar           2020-03-12  579  		/* Prepare req message */
-26bc7a6a0beed8 Len Baker             2021-08-08  580  		strscpy(req.service_path, pds->service_path, sizeof(req.service_path));
-fbe639b44a8275 Sibi Sankar           2020-03-12  581  		addr = pds->addr;
-fbe639b44a8275 Sibi Sankar           2020-03-12  582  		break;
-fbe639b44a8275 Sibi Sankar           2020-03-12  583  	}
-fbe639b44a8275 Sibi Sankar           2020-03-12  584  	mutex_unlock(&pdr->list_lock);
-fbe639b44a8275 Sibi Sankar           2020-03-12  585  
-fbe639b44a8275 Sibi Sankar           2020-03-12  586  	if (!req.service_path[0])
-fbe639b44a8275 Sibi Sankar           2020-03-12  587  		return -EINVAL;
-fbe639b44a8275 Sibi Sankar           2020-03-12  588  
-fbe639b44a8275 Sibi Sankar           2020-03-12  589  	ret = qmi_txn_init(&pdr->notifier_hdl, &txn,
-fbe639b44a8275 Sibi Sankar           2020-03-12  590  			   servreg_restart_pd_resp_ei,
-fbe639b44a8275 Sibi Sankar           2020-03-12  591  			   &resp);
-fbe639b44a8275 Sibi Sankar           2020-03-12  592  	if (ret < 0)
-fbe639b44a8275 Sibi Sankar           2020-03-12  593  		return ret;
-fbe639b44a8275 Sibi Sankar           2020-03-12  594  
-fbe639b44a8275 Sibi Sankar           2020-03-12  595  	ret = qmi_send_request(&pdr->notifier_hdl, &addr,
-fbe639b44a8275 Sibi Sankar           2020-03-12  596  			       &txn, SERVREG_RESTART_PD_REQ,
-fbe639b44a8275 Sibi Sankar           2020-03-12  597  			       SERVREG_RESTART_PD_REQ_MAX_LEN,
-fbe639b44a8275 Sibi Sankar           2020-03-12  598  			       servreg_restart_pd_req_ei, &req);
-fbe639b44a8275 Sibi Sankar           2020-03-12  599  	if (ret < 0) {
-fbe639b44a8275 Sibi Sankar           2020-03-12  600  		qmi_txn_cancel(&txn);
-fbe639b44a8275 Sibi Sankar           2020-03-12  601  		return ret;
-fbe639b44a8275 Sibi Sankar           2020-03-12  602  	}
-fbe639b44a8275 Sibi Sankar           2020-03-12  603  
-fbe639b44a8275 Sibi Sankar           2020-03-12  604  	ret = qmi_txn_wait(&txn, 5 * HZ);
-fbe639b44a8275 Sibi Sankar           2020-03-12  605  	if (ret < 0) {
-fbe639b44a8275 Sibi Sankar           2020-03-12  606  		pr_err("PDR: %s PD restart txn wait failed: %d\n",
-fbe639b44a8275 Sibi Sankar           2020-03-12  607  		       req.service_path, ret);
-fbe639b44a8275 Sibi Sankar           2020-03-12  608  		return ret;
-fbe639b44a8275 Sibi Sankar           2020-03-12  609  	}
-fbe639b44a8275 Sibi Sankar           2020-03-12  610  
-fbe639b44a8275 Sibi Sankar           2020-03-12  611  	/* Check response if PDR is disabled */
-fbe639b44a8275 Sibi Sankar           2020-03-12 @612  	if (resp.resp.result == QMI_RESULT_FAILURE_V01 &&
-fbe639b44a8275 Sibi Sankar           2020-03-12  613  	    resp.resp.error == QMI_ERR_DISABLED_V01) {
-fbe639b44a8275 Sibi Sankar           2020-03-12  614  		pr_err("PDR: %s PD restart is disabled: 0x%x\n",
-fbe639b44a8275 Sibi Sankar           2020-03-12  615  		       req.service_path, resp.resp.error);
-fbe639b44a8275 Sibi Sankar           2020-03-12  616  		return -EOPNOTSUPP;
-fbe639b44a8275 Sibi Sankar           2020-03-12  617  	}
-fbe639b44a8275 Sibi Sankar           2020-03-12  618  
-fbe639b44a8275 Sibi Sankar           2020-03-12  619  	/* Check the response for other error case*/
-fbe639b44a8275 Sibi Sankar           2020-03-12  620  	if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
-fbe639b44a8275 Sibi Sankar           2020-03-12  621  		pr_err("PDR: %s request for PD restart failed: 0x%x\n",
-fbe639b44a8275 Sibi Sankar           2020-03-12  622  		       req.service_path, resp.resp.error);
-fbe639b44a8275 Sibi Sankar           2020-03-12  623  		return -EREMOTEIO;
-fbe639b44a8275 Sibi Sankar           2020-03-12  624  	}
-fbe639b44a8275 Sibi Sankar           2020-03-12  625  
-fbe639b44a8275 Sibi Sankar           2020-03-12  626  	return 0;
-fbe639b44a8275 Sibi Sankar           2020-03-12  627  }
-9b09c0f289c5a8 Unnathi Chalicheemala 2023-09-22  628  EXPORT_SYMBOL_GPL(pdr_restart_pd);
-fbe639b44a8275 Sibi Sankar           2020-03-12  629  
+Applied, thanks
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
