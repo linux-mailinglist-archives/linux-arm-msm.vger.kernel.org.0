@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B1A1B0854D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:47:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4E50B08554
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:48:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0461EA416EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:47:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C11DA47E76
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:47:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB13E202962;
-	Thu, 17 Jul 2025 06:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE27021885D;
+	Thu, 17 Jul 2025 06:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLlANUPj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tT6vCpER"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBD117B425;
-	Thu, 17 Jul 2025 06:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0F7202962;
+	Thu, 17 Jul 2025 06:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752734870; cv=none; b=IJjCdyw66RBTPIO9sJyrrAJG6GuwtfZQo+cEDynUgeoKh98tqW44dZQrVA+DbFZ6XO8GzmsjgmBZPVY7YHismLXDx1Yh9kkHolFhJKJcfWKHxa6bSm9Q1JUFzG/kYzsf7GMNCv8VbF+JVrkZhM++nX7iIWygter1HQcVm2o0PFQ=
+	t=1752734875; cv=none; b=Jb71dS+OByj489XAvoX7koyrAu98lJWMIvqCg3lpWwfSxKCSiZV+i3+M7nXV0/6g0hjBEzflNH0pHyAYbapAhnmxV/Qc9OuNT+QuScBND6Alf+RCDtudenUr13LqqG522CtnIQULR3daviJlLUJuL9PNJvOMchRv6mDudN73A8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752734870; c=relaxed/simple;
-	bh=2K1Yqy5RHvQ5JVSCvcufJFqx7F5AGhbXd/38Kn83VEY=;
+	s=arc-20240116; t=1752734875; c=relaxed/simple;
+	bh=7Wc/Kok1Putd2sdYqEGi4fQ5bwFFhyB85mnB19qTxzQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s0ak4T03Ph9W//fOcZ3Mcm3+4vfWVyzWonJflObK58nq4XEsBvrCrCrP/HYZGNEI+fD7AhqJlBmW0PcUjTZYatWx6Uz8NXZqtpAhIQIcEMAMvro0DcONlHuiHcAtBX5Pj+p4nv3SrgpfUH3kLa50xDNcnGhHhOQJ07bZnKrY5rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLlANUPj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6ABAC4CEE3;
-	Thu, 17 Jul 2025 06:47:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fVw+Senz4G/c1EjgB4N3yF45qnN3LZ++f+yjX6zF0y9DneBKcWhrcpO83aRT/GqgVfP+RVbDGsgDydUru0pfMOdKzsOXnGQzJdRVrsyqrDoVsiTN/5/KAIa3WYsr//8StzUWmIjwSOowi0DQkDFll4KQWtob0SdfUJWCaehRRMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tT6vCpER; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBC6C4CEEB;
+	Thu, 17 Jul 2025 06:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752734870;
-	bh=2K1Yqy5RHvQ5JVSCvcufJFqx7F5AGhbXd/38Kn83VEY=;
+	s=k20201202; t=1752734875;
+	bh=7Wc/Kok1Putd2sdYqEGi4fQ5bwFFhyB85mnB19qTxzQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vLlANUPjVBfFvTVecr00X0rYLMDLPMSYqCCU7UcCMqWWqBcEi0uraFITYG8TbyLGY
-	 mUFzQMiUHKt3WGisf1Yp+SuDrxpFGB/ptg+hBQsGG3g/ayAEms8J11jIxagly1cpaX
-	 RQpdgU15TKEWba9zzllz4BGATfUJCGaOMIDm1EKX4Re7aPqZzaIqI32ytC4YwYuQv9
-	 aMbaO04DtP0WVY8demyZsUjKO0Im3GJfF0F4AqLy5O1CZgHgGVSwWYufIV54SrogV5
-	 QSJ8k4QF6NWto1CBYGiPnqMYYjzvAXXu4knHwdURM17rAY46wxbX6uJjxLrPEz1My6
-	 /lMvi/YQM8/pw==
-Message-ID: <2a55ff91-8fbe-4a9f-8892-d4073624a7da@kernel.org>
-Date: Thu, 17 Jul 2025 08:47:44 +0200
+	b=tT6vCpERg2mPGZDoFNMfBexHkxSL1KVbAPsCJayZF7ML03spxid0AxtdQMdkOmo0M
+	 nuip5xsjsn0cto2n6Oh9UcEN/mj159LZs1xCK/8gWpz4GWxdwqTcza5mMxTrZl6QdA
+	 dZX6kDXMrizSuJmFh0nAdthfRLKMo350yfFsvK5OecIbeQoBojHaCKaTMlKKXo51/K
+	 J4l+MK9p5Hoi6Jgym/gA2hnX/nweVdnjnKUJvwz91ver2Vawgy049xud27P2N+lmki
+	 vD6tpvSbIuGUUvoG5dLmyFD2tllLw/Qj+xXOzIvgK4WhbfwIO3AcAFSxZyyvEz70Ty
+	 LllzMGAUDQS/w==
+Message-ID: <ed4322ad-de80-4353-87d6-a4918ce7a55f@kernel.org>
+Date: Thu, 17 Jul 2025 08:47:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: clock: qcom,sm8150-camcc: Reference
+Subject: Re: [PATCH v2 2/4] dt-bindings: clock: qcom,mmcc: Reference
  qcom,gcc.yaml
 To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -64,7 +64,7 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250717-gcc-ref-fixes-v2-0-a2a571d2be28@quicinc.com>
- <20250717-gcc-ref-fixes-v2-1-a2a571d2be28@quicinc.com>
+ <20250717-gcc-ref-fixes-v2-2-a2a571d2be28@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250717-gcc-ref-fixes-v2-1-a2a571d2be28@quicinc.com>
+In-Reply-To: <20250717-gcc-ref-fixes-v2-2-a2a571d2be28@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -121,8 +121,9 @@ On 17/07/2025 08:38, Satya Priya Kakitapalli wrote:
 > Suggested-by: Krzysztof Kozlowski <krzk@kernel.org>
 > Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
->  .../devicetree/bindings/clock/qcom,sm8150-camcc.yaml | 20 ++++----------------
->  1 file changed, 4 insertions(+), 16 deletions(-)
+>  .../devicetree/bindings/clock/qcom,mmcc.yaml       | 24 +++-------------------
+>  1 file changed, 3 insertions(+), 21 deletions(-)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
