@@ -1,327 +1,437 @@
-Return-Path: <linux-arm-msm+bounces-65417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B85B4B08709
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:39:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 293D1B087E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:29:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D4275819A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:38:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66063ABE04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:29:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B46A24A076;
-	Thu, 17 Jul 2025 07:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4771228641D;
+	Thu, 17 Jul 2025 08:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k2r7Gph6"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3zZO/bQw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A045E2505AA;
-	Thu, 17 Jul 2025 07:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE85D285CAF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 08:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752737861; cv=none; b=P+NodO5tpOnf/gZwB4BMhFWRyUogs/oogMCwtJpq6k1Whry1m/CKYv+UQezoaxx4HuKL6ayGysvxDomAz4VHVF5JBSv6o8vWWRvp9esaqa8d1t4Bw635Xfev2ztvCYCJ4mSxy7UU3K3jYn3hchz0fSFEPGt9boSyQSSVPYGKRK0=
+	t=1752740982; cv=none; b=D+/ZbJvfu89cWr7kyMv/Rz3js5iaLhRBc1cTSUpQaLLWP2OJ9uCuysCxgxSJfiWBp2+p5A+5ucZ1hceiqQqj15+Agv2btdvpHAsJfVVjGXqlvLDiDF/3QjhDs6DDJKYqJ+KyKOBBo6PC5KT0jivaasQpZBT7vA9XPfJUPc4UaRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752737861; c=relaxed/simple;
-	bh=FIxnFxV/4JzUNjI50s1owU32R2TB0ovuNBfa9GHltww=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=AfBIzen5n0xZ6JriH83g/CTv7s4AymBuorpZ72HlPzYipb0U0Fj9f4S1MHCLk4lVzJ2QUwaop/U3qhWqm8bYHTPKRIINwGnTIZ1zAZfLdjvFgLPLTFW+25N4h18CZfpaGQqjyc/yKdoGyWmupwBFAnz/AqZn2Gq4uqbOUDL8kaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k2r7Gph6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H4Xo8J021709;
-	Thu, 17 Jul 2025 07:37:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3xU7SfH1f9xaMo6eYaTrPlYIKzLbU+yOb+Kv0YiFCr0=; b=k2r7Gph6U0l4axX5
-	ChUo+8PakGfKsjX5gmvuhf82w/phWPT/eu692C7q57JDNnWfxEvTS2kbrWcUxKf9
-	bdQ/Le3WMx7me4SFo3DVAA0jR+m2p/Zv+etpkja2nJMcpNe7m003mX2yDlkiPJKB
-	vSncn+LXpQgUkwaVDAIwGyokF0EVbl6U6bVQFK4F/Kg6itvcx1FRTEQ78FHYQrLP
-	EpiFrChK+N32Yy8VvJasoiCFsmPgNTTLe9RmCzpLQn0t6D7zNTmMKO/H42u+4L7S
-	uQDaKwBuTApG20x2rgQIGJ4qJz6WLzl1CiZQJ+uUV2h8UWvjZ9GGjZMcSjlYo9vu
-	PTtLuw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufu8ekqv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 07:37:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56H7bQ6X011930
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 07:37:26 GMT
-Received: from [10.50.48.71] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 17 Jul
- 2025 00:37:22 -0700
-Message-ID: <1c5df071-7000-ab45-dbc6-4384d883ba24@quicinc.com>
-Date: Thu, 17 Jul 2025 13:07:14 +0530
+	s=arc-20240116; t=1752740982; c=relaxed/simple;
+	bh=UNunHUNkH+TN7AOcVml1jP+DpDLBcanyZCyw+pldQvE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=m25g90nBtEQ1CC/yE/ptOg2wdyI2a5o0qDswIQePdPPFWFKtI7OM46+9rRQLe58C9nIes/0CGovuxLJQCaDxoJqOmLClrY1fV/9yUwvM52PZFffHRoubMH4eLPu7KuXz4tSEBbhwceDmHFurZhxF/EwGIf47JA8EoPNWeNCSUyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=3zZO/bQw; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-605b9488c28so1137300a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 01:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1752740978; x=1753345778; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ry2yqY4fcB8r6JNTuIg6GJi9ZBAG4EVyeQwgDvrWgsM=;
+        b=3zZO/bQwku27icG21ERWuH7SL6EIVSr/97M3536zv5kGuN1/dmzOy026I6R+otzsH5
+         Qc3mBy9t96Arvk3yWMke97BdB7dQYwy7dLrXY+o2yzK/6TtsRMtWeuxqglzwGtjGATT2
+         6i5Pu+ZOft0LFimO+QgTH34kXDKPfwFYEF8eC9FtDDjg6+SXzK4pPC1wKrHB45rr4mxU
+         6FCzOlt1ocVWLVyHshdurd8ou39ppYsquQ4CFhYJ1b4jQT9PIzZ42DrrmZvJGF/ibyrA
+         KBDCT+kQj9g+O3Eeqnyu+IUo8l6XMTJRk6O3osvzCtGUAwwlIHSERKr9/naKhneiJ7HW
+         tgcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752740978; x=1753345778;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ry2yqY4fcB8r6JNTuIg6GJi9ZBAG4EVyeQwgDvrWgsM=;
+        b=YwGWmwoegDGn62Z/b77ZHIlC+Qer234DvOwHZGu4jUffHVC5UAOY7UfvbbRfbOZsT+
+         Y1WgVof4/WqwQAvcSIKMsyDwz1WK0ywRbpj6B1HNTQIZ5uwb5FZX6XPaaTXkFhQ/QhM0
+         NvMiMarzzsQNbX3KIicoHDQOj3mZ9sw+XXF0R9umROdAIiyArjxvDgu/g8aAdl53JGwI
+         Gcbb12l3pVlrCKXDMHFvceJYcCM1RB+Pm73xshRiWyNoyp/Hp4sgxVb3DLjESn2NcahF
+         nt5glJBxp3PE7nj7WTL/fjziD7ZaweSOeTdIk65x/5SSmHKCdd3PWr+IIZuT3BSm+hxb
+         0JbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/7jFGFb6diZIb27ARmjjvhhBnYDY5KRcMtD97ZO4Dayt/itGhtN8tnFBH3IH5G2CvccznSfb3JaFIgV7+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXBj9+F6S593d8durWOnRRTZPO1L+ypXO7UppRtBH2QFqxj+x/
+	+T5IP0TeiWHgmIxKXXxbFjG3wHqiz61GMOcm5jowK5JX1cNyMQGCLbSfOIQSF+j3RIg=
+X-Gm-Gg: ASbGncugbAcp7WceQPz/uiNBMtYm9fU+0BG5Y15oEXhK6xL7bJ/iCaUpVeyNO2QIUN2
+	rJl1GrsjOdjG+3xfxI8U1fP7LENFDeYU8DGxCRzjV6djMNCQPV+AqbTTzNYvGedJrHGM5oivVPn
+	cKjuEtn/NVyzuSSx8m7lfCsVLjUmqYSHlA0iTqPKHNrKcpj6u2i9UQ9jWSfW69KUFV52iCbb1yv
+	UnLonioCTs/Kjia3rSD0EL5chWc2Oaa1W1VvwQ9PVmiqIS+ggAYZwJG9dJjcO7anmGCqFBQaSh+
+	JNS3LmLYjZKPDhnebNozDWKET//MJBsJ3B/Ii+4Cbzck7qpIit8Qja8d5pmSfkCv/Ejspe5jcjp
+	KiZVP2rcPWj25Kt5PUvAJ0ysA1vs6NV4ATtrZqC/bHAsAsiu7ZaNliDKT9cvKSXcvmXM=
+X-Google-Smtp-Source: AGHT+IE+TdhlMPh+u91g6pE8N6/1/E6+tgQ36t4anhpy9DrzlSFmbhQrj6aJo6OAcbvrAeM2GDcPYg==
+X-Received: by 2002:a05:6402:35c4:b0:608:6501:6a1f with SMTP id 4fb4d7f45d1cf-61285916635mr4613521a12.1.1752740978021;
+        Thu, 17 Jul 2025 01:29:38 -0700 (PDT)
+Received: from localhost (212095005146.public.telering.at. [212.95.5.146])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9796432sm9746425a12.73.2025.07.17.01.29.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Jul 2025 01:29:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 3/3] media: iris: Add support for SM8750 (VPU v3.5)
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org>
- <20250714-sm8750-iris-v1-3-3006293a5bc7@linaro.org>
- <7b0a984f-b62a-ac4d-74bf-a6e839c59272@quicinc.com>
- <d4c39f2c-9f95-4e65-87a3-78173b39adf1@linaro.org>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <d4c39f2c-9f95-4e65-87a3-78173b39adf1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA2NiBTYWx0ZWRfX/9v9rN03FwsX
- PtmqBGqbWn5BlOzyblmMlSkRjo9F9hwBdd9b0RhzxMizlkAVCBsKXlK5YX4ebrgrGr/3+2L6ZBe
- vKiZgiGMwWaLdXgI6h19/LoSogerMyrnoDs52CZrAc9PIVdKUG3mb+30Mcc11AOdUzrWRCHHe1d
- FS4xiGLkKZd6tY8mPTQmJgDGzf0wID1aABcFeuVL4CVDZwYDPgAioRA2kep2i1BII3wA9F8IKum
- TqUgOR5NY2rRY/LPDLLgTJEVd7zA3sCthNXeHVxQ+vdJxfS422yaUBOD9rSQrmFAVLg9jnhvjkM
- lHiq0tpaxCESxPqX9PfipR3VZ/UlvZB9aRPa9F9V8Q83FWkblMA6JikOK0BelpuZRwPj7iw/QxZ
- q/2OFCowrMz/VhZVl/xjhNEVVL0xbZKzisr3qoFMn6wC7LHmj9xyU7lFbSHhMp+pWlOyMvsr
-X-Proofpoint-ORIG-GUID: wBSmapMbFYVvbVxXlMMGbdjn7vAWfgIv
-X-Proofpoint-GUID: wBSmapMbFYVvbVxXlMMGbdjn7vAWfgIv
-X-Authority-Analysis: v=2.4 cv=f59IBPyM c=1 sm=1 tr=0 ts=6878a837 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=naxSXyrHOhEljO64-y4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170066
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 17 Jul 2025 10:29:35 +0200
+Message-Id: <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+ <linux-mmc@vger.kernel.org>
+Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
+ <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
+ <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
+ Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
+ <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
+ <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
+ Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
+ "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
+ <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
+ "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
+ "Ulf Hansson" <ulf.hansson@linaro.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+ <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
+ <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
+In-Reply-To: <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
 
+On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
+> On 7/13/25 10:05 AM, Luca Weiss wrote:
+>> Add a devicetree description for the Milos SoC, which is for example
+>> Snapdragon 7s Gen 3 (SM7635).
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>
+> [...]
+>
+>> +		cpu-map {
+>> +			cluster0 {
+>> +				core0 {
+>> +					cpu =3D <&cpu0>;
+>> +				};
+>> +
+>> +				core1 {
+>> +					cpu =3D <&cpu1>;
+>> +				};
+>> +
+>> +				core2 {
+>> +					cpu =3D <&cpu2>;
+>> +				};
+>> +
+>> +				core3 {
+>> +					cpu =3D <&cpu3>;
+>> +				};
+>> +			};
+>> +
+>> +			cluster1 {
+>> +				core0 {
+>> +					cpu =3D <&cpu4>;
+>> +				};
+>> +
+>> +				core1 {
+>> +					cpu =3D <&cpu5>;
+>> +				};
+>> +
+>> +				core2 {
+>> +					cpu =3D <&cpu6>;
+>> +				};
+>> +			};
+>> +
+>> +			cluster2 {
+>> +				core0 {
+>> +					cpu =3D <&cpu7>;
+>> +				};
+>> +			};
+>> +		};
+>
+> I'm getting mixed information about the core topology..=20
+>
+> What does dmesg say wrt this line?
+>
+> CPU%u: Booted secondary processor 0x%010lx [0x%08x]\n
 
+[    0.003570] CPU1: Booted secondary processor 0x0000000100 [0x410fd801]
+[    0.004738] CPU2: Booted secondary processor 0x0000000200 [0x410fd801]
+[    0.005783] CPU3: Booted secondary processor 0x0000000300 [0x410fd801]
+[    0.007206] CPU4: Booted secondary processor 0x0000000400 [0x410fd811]
+[    0.008206] CPU5: Booted secondary processor 0x0000000500 [0x410fd811]
+[    0.009073] CPU6: Booted secondary processor 0x0000000600 [0x410fd811]
+[    0.010406] CPU7: Booted secondary processor 0x0000000700 [0x410fd811]
 
-On 7/16/2025 2:58 PM, Krzysztof Kozlowski wrote:
-> On 16/07/2025 11:10, Dikshita Agarwal wrote:
->>
->>
->> On 7/14/2025 7:11 PM, Krzysztof Kozlowski wrote:
->>> Add support for SM8750 Iris codec with major differences against
->>> previous generation SM8650:
->>>
->>> 1. New clocks and new resets, thus new power up and power down
->>>    sequences,
->>>
->>> 2. New WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0 register programmed
->>>    during boot-up
->>>
-> 
-> 
-> 
-> Please kindly trim the replies from unnecessary context. It makes it
-> much easier to find new content.
-> 
-> 
->>> +struct iris_platform_data sm8750_data = {
->>> +	.get_instance = iris_hfi_gen2_get_instance,
->>> +	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
->>> +	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
->>> +	.vpu_ops = &iris_vpu35_ops,
->>> +	.set_preset_registers = iris_set_sm8550_preset_registers,
->>> +	.icc_tbl = sm8550_icc_table,
->>> +	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
->>> +	.clk_rst_tbl = sm8750_clk_reset_table,
->>> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8750_clk_reset_table),
->>> +	.bw_tbl_dec = sm8550_bw_table_dec,
->>> +	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
->>> +	.pmdomain_tbl = sm8550_pmdomain_table,
->>> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
->>> +	.opp_pd_tbl = sm8550_opp_pd_table,
->>> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
->>> +	.clk_tbl = sm8750_clk_table,
->>> +	.clk_tbl_size = ARRAY_SIZE(sm8750_clk_table),
->>> +	/* Upper bound of DMA address range */
->>> +	.dma_mask = 0xe0000000 - 1,
->>> +	.fwname = "qcom/vpu/vpu35_4v.mbn",
->> Could you clarify where this firmware has been merged? Also, it appears
->> that the naming convention hasn't been followed.
-> 
-> 
-> I mentioned in the DTS patchset but not here, so I will add it in the
-> cover letter - firmware is not released. About the name I cannot
-> comment, that's the name I got from qcom. Happy to use whatever name you
-> prefer.
-> 
+>
+>> +	pmu-a520 {
+>> +		compatible =3D "arm,cortex-a520-pmu";
+>> +		interrupts =3D <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+>> +	};
+>> +
+>> +	pmu-a720 {
+>> +		compatible =3D "arm,cortex-a720-pmu";
+>> +		interrupts =3D <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+>> +	};
+>
+> See:
+>
+> 9ce52e908bd5 ("arm64: dts: qcom: sm8650: switch to interrupt-cells 4 to a=
+dd PPI partitions")
+> 2c06e0797c32 ("arm64: dts: qcom: sm8650: add PPI interrupt partitions for=
+ the ARM PMUs")
 
+Sure, will take a look.
 
-You can name it vpu35_p4.mbn to maintain consistency with the current
-naming convention.
+>
+> [...]
+>
+>> +		gcc: clock-controller@100000 {
+>> +			compatible =3D "qcom,milos-gcc";
+>> +			reg =3D <0x0 0x00100000 0x0 0x1f4200>;
+>> +
+>> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&sleep_clk>,
+>> +				 <0>, /* pcie_0_pipe_clk */
+>> +				 <0>, /* pcie_1_pipe_clk */
+>> +				 <0>, /* ufs_phy_rx_symbol_0_clk */
+>> +				 <0>, /* ufs_phy_rx_symbol_1_clk */
+>> +				 <0>, /* ufs_phy_tx_symbol_0_clk */
+>> +				 <0>; /* usb3_phy_wrapper_gcc_usb30_pipe_clk */
+>> +			protected-clocks =3D <GCC_PCIE_1_AUX_CLK>, <GCC_PCIE_1_AUX_CLK_SRC>,
+>> +					<GCC_PCIE_1_CFG_AHB_CLK>, <GCC_PCIE_1_MSTR_AXI_CLK>,
+>> +					<GCC_PCIE_1_PHY_RCHNG_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
+>> +					<GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
+>> +					<GCC_PCIE_1_PIPE_DIV2_CLK>, <GCC_PCIE_1_PIPE_DIV2_CLK_SRC>,
+>> +					<GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
+>
+> Does access control disallow accessing these on your prod-fused
+> device?
 
+Hm, taking another look, this property should probably be moved to
+device dts.
 
-> 
-> 
->>> +static int iris_vpu35_power_on_hw(struct iris_core *core)
->>> +{
->>> +	int ret;
->>> +	u32 val;
->>> +
->>> +	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>> +	/* Switch GDSC to SW control */
->>> +	writel(0x0, core->reg_base + WRAPPER_CORE_POWER_CONTROL);
->> GDSCs have been transitioned from HW_CTRL to HW_CTRL_TRIGGER, placing them
->> under software control by default, what is the need of doing this?
->>> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_CORE_POWER_STATUS,
->>> +				 val, val & BIT(1), 200, 2000);
-> 
-> 
-> The need comes from differences between this and previous generation,
+Downstream has this in volcano.dtsi but volcano6i.dtsi (QCM6690?) and
+volcano6ip.dtsi (QCS6690?) have a /delete-property/ for this, because
+they have PCIe available.
 
+I don't think this has anything to do with secure boot fuses, but I
+don't think I have tried enabling these clocks on my SB-off prototype.
 
-which previous generation you’re referring to?
-HW_CTRL_TRIGGER is supported on SM8550 and all later SOCs, and if you look
-at videocc changes, same applies to SM8750 as well.
+>
+> [...]
+>
+>> +		usb_1: usb@a600000 {
+>> +			compatible =3D "qcom,milos-dwc3", "qcom,snps-dwc3";
+>> +			reg =3D <0x0 0x0a600000 0x0 0x10000>;
+>
+> size =3D 0xfc_000
 
+Ack
 
+>
+> [...]
+>
+>> +
+>> +			clocks =3D <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+>> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+>> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+>> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
+>> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>;
+>> +			clock-names =3D "cfg_noc",
+>> +				      "core",
+>> +				      "iface",
+>> +				      "sleep",
+>> +				      "mock_utmi",
+>> +				      "xo";
+>> +
+>> +			assigned-clocks =3D <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+>> +			assigned-clock-rates =3D <19200000>, <133333333>;
+>
+> Set the latter to 200000000 - your device doesn't have USB3, but the
+> next person may lose their hair about tracking down why it doesn't
+> work on theirs
 
-> mostly based on downstream sources. I think the hardware just did not
-> boot up without it.
+Ah, I think I only checked the downstream reference which was patched to
+be qcom,core-clk-rate =3D <133333333>; for FP6. The original file does
+have:
 
+  qcom,core-clk-rate =3D <200000000>;
+  qcom,core-clk-rate-disconnected =3D <133333333>;
 
-That shouldn’t be the case. The downstream design is different, which is
-why the driver requires the above code to move the GDSC to software control
-before enabling the clock. With HW_CTRL_TRIGGER, this step isn’t needed, so
-the above code is unnecessary.
+>
+> [...]
+>
+>> +		pdc: interrupt-controller@b220000 {
+>> +			compatible =3D "qcom,milos-pdc", "qcom,pdc";
+>> +			reg =3D <0x0 0x0b220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
+>
+> 1 per line, please
 
+Ack
 
-> 
-> You need to fix your email client to add line breaks around your
-> replies, because it is very difficult to spot them. It's close to
-> impossible...
-> 
-> 
->>> +	if (ret)
->>> +		goto err_disable_power;
->>> +
->>> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_CLK);
->>> +	if (ret)
->>> +		goto err_gdsc;
->>> +
->>> +	ret = iris_prepare_enable_clock(core, IRIS_HW_FREERUN_CLK);
->>> +	if (ret)
->>> +		goto err_disable_axi_clk;
->>> +
->>> +	ret = iris_prepare_enable_clock(core, IRIS_HW_CLK);
->>> +	if (ret)
->>> +		goto err_disable_hw_free_clk;
->>> +
->>> +	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
->>> +	if (ret)
->>> +		goto err_disable_hw_clk;
->>> +
->>> +	return 0;
->>> +
->>> +err_disable_hw_clk:
->>> +	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
->>> +err_disable_hw_free_clk:
->>> +	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
->>> +err_disable_axi_clk:
->>> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
->>> +err_gdsc:
->>> +	writel(BIT(0), core->reg_base + WRAPPER_CORE_POWER_CONTROL);
->>> +err_disable_power:
->>> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
->>> +
->>> +	return ret;
->>> +}
->>> +
->>> +static void iris_vpu35_power_off_hw(struct iris_core *core)
->>> +{
->>> +	u32 val = 0, value, i;
->>> +	int ret;
->>> +
->>> +	if (iris_vpu3x_hw_power_collapsed(core))
->>> +		goto disable_power;
->>> +
->>> +	value = readl(core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->>> +	if (value)
->>> +		writel(CORE_CLK_RUN, core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->>> +
->>> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
->>> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
->>> +					 val, val & 0x400000, 2000, 20000);
->>> +		if (ret)
->>> +			goto disable_power;
->>> +	}
->>> +
->>> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
->>> +				 val, val & BIT(0), 200, 2000);
->> what are you polling here for?
-> 
-> 
-> This is not different than existing code. I don't understand why you are
-> commenting on something which is already there.
+>
+>> +			interrupt-parent =3D <&intc>;
+>> +
+>> +			qcom,pdc-ranges =3D <0 480 40>, <40 140 11>, <51 527 47>,
+>> +					  <98 609 31>, <129 63 1>, <130 716 12>,
+>> +					  <142 251 5>;
+>> +
+>> +			#interrupt-cells =3D <2>;
+>> +			interrupt-controller;
+>> +		};
+>> +
+>> +		tsens0: thermal-sensor@c228000 {
+>> +			compatible =3D "qcom,milos-tsens", "qcom,tsens-v2";
+>> +			reg =3D <0x0 0x0c228000 0x0 0x1ff>, /* TM */
+>> +			      <0x0 0x0c222000 0x0 0x1ff>; /* SROT */
+>
+> drop the comments
+>
+> the sizes are 0x1000 for both regions for both controllers
 
-Which code are you referring to?
+Ack
 
-You are not setting AON_WRAPPER_MVP_NOC_LPI_CONTROL and polling for its status.
+>
+>> +
+>> +			interrupts =3D <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+>
+> pdc 26
 
-The current code is incomplete and missing several steps.
-Please review and provide a corrected version.
+You mean replace <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH> with
+<&pdc 26 IRQ_TYPE_LEVEL_HIGH> (plus interrupts-extended)?
 
+I assume you got this from internal docs, but just to mention,
+volcano-thermal.dtsi contains GIC_SPI 506 (+ 507 for tsens1).
 
-> 
->>> +	if (ret)
->>> +		goto disable_power;
->>> +
->>> +	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
->> Could you share the reference for this sqeunece, this looks half-cooked.
->> Would recommend following Hardware programmin guide(HPG) for this.
-> 
-> 
-> Why? Look at existing code. It's the same.
+>
+>> +				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names =3D "uplow",
+>> +					  "critical";
+>> +
+>> +			#qcom,sensors =3D <15>;
+>> +
+>> +			#thermal-sensor-cells =3D <1>;
+>> +		};
+>> +
+>> +		tsens1: thermal-sensor@c229000 {
+>> +			compatible =3D "qcom,milos-tsens", "qcom,tsens-v2";
+>> +			reg =3D <0x0 0x0c229000 0x0 0x1ff>, /* TM */
+>> +			      <0x0 0x0c223000 0x0 0x1ff>; /* SROT */
+>> +
+>> +			interrupts =3D <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+>
+> pdc 27
 
+same as above
 
-Which existing code? Please be specific.
-I don't think you referred to downstream code for this, because I see a lot
-of missing pieces here.
+>
+>> +				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names =3D "uplow",
+>> +					  "critical";
+>> +
+>> +			#qcom,sensors =3D <14>;
+>> +
+>> +			#thermal-sensor-cells =3D <1>;
+>> +		};
+>> +
+>> +		aoss_qmp: power-management@c300000 {
+>> +			compatible =3D "qcom,milos-aoss-qmp", "qcom,aoss-qmp";
+>> +			reg =3D <0x0 0x0c300000 0x0 0x400>;
+>> +
+>> +			interrupt-parent =3D <&ipcc>;
+>> +			interrupts-extended =3D <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLI=
+NK_QMP
+>> +						     IRQ_TYPE_EDGE_RISING>;
+>> +
+>> +			mboxes =3D <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +
+>> +			#clock-cells =3D <0>;
+>> +		};
+>> +
+>> +		sram@c3f0000 {
+>> +			compatible =3D "qcom,rpmh-stats";
+>> +			reg =3D <0x0 0x0c3f0000 0x0 0x400>;
+>> +		};
+>> +
+>> +		spmi_bus: spmi@c400000 {
+>> +			compatible =3D "qcom,spmi-pmic-arb";
+>
+> There's two bus instances on this platform, check out the x1e binding
 
+Will do
 
-> 
-> I think I responded to all your comments - it barely possible to spot
-> them in the quote.
-> 
+>
+> [...]
+>
+>> +		intc: interrupt-controller@17100000 {
+>> +			compatible =3D "arm,gic-v3";
+>> +			reg =3D <0x0 0x17100000 0x0 0x10000>,	/* GICD */
+>> +			      <0x0 0x17180000 0x0 0x200000>;	/* GICR * 8 */
+>
+> drop the comments please
 
+Ack
 
-No, you have missed some of the later comments. Since the code is snipped,
-I can’t point out those comments here.
+>
+> [...]
+>
+>> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+>> +			clock-names =3D "xo", "alternate";
+>
+> 1 a line, please
 
+Ack
 
-Thanks,
-Dikshita
+>
+> [...]
+>
+>> +		cpuss0-thermal {
+>> +			thermal-sensors =3D <&tsens0 1>;
+>> +
+>> +			trips {
+>> +				cpuss0-hot {
+>> +					temperature =3D <110000>;
+>> +					hysteresis =3D <1000>;
+>> +					type =3D "hot";
+>> +				};
+>> +
+>> +				cpuss0-critical {
+>> +					temperature =3D <115000>;
+>> +					hysteresis =3D <0>;
+>> +					type =3D "critical";
+>> +				};
+>> +			};
+>> +		};
+>
+> See:
+>
+> 06eadce93697 ("arm64: dts: qcom: x1e80100: Drop unused passive thermal tr=
+ip points for CPU")
+>
+> (tldr drop non-critical trips for CPU)
 
-> Best regards,
-> Krzysztof
+Will take a look.
+
+Regards
+Luca
+
+>
+> Konrad
+
 
