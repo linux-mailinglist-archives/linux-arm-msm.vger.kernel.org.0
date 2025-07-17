@@ -1,88 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-65486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE95BB08E50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 15:32:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E72BAB08E6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 15:39:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10C071C24D51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:32:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2351F1888106
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:39:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7881F2EA498;
-	Thu, 17 Jul 2025 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 271122EBDE6;
+	Thu, 17 Jul 2025 13:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="qUywYP61"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Q+KJh1Wq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E692E975D;
-	Thu, 17 Jul 2025 13:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F42EBDC6;
+	Thu, 17 Jul 2025 13:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752759119; cv=none; b=erpZtzJ6a5lBGTlma6vKseS7llNmcvE37HQTxE/VM98Hn/MkkH39f8QX8BYAJVQulzJQ2X8fR3C8yOCQ8TQfbrU+eu9QVq4M1ASLBoXoZUBPVj9Ym7USR0XrWN1011C7j5s5IGwy3gy93z0xfBkXD60YBGRj0vb7c9cSFjW8Yxs=
+	t=1752759545; cv=none; b=cZRAnmILLx+mEx4KcekwF8MQDMY2bwD2pxVVnhfV6/4SOMzZ1BWc0CXAfaw8hIxt2I+w2QaxQAQS2vvVRobnOkzocs8uGiDr7bB+tKRuK73BD7dglvvSRcL5leFLR1VROm9kFL30uGxD2rHesLdYodilvlo+rdFyfiFNvbe9Z4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752759119; c=relaxed/simple;
-	bh=aPEWDW3DKbruNkNr+5qftKrpi1xMqYprC+1aHTuSLYw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j/9MYODNERRUmO9TmeRt3Sri/jJwcVuFuta7/pNjFjyz13gyAkYSQZv6y+fzqAnsLS3dVy2V5NB8ZDtNiUM0u4K0386GV+eq16/qlwZ7fwPz7s7H6x/4LwPL4pmEunGWvyJMPuSToAzkNtx4jfhga/24CUGiTJvuhUYAxa5YhPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=qUywYP61; arc=none smtp.client-ip=188.165.51.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1752759105; x=1753018305;
-	bh=aPEWDW3DKbruNkNr+5qftKrpi1xMqYprC+1aHTuSLYw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=qUywYP613MdGorQ6Skw0P4OHml0OlX7xMq8/HtjRKCM0b4AnphpKQ8UQj05AVyOKq
-	 Jvo/77m/3rzY9zTxNRdadHYf9XjSJ29YEs/9JfkAAl6QOpnDiwU01b8vKud06URERr
-	 z6DV53QMPqWQSKKHKwiJsuahKpuCzzCcVXnqkoZDi+POZzOdrkPMoYbfadJM15V2Kt
-	 8HsLFlM2KSqTviUwbfNyCUm9iFC1OhvF0oNimT4jLkCZZX2jI+834P4C6fi2ienf6d
-	 UE4cObV7oUVTBMGyLXdU6HOJ+KLLzKoH85QIQqF1NsDxbsWnwuGzClUkChQdgqHcZf
-	 4xQy/wPq/eiHg==
-Date: Thu, 17 Jul 2025 13:31:40 +0000
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-From: Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, =?utf-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, linux-iio@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] iio: Add Qualcomm Sensor Manager driver
-Message-ID: <pf5Z61lF8AhA7lEZ3mew6aSShDnuQUe_da_gGIcw6cftOM0kuxDYHrnIbiOA91kHYw2RCQP4MvqOkubyJisqu8MmfcFI8yB5bXagfEO-U_Y=@protonmail.com>
-In-Reply-To: <CAHp75Vf8NzYRMeM=+S4p9LGnOd4iXcdw93hBjd=Rn=LqBXgwgA@mail.gmail.com>
-References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com> <20250710-qcom-smgr-v2-4-f6e198b7aa8e@protonmail.com> <CAHp75Vf8NzYRMeM=+S4p9LGnOd4iXcdw93hBjd=Rn=LqBXgwgA@mail.gmail.com>
-Feedback-ID: 6882736:user:proton
-X-Pm-Message-ID: c4341d71dd1799d4c6fdd96eeabe45193f82ce56
+	s=arc-20240116; t=1752759545; c=relaxed/simple;
+	bh=yLN7VF//2CVZZPmoMJ7VBKPuAA7aA4dv0y6POh5P3tM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nwgVbnsNUoq2oQaXMw2DjU31zXzTKf1L9ZCuH7TaGYBPEJNLqx2b88oD18zyn3Nec45vQqGJGZ+xcNC6njW2Ai1rbEsR+LinfYuCFe4XvpbTbsdjxxYEk7Nvvs2eQRPDwW0fK435KoHPzd6AjaGe9W4VmDSo2IRhcweu0sv6cKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Q+KJh1Wq; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=lfFBam5+7+XtNm3Zq2vi9q8MGJfF20M+DYWOSgZx/tw=; b=Q+KJh1WqNBwy2WWan3Kc7Aj2yo
+	rAwNzQN0U4ZpVzpocnC7ExYI46KBa7Arun4/bG7JTVA/RIatOEG4UBaREuYWToLZoyKyRKD5qaABD
+	rToD3q+xu/avOqwMy8RTYPoWBLrRvTpukCshNTCkODKC8R6/9iS7Zec5Hr5BNkIZ8ddM=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1ucOov-001tOr-Un; Thu, 17 Jul 2025 15:38:45 +0200
+Date: Thu, 17 Jul 2025 15:38:45 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v3 1/3] net: phy: qcom: Add PHY counter support
+Message-ID: <a19b72e5-bcee-46c8-9c6e-234af9b103b9@lunn.ch>
+References: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
+ <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
 
-On Thursday, July 10th, 2025 at 9:58 AM, Andy Shevchenko <andy.shevchenko@g=
-mail.com> wrote:
+On Tue, Jul 15, 2025 at 07:02:26PM +0800, Luo Jie wrote:
+> Add PHY counter functionality to the shared library. The implementation
+> is identical for the current QCA807X and QCA808X PHYs.
+> 
+> The PHY counter can be configured to perform CRC checking for both received
+> and transmitted packets. Additionally, the packet counter can be set to
+> automatically clear after it is read.
+> 
+> The PHY counter includes 32-bit packet counters for both RX (received) and
+> TX (transmitted) packets, as well as 16-bit counters for recording CRC
+> error packets for both RX and TX.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 
-> On Thu, Jul 10, 2025 at 11:06=E2=80=AFAM Yassine Oudjana via B4 Relay
-> devnull+y.oudjana.protonmail.com@kernel.org wrote:
->=20
-> > Add a driver for sensors exposed by the Qualcomm Sensor Manager service=
-,
-> > which is provided by SLPI or ADSP on Qualcomm SoCs. Supported sensors
-> > include accelerometers, gyroscopes, pressure sensors, proximity sensors
-> > and magnetometers.
->=20
->=20
-> First of all it's almost 2kLoCs, it's on the edge of unreviewable
-> code. Please, try to make 3+ patches out of this one.
-> Second, take your time and check what your code is using from the
-> kernel internal libraries and APIs and follow IWYU principle when
-> including headers.
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-I can cleanly split it into 2 patches by putting the QMI components
-in a separate patch. Not sure about 3+ patches but will try my best.
-Will review includes.
-
+    Andrew
 
