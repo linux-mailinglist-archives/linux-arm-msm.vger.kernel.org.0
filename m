@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-65412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BAB4B086DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:35:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32295B086E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:35:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5067D188880C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:34:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 670E0561286
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:35:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A5428B3F7;
-	Thu, 17 Jul 2025 07:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B61D28B7E0;
+	Thu, 17 Jul 2025 07:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="DQfN6tZZ"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="aa9nlXNk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF2C28A1CB;
-	Thu, 17 Jul 2025 07:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04AC28A3FA;
+	Thu, 17 Jul 2025 07:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752737448; cv=none; b=TJJCwOfaB4n2jYY4K8DVzdeCwtFoJZ9p0iCbumB3DyovMjjmlTOLn5h/dpAHDQvr/LVY0YbuDUlZY7uJT63iwwW0+ZmwIxzzdJKbbXEcGdXofZ8U9RKxnvBVvZjnHKMm78R0gsFd6ESX/qZ0iGn/I7K3R/28lmYsiIhfAMCn0MQ=
+	t=1752737449; cv=none; b=cm3dAxbfOz+tFEbQR19Kzw12KSEQJmRF1/mf+lU2I3Yu2qxKKTn4V7W0RVA297wHAtMozYGChqhxzPjzazoJtQccubo+64uLnja6wPIW6CrFxUrz8MjVQzTEP3KgmNJBqgMtPwu1tSCjHh+DOGKVQ7SL0p+NwxSf9rTfKFp59Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752737448; c=relaxed/simple;
-	bh=wK6s7mAYkYPJRqoutgkfeCOCzsu+q4gClu5YOlvachU=;
+	s=arc-20240116; t=1752737449; c=relaxed/simple;
+	bh=0lw7YpxGK0B91U9qbvXe15g4SKC+i034MLK0Ys9xyw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYDxjhBNVX4Zbu98iYInKnFoIyB8f2DmdD2OY7pEIigImaIysvSQ6rmt6QgPbanzX35Tpmi+HlCOQDocpyvptPflDAbJp6DKtgNGiOKAQkr985Hi6kYc+1w8cGBNfCn6wQ3DwzQqTjb0jVtn82ZSQQCZM2OJJgy9DB5OLuVXW0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=DQfN6tZZ; arc=none smtp.client-ip=217.70.183.199
+	 MIME-Version; b=XOYPKkwO89/UT7qw/LumWhXftQyKpnLzKrkHaJ0gwUriztiqhIGf9TBDoZjD8BvOmu+hXYJ8E2qY18R5VayEJADqAC3rLuaIaI76A3fIEdnwDgYPooW71dDLcVWtiuBxGmTFLXdP1SZ3emZjDWCK/DuQ25gt9TCckTMT9aqm1lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=aa9nlXNk; arc=none smtp.client-ip=217.70.183.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 565A2443F4;
-	Thu, 17 Jul 2025 07:30:42 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D34C7443F6;
+	Thu, 17 Jul 2025 07:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1752737443;
+	t=1752737445;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=9adhkQWxi71IBDaxFr3WPdVhxePQHRlsmcLimnWozx8=;
-	b=DQfN6tZZWRmC0wA4u4OC3VzVte097hl+vBcwRzHdKGi0nMRqZsin3Q3YyPCBlP/2ppWqy8
-	kStbBSagWN72LH36ispxd4wh0b6/AjXdrKO7KPpA+ZKAvEXCXA9lyk9H4sYNA4GNE52j/l
-	iVI5Tc99hrdIqfewpc0fk7sXYns2+hC5HU10thzCCKbTT4ab3eHfLb6VzgoXCITSGyjrzD
-	afcgrbyLJgBbrrzxy68DmNPfPR0KQlT00USFJf4NFgnw0/g2G+HNO1obd/w91p9Gy7RTHM
-	K+gsA4qBcwf1+26F7wAgTAbhAayOJwC6al3KF3x62OEOnAPV6jTI5iOmKU8vyg==
+	bh=M+c6gG67vdFsKda6/1bwU9cO4GgONAjjqGIsxKc7Sek=;
+	b=aa9nlXNkj7rY1XvuH2BnNpBO8sxyXB1oVp36z7dU9TXIuyyoj7Y8jEFoBLi089i6/NGA1J
+	3BCsjPtlYYLzzByh5lAgpgJUtpkwlqVZBfdCJkiRXYPv9FHnMGF1j7lwgly4ocf/1svs0C
+	lWvV1A2gXp8oepNgWO9shPWBNWX1ayVJQpXxDk+7U4gKh/LwA/mFwHc9FPc7sL/c/sdBgP
+	79eF4YSJCsfQ71kfUrx5KPeQ15z+4fsI3rnuNYY/cDXOz4rL9eHAIokeavdGEnPfCvOhi/
+	sb2NQat2GqO7BKiA5ANFIEFQPxulmK1CVcPl0K/Qx0LCW1swfe7OkaKUToKg5A==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -77,9 +77,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v9 12/15] net: phy: qca807x: Support SFP through phy_port interface
-Date: Thu, 17 Jul 2025 09:30:16 +0200
-Message-ID: <20250717073020.154010-13-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v9 13/15] net: phy: Only rely on phy_port for PHY-driven SFP
+Date: Thu, 17 Jul 2025 09:30:17 +0200
+Message-ID: <20250717073020.154010-14-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
 References: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
@@ -96,155 +96,150 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehleellecutefuodetggdotef
  ghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
 X-GND-Sasl: maxime.chevallier@bootlin.com
 
-QCA8072/8075 may be used as combo-port PHYs, with Serdes (100/1000BaseX)
- and Copper interfaces. The PHY has the ability to read the configuration
-it's in.  If the configuration indicates the PHY is in combo mode, allow
-registering up to 2 ports.
-
-Register a dedicated set of port ops to handle the serdes port, and rely
-on generic phylib SFP support for the SFP handling.
+Now that all PHY drivers that support downstream SFP have been converted
+to phy_port serdes handling, we can make the generic PHY SFP handling
+mandatory, thus making all phylib sfp helpers static.
 
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/qcom/qca807x.c | 75 +++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 43 deletions(-)
+ drivers/net/phy/phy_device.c | 28 +++++++++-------------------
+ include/linux/phy.h          |  6 ------
+ 2 files changed, 9 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
-index 6d10ef7e9a8a..ce92836b2472 100644
---- a/drivers/net/phy/qcom/qca807x.c
-+++ b/drivers/net/phy/qcom/qca807x.c
-@@ -13,7 +13,7 @@
- #include <linux/phy.h>
- #include <linux/bitfield.h>
- #include <linux/gpio/driver.h>
--#include <linux/sfp.h>
-+#include <linux/phy_port.h>
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 195559df81ad..c7a2ed6a606f 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1521,7 +1521,7 @@ static DEVICE_ATTR_RO(phy_standalone);
+  *
+  * Return: 0 on success, otherwise a negative error code.
+  */
+-int phy_sfp_connect_phy(void *upstream, struct phy_device *phy)
++static int phy_sfp_connect_phy(void *upstream, struct phy_device *phy)
+ {
+ 	struct phy_device *phydev = upstream;
+ 	struct net_device *dev = phydev->attached_dev;
+@@ -1531,7 +1531,6 @@ int phy_sfp_connect_phy(void *upstream, struct phy_device *phy)
  
- #include "../phylib.h"
- #include "qcom.h"
-@@ -642,67 +642,55 @@ static int qca807x_phy_package_config_init_once(struct phy_device *phydev)
+ 	return 0;
+ }
+-EXPORT_SYMBOL(phy_sfp_connect_phy);
+ 
+ /**
+  * phy_sfp_disconnect_phy - Disconnect the SFP module's PHY from the upstream PHY
+@@ -1543,7 +1542,7 @@ EXPORT_SYMBOL(phy_sfp_connect_phy);
+  * will be destroyed, re-inserting the same module will add a new phy with a
+  * new index.
+  */
+-void phy_sfp_disconnect_phy(void *upstream, struct phy_device *phy)
++static void phy_sfp_disconnect_phy(void *upstream, struct phy_device *phy)
+ {
+ 	struct phy_device *phydev = upstream;
+ 	struct net_device *dev = phydev->attached_dev;
+@@ -1551,7 +1550,6 @@ void phy_sfp_disconnect_phy(void *upstream, struct phy_device *phy)
+ 	if (dev)
+ 		phy_link_topo_del_phy(dev, phy);
+ }
+-EXPORT_SYMBOL(phy_sfp_disconnect_phy);
+ 
+ /**
+  * phy_sfp_attach - attach the SFP bus to the PHY upstream network device
+@@ -1560,7 +1558,7 @@ EXPORT_SYMBOL(phy_sfp_disconnect_phy);
+  *
+  * This is used to fill in the sfp_upstream_ops .attach member.
+  */
+-void phy_sfp_attach(void *upstream, struct sfp_bus *bus)
++static void phy_sfp_attach(void *upstream, struct sfp_bus *bus)
+ {
+ 	struct phy_device *phydev = upstream;
+ 
+@@ -1568,7 +1566,6 @@ void phy_sfp_attach(void *upstream, struct sfp_bus *bus)
+ 		phydev->attached_dev->sfp_bus = bus;
+ 	phydev->sfp_bus_attached = true;
+ }
+-EXPORT_SYMBOL(phy_sfp_attach);
+ 
+ /**
+  * phy_sfp_detach - detach the SFP bus from the PHY upstream network device
+@@ -1577,7 +1574,7 @@ EXPORT_SYMBOL(phy_sfp_attach);
+  *
+  * This is used to fill in the sfp_upstream_ops .detach member.
+  */
+-void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
++static void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
+ {
+ 	struct phy_device *phydev = upstream;
+ 
+@@ -1585,7 +1582,6 @@ void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
+ 		phydev->attached_dev->sfp_bus = NULL;
+ 	phydev->sfp_bus_attached = false;
+ }
+-EXPORT_SYMBOL(phy_sfp_detach);
+ 
+ static int phy_sfp_module_insert(void *upstream, const struct sfp_eeprom_id *id)
+ {
+@@ -1731,10 +1727,8 @@ static int phy_setup_sfp_port(struct phy_device *phydev)
+ /**
+  * phy_sfp_probe - probe for a SFP cage attached to this PHY device
+  * @phydev: Pointer to phy_device
+- * @ops: SFP's upstream operations
+  */
+-int phy_sfp_probe(struct phy_device *phydev,
+-		  const struct sfp_upstream_ops *ops)
++static int phy_sfp_probe(struct phy_device *phydev)
+ {
+ 	struct sfp_bus *bus;
+ 	int ret = 0;
+@@ -1746,7 +1740,7 @@ int phy_sfp_probe(struct phy_device *phydev,
+ 
+ 		phydev->sfp_bus = bus;
+ 
+-		ret = sfp_bus_add_upstream(bus, phydev, ops);
++		ret = sfp_bus_add_upstream(bus, phydev, &sfp_phydev_ops);
+ 		sfp_bus_put(bus);
+ 	}
+ 
+@@ -1755,7 +1749,6 @@ int phy_sfp_probe(struct phy_device *phydev,
+ 
  	return ret;
  }
+-EXPORT_SYMBOL(phy_sfp_probe);
  
--static int qca807x_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
-+static int qca807x_configure_serdes(struct phy_port *port, bool enable,
-+				    phy_interface_t interface)
+ static bool phy_drv_supports_irq(const struct phy_driver *phydrv)
  {
--	struct phy_device *phydev = upstream;
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(support) = { 0, };
--	phy_interface_t iface;
-+	struct phy_device *phydev = port_phydev(port);
- 	int ret;
--	DECLARE_PHY_INTERFACE_MASK(interfaces);
+@@ -3555,12 +3548,9 @@ static int phy_setup_ports(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
  
--	sfp_parse_support(phydev->sfp_bus, id, support, interfaces);
--	iface = sfp_select_interface(phydev->sfp_bus, support);
-+	if (!phydev)
-+		return -ENODEV;
- 
--	dev_info(&phydev->mdio.dev, "%s SFP module inserted\n", phy_modes(iface));
--
--	switch (iface) {
--	case PHY_INTERFACE_MODE_1000BASEX:
--	case PHY_INTERFACE_MODE_100BASEX:
-+	if (enable) {
- 		/* Set PHY mode to PSGMII combo (1/4 copper + combo ports) mode */
- 		ret = phy_modify(phydev,
- 				 QCA807X_CHIP_CONFIGURATION,
- 				 QCA807X_CHIP_CONFIGURATION_MODE_CFG_MASK,
- 				 QCA807X_CHIP_CONFIGURATION_MODE_PSGMII_FIBER);
-+		if (ret)
-+			return ret;
- 		/* Enable fiber mode autodection (1000Base-X or 100Base-FX) */
- 		ret = phy_set_bits_mmd(phydev,
- 				       MDIO_MMD_AN,
- 				       QCA807X_MMD7_FIBER_MODE_AUTO_DETECTION,
- 				       QCA807X_MMD7_FIBER_MODE_AUTO_DETECTION_EN);
--		/* Select fiber page */
--		ret = phy_clear_bits(phydev,
--				     QCA807X_CHIP_CONFIGURATION,
--				     QCA807X_BT_BX_REG_SEL);
--
--		phydev->port = PORT_FIBRE;
--		break;
--	default:
--		dev_err(&phydev->mdio.dev, "Incompatible SFP module inserted\n");
--		return -EINVAL;
-+		if (ret)
-+			return ret;
- 	}
- 
--	return ret;
-+	phydev->port = enable ? PORT_FIBRE : PORT_TP;
-+
-+	return phy_modify(phydev, QCA807X_CHIP_CONFIGURATION,
-+			  QCA807X_BT_BX_REG_SEL,
-+			  enable ? 0 : QCA807X_BT_BX_REG_SEL);
- }
- 
--static void qca807x_sfp_remove(void *upstream)
-+static const struct phy_port_ops qca807x_serdes_port_ops = {
-+	.configure_mii = qca807x_configure_serdes,
-+};
-+
-+static int qca807x_attach_port(struct phy_device *phydev, struct phy_port *port)
- {
--	struct phy_device *phydev = upstream;
-+	if (!port->is_mii)
-+		return 0;
- 
--	/* Select copper page */
--	phy_set_bits(phydev,
--		     QCA807X_CHIP_CONFIGURATION,
--		     QCA807X_BT_BX_REG_SEL);
-+	__set_bit(PHY_INTERFACE_MODE_1000BASEX, port->interfaces);
-+	__set_bit(PHY_INTERFACE_MODE_100BASEX, port->interfaces);
- 
--	phydev->port = PORT_TP;
--}
-+	port->ops = &qca807x_serdes_port_ops;
- 
--static const struct sfp_upstream_ops qca807x_sfp_ops = {
--	.attach = phy_sfp_attach,
--	.detach = phy_sfp_detach,
--	.module_insert = qca807x_sfp_insert,
--	.module_remove = qca807x_sfp_remove,
--	.connect_phy = phy_sfp_connect_phy,
--	.disconnect_phy = phy_sfp_disconnect_phy,
--};
-+	return 0;
-+}
- 
- static int qca807x_probe(struct phy_device *phydev)
- {
-@@ -744,9 +732,8 @@ static int qca807x_probe(struct phy_device *phydev)
- 
- 	/* Attach SFP bus on combo port*/
- 	if (phy_read(phydev, QCA807X_CHIP_CONFIGURATION)) {
--		ret = phy_sfp_probe(phydev, &qca807x_sfp_ops);
+-	/* Use generic SFP probing only if the driver didn't do so already */
+-	if (!phydev->sfp_bus) {
+-		ret = phy_sfp_probe(phydev, &sfp_phydev_ops);
 -		if (ret)
--			return ret;
-+		phydev->max_n_ports = 2;
-+
- 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->supported);
- 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->advertising);
- 	}
-@@ -800,6 +787,7 @@ static struct phy_driver qca807x_drivers[] = {
- 		.suspend	= genphy_suspend,
- 		.cable_test_start	= qca807x_cable_test_start,
- 		.cable_test_get_status	= qca808x_cable_test_get_status,
-+		.attach_port	= qca807x_attach_port,
- 	},
- 	{
- 		PHY_ID_MATCH_EXACT(PHY_ID_QCA8075),
-@@ -823,6 +811,7 @@ static struct phy_driver qca807x_drivers[] = {
- 		.led_hw_is_supported = qca807x_led_hw_is_supported,
- 		.led_hw_control_set = qca807x_led_hw_control_set,
- 		.led_hw_control_get = qca807x_led_hw_control_get,
-+		.attach_port	= qca807x_attach_port,
- 	},
- };
- module_phy_driver(qca807x_drivers);
+-			goto out;
+-	}
++	ret = phy_sfp_probe(phydev);
++	if (ret)
++		goto out;
+ 
+ 	if (phydev->n_ports < phydev->max_n_ports) {
+ 		ret = phy_default_setup_single_port(phydev);
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 329603c802d1..779187912e16 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1829,12 +1829,6 @@ int phy_suspend(struct phy_device *phydev);
+ int phy_resume(struct phy_device *phydev);
+ int __phy_resume(struct phy_device *phydev);
+ int phy_loopback(struct phy_device *phydev, bool enable, int speed);
+-int phy_sfp_connect_phy(void *upstream, struct phy_device *phy);
+-void phy_sfp_disconnect_phy(void *upstream, struct phy_device *phy);
+-void phy_sfp_attach(void *upstream, struct sfp_bus *bus);
+-void phy_sfp_detach(void *upstream, struct sfp_bus *bus);
+-int phy_sfp_probe(struct phy_device *phydev,
+-	          const struct sfp_upstream_ops *ops);
+ struct phy_device *phy_attach(struct net_device *dev, const char *bus_id,
+ 			      phy_interface_t interface);
+ struct phy_device *phy_find_first(struct mii_bus *bus);
 -- 
 2.49.0
 
