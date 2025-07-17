@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-65409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62FE2B086E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:35:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17BA2B086EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:35:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 348E83A6671
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:33:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFCBB3BDC27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:33:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7969C2882D7;
-	Thu, 17 Jul 2025 07:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB4112877ED;
+	Thu, 17 Jul 2025 07:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Re8wEroA"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="OTbYLYO9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47DE28504A;
-	Thu, 17 Jul 2025 07:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3C286D7D;
+	Thu, 17 Jul 2025 07:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752737443; cv=none; b=h/32D4wWwT5HNQq+1vIOl/a2tF6Z3yx7zLN1+T0TKUo3dZXT9+Wo2BRDI/iRyWUb1jPcgRQ830l9Hg3b3SK4hkkpExwy/rNo1nt89bfII9F/oaXojIM+vjchHo4X90C/xzn/AVZJNHoNUXY+DSNuQs+5CYcu8TL4ZAorfN6vMCg=
+	t=1752737444; cv=none; b=Ga/GfRPrTf7mqzxJNHIkoB01KNDIVaimgrZlKwbafUah3fXCDc+m9D1MHttRbFoZ57WxwJhpUoEKzx6lNYt3i0B9IBjzhr/rNrgDtnBeKTpNkZvaeRyVVdYc9FA5M7VDdnqhSIMJhoD/JlxnuAg896l1KeQJOjyfCP5Z3tYI6+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752737443; c=relaxed/simple;
-	bh=HiyUtlu/WHUcoaDEtlfuBXdO6WAX5zQbiXNL1/oj89U=;
+	s=arc-20240116; t=1752737444; c=relaxed/simple;
+	bh=qZq91shlGYPDlmSK7qbYrPHQ6m3IdlXyS8a7m7S5kG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srLhowtPjPQ2uDnq1FZv1aIPpovhsIh7rfOxKv7kTSqUEKdH6ugf25Ux35VqjeXwPVrWtJ6SXp17NSyckYK7rKweGLLCJZj+GuguZWpg3pBjU25idT8jE02YLJYQ/yNbSFiNyVd6ymOMVGu8yO6T2UM6Os+Az0XOBWkzJ+hLdVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Re8wEroA; arc=none smtp.client-ip=217.70.183.199
+	 MIME-Version; b=f5lA2vjuOnrydsQYxPrGwuvx/PbW/NwIYVQljv7J8XnFQXU4LBesfGAML92rtlP+VSvJScuhbNc6UeQPywssQ1LWup1eFa2HCBjQT5ZiDiRRt4xVYKb/nk8r7j8IJIRe+m9KbS9RtiNSFofkfWkAKXL1sTRMeWJryvaJTlTOewk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=OTbYLYO9; arc=none smtp.client-ip=217.70.183.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id DAC7D443EB;
-	Thu, 17 Jul 2025 07:30:37 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 5E935443F3;
+	Thu, 17 Jul 2025 07:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1752737439;
+	t=1752737440;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=w8rmrUxAjLWR1LXoQ/1rHxTuiIJstrc7uNNYiiWudbc=;
-	b=Re8wEroA6zLB70t35D3toDGpCo14p6a2T6eYezX4vDQ22t4Ql3XCh+8L0/rjormhrNpAPu
-	4B41PrOD0NTZwJDGeubAPH2Qpv19xC/F9T0hJ4bFoYL3ZCL9z5yCkSYxlVpzsDzIHiahDf
-	HNoSk75JqKweLqkwN4iWesXOkSbluMFf1d05rhA9y/rMCTxJhagUPv+GKPafaxF16P6aaT
-	zTzFGgTGeFAmkMScm9EiUkvTpSW6wfgC1RuBBpwhABieNfnyFPBkfOOsIKqEsa0v67XpNx
-	5qTol2vKyr54rG9IiQ3jxE8yw/LAaQL5C51CRE35qg7Db8ZaxC/7ZmNML7YSAQ==
+	bh=9iQH4kxfqf3NCgkxryD8jJxsQEYrTj/jEyun2UwK9nQ=;
+	b=OTbYLYO9CtI7kjeztIY5G9oYjrokYq/1ztbk3utDnIG1E4tKEAJEcan4rGdEclHRA1eG7f
+	ilxtnMKS74hKuRizjGVNgtSDh7bKrdDhLbv8pi1nv4fAeRSq43+hujUvdyKuXHkw51xQOk
+	t6M4e+YbJepdPNDGJL107P+Q/xi05FJ9Qw7mvIDp/vmclyal+tRmMaPFO4tMAAv7+rMZfZ
+	VW6AroFIm3ylha3Rcqgjt1K6QCs8wvd9sHOzWNGaZC/cvXh3/d7hOO8mYUeJBeZvSqGd3V
+	2b5nC6iLCeTVumOAzIbvEz42GEJJyDohT/UU+ag0NfMQxEYztHw75WqBATm2QQ==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -77,9 +77,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v9 09/15] net: phy: marvell: Support SFP through phy_port interface
-Date: Thu, 17 Jul 2025 09:30:13 +0200
-Message-ID: <20250717073020.154010-10-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v9 10/15] net: phy: marvell10g: Support SFP through phy_port
+Date: Thu, 17 Jul 2025 09:30:14 +0200
+Message-ID: <20250717073020.154010-11-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
 References: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
@@ -96,178 +96,176 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehleellecutefuodetggdotef
  ghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
 X-GND-Sasl: maxime.chevallier@bootlin.com
 
-Convert the Marvell driver (especially the 88e1512 driver) to use the
-phy_port interface to handle SFPs. This means registering a
-.attach_port() handler to detect when a serdes line interface is used
-(most likely, and SFP module).
+Convert the Marvell10G driver to use the generic SFP handling, through a
+dedicated .attach_port() handler to populate the port's supported
+interfaces.
+
+As the 88x3310 supports multiple MDI, the .attach_port() logic handles
+both SFP attach with 10GBaseR support, and support for the "regular"
+port that usually is a BaseT port.
 
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/marvell.c | 100 +++++++++++++++-----------------------
- 1 file changed, 39 insertions(+), 61 deletions(-)
+ drivers/net/phy/marvell10g.c | 47 +++++++++++++++++++-----------------
+ drivers/net/phy/phy_port.c   | 20 +++++++++++++++
+ include/linux/phy_port.h     |  1 +
+ 3 files changed, 46 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
-index 623292948fa7..4f5fe5189fb1 100644
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -29,10 +29,10 @@
- #include <linux/ethtool.h>
- #include <linux/ethtool_netlink.h>
- #include <linux/phy.h>
-+#include <linux/phy_port.h>
+diff --git a/drivers/net/phy/marvell10g.c b/drivers/net/phy/marvell10g.c
+index 13e81dff42c1..7cb638804a3f 100644
+--- a/drivers/net/phy/marvell10g.c
++++ b/drivers/net/phy/marvell10g.c
+@@ -28,7 +28,7 @@
+ #include <linux/hwmon.h>
  #include <linux/marvell_phy.h>
- #include <linux/bitfield.h>
- #include <linux/of.h>
+ #include <linux/phy.h>
 -#include <linux/sfp.h>
++#include <linux/phy_port.h>
+ #include <linux/netdevice.h>
  
- #include <linux/io.h>
- #include <asm/irq.h>
-@@ -3561,42 +3561,38 @@ static int marvell_probe(struct phy_device *phydev)
- 	return marvell_hwmon_probe(phydev);
+ #define MV_PHY_ALASKA_NBT_QUIRK_MASK	0xfffffffe
+@@ -463,36 +463,31 @@ static int mv3310_set_edpd(struct phy_device *phydev, u16 edpd)
+ 	return err;
  }
  
--static int m88e1510_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
-+static int mv88e1510_port_configure_serdes(struct phy_port *port, bool enable,
-+					   phy_interface_t interface)
+-static int mv3310_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
++static int mv3310_attach_port(struct phy_device *phydev, struct phy_port *port)
  {
+-	struct phy_device *phydev = upstream;
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(support) = { 0, };
 -	DECLARE_PHY_INTERFACE_MASK(interfaces);
--	struct phy_device *phydev = upstream;
--	phy_interface_t interface;
-+	struct phy_device *phydev = port_phydev(port);
- 	struct device *dev;
- 	int oldpage;
- 	int ret = 0;
- 	u16 mode;
- 
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+-	phy_interface_t iface;
 -
- 	dev = &phydev->mdio.dev;
- 
--	sfp_parse_support(phydev->sfp_bus, id, supported, interfaces);
--	interface = sfp_select_interface(phydev->sfp_bus, supported);
+-	sfp_parse_support(phydev->sfp_bus, id, support, interfaces);
+-	iface = sfp_select_interface(phydev->sfp_bus, support);
 -
--	dev_info(dev, "%s SFP module inserted\n", phy_modes(interface));
-+	if (enable) {
-+		switch (interface) {
-+		case PHY_INTERFACE_MODE_1000BASEX:
-+			mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_1000X;
- 
--	switch (interface) {
--	case PHY_INTERFACE_MODE_1000BASEX:
--		mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_1000X;
-+			break;
-+		case PHY_INTERFACE_MODE_100BASEX:
-+			mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_100FX;
- 
--		break;
--	case PHY_INTERFACE_MODE_100BASEX:
--		mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_100FX;
--
--		break;
--	case PHY_INTERFACE_MODE_SGMII:
--		mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_SGMII;
-+			break;
-+		case PHY_INTERFACE_MODE_SGMII:
-+			mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_SGMII;
- 
--		break;
--	default:
--		dev_err(dev, "Incompatible SFP module inserted\n");
-+			break;
-+		default:
-+			dev_err(dev, "Incompatible SFP module inserted\n");
- 
+-	if (iface != PHY_INTERFACE_MODE_10GBASER) {
+-		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
 -		return -EINVAL;
-+			return -EINVAL;
-+		}
-+	} else {
-+		mode = MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII;
++	if (port->is_mii) {
++		__set_bit(PHY_INTERFACE_MODE_10GBASER, port->interfaces);
++	} else if (port->not_described) {
++		/* This PHY can do combo-ports, i.e. 2 MDI outputs, usually one
++		 * of them going to an SFP and the other one to a RJ45
++		 * connector. If we don't have any representation for the port
++		 * in DT, and we are dealing with a non-SFP port, then we
++		 * mask the port's capabilities to report BaseT-only modes
++		 */
++		port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
++
++		phy_port_filter_supported(port);
  	}
- 
- 	oldpage = phy_select_page(phydev, MII_MARVELL_MODE_PAGE);
-@@ -3613,49 +3609,30 @@ static int m88e1510_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
- 
- error:
- 	return phy_restore_page(phydev, oldpage, ret);
--}
--
--static void m88e1510_sfp_remove(void *upstream)
--{
--	struct phy_device *phydev = upstream;
--	int oldpage;
--	int ret = 0;
--
--	oldpage = phy_select_page(phydev, MII_MARVELL_MODE_PAGE);
--	if (oldpage < 0)
--		goto error;
- 
--	ret = __phy_modify(phydev, MII_88E1510_GEN_CTRL_REG_1,
--			   MII_88E1510_GEN_CTRL_REG_1_MODE_MASK,
--			   MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII);
--	if (ret < 0)
--		goto error;
--
--	ret = __phy_set_bits(phydev, MII_88E1510_GEN_CTRL_REG_1,
--			     MII_88E1510_GEN_CTRL_REG_1_RESET);
--
--error:
--	phy_restore_page(phydev, oldpage, ret);
-+	return 0;
++
+ 	return 0;
  }
  
--static const struct sfp_upstream_ops m88e1510_sfp_ops = {
--	.module_insert = m88e1510_sfp_insert,
--	.module_remove = m88e1510_sfp_remove,
+-static const struct sfp_upstream_ops mv3310_sfp_ops = {
 -	.attach = phy_sfp_attach,
 -	.detach = phy_sfp_detach,
 -	.connect_phy = phy_sfp_connect_phy,
 -	.disconnect_phy = phy_sfp_disconnect_phy,
-+static const struct phy_port_ops mv88e1510_serdes_port_ops = {
-+	.configure_mii = mv88e1510_port_configure_serdes,
- };
- 
--static int m88e1510_probe(struct phy_device *phydev)
-+static int m88e1510_attach_port(struct phy_device *phy_device,
-+				struct phy_port *port)
+-	.module_insert = mv3310_sfp_insert,
+-};
+-
+ static int mv3310_probe(struct phy_device *phydev)
  {
--	int err;
-+	/* For classic Copper operation, we don't have any port-specific
-+	 * control to do.
-+	 */
-+	if (!port->is_mii)
-+		return 0;
+ 	const struct mv3310_chip *chip = to_mv3310_chip(phydev);
+ 	struct mv3310_priv *priv;
+ 	u32 mmd_mask = MDIO_DEVS_PMAPMD | MDIO_DEVS_AN;
++	DECLARE_PHY_INTERFACE_MASK(interfaces);
+ 	int ret;
  
--	err = marvell_probe(phydev);
--	if (err)
--		return err;
-+	port->ops = &mv88e1510_serdes_port_ops;
+ 	if (!phydev->is_c45 ||
+@@ -543,9 +538,13 @@ static int mv3310_probe(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
+ 
++	__set_bit(PHY_INTERFACE_MODE_10GBASER, interfaces);
 +
-+	__set_bit(PHY_INTERFACE_MODE_SGMII, port->interfaces);
-+	__set_bit(PHY_INTERFACE_MODE_1000BASEX, port->interfaces);
-+	__set_bit(PHY_INTERFACE_MODE_100BASEX, port->interfaces);
+ 	chip->init_supported_interfaces(priv->supported_interfaces);
  
--	return phy_sfp_probe(phydev, &m88e1510_sfp_ops);
+-	return phy_sfp_probe(phydev, &mv3310_sfp_ops);
++	phydev->max_n_ports = 2;
++
 +	return 0;
  }
  
- static struct phy_driver marvell_drivers[] = {
-@@ -3915,7 +3892,7 @@ static struct phy_driver marvell_drivers[] = {
- 		.driver_data = DEF_MARVELL_HWMON_OPS(m88e1510_hwmon_ops),
- 		.features = PHY_GBIT_FIBRE_FEATURES,
- 		.flags = PHY_POLL_CABLE_TEST,
--		.probe = m88e1510_probe,
-+		.probe = marvell_probe,
- 		.config_init = m88e1510_config_init,
- 		.config_aneg = m88e1510_config_aneg,
- 		.read_status = marvell_read_status,
-@@ -3941,6 +3918,7 @@ static struct phy_driver marvell_drivers[] = {
- 		.led_hw_is_supported = m88e1318_led_hw_is_supported,
- 		.led_hw_control_set = m88e1318_led_hw_control_set,
- 		.led_hw_control_get = m88e1318_led_hw_control_get,
-+		.attach_port = m88e1510_attach_port,
+ static void mv3310_remove(struct phy_device *phydev)
+@@ -1406,6 +1405,7 @@ static struct phy_driver mv3310_drivers[] = {
+ 		.set_loopback	= genphy_c45_loopback,
+ 		.get_wol	= mv3110_get_wol,
+ 		.set_wol	= mv3110_set_wol,
++		.attach_port	= mv3310_attach_port,
  	},
  	{
- 		.phy_id = MARVELL_PHY_ID_88E1540,
+ 		.phy_id		= MARVELL_PHY_ID_88X3310,
+@@ -1425,6 +1425,7 @@ static struct phy_driver mv3310_drivers[] = {
+ 		.set_tunable	= mv3310_set_tunable,
+ 		.remove		= mv3310_remove,
+ 		.set_loopback	= genphy_c45_loopback,
++		.attach_port	= mv3310_attach_port,
+ 	},
+ 	{
+ 		.phy_id		= MARVELL_PHY_ID_88E2110,
+@@ -1445,6 +1446,7 @@ static struct phy_driver mv3310_drivers[] = {
+ 		.set_loopback	= genphy_c45_loopback,
+ 		.get_wol	= mv3110_get_wol,
+ 		.set_wol	= mv3110_set_wol,
++		.attach_port	= mv3310_attach_port,
+ 	},
+ 	{
+ 		.phy_id		= MARVELL_PHY_ID_88E2110,
+@@ -1463,6 +1465,7 @@ static struct phy_driver mv3310_drivers[] = {
+ 		.set_tunable	= mv3310_set_tunable,
+ 		.remove		= mv3310_remove,
+ 		.set_loopback	= genphy_c45_loopback,
++		.attach_port	= mv3310_attach_port,
+ 	},
+ };
+ 
+diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
+index 36de8c5c9ad5..cd7ace64ed4b 100644
+--- a/drivers/net/phy/phy_port.c
++++ b/drivers/net/phy/phy_port.c
+@@ -131,6 +131,26 @@ void phy_port_update_supported(struct phy_port *port)
+ }
+ EXPORT_SYMBOL_GPL(phy_port_update_supported);
+ 
++/**
++ * phy_port_filter_supported() - Make sure that port->supported match port->mediums
++ * @port: The port to filter
++ *
++ * After updating a port's mediums to a more restricted subset, this helper will
++ * make sure that port->supported only contains linkmodes that are compatible
++ * with port->mediums.
++ */
++void phy_port_filter_supported(struct phy_port *port)
++{
++	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0 };
++	int i;
++
++	for_each_set_bit(i, &port->mediums, __ETHTOOL_LINK_MEDIUM_LAST)
++		phy_caps_medium_get_supported(supported, i, port->lanes);
++
++	linkmode_and(port->supported, port->supported, supported);
++}
++EXPORT_SYMBOL_GPL(phy_port_filter_supported);
++
+ /**
+  * phy_port_get_type() - get the PORT_* attribut for that port.
+  * @port: The port we want the information from
+diff --git a/include/linux/phy_port.h b/include/linux/phy_port.h
+index f47ac5f5ef9e..ce735d81bcd0 100644
+--- a/include/linux/phy_port.h
++++ b/include/linux/phy_port.h
+@@ -90,6 +90,7 @@ static inline bool phy_port_is_fiber(struct phy_port *port)
+ }
+ 
+ void phy_port_update_supported(struct phy_port *port);
++void phy_port_filter_supported(struct phy_port *port);
+ 
+ int phy_port_get_type(struct phy_port *port);
+ 
 -- 
 2.49.0
 
