@@ -1,216 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-65447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954B3B08B95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:16:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 456D9B08BBF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:29:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 508D73A3821
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 11:16:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 61CFF17567E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 11:29:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26FEB289E16;
-	Thu, 17 Jul 2025 11:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED91B29AB09;
+	Thu, 17 Jul 2025 11:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ImT21xl5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8KeEUQX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90ABC29AAFD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 11:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC8228935C;
+	Thu, 17 Jul 2025 11:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752750999; cv=none; b=Nb+XBhDlDlbC4DNxFkZvHzENZRUlOgDQL8nxxIKyGDt7xk4brgbOEIIQ3XjXEIGLW77U1EHq5BZ8oY1VcQ2/F0IQEyS/SB925Tuh7raXTDtx7n+eUVizeSONYnXX3YAkgSqs/Gv/nKGc28u1INOmEfkWasCNIufHWAdJrb+QsGA=
+	t=1752751794; cv=none; b=N+oh+aEd+bVHkuIQV7mnccJJNqeeBvtZdde4k4zkeuXotRiMFckj9MhE/ygs2hapYR4YKpoDChsAwj7m2VNcrDdefAKPtmZZua8Q7dTJrCdiP+6qY+y38owSBZW63O0fUljOXZDWi+G39zioVtIKWT7A40T/uFHHYLv1zi/8jRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752750999; c=relaxed/simple;
-	bh=IRUe127TymGTKdjcSBkg4PKr2Cb+9jXVulcgUozWB3g=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LrLG0dxB3e+VXQBmaw5oGhERKVZcYmeOnK26Fj7afHDYpSj5UU41UWw3gMMNWXxHWSeukuSWh4uXgBSUEh0PqEBHg1q/FFV8PTk1lgnchpNCELrYiOpqECN1ZQiH+hyPw6K6H+dNq4HzPPBNMEsekZGy0nvziDDYO9QBdMf65SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ImT21xl5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H434Do009576
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 11:16:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=IviiJoOMAMhIycQf6n/gwd8j
-	l6mb2ERtOrn+nwQU3d8=; b=ImT21xl5J3z2RjTL+w0brBj1bgtU8/SxQB53LPR/
-	dCxD3ieMSN2yneOkGbPBeA+st2e/PKPOxAxMaWyU+6qAs2u9xgNm5IS/8iKqvtsu
-	UrvDHXjHltRVygdo6WEg18CXtXuTY+XS66hiiqcEpUk0YZv2sCu6KRUA5mMjRpBf
-	k63m6hqupVPUZRWZWZQQY0mMUnyRpMtW/no8IUSp/Vzz25VJH/kXHuJdBTlTaVn2
-	XevX4RElhdB6GIUAsB+Mb3c1We3CQ2poKxlqglaMoBmo2qfF/gKp5Y7yA+m87XN6
-	3L9q9GXE6kCFS5/1ukR34Rr53nI+BTc9pAZIf5XvcqoLJQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxb7d65-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 11:16:35 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6fb5f70b93bso13930646d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 04:16:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752750994; x=1753355794;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IviiJoOMAMhIycQf6n/gwd8jl6mb2ERtOrn+nwQU3d8=;
-        b=s47xRep8xDUNIM+T1SVdejf97boNU+QuJuuYf5LLkfp4rT/Hi7HXhnI3ruDDocAcSJ
-         n5g8bdIKmF3X/eq5egSfk4yiE2dEcrtjEiEydmyXqMX7sUxs7pRmG98aSJdKjYvDqjzK
-         96rjR9Ajg5WmtaxwFABG2szHyqtKim4F7YRefEu8ylIVfczIQUh7ruZmsLIP1sOqpMFs
-         CFYmq+/ybCORzr1UiPPZNPBue1kjVZTG9ZSR33F8B/mf2nSlDaj0Gno0xcfUz2rKtSQ8
-         VZZZtFHX1NDlZ6xXCZHeE0rw5pdzhYNp34+TnBaG2zBps+rumkabFEAJ6pg1Qp0B+ySC
-         wFNg==
-X-Forwarded-Encrypted: i=1; AJvYcCVOxHa+txDm6LO51TNU+yNVQgNvNahWEP+Ia1e+bYoJSY/BkA8Sczr/cPaag5oI6wGINLcEnYJk0DmZ4XEQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzI1onfmyVXCSxF95bJ1dG/XRlX0vHTVfhckotVuRh3dQYdMjkg
-	BS4U8pGR+zOT3oXb5/XqMMxkXNnGX9ib2H4rPH3H7/JoitfmocJrzac09wTsAw7pLb8vj5VWLLK
-	yhFf7F/gfjfe/5u8Jv6c56sM+BKY7oREdD/zqGMp0n54B662DwCkxbhNS/HDULtvNuPrh
-X-Gm-Gg: ASbGnct1hGh22q2JkNy1Uix9rGsT6IpV69er85iVRC6WOr5m2lJVSDf/RWvaHdebyEK
-	ZDBORkzp6ezEFUZvSNWsQ85hH1MmpUd8hCotSBaLC7w9P+BXdxdZegvB1CJxaXGo2wu8igy5lgr
-	OtvIayo5no/IQiQi3i5J5ks00uxaCA2m7VFtU2gjkjZ70oNP2+LLrOsBPAwZk+CTNftg0ODdNUA
-	Kmsd4zNPeojgajya5f0DmKm9xzBE15BJw8ci9EBbAycZ5D6TFL9IUUB2/fxEfTDCcEPeO2q0wPQ
-	CYNQviIxIEWfMF8UUOqj0SDdxutOrw14Kdope8xzVNSpOix2Nxvg20mwxRd+1Fmzhx322LBWqsM
-	=
-X-Received: by 2002:ad4:5bce:0:b0:704:e120:50da with SMTP id 6a1803df08f44-705073a2d83mr30439926d6.29.1752750993902;
-        Thu, 17 Jul 2025 04:16:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2v1zi0j2L7zsAt4Ih6tCoD4JfALtxxdhEUf9CdOlZ0NqloLBOpqpwEjtfUDhbRRRGRobiQQ==
-X-Received: by 2002:ad4:5bce:0:b0:704:e120:50da with SMTP id 6a1803df08f44-705073a2d83mr30439216d6.29.1752750993357;
-        Thu, 17 Jul 2025 04:16:33 -0700 (PDT)
-Received: from trex (153.red-79-144-197.dynamicip.rima-tde.net. [79.144.197.153])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d872sm20627262f8f.60.2025.07.17.04.16.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jul 2025 04:16:32 -0700 (PDT)
-From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Thu, 17 Jul 2025 13:16:31 +0200
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
-        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/7] media: dt-bindings: venus: Add qcm2290 dt schema
-Message-ID: <aHjbjw8Z79Xcd/ZJ@trex>
-References: <20250715204749.2189875-1-jorge.ramirez@oss.qualcomm.com>
- <20250715204749.2189875-2-jorge.ramirez@oss.qualcomm.com>
- <8a63f517-a443-48e4-9b9c-0c4b362f59f8@linaro.org>
- <aHiZpnFhhR5O0h97@trex>
- <0bb2867a-393b-46f9-ad6f-1aeee5a3a9d4@kernel.org>
+	s=arc-20240116; t=1752751794; c=relaxed/simple;
+	bh=1IupY/CooA5f6pTF5w5s9P710FrsORD0Fd3kcUZOJkk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gcovE+t6sYcMCxFs/+RF/57ylfMQ0DPqg7lzWwk2m3XjPpGuEJzuRSg4FH40uQFekNaNhk6ifNN7krbDGl7XDkx7ww8VKfP7Ui68fX8JhXonBid3kaDOMM7c8Al1mRQBTyBoHSXdZ6HOH057UIv5K1HTHK2v2MeNbnMWbRT3pCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8KeEUQX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81258C4CEE3;
+	Thu, 17 Jul 2025 11:29:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752751794;
+	bh=1IupY/CooA5f6pTF5w5s9P710FrsORD0Fd3kcUZOJkk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=D8KeEUQXcg+1wnwbQNzAzQ/n9tnkOAg7Au4X3cFOHr7O4BvmKNAB/yHXs0QaRPvu9
+	 OXfKJmgdOGZeO8BnednyRslMU3sZhQdALSDu5F/k42bKOS2H+GlKvGro9zMHxbhbFs
+	 3FtlsoYJXdxINg3qjEGUcQUkqS6lpVGd/cSgFLbpSZGQJOC7i1MPrTdzsl67kHdCzs
+	 SZh2XGyU0SXLPyskQ+d2hNQs1C9xxmcHcSjFawNXYRFUFIrAjreR35aEbZpbXfCHYr
+	 O8KE5bgHoXe84Mvy38u4gaaeu2zWhiTD3uWSN28rke7U/AfOKhYZ8yELOR64NfuA73
+	 4oilaLZmvjm0A==
+Date: Thu, 17 Jul 2025 16:59:42 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+	Bjorn Helgaas <helgaas@kernel.org>, ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <o2gqqty6lakc4iw7vems2dejh6prjyl746gnq4gny4sxdxl65v@zmqse3244afv>
+References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
+ <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
+ <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
+ <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
+ <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0bb2867a-393b-46f9-ad6f-1aeee5a3a9d4@kernel.org>
-X-Proofpoint-GUID: 8-wvA6k_3BSvzo5gmquHHWRf-PrqmvqL
-X-Proofpoint-ORIG-GUID: 8-wvA6k_3BSvzo5gmquHHWRf-PrqmvqL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA5OSBTYWx0ZWRfX4QmguD1HujIk
- ZfeY6y+A5WyW7Orybv0djb01h5ndmcyD3JSZ8vlbUfuo5TAMRES1FP2PTEi4Qql2Le8eQj+UWYp
- C+eQNKGAACp8WJyuI0sleiM9XI0A769RiDp9K1sGEPU4PKcX6CACUSeKUy3I7m0HTcH9TxS1+lY
- byCC83c0wLS5b4Kqvk1+c7aO2Eg7VPH+g5hDH6YLQjkkwCHgc58kl8L80eMpgjFNA6EFw+ct3Yn
- n+Y5kwsmgx9A7isHpFDEp2WuQyDwjK2QnFKoMnsnCJALuMRNClxtBuIysQpNuQ3/lhMlMyUwqla
- jGDh0XIMS45vrDawHyjAZtPg2CmwNKq7yQzrEuxwnjRdhDNeGhdtRFpDVqMheeVbCvnQp46Eeod
- PYofiY7jGkcP5EgAw1EdKnEhncsy/9wgkx3AEjYPaDXxWNjH4OMzesKDj3N8BZ4OS+fi6CxU
-X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=6878db93 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=Ki5fnJvzvo7yLsyA0quaxQ==:17
- a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=cAyxk2cvX3BNt2Rx_zQA:9 a=CjuIK1q_8ugA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-17_01,2025-07-17_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170099
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
 
-On 17/07/25 08:45:17, Krzysztof Kozlowski wrote:
-> On 17/07/2025 08:35, Jorge Ramirez wrote:
-> > On 17/07/25 00:22:53, Bryan O'Donoghue wrote:
-> >> On 15/07/2025 21:47, Jorge Ramirez-Ortiz wrote:
-> >>> Add a schema for the venus video encoder/decoder on the qcm2290.
-> >>>
-> >>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> >>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> >>> ---
-> >>>   .../bindings/media/qcom,qcm2290-venus.yaml    | 127 ++++++++++++++++++
-> >>>   1 file changed, 127 insertions(+)
-> >>>   create mode 100644 Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> >>> new file mode 100644
-> >>> index 000000000000..0371f8dd91a3
-> >>> --- /dev/null
-> >>> +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> >>> @@ -0,0 +1,127 @@
-> >>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >>> +%YAML 1.2
-> >>> +---
-> >>> +$id: http://devicetree.org/schemas/media/qcom,qcm2290-venus.yaml#
-> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>> +
-> >>> +title: Qualcomm QCM2290 Venus video encode and decode accelerators
-> >>> +
-> >>> +maintainers:
-> >>> +  - Vikash Garodia <quic_vgarodia@quicinc.com>
-> >>
-> >> Shouldn't you be on this list ? If you upstream a file I think you should
-> >> list yourself as responsible for its glory or its mess.
+On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
+> 
+> 
+> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
 > > 
-> > happy to do it. The MAINTAINER's file covered all the files named
-> 
-> This should be the person(s) interested and caring about this hardware,
-> which means:
-> 1. Subsystem maintainers: no
-> 2. Driver maintainers: usually yes
-> 3. Author(s) of new hardware support: usually yes
-
-perfect, will do 
-
-> 
-> > schemas/media/*venus* so my understanding was that I shouldn't.
-> 
-> I cannot comment why people decided to go one way or another in other
-> code, but it as well could be just incorrect choice thinking only people
-> in MAINTAINERS care about hardware.
-> 
-> ...
-> 
-> >>> +
-> >>> +        memory-region = <&pil_video_mem>;
-> >>> +        iommus = <&apps_smmu 0x860 0x0>,
-> >>> +                 <&apps_smmu 0x880 0x0>,
-> >>> +                 <&apps_smmu 0x861 0x04>,
-> >>> +                 <&apps_smmu 0x863 0x0>,
-> >>> +                 <&apps_smmu 0x804 0xe0>;
-> >>
-> >> You're listing five iommus.
-> >>
-> >> I understand there's some disagreement about whether or not to list all of
-> >> the potential use-cases but, TBH I don't think those are good arguments.
-> >>
-> >> Unless there's some technical prohibition I can't think of listing all five
-> >> maxItems:5 .. let's just do that.
+> > [...]
 > > 
-> > since the device tree should describe hardware and not policy, and the
-> > driver seems to be able to ignore the unused SIDs I think this is the
-> > right thing to do.
+> >>> @@ -16,6 +16,8 @@
+> >>>  #include "mhi.h"
+> >>>  #include "debug.h"
+> >>>  
+> >>> +#include "../ath.h"
+> >>> +
+> >>>  #define ATH12K_PCI_BAR_NUM		0
+> >>>  #define ATH12K_PCI_DMA_MASK		36
+> >>>  
+> >>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+> >>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> >>>  
+> >>>  	/* disable L0s and L1 */
+> >>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>> -				   PCI_EXP_LNKCTL_ASPMC);
+> >>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> >>
+> >> Not always, but sometimes seems the 'disable' does not work:
+> >>
+> >> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
+> >> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
+> >>
+> >>
+> >>>  
+> >>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+> >>>  }
+> >>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+> >>>  {
+> >>>  	if (ab_pci->ab->hw_params->supports_aspm &&
+> >>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> >>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>> -						   PCI_EXP_LNKCTL_ASPMC,
+> >>> -						   ab_pci->link_ctl &
+> >>> -						   PCI_EXP_LNKCTL_ASPMC);
+> >>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
+> >>
+> >> always, the 'enable' is not working:
+> >>
+> >> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
+> >> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
+> >>
+> > 
+> > Interesting! I applied your diff and I never see this issue so far (across 10+
+> > reboots):
 > 
+> I was not testing reboot. Here is what I am doing:
 > 
-> It was never about the driver but about whether you should describe in
-> DTS for non-secure world the entries which are secure world. The answer
-> in general is that you can and there will be benefits (e.g. sharing DTS
-> with secure world implementations).
+> step1: rmmod ath12k
+> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
+> the issue)
+> 
+> 	sudo setpci -s 02:00.0 0x80.B=0x43
+> 
+> step3: insmod ath12k and check linkctrl
+> 
 
-all right, sounds good then, thanks
+So I did the same and got:
+
+[ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
+[ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
+[ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
+[ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
+
+My host machine is Qcom based Thinkpad T14s and it doesn't support L0s. So
+that's why the lnkctl value once enabled becomes 0x42. This is exactly the
+reason why the drivers should not muck around LNKCTL register manually.
+
+> > 
+> > [    3.758239] ath12k_pci_power_up 1475: link_ctl 0x42
+> > [    3.758315] ath12k_pci_power_up 1480: link_ctl 0x40
+> > [    4.383900] ath12k_pci_start 1180: link_ctl 0x40
+> > [    4.384026] ath12k_pci_start 1185: link_ctl 0x42
+> > 
+> > Are you sure that you applied all the 6 patches in the series and not just the
+> > ath patches? Because, the first 3 PCI core patches are required to make the API
+> > work as intended.
+> 
+> pretty sure all of them:
+> 
+> $ git log --oneline
+> 07387d1bc17f (HEAD -> VALIDATE-pci-enable-link-state-behavior) wifi: ath12k: dump linkctrl reg
+> dbb3e5a7828b wifi: ath10k: Use pci_{enable/disable}_link_state() APIs to enable/disable
+> ASPM states
+> 392d7b3486b3 wifi: ath11k: Use pci_{enable/disable}_link_state() APIs to enable/disable
+> ASPM states
+> f2b0685c456d wifi: ath12k: Use pci_{enable/disable}_link_state() APIs to enable/disable
+> ASPM states
+> b1c8fad998f1 PCI/ASPM: Improve the kernel-doc for pci_disable_link_state*() APIs
+> b8f5204ba4b0 PCI/ASPM: Transition the device to D0 (if required) inside
+> pci_enable_link_state_locked() API
+> 186b1bbd4c62 PCI/ASPM: Fix the behavior of pci_enable_link_state*() APIs
+> 5a1ad8faaa16 (tag: ath-202507151704, origin/master, origin/main, origin/HEAD) Add
+> localversion-wireless-testing-ath
+> 
+
+Ok!
+
+> 
+> > 
+> >>
+> >>>  }
+> >>>  
+> >>>  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
+> >>>
+> >>
+> >> In addition, frequently I can see below AER warnings:
+> >>
+> >> [  280.383143] aer_ratelimit: 30 callbacks suppressed
+> >> [  280.383151] pcieport 0000:00:1c.0: AER: Correctable error message received from
+> >> 0000:00:1c.0
+> >> [  280.383177] pcieport 0000:00:1c.0: PCIe Bus Error: severity=Correctable, type=Data Link
+> >> Layer, (Transmitter ID)
+> >> [  280.383184] pcieport 0000:00:1c.0:   device [8086:7ab8] error status/mask=00001000/00002000
+> >> [  280.383193] pcieport 0000:00:1c.0:    [12] Timeout
+> >>
+> > 
+> > I don't see any AER errors either.
+> 
+> My WLAN chip is attached via a PCIe-to-M.2 adapter, maybe some hardware issue? However I
+> never saw them until your changes applied.
+> 
+
+I don't think it should matter. I have an Intel NUC lying around with QCA6390
+attached via M.2. Let me test this change on that and report back the result.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
