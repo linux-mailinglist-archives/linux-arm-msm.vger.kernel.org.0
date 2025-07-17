@@ -1,57 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-65372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A75CCB084B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:16:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 490ACB084D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 08:23:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93D9EA4736C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:15:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FB21A47BEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 06:23:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E35E62147E6;
-	Thu, 17 Jul 2025 06:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pupAp+oE"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE1921576E;
+	Thu, 17 Jul 2025 06:23:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4205203706;
-	Thu, 17 Jul 2025 06:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78A2147E6;
+	Thu, 17 Jul 2025 06:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752732973; cv=none; b=krYw1gMJI9Ng9z+hHy6zFkAjIpWnaP5LGoSJAnXnADu8OgVI6sX+cNf4SJp6Of33zFRfxKx/yg5kzNKsT/56sRGbjcOI6m08kOZ61X/Z8k7GEtKZ2+nOTOUJmhrwxZe+oN5i/KUG9KRyo80W2Ot4S7kGJ6x7cVdLX4w0An/XOX4=
+	t=1752733423; cv=none; b=ksWKIqP7qDIsR6bus9M3g2bTZYj2rr3NzXiUj4HzxExdfNhf6osH+ZUmx6Wt9S41IPYQrzW5gaysxpRw3DY+/IQaW5HoYOLlGN4XjllzyG2kIHsNUhLgw25kx1Fe0tBsfkZSNex5iW8O8a/CPkHs1vsdR2/zuOonV+SPYykoFRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752732973; c=relaxed/simple;
-	bh=RD1DcmL7087BHaQRZh6FWCmENE/3bjxGbxvFJPr/UzM=;
+	s=arc-20240116; t=1752733423; c=relaxed/simple;
+	bh=yibcBDh2HavI8c3LCPjyI4o1JTWK9DiSzETRYuw5KZs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AR3gH5o8YdpPsDyp6jkXzYBXf60tWAdFEVvFY6e53tpkh3SI3mGsIUpERI/ThES+/0hNQQubuBcvLFYSmNQgwjVZwX77hrRe95+7hO8IYcyUBYNRasPVWCswWjMixSHdYL7PEe9ac6M5LjIxVHa4oVzru5kPBxmIF4pMNXGGo8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pupAp+oE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9CEC4CEE3;
-	Thu, 17 Jul 2025 06:16:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752732973;
-	bh=RD1DcmL7087BHaQRZh6FWCmENE/3bjxGbxvFJPr/UzM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pupAp+oE+LJQPmTIuORHd6gyLFC3muoBDgBaW+c008/LCTsA/ahpxeAT3AeiZq4Og
-	 z+Iap+hR+GDjVwMHB56LfE9zvDnS1By9crPXQpQhW8OqsZDIAUssVo5Gbs3vVhRLyH
-	 09MpBNCGmilN+CwrPgt9M5GYZEdCYIZdWndRA22btC1MJv0F18eXtaMXq7QrVU/t+J
-	 PkXxxfgA9egYRP9IOf8h3lnhfTRgjnBi3ABNBLM5GzCG5RJ4lvKkjosUMejqTw2N1m
-	 pELsz7OwS2qvUu5jMZegKrpgTzx3HV6phcL6TmisUYDCWR7rKFrSuPfqfshOXyknD1
-	 ebTw2D72I+Uig==
-Date: Thu, 17 Jul 2025 08:16:10 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Violet <violet@atl.tools>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 0/2] arm64: dts: qcom: add initial support for Samsung
- Galaxy S22
-Message-ID: <20250717-devious-resourceful-spaniel-6ffad7@kuoka>
-References: <20250716231710.99983-1-violet@atl.tools>
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0hz70V6AdZilTe8UzW18t84+VR5mR7qtGMAb4t/T3B87hnS5BF8wK2qDstbXMKRV1uC2skfus7H/0LtGiJGWbDOHZWWzVudGAN7oPm18xOOsQseMZeBow2Lm0HoBbvRH25J8mW5UxH/uVTwPWbPaFK/xSGjlBIikjHtjipUQo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB145C4CEED;
+	Thu, 17 Jul 2025 06:23:42 +0000 (UTC)
+Date: Thu, 17 Jul 2025 08:23:40 +0200
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: qcom,msm8998-bwmon:
+ Allow 'nonposted-mmio'
+Message-ID: <20250717-lumpy-auspicious-pillbug-aa7d77@kuoka>
+References: <20250716-8750_cpubwmon-v4-0-12212098e90f@oss.qualcomm.com>
+ <20250716-8750_cpubwmon-v4-1-12212098e90f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,22 +50,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250716231710.99983-1-violet@atl.tools>
+In-Reply-To: <20250716-8750_cpubwmon-v4-1-12212098e90f@oss.qualcomm.com>
 
-On Wed, Jul 16, 2025 at 11:17:08PM +0000, Violet wrote:
-> Changes in v6:
-> - Remove debug features (bootargs, etc) that slipped in the v5 DTS
-> - Format and organize nodes correctly based on existing DTS, 
->  move "status = "okay";" to the bottom always
-> - Solve "ddr_device_type" and "qcom,rmtfs-mem" warnings, the rest are
->  from existing SoC .dtsi
-> - Disable buttons, ufs and other features for later revision
+On Wed, Jul 16, 2025 at 02:25:46PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> One of the BWMON instances on SM8750 requires that its MMIO space is
+> mapped specifically with the nE memory attribute.
+> 
+> Allow the nonposted-mmio property which instructs the OS to do so.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-How this can be v6? Someone (you?) sent last time v2?
-
-Where is the rest of changelog? v1, v2, v3, v4, v5? Or at least lore
-links to previous discussions and changelogs?
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
