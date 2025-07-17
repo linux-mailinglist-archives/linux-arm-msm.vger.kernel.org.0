@@ -1,125 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-65488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14D8DB08E7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 15:47:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AC32B08EA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 16:01:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0E39585F05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:47:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C94743A4AB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 14:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1F612EF660;
-	Thu, 17 Jul 2025 13:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4C332798F8;
+	Thu, 17 Jul 2025 14:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="mFNf5HUx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DUkb5wRy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031A72EF288;
-	Thu, 17 Jul 2025 13:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6A71D63D3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 14:01:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752760015; cv=none; b=VW6YtwxleQiBhtoGK+uHRywK6Lb+ya4zVIU6QNcLQ4uFh7U+RHbh/zNHvAEoP3jpBqaXmJbfC/KwRTMlpf1yWBLrpChcO2HTTeLNohzZwPO14acYkbg1JG2mD1NQDqjz0+L60M2uldcqXhSQwXKfeAufoWCPOwoH6IrWFRZIMLo=
+	t=1752760900; cv=none; b=C+q4kGSnCLnrJLbHq8eAAmGWuVSMKqPNkVM1YJcFcGQrgPxtC94NDdwmQ0sxJnahXewysIqLvziB6WTaSC19vM0ntjD3x8+NEKXeqkmYbYlIe5tFCLExCCWzshLreZ7WOs3BnwST3S0rwPU7/Dn77zARfhizz7NBhxysL7ATms8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752760015; c=relaxed/simple;
-	bh=lYuKipqVydFEQPEcQM8C2GhLl+XomuY6ILVfb7TfIGs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cnv59xstrTfuOqsfoa9GsgT+JIyODocOA6FrGYdSo1A/oE5gyUffgdK9mf6eBsdO9qqBT5efcRzyxM4R2CO6ZCwxtQwnWBoUc9zilHfyABDVvQmGVUX7GoVsyb4V/eazLKwJ4gTUfgYHPE93kug0CV/WsING4Ah0ceKqN0SLZSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=mFNf5HUx; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=GOeiusU0AzU7wXtvsmxOC5NhQINrtZu+SE41tmlBH3Y=; b=mFNf5HUxzMBuf03WguApmHlMO0
-	XS1TSMEBe0NSZJIuJSAOg/aYvqc95GBI6ZEltdFDNMyDsh5bP1Fi/wBR5lJMB1v9xHV65Qb7Gl+aR
-	4GbS+lo7CvaK9Rzl6pK8AhPjfJvWw5A9IpePUBxKjl7L5n8mFnm+DgV9Q7r0wixgG1Ds=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1ucOwd-001tSb-Qs; Thu, 17 Jul 2025 15:46:43 +0200
-Date: Thu, 17 Jul 2025 15:46:43 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: Luo Jie <quic_luoj@quicinc.com>, Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v3 1/3] net: phy: qcom: Add PHY counter support
-Message-ID: <c34607d0-fb25-471d-a28d-8e759e148a0b@lunn.ch>
-References: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
- <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
- <e4b01f45-c282-4cc9-8b31-0869bdd1aae1@lunn.ch>
- <23ab18e6-517a-48da-926a-acfcaa76a4e7@quicinc.com>
- <87cace03-dd5e-4624-9615-15f3babd1848@redhat.com>
+	s=arc-20240116; t=1752760900; c=relaxed/simple;
+	bh=0BTQfC2w5Rd4VcCTtFNmuoBqEatSoZ/OgMG1M6bwx54=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aEA3E0zIme0XJQWigMjwIL4w4WOohV0Cf9wH5l5PMG737YEzUsBEJc2TRdCk8tloxSRHjYoeg1ACYZNBUbxWOZFdsR2grv1KWAujKxwY3oErJ87W+7+sam9pofFdz9pm+hvGkFhPGPZw7oxf/39X1hII9GHzjGhbgWQrtJ8SSeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DUkb5wRy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HCB5aC015626
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 14:01:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pXji7w03b38emMA9vb5J3M
+	JvatE27Vxj2JoLrEFkbvQ=; b=DUkb5wRywSO/YzhBHoThRutav7lcjS4xzXeDF2
+	Oq2RYGobttVW46n0OFmJkJr/3K9wVb5fS+g8Do6AHOqXev27nRsOTPfzyeNqcie+
+	NUjmJThNdgV8SVf7+2VODfenC5VQo5fJZw7Ux6hY3fcNdjCu5+lbjeULN2sbLlnt
+	2nlhvdk8Tf2tsD4q6oHinbSM/MNrV0rQ8IdTFeOp7zSIi3fMzrEMiEea1g1EZaTn
+	G4GtawRWcnjWsoafFHSYyd+ljloMN3E2xXFz2MXJh+3+XaLgbnEFUtzcVMkTvBVl
+	IzXiUyEm8JiCGVwJSOR33z0SvwQIsqdzihsVFVk/suxFTnhA==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dytv9q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 14:01:38 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-74ea5d9982cso830955b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 07:01:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752760897; x=1753365697;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pXji7w03b38emMA9vb5J3MJvatE27Vxj2JoLrEFkbvQ=;
+        b=RPxw6w42swHEu9/GCpgIMD9V0vXizYSG33exDSM0z2QS1zDvtF5dyNNw7wZUD8XeON
+         tc8uW1s5mrRXJVYB3DImsIENbDadoZIBXzWF2RjQdKaZClOA1uw51jEGwKeh7NrqNgsY
+         vLpWYhc9YrtaEPbADgCzWOfGMJspjpKaRDXOT1vJJFk8jXNoTUwz/Lpe5fVVhz6SJWlJ
+         ZqhyEwPemEUbeN12FLp+K6ERk5v3xb32YLvfQRGNHpCwqJibHZgO5mcXDnhSs0DQVMIa
+         QbsGcJltJ3LI4Cle0Nigle6a7sBfNPQdfmXZ9x6vV+afqY6AUCmjnOZ+N27jRZSlyHay
+         zYiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUv6OIaNMYg6XXmdMMlstuxP+Xs7CXPaSSlXQAOrDMwswKebAKwAqz3t5ttQGJPFXEQxo3I+RLcPNKjsksH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2B8gH6PVEs0mP989kZjtf8Xjcd8VCYOv/BtmvZw/wrXemSv7E
+	Xqj4rs4NNe5xG5HrQCfisgn8FSoAnl37jiuddjiwHtIZsIr5mHSaa6ref+CK/f/0uNNg/P9Oevo
+	2hoszP9qirZH9E9YEkIZJcEOQyW4gz2LagENIKDjPhm0+ZeeYVcrpvPJtQHOOJnOgq12c
+X-Gm-Gg: ASbGncv+XUPrXFqYw4FVcjSOXIqdhsjSBUmULKe5pgVXLqQ4T1VlDEfhqGlKCU2iegZ
+	D+Oo79/WUHFN6QuqPqgbqJMjfxaGOyxADZt8Z5qBLMkV/aIgY8MXycap+oOVpE0G4vq2OXjmDjR
+	nDGAFNywqanyYx92yVeu46wKGWzgPfxabXgk6QBgrFJPZOYDxuyaigy3DZrfi9AiTz/EVArhskA
+	5VerBqq97iwIWfCmuaXuk+6DZBF6oV6Zuops/xM3gEgXnpjlW21pSItu0Suifst/NBT+ByZITUC
+	na5MKuE/GGvdN7bg1vLw4vDQwTZfkelvA1fsJda3T/o0yXG2XDGVzGwfUSHGmglQTsdmSTRvsVU
+	=
+X-Received: by 2002:a05:6a21:151a:b0:238:3f54:78e9 with SMTP id adf61e73a8af0-2383f548d09mr9251728637.43.1752760896662;
+        Thu, 17 Jul 2025 07:01:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF45A+lgEoQb8f4TyEa6YkAJM5UqE/OX4TYBGRzoYifUxZTa8/Qrlg8/ommRgyQucY5cADfQA==
+X-Received: by 2002:a05:6a21:151a:b0:238:3f54:78e9 with SMTP id adf61e73a8af0-2383f548d09mr9251480637.43.1752760894322;
+        Thu, 17 Jul 2025 07:01:34 -0700 (PDT)
+Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7507a64b57dsm10311986b3a.14.2025.07.17.07.01.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Jul 2025 07:01:32 -0700 (PDT)
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 0/3] opp: Add bw_factor support to adjust bandwidth
+ dynamically
+Date: Thu, 17 Jul 2025 19:31:15 +0530
+Message-Id: <20250717-opp_pcie-v1-0-dde6f452571b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87cace03-dd5e-4624-9615-15f3babd1848@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIACsCeWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDc0Nz3fyCgviC5MxUXXNLY0MzgySjJENDYyWg8oKi1LTMCrBR0bG1tQC
+ 91UdPWgAAAA==
+X-Change-ID: 20250717-opp_pcie-793160b2b113
+To: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752760888; l=1757;
+ i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
+ bh=0BTQfC2w5Rd4VcCTtFNmuoBqEatSoZ/OgMG1M6bwx54=;
+ b=yZHyhU2ZmPe2y6FRKoFJIShRvrs8JFdyP+hmuU3SAHzGxMKpB3+iCxlbylH9wPkKzi6DgxqGt
+ csXPI+55WroBjWicfathL9vSadm88SK0hZ27fR6A63Od80rp/Tj8H8D
+X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-Proofpoint-ORIG-GUID: XUGAE29SoFUuZZCUqLR1d1o_ufmwsHVq
+X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=68790242 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=KRKipztoQesxEaMeAmMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDEyMyBTYWx0ZWRfX311w0ir+0v6w
+ EM98ALwQxoYqyQfzzhZMuO+qbmiSOs4Wz5jl42OlRwohvwQLwleCg0jim+Tf9KkqhHhoDThodXg
+ 17L1zDAKbYaM1h98iuWqHKAGai20cbi+hOFA5le/5ho6J8ULNuZfJjg09FVcyWzQYcb1+4UiUq/
+ 0lxsXmAYoHa1hv+U+YFv/xmHvmDcCaZEIi/vNqNaHErAbqxokzQxuwJvGv0OUoclMC2SW9Mj1A8
+ OF6NMr5YpRepjSa4S0IpRq4BIRAmHgZCQNJ/fTsbZFHYkVOmavItnvLewIfZOqpp/BD0Gx/KGV9
+ fa/N7Fj3W5qAslMVZqFFMA3y3DQ//dlrexofePk3be4NCh3q5EEAMl2yrTKS2LPMOmPf+AXRJlF
+ AeMKbqgNv0oo38t92a/P3CerrnQ27s0kQ2FdSVPrLFnCVtss76xbewF8z81MvgrHBaYq0L5C
+X-Proofpoint-GUID: XUGAE29SoFUuZZCUqLR1d1o_ufmwsHVq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-17_01,2025-07-17_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=876
+ priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507170123
 
-On Thu, Jul 17, 2025 at 03:23:16PM +0200, Paolo Abeni wrote:
-> On 7/16/25 12:15 PM, Luo Jie wrote:
-> > On 7/16/2025 12:11 AM, Andrew Lunn wrote:
-> >>> +int qcom_phy_update_stats(struct phy_device *phydev,
-> >>> +			  struct qcom_phy_hw_stats *hw_stats)
-> >>> +{
-> >>> +	int ret;
-> >>> +	u32 cnt;
-> >>> +
-> >>> +	/* PHY 32-bit counter for RX packets. */
-> >>> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_15_0);
-> >>> +	if (ret < 0)
-> >>> +		return ret;
-> >>> +
-> >>> +	cnt = ret;
-> >>> +
-> >>> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_31_16);
-> >>> +	if (ret < 0)
-> >>> +		return ret;
-> >>
-> >> Does reading QCA808X_MMD7_CNT_RX_PKT_15_0 cause
-> >> QCA808X_MMD7_CNT_RX_PKT_31_16 to latch?
-> > 
-> > Checked with the hardware design team: The high 16-bit counter register
-> > does not latch when reading the low 16 bits.
-> > 
-> >>
-> >> Sometimes you need to read the high part, the low part, and then
-> >> reread the high part to ensure it has not incremented. But this is
-> >> only needed if the hardware does not latch.
-> >>
-> >> 	Andrew
-> > 
-> > Since the counter is configured to clear after reading, the clear action
-> > takes priority over latching the count. This means that when reading the
-> > low 16 bits, the high 16-bit counter value cannot increment, any new
-> > packet events occurring during the read will be recorded after the
-> > 16-bit counter is cleared.
-> 
-> Out of sheer ignorance and language bias on my side, based on the above
-> I would have assumed that the registers do latch ;)
+The existing OPP table in the device tree for PCIe is shared across
+different link configurations such as data rates 8GT/s x2 and 16GT/s x1.
+These configurations often operate at the same frequency, allowing them
+to reuse the same OPP entries. However, 8GT/s and 16 GT/s may have
+different characteristics beyond frequency—such as RPMh votes in QCOM
+case, which cannot be represented accurately when sharing a single OPP.
 
-I interpret it differently. The register is set to clear on read. So
-you read and clear the least significant word. Even if that word
-starts incriminating, you have 65535 increments before it will
-overflow into the next word. So you can read the most significant word
-before such an overflow happens. It does not latch, you just have a
-time window when it is safe.
+To avoid conflicts and duplication in the device tree, we now define only
+one set of OPP entries per table and introduce a new mechanism to adjust
+bandwidth dynamically using a `bw_factor`.
 
-What i actually find odd is that clear on read works on words, not the
-full counter. I assume that is documented in the datasheet, and
-tested, because i've never seen hardware do that before.
+The `bw_factor` is a multiplier applied to the average and peak bandwidth
+values of an OPP entry. This allows PCIe drivers to modify the effective
+bandwidth at runtime based on the actual link width without needing
+separate OPP entries for each configuration.
 
-	Andrew
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+---
+Krishna Chaitanya Chundru (3):
+      opp: Add bw_factor support to adjust bandwidth dynamically
+      PCI: qcom: Use bw_factor to adjust bandwidth based on link width
+      arm64: dts: qcom: sm8450: Keep only x1 lane PCIe OPP entries
+
+ arch/arm64/boot/dts/qcom/sm8450.dtsi   | 17 ++--------------
+ drivers/opp/core.c                     | 37 ++++++++++++++++++++++++++++++++--
+ drivers/opp/opp.h                      |  2 ++
+ drivers/pci/controller/dwc/pcie-qcom.c |  8 ++++++--
+ include/linux/pm_opp.h                 |  7 +++++++
+ 5 files changed, 52 insertions(+), 19 deletions(-)
+---
+base-commit: e2291551827fe5d2d3758c435c191d32b6d1350e
+change-id: 20250717-opp_pcie-793160b2b113
+
+Best regards,
+-- 
+Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
 
