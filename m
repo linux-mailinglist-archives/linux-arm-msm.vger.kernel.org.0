@@ -1,157 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-65484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D940FB08E0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 15:23:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C076AB08E39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 15:28:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B92B173442
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:23:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85DE6A4305E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 13:28:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04EBD2E5401;
-	Thu, 17 Jul 2025 13:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 833602E6108;
+	Thu, 17 Jul 2025 13:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OEE7yf1d"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="RWiUZ0uQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CB92E49BE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 13:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3242E49AF;
+	Thu, 17 Jul 2025 13:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752758603; cv=none; b=MnglDH29p7HnMmHQEi3phB24jYYX8L/ZoAfA6ViLF0jkLzqVMEYX68qAgQ0EDMVukuBimcfU1xPymnReDFLek15QWAgoui8I6W73YAzhUWtpOxe0RSri3HnLYmNWw7bxqJNc/HVWNDwL+NROoLkz6IFLh3/e3g+JZeS0eP2XMXc=
+	t=1752758844; cv=none; b=apBqiYNvf/6uUcd4XV69f5c546YeBrHwQEvrnXN7juruAookySosQ116IGzJAjcWpNzlhXhn2QwkwO663X/DwK5wrwB3FT1taMEcdBcHv6qrOTPkGUo5B6Vq4oIszS9T24m5KNhBDNSzHaNa4rLucRW2UDD+a/Tk0Y0pO9wdwL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752758603; c=relaxed/simple;
-	bh=BPpYfnAnCBtMNCr7igg9bf2UIP7DI/13dxgs/9mKxm4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mNlhbEFcTGMjEWpUdgfu0tu4Fbe2sQ2UnMh2bazLDJyDZl9OCmRnTydBXjkpCy+N18Vqw4n+SksP0ZLu+qMGl0wKBQI3k2woe87esGiY4LifhaIqJId1KTkwDgdKIsQc4NuWFXB7aXzqggxyDoM2ogPXqt3a4WpF3V2ufJtB+a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OEE7yf1d; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752758601;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2qbOEl2PGxjAtCWeSF7R2ApFJ7Tug20O9G4azMGM+2M=;
-	b=OEE7yf1dAkYVdjiK+wjgKnqLWBDtS2NQGhBpMgiLDPFabLNCowaFrNi7RKCv62UbmhrhtT
-	HZGwoYtm5Nv5WS/lvb7ZhM9dUnGKsQUpDQ19UI3mrA463F9OE4vcJQ+Xo5c8PXsuyFiqH4
-	pAghR5ZqYTzYDxoV5rdVWs5gXcn9Yp0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-ohTBj7S6PoqvnLsD-cDUNw-1; Thu, 17 Jul 2025 09:23:19 -0400
-X-MC-Unique: ohTBj7S6PoqvnLsD-cDUNw-1
-X-Mimecast-MFC-AGG-ID: ohTBj7S6PoqvnLsD-cDUNw_1752758599
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-451d2037f1eso5776865e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jul 2025 06:23:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752758598; x=1753363398;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2qbOEl2PGxjAtCWeSF7R2ApFJ7Tug20O9G4azMGM+2M=;
-        b=BvfV+h3DXm7UtOZIhj1tpVif8Awy9uvb86I6p3uDLWOAgD/0KnzIcQgU0H3x/9jcOq
-         +9cfZf+kOIsTZBeg0l5Bh4W4Iz4xSMGBb9neU52/xCFy/FFRQSJuEWcUupkk3whA23a5
-         09eCsEksjUcr6QL6O9kX2PFocDp3gXf/iLklQ2EKdCZy26OumsgvEi3eQ3eoNgHFfh4R
-         Hqe0AFvLQ4ez8WCAQkWcMvWKaiNid9sjKwhLFLg+nNtV676LdoE5jrtfaH+FCLlw1lwJ
-         xW8AEnpDPwFMuSKzOn1MUjgetUTdeA5TXF29gxpMZ5s0pWsbO1tRpYalPCcyQoXjQYdu
-         GhNw==
-X-Forwarded-Encrypted: i=1; AJvYcCWs89+RwrO1pDbx4sCTKE9vZt+PiWFRXFv+gMIwpvJ2rWTrCddATC6OQk8sa6fwdNN4NUnN+ijIfny6TatX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzk7i9U9ecic3t7QcVB2TmFY2twNeXd1oBQmYpfCmVBbgIwBDeJ
-	SmgbGX/q+9aTt6Q5b5RGncz1SvUUcet9HK7niPy1dGwUI81Fl5XD3bn2yd4sl5pthhuwBXLA6s4
-	uXRG0vuMwPqwdBFivIvhPAIYR7w+2tEmfkzxpgzHNdbO9K5vwNhSTOxtXXlZo6Dzf9Dw=
-X-Gm-Gg: ASbGncvzI9PYvoigUk3m9WnjPzlkaKuRpBKRV+hCfGcnt0cH7JbSjwHYqABtzmRCna2
-	S0oRxviapGi+b2vrf3Hpw4xwC/heCTPDZyz7LnOb0QMrTYp4JPDCKcGAP3gq7Enjo6b3i4c++M5
-	jfXjppGOH/VXIyaJQ7p/X7EvkF4YFoC9EL+Z0cDruf4sJHoHmgsjPdvr8QWTr+BVSgHLWsWd3+O
-	BiIwi9FX29M0QHjqNlfjOIL8hOIuXOjsosOtStyWYTr2/kQhazHrTz+jaLXgYCwFOmnrivra9r9
-	KseCA6oqeEYDeG76kscwK9Dj8Ns6Rljc6nEo0c7mnNHYxCgtEdqyOENd4eTYUM5vVtpF1Giz0Jb
-	RuJGFMcDGKbY=
-X-Received: by 2002:a05:600c:3b88:b0:456:25aa:e9c0 with SMTP id 5b1f17b1804b1-4562e355c9bmr68526025e9.14.1752758598481;
-        Thu, 17 Jul 2025 06:23:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHXUaojOCvzBHn+KqDc2+2N5HsM1E5SZahUBXJwd1vHENhmXkX/VYLgSv3x8wTcAP/8nL4eJQ==
-X-Received: by 2002:a05:600c:3b88:b0:456:25aa:e9c0 with SMTP id 5b1f17b1804b1-4562e355c9bmr68525635e9.14.1752758598001;
-        Thu, 17 Jul 2025 06:23:18 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c? ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e89c87esm50578175e9.33.2025.07.17.06.23.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 06:23:17 -0700 (PDT)
-Message-ID: <87cace03-dd5e-4624-9615-15f3babd1848@redhat.com>
-Date: Thu, 17 Jul 2025 15:23:16 +0200
+	s=arc-20240116; t=1752758844; c=relaxed/simple;
+	bh=RdIr93HCsd5trCZ25EtHr2HNHx/dURXjk15kSU7Cvak=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UFCHQ7P4/PHvooh1hKXL2LUQby0KnlQHX1C9J4bdogie8ta/u6ApCrE5Fl9ubXoou3KpRzohER5H2Ldw5Gu3NtQ3Nucs0x1UUhY4OlnIsXP58CkhdD5JFIlcWG4KC8o/cd7nfCQjIWlFmkjYAqeSVdi1zNY4PkZuUVuUPEw3Prw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=RWiUZ0uQ; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1752758834; x=1753018034;
+	bh=RdIr93HCsd5trCZ25EtHr2HNHx/dURXjk15kSU7Cvak=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=RWiUZ0uQfyAcrEe4uC78ctOycMxATF1QqEFoVWdRELQWKjHGq3nHke4+j1yaArEns
+	 iAGE9Xj8OSSaw/j96tbZj7cReZ5fqYI5lwexJJUjCKTO9ehDUyTs/XYMMsH4UfUnxn
+	 aAMYTnsypInC1qCjcCPnSpciMr2o21hfLOGrKsQwfzw/OWzl8Jlvf7FehPmG4oJ5OP
+	 cwpiocJ2X3LJGHqvB8grYV70EWSu6GTIDxdCYt4t7hiifEoetdiaK/sYi57OfwcfSz
+	 UlmlCTbThqB4EUCrRzVPbjoyMbPbmVwU1kUOxma+Qe5MKetD9Wjop5xT/rh5JeWU+z
+	 0aDi08/rDqV8A==
+Date: Thu, 17 Jul 2025 13:27:08 +0000
+To: Simon Horman <horms@kernel.org>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, =?utf-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] QRTR bus and Qualcomm Sensor Manager IIO drivers
+Message-ID: <o9POEVj6j_JoTCM8BNtkY-tPUh1jfHXyAgY7SHyws3zOuRqlaXZZsrDoaYxGtVjWyQdrFxAH1ztg4OD-Szh9ZdlYSe_3NbEMrY54DaqZYi4=@protonmail.com>
+In-Reply-To: <20250710112208.GR721198@horms.kernel.org>
+References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com> <20250710112208.GR721198@horms.kernel.org>
+Feedback-ID: 6882736:user:proton
+X-Pm-Message-ID: d6c5cc2a5bde08cc4748ec2dd9e771e78efe4bcc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 1/3] net: phy: qcom: Add PHY counter support
-To: Luo Jie <quic_luoj@quicinc.com>, Andrew Lunn <andrew@lunn.ch>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>,
- Russell King <linux@armlinux.org.uk>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
- <20250715-qcom_phy_counter-v3-1-8b0e460a527b@quicinc.com>
- <e4b01f45-c282-4cc9-8b31-0869bdd1aae1@lunn.ch>
- <23ab18e6-517a-48da-926a-acfcaa76a4e7@quicinc.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <23ab18e6-517a-48da-926a-acfcaa76a4e7@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 7/16/25 12:15 PM, Luo Jie wrote:
-> On 7/16/2025 12:11 AM, Andrew Lunn wrote:
->>> +int qcom_phy_update_stats(struct phy_device *phydev,
->>> +			  struct qcom_phy_hw_stats *hw_stats)
->>> +{
->>> +	int ret;
->>> +	u32 cnt;
->>> +
->>> +	/* PHY 32-bit counter for RX packets. */
->>> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_15_0);
->>> +	if (ret < 0)
->>> +		return ret;
->>> +
->>> +	cnt = ret;
->>> +
->>> +	ret = phy_read_mmd(phydev, MDIO_MMD_AN, QCA808X_MMD7_CNT_RX_PKT_31_16);
->>> +	if (ret < 0)
->>> +		return ret;
->>
->> Does reading QCA808X_MMD7_CNT_RX_PKT_15_0 cause
->> QCA808X_MMD7_CNT_RX_PKT_31_16 to latch?
-> 
-> Checked with the hardware design team: The high 16-bit counter register
-> does not latch when reading the low 16 bits.
-> 
->>
->> Sometimes you need to read the high part, the low part, and then
->> reread the high part to ensure it has not incremented. But this is
->> only needed if the hardware does not latch.
->>
->> 	Andrew
-> 
-> Since the counter is configured to clear after reading, the clear action
-> takes priority over latching the count. This means that when reading the
-> low 16 bits, the high 16-bit counter value cannot increment, any new
-> packet events occurring during the read will be recorded after the
-> 16-bit counter is cleared.
+On Thursday, July 10th, 2025 at 12:22 PM, Simon Horman <horms@kernel.org> w=
+rote:
 
-Out of sheer ignorance and language bias on my side, based on the above
-I would have assumed that the registers do latch ;)
+> On Thu, Jul 10, 2025 at 09:06:26AM +0100, Yassine Oudjana via B4 Relay wr=
+ote:
+>=20
+> > Sensor Manager is a QMI service available on several Qualcomm SoCs whic=
+h
+> > exposes available sensors and allows for getting data from them. This
+> > service is provided by either:
+> >=20
+> > - SSC (Snapdragon Sensor Core): Also known as SLPI (Sensor Low Power
+> > Island). Has its own set of pins and peripherals to which sensors are
+> > connected. These peripherals are generally inaccessible from the AP,
+> > meaning sensors need to be operated exclusively through SSC. The only
+> > known SoCs in this category are MSM8996 and MSM8998 (and their
+> > derivatives).
+> > - ADSP (Audio DSP): Shares pins and peripherals with the AP. At least o=
+n
+> > some devices, these pins could be configured as GPIOs which allows the =
+AP
+> > to access sensors by bit-banging their interfaces. Some SoCs in this
+> > category are SDM630/660, MSM8953, MSM8974 and MSM8226.
+> >=20
+> > Before Sensor Manager becomes accessible, another service known as Sens=
+or
+> > Registry needs to be provided by the AP. The remote processor that prov=
+ides
+> > Sensor Manager will then request data from it, and once that process is
+> > done, will expose several services including Sensor Manager.
+> >=20
+> > This series adds a kernel driver for the Sensor Manager service, exposi=
+ng
+> > sensors accessible through it as IIO devices. To facilitate probing of =
+this
+> > driver, QRTR is turned into a bus, with services being exposed as devic=
+es.
+> > Once the Sensor Manager service becomes available, the kernel attaches =
+its
+> > device to the driver added in this series. This allows for dynamic prob=
+ing
+> > of Sensor Manager without the need for static DT bindings, which would =
+also
+> > not be ideal because they would be describing software rather than
+> > hardware. Sensor Manager is given as a working example of the QRTR bus.
+> > Kernel drivers for other services may also be able to benefit from this
+> > change.
+>=20
+>=20
+> ...
+>=20
+> Hi Yassine,
+>=20
+> This series both adds an IIO driver and updates Networking code.
+>=20
+> I'd suggest splitting the series so that the Networking updates can be
+> targeted at net-next, while the IIO driver is targeted at a different tre=
+e.
+>=20
+> Also, I note that this series does not compile against current net-next.
+> This seems like it should be addressed, at least for the Networking
+> changes.
 
-> Therefore, the current sequence for reading the counter is correct and
-> will not result in missed increments.
-
-Andrew, looks good?
-
-/P
+I targeted linux-next. By including the IIO driver my idea was to show
+an example of using the QRTR bus, but if it has to target different trees
+then sure, I'll split it.
 
 
