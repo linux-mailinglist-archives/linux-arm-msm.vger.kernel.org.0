@@ -1,151 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-65435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6425AB08A49
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:08:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F274CB08A68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:20:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95B964E374D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:07:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44A73560856
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:20:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F2A298CCF;
-	Thu, 17 Jul 2025 10:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92E5028B41E;
+	Thu, 17 Jul 2025 10:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsGOlj71"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBsNLYvI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F197C295DBA;
-	Thu, 17 Jul 2025 10:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D144A1E1DE9;
+	Thu, 17 Jul 2025 10:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752746899; cv=none; b=REQ/IC3qX44HpwrnLquIyk73nYDeWF1LGB8w59ukPoKXmExqzaF3pVwwKLUkdD9md/RSGMOxx47LK811LKzJgSsm0KlnUnkflIDfqY7BJDJmtLQZXiW6P1AmZ5zxtn+J7C21dPGDYTPF8CeABLaeB1K8KpL+hGRx3W+6stZppGc=
+	t=1752747622; cv=none; b=MY7j+NjftqBeVdPC/ZROarsDcw678XNFSTVO+qK8ahywgVB2L244NEJ2fu4fFXgMYud1pPKTw8rpdK5C7g2sp/xFwUlmKNZVM5+D+5h25kSzkBCH7GbgZ5IxJE5CMShcM8PkxPkLSr6IKhYXuV1M8OG3z4EqbzHS7JLXbeMEtk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752746899; c=relaxed/simple;
-	bh=4hP+nyTzsHr+HW8bo2r86lHJYv3b9wAQ8DWbNVa32jg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a/0IIHTOL9JNLmtOR3AOfv04W7kaZF7B0dTJ/1byd8PpdfTto3jLnH6gS6T5Qj4oQfktdj/luPwztbZHLviLVU2zHT7bjX9YsheZVtW3pUn1lu9EhiyZXxA3bgdhAk5Ql3itxqQjhmOIWMwtFeI22kniFqbInRqAjvkeCqOVSG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsGOlj71; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56691C4CEE3;
-	Thu, 17 Jul 2025 10:08:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752746896;
-	bh=4hP+nyTzsHr+HW8bo2r86lHJYv3b9wAQ8DWbNVa32jg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tsGOlj71QTbjVVS4eK+K5Y1lblwMDlpMc8Wf8ZWAF2bSbk1ytL2w/z2bj46HRN8RK
-	 57t0UIhUFY+TwwNRf+gpNOa/5ooaQEwjPN2idbtKgnzlmsusVHGmLRvqfoURMtC/fT
-	 TCdz6tOb0tCYLXj2A7M3feWkzB0/w2Kdk9G8iU1NkygHqEJkFxwwapPKiUSSHsFjkb
-	 0r+LbeQ8YqhUxIL8Dufk67n+S8DGpEzXwDXEO8wCW1//FaB6KNdlbq+Xw8YWvm3fY7
-	 15cYza3sUK6aOMW9je5KoztIstgkiAXuS/ZHrFjroWtPWuPAsCqwQ4zd25eke6cUVQ
-	 SyzIS8sY1xZVw==
-Message-ID: <40534488-24f6-4958-b032-d45a177dfd80@kernel.org>
-Date: Thu, 17 Jul 2025 12:08:11 +0200
+	s=arc-20240116; t=1752747622; c=relaxed/simple;
+	bh=hiL8PeW9E547x46ejeKBtYo91AKJR5q+WcE1Wsi3I6o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cbp2CZR7kBy1Rplz22VQQkZwHYWKTcI5ruyzuMM6skcOKi5xs0MJLGUCB/znNokIDc8y4E6EVwDUsDWBMci+kCKWUZ0A8hAxfKWIAB/saRrP5TuFKO9DEA1XiLuR5QUz4kc+SOvPqsJO0PMS9hNUCVnm8yF4DoDf8cPz2M/7kuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IBsNLYvI; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a6cdc27438so637677f8f.2;
+        Thu, 17 Jul 2025 03:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752747618; x=1753352418; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A3nqRBi7n+rmYbqWhl2914eyEJuadwuJxywGJKNC2w4=;
+        b=IBsNLYvIbb648B/Wl5slbiSQzJwRyP5YwYwgsx+rRKW8zITSZmsPIsnxo3xdDAfdrs
+         P2MsIXxw4M9Tv1cotdccgFIOp0lERz38gPnkGxewDjead7AgPbK/lLs7QSBVZs4sTqKN
+         2Lsz5YmbSiEfDI00So+m5MACwy0YJY6viRpMZ4y+iXClItbWDRvdI/nXq15NSh0Yutvy
+         MBgKWnC2yikTP5H9YrpH4VFHSm0df2/uOyxTDiM+jcmaEfflubcHdba77h/RQWAk8IE5
+         kOCc1sXSUfhJCYE5RsyDk42BamO/OqjyBs6BgXcnBRLhK43MEYepP1a6lNQ/XROc+1wm
+         BqRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752747618; x=1753352418;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A3nqRBi7n+rmYbqWhl2914eyEJuadwuJxywGJKNC2w4=;
+        b=I/1WHXI1gg4iz+/zP/5ncjUkjNP93XG83QGLHkM2WAyJgocMaNi8aqJNJDVcJF3g5D
+         Y/XybmgoXKBZpu9LPjiPzwA+k+uxVgPgDlpl7IuxWBgrQLwBCi7YxRH5n/ceNQjjrHlY
+         H+QMJCsM3IXt+pnTCAEn1g9mEGaMBP3m7L+kJbLv/Hprw7Cql1LrUe7YGfQh1hRhjvnK
+         yu/9m+YcNpHBPCJc/cnJhFiVPR09cjVlt36yns3tljcSIOd3iWIs5tcQ6zmivztIUP69
+         3F57PfojhXrzV3HzlMxXBZ/TtfHfGulvU+hQc9mEsybGroC6iGLueGGCpgJJEOzYzSQ4
+         LSrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+2dBhzY1JttF2Fpv/gDJxXy0LBoeUwOCtr1q0+Ora2xjwGWYAfXrmYgwGzmy0Nj9yiqK7Jm+d@vger.kernel.org, AJvYcCWDh4j4pJYwMcnqlK7LJSXV2NJ6O5XczB3oQHA7bK4sTa6eWSFqwCWBk9XlEfiAvDkVKUgJmbO1mZvm5dcE@vger.kernel.org, AJvYcCWZOOPCL6VHBBEmL2JrP8FSNQDeMbloVi52hXfuQAUhkhXSb6McmVBJZJcQlm4dOxmdu5396W/87NI3@vger.kernel.org, AJvYcCX3Nldd36smRKOK7501zTm1HvVod2jHAQmzoarFFKJtdAWA2Dv/qUHx4tYti5CViXCKm8vSDxcq7289lZRL9g==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZboRq8fgpa896IgZ0uf6Q98H26c1Enj2cr4QUtfEwQ+LjTssu
+	GQokrIKo/fdkIYnsHkeqhR+X3cnlVH1likkMKULcUz0DxQTsamoLas7stTP1RJnwN+YFDybuefW
+	eQwJTPk2ieT52EDufx1jJM/3DnO0TRQ==
+X-Gm-Gg: ASbGncuR6WYKKITaIj2erHqmd7ui8wOxBdkHifSa5S59pKAqr42TBcnx8rVgeqM1w7c
+	pEQU84+hctPrt1TMC0LHw6xZrlr5nhkzL/clcX9SdjIo9wLg0D0fvYPWmDzBW8zGmX8S195jG5b
+	TYqTNGP7PLZLCgCy39ry3ob1L6xipBDvRrrJHWamTpvTQpU3xBBM3WVHhVfMdG0J+Il3Cxao2oO
+	ja+xbw=
+X-Google-Smtp-Source: AGHT+IEExzPg1ZFquopOlKqZeD7zQXYVPzF86QGynEvx2ljIbgvGg2a1b926W4qwEBzJfp6GnS5qUDt4LwMU28iXFjY=
+X-Received: by 2002:a05:6000:2482:b0:3a5:5fa4:a3f7 with SMTP id
+ ffacd0b85a97d-3b60e54a361mr4528105f8f.58.1752747617790; Thu, 17 Jul 2025
+ 03:20:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
- Controller
-To: Abel Vesa <abel.vesa@linaro.org>,
- Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: sboyd@kernel.org, mturquette@baylibre.com, andersson@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- quic_rjendra@quicinc.com, taniya.das@oss.qualcomm.com,
- linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
- <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
- <aHjJG2nrJJZvqxSu@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aHjJG2nrJJZvqxSu@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250701183625.1968246-1-alex.vinarskis@gmail.com> <20250701183625.1968246-2-alex.vinarskis@gmail.com>
+In-Reply-To: <20250701183625.1968246-2-alex.vinarskis@gmail.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Date: Thu, 17 Jul 2025 12:20:04 +0200
+X-Gm-Features: Ac12FXyjBUphoLYn2GR7CZGe1qBId6Bk9wQMdDWE_cy5din5jYzLL32gxBGRlVA
+Message-ID: <CAMcHhXouMRKEu+1hK-XYeuHa9RCXsEOR=ho0vEVCXewTsWFrtw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: x1e80100-pmics: Disable pm8010
+ by default
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, laurentiu.tudor1@dell.com, 
+	abel.vesa@linaro.org, bryan.odonoghue@linaro.org, 
+	jens.glathe@oldschoolsolutions.biz, stable@vger.kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 17/07/2025 11:57, Abel Vesa wrote:
-> On 25-07-16 20:50:17, Pankaj Patil wrote:
->> From: Taniya Das <taniya.das@oss.qualcomm.com>
->>
->> Add support for Global clock controller for Glymur platform.
->>
->> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->> ---
->>  drivers/clk/qcom/Kconfig      |   10 +
->>  drivers/clk/qcom/Makefile     |    1 +
->>  drivers/clk/qcom/gcc-glymur.c | 8623 +++++++++++++++++++++++++++++++++
->>  3 files changed, 8634 insertions(+)
->>  create mode 100644 drivers/clk/qcom/gcc-glymur.c
->>
->> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->> index 051301007aa6..1d9e8c6aeaed 100644
->> --- a/drivers/clk/qcom/Kconfig
->> +++ b/drivers/clk/qcom/Kconfig
->> @@ -645,6 +645,16 @@ config SAR_GPUCC_2130P
->>  	  Say Y if you want to support graphics controller devices and
->>  	  functionality such as 3D graphics.
->>  
->> +config SC_GCC_GLYMUR
-> 
-> Wait, are we going back to this now?
-> 
-> X Elite had CLK_X1E80100_GCC, so maybe this should be CLK_GLYMUR_GCC
-> then.
+On Tue, 1 Jul 2025 at 20:36, Aleksandrs Vinarskis
+<alex.vinarskis@gmail.com> wrote:
+>
+> pm8010 is a camera specific PMIC, and may not be present on some
+> devices. These may instead use a dedicated vreg for this purpose (Dell
+> XPS 9345, Dell Inspiron..) or use USB webcam instead of a MIPI one
+> alltogether (Lenovo Thinbook 16, Lenovo Yoga..).
+>
+> Disable pm8010 by default, let platforms that actually have one onboard
+> enable it instead.
+>
+> Cc: <stable@vger.kernel.org>
+> Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> ---
 
+Hi,
 
-Yeah, the SC is meaningless here, unless you call it CLK_SC8480XP_GCC,
-so the authors need to decide on one naming. Not mixtures..
+I've noticed this was reviewed some time ago, but was not included in
+for upcoming 6.17. Perhaps it was forgotten?
 
+Thanks in advance,
+Alex
 
-Best regards,
-Krzysztof
+>  arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> index e3888bc143a0..621890ada153 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> @@ -475,6 +475,8 @@ pm8010: pmic@c {
+>                 #address-cells = <1>;
+>                 #size-cells = <0>;
+>
+> +               status = "disabled";
+> +
+>                 pm8010_temp_alarm: temp-alarm@2400 {
+>                         compatible = "qcom,spmi-temp-alarm";
+>                         reg = <0x2400>;
+> --
+> 2.48.1
+>
 
