@@ -1,172 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-65399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 805CEB0869A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:28:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 666A5B086A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 09:30:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 454CA7A56E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:26:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5D951A64E0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 07:30:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A0BE23643E;
-	Thu, 17 Jul 2025 07:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 350A224EABC;
+	Thu, 17 Jul 2025 07:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jJxHHA9z"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="mnQATOc3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F07122DFA4;
-	Thu, 17 Jul 2025 07:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639082459F7;
+	Thu, 17 Jul 2025 07:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752737286; cv=none; b=OtYLovjuAHn6Y32eMlogwMD3phPxzDI+QrVK6Z6pB29MMl/3qY0V2JB6lyr6DAihE26P1JiOVEk0N4qvlUfoh0ziJ26elGEJY6bXVIKC/yN1dapyGwtsey5SS9CD1y0QJ+49KGOdCyCD8bF4vclhTMuVjHcMsbe02BeyEcsNEIQ=
+	t=1752737431; cv=none; b=ry4hN2xQqorCel+9Maf3qes5r1+d1RZmByO6U6U0IRLy1J0eueV8pErWgPT/b9b0Jp9PmcDpPyM9DhetAbxrWXm6tfx4waxsFOVB240EvpYyD4RRtVGPgU8gbq0bC/YhaqLSNpU0xubinLSGkK9+NUibGe770DwZskIl3XDB8x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752737286; c=relaxed/simple;
-	bh=iNGfZUT3vIjs9LIEtmZBN/64+7hv7dRJ5bx0l4MtKW4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=dShpJutaTL6VGlfPda2lXhtPC8nu+br17DV+rVand0eOKK15p2uDJvU/4VajneLTUGq7CRfZ3CzYoSvhVL3euSJ+53F8fmvSRJtZKh22PxpuABwnobz6GigMmQRHXVpvJWqQWb4+ELVZAwvLnvDqp9i1n5+VfSiqO0arRQd2B9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jJxHHA9z; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56H5PRRQ021567;
-	Thu, 17 Jul 2025 07:27:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=d14ckrCMuZgzNHnUDuNhFN
-	FqmXjLNb/Tp604F/4Ov/w=; b=jJxHHA9zif7whnGBq6dKLlrJx/7GYbLey9+/d+
-	cRsmwsMQm90sDNCQuW/HUQ0hFWwPYW21QOmRq/4Yzxs1PHkKrNjoBrvv8qAx/ULD
-	ZyYAmMrQi0kXLJli7LTk5Gn8cewbLaVhgu2Y53H+/gatcuk3csI0nfiUUO+8XJVH
-	noTVufU4NjojMPXi6MHcie6SWZM8mRn5b8XDbxh6YnaRP4V7D9mga7ylMynT+LF5
-	IGS839uV22m1QEqzOapG0m9hWJ2f+hT4qAyKoXP/FvyWNDW1vvRZbCfiaQ1j0G07
-	VZpknn7w/EVbom6pdkFIWaLpHUet7HTduqecRTYLyuN7ERlw==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufu8ejj9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 07:27:53 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56H7RotA029527;
-	Thu, 17 Jul 2025 07:27:50 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 47ugsmt61c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 07:27:50 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56H7Rn30029522;
-	Thu, 17 Jul 2025 07:27:50 GMT
-Received: from cse-cd01-lnx.ap.qualcomm.com (cse-cd01-lnx.qualcomm.com [10.64.75.209])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 56H7RmgQ029519
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Jul 2025 07:27:49 +0000
-Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id E8A3D20CAF; Thu, 17 Jul 2025 15:27:47 +0800 (CST)
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>,
-        Tingguo Cheng <quic_tingguoc@quicinc.com>
-Subject: [PATCH v2 1/1] arm64: dts: qcom: qcs615: Set LDO12A regulator to HPM to avoid boot hang
-Date: Thu, 17 Jul 2025 15:27:46 +0800
-Message-Id: <20250717072746.987298-1-quic_ziyuzhan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1752737431; c=relaxed/simple;
+	bh=X5KtMoelbU809g7NkdayOPmKClRVSKLwSlDQ1dHrio4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=evv3O+p2hd97qi8DCuvnIM07Ea5cD1g8nXUQqL6nonAmafhDKxFyw4/G/JsIkkFqxopYn4HWg868sRlHIXgK68OxW6nb4DR15Fne8s/6F7noXocUaA8yE3dWOM4AdBmZOjkYZtQ04KubbpTU0dbZO7dGt5YOwYhcJcuxkPfpNxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=mnQATOc3; arc=none smtp.client-ip=217.70.183.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 7FA8D443F2;
+	Thu, 17 Jul 2025 07:30:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1752737425;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=F6qJz6FW92hpTJPKGEZ8jdqv8tNGizAfpJ2FexjvlZE=;
+	b=mnQATOc3JQW/VbrXaHC3ctIgELJULkrtEQmkUVcN1IraLZF2AmPXoo70V+Gc4vJaSRgn5y
+	7xW43NsGhSgXggVRbC/I3h46gB0mCXPJJx9jp00ff7PooG+4uIQRf7Ve90bbYzFT+9T5F3
+	ZnBVYIcTqb4GUO5FoeLMngGbRVaWMxTEphXzzAhMMoDMeb3QF0AC3U8MfTfdwDBiuXpow2
+	2Yagh8q+J9GbHDILox/X90nQAq1zeAvp4IdkTRtDYjkZVlhsLK1iw0bl2LA+H00Jk221Jo
+	CoT3Eb8uSpyG9VxvDaZoZ2Cfcx67275qqqLX/Q4Q8vS9Ml2ilAPfdiZW5nCGSQ==
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+To: davem@davemloft.net
+Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?UTF-8?q?Nicol=C3=B2=20Veronese?= <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>,
+	devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: [PATCH net-next v9 00/15] net: phy: Introduce PHY ports representation
+Date: Thu, 17 Jul 2025 09:30:04 +0200
+Message-ID: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDA2NCBTYWx0ZWRfX7K9LvX4f/Cko
- auYN982UNh+2cpgz6cn0/ECv8V71k+igsCBotfCN0/0FFRmBWCgVTipTlTOUxLUvSoCHtNrmjfN
- uWVHv6pmdNUdrSIFJu/fqZEybVuBxRcg1uVwxmMd/IhU0oJ4wJeWO7l9xNE5kgKrDv8E0H1pQN+
- RuYy6jmWbGAYA8MoFQIuP/XoMnOrtA/mjVosi3weNFmLiusVOMm62KLM/4wEnGkcknIi/9C6cjP
- TIVvVtx+pF6s6OFa+SiUqlclJoTnr9jGbjbj6KAU6RWlLMlw7StkvVWdZT1HaVjEadasX61eHek
- 8BGOHwlU6qoBPdtsww0iPSIYVgGELbjtu4IrX60owWdYT+8gXZejaJ9aXq4ZrRtiREo4fsuOgAc
- xkkdnh1KlucjVH4XcRiLYIJVgFnWEGsAR5r17X7MtC9MCByNf8abScURQngBOqdJGcZNTZ6l
-X-Proofpoint-ORIG-GUID: 3xaLGOW8Gc40F4fpnWAo7K_NMNc0-Pa4
-X-Proofpoint-GUID: 3xaLGOW8Gc40F4fpnWAo7K_NMNc0-Pa4
-X-Authority-Analysis: v=2.4 cv=f59IBPyM c=1 sm=1 tr=0 ts=6878a5f9 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=lOb7t7NH7aykvVN8AcwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-17_01,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507170064
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehleellecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeufeevvdfggfdvteeliefhudfgtdfgffeuudehtdeiveeigeehgfeiudeludelfeenucffohhmrghinhepnhgvthguvghvtghonhhfrdhinhhfohdplhhptgdrvghvvghnthhspdhkvghrnhgvlhdrohhrghenucfkphepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepmhgrgihimhgvr
+ dgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
+X-GND-Sasl: maxime.chevallier@bootlin.com
 
-From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Hi everyone,
 
-On certain platforms (e.g., QCS615), consumers of LDO12A—such as PCIe,
-UFS, and eMMC—may draw more than 10mA of current during boot. This can
-exceed the regulator's limit in Low Power Mode (LPM), triggering current
-limit protection and causing the system to hang.
+Here's a V9 for the phy port work, that includes some fixes from Rob's
+reviews, by addressing a typo and the mediums item list.
 
-To address this, there are two possible approaches:
-a) Set the regulator's initial mode to High Performance Mode (HPM) in
-   the device tree.
-b) Keep the default LPM setting and have each consumer driver explicitly
-   set its current load.
+I didn't include a compatible in the connector yet, but this can indeed
+be added if need be.
 
-Since some regulators are shared among multiple consumers, and setting
-the current must be coordinated across all of them, we will initially
-adopt option a by setting the regulator to HPM. We can later migrate to
-option b when the timing is appropriate and all consumer drivers are
-ready.
+Before going into the details, a few important notes :
 
-Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
----
-This patch follows a suggestion from Bjorn Andersson regarding USB
-regulator handling where each consumer is expected to explicitly set its
-current load.
-Link: https://lore.kernel.org/linux-arm-msm/37fc7aa6-23d2-4636-8e02-4957019121a3@quicinc.com/
+ - This is only a first phase. It instantiates the port, and leverage
+   that to make the MAC <-> PHY <-> SFP usecase simpler.
 
-changes in v2:
- - Delete all LPM mode config in ldo12a, which may lead to potential
-   risks
- - Link to v1: https://lore.kernel.org/all/20250716030601.1705364-1-ziyue.zhang@oss.qualcomm.com/
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ - Next phase will deal with controlling the port state, as well as the
+   netlink uAPI for that.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index a6652e4817d1..75effc790c79 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -166,10 +166,7 @@ vreg_l12a: ldo12 {
- 			regulator-name = "vreg_l12a";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1890000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
--			regulator-allow-set-load;
--			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
--						   RPMH_REGULATOR_MODE_HPM>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l13a: ldo13 {
+ - The end-goal is to enable support for complex port MUX. This
+   preliminary work focuses on PHY-driven ports, but this will be
+   extended to support muxing at the MII level (Multi-phy, or compo PHY
+   + SFP as found on Turris Omnia for example).
+
+ - The naming is definitely not set in stone. I named that "phy_port",
+   but this may convey the false sense that this is phylib-specific.
+   Even the word "port" is not that great, as it already has several
+   different meanings in the net world (switch port, devlink port,
+   etc.). I used the term "connector" in the binding.
+
+A bit of history on that work :
+
+The end goal that I personnaly want to achieve is :
+
+            + PHY - RJ45
+            | 
+ MAC - MUX -+ PHY - RJ45
+
+After many discussions here on netdev@, but also at netdevconf[1] and
+LPC[2], there appears to be several analoguous designs that exist out
+there.
+
+[1] : https://netdevconf.info/0x17/sessions/talk/improving-multi-phy-and-multi-port-interfaces.html
+[2] : https://lpc.events/event/18/contributions/1964/ (video isn't the
+right one)
+
+Take the MAchiatobin, it has 2 interfaces that looks like this :
+
+ MAC - PHY -+ RJ45
+            |
+	    + SFP - Whatever the module does
+
+Now, looking at the Turris Omnia, we have :
+
+
+ MAC - MUX -+ PHY - RJ45
+            |
+	    + SFP - Whatever the module does
+
+We can find more example of this kind of designs, the common part is
+that we expose multiple front-facing media ports. This is what this
+current work aims at supporting. As of right now, it does'nt add any
+support for muxing, but this will come later on.
+
+This first phase focuses on phy-driven ports only, but there are already
+quite some challenges already. For one, we can't really autodetect how
+many ports are sitting behind a PHY. That's why this series introduces a
+new binding. Describing ports in DT should however be a last-resort
+thing when we need to clear some ambiguity about the PHY media-side.
+
+The only use-cases that we have today for multi-port PHYs are combo PHYs
+that drive both a Copper port and an SFP (the Macchiatobin case). This
+in itself is challenging and this series only addresses part of this
+support, by registering a phy_port for the PHY <-> SFP connection. The
+SFP module should in the end be considered as a port as well, but that's
+not yet the case.
+
+However, because now PHYs can register phy_ports for every media-side
+interface they have, they can register the capabilities of their ports,
+which allows making the PHY-driver SFP case much more generic.
+
+Let me know what you think, I'm all in for discussions :)
+
+Regards,
+
+Changes in V9:
+ - Removed maxItems and items from the connector binding
+ - Fixed a typo in the binding
+
+Changes in V8:
+ - Added maxItems on the connector media binding
+ - Made sure we parse a single medium
+ - Added a missing bitwise macro
+
+Changes in V7:
+ - Move ethtool_medium_get_supported to phy_caps
+ - support combo-ports, each with a given set of supported modes
+ - Introduce the notion of 'not-described' ports
+
+Changes in V6:
+
+ - Fixed kdoc on patch 3
+ - Addressed a missing port-ops registration for the Marvell 88x2222
+   driver
+ - Addressed a warning reported by Simon on the DP83822 when building
+   without CONFIG_OF_MDIO
+
+Changes in V5 :
+
+ - renamed the bindings to use the term "connector" instead of "port"
+ - Rebased, and fixed some issues reported on the 83822 driver
+ - Use phy_caps
+
+Changes in V4 :
+
+ - Introduced a kernel doc
+ - Reworked the mediums definitions in patch 2
+ - QCA807x now uses the generic SFP support
+ - Fixed some implementation bugs to build the support list based on the
+   interfaces supported on a port
+
+V8: https://lore.kernel.org/netdev/20250710134533.596123-1-maxime.chevallier@bootlin.com/
+v7: https://lore.kernel.org/netdev/20250630143315.250879-1-maxime.chevallier@bootlin.com/
+V6: https://lore.kernel.org/netdev/20250507135331.76021-1-maxime.chevallier@bootlin.com/
+V5: https://lore.kernel.org/netdev/20250425141511.182537-1-maxime.chevallier@bootlin.com/
+V4: https://lore.kernel.org/netdev/20250213101606.1154014-1-maxime.chevallier@bootlin.com/
+V3: https://lore.kernel.org/netdev/20250207223634.600218-1-maxime.chevallier@bootlin.com/
+RFC V2: https://lore.kernel.org/netdev/20250122174252.82730-1-maxime.chevallier@bootlin.com/
+RFC V1: https://lore.kernel.org/netdev/20241220201506.2791940-1-maxime.chevallier@bootlin.com/
+
+Maxime
+
+Maxime Chevallier (15):
+  dt-bindings: net: Introduce the ethernet-connector description
+  net: ethtool: common: Indicate that BaseT works on up to 4 lanes
+  net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
+  net: phy: Introduce PHY ports representation
+  net: phy: dp83822: Add support for phy_port representation
+  net: phy: Create a phy_port for PHY-driven SFPs
+  net: phy: Introduce generic SFP handling for PHY drivers
+  net: phy: marvell-88x2222: Support SFP through phy_port interface
+  net: phy: marvell: Support SFP through phy_port interface
+  net: phy: marvell10g: Support SFP through phy_port
+  net: phy: at803x: Support SFP through phy_port interface
+  net: phy: qca807x: Support SFP through phy_port interface
+  net: phy: Only rely on phy_port for PHY-driven SFP
+  net: phy: dp83822: Add SFP support through the phy_port interface
+  Documentation: networking: Document the phy_port infrastructure
+
+ .../bindings/net/ethernet-connector.yaml      |  45 +++
+ .../devicetree/bindings/net/ethernet-phy.yaml |  18 +
+ Documentation/networking/index.rst            |   1 +
+ Documentation/networking/phy-port.rst         | 111 ++++++
+ MAINTAINERS                                   |   3 +
+ drivers/net/phy/Makefile                      |   2 +-
+ drivers/net/phy/dp83822.c                     |  78 +++--
+ drivers/net/phy/marvell-88x2222.c             |  98 +++---
+ drivers/net/phy/marvell.c                     | 100 +++---
+ drivers/net/phy/marvell10g.c                  |  47 +--
+ drivers/net/phy/phy-caps.h                    |   5 +
+ drivers/net/phy/phy_caps.c                    |  58 ++++
+ drivers/net/phy/phy_device.c                  | 327 +++++++++++++++++-
+ drivers/net/phy/phy_port.c                    | 170 +++++++++
+ drivers/net/phy/qcom/at803x.c                 |  64 +---
+ drivers/net/phy/qcom/qca807x.c                |  75 ++--
+ include/linux/ethtool.h                       |  44 ++-
+ include/linux/phy.h                           |  38 +-
+ include/linux/phy_port.h                      |  97 ++++++
+ include/uapi/linux/ethtool.h                  |  20 ++
+ net/ethtool/common.c                          | 267 ++++++++------
+ 21 files changed, 1279 insertions(+), 389 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+ create mode 100644 Documentation/networking/phy-port.rst
+ create mode 100644 drivers/net/phy/phy_port.c
+ create mode 100644 include/linux/phy_port.h
+
 -- 
-2.34.1
+2.49.0
 
 
