@@ -1,115 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-65436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F274CB08A68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:20:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB881B08A6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 12:21:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44A73560856
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:20:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 613661C23A51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jul 2025 10:21:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92E5028B41E;
-	Thu, 17 Jul 2025 10:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70AB528FAA8;
+	Thu, 17 Jul 2025 10:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBsNLYvI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBob1YaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D144A1E1DE9;
-	Thu, 17 Jul 2025 10:20:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB14A1E1DE9;
+	Thu, 17 Jul 2025 10:21:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752747622; cv=none; b=MY7j+NjftqBeVdPC/ZROarsDcw678XNFSTVO+qK8ahywgVB2L244NEJ2fu4fFXgMYud1pPKTw8rpdK5C7g2sp/xFwUlmKNZVM5+D+5h25kSzkBCH7GbgZ5IxJE5CMShcM8PkxPkLSr6IKhYXuV1M8OG3z4EqbzHS7JLXbeMEtk8=
+	t=1752747689; cv=none; b=r31ZOiLvNDvEkdunCO9Y42mLeSpM2enCX9f9c/VSbDajePqZFprQPO+ouR8EVhrfUqcTzJ1vMqq11+UFkh4A95prZhM5Rz0RKGJW+HO6wajnjUvV0ynmiBVhckCHPKEJ3y7ZXdS6FVwikpWNKojdZzD0J6fKpXTY4bTxCW24iZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752747622; c=relaxed/simple;
-	bh=hiL8PeW9E547x46ejeKBtYo91AKJR5q+WcE1Wsi3I6o=;
+	s=arc-20240116; t=1752747689; c=relaxed/simple;
+	bh=VDEvp4nPa1fTYguPdURxWsEZGCTUTGn8gTFvVXSjEEk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cbp2CZR7kBy1Rplz22VQQkZwHYWKTcI5ruyzuMM6skcOKi5xs0MJLGUCB/znNokIDc8y4E6EVwDUsDWBMci+kCKWUZ0A8hAxfKWIAB/saRrP5TuFKO9DEA1XiLuR5QUz4kc+SOvPqsJO0PMS9hNUCVnm8yF4DoDf8cPz2M/7kuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IBsNLYvI; arc=none smtp.client-ip=209.85.221.43
+	 To:Cc:Content-Type; b=WLaKDBA1r9z/3bEzGd2v/0o+Wh37lZnUr333J/oXMvNnM+zSKtyja3HIRvPEYzsLJeCnMqHl94WwkduMiwrOf+u7dR1aS5n14yjpDEzjRTBWqps+bUgYehJndUpW0M/zIAB3uOkZ3sSbndqBflamAuVdNIsuNZAQc4Ely1uteUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBob1YaS; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a6cdc27438so637677f8f.2;
-        Thu, 17 Jul 2025 03:20:19 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-454f428038eso7264465e9.2;
+        Thu, 17 Jul 2025 03:21:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752747618; x=1753352418; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752747686; x=1753352486; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=A3nqRBi7n+rmYbqWhl2914eyEJuadwuJxywGJKNC2w4=;
-        b=IBsNLYvIbb648B/Wl5slbiSQzJwRyP5YwYwgsx+rRKW8zITSZmsPIsnxo3xdDAfdrs
-         P2MsIXxw4M9Tv1cotdccgFIOp0lERz38gPnkGxewDjead7AgPbK/lLs7QSBVZs4sTqKN
-         2Lsz5YmbSiEfDI00So+m5MACwy0YJY6viRpMZ4y+iXClItbWDRvdI/nXq15NSh0Yutvy
-         MBgKWnC2yikTP5H9YrpH4VFHSm0df2/uOyxTDiM+jcmaEfflubcHdba77h/RQWAk8IE5
-         kOCc1sXSUfhJCYE5RsyDk42BamO/OqjyBs6BgXcnBRLhK43MEYepP1a6lNQ/XROc+1wm
-         BqRQ==
+        bh=R0SDQOrTuS1H9lUpxF+kJGVHmuSWWz5UnyQqpeF3N/I=;
+        b=nBob1YaSc3ZTAenMoDx6NhsnYxh+/vBrt4imCCpZt4ot79LbaFCJQBmJmR1jk+9ZyP
+         Fo9mLivzHSm7OPi8fOnjzbj1mM3Iy2NH+InvqXifsD0JMmd/pZmLwMvG7PFT49xlXHZD
+         LLKS2uQ8pLALsNbVStTXuDWDCPFJL+bIP7Ioj9JMu//vkN/88V01EE8d5mgCkCztod3C
+         cOf8zdiBALOLTUsDpxPg7PoXhkEF7z1tjovJLxQCbRgy1PYGBLZqTKFSmsWkVFA22i1V
+         17HSWizIbdHIa8bT0fQjsVHDIffEF7ubLZyZ40kVY4vpEv/0gFSxA+m3sTmHV6a8W4Fk
+         QfEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752747618; x=1753352418;
+        d=1e100.net; s=20230601; t=1752747686; x=1753352486;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A3nqRBi7n+rmYbqWhl2914eyEJuadwuJxywGJKNC2w4=;
-        b=I/1WHXI1gg4iz+/zP/5ncjUkjNP93XG83QGLHkM2WAyJgocMaNi8aqJNJDVcJF3g5D
-         Y/XybmgoXKBZpu9LPjiPzwA+k+uxVgPgDlpl7IuxWBgrQLwBCi7YxRH5n/ceNQjjrHlY
-         H+QMJCsM3IXt+pnTCAEn1g9mEGaMBP3m7L+kJbLv/Hprw7Cql1LrUe7YGfQh1hRhjvnK
-         yu/9m+YcNpHBPCJc/cnJhFiVPR09cjVlt36yns3tljcSIOd3iWIs5tcQ6zmivztIUP69
-         3F57PfojhXrzV3HzlMxXBZ/TtfHfGulvU+hQc9mEsybGroC6iGLueGGCpgJJEOzYzSQ4
-         LSrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+2dBhzY1JttF2Fpv/gDJxXy0LBoeUwOCtr1q0+Ora2xjwGWYAfXrmYgwGzmy0Nj9yiqK7Jm+d@vger.kernel.org, AJvYcCWDh4j4pJYwMcnqlK7LJSXV2NJ6O5XczB3oQHA7bK4sTa6eWSFqwCWBk9XlEfiAvDkVKUgJmbO1mZvm5dcE@vger.kernel.org, AJvYcCWZOOPCL6VHBBEmL2JrP8FSNQDeMbloVi52hXfuQAUhkhXSb6McmVBJZJcQlm4dOxmdu5396W/87NI3@vger.kernel.org, AJvYcCX3Nldd36smRKOK7501zTm1HvVod2jHAQmzoarFFKJtdAWA2Dv/qUHx4tYti5CViXCKm8vSDxcq7289lZRL9g==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZboRq8fgpa896IgZ0uf6Q98H26c1Enj2cr4QUtfEwQ+LjTssu
-	GQokrIKo/fdkIYnsHkeqhR+X3cnlVH1likkMKULcUz0DxQTsamoLas7stTP1RJnwN+YFDybuefW
-	eQwJTPk2ieT52EDufx1jJM/3DnO0TRQ==
-X-Gm-Gg: ASbGncuR6WYKKITaIj2erHqmd7ui8wOxBdkHifSa5S59pKAqr42TBcnx8rVgeqM1w7c
-	pEQU84+hctPrt1TMC0LHw6xZrlr5nhkzL/clcX9SdjIo9wLg0D0fvYPWmDzBW8zGmX8S195jG5b
-	TYqTNGP7PLZLCgCy39ry3ob1L6xipBDvRrrJHWamTpvTQpU3xBBM3WVHhVfMdG0J+Il3Cxao2oO
-	ja+xbw=
-X-Google-Smtp-Source: AGHT+IEExzPg1ZFquopOlKqZeD7zQXYVPzF86QGynEvx2ljIbgvGg2a1b926W4qwEBzJfp6GnS5qUDt4LwMU28iXFjY=
-X-Received: by 2002:a05:6000:2482:b0:3a5:5fa4:a3f7 with SMTP id
- ffacd0b85a97d-3b60e54a361mr4528105f8f.58.1752747617790; Thu, 17 Jul 2025
- 03:20:17 -0700 (PDT)
+        bh=R0SDQOrTuS1H9lUpxF+kJGVHmuSWWz5UnyQqpeF3N/I=;
+        b=GV6fC4Fkdk5Q6hVNif4mTkSTmzzIG3vJVoY7WwrbyuTKsYsAA3B5pZpprRwSw8Busm
+         ZcfJHgl/N+S9Mnag6l5AS+6A7QWrvtgGURxI1CXG+qYqFi5PW5kpo2OU/uGVCkst9J00
+         sc4KQ6+Xu1VhAWJ6+id79WTu4FhDBtkdPNWWpkTP/HNAtrGqpZC03M5jGQZ78frnMfn/
+         OpCY4Cjmr6FKIWhB5Vp+ztqt+rRhLJbYVMqLLoxINENNlY9QH9OMAtROAD6+qAsJbLBG
+         WJNAnwGIdN6PsZ8saG0tWFId+gqahEQS1r8y9EUMMwxGEQoG6EgwaifZmbvn1VqrTIvi
+         9uFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUi1HQk0uHx0UcQng+/+f3B9zt/X3e1ruVXY2l51yn97QYY9Fvz6slTAgE1L4ziBrpc1MtTfOwMIFFfQ39/fQ==@vger.kernel.org, AJvYcCXCiOtjNyX/HnqL+niZEgxEeTUVUQWE8C2Tv1oasETZAHdm4/6I+sCA8FwPwDTFsuCVSgDcH5Vb0j+UdRNk@vger.kernel.org, AJvYcCXSYJhTrpAwohWwel96wp5YNC7qjBZXS2eQg17MNYwVuZtcDb0gfJ/cJmwyuEqOxd8WW5XdW6zfjXMm@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/P1J76jyxMyJBbhiyEp7g4PAek7kToCLe6jYjXlPzmJNtL2mi
+	zX3iIwoWJSfV+rL58IhS4CBLwaz0VFjDfGzAew0go1X0MzAHKZXS1siJUPL1R/PXdMokYRolmyQ
+	sJnAWUaoKJ+HhQyphZSX0CH95YjBRVPV45CDYbg==
+X-Gm-Gg: ASbGnctpcdoE7edXPhQ80DCmiI99B3EghYxYofnZofuYSjDLmV87+6qbd2AjmgT3Es4
+	GK/5VFaF8j2IfDo2zYIsFDHSbMDl4Twcj+HorFBzCVkTAKfLPjyE9qYblJVjMw5Ae3tIRkwkTDy
+	3KYvO3pjTfZvTf9K/yojMoFPt7unaXvBbschiy6Vcu+j3TBlpJPAZ7dYAWDf3Oa829ugKTb2HKa
+	U3wa4+5qg6kRbhPIQ==
+X-Google-Smtp-Source: AGHT+IFv6PBDOX156MvNUaV8Z5aPrBU4/FhLTnO0xFtNzvyAZYCODnCC9mUWUFf0SytFNxDo8Gj6Wf3YhC7QoNI3akg=
+X-Received: by 2002:a05:600c:a009:b0:456:13d8:d141 with SMTP id
+ 5b1f17b1804b1-456389d8690mr7082975e9.27.1752747685756; Thu, 17 Jul 2025
+ 03:21:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250701183625.1968246-1-alex.vinarskis@gmail.com> <20250701183625.1968246-2-alex.vinarskis@gmail.com>
-In-Reply-To: <20250701183625.1968246-2-alex.vinarskis@gmail.com>
+References: <20250630205514.14022-1-alex.vinarskis@gmail.com>
+In-Reply-To: <20250630205514.14022-1-alex.vinarskis@gmail.com>
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Thu, 17 Jul 2025 12:20:04 +0200
-X-Gm-Features: Ac12FXyjBUphoLYn2GR7CZGe1qBId6Bk9wQMdDWE_cy5din5jYzLL32gxBGRlVA
-Message-ID: <CAMcHhXouMRKEu+1hK-XYeuHa9RCXsEOR=ho0vEVCXewTsWFrtw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: x1e80100-pmics: Disable pm8010
- by default
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+Date: Thu, 17 Jul 2025 12:21:14 +0200
+X-Gm-Features: Ac12FXxvNJ0B0zaGN1T4nR7wK4g-_GSIvgNfz6hKS1s0YPdaG7xpe40EqrOql8w
+Message-ID: <CAMcHhXoNFnAhSoOzTQ0quHJd6=CbZYEsozcSxTJaiYXWWQ6Ayw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] X1E HBR3 fixes
+To: Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
 Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, laurentiu.tudor1@dell.com, 
-	abel.vesa@linaro.org, bryan.odonoghue@linaro.org, 
-	jens.glathe@oldschoolsolutions.biz, stable@vger.kernel.org, 
-	Johan Hovold <johan+linaro@kernel.org>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 1 Jul 2025 at 20:36, Aleksandrs Vinarskis
+On Mon, 30 Jun 2025 at 22:55, Aleksandrs Vinarskis
 <alex.vinarskis@gmail.com> wrote:
 >
-> pm8010 is a camera specific PMIC, and may not be present on some
-> devices. These may instead use a dedicated vreg for this purpose (Dell
-> XPS 9345, Dell Inspiron..) or use USB webcam instead of a MIPI one
-> alltogether (Lenovo Thinbook 16, Lenovo Yoga..).
+> It appears during initial series to enable HBR3 earlier this year [1]
+> few devices were left out, add them.
 >
-> Disable pm8010 by default, let platforms that actually have one onboard
-> enable it instead.
+> [1] https://lore.kernel.org/all/20250226231436.16138-1-alex.vinarskis@gmail.com/
 >
-> Cc: <stable@vger.kernel.org>
-> Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> ---
+> Aleksandrs Vinarskis (2):
+>   arm64: dts: qcom: x1-crd: Enable HBR3 on external DPs
+>   arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Enable HBR3 on
+>     external DPs
+>
+>  arch/arm64/boot/dts/qcom/x1-crd.dtsi                        | 3 +++
+>  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 2 ++
+>  2 files changed, 5 insertions(+)
+>
+> --
 
 Hi,
 
@@ -119,23 +115,6 @@ for upcoming 6.17. Perhaps it was forgotten?
 Thanks in advance,
 Alex
 
->  arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-> index e3888bc143a0..621890ada153 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-> @@ -475,6 +475,8 @@ pm8010: pmic@c {
->                 #address-cells = <1>;
->                 #size-cells = <0>;
->
-> +               status = "disabled";
-> +
->                 pm8010_temp_alarm: temp-alarm@2400 {
->                         compatible = "qcom,spmi-temp-alarm";
->                         reg = <0x2400>;
-> --
 > 2.48.1
 >
 
