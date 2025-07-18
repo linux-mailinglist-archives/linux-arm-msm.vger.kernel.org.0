@@ -1,65 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-65578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A0FAB09B40
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 08:19:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DF0FB09B4B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 08:25:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B23451766C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 06:19:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E6857A3A0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 06:23:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFB941EB5E3;
-	Fri, 18 Jul 2025 06:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A3A81F1537;
+	Fri, 18 Jul 2025 06:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Eivs3cUq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmS/Pgw3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617E21E9B19;
-	Fri, 18 Jul 2025 06:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE819E97C;
+	Fri, 18 Jul 2025 06:24:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752819572; cv=none; b=rPLo40ViNfvWkzfvnnKleoR48IPzZIf7162FqVCxs7rIdzcc7ElDpP8E6b7oae//3V3lHO0jEHJDK348yLFFsiKHSWvzrXQx7Pen/Mnt99HMg7IIRiKd20Q8ShhCCwVvMFAB8qAVa3mSbfQbuPZ56lDJnrORC7oX0euQ9DYQKWo=
+	t=1752819896; cv=none; b=YTdXyVYGyqREfnswSIjeg+zfJUyWeesPrud+YzR5CSae6BnwG/pzPlJnz2aJ2ArwgPl4EvcFInnPoZy3DwtN7Tf5enw3T7+SDiIv5xZuUhp/piOAFMHBvjplJKnPJPuqNUvTraWIBfljAU71QY9EKQH64LiNqePWy52MfSxhEqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752819572; c=relaxed/simple;
-	bh=h6fTbzxB8EZ1LSr41gvQc07pwMx3ZFCzi8pYHbC1bNk=;
+	s=arc-20240116; t=1752819896; c=relaxed/simple;
+	bh=/6SI6szoF3CsGljSC+x/Od/jrVrb9u3jgQriXy1GQ4Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Iv65IB0gJzsI70ScJze7Om/9GFuNQ04BYAN5Helnn0XKJf8A9KnUk9zA0bte3p1wSXz84je5XH1F/yzF/nnXLe8jP053buVwkr1KmML0cq7fC0a2tZ83w/x8UZhONOctcPdgebbWFZE/kEGmLItxCoQFNJH9EonreqoXluJSJTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Eivs3cUq; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752819571; x=1784355571;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=h6fTbzxB8EZ1LSr41gvQc07pwMx3ZFCzi8pYHbC1bNk=;
-  b=Eivs3cUqRS80GmiY1eIaskY9QNMkBIMBsdtIJKWW9poIdX3CWCoIFw5S
-   T9W+rirC2rRNdLFtTmGiXOBTMjZnYPn/gVnjzV1cPbMGt5bhjh2RqVgoz
-   j8I/X70GFRM19nI7vKHg/3eR9jU5ekBYg1czGoVnZXEnRpDhUIB5o+Y0w
-   XIS/YmkGUt9QwY/e6+dOmUUAVATMLpfDIbL59Flzc9b5s6rgGpszX+mnk
-   IKMKvnqWK0IenVh65gA0ZBjOJY63svODvgZ/0FX8jSbQTV+ESo/GuZ5kY
-   E4kUapeTnmi6rePbWzstswI2Xopd25viWuSwr4ZP+BbWuDhldq830a04b
-   A==;
-X-CSE-ConnectionGUID: HAtlq+v7Tw6KcJKyN99qtw==
-X-CSE-MsgGUID: pTHbmB60QHm93xAvGcD9gA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="80553632"
-X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="80553632"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 23:19:31 -0700
-X-CSE-ConnectionGUID: WVyscegLRjOjWNORncxODw==
-X-CSE-MsgGUID: ytwcFLY5SsuuOC44yR5wMw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="157797786"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 23:19:15 -0700
-Message-ID: <39dccffe-ac30-45e2-9146-e26e958ef9d9@intel.com>
-Date: Fri, 18 Jul 2025 14:19:12 +0800
+	 In-Reply-To:Content-Type; b=K0XuKcOrlmLj3zIZafckZa8AeooMbsuFIw+Ax+0TpMK7WcZbsH/RhEjwBwSbU0Ry0PfMo/cT0DUtI2qV0pRmZTQ/NOwe8KvnPPGCLoV/0uYoGIqQHgOcLQ92mnNCHkWfcQ9JQWkB8YinMAKT/XWucWqzTb8LA8rHE6PxskqCPVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmS/Pgw3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB36C4CEED;
+	Fri, 18 Jul 2025 06:24:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752819894;
+	bh=/6SI6szoF3CsGljSC+x/Od/jrVrb9u3jgQriXy1GQ4Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cmS/Pgw3Cncuu/dXYOR0f4Br7nLz5HpxqvaBHkztfP0SLRSLbzjhjbd7RWbWroqXk
+	 Hw8eh91BGDBoDdh7T1g5zC1U1p9mZCdPc//x/45lDExqgBzr4WUXYOocdPRWKOSC9g
+	 fVIWrvBIzXJydXPP/CrQ2mq6xt46eASv5itkzvF0Bcg9GoRwHLYHJSebRIrmP7ZjxS
+	 svb57+L2jcHfgmc/f2UG52odPCWT3FcSSskwbor1U1n7adN9YU2UWv7BQumOTbZylE
+	 COFYSzZDpNV3lr4t/IWIWucKwcQ9qlo/b7JwDHRpY2RWjJRmjNChk6utWR0o/0yBvw
+	 LBnaWd9JJX6kw==
+Message-ID: <c1bfe8cf-580b-4fd6-a4b9-c457fada5821@kernel.org>
+Date: Fri, 18 Jul 2025 08:24:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,74 +50,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 10/21] KVM: x86/mmu: Generalize
- private_max_mapping_level x86 op to max_mapping_level
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-11-tabba@google.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: media: i2c: Add Sony IMX355
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Robert Mader <robert.mader@collabora.com>
+References: <20250714210227.714841-6-mailingradian@gmail.com>
+ <20250714210227.714841-7-mailingradian@gmail.com>
+ <20250715-quick-misty-rottweiler-9ae7f7@krzk-bin> <aHlwTEdPGq43PGqo@radian>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250717162731.446579-11-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aHlwTEdPGq43PGqo@radian>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> From: Ackerley Tng <ackerleytng@google.com>
+On 17/07/2025 23:51, Richard Acayan wrote:
+> On Tue, Jul 15, 2025 at 10:27:54AM +0200, Krzysztof Kozlowski wrote:
+>> On Mon, Jul 14, 2025 at 05:02:29PM -0400, Richard Acayan wrote:
+> (snip)
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - clocks
+>>
+>> Still missing supplies. Hardware cannot operate without power. Please
+>> check your datasheet which will describe which supplies are optional.
 > 
-> Generalize the private_max_mapping_level x86 operation to
-> max_mapping_level.
+> Maybe I shouldn't have pretended to have docs when changing the
+> supply names, but I don't know which ones are optional.
 > 
-> The private_max_mapping_level operation allows platform-specific code to
-> limit mapping levels (e.g., forcing 4K pages for certain memory types).
-> While it was previously used exclusively for private memory, guest_memfd
-> can now back both private and non-private memory. Platforms may have
-> specific mapping level restrictions that apply to guest_memfd memory
-> regardless of its privacy attribute. Therefore, generalize this
-> operation.
-> 
-> Rename the operation: Removes the "private" prefix to reflect its
-> broader applicability to any guest_memfd-backed memory.
-> 
-> Pass kvm_page_fault information: The operation is updated to receive a
-> struct kvm_page_fault object instead of just the pfn. This provides
-> platform-specific implementations (e.g., for TDX or SEV) with additional
-> context about the fault, such as whether it is private or shared,
-> allowing them to apply different mapping level rules as needed.
-> 
-> Enforce "private-only" behavior (for now): Since the current consumers
-> of this hook (TDX and SEV) still primarily use it to enforce private
-> memory constraints, platform-specific implementations are made to return
-> 0 for non-private pages. A return value of 0 signals to callers that
-> platform-specific input should be ignored for that particular fault,
-> indicating no specific platform-imposed mapping level limits for
-> non-private pages. This allows the core MMU to continue determining the
-> mapping level based on generic rules for such cases.
-> 
-> Acked-by: David Hildenbrand <david@redhat.com>
-> Suggested-by: Sean Christoperson <seanjc@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> I'd assume at least dovdd/VIO is required.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Then all of them are usually required.
+
+Best regards,
+Krzysztof
 
