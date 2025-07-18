@@ -1,191 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-65594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1B72B09CD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 09:41:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88766B09D42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 10:00:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5730116A775
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 07:41:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3122E1C45E6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 08:00:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF1523C50B;
-	Fri, 18 Jul 2025 07:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93DCF292B2E;
+	Fri, 18 Jul 2025 07:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QTy2Kqxm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GP3I1yO/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1661A8F97;
-	Fri, 18 Jul 2025 07:41:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C3C290DBC;
+	Fri, 18 Jul 2025 07:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752824513; cv=none; b=mAHm2QcANWWhxx/hPDVQ8ITfwsS//Du78odCNNxO6yi5xaA7cybgkvo/JulfUbehHEQiS+5v/wsupkQNBhBL2ccGIE+bXUhJONMIfvRgZlHsVM4eCBCY658/ElevdoCyIlGNsHxbe3AFn18PQQPyjVPzwTF8iKzs6VyJUcgf8wE=
+	t=1752825447; cv=none; b=d3xG3hvbclJOIA9O8HpKr/JCT2D2R8vSBIOdNIc+L5zPT9WkrlQ2tnA6qCSn2GJUwtJMbIUMwU8WV1KHLQYoe09DjtoVeXvEBsRXiTJsmgkX8tqJ5KozMvj65lRw4qnYLxpXXSIDAPtpmD9bBIV1NmsOahxNftbRtqDlVGjfJc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752824513; c=relaxed/simple;
-	bh=J5kKqTKlg4ioIqTAnV2dtolGEeERqKQr/KzPEPbUKz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UcJGE+H5fJ4tsFyMhaFg/DBF8raW/C6nPGIZny9Ka0VYF/usrsSe9DpjnTj+rJ9NYahCz8sp/AZheL5b49yeKCh87CHGAZWI8xmXazcl7OVBo6alglOJu8LQc3CkwSWx2Et3WFhsEAp74sKMezXB+d95Nm0LFqNgtEa6FsjcL4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QTy2Kqxm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I7cjHo009576;
-	Fri, 18 Jul 2025 07:41:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FFAOMChFqrKhKYfUFTQm9VW1DmXhkt4PhiDLnZ9VC2M=; b=QTy2Kqxm09sxhe30
-	oq1riXFH+6JvVlsJoFElb+y9/z/QhwqNLKFRBtJjZzmaQWg5tHu//P6+gSglvwBD
-	d/XYDK+zzityzeIoJg8CoPQlhhQrnr/V7pQxxL37da/FUkMQFzhtLsQYT2Iszk6w
-	63YSdnPxT750gWzVEBmmXh8MxwS5tf63HQUUgC3gtwbRYIQ6YEQHiBwlIimpNie/
-	yVuIzzxlgG9DxKQuBn9APVvv1aQGT/hejB78Q/68Jiiw7o8NGcd0h22o7BFBxzAz
-	skWtQLq2Ro78XdLHsk2GBJHmgDSSd8EENrM/w+sbaDuivQsNO+kg1m6yC56GY0yc
-	7LYZIg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxbam37-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Jul 2025 07:41:34 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56I7fXVK013574
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Jul 2025 07:41:33 GMT
-Received: from [10.253.76.178] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 18 Jul
- 2025 00:41:27 -0700
-Message-ID: <13ca4d6e-d5db-4fd5-af14-9ccda55ddba2@quicinc.com>
-Date: Fri, 18 Jul 2025 15:41:24 +0800
+	s=arc-20240116; t=1752825447; c=relaxed/simple;
+	bh=HtMkyMiApABrG1p0fj6Rh2/bC8EWBoPtuZRmkETmM0g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jzknpu39dCSvMB9JwoawbKJCn6Adwy62/XOnhOuyN3DwwgkExmlBKEKjA65hE0/3Tx9eJuCh1RB0paCdVDwmhyYpUBksCvUvW3HTWfiXBEAVsXXOfV5Vf0p+ial7lwz8eqziUweIf6adLnVTq/W2tiGu+lDyo6ATggggd7rtHWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GP3I1yO/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F15CC4CEEB;
+	Fri, 18 Jul 2025 07:57:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752825447;
+	bh=HtMkyMiApABrG1p0fj6Rh2/bC8EWBoPtuZRmkETmM0g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GP3I1yO/9x3yN3ztQdGGuVWsFEAv4IonhkZC1/YuylH9hk3rpUPH6F3fVgr1nBYUf
+	 pnjoEs60AqCkiHB1vwHE1GJk5niNnYTesz+OM25VQJACJ6mweiS2wTad1iy/Xu0YVS
+	 5hYVKzMuwFyTQQJHMKWVPQB0kJ6ZYkRg2hXwMPLi9wwyrVhcW9TtruacgcUt23KmTG
+	 U881qJIoxdy/PdRoxOokJt/J/xDiR0qYVZ4h6pAkE85IQvrhWDQTD20uw9pXyOgloh
+	 JTiudxV6DJiT2J+wQjw+Yq5boYxCBvLMQMZOJ1qsIwI7G8ZVbHkLk/r/rM+PeieYM4
+	 8tuGfZbpapCSg==
+Date: Fri, 18 Jul 2025 13:27:14 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+	Bjorn Helgaas <helgaas@kernel.org>, ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <gx5gruyhrhwhvwkiqlkp2bggqd4oqe4quvqiiphfzolhjtzun6@okogvabkqah3>
+References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
+ <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
+ <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
+ <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
+ <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
+ <o2gqqty6lakc4iw7vems2dejh6prjyl746gnq4gny4sxdxl65v@zmqse3244afv>
+ <1db7c119-882f-4184-9ca4-9dbe5a49cb16@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 10/14] net: ethernet: qualcomm: Initialize PPE
- RSS hash settings
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Andrew Lunn
-	<andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        "Eric
- Dumazet" <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Lei Wei
-	<quic_leiwei@quicinc.com>,
-        Suruchi Agarwal <quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,
-        "Gustavo A. R.
- Silva" <gustavoars@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>
-References: <20250626-qcom_ipq_ppe-v5-0-95bdc6b8f6ff@quicinc.com>
- <20250626-qcom_ipq_ppe-v5-10-95bdc6b8f6ff@quicinc.com>
- <793434f9-7cdc-409f-b855-380be7a2b0db@oss.qualcomm.com>
-Content-Language: en-US
-From: Luo Jie <quic_luoj@quicinc.com>
-In-Reply-To: <793434f9-7cdc-409f-b855-380be7a2b0db@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d_Ee6WCGIkzRAaD8MJrO82z3Rn9nrrvQ
-X-Proofpoint-ORIG-GUID: d_Ee6WCGIkzRAaD8MJrO82z3Rn9nrrvQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDA1OSBTYWx0ZWRfXzWtpS0NkR21S
- bKygKN8oh1IUv8AVDh/vUd/98aZ1oaCRQpBNmnNHVo+bU0S20YIhwjsQfAGy8QYS8WmMWEhjMuh
- dOEjt7OBI0xihMiqz95prDVSpkl+qR5vNDTqFFu/S5iixN7P4Q7k/dPXBGiu4152Y64ZCT0kgy4
- IsNKfG6OInSNOWwIGk1E2H5zs0CecuE8LQnvsSa3h8/Bk1kynfcR/EYLONf5ZsGaParQWlh+ZgF
- 6bFwKiSXXkavGCM0iDeit/p5+CBfc4c5N8BvrbaMeMovs8UT0JHfNz0rA2J1BcLXaCde1PXtTbU
- OSeDdCdNTQ1CyL+HvZjr+IU6AVKhPnr1440unU7xxT0Ht2vq/MPuQF++CpGHHjclr3DfAWQgh4V
- kGt0b7fqYgCsDzRrgTV5rnNQrs8tJx5idRSJgbWUJj6ShIHBnq6AWK0QWpwM7pjEN0Jbfnie
-X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=6879faae cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=8GLID_3tYxgRnLsb8HMA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-18_01,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180059
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1db7c119-882f-4184-9ca4-9dbe5a49cb16@oss.qualcomm.com>
 
-
-
-On 7/18/2025 4:48 AM, Konrad Dybcio wrote:
-> On 6/26/25 4:31 PM, Luo Jie wrote:
->> The PPE RSS hash is generated during PPE receive, based on the packet
->> content (3 tuples or 5 tuples) and as per the configured RSS seed. The
->> hash is then used to select the queue to transmit the packet to the
->> ARM CPU.
->>
->> This patch initializes the RSS hash settings that are used to generate
->> the hash for the packet during PPE packet receive.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   drivers/net/ethernet/qualcomm/ppe/ppe_config.c | 194 ++++++++++++++++++++++++-
->>   drivers/net/ethernet/qualcomm/ppe/ppe_config.h |  39 +++++
->>   drivers/net/ethernet/qualcomm/ppe/ppe_regs.h   |  40 +++++
->>   3 files changed, 272 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
->> index dd7a4949f049..3b290eda7633 100644
->> --- a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
->> +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
->> @@ -1216,6 +1216,143 @@ int ppe_counter_enable_set(struct ppe_device *ppe_dev, int port)
->>   	return regmap_set_bits(ppe_dev->regmap, reg, PPE_PORT_EG_VLAN_TBL_TX_COUNTING_EN);
->>   }
->>   
->> +static int ppe_rss_hash_ipv4_config(struct ppe_device *ppe_dev, int index,
->> +				    struct ppe_rss_hash_cfg cfg)
->> +{
->> +	u32 reg, val;
->> +
->> +	switch (index) {
->> +	case 0:
->> +		val = FIELD_PREP(PPE_RSS_HASH_MIX_IPV4_VAL, cfg.hash_sip_mix[0]);
->> +		break;
->> +	case 1:
->> +		val = FIELD_PREP(PPE_RSS_HASH_MIX_IPV4_VAL, cfg.hash_dip_mix[0]);
->> +		break;
->> +	case 2:
->> +		val = FIELD_PREP(PPE_RSS_HASH_MIX_IPV4_VAL, cfg.hash_protocol_mix);
->> +		break;
->> +	case 3:
->> +		val = FIELD_PREP(PPE_RSS_HASH_MIX_IPV4_VAL, cfg.hash_dport_mix);
->> +		break;
->> +	case 4:
->> +		val = FIELD_PREP(PPE_RSS_HASH_MIX_IPV4_VAL, cfg.hash_sport_mix);
->> +		break;
->> +	default:
->> +		return -EINVAL;
->> +	}
->> +
->> +	reg = PPE_RSS_HASH_MIX_IPV4_ADDR + index * PPE_RSS_HASH_MIX_IPV4_INC;
->> +
->> +	return regmap_write(ppe_dev->regmap, reg, val);
+On Fri, Jul 18, 2025 at 10:05:02AM GMT, Baochen Qiang wrote:
 > 
-> FWIW you can assign the value in the switch statement and only FIELD_PREP
-> it in the regmap_write, since the bitfield is the same
 > 
-> Konrad
+> On 7/17/2025 7:29 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
+> >>
+> >>
+> >> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
+> >>> On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
+> >>>
+> >>> [...]
+> >>>
+> >>>>> @@ -16,6 +16,8 @@
+> >>>>>  #include "mhi.h"
+> >>>>>  #include "debug.h"
+> >>>>>  
+> >>>>> +#include "../ath.h"
+> >>>>> +
+> >>>>>  #define ATH12K_PCI_BAR_NUM		0
+> >>>>>  #define ATH12K_PCI_DMA_MASK		36
+> >>>>>  
+> >>>>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+> >>>>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> >>>>>  
+> >>>>>  	/* disable L0s and L1 */
+> >>>>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>>>> -				   PCI_EXP_LNKCTL_ASPMC);
+> >>>>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> >>>>
+> >>>> Not always, but sometimes seems the 'disable' does not work:
+> >>>>
+> >>>> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
+> >>>> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
+> >>>>
+> >>>>
+> >>>>>  
+> >>>>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+> >>>>>  }
+> >>>>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+> >>>>>  {
+> >>>>>  	if (ab_pci->ab->hw_params->supports_aspm &&
+> >>>>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> >>>>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>>>> -						   PCI_EXP_LNKCTL_ASPMC,
+> >>>>> -						   ab_pci->link_ctl &
+> >>>>> -						   PCI_EXP_LNKCTL_ASPMC);
+> >>>>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
+> >>>>
+> >>>> always, the 'enable' is not working:
+> >>>>
+> >>>> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
+> >>>> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
+> >>>>
+> >>>
+> >>> Interesting! I applied your diff and I never see this issue so far (across 10+
+> >>> reboots):
+> >>
+> >> I was not testing reboot. Here is what I am doing:
+> >>
+> >> step1: rmmod ath12k
+> >> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
+> >> the issue)
+> >>
+> >> 	sudo setpci -s 02:00.0 0x80.B=0x43
+> >>
+> >> step3: insmod ath12k and check linkctrl
+> >>
+> > 
+> > So I did the same and got:
+> > 
+> > [ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
+> > [ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
+> > [ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
+> > [ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
+> > 
+> > My host machine is Qcom based Thinkpad T14s and it doesn't support L0s. So
+> > that's why the lnkctl value once enabled becomes 0x42. This is exactly the
+> > reason why the drivers should not muck around LNKCTL register manually.
+> 
+> Thanks, then the 0x43 -> 0x40 -> 0x40 -> 0x42 sequence should not be a concern. But still
+> the random 0x43 -> 0x43 -> 0x43 -> 0x42 sequence seems problematic.
+> 
+> How many iterations have you done with above steps? From my side it seems random so better
+> to do some stress test.
+> 
 
-Thank you for the suggestion, I'll update the code accordingly.
+So I ran the modprobe for about 50 times on the Intel NUC that has QCA6390, but
+didn't spot the disparity. This is the script I used:
 
+for i in {1..50} ;do echo "Loop $i"; sudo setpci -s 01:00.0 0x80.B=0x43;\
+sudo modprobe -r ath11k_pci; sleep 1; sudo modprobe ath11k_pci; sleep 1;done
+
+And I always got:
+
+[ 5862.388083] ath11k_pci_aspm_disable: 609 lnkctrl: 0x43
+[ 5862.388124] ath11k_pci_aspm_disable: 614 lnkctrl: 0x40
+[ 5862.876291] ath11k_pci_start: 880 lnkctrl: 0x40
+[ 5862.876346] ath11k_pci_start: 886 lnkctrl: 0x42
+
+Also no AER messages. TBH, I'm not sure how you were able to see the random
+issues with these APIs. That looks like a race, which is scary.
+
+I do not want to ignore your scenario, but would like to reproduce and get to
+the bottom of it.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
