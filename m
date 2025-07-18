@@ -1,147 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-65632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C2EFB0A086
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 12:21:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E82E1B0A0A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 12:28:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D1D31AA60B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 10:21:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E12D5A6A75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 10:28:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C5F29E118;
-	Fri, 18 Jul 2025 10:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54AB29ACF3;
+	Fri, 18 Jul 2025 10:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J/wWWskB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOF4Nqqm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7794529CB40
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 10:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E84221297;
+	Fri, 18 Jul 2025 10:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752834073; cv=none; b=G0ckhwcRKz5s1D/qzo1KoR6OYoKNzrAZKvxZLpV00h3WQewC2n0gM0ZsqwajTtvoqPHMvxEJS7PtAsUbxEVw5aOktgiDikMibpxhnWJtb3W64qtjS6HlGxIwT799BlllNUYU6yXVt/euDfu/FJz+7zvoNz1B3gzwuTNUk7m1yns=
+	t=1752834524; cv=none; b=lbKchX05X0DVTG7DMRb5yKMxfaDwRDzlkuM6chIWpvmF9TV4udW7pAYUVi6Hp4dM9wl/3pOmkbDO6HBqH0F4WtBAchA2d0Dnv/3r5dKi3hcl2u/SvMqLc0oL0Jow6VQymjT+D6zPgIk0LdS8Y9FhxIWqE0vwUXoizjYXXTXLKjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752834073; c=relaxed/simple;
-	bh=g0MCGJ7YaYbAjDt3WhSX/LOOkU6F6Pxo7BkKvNMJkvo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nl0N86wXKM391/9eHAoLQQtkQI7vi1ZfMSdKdry281bcMsGyu+DqtcryWE8txSqV1DFOP1bh2N/vux6Q/1NMlChjXhis8zkg+qkQX4R/8Iw1O6qIgfSk8TItTe/eRzvEl4GM+27IBzdUv3ianLPQyFHMBmI84rWKIIYMWIoey7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J/wWWskB; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a536ecbf6fso1165969f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 03:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752834070; x=1753438870; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0OAIcBL70630f3jMfmSHdEwCAV/8PODlKAUzq5Lxgf4=;
-        b=J/wWWskBzPKPx1yaR7a+bWgJi8A/MIVn7ItK7/YQCis1Xz+EY+YQKZAX0kgMHw/OKO
-         jERX7ACjBL0auwz409G0hE/JClq/5/Y8kMUCPU9B5e2E54eXhyXGrXwBfvWoZpoYPfhy
-         +YPW/szg4MpecksdbkFdvkKAmZ5GMYYMuVlA4FGplKVfPmg46y4NC2Vr0AlJGn5H9JqJ
-         l9Da2T7Xv8UjiNlf9gGKhTausYqcspHyHCZWNnRKShJlg4MyaW+m07P6H/HZzwmOxCgc
-         w7DMVzmRNhYzA7NGZMIdtFEsElqijKyHldkztsn1vLf+DIdvpi580AObPJRJt/0RY/4v
-         ir0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752834070; x=1753438870;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0OAIcBL70630f3jMfmSHdEwCAV/8PODlKAUzq5Lxgf4=;
-        b=IsWe36iyjav3Y1WJVsSo6cCl7q6XnGi2aGyvo9DxU1q6rlzuZQpQNPFSLk9q5pELw5
-         RLCGR2UhMbjyw6t23lTgyqXUbKIrqcxEoaet7jx3zEAGDRB1gKf04OUavfBrpwf4Ls/0
-         mlPSHSfdvoqkLDuUpWa05aQ1IaaTu3G2dY86Lst1ntdup1VHa6T7MAxesJcS9uF3imf9
-         0jSl9502JGfcGW9Gv3HQBL73Kw+QI/R64ua4/U/f8+ryVCXOd5dUcZfGhpr8sv+V4GxK
-         RDBMv8WVscmT05AgC2EPrjUo24RwnL5mQdhQ8tGLj2MtPvpgV34/Z0uZQ/NcsNEYUu9O
-         EXcA==
-X-Forwarded-Encrypted: i=1; AJvYcCU+2wjb1dlcyB9mmf3Yj57EqTYfZYNCm5MYe2KS8qEov1YCebaxg1i3v3CN6W+ykTsT1kyqabrHByk6ajnP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFOekTa4uFy/+7+tePIKevYINQYjXm5I8f1Blbx5L1aGK7rb2E
-	JIT9R6O6wppjjvnqUHP1//lET7UEyFn196T4UkxUc8HN52S6I5+MhjTee2sPNB2tV5Y=
-X-Gm-Gg: ASbGncs1D5dF5qW51ASUW2iOJpH3uS35fDq+iNf/W31Mwo2RkBxI44iZ1SXcpG7U/mR
-	Bt/ayHQxwfs8kwWdgbGObHF/kYyVNv0PKbJietwIeOb/cZKthsN+kSj/pgeSMvsIQVxjo59Zx7P
-	mwVF1to2yA2Fi7x5MTlAQOcEfeFn1EZly61+OLi8XMdto5sA3owmUiPxoJK2HnQtFM9pTLM36Oi
-	sJpPxmpZ2FwgU0aVZyuK3HNhWw/VNIbfP9hxMITLzTmW4dk5p1FqBzSGWes/jPIF8crhXJ1ate4
-	qJjH/+8EnkJq5b9KHQVajBtQcuLbakiL6PGH6KxQa9OqqSAarqqtkWirbn7FXDpbkndWZ2GaOCQ
-	tGLjAtn0TAt/jnV5O7q6zBsppZBmsYbO/yxsKm1Ay/nIf7K/ORiPly4WJEH8KjrQrAEH5A/gysi
-	I=
-X-Google-Smtp-Source: AGHT+IFb4UrEaIgReWQNYtGNnuAGOrUAMETqNaFcLfwK/JPQUJ9ADxpbWpnghscMDuTHhPHpfNW4tw==
-X-Received: by 2002:a05:6000:26c9:b0:3a5:3b03:3bc6 with SMTP id ffacd0b85a97d-3b613e983bemr5609226f8f.28.1752834069708;
-        Fri, 18 Jul 2025 03:21:09 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca2b945sm1427254f8f.22.2025.07.18.03.21.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 03:21:09 -0700 (PDT)
-Message-ID: <1402a52f-639c-4872-a153-b549603c13a7@linaro.org>
-Date: Fri, 18 Jul 2025 11:21:07 +0100
+	s=arc-20240116; t=1752834524; c=relaxed/simple;
+	bh=mLEIXOd7eZdISffuLnCpahYVvfWHAggJn8bBD65Jk+8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uQsS2nA6hs5tKAKOyQ33LRHC+IyVY7nedVQQhH19RMi509S+nuKFl4JeXhh3Z1rsNW58sFWz46W2bmjnR/ja//9MpR+Bzz4W9pG+7nf11O2mA2JyyWoN3ETnQ1udcKNwdRJbb5TzI/sHiKuKKPTn/pR7dRwFG4UPe68Z5Dhb5ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOF4Nqqm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F19AC4CEEB;
+	Fri, 18 Jul 2025 10:28:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752834524;
+	bh=mLEIXOd7eZdISffuLnCpahYVvfWHAggJn8bBD65Jk+8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eOF4Nqqmy62wOTE6iyDUN+If8Qx8CfTpC+N5PVoQWCe5WQhj+WWHU6Tyv3hi9eNhr
+	 FIoXTkuUWVi3cRj6W8FENzyay4s+zTghm5Vc8MYJeCWKF0Bw2h413GvxFcYuAR9NAR
+	 AsrElcNhPyoTnVlsCVCrQaopu97MxZTemFopAhXFV4BOoUGeXjbUQVsadiEe+JLuav
+	 yW4WCznBsJ0bxTwTsqy3Tg/wFN93AxwPEFWVFLdH8LZz/8Qm3JTU1utMKG2qb9dBji
+	 6qVErsWOPsaWploLev2unOE7h5UtBN5Bu1SJAkGsv/Rx6PACnsIUF3Gl6VH3Kjssvn
+	 2XjO0g8ZNrKhw==
+Date: Fri, 18 Jul 2025 12:28:37 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: Re: [PATCH v6 0/4] PCI: Add support for resetting the Root Ports in
+ a platform specific way
+Message-ID: <aHoh1XfhR8EB_5yY@ryzen>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/7] media: dt-bindings: venus: Add qcm2290 dt schema
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Cc: quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, krzk+dt@kernel.org,
- konradybcio@kernel.org, mchehab@kernel.org, andersson@kernel.org,
- conor+dt@kernel.org, amit.kucheria@oss.qualcomm.com,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250715204749.2189875-1-jorge.ramirez@oss.qualcomm.com>
- <20250715204749.2189875-2-jorge.ramirez@oss.qualcomm.com>
- <8a63f517-a443-48e4-9b9c-0c4b362f59f8@linaro.org> <aHiZpnFhhR5O0h97@trex>
- <0bb2867a-393b-46f9-ad6f-1aeee5a3a9d4@kernel.org> <aHjbjw8Z79Xcd/ZJ@trex>
- <aHksJum91s4ZmI56@trex> <5afbaf46-bbb1-47d8-84aa-29b18987564f@kernel.org>
- <18d013e5-352e-457b-ba96-3dd19f1cbaed@oss.qualcomm.com>
- <56d4e911-5bec-458e-acd1-3594a6d8b91d@kernel.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <56d4e911-5bec-458e-acd1-3594a6d8b91d@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
 
-On 18/07/2025 11:04, Krzysztof Kozlowski wrote:
-> On 18/07/2025 12:02, Konrad Dybcio wrote:
->> On 7/18/25 8:27 AM, Krzysztof Kozlowski wrote:
->>> On 17/07/2025 19:00, Jorge Ramirez wrote:
->>>> On 17/07/25 13:16:31, Jorge Ramirez wrote:
-
->>>> Not sure if I’ve shared this before, but following an internal
->>>> discussion, I think it’s worth highlighting a functional dependency in
->>>> the current kernel:
->>>>
->>>>   - the driver only works if the first two IOMMUs in the list — the
->>>> non-secure ones — are placed at the beginning. Reordering them breaks
->>>> functionality, which introduces unexpected fragility.
->>>>
->>>> Regardless, this seems like a valid concern to me — a driver shouldn't
->>>> rely on the order of phandles — and I just wanted to make sure you're
->>>> aware of it before I post a v8 (likely sometime next week or the
->>>> following, as I’ll be taking a short break soon).
->>>
->>>
->>> Hm? Order of lists is strictly defined. That's actually an overlook that
->>> we never do it for iommus, but the core rule stays.
->>
->> (FWIW "items:" is an ordered list, "enum:" is unordered)
+On Tue, Jul 15, 2025 at 07:51:03PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> Testing
+> -------
 > 
-> enum is not a list, but enumeration, meaning one item of multiple values.
-> 
-> Best regards,
-> Krzysztof
+> I've lost access to my test setup now. So Krishna (Cced) will help with testing
+> on the Qcom platform and Wilfred or Niklas should be able to test it on Rockchip
+> platform. For the moment, this series is compile tested only.
 
-As Krzysztof says the ordering is strict.
 
-I think the right-thing-to-do is to document in the commit log the 
-dependency.
+Since this patch series implements two things:
 
-The final three entries are secure entries and the ordering is important.
+1) Testing sysfs initiated reset:
 
----
-bod
+selftests before sysfs initiated reset:
+# FAILED: 14 / 16 tests passed.
+
+# echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
+
+[  145.567748] pci-endpoint-test 0000:01:00.0: resetting
+[  145.638755] rockchip-dw-pcie a40000000.pcie: PCIE_CLIENT_INTR_STATUS_MISC: 0x3
+[  145.639472] rockchip-dw-pcie a40000000.pcie: LTSSM_STATUS: 0x230011
+[  145.640063] rockchip-dw-pcie a40000000.pcie: Received Link up event. Starting enumeration!
+[  145.682612] rockchip-dw-pcie a40000000.pcie: PCIe Gen.3 x4 link up
+[  145.683162] rockchip-dw-pcie a40000000.pcie: Root Port reset completed
+[  145.810852] pci-endpoint-test 0000:01:00.0: reset done
+
+selftests after sysfs initiated reset:
+# FAILED: 14 / 16 tests passed.
+
+(Without this patch series: # FAILED: 7 / 16 tests passed.)
+
+So for this part:
+Tested-by: Niklas Cassel <cassel@kernel.org>
+
+
+
+
+2) Testing link down reset:
+
+selftests before link down reset:
+# FAILED: 14 / 16 tests passed.
+
+## On EP side:
+# echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
+  sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
+
+
+[  111.137162] rockchip-dw-pcie a40000000.pcie: PCIE_CLIENT_INTR_STATUS_MISC: 0x4
+[  111.137881] rockchip-dw-pcie a40000000.pcie: LTSSM_STATUS: 0x0
+[  111.138432] rockchip-dw-pcie a40000000.pcie: hot reset or link-down reset
+[  111.139067] pcieport 0000:00:00.0: Recovering Root Port due to Link Down
+[  111.139686] pci-endpoint-test 0000:01:00.0: AER: can't recover (no error_detected callback)
+[  111.255407] rockchip-dw-pcie a40000000.pcie: PCIe Gen.3 x4 link up
+[  111.256019] rockchip-dw-pcie a40000000.pcie: Root Port reset completed
+[  111.383401] pcieport 0000:00:00.0: Root Port has been reset
+[  111.384060] pcieport 0000:00:00.0: AER: device recovery failed
+[  111.384582] rockchip-dw-pcie a40000000.pcie: PCIE_CLIENT_INTR_STATUS_MISC: 0x3
+[  111.385218] rockchip-dw-pcie a40000000.pcie: LTSSM_STATUS: 0x230011
+[  111.385771] rockchip-dw-pcie a40000000.pcie: Received Link up event. Starting enumeration!
+[  111.390866] pcieport 0000:00:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+[  111.391650] pci_bus 0000:01: busn_res: [bus 01-ff] end is updated to 01
+
+Basically all tests timeout
+# FAILED: 1 / 16 tests passed.
+
+Which is the same as before this patch series.
+
+So AFAICT, this part does not seem to work as advertised.
+
+Instead of quickly stopping and starting the link, I also tried to reboot the
+EP board, which does the configfs writes and starts the link automatically on
+boot, but that had the same result as quickly stopping and starting the link.
+
+
+Kind regards,
+Niklas
 
