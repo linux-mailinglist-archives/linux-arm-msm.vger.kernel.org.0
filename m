@@ -1,214 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-65702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D555B0A975
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 19:27:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A14ADB0A97E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 19:28:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 011454E1DB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 17:27:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD3A7A44E43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 17:28:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 308642E764B;
-	Fri, 18 Jul 2025 17:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99DB82E62B1;
+	Fri, 18 Jul 2025 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DzobpW+x"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hL3fYOQC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976E12E762F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DD42E5B0F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752859624; cv=none; b=TtCy57VdR3fGkLcxRV3LPD5YqaMH/IzAmeKV6EL1qCrEEQ0cItt95ODDWLFcVyfoJBz75wu/Ot8ydbUosmZq9cHrLVv4xeWLQbDDtK61xfCAO15AgfXccqPp+dr6k+25z1tSUkLy0QUWTrTwhMoV0CO0dViI1jLJHcluDNJu5lE=
+	t=1752859708; cv=none; b=uonILrjn1mkfx0G/H2lO3R0UWxDs3PLQQ3N9uImR83uu/CWexaGNqVOX53EmDkp3fY1lSHakRWt67+iagpGhp7C8ld5oeOtto8Ch05t4lu0Zem2G1VO4jZIHlqT8qKanltGkIb4Vk3kj9KSei3cjuWHsyXaYigyjq6lyIl0SWxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752859624; c=relaxed/simple;
-	bh=PNmspk2fu/IR2dTOXna+ISz0MMt+wWO3tpb86klVnyU=;
+	s=arc-20240116; t=1752859708; c=relaxed/simple;
+	bh=90B31psnyuDI6zcbsl6GMlpN4O29mgnxLtJPusFpi1I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GdvUbwyTnvzpJ7kKe0+83ImNsVEnbz8Tpx/YVSmIIDMKHAjoRPCGZF9/LlzyyC1Gj4PqAKrtiCLtxC+geyyW18Xdx+cVwNRaavNFcGKiaMKAbE09O5OUzTXFxaBSH12Wo+DKLwXhvdKSRt57+rdvWrQEkxAAGbqAxSRL1R0cHf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DzobpW+x; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=GVHpnZNw3K6GYNyNssHqNfduEfCrIMxAA5fuLfS3sXAXFgNCb9aZTdDCg1SUN40gbRF2y7bRMAe6Vb5a9S2vy7lQNC8H1/1TAW395OqGxmjisjLF/yHukYs0cqUleyay7LfVC8vRc2WfHT0B84vSSGO8CeNQezESjNqnClPMQ6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hL3fYOQC; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I969IF022149
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:27:01 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IHOJix025177
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:28:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=+kObH4cbteXwLfeWdFmGrxDm
-	MfZ/gQ1F30gvtsINTQo=; b=DzobpW+x4Sh8HuTb8Br5Y4W+K5FzLi3MZPbDfkFZ
-	MOfcuNouCk8DaeQ1fb1jO4tI3wfNVKHQcEnGzkUkTGNIFO0HaZGpsxjragGUs2gB
-	fCQpzl0OH3l212xZk5/IZSdhs6QX5fHuZFQ2P14fIxtuAznDWYsoctXbC7mjHDGH
-	duH4t5jOAWVowBRzq1PyzWERehL82idn6iodHao1Mg6xczlo+fbQP/UgIklgKME7
-	pkTGb/ZFwuK/Qp9NGuYwqPaexxjMMiwZlorCxexWpNkNiUdu6y8HVcHAblkcAbTh
-	Z2xVIdbhUqGe1u+vr1Hmx4Tc29sCX7Q1tleGm3zn2awuBQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufu8m8b8-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	m3LoWx9DJ0TyeqCc/zXgNGefaOcySK/itM7vHhC503E=; b=hL3fYOQCMSzfdzZe
+	ARYdewThhNQpHTxU9N5K5FEGaVx+b6EyURyjSKgeEY05Surk9walCPC6uH3da5kM
+	moiRe8ECpMYOhbwKNv2N5EZQP99VZA8OMHEFDTFQkoM6/eThJPecHLpCq6DZWWt7
+	zLe7E9CkPzejy4CdqKdIifKZEA6CUdob6+dbeWyHbNUXJyxyzuRpmYtrYWX8XYnx
+	Jmv9Zq/6pNmnNLa2Tug6NgWZTA+7oXWZn90cUMOOkoFhaz8iYAL1xILGlbSG6zMQ
+	vjuQwEXALfkTvBftllkkaBt9BreiI61wcEFH6BvwLbyNUl7JPgYwRBEnUJgifCGx
+	XJbQ8g==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47xbsqgkv1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:27:01 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e1fb57a7adso219756685a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 10:27:01 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:28:25 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7da0850c9e5so353366285a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 10:28:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752859620; x=1753464420;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+kObH4cbteXwLfeWdFmGrxDmMfZ/gQ1F30gvtsINTQo=;
-        b=NDa/HgHbmrpvxT4RIHGxjFqCYVa4NDcEVruQ4br09+enGL9vv+oC1oLTYEbFmPHU5/
-         wLTwND72Df2lpQIIIrHUy7ADzWw8WhE/mz+lwAyKiZg+30PULSjWXXZi+xD+5AIJT6ZY
-         C8E3nPnOceXroY3wbCGFvdbWVrO4Ca2JRYQcegWvuVZxcJuHe7Xi3r5Racn5qN9EJEiS
-         TwtdKldKLTkTOMk3783TxjOly97606DCO8boUy49rYoFwtPhPrQCpme5CcdgvDxWHKB5
-         0gGf68KT+iJhdPFY8SoJSIBbSLPQHjCfYnHQUJNGR2IxYe0oujLTZfvPYZxqUDrW+wof
-         8vGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWIzEyx9zywX0oOdsd65Z9IckRWHhYjPhwQoCOWDuiRxSmVEZR5+++G0H8nngUcR1FEv0tc7qD7E/Q4xvRm@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzcq/8ljymq3F2ZjKvPObGNLu2KwuqXlFIjhvFnUvEJJvoQHFRV
-	TFkkXbgy5yHejJ6Eab9u+irESnf/u7b/eLUGYBHOhKJatoHWbHmM5c1jeUNizRY7Waii4KrUB78
-	xjXjGVI+RdW2V5NjILpV24xICIN5ZQMFFnHzYy+428hBj9761lkIJx9tDDc1fZWWkN0xt
-X-Gm-Gg: ASbGncvSAEDQZapXU1kb492hSFYMjyqA3gHQL+SigWCD0SxuFKtb/RSS8KYtN2sGHoj
-	xLnlzKkkOxfMa7/VC6MS4Wca0CC7Wwk8StDdTe2/CkYDjWvxpRXvhe3p6Ck9qOHAKzwPIBlXY0s
-	DK9GijF9OiA1H//HwKn2D7aEHu95oLoql2tOuHrrIRI+Ht8sxm0y5+SRx3H1C9ut9FOUePP1A5x
-	HVqHYay+v1IQPwwo29MP6hgwIZ5ku88fGaFDIgYBdY6D+eLrLSq8PNPTIQBSTxsAaIfKQvcnSu/
-	cDnFI+9oC7VB1u0Qp9SaJ/ZOD7HM2sDXtpeiDYBcFHIOIzYWAaF0TCy2ZZvDw1HC51/v+WGS7bw
-	zaP8DBc1KPdlCipQOfuF4OVrfuGVXzJUciPFh8Rvcl49MgMzZLHzX
-X-Received: by 2002:a05:620a:3d89:b0:7e3:4416:fd6 with SMTP id af79cd13be357-7e344165874mr1273078385a.61.1752859620310;
-        Fri, 18 Jul 2025 10:27:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJ/ik+O1GI49O6qiePOhD7kpa6iYGBKoCjB8vuyMr6LyH7Wks4unXKok1B6hJX1V6SOF0HVg==
-X-Received: by 2002:a05:620a:3d89:b0:7e3:4416:fd6 with SMTP id af79cd13be357-7e344165874mr1273073985a.61.1752859619766;
-        Fri, 18 Jul 2025 10:26:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752859705; x=1753464505;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m3LoWx9DJ0TyeqCc/zXgNGefaOcySK/itM7vHhC503E=;
+        b=AkIA0pogfLdb3lZodtwt5qBsB7EoFf5+RUmn04NHuWjfuUSc9oss+qbfx2PtQtQi/b
+         lougaSZ3xxxQ6/y8dQlDBTBNPYbXZ5lJvS4QQNwrh4l9h6OkMwVnmli2OQVPf4aS8Hgb
+         gHKPaNSJoJmukasMYRp/Eg0slUWqSUekf27pv6pTj59UwaDmcjYRKIA9liPOVUaOgd3y
+         LDZgNI6gpNso6swlSa3vWwrVX6AjO+Q89tXsnyGPf626EG3DzeedBfybapBSLYM+PKYZ
+         9mN2gtgWasaDEdUmtidwcEqk4D+6XbPsj7efvZF06XFoOxUGVoHQTb1FOVsNCHlAvqFl
+         8U8g==
+X-Forwarded-Encrypted: i=1; AJvYcCXrocl73iTvKz2yy7rLTwfNooP4PWwd2li270LjEs7JyOvjYb0SHN34nnnn/34+VnW/kYLX6PWbTrfyAqD7@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcuzFJZhSGUCNpYsNQ0Lwk3cbJ4gnee3sUIM8OAs9O8O3vRNA+
+	Rl0j5epSeXWavrrgHIDwzhrytSGcVAfVj4hMs70r2QMIqaNqM/Ylk9/gWVjeGesp2aGjUVHHbct
+	u+Q7hDs4KLVk7O6YpQ6F8RvfpNX9LLeGjf7J8Nus9iH6XSywPYGyai8mDkSxpJrvzuSKe
+X-Gm-Gg: ASbGncvgkpIczI8ZlI8Ex73s5/1/0BLZsj1zPGolXr9l4nhvYobc410wWKswSBZpASn
+	G/bXnu7Z7uUQzNEUpUHBhR6Am9mXrLtQ9mPaA7m76sJL0Vx9XDHasWZGUA0xkt9OdWmKhv4hprq
+	Vcqxt5YgUlcSGgf3QgYGwAw1Xhi722xkhvMUO11jNjxkKOnB3u1IbvtsXLaaRUMdsQk/kEHnR4S
+	ztKNuKI0z9pR7+CcH2Cj9r7bk1fLAqmb3KcrkHfcOTqfcGzW5Ckwz6EsEUqPQawfq0k+OgMlTQe
+	98j7mU8WX9alc7Ed2eUQsXKL6oR4hedFB4+tXdl1yyrgKsrktolkUs7y1LzCuDdmP/6z36HvVzI
+	asOKAveuX8Z2+/UxlpLVSR/qOXCnWis0GnQPRedePHlH9Z9lSf8Ij
+X-Received: by 2002:a05:620a:31a2:b0:7e1:ef9c:551b with SMTP id af79cd13be357-7e342aaa43cmr1705213585a.14.1752859704673;
+        Fri, 18 Jul 2025 10:28:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHi1fx7XAxIa0TvF/aFCXfwm8ex0+eb4Ytu8ukrsy0ujfZiAFNB/UKSTVvQ3I4n6jhoSky01Q==
+X-Received: by 2002:a05:620a:31a2:b0:7e1:ef9c:551b with SMTP id af79cd13be357-7e342aaa43cmr1705206985a.14.1752859703989;
+        Fri, 18 Jul 2025 10:28:23 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31aac72csm335768e87.58.2025.07.18.10.26.58
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31a9b71esm334910e87.30.2025.07.18.10.28.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jul 2025 10:26:58 -0700 (PDT)
-Date: Fri, 18 Jul 2025 20:26:57 +0300
+        Fri, 18 Jul 2025 10:28:23 -0700 (PDT)
+Date: Fri, 18 Jul 2025 20:28:21 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Georgi Djakov <djakov@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 03/28] interconnect: qcom: rpmh: make nodes a
- NULL_terminated array
-Message-ID: <efvyk4ojddr3emsdavex4uqrl476sj5hz3ihd6kditdxd373jm@wu2av4fvqc4h>
-References: <20250704-rework-icc-v2-0-875fac996ef5@oss.qualcomm.com>
- <20250704-rework-icc-v2-3-875fac996ef5@oss.qualcomm.com>
- <859be3e3-be14-411d-b5ef-07bdad91a878@kernel.org>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm: Don't use %pK through printk
+Message-ID: <kb7m3ybmvpt6ywbzawjeqzzxpinc2k7b5hgm5333gay557hxrv@swg4dz4sh7ft>
+References: <20250718-restricted-pointers-drm-v2-1-3d9f8566f927@linutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <859be3e3-be14-411d-b5ef-07bdad91a878@kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzOCBTYWx0ZWRfX3hsboh2ojrNJ
- CU+xt4z0/SUQ90ExGwmTYCyE+1fWJpRYuRNRS0FsbEGS1toUtC3zy+iUSnBq8oARkycQMYXN1Hq
- lS4lh7cyLuyYJo3EeKAF0ZxiEPZCSGQpsIkpsSyeY8zNy5IKBzXTGXpeo8ITA3OwI44erY0ja7I
- yAZcsrmLaO0PmrBbKtrwt3jzL/GgemzxmUa4CQLV1Y3h9M9QoPkU4v0GJgod6AgS6YQwYoI2IVn
- nnBIIixORTKSqKbgSsCJLYrNBpncC2IMWjqMCmyz3GqlrA94Yidgb0TSWQYZJ74v6yxhUtujb6X
- 2d6VyzYnt7JSHY6uHMj29y1kOn/z+AcLP9EFW+JQPKA4UkGBj+Z8Qz8OaXz1uSBe6vu/iVvCk2J
- 9RXaeVAlVnUdYdKOkCQNpiX2VfVGthfJR04sBlLsstfu57cH8ehTrDapWLUTzD/MUmqxvNvC
-X-Proofpoint-ORIG-GUID: -EtqNDpLb1wF53D63bGrM6puCupIiXc9
-X-Proofpoint-GUID: -EtqNDpLb1wF53D63bGrM6puCupIiXc9
-X-Authority-Analysis: v=2.4 cv=f59IBPyM c=1 sm=1 tr=0 ts=687a83e5 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=aAPYKyr1qmF_MXq4w6AA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250718-restricted-pointers-drm-v2-1-3d9f8566f927@linutronix.de>
+X-Authority-Analysis: v=2.4 cv=ad1hnQot c=1 sm=1 tr=0 ts=687a8439 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=FzZ3ZiyTMWqXPo3om_sA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: mUWh7a3rD3Ih6Ho9SjarCTwTc50eBZ-A
+X-Proofpoint-GUID: mUWh7a3rD3Ih6Ho9SjarCTwTc50eBZ-A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzOCBTYWx0ZWRfX1SCMvjeRuhBo
+ e+JmpSTIGSKA5TLc+8sE8iw4kWm3aMt+KPTsH+m3U589AgWoZSV1rcTSCwavbTpliCIOIxpAp4H
+ VKUDiMejLLNMlKxFZZFzzBnR/KhLozbFYW1R3qoPhjQsgne82dbaoOLvAVA7h1lrq4I4VQbielo
+ tGZyoRY1nMtKR+a5bvJxeg3/WIojNoATT+KOncpYWy0sF08jMju1eGT/JPh8wpsooQ7DMfK11Xs
+ /b9FTq8rzmaFDzeDltAoD+wuMPu1kqU0RDgISOwpryHlT2LoLhgBPh+R3MFr6CDdIIcNDke+LIl
+ y9NQUaqVrJ7kkVJzzZbVhqfa1PIij0Xdx0OinnHO44SH1CKNlZZlExZEmZV8iRtUXpsAx1qeOUO
+ nQehCETRziV8JRi0tFp5GLPiK20d3lMVnnRZXWnP1wWZDSG1P5BaURBiy04ExnYxuZKbwhYF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-18_04,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180138
+ adultscore=0 bulkscore=0 mlxlogscore=946 suspectscore=0 spamscore=0
+ malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507180138
 
-On Fri, Jul 18, 2025 at 04:38:02PM +0300, Georgi Djakov wrote:
-> Hi Dmitry,
+On Fri, Jul 18, 2025 at 03:27:37PM +0200, Thomas Weiﬂschuh wrote:
+> In the past %pK was preferable to %p as it would not leak raw pointer
+> values into the kernel log.
+> Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+> the regular %p has been improved to avoid this issue.
+> Furthermore, restricted pointers ("%pK") were never meant to be used
+> through printk(). They can still unintentionally leak raw pointers or
+> acquire sleeping locks in atomic contexts.
 > 
-> On 7/4/25 7:35 PM, Dmitry Baryshkov wrote:
-> > Having the .num_nodes as a separate struct field can provoke errors as
-> > it is easy to omit it or to put an incorrect value into that field. Turn
-> > .nodes into a NULL-terminated array, removing a need for a separate
-> > .num_nodes field.
+> Switch to the regular pointer formatting which is safer and
+> easier to reason about.
 > 
-> I am not entirely convinced that an error in the termination is more
-> unlikely than an error in the num_nodes. Aren't we trading one kind of
-> error for another? Also if we omit the num_nodes i expect that just the
-> QoS of a specific path will fail, but if we miss the NULL - worse things
-> might happen.
+> Signed-off-by: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
+> ---
+> Changes in v2:
+> - Drop already applied patches
+> - Link to v1: https://lore.kernel.org/r/20250618-restricted-pointers-drm-v1-0-781e0d88cd92@linutronix.de
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 4 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 4 ++--
+>  drivers/gpu/drm/msm/msm_mdss.c              | 2 +-
+>  4 files changed, 6 insertions(+), 6 deletions(-)
+> 
 
-Exactly, that's the point. It is easy to miss num_nodes, while omitting
-NULL will crash the driver. So the error will be noted during
-development.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-> 
-> [..]
-> >   27 files changed, 541 insertions(+), 1119 deletions(-)
-> 
-> The negative diffstat is nice.
-> 
-> > 
-> > diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-> > index a2d437a05a11fa7325f944865c81a3ac7dbb203e..4fa960630d28f338f484794d271a5b52f3e698d3 100644
-> > --- a/drivers/interconnect/qcom/bcm-voter.c
-> > +++ b/drivers/interconnect/qcom/bcm-voter.c
-> > @@ -68,7 +68,7 @@ static void bcm_aggregate_mask(struct qcom_icc_bcm *bcm)
-> >   		bcm->vote_x[bucket] = 0;
-> >   		bcm->vote_y[bucket] = 0;
-> > -		for (i = 0; i < bcm->num_nodes; i++) {
-> > +		for (i = 0; bcm->nodes[i]; i++) {
-> >   			node = bcm->nodes[i];
-> 
-> I like better the single memory access and the two registers comparison
-> that we already have, but both are fine as we are not in some critical
-> section.
-> 
-> [..]
-> > diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-> > index bd8d730249b1c9e5b37afbee485b9500a8028c2e..0018aa74187edcac9a0492c737771d957a133cc0 100644
-> > --- a/drivers/interconnect/qcom/icc-rpmh.h
-> > +++ b/drivers/interconnect/qcom/icc-rpmh.h
-> > @@ -126,7 +126,6 @@ struct qcom_icc_node {
-> >    * communicating with RPMh
-> >    * @list: used to link to other bcms when compiling lists for commit
-> >    * @ws_list: used to keep track of bcms that may transition between wake/sleep
-> > - * @num_nodes: total number of @num_nodes
-> >    * @nodes: list of qcom_icc_nodes that this BCM encapsulates
-> >    */
-> >   struct qcom_icc_bcm {
-> > @@ -142,7 +141,6 @@ struct qcom_icc_bcm {
-> >   	struct bcm_db aux_data;
-> >   	struct list_head list;
-> >   	struct list_head ws_list;
-> > -	size_t num_nodes;
-> 
-> So no change in memory footprint, as now instead of the num_nodes, there
-> will be an additional NULL pointer for termination.
-> 
-> [..]
-> 
-> Well, this approach is also good. The existing one just follows the pattern
-> used by other frameworks, that seemed more common and thus make the code
-> easier to read and review.
-> 
-> I don't see a strong argument to switch to a NULL terminated arrays (yet),
-> as it does not make things any better for performance/memory, so I'm not
-> sure if it's worth reshuffling the 10k+ LoC in drivers. Is there any other
-> argument that i miss?
-
-Well, two arguments:
-
-- Two first patches in the series (which fix num_links / num_nodes).
-
-- I think we should drop the old (static IDs) code path. Switching to
-  dynamic IDs would require reshuffling of the drivers (and these
-  arrays) anyway.
-
-> 
-> Thanks,
-> Georgi
-> 
 
 -- 
 With best wishes
