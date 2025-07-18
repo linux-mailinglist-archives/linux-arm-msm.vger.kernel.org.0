@@ -1,90 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-65694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CAE0B0A8A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:39:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BC00B0A836
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:14:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F1A87B8789
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:38:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAE3A3A89CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:13:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D2D2E6D3B;
-	Fri, 18 Jul 2025 16:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EB2A2E62BA;
+	Fri, 18 Jul 2025 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n3OWBQ0B"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HddTm0sh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8006C2E6D10
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FA2E613E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752856767; cv=none; b=nQZEny6zTt4WV3BVecLqGjHU9D6LAO5fJo37wEdCP5QUH7GQFDLM5jn/M7VWmril8DPQpUG7TFfWIK+tWOulgUNiWtzztw5k+2yDTNtU1DrxSxofuP5u6WxSfqxAN99RLhZ6tU7mO76Jn1g+5U1Jaga0wxYUwdYTmpeSEhqHhW4=
+	t=1752855234; cv=none; b=Xm19CAKz4TG9N6iB8lFA0KEa1T9Pl1ClFSIl1rAyb7scuhcoUmi/QLQyUbT+FcvwbRko1cqBe5l5cn4IXodKcHOuX13V4hajQZd9StMzlKOu3fk5RAoXxuvt7ZRtQ4PshKhvl6T+bs0dJdi56d70LhZmv8ohV00M/+0yhOc8OQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752856767; c=relaxed/simple;
-	bh=IwxC3fpHxLFPYEQoaZS4yJMMljex/qOEtV0vlUC9pvc=;
+	s=arc-20240116; t=1752855234; c=relaxed/simple;
+	bh=qbZsoJ4WpXYeEtPSlbOZ2i4uthnkxzqWJFYyR6RgjZk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cRMHKN4VFHMzEMzmgFiAmykoZJTIm5Y3GVPFFDlegXd/18A9I/rSnlvbA7dIo/ZUOwfeqgZZdHxH1P2zzxJsUlIafUEovbVVaiEu6pCKwDk7gYshPC/+SFrchpDN+MDjXpmc7n+P+kqSwRh7wCuCB4/L8peF38+QqUIYsUoH6DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n3OWBQ0B; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=bO9Fiwu2glyAJPB2G4P9Kkf2+gCxfTz4f9hZJ/vi4GFQJc88fEU8toCqdFo8JC9xx+aIaAMs2Hxuid+nBcM9Ao1gL8xDULLxfu/tuQIsTTLm6dzizoQUK4IZrEjh+HwyJBi0trUVKBeiJl1vgOGCdmrheA6fQnKzMEa+/11BjxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HddTm0sh; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IE52dA030393
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:39:24 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IFVw5n022405
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:13:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xDxbLObSKfcdBQzl/HXRVZp/xBslvDyyovwYDO8QatA=; b=n3OWBQ0B5OhmwxoB
-	lQ+mdmXYMAtj12I50g8/OLiwf82gPajXENlXdMddE8LvW+CwHVryG8z2kV9lR28o
-	402WqQApieBeRXHIMoXZ16S9P8UeOPy1SlxYK1oYi0L4Mw1rLFXirunoC4ZELLV3
-	VWLGTLulil4XW6LOdtetgcOMsoflsVxhOGraQjEbpIfjqKk/I5NtQgLUWj1NunNM
-	9D+A+VA0v9UiCbTfGhsse86KmsJiJy2ze9JTmHSLCJuN3gfh5D0SYmFZbgl9LQbs
-	2dRhDtUQUfLWxMcSzrEWcEy4dcLoatrppyzngdqFGT2BVx/Jt4K/1k61YqBZ3rQr
-	N2QuTw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47x8x7s4n9-1
+	x3jBTC4AynQ+yZKDFlQILcBO8zD5iMJ+Pqbi43VQy84=; b=HddTm0shYPQdh07y
+	H1wHzpgPVDXBKe268xQ1R3/d2mQoUi+p78iYcBinNl7bdD1w7V0OAaZ+Lo+6PmLz
+	rJpo3F0OSEEQVpHeGjAGNbJZPScHfSZQncRzbrfYj/bOW+5fvvggfhzB9+G3EgVy
+	HO30MvyE+TumG19ORBp1OzdWGXyWyvgPL3iaX63W1b20QSWWMF8XH3r9tQZqfeR1
+	8Gm56P1YcNuMreHMsPpbNzCtpfKiDfQxR+vM+NQdmJHcL9iPocSfADv6gBqgOdqr
+	u8fk47Gm6pC4zvhmcrJdCMA3lWYlJFHfP81fghCj8+aHLBBeZWbesI4ICKxxAX65
+	vbXqWA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsyc7h5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:39:24 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5bb68b386so581638685a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:39:24 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:13:51 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d413a10b4cso306049885a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:13:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752856763; x=1753461563;
+        d=1e100.net; s=20230601; t=1752855229; x=1753460029;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xDxbLObSKfcdBQzl/HXRVZp/xBslvDyyovwYDO8QatA=;
-        b=iSxB11cu7s41hpppjelhKcAOfenLcURMU5f8a8GjzeazZN5iFcQK9IbbE3dBPYXFt2
-         bF8XSzO4oVmfH/XRRHkpOyyy8A2jCrapgvKGTUJzicD7VZwCXLQZlsK7C7ZzK01gpH3y
-         sj/8r0Wqqa4sZjEYfqBerW2Y8Xr9yuq6O4LUg0JDpK5DTv+0aYWs3RTPmFCkVws3EuG0
-         Jx86s6gVjAsh95NjaoP5Kovf2Apg4wxaI4jjaVUiTV2D/OCzkQAD2W0VVL/MqCqTkrw7
-         AiVaAOd2IidXham3yliywsBX9CsPXn6/C6LezNY2hpA8sECqd4uJmAuQ9uTIfOsdUscn
-         ZTYw==
-X-Gm-Message-State: AOJu0Yw36XR44mIU4Gn3CnjrJzl9E1awHqJq0J7JpvW+9b/7UHKETSfE
-	jRxJPZL5TDe78mHqV5nknzjNb/xVcexBeqhWLf7Mok1qvF+DMeX7qJDXOcofibfvB2Wvb8voL1S
-	ZpSobr5sG0Lg0K2KD2do9TtO74J7nxfc1okvBVmrr5DrTwqJYK/meP0Pxt+2wb1mgnplRDDQIZo
-	ff
-X-Gm-Gg: ASbGncusrTpM+i+REKFd0jMHZJTcZX/rTS4rNhhx23matJL4ayqwgffHmMowhd7BzXH
-	X2aXwiPtZSXCFe6FV3O29bGNoLAcAggfNXNNf7hQSwJ0jTr6BrpsRPg/0M1gBSHBh0aRlkc4nRO
-	uLLZH4ORdCs9W4ZP+lf9dMLnTrt+Am3BAJ+UV0zJziIuHCz8FCAtBU/07nJnK4v8H0LrVLWF1LI
-	k2Lzi+tqDc2IIFVE88EyEbGqAtw/bMP1W2uguNe1Dn+qri0WtvHhuv23IjVUn6fCSBu7EIDEpnX
-	Big8zR3l3UFj7u12FBHY9nhmrK1tUbE5qjdowz4wuAaaMUxxZfBBiKF/DHks4eUogF1ZbRouAAg
-	/IzY3V5fVUuIf4kvBzYvgaKApVYDIjIW+YggiNHzqEkopbvkE4seY
-X-Received: by 2002:a05:620a:4690:b0:7e3:4416:1033 with SMTP id af79cd13be357-7e356b2ceebmr453841685a.60.1752855231073;
-        Fri, 18 Jul 2025 09:13:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENmojVPRULhryYzYcjKAupjpRcli1UOb7Y9P15EYANIEcwieDAArApyc6GdRKsYu170ABl+Q==
-X-Received: by 2002:a05:620a:4690:b0:7e3:4416:1033 with SMTP id af79cd13be357-7e356b2ceebmr453810085a.60.1752855227144;
-        Fri, 18 Jul 2025 09:13:47 -0700 (PDT)
+        bh=x3jBTC4AynQ+yZKDFlQILcBO8zD5iMJ+Pqbi43VQy84=;
+        b=DuNO1jrz8J51BbO1y7SDSUonMvYj98ZG4pEuEsXWFY6aU3KCAIlte16JrufX3M9mft
+         iqXLnaT9kCFdnA4ogVgxhg2FoCfmmCJ/CWL0G9zOBmlZiIfugfKa71G9ZV4k06xt2/ZN
+         OCIqIM/TbdypA5TzOSuITYtSsC4khNyIuJ5WEcK59J/5IEas2uceSqwW0Gc3GXsh6Kzi
+         Rk8lUoTHDVY6WUV7gy3VBoa8qutCvWkXwVwEbWHIyIRiy5YIfBKBwRcpwW9uxKOonVCT
+         4p+HV1qieVFvjQgoHW4mLrRka8eeUJOzgMfGBgku1NVvZ7fLOixjcudPxdbnZj6Gl+C+
+         3ZYA==
+X-Gm-Message-State: AOJu0YxsGBXvBXNsJvoiMPyumP9FwCmS2HV3KmHBiRLIUuTMLjJDxpmQ
+	C1ATNIGxCkP6vAhgGTCvywTN4VGj3x9JY1p2zXilWQsnduMNHYLRxEcZV6Y5Unx/jFjfeRg/Ffz
+	BAzkCcvhBNxen/SkhCnEhudIsjj+921YEPM8IJuI3n10q6/XwlX93i0ct0SpGCYl6UHcCVOUmj9
+	nS
+X-Gm-Gg: ASbGncsg+a2uenCh1u97vU1hf3DB/bDZWtojyeMAirnEahQMJD3FWE18qkrMc3P7IVH
+	KB8DaqRoDpML35UGwEUR+6JuA7hie24NVkPFObmNUVE0jrtABepiQxv4slGhqzI4wRMcFhlpqDt
+	KsYsl+oh4ri01kuFHpfrZwooq+G2yCStax33se/viuS2Vl5h2uWAGA2+mNzaKQxVblP83KHrL3w
+	6w9vumc65UPo0Z6hHV25HYk573EIg1Z04Y5Xt62XiLGB08tvRUoroEIOvX6/Fe86j/VMIjPKjna
+	YIX0+f17wt47dAdO845IvRN6nJmRUzEezL7/mDiBKFG94qezsd3AUCFXixU1I4aZcpZRJBMpODa
+	0V+apYetqlzcwnIuph9NsWx5/pgw/dfepXSjMPocdfKN1hWcbZt2f
+X-Received: by 2002:a05:620a:3d12:b0:7e3:4413:e491 with SMTP id af79cd13be357-7e34413e869mr1399588185a.61.1752855229278;
+        Fri, 18 Jul 2025 09:13:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1122fPka/53dNADi6RlnmEas+Pvvg3ROQ+ycEnr8z5NvdDUj9fS6sYKgHvTRJw+APk0QlKw==
+X-Received: by 2002:a05:620a:3d12:b0:7e3:4413:e491 with SMTP id af79cd13be357-7e34413e869mr1399583185a.61.1752855228615;
+        Fri, 18 Jul 2025 09:13:48 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.46
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jul 2025 09:13:46 -0700 (PDT)
+        Fri, 18 Jul 2025 09:13:47 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 19:13:39 +0300
-Subject: [PATCH 1/8] dt-bindings: power: qcom-rpmpd: split RPMh domains
- definitions
+Date: Fri, 18 Jul 2025 19:13:40 +0300
+Subject: [PATCH 2/8] dt-bindings: power: qcom-rpmpd: sort out entries
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-1-eedca108e540@oss.qualcomm.com>
+Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-2-eedca108e540@oss.qualcomm.com>
 References: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -104,540 +103,117 @@ To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13688;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2336;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=IwxC3fpHxLFPYEQoaZS4yJMMljex/qOEtV0vlUC9pvc=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK3qE/IIpouo3rTZyCInPRVbbxuttOTY5iXq
- leHAsUz3riJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
- 1RdgB/0ZkP60RomiSf+x/lJdLDp0LsqE8pBA9G4IpWyWsuCWazwfbBFZsNPfLZo/rCelfw3phUG
- ++lgsgFoaKmmgHGxuX2YZkTTC4hqt4XVYC0eWZPZqRBwlwhwBUQ6FKrppEqUUf4hVh3NyToHq6I
- RSfKa54nUCL1Ij/FU1YJhiOxyZv9cS61mZPfbP4RdZ1p5tq1wFPtYhEIf6718YIHEGLUpfSyv6N
- u5ZbIBFya6UaGE7krKSn2kAddk9NThFtKtiWpZN6MG+iTEfiTCyQZlOMiKyXik8+WwFw9RVspIL
- Ntyp7+GmY5JXs8MF8ydA9C5D1wN9uzbaLoLN9cJy4Gys+8aV
+ bh=qbZsoJ4WpXYeEtPSlbOZ2i4uthnkxzqWJFYyR6RgjZk=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK3i/jyVE0ZIoibzrTm/1+blpzp8ZkkyxXI2
+ lmruymnYleJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
+ 1dOnB/0XkwyWN4V3SDZec6oX7fdy2JHxJX5yUxi76qD0OcjvKJWJJvITSPq2Q7t+y+MeO8LA9sg
+ hn5CMYqiaTBJXjMuheKlOa+HWpcSULkC+kShj+tJvNoY4VT7wJyErAeDgQhnaLLiugCLMzLccNC
+ 6dNJYkdLUK+ec9H6iCPZwzQrZcP3fW3PwA4xWyW9CFdLyS8apwtEr86mOwWawdNrcSrU0wOG/Za
+ n1YI4j2c/kG58xlATqK1bUDrkH5RpqTFWdR6OdgY274q+ufGHNQjuztmRJ/HahZOx8A/JDxCzF1
+ vp9pEVyK11RiuKRQ90xAr6DFdxwAT6r/0mmTae4wrpDLtO0s
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyOSBTYWx0ZWRfX5AIRJmCwcJWZ
- yFRn8b3DCnjWssw9mYXO78ieko0FEY2OXk/tPH2PRDK8Ch7qUIXq00AdZbGbEAKTrskhEm3wk2J
- Vopmle0tkkhkAp6tSMsh4FkCumjVngtgRjigLikrjr7ks+RigjRQn/fcwC24VuEVu2fjAEiAiDM
- 1OZeKNp40RxHs8toLL2GCwmP7f4Ln10peK/XaUrR2fxBwRfJS5VE+5cgspgSZWFqChejui9Kp8F
- qcw4mQiVU6oTBC8aPAz+6LvitNZhXTEJzt8cdKX50D+DnlHBGx4NNnqEfnuA8rOtyfEZlkiUsqp
- 2O+VFZ1EnWRGujv2Ga3ACBjhQ/0sIuvXUHFD7q4Ly93XNnbQ0zVOraOYIa7JdOjVZK3l6CDHUYT
- Rfc2wyTfdnIzN4QlJ/LVJrkSuKrIZvtAT1GJDrdcK5rMT2NuPYyp7Ar8db5uk+03xsoCm1yQ
-X-Proofpoint-GUID: 1blCGSlqDRjWLHVdy9Qi-3OPYc_8U4MN
-X-Proofpoint-ORIG-GUID: 1blCGSlqDRjWLHVdy9Qi-3OPYc_8U4MN
-X-Authority-Analysis: v=2.4 cv=N9YpF39B c=1 sm=1 tr=0 ts=687a78bc cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=LdBTWnh5yz5cCWo1om8A:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyNiBTYWx0ZWRfXwf2Qt31C6RNW
+ XKz5Fz8w1ZA5jDp5uNlmLFGppGrjGjKA0hwQqVg64MX/xzcFdueb2GGpSqB6A0mV4Tt0SR3Oatc
+ c0+8tAoZg58JwGx1MuUK4BolfsVbV2rBuBaTzUwKYteBVbsvUytOiD6ZnySdnqjIDBD7aDvjP/s
+ n739vnV+6J5if0RKTXxWY5AXfngLcr+6jCYJZrXBarze2HDZALGrzeSCTObKl8LDhVCzXGYnW3t
+ e6FFPrYdpg5VvuCaKPlcOm+xZxQfZv2XLo7hGgGI408PZOe9LyqKs7o/N9n0ZV+OPp2Y5yrxT14
+ LetI4elxMrYDgyTR13OOhWhitr/165hXyByW8gUVjeVn4Fn9HK774wx2VRe08tCCHte++hlNAV3
+ QELJsjjacnPn9VcfH04KJspFPPK2aR9UMI8S/6J9lpY3jGq1aPGlSNhtlXfPl2vLFrwgIynJ
+X-Proofpoint-GUID: zd4clmzGETeY66aBsu5NqvBODSTdrKeU
+X-Proofpoint-ORIG-GUID: zd4clmzGETeY66aBsu5NqvBODSTdrKeU
+X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=687a72bf cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=lzX941RX6UCYqbaESYMA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-18_03,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 mlxlogscore=833 bulkscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0 impostorscore=0
- phishscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ malwarescore=0 mlxlogscore=728 impostorscore=0 mlxscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180129
+ definitions=main-2507180126
 
-Historically both RPM and RPMh domain definitions were a part of the
-same, qcom-rpmpd.h header. Now as we have a separate header for RPMh
-definitions, qcom,rpmhpd.h, move all RPMh power domain definitions to
-that header.
+After removing RPMh PD indices, it becomes obvious that several entries
+don't follow the alphabetic sorting order. Move them in order to keep
+the file sorted.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- include/dt-bindings/power/qcom,rpmhpd.h | 233 ++++++++++++++++++++++++++++++++
- include/dt-bindings/power/qcom-rpmpd.h  | 228 +------------------------------
- 2 files changed, 234 insertions(+), 227 deletions(-)
+ include/dt-bindings/power/qcom-rpmpd.h | 42 +++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-index e54ffa3614515ca19e7ef93d33c22645c13a128b..73cceb88953f705106486b7e111b3ffc39c85664 100644
---- a/include/dt-bindings/power/qcom,rpmhpd.h
-+++ b/include/dt-bindings/power/qcom,rpmhpd.h
-@@ -29,4 +29,237 @@
- #define RPMHPD_NSP2             19
- #define RPMHPD_GMXC		20
- 
-+/* RPMh Power Domain performance levels */
-+#define RPMH_REGULATOR_LEVEL_RETENTION		16
-+#define RPMH_REGULATOR_LEVEL_MIN_SVS		48
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D3		50
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D2		52
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D1		56
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D0		60
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS		64
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_P1		72
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_L1		80
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_L2		96
-+#define RPMH_REGULATOR_LEVEL_SVS		128
-+#define RPMH_REGULATOR_LEVEL_SVS_L0		144
-+#define RPMH_REGULATOR_LEVEL_SVS_L1		192
-+#define RPMH_REGULATOR_LEVEL_SVS_L2		224
-+#define RPMH_REGULATOR_LEVEL_NOM		256
-+#define RPMH_REGULATOR_LEVEL_NOM_L0		288
-+#define RPMH_REGULATOR_LEVEL_NOM_L1		320
-+#define RPMH_REGULATOR_LEVEL_NOM_L2		336
-+#define RPMH_REGULATOR_LEVEL_TURBO		384
-+#define RPMH_REGULATOR_LEVEL_TURBO_L0		400
-+#define RPMH_REGULATOR_LEVEL_TURBO_L1		416
-+#define RPMH_REGULATOR_LEVEL_TURBO_L2		432
-+#define RPMH_REGULATOR_LEVEL_TURBO_L3		448
-+#define RPMH_REGULATOR_LEVEL_TURBO_L4		452
-+#define RPMH_REGULATOR_LEVEL_TURBO_L5		456
-+#define RPMH_REGULATOR_LEVEL_SUPER_TURBO	464
-+#define RPMH_REGULATOR_LEVEL_SUPER_TURBO_NO_CPR	480
-+
-+/*
-+ * Platform-specific power domain bindings. Don't add new entries here, use
-+ * RPMHPD_* above.
-+ */
-+
-+/* SA8775P Power Domain Indexes */
-+#define SA8775P_CX	0
-+#define SA8775P_CX_AO	1
-+#define SA8775P_DDR	2
-+#define SA8775P_EBI	3
-+#define SA8775P_GFX	4
-+#define SA8775P_LCX	5
-+#define SA8775P_LMX	6
-+#define SA8775P_MMCX	7
-+#define SA8775P_MMCX_AO	8
-+#define SA8775P_MSS	9
-+#define SA8775P_MX	10
-+#define SA8775P_MX_AO	11
-+#define SA8775P_MXC	12
-+#define SA8775P_MXC_AO	13
-+#define SA8775P_NSP0	14
-+#define SA8775P_NSP1	15
-+#define SA8775P_XO	16
-+
-+/* SDM670 Power Domain Indexes */
-+#define SDM670_MX	0
-+#define SDM670_MX_AO	1
-+#define SDM670_CX	2
-+#define SDM670_CX_AO	3
-+#define SDM670_LMX	4
-+#define SDM670_LCX	5
-+#define SDM670_GFX	6
-+#define SDM670_MSS	7
-+
-+/* SDM845 Power Domain Indexes */
-+#define SDM845_EBI	0
-+#define SDM845_MX	1
-+#define SDM845_MX_AO	2
-+#define SDM845_CX	3
-+#define SDM845_CX_AO	4
-+#define SDM845_LMX	5
-+#define SDM845_LCX	6
-+#define SDM845_GFX	7
-+#define SDM845_MSS	8
-+
-+/* SDX55 Power Domain Indexes */
-+#define SDX55_MSS	0
-+#define SDX55_MX	1
-+#define SDX55_CX	2
-+
-+/* SDX65 Power Domain Indexes */
-+#define SDX65_MSS	0
-+#define SDX65_MX	1
-+#define SDX65_MX_AO	2
-+#define SDX65_CX	3
-+#define SDX65_CX_AO	4
-+#define SDX65_MXC	5
-+
-+/* SM6350 Power Domain Indexes */
-+#define SM6350_CX	0
-+#define SM6350_GFX	1
-+#define SM6350_LCX	2
-+#define SM6350_LMX	3
-+#define SM6350_MSS	4
-+#define SM6350_MX	5
-+
-+/* SM8150 Power Domain Indexes */
-+#define SM8150_MSS	0
-+#define SM8150_EBI	1
-+#define SM8150_LMX	2
-+#define SM8150_LCX	3
-+#define SM8150_GFX	4
-+#define SM8150_MX	5
-+#define SM8150_MX_AO	6
-+#define SM8150_CX	7
-+#define SM8150_CX_AO	8
-+#define SM8150_MMCX	9
-+#define SM8150_MMCX_AO	10
-+
-+/* SA8155P is a special case, kept for backwards compatibility */
-+#define SA8155P_CX	SM8150_CX
-+#define SA8155P_CX_AO	SM8150_CX_AO
-+#define SA8155P_EBI	SM8150_EBI
-+#define SA8155P_GFX	SM8150_GFX
-+#define SA8155P_MSS	SM8150_MSS
-+#define SA8155P_MX	SM8150_MX
-+#define SA8155P_MX_AO	SM8150_MX_AO
-+
-+/* SM8250 Power Domain Indexes */
-+#define SM8250_CX	0
-+#define SM8250_CX_AO	1
-+#define SM8250_EBI	2
-+#define SM8250_GFX	3
-+#define SM8250_LCX	4
-+#define SM8250_LMX	5
-+#define SM8250_MMCX	6
-+#define SM8250_MMCX_AO	7
-+#define SM8250_MX	8
-+#define SM8250_MX_AO	9
-+
-+/* SM8350 Power Domain Indexes */
-+#define SM8350_CX	0
-+#define SM8350_CX_AO	1
-+#define SM8350_EBI	2
-+#define SM8350_GFX	3
-+#define SM8350_LCX	4
-+#define SM8350_LMX	5
-+#define SM8350_MMCX	6
-+#define SM8350_MMCX_AO	7
-+#define SM8350_MX	8
-+#define SM8350_MX_AO	9
-+#define SM8350_MXC	10
-+#define SM8350_MXC_AO	11
-+#define SM8350_MSS	12
-+
-+/* SM8450 Power Domain Indexes */
-+#define SM8450_CX	0
-+#define SM8450_CX_AO	1
-+#define SM8450_EBI	2
-+#define SM8450_GFX	3
-+#define SM8450_LCX	4
-+#define SM8450_LMX	5
-+#define SM8450_MMCX	6
-+#define SM8450_MMCX_AO	7
-+#define SM8450_MX	8
-+#define SM8450_MX_AO	9
-+#define SM8450_MXC	10
-+#define SM8450_MXC_AO	11
-+#define SM8450_MSS	12
-+
-+/* SM8550 Power Domain Indexes */
-+#define SM8550_CX	0
-+#define SM8550_CX_AO	1
-+#define SM8550_EBI	2
-+#define SM8550_GFX	3
-+#define SM8550_LCX	4
-+#define SM8550_LMX	5
-+#define SM8550_MMCX	6
-+#define SM8550_MMCX_AO	7
-+#define SM8550_MX	8
-+#define SM8550_MX_AO	9
-+#define SM8550_MXC	10
-+#define SM8550_MXC_AO	11
-+#define SM8550_MSS	12
-+#define SM8550_NSP	13
-+
-+/* QDU1000/QRU1000 Power Domain Indexes */
-+#define QDU1000_EBI	0
-+#define QDU1000_MSS	1
-+#define QDU1000_CX	2
-+#define QDU1000_MX	3
-+
-+/* SC7180 Power Domain Indexes */
-+#define SC7180_CX	0
-+#define SC7180_CX_AO	1
-+#define SC7180_GFX	2
-+#define SC7180_MX	3
-+#define SC7180_MX_AO	4
-+#define SC7180_LMX	5
-+#define SC7180_LCX	6
-+#define SC7180_MSS	7
-+
-+/* SC7280 Power Domain Indexes */
-+#define SC7280_CX	0
-+#define SC7280_CX_AO	1
-+#define SC7280_EBI	2
-+#define SC7280_GFX	3
-+#define SC7280_MX	4
-+#define SC7280_MX_AO	5
-+#define SC7280_LMX	6
-+#define SC7280_LCX	7
-+#define SC7280_MSS	8
-+
-+/* SC8180X Power Domain Indexes */
-+#define SC8180X_CX	0
-+#define SC8180X_CX_AO	1
-+#define SC8180X_EBI	2
-+#define SC8180X_GFX	3
-+#define SC8180X_LCX	4
-+#define SC8180X_LMX	5
-+#define SC8180X_MMCX	6
-+#define SC8180X_MMCX_AO	7
-+#define SC8180X_MSS	8
-+#define SC8180X_MX	9
-+#define SC8180X_MX_AO	10
-+
-+/* SC8280XP Power Domain Indexes */
-+#define SC8280XP_CX		0
-+#define SC8280XP_CX_AO		1
-+#define SC8280XP_DDR		2
-+#define SC8280XP_EBI		3
-+#define SC8280XP_GFX		4
-+#define SC8280XP_LCX		5
-+#define SC8280XP_LMX		6
-+#define SC8280XP_MMCX		7
-+#define SC8280XP_MMCX_AO	8
-+#define SC8280XP_MSS		9
-+#define SC8280XP_MX		10
-+#define SC8280XP_MXC		12
-+#define SC8280XP_MX_AO		11
-+#define SC8280XP_NSP		13
-+#define SC8280XP_QPHY		14
-+#define SC8280XP_XO		15
-+
- #endif
 diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index f15bcee7c9283e74dc8e6f9b6b6f73c0ced009e4..d303b3b37f18e0ff63929f3fe197151c5a3d3364 100644
+index d303b3b37f18e0ff63929f3fe197151c5a3d3364..65f7d5ecc3521cfbc45d6158bd6143ea09f47302 100644
 --- a/include/dt-bindings/power/qcom-rpmpd.h
 +++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -4,66 +4,7 @@
- #ifndef _DT_BINDINGS_POWER_QCOM_RPMPD_H
- #define _DT_BINDINGS_POWER_QCOM_RPMPD_H
+@@ -6,18 +6,6 @@
  
--/* SA8775P Power Domain Indexes */
--#define SA8775P_CX	0
--#define SA8775P_CX_AO	1
--#define SA8775P_DDR	2
--#define SA8775P_EBI	3
--#define SA8775P_GFX	4
--#define SA8775P_LCX	5
--#define SA8775P_LMX	6
--#define SA8775P_MMCX	7
--#define SA8775P_MMCX_AO	8
--#define SA8775P_MSS	9
--#define SA8775P_MX	10
--#define SA8775P_MX_AO	11
--#define SA8775P_MXC	12
--#define SA8775P_MXC_AO	13
--#define SA8775P_NSP0	14
--#define SA8775P_NSP1	15
--#define SA8775P_XO	16
--
--/* SDM670 Power Domain Indexes */
--#define SDM670_MX	0
--#define SDM670_MX_AO	1
--#define SDM670_CX	2
--#define SDM670_CX_AO	3
--#define SDM670_LMX	4
--#define SDM670_LCX	5
--#define SDM670_GFX	6
--#define SDM670_MSS	7
--
--/* SDM845 Power Domain Indexes */
--#define SDM845_EBI	0
--#define SDM845_MX	1
--#define SDM845_MX_AO	2
--#define SDM845_CX	3
--#define SDM845_CX_AO	4
--#define SDM845_LMX	5
--#define SDM845_LCX	6
--#define SDM845_GFX	7
--#define SDM845_MSS	8
--
--/* SDX55 Power Domain Indexes */
--#define SDX55_MSS	0
--#define SDX55_MX	1
--#define SDX55_CX	2
--
--/* SDX65 Power Domain Indexes */
--#define SDX65_MSS	0
--#define SDX65_MX	1
--#define SDX65_MX_AO	2
--#define SDX65_CX	3
--#define SDX65_CX_AO	4
--#define SDX65_MXC	5
--
--/* SM6350 Power Domain Indexes */
--#define SM6350_CX	0
--#define SM6350_GFX	1
--#define SM6350_LCX	2
--#define SM6350_LMX	3
--#define SM6350_MSS	4
--#define SM6350_MX	5
-+#include <dt-bindings/power/qcom,rpmhpd.h>
+ #include <dt-bindings/power/qcom,rpmhpd.h>
  
- /* SM6375 Power Domain Indexes */
- #define SM6375_VDDCX		0
-@@ -77,173 +18,6 @@
- #define SM6375_VDD_LPI_CX	8
- #define SM6375_VDD_LPI_MX	9
- 
--/* SM8150 Power Domain Indexes */
--#define SM8150_MSS	0
--#define SM8150_EBI	1
--#define SM8150_LMX	2
--#define SM8150_LCX	3
--#define SM8150_GFX	4
--#define SM8150_MX	5
--#define SM8150_MX_AO	6
--#define SM8150_CX	7
--#define SM8150_CX_AO	8
--#define SM8150_MMCX	9
--#define SM8150_MMCX_AO	10
--
--/* SA8155P is a special case, kept for backwards compatibility */
--#define SA8155P_CX	SM8150_CX
--#define SA8155P_CX_AO	SM8150_CX_AO
--#define SA8155P_EBI	SM8150_EBI
--#define SA8155P_GFX	SM8150_GFX
--#define SA8155P_MSS	SM8150_MSS
--#define SA8155P_MX	SM8150_MX
--#define SA8155P_MX_AO	SM8150_MX_AO
--
--/* SM8250 Power Domain Indexes */
--#define SM8250_CX	0
--#define SM8250_CX_AO	1
--#define SM8250_EBI	2
--#define SM8250_GFX	3
--#define SM8250_LCX	4
--#define SM8250_LMX	5
--#define SM8250_MMCX	6
--#define SM8250_MMCX_AO	7
--#define SM8250_MX	8
--#define SM8250_MX_AO	9
--
--/* SM8350 Power Domain Indexes */
--#define SM8350_CX	0
--#define SM8350_CX_AO	1
--#define SM8350_EBI	2
--#define SM8350_GFX	3
--#define SM8350_LCX	4
--#define SM8350_LMX	5
--#define SM8350_MMCX	6
--#define SM8350_MMCX_AO	7
--#define SM8350_MX	8
--#define SM8350_MX_AO	9
--#define SM8350_MXC	10
--#define SM8350_MXC_AO	11
--#define SM8350_MSS	12
--
--/* SM8450 Power Domain Indexes */
--#define SM8450_CX	0
--#define SM8450_CX_AO	1
--#define SM8450_EBI	2
--#define SM8450_GFX	3
--#define SM8450_LCX	4
--#define SM8450_LMX	5
--#define SM8450_MMCX	6
--#define SM8450_MMCX_AO	7
--#define SM8450_MX	8
--#define SM8450_MX_AO	9
--#define SM8450_MXC	10
--#define SM8450_MXC_AO	11
--#define SM8450_MSS	12
--
--/* SM8550 Power Domain Indexes */
--#define SM8550_CX	0
--#define SM8550_CX_AO	1
--#define SM8550_EBI	2
--#define SM8550_GFX	3
--#define SM8550_LCX	4
--#define SM8550_LMX	5
--#define SM8550_MMCX	6
--#define SM8550_MMCX_AO	7
--#define SM8550_MX	8
--#define SM8550_MX_AO	9
--#define SM8550_MXC	10
--#define SM8550_MXC_AO	11
--#define SM8550_MSS	12
--#define SM8550_NSP	13
--
--/* QDU1000/QRU1000 Power Domain Indexes */
--#define QDU1000_EBI	0
--#define QDU1000_MSS	1
--#define QDU1000_CX	2
--#define QDU1000_MX	3
--
--/* SC7180 Power Domain Indexes */
--#define SC7180_CX	0
--#define SC7180_CX_AO	1
--#define SC7180_GFX	2
--#define SC7180_MX	3
--#define SC7180_MX_AO	4
--#define SC7180_LMX	5
--#define SC7180_LCX	6
--#define SC7180_MSS	7
--
--/* SC7280 Power Domain Indexes */
--#define SC7280_CX	0
--#define SC7280_CX_AO	1
--#define SC7280_EBI	2
--#define SC7280_GFX	3
--#define SC7280_MX	4
--#define SC7280_MX_AO	5
--#define SC7280_LMX	6
--#define SC7280_LCX	7
--#define SC7280_MSS	8
--
--/* SC8180X Power Domain Indexes */
--#define SC8180X_CX	0
--#define SC8180X_CX_AO	1
--#define SC8180X_EBI	2
--#define SC8180X_GFX	3
--#define SC8180X_LCX	4
--#define SC8180X_LMX	5
--#define SC8180X_MMCX	6
--#define SC8180X_MMCX_AO	7
--#define SC8180X_MSS	8
--#define SC8180X_MX	9
--#define SC8180X_MX_AO	10
--
--/* SC8280XP Power Domain Indexes */
--#define SC8280XP_CX		0
--#define SC8280XP_CX_AO		1
--#define SC8280XP_DDR		2
--#define SC8280XP_EBI		3
--#define SC8280XP_GFX		4
--#define SC8280XP_LCX		5
--#define SC8280XP_LMX		6
--#define SC8280XP_MMCX		7
--#define SC8280XP_MMCX_AO	8
--#define SC8280XP_MSS		9
--#define SC8280XP_MX		10
--#define SC8280XP_MXC		12
--#define SC8280XP_MX_AO		11
--#define SC8280XP_NSP		13
--#define SC8280XP_QPHY		14
--#define SC8280XP_XO		15
--
--/* SDM845 Power Domain performance levels */
--#define RPMH_REGULATOR_LEVEL_RETENTION		16
--#define RPMH_REGULATOR_LEVEL_MIN_SVS		48
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D3		50
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D2		52
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D1		56
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D0		60
--#define RPMH_REGULATOR_LEVEL_LOW_SVS		64
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_P1		72
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_L1		80
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_L2		96
--#define RPMH_REGULATOR_LEVEL_SVS		128
--#define RPMH_REGULATOR_LEVEL_SVS_L0		144
--#define RPMH_REGULATOR_LEVEL_SVS_L1		192
--#define RPMH_REGULATOR_LEVEL_SVS_L2		224
--#define RPMH_REGULATOR_LEVEL_NOM		256
--#define RPMH_REGULATOR_LEVEL_NOM_L0		288
--#define RPMH_REGULATOR_LEVEL_NOM_L1		320
--#define RPMH_REGULATOR_LEVEL_NOM_L2		336
--#define RPMH_REGULATOR_LEVEL_TURBO		384
--#define RPMH_REGULATOR_LEVEL_TURBO_L0		400
--#define RPMH_REGULATOR_LEVEL_TURBO_L1		416
--#define RPMH_REGULATOR_LEVEL_TURBO_L2		432
--#define RPMH_REGULATOR_LEVEL_TURBO_L3		448
--#define RPMH_REGULATOR_LEVEL_TURBO_L4		452
--#define RPMH_REGULATOR_LEVEL_TURBO_L5		456
--#define RPMH_REGULATOR_LEVEL_SUPER_TURBO 	464
--#define RPMH_REGULATOR_LEVEL_SUPER_TURBO_NO_CPR	480
+-/* SM6375 Power Domain Indexes */
+-#define SM6375_VDDCX		0
+-#define SM6375_VDDCX_AO	1
+-#define SM6375_VDDCX_VFL	2
+-#define SM6375_VDDMX		3
+-#define SM6375_VDDMX_AO	4
+-#define SM6375_VDDMX_VFL	5
+-#define SM6375_VDDGX		6
+-#define SM6375_VDDGX_AO	7
+-#define SM6375_VDD_LPI_CX	8
+-#define SM6375_VDD_LPI_MX	9
 -
  /* MDM9607 Power Domains */
  #define MDM9607_VDDCX		0
  #define MDM9607_VDDCX_AO	1
+@@ -130,6 +118,16 @@
+ #define MSM8998_SSCMX		8
+ #define MSM8998_SSCMX_VFL	9
+ 
++/* QCM2290 Power Domains */
++#define QCM2290_VDDCX		0
++#define QCM2290_VDDCX_AO	1
++#define QCM2290_VDDCX_VFL	2
++#define QCM2290_VDDMX		3
++#define QCM2290_VDDMX_AO	4
++#define QCM2290_VDDMX_VFL	5
++#define QCM2290_VDD_LPI_CX	6
++#define QCM2290_VDD_LPI_MX	7
++
+ /* QCS404 Power Domains */
+ #define QCS404_VDDMX		0
+ #define QCS404_VDDMX_AO		1
+@@ -169,15 +167,17 @@
+ #define SM6125_VDDMX_AO		4
+ #define SM6125_VDDMX_VFL	5
+ 
+-/* QCM2290 Power Domains */
+-#define QCM2290_VDDCX		0
+-#define QCM2290_VDDCX_AO	1
+-#define QCM2290_VDDCX_VFL	2
+-#define QCM2290_VDDMX		3
+-#define QCM2290_VDDMX_AO	4
+-#define QCM2290_VDDMX_VFL	5
+-#define QCM2290_VDD_LPI_CX	6
+-#define QCM2290_VDD_LPI_MX	7
++/* SM6375 Power Domain Indexes */
++#define SM6375_VDDCX		0
++#define SM6375_VDDCX_AO	1
++#define SM6375_VDDCX_VFL	2
++#define SM6375_VDDMX		3
++#define SM6375_VDDMX_AO	4
++#define SM6375_VDDMX_VFL	5
++#define SM6375_VDDGX		6
++#define SM6375_VDDGX_AO	7
++#define SM6375_VDD_LPI_CX	8
++#define SM6375_VDD_LPI_MX	9
+ 
+ /* RPM SMD Power Domain performance levels */
+ #define RPM_SMD_LEVEL_RETENTION       16
 
 -- 
 2.39.5
