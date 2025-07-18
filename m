@@ -1,278 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-65649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD32BB0A18A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:05:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C1EBB0A1B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:13:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37228A8779D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 11:04:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 052DBA80908
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 11:13:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D92C22BE65E;
-	Fri, 18 Jul 2025 11:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 530A52BEC20;
+	Fri, 18 Jul 2025 11:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="STGkbIFq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lhy0/SqA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD542BE634
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:05:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAB629B767
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752836713; cv=none; b=Uo9ilaNFISYWVQYITO2hYNZ0MkOdaGlHUzVWmmI0xh/OM6Qc0knMfu4r5tsVLP9gJj9JyJb8vduJq8nHElr8AkCbU1piFsC3gWqEJrd+LlRqck6SAOFUTBUbhnPMn37THapRY+We8vMLW2vs0cOF5qVP26aOwSF510UQ4vkXn08=
+	t=1752837209; cv=none; b=pClYzUxsOuLdFkqLoQMp68hK4jZmQQzOHczBYSGGQJHqxzwCyfeesyRV9BGLcdOsZ95VDgTPArBk/rjSSTufpBdKAqzJnB6olIpg/weR/Uwjr7G9Eh368p7stgzwB48jpwYJh/+hdWNHb8ryzzFjLJeefgTVVTBJ526jiIRDzF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752836713; c=relaxed/simple;
-	bh=dMtuoxGSdjumZV+lLK49yZ9rk8j5SdmiUjAmrg9aJuo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NXMmFB6hMO6JMN3WCTHoo2bvPQApGES5qQFd5Mh5StCMsjxYwj9ZyAXGGkbrvJAvlpves504rom1xKcupJb9fQffTgrsyLiSpoAKEs4NJMYvHdpBEDY3r3h7J3ocMW3sTnE1wtr9kD0LJqWeMQIvsu8op/eZG8ig2u0O034Mnfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=STGkbIFq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IAWIT8015953
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:05:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	F31vlSMyXbjYusWa7M3cQemIFdIPlrkmW7eRg+7tqFY=; b=STGkbIFqpf7zTrXV
-	3k9c8VBN2Vxpfg90hCJg59eGHhVaQ2irgJ+ndSuWZq9yR+qNUbRvlCDC+4s+Q31q
-	33sK8izSNBd4tA5Q3Wu9+36EF4Halh8iT1Db5PSAScGolBt03WyZ/qgDpd2AWueA
-	rcRComGwDeP6rEaYJBbebtHZhzSK9gCIa7g95XGtA+uwDSXU6LC4rUN2FovrrTp8
-	BzenXqoi256UGUUL8Kj6W3nfVxgUa6UNQH5DUcg5ixhMi8SK0kVnrlTViFts1N3f
-	yIjk+OVswiyY6fgYbs3j1L8Q6cC3gQ1FAHDqDo9g8Bq7AQ/18af1Z0Vt9S8MF7O+
-	Szj//Q==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47y3tc33x5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:05:11 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-23824a9bc29so28971075ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 04:05:11 -0700 (PDT)
+	s=arc-20240116; t=1752837209; c=relaxed/simple;
+	bh=fyq992ghjiN1KAlcI1YrvA4Yycur+ovMG5WSElQM5M8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=I32QiTXoIpqOQc2q1BdKP2mX1KjnZGAt801E9eVTgluX3xt6OVZaitlcwGxRUVRlDBYz5rOsDS2Li23TkIpNsyGp/SO4qXjJ8ekpDt7eZ2Vaw7ZHae+4TFA/vGVssZHt6oR6UKhmBRnMkSK/7u7PZpSDwSZKnrAwSkPucPY8z/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lhy0/SqA; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b321bd36a41so1561776a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 04:13:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752837207; x=1753442007; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2ugICqfFgDIHEho8XiK+TfnaiVKr7b0xokHuPH4p4dU=;
+        b=lhy0/SqAjo+Vk67XEpGASp7aZqZj8ncIFsWaDO3g8IKhl2IAsM1DgFhiT1+an40/Ds
+         VnDC2uDTE7p5+03bpXvQRlY76mtoyQ6qdO0tDfm/hjEPlEtUlY78by0dc8+CJ7RRjfFS
+         X4pn5MXrokCxxjoqBxH8FLVhtS/yUBMECViVyGo52x2KJPVJCgVkpXU6U9Wt2ysl9WXC
+         ccSAUk/Wss0cbTTQxcecRMfEzk6+YhP9VH78SxycgA1dcvRv1viibaPTb/e8iVuE+83h
+         vKI4D1W6b7xBo90EWVrvYx+QReQzTubMVEwt6XmKnUBWUkEFc2jc1xNL6W+p9sY/20tf
+         DaMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752836710; x=1753441510;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F31vlSMyXbjYusWa7M3cQemIFdIPlrkmW7eRg+7tqFY=;
-        b=YREDRWtHRIHgiU2QL3Cl4D3U0Jj81FDBeVFZtXiOmhF9YF4I0skTyX1WIkT7RKcYio
-         o4TKX3m565YQ3nnfB2mB+ejBSED0TqzpSwP1P97QhaEmfDydbpnEL2pdUOuYh+NeXYks
-         tNY8mB0PY1Ja1S4waQ0GZsZp9W3eDeKhv9pF77IBjej+5TnonNYrbEoAkqdfjA3J0GN0
-         WCKmi8LEGNUv+00mBxULV04Gxe/JoKB5Hh0TCEgNuLL1oI9pRGK9B379K6pZCPYPkCP5
-         nCd85mnJ4mznDj0JbUei5hN2QbPcL31EcWMXryyL1mGRW1D3ld7JBVA4hk+3Xhj+3hi1
-         pMoA==
-X-Forwarded-Encrypted: i=1; AJvYcCXikw6N8kjkfEItELG7Rtc0LuKVfsISzQuFbcNBZHUHT5hu/MPRa5YkHuL4+6X3/gS+8+kyy/5/+CqZCGuU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/Mu0ghCxHCglVUD44JgAMC4QW1A/u9qSwxvHHDtNa6S+zaVw1
-	k9LU2DEmH6yESYKKoKCEZ8Y4cl/7I0qJxZ+3dE8NvnAmIxk0gduJ2QMlllag//JCVO3PLm7Bk3M
-	g/LvaJjzUzrMcKOLd9mpv3tfZJD3JXjuardzaKKyg2rWKDiFIzH13mVW9GsdXVC391BHL
-X-Gm-Gg: ASbGncuIpO71EYirS5C5aL706VzBfor8QTGzstnJafhJHAHDU/NUM/Xi3LlZNDQsaCH
-	zuNYURXzRuZEupBkGy+a7T2KnDzAwUhpcwQCVHSGij2hk6Q/igQEQhntIUtWr1PlrA5vqY0zaI+
-	a5jLqe7XnK2a+5AnXCqX92NbcJCA7RZlBt65cNz/97dVm3BXMk0rjsHwvpWrkfCR3NxEwhon/1r
-	d8nj/SZpXJADJbbHlWViE/82yW3sMS4TOA3u7kHX2FSg0AXhwHerbEe+C0fw1d5ASo7nr94WrlS
-	epEgvHXPHQeVjnkzi4gXOSKHOjULa0h4IdwSQKPN4SJX4/hRYopw/UpFXE3YdDtshCg22klV3xZ
-	vDJD5gt6TaN3RUJ6l6Jhw63n0LyNdR8w5
-X-Received: by 2002:a17:903:320b:b0:234:d292:be83 with SMTP id d9443c01a7336-23e25693897mr152371735ad.10.1752836710179;
-        Fri, 18 Jul 2025 04:05:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrxaqDfHtW8KZ3Yog7NNdzKoptJfo76jyLrkhxmzJHeTOo+hCR8UOXByV7C/6RTEySc+0X7Q==
-X-Received: by 2002:a17:903:320b:b0:234:d292:be83 with SMTP id d9443c01a7336-23e25693897mr152370645ad.10.1752836709041;
-        Fri, 18 Jul 2025 04:05:09 -0700 (PDT)
-Received: from [10.133.33.245] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6cfe05sm11056385ad.143.2025.07.18.04.05.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 04:05:08 -0700 (PDT)
-Message-ID: <30fe1325-16d6-4621-a7d2-811d9c958e04@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 19:05:03 +0800
+        d=1e100.net; s=20230601; t=1752837207; x=1753442007;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2ugICqfFgDIHEho8XiK+TfnaiVKr7b0xokHuPH4p4dU=;
+        b=u0srtzj6T3yTzFBlNLsNwPWV9mGBt8R3ejk1oOoc/Ag4WAkpqe85IEC0yAZKxS3T+B
+         csuNoijY7bOCxs6+cy/mVts4RH6wXrZJCLklZRl57VUdq7p98XGecz+HgXfjC8zZ3fF8
+         AWjoRW37JKMqYnwNZNkWB/74YmyQbN2CaoLDhEpxkr9dyxBwwEOuDlmo4ZTIU2fJMpa9
+         VRi/xU4fj1TuQHDE3XJYBUb/7C/3dozBvRFi+fzEs/X35tSyfM/MooBlEPrawAj9kfME
+         29dPbQd7SQ/310QUX63UGaD0ojA/wEQbE87Srp1iK1hDg3HDs7GoABcWk6a2xiB9Xefk
+         F5RA==
+X-Forwarded-Encrypted: i=1; AJvYcCVehM44H06xkxTU2sPyKb+OFCuQJWF42/NWvc7hJLBix2vWgvjPsM+nKL8vYYDkIdpCkvS4+ae4XfXl1Ctc@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxe39xhJcPcgqRdXz2OVprNBMjPiaLnvvOAR0i8+tFJxjAKb5+O
+	4sSuDL3YwOZ72sB7ldaXMsN+Bl0lQWG9GKKD+TzgHARsOVHEjWKYmPjdtF8uDZQtWHJyhwFdxhH
+	+lgV8Fn4zD93SvcbUoRFFHbG+DAvklK8J8CWRgbFbgQ==
+X-Gm-Gg: ASbGncvUNSQ+raSsTFpD01wE36ico9j2zGLDzgVrYmgto+JyLDm/bW3WBzumxpqeImo
+	GpdS6w2SU1KZJbVjmU96FL654tK2xyAC5hFyyDWs3Ha2Vl5pU9WK0Evrb0GTLBaWIhEbpUxGO7z
+	sLCXpMkksS9XgFE9Zyuo+kzoldYvIUWluDXznu36eoi7gyyan4+X8gbCsHpzR59ofdV/oMN56mq
+	USzyHa/oqwLvrsCMUS/IWllbOmKvYTvUjycLiOwBJpKSEVERYQ=
+X-Google-Smtp-Source: AGHT+IGOkia721AY676t+fmu13gN1NV66S9oFI8NxbveWX6OhwIQaoS76AvEpNR9I6Tz21cUYHEq199KgcfAe2+qFsY=
+X-Received: by 2002:a17:90b:3f08:b0:312:e91c:e340 with SMTP id
+ 98e67ed59e1d1-31c9f4c507bmr14357476a91.35.1752837206629; Fri, 18 Jul 2025
+ 04:13:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
- APIs to enable/disable ASPM states
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
-        Jeff Johnson
- <jjohnson@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Nirmal Patel <nirmal.patel@linux.intel.com>,
-        Jonathan Derrick <jonathan.derrick@linux.dev>,
-        linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ath12k@lists.infradead.org, ath11k@lists.infradead.org,
-        ath10k@lists.infradead.org, Bjorn Helgaas <helgaas@kernel.org>,
-        ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Qiang Yu <qiang.yu@oss.qualcomm.com>
-References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
- <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
- <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
- <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
- <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
- <o2gqqty6lakc4iw7vems2dejh6prjyl746gnq4gny4sxdxl65v@zmqse3244afv>
- <1db7c119-882f-4184-9ca4-9dbe5a49cb16@oss.qualcomm.com>
- <gx5gruyhrhwhvwkiqlkp2bggqd4oqe4quvqiiphfzolhjtzun6@okogvabkqah3>
- <otdgyzdymraa3f33vyb445kmssi3mqf5z2mw7w5pib4q4sb7vz@qbrzvrojqji3>
-Content-Language: en-US
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-In-Reply-To: <otdgyzdymraa3f33vyb445kmssi3mqf5z2mw7w5pib4q4sb7vz@qbrzvrojqji3>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Z5PsHGRA c=1 sm=1 tr=0 ts=687a2a67 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=_ABfaSfIuMkMDhf_T8wA:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: SUNnNrecXOjVPjqDNQY5h0Fg_RXIHlYX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDA4NiBTYWx0ZWRfX+++DKErdygxK
- bjCmYqqtUNRKSkpdm1F7KqULdNDBPvLNKy3RaU3jC6bV+j/J7jhebFZgLZdbMXxquR5PlpHVyPv
- CoIfLXukyEkpk7OH+dKsLT7onSi0P+6Z57tXUO6FMbeFneuZ8BWkDzJB+6F45pPuEG8AylegO7x
- LTG8iYca3GasJ89YWxPU9VHf+VPkVW9db6Qz2PwpsHaJEBUXu294YIPJHtMPFOXvwFmbgGX5CFY
- YqWkDW9pysrkbSCv70gB7mZaKNEnwvIFyq8XAs5ny2CSf7xqDmU4rdbDLzzO90Pc1rB3pUW4taV
- 7m5MhqnuwtpJifOPKRi9atsnBqQP+h848TQfE8T1XGj8yLlqJqxnWjeD+eaFKUNPrkfhYO2sPlg
- i0swd1KTI34oqdGfqolF3jCUjBwb+YbuI8V2tJ/X8Son+I4oYPdA9VkKTuSrbXCW1lXSrCJB
-X-Proofpoint-GUID: SUNnNrecXOjVPjqDNQY5h0Fg_RXIHlYX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-18_02,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 spamscore=0 clxscore=1015
- mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180086
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 18 Jul 2025 16:43:15 +0530
+X-Gm-Features: Ac12FXyn7oadQvZ8ThG2f13b6pdzjNTb1LAR3UQzOj2T0pPa55C9A9OIPclltvQ
+Message-ID: <CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com>
+Subject: arm64 dragonboard 410c Internal error Oops dev_pm_opp_put core_clks_enable
+To: open list <linux-kernel@vger.kernel.org>, lkft-triage@lists.linaro.org, 
+	Linux Regressions <regressions@lists.linux.dev>, linux-clk <linux-clk@vger.kernel.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux Media Mailing List <linux-media@vger.kernel.org>
+Cc: quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Benjamin Copeland <ben.copeland@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+
+The following Boot regressions are noticed on the Linux
+next-20250708with gcc-13 and clang-20 toolchains for the dragonboard
+410c device.
+
+First seen on the tag next-20250708.
+Good: next-20250704
+Bad:  next-20250708
+
+Regression Analysis:
+- New regression? Yes
+- Reproducibility? Yes
+
+Boot regression: arm64 dragonboard 410c Internal error Oops
+dev_pm_opp_put core_clks_enable
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Test log
+[   12.512749] Internal error: Oops: 0000000096000004 [#1]  SMP
+[   12.518471] Modules linked in: drm_dp_aux_bus qcom_vadc_common
+venus_core(+) qcom_pon(+) qmi_helpers videobuf2_dma_sg qnoc_msm8916
+qcom_stats drm_display_helper v4l2_mem2mem videobuf2_memops qcom_rng
+mdt_loader videobuf2_v4l2 cec videobuf2_common drm_client_lib
+display_connector rpmsg_ctrl rpmsg_char ramoops drm_kms_helper socinfo
+reed_solomon rmtfs_mem fuse drm backlight ip_tables x_tables
+[   12.527390] input: pm8941_resin as
+/devices/platform/soc@0/200f000.spmi/spmi-0/0-00/200f000.spmi:pmic@0:pon@800/200f000.spmi:pmic@0:pon@800:resin/input/input2
+[   12.536414] CPU: 1 UID: 0 PID: 245 Comm: (udev-worker) Not tainted
+6.16.0-rc6-next-20250717 #1 PREEMPT
+[   12.536428] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+[   12.536435] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   12.536445] pc : dev_pm_opp_put (/builds/linux/drivers/opp/core.c:1685)
+[   12.595660] lr : core_clks_enable+0x54/0x148 venus_core
+[   12.595754] sp : ffff80008492b600
+[   12.595760] x29: ffff80008492b600 x28: ffff80008492bba0 x27: ffff0000047a6138
+[   12.595778] x26: 0000000000000000 x25: ffff800082c4fe38 x24: ffff80007b3b8ba0
+[   12.595795] x23: ffff00000b2e00c8 x22: ffff00000b2e0080 x21: 0000000000000000
+[   12.595811] x20: 0000000000000000 x19: ffffffffffffffee x18: 0000000000000000
+[   12.595827] x17: 0000000000000000 x16: 1fffe000006c0ae1 x15: 0000000000000000
+[   12.629871] x14: 0000000000000000 x13: 007473696c5f7974 x12: 696e696666615f65
+[   12.629890] x11: ffff00003fa551c0 x10: 0000000000000020 x9 : ffff80007b3a5684
+[   12.629908] x8 : ffffffffffffffde x7 : ffff000009ade040 x6 : 0000000000000000
+[   12.629924] x5 : 0000000000000002 x4 : 00000000c0000000 x3 : 0000000000000001
+[   12.629939] x2 : 0000000000000002 x1 : ffffffffffffffde x0 : ffffffffffffffee
+[   12.629956] Call trace:
+[   12.629962]  dev_pm_opp_put+0x24/0x58 (P)
+[   12.629981]  core_clks_enable+0x54/0x148 venus_core
+[   12.630064]  core_power_v1+0x78/0x90 venus_core
+[   12.691130]  venus_runtime_resume+0x6c/0x98 venus_core
+[   12.691214]  pm_generic_runtime_resume+0x34/0x58
+[   12.691233]  __genpd_runtime_resume+0x38/0x90
+[   12.691247]  genpd_runtime_resume+0xe0/0x2f0
+[   12.691261]  __rpm_callback+0x50/0x1f0
+[   12.691272]  rpm_callback+0x7c/0x90
+[   12.691281]  rpm_resume+0x46c/0x650
+[   12.721332]  __pm_runtime_resume+0x58/0xa8
+[   12.721345]  venus_probe+0x2d8/0x588 venus_core
+[   12.721409]  platform_probe+0x64/0xa8
+[   12.721423]  really_probe+0xc8/0x3a0
+[   12.721433]  __driver_probe_device+0x84/0x170
+[   12.721443]  driver_probe_device+0x44/0x120
+[   12.721453]  __driver_attach+0xf8/0x208
+[   12.749283]  bus_for_each_dev+0x90/0xf8
+[   12.749299]  driver_attach+0x2c/0x40
+[   12.749314]  bus_add_driver+0x118/0x248
+[   12.749328]  driver_register+0x64/0x138
+[   12.749339]  __platform_driver_register+0x2c/0x40
+[   12.749350]  qcom_venus_driver_init+0x28/0xfb8 venus_core
+[   12.772990]  do_one_initcall+0x60/0x290
+[   12.773012]  do_init_module+0x60/0x268
+[   12.773028]  load_module+0x1e00/0x2060
+[   12.773042]  init_module_from_file+0x90/0xe0
+[   12.773057]  __arm64_sys_finit_module+0x270/0x370
+[   12.773070]  invoke_syscall+0x50/0x120
+[   12.773081]  el0_svc_common.constprop.0+0xc8/0xf0
+[   12.773091]  do_el0_svc+0x24/0x38
+[   12.773100]  el0_svc+0x3c/0x138
+[   12.773116]  el0t_64_sync_handler+0xa0/0xe8
+[   12.773130]  el0t_64_sync+0x198/0x1a0
+[   12.817608] Code: 910003fd f9000bf3 91004013 aa1303e0 (f9402821)
+All code
+========
+   0: 910003fd mov x29, sp
+   4: f9000bf3 str x19, [sp, #16]
+   8: 91004013 add x19, x0, #0x10
+   c: aa1303e0 mov x0, x19
+  10:* f9402821 ldr x1, [x1, #80] <-- trapping instruction
+
+Code starting with the faulting instruction
+===========================================
+   0: f9402821 ldr x1, [x1, #80]
+[   12.817618] ---[ end trace 0000000000000000 ]---
+
+...
+[   38.070603] Internal error: Oops: 0000000096000004 [#2]  SMP
+[   38.077336] Modules linked in: pm8916_wdt snd_soc_lpass_apq8016
+snd_soc_msm8916_digital snd_soc_lpass_cpu snd_soc_msm8916_analog
+snd_soc_apq8016_sbc msm qcom_wcnss_pil snd_soc_lpass_platform
+snd_soc_qcom_common snd_soc_core snd_compress qrtr coresight_stm
+ubwc_config coresight_cpu_debug snd_pcm_dmaengine qcom_q6v5_mss
+llcc_qcom stm_core snd_pcm coresight_cti qcom_pil_info ocmem snd_timer
+qcom_q6v5 drm_gpuvm adv7511 snd qcom_sysmon drm_exec soundcore
+gpu_sched qcom_common qcom_spmi_temp_alarm rtc_pm8xxx qcom_spmi_vadc
+qcom_glink_smem qcom_camss drm_dp_aux_bus qcom_vadc_common
+venus_core(+) qcom_pon qmi_helpers videobuf2_dma_sg qnoc_msm8916
+qcom_stats drm_display_helper v4l2_mem2mem videobuf2_memops qcom_rng
+mdt_loader videobuf2_v4l2 cec videobuf2_common drm_client_lib
+display_connector rpmsg_ctrl rpmsg_char ramoops drm_kms_helper socinfo
+reed_solomon rmtfs_mem fuse drm backlight ip_tables x_tables
+[   38.140171] CPU: 0 UID: 0 PID: 1202 Comm: irq/55-3-0039 Tainted: G
+    D             6.16.0-rc6-next-20250717 #1 PREEMPT
+[   38.162330] Tainted: [D]=DIE
+[   38.173246] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+[   38.176294] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   38.182980] pc : adv7511_cec_register_volatile+0xc/0x40 adv7511
+[   38.189659] lr : regmap_volatile
+(/builds/linux/drivers/base/regmap/regmap.c:153)
+[   38.195904] sp : ffff8000869e3bf0
+[   38.199896] x29: ffff8000869e3bf0 x28: ffff00000b38eeac x27: ffff8000801e1700
+[   38.203289] x26: ffff8000801de1b0 x25: ffff8000829a0210 x24: ffff00000a091d80
+[   38.210408] x23: 0000000000000070 x22: 0000000000000096 x21: ffff8000869e3cb4
+[   38.217525] x20: 0000000000000096 x19: ffff00000366f400 x18: 0000000000000098
+[   38.224643] x17: 00000000000000c7 x16: 00000000000000c4 x15: 00000000000000bf
+[   38.231761] x14: 00000000000000be x13: 00000000000000ff x12: 00000000000000f6
+[   38.238881] x11: 00000000000000f4 x10: 00000000000000cb x9 : ffff800080c83384
+[   38.245997] x8 : ffff8000869e3a78 x7 : 0000000000000000 x6 : 0000000000000001
+[   38.253115] x5 : ffff8000829a0000 x4 : 0000000000000000 x3 : ffff00000366f400
+[   38.260233] x2 : ffff80007b4b74d8 x1 : 0000000000000096 x0 : 0000000000000000
+[   38.267353] Call trace:
+[   38.274460]  adv7511_cec_register_volatile+0xc/0x40 adv7511 (P)
+[   38.276726]  regcache_read+0x3c/0x100
+[   38.282973]  _regmap_read+0x90/0x190
+[   38.286615]  regmap_read+0x54/0x88
+[   38.290260]  adv7511_cec_irq_process+0xb4/0x310 adv7511
+[   38.293477]  adv7511_irq_process+0xc4/0x158 adv7511
+[   38.298946]  adv7511_irq_handler+0x20/0x40 adv7511
+[   38.303979]  irq_thread_fn+0x34/0xb8
+[   38.309010]  irq_thread+0x198/0x3b0
+[   38.312570]  kthread+0x138/0x228
+[   38.315781]  ret_from_fork+0x10/0x20
+[   38.319260] Code: ffff8000 aa1e03e9 d503201f f9403c00 (f941cc00)
+All code
+========
+   0: ffff8000 .inst 0xffff8000 ; undefined
+   4: aa1e03e9 mov x9, x30
+   8: d503201f nop
+   c: f9403c00 ldr x0, [x0, #120]
+  10:* f941cc00 ldr x0, [x0, #920] <-- trapping instruction
+
+Code starting with the faulting instruction
+===========================================
+   0: f941cc00 ldr x0, [x0, #920]
+[   38.322823] ---[ end trace 0000000000000000 ]---
 
 
+## Source
+* Git tree: https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next.git
+* Project: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20250717/
+* Git sha: 024e09e444bd2b06aee9d1f3fe7b313c7a2df1bb
+* Git describe: 6.16.0-rc6-next-20250717
+* kernel version: next-20250717
+* Architectures: arm64 (Dragonboard 410c)
+* Toolchains: clang-20 gcc-13
+* Kconfigs: defconfig+lkftconfigs
 
-On 7/18/2025 6:20 PM, Manivannan Sadhasivam wrote:
-> On Fri, Jul 18, 2025 at 01:27:27PM GMT, Manivannan Sadhasivam wrote:
->> On Fri, Jul 18, 2025 at 10:05:02AM GMT, Baochen Qiang wrote:
->>>
->>>
->>> On 7/17/2025 7:29 PM, Manivannan Sadhasivam wrote:
->>>> On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
->>>>>
->>>>>
->>>>> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
->>>>>> On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
->>>>>>
->>>>>> [...]
->>>>>>
->>>>>>>> @@ -16,6 +16,8 @@
->>>>>>>>  #include "mhi.h"
->>>>>>>>  #include "debug.h"
->>>>>>>>  
->>>>>>>> +#include "../ath.h"
->>>>>>>> +
->>>>>>>>  #define ATH12K_PCI_BAR_NUM		0
->>>>>>>>  #define ATH12K_PCI_DMA_MASK		36
->>>>>>>>  
->>>>>>>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
->>>>>>>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
->>>>>>>>  
->>>>>>>>  	/* disable L0s and L1 */
->>>>>>>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
->>>>>>>> -				   PCI_EXP_LNKCTL_ASPMC);
->>>>>>>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
->>>>>>>
->>>>>>> Not always, but sometimes seems the 'disable' does not work:
->>>>>>>
->>>>>>> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
->>>>>>> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
->>>>>>>
->>>>>>>
->>>>>>>>  
->>>>>>>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
->>>>>>>>  }
->>>>>>>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
->>>>>>>>  {
->>>>>>>>  	if (ab_pci->ab->hw_params->supports_aspm &&
->>>>>>>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
->>>>>>>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
->>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC,
->>>>>>>> -						   ab_pci->link_ctl &
->>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC);
->>>>>>>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
->>>>>>>
->>>>>>> always, the 'enable' is not working:
->>>>>>>
->>>>>>> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
->>>>>>> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
->>>>>>>
->>>>>>
->>>>>> Interesting! I applied your diff and I never see this issue so far (across 10+
->>>>>> reboots):
->>>>>
->>>>> I was not testing reboot. Here is what I am doing:
->>>>>
->>>>> step1: rmmod ath12k
->>>>> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
->>>>> the issue)
->>>>>
->>>>> 	sudo setpci -s 02:00.0 0x80.B=0x43
->>>>>
->>>>> step3: insmod ath12k and check linkctrl
->>>>>
->>>>
->>>> So I did the same and got:
->>>>
->>>> [ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
->>>> [ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
->>>> [ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
->>>> [ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
->>>>
->>>> My host machine is Qcom based Thinkpad T14s and it doesn't support L0s. So
->>>> that's why the lnkctl value once enabled becomes 0x42. This is exactly the
->>>> reason why the drivers should not muck around LNKCTL register manually.
->>>
->>> Thanks, then the 0x43 -> 0x40 -> 0x40 -> 0x42 sequence should not be a concern. But still
->>> the random 0x43 -> 0x43 -> 0x43 -> 0x42 sequence seems problematic.
->>>
->>> How many iterations have you done with above steps? From my side it seems random so better
->>> to do some stress test.
->>>
->>
->> So I ran the modprobe for about 50 times on the Intel NUC that has QCA6390, but
->> didn't spot the disparity. This is the script I used:
->>
->> for i in {1..50} ;do echo "Loop $i"; sudo setpci -s 01:00.0 0x80.B=0x43;\
->> sudo modprobe -r ath11k_pci; sleep 1; sudo modprobe ath11k_pci; sleep 1;done
->>
->> And I always got:
->>
->> [ 5862.388083] ath11k_pci_aspm_disable: 609 lnkctrl: 0x43
->> [ 5862.388124] ath11k_pci_aspm_disable: 614 lnkctrl: 0x40
->> [ 5862.876291] ath11k_pci_start: 880 lnkctrl: 0x40
->> [ 5862.876346] ath11k_pci_start: 886 lnkctrl: 0x42
->>
->> Also no AER messages. TBH, I'm not sure how you were able to see the random
->> issues with these APIs. That looks like a race, which is scary.
->>
->> I do not want to ignore your scenario, but would like to reproduce and get to
->> the bottom of it.
->>
-> 
-> I synced with Baochen internally and able to repro the issue. Ths issue is due
-> to hand modifying the LNKCTL register from userspace. The PCI core maintains
-> the ASPM state internally and uses it to change the state when the
-> pci_{enable/disable}_link_state*() APIs are called.
-> 
-> So if the userspace or a client driver modifies the LNKCTL register manually, it
-> makes the PCI cached ASPM states invalid. So while this series fixes the driver
-> from doing that, nothing prevents userspace from doing so using 'setpci' and
-> other tools. Userspace should only use sysfs attributes to change the state and
-> avoid modifying the PCI registers when the PCI core is controlling the device.
-> So this is the reason behind the errantic behavior of the API and it is not due
-> to the issue with the API or the PCI core.
+## Test
+* Test log:https://qa-reports.linaro.org/api/testruns/29169813/log_file/
+* Test LAVA: https://lkft.validation.linaro.org/scheduler/job/8361760#L3403
+* Test run: https://regressions.linaro.org/lkft/linux-next-master/next-20250717/testruns/1662734/
+* Test history:
+https://regressions.linaro.org/lkft/linux-next-master/next-20250717/log-parser-test/internal-error-oops-oops-smp/history/
+* Test plan: https://regressions.linaro.org/lkft/linux-next-master/next-20250717/log-parser-test/internal-error-oops-oops-smp/
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2zzwEWZON9hQQK9VfaE276a89yt/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2zzwEWZON9hQQK9VfaE276a89yt/config
 
-IMO we can not rely on userspace doing what or not doing what, or on how it is doing,
-right? So can we fix PCI core to avoid this?
 
-> 
-> - Mani
-> 
-
+--
+Linaro LKFT
+https://lkft.linaro.org
 
