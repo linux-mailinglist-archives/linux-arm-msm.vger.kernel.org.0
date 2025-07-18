@@ -1,131 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-65661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0B47B0A4FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 15:23:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CFCFB0A522
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 15:27:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6127E3B69F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:22:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CBF8A87F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C72518DF9D;
-	Fri, 18 Jul 2025 13:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8CD2DC332;
+	Fri, 18 Jul 2025 13:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="1rIGmLAY"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="oCAN643G";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eaLHvwgl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295032E370B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 13:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F2D2DC349;
+	Fri, 18 Jul 2025 13:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752844997; cv=none; b=V7gb/CPYYP1eDNtfPOMUCAXEn7Nlx7ys1gTB0rOZNHwQ/9abn5WMWQf6ec8YRNfAwH00SbhSlS8IixvG7WsY5K26Amawe3nQwIWx8mmaVwM+QShbG1jfMzNpGk9KhBfqgysrx1qL8C9bc4aGcBKHgBwU/6bktzjPwGCmAoBfrOk=
+	t=1752845262; cv=none; b=rMMz6oTRm3NiOBWvUgnTSGhhI0usI8TZuOloFw+0F3/dMrVPD6F2Ne0Gzvp2okohNaOaQpSXdkfImswyq+ZugcDUcw/twNyMHCcs9JvdSjCMu1yjdNg86eAuPCrVH+1ghsMGpSNlORVfKUJYQ6tdYpsVoH7cPjeptgLCe9+QZaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752844997; c=relaxed/simple;
-	bh=RJXTsE2KOiSMZokrSowhZ4t+AsNAOTZqnDdpfZ+HcGc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=WKBNv4rzmMddzI/TLeKssTcQZsFUEtT3ALweqhyhUYgEDB8v6VHYRthMnX/EynyjzxTacrH36CNvyj57JqSaQgCtnmJPFxndvYYOp8Tg13gcH+LVk4JER3FF2N7N16BWZ8g7E0ceZCtJEtl+Pjm2HabbBP0FcYBUxIH0o319zbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=1rIGmLAY; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ad56cbc7b07so343212566b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 06:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1752844992; x=1753449792; darn=vger.kernel.org;
-        h=to:from:subject:message-id:date:content-transfer-encoding
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RJXTsE2KOiSMZokrSowhZ4t+AsNAOTZqnDdpfZ+HcGc=;
-        b=1rIGmLAYcx1Xhi1pbucJyK3BRwnbGSVN35ia//6Vbp3JUxcopAiBgn5H6jA7XX0hO7
-         VStiycVuk4xFc/kKugsFiIyUwETG3IalRG6TilJcJFyS9EX3PiVgqxXY0CnZiVF+0h/2
-         Kh7F7ZTMB3Tj7E3LuwZsP5WrdKy5/T4Pbfs7YrzwB7uflSPH/hT5UU58sXANpiBkAe0/
-         yxHqJrvmZu05fxqgEz4Nej49OVvsByr3rmFWZmSsLt6MZ+tSPJLtksaBpOO+QnvJ+9m2
-         dtGbe6PboQ5FT5NMpDhHx2FWl6Cp5eLEK7U95cK8/WX+H9IFifM1yt0Oe23BMVe2DOFd
-         uQ2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752844992; x=1753449792;
-        h=to:from:subject:message-id:date:content-transfer-encoding
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RJXTsE2KOiSMZokrSowhZ4t+AsNAOTZqnDdpfZ+HcGc=;
-        b=DWFUDRsofg1wMlFMGviYDXSS5toSm0SmUBlxTzRVAOrwcHDaT12b2DWlgeo8wnqW2D
-         STYe6wDtwei54XDkLdN4i7jJrcVo/Cs7qNApUMieiH1y9lKHV8ypYxz55fSGFdHc58VT
-         3+Gb9NOUTvz926jzlIlXYJ7L/rQUVIyNw7oCbwBI0Du3vWZVUr9PpVzohPKBd1Z539Mq
-         OJEqMkCYYi52SHcpAf1QvbvFJfyrv48LvB+1t1cG6pBqsrKmL5VOvZv2mkMDXyhIB9hP
-         hm6cJRS6f77nF+eQwIckETBqShQTOBOBT34MeXtmIxEPdLcTKqCQYV+O4jpxXhXpGWUl
-         5EUg==
-X-Forwarded-Encrypted: i=1; AJvYcCUHheb8YTaUbi3UHUl3DDTsLpfww+zhtIL4l4wADo9IOCZQDDFgcPmW1NlgADS2/H2NHJ5lgfvuz3Jl3/NP@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRHpfM6i2sUz+c5NEj4m9aSQA1SU09BvXeMmmOECCX2VEDrlXK
-	E5+adqiECW1UZpwpXYOx1TXe8m9Pqb8tvGikrkk6tUDPfkvAD54PFttYcTLB5liYegMJE6GromO
-	w83kWlVc=
-X-Gm-Gg: ASbGncvGtwIHhVxUKrauQnXpFTs9U8JUBGSiYGVPCzpAnVbMXQqv+E/NNubesVY43IR
-	SUKz6H7pJYEt2QOjtHXD6dKeN5zaj2d6j4yCjA5779okaSLf34i0T8dqOU3jw5HljXiDO91msio
-	HmAk0E+7bo9JQuZ77Pq66kyI6lUfqyTtnJLEtht/o+KnAQ+ttAkbd5izjDSiH2sDKBERVi7XeWX
-	fc6fXejoPc3kmFd2FjszzM08LWYIa+jeZsF4EiDht84dufq2heRuiZFXUcdRcKoU9mjfRMYY5Ln
-	NWKVaY9not5Au20L16di0sq6UIOGR4WTz27A4kJ3iB9dhdRiZx6AW/2vQ9dnUKhU3waH1hgjThB
-	BI6P/LWawPYIqQ9Mqt4z1HElClKOI/U9H8VKk76ErCcn3WXewRSSKVNs=
-X-Google-Smtp-Source: AGHT+IHZo2D/DBg8hn+lB03yUXC/ioaRaeyW1DWDx5Kc7syRvpA3/VoW5y+u6rC3pfNmkDBBKHRZFg==
-X-Received: by 2002:a17:907:c5cd:b0:ae3:6744:3661 with SMTP id a640c23a62f3a-ae9ce10c4f9mr829756066b.44.1752844992262;
-        Fri, 18 Jul 2025 06:23:12 -0700 (PDT)
-Received: from localhost (212095005010.public.telering.at. [212.95.5.10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6c79ae67sm121366666b.11.2025.07.18.06.23.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 06:23:11 -0700 (PDT)
+	s=arc-20240116; t=1752845262; c=relaxed/simple;
+	bh=VWAH+3AGXcFzWM1iqUfxiu+KLg26t8PA+iVM7DpFyjE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HLQBXaqvuQps2Dp63OdivnvCMXeQjWN3ujxIw9aZm+Hk9wCt24dwfSvBuAJ2SbcXfdL353XXa5trzuFhK1UdLSNQn6hwESYasXHQ/aZ6JmTX75vVG9wYLnPOBpXoSPw+Tjy8pFEJ90WxN7QxRPhifUyfx9xYCVUOfxK861Ogot4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=oCAN643G; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eaLHvwgl; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1752845258;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=80yt9PNGZ40066R0qjg7QPOIFgJ0BIytwbIbV0r3YLo=;
+	b=oCAN643GsWhpiOlaV27hV7jYVi2ciU4EsTR4XN512a68GbM4QHhzrgzE/o5FERgoMgD55U
+	zpavaDJDi4kVRgOxdXywEK2vh8i0QMj1lWseeSK2lj+rTyD1pur2ngD7s8okIt5GVHNsaN
+	UOMn9rUrFyQA13mSPlEJna5A0Pt9sKYLLaMA48ifslLklDG6/DpVlL9xLgtAuWPyvAXfet
+	4LmVPPCmU7lvz1ym5jJfg3HmhMtDCfxx+tFX5WOLVDPRDGbSsNFDhCOBzfYO8K4+Pdll/J
+	XemtCPgBaCmye+oEXGrY8JgLvHF8YO6zHH6z3Dr+Skl0xJlQYG9lDwFCEpR3zg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1752845258;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=80yt9PNGZ40066R0qjg7QPOIFgJ0BIytwbIbV0r3YLo=;
+	b=eaLHvwgl4BJI9zNp6GtF6PLOadkYibJtpUyG5TOwhuxK5f7ZzjZLaVA3K8apvD0fiitzot
+	zbYLnfau4jy88SAw==
+Date: Fri, 18 Jul 2025 15:27:37 +0200
+Subject: [PATCH v2] drm/msm: Don't use %pK through printk
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 18 Jul 2025 15:23:10 +0200
-Message-Id: <DBF7OWAWQ94M.FSCP4DPF8ZJY@fairphone.com>
-Subject: ath11k WiFi bringup on Milos SoC
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: <ath11k@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250718-restricted-pointers-drm-v2-1-3d9f8566f927@linutronix.de>
+X-B4-Tracking: v=1; b=H4sIAMhLemgC/3WNQQ6CMBBFr0JmbU1bkRZW3sOwQDrIJNqSaSUYw
+ t2tuHb5XvLfXyEiE0ZoihUYZ4oUfAZ9KKAfO39HQS4zaKnPspSlYIyJqU/oxBTIJ+QoHD+FNTc
+ jT5Wph85BXk+MAy17+dpmHimmwO/9aFZf+2tWyv5tzkpIYaxC6aztXa0vD/KvxMHTcnQI7bZtH
+ xH0DfHCAAAA
+X-Change-ID: 20250404-restricted-pointers-drm-87b703679fad
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752845258; l=4224;
+ i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
+ bh=VWAH+3AGXcFzWM1iqUfxiu+KLg26t8PA+iVM7DpFyjE=;
+ b=eWaz9frDehJCeSMgrLB5NPtTUy4c6S5MzkkKUGrqlpQ8KeEhwxUFESvF+038wbq8IuvOmyMGh
+ /4qI74uRl8zD6c3iyOi1iKtbGEi786xLqtGBf/RNqcOmhtWOHIlNkpN
+X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
+ pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
 
-Hi,
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-I'm trying to bring up WiFi on the Milos SoC (on my device: SM7635)
-which is paired with a WCN6755.
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
 
-There's also the WPSS remoteproc on this SoC, similar to SC7280/Kodiak.
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+---
+Changes in v2:
+- Drop already applied patches
+- Link to v1: https://lore.kernel.org/r/20250618-restricted-pointers-drm-v1-0-781e0d88cd92@linutronix.de
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 4 ++--
+ drivers/gpu/drm/msm/msm_mdss.c              | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-Using the qcom,wcn6750-wifi compatible in dt makes the wpss firmware
-crash soon after boot with the following errors:
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index d4b545448d74657aafc96e9042c7756654b4f0e7..94912b4708fb5be937f1b3898a5676f7b481bd42 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -596,7 +596,7 @@ static void _dpu_crtc_complete_flip(struct drm_crtc *crtc)
+ 
+ 	spin_lock_irqsave(&dev->event_lock, flags);
+ 	if (dpu_crtc->event) {
+-		DRM_DEBUG_VBL("%s: send event: %pK\n", dpu_crtc->name,
++		DRM_DEBUG_VBL("%s: send event: %p\n", dpu_crtc->name,
+ 			      dpu_crtc->event);
+ 		trace_dpu_crtc_complete_flip(DRMID(crtc));
+ 		drm_crtc_send_vblank_event(crtc, dpu_crtc->event);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+index 11fb1bc54fa92a5d9926addb437bc4b8f283723b..54b20faa0b697e3bf8ad81bd806adb49de98f2b5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+@@ -31,14 +31,14 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
+ 	u32 base;
+ 
+ 	if (!ctx) {
+-		DRM_ERROR("invalid ctx %pK\n", ctx);
++		DRM_ERROR("invalid ctx %p\n", ctx);
+ 		return;
+ 	}
+ 
+ 	base = ctx->cap->sblk->pcc.base;
+ 
+ 	if (!base) {
+-		DRM_ERROR("invalid ctx %pK pcc base 0x%x\n", ctx, base);
++		DRM_ERROR("invalid ctx %p pcc base 0x%x\n", ctx, base);
+ 		return;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 12dcb32b472497f9e59619db4e810abfbf610c7c..a306077647c317af9345eeff13082230906b5767 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1345,7 +1345,7 @@ static int dpu_kms_mmap_mdp5(struct dpu_kms *dpu_kms)
+ 		dpu_kms->mmio = NULL;
+ 		return ret;
+ 	}
+-	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
++	DRM_DEBUG("mapped dpu address space @%p\n", dpu_kms->mmio);
+ 
+ 	dpu_kms->vbif[VBIF_RT] = msm_ioremap_mdss(mdss_dev,
+ 						  dpu_kms->pdev,
+@@ -1380,7 +1380,7 @@ static int dpu_kms_mmap_dpu(struct dpu_kms *dpu_kms)
+ 		dpu_kms->mmio = NULL;
+ 		return ret;
+ 	}
+-	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
++	DRM_DEBUG("mapped dpu address space @%p\n", dpu_kms->mmio);
+ 
+ 	dpu_kms->vbif[VBIF_RT] = msm_ioremap(pdev, "vbif");
+ 	if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 1f5fe7811e016909282087176a42a2349b21c9c4..39885b333910bb7aab7f72b9846f49ab16cfe5cc 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -423,7 +423,7 @@ static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5
+ 	if (IS_ERR(msm_mdss->mmio))
+ 		return ERR_CAST(msm_mdss->mmio);
+ 
+-	dev_dbg(&pdev->dev, "mapped mdss address space @%pK\n", msm_mdss->mmio);
++	dev_dbg(&pdev->dev, "mapped mdss address space @%p\n", msm_mdss->mmio);
+ 
+ 	ret = msm_mdss_parse_data_bus_icc_path(&pdev->dev, msm_mdss);
+ 	if (ret)
 
-[ 1263.547381] ath11k 17110040.wifi: wcn6750 hw1.0
-[ 1263.577281] remoteproc remoteproc2: powering up wpss
-[ 1263.814337] remoteproc remoteproc2: Booting fw image qcom/milos/fairphon=
-e/fp6/wpss.mbn, size 8229144
-[ 1263.817861] PDM: no support for the platform, userspace daemon might be =
-required.
-[ 1264.523796] remoteproc remoteproc2: remote processor wpss is now up
-[ 1264.773557] ath11k 17110040.wifi: chip_id 0x1 chip_family 0xb board_id 0=
-xff soc_id 0x40140120
-[ 1264.774484] ath11k 17110040.wifi: fw_version 0x3014ffff fw_build_timesta=
-mp 2025-04-09 08:57 fw_build_id WLAN.MSL.3.0.1-00328.3-QCAMSLSWPLZ-1.105949=
-.2
-[ 1272.362281] ath11k 17110040.wifi: htt event 48 not handled
-[ 1273.499832] qcom_q6v5_pas 8a00000.remoteproc: fatal error received: cmno=
-s_assert.c:400:Asserted in whal_wmac_recipes.c:whal_wmac_transition_to_fw_c=
-ontrol:1734
-[ 1273.500231] remoteproc remoteproc2: crash detected in wpss: type fatal e=
-rror
-[ 1273.501114] remoteproc remoteproc2: handling crash #1 in wpss
-[ 1273.501153] remoteproc remoteproc2: recovering wpss
+---
+base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
+change-id: 20250404-restricted-pointers-drm-87b703679fad
 
-That "htt event 48" should be HTT_T2H_PPDU_ID_FMT_IND, I have briefly
-looked in the WiFi driver from the downstream 6.1 kernel and while I
-might definitely be wrong here, I'm guessing it's not related to the
-crash.
+Best regards,
+-- 
+Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-Anyone have an idea how to debug this? Unfortunately my AMSS sources do
-not include any sources for WiFi, it's just prebuilts.
-
-Regards
-Luca
 
