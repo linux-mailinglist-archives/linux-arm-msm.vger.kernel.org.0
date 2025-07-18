@@ -1,126 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-65705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0046B0A98D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 19:35:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C720B0A997
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 19:37:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75A741AA82E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 17:35:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3033C1AA86B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 17:37:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 611FE2E612E;
-	Fri, 18 Jul 2025 17:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B63EF2E6D34;
+	Fri, 18 Jul 2025 17:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="UmYIc2eg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I/7pbHCN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF8D80C1C;
-	Fri, 18 Jul 2025 17:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D36C156678
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752860103; cv=none; b=D8WBm1ARlDS81/Huy+KF/UO9eGhjCKE3/pcgSGtFCuwK7ZzAGjhckOD5lKW3T36udzkvfO5PKe9anuAe4r9RQ2DnIv14mhKL3aIR6CHIlAJBPbvu+HPfMOkkk2bxHPj8lotVpRX7PdgBSeYvQjnCMmG9u1P8B1PbOlxXc1UOpiA=
+	t=1752860253; cv=none; b=JfVcUJFeCCW850mGq6/p3Bq7qg/Oay/wYqTcWFysryWYV/XOjn87QHCyrgTTKtt/8HfnEIGZERUweMyd/XfCZbZTYiEtlBCYPSfF4Mqp0IhOXLGnJx621KARJF/LoYFBZgPRyqOc54Z3YVcTPZCn+2q99R5nk8jdRoC1XtbuSTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752860103; c=relaxed/simple;
-	bh=5H3s41WG2tVQpIk2QxusXyG4JN7gcoy1GFgeMIst1OY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nbN5+ptsjJ8XG+9vwVOdtN8bzuOUZJZMSNcoX0YKqYYChsFwwNOY5llFy53ZfxlGbJlDBLp7bEewVz3JuiGhv3jWSfWHOvn+BT9E5EtSBoe/LJ3TlShlwpwO1t0pissy3hWIP/MRjuw4/BJEYChlMBXlzExs1zJxE6+lNMsGdpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=UmYIc2eg; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id C6525444F8;
-	Fri, 18 Jul 2025 17:34:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1752860091;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nfdQECwsAKd69oCQQPZXeJ3b8ObsrMbJL3v2gq4m8TM=;
-	b=UmYIc2egaj26juBgJQR+c78DD5Csk9bBatZYAbTD3lMAHKw5HZFfAtWRzUVmfDvMUbyMKC
-	tBn0jwwRswN43TxOcV3Gwgb548OHovR98Ju2XQFHASM/IOugi5oBAh3SNQGXr8YCG1SKah
-	gnSSvFhz9xkVzCWeMh3COa/bcI3MWTS18v9ARc8qGNQKyYq+9YsNQ/UZosBqXlJQO6PQwA
-	Uq5DG0mFC6xY0Boy7Rub7tgkBERWRL1swV8grxzHQZ+G3Fjz5jfR84JOn2svm1FIurvXQt
-	EnuS4WcXvI+jnn+HrG7BNUjCzJ0WVnmH5VwSI1+RvtP/CpF0K6HpGHPWv7OwNg==
-Date: Fri, 18 Jul 2025 19:34:46 +0200
-From: Kory Maincent <kory.maincent@bootlin.com>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v9 01/15] dt-bindings: net: Introduce the
- ethernet-connector description
-Message-ID: <20250718193431.147df503@kmaincent-XPS-13-7390>
-In-Reply-To: <20250717073020.154010-2-maxime.chevallier@bootlin.com>
-References: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
-	<20250717073020.154010-2-maxime.chevallier@bootlin.com>
-Organization: bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1752860253; c=relaxed/simple;
+	bh=Jp1XqFkdELGuoMkw/LjGQL5oKQgMBjwV/r0rNb05WHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=M1FNDdudK2vwczEMyD87mjVwA6US9VaX6icIWN8dVvG3rvDooRgeo459/t/wYsRT+WBimd3yZGh3xaEe+SvLOk5R7MGCjJSJEhyEvgCnN0rI5SpooWsBHEujfWHYA0EHXylEdTwW6z/rlLQgo+Ha0OGx3SDTuojN1lUsoJVCNYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I/7pbHCN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I9DESF016003
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:37:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DbmW9l10evhVj/WcPjTCyWMiSSALM7/4VQmz6IFqWv0=; b=I/7pbHCNKoxqjt0d
+	p9wMuOFhH2rdGi+3XLuuJLcfUwd/5RaHKxwdyXJNPFumvuRqFKKsMeG7g4r7rOMb
+	CIs9AslrXszcPrdE0bKqwc+10M9bh4gH4ACiPDSNjs/ClEGKlrgznsjAmq9VlfCu
+	w6tVuyZb/jcc0EYFm4WKxffWg9CHTlVOlavnyjh4iF57NUpk6gDV6Me6w11BOqCy
+	Evx5A3WTTVq7koEHgj2LFUPkrUf3ACEBSGd6ljPLvS0hfM5EaASqu75m9LeYtsjd
+	nbLdlR0pDSFzjrGtshLeakqx3/fxvSIsxG1CPGm9BSPHnKvsx1x0gewdK848eR51
+	183yfA==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47y3tc4bsr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 17:37:31 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b38d8ee46a5so2173107a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 10:37:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752860250; x=1753465050;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DbmW9l10evhVj/WcPjTCyWMiSSALM7/4VQmz6IFqWv0=;
+        b=R/H7g48RWvVJw5ZOiRdO3r2RJ/VpdGGnD88guICfxhcDQ9cd7/RfxarEpG/VQ9T8T3
+         qw9zoNMk/pj62yO+EHHd+f9h7W8T3Tef/gSwGmkm7PhXrzMkPddfWNm46O+mCk0kVBXn
+         SMiNqTh0DUVhGY1PVC/+ilIwQs0IIT+6M8q59eZ61NtzwMEdOCeMYZ9LB67ztdv0jRts
+         nuPuCaP5ZqN+xvwx/xyKh77rfKHBh+HpZiOjr78PM7fud6ZWj0hnZp97ndgk7BPiL0gR
+         HyZTLjfes7wBjoT89a+7sx68R/VTSXxJjxI9GAFX8ssR1KYuMlVNOKfxHbIyHCK+4z+j
+         mqzA==
+X-Forwarded-Encrypted: i=1; AJvYcCUpjAGES84wSrl69gfCzkPLgBfWhLghEUw3miQDiLfrvax33B9P+gtg7X/kOAQmbIM04rgPSLAPRgZjne/B@vger.kernel.org
+X-Gm-Message-State: AOJu0YwFbtRyMrqekOPh7o13FIicels0YuDbyLogzo+fNKO7CZ3hwmMe
+	P0GsX9kaWUYCVzalG3G1p0Rpm8i7mm75Bb+RLXdJOQQnEADQijGP2vk+tApu4ekvuo2B8AXWbPi
+	BKTBY16GEQQmnI73jxDDdpM2uIgQy8xpdlci1b+KTex543HNFqZpjCR/23qALjK5vIdAS
+X-Gm-Gg: ASbGncs30BKmMMVLoyY1RLjyVY1L3lq0TeRwlqQnOwWBHc9HuEOPCQZfbkuHUX7im/d
+	mtfp8iIqQ6eECOamcOPgjxrFpbQBIBWrG5xepwQLbL8bOtiPn6gmt9XK8841aBwoOTC3IdGDzZP
+	HRA7pCw9giRB0Fxe/RwM/jhLrNPLe4JO/rijd4LMC2rWkBrDxwZYm+evm03yHXKEOer16XG3INO
+	fdcjRhxd2UCgsYJMCbJTA/GJoLJyyfS5umnYzqSSTmPaLCjZnpIFJAZZjFjKjK0S9aQkRgzS+X6
+	C8aJrCCcW/m7nAn5Is7YSOPG0gqaN8cEEDh5iGeHGxIRMdlu0Zdu9/Ek/AGBlK52AxU=
+X-Received: by 2002:a05:6a20:430c:b0:224:46a0:25ef with SMTP id adf61e73a8af0-2390c7f698cmr13397776637.16.1752860250366;
+        Fri, 18 Jul 2025 10:37:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGS+WhE3jQDC0YVjY/4E/XNzovaX5vUwzvI27UOQtAKYgfzXmsNsUeiIAZoMDUSIbvOYGM/sQ==
+X-Received: by 2002:a05:6a20:430c:b0:224:46a0:25ef with SMTP id adf61e73a8af0-2390c7f698cmr13397740637.16.1752860249913;
+        Fri, 18 Jul 2025 10:37:29 -0700 (PDT)
+Received: from [192.168.0.195] ([49.204.28.43])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-759c84e2b48sm1581307b3a.19.2025.07.18.10.37.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Jul 2025 10:37:29 -0700 (PDT)
+Message-ID: <2f5b5e6e-5041-453e-b3f7-b10b40bc6f57@oss.qualcomm.com>
+Date: Fri, 18 Jul 2025 23:07:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
+ Controller
+To: Krzysztof Kozlowski <krzk@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: sboyd@kernel.org, mturquette@baylibre.com, andersson@kernel.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        quic_rjendra@quicinc.com, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
+ <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
+ <aHjJG2nrJJZvqxSu@linaro.org>
+ <40534488-24f6-4958-b032-d45a177dfd80@kernel.org>
+Content-Language: en-US
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+In-Reply-To: <40534488-24f6-4958-b032-d45a177dfd80@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeigedtjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthhqredtredtjeenucfhrhhomhepmfhorhihucforghinhgtvghnthcuoehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefguddtfeevtddugeevgfevtdfgvdfhtdeuleetffefffffhffgteekvdefudeiieenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepvdgrtddumegtsgduheemfegvgeemtgehtddtmeekvddttgemiegvtddumeejkegrtgemvdgtugefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduheemfegvgeemtgehtddtmeekvddttgemiegvtddumeejkegrtgemvdgtugefpdhhvghlohepkhhmrghinhgtvghnthdqigfrufdqudefqdejfeeltddpmhgrihhlfhhrohhmpehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtp
- hhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: kory.maincent@bootlin.com
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Z5PsHGRA c=1 sm=1 tr=0 ts=687a865b cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=tMiizUMu9hGndvLFPAJAbA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=ZEZnheZsc53CzuolOOIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: lRJwyfMQkftG1LGd1z-jxZBdz5pZdami
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzOSBTYWx0ZWRfX6RSeN1/lk/FN
+ 1yL9Zc37lMGOkqef8AlW7uSO5B9V0hTHAc8218aAzhFzX/bPbfabllRHxZlLvR1tJwIcdysfKki
+ KYO/MMH04R7BJtgUjZDBdJ0r3oA29qsL2kOnE6nCP+nPCXrpoR0O0CHkDKzwZx1A0a6yq0Mdvz0
+ USZIihthzek4NsnUVq8A4oJsKygGS/woX0ZA5XKQVkZ24XvocP2E6aEN0d7it6K1Sh4y0JrTs77
+ ZrrbBZItgeD5Kojk9s7L/tif3FI1TspTQ7MPEUawS9c8o1eCBFryVFlhX3QpeWONm6M2UDHWPvP
+ 18Dg0pIdjc4qY8+cTBOC6l5A3PDGW4cFvNPN5HwsTlRq0NJUPLl2XdLi6kGMJN8chbc5egayTNW
+ FhOBk8A8a+7s6QuFDdSWlogxeO+0BtO5xdFDT66rVxAHTfcNK12OWx+x0L3/aUg3O8aHcSIw
+X-Proofpoint-GUID: lRJwyfMQkftG1LGd1z-jxZBdz5pZdami
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-18_04,2025-07-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxlogscore=999 suspectscore=0 spamscore=0 clxscore=1015
+ mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507180139
 
-Le Thu, 17 Jul 2025 09:30:05 +0200,
-Maxime Chevallier <maxime.chevallier@bootlin.com> a =C3=A9crit :
 
-> The ability to describe the physical ports of Ethernet devices is useful
-> to describe multi-port devices, as well as to remove any ambiguity with
-> regard to the nature of the port.
->=20
-> Moreover, describing ports allows for a better description of features
-> that are tied to connectors, such as PoE through the PSE-PD devices.
->=20
-> Introduce a binding to allow describing the ports, for now with 2
-> attributes :
->=20
->  - The number of lanes, which is a quite generic property that allows
->    differentating between multiple similar technologies such as BaseT1
->    and "regular" BaseT (which usually means BaseT4).
->=20
->  - The media that can be used on that port, such as BaseT for Twisted
->    Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
->    ethernet, etc. This allows defining the nature of the port, and
->    therefore avoids the need for vendor-specific properties such as
->    "micrel,fiber-mode" or "ti,fiber-mode".
->=20
-> The port description lives in its own file, as it is intended in the
-> future to allow describing the ports for phy-less devices.
->=20
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+On 7/17/2025 3:38 PM, Krzysztof Kozlowski wrote:
+> On 17/07/2025 11:57, Abel Vesa wrote:
+>> On 25-07-16 20:50:17, Pankaj Patil wrote:
+>>> From: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>
+>>> Add support for Global clock controller for Glymur platform.
+>>>
+>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+>>> ---
+>>>  drivers/clk/qcom/Kconfig      |   10 +
+>>>  drivers/clk/qcom/Makefile     |    1 +
+>>>  drivers/clk/qcom/gcc-glymur.c | 8623 +++++++++++++++++++++++++++++++++
+>>>  3 files changed, 8634 insertions(+)
+>>>  create mode 100644 drivers/clk/qcom/gcc-glymur.c
+>>>
+>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>>> index 051301007aa6..1d9e8c6aeaed 100644
+>>> --- a/drivers/clk/qcom/Kconfig
+>>> +++ b/drivers/clk/qcom/Kconfig
+>>> @@ -645,6 +645,16 @@ config SAR_GPUCC_2130P
+>>>  	  Say Y if you want to support graphics controller devices and
+>>>  	  functionality such as 3D graphics.
+>>>  
+>>> +config SC_GCC_GLYMUR
+>>
+>> Wait, are we going back to this now?
+>>
+>> X Elite had CLK_X1E80100_GCC, so maybe this should be CLK_GLYMUR_GCC
+>> then.
+> 
+> 
+> Yeah, the SC is meaningless here, unless you call it CLK_SC8480XP_GCC,
+> so the authors need to decide on one naming. Not mixtures..
+> 
+> 
+Glymur follows the "SC" naming convention, and historically we've
+adhered to the format: "SC/SM/SDX/SA_<Clock Controller>_<Target Name or
+Chipset>". This structure has helped maintain consistency and clarity
+across platforms.
 
-Thank you!
+The case of X1E80100 appears to be an exception—likely influenced by its
+unique naming convention at the time.
 
---=20
-K=C3=B6ry Maincent, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+That said, I’d prefer to stay aligned with the established convention
+used for earlier chipsets to preserve continuity. I’d appreciate hearing
+your thoughts on this as well.
+
+-- 
+Thanks,
+Taniya Das
+
 
