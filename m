@@ -1,167 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-65683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B52D8B0A7F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 17:53:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA3E6B0A856
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:21:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82C907A6C9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 15:51:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD5955A3684
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:21:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A88C02E54DD;
-	Fri, 18 Jul 2025 15:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D98D2951CE;
+	Fri, 18 Jul 2025 16:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="quEXalad"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H4JCJR3S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D482DFA4A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 15:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88B32DCF66
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752854003; cv=none; b=s8zM9Xs93YqXYyFHQG5lzQw586+abJRHqbHwm+9NnLgrAuV8JgpLksCra8L7F90eIsfR2vVAGMBarlmrBecOnsoXm1Q9JowCpSATyQRSWVnOi634zXu+ND1MIS2OoEwC7UY5jpKWUBSp9qM4MQeTVYDfLW8C9lyuL3izNIgX7Is=
+	t=1752855663; cv=none; b=Agi9NXRgvEP6XUruBIy575fS5/YuwGxvy5NZ2qH6nt7MN2K/66rZa9lFG6gYa957ZYJuPbIWjWD+DpP3Uk0U2Qi306zOef7PVTEyrK2m/Zl8dr4tTpq+9pEJ7TMh81H7sG4T53JYVwPctXxTB0iVRX6kzZGu37pnNLYgMd+1u/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752854003; c=relaxed/simple;
-	bh=j2W+9vWZsygzydsPzqO/o9VE+ojXl/rNKKXIRCB7PdM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Qt9LWWa9ohmT6oQQBa2FMeWtOabXFdSuegzAcWLK0yL53cHrx4cd/AUdBtJpx1zQJjVRa+br3xDUMHpwqfU96kKkwRdRAexV/654fzsoRjf0rN1VjRdj3nSzfs28iXuCpDONoEdYh8HB+Rc/HE2P49zGF+Y46ByNqOX2Rl3uKYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=quEXalad; arc=none smtp.client-ip=209.85.221.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-3a6d77b43c9so1793709f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 08:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752854000; x=1753458800; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=83xEI2XLKwN+ObHpZw5yMzUhkwEXU5BkIjkQsIobU8g=;
-        b=quEXaladmKW2q5CV7phoOgsBo3VW6XelB0O7YB9YouJED79d+6VRoS7ia+rfw8P8+L
-         LXc9l76LgIYHq7U+6+SX4ZmFzITIq7ANMXJR8HSlXl1aAsrdbZoKTx5ZAb5pE7JuBGKD
-         tu2IGnIAS0yyIHLJSWqijU77SbSGG8KEt+u72yoT6h4jqX9rGne8QptIROZqqnfupZwv
-         WicYiE1CIy00jcvXrXJt4GjRnIYz9ncAbaOOtk273wsGvrhRXlGhfkziILgYA98+/9Gk
-         DUEVaSq8/1VuIOMvkK8oNI+EWBS472zKHLvF9BTerwHQ7L5wXg/LwbRQREN3qkw/87z4
-         gHEQ==
+	s=arc-20240116; t=1752855663; c=relaxed/simple;
+	bh=jnQej5os8946OtwsAYxWV5AqWfH0NVCPXeIuQ2kik1I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U3bqecUu/wTgtkAO1vQ+oqeXRtxwwuG6lf6MudFAE3of8TW0an85LuR5mIPTXoEGrhRj0xZU6C8JsDfTN2cy8r8YUzbc0iqygZJ1A+i24E2DUecvhTldoK9N+qn9I55fSsDFFu003jQAhaZCcGdpykpugr/kJlQcllfiOyyqc5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H4JCJR3S; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I93Q72028059
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=E2+mYONdTWwAKa/b2Dnjv7
+	gT1I0AopAtzO+8co3bDc4=; b=H4JCJR3SXw9tgn0jFSQ5nadXmD0sTfvO33FeTC
+	xkfh5XGBEmDujfKzTA5bMnAmG5Ulv0jyGvCevfwmHKoWpXjjAm/4ng3/dBAtlHy8
+	fXnvStcAJWLpDeStFDUL5b3tZLKgJMwKj2+8EYZ9t569nddutkEkmWTjHCBQKekl
+	YTPqrhSxc9uFxgvQDSZowyjcXVbjGUytVvTHk1t93YwZtV18n4CAfLQDI0ukqG02
+	l2OvLbQsuhE5RDzF9Y+u3GD6qZ2vVsKZpD3jzSSEtEpoYMcN7sV7R5DWDtcK7Ejs
+	+hO5ebj+NecfXcjO/nYYv91mk1VdOFt9E7xx2ChLivO8s5og==
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com [209.85.160.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wnh64fp0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:00 +0000 (GMT)
+Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-2e8e969090aso2261768fac.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:21:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752854000; x=1753458800;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=83xEI2XLKwN+ObHpZw5yMzUhkwEXU5BkIjkQsIobU8g=;
-        b=swEMyG+yyiHn8A1bMLrGNO2YBIeyALJ8NzNfUrk7ykFkJThAL7q4Cbw/aS6WsQb4aF
-         9kAAHUIk1DxylEMGZXoBHCkcuHhqcK0qe0Wp37kpy0gBc14eriqHI81NqvOsO2ceOAbY
-         xW5n1Hu/6Xuh3e8L80saceL4l+dsxMPqRJdrFXgHBy8CHu+Q4WWsVCQl5awWYU5O/XLh
-         5MreRfs0Ug7Za9y+QC+v0ukc63WcNiKfDTYRiL2nTenQFQLnH5OtAxDqOxR7TxQns5cd
-         UNRVlFxfjvxXvwiwuOJ5YAwUMXiZPatqCJCTmnqcgozl/K2rwjnOsjDsEx0vGJaG/ihg
-         PSjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVjZlt57vo3K1+EBhaJP77rvd+9CTPZcgWJpvnC+DUSWhC05JRisWaRkOf9evm0eXZne2yqh28ZZqwUZ/Og@vger.kernel.org
-X-Gm-Message-State: AOJu0YxageXLZg6zjo0h6bEKolgiNI7c3hGKcCrgmTiJRpe4l+T/VcN1
-	PdA0TwEXwKrvUcyZl4pnbFltj727C5JXG/YiSPS0u4tuYeiW2a76j5lVI1+rVDf+mWc=
-X-Gm-Gg: ASbGncv4WyqNU9pKR+UdUhJHFkkAMBOouUpCXkoGR0FyZy52+8IerTe31MeKtyJkqKk
-	VP4ylD0NhRGdHaaRF0LHUOnsRqZMbnnQ/FtXnQntwgNqhM6q46HxPChTQT/dWIQzLeExmrAEfNJ
-	RvSKk0kH9Bd+CwVG78Soddp7CqBCmBBZqgmoAph4OpSLzD9IJNsk/6gOszLJaDJLSkFxADZ3zW1
-	UVIVoqpdfEIQHE6TDhvfzCDgjEgNnk6uVO+IgqQ3AGlt32A6wqHlee1Hli0PQUjpvv9sDtz6/49
-	syH6y+CZ1apHr5nIc2pjiC0g1zbQdoEmOSNQl8y0kUu5J2vgyXYvwJwdXcwBCBhv8g5TtTvkiOR
-	89MaIsHgozR+pFqACY85cX9wJIeoblCIrzmaQCBxdjW6p5W+Uu7Nah8gD3KJ2CPQ=
-X-Google-Smtp-Source: AGHT+IF0QxuN6b53Ajqhh8pPWoHEegj14l8lxBEfG99eop0NenvhhCX6GWM4sUaNBmu1FVWFfiXd9Q==
-X-Received: by 2002:a05:6000:310d:b0:3b6:c6b:e4e6 with SMTP id ffacd0b85a97d-3b60e4be9b2mr9606302f8f.11.1752853998584;
-        Fri, 18 Jul 2025 08:53:18 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca25678sm2264632f8f.12.2025.07.18.08.53.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 08:53:18 -0700 (PDT)
-Message-ID: <fd107ad0-27b4-48f0-a441-03294e7b029e@linaro.org>
-Date: Fri, 18 Jul 2025 16:53:17 +0100
+        d=1e100.net; s=20230601; t=1752855659; x=1753460459;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E2+mYONdTWwAKa/b2Dnjv7gT1I0AopAtzO+8co3bDc4=;
+        b=LM/CQhcnZihS2elwoPE6BrGQquGOKj9INMVnBytlR517sQ+TGIQgOt52Q4drYDXnp3
+         vkYDH+kIXkhlGi8QA3DzdTCRCKOjY4gZsRxR7V0pQfaOHZJRoCbpSwwdz3nW9AgCCFy8
+         8IWRrF7Tp74aApLjI8BQDWfuwPvx0AxUD5xYUmkDhOps+ibuRorzRjnGar9QXeF+ZMwm
+         trwP6vLe4tRoslNEk0RAS/8i1CldWZTLfQHa9K61xWfxWxlKRFoiBq9s7P49nHXRAGPx
+         m9BYkf9d/ZlbPFBwQtKXJIijOJIPU56g87Z5q/zMT6t2m1EUXS7tA4dO4liqBCXYWjWV
+         9x5w==
+X-Gm-Message-State: AOJu0YyTTWMYz6du97DVNAUHXMNai4/7NR2A/paRpQZxaSHEj/xM8sPJ
+	IBeM+qEs6CQnW2/h6tEouGqchuzPwENK/CER2QYztraK5PhMJacPxLfCVNjpiJBDwNqq6v7++YA
+	lzuaxNz1V0Ouh28V4DsVcxKuPUnlnLuCLexupi1/QH+Uw1qU8TH2tbsVT0RsSV4Di1VO/P+Xyfc
+	vl
+X-Gm-Gg: ASbGncuxhUOGrInI1jotqzCFhMm8WTE88NRL+ZQ81KJN+fawqqE1LW9xnetUVwNIw03
+	mD5hnzRV5h5e5uIflAGaXKtrcwBpMkRYV1FStET88k//d/0eEGwMKW2cLpT9YEBPzeYD1EYB5np
+	lM4lTpBM7c+CzjcwEPJIiEfCr4q6L+3UxNyXBb4crL8g+ABvUZAePLPrhgfkwnC+tX82D+Dd8YE
+	wPFvLgX1gh1C/BAZnq87ExQb/wf8KKFxAZMq4jKCYeouFF25geKGP3KSAK4rWILpPPMJlTsMOF6
+	hfGXg7EFEtkeuVTYQHtbg5xBCrCw+8Lixtl749GXsDwkwSRpzI0LEzp6XORF5HGFptZAfoMJHA4
+	Hri7MU3gxkqtIBkKYOVvgy5FqKry2mLBvPTlSxpJ5PZmest0/uAaZ
+X-Received: by 2002:a05:620a:8509:b0:7e3:35e3:3412 with SMTP id af79cd13be357-7e34d9ac2e5mr622296385a.34.1752855226594;
+        Fri, 18 Jul 2025 09:13:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJFME1iu2nBdlZCEndMtUjbp0cqubsgTDnznr23GMq/CHMfz0nkUvr0ssMwdhTZk5t9cEtiA==
+X-Received: by 2002:a05:620a:8509:b0:7e3:35e3:3412 with SMTP id af79cd13be357-7e34d9ac2e5mr622289885a.34.1752855225796;
+        Fri, 18 Jul 2025 09:13:45 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Jul 2025 09:13:44 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 0/8] pmdomain: qcom: sort out RPMh and RPM power domain
+ indices
+Date: Fri, 18 Jul 2025 19:13:38 +0300
+Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add Dell Inspiron 7441 / Latitude 7455
- (X1E-80-100)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Val Packett <val@packett.cool>
-Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250716003139.18543-1-val@packett.cool>
- <a2681844-a96a-465a-a48d-49e1ede526c6@linaro.org>
- <316007b6-6e24-4095-be24-fbd4ae7d425c@linaro.org>
- <2c5b3ddb-d171-4b30-9b64-def913ca5af2@linaro.org>
-Content-Language: en-US
-In-Reply-To: <2c5b3ddb-d171-4b30-9b64-def913ca5af2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALJyemgC/yWM2wqDMBBEfyXsc0OTiAj+SvEhJtu6lFy6ia0g/
+ nvT+jLDGZizQ0EmLDCKHRjfVCjFBvoiwC02PlCSbwxGmV4NepCMn8RPyTks2f+qpe663lit3Ox
+ 7aM/MeKftb71NJzO+1iav5wizLShdCoHqKCJu9RpsqcgwHccXYpV3FZQAAAA=
+X-Change-ID: 20250717-rework-rpmhpd-rpmpd-13352a10cbd5
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1864;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=jnQej5os8946OtwsAYxWV5AqWfH0NVCPXeIuQ2kik1I=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK2X/4FUMKR/6O9sQRhqyVPR9hRSX6jxmwhn
+ gheSKljeAiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytgAKCRCLPIo+Aiko
+ 1WBDB/93DGP5KNuZts9BxHzohRG1Am3sPtjk5P93zmsB/JMqiWqKOM/hgbgj5r+UBDA8tyf+e2S
+ eBGQrnJ6eZ3ybThugmU5ZTY8qq3d4TKf5hWv3P7bufQoeu0FWwMJNcg4nmSGxlrPWslux4byiRl
+ 86v7dmjWxDRHZkT6CtDTUVi+XyjMjCeIvssj0pR5GHfYMh8Y6JBV0daf0me7Sec1keBlgb6BboW
+ DAr1H8ykZzXcebSMtffH3PEY36WiCxRAngEjpl+CcCQIVJNsRCgr2MA/7TOT09cFJZFqYaGa3sD
+ O1EZUeyToT0ck7XzZCHFx0gcP1/M8gaCwNqEc5OheEDt7Y9U
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Authority-Analysis: v=2.4 cv=dKimmPZb c=1 sm=1 tr=0 ts=687a746c cx=c_pps
+ a=Z3eh007fzM5o9awBa1HkYQ==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gAiK-lJt_Rg5ifV0ZIAA:9
+ a=QEXdDO2ut3YA:10 a=eBU8X_Hb5SQ8N-bgNfv4:22
+X-Proofpoint-GUID: R8kZz81-YuQDQO45u8iEWW5HQf7ttfjB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyOCBTYWx0ZWRfX2XbnKMN/OU8B
+ FfJAaj5uOhwoCHTGHaGEmcA/QAuZLGXc8ZX09ILx3L5u4XJO15b0XUj3VpwR70Ea1z/cLa5cWxm
+ zsMBqfmzctVPElMOu3v/8hyGLpmR4xAReSxGkg77jWUVWjvzjcbXyme8gs1wcaLAuH6grLUX4L5
+ //GHuyNgwmUm73Jc0D2RecWMCpixkTZ6npCmnCofhXR/TDsD1G7bwk3p0gEEwItns4SVvJIvQ6P
+ RmqzVXvGtkyhXLF6IKRk7UybHQ2zGsZXIrwOIKal7HgorglAhP1QiKQ+nfwRONSWQq+dX7BzsNI
+ yGl3VQXkqtOB/6vkRtiJr9sGfTjlODncX28xsYyldRJ4Zgx7km00E57qJywvRfSiHK6hrlRh0rS
+ xnBx25YyJciDEHmEp9hVPFYs/AyS8pB5lmiSIxHSQwHpbdIl7E+BEtok6eSYp392AYpFQuyY
+X-Proofpoint-ORIG-GUID: R8kZz81-YuQDQO45u8iEWW5HQf7ttfjB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-18_03,2025-07-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 mlxlogscore=706 mlxscore=0 spamscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507180128
 
-On 18/07/2025 16:34, Bryan O'Donoghue wrote:
-> On 18/07/2025 16:33, Bryan O'Donoghue wrote:
->> On 16/07/2025 11:53, Bryan O'Donoghue wrote:
->>> On 16/07/2025 01:26, Val Packett wrote:
->>>> Since v3[1]:
->>>>
->>>> - Applied R-b tags
->>>> - Skipping the eDP panel ID patch now since it's been applied
->>>> - Fixed the last remaining '-names before -0' order issue
->>>> - Changed usb_mp: keep the unused PHYs enabled in the DT
->>>>    (to let them go to sleep), like how it is done for the XPS
->>>>
->>>> [1]: https://lore.kernel.org/all/20250706205723.9790-2- 
->>>> val@packett.cool/
->>>>
->>>> Bryan O'Donoghue (2):
->>>>    dt-bindings: arm: qcom: Add Dell Inspiron 14 Plus 7441
->>>>    arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455
->>>>
->>>> Val Packett (2):
->>>>    dt-bindings: arm: qcom: Add Dell Latitude 7455
->>>>    firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude
->>>>      7455
->>>>
->>>>   .../devicetree/bindings/arm/qcom.yaml         |    2 +
->>>>   arch/arm64/boot/dts/qcom/Makefile             |    4 +
->>>>   arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi   | 1666 +++++++++++++ 
->>>> ++++
->>>>   .../x1e80100-dell-inspiron-14-plus-7441.dts   |   52 +
->>>>   .../dts/qcom/x1e80100-dell-latitude-7455.dts  |   53 +
->>>>   drivers/firmware/qcom/qcom_scm.c              |    2 +
->>>>   6 files changed, 1779 insertions(+)
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell- 
->>>> inspiron-14-plus-7441.dts
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell- 
->>>> latitude-7455.dts
->>>>
->>>
->>> Just tested on the 14p this updated version seems to work just about 
->>> fine - or no worse than previous.
->>>
->>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>
->> Ah I was booting my old dts with the spelling mistake "inspir I on" 
->> booting the insprion.dtb here is a no-boot for me.
->>
->> Please hold off on applying this, until its root-caused.
->>
->> ---
->> bod
-> 
-> [sic] inspiron.dtb
+- Separate RPMh power domain bindings from RPM PD bindings
 
-Ah no it is OK to boot.
+- Drop now-unused (after [1] is merged) binding indices for RPMh
+  platforms
 
-For some reason my encrypted disk prompt is a blank screen with this dts 
-but other than that it appears to work the same.
+- Introduce generic bindings for RPM power domains controller
 
-No reason to hold it up.
+Two last patches (marked as [DO NOT MERGE]) should only be merged after
+corresponding DT cleanup lands ([1] and DTS parts of this patchset).
 
+[1] https://lore.kernel.org/r/20250717-fix-rpmhpd-abi-v1-0-4c82e25e3280@oss.qualcomm.com
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
-bod
+Dmitry Baryshkov (8):
+      dt-bindings: power: qcom-rpmpd: split RPMh domains definitions
+      dt-bindings: power: qcom-rpmpd: sort out entries
+      dt-bindings: power: qcom-rpmpd: add generic bindings for RPM power domains
+      pmdomain: qcom: rpmpd: switch to RPMPD_* indices
+      arm64: dts: qcom: dts: switch to RPMPD_* indices
+      ARM: dts: qcom: dts: switch to RPMPD_* indices
+      [DO NOT MERGE] dt-bindings: power: qcom-rpmpd: drop compatibility defines
+      [DO NOT MERGE] dt-bindings: power: qcom,rpmhpd: drop duplicate defines
+
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi |   4 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi    |   8 +-
+ arch/arm64/boot/dts/qcom/msm8917.dtsi    |  10 +-
+ arch/arm64/boot/dts/qcom/msm8976.dtsi    |   4 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi    |  16 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi     |  16 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi     |  12 +-
+ drivers/pmdomain/qcom/rpmpd.c            | 112 ++++-----
+ include/dt-bindings/power/qcom,rpmhpd.h  | 175 +++++++++++++++
+ include/dt-bindings/power/qcom-rpmpd.h   | 375 ++++---------------------------
+ 10 files changed, 306 insertions(+), 426 deletions(-)
+---
+base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
+change-id: 20250717-rework-rpmhpd-rpmpd-13352a10cbd5
+
+Best regards,
+-- 
+With best wishes
+Dmitry
+
 
