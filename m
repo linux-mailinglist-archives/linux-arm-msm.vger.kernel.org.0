@@ -1,90 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-65687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B64DB0A855
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:21:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35CD8B0A858
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:21:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E5D85A378D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:21:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E12D7A46194
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:20:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2950D2E11D1;
-	Fri, 18 Jul 2025 16:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B0961DE2B4;
+	Fri, 18 Jul 2025 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="odUf99go"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lFlfwSoq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903BF2BD00C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791EE2E2658
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752855656; cv=none; b=mFTnbWJX7owBrfvjkE7MjeJhhJ9H8uG7+AsZzpLLkBLk1AiDRka66+M/t8gX+Levo66zmLzgm8BjhpD4nAsZ4wZB7kf55mguD1EP5fBzEZ+TykD40pGI7gJ+esHcDAc4jZTqcyhqjtAWiQf8GdwaM+gSgmAp9CgEJ5a+nO9WFD0=
+	t=1752855670; cv=none; b=cbZqTMdiONzvPqJnh8l57ITx5QjvmmXDO1SdKxf9+0iBWehUm8311qsK+UD16lrt9wzBU+no25zRTrodUAdQpPWec/L8vIE5sBijZ+KvXVBvnOFe1Xa/PWq30V4/3w4sTtrNq5dO/aBfpOiU3oDyQ1PQfwy8xZZf61BrPPySeDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752855656; c=relaxed/simple;
-	bh=hKwIxLX6Tkq5ssXYijoQYUEhL4IdWqUldpJvuIWYf1I=;
+	s=arc-20240116; t=1752855670; c=relaxed/simple;
+	bh=PQ8nep6+2CkJ/XSkB12+zBFIYToc6uVoayIbLHk7IAM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GFjTlZpjddE87TxuAcYpQFuJGOelhff72HXNhkQp9WTWfvTyBYpjok7rSEn+6mlAvuTpGLonc12/VYIY8K2kh7Cu4inlCOUzrlaPYjQlQlDZnaANuJdZv5X0qSAyKfxrJF97LLbpkrP8Y0ytbLUmNBk/8laszZqMcPTwlwAefa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=odUf99go; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=u0mrrOvPLYM6jxZsewOtpnkxvlQPAtxlxVAbMdyZ3CcQLRBiNoFLAaUSt5U/TAAqN2BPyyBGI8zGwtNJhxKpMFvkJ58Hbf8jW0MzjHsQ6EySIPSNDIL9gK9zg6QLiwNgSXxaVRs5mpwq+6C01Yhiar79Xvc89tqYRWr4NmYDUt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lFlfwSoq; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I8S2MF015727
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:54 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IEHH3O022256
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0bC86cQsWTQOgqMpG7vO8FaEN+Csh7UDonwPSnCbi+A=; b=odUf99go/JP/kCuV
-	dDKnf240HKqwNgfq9OmBBOjUqazvW75E5X4uYiwv6GaO8+PKa3pj8csWZwiXETWz
-	i+0FDTokvPYFYvEhdgR4xpYGqbzBO+G5E2pSoSxKhBHiRfmoL5XWhdDEWw4JUgRQ
-	/ud24bNu6pYMJ3QnS/2dOeTuOikNsffmUG+erWVNGA8oRd8dwNu9DuVVaP0R31tC
-	nxMcTXxXdZjaHEz9AbFDYamjACIXLws9w9kLPRvEtv70shYf9FwK4jvjyGqSdThP
-	uElXPEQjCQ0Xutc2rW4nabKI626LWVSN6aMC7/QJse2oo48I0xfQSVfnbdkQYzlx
-	nbnXjw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47w5dyy62r-1
+	ToUWdrHOvvzd4l32npkLp+sN31SJLS2F6Ly2KepaknI=; b=lFlfwSoqDHT1TY1N
+	VPEpLTcEsQtxZCs2qakOqXo/4ZER0prB+NxDrImd7sC0xU/hVDdjShNNnum9zcZF
+	aCjaC7xXWvkJjnSfUsOXACWK5cQXFNYND76q5nMK9ieBfDWg5XtNeZxR+P6OD44s
+	SRMWUo8dEoVnvsi43HyEEUc8J1Ccq7tPcMBrkLYHlX0igLWdG7bKGGL4Frd5RChC
+	/FsjUWLnUUdAZGwtJ+fCIUMolrgs6dvm5GF1Iv486KHKKMdGhKo1OTxVsKLxI2Xu
+	DMf+QX1ky0LEAaeFCfPWgobHuGjZxTN3EdCS89zTcL0TsMtyTp0J4RIdmJkajngb
+	f178SA==
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsyc87j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:53 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ab878dfc1aso40692601cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:20:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:21:08 +0000 (GMT)
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-73e633ec148so1631976a34.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:21:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752855652; x=1753460452;
+        d=1e100.net; s=20230601; t=1752855667; x=1753460467;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0bC86cQsWTQOgqMpG7vO8FaEN+Csh7UDonwPSnCbi+A=;
-        b=uwjLkgHZUoIDSe3R++g+7Wo0mRjjCs/ru0Enpbp0biU/Q/9X0SDoi1iIP0jH5oYPLZ
-         kMI6qh/mj8UVZFhwtfFPP8FmvH0yddOHoWyRK4oNR7VFWklaei5MqOMR3/4JB5GTLwdn
-         P8XDmQh+z4rxBvTe71ByNTJ3qI3nCzGv+1LGJNmilkdhJWC34AAlcdB1Ys6SPGUhMlhG
-         UKjVxaAJlr/1R4DnK5xMT5UccfYRmKMUHwZyLFX1qRDRRKqLy3fJdHG/EDeGW/euUhuS
-         I/QUDIyPdVLtMPQ4sm7qnEt/EPNC5DMdDZOArUVW2jtXXicvQv1oiPk9IrDeyQR0YCOU
-         TzOQ==
-X-Gm-Message-State: AOJu0YwGNo1DiWsqBAt0Y7kTzqdydy7pLlwrBlq425BONUFW4Kd8Gl8m
-	iGUEg4noTmoOY3DTe2JFqhamMNsTyYdkA5DwtIQoVuAttRYCRnWRDp408Sh9ITQJhQ/du8Z0WNH
-	0dYzjJY/OQ9zq0uIHVmhiyIARjMq7mR2nR9yvrGg+Tym9/rgcIbBOV/bTv89jSZivb6Jf/NBpvu
-	Cy
-X-Gm-Gg: ASbGncucIznY5ALF3oOxMSeRtFeo7Nr7zdAHc0k8PLquarZotnk7lhjdBoAeQVuAMPO
-	yEgXeyaPspNiXWpTNz8g6HdZ4dXEqMjgldn9l7UpA0irIoTPN8+g8V5aZiZiI03BYx1XSWs6ZxL
-	VwvJVwVV4/B4E457Ge/3PkGSMRcIeHCZcnCorUSgVCBFC6cFyS+bXEHcDfv9yd2U7u1XO93iLxy
-	9CYaHBK704LvCi6vOE6yIIa7esxeyinCcQxhthzNlWV8VsKWpFlo+NlnmBUGiS3mu720e75LRmH
-	V9dvBcr6WIqwtZLZ75z835cec984gWG8tt9R5WzjxEv594xJkYNuV2QEbgdbuJliCfPWz7wLRqp
-	nnm3oEvKwwN3rpnU31kqzJJwrhUnBdY43UUftQyDDjEj5oYn0cEoR
-X-Received: by 2002:ae9:e302:0:b0:7e3:2db6:1163 with SMTP id af79cd13be357-7e34d9d2706mr818146585a.43.1752855231806;
-        Fri, 18 Jul 2025 09:13:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJ/xfyE4EqYZs5SJKoG8l9Wmr7yLZMHsyXm0BSNJgn7dGYympaLxySGid05XcsqJ+9QPL8dQ==
-X-Received: by 2002:ae9:e302:0:b0:7e3:2db6:1163 with SMTP id af79cd13be357-7e34d9d2706mr818138485a.43.1752855230952;
-        Fri, 18 Jul 2025 09:13:50 -0700 (PDT)
+        bh=ToUWdrHOvvzd4l32npkLp+sN31SJLS2F6Ly2KepaknI=;
+        b=t8t0TSCWpG+MM/PFHjm/V3s74+PHfNmip5EMybL4RAyg6cZzABPhckFehwFuHRGgH7
+         JlC2k0rcnWO4cgQtlkH3c/U2LNNJKdj3Tk7JI4SvXDIT+BLsSYxjxFN8GCe44ETDtosh
+         Dc5sDjSe5RnVR0+ks2/KknL3tzMW/YKR5onWMXoZqhlehtqS9lfzUX9XLyU8MPPGwRh1
+         z/aCt/RFkgBz/Zmp3WaAyfhNWo2JYSkW7Vnak/xURUuN9MI+rsK8F13UoOIEXwEb4Fsy
+         o6nzwKzdCaBrNmje3D4oJnGk200YRF9mMGAYCy3UU7RLtYla8PJ27mDPahrVm/UwcUP5
+         iYwg==
+X-Gm-Message-State: AOJu0YzDwY/TtlLvhRaOYxehKMVy1eD6qiVqi1eYZKAUzoSZ2k+VR/Sw
+	nwL2dXR9d2JnG+sr1D94agKsVorJfpGct3KoiOQ9TwFvLNCkA3jlkEdfKEUFeidtUnEHe3bwTWA
+	hnzRpjvaS2MlCeDmNyqqycmiDN6MmZYwx/jLwUF59C2Sqlge+AJuVutzqGdh7gqL0b8bW/0oA6u
+	XA
+X-Gm-Gg: ASbGncufY/JDYI+a+c6AgwzkRuVsUSCdKam4GP6cM4y/Vd5pe0vhyafEelYNfAZR7Xo
+	Wrg7Sp8N0UIkEVCt8nocuhWJB2YWxPPAbWLWeHjqoRjCoJ5h3Bbg2RROn2wr4KGvcvGnfJkBmb8
+	57+X/DJB5P/62uJbWc9vtQLLrZHYNtlUZokGK515fehGnCGt2gYi2DommbQTNDa6GD7jEa1ctPW
+	I4/f/3BVZYfOc3DJYnyDQRKnnz6aYmLBE/vegfOrQpK3J8jDsYdkwtoKpe2t41ZEN831sx54QEJ
+	J75LjXp3q/nPtSDrOrq3FzBJhTDfpyWNVdReJ9pwtrhO8Bembw3qEF4IALAfOY80A/mCYeEgKrh
+	lyh6PceL81pJKAO42q/zm6OPAZu6SKNt1cRvyBBGEo1u4ZEmOfQTn
+X-Received: by 2002:a05:620a:2947:b0:7e3:3d2e:1f08 with SMTP id af79cd13be357-7e34361b247mr1657432785a.45.1752855232940;
+        Fri, 18 Jul 2025 09:13:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1YG0jt9yWFaIGUj666c/NtISkNC4WDZgTnNihtZZCDJ9bbquyIoF7UFwFofEUy4lFvuRhlg==
+X-Received: by 2002:a05:620a:2947:b0:7e3:3d2e:1f08 with SMTP id af79cd13be357-7e34361b247mr1657424385a.45.1752855232184;
+        Fri, 18 Jul 2025 09:13:52 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.48
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jul 2025 09:13:49 -0700 (PDT)
+        Fri, 18 Jul 2025 09:13:51 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 19:13:41 +0300
-Subject: [PATCH 3/8] dt-bindings: power: qcom-rpmpd: add generic bindings
- for RPM power domains
+Date: Fri, 18 Jul 2025 19:13:42 +0300
+Subject: [PATCH 4/8] pmdomain: qcom: rpmpd: switch to RPMPD_* indices
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-3-eedca108e540@oss.qualcomm.com>
+Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-4-eedca108e540@oss.qualcomm.com>
 References: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -104,227 +103,228 @@ To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5883;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6484;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=hKwIxLX6Tkq5ssXYijoQYUEhL4IdWqUldpJvuIWYf1I=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK3c1qXB/balMU/jlQcdeziArEdBNc7sKEd3
- ef4fwJs6OKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
- 1SkJB/0WeBKjARPPuXb1n5taQMhySYAUcfJX1gsRiO3aUC1ORivBGXl2bytDlYboU1K56NYeWO4
- /khQR9GtaaZJ2TqnHrpnqA6Dxegz+/T/hwUFiSbXthk5YD5Br2JNJFkDvEJ9sSlEIHpyOKtnm+I
- ehbjPIgKY17hLhIxW7/MbhYrl964elgrZn0ue1Fk5HLan1wthQJt2fXyKChkQs/vk0BSWPweCBz
- z1DC5N7U37sxpfozs3+tYb0jsOYRWaBG9/K+9LDelcJEgjD6+pf5w+U26qORa0ShOgYGuguAzVS
- Fw+fqhrBAPr30ShCCGpSRD35A8Pp1LSqNF1p3u6lpUCgrqpl
+ bh=PQ8nep6+2CkJ/XSkB12+zBFIYToc6uVoayIbLHk7IAM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK31D+ET4JXXb3RpsdqeFLE9iRYlmTx+o5vX
+ ICQ4VXeLs+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
+ 1fRAB/9veeHp8Lre9JqC3BHTf4Nu8Ske2qUokDoR2mCLk5a+g2oDWpJ43Kawe0+mF9OZ1wj4fL6
+ zd9gj0ES6Z9YD6oEYng7H4tFZTDyaQLMw2D2KfDaqqDJGjM7uIH359YYbW3pHp5zSfH5ShNecAU
+ VmSLQIZoS7w8+RGPEhPUKtaW5fKo8PlPX8qWmUl1mEnLIqrPZB/QAY0KivUlQLZdvDXdvAQKboE
+ jWKvPZ+sH9c0hfJfnYl4uygNzrNpmrmNPI/XQ+g55mES+E9+4DZOU5BcMBoc+9kX9gZyZ36Ep4V
+ IaBVJ9Xb2I5S1oIz4beNVjJNTTI8FNEUxVI27jAkBIPHcEnb
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: uNic6jG6f5zof5iguPq8ch-l9fwSbDzO
-X-Authority-Analysis: v=2.4 cv=RtXFLDmK c=1 sm=1 tr=0 ts=687a7465 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=AzVmNdOAsp2gS-V4oEsA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyOCBTYWx0ZWRfX2IlLjQvvGi5z
- 8NhuVMDLXwr65YH8h5AKWg00VjA0eg/VSYSvAK1PBjNjd78EJy9mPSTH5SydZESzWKg+GimWHZy
- ROr0LWNx+2J1IZEiH7h5/TGI9coV9Lb0VJMn4T1p9ybEPGAxGAJBJxkEQPYUqvVNeOTQIxnKUaP
- PLWcQSLwYkx7CJ2eBN7er6m5cxs53c18VAIMfj4a+fKkprbYFfZwpgsfFhieiLQGH8+7ETsAF4G
- EelzVas4103CS1JkQH2ZFWcMZxH4aj731tm2mBJfB9GA8vQRM+zp/gFKb5Z6B3/niIkpsEwu4rR
- wY3zgr82poCote2fep+F/CDdFqDsZOA9s01llFudTWV8KlOY+gi/cC5SeZd05NYU3H0yVEUvhXY
- gWkMzkdR/28trsyU6G3B88YrG8hr3ZGHDcCvcWXmG70uw4uVmtqClZLCzSqWYd9MTlkw9Eda
-X-Proofpoint-GUID: uNic6jG6f5zof5iguPq8ch-l9fwSbDzO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyOCBTYWx0ZWRfXxzKn8it/w098
+ AQiT7nHjdkeqRqyA/q5r50md9oqjo6MS/Sor5dBrIX9xFORCqhYGGXXCpE2eIKLkDPMWHy8xFM7
+ 4Q6Jn5CdkPiHKdubCgvIO3DoLQV2Gv31bfzb8+WfkPwc4vylYvqqN8YpwF1g2HVuL/x7lXaF2J3
+ IaJdn3xLNhJbCtA1A7qspAaFN3GpXl2Iy87nvpCIg4CuI8UBG/s39SwDbMdfM4DVlbrl4r/IOJ/
+ wt4u4i50jGQUrJkMHVzbaZM/31dx/s8B/olQtMSKsoC91+4+9zs2/Ni3pPuoD/ed8YTQIh/1a6T
+ 8uAzTqOczIlJT5xu39MSp0zO6HcsMzsrTH6/IJBkhffdZQpClDpzUmUnc0Ipz2oJQ6GQsS6kgCa
+ H9x6FWqXxBvmAlcgwyisTE+GLiHsKoqP10zqPaiPGYq59+6PO3Vn/d8ivuCJ6qJeYD/kxj8M
+X-Proofpoint-GUID: q5R6tGBfdNk-bCikr1Qp9fH-pcDwkPOT
+X-Proofpoint-ORIG-GUID: q5R6tGBfdNk-bCikr1Qp9fH-pcDwkPOT
+X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=687a7474 cx=c_pps
+ a=z9lCQkyTxNhZyzAvolXo/A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=9OzbfAs58j7jRePA22kA:9 a=QEXdDO2ut3YA:10
+ a=EyFUmsFV_t8cxB2kMr4A:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-18_03,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=877
- priorityscore=1501 phishscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507180128
+ malwarescore=0 mlxlogscore=910 impostorscore=0 mlxscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507180128
 
-Some of the Qualcomm RPM PD controllers use a common set of indices for
-power domains. Add generic indices for Qualcomm RPM power domain
-controllers.
+Use generic RPMPD_* defines for power domain instead of using
+platform-specific defines for the platforms that use shared indices.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- include/dt-bindings/power/qcom-rpmpd.h | 121 +++++++++++++++++++--------------
- 1 file changed, 70 insertions(+), 51 deletions(-)
+ drivers/pmdomain/qcom/rpmpd.c | 112 +++++++++++++++++++++---------------------
+ 1 file changed, 56 insertions(+), 56 deletions(-)
 
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index 65f7d5ecc3521cfbc45d6158bd6143ea09f47302..4371ac941f29d9657b6573f4934658f100726224 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -6,18 +6,37 @@
+diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
+index 833c46944600faa641d44ebe85db17280bb927b1..f8580ec0f73785544aeb6f686438f39b477d134d 100644
+--- a/drivers/pmdomain/qcom/rpmpd.c
++++ b/drivers/pmdomain/qcom/rpmpd.c
+@@ -631,12 +631,12 @@ static struct rpmpd ssc_mx_rwsm0_vfl = {
+ };
  
- #include <dt-bindings/power/qcom,rpmhpd.h>
+ static struct rpmpd *mdm9607_rpmpds[] = {
+-	[MDM9607_VDDCX] =	&cx_s3a_lvl,
+-	[MDM9607_VDDCX_AO] =	&cx_s3a_lvl_ao,
+-	[MDM9607_VDDCX_VFL] =	&cx_s3a_vfl,
+-	[MDM9607_VDDMX] =	&mx_l12a_lvl,
+-	[MDM9607_VDDMX_AO] =	&mx_l12a_lvl_ao,
+-	[MDM9607_VDDMX_VFL] =	&mx_l12a_vfl,
++	[RPMPD_VDDCX] =		&cx_s3a_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_s3a_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_s3a_vfl,
++	[RPMPD_VDDMX] =		&mx_l12a_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_l12a_lvl_ao,
++	[RPMPD_VDDMX_VFL] =	&mx_l12a_vfl,
+ };
  
-+/* Generic RPM Power Domain Indexes */
-+#define RPMPD_VDDCX		0
-+#define RPMPD_VDDCX_AO		1
-+/* VFC and VFL are mutually exclusive and can not be present on the same platform */
-+#define RPMPD_VDDCX_VFC		2
-+#define RPMPD_VDDCX_VFL		2
-+#define RPMPD_VDDMX		3
-+#define RPMPD_VDDMX_AO		4
-+#define RPMPD_VDDMX_VFL		5
-+#define RPMPD_SSCCX		6
-+#define RPMPD_SSCCX_VFL		7
-+#define RPMPD_SSCMX		8
-+#define RPMPD_SSCMX_VFL		9
-+
-+/*
-+ * Platform-specific power domain bindings. Don't add new entries here, use
-+ * RPMPD_* above.
-+ */
-+
- /* MDM9607 Power Domains */
--#define MDM9607_VDDCX		0
--#define MDM9607_VDDCX_AO	1
--#define MDM9607_VDDCX_VFL	2
--#define MDM9607_VDDMX		3
--#define MDM9607_VDDMX_AO	4
--#define MDM9607_VDDMX_VFL	5
-+#define MDM9607_VDDCX		RPMPD_VDDCX
-+#define MDM9607_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MDM9607_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define MDM9607_VDDMX		RPMPD_VDDMX
-+#define MDM9607_VDDMX_AO	RPMPD_VDDMX_AO
-+#define MDM9607_VDDMX_VFL	RPMPD_VDDMX_VFL
+ static const struct rpmpd_desc mdm9607_desc = {
+@@ -646,9 +646,9 @@ static const struct rpmpd_desc mdm9607_desc = {
+ };
  
- /* MSM8226 Power Domain Indexes */
--#define MSM8226_VDDCX		0
--#define MSM8226_VDDCX_AO	1
--#define MSM8226_VDDCX_VFC	2
-+#define MSM8226_VDDCX		RPMPD_VDDCX
-+#define MSM8226_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MSM8226_VDDCX_VFC	RPMPD_VDDCX_VFC
+ static struct rpmpd *msm8226_rpmpds[] = {
+-	[MSM8226_VDDCX] =	&cx_s1a_corner,
+-	[MSM8226_VDDCX_AO] =	&cx_s1a_corner_ao,
+-	[MSM8226_VDDCX_VFC] =	&cx_s1a_vfc,
++	[RPMPD_VDDCX] =		&cx_s1a_corner,
++	[RPMPD_VDDCX_AO] =	&cx_s1a_corner_ao,
++	[RPMPD_VDDCX_VFC] =	&cx_s1a_vfc,
+ };
  
- /* MSM8939 Power Domains */
- #define MSM8939_VDDMDCX		0
-@@ -30,11 +49,11 @@
- #define MSM8939_VDDMX_AO	7
+ static const struct rpmpd_desc msm8226_desc = {
+@@ -675,11 +675,11 @@ static const struct rpmpd_desc msm8939_desc = {
+ };
  
- /* MSM8916 Power Domain Indexes */
--#define MSM8916_VDDCX		0
--#define MSM8916_VDDCX_AO	1
--#define MSM8916_VDDCX_VFC	2
--#define MSM8916_VDDMX		3
--#define MSM8916_VDDMX_AO	4
-+#define MSM8916_VDDCX		RPMPD_VDDCX
-+#define MSM8916_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MSM8916_VDDCX_VFC	RPMPD_VDDCX_VFC
-+#define MSM8916_VDDMX		RPMPD_VDDMX
-+#define MSM8916_VDDMX_AO	RPMPD_VDDMX_AO
+ static struct rpmpd *msm8916_rpmpds[] = {
+-	[MSM8916_VDDCX] =	&cx_s1a_corner,
+-	[MSM8916_VDDCX_AO] =	&cx_s1a_corner_ao,
+-	[MSM8916_VDDCX_VFC] =	&cx_s1a_vfc,
+-	[MSM8916_VDDMX] =	&mx_l3a_corner,
+-	[MSM8916_VDDMX_AO] =	&mx_l3a_corner_ao,
++	[RPMPD_VDDCX] =		&cx_s1a_corner,
++	[RPMPD_VDDCX_AO] =	&cx_s1a_corner_ao,
++	[RPMPD_VDDCX_VFC] =	&cx_s1a_vfc,
++	[RPMPD_VDDMX] =		&mx_l3a_corner,
++	[RPMPD_VDDMX_AO] =	&mx_l3a_corner_ao,
+ };
  
- /* MSM8909 Power Domain Indexes */
- #define MSM8909_VDDCX		MSM8916_VDDCX
-@@ -44,11 +63,11 @@
- #define MSM8909_VDDMX_AO	MSM8916_VDDMX_AO
+ static const struct rpmpd_desc msm8916_desc = {
+@@ -689,11 +689,11 @@ static const struct rpmpd_desc msm8916_desc = {
+ };
  
- /* MSM8917 Power Domain Indexes */
--#define MSM8917_VDDCX		0
--#define MSM8917_VDDCX_AO	1
--#define MSM8917_VDDCX_VFL	2
--#define MSM8917_VDDMX		3
--#define MSM8917_VDDMX_AO	4
-+#define MSM8917_VDDCX		RPMPD_VDDCX
-+#define MSM8917_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MSM8917_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define MSM8917_VDDMX		RPMPD_VDDMX
-+#define MSM8917_VDDMX_AO	RPMPD_VDDMX_AO
+ static struct rpmpd *msm8917_rpmpds[] = {
+-	[MSM8917_VDDCX] =	&cx_s2a_lvl,
+-	[MSM8917_VDDCX_AO] =	&cx_s2a_lvl_ao,
+-	[MSM8917_VDDCX_VFL] =	&cx_s2a_vfl,
+-	[MSM8917_VDDMX] =	&mx_l3a_lvl,
+-	[MSM8917_VDDMX_AO] =	&mx_l3a_lvl_ao,
++	[RPMPD_VDDCX] =		&cx_s2a_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_s2a_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_s2a_vfl,
++	[RPMPD_VDDMX] =		&mx_l3a_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_l3a_lvl_ao,
+ };
  
- /* MSM8937 Power Domain Indexes */
- #define MSM8937_VDDCX		MSM8917_VDDCX
-@@ -81,12 +100,12 @@
- #define MSM8974_VDDGFX_VFC	4
+ static const struct rpmpd_desc msm8917_desc = {
+@@ -747,12 +747,12 @@ static const struct rpmpd_desc msm8974pro_pma8084_desc = {
+ };
  
- /* MSM8976 Power Domain Indexes */
--#define MSM8976_VDDCX		0
--#define MSM8976_VDDCX_AO	1
--#define MSM8976_VDDCX_VFL	2
--#define MSM8976_VDDMX		3
--#define MSM8976_VDDMX_AO	4
--#define MSM8976_VDDMX_VFL	5
-+#define MSM8976_VDDCX		RPMPD_VDDCX
-+#define MSM8976_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MSM8976_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define MSM8976_VDDMX		RPMPD_VDDMX
-+#define MSM8976_VDDMX_AO	RPMPD_VDDMX_AO
-+#define MSM8976_VDDMX_VFL	RPMPD_VDDMX_VFL
+ static struct rpmpd *msm8976_rpmpds[] = {
+-	[MSM8976_VDDCX] =	&cx_s2a_lvl,
+-	[MSM8976_VDDCX_AO] =	&cx_s2a_lvl_ao,
+-	[MSM8976_VDDCX_VFL] =	&cx_rwsc2_vfl,
+-	[MSM8976_VDDMX] =	&mx_s6a_lvl,
+-	[MSM8976_VDDMX_AO] =	&mx_s6a_lvl_ao,
+-	[MSM8976_VDDMX_VFL] =	&mx_rwsm6_vfl,
++	[RPMPD_VDDCX] =		&cx_s2a_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_s2a_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_rwsc2_vfl,
++	[RPMPD_VDDMX] =		&mx_s6a_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_s6a_lvl_ao,
++	[RPMPD_VDDMX_VFL] =	&mx_rwsm6_vfl,
+ };
  
- /* MSM8994 Power Domain Indexes */
- #define MSM8994_VDDCX		0
-@@ -107,16 +126,16 @@
- #define MSM8996_VDDSSCX_VFC	6
+ static const struct rpmpd_desc msm8976_desc = {
+@@ -796,16 +796,16 @@ static const struct rpmpd_desc msm8996_desc = {
+ };
  
- /* MSM8998 Power Domain Indexes */
--#define MSM8998_VDDCX		0
--#define MSM8998_VDDCX_AO	1
--#define MSM8998_VDDCX_VFL	2
--#define MSM8998_VDDMX		3
--#define MSM8998_VDDMX_AO	4
--#define MSM8998_VDDMX_VFL	5
--#define MSM8998_SSCCX		6
--#define MSM8998_SSCCX_VFL	7
--#define MSM8998_SSCMX		8
--#define MSM8998_SSCMX_VFL	9
-+#define MSM8998_VDDCX		RPMPD_VDDCX
-+#define MSM8998_VDDCX_AO	RPMPD_VDDCX_AO
-+#define MSM8998_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define MSM8998_VDDMX		RPMPD_VDDMX
-+#define MSM8998_VDDMX_AO	RPMPD_VDDMX_AO
-+#define MSM8998_VDDMX_VFL	RPMPD_VDDMX_VFL
-+#define MSM8998_SSCCX		RPMPD_SSCCX
-+#define MSM8998_SSCCX_VFL	RPMPD_SSCCX_VFL
-+#define MSM8998_SSCMX		RPMPD_SSCMX
-+#define MSM8998_SSCMX_VFL	RPMPD_SSCMX_VFL
+ static struct rpmpd *msm8998_rpmpds[] = {
+-	[MSM8998_VDDCX] =	&cx_rwcx0_lvl,
+-	[MSM8998_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
+-	[MSM8998_VDDCX_VFL] =	&cx_rwcx0_vfl,
+-	[MSM8998_VDDMX] =	&mx_rwmx0_lvl,
+-	[MSM8998_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
+-	[MSM8998_VDDMX_VFL] =	&mx_rwmx0_vfl,
+-	[MSM8998_SSCCX] =	&ssc_cx_rwsc0_lvl,
+-	[MSM8998_SSCCX_VFL] =	&ssc_cx_rwsc0_vfl,
+-	[MSM8998_SSCMX] =	&ssc_mx_rwsm0_lvl,
+-	[MSM8998_SSCMX_VFL] =	&ssc_mx_rwsm0_vfl,
++	[RPMPD_VDDCX] =		&cx_rwcx0_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_rwcx0_vfl,
++	[RPMPD_VDDMX] =		&mx_rwmx0_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
++	[RPMPD_VDDMX_VFL] =	&mx_rwmx0_vfl,
++	[RPMPD_SSCCX] =		&ssc_cx_rwsc0_lvl,
++	[RPMPD_SSCCX_VFL] =	&ssc_cx_rwsc0_vfl,
++	[RPMPD_SSCMX] =		&ssc_mx_rwsm0_lvl,
++	[RPMPD_SSCMX_VFL] =	&ssc_mx_rwsm0_vfl,
+ };
  
- /* QCM2290 Power Domains */
- #define QCM2290_VDDCX		0
-@@ -138,16 +157,16 @@
- #define QCS404_LPIMX_VFL	6
+ static const struct rpmpd_desc msm8998_desc = {
+@@ -831,11 +831,11 @@ static const struct rpmpd_desc qcs404_desc = {
+ };
  
- /* SDM660 Power Domains */
--#define SDM660_VDDCX		0
--#define SDM660_VDDCX_AO		1
--#define SDM660_VDDCX_VFL	2
--#define SDM660_VDDMX		3
--#define SDM660_VDDMX_AO		4
--#define SDM660_VDDMX_VFL	5
--#define SDM660_SSCCX		6
--#define SDM660_SSCCX_VFL	7
--#define SDM660_SSCMX		8
--#define SDM660_SSCMX_VFL	9
-+#define SDM660_VDDCX		RPMPD_VDDCX
-+#define SDM660_VDDCX_AO		RPMPD_VDDCX_AO
-+#define SDM660_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define SDM660_VDDMX		RPMPD_VDDMX
-+#define SDM660_VDDMX_AO		RPMPD_VDDMX_AO
-+#define SDM660_VDDMX_VFL	RPMPD_VDDMX_VFL
-+#define SDM660_SSCCX		RPMPD_SSCCX
-+#define SDM660_SSCCX_VFL	RPMPD_SSCCX_VFL
-+#define SDM660_SSCMX		RPMPD_SSCMX
-+#define SDM660_SSCMX_VFL	RPMPD_SSCMX_VFL
+ static struct rpmpd *qm215_rpmpds[] = {
+-	[QM215_VDDCX] =		&cx_s1a_lvl,
+-	[QM215_VDDCX_AO] =	&cx_s1a_lvl_ao,
+-	[QM215_VDDCX_VFL] =	&cx_s1a_vfl,
+-	[QM215_VDDMX] =		&mx_l2a_lvl,
+-	[QM215_VDDMX_AO] =	&mx_l2a_lvl_ao,
++	[RPMPD_VDDCX] =		&cx_s1a_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_s1a_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_s1a_vfl,
++	[RPMPD_VDDMX] =		&mx_l2a_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_l2a_lvl_ao,
+ };
  
- /* SM6115 Power Domains */
- #define SM6115_VDDCX		0
-@@ -160,12 +179,12 @@
- #define SM6115_VDD_LPI_MX	7
+ static const struct rpmpd_desc qm215_desc = {
+@@ -845,16 +845,16 @@ static const struct rpmpd_desc qm215_desc = {
+ };
  
- /* SM6125 Power Domains */
--#define SM6125_VDDCX		0
--#define SM6125_VDDCX_AO		1
--#define SM6125_VDDCX_VFL	2
--#define SM6125_VDDMX		3
--#define SM6125_VDDMX_AO		4
--#define SM6125_VDDMX_VFL	5
-+#define SM6125_VDDCX		RPMPD_VDDCX
-+#define SM6125_VDDCX_AO		RPMPD_VDDCX_AO
-+#define SM6125_VDDCX_VFL	RPMPD_VDDCX_VFL
-+#define SM6125_VDDMX		RPMPD_VDDMX
-+#define SM6125_VDDMX_AO		RPMPD_VDDMX_AO
-+#define SM6125_VDDMX_VFL	RPMPD_VDDMX_VFL
+ static struct rpmpd *sdm660_rpmpds[] = {
+-	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
+-	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
+-	[SDM660_VDDCX_VFL] =	&cx_rwcx0_vfl,
+-	[SDM660_VDDMX] =	&mx_rwmx0_lvl,
+-	[SDM660_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
+-	[SDM660_VDDMX_VFL] =	&mx_rwmx0_vfl,
+-	[SDM660_SSCCX] =	&ssc_cx_rwlc0_lvl,
+-	[SDM660_SSCCX_VFL] =	&ssc_cx_rwlc0_vfl,
+-	[SDM660_SSCMX] =	&ssc_mx_rwlm0_lvl,
+-	[SDM660_SSCMX_VFL] =	&ssc_mx_rwlm0_vfl,
++	[RPMPD_VDDCX] =		&cx_rwcx0_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_rwcx0_vfl,
++	[RPMPD_VDDMX] =		&mx_rwmx0_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
++	[RPMPD_VDDMX_VFL] =	&mx_rwmx0_vfl,
++	[RPMPD_SSCCX] =		&ssc_cx_rwlc0_lvl,
++	[RPMPD_SSCCX_VFL] =	&ssc_cx_rwlc0_vfl,
++	[RPMPD_SSCMX] =		&ssc_mx_rwlm0_lvl,
++	[RPMPD_SSCMX_VFL] =	&ssc_mx_rwlm0_vfl,
+ };
  
- /* SM6375 Power Domain Indexes */
- #define SM6375_VDDCX		0
+ static const struct rpmpd_desc sdm660_desc = {
+@@ -881,12 +881,12 @@ static const struct rpmpd_desc sm6115_desc = {
+ };
+ 
+ static struct rpmpd *sm6125_rpmpds[] = {
+-	[SM6125_VDDCX] =	&cx_rwcx0_lvl,
+-	[SM6125_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
+-	[SM6125_VDDCX_VFL] =	&cx_rwcx0_vfl,
+-	[SM6125_VDDMX] =	&mx_rwmx0_lvl,
+-	[SM6125_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
+-	[SM6125_VDDMX_VFL] =	&mx_rwmx0_vfl,
++	[RPMPD_VDDCX] =		&cx_rwcx0_lvl,
++	[RPMPD_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
++	[RPMPD_VDDCX_VFL] =	&cx_rwcx0_vfl,
++	[RPMPD_VDDMX] =		&mx_rwmx0_lvl,
++	[RPMPD_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
++	[RPMPD_VDDMX_VFL] =	&mx_rwmx0_vfl,
+ };
+ 
+ static const struct rpmpd_desc sm6125_desc = {
 
 -- 
 2.39.5
