@@ -1,250 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-65653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 854D3B0A303
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:47:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6C90B0A371
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 13:49:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C51205A606D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 11:47:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 43DEB7A9F8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 11:48:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0024C2D839E;
-	Fri, 18 Jul 2025 11:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA9429993E;
+	Fri, 18 Jul 2025 11:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PvyQsUsb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JB+JFFDA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57928221297
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:47:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDDA249F9;
+	Fri, 18 Jul 2025 11:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752839228; cv=none; b=Y5y85+ab1DejTTJu8Psl0SQGwQjVWVW4pudR8OEdIfQwY7wOvX0dPEuLkzAnsbwCrHNtFMsbBYHUgdA2o5Hdxm5BagnfQcU+ugo7VGPjVS81nbEzzx5ZZzXIXikbMTTiqI6OigvyUinJ/QQ5Sumqi8YeCHnLpT/3VNyeG7ybHq8=
+	t=1752839382; cv=none; b=kA1O0qwgFrUqQSke2NinCezhkYGtsJTjBgkAiUWUrn2FmGsJcognwyY0RUKoLCGieLdWSjGucpXU/MfmQgWww8+l+GL26AGhC8Po0zCCwHNvBqxxhPeke3Awx95+IH8PZfDddNrd0fGxGGuV8v2d9zQ+KSLtCml6oPOqeFGSlag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752839228; c=relaxed/simple;
-	bh=ytkcnLwqiafPf/jGRtT7S0382mzgavn9/7lB3ddQiNM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lPtD7UZnsxhxn6HckMLRxg+0OEn6rpwycU2/+itQx4dB4TmMCccP5Jk2tqllmNN0/0MNAxz7DADA9rCNe9KGlT8u86Sugj1JCMQbmPtVo3TigeGGLk7L0OkHSg+vbhYKN0viOd0k21f0IDWFYmkM/eIpSAo5SQWYyfblPO/6+T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PvyQsUsb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I8HJMX008498
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:47:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=esD0BgiWEWaYJCdGXCJIJorS
-	TkPDE9pqdzuFw4kpSBU=; b=PvyQsUsbuyHkGWf/T7KjP7sJx9J/bysQi5Oz0U8x
-	gf3ssH10xYtGOZshAZ3AUrVXJwwoARElKaPXb7SdTzv4wIRNgkiJiFEvYO4kVGQ3
-	Nx6xOjw42W7pYJZ8BSYKpgX+sFVt/TXloMQ5rDnAscdKkhkTzxs+r3Z0WSiHkUrl
-	+oBXnBScM2Jh2130W1vY2qcivnlgnIjpItqhCtQ1xtVRYzDquA20z17X22j9jCEa
-	MrH3jnLU8JLPdvfsYcV4iS6uSd6Esf8ltRGho2NqkjYkpQFv7lx9IjVPY6uTg/Qq
-	T68kr2tu3TT7LvpbWGioZFq6mkgHrs0i1DqDeArFAulpxw==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxbbbv1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 11:47:06 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-313c3915345so3050098a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 04:47:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752839225; x=1753444025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=esD0BgiWEWaYJCdGXCJIJorSTkPDE9pqdzuFw4kpSBU=;
-        b=qnI+9kC9bK5CgRs0LQYSkGiOYPaC6Q9IEJcYfJyAWwZsSoGmFN9dBF+pnu+sFytY56
-         5K85bJ/ykqwGxQpOKcd/aq4kKQ5PLBmWtRfWbTF/jylr9Yh2t3/OqGQxU9wQx31wUa7V
-         0ug70yIG8mNXe7ejmuykc4ZtlrcvmjMvOd1yVYk3CMCcmqJDaTJql8t14F5Kfn1Rzmgy
-         pf/xqIG2hqGn8KdoMDUq6cqQsac16UpU6q6BaZGTV9JfF/R6dfKtGNd9UJhIR0EDhG9e
-         vk15ixVuaEpESoCvoug5dbeeO4ZDsI0ZZlZ3YlH0hMWdm+rrR4svkiVk8GP7qWWgBXy7
-         cT6w==
-X-Forwarded-Encrypted: i=1; AJvYcCVrm4amFHuf1UCdAfStuoFnJGfsS8Dn99GkVFLo1cpn0ieXAs/3+SFE6ATsd3yZa5YpsbyEs+FAVSaOgfjJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzP+OXNRxYkJ7HGmteE7jgdPuIq/LEdAB6Mawu8SpFTHKkfqt+6
-	teR5HLhmZTDNLlpItPVU9etLSJT4lleTT9TXV2PYfHWyLSK6uDOQtPzSzKD+ZQv56ywRdovKNua
-	1Jdpl5ETQGm7vRgfXvlBIn4rHtGaSwiTgCC3ntvbv2aRBKq248fO7Lu1XML3HHQMFGL/SToCx9A
-	mYOSCpFIUxUJpruX8tquuLsVfNTrkEe1RgTTuWcFrg+8g=
-X-Gm-Gg: ASbGnct8NWVWMJXuzLQAL5NBQlp8wfTg688+RUJsNHCtWb6zWoyJIMhzK75+3RSW25t
-	XochKM3WJchKrgd5FNTwl2D+PIwLe5oOOATl3T96jrfQhouG//3qi+whDzWfGwJeD9lks3Et1xW
-	J4vYlYRMHv+mrJld8qIoW4sXhb3qvt2YcaS2M=
-X-Received: by 2002:a17:90a:e70e:b0:313:279d:665c with SMTP id 98e67ed59e1d1-31caf821883mr8766070a91.7.1752839224648;
-        Fri, 18 Jul 2025 04:47:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/e2gTuOuRLymJ4eOQ4DhprwaCxsJiNfGjI9j8p3zBknk5c0ZzcCU5OhLtMQ+p3evd2nstjb8g0a74HKuWdfs=
-X-Received: by 2002:a17:90a:e70e:b0:313:279d:665c with SMTP id
- 98e67ed59e1d1-31caf821883mr8766034a91.7.1752839224131; Fri, 18 Jul 2025
- 04:47:04 -0700 (PDT)
+	s=arc-20240116; t=1752839382; c=relaxed/simple;
+	bh=brnIQKO+k671IytUQOcvFc/YtZw2YsaVUB7/hwCJ4Og=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VWmWmQaav2drmdaL6qJ7DjhWfY3vog2N0knq8a9+eX2x6VmGB5whlzcS+ll51dZlR9ZOfVxHSQl+C2Gi7oWrm4qCy03f3UCfRbrgZ4EPKE7recDGaOPEQLyapfYW4uRHj3mW6oyg2C/8JSEFTBlikFxUtkPpGJdkxwik9cclWEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JB+JFFDA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8035C4CEEB;
+	Fri, 18 Jul 2025 11:49:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752839382;
+	bh=brnIQKO+k671IytUQOcvFc/YtZw2YsaVUB7/hwCJ4Og=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JB+JFFDAXTlnRS4Z+CB4KzaASA/lRSl0akwPbIGypV5TL6xotGMMcx0yekHa//dQH
+	 dmAMeryoXQtvixnT6Cmjyx9kKA4UDmlKcLNMBYegnul9JgjJDGNhkUx7m99q45YnWn
+	 nVpw4VGDKPVoi43G1pjvDA/wflXVneWXyn0Qh00Fqbpj+isk5CGIiPzyqcKwZgonBM
+	 D7izHy+QPZgpBRq/0WsMG/VEoaKULIuw0jlgdglFEubWEdmOv0QXD94bwBIXfS/HQJ
+	 qp0ad+lSvUsxtwHnpOiWMAV3BGcbRXHnWy5LCIAc6LHprB97yy2ahBZ3996t4xpFN+
+	 GV4mLvh3b3uMw==
+Date: Fri, 18 Jul 2025 17:19:28 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+	Bjorn Helgaas <helgaas@kernel.org>, ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <wkapzhyr6hzp5az4jae3y5c77c3fg4uwrmyyipbq4uosamcivq@z7nv6w7nbyrp>
+References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
+ <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
+ <38ace6a3-d594-4438-a193-cf730a7b87d6@oss.qualcomm.com>
+ <wyqtr3tz3k2zdf62kgtcepf3sedm7z7wacv27visl2xsrqspmq@wi4fgef2mn2m>
+ <03806d02-1cfc-4db2-8b63-c1e51f5456e2@oss.qualcomm.com>
+ <o2gqqty6lakc4iw7vems2dejh6prjyl746gnq4gny4sxdxl65v@zmqse3244afv>
+ <1db7c119-882f-4184-9ca4-9dbe5a49cb16@oss.qualcomm.com>
+ <gx5gruyhrhwhvwkiqlkp2bggqd4oqe4quvqiiphfzolhjtzun6@okogvabkqah3>
+ <otdgyzdymraa3f33vyb445kmssi3mqf5z2mw7w5pib4q4sb7vz@qbrzvrojqji3>
+ <30fe1325-16d6-4621-a7d2-811d9c958e04@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
- <20250716-hamoa_initial-v1-4-f6f5d0f9a163@oss.qualcomm.com>
- <aHkm4qjgSaklHGp0@linaro.org> <4363f117-cc25-4904-84cf-4b3779797223@oss.qualcomm.com>
- <ng7koaqz6s4cslugrujklsrprsl7v7wijtserr6edvsvbeqfkv@pldexeryni7h> <aHoU7MnweSHGPwxp@linaro.org>
-In-Reply-To: <aHoU7MnweSHGPwxp@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 14:46:52 +0300
-X-Gm-Features: Ac12FXy2Ni2DJVd4IxEHAjNLlJqPYCR_DtiPN2YpU_IHj7Inv-raVfZg2vrnC-g
-Message-ID: <CAO9ioeWZYht=oJHKeHqwpPmOyJkDE5H2hxh-+Ppp0V=OPv7bJw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Yijie Yang <yijie.yang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-GUID: AOCyG3oJK-nBW_MemrHnNgOYiVSvOT-i
-X-Proofpoint-ORIG-GUID: AOCyG3oJK-nBW_MemrHnNgOYiVSvOT-i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDA5MiBTYWx0ZWRfX7q+zCJuefPkO
- S86BrQi0G2yHmNKeK1o5RfpT139mnTgVX4nvXatdgAOEyyJ8/dQCYvHwyEBH936RsNC4a7Ck5Md
- wOxmbSJnfwgte9uKaC7CJLYaQNp4zGN0t4dw556ItVxcMlCVvKdRPJl7dza4FqECu3w5uBZ5eV7
- 1XNX9tvWt35cMbrCFj3GbtorhHtMIMROehZEZvMUn+AYfbotkVbz2He5QPfIo3Z1VYpqKgUHyn7
- 3/WzDjodv280m3Tc2K0DuXG+hxW7hQZgGmF6XQzXQiZXtt19MYkvrV/so3CnMPlTsVQaX885TcM
- QRjpQAbRXPyE4ELrMVkhw3DHmfUpa/O1ad74g7PFuv1menzSxLUltydkf0srGjqKSz8wKkVrZwQ
- eHmnOrYXM+VF7CSw7alakQTE7TSU9uoVIZa1qDFmxSM6exdjobs6e2ui1lWBHrltK0+ExreV
-X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=687a343a cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=YHsmNHqWrCgzcmbIdFEA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-18_02,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180092
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <30fe1325-16d6-4621-a7d2-811d9c958e04@oss.qualcomm.com>
 
-On Fri, 18 Jul 2025 at 12:33, Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
->
-> On Fri, Jul 18, 2025 at 12:27:34PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, Jul 18, 2025 at 04:19:13PM +0800, Yijie Yang wrote:
-> > > On 2025-07-18 00:37, Stephan Gerhold wrote:
-> > > > On Wed, Jul 16, 2025 at 05:08:42PM +0800, Yijie Yang wrote:
-> > > > > The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
-> > > > > the Hamoa IoT SoM and a carrier board. Together, they form a complete
-> > > > > embedded system capable of booting to UART.
-> > > > >
-> > > > > This change enables and overlays the following peripherals on the carrier
-> > > > > board:
-> > > > > - UART
-> > > > > - On-board regulators
-> > > > > - USB Type-C mux
-> > > > > - Pinctrl
-> > > > > - Embedded USB (EUSB) repeaters
-> > > > > - NVMe
-> > > > > - pmic-glink
-> > > > >
-> > > > > Written with contributions from Shuai Zhang (added Bluetooth).
-> > > > >
-> > > > > Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> > > > > ---
-> > > > >   arch/arm64/boot/dts/qcom/Makefile          |   1 +
-> > > > >   arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 835 +++++++++++++++++++++++++++++
-> > > > >   2 files changed, 836 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > > > > index 4bfa926b6a0850c3c459bcba28129c559d50a7cf..c5994b75d3e56e74ffb64b2389ee1bcc086f3065 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > > > > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > > > > @@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_QCOM)       += apq8039-t2.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += apq8094-sony-xperia-kitakami-karin_windy.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += apq8096-db820c.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += apq8096-ifc6640.dtb
-> > > > > +dtb-$(CONFIG_ARCH_QCOM)        += hamoa-iot-evk.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += ipq5018-rdp432-c2.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += ipq5018-tplink-archer-ax55-v1.dtb
-> > > > >   dtb-$(CONFIG_ARCH_QCOM)       += ipq5332-rdp441.dtb
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> > > > > new file mode 100644
-> > > > > index 0000000000000000000000000000000000000000..843f39c9d59286a9303a545411b2518d7649a059
-> > > > > --- /dev/null
-> > > > > +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> > > > > [...]
-> > > > > +       vreg_wcn_3p3: regulator-wcn-3p3 {
-> > > > > +               compatible = "regulator-fixed";
-> > > > > +
-> > > > > +               regulator-name = "VREG_WCN_3P3";
-> > > > > +               regulator-min-microvolt = <3300000>;
-> > > > > +               regulator-max-microvolt = <3300000>;
-> > > > > +
-> > > > > +               gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
-> > > > > +               enable-active-high;
-> > > > > +
-> > > > > +               pinctrl-0 = <&wcn_sw_en>;
-> > > > > +               pinctrl-names = "default";
-> > > > > +
-> > > > > +               regulator-boot-on;
-> > > > > +       };
-> > > > > +
-> > > > > +       /*
-> > > > > +        * TODO: These two regulators are actually part of the removable M.2
-> > > > > +        * card and not the CRD mainboard. Need to describe this differently.
-> > > > > +        * Functionally it works correctly, because all we need to do is to
-> > > > > +        * turn on the actual 3.3V supply above.
-> > > > > +        */
-> > > > > +       vreg_wcn_0p95: regulator-wcn-0p95 {
-> > > > > +               compatible = "regulator-fixed";
-> > > > > +
-> > > > > +               regulator-name = "VREG_WCN_0P95";
-> > > > > +               regulator-min-microvolt = <950000>;
-> > > > > +               regulator-max-microvolt = <950000>;
-> > > > > +
-> > > > > +               vin-supply = <&vreg_wcn_3p3>;
-> > > > > +       };
-> > > > > +
-> > > > > +       vreg_wcn_1p9: regulator-wcn-1p9 {
-> > > > > +               compatible = "regulator-fixed";
-> > > > > +
-> > > > > +               regulator-name = "VREG_WCN_1P9";
-> > > > > +               regulator-min-microvolt = <1900000>;
-> > > > > +               regulator-max-microvolt = <1900000>;
-> > > > > +
-> > > > > +               vin-supply = <&vreg_wcn_3p3>;
-> > > > > +       };
-> > > >
-> > > > Like the TODO comment already says, regulators located on a M.2 card
-> > > > shouldn't be described as part of the device DT. We need a proper
-> > > > solution for modelling the M.2 slots together with the standard power
-> > > > supplies (3.3V and 1.8V) and hook this up to the pwrseq subsystem. This
-> > > > is also the reason why the CRD does not have Bluetooth enabled upstream
-> > > > yet, this needs to be solved first.
-> > > >
-> > > > As far as I know, there is no one actively working on addressing this at
-> > > > the moment. Perhaps you can assign someone at QC to work on solving this
-> > > > upstream.
-> > >
-> > > This power section is now managed by UEFI, rendering these regulator nodes
-> > > unnecessary. Therefore, I will remove them in the next version.
-> >
-> > No. The regulators for the M.2 slot should be present here so that Linux
-> > doesn't disable them. Which triggers a question: how are they
-> > controlled? I don't see a GPIO line there.
-> >
->
-> The 0.95V and 1.9V regulators are located on the inserted M.2 *card* and
-> get automatically enabled by the 3.3V supply of the M.2 *slot*. If you
-> remove the card or insert a different one, they won't be present. This
-> is why they shouldn't be part of the DT. The M.2 slot only has a 3.3V
-> supply and a 1.8V supply.
->
-> The only reason why they are here is that the current bindings for the
-> WCN7850 require describing the whole PMU and internal regulators of the
-> M.2 card. Ideally, we should have a generic description for the M.2
-> slot/connector instead.
+On Fri, Jul 18, 2025 at 07:05:03PM GMT, Baochen Qiang wrote:
+> 
+> 
+> On 7/18/2025 6:20 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Jul 18, 2025 at 01:27:27PM GMT, Manivannan Sadhasivam wrote:
+> >> On Fri, Jul 18, 2025 at 10:05:02AM GMT, Baochen Qiang wrote:
+> >>>
+> >>>
+> >>> On 7/17/2025 7:29 PM, Manivannan Sadhasivam wrote:
+> >>>> On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
+> >>>>>
+> >>>>>
+> >>>>> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
+> >>>>>> On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
+> >>>>>>
+> >>>>>> [...]
+> >>>>>>
+> >>>>>>>> @@ -16,6 +16,8 @@
+> >>>>>>>>  #include "mhi.h"
+> >>>>>>>>  #include "debug.h"
+> >>>>>>>>  
+> >>>>>>>> +#include "../ath.h"
+> >>>>>>>> +
+> >>>>>>>>  #define ATH12K_PCI_BAR_NUM		0
+> >>>>>>>>  #define ATH12K_PCI_DMA_MASK		36
+> >>>>>>>>  
+> >>>>>>>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+> >>>>>>>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> >>>>>>>>  
+> >>>>>>>>  	/* disable L0s and L1 */
+> >>>>>>>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>>>>>>> -				   PCI_EXP_LNKCTL_ASPMC);
+> >>>>>>>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> >>>>>>>
+> >>>>>>> Not always, but sometimes seems the 'disable' does not work:
+> >>>>>>>
+> >>>>>>> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
+> >>>>>>> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>>  
+> >>>>>>>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+> >>>>>>>>  }
+> >>>>>>>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+> >>>>>>>>  {
+> >>>>>>>>  	if (ab_pci->ab->hw_params->supports_aspm &&
+> >>>>>>>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> >>>>>>>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> >>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC,
+> >>>>>>>> -						   ab_pci->link_ctl &
+> >>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC);
+> >>>>>>>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
+> >>>>>>>
+> >>>>>>> always, the 'enable' is not working:
+> >>>>>>>
+> >>>>>>> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
+> >>>>>>> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
+> >>>>>>>
+> >>>>>>
+> >>>>>> Interesting! I applied your diff and I never see this issue so far (across 10+
+> >>>>>> reboots):
+> >>>>>
+> >>>>> I was not testing reboot. Here is what I am doing:
+> >>>>>
+> >>>>> step1: rmmod ath12k
+> >>>>> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
+> >>>>> the issue)
+> >>>>>
+> >>>>> 	sudo setpci -s 02:00.0 0x80.B=0x43
+> >>>>>
+> >>>>> step3: insmod ath12k and check linkctrl
+> >>>>>
+> >>>>
+> >>>> So I did the same and got:
+> >>>>
+> >>>> [ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
+> >>>> [ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
+> >>>> [ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
+> >>>> [ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
+> >>>>
+> >>>> My host machine is Qcom based Thinkpad T14s and it doesn't support L0s. So
+> >>>> that's why the lnkctl value once enabled becomes 0x42. This is exactly the
+> >>>> reason why the drivers should not muck around LNKCTL register manually.
+> >>>
+> >>> Thanks, then the 0x43 -> 0x40 -> 0x40 -> 0x42 sequence should not be a concern. But still
+> >>> the random 0x43 -> 0x43 -> 0x43 -> 0x42 sequence seems problematic.
+> >>>
+> >>> How many iterations have you done with above steps? From my side it seems random so better
+> >>> to do some stress test.
+> >>>
+> >>
+> >> So I ran the modprobe for about 50 times on the Intel NUC that has QCA6390, but
+> >> didn't spot the disparity. This is the script I used:
+> >>
+> >> for i in {1..50} ;do echo "Loop $i"; sudo setpci -s 01:00.0 0x80.B=0x43;\
+> >> sudo modprobe -r ath11k_pci; sleep 1; sudo modprobe ath11k_pci; sleep 1;done
+> >>
+> >> And I always got:
+> >>
+> >> [ 5862.388083] ath11k_pci_aspm_disable: 609 lnkctrl: 0x43
+> >> [ 5862.388124] ath11k_pci_aspm_disable: 614 lnkctrl: 0x40
+> >> [ 5862.876291] ath11k_pci_start: 880 lnkctrl: 0x40
+> >> [ 5862.876346] ath11k_pci_start: 886 lnkctrl: 0x42
+> >>
+> >> Also no AER messages. TBH, I'm not sure how you were able to see the random
+> >> issues with these APIs. That looks like a race, which is scary.
+> >>
+> >> I do not want to ignore your scenario, but would like to reproduce and get to
+> >> the bottom of it.
+> >>
+> > 
+> > I synced with Baochen internally and able to repro the issue. Ths issue is due
+> > to hand modifying the LNKCTL register from userspace. The PCI core maintains
+> > the ASPM state internally and uses it to change the state when the
+> > pci_{enable/disable}_link_state*() APIs are called.
+> > 
+> > So if the userspace or a client driver modifies the LNKCTL register manually, it
+> > makes the PCI cached ASPM states invalid. So while this series fixes the driver
+> > from doing that, nothing prevents userspace from doing so using 'setpci' and
+> > other tools. Userspace should only use sysfs attributes to change the state and
+> > avoid modifying the PCI registers when the PCI core is controlling the device.
+> > So this is the reason behind the errantic behavior of the API and it is not due
+> > to the issue with the API or the PCI core.
+> 
+> IMO we can not rely on userspace doing what or not doing what, or on how it is doing,
+> right? So can we fix PCI core to avoid this?
+> 
 
-Agree.
+I'm not sure it is possible to *fix* the PCI core here. Since the PCI core gives
+userspace access to the entire config space of the device, the userspace
+reads/writes to any of the registers it want. So unless the config space access
+if forbidden if a driver is bound to the device, it is inevitable. And then
+there is also /dev/mem...
 
+Interestingly, there is an API available for this purpose:
+pci_request_config_region_exclusive(), but it is used only by the AMD arch
+driver to prevent userspace from writing to the entire config space of the
+device.
+
+Maybe it makes sense to use something like this to prevent the userspace access
+to the entire config space if the driver is bind to the device.
+
+Bjorn, thoughts?
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
