@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-65696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08259B0A8AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:42:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96B4FB0A8A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:42:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 392E45A6BC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:42:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 45EA47A27C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:41:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA9F31EB5B;
-	Fri, 18 Jul 2025 16:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE8F2E6D13;
+	Fri, 18 Jul 2025 16:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Dna9LmBx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pBFccEd4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C90EEDE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F12EEDE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752856967; cv=none; b=PKPgXQxMyUzm4zZOCuyY3lLTd8ve8LUQ9gk1YQ+zHudiTa9YZurfOPV7G5MFYSPyoKU/5eiASsDYSqFJFFJulB+6gHuK9UaMXddaR5/voG/gbhKAdhVNMM6j1pXNgP3KeSqOKhkouIa33vplr+A/jc/ZNZs/labFsSHCN1WlZ90=
+	t=1752856948; cv=none; b=WVCm+4lDzlHXSd4xN+/YrdvIkiL+gaLGpznjUw50fT++TWAEkqX/BU18C4RClh1Yuq3cWM1y6LWXu37j8Co7QnYVTwgt6PHZuh06Ku0vH56RooavLI3gUFqHvh3Jgi7CjKQnhAHX4JQblYVAJ6VVItMjKLDex5vY+++57LqzseQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752856967; c=relaxed/simple;
-	bh=J9J5s3ZT8qppRfzTVRn+3+0mDOD8laySW8Eg2GginiY=;
+	s=arc-20240116; t=1752856948; c=relaxed/simple;
+	bh=GS8W5OKhX5k/3MQCghSpRV/kbVATVCRf5/YkEeA5moE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MbSJ3ZcGoDWEIugYcB7kbOwn3uiHRhKRUW8ZuyDBmM9KCUh3bxCOhk1ypHvViE0ajFh+aUS8Iqktm2pdNIYrxLwHB8x7winWd1YyvtIp5hWgnpGaIelKPdj00xfHRmq5p8QmIjSOLyKRoHXKsImffruCSGYmxKhKLCaZUqmyEhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Dna9LmBx; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=YwO8tG/Yz9+7kjMTxdI7+5ppXQUVUBRTt1tX/qUUoRvUF1VNSF1YiDBRGZ1sOAoVNfYXIier0BuB8MQm+7LHeXZd4aPysGek9h5QOWjNYFW18izaDddRCNG2PYlcN0blntjzO9Z93JqpAXUTL1HW3kZHjZLhEuNfY4AVKPLS1GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pBFccEd4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IEK9O1022220
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:45 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IG8Sp5022222
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZCzwxr7iMtuP14zekGihLh8lesU3QR6bkF8d5rNiDCg=; b=Dna9LmBx27bFYz+Q
-	W2UG31YR5KVjHRho8ThR5+3r/6QAim7RNsNUk7LeXxmLJK0IShB/bnuWYgbiryLc
-	AGSxvMNI62d8IxbRKIQQqcsD1QDfNY+yx0ooiRBiMKSp1lXDOXpBa+O0Gr3g4N4y
-	45OYvUYONv5oKa6kv+9/z5PM60y8NXTAlv7m1IVBCN8KKuS4va0K0DSMMdNYTyFV
-	XP2A7kG63VY6cBHluZm4VGWcePrYRXKQvcPVk873Pk6cDVHSIwLnuZ4QrKiXa96w
-	JTYM4D8rr54IwfpTqvzjJuV34G38hLUv5Kq+Gi2L4OSPh7J7SeBhlBoTOStA3UsY
-	0yHRMg==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsyca8d-1
+	/MegsDezoJ79tZFpGw1Q8AeYWxrjPn3HT2ydHvhFydU=; b=pBFccEd4Wx/lh3Bx
+	0baDdpJrAVlSPbsVtEeTH7+PXy100+0rEt/+u1MKhY33ccl0/7NSMXBoGblR/ZPw
+	S35ODjNp1M+nxORrVKJxGpY3U+LqsQtU7TPH1ICKHFPwHTszqrgU6QPX9J4COuXR
+	7KVPc3CH98nvAWGAvY6lwzsGZ8gicCBIBNLLO3w0sERs/c3MEWkb7zqHIv3bosvE
+	eD8qRavQ9U8Oeh5xuL3rCz0Q+95zR6o6faiMuXUR4lppSAoXZlqvdk0tgKkfBV5F
+	o4rc6JSQcCOOzE9Hrq2zk33sG5KA7AsMSyQswbuLk3D4QPLtmdFUyU4XgDX/+oEj
+	QX7vYQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47wqsyca73-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:45 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-87ec971f51fso2830461241.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:42:45 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:42:26 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e269587d8eso394535685a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:42:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752856963; x=1753461763;
+        d=1e100.net; s=20230601; t=1752856945; x=1753461745;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZCzwxr7iMtuP14zekGihLh8lesU3QR6bkF8d5rNiDCg=;
-        b=YomXFjlr6jhY7jjLvKmxno34M/WgWx4X5dOYdmFcvABGWgOtRBHUkAKvRs3HW77RE/
-         SCeQfMtwkVXQsiPcXxJhlwl3xtFtY6oup9/7IiX3qp4FlKH76l5oGHKSALUH5CoqwOEo
-         DB4WPZZ8HuHBGCi8VKUgFXeQlgbv8iYkZ7VzZ6ELdCOqzuGCKf5tTjvQCSKBHVk/ZNiL
-         DD0HgGJEZaZLkBnE11ZGtzhPmJq6YHOBXA5wHCBQiDpQjw6MxGLc+49ZoyGJZKw/TGUp
-         Cipe7bGtmqIb5K4SEfZjiBi82oXlTV/ngf+IqBCHaRfsVa52ye/gDs1vyI5PL6Rc4GNz
-         eA/Q==
-X-Gm-Message-State: AOJu0Yzjyh6cDbN4P86V68e7R3+WAGS2kX7ed6VRvGcUuh5c9tRByfgd
-	9PTByqiMSWIDvJW7kiDjzyhg/yytfZJQtfJeGGOR67cogjNmtCQjRROS1wec2AoGCJRyodzKMrM
-	EyLhMQZpHuHfRIhjy4Y3LlAjuy1kFoT2JmuzB0c5dGMEU1EVcm8egdrLQir58yPBpu5w0lCp3cy
-	lW
-X-Gm-Gg: ASbGncsmIroDz7IkLJ2GuBhLvSXJpiwu8dKb4vK+hzxedEsKwtPvEsM8hH5wE9y6qt/
-	XUqZWEkdjKPw7W/xVROMwv+uhvfGx683ZLdGtZguo7Vms6yo7Mk2G2FZJBuqyopJjitNASranaH
-	6pAhHsw8QFlhh3uona5kp7hiJuwfPlKD25Z8YzSDZ0EPWtDYxncy28Cw4ZGfm1Wl9URALdxLDn0
-	OkT4vP05sR0yXF7kgimZG5rj8kQqNbO69F+Vgsr7A+eLe9V4jz+7awTdVli4susfB6mB9CW3trg
-	q4nBVv11/JzD/0YuDTLp5fYeAUcOikvvLQKSQPjFt/9ZJzN1/k6aJBZ8MsACWUa9K7Z8yPHFAfA
-	JdQ9N6RLrZCuSqfPEsOfC3ejjlB4XNyAa21Ki8qO/gGnmxhpwWtk4
-X-Received: by 2002:a05:620a:2619:b0:7d5:2332:2830 with SMTP id af79cd13be357-7e342b36709mr1514340785a.33.1752855234554;
-        Fri, 18 Jul 2025 09:13:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJqhbUfsJcgskPt5gFSsEFmUoM869N3h4c6DWZdwSQ7WM+DzUs0Eyz4ta6GT222TI9nBDg8g==
-X-Received: by 2002:a05:620a:2619:b0:7d5:2332:2830 with SMTP id af79cd13be357-7e342b36709mr1514330285a.33.1752855233571;
-        Fri, 18 Jul 2025 09:13:53 -0700 (PDT)
+        bh=/MegsDezoJ79tZFpGw1Q8AeYWxrjPn3HT2ydHvhFydU=;
+        b=Hp2YbbwuqhfEd5SGyfSJXG+iq5dYU61+8xl0CWZVcG440tXgjPjk+BsEe5IvBNoSzX
+         uSAEHP9dAOzTL4FlqC37BS5G8sY0qHCXpCarxfwv0nbOIKAdmqPWC6L7k39jrA5wf1kB
+         u4lFRxqnsgBJpzXClQsNZj1r88uXRW9nZ3wh+0+eqdXtAromk2CHKQ4DzLkzOuv6nK4E
+         gZM+dnXBIMRhk+AIRtZWYrS88eTdvxj5HoVb8MCrdpBeU6PLkHw/+02sg7vt5QQZJdct
+         kH8ahF+SJEb5sxoII1uGG4MUsiSt8iQ4JSPWfK0hdTHowYHZaIqGctAKqwiHAWyautPD
+         FXnA==
+X-Gm-Message-State: AOJu0YznrtfTeTEBFu8iI8GY+FIVTc9WV78BlzXeF0Ryb5x8YZhzvtSH
+	evE2xENId2uUydzZq/q99FuHTjB28laRRFTmeMPoORbOiZA5c0L7OnGjswXz2Qe2kJi+DFswA/c
+	OJshnnu0mduUT0o4zdsVMndIK6eJ+PHsKVSgQVwVz7SA469VCBvSZ8c2Y9mZgnesmH//srJMVoz
+	Tu
+X-Gm-Gg: ASbGncsd2aepR2rRnRI56m892+y7G8YuvN5T2I9Q2sJCEhFue8YadbsJeVL6OsGEBlp
+	0THNRsWmLiGGeULBE0XR83sriQs4BxPv42RtHwMsBWPdr1y94m8955hbzZY6P3cfCad3goabPc6
+	w4bsmG6+s+9eKrwqHzlGK4fmHqMHbXS2gxOZMZNjHhdBcBbhyZgKDi/XUqA5Xfyb/gRqQcWPxJP
+	PPhUY/wKTGL1+VyA3T4XeYZEs3UR+7UT3Egfxk+Ux3hgQ2gVQ2s20ZbLcL/UzeWIyLTxzcnbiKP
+	pbXujPJ52CfoumQlQSBRrGO7zYpoCLzSySIfBw9w3UZk1bWCCtnBsAdZug1gjNGm1x9b8rZaWMA
+	QPT+AI/uVjJ8gGM8qolVR++qLFIh/8JQhl6YDi04uICKvIdQ0cG5C
+X-Received: by 2002:a05:620a:1357:b0:7e3:3e32:e620 with SMTP id af79cd13be357-7e34d9ab6c0mr981680985a.36.1752855236354;
+        Fri, 18 Jul 2025 09:13:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEETTxoYHaMo2UupceBlHL0TBQW5LinpfSukvtJjEUlWPT/+Pekf+q78KOdNgHFAAMem1ZIkA==
+X-Received: by 2002:a05:620a:1357:b0:7e3:3e32:e620 with SMTP id af79cd13be357-7e34d9ab6c0mr981675285a.36.1752855235755;
+        Fri, 18 Jul 2025 09:13:55 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.52
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jul 2025 09:13:52 -0700 (PDT)
+        Fri, 18 Jul 2025 09:13:53 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 19:13:43 +0300
-Subject: [PATCH 5/8] arm64: dts: qcom: dts: switch to RPMPD_* indices
+Date: Fri, 18 Jul 2025 19:13:44 +0300
+Subject: [PATCH 6/8] ARM: dts: qcom: dts: switch to RPMPD_* indices
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-5-eedca108e540@oss.qualcomm.com>
+Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-6-eedca108e540@oss.qualcomm.com>
 References: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -103,36 +103,36 @@ To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10548;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1218;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=J9J5s3ZT8qppRfzTVRn+3+0mDOD8laySW8Eg2GginiY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK3KYawurHCbAYIJ0Q4CQdzPRjR8zEj37Kyy
- IF02mgP0yeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
- 1WFXB/9ORH804iejkaKkwkJyKdgcA2PvTgOCFm9rVIEV9Tex05dxpfDyqTkADXOZ9Hxk9OJN1gM
- gpacrzEOlW2/YuuXI4eD+NPU1ArxXw3ETfF2LIC3yNpAXLgnzcYr7iS2D16nHHP033q37/lMRnC
- U5aHkgg6L5FtmXhagFD03m8Wwe7AUCCiXAcGRwRI3rcMFuq5BRLtHoa/2A3P/ythyyRr3qHoI31
- iD3+rf3rX5ruMaNuupHA/YbDY5Yp/veJe+I4aCmO2HvEsnyERAyMXR+xcUtXX+MkbeU2z+kc4CM
- HBd02eBtMBiio5t9lYHE7RydXk7dbrh+/mIIqrX+xA7ofLwt
+ bh=GS8W5OKhX5k/3MQCghSpRV/kbVATVCRf5/YkEeA5moE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK3f9gT0zERUZec9/hsBUQ1qPK6ZuGLIOve3
+ S3naw0SXUeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpytwAKCRCLPIo+Aiko
+ 1djfB/sFx/Qa/dlaCqhOszPGddW0LxXnXaDbnVtsqUwKL5xI0ckxf/GOxTrGWqrY6/FILTdFH5h
+ oTXojXp6+aH0hpFTkkuE8VbllnDMSMfyL1nd5e+JfiPCrVdyDhmCh4C0CtkJlY+Hhj9algdfCIw
+ VeuKF8rlqI4NqBXqaVrxfshNf9ZJQNNjMnS65dw+gk43Hi5gyHSvW84+Fq+IO9glI5JGyGxuv+o
+ aj/WTob6RDLb7elEQY3tjCnqRaRjPbbjMI+JsAc8SPC2whki3e0chNnC7+ylne/j7Wg28LsE5gY
+ zCWfNlRACRkqr/apeWH7J0kXYp14+E7m5d0DguYjMEq/myqE
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzMSBTYWx0ZWRfX51UOuGQGLiVO
- R9Hbopt+uo1rwiQXPzsCPNcTF746Ch6i19d7XoEidhlnNoveNZ4EewiHP2al22PAr2ULcFxhKGs
- SeojqWEyjzcQs7l+mmrzaw3Aimb0Gl1r/SG3F1zZx8KYFkq2ROS3cJnU/h4mo03ygv1jgLh5RD/
- 2m+Xbup6h4l+nqD+x7v6D70bkPfNEuKN8k0Yezhj7mcrzy17BwhXCdRhFx5eaBVbzKQhNZ+w43/
- v87aVp6Ttpzs/iDDZlj+AXR1cQnTQ3IUob57HYWxoMoBIM049UbdzbdaSIRqyzP6k9uUqid/dom
- bX0GiBVSW9yT8cNdiIwTCJ9AnfML1R3vgxreyda3hHeM+hZ3s5mndNpdMwDxHrLRiEf7DwycCpT
- 8uz3p+sSi3j72bx+MMaKFBkokNPgyvrfWNcHVQTH8stcmqhNpeWzHwKtwK+2HuBF6ox6odu5
-X-Proofpoint-GUID: 8DI6c8gi9BeK9kc_9oeGWudO_t2q_j1-
-X-Proofpoint-ORIG-GUID: 8DI6c8gi9BeK9kc_9oeGWudO_t2q_j1-
-X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=687a7985 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=Y3wYzle4tNZGDD-pgqsA:9 a=QEXdDO2ut3YA:10
- a=o1xkdb1NAhiiM49bd1HK:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzMSBTYWx0ZWRfXxFzMyvcm/VT0
+ tVmmUbu7GgdBvhjUeW28aqRALk0uN03q+60nUB9cEIv0VfaxL1PhT6GsSshVT8tdwnultP99vop
+ /BwFXTee2837gk/xFqaKWuJONoFgrHabp/BlGtkEBRGjc75IuBrCCCXvWqgf7uYzV9IZ2Ha3UAx
+ Rs18hZaGf2W50qr57ilizHUfJsux3GRcG+qWtfZ0F4vONXFwPs5HHuQeDZUskRAVbOnZ3FO6Of/
+ A9//gbGedjSiRUjhPO32VPCuTsGzOkkVTOTRvEncGQtknSmSYnhENJn2imX7CjZpT+eqVJ1q99r
+ Z9LlplECa0zD9S6HuRqyhQgEdslxE2lJsg1Gh39HtxpBzEJ8zPueOib9TSiqFNV36hDjJzq81Z0
+ 5258CkSNIWr8ck5H7CvDZJ51g09tQlWvluF798ZxKCXA9Xb8CyyagfCQ1t7gAlqozIzQWrm+
+X-Proofpoint-GUID: LrXhqhSYM_zwxDhpdR4OcHG8uNld3faK
+X-Proofpoint-ORIG-GUID: LrXhqhSYM_zwxDhpdR4OcHG8uNld3faK
+X-Authority-Analysis: v=2.4 cv=McZsu4/f c=1 sm=1 tr=0 ts=687a7972 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=AJhAjMZ01lUAXvDxW_0A:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-18_04,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=679 impostorscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=934 impostorscore=0 mlxscore=0 phishscore=0
  adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
  spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
@@ -143,293 +143,31 @@ platform-specific defines.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi |  8 ++++----
- arch/arm64/boot/dts/qcom/msm8917.dtsi | 10 +++++-----
- arch/arm64/boot/dts/qcom/msm8976.dtsi |  4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 16 ++++++++--------
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 16 ++++++++--------
- arch/arm64/boot/dts/qcom/sm6125.dtsi  | 12 ++++++------
- 6 files changed, 33 insertions(+), 33 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index b50c7e6e0bfcd35ab4f8b84aeabe214fd60e8d7c..ca184ee3af065df0dfb3c7106d29360a860b8b36 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1943,8 +1943,8 @@ mpss: remoteproc@4080000 {
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 51a7a3fb36d88eeb8dbccefbab672aceb1e46428..bcf14a3b13a1b4b3455ef4069df2f3d9c5c7f9ff 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -959,7 +959,7 @@ modem: remoteproc@fc880000 {
+ 			resets = <&gcc GCC_MSS_RESTART>;
+ 			reset-names = "mss_restart";
  
--			power-domains = <&rpmpd MSM8916_VDDCX>,
--					<&rpmpd MSM8916_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-@@ -2445,8 +2445,8 @@ wcnss: remoteproc@a204000 {
- 					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
- 
--			power-domains = <&rpmpd MSM8916_VDDCX>,
--					<&rpmpd MSM8916_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			qcom,smem-states = <&wcnss_smp2p_out 0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-index 8a642fce2e40d6d252a1cfbdfed602e6789ef09a..87dfc1e7e131cd4192ffbdd4913f934af17c5c88 100644
---- a/arch/arm64/boot/dts/qcom/msm8917.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-@@ -1070,7 +1070,7 @@ mdss_dsi0: dsi@1a94000 {
- 				phys = <&mdss_dsi0_phy>;
- 
- 				operating-points-v2 = <&mdss_dsi0_opp_table>;
--				power-domains = <&rpmpd MSM8917_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -1288,7 +1288,7 @@ sdhc_1: mmc@7824900 {
- 			pinctrl-0 = <&sdc1_default>;
- 			pinctrl-1 = <&sdc1_sleep>;
- 			pinctrl-names = "default", "sleep";
--			power-domains = <&rpmpd MSM8917_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 			mmc-hs200-1_8v;
- 			mmc-hs400-1_8v;
- 			mmc-ddr-1_8v;
-@@ -1313,7 +1313,7 @@ sdhc_2: mmc@7864900 {
- 			pinctrl-0 = <&sdc2_default>;
- 			pinctrl-1 = <&sdc2_sleep>;
- 			pinctrl-names = "default", "sleep";
--			power-domains = <&rpmpd MSM8917_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 			bus-width = <4>;
- 			status = "disabled";
- 		};
-@@ -1517,8 +1517,8 @@ wcnss: remoteproc@a204000 {
- 					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
- 
--			power-domains = <&rpmpd MSM8917_VDDCX>,
--					<&rpmpd MSM8917_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			qcom,smem-states = <&wcnss_smp2p_out 0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index f9962512f243d6c1af4931787f4602554c63bb39..80a0a09e055d79c5e56f89e5d67baf9971d87069 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -1558,8 +1558,8 @@ wcnss: remoteproc@a204000 {
- 					  "handover",
- 					  "stop-ack";
- 
--			power-domains = <&rpmpd MSM8976_VDDCX>,
--					<&rpmpd MSM8976_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			qcom,smem-states = <&wcnss_smp2p_out 0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 0b0a9379cb05b01ebb17cef9fe7d22d56790efd3..2d7c45fec94e868b41a2b8d7acf8175a7b02c0b7 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1497,8 +1497,8 @@ remoteproc_mss: remoteproc@4080000 {
- 
- 			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
- 
--			power-domains = <&rpmpd MSM8998_VDDCX>,
--					<&rpmpd MSM8998_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			status = "disabled";
-@@ -1544,7 +1544,7 @@ adreno_gpu: gpu@5000000 {
- 			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
- 			iommus = <&adreno_smmu 0>;
- 			operating-points-v2 = <&gpu_opp_table>;
--			power-domains = <&rpmpd MSM8998_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDMX>;
- 			status = "disabled";
- 
- 			gpu_opp_table: opp-table {
-@@ -1680,7 +1680,7 @@ remoteproc_slpi: remoteproc@5800000 {
- 			qcom,smem-states = <&slpi_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
- 
--			power-domains = <&rpmpd MSM8998_SSCCX>;
-+			power-domains = <&rpmpd RPMPD_SSCCX>;
- 			power-domain-names = "ssc_cx";
- 
- 			status = "disabled";
-@@ -2871,7 +2871,7 @@ mdss_mdp: display-controller@c901000 {
- 				assigned-clock-rates = <19200000>;
- 
- 				operating-points-v2 = <&mdp_opp_table>;
--				power-domains = <&rpmpd MSM8998_VDDMX>;
-+				power-domains = <&rpmpd RPMPD_VDDMX>;
- 
- 				mdp_opp_table: opp-table {
- 					compatible = "operating-points-v2";
-@@ -2953,7 +2953,7 @@ mdss_dsi0: dsi@c994000 {
- 							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
- 
- 				operating-points-v2 = <&dsi_opp_table>;
--				power-domains = <&rpmpd MSM8998_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				phys = <&mdss_dsi0_phy>;
- 				phy-names = "dsi";
-@@ -3029,7 +3029,7 @@ mdss_dsi1: dsi@c996000 {
- 							 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>;
- 
- 				operating-points-v2 = <&dsi_opp_table>;
--				power-domains = <&rpmpd MSM8998_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				phys = <&mdss_dsi1_phy>;
- 				phy-names = "dsi";
-@@ -3277,7 +3277,7 @@ remoteproc_adsp: remoteproc@17300000 {
- 			qcom,smem-states = <&adsp_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
- 
--			power-domains = <&rpmpd MSM8998_VDDCX>;
+-			power-domains = <&rpmpd MSM8226_VDDCX>;
 +			power-domains = <&rpmpd RPMPD_VDDCX>;
  			power-domain-names = "cx";
  
- 			status = "disabled";
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 8b1a45a4e56ed1ae02e5bb6e78ca6255d87add1c..412d7f7d6de67008c1f406ac5a73a51ff7f4f98d 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1058,8 +1058,8 @@ remoteproc_mss: remoteproc@4080000 {
+ 			qcom,ext-bhs-reg = <&tcsr_regs_1 0x194>;
+@@ -1372,7 +1372,7 @@ adsp: remoteproc@fe200000 {
+ 					      <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
  
- 			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
- 
--			power-domains = <&rpmpd SDM660_VDDCX>,
--					<&rpmpd SDM660_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>,
-+					<&rpmpd RPMPD_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
- 			memory-region = <&mba_region>, <&mpss_region>, <&mdata_mem>;
-@@ -1096,7 +1096,7 @@ adreno_gpu: gpu@5000000 {
- 				"rbcpr",
- 				"core";
- 
--			power-domains = <&rpmpd SDM660_VDDMX>;
-+			power-domains = <&rpmpd RPMPD_VDDMX>;
- 			iommus = <&kgsl_smmu 0>;
- 
- 			nvmem-cells = <&gpu_speed_bin>;
-@@ -1396,7 +1396,7 @@ sdhc_2: mmc@c084000 {
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc2_state_on>;
- 			pinctrl-1 = <&sdc2_state_off>;
--			power-domains = <&rpmpd SDM660_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 			status = "disabled";
- 
-@@ -1450,7 +1450,7 @@ sdhc_1: mmc@c0c4000 {
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc1_state_on>;
- 			pinctrl-1 = <&sdc1_state_off>;
--			power-domains = <&rpmpd SDM660_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 			bus-width = <8>;
- 			non-removable;
-@@ -1612,7 +1612,7 @@ mdp: display-controller@c901000 {
- 						     "rotator-mem";
- 				iommus = <&mmss_smmu 0>;
- 				operating-points-v2 = <&mdp_opp_table>;
--				power-domains = <&rpmpd SDM660_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				ports {
- 					#address-cells = <1>;
-@@ -1664,7 +1664,7 @@ mdss_dsi0: dsi@c994000 {
- 				reg-names = "dsi_ctrl";
- 
- 				operating-points-v2 = <&dsi_opp_table>;
--				power-domains = <&rpmpd SDM660_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				interrupt-parent = <&mdss>;
- 				interrupts = <4>;
-@@ -2280,7 +2280,7 @@ adsp_pil: remoteproc@15700000 {
- 			clock-names = "xo";
- 
- 			memory-region = <&adsp_region>;
--			power-domains = <&rpmpd SDM660_VDDCX>;
+-			power-domains = <&rpmpd MSM8226_VDDCX>;
 +			power-domains = <&rpmpd RPMPD_VDDCX>;
  			power-domain-names = "cx";
  
- 			qcom,smem-states = <&adsp_smp2p_out 0>;
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 8f2d65543373e70b48b4015478e21e8e74fd23c9..80c42dff5399b7c60576c2b6cf79afdbd8b9b1d4 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -724,7 +724,7 @@ sdhc_1: mmc@4744000 {
- 			clock-names = "iface", "core", "xo";
- 			iommus = <&apps_smmu 0x160 0x0>;
- 
--			power-domains = <&rpmpd SM6125_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 			qcom,dll-config = <0x000f642c>;
- 			qcom,ddr-config = <0x80040873>;
-@@ -755,7 +755,7 @@ sdhc_2: mmc@4784000 {
- 			pinctrl-1 = <&sdc2_off_state>;
- 			pinctrl-names = "default", "sleep";
- 
--			power-domains = <&rpmpd SM6125_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 			qcom,dll-config = <0x0007642c>;
- 			qcom,ddr-config = <0x80040873>;
-@@ -1275,7 +1275,7 @@ mdss_mdp: display-controller@5e01000 {
- 				assigned-clock-rates = <19200000>;
- 
- 				operating-points-v2 = <&mdp_opp_table>;
--				power-domains = <&rpmpd SM6125_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				ports {
- 					#address-cells = <1>;
-@@ -1345,7 +1345,7 @@ mdss_dsi0: dsi@5e94000 {
- 							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
- 
- 				operating-points-v2 = <&dsi_opp_table>;
--				power-domains = <&rpmpd SM6125_VDDCX>;
-+				power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 				phys = <&mdss_dsi0_phy>;
- 				phy-names = "dsi";
-@@ -1406,7 +1406,7 @@ mdss_dsi0_phy: phy@5e94400 {
- 					      "ref";
- 
- 				required-opps = <&rpmpd_opp_nom>;
--				power-domains = <&rpmpd SM6125_VDDMX>;
-+				power-domains = <&rpmpd RPMPD_VDDMX>;
- 
- 				status = "disabled";
- 			};
-@@ -1434,7 +1434,7 @@ dispcc: clock-controller@5f00000 {
- 				      "gcc_disp_gpll0_div_clk_src";
- 
- 			required-opps = <&rpmpd_opp_ret>;
--			power-domains = <&rpmpd SM6125_VDDCX>;
-+			power-domains = <&rpmpd RPMPD_VDDCX>;
- 
- 			#clock-cells = <1>;
- 			#power-domain-cells = <1>;
+ 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
 
 -- 
 2.39.5
