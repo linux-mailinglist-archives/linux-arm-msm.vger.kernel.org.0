@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-65573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5D3CB09B0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 07:57:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79372B09B25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 08:09:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 860A64E0B4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 05:57:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB252188E64C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 06:10:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C80B1CBEB9;
-	Fri, 18 Jul 2025 05:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AC451E5207;
+	Fri, 18 Jul 2025 06:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g/yu3qE0"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Yj5iO7gJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0251DE4E1;
-	Fri, 18 Jul 2025 05:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ADE17578;
+	Fri, 18 Jul 2025 06:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752818266; cv=none; b=YS8Jvp348/D8jdsRKxpHwLw+b9eXyZ4K0b/As8ADyKdcsjePoiCcpI/vzpRumKy0qGolCbcGvVZCwTaA7YlxB5Em2vcBaGRu2K27IOU7KKUD1fGqpSxtIJUj8eWH8HG1bKgf8+i4GAra2fVC86o9o+59ztbUN2SWzMLOBjeDdpg=
+	t=1752818986; cv=none; b=afSePKIt2/LNe8qDwRHuN32YBhsmHgTud9wrDWCrOi99dl5TFHLT2xUOFMpp2WAr/tkCmCJBqz6/r3kSzviSGOYe1Isk65F9nsTXtNV4RPyTxKHrWWYMsiTW/xnjPrWd39EeQmMAUoiwFQYYEfKtR/7cWZE5CBBIwRVOTSfD1Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752818266; c=relaxed/simple;
-	bh=6HyipH6ZGn2eTCwtX/8w8N8MbCivU7M119JVojMbDow=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UMStaDm6g7+EtD7TXGsmhf1CAh4IkGvxgjr128OELegC4cWrUnf1NaZq4erHA2Pyyr6pek2j9wVJcPmoK/kcPCprUaeQixPOR1iMMOw+nQKC8mDvEVfs96H5bfk8H/YIdGoK2+srDBmBOpKW4mr29gonQrEiyt8v2I94SIo6nhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g/yu3qE0; arc=none smtp.client-ip=198.175.65.19
+	s=arc-20240116; t=1752818986; c=relaxed/simple;
+	bh=Muu4to5olDa5hJVh7CdT0a9aefhZ6PwtM5Jz5Cbadhk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YsQNpkmLsroZQIuaCBcwGOzP3Q7BrkuDrUD7+2aq4XmZ1oGwNAq+/KbXdAI+zMxMMM1pch4O+BYkWkdqniPPhWdUmLr18tLAkvecgLbTb59lQXIKDgSI2dWLsIhw+gh7c/junwjq44raOgyZmWFdjfY6BOYJNjtWiotG08woyYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Yj5iO7gJ; arc=none smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752818264; x=1784354264;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=6HyipH6ZGn2eTCwtX/8w8N8MbCivU7M119JVojMbDow=;
-  b=g/yu3qE005OQnYf9YgH/Z1RaiMHznwySxFQmv10EQJUBtjktnx+UNhvH
-   wzrnh/lXVeszP3TKacpkmTTkwhABckWrS606oQgaUzTi9Eb0rRKDaoRj5
-   IBz9TfJT0dVlc2JNA1Gu/6PL0MKl8nbqqq6wIByqpTcNU+4tOUXnmNSOU
-   /K2cgdaf7kXyAzYLc6gFNBk2UAFMfdSQ1YWjEPZlwek5UYo7KAf/ORBli
-   8nzhgAmzqB482spHtNl/34JzM48M7WU75CMHDpMzkAFRPWnQ14oWOUJ8o
-   cfBVW7I/KNAodnVD/78zGx+6ucA7A0Q9tyQWgmHnbsN5Mre39Oy9Z4tKW
-   A==;
-X-CSE-ConnectionGUID: jfvhYIWFSme1khIB3xWuNA==
-X-CSE-MsgGUID: 3UIL3NaPRvK54yyC6iUi/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="54963627"
+  t=1752818985; x=1784354985;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Muu4to5olDa5hJVh7CdT0a9aefhZ6PwtM5Jz5Cbadhk=;
+  b=Yj5iO7gJS7h4jD+PykKzPbIDC/ddULV7qTLm5DvNrsbn0puBogdowtB4
+   RPl2y+bcGOdtSFMxeKRe4h094WZGK312sgjxHhf13AXzsFKmMtxF0Fz1H
+   YHdNxjlODW85a2xSYhXrawdMq71k77t/D7bR5HplGLD4yyycC2oTHOoA8
+   YEdc5LsNHaOG2Pmpks6Jz2Tzt1tGaZBA8sSMrLzEq8AZXLySAlKqzD3MS
+   O/8MmzQ1+1vqm8B4LpAGaJR+H0l6eR4YOj48jUKo+RbghCBeslP9dFz0I
+   jWkSTowB2zX+h+kiE8a4aBI/G/4XpoqC2AQfIUjIQzrAFUivsS7jvQOWh
+   Q==;
+X-CSE-ConnectionGUID: 4xqw34QpRACkklvHwIJEaQ==
+X-CSE-MsgGUID: GwsIB3ZPR1C25tO2A8cBxw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="55231384"
 X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="54963627"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 22:57:43 -0700
-X-CSE-ConnectionGUID: gGSQjf1oTiKmkpHzD1CHqg==
-X-CSE-MsgGUID: 7MpZdOhSSiy/G0j+1Lk4Jw==
+   d="scan'208";a="55231384"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 23:09:44 -0700
+X-CSE-ConnectionGUID: b3Qe9VFRT1yDBJGJPtpzNw==
+X-CSE-MsgGUID: xpob/a9xSH2SyoR3DNf2uA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="188960541"
+   d="scan'208";a="157367080"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 22:57:28 -0700
-Message-ID: <8db83e78-8e18-4cdb-b8eb-80351c5273fc@intel.com>
-Date: Fri, 18 Jul 2025 13:57:25 +0800
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 23:09:27 -0700
+Message-ID: <9f8bd84d-6386-4e3c-802b-de598b8ac0c2@intel.com>
+Date: Fri, 18 Jul 2025 14:09:24 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,9 +67,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 12/21] KVM: x86/mmu: Consult guest_memfd when
- computing max_mapping_level
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v15 13/21] KVM: x86/mmu: Handle guest page faults for
+ guest_memfd with shared memory
 To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
@@ -93,42 +92,89 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
  jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
  ira.weiny@intel.com
 References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-13-tabba@google.com>
- <9b425918-1858-47d6-a1cd-1b44d5898ab4@intel.com>
+ <20250717162731.446579-14-tabba@google.com>
 Content-Language: en-US
-In-Reply-To: <9b425918-1858-47d6-a1cd-1b44d5898ab4@intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250717162731.446579-14-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/18/2025 1:32 PM, Xiaoyao Li wrote:
-> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
->> From: Ackerley Tng <ackerleytng@google.com>
->>
->> Modify kvm_mmu_max_mapping_level() to consult guest_memfd for memory
->> regions backed by it when computing the maximum mapping level,
->> especially during huge page recovery.
+On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+> From: Ackerley Tng <ackerleytng@google.com>
 > 
-> IMHO, we need integrate the consultation of guest_memfd into 
-> __kvm_mmu_max_mapping_level, not kvm_mmu_max_mapping_level().
+> Update the KVM MMU fault handler to service guest page faults
+> for memory slots backed by guest_memfd with mmap support. For such
+> slots, the MMU must always fault in pages directly from guest_memfd,
+> bypassing the host's userspace_addr.
 > 
-> __kvm_mmu_max_mapping_level() (called by kvm_mmu_hugepage_adjust()) is 
-> the function KVM X86 uses to determine the final mapping level,
-> fault->goal_level.
+> This ensures that guest_memfd-backed memory is always handled through
+> the guest_memfd specific faulting path, regardless of whether it's for
+> private or non-private (shared) use cases.
 > 
+> Additionally, rename kvm_mmu_faultin_pfn_private() to
+> kvm_mmu_faultin_pfn_gmem(), as this function is now used to fault in
+> pages from guest_memfd for both private and non-private memory,
+> accommodating the new use cases.
+> 
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Co-developed-by: Fuad Tabba <tabba@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 
-I think I can understand the patch now.
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-For normal TDP page fault that requires KVM to setup the TDP page table 
-to map the guest memory. The max page level of guest memfd is consulted 
-when faulting in the pfn in kvm_mmu_faultin_pfn_private() and update 
-fault->max_level accordingly. So skip consultation in 
-__kvm_mmu_max_mapping_level() is OK.
 
-But for recover_huge_pages_range() and kvm_mmu_zap_collapsible_spte() 
-(this patch misses this case) which call kvm_mmu_max_mapping_level() and 
-without information of the max page level of guest memfd. So we need to 
-consult guest memfd separately.
+Note to myself:
 
-But the changelog doesn't clarify it such way.
+After this patch, it looks possible that 
+kvm_mmu_prepare_memory_fault_exit() in kvm_mmu_faultin_pfn_gmem() might 
+be triggered for guest_memfd with mmap support, though I'm not sure if 
+there is real case to trigger it.
+
+This requires some change in QEMU when it adds support for guest_memfd 
+mmap support, since current QEMU handles KVM_EXIT_MEMORY_FAULT by always 
+converting the memory attribute.
+
+> ---
+>   arch/x86/kvm/mmu/mmu.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index 94be15cde6da..ad5f337b496c 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -4511,8 +4511,8 @@ static void kvm_mmu_finish_page_fault(struct kvm_vcpu *vcpu,
+>   				 r == RET_PF_RETRY, fault->map_writable);
+>   }
+>   
+> -static int kvm_mmu_faultin_pfn_private(struct kvm_vcpu *vcpu,
+> -				       struct kvm_page_fault *fault)
+> +static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
+> +				    struct kvm_page_fault *fault)
+>   {
+>   	int max_order, r;
+>   
+> @@ -4536,13 +4536,18 @@ static int kvm_mmu_faultin_pfn_private(struct kvm_vcpu *vcpu,
+>   	return RET_PF_CONTINUE;
+>   }
+>   
+> +static bool fault_from_gmem(struct kvm_page_fault *fault)
+> +{
+> +	return fault->is_private || kvm_memslot_is_gmem_only(fault->slot);
+> +}
+> +
+>   static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
+>   				 struct kvm_page_fault *fault)
+>   {
+>   	unsigned int foll = fault->write ? FOLL_WRITE : 0;
+>   
+> -	if (fault->is_private)
+> -		return kvm_mmu_faultin_pfn_private(vcpu, fault);
+> +	if (fault_from_gmem(fault))
+> +		return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
+>   
+>   	foll |= FOLL_NOWAIT;
+>   	fault->pfn = __kvm_faultin_pfn(fault->slot, fault->gfn, foll,
 
 
