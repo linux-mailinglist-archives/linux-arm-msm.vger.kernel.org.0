@@ -1,111 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-65564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E84AB09957
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 03:43:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F0B6B09984
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 04:00:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E32D51C487DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 01:43:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 461381715D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 02:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2363718A6AE;
-	Fri, 18 Jul 2025 01:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72F401BC2A;
+	Fri, 18 Jul 2025 02:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GeiZKkhg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tHLrVRNH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94F311712;
-	Fri, 18 Jul 2025 01:42:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4806E1CEAB2;
+	Fri, 18 Jul 2025 02:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752802977; cv=none; b=McH/YJ/0hfWK3oeCJDFoPAV4R0dqAqtwfqDARkeI8wf8P+/WjhikG3rylRH7a/s+BeO3wyXkZB98LvxEn/OKtIbHlHq30Msw8l9D4u6uEH1Wdo2DQ3dOQnlnUbB0/ezK2MBgqJiu+V+5INAEB5K0GIfuugZkrDCrmJTTrrlKLA8=
+	t=1752804005; cv=none; b=Sd2inPOPfmtEM36qPjJbtPFH7zrn0k576dDgnW1S/uFc9qroXrCHY1heGCSKW3qg0Mj/tR7+QfE55cWqBQqkG0CItnwcsnfuOrlkooqn1xaqWi7QWP7PuNGg/+ybzjkBHmJ9a9byi9p9Q3VsmGTxRgq4LENQgUZQbO+mZByrPNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752802977; c=relaxed/simple;
-	bh=nALzQ13/hKtBqXb8rfNtCTmHGGtFpFLO/y5dIAkAQfY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KL8s4feO58b6yW98UR/Fba96jIKcqu2Jk8zM+6/ffNL+9eIrSf00nyXnf3SCJcn3ep7CxBGP2gM/eYtcqqaqybJEC3BC+rI9r2RhGhe52vevR9OVp7NlHYoFDVWY78Pa+xDFbYsiHg2Rj39wYxNaszIX0HnW53Mp+/vYIJ27rE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GeiZKkhg; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752802976; x=1784338976;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=nALzQ13/hKtBqXb8rfNtCTmHGGtFpFLO/y5dIAkAQfY=;
-  b=GeiZKkhggLMerCycTOca4mSA4KOxmxrdEONrl2zKF3g3xD4otfEdMle1
-   NIt2nk0haMu/yj1TGz+fh11XWEp4heA6mdfXp+2aLkGjJhNn5iSA0kRIb
-   QXyBWo6FdvAlhXU1qJRzqws7bScOdqZ+MOrvgFjZNYaN7GM5yKQkLPWBS
-   aI4QtGWnBuEGGStLnIl/GVFbUKFr8suKLTp38UgfGW8Vx+c30xm2PilIr
-   xmADptvaG7Yp3hgUDZrDKytnsNw87J+0tzhhISEXsGEz/yUcWdHIM2I25
-   8j1zQgCRm3qnN0S1mkOXhZCPTCDakvIRWFtkg30rbOhZhKJweKIB6QpzR
-   w==;
-X-CSE-ConnectionGUID: OvkIr1KfRUqIchvpcPFIrg==
-X-CSE-MsgGUID: 13pPtwk9SwmOed85rkaa9g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="77632278"
-X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="77632278"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 18:42:55 -0700
-X-CSE-ConnectionGUID: ZkS0VEoES4W3YCuvt7mYLA==
-X-CSE-MsgGUID: koIEcje3TW2XcXgRJ6Mvag==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,320,1744095600"; 
-   d="scan'208";a="157754551"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2025 18:42:40 -0700
-Message-ID: <ffb23653-058a-426e-9571-51784a77ad3d@intel.com>
-Date: Fri, 18 Jul 2025 09:42:36 +0800
+	s=arc-20240116; t=1752804005; c=relaxed/simple;
+	bh=7qvsqx1de8j/7gYl2naIdK0LtF2ufyf4Xtjxazufslw=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=onIusKoy8mgsXOEFxDdZ1+gkPJBz0sBQDr/sHZFgB3esb/qd6E3oI0NBNQ9aJUcemX7QnH3Fy9UAtN4WdeQNYxgAjkHDXZKC0K/7YzvEjEHYku1XkJldRIuBI6N10YWKyHIfgUrDnbnXc6NkZ+AoAIEQp4vYUM96e7KC1Pa6ExY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tHLrVRNH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA013C4CEF0;
+	Fri, 18 Jul 2025 02:00:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752804004;
+	bh=7qvsqx1de8j/7gYl2naIdK0LtF2ufyf4Xtjxazufslw=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=tHLrVRNH3g+96sUkLxI8ICty+80cREVqrb3f8KiBKuejU1r/d86yTpnqfTUwZ3MdP
+	 b28fpEogcg9U+WLEv8/NQIPjiDFMQ6I5WRqANHAmX8yPIC5dNSJ+EEMOpa7PEECHXN
+	 LuTjNqTORZa8+y0IbxRyDDjLiwEP2KJ53ZcZPl0FK8A6fppl+4u4QBCspxUz3kI1sw
+	 udCHJQmbvoYVc3qtAWQxIKGm5VPCDV1FUg4/O59m0iTtqCe7rjtv7V10sd1lxy/6+r
+	 I5lNrFRcgw0IZ5asaJX/Z8i7NIVV0PA3jiinb34mvf94+iwI7W8NtsPPNiE/Q04x1x
+	 7tVpPxDSivl2Q==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAD34383BA3C;
+	Fri, 18 Jul 2025 02:00:25 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 03/21] KVM: Introduce kvm_arch_supports_gmem()
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-4-tabba@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250717162731.446579-4-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v3 0/3] Add shared PHY counter support for
+ QCA807x
+ and QCA808x
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <175280402449.2141855.11339300453684668234.git-patchwork-notify@kernel.org>
+Date: Fri, 18 Jul 2025 02:00:24 +0000
+References: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
+In-Reply-To: <20250715-qcom_phy_counter-v3-0-8b0e460a527b@quicinc.com>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 
-On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> -/* SMM is currently unsupported for guests with private memory. */
-> +/* SMM is currently unsupported for guests with guest_memfd private memory. */
->   # define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_has_private_mem(kvm) ? 1 : 2)
+Hello:
 
-As I commented in the v14, please don't change the comment.
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-It is checking kvm_arch_has_private_mem(), *not* 
-kvm_arch_supports_gmem(). So why bother mentioning guest_memfd here?
+On Tue, 15 Jul 2025 19:02:25 +0800 you wrote:
+> The implementation of the PHY counter is identical for both QCA808x and
+> QCA807x series devices. This includes counters for both good and bad CRC
+> frames in the RX and TX directions, which are active when CRC checking
+> is enabled.
+> 
+> This patch series introduces PHY counter functions into a shared library,
+> enabling counter support for the QCA808x and QCA807x families through this
+> common infrastructure. Additionally, enable CRC checking and configure
+> automatic clearing of counters after reading within config_init() to ensure
+> accurate counter recording.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,v3,1/3] net: phy: qcom: Add PHY counter support
+    https://git.kernel.org/netdev/net-next/c/22bf4bd8ec4f
+  - [net-next,v3,2/3] net: phy: qcom: qca808x: Support PHY counter
+    https://git.kernel.org/netdev/net-next/c/3370e33a1c23
+  - [net-next,v3,3/3] net: phy: qcom: qca807x: Support PHY counter
+    https://git.kernel.org/netdev/net-next/c/d98f43b84a1e
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
