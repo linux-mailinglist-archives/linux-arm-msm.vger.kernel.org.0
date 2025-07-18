@@ -1,224 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-65686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C4AAB0A851
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:20:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B685B0A864
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 18:26:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE8425A3405
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:20:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CE925A364B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jul 2025 16:26:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 045152BD00C;
-	Fri, 18 Jul 2025 16:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC702E54BC;
+	Fri, 18 Jul 2025 16:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LQTN3Eu4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VitDl0P2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AD4221DA5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA6C2DD608;
+	Fri, 18 Jul 2025 16:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752855625; cv=none; b=nNV3JhCl4q+9nD+kj8DJz8KCUz6J6B32EO6JxtpCYAcsMAHCTqXXBxayZCGHal2kkY2wpPhrmYsBWcZZvJpHCM7umT4flZi88JLR7ozaPrX25H1s8NvkcW6zKcp390BMRLNxuhHURlKKDuFhEKHyRc92JiCDVH91f8OIXhewBNo=
+	t=1752855964; cv=none; b=LDHFAmx5/40t8jBEjqZw0f+PPGUo3ffZ4zFsGTyP7hRwdFAxFVppeNKRdG0sKropwH1bq7RyPw6nsIEZYOcuU7t+V2iW8LV/ZhsD0HQ8y3o1ewP1AvRoqcXSFNButEzg2jzY9zCidrnAT/TwYjUc/GB9IQ/KpfgA4oMlKg6Q4Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752855625; c=relaxed/simple;
-	bh=gmfr46OFYmUccWZSBc7IaVgajR2Vt394m5Ncm1zzRZI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UXJCh7BFf5rDysNfHA0UF3G9Oe5SApIoNcPp8WeFVRBdO3JjPoafvsDvWJZn+zSjf085mRq168WXdiyiWAdHAgGNmekmys7ctjoHBiaOSjE5q5H1umLSYJbx7izBedgDsBlVxI1PPyCCn/T5+tEOQBrIJVVlIc/wA90mdPKH3wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LQTN3Eu4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56I7wolY025209
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GyGX0yCNyB/fJpepU8CmcL0R5Xf5NuixqQQS52Ar6fE=; b=LQTN3Eu4FoyTKj3e
-	pR5PMtaGCqha8gKjJVV/Gwwk9cnsGI5dLZPpSDaQPLi0Vhoh3lHiVZd6uhKybHOu
-	qT7iVSelDoOi9gUzEgfLH8liFZFv2tyZGrDA7G0sorhDVM5u5ea2I8mfXcj40/42
-	0eaLlMFGev+oyslpBUESeUV9n4JtQL3N8+1CmTUoJnbjKioDo0Pldl3w+RPyvLOU
-	Kt211uds2/+zEvs+4LpjTv2nMgcu/ilWVoWkcx4vkcjly6Xo2NHDX8uanHvAZkLE
-	Wl/asb6LFk0Uk8XkTBX5mB31VX/id5rJBwfP0gFlU96fnXs9yDuVtRC3EURfJsbB
-	Jc5WBQ==
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com [209.85.166.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47xbsqge08-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 16:20:23 +0000 (GMT)
-Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-87c056ae7c0so320998939f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jul 2025 09:20:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752855605; x=1753460405;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GyGX0yCNyB/fJpepU8CmcL0R5Xf5NuixqQQS52Ar6fE=;
-        b=KzsT0Dm3Y8OfL8oxVEfdYUqio9rRj4VjbRcnoRuP7j/3oiIsdPEfZmKmd3Stz+FY+M
-         70ysWomB0Fen8wPDg4aZXdjRPWD6YirEn5GP0eEsL2qLLjtsfLZnxj5JcSapmsPBBfI9
-         UQfaIzQu1cq/fxOeQXNZ9gM5Mr8aa0lQq0V0reFXW3oY91LqoLM2dMvzQy9xlh1R2ouC
-         u5zg1KKfJNe+qOWSECPfRMWMMG23orMxqohgmdI1vQr3akJoJcovTM5SakFOBYRNc5do
-         /060u3wOt1J+28BqdGYUTGgz2TAgf7oEHLNOrnhhS6qWTgKgniXrSqWV0RHWPYNlV3tt
-         ukwA==
-X-Gm-Message-State: AOJu0YyU0WthviOusxYKQLGJAuL3NRFQ5peUAq0P72gPLMtFPFMPEgTl
-	ztu/mflYFajy/yki4AtBU1Aiu5Y/OOtkIojtHmylIBqpEDYCM6OGMuEvmfQl/MyoEi6qniE0Guc
-	rO1mfFjKSscSK7roCbWdsO3BGf8B+cDHSkhpVTfg5BZYTG4NXRqE4Pxo7BVFVmrkSWgwgGFba4+
-	Q/
-X-Gm-Gg: ASbGncuK7//Os58xLo6f4BArzQ3Ek+xvMW/W0mA8+JW9WjGO1TV4E2eE/xLKGhxepEx
-	S1leBOyTR90hleVC6kR/qH/zFVtsAsLHIV9S1InqFnEG/jLM2yB+fcj5LwWkkX0716XZzlIXZdD
-	UVo8+Y6FX3AeVyKWErMAE64SRQUn3uZC3yWe9FklMIpHeVqvGYZ5cl6Is2YijnDpcRTeEsjwIs2
-	LjOHvWsxmTKi7+xxWENRydvRt+hwaAdsDWjl5xGqQTq6pfpnBVBN4CMO4n1e4QEll/x3LEYOn5w
-	gBQZeaumuRTIs5iYBn0JwvtnoXuetQgLiNdm6XkIydtTCMd5INPvP4HWMQ/2+o6HZJHTYV1fBga
-	KzligoVbB4WiuqpdK92Rm1KiKVtaxEf4w6OJuPwbcQzDUsMOTiamg
-X-Received: by 2002:a05:620a:4111:b0:7d4:5db0:5b95 with SMTP id af79cd13be357-7e342b9c9d9mr1695736785a.58.1752855239300;
-        Fri, 18 Jul 2025 09:13:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEF5+LPdchdvDPtfa1f7zPMhgf1TwpIBYaXASh9HQnX2GtnD+tloD0jFjFD+zpI1ErW5YaIgg==
-X-Received: by 2002:a05:620a:4111:b0:7d4:5db0:5b95 with SMTP id af79cd13be357-7e342b9c9d9mr1695731985a.58.1752855238785;
-        Fri, 18 Jul 2025 09:13:58 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91c1ab7sm2388131fa.50.2025.07.18.09.13.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jul 2025 09:13:57 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 19:13:46 +0300
-Subject: [PATCH DO NOT MERGE 8/8] dt-bindings: power: qcom,rpmhpd: drop
- duplicate defines
+	s=arc-20240116; t=1752855964; c=relaxed/simple;
+	bh=aXCC6a0BRcLONBCEG+qLtT+Rm3FPzL7V91riur1H9Xg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=jX2s6ufkFVap81Rv3ncfsGC06R37DQsAL8qq745DY7wrwqfsdyGZ/2/iXBoOJKIMT7Sw0IhNno+NBXOxb0N8vka24hkhFChAD2vyomBTIViFJ2uz6JxQefYEdOP9VLp2rBKrQmdVa7FOVOur79O3Jn3ZCO5mfWGpiPXlj20RqFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VitDl0P2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F3C4CEEB;
+	Fri, 18 Jul 2025 16:26:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752855963;
+	bh=aXCC6a0BRcLONBCEG+qLtT+Rm3FPzL7V91riur1H9Xg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=VitDl0P293UBhnBWTfwW9kVJK0g1L/RqqX2mGlwmW2JmETRPxtereKE2Vuq0LK+EG
+	 bf8x/QDXwtgdesGEGkf9l3+tOv/u5eMPMLfDd5Jm8tmNgi/l9dkuuL+h79ov7lthlp
+	 UFI2NSU7GD4fAKI/DAVKgV5+ZvEGjKu37s3kDh3BO2tZWRiDjhL2lKGk1Q0vG+z9uf
+	 wI7zXsu3ola9AnO/2kZYI7KblB/WNrwX/y89x0GMfAWLCxdr3YZUcYLqkv2y4YdPhH
+	 a+Wk/8evsszEwS9hOiOwuRm74mqj4lvhO6udfWVIb4fa6/y07B1q7rkveAwQJ6a9dO
+	 Qcy/kMyM8zjbQ==
+Date: Fri, 18 Jul 2025 11:26:00 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	manivannan.sadhasivam@oss.qualcomm.com,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org,
+	ath10k@lists.infradead.org, ilpo.jarvinen@linux.intel.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+Message-ID: <20250718162600.GA2700538@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250718-rework-rpmhpd-rpmpd-v1-8-eedca108e540@oss.qualcomm.com>
-References: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
-In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2189;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=gmfr46OFYmUccWZSBc7IaVgajR2Vt394m5Ncm1zzRZI=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoenK4Ky2laV+OIQFpLhQXvV3YcdhKqF4v3szYM
- L9s+c2reICJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaHpyuAAKCRCLPIo+Aiko
- 1TFkB/9zASb2ttqh4bUFeLr7tB6UPx+zGOKm5Ru0OqSNEZ4peWOE+CyEuXuLPlrnvrfqaSBc9Xy
- UKYbqiqaYolNJ6zGX6WYpRw5Il73+W1GbOG7remVMF0EcnsLxEWZ1NnS/mcYJ8ayu9C2ZlEdc6S
- B98tNfPuHTmNR98CKd9AceXSoztM3VTaGTKQ0OvBbdrFt+hLg/IaE/+GtrZFfTw624cGDyMH6Vj
- qzjpibaFgupAuzA1ZmtudzlnszBzvkA7/7PPVLdBmCdeNbJ5Zx1Q5VGbh3BgVD7OR7fbjiS4GfO
- BDKDeHj1ZRpF6mEaVuZg+6HydBzIFpSMy/IVMqgnrAZM9h/j
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Authority-Analysis: v=2.4 cv=ad1hnQot c=1 sm=1 tr=0 ts=687a7447 cx=c_pps
- a=WjJghted8nQMc6PJgwfwjA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=Ucwj6ZyNMwC4X40j0pUA:9 a=QEXdDO2ut3YA:10
- a=CtjknkDrmJZAHT7xvMyn:22
-X-Proofpoint-ORIG-GUID: QpG8hW1tmeCkNb0OHgrXiaBZ68N7PLKL
-X-Proofpoint-GUID: QpG8hW1tmeCkNb0OHgrXiaBZ68N7PLKL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEyOCBTYWx0ZWRfX6jeW8fxoto7z
- sByP9JlFNTWLC4ZHAnQPRk+rY4tC3NjmXoyHQfGC5hrQb9oLRIOgQ5PgCTvH4qY3rCWPOMGn1aC
- ZUSBY/4/i23nSJU6+GLg+A+vA/zjXLjCooW33iGUYMYq/kLlpZ9WKHKga1Z5/Qc6Cq4e2awoTP0
- GNpGSnyApd0uHsKhOdJ0A2/Hb3q81y3QLXZTytGitFAwnSNHLAMenFdAtOTtTnYrofqQiYHjYeF
- eD1s/bshtT47AN/tSlbNvN+M8HQtIsX1dJ0cBxNDBqYOJ2Gf9uiN/ky8rZMZwp7GlUljJWMhrHB
- zX3BtkOQBKmVKHMuvRpcdrWdBS/gYtSAcLZiP9ZegupueaDZEacQDVfDr+W3mnNRJZkfSGOubxW
- md1RI4GWw+I2l8xFkJE1HW17EV04wUxJVPHzcEXRT04q3PBg3Sls7IobAgg6K72ZBlC94aMy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-18_03,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 mlxlogscore=488 suspectscore=0 spamscore=0
- malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507180128
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wkapzhyr6hzp5az4jae3y5c77c3fg4uwrmyyipbq4uosamcivq@z7nv6w7nbyrp>
 
-In order to prevent further confusion, drop SoC-specific defines for
-power domain indices for platforms which were converted to use
-RPMHPD_foo indices.
+On Fri, Jul 18, 2025 at 05:19:28PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Jul 18, 2025 at 07:05:03PM GMT, Baochen Qiang wrote:
+> > On 7/18/2025 6:20 PM, Manivannan Sadhasivam wrote:
+> > > On Fri, Jul 18, 2025 at 01:27:27PM GMT, Manivannan Sadhasivam wrote:
+> > >> On Fri, Jul 18, 2025 at 10:05:02AM GMT, Baochen Qiang wrote:
+> > >>> On 7/17/2025 7:29 PM, Manivannan Sadhasivam wrote:
+> > >>>> On Thu, Jul 17, 2025 at 06:46:12PM GMT, Baochen Qiang wrote:
+> > >>>>> On 7/17/2025 6:31 PM, Manivannan Sadhasivam wrote:
+> > >>>>>> On Thu, Jul 17, 2025 at 05:24:13PM GMT, Baochen Qiang wrote:
+> > >>>>>>
+> > >>>>>> [...]
+> > >>>>>>
+> > >>>>>>>> @@ -16,6 +16,8 @@
+> > >>>>>>>>  #include "mhi.h"
+> > >>>>>>>>  #include "debug.h"
+> > >>>>>>>>  
+> > >>>>>>>> +#include "../ath.h"
+> > >>>>>>>> +
+> > >>>>>>>>  #define ATH12K_PCI_BAR_NUM		0
+> > >>>>>>>>  #define ATH12K_PCI_DMA_MASK		36
+> > >>>>>>>>  
+> > >>>>>>>> @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+> > >>>>>>>>  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> > >>>>>>>>  
+> > >>>>>>>>  	/* disable L0s and L1 */
+> > >>>>>>>> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> > >>>>>>>> -				   PCI_EXP_LNKCTL_ASPMC);
+> > >>>>>>>> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> > >>>>>>>
+> > >>>>>>> Not always, but sometimes seems the 'disable' does not work:
+> > >>>>>>>
+> > >>>>>>> [  279.920507] ath12k_pci_power_up 1475: link_ctl 0x43 //before disable
+> > >>>>>>> [  279.920539] ath12k_pci_power_up 1482: link_ctl 0x43 //after disable
+> > >>>>>>>
+> > >>>>>>>
+> > >>>>>>>>  
+> > >>>>>>>>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+> > >>>>>>>>  }
+> > >>>>>>>> @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+> > >>>>>>>>  {
+> > >>>>>>>>  	if (ab_pci->ab->hw_params->supports_aspm &&
+> > >>>>>>>>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> > >>>>>>>> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> > >>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC,
+> > >>>>>>>> -						   ab_pci->link_ctl &
+> > >>>>>>>> -						   PCI_EXP_LNKCTL_ASPMC);
+> > >>>>>>>> +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
+> > >>>>>>>
+> > >>>>>>> always, the 'enable' is not working:
+> > >>>>>>>
+> > >>>>>>> [  280.561762] ath12k_pci_start 1180: link_ctl 0x43 //before restore
+> > >>>>>>> [  280.561809] ath12k_pci_start 1185: link_ctl 0x42 //after restore
+> > >>>>>>>
+> > >>>>>>
+> > >>>>>> Interesting! I applied your diff and I never see this issue so far (across 10+
+> > >>>>>> reboots):
+> > >>>>>
+> > >>>>> I was not testing reboot. Here is what I am doing:
+> > >>>>>
+> > >>>>> step1: rmmod ath12k
+> > >>>>> step2: force LinkCtrl using setpci (make sure it is 0x43, which seems more likely to see
+> > >>>>> the issue)
+> > >>>>>
+> > >>>>> 	sudo setpci -s 02:00.0 0x80.B=0x43
+> > >>>>>
+> > >>>>> step3: insmod ath12k and check linkctrl
+> > >>>>>
+> > >>>>
+> > >>>> So I did the same and got:
+> > >>>>
+> > >>>> [ 3283.363569] ath12k_pci_power_up 1475: link_ctl 0x43
+> > >>>> [ 3283.363769] ath12k_pci_power_up 1480: link_ctl 0x40
+> > >>>> [ 3284.007661] ath12k_pci_start 1180: link_ctl 0x40
+> > >>>> [ 3284.007826] ath12k_pci_start 1185: link_ctl 0x42
+> > >>>>
+> > >>>> My host machine is Qcom based Thinkpad T14s and it doesn't
+> > >>>> support L0s. So that's why the lnkctl value once enabled
+> > >>>> becomes 0x42. This is exactly the reason why the drivers
+> > >>>> should not muck around LNKCTL register manually.
+> > >>>
+> > >>> Thanks, then the 0x43 -> 0x40 -> 0x40 -> 0x42 sequence should
+> > >>> not be a concern. But still the random 0x43 -> 0x43 -> 0x43 ->
+> > >>> 0x42 sequence seems problematic.
+> > >>>
+> > >>> How many iterations have you done with above steps? From my
+> > >>> side it seems random so better to do some stress test.
+> > >>>
+> > >>
+> > >> So I ran the modprobe for about 50 times on the Intel NUC that
+> > >> has QCA6390, but didn't spot the disparity. This is the script
+> > >> I used:
+> > >>
+> > >> for i in {1..50} ;do echo "Loop $i"; sudo setpci -s 01:00.0 0x80.B=0x43;\
+> > >> sudo modprobe -r ath11k_pci; sleep 1; sudo modprobe ath11k_pci; sleep 1;done
+> > >>
+> > >> And I always got:
+> > >>
+> > >> [ 5862.388083] ath11k_pci_aspm_disable: 609 lnkctrl: 0x43
+> > >> [ 5862.388124] ath11k_pci_aspm_disable: 614 lnkctrl: 0x40
+> > >> [ 5862.876291] ath11k_pci_start: 880 lnkctrl: 0x40
+> > >> [ 5862.876346] ath11k_pci_start: 886 lnkctrl: 0x42
+> > >>
+> > >> Also no AER messages. TBH, I'm not sure how you were able to
+> > >> see the random issues with these APIs. That looks like a race,
+> > >> which is scary.
+> > >>
+> > >> I do not want to ignore your scenario, but would like to
+> > >> reproduce and get to the bottom of it.
+> > > 
+> > > I synced with Baochen internally and able to repro the issue.
+> > > Ths issue is due to hand modifying the LNKCTL register from
+> > > userspace. The PCI core maintains the ASPM state internally and
+> > > uses it to change the state when the
+> > > pci_{enable/disable}_link_state*() APIs are called.
+> > > 
+> > > So if the userspace or a client driver modifies the LNKCTL
+> > > register manually, it makes the PCI cached ASPM states invalid.
+> > > So while this series fixes the driver from doing that, nothing
+> > > prevents userspace from doing so using 'setpci' and other tools.
+> > > Userspace should only use sysfs attributes to change the state
+> > > and avoid modifying the PCI registers when the PCI core is
+> > > controlling the device.  So this is the reason behind the
+> > > errantic behavior of the API and it is not due to the issue with
+> > > the API or the PCI core.
+> > 
+> > IMO we can not rely on userspace doing what or not doing what, or
+> > on how it is doing, right? So can we fix PCI core to avoid this?
+> 
+> I'm not sure it is possible to *fix* the PCI core here. Since the
+> PCI core gives userspace access to the entire config space of the
+> device, the userspace reads/writes to any of the registers it want.
+> So unless the config space access if forbidden if a driver is bound
+> to the device, it is inevitable. And then there is also /dev/mem...
+> 
+> Interestingly, there is an API available for this purpose:
+> pci_request_config_region_exclusive(), but it is used only by the
+> AMD arch driver to prevent userspace from writing to the entire
+> config space of the device.
+> 
+> Maybe it makes sense to use something like this to prevent the
+> userspace access to the entire config space if the driver is bind to
+> the device.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- include/dt-bindings/power/qcom,rpmhpd.h | 58 ---------------------------------
- 1 file changed, 58 deletions(-)
+I'm not really a fan of pci_request_config_region_exclusive() because
+it's such a singleton thing.  I don't like to be one of only a few
+users of an interface.
 
-diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-index 73cceb88953f705106486b7e111b3ffc39c85664..ccf47b4670d905b166a9a39badc3535c8f9a05bf 100644
---- a/include/dt-bindings/power/qcom,rpmhpd.h
-+++ b/include/dt-bindings/power/qcom,rpmhpd.h
-@@ -146,64 +146,6 @@
- #define SA8155P_MX	SM8150_MX
- #define SA8155P_MX_AO	SM8150_MX_AO
- 
--/* SM8250 Power Domain Indexes */
--#define SM8250_CX	0
--#define SM8250_CX_AO	1
--#define SM8250_EBI	2
--#define SM8250_GFX	3
--#define SM8250_LCX	4
--#define SM8250_LMX	5
--#define SM8250_MMCX	6
--#define SM8250_MMCX_AO	7
--#define SM8250_MX	8
--#define SM8250_MX_AO	9
--
--/* SM8350 Power Domain Indexes */
--#define SM8350_CX	0
--#define SM8350_CX_AO	1
--#define SM8350_EBI	2
--#define SM8350_GFX	3
--#define SM8350_LCX	4
--#define SM8350_LMX	5
--#define SM8350_MMCX	6
--#define SM8350_MMCX_AO	7
--#define SM8350_MX	8
--#define SM8350_MX_AO	9
--#define SM8350_MXC	10
--#define SM8350_MXC_AO	11
--#define SM8350_MSS	12
--
--/* SM8450 Power Domain Indexes */
--#define SM8450_CX	0
--#define SM8450_CX_AO	1
--#define SM8450_EBI	2
--#define SM8450_GFX	3
--#define SM8450_LCX	4
--#define SM8450_LMX	5
--#define SM8450_MMCX	6
--#define SM8450_MMCX_AO	7
--#define SM8450_MX	8
--#define SM8450_MX_AO	9
--#define SM8450_MXC	10
--#define SM8450_MXC_AO	11
--#define SM8450_MSS	12
--
--/* SM8550 Power Domain Indexes */
--#define SM8550_CX	0
--#define SM8550_CX_AO	1
--#define SM8550_EBI	2
--#define SM8550_GFX	3
--#define SM8550_LCX	4
--#define SM8550_LMX	5
--#define SM8550_MMCX	6
--#define SM8550_MMCX_AO	7
--#define SM8550_MX	8
--#define SM8550_MX_AO	9
--#define SM8550_MXC	10
--#define SM8550_MXC_AO	11
--#define SM8550_MSS	12
--#define SM8550_NSP	13
--
- /* QDU1000/QRU1000 Power Domain Indexes */
- #define QDU1000_EBI	0
- #define QDU1000_MSS	1
+Linux has a long tradition of allowing root users to shoot themselves
+in the foot, and setpci is very useful as a debugging tool.  Maybe
+tainting the kernel for config writes from userspace, and possibly
+even a WARN_ONCE() at the time, would be a compromise.
 
--- 
-2.39.5
-
+Bjorn
 
