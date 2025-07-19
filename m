@@ -1,133 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-65753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B786B0B19B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 21:02:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF66DB0B2BE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 01:22:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 016143BFDD3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 19:01:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D602189AB4F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 23:22:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFC7028B7FD;
-	Sat, 19 Jul 2025 18:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F37328A730;
+	Sat, 19 Jul 2025 23:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="WspLDH8S"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JowmF4+o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.ionic.de (ionic.de [145.239.234.145])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA9E28983A;
-	Sat, 19 Jul 2025 18:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.239.234.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7DC288CBA;
+	Sat, 19 Jul 2025 23:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752951587; cv=none; b=FxHFAtXKtcxZNbKmsTgMkH4INWsf+WkojW0POJAjo3+xLkI14CGzR0nxYi7me8SnNJBe9TWNRMzWgFEew5KUUpkoDrMYc3cY5p7//0qACHS2aqfsQuLcBI6PYB06jRNklSEgomlc1fn8gYl03jTZxQX4ifEejTOtp45YqBruRvM=
+	t=1752967337; cv=none; b=opg3xO+rwUNcbLGpCYg7j9XVBemX+1p4IeknzUOzbCkaT+Og7mxTmd+DzoDOatgKxPnwfNDyjVqag5PKUKdT8yoXLh6A1gv8VZUoN2/QbZAE6vOe90pp0b1oCr59s6yL/5gfJm4ZXqTSWLVcshbxQ/gAfWB6VfoLf7g9te65qsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752951587; c=relaxed/simple;
-	bh=zBfaiZsRaBX1mtg6/PbLsiFZPxTKFf0eWcU8N5i1va8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTNcywtNYfZpLQCTPoc9eYiv9GGVUpSKV4jVJD4z683og2rx6/YmQUzUS1OqhWbZTsTNyqnrqzLnswHrVnG5en5EDAp8YOJqSS9qzsZMnGVBAyDQUIUcRrCAmvuYJYfquCJxV+Bh0ds46BkfVg26w34LbUb3D0soKombS/4Hhg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=WspLDH8S; arc=none smtp.client-ip=145.239.234.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionic.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ionic.de; s=default;
-	t=1752951579; bh=zBfaiZsRaBX1mtg6/PbLsiFZPxTKFf0eWcU8N5i1va8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WspLDH8SSU2tVrQQEDz7/WV1OTAC6k6rAZzUXRjWnsjUoMRSuDQmN3PRXdfYphU/g
-	 XBXo93oOlq3D7gFkYdEItvu6ms3OgJC7qga5hcU7wKLQPMJyoQ14mMBKYJViFPHJbo
-	 rHPpk1xnDTuvD79bBVgD+UHtrniu/hAdXOZ24Nyk=
-Received: from grml.local.home.ionic.de (unknown [IPv6:2a00:11:fb41:7a00:21b:21ff:fe5e:dddc])
-	by mail.ionic.de (Postfix) with ESMTPSA id 322C3148A06A;
-	Sat, 19 Jul 2025 20:59:39 +0200 (CEST)
-From: Mihai Moldovan <ionic@ionic.de>
-To: linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1752967337; c=relaxed/simple;
+	bh=592mduOSIIbjRo6QOG1O1f748urmA9UgcK+qaVVszxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ic9vlKTTcZTq2uBaeFOGPp0vnZ8cNMxbL6rfxnEsljjxJhT+UfIb71uh/Wp1SdK0+RXBMuQeewh8nzTxbFPcbcHC98gvk1j3en425dyNYolm6KyepyAiMYXWjK+5pMDjGW4xSVFmkj+4C7mLJftgOEeHoVV4iYqqCVj+LiLgwrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JowmF4+o; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752967335; x=1784503335;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=592mduOSIIbjRo6QOG1O1f748urmA9UgcK+qaVVszxw=;
+  b=JowmF4+oMR7uc/bvahy8yNe8EWGt2QwNKwpPn6EixHr+bnwASfsWCXtj
+   kC1oa+grz2lRZg4OFLcLBSfK+FpyYJEYR0NLNFoPoJWkQuCNQzPAQb6Xr
+   k2byGpbJQEKV4MCRKe8zEO+nWDS6tdiYlV3rsMWS6KotpsGPXpxnagBip
+   5jYqpoofU0tp+rOykkU4fzvDLSC2N3MEY1ec+2RyppKy+3apkjrccsmFh
+   9QQkxt7VMjzbsA+MLG/XtP8/nVl4z2u2ATMia7/f0gc+NMs6xvfHiN54l
+   oG9SqFBV3rwpt+IWnJszYDWjzpchnRpfF61e0eTQ+LfJw7NgjaFrTQcXE
+   w==;
+X-CSE-ConnectionGUID: 7Hx6cFLMTq+KQ8zITO7gMQ==
+X-CSE-MsgGUID: 47SZ4qeTTzKgSN3xM9C0cQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11497"; a="55105536"
+X-IronPort-AV: E=Sophos;i="6.16,325,1744095600"; 
+   d="scan'208";a="55105536"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2025 16:22:15 -0700
+X-CSE-ConnectionGUID: DE2RZxVNR9maiV7c8OKcRw==
+X-CSE-MsgGUID: 5djQIU38Qxqxg9c80EihYA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,325,1744095600"; 
+   d="scan'208";a="158560564"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 19 Jul 2025 16:22:11 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1udGsb-000Fpx-0q;
+	Sat, 19 Jul 2025 23:22:09 +0000
+Date: Sun, 20 Jul 2025 07:22:05 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mihai Moldovan <ionic@ionic.de>, linux-arm-msm@vger.kernel.org,
 	Manivannan Sadhasivam <mani@kernel.org>
-Cc: Denis Kenzior <denkenz@gmail.com>,
+Cc: oe-kbuild-all@lists.linux.dev, Denis Kenzior <denkenz@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Willem de Bruijn <willemb@google.com>,
 	"David S . Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH v2 10/10] net: qrtr: mhi: Report endpoint id in sysfs
-Date: Sat, 19 Jul 2025 20:59:30 +0200
-Message-ID: <1a49dec96d5c2c5258c9df935d8c9381793d4ddd.1752947108.git.ionic@ionic.de>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <cover.1752947108.git.ionic@ionic.de>
-References: <cover.1752947108.git.ionic@ionic.de>
+	Jakub Kicinski <kuba@kernel.org>, Simon Horman <horms@kernel.org>,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v2 03/10] net: qrtr: support identical node ids
+Message-ID: <202507200739.pd0Gkp22-lkp@intel.com>
+References: <4d0fe1eab4b38fb85e2ec53c07289bc0843611a2.1752947108.git.ionic@ionic.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4d0fe1eab4b38fb85e2ec53c07289bc0843611a2.1752947108.git.ionic@ionic.de>
 
-From: Denis Kenzior <denkenz@gmail.com>
+Hi Mihai,
 
-Add a read-only 'endpoint' sysfs entry that contains the qrtr endpoint
-identifier assigned to this mhi device.  Can be used to direct / receive
-qrtr traffic only from a particular MHI device.
+kernel test robot noticed the following build warnings:
 
-Signed-off-by: Denis Kenzior <denkenz@gmail.com>
-Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
-Reviewed-by: Andy Gross <agross@kernel.org>
-Signed-off-by: Mihai Moldovan <ionic@ionic.de>
+[auto build test WARNING on mani-mhi/mhi-next]
+[also build test WARNING on net-next/main net/main linus/master v6.16-rc6 next-20250718]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
----
+url:    https://github.com/intel-lab-lkp/linux/commits/Mihai-Moldovan/net-qrtr-ns-validate-msglen-before-ctrl_pkt-use/20250720-030426
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git mhi-next
+patch link:    https://lore.kernel.org/r/4d0fe1eab4b38fb85e2ec53c07289bc0843611a2.1752947108.git.ionic%40ionic.de
+patch subject: [PATCH v2 03/10] net: qrtr: support identical node ids
+config: arc-randconfig-002-20250720 (https://download.01.org/0day-ci/archive/20250720/202507200739.pd0Gkp22-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 8.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250720/202507200739.pd0Gkp22-lkp@intel.com/reproduce)
 
-v2:
-  - rebase against current master
-  - use %u formatter instead of %d when printing endpoint id (u32) as
-    per review comment
----
- net/qrtr/mhi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507200739.pd0Gkp22-lkp@intel.com/
 
-diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-index 69f53625a049..9a23c888e234 100644
---- a/net/qrtr/mhi.c
-+++ b/net/qrtr/mhi.c
-@@ -72,6 +72,16 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
- 	return rc;
- }
- 
-+static ssize_t endpoint_show(struct device *dev,
-+			     struct device_attribute *attr, char *buf)
-+{
-+	struct qrtr_mhi_dev *qdev = dev_get_drvdata(dev);
-+
-+	return sprintf(buf, "%u\n", qdev->ep.id);
-+}
-+
-+static DEVICE_ATTR_RO(endpoint);
-+
- static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
- 			       const struct mhi_device_id *id)
- {
-@@ -91,6 +101,9 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
- 	if (rc)
- 		return rc;
- 
-+	if (device_create_file(&mhi_dev->dev, &dev_attr_endpoint) < 0)
-+		dev_err(qdev->dev, "Failed to create endpoint attribute\n");
-+
- 	/* start channels */
- 	rc = mhi_prepare_for_transfer_autoqueue(mhi_dev);
- 	if (rc) {
-@@ -107,6 +120,7 @@ static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
- {
- 	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
- 
-+	device_remove_file(&mhi_dev->dev, &dev_attr_endpoint);
- 	qrtr_endpoint_unregister(&qdev->ep);
- 	mhi_unprepare_from_transfer(mhi_dev);
- 	dev_set_drvdata(&mhi_dev->dev, NULL);
+All warnings (new ones prefixed by >>):
+
+   net/qrtr/af_qrtr.c: In function 'qrtr_node_assign':
+>> net/qrtr/af_qrtr.c:429:36: warning: left shift count >= width of type [-Wshift-count-overflow]
+     key = (unsigned long)node->ep->id << 32 | nid;
+                                       ^~
+
+
+vim +429 net/qrtr/af_qrtr.c
+
+   412	
+   413	/* Assign node id to node.
+   414	 *
+   415	 * This is mostly useful for automatic node id assignment, based on
+   416	 * the source id in the incoming packet.
+   417	 */
+   418	static void qrtr_node_assign(struct qrtr_node *node, unsigned int nid)
+   419	{
+   420		unsigned long flags;
+   421		unsigned long key;
+   422	
+   423		if (nid == QRTR_EP_NID_AUTO)
+   424			return;
+   425	
+   426		spin_lock_irqsave(&qrtr_nodes_lock, flags);
+   427	
+   428		/* Always insert with the endpoint_id + node_id */
+ > 429		key = (unsigned long)node->ep->id << 32 | nid;
+   430		radix_tree_insert(&qrtr_nodes, key, node);
+   431	
+   432		if (!radix_tree_lookup(&qrtr_nodes, nid))
+   433			radix_tree_insert(&qrtr_nodes, nid, node);
+   434	
+   435		if (node->nid == QRTR_EP_NID_AUTO)
+   436			node->nid = nid;
+   437		spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
+   438	}
+   439	
+
 -- 
-2.50.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
