@@ -1,208 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-65729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BF69B0AF24
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 11:43:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6D26B0AF26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 11:45:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA79C7B4F72
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 09:42:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 78E917A7403
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 09:43:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F05D12397B0;
-	Sat, 19 Jul 2025 09:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F6F2238C3C;
+	Sat, 19 Jul 2025 09:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eIKe/XQW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e9E9NDCO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556AE236424
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:43:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C540E22D7A1
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752918221; cv=none; b=p1Kblnv3efrcdkuridwvAm9Yd18wXBCUFowTOzc5u3WpYvfu/geGEkVGiWDpM7znKo1y3we5VxmVld783Si+HXoYwI2+h1Ojg7UzSZBuScXSOSrHo5DnRCVq37q7/Y1xHgaLw14inFNgVeCvGCgymdpwYKfpqsqZx31OMxm6VgQ=
+	t=1752918305; cv=none; b=qdJaClaUpAciaou9nyNk4D6R4MO7BRZi55H+HM48bs7j+VsY/LaEUTHA2AcpXeDLH/35CB4hfGgcIB9aAn3Dxz7hjC9Q6uC7pkruhKUo+X1clOyac+POrjMSPOCrs0wsAfgN1YG1uluAs3Gdu7x+gDpaHBh4L8zL0pdgGgq9ScM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752918221; c=relaxed/simple;
-	bh=P+Mk/P5ye+p9KUFqL+K46gO8goqLtuTv3VJtLHalKhc=;
+	s=arc-20240116; t=1752918305; c=relaxed/simple;
+	bh=hqvHHheKAZnHkb3a7WD3cL/KUebdQJVYwj73ESmJgYc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DX2KT1061fqVhruqW0h/LwpnL7DWVxL+mWOVXF6mH5bOZ7UUMFA3kjAOxxX8tOoUr0x5C8RTNISx+7MGspVwPnTTVy8HkTFYKf3vzbfVYA8iM1nj0/WnTB4VGi2M7O5lUP2dnlpwpt4Gosx2FmB0JLG6X7WyeyTFZRyQ7lIEctI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eIKe/XQW; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=mWlRKjOfVvYNlE8ISFkRIIyn/Qdkl3boy2bTYQsVxFUGf/g/mm+/a1sopaJZhK2IJUeetaQdIiDgRgMt68NX39R0VYPurftAir+/a013n+qUxePyqOb5L3P31l/v5lzokTv1iOoGf3Nt9C9jvvN53oX5vm8RyYlTlfC5W/YAEnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e9E9NDCO; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56J4M69n028205
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:43:38 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56J9OTwf031527
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:45:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rhgfcFJFu0pycjGyM1cFEjZ0PRIhr6IT98FgwjCWEYk=; b=eIKe/XQW+VCrw6qy
-	YDZuIu71jU6krVAEG2ro//VgSU2zD6oREy2R73F5f006S9h81k8XEGWAIURic6/s
-	3C/z2ibBhsgp0kMODRuAAN+JBFcjgvxv/koBXdeEy39ebHbJAxNJqDY17Gwpojwq
-	f/KI17OGkh0tUZ4fhv39qWLu7OlGVjfbVkD0m57Ao03Sn0UGqG6EhvTY1rU6Coce
-	RoIwuwbAHtSCf3oPsN5jdsd1aMnjD/beax6buRrZfJimzhSvAS3+kcO7eCbWRKYN
-	cXCct5kYpWcudSGRIiTgogUiLLa+1MOoQLpfnConsFxieo1+CKhVwXaferS3JKCf
-	avz83w==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048rred6-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=R0sRSQm6QGldYU9cEcvu2UaM
+	4oCZ6d5h4JpfdEInEJ8=; b=e9E9NDCOMkAo1RFfIPbiv8pnNNhg/5OMJLWFp7C3
+	DqceBnVGb6VdB7PrrPA6b2CaLeh+Wko2ws2f6z9Q5BT8lFEtpvj9BcHQvyJGZmp5
+	hRmvANy6TDjoVEdFXQweMZ6+CEyknAwVa8YdVwaY2Es3C5sAw9ACzLInjoHKFVkY
+	2+3DshMPetj4hnMpAzJu3AZ1f0xe/fi6xeJuq+CshwJlmsL2L2EcUnun1R2wlcDb
+	he09kOf+NGZX4LvZdT+Ri9FivAiDCh58q6WIUHXd8Q+Kzbg6sZVgpGFupj0jhwjr
+	dzCmfAtJAtW6E6+QEn4zBVaKP7yBPIyY3nem2eYNgmiVvA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 480459ge5s-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:43:37 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e33af599bcso474656485a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 02:43:37 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 09:45:02 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d40f335529so613600885a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Jul 2025 02:45:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752918217; x=1753523017;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rhgfcFJFu0pycjGyM1cFEjZ0PRIhr6IT98FgwjCWEYk=;
-        b=TZKXHxOMO3aymNUzhxu587zLD1o4dHe2jaihIQcxhdkT+Pmnz9zDZDk0DL0aXWw5ID
-         nrYB5GkEO96TtKWb7wlY5QCksCC8ln/f6yjQOdcslD21c9xLS++DHfwIiNswm18Awg4O
-         drx/oMnM4Q9zE1KzHo8C+QkwulVikj/U3t+1CuzPNr+Qp/5k0vHI20I29aZHq1LtKik5
-         +uOuuicjvCTt+Hx+Z+7siulhB9vKIL/iyhqCaUVl+ERyCtZ7mGykz8FYmJBLo3RiN2VJ
-         LSeHHUN7AKAQyJF+JseiADXOSE00K2dFaa9POl1lMHSuzntVBuaTg1KFDnlFRGmBBwBe
-         vXKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWmbqzwSni6UNQDy76syfOUe50YzpqWSE6FwTGKl7fyS1L/AxC2LxJThlj0sb09lah6mMZRcFRcqk/0aF2d@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYvk0miW4DQ/t1yNs9D0H23mTcNWXYircrEo1qsubB2tmzcr9U
-	aMfG4vDI5Mk+81ctbmA770oPSoqHlL8gGR0NHDE4okuzJe+6oeZwX5PACvpmqhGYVUR2wgRB1q6
-	d2NtlY5zf8Cq0LvKlCUnMJSDU7dGZGhPQTgo0BuIhWNfZsqA2nGkTOaJuDK9mzeE8niEs
-X-Gm-Gg: ASbGnctEp1eIJT/+k+5oRsshBhnpb7bE5SqvAHKjWM0QVKd+aXn0RZWvdSAr5PAhPcf
-	Nrv5OZSNcjgXq3ApNTDcopFOhyTfe1Y7M50rJSn6U8hDAQknuK3E4cCo3zSVKyJZbKquJGlLA5A
-	BYfMIzz5v5LUd1tNmm/t+u8mTPU97phW/Qp23Vi1PWwflPkalFOy2YI8NeQLLTg0JkWswG6Ztp0
-	STjMYh3yiH/kvxNv56tUQ/09FfL7hCWyD7DYV2v4dPbfNU+4EeEa6sgbmIBP0jd0K1tpRZRSBww
-	M1R5F+PrJDdy7ddKyy1m56afEZw2TNq9Gg8wYtN4ihZqnF2PMXU7gFn6mNKimMkT3jnLV3qNgbQ
-	14/9l3g2kFM2yhq9H1oizKvzos6coLBER/vhIlJWQnQxsyj4C/nQY
-X-Received: by 2002:a05:620a:8509:b0:7e3:35e3:3412 with SMTP id af79cd13be357-7e34d9ac2e5mr834615485a.34.1752918217027;
-        Sat, 19 Jul 2025 02:43:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEO4TN2m1HCMk2uK61roXdJAndfjxoSfPKSTjVyKPnhMXeMW5zR1fepHcMLF91nfBnN6lMC7g==
-X-Received: by 2002:a05:620a:8509:b0:7e3:35e3:3412 with SMTP id af79cd13be357-7e34d9ac2e5mr834614885a.34.1752918216533;
-        Sat, 19 Jul 2025 02:43:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752918301; x=1753523101;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R0sRSQm6QGldYU9cEcvu2UaM4oCZ6d5h4JpfdEInEJ8=;
+        b=TnJiXTTxZoGhMaRKK2D8pNSYjNdWbfYUnOUWB8ULeRiDZj+0q7F5rQjQcror9lYdkl
+         5qYjhn6DL3BQTRJWFB9mk+EKNIFCa8i2errSbtnDoxt0nWTsuIhsAi9kN+p0Jq8uu1Pt
+         DL1LxwWIGVb9hYVE//jPBh5gpkWK5cuEBUerjr1SIFfhk4O14+9Ne7go/gYplY0C2msH
+         tBrZFiKWzMHfbm3JQ0uysbNBXFYGtZ+1Qn1ywF6RR2lVSazks8PraLajErtM+10KwGRA
+         kp95us+dlrakU9JTizh2YFu/Zmlv+9vM8JKIDPwTyt91QVMh4CKZcGS5d86XvZF3q6xN
+         82dw==
+X-Forwarded-Encrypted: i=1; AJvYcCWOmTEf1iPE9ozC6oIIeOUSQBrPMuMg78oYAU80TqB+O2+dItstV5aAMdqHiHxTtrqdkwwxZqevbmIhAkZG@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy//CNZMQtRATek6uUGQ6Zieu9/29x5s624W46Xypd+jT3jwWL7
+	X/FPWBcMLkxgWPIzmHU9NE7TBivnM/637rzE9Z/H5KCZXmOSj4MKKBu7dhk6SEzzvjM1maeSTPq
+	31EGYHU48WEyCI9Dl9ZcKDwV3Vv1IwvmA04xbIqezx0B2puFwx5h8MXLowEQxD+Cq3wAq
+X-Gm-Gg: ASbGncv+mq/4Fhly5qA3GM9rogv8mCQX2rA45XUSpNTnYiFI8b88dPrBrZOEVVh8g4R
+	IEJECrlMFClodGJP7j/lQR6hqxV8eFvLwz3ggatbxjQU5NAS4Jt6PgJxzsLblHL7zSUjX44PrYJ
+	T4lzwCpJkHl+VRJwFBY2ft+kZqLGNsZ6ZlLOAbv+pcWUQEt4AbW/wBgqQF/E9PTNUDtdb5HLJuo
+	f1pyvNkXXyC2iJVNNaNhtJogGmPTxlBi80s7jfoEguDJoUsvvLUCIEvg8dNN2JnzXGGd6+tQZd/
+	7g65EpU4pUQ2LyicUSUf8wzaLiVZXZUNcPABbiCfp3pDDb/dUOgd7S4kZHRrYCR0fxf1c+hv6qc
+	Wpa2nEIoUAMQkrhAXZoaBjg2cLJN0CJ8JWjhtK4wEMSQnog3eJaE6
+X-Received: by 2002:a05:620a:e09:b0:7e3:43cf:5a73 with SMTP id af79cd13be357-7e35557c7demr767060185a.11.1752918301236;
+        Sat, 19 Jul 2025 02:45:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPdP6NiZKgFvKPiQrN/esZZaRULd3fT9u4TcKGfAdnilezqUcW8siPDqSy3OKK9PIDQMg3ng==
+X-Received: by 2002:a05:620a:e09:b0:7e3:43cf:5a73 with SMTP id af79cd13be357-7e35557c7demr767056885a.11.1752918300733;
+        Sat, 19 Jul 2025 02:45:00 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31d7c7basm652746e87.94.2025.07.19.02.43.35
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31d8f936sm638066e87.138.2025.07.19.02.44.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jul 2025 02:43:35 -0700 (PDT)
-Date: Sat, 19 Jul 2025 12:43:33 +0300
+        Sat, 19 Jul 2025 02:44:58 -0700 (PDT)
+Date: Sat, 19 Jul 2025 12:44:55 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, quic_lliu6@quicinc.com,
-        quic_fangez@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-gpio@vger.kernel.org,
-        quic_xiangxuy@quicinc.com
-Subject: Re: [PATCH 7/8] drm/msm/dp: Retry Link Training 2 with lower pattern
-Message-ID: <w66xyhu5w7ajpkennvj24cad4j6izvapsp3reyla7iui2jdgkx@d43b6z3qw5tj>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-7-09a4338d93ef@quicinc.com>
- <CAA8EJpoN1qBHyZrQJT_=e_26+tcaKRnSrhtxrK6zBP4BwpL=Hg@mail.gmail.com>
- <b4345b9e-62c6-470d-b1b0-4758cef7f175@quicinc.com>
- <xlmgdysjah3ueypdrdu5b6botvidb2wn4rfm4qpeysclscmuwy@vpfv2ymprblj>
- <b4e1ea54-ff3c-408e-8716-f48001ec9113@oss.qualcomm.com>
- <d427de7d-76ac-4e5b-b79a-3b7638a8e7fc@oss.qualcomm.com>
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
+Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add missing unmapping
+ user-requested remote heap
+Message-ID: <lmytte3p2eq7fsjsbogzrqjyimlw42v2x2zystx32nuvnm62yb@wzqrmhqcrzl3>
+References: <22uccyp5m2szry7bpitqcav5nlvwch5eqh4mdacfedidgrnyhx@vsjobngwdkmb>
+ <dc67df54-2a19-4318-acd4-b96b8549b64d@oss.qualcomm.com>
+ <7ogkoxsowpd2x5qmjog4qx5eu4eiinvtnyjz5hfufgna2hz7na@oxzmowlnelxb>
+ <61dd2c3f-20ac-484e-8a45-f42fd5f42b86@oss.qualcomm.com>
+ <CAO9ioeX1uE3ty5oSezYOLJKqf8G5dLYAS5nRiNvryWTk0RPdEQ@mail.gmail.com>
+ <f3d376cc-6e2d-4ac3-88f6-3104eec67acf@oss.qualcomm.com>
+ <qw64xqfnyy76f6oawtaecvraejcwyml5k7oxdy67adj2rh46lq@nupxbuy3vwu4>
+ <7505f0e8-222d-4052-8614-c12109d14bce@oss.qualcomm.com>
+ <cq3qfx32dallivdcwjwqgq7kggiwucpcyhwqqlbrf6n4efkmuc@htjwnigojag2>
+ <8b877eeb-941a-47c5-a67d-450dfb772d6e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d427de7d-76ac-4e5b-b79a-3b7638a8e7fc@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE5MDA5NiBTYWx0ZWRfX+HJIa87FXbSR
- LSNQYKbJTh85fFkaPHkmFBF2Yk3/KtelgSnCW4zLifOZmlZt8gh0UumOOAKA8a7n2bjWragMipy
- r8LoM0Yj12we0DG/51+YTlYxhhDVwf4JngUYx1bDYKrqTa48hcge0TpmRzd3hcpa/vgsfiw0Z8r
- +ydKDAAQu/pciRLdC/WcVg7wo4FrpUwjWatHG11EbI+VZm0G0YcNh2z4MSyu047cn5KZFuI9yPs
- EhUEHNdckrISTKyVVJee3PpAXN4j1d1PQkfjoP+5G7qOd86KSauiGtPh7hr44A4p3W+Pus1DQ9I
- jMdfog4zYi6KEbMlGac7o1ZA/+4sFJ/HiDaKiSZfSkqXxM8M7phy7tufmX9k+OuNZNg0ZHoCwUv
- m00yg07qbhN/MeveCk2xXQjjFs+G0VAUv7MiL1jWO1QTh8dLo6kyyk4Ni/iOTJ90RBzKMj5+
-X-Proofpoint-ORIG-GUID: _cYzSnK0VXHve95IyRxz231tC_o1BqBR
-X-Proofpoint-GUID: _cYzSnK0VXHve95IyRxz231tC_o1BqBR
-X-Authority-Analysis: v=2.4 cv=OPUn3TaB c=1 sm=1 tr=0 ts=687b68ca cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=YZjHnbvoZT85EzRjquwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=TjNXssC_j7lpFel5tvFf:22
+In-Reply-To: <8b877eeb-941a-47c5-a67d-450dfb772d6e@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: oTMMN7zS-8opjlfsgF75VFqZHMeVkVvM
+X-Authority-Analysis: v=2.4 cv=fdyty1QF c=1 sm=1 tr=0 ts=687b691e cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=QlMHoEhoFvJFoSiYPA4A:9
+ a=MBxd-Kn_9RtsxwEB:21 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: oTMMN7zS-8opjlfsgF75VFqZHMeVkVvM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE5MDA5NiBTYWx0ZWRfX9WiJVbATYmt+
+ a3Pe6iPOkcU0D7WUDr3d2/FFPVAzPOpYlR1ffjYcelj6nLDQshMRkD8AYClzPBr+w8ASZiddDsI
+ MbxuXAD/EjS+snknWjD8J0y7yXzjRFhg8RoBSh05c2jWyLGXg1NNZxkf8a4PDNhvasTZ7vOanrn
+ zuVqShl3te9ve7xR49fB3VDWgSR3j/WFRwKYswj+okxuQpQewC5HOycH7YFYPz4UEAEw4tccFFn
+ QV+GVZmzpKa4kLpNxAwaSezudQPdmntvflwgfjN6BFhbOYIGQtp1G+I5FFnYsN4G+IOxnNHUpkg
+ 92SHnKorZ2Ker7dDl0SIEl1m3lzC8IOQ0WDC1Wzmf8LZbiOei7uJqmZXpZ1Ype8C9xbm53AWM64
+ RsEkv9lHjeH8C9us5MqU4fiqFj3sSCBM9YGrNQ3Jtt+EMmQ1HnHv6rAwgZiDXGDWe1PRljUw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-19_01,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- spamscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507190096
+ suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ mlxlogscore=999 mlxscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507190096
 
-On Wed, Jul 09, 2025 at 05:16:02PM +0800, Xiangxu Yin wrote:
+On Wed, Jul 09, 2025 at 11:13:49AM +0530, Ekansh Gupta wrote:
 > 
 > 
-> On 5/28/2025 4:49 AM, Konrad Dybcio wrote:
-> > On 12/3/24 3:07 PM, Dmitry Baryshkov wrote:
-> >> On Tue, Dec 03, 2024 at 04:13:22PM +0800, Xiangxu Yin wrote:
-> >>>
-> >>>
-> >>> On 11/29/2024 9:53 PM, Dmitry Baryshkov wrote:
-> >>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
-> >>>>>
-> >>>>> Add a mechanism to retry Link Training 2 by lowering the pattern level
-> >>>>> when the link training #2 first attempt fails. This approach enhances
-> >>>>> compatibility, particularly addressing issues caused by certain hub
-> >>>>> configurations.
+> On 6/12/2025 3:54 PM, Dmitry Baryshkov wrote:
+> > On Thu, Jun 12, 2025 at 03:02:52PM +0530, Ekansh Gupta wrote:
+> >>
+> >> On 6/12/2025 1:35 PM, Dmitry Baryshkov wrote:
+> >>> On Thu, Jun 12, 2025 at 10:50:10AM +0530, Ekansh Gupta wrote:
+> >>>> On 5/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+> >>>>> On Thu, 22 May 2025 at 08:01, Ekansh Gupta
+> >>>>> <ekansh.gupta@oss.qualcomm.com> wrote:
+> >>>>>> On 5/19/2025 7:04 PM, Dmitry Baryshkov wrote:
+> >>>>>>> On Mon, May 19, 2025 at 04:28:34PM +0530, Ekansh Gupta wrote:
+> >>>>>>>> On 5/19/2025 4:22 PM, Dmitry Baryshkov wrote:
+> >>>>>>>>> On Tue, May 13, 2025 at 09:58:25AM +0530, Ekansh Gupta wrote:
+> >>>>>>>>>> User request for remote heap allocation is supported using ioctl
+> >>>>>>>>>> interface but support for unmap is missing. This could result in
+> >>>>>>>>>> memory leak issues. Add unmap user request support for remote heap.
+> >>>>>>>>> Can this memory be in use by the remote proc?
+> >>>>>>>> Remote heap allocation request is only intended for audioPD. Other PDs
+> >>>>>>>> running on DSP are not intended to use this request.
+> >>>>>>> 'Intended'. That's fine. I asked a different question: _can_ it be in
+> >>>>>>> use? What happens if userspace by mistake tries to unmap memory too
+> >>>>>>> early? Or if it happens intentionally, at some specific time during
+> >>>>>>> work.
+> >>>>>> If the unmap is restricted to audio daemon, then the unmap will only
+> >>>>>> happen if the remoteproc is no longer using this memory.
+> >>>>>>
+> >>>>>> But without this restriction, yes it possible that some userspace process
+> >>>>>> calls unmap which tries to move the ownership back to HLOS which the
+> >>>>>> remoteproc is still using the memory. This might lead to memory access
+> >>>>>> problems.
+> >>>>> This needs to be fixed in the driver. We need to track which memory is
+> >>>>> being used by the remoteproc and unmap it once remoteproc stops using
+> >>>>> it, without additional userspace intervention.
+> >>>> If it's the audio daemon which is requesting for unmap then it basically means that
+> >>>> the remoteproc is no longer using the memory. Audio PD can request for both grow
+> >>>> and shrink operations for it's dedicated heap. The case of grow is already supported
+> >>>> from fastrpc_req_mmap but the case of shrink(when remoteproc is no longer using the
+> >>>> memory) is not yet available. This memory is more specific to audio PD rather than
+> >>>> complete remoteproc.
 > >>>>
-> >>>> Please reference corresponding part of the standard, describing this lowering.
-> >>>>
-> >>> Per DisplayPort 1.4a specification Section 3.5.1.2 and Table 3-10, while the standard doesn't explicitly define a TPS downgrade mechanism, it does specify:
-> >>
-> >> Anything in DP 2.1?
-> >>
-> In the DP 2.1 spec, mainly on section '3.6.7.2 8b/10b DP Link Layer LTTPR Link Training Mandates', defined 'LTTPR shall support TPS4'.
-> The other parts seems similar to the 1.4 spec.
-> >>> - All devices shall support TPS1 and TPS2
-> >>> - HDR2-capable devices shall support TPS3
-> >>> - HDR3-capable devices shall support TPS4
-> >>> While these capabilities are explicitly defined DPCD for sink devices, source device capabilities are less strictly defined, with the minimum requirement being support for TPS1 and TPS2.
-> >>> In QCS615 DP phy is only supporting to HBR2, we observed a critical interoperability scenario with a DP->HDMI bridge. When link training at TPS4 consistently failed, downgrading to the next lower training pattern successfully established the link and display output successfully.
-> >>
-> >> Any other driver doing such TPS lowering? Or maybe we should be
-> >> selecting TPS3 for HBR2-only devices?
-> > 
-> This logic is porting from qualcomm downstream, 
-
-Hopefully a downstream has some sensible commit message which describes
-the issue and the configuration to reproduce it?
-
-> For other device, only found in some older Tx chips like i915（intel_dp_training_pattern) used the maximum hardware-supported patterns, but not lowering.
+> >>>> If we have to control this completely from driver then I see a problem in freeing/unmapping
+> >>>> the memory when the PD is no longer using the memory.
+> >>> What happens if userspace requests to free the memory that is still in
+> >>> use by the PD
+> >> I understand your point, for this I was thinking to limit the unmap functionality to the process
+> >> that is already attached to audio PD on DSP, no other process will be able to map/unmap this
+> >> memory from userspace.
+> > Ugh... and what if the adsprpcd misbehaves?
+> >
+> >>> How does PD signal the memory is no longer in use?
+> >> PD makes a reverse fastrpc request[1] to unmap the memory when it is no longer used.
+> > I don't see how this can be made robust. I fear that the only way would
+> > be to unmap the memory only on audio PD restart / shutdown. Such
+> > requests should never leave the kernel.
+> >
+> > Moreover, the payload should not be trusted, however you don't validate
+> > the length that you've got from the remote side.
+> I was thinking of giving the entire reserved memory to audio PD when
+> init_create_static_process is called. This way, we can avoid any need to
+> support grow/free request from user process and the audio PD pool on
+> DSP will have sufficient memory support the use cases.
 > 
-> According to the description in DPCD table 2-232 003h, From the DP spec perspective, it appears that all supported cases should preferably adopt TPS4, as it is more robust.
-
-If other drivers don't perform this kind of lowering, I'd prefer if we
-don't perform it too.
-
-> 'DPRXs should support TPS4 and set this bit, regardless of whether the DPRX supports HBR3 because TPS4 is more conducive to robust link establishment than TPS2 and TPS3.
-> 0 = TPS4 is not supported.
-> 1 = TPS4 is supported (shall be supported for downstream devices with DPCD r1.4, except for eDPRXs).'
+> This way the free can be moved to fastrpc_rpmsg_remove(When DSP
+> is shutting down) or during Audio PD restart(Static PD restart is not
+> yet supported, but clean-up can be done when PDR framework is
+> implemented in the future).
 > 
-> Although maximum capability of QCS615 is HBR2, but the actual pattern supports TPS4. 
-> From pure design perspective, it would be cleaner to drop this lowering in next patch. 
-> > Bump, this patch looks interesting and I'd like to see it revisited if
-> > it's correct
-> > 
-> > Konrad
+> Do you see any drawbacks with this design?
+
+I'm sorry for the delay in responding to your email.
+
+I think this is a perfect idea. Can we be sure that there will be no
+extra requests from the DSP?
+
 > 
+> >
+> >> [1] https://github.com/quic/fastrpc/blob/development/src/apps_mem_imp.c#L231
 > 
 
 -- 
