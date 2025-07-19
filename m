@@ -1,114 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-65739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E633B0B0F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 18:58:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A16B8B0B10B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 19:19:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34F801AA2431
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 16:58:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 337B9AA2822
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jul 2025 17:19:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D162882CA;
-	Sat, 19 Jul 2025 16:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76781FBEA2;
+	Sat, 19 Jul 2025 17:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="pDnwgip7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lsy82JPl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E21320B80A;
-	Sat, 19 Jul 2025 16:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A4D42AA4;
+	Sat, 19 Jul 2025 17:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752944278; cv=none; b=quNhEYnTlMtB+t5dMy5g1JOo1u5A01lGZKtgxF2bgHIVacjCBoT35r7+ph/y9V16NALRzxTqwT+AfdfeFH24SeFmTxEnsD4z+B3vfao+gyfJpsmFPJlkww1Z7qQPK8hzhN1liDIP2sl44KZwfMpa9qJQW2hmfnwwjeGgrLq84sM=
+	t=1752945568; cv=none; b=LJxzw/Z2Fv3ARDtbm5nBye3EWJHCtFFSrm5r1yu4U5RpTAZuJfHY7RUzOvq4nzL+FI7Wmq2QfTYvAjGWc2PPUbTXMuHsWy3/OTG9+b3uUAswZ4lNPnMqQ9nLmD5kNDfO4Vjl6Z3DemDnxLFrBA0gZjG2Hlsf0ySjIf3vkxAHUCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752944278; c=relaxed/simple;
-	bh=vqvz+1tGu+LpaR4QvDy5MuUcglJGRzLgrNDVSW5K+4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lGgpCFIl7BhPAqr+xNjAph9LyyFcnYfP3ZskIeU/nTjLy1/e/cSGhtUESJ7/w23B+1oclmAMKp57MbsnoTQ5ODG7S91BVvhTbRphsm20LUFrTvVn9uOTwk+1f24IXb7zm+Q838OLlqBVM+O91ODcoO6p3nxLXko4VgO/R+CBtNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=pDnwgip7; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=1mfA517rjzPZoRXNHzM0lVU9Rb/n66iO6+Wm0YH3JEY=; b=pDnwgip7JjpRRWIQ+7eRa13nTL
-	sQhiLhgkqwUNQzTMjMiV6IwiXk3MJxORqA/jcroj65TMl3vSBO6v6/9F/sFhmRJLyGC2ssIVr/z6t
-	xIGP+9TukEbjzMlariteXOPgxw88EJGzpxqNhZ+1M9Fk8GCP87KYK0v7j40u+srk3kNg=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1udAsS-0025PX-Nw; Sat, 19 Jul 2025 18:57:36 +0200
-Date: Sat, 19 Jul 2025 18:57:36 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Andre Draszik <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: Re: [PATCH v11 2/8] power: reset: reboot-mode: Add support for 64
- bit magic
-Message-ID: <8d4a42b6-657f-4c30-8e25-4213d8d53a89@lunn.ch>
-References: <20250717-arm-psci-system_reset2-vendor-reboots-v11-0-df3e2b2183c3@oss.qualcomm.com>
- <20250717-arm-psci-system_reset2-vendor-reboots-v11-2-df3e2b2183c3@oss.qualcomm.com>
- <6vlm3ybjpy2jq3cr2pzj4vcmqwoissdml2xmhfzlulfbrpzakt@xrepu6c5zykb>
- <713b2cc8-1bc7-a8b7-678b-5fc7fe25615a@oss.qualcomm.com>
+	s=arc-20240116; t=1752945568; c=relaxed/simple;
+	bh=e5rgUdJo2dK/e+OmbOI/EEyI0Fxk0Q4aGrlatS6p2ok=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dUq94xyyaTOjkCdTvI6lfUxw7cnrA1ZPPUHrV8F77r1C+6/gh2jm15fK66ptwrqXa4FeMu9Ied3+SJIF+c+6fTOQ8Oqapb8ECW9qbvnwWoD5DRAxVvimUcD9doOZC7pF7yD+M9m6NkwR/TOEQeoN9s7gZeZKlpK7IiLtAXUytoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lsy82JPl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CD5C4CEE3;
+	Sat, 19 Jul 2025 17:19:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752945567;
+	bh=e5rgUdJo2dK/e+OmbOI/EEyI0Fxk0Q4aGrlatS6p2ok=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=lsy82JPlf8Wai9HWzJKO1NQn6YwlCKng9fQBt6r64/v8Qng6dDOKMM8omkS9D1cdr
+	 Py0yF3kh5CrW3WVJgfnUSyhqsWJCoGJdQT3hJNuHDkdPigYPhkyMESUQEjwiJ0IX8i
+	 U0pRV5dVS27OunE/EaSL/0fsviyeKdudIulg/C+CWeFmkg0gfO0TKH72VEoUcgNzzc
+	 UD/XM2u9HtVQ4mCBrw54k1zW390nZAX0zRjUaqqRNs0vAtnNOzKtKFT2tpscjre1q7
+	 vTGGVzkQeYpi1cfjS0Vz3wg6HqkdbchW2BDuP4pX5Vm8eA+Xm7TaduV+GFiEu32x8J
+	 Chxuw66Q8E03Q==
+Date: Sat, 19 Jul 2025 18:19:15 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Yassine Oudjana via B4 Relay
+ <devnull+y.oudjana.protonmail.com@kernel.org>, Manivannan Sadhasivam
+ <mani@kernel.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
+ <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Masahiro
+ Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+ Nicolas Schier <nicolas.schier@linux.dev>, David Lechner
+ <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+ linux-iio@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] iio: Add Qualcomm Sensor Manager driver
+Message-ID: <20250719181915.499d5c4d@jic23-huawei>
+In-Reply-To: <nSoiRmruHeLNNxpRCxJ5M5aQ-Vx7lE3U9wtVwYh6MVZHr0pkk9Cwl5ggSN3xAZ09zA8bk_RJS6mRAgxWkCIrNGogaElh4x8VKaQPO_Rzrqs=@protonmail.com>
+References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com>
+	<20250710-qcom-smgr-v2-4-f6e198b7aa8e@protonmail.com>
+	<20250713164033.3488db3c@jic23-huawei>
+	<nSoiRmruHeLNNxpRCxJ5M5aQ-Vx7lE3U9wtVwYh6MVZHr0pkk9Cwl5ggSN3xAZ09zA8bk_RJS6mRAgxWkCIrNGogaElh4x8VKaQPO_Rzrqs=@protonmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <713b2cc8-1bc7-a8b7-678b-5fc7fe25615a@oss.qualcomm.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-> >> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
-> >>  {
-> >>  	struct qcom_pon *pon = container_of
-> >>  			(reboot, struct qcom_pon, reboot_mode);
-> >> @@ -37,7 +36,7 @@ static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
-> >>  	ret = regmap_update_bits(pon->regmap,
-> >>  				 pon->baseaddr + PON_SOFT_RB_SPARE,
-> >>  				 GENMASK(7, pon->reason_shift),
-> >> -				 magic << pon->reason_shift);
-> >> +				 ((u32)magic) << pon->reason_shift);
+> > > +static int qcom_smgr_iio_read_raw(struct iio_dev *iio_dev,
+> > > + struct iio_chan_spec const *chan, int *val,
+> > > + int *val2, long mask)
+> > > +{
+> > > + struct qcom_smgr_iio_priv *priv = iio_priv(iio_dev);
+> > > +
+> > > + switch (mask) {  
+> > 
+> > 
+> > No sysfs access at all to data is unusual but not completely unheard of.  
+> 
+> There is no (known) method to request a single reading from the QMI
+> service. The only known way to get sensor data is to send a buffering
+> request to initiate sending data, then the remoteproc sends QMI
+> indications at a regular interval carrying sensor data which I am
+> pushing to the IIO buffers. The only way to implement direct sysfs
+> access would be to store the last received value somewhere then pass
+> it to sysfs when requested. This will also require enabling buffering
+> if disabled at the time of reading, then waiting until new data is
+> received. I didn't like this solution so I skipped direct sysfs access
+> altogether. Buffer access is enough for the current use case with
+> iio-sensor-proxy in userspace.
 
-As a general rule of thumb, code with casts is poor quality code. Try
-to write the code without casts.
+This is absolutely fine.   I have mulled in the past implementing core
+code to deal with cases where we are in buffered mode but want to still
+provide sysfs access.  That applies for cases like ADCs where a couple
+of channels are used for a touchscreen but where there is a hardware
+restriction on accessing other channels on a oneshot basis whilst streaming
+data on the others.  Maybe one day we'll have that support and it will
+also help here, but it's not a high priority thing.
 
-Maybe something like
+> > > +static const struct iio_chan_spec qcom_smgr_pressure_iio_channels[] = {
+> > > + {
+> > > + .type = IIO_PRESSURE,
+> > > + .scan_index = 0,
+> > > + .scan_type = {
+> > > + .sign = 'u',
+> > > + .realbits = 32,
+> > > + .storagebits = 32,
+> > > + .endianness = IIO_LE,
+> > > + },
+> > > + .info_mask_separate = BIT(IIO_CHAN_INFO_SCALE) |
+> > > + BIT(IIO_CHAN_INFO_SAMP_FREQ)
+> > > + },
+> > > + {
+> > > + .type = IIO_TIMESTAMP,
+> > > + .channel = -1,
+> > > + .scan_index = 3,  
+> > 
+> > 
+> > Why 3?  
+> 
+> Because the same struct is used for this and 3-axis sensors, so we should
+> skip the unused values.
 
-      If (magic > MAX_U32)
-      	   return -EINVAL;
+I'm not sure how that is related to this value.  These are effectively monotonic
+but shouldn't be used to index anything driver side.  So there is nothing
+wrong with the value 3, it's just a bit odd.
 
-      magic_32 = magic;
+> 
+> >   
+> > > + .scan_type = {
+> > > + .sign = 'u',
+> > > + .realbits = 32,  
+> > 
+> > 
+> > If it's realbits 32 and no shift, why not store it in a 32 bit value?
+> > I assume this is a hardware provided timestamp rather than typical software
+> > filled in one? Anyhow, I'm not immediately spotting it being used yet
+> > so for now perhaps best to drop the channel descriptions.  
+> 
+> The hardware (or firmware rather) passes an unsigned 32-bit timestamp
+> value in a 64-bit QMI field. I was previously passing it as-is to IIO
+> but now since I introduced a new struct I can make it 32-bit storagebits.
+> 
+> But below you said s64 for timestamp so which is it going to be?
 
-You might be able to go further, and validate that magic actually fits
-into the field when you consider the << pon->reason_shift.
+I wasn't sure if it was a software or hardware timestamp. Given it's coming
+from the QMI thing it's 'hardware' so 32 bit is correct here.
 
-	Andrew
+> 
+> > > + {
+> > > + .service = SNS_SMGR_QMI_SVC_ID,
+> > > + / Found on MSM8996 and SDM660 */
+> > > + .instance = QRTR_INSTANCE_CONST(1, 50)
+> > > + },
+> > > + { },  
+> > 
+> > 
+> > No comma on a terminating entry like this.  
+> 
+> Ok. Gotta keep track of all the conventions used in different subsystems.
+I'm curious - have you ever had anyone request the comma?
+
+I know some don't care, but it seems like an odd thing to insist on.
+
+> 
+> >   
+> > > +};
+> > > +MODULE_DEVICE_TABLE(qrtr, qcom_smgr_qrtr_match);  
+
+Jonathan
 
