@@ -1,202 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-65806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4CDBB0B613
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 14:20:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74CEEB0B618
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 14:22:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB79116C6C1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 12:20:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3A0CA7AF303
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 12:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD50225A37;
-	Sun, 20 Jul 2025 12:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 930EE20E718;
+	Sun, 20 Jul 2025 12:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Cj2VxrdF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RHnNIdlM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB2521A458
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jul 2025 12:18:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627DE1E3775;
+	Sun, 20 Jul 2025 12:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753013883; cv=none; b=WPJ4+dyjQl/Qs+aLajc3jT3k/x6+0Zg9aU8ReZZYjf9ihmvFD7MKyc1k4M5WwaUy0tdDU+vuhxUQHvzK9ZPuaLaZwqcsd+Hfi7ufKQIpGBFCp2xv7A6VJ1HDEM0oY8VG5wE13GqurY5xlk7TT+V28vxnEF49bTNjb+nfQZdzRdA=
+	t=1753013904; cv=none; b=Sh3BisXAlpiSdcba3Pfcwvqa8OvSrC6a8y2MjeyZiWIhVPoD4a/5v6eCT5S6dSzX08od1cc4d0g93ZRGA8RpTBR6sNQ5ZH5r9LgApEkg2COeSlwuGQ5WNCBqXv0ypft5ltHxJtuI7KHcfVibl72NHcQn3xhrNCRSnAWD3eR0oyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753013883; c=relaxed/simple;
-	bh=yo//VXpe8iX48jIZ0sCMtloy5TgF3OidJukwu7tRn5s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aUINaS1IuxamIxpu+yfDGR27QVykzhWCHBXMUHSI9PuqKE97roque4eez4OQZ7fxabZn22WYuxA3r0BE0HXz9Nc5zfgWzfgbJe+EhDBJY7JPy0EeQ0l0FJ1wNMTxEpHAXX+oacJ2fSWHAS4wyjstej12vkaYfSthZauuR0lInLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Cj2VxrdF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56K7lPgZ007097
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jul 2025 12:18:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/TScNC6zTNOCvvTMV/4I4HH4gXtKqdB6Thd+WQC9r2s=; b=Cj2VxrdFlmCcBmzi
-	rs947vicwhDfLMZSTo9JAa9w+4MBd3BrFjZQTr4vmreMlaShC+zf70VYeqI0Cid5
-	lwzdJ3Ab+x5GwT006RnWn+GpVAYysY3WunyD83VRJqNGsnfzUcJ6rQ7ANBFsXRYG
-	OtV2GygEK2wd+VCjsCMB3++2IH8qn2y6AeX7KCs1kP+i9Tm9wu0Z1Rw5LF1JHK4v
-	x0MN4BS6GWP+RC86A3gLG6RLqBXFxWclCCBqubyMY+a1dChQOFJRoh21r3VaAaK1
-	9CjVbOrznBScdMPA1vVdew1uVXxQ6Gm97ehrtYGtQYL6DEu7ICfXUZd8uB5uLmaL
-	nFhJ8g==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045ha5yd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jul 2025 12:18:00 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-740774348f6so3328393b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jul 2025 05:18:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753013879; x=1753618679;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/TScNC6zTNOCvvTMV/4I4HH4gXtKqdB6Thd+WQC9r2s=;
-        b=btCY6tv0ZW0s8Zt9/S7bAswgrzZ/f7BlO6FzlB48S4OO+jTbwnlHRKuLhvI6BbrI26
-         udcO59nLtTc5d+asfeXGO1BAYvgq8I1vf9Kg0SIx4cHbWnp+k2amEbb6hhRjtH5EXef9
-         MUUOTdz6jAqCIFVvOF8Mbkk4neXQndQApcrswu2qF2TMEOBxkjiDmc0fqsqnrtMzdbOp
-         CiP2aaYhtXSSTvf8Fa4lFkRHh4xLB+YkShn0U7WxfT7O4/xVDlJNkzSWvLY5cXVrTJw7
-         F8R0doDIiB6hFHtw6NLgZ7zHLv0NyzHcRcpXzr4b0NZnGJmAtWYmnmEsEOpS4k5qvS6r
-         3dow==
-X-Gm-Message-State: AOJu0YwgDXa2Qo/w6ITrb2I/6NHZGEofXQJs/jr8d+F0xGwMmV+rVri5
-	Tb3ptBz6TmhZLuhwN+pLYm2sO0DEf5mlwjKuS+q5wThdaSsC4wlDamjXzAF9eo+2V1jrewgskN3
-	pFs+9eVMyHQ7wFmRwfic9jzZcoNZL98FY0BCMNz7APbvvsPFskqng0V1L0LhzJNgY2S3woEAae3
-	Sw
-X-Gm-Gg: ASbGnctjUmpFYZoKO2hBJRp55h6Mz5S8mxOIG8EhgdWfR2bNRS0sTI9Ec2EJ45G2HB7
-	oUG/DhT4PSOosoE/+i0c1DqVugI+WgxaWcTbwEA3FsTY8QwohWAyAQU0D14fCna43i05O6yq2wh
-	nVZEaByaD6jv/fVK6T8i8wK39G2QEhJ3YSSLBMuwcPF2ashLSoh+dKvaZPnmYa6KcViUwPh3OSb
-	YCEBu0hJf3eUEZskSP3AeiNPgQssc3Ec0JTNy5KIlaQr2D1A3xDEtlDlTDtGHi2tNsahZ+1cyeV
-	toSsfkw1sBwhp+YRx2g7+OF8kVQ7wewdUjME6EG1SNEjrViGDdI4UANk86ope3bC
-X-Received: by 2002:aa7:88cd:0:b0:736:50d1:fc84 with SMTP id d2e1a72fcca58-759adede58fmr12676485b3a.21.1753013879230;
-        Sun, 20 Jul 2025 05:17:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7VV3dIbqLv0Bda7KAub7izD7dYBl2htnDCyzsK/RNWmk3X3ufAsjrIqpvrxS5nYqsh01IYQ==
-X-Received: by 2002:aa7:88cd:0:b0:736:50d1:fc84 with SMTP id d2e1a72fcca58-759adede58fmr12676431b3a.21.1753013878679;
-        Sun, 20 Jul 2025 05:17:58 -0700 (PDT)
-Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-759cb154755sm4097933b3a.69.2025.07.20.05.17.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Jul 2025 05:17:58 -0700 (PDT)
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Date: Sun, 20 Jul 2025 17:46:18 +0530
-Subject: [PATCH 17/17] drm/msm/adreno: Relax devfreq tunings
+	s=arc-20240116; t=1753013904; c=relaxed/simple;
+	bh=eDhTMepW1yIoExyi5c3IFoAn2e0OrJGqBpYqi5n1H2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SmPi+gU8neDpVDhPdzfkP1+UBUSMqoaLaq1dCMiqex1IkChy06YhLLlslTNid/B1R9VhRav0Fq5XESQ65DZ8aS5UIn3/AIc1qjix4bj5XB1vBGNGTf8oefGVKomNrBBPPbhBc1WSPSXi7HNB2c8Pzn3j8Yceu1WqdjD4pysep+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RHnNIdlM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9A8C4CEE7;
+	Sun, 20 Jul 2025 12:18:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753013904;
+	bh=eDhTMepW1yIoExyi5c3IFoAn2e0OrJGqBpYqi5n1H2Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RHnNIdlMFx0wVT3AHRZkC3HFXSZm55Gnezt3JoOnMn8af0ZrVSa7KHohBdX4NYnd1
+	 kOPNJBf/x6LWRMTn/CbfIqlq/ZrG7Nbg5KFQ0TOS81O3t6CZersZVB5je4o0f0ztgA
+	 fb61UG+PzgGcra7GSaD0nSgsrRia9B3muezGmTUgboNZE1RwiT5Bbqk65tinGeZKYd
+	 sMclNxn+t0aqSavZ+wwKUvwjkadhoX2gZ+atsLtHN9qyOcpe4ONoH5JXFChlcE/zJv
+	 idZaZhzcMu/EufHMYN8OttRxfu/5dP4isnoypCa6yF0ZWPVWfj80/c/Aqo5lB3jux2
+	 /+U5PbSVdic1g==
+Message-ID: <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
+Date: Sun, 20 Jul 2025 14:18:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
+ Controller
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org,
+ mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, quic_rjendra@quicinc.com, taniya.das@oss.qualcomm.com,
+ linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
+ <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
+ <28ea2b11-a269-4536-8306-185bf272bd60@kernel.org>
+ <2yekmjqihkzsfjr223vepigfj4hfruleigguhrlekp6s7riuxk@ta5kghr2kafi>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <2yekmjqihkzsfjr223vepigfj4hfruleigguhrlekp6s7riuxk@ta5kghr2kafi>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250720-ifpc-support-v1-17-9347aa5bcbd6@oss.qualcomm.com>
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
-In-Reply-To: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753013805; l=2469;
- i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
- bh=yo//VXpe8iX48jIZ0sCMtloy5TgF3OidJukwu7tRn5s=;
- b=fgzO+9t43IUEuMn8OKI3RpLpyTPjIfZFm2fuZ7JUwHO5rdQh18cOUA5e0P2EnAGfWjI731t+L
- 30I15mVzH/SCXUskrPfsLIAz4Cbxjm7knH19i9nyCmqWi/Y180GA9j5
-X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-Authority-Analysis: v=2.4 cv=ZtDtK87G c=1 sm=1 tr=0 ts=687cde78 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=A_RMCc231MWr08KmCZIA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIwMDExOCBTYWx0ZWRfX01VVjOXoYsKe
- kWIse6qBwTyuWsiziIQ5grGIIpNzNh/EWMbs2eDdyRD22evYb0KLNY4/rewS+d1VFZXTfT7uWuJ
- c2XR6cShDd6/Mb6Whv2JnJRs2RhgMELeVThFvUSNxg9+Bhs1ds/KrYYnd1rXHBpcUR+p/u15Msu
- Hf2MvXryuCg8U16IEbE9bhGREcSUGgGKJrWRMGXoc0HkOJFQN8Owsnf2FKu1hHwVpft2Cw0Elwp
- TsjXEVWLc9/BBWJKoergm5JaNBTxUmbATy4VetrQmch9HV+Mrz0qlrzsKVZ3S3ae8OHzQ9Et/Vv
- kEvHwigqNDZivjCRGW81zKh6iYschGoeT94Ot/apEQ4yEbf4bU4gJr2seSLLUTXciRMQpyPAFZK
- LoSGz+4EaONoOEEKxJrw4T2X4FzaCOMS0z1ufs3pzgcB33q1y5iBUMgxjhQRaZnGZSimABah
-X-Proofpoint-GUID: vTFPux6Id_9H0fRvzF5pcjNHDnPDbz1u
-X-Proofpoint-ORIG-GUID: vTFPux6Id_9H0fRvzF5pcjNHDnPDbz1u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-19_03,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 clxscore=1015 spamscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- suspectscore=0 mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507200118
 
-Relax the devfreq tunings when IFPC feature is supported because there
-is no wakeup latency that we have to hide with aggressive dcvs. This
-helps to eliminate the very frequent gpu frequency spikes to FMAX even
-with common lightweight workloads like UI scrolling. Some profiling
-data from X1E which shows the improvement:
+On 20/07/2025 05:46, Bjorn Andersson wrote:
+> On Wed, Jul 16, 2025 at 06:28:15PM +0200, Krzysztof Kozlowski wrote:
+>> On 16/07/2025 17:20, Pankaj Patil wrote:
+> [..]
+>>> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+>>> new file mode 100644
+>>> index 000000000000..a1a6da62ed35
+>>> --- /dev/null
+>>> +++ b/drivers/clk/qcom/gcc-glymur.c
+>>> @@ -0,0 +1,8623 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>
+>> Missing date.
+>>
+> 
+> Per updated company guidelines we don't want a year here. Please let us
+> know if you have any concerns with this.
+> 
+I remember the guidelines and they were about publishing your code, not
+about contributing to open-source projects. And whatever you have
+internally does not cover us at all. You can have internal guideline
+saying you need to buy me a beer or I need to buy you a beer. Does not
+matter.
 
-DUT: X1E CRD, 1.25Ghz GPU FMAX, 2880x1800@120Hz, Debian Trixie Gnome
-Testcase: WebGL aquarium with Chromium
+That above copyright statement without date does not adhere to expected
+format. Explanation how this should be written:
 
-Current dcvs config:
+https://www.gnu.org/licenses/gpl-howto.en.html#copyright-notice
 
-  +--------+--------------+------------+------+
-  | Fishes | GPU Load (%) | Freq (Mhz) | FPS  |
-  +--------+--------------+------------+------+
-  | 1      | 23           | 300        | 120  |
-  | 100    | 29           | 300        | 120  |
-  | 500    | 41           | 300        | 120  |
-  | 1000   | 45           | 390/550    | 120  |
-  | 5000   | 50           | 1250       | 120  |
-  | 10000  | 93           | 1250       | 120  |
-  | 15000  | 100          | 1250       | 87   |
-  +--------+--------------+------------+------+
+The GPL-2.0 license in the kernel also uses date:
 
-New dcvs config:
+"Copyright (C) <year>  <name of author>    "
 
-  +--------+--------------+------------+------+
-  | Fishes | GPU Load (%) | Freq (Mhz) | FPS  |
-  +--------+--------------+------------+------+
-  | 1      | 23           | 300        | 120  |
-  | 100    | 28           | 300        | 120  |
-  | 500    | 42           | 300        | 120  |
-  | 1000   | 62           | 300        | 120  |
-  | 5000   | 84           | 744        | 120  |
-  | 10000  | 93           | 1250       | 120  |
-  | 15000  | 100          | 1250       | 87   |
-  +--------+--------------+------------+------+
+There is no option without date in the license or GPL faq. I am not a
+lawyer, so no clue whether this is what we want, but I also should not
+be my task to figure out whether different copyright statement is okay
+or not. It's your burden.
 
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Or drop the Copyright statement complete to avoid any questions.
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index 53ef2add5047e7d6b6371af949cab36ce8409372..212963a5b8b57597bf5b01ab90893b01fd9c6e76 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -156,6 +156,13 @@ void msm_devfreq_init(struct msm_gpu *gpu)
- 	priv->gpu_devfreq_config.upthreshold = 50;
- 	priv->gpu_devfreq_config.downdifferential = 10;
- 
-+	/*
-+	 * Relax the tunings when IFPC is supported because there is negligible latency in
-+	 * switching power state
-+	 */
-+	if (to_adreno_gpu(gpu)->info->quirks & ADRENO_QUIRK_IFPC)
-+		priv->gpu_devfreq_config.upthreshold = 90;
-+
- 	mutex_init(&df->lock);
- 	df->suspended = true;
- 
-
--- 
-2.50.1
-
+Best regards,
+Krzysztof
 
