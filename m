@@ -1,78 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-65832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65722B0B933
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 01:29:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AEA3B0B94D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 01:43:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0EC1176754
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 23:29:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 670007A8C18
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 23:41:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D390322DFBE;
-	Sun, 20 Jul 2025 23:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C36922B5A5;
+	Sun, 20 Jul 2025 23:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r8V/zCiy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ABLkidrE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB1212CDA5;
-	Sun, 20 Jul 2025 23:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E189984D02;
+	Sun, 20 Jul 2025 23:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753054193; cv=none; b=CGYVq/8qLSOSCF0qYU0kE6nucQzGCJOpt1Qb2Kadi2PaxTnNuUillVAPtf3KB62B/4whCX0UJcOv5xiKfDgo7oYbEhlZtzdUpqmiqAvs0r/4oP6o9We5ZeJgTGJIV5QyYFEwM1FQHWzrV3UQYu0m5KvOVfZxqMMf2zv6S1Rr2CY=
+	t=1753054985; cv=none; b=hFIHe/yx8gaKgCKJygp9jJvmsBQ3x3WfM88KV+iDhhWxKfFJT/G5ktlBoyJOsgI9cNF2V4B4XxDTtHrR3uvftTr39LWHuwf3bOQnEyv2ELD2FKpYYqNB0mex9NZU5gaNYtLb3gx3qPxDlYsZOJ6NzjfIZZn3shPMJ6G0hIQqK5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753054193; c=relaxed/simple;
-	bh=9vRFi57eCNNn/RDG1UsnpLJA0b2NK9C+iSXFxF1Bsu4=;
+	s=arc-20240116; t=1753054985; c=relaxed/simple;
+	bh=hi1P1Md3lx0mFctv/IZEeLMfN66v8OwqSqJnjru2AKs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V1FrqveAG5O50zY4x126Ffp40SI63pGNJ+hLMKuGbD5Dk+gsYNCN2IUVuIIhg/3UmGPh1R/uuvKPqoenjfwlAF3/kGc8uKvQWcKZ3SeLoHgCSHmO/oAH/JJHNdNkxS8q0I0n7JzlPa8YUo/CCQs6BCDCzSKgWtrHQmbLKPteDuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r8V/zCiy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C0CC4CEE7;
-	Sun, 20 Jul 2025 23:29:52 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=g9XHC58MZk2yGrOuKGsPBJYejfMc42nkwcYT0kNjEA9HvHnqkPGkcn6/vK9MEh87eik47+LCfwnNIWOiuj80e+fQTCjovXdT0iya9BuvW9hEeqTmI4UgEQwqIeg4oZ431TKih2fuq+8eUuf/Kd+JVKuDr7CZK841KUXBNG2Xj7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ABLkidrE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30910C4CEF1;
+	Sun, 20 Jul 2025 23:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753054193;
-	bh=9vRFi57eCNNn/RDG1UsnpLJA0b2NK9C+iSXFxF1Bsu4=;
+	s=k20201202; t=1753054984;
+	bh=hi1P1Md3lx0mFctv/IZEeLMfN66v8OwqSqJnjru2AKs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r8V/zCiyA4u/5PyfBrhpwGiPbXUwMo0HTAx+K7zSRwdmp+PKBPT2vii+6hPfcbAjy
-	 2E+uTWZ8QZjdX4Z8defLdoE1RtHOnwdeMWfjGsGtRSXdWPp+pMDXXBmabMPFi0t7X5
-	 MTeg9th7oSkxf7MG4+Gj/EC+h26qOlzDV9EYcDUzPD1z6ls4lI+4MwTFzBqICzXShD
-	 7BLvUbAPGD84WrSLNxuwEP9AFhXNN7/0qmkEwJX5EABaJ2MSfEeTWET8LKrSJZcXeQ
-	 5uKxFu29ob4YwEuI5dYLikVQDIyrjpBvw2WgVNlD1qxkp1PFkSuYTK8vxJhWkGC+Yv
-	 UE+r0AgmhZ79w==
-Date: Sun, 20 Jul 2025 18:29:52 -0500
+	b=ABLkidrEM2saNjFzmOPHi29nSFhi1ImiUstYIa9yWmskrhoktNS5WuZjis65jTXRz
+	 EKhBUHbQbM7wE+228YJdxf53icCDaPhE6RyY7JHHEWJ9u+BS1lwFX86/0myp3zyBqu
+	 Mt4GYUjy4msPoJe2Z9JFKjXlB3lSfPnG6CZOj8lIApsV9xKadTvLKiVtuo+wUfMXnx
+	 aWFRM71T9t7WhjFLb1Q4/RVPP9stBFqHPL4jiR69gVan7MbPsdz9THwJUtT995xlHB
+	 aff7lL8tlUBv0Xx4k8QZPGMSbwLtIkj2nRavbC14DeD4vBniYJfOL3yMCAeJOAhjsT
+	 EgYnWx+7oM20w==
+Date: Sun, 20 Jul 2025 18:43:03 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: =?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
-	thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	davem@davemloft.net, Conor Dooley <conor+dt@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Antoine Tenart <atenart@kernel.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
-	linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
-	Daniel Golle <daniel@makrotopia.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Romain Gantois <romain.gantois@bootlin.com>, mwojtas@chromium.org,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Subject: Re: [PATCH net-next v9 01/15] dt-bindings: net: Introduce the
- ethernet-connector description
-Message-ID: <175305419142.3067276.17489545129976520306.robh@kernel.org>
-References: <20250717073020.154010-1-maxime.chevallier@bootlin.com>
- <20250717073020.154010-2-maxime.chevallier@bootlin.com>
+To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Cc: conor+dt@kernel.org, quic_krichai@quicinc.com, vkoul@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, krzk+dt@kernel.org,
+	jingoohan1@gmail.com, qiang.yu@oss.qualcomm.com,
+	abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org, kw@linux.com,
+	neil.armstrong@linaro.org, mani@kernel.org,
+	devicetree@vger.kernel.org, johan+linaro@kernel.org,
+	andersson@kernel.org, linux-pci@vger.kernel.org,
+	kwilczynski@kernel.org, linux-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, kishon@kernel.org,
+	konradybcio@kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v5 2/4] dt-bindings: PCI: qcom,pcie-sa8775p: document
+ link_down reset
+Message-ID: <175305498292.3083407.12105009386525845667.robh@kernel.org>
+References: <20250718081718.390790-1-ziyue.zhang@oss.qualcomm.com>
+ <20250718081718.390790-3-ziyue.zhang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,40 +67,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250717073020.154010-2-maxime.chevallier@bootlin.com>
+In-Reply-To: <20250718081718.390790-3-ziyue.zhang@oss.qualcomm.com>
 
 
-On Thu, 17 Jul 2025 09:30:05 +0200, Maxime Chevallier wrote:
-> The ability to describe the physical ports of Ethernet devices is useful
-> to describe multi-port devices, as well as to remove any ambiguity with
-> regard to the nature of the port.
+On Fri, 18 Jul 2025 16:17:16 +0800, Ziyue Zhang wrote:
+> Each PCIe controller on SA8775P includes a 'link_down' reset line in
+> hardware. This patch documents the reset in the device tree binding.
 > 
-> Moreover, describing ports allows for a better description of features
-> that are tied to connectors, such as PoE through the PSE-PD devices.
+> The 'link_down' reset is used to forcefully bring down the PCIe link
+> layer, which is useful in scenarios such as link recovery after errors,
+> power management transitions, and hotplug events. Including this reset
+> line improves robustness and provides finer control over PCIe controller
+> behavior.
 > 
-> Introduce a binding to allow describing the ports, for now with 2
-> attributes :
+> As the 'link_down' reset was omitted in the initial submission, it is now
+> being documented. While this reset is not required for most of the block's
+> basic functionality, and device trees lacking it will continue to function
+> correctly in most cases, it is necessary to ensure maximum robustness when
+> shutting down or recovering the PCIe core. Therefore, its inclusion is
+> justified despite the minor ABI change.
 > 
->  - The number of lanes, which is a quite generic property that allows
->    differentating between multiple similar technologies such as BaseT1
->    and "regular" BaseT (which usually means BaseT4).
-> 
->  - The media that can be used on that port, such as BaseT for Twisted
->    Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
->    ethernet, etc. This allows defining the nature of the port, and
->    therefore avoids the need for vendor-specific properties such as
->    "micrel,fiber-mode" or "ti,fiber-mode".
-> 
-> The port description lives in its own file, as it is intended in the
-> future to allow describing the ports for phy-less devices.
-> 
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
 > ---
->  .../bindings/net/ethernet-connector.yaml      | 45 +++++++++++++++++++
->  .../devicetree/bindings/net/ethernet-phy.yaml | 18 ++++++++
->  MAINTAINERS                                   |  1 +
->  3 files changed, 64 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>  .../devicetree/bindings/pci/qcom,pcie-sa8775p.yaml    | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
 > 
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
