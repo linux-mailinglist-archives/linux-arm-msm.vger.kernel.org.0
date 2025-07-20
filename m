@@ -1,167 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-65787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21F5EB0B549
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 13:02:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E73DB0B59F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 13:40:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B69671892544
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 11:02:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48F54189B5A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 11:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F532343C7;
-	Sun, 20 Jul 2025 10:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3A131E376C;
+	Sun, 20 Jul 2025 11:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BtUQQlRQ"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6GotjCl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8642220C48A;
-	Sun, 20 Jul 2025 10:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04A512E7F;
+	Sun, 20 Jul 2025 11:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753009123; cv=none; b=d/zTQlaLTw0g9vgAL7uUFkxIKLKwBi95JMTuRgfYuhk0JkM0+hisIUDNCVfp1tyg0goz+fBO9DHsoVLhGZ8B1zeM1w00i7BtHFettNQXxUOfAvr77M1/PrMukDT+LMUaf7tA52vr37YKSf7KDhCSj0rGIbqXdFxn2t4XLEJbb6Q=
+	t=1753011622; cv=none; b=fn0qbEKzA1Ja1XWxbvSuNS6NnpbmD/VZVonpLjkAMnY6b7gl7psFA/OTlDqK38YiZY92kJYOzxA/qZG4+qgMeZ4mlapiaDWWqFAjKKWsgOJvC2cavN9XLtys2MDnXOfKJmaQuyvtwlu/qbLS6m2LRgRNRtdqX+obGDo/OgcfUY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753009123; c=relaxed/simple;
-	bh=KR5cSKHbse4WF9oIItyoo1P+gdcxR8Y20MnTAFL4sJk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=cMnyC/UrAN5msvPJ2XePzgpzUwUVN7GtnzrDm1BQ0X4umzHXr/eIOg8iCVmV3UwAoNUNbldWseL/ZtAZlzHK7GaS6OHP5nf8wpakxScjApSOi1uhfs+7PEFgWO/XgQzE0rLm8NUAsbR/DyaolueRnzn5vsEfh8Qt6bdu0KsZOr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BtUQQlRQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56KAunkI013853;
-	Sun, 20 Jul 2025 10:58:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RgzVHIbX4TwTgW41kpg3Su1cYJM5g7jJy17SqjOejyQ=; b=BtUQQlRQVnaz7a2t
-	Pru1YkBiaw7P/bqXgu+B4ihf1Z/gJUYu9/4fT/2v5U1GKqmhug9JZILpbvHlfzF/
-	5Yz84ZKzo5OpVutwMGVtvLemShtAly3uj24swTrO2FMHGPppT0mkoGwVcK2vIl+y
-	Ml6KL1jKZ664n6GmOWvgV3mvHlwreFBcF4mf8CoRn6LRQsiJJSZ/xIIufmaokaW2
-	bRmzNQLqTilHOPsDmwwxovHaj5OXvhiyjA3ffQiQmnDpv7LFMqZOgb03391plMJf
-	6b9verG2JTP8mlTFQo32jv1sNofs6LuhEajFGtaoJpSYmYJvqSqr/bqzTDwArkSL
-	uBbo0A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4804hmj11x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 20 Jul 2025 10:58:31 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56KAwVA0019507
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 20 Jul 2025 10:58:31 GMT
-Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Sun, 20 Jul 2025 03:58:26 -0700
-From: Luo Jie <quic_luoj@quicinc.com>
-Date: Sun, 20 Jul 2025 18:57:21 +0800
-Subject: [PATCH net-next v6 14/14] MAINTAINERS: Add maintainer for Qualcomm
- PPE driver
+	s=arc-20240116; t=1753011622; c=relaxed/simple;
+	bh=pjDOmPsSd1VdBpRg5iH+lfVFwZTEL+/aUFCOxBbqhlY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xcaxn5Yq2vGpjOBIDWS4aJ1zDHhO59JOxZ+F4pXrw3FoG8x75oHYCKNavzlvNIWHHH38W3aTF2RX0niusK6/nypmLoIiGI4sCCI1FIRevgu5XKiLuFkc3i/D6KInaNqDXlj88pDQhTlKbWIXeypqFSbBc63vJ44UzciOYMnEfqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6GotjCl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14E3C4CEE7;
+	Sun, 20 Jul 2025 11:40:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1753011622;
+	bh=pjDOmPsSd1VdBpRg5iH+lfVFwZTEL+/aUFCOxBbqhlY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=D6GotjClbic3B7RU4bx20XE+wSwsAeu2MatiBFaVGQxLFqXNI9a5/dTD301MgvYIB
+	 +8WWVx39xipiXmUzQJnRlk3mNNmBUjhFbdkqoOos8U9VgEXnNfqh0cAR0f7t5U2iHl
+	 w29cjdF47ZE3Jo7nH6eLNsF931xixkrMVjCSH5/M=
+Date: Sun, 20 Jul 2025 13:40:19 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] usb: dwc3: qcom: Remove extcon functionality from glue
+Message-ID: <2025072021-rounding-oversized-5b4b@gregkh>
+References: <20250718053856.2859946-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250720-qcom_ipq_ppe-v6-14-4ae91c203a5f@quicinc.com>
-References: <20250720-qcom_ipq_ppe-v6-0-4ae91c203a5f@quicinc.com>
-In-Reply-To: <20250720-qcom_ipq_ppe-v6-0-4ae91c203a5f@quicinc.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
-        Suruchi Agarwal
-	<quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>,
-        "Simon
- Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Kees Cook
-	<kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        Luo Jie
-	<quic_luoj@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753009037; l=880;
- i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
- bh=KR5cSKHbse4WF9oIItyoo1P+gdcxR8Y20MnTAFL4sJk=;
- b=KWyHWRbki8fg/wAO/EHeajhsXMSXXgSO7M5viZAPSA0ELOr+04ZB2zUx7eHizegpRPReh0DWt
- 8J5uJrMmYM6DQdX0+y2Ga+BkfKUW7Dy43ocfHubLuH3UUiNUzC45onI
-X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
- pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yPDHhvdPDlX-JNegC0c794C7Po7bEbIt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIwMDEwNSBTYWx0ZWRfXwR3kMVGiLxUi
- ZJcXsYyoSptPbrHeRKg/6NJPnaFh90OoFBr69rvk6KGKJ3BisL+ocP2KJvWEBvXBzq+25YnKQ9k
- 1DUFYRR2etP0z1Ua9xadvMJidEybV934HKfOkVJbU4P4qPaVKk4hvhfWKs2uXSlMDxISjZxeAUD
- v4VQrnL5wRbP730RlqRuU042ihSiUugBmzf2JAOCiPQ05mej6if+M5fD03YtIKgVOjak9yjjLyK
- gKcqzPDf7td/7zVCYojatG/SlVgKRDZrDlHuy9gYgXT+VaKK7iJgDxr38ID5+YAZMO2X40/AdWJ
- 9uxUkw3UjhFe1UbJVeLTgvojgenahmCQiZZyW3PtxcX/wtq23gDRfVZt7Vv67QIxjUSZBPKXRPg
- 7wiTsFGb0/MEBvlOhzHtuV0rjLdNkXVa9M6TZJdf/epUG2VsoTORC2ONQkDM/sC+cgLYLmZv
-X-Authority-Analysis: v=2.4 cv=Navm13D4 c=1 sm=1 tr=0 ts=687ccbd7 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=-_PooAnB-Ua2z9syxaEA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: yPDHhvdPDlX-JNegC0c794C7Po7bEbIt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-19_03,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=692 suspectscore=0 phishscore=0 adultscore=0 malwarescore=0
- mlxscore=0 impostorscore=0 clxscore=1015 bulkscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507200105
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250718053856.2859946-1-krishna.kurapati@oss.qualcomm.com>
 
-Add maintainer entry for PPE (Packet Process Engine) driver supported
-for Qualcomm IPQ SoCs.
+On Fri, Jul 18, 2025 at 11:08:56AM +0530, Krishna Kurapati wrote:
+> Deprecate usage of extcon functionality from the glue driver.
 
-Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+It's not "deprecate", it is "delete".  "deprecate" means that you don't
+want future users of this, you are flat out deleting it entirely.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1bc1698bc5ae..1caca0fa90c5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20577,6 +20577,14 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
- F:	drivers/mtd/nand/raw/qcom_nandc.c
- 
-+QUALCOMM PPE DRIVER
-+M:	Luo Jie <quic_luoj@quicinc.com>
-+L:	netdev@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml
-+F:	Documentation/networking/device_drivers/ethernet/qualcomm/ppe/ppe.rst
-+F:	drivers/net/ethernet/qualcomm/ppe/
-+
- QUALCOMM QSEECOM DRIVER
- M:	Maximilian Luz <luzmaximilian@gmail.com>
- L:	linux-arm-msm@vger.kernel.org
+> Now
+> that the glue driver is a flattened implementation, all existing
+> DTs would eventually move to new bindings.
 
--- 
-2.34.1
+When is this happening?
 
+> While doing so let them
+> make use of role-switch/ typec frameworks to provide role data
+> rather than using extcon. None of the existing in-kernel extcon users
+> have moved to using new bindings yet, so this change doesn't affect
+> any existing users.
+
+I don't understand, who does this affect?
+
+> On upstream, summary of targets/platforms using extcon is as follows:
+
+What is "upstream" here?  In-tree?  We only have one development place :)
+
+> 1. MSM8916 and MSM8939 use Chipidea controller, hence the changes have no
+> effect on them.
+> 
+> 2. Of the other extcon users, most of them use "linux,extcon-usb-gpio"
+> driver which relies on id/vbus gpios to inform role changes. This can be
+> transitioned to role switch based driver (usb-conn-gpio) while flattening
+> those platforms to move away from extcon and rely on role switching.
+
+"most" do, but not all.
+
+> 3. The one target that uses dwc3 controller and extcon and is not based
+> on reading gpios is "arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi".
+> This platform uses TI's Type-C Port controller chip to provide extcon. If
+> usb on this platform is being flattened, then effort should be put in to
+> define a usb-c-connector device in DT and make use of role switch in
+> TUSB320L driver.
+
+I really still do not understand what is happening here.
+
+Does this break existing in-tree users?  If yes, we can't do that.  If
+no, they this is just unused code?  That's all that we should be
+concerned about here.
+
+> ---
+> Changes in v4:
+> Updated commit text to reflect the patch doesn't affect in-kernel users.
+> Removed RB tags from v3 since commit text is changed.
+> 
+> Link to v3:
+> https://lore.kernel.org/all/20250714044703.2091075-1-krishna.kurapati@oss.qualcomm.com/
+
+What changed in v3?  v2?  v1?
+
+Please properly document this.
+
+thanks,
+
+greg k-h
 
