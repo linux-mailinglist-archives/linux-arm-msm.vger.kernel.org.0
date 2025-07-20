@@ -1,121 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-65828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFCF4B0B913
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 01:07:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8803FB0B918
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 01:14:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1020F174140
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 23:07:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E83923B665B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jul 2025 23:14:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C365230BE0;
-	Sun, 20 Jul 2025 23:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5EAB22B8A4;
+	Sun, 20 Jul 2025 23:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zl74uxxR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CSbI/dIx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2100522FF2E;
-	Sun, 20 Jul 2025 23:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CF9185E7F;
+	Sun, 20 Jul 2025 23:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753052817; cv=none; b=FvXp/3KoXlZofOH91Q+yIv+JhK+VRL1KzMeltUueYKdnVBVW2lBjuW9xZ4SGYVU2NMceq/4M6QXNS5bxUiJgD2AFMmrIe0Qtt71Y/VuDkLYN9A3W6Rf4kticVQIB8aLvvU0UkykwNrSTIeho0vVIOkC0+qA4Osf1oi/RSiw0Ai4=
+	t=1753053291; cv=none; b=nlZGJ2abZlDAQSjz5pvLjt6rZqc7ipnhsDuZAj848F5rGVaSW3fsISX26vRPyKFYVW7cZ8msNHHmo8IcaysHhwY59GFqAWhvMA6Mx9Ub347NZt56m8qMwTf1eV5FBrG1LPO6bKaFBZUxJACd4qVO5j9rm+9N9F96OP22IrrlfgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753052817; c=relaxed/simple;
-	bh=ZTRDpmmSvFamTynuWfGd9M42MeY4cjtfxbCCGNJvTt0=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=Xc2styIIfkeXAMuVlELqtXOBCTUysY/Ayiib/Z1fT3gn5NkCWFB6cN6m75qiUWtsQnXs0EeFP+hBqj25RvhSRXdFyhcbqz4fc88CeblWwwJnR8XIbwbjKSpMWanFoIhegRNhO7VAziWdMFwqZbyuLq2Eq2SrFatyKCBci66qBL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zl74uxxR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D68EC4CEED;
-	Sun, 20 Jul 2025 23:06:56 +0000 (UTC)
+	s=arc-20240116; t=1753053291; c=relaxed/simple;
+	bh=OQwQvxm6Q2KinutCS4PNCDJD90HO+SHTV3G6rx0KPdQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JCAiZuNFiZ6MDrn4gUkaxloAklVL5qUt69oszodyLWKqEq07HUfhqgcd39iJ/5lus2pwap31H6XH9AQCMKZ2CEEXWJypjDbUrHrMc9iE7OeH/vFFxakqaqo+XvO3Izb73+QLnbH+kwojGweAwxSpL871+i9Tw83E4J6mkLB1dLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CSbI/dIx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B4C4CEE7;
+	Sun, 20 Jul 2025 23:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753052816;
-	bh=ZTRDpmmSvFamTynuWfGd9M42MeY4cjtfxbCCGNJvTt0=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Zl74uxxRf9HOX9xGXAwOMlQ1KtqP3q7BlruidfveRTJJg2JpBIbdE4jq4h1bM19n1
-	 EsgmUcm2JfW2siseCQpqRJMyYPll2ds+FHhpYCDziIwt5PC91/gMwz31bC91GMyMCn
-	 o31p+p1HUMtqidBCXW54TFzzpnsT0vT9wn/zaEx3zlLVRdtaR2sb0wnA2pThovz1tE
-	 DU8bxenOTZFDH6Bg2vcau85btikLdvE5+QezUzxJubPCG1a4topG/irETeKWskwEMM
-	 zpc/AjX6BjE9SkLIA1WB0pLJsWSuh6bbbBqMmlDTKfT74kBw5DZIxJqA9/6pDpIEUS
-	 +TuyQsXsNle0A==
-Date: Sun, 20 Jul 2025 18:06:55 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1753053291;
+	bh=OQwQvxm6Q2KinutCS4PNCDJD90HO+SHTV3G6rx0KPdQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CSbI/dIxz71Cic2xTDFwVvGkeh5HWmxIJDt0kp+Md0Sjo+qwAc/x69L27yYAVduti
+	 itazWQnzkyM61aKMvZZBsEBrrUhuCqS93KAbPMTV45HxaKpuGzX/dFq61Kqf5arc20
+	 2tWOerr+d1k4EXaWdgvCI0KnvwDJ4XZQJ+iTzewSZHVty/qVJl6haPFXtdASAA2mx5
+	 kbDByq9dd7EfPJ8wXnUIJJSBsG+kWii0hLrsHZpq4VLDG6N7nFrDDwmmEfHR4ggt5w
+	 DHdkLoKp7Uw6GIYjS6/U+CqfqzIx4cKGuYTrGJKS/BgDc469xXxM2XnwdYIRK46wbW
+	 WsdUj+HBw9Pww==
+Date: Sun, 20 Jul 2025 18:14:50 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: a39.skl@gmail.com, djakov@kernel.org, krzk+dt@kernel.org,
+	raviteja.laggyshetty@oss.qualcomm.com, lumag@kernel.org,
+	quic_rjendra@quicinc.com, linux-arm-msm@vger.kernel.org,
+	conor+dt@kernel.org, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: document the RPMh
+ Network-On-Chip interconnect in Glymur SoC
+Message-ID: <175305328995.3049333.15023006374330516032.robh@kernel.org>
+References: <20250716151535.4054172-1-pankaj.patil@oss.qualcomm.com>
+ <20250716151535.4054172-2-pankaj.patil@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- linux-kernel@vger.kernel.org
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com>
-Message-Id: <175305254851.3034438.3710403978107682400.robh@kernel.org>
-Subject: Re: [RFC PATCH] arm64: dts: qcom: sc7280: Flatten primary usb
- controller node
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250716151535.4054172-2-pankaj.patil@oss.qualcomm.com>
 
 
-On Sun, 20 Jul 2025 12:51:25 +0530, Krishna Kurapati wrote:
-> Flatten primary usb controller node and update to using latest
-> bindings and flattened driver approach.
+On Wed, 16 Jul 2025 20:45:34 +0530, Pankaj Patil wrote:
+> From: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
 > 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> Document the RPMh Network-On-Chip Interconnect in Glymur platform.
+> 
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
 > ---
-> DTBS check has been done on all platforms. This patch has only been
-> compile tested since I dont have access to many of the platforms.
-> If folks from community can help test on any platforms, it would be
-> helpful. Thanks in advance.
-> 
->  .../boot/dts/qcom/qcm6490-fairphone-fp5.dts   |  6 +-
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      |  7 +--
->  .../boot/dts/qcom/qcm6490-shift-otter.dts     |  6 +-
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |  6 +-
->  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts       |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 59 ++++++++-----------
->  .../boot/dts/qcom/sm7325-nothing-spacewar.dts |  6 +-
->  9 files changed, 42 insertions(+), 66 deletions(-)
+>  .../interconnect/qcom,glymur-rpmh.yaml        |  84 +++++++
+>  .../interconnect/qcom,glymur-rpmh.h           | 205 ++++++++++++++++++
+>  2 files changed, 289 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,glymur-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,glymur-rpmh.h
 > 
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20250718 (best guess, 8/9 blobs matched)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: usb@8cf8800 (qcom,sc7280-dwc3): 'dr_mode' does not match any of the regexes: '^pinctrl-[0-9]+$', '^usb@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
 
