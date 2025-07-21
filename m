@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-65838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53007B0BC3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 08:04:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EE11B0BC42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 08:04:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15FCA1896481
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 06:05:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D26823A4B32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 06:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44FAD21CC43;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 482C521D3C6;
 	Mon, 21 Jul 2025 06:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q2AAYmG8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQ8ibeKK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1986BE56A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198D21F3BB5;
 	Mon, 21 Jul 2025 06:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753077890; cv=none; b=bukd32Ama6jkLeKRZrwx3+T1nsPbSBPGFfQeiAVBQ/SI0a+1zIE3N1b9r4LIBCyj9/waGX1efxW5c7xWxD0aV43ScMHSDhqdHJQ/WGsGzwKIs1pkL4pPu/mrqdbOwmowprs5bESZwL4bRc6WAEjtTsP4aDt66VaHwbm9SDsVuq0=
+	t=1753077890; cv=none; b=NeKmOUF/MVokb6BdiBhXmnzr+POhl92T4lQLPWag/z2JOvoGOV6s7370gynX+DonTHrT0iuWg2TI5GnZs1mj0nIMtAuye1Pj8sjRYYO3cGdO2DRg96go1ZCOtkzMuEZnNQ1Dx5LYX+agYpLGQ1/SKPjMbARYWrT38sDdLvTjwyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1753077890; c=relaxed/simple;
-	bh=GJGKJkD0S9i1I48RnIhVN+NDQEpwg+vdqVOw66GHbhc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=t9NnEJJ0VMSXRdCaCieSFmvhipYpzqVt3iH93Qsjt1BdD03T3h+6GbaoFY8Zy6pIBSBLlTAnSuh+fXAUN25heO3Aq9mNjWfsMKlzxiUWpPaHblHzzzXLA9w4zYsL0+Tc2PJzX0sYp4n1G2DNdhU1lHCnlR/bkY4jH69GDzcmmh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q2AAYmG8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A0719C4CEF1;
+	bh=3RIKLCbpXuG5IzWRYoD9BqTheBfbi8XdnTcRob2v7tg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nfVDfZT96HZnGRZ58OTbuIISaJZ6x09jzze/1TGFLtcw0BsRt8rySuZc8P3pdMYzZ0ghT8sIrzR4lzzHU8ZCJBL7W2vMi3KrnL+WKEopn9hxdgiFKicKVXQJDBw8Z8P6uq34zov1/0hbDM8Xk3rloLJCkq7j92vymw2AY9BPJ6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQ8ibeKK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AD802C4CEF5;
 	Mon, 21 Jul 2025 06:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1753077889;
-	bh=GJGKJkD0S9i1I48RnIhVN+NDQEpwg+vdqVOw66GHbhc=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=q2AAYmG8ZwwmbbLYd4+RMHwZEV+hSoNGd6+HNPiHYESm5BbPCbbLMTazJxWOPzLh6
-	 tbY8Ur7qgMAOSuRv4kCeETcKMO6m6M/YPu+Gqqu8OVraAEE1YE1ufV27NMJ1J+czj8
-	 TyX2F7ixBWHZyhw1nkpmghrw5v8GIvqR4D4pA4U95IikVhulMAJqemcgzniqNNhIm4
-	 wPqLFqjqvP7ZqFIdgUqZ++W97fQosn0eZ64sAncC1SlyhFvbyhow80XH20C/ALXIKv
-	 b6G86J6hgPmAxUUORM0LYjOAdyIdkhHBys47ZnkkmTY+qx4IwXwNVSIq736xdy49IT
-	 iJJFQ7sKSON+A==
+	bh=3RIKLCbpXuG5IzWRYoD9BqTheBfbi8XdnTcRob2v7tg=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=HQ8ibeKKn4et6M8mJGRuHhq6Rg92YMAyOFrcOaChWL8ZYIO9VQKiynuBY4JUNXkvC
+	 wZfJQ+g73+BWoRp3RhJz6cMqvhgNu60JwLXPatwifPhbU4CXEv6YDnIc50eT3x4H9k
+	 XlVfYoQMc7jrxdsS3JMof70K3ZG2obnWVBMUknZepTGXS5Pd5PNbEzCU5r+lpuy+bP
+	 kVdlOKGYtnaoeAH+Fcz5HX7PEQ0WvF7Jf9J4KckZmNMsrB2qP8XXGNZwK077oeYNcr
+	 tP9UTIpC8533RGcNiYhmQelgC2QWXmqx+SUrKFdM8MWGQSMi3dxN+i4TzbBZb+veVM
+	 IyTvv4YkEyIQQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83ADFC87FC5;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91AB2C83F27;
 	Mon, 21 Jul 2025 06:04:49 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Subject: [PATCH v5 0/2] Add CMN PLL clock controller support for IPQ5018
-Date: Mon, 21 Jul 2025 10:04:34 +0400
-Message-Id: <20250721-ipq5018-cmn-pll-v5-0-4cbf3479af65@outlook.com>
+Date: Mon, 21 Jul 2025 10:04:35 +0400
+Subject: [PATCH v5 1/2] arm64: dts: ipq5018: Add CMN PLL node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,12 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHLYfWgC/4XOwW7CMAwG4FdBOS/ITpom5cR7TDsU14VopWnTU
- m1CfXcCaBqiSJys35K/32cxcPQ8iM3qLCJPfvChTcF8rAQdynbP0lcpCwXKgAGUvuvTcJKOrey
- aRjo2aCt2VtdOpKsucu1/buLn1z1H7k8JHv+XBz+MIf7eWie8bv8K1KJgQglS2QIUIWVgcRtOY
- xPC95rCUVy1ST0K+VJQSSAoi5qIK8RsKegHAV8IOgm1drklUyqw+VLI3ghZErQrynyngQ08/TD
- P8wWuNuGpiwEAAA==
-X-Change-ID: 20250501-ipq5018-cmn-pll-8e517de873f8
+Message-Id: <20250721-ipq5018-cmn-pll-v5-1-4cbf3479af65@outlook.com>
+References: <20250721-ipq5018-cmn-pll-v5-0-4cbf3479af65@outlook.com>
+In-Reply-To: <20250721-ipq5018-cmn-pll-v5-0-4cbf3479af65@outlook.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -70,11 +67,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  George Moussalem <george.moussalem@outlook.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753077887; l=2648;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753077887; l=2619;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=GJGKJkD0S9i1I48RnIhVN+NDQEpwg+vdqVOw66GHbhc=;
- b=cKuDzYsoKrIQCumB61hsrkVupRSRJ1IFEeC02V/6gpFapF6av5n4m4+ZRUXJlJB2RpN1ONsD6
- Tr9IGbuRMEpDNl5ykmXmWUBiDSklyJ1DboA0HmvIYB+osCfRP2ms/KV
+ bh=Jc7mpYMgCxpITcEYnscgFXztbHy0Q20lBLLi8g9IFDY=;
+ b=ZlhpHZYcU/pvY451fXhFyhUUQlQkmIA98V5BkMy/NBGcOpKwYuiesMbF60fN8bh1mFZ/AtuOO
+ Nq0FP0/K73kAehBojSK3M402uuZSqXJOoXmo+NGqzQZdJPgAdwtfTRD
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -82,64 +79,93 @@ X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
 X-Original-From: George Moussalem <george.moussalem@outlook.com>
 Reply-To: george.moussalem@outlook.com
 
-The CMN PLL block of IPQ5018 supplies output clocks for XO at 24 MHZ,
-sleep at 32KHZ, and the ethernet block at 50MHZ.
+From: George Moussalem <george.moussalem@outlook.com>
 
-This patch series extends the CMN PLL driver to support IPQ5018. It also
-adds the SoC specific header file to export the CMN PLL output clock
-specifiers for IPQ5018. A new table of output clocks is added for the
-CMN PLL of IPQ5018, which is acquired from the device according to the
-compatible.
+Add CMN PLL node for enabling output clocks to the networking
+hardware blocks on IPQ5018 devices.
 
+The reference clock of CMN PLL is routed from XO to the CMN PLL
+through the internal WiFi block.
+.XO (48 MHZ) --> WiFi (multiplier/divider)--> 96 MHZ to CMN PLL.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
-Changes in v5:
-- Rebased on tip of master for patches to cleanly apply
-- Picked up Konrad's RB tag
-- Link to v4: https://lore.kernel.org/r/20250516-ipq5018-cmn-pll-v4-0-389a6b30e504@outlook.com
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-Changes in v4:
-- Re-add missing CMN PLL node after git pull and rebase on linux-next
-- Link to v3: https://lore.kernel.org/r/20250516-ipq5018-cmn-pll-v3-0-f3867c5a2076@outlook.com
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index 9ce73682e4ae7cde90f151dfcd41a5201ced2aa6..3ddcceaf760dccb39914a117d5dcc8955fdb94fe 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -2,12 +2,13 @@
+ /*
+  * IPQ5018 SoC device tree source
+  *
+- * Copyright (c) 2023 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2025 The Linux Foundation. All rights reserved.
+  */
+ 
+ #include <dt-bindings/clock/qcom,apss-ipq.h>
+-#include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
++#include <dt-bindings/clock/qcom,ipq5018-cmn-pll.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+ #include <dt-bindings/thermal/thermal.h>
+ 
+@@ -29,6 +30,14 @@ gephy_tx_clk: gephy-tx-clk {
+ 			#clock-cells = <0>;
+ 		};
+ 
++		ref_96mhz_clk: ref-96mhz-clk {
++			compatible = "fixed-factor-clock";
++			clocks = <&xo_clk>;
++			#clock-cells = <0>;
++			clock-div = <1>;
++			clock-mult = <2>;
++		};
++
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+@@ -38,6 +47,12 @@ xo_board_clk: xo-board-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 		};
++
++		xo_clk: xo-clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <48000000>;
++		};
+ 	};
+ 
+ 	cpus {
+@@ -229,6 +244,20 @@ mdio1: mdio@90000 {
+ 			status = "disabled";
+ 		};
+ 
++		cmn_pll: clock-controller@9b000 {
++			compatible = "qcom,ipq5018-cmn-pll";
++			reg = <0x0009b000 0x800>;
++			clocks = <&ref_96mhz_clk>,
++				 <&gcc GCC_CMN_BLK_AHB_CLK>,
++				 <&gcc GCC_CMN_BLK_SYS_CLK>;
++			clock-names = "ref",
++				      "ahb",
++				      "sys";
++			#clock-cells = <1>;
++			assigned-clocks = <&cmn_pll IPQ5018_CMN_PLL_CLK>;
++			assigned-clock-rates-u64 = /bits/ 64 <9600000000>;
++		};
++
+ 		qfprom: qfprom@a0000 {
+ 			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+ 			reg = <0x000a0000 0x1000>;
 
-Changes in v3:
-- After further testing and evaluating different solutions, reverted to
-  marking the XO clock in the GCC as critical as agreed with Konrad
-- Moved kernel traces out of commit message of patch 1 to under the
-  diffstat separator and updated commit message accordingly
-- Updated commit message of patch 3
-- Link to v2: https://lore.kernel.org/r/20250506-ipq5018-cmn-pll-v2-0-c0a9fcced114@outlook.com
-
-Changes in v2:
-- Moved up commit documenting ipq5018 in qcom,tcsr bindings
-- Fixed binding issues reported by Rob's bot
-- Undone accidental deletion of reg property in cmn pll bindings
-- Fixed register address and size based on address and size cells of 1
-- Removed XO and XO_SRC clock structs from GCC and enabled them as
-  always-on as suggested by Konrad
-- Removed bindings for XO and XO_SRC clocks
-- Removed qcom,tscr-cmn-pll-eth-enable property from bindings and will 
-  move logic to ipq5018 internal phy driver as per Jie's recommendation.
-- Removed addition of tcsr node and its bindings from this patch set
-- Corrected spelling mistakes
-- Link to v1: https://lore.kernel.org/r/20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com
-
----
-George Moussalem (2):
-      arm64: dts: ipq5018: Add CMN PLL node
-      arm64: dts: qcom: Update IPQ5018 xo_board_clk to use fixed factor clock
-
- arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts     |  3 +-
- .../dts/qcom/ipq5018-tplink-archer-ax55-v1.dts     |  3 +-
- arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 34 ++++++++++++++++++++--
- 3 files changed, 36 insertions(+), 4 deletions(-)
----
-base-commit: 098738b001e2e6944805f8ea53e9bc711f13d47f
-change-id: 20250501-ipq5018-cmn-pll-8e517de873f8
-
-Best regards,
 -- 
-George Moussalem <george.moussalem@outlook.com>
+2.50.1
 
 
 
