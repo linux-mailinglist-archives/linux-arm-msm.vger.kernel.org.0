@@ -1,115 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-65972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75C1FB0CE42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 01:35:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F414CB0CE6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 01:51:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BEAB87AD53D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 23:34:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 755177AF19C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 23:49:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01BE23BD14;
-	Mon, 21 Jul 2025 23:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69F824679D;
+	Mon, 21 Jul 2025 23:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="r2zSzyHh"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ccFs8bJu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B522E3716;
-	Mon, 21 Jul 2025 23:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34241219A6B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 23:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753140937; cv=none; b=elPlcf7f0ub07huWSUQRYHKr5w2cpg9P5kpW5G1oaFEfJDSgj6CfphdLIjV7hEQwcNDYC1ocsoDLZWP4s3eXFgDFoCROQ5U4qKHaU0mo/ygOISRoKbQJV+XshRmsWeXBv7IrEeBCV5n0oxgu+q2ZqW6UupEzkgkd7SC0bAdoXJ8=
+	t=1753141848; cv=none; b=LOrwgsKohs4qV75G8TCIvGkGGfE9TCOUWMhwBIlLiAIkAfoO93BL5JH1N6qZuLzedHnig28aGBQB3/IFDUt5aVlumc+2YlYukzAc+kMcF43a2p+/30zaZlyTM0KcrFWXw1szJ0jIPgbN3HM1yHaS3kd+tVXxtfguTi15Ag7svcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753140937; c=relaxed/simple;
-	bh=lVQMxv1VxmMgBhdUyZLq7S3b/3eQArDg2bF6jiioln0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KGCSlhHebXcW4PHG8yfcK712R3abe0RrFdicUq45KOl6wVvoYetBiTAIdXXHMZ4kIDJ2cWWfAwlpczXHbmR58YG5f9SMTbQeif169gjsyj+QvmBgZ9BBs/kJD2QltzO/0M7RRjZfO38BChDg3NIIR6apwlOD5V53J0OmtqIozew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=r2zSzyHh; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <ece307c3-7d65-440f-babd-88cf9705b908@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1753140932;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8/geEkB40JNZ1dVvddexIz+4X4JnuBeRGFU7+a1RO9k=;
-	b=r2zSzyHhGbPZmuNyqYl8gwbAIg2poImKw/459M7Lc4M7pwqg99VketHOk4h2tK28s2C/mZ
-	Joz+sBuPMaF8NrAGr7NlWNzpo52R0mgLyJ6xLA/kK5f1MQ0DEjMJ38Armm7n7peK0xkrG1
-	KSjXww3HOlMfpNS8hjRc6piH6HmbWs++CI/73xVkTaYWBtXlhzHrWcJAJ+d01vxBsf7+oi
-	L6TVrUJv1zbk6Ssb4Oh9BMeUAWXQLQ6liXO5sWJZnYRzUPJMH6NhjDo2T42WEKR4ZoSHc+
-	ga/5q1tNWdj3fbvKoCE0d1/Cj1ztf5SDlvKX5hyLE1MCShy6B0ltjlk11Tj+/A==
-Date: Mon, 21 Jul 2025 20:35:22 -0300
+	s=arc-20240116; t=1753141848; c=relaxed/simple;
+	bh=X76sqgXUjd4+zPeFBazIpld1nyyNRqan5r6plQcLZq0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uZO2IIGD4Ed+0d+jm8w3lbTVVEDjVp0s+870CifKtRQUOQvkT3pxaVb22X8uARvRoWf4IkaA7otzwrCs79728XdjxdkxoNM6b7F2ObvGpZ3Lj0kQhaohox7u4HDxhf87XGA6ShWZUvmJ7YH9R0M9OR0FJ61HbKskZOcFI/sHWAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ccFs8bJu; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-235e389599fso90505ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 16:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753141845; x=1753746645; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8IB72aB1pAV9dq+XvFFbs2e0X7c42HGWgrt5SuJCD/0=;
+        b=ccFs8bJuzPsfEgvfxPBigj44wAN/DeMFP7GMiWJFVygsGtKFg+hIsAlTjcRq+mVEkg
+         BHP5haV3earx2WX2yZQ0sDPqMUdT4c6JaRAHzOYI1lE2LW/zAufhrcHC9eppfD2W7ILW
+         eLP2tH+WHwq77I2bnryrBsaUfeDwbLI0Ajfc6Lu0J+nfX3yzPXD4cHlTxMGkQmzW5cyQ
+         fwwi1vP1YSE6HtSyFXsbrxN6VhqiGtC3e19lWXtZYNxnydcufcS5UHbMvTcfWNPyxxx7
+         nad+knBaAd5liuZyP2xfwOvti/EUsKzjGx8DfBN/+LWt4v+eosCF9SEghwkEr1F4t6OD
+         rUpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753141845; x=1753746645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8IB72aB1pAV9dq+XvFFbs2e0X7c42HGWgrt5SuJCD/0=;
+        b=wvXLlSCeXHMEkxXqbkpwFgt98hpRb+4oeRL+kQ/7yj61L7dPRhhwma/PFTR1aQonrS
+         7RXI4Db4NNL3A5SgIuhk9PXvK8c+dGPuZ3AYsiOnEjcCARmqFwcQZMbe3C+S3ksW2AEm
+         ommXkgE8Ud9jSyjsEJPfs9Dz17NYLgdcBgwKzmSiSRDtCMxMOQ6hF5oh3hE0j4sgRUcD
+         gyd457XXLaj7XJOeW0JsQNy1mK3dY6xgNby49gcAMlMT36qkaj4G5M36gVqCsxkinVsp
+         dse7j5dNzAtGqMocFPi+UbL9A9vpbxqkXSehrsDSi2yBfgJ9fXHjH5DkNSUpbnUYTHhq
+         63KA==
+X-Forwarded-Encrypted: i=1; AJvYcCU5f94XFgj9KZ6VfjOOGgdfBodf+xH9WMqgHha6I/Na4QNfxb7Mi8P4Ry33pFll4nWa6aWfuN7GO3v992r4@vger.kernel.org
+X-Gm-Message-State: AOJu0YytpegooO+3TH5tjwOePK1G63URiJnNRrdzjxT64ct61vtdyEzC
+	PfyKN1Xc+FFiKEisnsifb3k9gmAPz82Nd3v1AIWcumqLo7HzQoGbvsK5+oaXorJULUPmOXXPEyo
+	MulaON/CyF48UD6Gef52ztHjItA/+JJzZhoeA+AzQ
+X-Gm-Gg: ASbGnctYMN33X5UzVRQrejAL1IZNY48SYwzOtVFDci/Iy1+FxekAhB1jV4EhErnt2AY
+	Jq/+s16fdoikxt5awbINLUaCKjXWjasB/5ot6BtFeXKsD6UIbbf/UlMtWTjXpRdJT9eycKviMMg
+	xya/ruEgEUD9jqLz3MaVqZsPeTjr8b527rVgdHZAyDET/a4WhhA2zXhyBolfNDKiXs80F1RlwZi
+	cAu1OZl5BtKc7O3GMrZgerGy/oWBUHb6uiIMZq6zVgl9JgN
+X-Google-Smtp-Source: AGHT+IH3YiQMKqSdvOi3Hl2chQEQjKBZYYncsqU52df1Cul+060EhTbwEXWwh9jGrpqKQQvBZjZc/wdEQOaLY9BZwWk=
+X-Received: by 2002:a17:902:e5ca:b0:215:65f3:27ef with SMTP id
+ d9443c01a7336-23f8b590f46mr1250935ad.12.1753141844936; Mon, 21 Jul 2025
+ 16:50:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Fix error return values in
- mdt_header_valid()
-To: Dan Carpenter <dan.carpenter@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel-janitors@vger.kernel.org
-References: <db57c01c-bdcc-4a0f-95db-b0f2784ea91f@sabinyo.mountain>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <db57c01c-bdcc-4a0f-95db-b0f2784ea91f@sabinyo.mountain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
+ <aH5RxqcTXRnQbP5R@google.com> <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
+ <aH55BLkx7UkdeBfT@google.com> <CAGtprH8H2c=bK-7rA1wC1-9f=g8mK3PNXja54bucZ8DnWF7z3g@mail.gmail.com>
+ <aH69a_CVJU0-P9wY@google.com>
+In-Reply-To: <aH69a_CVJU0-P9wY@google.com>
+From: Vishal Annapurve <vannapurve@google.com>
+Date: Mon, 21 Jul 2025 16:50:32 -0700
+X-Gm-Features: Ac12FXzatYxpj7dOmCOTU3y6raVwJgub7Hc67jtCHL8r3j1EPu7lx3yUXCqmwaM
+Message-ID: <CAGtprH_r+eQjdi8q5LABz7LHEhK-xAMi4ciz83j3GnMm5EZRqQ@mail.gmail.com>
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+To: Sean Christopherson <seanjc@google.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Jul 21, 2025 at 3:21=E2=80=AFPM Sean Christopherson <seanjc@google.=
+com> wrote:
+>
+> On Mon, Jul 21, 2025, Vishal Annapurve wrote:
+> > On Mon, Jul 21, 2025 at 10:29=E2=80=AFAM Sean Christopherson <seanjc@go=
+ogle.com> wrote:
+> > >
+> > > >
+> > > > > > 2) KVM fetches shared faults through userspace page tables and =
+not
+> > > > > > guest_memfd directly.
+> > > > >
+> > > > > This is also irrelevant.  KVM _already_ supports resolving shared=
+ faults through
+> > > > > userspace page tables.  That support won't go away as KVM will al=
+ways need/want
+> > > > > to support mapping VM_IO and/or VM_PFNMAP memory into the guest (=
+even for TDX).
+> >
+> > As a combination of [1] and [2], I believe we are saying that for
+> > memslots backed by mappable guest_memfd files, KVM will always serve
+> > both shared/private faults using kvm_gmem_get_pfn().
+>
+> No, KVM can't guarantee that with taking and holding mmap_lock across hva=
+_to_pfn(),
+> and as I mentioned earlier in the thread, that's a non-starter for me.
 
-On 6/25/25 12:22 PM, Dan Carpenter wrote:
-> This function is supposed to return true for valid headers and false for
-> invalid.  In a couple places it returns -EINVAL instead which means the
-> invalid headers are counted as true.  Change it to return false.
-[..]
->   	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-> -		return -EINVAL;
-> +		return false;
->   
->   	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
->   	if (shend > fw->size)
+I think what you mean is that if KVM wants to enforce the behavior
+that VMAs passed by the userspace are backed by the same guest_memfd
+file as passed in the memslot then KVM will need to hold mmap_lock
+across hva_to_pfn() to verify that.
 
-this has broken all firmware loading on my x1e laptop (Dell Latitude 7455).
+What I understand from the implementation of [1] & [2], all guest
+faults on a memslot backed by mappable guest_memfd will pass the
+fault_from_gmem() check and so will be routed to guest_memfd i.e.
+hva_to_pfn path is skipped for any guest faults. If userspace passes
+in VMA mapped by a different guest_memfd file then the guest and
+userspace will have a different view of the memory for shared faults.
 
-Apparently e_shentsize is always 0 in Qualcomm firmware files.
+[1] https://lore.kernel.org/kvm/20250717162731.446579-10-tabba@google.com/
+[2] https://lore.kernel.org/kvm/20250717162731.446579-14-tabba@google.com/
 
-Confirmed externally with readelf:
-
-% readelf --all 
-/lib/firmware/qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn
-[..]
-   Start of program headers:          52 (bytes into file)
-   Start of section headers:          0 (bytes into file)
-   Flags:                             0x73
-   Size of this header:               52 (bytes)
-   Size of program headers:           32 (bytes)
-   Number of program headers:         58
-   Size of section headers:           0 (bytes)
-   Number of section headers:         0
-   Section header string table index: 0
-
-There are no sections in this file.
-
-There are no section groups in this file.
-
-
-(Not just with my files, also readelf'd the Lenovo ones committed to 
-linux-firmware, same deal.)
-
-Thanks,
-~val
-
+>
+> For a memslot without a valid slot->gmem.file, slot->userspace_addr will =
+be used
+> to resolve faults and access guest memory.  By design, KVM has no knowled=
+ge of
+> what lies behind userspace_addr (arm64 and other architectures peek at th=
+e VMA,
+> but x86 does not).  So we can't say that mmap()'d guest_memfd instance wi=
+ll *only*
+> go through kvm_gmem_get_pfn().
+>
+>
 
