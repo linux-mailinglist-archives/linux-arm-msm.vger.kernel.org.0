@@ -1,164 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-65923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23703B0C7E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E956B0C7F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:47:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 561EE6C0187
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:45:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D34AF3A7C56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:46:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 523BF2D9ED9;
-	Mon, 21 Jul 2025 15:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA8BB2D9489;
+	Mon, 21 Jul 2025 15:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sPOIJNi5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ajoXNZX0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD4B209F45;
-	Mon, 21 Jul 2025 15:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007932989B4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753112736; cv=none; b=biMTCu9k9NVxJAvYi9QaoIzDLyZqHT6sWyMmENhgHT78UG/j3BRpj+UhgpryqwgZqiznQy2IIr5CXofBKTNR48I3hYxCMR12Z+9O4lXY4CM2G/5ElKJ9j7kBQdz2ZlQx48//jAFrmFFYXIRoyKPEDkBqAwxiu7Ai8a05vFajaZE=
+	t=1753112817; cv=none; b=N2kwEAtypoX4+T4XQurqAl69hE/FOX0xsoaQoXVlvtP6kjG1pq00qCSRxwLlJeRtsfDi/9CRyLl5WOgCy72FvxoZTbkh7tOJWPb3OjHdq6ioTAxx8ZLNaGMxe66okpLR1LzeYERKdt37NezJmZem7vct78nJ2RqPlFeDCQ4XrcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753112736; c=relaxed/simple;
-	bh=trQEnBNyEfAkk362wq/BjgTIn3ODld9E8i7xCagZlkU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ofr2XPLRRzhjMJMpElq5AxhPdYg3ON/uHXwPIWfEeI3FAeiXBFw59bm6cAqOEbmdjyo9uzymGf5+zqfqtfnib7juQTVdvrrwRqkDNnHrYMdPXbRauSEwRtvA0OHM61OtywSfHenEm6lSnFyykmK0/zIqqwKHkcsRml8bAyCvepw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sPOIJNi5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20DBC4CEED;
-	Mon, 21 Jul 2025 15:45:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753112735;
-	bh=trQEnBNyEfAkk362wq/BjgTIn3ODld9E8i7xCagZlkU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sPOIJNi5c5iwG/SYu0pqCd88HJORXiLa4sWgRVobvy3eoPcpZkaONBaqaGXPDjjXd
-	 yw01eofdH6sTM4jTfSVErs59LKocjEQ8Atx7r78jbCe5fR5pGXZ9OkGpKE5xk1guzt
-	 n25YeWxHE4iosUgz63INXXtSMueSkLEDuur/IFkIbCKau7SCmkDdtX5gCdU6ny5zWs
-	 jo9jXq04wM7DYIu1gfy20C5Qo/JlLQmotF8B686ddbw7+tZNr6Qx425eSWHSXQzpS2
-	 6zy9iFqpkCdEf30BKEKoXeiQ/hM5e6kUItML4o4TBi6d9lWDieJv3MI+c4ENdIHWRU
-	 X0VVzfp98Vzdg==
-Date: Mon, 21 Jul 2025 21:15:26 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] PCI: qcom: Switch to bus notifier for enabling ASPM
- of PCI devices
-Message-ID: <hvny6e6jt6pqeqwmuudabdergkbq6qybzofvek62qhqv4hj44x@qgkl47v3rmld>
-References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
- <20250714-aspm_fix-v1-1-7d04b8c140c8@oss.qualcomm.com>
- <aH4JPBIk_GEoAezy@hovoldconsulting.com>
- <rmltahsjvllae3or7jjk5kwvdkcqohj4bbjsfv4mnfbuq7376s@wtsha4zorf2p>
- <aH43Sm3LWoipx5Yn@hovoldconsulting.com>
+	s=arc-20240116; t=1753112817; c=relaxed/simple;
+	bh=pEmFK3YtX71Ss7IoSfHexKR6lboNbFxDMXbiAmk0Md8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ZCwgCHz4S4KAH6Hh4Y19bZwb6RxGkT0iLzbchbcHhqU32UPyCAMVDE1r8oiEV0nEyCBI3WaNEkgcRaGXz6NGs/XACPvLt45KHjm2NqzQef/V8C8MaePCLwgkVCSpUVGpLtva71JB7jN3T6y4tfnNtuumZmYHVNZEQ0UotsdZMMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ajoXNZX0; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b611665b96so2478518f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 08:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753112814; x=1753717614; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=71JdOjhcRzTfEZ2kGP13U0soxm4bQUZhtALxxJcwpGY=;
+        b=ajoXNZX0nijaUEfy6fHi3fC+TeAleT4F5zR/05w7v0YqoY3AhHQn2guCyCAhfeFheX
+         WX7lTiAolW5qSUZF/AFiQjtCoH4Pg95uSKJb7vMD6gcF+70gmOGEG8/bNGHlp8qFdJ/U
+         +yB2RMpJ7FmjQdsaQe2iO6R+kwfZv8tPhXEDyeYxCnTfJo7q3SS/6MVswKZiIWYeQkrh
+         papCUYMV4k/0geWEw1lxpJiqZBr4yvHPxSU325G+r5Khi0EFxqTBUEGzLQriJtfyucd0
+         bWvx97pCqWuQrmqbACEMKYdCc16haDnDnUgOaXlBx7tTL/7MbEIWnQKyj85D3CmhK0vj
+         jC5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753112814; x=1753717614;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=71JdOjhcRzTfEZ2kGP13U0soxm4bQUZhtALxxJcwpGY=;
+        b=b0B0x+1XHimnFxWgZ9aypzdJIHk+YvU7ZqJfpEkFClxytRwS/9CBPrewyzWiWuwrvA
+         Wd8n77KJnQGqB5uLbYKbKvtqefh802KILMSum6Qojg8v4YkPHzYIbl0a2GUzp++KONjl
+         9jCbT8N/E5VJlA3jUR+rUXfXMdRSHALxOeDe0xYF840QT+9t7bfcbpBbBAKIYvilrx3H
+         UBBMxdQ7pyZ2o35rghq6OrZMqfJJR1zOo+sZNqm6iknb2kroNE38CXM3cRv5CzSbNlps
+         U9To/M2lUJyYmeezlU+CyNXDKvevQmRhfkvZd4xW8HCq4ej6DdmK4XAO/foef3pVOf3f
+         yKSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW1SlJlYE2Gxn0ju/MgGQEDvo9Qrnuy4tvW4mVRoeYrKvY6dsjfXFX2RmdVk+7Wk/93AtWbaerjhyOrIWRO@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFTsBumIf8X8VtBkGUL79fO4Xz6THDRREFCgdlu3bzY0Gdx10X
+	TXlr0An0VU//yheDYN7elf6wTtd48j894AuXxEk1PZW4P8etKuxcfqFsgse0LLoEzVs=
+X-Gm-Gg: ASbGncvN4sNinH51mCTXqjhC4H+yd59dR7SSU8CqTXamhZwMp1d/1SDX4Cpzolf8jvH
+	/Kg8A1u3Sf0NrnEkZcSbw4li2yPMPDb8z9C47Wx8c/AYbzDuJX4IOW/mXr5U5x3IH4S6nakoclg
+	dDhCQ4jq3CP8U24JaZCr49kGOBxFb3HZF3b4P/ChHGrCzgvz1uB6XTGEPM4jGVV7vXBosyxklSH
+	cnQ/fjOnYR1fJ+a9zMdZLbEgnDcOZrHrkrJmucg1PtY1x0+/XoZ4VYUTeaicvd96vTeJ0XCXe+9
+	7jPjvqcgu3SFRH+GjURVpiURfyRKnWaZS+3wRJ0xisdm1SMoOP99ABfGHAr4IQj8n0jlU4b7EpO
+	AgFXhNcSgBCx7BwkNebt5UGgqS1n/KNeMCmo1P27U1OPKzM9WrGCTAROQh569PDZCkb17NeVYyD
+	0=
+X-Google-Smtp-Source: AGHT+IE18IBrQLiihCAuzNQ8PIrN0f+oNCcFrb048tnw4oH4ReNy5YSqf9fO8yU7sBsWjafeYv0hqA==
+X-Received: by 2002:a5d:64c1:0:b0:3a6:d967:380e with SMTP id ffacd0b85a97d-3b60e4c521dmr14461783f8f.3.1753112814028;
+        Mon, 21 Jul 2025 08:46:54 -0700 (PDT)
+Received: from ?IPV6:2001:861:c12:13d0:4146:67eb:7420:1c39? ([2001:861:c12:13d0:4146:67eb:7420:1c39])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e8ab7a1sm164661725e9.34.2025.07.21.08.46.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Jul 2025 08:46:53 -0700 (PDT)
+Message-ID: <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
+Date: Mon, 21 Jul 2025 17:46:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vinod Koul
+ <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
+ <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
+ <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
+ <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
+ <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
+ <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
+ <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
+ <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
+ <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
+ <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aH43Sm3LWoipx5Yn@hovoldconsulting.com>
 
-On Mon, Jul 21, 2025 at 02:49:14PM GMT, Johan Hovold wrote:
-> On Mon, Jul 21, 2025 at 04:26:41PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Jul 21, 2025 at 11:32:44AM GMT, Johan Hovold wrote:
-> > > On Mon, Jul 14, 2025 at 11:31:04PM +0530, Manivannan Sadhasivam wrote:
-> > > > Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0
-> > > > ops") allowed the Qcom controller driver to enable ASPM for all PCI devices
-> > > > enumerated at the time of the controller driver probe. It proved to be
-> > > > useful for devices already powered on by the bootloader as it allowed
-> > > > devices to enter ASPM without user intervention.
-> > > > 
-> > > > However, it could not enable ASPM for the hotplug capable devices i.e.,
-> > > > devices enumerated *after* the controller driver probe. This limitation
-> > > > mostly went unnoticed as the Qcom PCI controllers are not hotplug capable
-> > > > and also the bootloader has been enabling the PCI devices before Linux
-> > > > Kernel boots (mostly on the Qcom compute platforms which users use on a
-> > > > daily basis).
-> > > > 
-> > > > But with the advent of the commit b458ff7e8176 ("PCI/pwrctl: Ensure that
-> > > > pwrctl drivers are probed before PCI client drivers"), the pwrctrl driver
-> > > > started to block the PCI device enumeration until it had been probed.
-> > > > Though, the intention of the commit was to avoid race between the pwrctrl
-> > > > driver and PCI client driver, it also meant that the pwrctrl controlled PCI
-> > > > devices may get probed after the controller driver and will no longer have
-> > > > ASPM enabled. So users started noticing high runtime power consumption with
-> > > > WLAN chipsets on Qcom compute platforms like Thinkpad X13s, and Thinkpad
-> > > > T14s, etc...
-> > > 
-> > > Note the ASPM regression for ath11k/ath12k only happened in 6.15, so
-> > > commit b458ff7e8176 ("PCI/pwrctl: Ensure that pwrctl drivers are probed
-> > > before PCI client drivers") in 6.13 does not seem to be the immediate
-> > > culprit here.
-> > 
-> > This series was intented to fix the ASPM issue which exist even before the
-> > introduction of pwrctrl framework.
+On 15/07/2025 11:33, Konrad Dybcio wrote:
+> On 7/15/25 11:20 AM, Vladimir Zapolskiy wrote:
+>> On 7/15/25 12:01, Konrad Dybcio wrote:
+>>> On 7/15/25 8:35 AM, Vladimir Zapolskiy wrote:
+>>>> On 7/15/25 03:13, Bryan O'Donoghue wrote:
+>>>>> On 14/07/2025 16:30, Vladimir Zapolskiy wrote:
+>>>>>>>
+>>>>>>> I think that is genuinely something we should handle in camss-csid.c
+>>>>>>> maybe with some meta-data inside of the ports/endpoints..
+>>>>>>>
+>>>>>>
+>>>>>> This is a CSIPHY property, a CSIPHY hardware configuration and a wiring
+>>>>>> of sensors to a CSIPHY. Where is the relation to CSID here? There is no.
+>>>>>
+>>>>> All the PHY really needs to know is the # of lanes in aggregate, which
+>>>>> physical lanes to map to which logical lanes and the pixel clock.
+>>>>>
+>>>>> We should add additional support to the Kernel's D-PHY API parameters
+>>>>> mechanism to support that physical-to-logical mapping but, that's not
+>>>>> required for this series or for any currently know upstream user of CAMSS.
+>>>>>
+>>>>>> Please share at least a device tree node description, which supports
+>>>>>> a connection of two sensors to a single CSIPHY, like it shall be done
+>>>>>> expectedly.
+>>>>> &camss {
+>>>>>         port@0 {
+>>>>>             csiphy0_lanes01_ep: endpoint0 {
+>>>>>                 data-lanes = <0 1>;
+>>>>>                 remote-endpoint = <&sensor0_ep>;
+>>>>>             };
+>>>>>
+>>>>>             csiphy0_lanes23_ep: endpoint0 {
+>>>>>                 data-lanes = <2 3>;
+>>>>>                 remote-endpoint = <&sensor1_ep>;
+>>>>>             };
+>>>>>          };
+>>>>> };
+>>>>
+>>>> Don't you understand that this is broken?.. That's no good.
+>>>>
+>>>> Please listen and reread the messages given to you above, your proposed
+>>>> "solution" does not support by design a valid hardware setup of two
+>>>> sensors connected to the same CSIPHY.
+>>>>
+>>>> I would propose to stop force pushing an uncorrectable dt scheme, it
+>>>> makes no sense.
+>>>
+>>> If all you're asking for is an ability to grab an of_graph reference
+>>> from the camss (v4l2) driver, you can simply do something along the
+>>> lines of of_graph_get_remote_port(phy->dev->of_node)
+>>>
+>>
+>> It's not about the driver specifics, my comment is about a proper
+>> hardware description in dts notation, please see the device tree node
+>> names.
 > 
-> But this limitation of the ASPM enable implementation wasn't really an
-> issue before pwrctrl since, as you point out above, these controllers
-> are not hotplug capable.
+> I'm a little lost on what you're trying to argue for..
+> 
+> I could make out:
+> 
+> 1. "the phy should be a multimedia device"
+> 2. "There is no ports at all, which makes the device tree node unusable,
+>    since you can not provide a way to connect any sensors to the phy."
+> 
+> I don't really understand #1.. maybe that could be the case if the PHY
+> has a multitude of tunables (which I don't know if it does, but wouldn't
+> be exactly surprised if it did) that may be usecase/pipeline-specific
+> 
+> As for #2, I do think it makes sense to connect the sensors to the PHY,
+> as that's a representation of electrical signals travelling from the
+> producer to the consumer (plus the data passed in e.g. data-lanes is
+> directly related to the PHY and necessarily consumed by its driver)
+
+The port/endpoint should represent the data flow, and if the signal is the following:
+
+sensor -> csiphy -> csid
+
+and in addition the "csiphy" can handle up to two sensors by splitting the lanes,
+then the DT should take this in account and effectively the "csiphy" should be
+an element of the graph and should take it's configuration from the DT graph
+to properly configure the lanes configuration.
+
+While it can feel simpler to simply move the csiphy code into standalone
+PHY device and just replace camss code with phy_*() calls, it doesn't
+solve the proper representation on the data flow and doesn't fix how
+the combo mode could be handled.
+
+The solution shared by Vladimir (I think the "csiphy" node should be out
+of the camss node), solves all this and will be able to handle more
+complex situations with shared resources between "csiphys" and start
+moving elements out of the gigantic camss node.
+
+Neil
+
+
+> 
+> Konrad
 > 
 
-Yeah, but nothing prevented an user from powering on the endpoint later and
-doing manual rescan.
-
-> > But I also agree that the below commits made
-> > the issue more visible and caused regression on platforms where WLAN used to
-> > work.
-> > 
-> > > Candidates from 6.15 include commits like
-> > > 
-> > > 	957f40d039a9 ("PCI/pwrctrl: Move creation of pwrctrl devices to pci_scan_device()")
-> > > 	2489eeb777af ("PCI/pwrctrl: Skip scanning for the device further if pwrctrl device is created")
-> > > 
-> > > This is probably related to the reports of these drivers sometimes
-> > > failing to probe with
-> > > 
-> > > 	ath12k_pci 0004:01:00.0: of_irq_parse_pci: failed with rc=134
-> > > 
-> > > after pwrctrl was merged, and which since 6.15 should instead result in
-> > > the drivers not probing at all (as we've discussed off list).
-> > 
-> > We discussed about the ASPM issue IIRC. The above mentioned of_irq_parse_pci
-> > could also be related to the fact that we are turning off the supplies after
-> > pci_dev destruction. For this issue, I guess the patch from Brian could be the
-> > fix:
-> > 
-> > https://lore.kernel.org/linux-pci/20250711174332.1.I623f788178c1e4c5b1a41dbfc8c7fa55966373c0@changeid/
-> 
-> We've also discussed the rc=134 issue, which appears to be due to some
-> pwrctrl race. IIRC, you thought it may be the bluetooth driver powering
-> down the bt/wlan controller before the wlan bit has had a chance to
-> (complete its) probe. Not sure if that was fully confirmed, but I
-> remember you saying that the rc=134 symptom would no longer be visible
-> since 6.15 and instead wlan would never even probe at all if we hit this
-> issue...
-> 
-
-Ah yes, this one was *before* the ASPM discussion we had.
-
-> The patch you link to above only appears to relate to drivers being
-> manually unbound. I hope we're not also hitting such issues during
-> regular boot?
-> 
-
-The patch makes sure that the pwrctrl doesn't power off the endpoint when
-'struct pci_dev' gets destroyed. But thinking more, I'm not sure if that's
-what happenning during the 'of_irq_parse_pci' issue.
-
-I need to dig more at some point.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
