@@ -1,160 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-65895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65422B0C430
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:35:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81A6AB0C44B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:43:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B0C67A9800
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:33:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B67B1AA2223
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:43:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 016B82D0C68;
-	Mon, 21 Jul 2025 12:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E7E2D46B0;
+	Mon, 21 Jul 2025 12:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bh0gqTXl"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="z+hcYGAA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B02D0C8C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 12:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032AB2D5C69
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 12:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753101310; cv=none; b=bMHL4OHGLDWhfIusYIU1sldCCDlu/S0bIaic6PlfpSrftiwAeE4rb9KvmD9WyqEg7SVkyqq+AnJa4VQnLfLRccMdXmnHyEw9CZ+/59hInI76aiNeujhNzxZo8NQV9rcwUJ44J6wTTaufxpWabXvX9fLHIEee0RtNkG4JmH1MCqo=
+	t=1753101723; cv=none; b=cckxXGmn5VWToTVpAGjf2YDT7F6J6MAt9Xk623PQunoeL/0xlRyRQUkgXeExhOqVQjjkJi5WsMSunCDxBlhxJNGvDRHJHx957FMEPlSgw2Y3xJ6JMBfB/qVqgyUIlM0pDtkQXJCoxbQhHSU8hUauGqoMoeJXEgJmBzoP5x2QJOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753101310; c=relaxed/simple;
-	bh=O91kV79pVlyB1aw34aHO5FvLamb5mNiEO23N/U5+fiE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mjLz1Pm6ZCTRAwTwlhll1+ze7UQwH3l6HpQVT4C5OSmW4usPQ/Oj2YHlUouPDZ7hcZpAyzcYRWbrMTuYDu5nm51nIxmoMauG5qwmEfV6gQCr1sKo5oCM9W/QRE2olITCcLKcwdaNHuu0rmTdLlRFbc/u8t/r0se9TPEm+XQHmSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bh0gqTXl; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4560d176f97so46182765e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 05:35:07 -0700 (PDT)
+	s=arc-20240116; t=1753101723; c=relaxed/simple;
+	bh=FH6NOtN844idHZdK0Ri+r5hjSZq61hkeGP1rVZSSTzs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IpAoQ1R7934BWcGSU6EwzDgirTiPlXEfX183/0TaPvkBWVpwF8QxDwFkkveAL6daAAPDgpGylukd67RsLOZSbEMhXS4wb8NPvfMDtFmAcL/2HepWOAwGmGAB+MJP3cobDBcHqM8PotekPnCf7SaWFhAUOdNY54Dvo8ttnhfjaAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=z+hcYGAA; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso713391cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 05:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753101306; x=1753706106; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zWeKKFmXQT7g0C6PVGMg3GNyP6pXlJ0on9vzRpXs9c4=;
-        b=Bh0gqTXllfuQAbX1jAH13X2R6upqB9cDUxtOFUyimTjLPImC5H6L7mQY9IoZF3hM1K
-         pAzRHdEKqRK/9YiMhol4+o+KrOIQQ3U4NQ06hyQVo29yi+MGGc8Tzj7ZPjcuyszZfb38
-         mUlyb4PcVlbZ5ap9X6kBznsVWZNjkoOKi32ngdi8JsqC+AR1jBryInHM5eps+obQ/iqC
-         hOM0CPBmb2ailGfuuWh8slauVngyWYdJrsaAhOA+TXocfn4KlZmEhLl/d00xCQJw5f1y
-         99XPGYEOm5R4nl58lg6duoJ1S+f6q2lgPIGGN+01ETMe27gtjWTLwmKbJ+AyrtPagEFA
-         Fl1Q==
+        d=google.com; s=20230601; t=1753101721; x=1753706521; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rIS8RtGx3BM3yP3QF7bgfk7fFz/ztOEu+IhwOpSASZw=;
+        b=z+hcYGAApOn4Atj21ZoBMeJvBJ6Rh+Z18KWnig1K+Nm8KAz+ZTLBaeszaSu/mwnSMl
+         QvB5AwZA65YtUnD4YjDJ2oqhS/Mr21jPIs5aj1+/44qZVXkACNm9Ivv81cdXcacIgh10
+         arZat+Ou17+LMuQtpyhoTyqcoezrEd5R3Bgv5NIcbJg/bTQtrwgF47s3XPOzS/PITixh
+         Zzube8MIyFtzzTqPw6pFc5BWJ4fMLNU2RYLvYsNS0iRw+FKZi8D9DsBTmihA6Zujm0cO
+         APqRpafLgPqJu/r9BdfUj26xsU5FtjUGiKbuwTykaWqEhvWQX3LzeVcRNj+A5VePS0z+
+         MPkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753101306; x=1753706106;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1753101721; x=1753706521;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zWeKKFmXQT7g0C6PVGMg3GNyP6pXlJ0on9vzRpXs9c4=;
-        b=dP9JnzSKeJylYeL8LeYIzfpPqBzm+xJEAAcy/Denff0VKh9njnAMwTmzYF7zlB7IzG
-         VfZt9/TAnQixm/uFsSKRApbSnQbhwRQQmLvQlcVciOcTjlmrvAqLVGfhJqSrhrbmlxWx
-         Gd+LHqtFIZ05czJNF4df6WPZAOmdxVV+LGypy9OKmyDRqvdlzosVituTTCfKtRfY4bTZ
-         fyztdrZXU/L0ccu5OADzBqJ6UYnjynQjMB2DO6TUxLzAGt4DC4rAIFaoQ9jTBONODP0v
-         P2LD4Ws46mloxAfD1v+rpuyVs6XaX6h8SOElcKtEfatVeigsHnrCnM4H8rzqEdkTbiyC
-         xJyA==
-X-Gm-Message-State: AOJu0YykRLfr45U2QaIQRW3omCKm92GMg1V3iQZu7FuYVpDQHo3zJ4Q/
-	WVyBDbSAengkpTrUiWTPfjyzil8GceJVoqX8KjQnyyKTchxvyjTmkqwdU2fUMBFqK+0=
-X-Gm-Gg: ASbGncuKtIXderfociX4WSXQY97syhBv5SxugDy8ZD6EAblS7lcF8Q6Xyw4uADE7Cyh
-	y3St40PTzJqF9gz7huL98y4wmHcWBaI89olWll7Msg+FtcBNg7/jq8c/AZh+DOCUPkVlgiylrYq
-	1cQPpuN5489GMcW/ikLwPD/aii8D/3uVxVGebqxfcbl+idxASlViacJZMnjmP65XJLqsNj6xhnC
-	QWIP2B/KvLAT6zHA3lhdK6t285O2MpqGVN/y2KT4fTr07uZzUBsi5s0vzGpIk7tNnMMkfvjRU5d
-	FGdlR+HeU2j6zN7AXaPcr0Z8cjVOdhTUuwoV+0gpMhpw9K96uPMtbwlQEb2ZWGUHPvLyGfyQUF8
-	hVTSkGgzKBC1xunWCqzE7PyiKBgzKRuZHKCU0/Gvez6w=
-X-Google-Smtp-Source: AGHT+IFG4kXXmx0zh4K9sMcn1V0MOV16G+IB8ljJaAKXFE9c5b/lozHQb27C8mLcsiUk1H5j42FfJA==
-X-Received: by 2002:a05:600c:468b:b0:456:2419:dc05 with SMTP id 5b1f17b1804b1-4562e33db7fmr212236965e9.12.1753101306277;
-        Mon, 21 Jul 2025 05:35:06 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca25643sm10026654f8f.16.2025.07.21.05.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jul 2025 05:35:05 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 21 Jul 2025 14:35:04 +0200
-Subject: [PATCH] drm/msm: adreno: a6xx: enable GMU bandwidth voting for
- x1e80100 GPU
+        bh=rIS8RtGx3BM3yP3QF7bgfk7fFz/ztOEu+IhwOpSASZw=;
+        b=IbnL8TJu4oB8obTVjaO2mNZI9KNohZzYExnk3QWwsRhIhmzjb47fYgtpkqmQWXi7xs
+         8y1ErRl61pHrKB+VWIhwOjzeWf/N16S8TcAA/R8aVzMui04TD8pxwEz50ij8JzaFqqO9
+         XMFYn0tqacLOIga0c4+kcNNlqWOI3cHke5xQaTmpoIno+H9GYTmWgsKZtzut/STu01eo
+         7aqkUPtgPCJszlh9p0n0+vPLuRZJPWibJM4FAVn25j4A3GZuSoZtzYz+XSBnOw3k+w0A
+         j4KDwKXXFjq6JenTaCifKMNMSJM8uDDJpo/vklZ7IQa/G1MxNVaoyzRkPa+1hMSEMYRZ
+         lShQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWVxptjoHkPGFmiQzcF7e1sxRIz+LwUjqlFuWaQ9QaMocaXwiZZAG8ZoDQG7K2uJhFfibqpLGHI+krAvav+@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx/TaZOhqLr8kXdaSECO4QNtLR2Nre2UhHM+n3p5oOWimLpB9x
+	grkwyJqdoSwh/kH4tqW97YNiZTXV2ezltljOuBO38EW3Sb+0qNAkidf8sl/bcKzvZwDWQRFX9mo
+	yOSMsPNwNOLQRMkoSrETxd4CgMVMK1VgyBR65ui+2
+X-Gm-Gg: ASbGnct91Iew2nQftBubDrLpEpZtZZ5KGIb69hOSnc3cVYMUm/9PLgKLkq7Fl90zrmw
+	3gcrc/12KI8vTGyIOhp1Koa3jcM5bmOrkuuBNNvyw7H8X9lLBuHJM+fVCSaBFayjcrIqgXx1wer
+	HSX0KFdGj29ywa8COqmS4W6C6uCsfhcWQcHwNBOOFsXCx40K2tm5CyIiXqTx5WCD/BsHuHulolR
+	t5qPM4=
+X-Google-Smtp-Source: AGHT+IHICvOHUdMlgc+MwG4TRplOdK0+NsvYnQSN7a8Q94vN9K19Iv4njTMi3Vqu6DpIpL1LZ7OPxQ3JKDjs7jxoPb4=
+X-Received: by 2002:a05:622a:8c19:b0:4ab:54d2:3666 with SMTP id
+ d75a77b69052e-4abc2b37a63mr6227901cf.25.1753101720495; Mon, 21 Jul 2025
+ 05:42:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250721-topic-x1e80100-gpu-bwvote-v1-1-946619b0f73a@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAPczfmgC/x3MOw6DMBBF0a2gqRlpbEIS2AqiSJxnMg22bH4SY
- u+xUp7i3pMykiJTX52UsGnWMBeYuiL3fc0TWD/FZMW28rCGlxDV8WHwFCPCU1z5vW9hAXfe3e6
- deLRoqPQxwevxfw/jdf0AHSMKJWsAAAA=
-X-Change-ID: 20250721-topic-x1e80100-gpu-bwvote-9fc4690fe5e3
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1510;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=O91kV79pVlyB1aw34aHO5FvLamb5mNiEO23N/U5+fiE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBofjP4kJcyfWacvsCCp1u6bg1wWUMn/RjwQ3GLOc9C
- buFsCgGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaH4z+AAKCRB33NvayMhJ0SkJD/
- 9OjSOM3gWCnvasEhptI4hBy1sc2kjQQqMcjy4dCSE18KxSG0hBpJR8LsXVJSKvWxed/zdmPse9wB8i
- HcwrX68tuo1Y11kf/IohKZOmW43zSu9X/ox0+Imq/1UxirYaezrAy6Le19D/H4Dcvy87PbsW+zck2j
- w6VZiu2Y21LHow4N4a1hA3uuwAtGV0WLdLyrLcBVIqO0msQIi8gF3Tt1fP0KNeokd4z4z2l3U8i7i5
- 8YTxW0yGHZneLcYUqk1LxyIoaFnWtVNij/ON4QsDMCb0bHIoZMgzTLuOfygHEuAWXQTdR3nseFhAii
- E8XMDPkbMglGxCMiXjU92LeKm9YfZrHp2KmLom4BEpMvPsHYObpICMEy542dA3uOwm/6UqUS5TMVRT
- /c+ijayc/i+vJYFerhzCuJXZb9pvkNa7kOsCDYeDpBQU7q7TB0cHP9Ky0wWUTo+gvB3Uge6MFcELSf
- IEy3qCw0zLvTFkQloYfz73QsIPeTfLDvhZSdFpCIATKjydKx0HtfywRLv0E7cc2Pvi4dnkcAFcR2uh
- wYs2X/BVkhYBw47WQu3xqu4ccKVfH4uhPdXiJJliS0HqE4VME4lcYBl5E6ksB4Ohhl2zWABz3xUEi5
- A2vtwhF+C/qxPPoZxGDdr2DKhrLZhZgU7wc7wTNR/X5te04h5yPne7BZuP/g==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
+In-Reply-To: <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 21 Jul 2025 13:41:23 +0100
+X-Gm-Features: Ac12FXwLO_dne2w1dGUUYLFktGe9s64wr0cEuXbxIsFFA8S3s8yrvlEfzoVjAQI
+Message-ID: <CA+EHjTxUpLU3-3dQY8O_SoQCmA8LR1y6w759xfYwisfxHec4aQ@mail.gmail.com>
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-The Adreno GPU Management Unit (GMU) can also scale DDR Bandwidth along
-the Frequency and Power Domain level, but by default we leave the
-OPP core scale the interconnect ddr path.
+Hi Xiaoyao,
 
-Declare the Bus Control Modules (BCMs) and the corresponding parameters
-in the GPU info struct to allow the GMU to vote for the bandwidth.
+On Mon, 21 Jul 2025 at 13:22, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>
+> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+> > +/*
+> > + * CoCo VMs with hardware support that use guest_memfd only for backing private
+> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
+> > + */
+> > +#define kvm_arch_supports_gmem_mmap(kvm)             \
+> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&   \
+> > +      (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
+>
+> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
+>
+> Actually, QEMU can use gmem with mmap support as the normal memory even
+> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
+> on KVM_SET_USER_MEMORY_REGION2.
+>
+> Since the gmem is mmapable, QEMU can pass the userspace addr got from
+> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
+> works well for non-coco VMs on x86.
+>
+> Then it seems feasible to use gmem with mmap for the shared memory of
+> TDX, and an additional gmem without mmap for the private memory. i.e.,
+> For struct kvm_userspace_memory_region, the @userspace_addr is passed
+> with the uaddr returned from gmem0 with mmap, while @guest_memfd is
+> passed with another gmem1 fd without mmap.
+>
+> However, it fails actually, because the kvm_arch_suports_gmem_mmap()
+> returns false for TDX VMs, which means userspace cannot allocate gmem
+> with mmap just for shared memory for TDX.
+>
+> SO my question is do we want to support such case?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Thanks for sharing this. To answer your question, no, we explicitly do
+not want to support this feature for TDX, since TDX uses a completely
+different paradigm.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 00e1afd46b81546eec03e22cda9e9a604f6f3b60..b313505e665ba50e46f2c2b7c34925b929a94c31 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -1440,6 +1440,17 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.pwrup_reglist = &a7xx_pwrup_reglist,
- 			.gmu_chipid = 0x7050001,
- 			.gmu_cgc_mode = 0x00020202,
-+			.bcms = (const struct a6xx_bcm[]) {
-+				{ .name = "SH0", .buswidth = 16 },
-+				{ .name = "MC0", .buswidth = 4 },
-+				{
-+					.name = "ACV",
-+					.fixed = true,
-+					.perfmode = BIT(2),
-+					.perfmode_bw = 10687500,
-+				},
-+				{ /* sentinel */ },
-+			},
- 		},
- 		.preempt_record_size = 4192 * SZ_1K,
- 		.speedbins = ADRENO_SPEEDBINS(
-
----
-base-commit: 97987520025658f30bb787a99ffbd9bbff9ffc9d
-change-id: 20250721-topic-x1e80100-gpu-bwvote-9fc4690fe5e3
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+Cheers,
+/fuad
 
