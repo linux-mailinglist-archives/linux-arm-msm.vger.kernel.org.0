@@ -1,109 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-65910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A176CB0C691
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 16:39:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3A9B0C6AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 16:42:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 755091700CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:38:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95A791AA6BB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:42:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D3212DA77E;
-	Mon, 21 Jul 2025 14:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA22C2DD5EB;
+	Mon, 21 Jul 2025 14:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4x3Q2iZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oI4S8zvx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1BD1E5B6D;
-	Mon, 21 Jul 2025 14:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1299A2DD5F3;
+	Mon, 21 Jul 2025 14:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753108723; cv=none; b=EZZeCFjrJYfmyoOi/mqY4cW26aoAlykcxAn8g53I0zJK3Lwvm+qCafLMqR1agvGPRnvDAM0c6fhIzYcrPBLqAIuFpdMlfCM/V7Kl4ijN9Wk5LIXC+OFrUlS32eiCBLaYk6CK+2I0h+oHOoqMXxRti4x0T2y7k02ZA5iZUEPWAMY=
+	t=1753108938; cv=none; b=DCloK7R8ec6sK5ENMMiqyL1u7+/oFrVZRNMN1Xi/R+JyYgVxJLtKyFStBg7T+H8JcnhfyFqGR4fEVN/EIgzbF0bRq+qFafrgP7mwZmENk4eOmkUskk/l2/4eRlaeRJkEKJPvD9a1/+Ihp+ecbH67RHyRFmSeC6gVrJ6NvvfC+N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753108723; c=relaxed/simple;
-	bh=Rvu0r8kwgBxipAxQiYHn7UFFSL0RRcLSxbSDcMmsCk0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C5FESYZ+i1htr1l10Gf8WCSgIpABrvUvefuaJyYUsM/xm6SjZIQ0acOJ97GjIC6iUGOe+G1QftbTovy7EmosWpXRBvVySW51Zyga9EsRETznO+01ZiC9zvU1/sAtMsuvK5m7oOolKZDwgM3/U+wAcLGxHKdfMamD6WPYjLsXsYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4x3Q2iZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6F8C4CEED;
-	Mon, 21 Jul 2025 14:38:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753108722;
-	bh=Rvu0r8kwgBxipAxQiYHn7UFFSL0RRcLSxbSDcMmsCk0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y4x3Q2iZ7jBgZLWFnMQ7KoznQ+yd8/iBXZmW7dlOp2v2fOhN8IxBa2mQhqQ1D+YEq
-	 fjSPPj4Hc70435n9pdpKMWfnO4d6DMNFPBiUplWNay19MoO3K4vpbeO+oBeYltrzay
-	 TDHWDzpLwB5IxfYo57stXFmkV0bfQbo+udRi7Wiov0HblyScULYG7yPu0qdiUigdcW
-	 MnSkg8iWLCOwqo2sVSkmwmgBl5IwCwbQ1J46C3uGXt/9MxOof/4mgPdFLL2d7mjVH3
-	 JzigV2dqnJK5/3fykFefCnvac0mg0pz2elB0F+emFCnTEFDNUmdcV24Qgy1zawoi6Q
-	 JiGAWOREpG5GQ==
-Date: Mon, 21 Jul 2025 09:38:41 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Yongxing Mou <quic_yongmou@quicinc.com>,
-	Mahadevan <quic_mahap@quicinc.com>, Simona Vetter <simona@ffwll.ch>,
-	Sean Paul <sean@poorly.run>, Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	freedreno@lists.freedesktop.org,
-	Michael Turquette <mturquette@baylibre.com>,
-	cros-qcom-dts-watchers@chromium.org,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	David Airlie <airlied@gmail.com>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Krishna Manikandan <quic_mkrishn@quicinc.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	dri-devel@lists.freedesktop.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	devicetree@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>, linux-clk@vger.kernel.org,
-	Maxime Ripard <mripard@kernel.org>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] dt-bindings: display/msm: dp-controller: allow eDP for
- X1E8 and SA8775P
-Message-ID: <175310872113.600678.8339317766064145962.robh@kernel.org>
-References: <20250717-dp_mst_bindings-v3-0-72ce08285703@oss.qualcomm.com>
- <20250719091445.3126775-1-dmitry.baryshkov@oss.qualcomm.com>
+	s=arc-20240116; t=1753108938; c=relaxed/simple;
+	bh=fHFhQnz1d9jkIQy6+wvI0Utsmrj/cSx28cBy/0zuK7U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KYjBbIjgeOgBpXHugr0Ol6NMQoMASqChbrVJhsUlr11hTXNgCtYpX+pydCHQ+3BoTQZP/906SwxEsyihM4fe0+fZIeXxcLHFyuP8mmJXgww5FSD6U4G1SEGshI/Nt9nBkDckwELlGvCVz5WJAcF6SmRXUHbVI9cYA78ehfFUwFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oI4S8zvx; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1753108937; x=1784644937;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=fHFhQnz1d9jkIQy6+wvI0Utsmrj/cSx28cBy/0zuK7U=;
+  b=oI4S8zvxfXW1EoffdJ8g7WI1Rx2Qkj9BfIj5I48LaxMl3bPcpT2j2zPX
+   6C84lnmN6VOLdD6KLte9tgNZuEez+hdOnUiNrvoXxjrqu72zdxgKESMgu
+   HQ5D3w8OPwb/HTI4uxE4rV5YWI4Xg3u/zMTcGD1VxUDpSJpkenLSI0RKo
+   0MM3t3TOjLiVKI+0EnkyDpOGjB7BzWopd80h0ifJFwNwlzOk2Iocvg/vY
+   T16VdOtII1/s1ooJyMWb12S1k2+XcRQcbLrjF0wCbLf3Jk08spobEGbYM
+   PPlgD38PPBkWsDZehctl3JdZN8Pz2FlwzcGG46SgZNNN7px18Di0+gKfR
+   g==;
+X-CSE-ConnectionGUID: YrcLLfDbS+CenVt5wbGrzA==
+X-CSE-MsgGUID: MIx7IPmdQvea93mfGH04gA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="58985278"
+X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
+   d="scan'208";a="58985278"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 07:42:16 -0700
+X-CSE-ConnectionGUID: qL0fP/21RrO2BIIqh5xu1g==
+X-CSE-MsgGUID: xd+ebKGrR4KwX8aDa1+/mA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
+   d="scan'208";a="159582796"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 07:42:02 -0700
+Message-ID: <131a3b2f-616f-428d-a41c-d490b9ca1b88@intel.com>
+Date: Mon, 21 Jul 2025 22:42:00 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250719091445.3126775-1-dmitry.baryshkov@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+To: Vishal Annapurve <vannapurve@google.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
+ pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, ackerleytng@google.com,
+ mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250717162731.446579-1-tabba@google.com>
+ <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
+ <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+On 7/21/2025 9:45 PM, Vishal Annapurve wrote:
+> On Mon, Jul 21, 2025 at 5:22 AM Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>>
+>> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+>>> +/*
+>>> + * CoCo VMs with hardware support that use guest_memfd only for backing private
+>>> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
+>>> + */
+>>> +#define kvm_arch_supports_gmem_mmap(kvm)             \
+>>> +     (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&   \
+>>> +      (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
+>>
+>> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
+>>
+>> Actually, QEMU can use gmem with mmap support as the normal memory even
+>> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
+>> on KVM_SET_USER_MEMORY_REGION2.
+>>
+>> Since the gmem is mmapable, QEMU can pass the userspace addr got from
+>> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
+>> works well for non-coco VMs on x86.
+>>
+>> Then it seems feasible to use gmem with mmap for the shared memory of
+>> TDX, and an additional gmem without mmap for the private memory. i.e.,
+>> For struct kvm_userspace_memory_region, the @userspace_addr is passed
+>> with the uaddr returned from gmem0 with mmap, while @guest_memfd is
+>> passed with another gmem1 fd without mmap.
+>>
+>> However, it fails actually, because the kvm_arch_suports_gmem_mmap()
+>> returns false for TDX VMs, which means userspace cannot allocate gmem
+>> with mmap just for shared memory for TDX.
+> 
+> Why do you want such a usecase to work?
+> 
+> If kvm allows mappable guest_memfd files for TDX VMs without
+> conversion support, userspace will be able to use those for backing
+> private memory unless:
+> 1) KVM checks at binding time if the guest_memfd passed during memslot
+> creation is not a mappable one and doesn't enforce "not mappable"
+> requirement for TDX VMs at creation time.
+
+yes, this is the additional change required.
+
+> 2) KVM fetches shared faults through userspace page tables and not
+> guest_memfd directly.
+
+current KVM supports it already.
+
+And as I described above,  current userspace can just mmap the gmem and 
+pass the gotten addr to userspace_addr without passing guest_memfd, to 
+force KVM to fetch through userspace page tables.
+
+So if we want KVM to fetch page from guest memfd directly, should we add 
+something in KVM to enforce it?
+
+> I don't see value in trying to go out of way to support such a usecase.
+
+ From my perspective, it's intuitive to think about this usecase when I 
+tried to enable gmem mmap in QEMU. It seems a little strange that 
+mmap'ed gmem can only serve as normal memory for non-CoCo VMs.
+
+If KVM mandates any gmem must be passed via 
+kvm_userspace_memory_region2.guest_memfd, no matter it's mmap'ed or not, 
+it would make more sense (to me) to not support such usecase, since 
+there is only one guest_memfd field in struct kvm_userspace_memory_region2.
+
+At last, I just put it on the table, so people can be aware of it and 
+make the call to support it or not. Either is OK to me.
 
 
-On Sat, 19 Jul 2025 12:14:45 +0300, Dmitry Baryshkov wrote:
-> 
-> On Qualcomm SA8775P and X1E80100 the DP controller might be driving
-> either a DisplayPort or a eDP sink (depending on the PHY that is tied to
-> the controller). Reflect that in the schema.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> 
-> Jessica, your X1E8 patch also triggers warnings for several X1E8-based
-> laptops. Please include this patch into the series (either separately
-> or, better, by squashing into your first patch).
-> 
-> ---
->  .../bindings/display/msm/dp-controller.yaml   | 26 ++++++++++++++-----
->  1 file changed, 20 insertions(+), 6 deletions(-)
-> 
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 
