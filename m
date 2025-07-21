@@ -1,137 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-65940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36BA3B0C94E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 19:15:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3A4AB0C9AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 19:29:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFE4E4E762E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:14:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63409188A5A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:30:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05D872E11D2;
-	Mon, 21 Jul 2025 17:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9469E2DA77F;
+	Mon, 21 Jul 2025 17:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KoUHjnpC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4ps3m5WG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD8328F95E;
-	Mon, 21 Jul 2025 17:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F0C2D1914
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 17:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753118099; cv=none; b=O3aOURKazZTlf2uRIbjAjAeaag5hYyi8Bj7VDXyod2jPits6FiMPBroP0xiD5BF1FyypSEVudmhuPHHWns9BOVIXlDZoH++0Y71GLLrBRLCwdki19Ji/sAm0YMPHYe1rJiFIW/xmGvoeYxXbYplTr9Pi4KasIKGPXb61SRefhqM=
+	t=1753118984; cv=none; b=TSLbWPqSDrf2CD9sE2s8v+157Alr9Ga77H47QfwG8YGdzWlNw5H9pEu03nl/fJqHOx4mzYUimlByNrEXj6HTiqokVHaIN1g7olDfngLjEuKgPvdBdyyP8rNrSdDbSKlUlAjBFsUY6ezow71M1IjjczkzVa91bYPYZC/YNHK2Ah4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753118099; c=relaxed/simple;
-	bh=EDwVEG1YcLrzyGWM3/+Lk5Mp3z0nij43S1kN6uWIoBs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TwTvXc8uZE+EFuXNf951t2oV+OgQ5fW4BVgkpMzmeeMHEdcdVome5kBB+uk611/3ntpnzeqDyhbxUnb83iazxtsGdYpMFahb029KDwB6L1wDxHovcwZSObDbRxkdTqZeuQZGdsOT5/y7CVZsfK4El+HT8Mb5L5olY0kYb2ZHRbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KoUHjnpC; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753118099; x=1784654099;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=EDwVEG1YcLrzyGWM3/+Lk5Mp3z0nij43S1kN6uWIoBs=;
-  b=KoUHjnpCEyHwO+V6s+lsdpf28u1D1Lj7JBw2Dxrz9KP/5w8i4L1HEWWz
-   FmDyMHEpxbp8RCGiD6f0HyZDkuGGUdQNqvl1yYou2mwaq5/4pA2cCburR
-   SlTNi4KDGNcfnO1axOS+RnMiH8NG5k8EXpVJJ4XFuSmP+hUfunKdEpCA3
-   FGfr2aNOTFTHFALwGwBGSMyQdnwiSZZPtUabmawvNAOiVbB7+xznaM6UM
-   QBtHeq3XZSZj/AeiNSfts3VbTDsWECCyX8S/KrBhwZJRrpv1RWF6IY7ge
-   j14q80skWN0ZjxO4/4l4F97V/9d7EaHbnISyimQXJFihCRg7XXbw7Qq0k
-   g==;
-X-CSE-ConnectionGUID: +v+C/ls0TviENcPYHlAQ6w==
-X-CSE-MsgGUID: gQAA4+yhQnKsFW4cvNSwzw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="65909270"
-X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
-   d="scan'208";a="65909270"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 10:14:58 -0700
-X-CSE-ConnectionGUID: mE54dbTTSJWW6EhWVJ6OfA==
-X-CSE-MsgGUID: xIwlqI3hRfmb47Xue2ydPg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
-   d="scan'208";a="163196999"
-Received: from smile.fi.intel.com ([10.237.72.52])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 10:14:53 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1udu6D-0000000HOKx-2u52;
-	Mon, 21 Jul 2025 20:14:49 +0300
-Date: Mon, 21 Jul 2025 20:14:49 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
-	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
-	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
-	u.kleine-koenig@baylibre.com, linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
-	kernel@collabora.com, wenst@chromium.org
-Subject: Re: [PATCH v1 3/7] power: reset: qcom-pon: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <aH51idxbwW1SAExG@smile.fi.intel.com>
-References: <20250721075525.29636-1-angelogioacchino.delregno@collabora.com>
- <20250721075525.29636-4-angelogioacchino.delregno@collabora.com>
- <aH4mWfgQt_Q0O-7S@smile.fi.intel.com>
- <f5d529c3-b898-48ac-8e5a-f587db72dc82@collabora.com>
+	s=arc-20240116; t=1753118984; c=relaxed/simple;
+	bh=bCPBYcrgZPJnQrdDLmfZ1ILRwRzBYyAsU8a1QcwRpXU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=fhNWwtgZHCKYhgNtnH+4rLZY2XISg7O+mIJJ+BX3P3Di43e/fMIHl0sg3ctMukjtVRxuO6TVbl9sOyMIO023bG3Yilfav8Ctd9QsO5ok3MWMMF7lOsed0phgeRjMkKh2eaunzAWgw6cmLNJRHyT3RXf3/nauYyAbu8w1R5o7+kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4ps3m5WG; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-311ef4fb5fdso5403287a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 10:29:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753118982; x=1753723782; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9OvpY0AOd4TKj+pOT3DzWszlAggjOKWS4p4sbX0uowc=;
+        b=4ps3m5WGlxEMm5IHt+zjnvfihTePcOAJYb22zT+DymAdQBtBFNTVYGUhk59lk0zXgL
+         ReTZGjOtbmlmYWbH6KLu61nnrAOMBlcg+tahW0IbkkQT1JN+nw9OBzrAiwYhBQdkiZn7
+         IXT+7BgBrepDxKBp4YIfkbGJc0yui78qPYD8SuyunBfWmO01QySWtOOhO/h/w/BZ6nxT
+         o+OMc1iusI5cOJ0wDQofQFiu+rmqKvjDGioJmiQadzJi9IMf/pUGQRkpIMh7nJH+Q6sE
+         DZv63LHfrbVv0U4zMPdEH8QaUBYAoSUOoZJaInbYxEiE6G1rJ/lLDpstNo6+UnR8H89d
+         w87g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753118982; x=1753723782;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9OvpY0AOd4TKj+pOT3DzWszlAggjOKWS4p4sbX0uowc=;
+        b=vAwcE7JemgF/PDuDO3Qfi9NkzLCP6MSL4ThEHVdt+bIqMslkhBKxz+0p2ZK/NIS3o8
+         81Z95Jt35mUBBl5Nou5O0HtkC4sXzuOkIcOxybbHyngKfY8cfo5cgDFmKDxgG1PeNa//
+         SIddgw1/QMSewnsp3D9gIFBeR54lEB4Upu46bb0clT52P6/TD5hRJAneCvVK9wD2vciT
+         +qf4fs8mTrPwLyZC++fJu+6HS4QPnN1eOK6v1iErlgxDiUzVmSyBaZOuR6EX5i+IYX7B
+         dcExBy4tLaIekPnNFDw0wWUbbObI3F3NZHYlHUdQE3A2qge3CEPXOWQX2+f0ZtzOfkrm
+         3NwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdtVmeOU9ZRZPWm/UqNae/sBwTf4ZCvS/UhjXCjPxh8ytVssofPN3YZ6/7X91kz1ePenQNo3kpM5Op7YNP@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaASPoMn8vVwM/cR1kt43adgByu94ceKfK+the9Z+3mucPVSAI
+	ugIZrTO5OWKVComG6L1iILdMBxA7tjRab4xLKQh4EZXckjGadBg3kU6sOAOfFKkVniI7q3S1+19
+	VEvS6aQ==
+X-Google-Smtp-Source: AGHT+IFhRVu6/b0PqYJW3muXwv7nDoSYEeLC8OqW5axU4suctUJzDOyv4LU8g7tON33RpjxB06RUczbhKIA=
+X-Received: from pjzz15.prod.google.com ([2002:a17:90b:58ef:b0:311:ef56:7694])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:580c:b0:313:d6d9:8891
+ with SMTP id 98e67ed59e1d1-31c9e6e5584mr28813484a91.3.1753118982212; Mon, 21
+ Jul 2025 10:29:42 -0700 (PDT)
+Date: Mon, 21 Jul 2025 10:29:40 -0700
+In-Reply-To: <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5d529c3-b898-48ac-8e5a-f587db72dc82@collabora.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Mime-Version: 1.0
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
+ <aH5RxqcTXRnQbP5R@google.com> <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
+Message-ID: <aH55BLkx7UkdeBfT@google.com>
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+From: Sean Christopherson <seanjc@google.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Vishal Annapurve <vannapurve@google.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, Jul 21, 2025 at 03:05:46PM +0200, AngeloGioacchino Del Regno wrote:
-> Il 21/07/25 13:36, Andy Shevchenko ha scritto:
-> > On Mon, Jul 21, 2025 at 09:55:21AM +0200, AngeloGioacchino Del Regno wrote:
-
-...
-
-> > > +	if (!pdev->dev.parent)
-> > > +		return -ENODEV;
+On Mon, Jul 21, 2025, Xiaoyao Li wrote:
+> On 7/21/2025 10:42 PM, Sean Christopherson wrote:
+> > > > However, it fails actually, because the kvm_arch_suports_gmem_mmap()
+> > > > returns false for TDX VMs, which means userspace cannot allocate gmem
+> > > > with mmap just for shared memory for TDX.
+> > > 
+> > > Why do you want such a usecase to work?
 > > 
-> > You can start using
-> > 
-> > 	struct device *dev = &pdev->dev;
-> > 
-> > here and perhaps one may convert the rest to it...
-> > 
-> > ...
-> > 
-> > >   	error = of_property_read_u32(pdev->dev.of_node, "reg",
-> > 
-> > ...including, but not limited to, use of device_property_read_u32(dev, ...) here.
-> > 
+> > I'm guessing Xiaoyao was asking an honest question in response to finding a
+> > perceived flaw when trying to get this all working in QEMU.
 > 
-> I didn't do that for one single reason: I did not want to add noise to the commits
-> and wanted those to exclusively migrate the drivers to the new API, literally
-> without doing *anything* else unnecessary, even if I have located some almost
-> effortless improvements that I could've done to those drivers.
+> I'm not sure if it is an flaw. Such usecase is not supported is just
+> anti-intuition to me.
 > 
-> Please - I prefer to keep it this way: these are the first commits that add the
-> usage of the new functions and of the concept of SPMI subdevices, and I really
-> want those to contain just that and nothing else - because I suspect that these
-> will be taken as example and will be read by the next person that is implementing
-> a new SPMI (sub)driver or converting any remaining ones to subdevice.
+> > > If kvm allows mappable guest_memfd files for TDX VMs without
+> > > conversion support, userspace will be able to use those for backing
+> > 
+> > s/able/unable?
+> 
+> I think vishal meant "able", because ...
+> 
+> > > private memory unless:
+> > > 1) KVM checks at binding time if the guest_memfd passed during memslot
+> > > creation is not a mappable one and doesn't enforce "not mappable"
+> > > requirement for TDX VMs at creation time.
+> > 
+> > Xiaoyao's question is about "just for shared memory", so this is irrelevant for
+> > the question at hand.
+> 
+> ... if we allow gmem mmap for TDX, KVM needs to ensure the mmapable gmem
+> should only be passed via userspace_addr. IOW, KVM needs to forbid userspace
+> from passing the mmap'able guest_memfd to
+> kvm_userspace_memory_region2.guest_memfd. Because it allows userspace to
+> access the private mmeory.
 
-You can introduce a temporary variable in this change and use it only in the
-lines you have added/touched. We have similar approach in several drivers.
-Then somebody (not specifically should be you) can move it forward.
+TDX support needs to be gated (and is gated) on private vs. shared being tracked
+in guest_memfd.  And that restriction should be (and is) reflected in
+KVM_CAP_GUEST_MEMFD_MMAP when invoked on a VM (versus on /dev/kvm).
 
--- 
-With Best Regards,
-Andy Shevchenko
+> 
+> > > 2) KVM fetches shared faults through userspace page tables and not
+> > > guest_memfd directly.
+> > 
+> > This is also irrelevant.  KVM _already_ supports resolving shared faults through
+> > userspace page tables.  That support won't go away as KVM will always need/want
+> > to support mapping VM_IO and/or VM_PFNMAP memory into the guest (even for TDX).
+> > 
+> > > I don't see value in trying to go out of way to support such a usecase.
+> > 
+> > But if/when KVM gains support for tracking shared vs. private in guest_memfd
+> > itself, i.e. when TDX _does_ support mmap() on guest_memfd, KVM won't have to go
+> > out of its to support using guest_memfd for the @userspace_addr backing store.
+> > Unless I'm missing something, the only thing needed to "support" this scenario is:
+> 
+> As above, we need 1) mentioned by Vishal as well, to prevent userspace from
+> passing mmapable guest_memfd to serve as private memory.
 
-
+Ya, I'm talking specifically about what the world will look like once KVM tracks
+private vs. shared in guest_memfd.  I'm not in any way advocating we do this
+right now.
 
