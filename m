@@ -1,162 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-65918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7ACEB0C769
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:20:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11676B0C78C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:26:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14CC01892E5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:21:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD1A71AA55AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:27:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF9F52DF3EA;
-	Mon, 21 Jul 2025 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5946E2DE1E6;
+	Mon, 21 Jul 2025 15:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dSUpea09";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Q0GGv108"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NcOMATBv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FE52DE213;
-	Mon, 21 Jul 2025 15:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F33F2D3745
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753111244; cv=none; b=XPp49NC9tCOStJw0B/lcoRxRMEly0k5gbTNoemMsV/P5nwjEJBPojjS1flTBWw4oqAkRLIZgaSp+Y8eKa+zOhFDfgsQXTm8IbZP2Qc8gZ9hRxPws1/+VLxt2PEXkCDd1pz31hWKJriNunBsZFxD8Q1nXuYYjkW2OthssYtliOA8=
+	t=1753111602; cv=none; b=rqls8Z7YpXip0IVQYl17XGHvIvAliBVfFFBTwqlINtlcrR4pMSnmZSHJTVVGgAZDeO5AEYJIFiWxIp0eOR/qx7rp2JJex0Skr1GBunYEduC7TYsNPFFUA9gNOO4X/p+QWws6OEiNOSYmDsfBmzfShF1JzvJ9o9MnYyloRBUlsew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753111244; c=relaxed/simple;
-	bh=EKv/CuvVWTqGB+3lPgiI/Kb5dtzwxeNfNXJbovQpa9I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u6ERqfSYS+M2Hr+gosEj3fsCnnnHf6SisTSvhGLuB8eaD+AJPSHeAW6A9CTnz8SzgQMFzxZAfUao/tyb3TR9cX2wdb1Y1vo80JPGw6ilLi7AdJqsi5EozFZKrjFVgVS00awF3tuFW0GN0gVpi10jMtvDm0+qchxye6fJEtUsJI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dSUpea09; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Q0GGv108; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1753111241;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/9FzCqmcyJh+8Ydz6tHP0relc2+nn3FdzXGKT9u9tC0=;
-	b=dSUpea09yTKvaap84BHTchrX/mvRMJUc48+kcHHkQxoYAlMq1o9H91n0rEyouWUQZds+Ls
-	rJWeBKpdVh+r6TVg9PcQPcuj0sZz+kTaDMsLK4KCjaOjlWQYgv4f4R/F/uiKtEsxW6IPu8
-	BZs7DYrF+ZLrdRacfIavNLPjVeum/qGXpUL0kBgehfj92Ae5GBzPEau0pmYMGKZYiMUTmA
-	WBzzEbBwXCWSUfsni3ElVs+D8g26iSUsJ/++lpGRihfVxdZY1aFI35kcEgLVtGeA+2qJTV
-	JIM9YCZ9KB6Tup50FIIXZa38Dsi7uKFBiXUKjNhkEMalmJWrVmGFGCj4lmFI7A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1753111241;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/9FzCqmcyJh+8Ydz6tHP0relc2+nn3FdzXGKT9u9tC0=;
-	b=Q0GGv108K0Wx0ZlG5G8V8V0Na3jr3eUG3hFHWm0zuYoWeHBjtZZPu1Oy3mIu6+M+ntdxcb
-	YsPYlYqxSgIstBDQ==
-To: panchuang <panchuang@vivo.com>, Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: =?utf-8?B?5p2O5oms6Z+s?= <frank.li@vivo.com>, Uwe =?utf-8?Q?Kleine-K?=
- =?utf-8?Q?=C3=B6nig?=
- <u.kleine-koenig@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui
- <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Markus Mayer
- <mmayer@broadcom.com>, Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Florian Fainelli
- <florian.fainelli@broadcom.com>, Shawn Guo <shawnguo@kernel.org>, Sascha
- Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
- <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, zhanghongchen
- <zhanghongchen@loongson.cn>, Yinbo Zhu <zhuyinbo@loongson.cn>, Amit
- Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>, Geert
- Uytterhoeven <geert+renesas@glider.be>, Magnus Damm
- <magnus.damm@gmail.com>, Heiko Stuebner <heiko@sntech.de>, Bartlomiej
- Zolnierkiewicz <bzolnier@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Vasily Khoruzhick <anarsoul@gmail.com>,
- Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@csie.org>, Jernej
- Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>,
- Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
- <jonathanh@nvidia.com>, Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Masami Hiramatsu <mhiramat@kernel.org>, Matthias Brugger
- <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Srinivas Pandruvada
- <srinivas.pandruvada@linux.intel.com>, Greg KH
- <gregkh@linuxfoundation.org>, Peter Zijlstra <peterz@infradead.org>,
- =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= <nfraprado@collabora.com>,
- Conor Dooley
- <conor.dooley@microchip.com>, Julien Panis <jpanis@baylibre.com>, Arnd
- Bergmann <arnd@arndb.de>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>,
- Colin Ian King <colin.i.king@gmail.com>, Raphael Gallais-Pou
- <rgallaispou@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, "Jiri Slaby (SUSE)"
- <jirislaby@kernel.org>, Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Andrew Morton <akpm@linux-foundation.org>, Costa Shulyupin
- <costa.shul@redhat.com>, Yury
- Norov <yury.norov@gmail.com>, Cheng-Yang Chou <yphbchou0911@gmail.com>,
- Caleb Sander Mateos <csander@purestorage.com>, "linux-pm@vger.kernel.org"
- <linux-pm@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, "imx@lists.linux.dev"
- <imx@lists.linux.dev>, "linux-arm-msm@vger.kernel.org"
- <linux-arm-msm@vger.kernel.org>, "linux-renesas-soc@vger.kernel.org"
- <linux-renesas-soc@vger.kernel.org>, "linux-rockchip@lists.infradead.org"
- <linux-rockchip@lists.infradead.org>, "linux-samsung-soc@vger.kernel.org"
- <linux-samsung-soc@vger.kernel.org>,
- "linux-stm32@st-md-mailman.stormreply.com"
- <linux-stm32@st-md-mailman.stormreply.com>, "linux-sunxi@lists.linux.dev"
- <linux-sunxi@lists.linux.dev>, "linux-tegra@vger.kernel.org"
- <linux-tegra@vger.kernel.org>, "linux-mediatek@lists.infradead.org"
- <linux-mediatek@lists.infradead.org>
-Subject: Re: =?utf-8?B?5Zue5aSNOg==?= [PATCH v6 01/24] genirq/devres: Add
- devm_request_threaded_irq_probe() and devm_request_irq_probe()
-In-Reply-To: <draft-87ikjnvqfx.ffs@tglx>
-References: <draft-87ikjnvqfx.ffs@tglx>
-Date: Mon, 21 Jul 2025 17:20:39 +0200
-Message-ID: <87qzy9tvso.ffs@tglx>
+	s=arc-20240116; t=1753111602; c=relaxed/simple;
+	bh=8DwP3omhkAVQqs7IffAT+dALozWU0wdNIC142sQ97Ro=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=StqBJ3XJd+v6yttI7EzD7Yq5ciqXTsP8gN/S5/MQWeDylILHjuKZ07p4cmvN3NgLVRIIuJ8cG7H4cOuXN8BhJterTEHJMpdxrqTPdilarz+anlNhg1SuitddwnhT65eE0/TOGAsBr0UyNuz6ZDcLbZ4ck7yxQebjv0rmUQ638cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NcOMATBv; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso809951cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 08:26:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753111599; x=1753716399; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+zXX1Cs6v+OQFAHcUcXiOun/0OGx+sBx9HWHDVkm/fI=;
+        b=NcOMATBv9IB8+ioYrYRklZgPjNH7tFX7gmzzsrhT0cPTt/gZzNDsVCZxpIOxbp3ltD
+         pU8yWN53p4AFCeT9Ryg7h1fyhiLjlqKLoArNPK7UvvxZXejk+TrZwRNDQH8bee7nTMwZ
+         I/zNb9OTZ31MNF+ejdOPWtxUWBkm94qOMJnRu2YN46PDi95osOSFCPzbTPngU5e5PeqI
+         +yr0jfEyPR90t1EBMcCYXOWu+7yydOJglxbSbRaRceA3XntXYzRZDpQe2PLf6IJZKP4l
+         NwsIYu4YuhTYhWlnQXFfZ1+OIncK31RWh1ohqwNCV8CXw0CwsTVQguvUdnMmCsgbNmGr
+         6odA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753111599; x=1753716399;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+zXX1Cs6v+OQFAHcUcXiOun/0OGx+sBx9HWHDVkm/fI=;
+        b=EGQDgYzWzGJHMIxzpOvyDMIUSR+GpT1mhgAzly63X/rr1PXkJkjUmkGPTem9ibxvju
+         ejvLeyTxFa0SLRQyLVdRy2Wi+28KZWCQ/o+ES5J35y5ac84NhLAsPBv0sv6euJv9dS7F
+         rD29q2Eoe0xOmisMo/JD/+tTiaxvl70i/EH8PPX17py0YI6DGZcOkG+PRJdQZz3QW3uK
+         BZir3Zhonw//CE1LR8zIlOnb4QZYHqKnm2Ac2RrCBqKGH+zakuzQWwu9vKM0mJ3Ub+gm
+         DlD2h8JVxPIVsmP6YCRM+qd2FutC6IsmDRtbegMNeoymew24adP96O9iHNDJIVpIJqoV
+         l8bA==
+X-Forwarded-Encrypted: i=1; AJvYcCWzR6ELJ/t1AA9HIFft14FjUV+Fu5XBQ01JPf39cKzAlPbphDglVmBUubqRzKH1JUFaZNyJ5mpdOVvLPyRe@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyvhn9lGG6Rd5fougMqK5Krt+996fTYq7rYvJRk6I3ut3P8mYPv
+	6K1pw6YSM3BBk19fCucOXQKrQPc5Kj6748Bhyh6/98rG/JCpdm7Y2D0pEvAEf+vghJq8uYL/UQp
+	1zm7KyvrV9sGGxyK1xhs2pr3fAmvt/uig4c33DZsb
+X-Gm-Gg: ASbGncvqMxYdV4sFNwRwPQ4MN5G6ndFBwp+e+9jljpaFrDoveYFrZAT5qmIdehOQUDN
+	UCYzK9lJTOwj5blOnL/9FpSIt9pdqsuF52AWN/xiGCZecRp+fTas12zdjLmMoCc0xme0HIbAlDA
+	rjEH2gqdMuboBQqZvzz6+HCt9B2rmOX1SydGhoSgZNOgqgmSBwm0gYdUhLdBOa8Y+v9ij0TvTKP
+	PK8HEw=
+X-Google-Smtp-Source: AGHT+IEJ1agfPLztb2zu+kNSQrf+HNQSH/8YBV9oHV+GLXju3loOkIiAuNIEAfRphTYzBRJ1wUQtlA8Dhv1rRae6lKk=
+X-Received: by 2002:a05:622a:a18d:b0:494:4aa0:ad5b with SMTP id
+ d75a77b69052e-4ae5ad66634mr161081cf.2.1753111599011; Mon, 21 Jul 2025
+ 08:26:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-2-tabba@google.com>
+ <aH5Z7edFZSPzmJ5w@google.com>
+In-Reply-To: <aH5Z7edFZSPzmJ5w@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 21 Jul 2025 16:26:02 +0100
+X-Gm-Features: Ac12FXxSI2fqE4AUgjZ2pvOx5zOwfObgBpuUEKoP_2mWQ6ddL7hqgwa3HEbqCBI
+Message-ID: <CA+EHjTzemPVuHnm8vZh2Lh25GpZL-CR3kqtFQ7uktKobkjNDUA@mail.gmail.com>
+Subject: Re: [PATCH v15 01/21] KVM: Rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
+To: Sean Christopherson <seanjc@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Jul 19 2025 at 23:08, Thomas Gleixner wrote:
-> On Wed, Jul 09 2025 at 17:13, panchuang@vivo.com wrote:
->> Hi tglx and Miqu=C3=A8l, Just a gentle ping on this patchset. I understa=
-nd=20
->> you're likely busy with many other tasks, but any feedback or guidance=20
->> on how to proceed would be greatly appreciated. As discussed in the=20
->> previous thread, there was some uncertainty about whether we should=20
->> directly integrate dev_err_probe() into devm_request_threaded_irq(), or=
-=20
->> if it's better to create a wrapper function. Thanks for your time!=20
->> Thanks, Panchuang
+Hi Sean,
 
-For simplicity sake just rename the existing functions
-devm_request_threaded_irq() and devm_request_any_context_irq() to
-__devm_request_threaded_irq() and __devm_request_any_context_irq().
+On Mon, 21 Jul 2025 at 16:17, Sean Christopherson <seanjc@google.com> wrote:
+>
+> On Thu, Jul 17, 2025, Fuad Tabba wrote:
+> > Rename the Kconfig option CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM.
+>
+> Please name this CONFIG_KVM_GUEST_MEMFD.  I'm a-ok using gmem as the namespace
+> for functions/macros/variables, but there's zero reason to shorten things like
+> Kconfigs.
 
-Then create new functions for the API, which
+Ack.
 
-   - invoke the underscore variants
-   - and on error invoke dev_err_probe() similar to what I suggested in
-     my reply in this thread.
+> > @@ -719,10 +719,10 @@ static inline int kvm_arch_vcpu_memslots_id(struct kvm_vcpu *vcpu)
+> >  #endif
+> >
+> >  /*
+> > - * Arch code must define kvm_arch_has_private_mem if support for private memory
+> > - * is enabled.
+> > + * Arch code must define kvm_arch_has_private_mem if support for guest_memfd is
+> > + * enabled.
+>
+> This is undesirable, and the comment is flat out wrong.  As evidenced by the lack
+> of a #define in arm64, arch does NOT need to #define kvm_arch_has_private_mem if
+> CONFIG_KVM_GUEST_MEMFD=y.  It "works" because the sole caller to kvm_arch_has_private_mem()
+> is guarded by CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES=y, and that's never selected
+> by arm64.
+>
+> I.e. this needs to key off of CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES=y, not off of
+> CONFIG_KVM_GUEST_MEMFD=y.  And I would just drop the comment altogether at that
+> point, because it's all quite self-explanatory:
+>
+> #ifndef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+> static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+> {
+>         return false;
+> }
+> #endif
 
-In the rare case of failure, this will print error messages for the
-affected drivers both in the core and at the callsite, but that's not
-the end of the world.
+Ack.
 
-Then go and remove the random printks from the drivers, once the core
-change has hit upstream.
+>
+> >   */
+> > -#if !defined(kvm_arch_has_private_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
+> > +#if !defined(kvm_arch_has_private_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
+> >  static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+> >  {
+> >       return false;
+> > @@ -2527,7 +2527,7 @@ bool kvm_arch_post_set_memory_attributes(struct kvm *kvm,
+> >
+> >  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> >  {
+> > -     return IS_ENABLED(CONFIG_KVM_PRIVATE_MEM) &&
+> > +     return IS_ENABLED(CONFIG_KVM_GMEM) &&
+>
+> And this is equally wrong.  The existing code checked CONFIG_KVM_PRIVATE_MEM,
+> because memory obviously can't be private if private memory is unsupported.
+>
+> But that logic chain doesn't work as well for guest_memfd.  In a way, this is a
+> weird semantic change, e.g. it changes from "select guest_memfd if private memory
+> is supported" to "allow private memory if guest_memfd is select".   The former
+> existed because compiling in support for guest_memfd when it coulnd't possibly
+> be used was wasteful, but even then it was somewhat superfluous.
+>
+> The latter is an arbitrary requirement that probably shouldn't exist, and if we
+> did want to make it a hard requirement, should be expressed in the Kconfig
+> dependency, not here.
+>
+> TL;DR: drop the IS_ENABLED(CONFIG_KVM_GMEM) check.
 
-Thanks,
+Ack.
 
-        tglx
-
-
-
+Thanks!
+/fuad
 
