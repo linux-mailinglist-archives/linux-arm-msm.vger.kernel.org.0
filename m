@@ -1,151 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-65896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81A6AB0C44B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:43:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C6B5B0C454
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:46:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B67B1AA2223
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:43:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D2013AD6B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E7E2D46B0;
-	Mon, 21 Jul 2025 12:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AABB629B23B;
+	Mon, 21 Jul 2025 12:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="z+hcYGAA"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="kSPo9cv7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032AB2D5C69
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 12:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1DE4502F;
+	Mon, 21 Jul 2025 12:46:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753101723; cv=none; b=cckxXGmn5VWToTVpAGjf2YDT7F6J6MAt9Xk623PQunoeL/0xlRyRQUkgXeExhOqVQjjkJi5WsMSunCDxBlhxJNGvDRHJHx957FMEPlSgw2Y3xJ6JMBfB/qVqgyUIlM0pDtkQXJCoxbQhHSU8hUauGqoMoeJXEgJmBzoP5x2QJOo=
+	t=1753101968; cv=none; b=J7UQQbdoKY26z0zTOSKv2BG/3RT3DajMqj5cOO4DxN1ojgVHugr6NslpgizKW0QEE6tH8ml/HBndHLOoTqC2g561+g9h6YKTj0XoVD5sbbrg1Wd0zxohZJMDyzwJqbiWXuw/mp4LPN1re+45QW4FSgpV9spJiF5EC2DzM5P/HjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753101723; c=relaxed/simple;
-	bh=FH6NOtN844idHZdK0Ri+r5hjSZq61hkeGP1rVZSSTzs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IpAoQ1R7934BWcGSU6EwzDgirTiPlXEfX183/0TaPvkBWVpwF8QxDwFkkveAL6daAAPDgpGylukd67RsLOZSbEMhXS4wb8NPvfMDtFmAcL/2HepWOAwGmGAB+MJP3cobDBcHqM8PotekPnCf7SaWFhAUOdNY54Dvo8ttnhfjaAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=z+hcYGAA; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso713391cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 05:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753101721; x=1753706521; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rIS8RtGx3BM3yP3QF7bgfk7fFz/ztOEu+IhwOpSASZw=;
-        b=z+hcYGAApOn4Atj21ZoBMeJvBJ6Rh+Z18KWnig1K+Nm8KAz+ZTLBaeszaSu/mwnSMl
-         QvB5AwZA65YtUnD4YjDJ2oqhS/Mr21jPIs5aj1+/44qZVXkACNm9Ivv81cdXcacIgh10
-         arZat+Ou17+LMuQtpyhoTyqcoezrEd5R3Bgv5NIcbJg/bTQtrwgF47s3XPOzS/PITixh
-         Zzube8MIyFtzzTqPw6pFc5BWJ4fMLNU2RYLvYsNS0iRw+FKZi8D9DsBTmihA6Zujm0cO
-         APqRpafLgPqJu/r9BdfUj26xsU5FtjUGiKbuwTykaWqEhvWQX3LzeVcRNj+A5VePS0z+
-         MPkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753101721; x=1753706521;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rIS8RtGx3BM3yP3QF7bgfk7fFz/ztOEu+IhwOpSASZw=;
-        b=IbnL8TJu4oB8obTVjaO2mNZI9KNohZzYExnk3QWwsRhIhmzjb47fYgtpkqmQWXi7xs
-         8y1ErRl61pHrKB+VWIhwOjzeWf/N16S8TcAA/R8aVzMui04TD8pxwEz50ij8JzaFqqO9
-         XMFYn0tqacLOIga0c4+kcNNlqWOI3cHke5xQaTmpoIno+H9GYTmWgsKZtzut/STu01eo
-         7aqkUPtgPCJszlh9p0n0+vPLuRZJPWibJM4FAVn25j4A3GZuSoZtzYz+XSBnOw3k+w0A
-         j4KDwKXXFjq6JenTaCifKMNMSJM8uDDJpo/vklZ7IQa/G1MxNVaoyzRkPa+1hMSEMYRZ
-         lShQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWVxptjoHkPGFmiQzcF7e1sxRIz+LwUjqlFuWaQ9QaMocaXwiZZAG8ZoDQG7K2uJhFfibqpLGHI+krAvav+@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywx/TaZOhqLr8kXdaSECO4QNtLR2Nre2UhHM+n3p5oOWimLpB9x
-	grkwyJqdoSwh/kH4tqW97YNiZTXV2ezltljOuBO38EW3Sb+0qNAkidf8sl/bcKzvZwDWQRFX9mo
-	yOSMsPNwNOLQRMkoSrETxd4CgMVMK1VgyBR65ui+2
-X-Gm-Gg: ASbGnct91Iew2nQftBubDrLpEpZtZZ5KGIb69hOSnc3cVYMUm/9PLgKLkq7Fl90zrmw
-	3gcrc/12KI8vTGyIOhp1Koa3jcM5bmOrkuuBNNvyw7H8X9lLBuHJM+fVCSaBFayjcrIqgXx1wer
-	HSX0KFdGj29ywa8COqmS4W6C6uCsfhcWQcHwNBOOFsXCx40K2tm5CyIiXqTx5WCD/BsHuHulolR
-	t5qPM4=
-X-Google-Smtp-Source: AGHT+IHICvOHUdMlgc+MwG4TRplOdK0+NsvYnQSN7a8Q94vN9K19Iv4njTMi3Vqu6DpIpL1LZ7OPxQ3JKDjs7jxoPb4=
-X-Received: by 2002:a05:622a:8c19:b0:4ab:54d2:3666 with SMTP id
- d75a77b69052e-4abc2b37a63mr6227901cf.25.1753101720495; Mon, 21 Jul 2025
- 05:42:00 -0700 (PDT)
+	s=arc-20240116; t=1753101968; c=relaxed/simple;
+	bh=WGUQgDlE1s2YTapj41wUMa0BgEKsNgWIMJNz10NotwM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IOpX2dO0Im+6qwpknhtgLJX2nygwMqgzmEEY2dS+s44YpRLx5T6WxCfeF/OlaFZKZnOTbzUaZSCCgWPAu9sDXV12aCLT38RxNopGq+MRRU1n+6pH1EV8SLjeYII13O1GwG1GIkfydu8GjS4a063SpNBN+crwPaBENz61ShKb/50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=kSPo9cv7; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1753101960;
+	bh=WGUQgDlE1s2YTapj41wUMa0BgEKsNgWIMJNz10NotwM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=kSPo9cv75vw9UZ0CR4OLbjZU8t3subAZ5maiKshA0TNSuGgefVTXxIYzo/HTqAlgl
+	 LIyQd3zMu9eP/O31LM7EpmNAo7PT495/rRzlRj82cqeKI/VrrXYPFmxeiLrX6PuuIP
+	 FCR9FhRLbhFcUXn4dj+LLZYLFUw9GKsIwj9PUOM2iGTpKqPdSIXa/f18ZCZA86UKME
+	 +Z9Ijtncdp/ontJplBRxZ1+jGDXvsgzV1EH1u0r6UTWn6d68hOKx4jkrUJoRPRYeOd
+	 GyogLDsta52fywRoObfEo9lSGMyOW6s0xxYE1qPFDVgWDaYnWQfFay4V3JnABrkBmc
+	 u7FkwJT88NMNw==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 53ADF17E0CA1;
+	Mon, 21 Jul 2025 14:45:59 +0200 (CEST)
+Message-ID: <b06969d2-0c35-44c7-bb2c-162942186c53@collabora.com>
+Date: Mon, 21 Jul 2025 14:45:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-In-Reply-To: <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Mon, 21 Jul 2025 13:41:23 +0100
-X-Gm-Features: Ac12FXwLO_dne2w1dGUUYLFktGe9s64wr0cEuXbxIsFFA8S3s8yrvlEfzoVjAQI
-Message-ID: <CA+EHjTxUpLU3-3dQY8O_SoQCmA8LR1y6w759xfYwisfxHec4aQ@mail.gmail.com>
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+To: Casey Connolly <casey.connolly@linaro.org>, sboyd@kernel.org
+Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
+ andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org,
+ krzysztof.kozlowski@linaro.org, u.kleine-koenig@baylibre.com,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org
+References: <20250721075525.29636-1-angelogioacchino.delregno@collabora.com>
+ <20250721075525.29636-3-angelogioacchino.delregno@collabora.com>
+ <e724e6a2-21a8-436a-8809-ce73c0afa433@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <e724e6a2-21a8-436a-8809-ce73c0afa433@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Xiaoyao,
+Il 21/07/25 12:44, Casey Connolly ha scritto:
+> Hi Angelo,
+> 
+> On 21/07/2025 09:55, AngeloGioacchino Del Regno wrote:
+>> Some Qualcomm PMICs integrate a SDAM device, internally located in
+>> a specific address range reachable through SPMI communication.
+>>
+>> Instead of using the parent SPMI device (the main PMIC) as a kind
+>> of syscon in this driver, register a new SPMI sub-device for SDAM
+>> and initialize its own regmap with this sub-device's specific base
+>> address, retrieved from the devicetree.
+>>
+>> This allows to stop manually adding the register base address to
+>> every R/W call in this driver, as this can be, and is now, handled
+>> by the regmap API instead.
+> 
+> This is honestly a really nice improvement :D>
 
-On Mon, 21 Jul 2025 at 13:22, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->
-> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> > +/*
-> > + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> > + */
-> > +#define kvm_arch_supports_gmem_mmap(kvm)             \
-> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&   \
-> > +      (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
->
-> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
->
-> Actually, QEMU can use gmem with mmap support as the normal memory even
-> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
-> on KVM_SET_USER_MEMORY_REGION2.
->
-> Since the gmem is mmapable, QEMU can pass the userspace addr got from
-> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
-> works well for non-coco VMs on x86.
->
-> Then it seems feasible to use gmem with mmap for the shared memory of
-> TDX, and an additional gmem without mmap for the private memory. i.e.,
-> For struct kvm_userspace_memory_region, the @userspace_addr is passed
-> with the uaddr returned from gmem0 with mmap, while @guest_memfd is
-> passed with another gmem1 fd without mmap.
->
-> However, it fails actually, because the kvm_arch_suports_gmem_mmap()
-> returns false for TDX VMs, which means userspace cannot allocate gmem
-> with mmap just for shared memory for TDX.
->
-> SO my question is do we want to support such case?
+Thanks! :-D
 
-Thanks for sharing this. To answer your question, no, we explicitly do
-not want to support this feature for TDX, since TDX uses a completely
-different paradigm.
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>>   drivers/nvmem/qcom-spmi-sdam.c | 41 +++++++++++++++++++++++++---------
+>>   1 file changed, 30 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
+>> index 4f1cca6eab71..1b80e8563a33 100644
+>> --- a/drivers/nvmem/qcom-spmi-sdam.c
+>> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+>> @@ -9,6 +9,7 @@
+>>   #include <linux/nvmem-provider.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/regmap.h>
+>> +#include <linux/spmi.h>
+>>   
+>>   #define SDAM_MEM_START			0x40
+>>   #define REGISTER_MAP_ID			0x40
+>> @@ -20,7 +21,6 @@
+>>   struct sdam_chip {
+>>   	struct regmap			*regmap;
+>>   	struct nvmem_config		sdam_config;
+>> -	unsigned int			base;
+>>   	unsigned int			size;
+>>   };
+>>   
+>> @@ -73,7 +73,7 @@ static int sdam_read(void *priv, unsigned int offset, void *val,
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, bytes);
+>> +	rc = regmap_bulk_read(sdam->regmap, offset, val, bytes);
+>>   	if (rc < 0)
+>>   		dev_err(dev, "Failed to read SDAM offset %#x len=%zd, rc=%d\n",
+>>   						offset, bytes, rc);
+>> @@ -100,7 +100,7 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, bytes);
+>> +	rc = regmap_bulk_write(sdam->regmap, offset, val, bytes);
+>>   	if (rc < 0)
+>>   		dev_err(dev, "Failed to write SDAM offset %#x len=%zd, rc=%d\n",
+>>   						offset, bytes, rc);
+>> @@ -110,28 +110,47 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
+>>   
+>>   static int sdam_probe(struct platform_device *pdev)
+>>   {
+>> +	struct regmap_config sdam_regmap_config = {
+>> +		.reg_bits = 16,
+>> +		.val_bits = 16,
+> 
+> I believe registers are 8 bits wide, at least on Qualcomm platforms.
+> 
+
+I used 16 because usually that's the usual default for SPMI - but if you're sure
+about Qualcomm platforms having 8-bits wide registers and you can confirm that,
+I can change both of those to 8 in a jiffy.
+
+I anyway have to send a v2 because I forgot an error check - so changing this is
+not a problem at all for me.
+
+But.
+
+Before me changing - can you please please please double check and confirm?
+
+If you can also check the register width of the others that I converted, I'd really
+appreciate that (I have no datasheets for qcom so it's a bit of a guessing game for
+me here... :-P), just so that we get everything right from the get-go ... even if
+a mismatch wouldn't really cause issues in the current state of things.
+
+That's because - I just noticed - in qcom-spmi-pmic.c, reg_bits is 16, but val_bits
+is 8 (which basically means "the registers are 16-bits wide, but we always only
+care about the lower 8 bits).
+
+Thanks again!
 
 Cheers,
-/fuad
+Angelo
 
