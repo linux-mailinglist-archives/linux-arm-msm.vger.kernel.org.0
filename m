@@ -1,222 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-65966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 864F3B0CB37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 21:56:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0DF1B0CBDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 22:33:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CBBD13A5205
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 19:56:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2017C168AC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 20:33:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4C8723816A;
-	Mon, 21 Jul 2025 19:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC844239E8B;
+	Mon, 21 Jul 2025 20:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fDFHJWdd"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TBUXWeVl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BAD23506A;
-	Mon, 21 Jul 2025 19:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A6C14A60D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 20:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753127785; cv=none; b=BQ5DD8VLBq2GctlbsvGkV/HFZ+IWg47NxG1QuYSsZiW9yYV2yaGHy10y16G65EsJAuAq++VvIQspiwsin5Y6BjD3nLJKz7L21zwrQ2NxLQ6GpCmJxb5z8wNk9rxLeGa0xWVEcmCw45uqE34IQ9U1Y/dYuwKZdivPP4zsN1eED3k=
+	t=1753130005; cv=none; b=koQpwwWE4Lqvkun5xpr+JhpUMbCKItVo+wr9tgaF0remRYFsJMyHoNc3SIPayA59qUKj36Bcy79l7bqFqoyXLdWGGa7Z4imG9QbkvRfQk3SNm1qh3XUtn8xpZsHw8s2aUDShGlUfpB3kpEWHUQWj5r1qFo1nQJO7xqeqXSng1n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753127785; c=relaxed/simple;
-	bh=86ZWFwENjjzEzuXZxiMpq5v1vY2VwtODGSuhLJSv+AA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WQnO4YU5UeboZL+y3TT2Laah/H5xmimatrh+/dPwmIUHjNML7JksKE/PRdmR1S8eaLWxkDAVp0IfpXL091sQ7KyYjrPOb37l/DQWPvT3Togtym9SH+Ke7UQARQCf98roYkqHSaGgfyvQoRi8NZggKqE++NrbEn4SjQ06BX88tkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fDFHJWdd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D1CC4CEED;
-	Mon, 21 Jul 2025 19:56:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753127785;
-	bh=86ZWFwENjjzEzuXZxiMpq5v1vY2VwtODGSuhLJSv+AA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fDFHJWddZ7cOoD1rdl23jS380yXpGP3jgu8H0GTcX3CEzYMFzdeMgfP8EsGmtkjZS
-	 ALNrOY+luRpCH5w25UMwJOyxl76D9M6syN/3Klp8/cCkC1Gqj0symLbwhDOvogokZg
-	 WeHSGA9wqtUg0n+WAbZ6ZfNsmR2oMUF0j+0COrFXdaLtzcvYG1gMAta91GJPGoXCvV
-	 PehZMQxjbkeBBPdOf2nNmeC0rQ5iYcKgRT1BzH5K5Kwga9n7VeTvxkLvko8FWEA2GL
-	 cBnQq2dxg1Bi2dawSHOKjEDBRlkmnhR1rIHZZah/g0GlcgQxn48PqdnuKFgayE9wF8
-	 1KdQLn6B61OlA==
-Date: Mon, 21 Jul 2025 14:56:24 -0500
-From: Rob Herring <robh@kernel.org>
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: andersson@kernel.org, linus.walleij@linaro.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, quic_rjendra@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add Glymur pinctrl
- bindings
-Message-ID: <20250721195624.GA1160054-robh@kernel.org>
-References: <20250721163221.310746-1-pankaj.patil@oss.qualcomm.com>
- <20250721163221.310746-2-pankaj.patil@oss.qualcomm.com>
+	s=arc-20240116; t=1753130005; c=relaxed/simple;
+	bh=9q738OSy5F3XSck6fQATo5Tzl7DSUQk68x8EkXY8TcI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HgWQG8L2i52gzAvoCRfvR8Q3plGlTFIbKmHffnQFfOA0nPGX5FUH+pxTCtLtEdSgTDF9Cke7htiQwOcjgHuVjfJSx4GxG1QcM3dUaEl56joEX3GVsB+J9HlWpvn/NUrupOXhvBbcEg7KJxL8goj2oGg4MQS2v32RCW6VoQgFESQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TBUXWeVl; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-23dd9ae5aacso14145ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 13:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753130004; x=1753734804; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tsRkrVSZ79KFOrHUZnkYB8zyV0FovPAw/7nSbgdf9SA=;
+        b=TBUXWeVledvYrz07Eu5Omg3SM6HVjM9DAbHE2pO6vreR6d58656dngCmV+32wOOfp3
+         I6kd5WuVHFZ4Nmqkfi0DWddm0eufSePTta65qXGaLPXVzO+nKl/1ZzNnpK6/S5TnVOiQ
+         h4mgJuG++BS8VBRXcaLKzNWp7rpfEaY9CfDHSeLXuDIT1CfWvqXpaVsFgINGpcYyWk6I
+         /+UeNhKzmiuSspkx+1ad9nO0b3X3iCvSddG17OOkWaTnAbTIcIZ3delq/sfXMlnNfOHm
+         XrQ5YZ31aK9L0WN6/PItX8g1VFxAIedQe1PQxt/qK9/eYwkPnskURq0WREyAj0IkQOgF
+         lXkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753130004; x=1753734804;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tsRkrVSZ79KFOrHUZnkYB8zyV0FovPAw/7nSbgdf9SA=;
+        b=tB2TcPOijdVdkrWgnrCXnq9t96tSUsWTSlvhJt3s9zP8ChRKYoN5WSNQftKXIARgGd
+         vGiPfaTJUIwv15L7k3bPBadn5OfDGDGzhxahzG6hJyJdbD4//zDD8MJw0oqvEee3J0pF
+         ES2UAastIvcBleTdTMRwTc7Ch7HMYBe6LjWbSFvxlICEPC/JkKkadwcrdGkFx+umOf5P
+         rq+uOiZ+tHhzRuRYWjHTJHe8mLiuNOdsf7TWt/G0k0tbLfdz+MsmFv6E0s3BTyVq5Btt
+         zxs1r5Zcp62WG+9oPwjeunO+immFM8/k6PsyVSIj7UUiKRH/pJM4uORYncfx2yNDPFnA
+         o2jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVxxPboFUcKLBTlxKfOnOtl26nhdr5yDnPGjuzE+j7AHm0eePQRaS/+Zqi5yhT4BkwL7+OEWU5eBguBjvUU@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxFEiU5TH3l8ZB8Q3+mqMOLaHyQXL72diBpNcvHPBiuXF9aIdz
+	NzXT4EIxxdx/HMWgEcqPpF1KKE/+9OhD0U2gX2Q63f2NuYhsIRE4LkuJRGRADgyNAkWeoCMAggi
+	4RXt5PFHRoWo7JrNGs+fdumYVOQW+VFIT8lt7BfSp
+X-Gm-Gg: ASbGncsoFt7wrWXGLjlpf8jCRQPNED0yKmUfX4nknxLZT3wbi8yn0PQFPF6zWnaKuUl
+	U9grSWFGuSzwqsPUyttnbknnKaCA1X3ZEtkVlRGxYCZQ/3u1KUTeXyJEA2WPNWz8mx8ES4ePmJO
+	5sdK6gYSl1KTxEMvUGCHBX2i3nDaUjyQKL36J6TK9thQsWg40pxP2kCZTm7rn8aWa1gRIhjmtzb
+	UPIlZOek+Q5ozQNGFkzpgYaTD2RDEa2h2IVcpFN1IWDYo5g
+X-Google-Smtp-Source: AGHT+IFkWHBx/fnOdJ0fH9ksHzfcdY6F8RTAu24ALLaPBJXK759V2xcE3RRWajNRHJ7uflgEVtUatOGBWMqwE9pCFGw=
+X-Received: by 2002:a17:902:fc47:b0:235:e1d6:5343 with SMTP id
+ d9443c01a7336-23f8b60e3e9mr699005ad.20.1753130002979; Mon, 21 Jul 2025
+ 13:33:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250721163221.310746-2-pankaj.patil@oss.qualcomm.com>
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
+ <aH5RxqcTXRnQbP5R@google.com> <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
+ <aH55BLkx7UkdeBfT@google.com>
+In-Reply-To: <aH55BLkx7UkdeBfT@google.com>
+From: Vishal Annapurve <vannapurve@google.com>
+Date: Mon, 21 Jul 2025 13:33:10 -0700
+X-Gm-Features: Ac12FXygamzg8jas5GHmqT107kji5KSuvRb10tflFD6TWTFWMXuoj12Xx7V3ojk
+Message-ID: <CAGtprH8H2c=bK-7rA1wC1-9f=g8mK3PNXja54bucZ8DnWF7z3g@mail.gmail.com>
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+To: Sean Christopherson <seanjc@google.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 21, 2025 at 10:02:20PM +0530, Pankaj Patil wrote:
-> Add DeviceTree binding for Glymur SoC TLMM block
-> 
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> ---
-> Changes in v3:
-> Fixed indentation for example tlmm node
-> 
-> Changes in v2:
-> Updated gpio-line-names maxItems to 250
-> Fixed example node reg property
-> 
-> .../bindings/pinctrl/qcom,glymur-tlmm.yaml    | 128 ++++++++++++++++++
->  1 file changed, 128 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,glymur-tlmm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,glymur-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,glymur-tlmm.yaml
-> new file mode 100644
-> index 000000000000..25ec99bde59d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,glymur-tlmm.yaml
-> @@ -0,0 +1,128 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,glymur-tlmm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. Glymur TLMM block
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> +
-> +description:
-> +  Top Level Mode Multiplexer pin controller in Qualcomm Glymur SoC.
-> +
-> +allOf:
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,glymur-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  gpio-reserved-ranges:
-> +    minItems: 1
-> +    maxItems: 119
-> +
-> +  gpio-line-names:
-> +    maxItems: 250
-> +
-> +patternProperties:
-> +  "-state$":
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-glymur-tlmm-state"
-> +      - patternProperties:
-> +          "-pins$":
-> +            $ref: "#/$defs/qcom-glymur-tlmm-state"
-> +        additionalProperties: false
-> +
-> +$defs:
-> +  qcom-glymur-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-> +    unevaluatedProperties: false
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9])$"
-> +            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +        enum: [ gpio, RESOUT_GPIO_N, aoss_cti, asc_cci, atest_char, atest_usb, audio_ext_mclk0,
-> +                audio_ext_mclk1, audio_ref_clk, cam_asc_mclk4, cam_mclk, cci_async_in, cci_i2c_scl,
-> +                cci_i2c_sda, cci_timer, cmu_rng, cri_trng, dbg_out_clk, ddr_bist_complete,
-> +                ddr_bist_fail, ddr_bist_start, ddr_bist_stop, ddr_pxi, edp0_hot, edp0_lcd,
-> +                edp1_lcd, egpio, eusb0_ac_en, eusb1_ac_en, eusb2_ac_en, eusb3_ac_en, eusb5_ac_en,
-> +                eusb6_ac_en, gcc_gp1, gcc_gp2, gcc_gp3, host2wlan_sol, i2c0_s_scl, i2c0_s_sda,
-> +                i2s0_data, i2s0_sck, i2s0_ws, i2s1_data, i2s1_sck, i2s1_ws, ibi_i3c, jitter_bist,
-> +                mdp_vsync_out, mdp_vsync_e, mdp_vsync_p, mdp_vsync_s, pcie3a_clk, pcie3a_rst_n,
-> +                pcie3b_clk, pcie4_clk_req_n, pcie5_clk_req_n, pcie6_clk_req_n, phase_flag,
-> +                pll_bist_sync, pll_clk_aux, pmc_oca_n, pmc_uva_n, prng_rosc, qdss_cti, qdss_gpio,
-> +                qspi, qup0_se0, qup0_se1, qup0_se2, qup0_se3_l0, qup0_se3, qup0_se4, qup0_se5,
-> +                qup0_se6, qup0_se7, qup1_se0, qup1_se1, qup1_se2, qup1_se3, qup1_se4, qup1_se5,
-> +                qup1_se6, qup1_se7, qup2_se0, qup2_se1, qup2_se2, qup2_se3, qup2_se4, qup2_se5,
-> +                qup2_se6, qup2_se7, qup3_se0, qup3_se1, sd_write_protect, sdc4_clk,
-> +                sdc4_cmd, sdc4_data, smb_acok_n, sys_throttle, tb_trig_sdc2, tb_trig_sdc4,
-> +                tmess_prng, tsense_pwm, tsense_therm, usb0_dp, usb0_phy_ps, usb0_sbrx, usb0_sbtx,
-> +                usb0_tmu, usb1_dbg, usb1_dp, usb1_phy_ps, usb1_sbrx, usb1_sbtx, usb1_tmu, usb2_dp,
-> +                usb2_phy_ps, usb2_sbrx, usb2_sbtx, usb2_tmu, vsense_trigger_mirnat, wcn_sw,
-> +                wcn_sw_ctrl ]
+On Mon, Jul 21, 2025 at 10:29=E2=80=AFAM Sean Christopherson <seanjc@google=
+.com> wrote:
+>
+> >
+> > > > 2) KVM fetches shared faults through userspace page tables and not
+> > > > guest_memfd directly.
+> > >
+> > > This is also irrelevant.  KVM _already_ supports resolving shared fau=
+lts through
+> > > userspace page tables.  That support won't go away as KVM will always=
+ need/want
+> > > to support mapping VM_IO and/or VM_PFNMAP memory into the guest (even=
+ for TDX).
 
-Wrap lines at 80 char.
+As a combination of [1] and [2], I believe we are saying that for
+memslots backed by mappable guest_memfd files, KVM will always serve
+both shared/private faults using kvm_gmem_get_pfn(). And I think the
+same story will be carried over when we get the stage2 i.e.
+mmap+conversion support.
 
-> +
-> +    required:
-> +      - pins
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    tlmm: pinctrl@f100000 {
-> +        compatible = "qcom,glymur-tlmm";
-> +        reg = <0x0f100000 0xf00000>;
-> +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +        gpio-controller;
-> +        #gpio-cells = <2>;
-> +        interrupt-controller;
-> +        #interrupt-cells = <2>;
-> +        gpio-ranges = <&tlmm 0 0 249>;
-> +        wakeup-parent = <&pdc>;
-> +        gpio-reserved-ranges = <4 4>, <10 2>, <33 3>, <44 4>;
-> +        qup_uart21_default: qup-uart21-default-state {
-> +            tx-pins {
-> +                pins = "gpio86";
-> +                function = "qup2_se5";
-> +                drive-strength = <2>;
-> +                bias-disable;
-> +            };
-> +
-> +            rx-pins {
-> +                pins = "gpio87";
-> +                function = "qup2_se5";
-> +                drive-strength = <2>;
-> +                bias-disable;
-> +            };
-> +        };
-> +    };
-> +...
-> -- 
-> 2.34.1
-> 
+[1] https://lore.kernel.org/kvm/20250717162731.446579-10-tabba@google.com/
+[2] https://lore.kernel.org/kvm/20250717162731.446579-14-tabba@google.com/
+
+> > >
+> > > > I don't see value in trying to go out of way to support such a usec=
+ase.
+> > >
+> > > But if/when KVM gains support for tracking shared vs. private in gues=
+t_memfd
+> > > itself, i.e. when TDX _does_ support mmap() on guest_memfd, KVM won't=
+ have to go
+> > > out of its to support using guest_memfd for the @userspace_addr backi=
+ng store.
+> > > Unless I'm missing something, the only thing needed to "support" this=
+ scenario is:
+> >
+> > As above, we need 1) mentioned by Vishal as well, to prevent userspace =
+from
+> > passing mmapable guest_memfd to serve as private memory.
+>
+> Ya, I'm talking specifically about what the world will look like once KVM=
+ tracks
+> private vs. shared in guest_memfd.  I'm not in any way advocating we do t=
+his
+> right now.
+
+I think we should generally strive to go towards single memory backing
+for all the scenarios, unless there is a real world usecase that can't
+do without dual memory backing (We should think hard before committing
+to supporting it).
+
+Dual memory backing was just a stopgap we needed until the *right*
+solution came along.
 
