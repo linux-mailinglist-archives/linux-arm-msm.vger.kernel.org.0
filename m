@@ -1,48 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-65888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AE76B0C360
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:41:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 692BAB0C3B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:54:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A52553AB092
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:41:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 24F411887887
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:54:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 859702D3EF4;
-	Mon, 21 Jul 2025 11:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B900F2BEC57;
+	Mon, 21 Jul 2025 11:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nr6+SyD4"
+	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="H3HFpjET"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.ionic.de (ionic.de [145.239.234.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0642D3744;
-	Mon, 21 Jul 2025 11:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7191F3FC8;
+	Mon, 21 Jul 2025 11:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.239.234.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753097945; cv=none; b=MmOP0dy5h3UFN/QqX7gZbD5bOcopZdA4rEn8lMd99O8dJ2NTWCz8Dn4PROqrWimjq/X01IBQBUJ6jzr3AEQe6lf6qdOWKngXA4ghh29IlHa7x9t1n8EMEmIeY0Z2eCAtwHp+UE0I4SYKxqFQOTlY37vxcEvvFi1RDNb0FaE0zqM=
+	t=1753098847; cv=none; b=tq/1+E4TcQEvw3/n+/QDG6dLjqz1yqTop4bY6NUt7/ULCnw3k8moU39h597DQWGBzuB77Jil7W/p74UfeL6TXe1LQ97PsSExoxwlvgK3G8p6bgMBeMkKOBmK73pK5mNEl+J3J/NZJRfvmxtF2porwpVLT4HT8LEOjQoIp7RRfuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753097945; c=relaxed/simple;
-	bh=Jj2hjt/p/kDW9rpYHB1UHsSQqtiClT24invxFV5SBzM=;
+	s=arc-20240116; t=1753098847; c=relaxed/simple;
+	bh=cpe8TH5BXmM+NNX4qQ4MXmml7aD2/B4yAfB8e4eL6Jk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MFGEkMkgFkeGH++SK+jr1u4aVFY00uMdkhpiCTbhaHcQBVAIEV6yOqmyGOtoO6C9XQ7GYfJcpfxoel2mx+RQiJfsCdMKf3z0wGnIMlol4ivHJsT+xuVaiW+/pF44qlhp3efDjzr2fKripfQOmNQH7veJ+kBb4sydeIF2gbL8U9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nr6+SyD4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2608CC4CEED;
-	Mon, 21 Jul 2025 11:39:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753097944;
-	bh=Jj2hjt/p/kDW9rpYHB1UHsSQqtiClT24invxFV5SBzM=;
+	 In-Reply-To:Content-Type; b=c9Lf+4naLa+nfimsNPoMUNHsgAUDbAw+jloUQFdnQRYRUkC5zZ1wl/09JJFT5y5HCpvRVbTZKq2bdOFEMlE7hQQnDWyif07hkf2uwZX+lP7s/AyLbJgZLfYv3hQkzezgtj2lxuth++S93E7AkFun9HMrzgF3s0Ku61vB/3dQ4oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=H3HFpjET; arc=none smtp.client-ip=145.239.234.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionic.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ionic.de; s=default;
+	t=1753098835; bh=cpe8TH5BXmM+NNX4qQ4MXmml7aD2/B4yAfB8e4eL6Jk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nr6+SyD4lomAnh2RT38WToMmEjmMRbDzmi37dpqeJ7iEPfLPLaFsI9i6VOZ0s/Ugz
-	 xOnlH1kTaNejHt3JZ/RqAquuBEVBwujgnYK7Vy4BleOGZypUbj5WFOpy0C1BcZRskW
-	 UOhS67Rp9hlaUQHQeh60XH+YB4YPZfjJKvW06mQkzjxGTYTK3IJe/YX8icsJCLJdWF
-	 aa3WjzmrZ6CZD/Yw/8wdMm0K7hT8sS7cKa/xwUl9BXntObfAVL6OgEbSEEUsYSpWvv
-	 BAv3oQWppCvX8Xkw0jy4RrR+dy1bXMr/al2107xbYEn/hFsMD1yrX+wj4/catLuXv6
-	 0S9K25w2OjnMA==
-Message-ID: <2d7707cc-0a49-47a6-b222-9032f08bac0c@kernel.org>
-Date: Mon, 21 Jul 2025 13:38:59 +0200
+	b=H3HFpjETO20JknpVgHSJxpTcReDl0Pu+OpGvyNGEY6CYpyJf7y/8ABR/IrlpwNjHo
+	 g4GclcnPAfxNBBY6BkxZeS6RFD2bTUzAYspYT09jPSi2KjKwySyBqDQUS6CHa3xMxk
+	 BClYGylgE7lUSnaBmT/FUzPerKGaec9vOlLK2qdQ=
+Received: from [172.24.215.49] (unknown [185.102.219.57])
+	by mail.ionic.de (Postfix) with ESMTPSA id BDA371480F5B;
+	Mon, 21 Jul 2025 13:53:55 +0200 (CEST)
+Message-ID: <852835ff-9463-443a-98bb-8a5824fdb1f4@ionic.de>
+Date: Mon, 21 Jul 2025 13:53:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,132 +49,125 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: remoteproc: qcom,milos-pas: Document
- remoteprocs
-To: Peng Fan <peng.fan@oss.nxp.com>, Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250709-sm7635-remoteprocs-v3-0-c943be976180@fairphone.com>
- <20250709-sm7635-remoteprocs-v3-1-c943be976180@fairphone.com>
- <20250721064256.GB4844@nxa18884-linux.ap.freescale.net>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 01/10] net: qrtr: ns: validate msglen before ctrl_pkt
+ use
+To: Casey Connolly <casey.connolly@linaro.org>,
+ linux-arm-msm@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>
+Cc: Denis Kenzior <denkenz@gmail.com>, Eric Dumazet <edumazet@google.com>,
+ Kuniyuki Iwashima <kuniyu@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Willem de Bruijn <willemb@google.com>, "David S . Miller"
+ <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ Simon Horman <horms@kernel.org>, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
+References: <cover.1752947108.git.ionic@ionic.de>
+ <866f309e9739d770dce7e8c648b562d37db1d8b5.1752947108.git.ionic@ionic.de>
+ <985111fc-3301-4c0a-a13e-ab65e94bdcbb@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250721064256.GB4844@nxa18884-linux.ap.freescale.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Mihai Moldovan <ionic@ionic.de>
+Autocrypt: addr=ionic@ionic.de; keydata=
+ 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
+ S0VlnF9z
+In-Reply-To: <985111fc-3301-4c0a-a13e-ab65e94bdcbb@linaro.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------YFK00L0URMavkDf9W8uBBTx2"
 
-On 21/07/2025 08:42, Peng Fan wrote:
->> +
->> +  interrupt-names:
->> +    minItems: 6
->> +    maxItems: 6
-> 
-> Ditto.
-> 
-> Do you need to define the list?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------YFK00L0URMavkDf9W8uBBTx2
+Content-Type: multipart/mixed; boundary="------------yjfHvdcaWztG84OvH0p23nby";
+ protected-headers="v1"
+From: Mihai Moldovan <ionic@ionic.de>
+To: Casey Connolly <casey.connolly@linaro.org>,
+ linux-arm-msm@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>
+Cc: Denis Kenzior <denkenz@gmail.com>, Eric Dumazet <edumazet@google.com>,
+ Kuniyuki Iwashima <kuniyu@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Willem de Bruijn <willemb@google.com>, "David S . Miller"
+ <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ Simon Horman <horms@kernel.org>, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
+Message-ID: <852835ff-9463-443a-98bb-8a5824fdb1f4@ionic.de>
+Subject: Re: [PATCH v2 01/10] net: qrtr: ns: validate msglen before ctrl_pkt
+ use
+References: <cover.1752947108.git.ionic@ionic.de>
+ <866f309e9739d770dce7e8c648b562d37db1d8b5.1752947108.git.ionic@ionic.de>
+ <985111fc-3301-4c0a-a13e-ab65e94bdcbb@linaro.org>
+In-Reply-To: <985111fc-3301-4c0a-a13e-ab65e94bdcbb@linaro.org>
 
+--------------yjfHvdcaWztG84OvH0p23nby
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Did you read the entire binding? It reminds me Frank's comment as well -
-instead of actually checking you just ask question which you would find
-answer by yourselves if you really opened the code.
+KiBPbiA3LzIxLzI1IDEzOjAyLCBDYXNleSBDb25ub2xseSB3cm90ZToNCj4gT24gMTkvMDcv
+MjAyNSAyMDo1OSwgTWloYWkgTW9sZG92YW4gd3JvdGU6DQo+IA0KPiBJIHRoaW5rIHRoaXMg
+aXMgbWlzc2luZyBhIEZpeGVzOiB0YWc/DQoNClRoYW5rcy4NCg0KV2lsbCBhZGQgRml4ZXM6
+IDBjMjIwNGE0YWQ3MSAoIm5ldDogcXJ0cjogTWlncmF0ZSBuYW1lc2VydmljZSB0byBrZXJu
+ZWwgZnJvbSANCnVzZXJzcGFjZSIpIGluIHYzLg0KDQpJIGhhdmVuJ3Qgc2VlbiBhbnkgcmVw
+b3J0cyBvZiB0aGlzIGFjdHVhbGx5IHRyaXBwaW5nIGFueXRoaW5nIHVwLg0KDQoNCg0KTWlo
+YWkNCg==
 
-> 
->> +
->> +  qcom,qmp:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description: Reference to the AOSS side-channel message RAM.
->> +
->> +  smd-edge: false
->> +
->> +  firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string-array
->> +    minItems: 1
->> +    items:
->> +      - description: Firmware name of the Hexagon core
->> +      - description: Firmware name of the Hexagon Devicetree
->> +
->> +  memory-region:
->> +    minItems: 1
->> +    items:
->> +      - description: Memory region for core Firmware authentication
->> +      - description: Memory region for Devicetree Firmware authentication
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - memory-region
->> +
->> +allOf:
->> +  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - qcom,milos-adsp-pas
->> +            - qcom,milos-cdsp-pas
->> +    then:
->> +      properties:
->> +        memory-region:
->> +          minItems: 2
->> +          maxItems: 2
->> +        firmware-name:
->> +          minItems: 2
->> +          maxItems: 2
-> 
-> Just keep minItems if maxItems is same value.
+--------------yjfHvdcaWztG84OvH0p23nby--
 
+--------------YFK00L0URMavkDf9W8uBBTx2
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-This is not a correct advice.
+-----BEGIN PGP SIGNATURE-----
 
+wsF5BAABCAAjFiEEbhHQj3UzgcdE8cg8H9Yu2W4lOocFAmh+KlMFAwAAAAAACgkQH9Yu2W4lOodU
+kBAA48v9IErBmgM+54RwlE31zR1vukFcZawnkX8usW+a6SwoYxSsAi397udv4bxNLrtAUbPtqOWU
+y6Hpnu7Jwgoy35UADfWHwheyJ2h+y3HhwZ2FzkqCaxLhr/mmk31ybUg9IuGxMed+rZI+xkI5K/ZJ
+q+TQedpC1TrbHHUyUp36heXykw+gI13mPvpMsywiIv6jxn4hEwcrWacD3JTt76DuTnIsbuFGEj9Y
+moBAsvW6qROXEw5p7LUZ1S6dJxBbKaGzP1WtoWI/ErxofFbVwI8Akq0lb08tokLaMH5EOhJ3Vkwu
+n2scMoJRCKs++SyQ0bSl1wTgPdmZvB2cOcAgm9a2o9qoEXrJ+r7Atqd0TaN+a62Xp7jCNqSBLAqj
++ROVmqL/IsokuNrHiYqcXBWJcSly5v2WtrsyeO5kkfcDePbeGjOcrh4P1Ml6OjYI5KWXC1W9Dg9C
+pSnjcy1qaS8b1xTS08jY74aCi2MJ/6xGIaEgMRfYevNgHzYAYYcoTraR5HCxJn0KeThfxv3h+Fqj
+dpPQl7Y/aedUYqiGS4Vyg3RWk2YI1q/yPFN6aNr8gNl59bcppiQPVA3UsCv3DUkPxSY5IC7dS4EB
+sUcxnpQp1LSXmucmHax7iqNIpk23uqPQr91/eCMbdSLJrge/qrxYfb0NvTI+EG9ZEA9Ro4Xi0NgE
+KBE=
+=226L
+-----END PGP SIGNATURE-----
 
-Best regards,
-Krzysztof
+--------------YFK00L0URMavkDf9W8uBBTx2--
 
