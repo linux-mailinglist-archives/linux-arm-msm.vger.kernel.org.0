@@ -1,124 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-65869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1C01B0BFC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:16:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43010B0C00F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:21:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 076A53A94FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 09:15:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F1453BF150
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 09:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99FB11CF7AF;
-	Mon, 21 Jul 2025 09:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50E7828DB7B;
+	Mon, 21 Jul 2025 09:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bZlIBiSZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prIb9brq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6B61A3155;
-	Mon, 21 Jul 2025 09:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9F628D8C8;
+	Mon, 21 Jul 2025 09:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753089361; cv=none; b=qoAxA2mC+BfFj0TM3oiISjPrmqSaN1KqUTpltWrSFLsa5ZTPxn1/2AZ4J0ceNvHn8lkbhYUQ6f+nePoRrPI0JVhGOMtGj39T4f2TrXDteRwS0x5vymo63PGnzUyseGtpdxUtLcjyEzPHO3R9LSCoao57yYMJBCtr7emcJy9s/aE=
+	t=1753089579; cv=none; b=IH/+zcE0bZMp+R6T8cssItBk9rAHL6YONz7uD+pcIBvAU7hyXHaPuYPR+c4l0NJOE5dLBn8NI9TS9eVXm50MJyI6muH4skmQaeZ4HnHpL62v16NiWbdbTDlwFuThqLT7UlSsPQt8vPCHnavgl0VjsNlZGbpANfSd1vdOLXPcS3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753089361; c=relaxed/simple;
-	bh=iw+0frTPEpJ/43nXvIJZK8kcvyxLrqS32VG0riYHUn4=;
+	s=arc-20240116; t=1753089579; c=relaxed/simple;
+	bh=1O6qgZHNCTzxqtoMwL2LoFK2ceOAh2w0TjTzof8c+Hg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Iqc7BW1WCKHp8AMyqscCDRMplNShdhm6Fsow+RhtG05Mb0z5odX/rNQWQYlGLZKNz1BaNHuG3ROVyL0HTUAZ8/PPnERGVWXAnCdZS4MteG0wyIwCoN8P0HsekIyXIqTCXBBH7JXfrbttGJV2qd2VAkOa3zHlbVp2fo8e870CnR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZlIBiSZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E112BC4CEED;
-	Mon, 21 Jul 2025 09:16:00 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HHDbaH0A0EFjtawjnhG+9SViApqqhnoxZvJJcI9O8jdm7WhHNhwJnTWedUZODw/BQGQAyAE6xKcXPv3Sl0XUyYbm8D7Yi7WgznmRniZ5xxBnG6ubllsYh26fd/j29GNciHyXaeAHRED2j3yjshtiENm5GguUrjrKNKym5jl0pTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prIb9brq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC75AC4CEED;
+	Mon, 21 Jul 2025 09:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753089360;
-	bh=iw+0frTPEpJ/43nXvIJZK8kcvyxLrqS32VG0riYHUn4=;
+	s=k20201202; t=1753089578;
+	bh=1O6qgZHNCTzxqtoMwL2LoFK2ceOAh2w0TjTzof8c+Hg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bZlIBiSZ2HtXzsW9X0Tia1nwaoLNlkqpvbSywwBNERzDhElrlLM1PnFZbdNahNKXM
-	 UjA3pA4saAMITJwX1dbuWPcJ+CwgVt6zuZ25sFSOJpV/C6JJmz5b+wukoyTEJ8tf8n
-	 dcXBLrXY6NFKofAqZYlTrKRV1IRbN5NX/4J+ZaekEViX9lFwIWL0i4OYzrF5shDFa+
-	 7FoypM41Z2+0Eb7XlGasN7IsleLqFMzpkPQ0Bii8FTPcFoaYN9pVujTllpGfxO4II4
-	 Min7xH2FbnACW/lhRiRCafVqSD8A3a1U+imUN3VPV/WxIuU3uymWvfVWnrDVptEh4J
-	 CfBdLghbOF9jg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1udmce-000000000P8-2R1J;
-	Mon, 21 Jul 2025 11:15:49 +0200
-Date: Mon, 21 Jul 2025 11:15:48 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] PCI: qcom: Move qcom_pcie_icc_opp_update() to
- notifier callback
-Message-ID: <aH4FRGIq0oCLMQqB@hovoldconsulting.com>
-References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
- <20250714-aspm_fix-v1-2-7d04b8c140c8@oss.qualcomm.com>
- <b2f4be6c-93d9-430b-974d-8df5f3c3b336@oss.qualcomm.com>
- <jdnjyvw2kkos44unooy5ooix3yn2644r4yvtmekoyk2uozjvo5@atigu3wjikss>
- <55f2e014-044c-4021-8b01-99bdf2a0fd7f@oss.qualcomm.com>
- <kyu4bpuqvmc3iyqekmqvbpxqpbbxbq7df725dcpiu3dnvcztyy@yyqwm2uqjobj>
- <e0553625-2864-4d9e-89ef-fab44fb18be4@oss.qualcomm.com>
+	b=prIb9brqCDoJJMvY+L+ynnNCx6xgVEHxxu8CcuPcizoGs6SwxSjRzTjNt3viua4Q4
+	 lHOx/7IVJ3HL4SceNVesqW3oIBALN0p6sP/jwbxudcGNHNpU8whIvgU8O1Dw/8E84/
+	 Wi9wAEtv5gONeO741RX1pFpJGDnQYq1ngb7kLNNgtC8mg7f5ePkLdUXRkYtOp3+o2I
+	 4GPBh31u/DWcLS0ZSxsJgkqkj4/uijJKq7mXwZOG5hZKs8R3vD39D313CBr+ct5Cp5
+	 63//0lpqsxtM53VlRyBRzaATIqadPWCFRihpZlYf2QfS/lWorw+PNev2uDCAud1eZJ
+	 sJHrVxnmG0ifg==
+Date: Mon, 21 Jul 2025 11:19:35 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: sboyd@kernel.org, mturquette@baylibre.com, andersson@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	quic_rjendra@quicinc.com, taniya.das@oss.qualcomm.com, linux-clk@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/7] dt-bindings: clock: qcom: Add bindings documentation
+ for the Glymur TCSR
+Message-ID: <20250721-striped-defiant-hippo-6dee44@kuoka>
+References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
+ <20250716152017.4070029-3-pankaj.patil@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e0553625-2864-4d9e-89ef-fab44fb18be4@oss.qualcomm.com>
+In-Reply-To: <20250716152017.4070029-3-pankaj.patil@oss.qualcomm.com>
 
-On Wed, Jul 16, 2025 at 12:33:48PM +0200, Konrad Dybcio wrote:
-> On 7/16/25 7:28 AM, Manivannan Sadhasivam wrote:
-> > On Tue, Jul 15, 2025 at 12:45:36PM GMT, Konrad Dybcio wrote:
-> >> On 7/15/25 12:36 PM, Manivannan Sadhasivam wrote:
-> >>> On Tue, Jul 15, 2025 at 11:54:48AM GMT, Konrad Dybcio wrote:
-> >>>> On 7/14/25 8:01 PM, Manivannan Sadhasivam wrote:
-> >>>>> It allows us to group all the settings that need to be done when a PCI
-> >>>>> device is attached to the bus in a single place.
-> >>>>>
-> >>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> >>>>> ---
+On Wed, Jul 16, 2025 at 08:50:12PM +0530, Pankaj Patil wrote:
+> From: Taniya Das <taniya.das@oss.qualcomm.com>
 > 
-> [...]
+> The Glymur TCSR block provides CLKREF clocks for EDP, PCIe, and USB. Add
+> this to the TCSR clock controller binding together with identifiers for
+> the clocks
 > 
-> >>> Let me think of other ways to call these two APIs during the device addition. If
-> >>> there are no sane ways, I'll drop *this* patch.
-> >>
-> >> Would it be too naive to assume BUS_NOTIFY_ADD_DEVICE is a good fit?
-> > 
-> > BUS_NOTIFY_ADD_DEVICE is not currently a good fit as ASPM link state
-> > initialization happen after all the devices are enumerated for the slot. This is
-> > something to be fixed in the PCI core and would allow us to use
-> > BUS_NOTIFY_ADD_DEVICE.
-> > 
-> > I talked to Bjorn H and we both agreed that this needs to be revisited. But I'm
-> > just worrried that until this happens, we cannot upstream the ASPM fix and not
-> > even backport it to 6.16/16.
-> > 
-> > So maybe we need to resort to this patch as an interim fix if everyone agrees.
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+
+A nit, subject: drop second/last, redundant "bindings". The
+"dt-bindings" prefix is already stating that these are bindings.
+See also:
+https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+
+And same for documentation...
+
+> ---
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml      |  3 +++
+>  .../dt-bindings/clock/qcom,glymur-tcsrcc.h    | 24 +++++++++++++++++++
+>  2 files changed, 27 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,glymur-tcsrcc.h
 > 
-> I'm not opposed if there's going to be an improved solution next cycle.
-> Having ASPM 99.9% of the time is much better than not having it at all
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> index f3afbb25e868..9fbf88836782 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> @@ -8,12 +8,14 @@ title: Qualcomm TCSR Clock Controller on SM8550
+>  
+>  maintainers:
+>    - Bjorn Andersson <andersson@kernel.org>
+> +  - Taniya Das <taniya.das@oss.qualcomm.com>
+>  
+>  description: |
+>    Qualcomm TCSR clock control module provides the clocks, resets and
+>    power domains on SM8550
+>  
+>    See also:
+> +  - include/dt-bindings/clock/qcom,glymur-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8550-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8650-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8750-tcsr.h
+> @@ -22,6 +24,7 @@ properties:
+>    compatible:
+>      items:
+>        - enum:
+> +          - qcom,glymur-tcsr
+>            - qcom,sar2130p-tcsr
+>            - qcom,sm8550-tcsr
+>            - qcom,sm8650-tcsr
+> diff --git a/include/dt-bindings/clock/qcom,glymur-tcsrcc.h b/include/dt-bindings/clock/qcom,glymur-tcsrcc.h
+> new file mode 100644
+> index 000000000000..72614226b113
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,glymur-tcsrcc.h
 
-This has been broken since 6.15 (not 6.13 as the commit message of patch
-1/2 suggests) so there's no rush to get it sorted in 6.16.
+Filename matching compatible.
 
-The current approach also works for everything but devices using pwrctrl
-(read: anything but ath11k/ath12k).
+Best regards,
+Krzysztof
 
-It seems like adding an enable_device() callback can be used as minimal,
-backportable fix for the ath11k/ath12k regression on Qualcomm platforms,
-while working on something more general (e.g. also handling the OPPs) if
-that turns out to be more invasive.
-
-Johan
 
