@@ -1,88 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-65882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46294B0C24F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:11:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 318E0B0C259
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:13:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82D814E463D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:10:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6469B17B87F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:13:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DC77295516;
-	Mon, 21 Jul 2025 11:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75BEB29898A;
+	Mon, 21 Jul 2025 11:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EvppDEKe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K3yCEvZ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C78329616D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 11:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A267B2980DF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 11:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753096247; cv=none; b=i1Rwvh761IEkXrkTuxjEI5ydRNKhFCS/GNQfTT5zbyJCNlmxDvcXPMnqovABycqSEz4is7lty1bxu6ZdI3MHK8v/C9ULlhmsJB6kM9uzVeh7Sg7xYx9tNT2tPHOMDGVN1pDN1+T2l8aJ53kp10QDpSGvNrKOVCOU4VQ9ATP7sZk=
+	t=1753096433; cv=none; b=gmfVIOg8N62cPz6mBSukGGKejm9muTu6GKTF8U3IppIwICTAjw8egIUUIJm8izTP+SeV8ZHjja4KXgNUaSnjnxUJhYhLgI1W+vLFay6+Rt+ICWHlTvyu4eG/MaOw8ZWyFlQ/E4vvMFZu+Mfy1cysEtKN3oSsaMoWupIVaKCfJf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753096247; c=relaxed/simple;
-	bh=ayVnVg9eme40xDElnjkpZrNBmaTxXUTukfPtFjBG+MY=;
+	s=arc-20240116; t=1753096433; c=relaxed/simple;
+	bh=3LePUhZLqMHmMSA1GfKcOrJBLnHS9teMOpXWN0q2aMI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S7LuoP5rMCuHcUiR0bmM/dIsKDIeOzaW9xsddN9j59yTxJWC5kNVRZBBF66v0fxUVd4fcTQzZseGtEVTGnZSEcKk1UlqGXkkVTlNYvqqHdKSxeKEj4uwMo8GevouDQzRNDl8c9HoOU7TUgcP7fb/JvX/NxNmpsEozFmPzsC6rDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EvppDEKe; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LAH0qN000585
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 11:10:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GMwMN9DSD/nnB6vD5iQlaXP8fE0DlL0JKkeqnocUKcI=; b=EvppDEKeILxJaBai
-	yXsQH6Toq6ipyVJkIf3hxQPSA0+mUa7KmwBWf/JSRQguTNAklSiRFypwbRGzZxv3
-	CVe3ahscsFPJDSfrhCs0vxCDvT4DF6TRklYKcfEYUOAP+xKujAk7fPp2zQLD9YEQ
-	AvJXHh58ibrKz2x/9x0GcwkGXDVRmHx2wekLHjeteXlWamm+AyRE85xa+2LPwQfh
-	XhgEto2Q0sCDC5q5jELTGIgYSdKBu2eH7Ofuqn6Kj0tByE0m/hHeSBAaND2kCAzs
-	efB1ucCGNuYJWkXVNKT7MfBXHOq6ANWGt6uuF3CNooQK+Y4dBmYx1Dex1VMvszOU
-	C3Desg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048v4q9c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 11:10:39 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ab5e4f4600so13389861cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 04:10:38 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=EX0IU39W6e3VRtfEty1C01q+Vxe7ZjcPIfin5EzhLFPoXvBA52ncjsPz7bMTeUKlmFnZxmYs8XzihNUcbGkazsz01JFrnaWjrsFIVqt6BQODRltnZyDurZbnTJwdzQXN4OhRM33SgpyXw7ZPi7Hds1VR4qlSX0k7G6z/u0wIfOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K3yCEvZ/; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a6e2d85705so2067270f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 04:13:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753096430; x=1753701230; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qCpk9GjmCqOqyvs+4Z7EUdmuqAEP2pxTsgkUzsyKDEo=;
+        b=K3yCEvZ/DbLZYArDvEFschm5fG6TaXd8DDVie+6xzKntLEHLI50c92iV1XvGo/Us/G
+         YIGoG0XHQJ8sShww3CwVnfdJeWTs3cbYiHWqsZJzT0vc0V28hXKGoswRBQOIT7A9gAu/
+         eqfSk+5iGhP1jbfWlsazv28vw1HgAYRyvddIsBhdHW2MNtcdZ0MfSY0xE1DF4+IrchNp
+         XMo8lto8Uym1MQ17aBusYX10uuv3gP0xfIrUyM9kypeCFsuwyUG7GYGBWKOFqnK/kX2w
+         oVc8zYWRxQs4/qGLEvT8wMbuyhce06N6uTqdmdoBMxn4fLIk1BR8CyuTKMnxaqfTCk5f
+         Jv+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753096238; x=1753701038;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1753096430; x=1753701230;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMwMN9DSD/nnB6vD5iQlaXP8fE0DlL0JKkeqnocUKcI=;
-        b=p3DsQQkubnQLg6gzFGW3Ap92iUFvexNme5OmyuFBKG19LPdOsvvAWKG+ybK3VbvtOB
-         i2zgMtTimsTMHTq1FMvbnEPRGksKpd+TVIImy3CQkaAnR9exFP/B6wxdWC85BVuzHiZ7
-         xWvhGKqdWDJNX7OI49gUqAdPDF57+ZX3d6pBw/TknO5+18yJjpmiIy2zceARJA3q43rY
-         ja9elbMwFkbcs5y+ojBKkwGx1sIqHJ7bhCUFCsm1ajypXH5L047hPGEao3LopbAl+nk5
-         U09qCl39+mXKsjxdeAGR2yeGfEhmnBEBZGM1/DLIfpIg+AexsHZEgTNu4IJgXNDCakHH
-         u5vQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWMPZ4PeBBfK+27/2k7qoSFbyndRxXSmr+o/FdMvZbYd+EztojbZdRnuITkpeX3vhJJmcZRT9juTQWxIM2y@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw54jTeAEcCctDVy4rcLCRWB+nayykzWKLDx/JrbovB6sIksfoM
-	ZLuQfi22GSIDlxSErXd+GtRuAdSZMYwiasdwhZzxWvJD1DXptHuDpw9DHhCU+ky4nzbsde/OSLr
-	4oXfz0pUUjKxzT+WwSuNC8PJyYyWw3p1Yhn5Y4mxw1D6+TzASKxeaa/zqRaAcnI33GGn9
-X-Gm-Gg: ASbGncvWz4irwzQfETdkzUNsSCuXxvHkP8l3uN15BQQC6CfLOe4N8pz9SqHgq38E5MO
-	Ys9rj0BXg/tzmpovTQ5IWO5YZMh0rejJxxSIuEl7Cw2clJ2cJJNhZbLVfHy4ahcCvSggsxMV4Yu
-	PyJKieAbV7J4ZfPO291+AeUU5ZjZwBJ0IYbFYY4pNsL5SEguoBAuGr1FCZ+samA2Q58ZwJLTSP6
-	nbyDpSB4t6cKTL4/xhaPH+e7nmQ1vYZa+i8rdSuSA5QjuE5UfxksyTy2UtBsSKEczEp5rVK3m1I
-	2zEFJUykZHBs0aVlG2L2pDj8I1SXotzBZG+/wRwCeYGvvDni/gdPaz7G/694oX4pmPZg+NA//ef
-	dymXKKVU/uVzLjAlLvQHv
-X-Received: by 2002:a05:620a:2850:b0:7e3:3c61:564a with SMTP id af79cd13be357-7e342b69642mr1175957985a.13.1753096237827;
-        Mon, 21 Jul 2025 04:10:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+usxYJ0rcx0aY5PomFcpe95e/guIMzZOIesQD8S5mJPCtrTQdxUcKX9zEaBa9XZtr7TlJTA==
-X-Received: by 2002:a05:620a:2850:b0:7e3:3c61:564a with SMTP id af79cd13be357-7e342b69642mr1175955585a.13.1753096237196;
-        Mon, 21 Jul 2025 04:10:37 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-612c8f09d99sm5298795a12.3.2025.07.21.04.10.34
+        bh=qCpk9GjmCqOqyvs+4Z7EUdmuqAEP2pxTsgkUzsyKDEo=;
+        b=UYyVVJg5ev89Szb2O7y5yaxVaqiEJkskU3Q4ejECgYfCmq8S+OaeZzXfG2f1YHoWud
+         VyZkhUCLxLPkwF42giv+9WqSjpu6D8z1dWhm1CLSAI5KeLvJYmf02Vi43KZMCB03UX5L
+         eOx3dBCbPEkbFoqSwDIEmOhWICwcYJHEX8n4voOkl1YSCVi0IqP9hHXTw3wtE8HcUWma
+         Rr90tPfATDz+KpSIGEeOfEL5TjqIOCMpwJdKEBy33qcwPo0mVk4xuAt4l4LXIlYPzGca
+         H35uZRoudGRVfBPo7xU1hIHKcgdXsTWaQWcC/NIJjGjQJxQO+ag3etNyBf41iEFNEsTQ
+         rltQ==
+X-Gm-Message-State: AOJu0YxlPPhE4lRBhYv/CBRT9t2s8uRujhwwK6S7uBN9OaOlJolZRUW+
+	1VxkEgoe2FQBYdIJYcxi4aB8NQVF9oj93u6zmtwqRJQkHTzpOyunHFxR9GP0FwWVFeM=
+X-Gm-Gg: ASbGncvGj8lKiFBcJqxuSMoKuqN3cUYl8bKdzdwXDe54/HsQj34lL17EEA7hYaI/lIT
+	JBoevywGEHqeSvfQWHoBgCnQ4wl0u831Juw6oqpOWC/zCk6RL6ck+6i3xQn9wIvWd5/gr/cCUFp
+	aIR1ymHoJOYO7cYCd74Su4uEEoEQt6ZlTu0tXGRN5gsbg7K+GEOObgzIU76kMIOPhtWrA4Tl+gA
+	z9RqoCZEQ+uPUvyqPV1tYbcGQaClKUP4C4aBgXbGRkMqEzvcqhmCpRpsmbuEcDORnVd8zatYev7
+	6KxqvT8dRyuLe2elUq3Ewd7olar6FgW/5Z4vHCu9QHB8hQjFtEQxmZNw4+GuQQEDHy3PisPi8Ae
+	XBdRRlJ0Uzfi4s7BdStDZiHQjtfcIKPZeRPvI8Z6AU8JRLNloHheJ7ciSbK800mk=
+X-Google-Smtp-Source: AGHT+IGphSZ4nqGy3QQspzTFvacskBSUZG+3aCT88SVK0C+HxQ5ng+J8deaVhU6sjyoaTxsnS6cTNg==
+X-Received: by 2002:a05:6000:144a:b0:3a8:310a:b1dc with SMTP id ffacd0b85a97d-3b60ddc64e3mr16113819f8f.56.1753096429728;
+        Mon, 21 Jul 2025 04:13:49 -0700 (PDT)
+Received: from [192.168.1.36] (p549d4bd0.dip0.t-ipconnect.de. [84.157.75.208])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca5c9e2sm10284808f8f.89.2025.07.21.04.13.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jul 2025 04:10:36 -0700 (PDT)
-Message-ID: <4d7aa1c4-9dd9-424c-bce1-fd000ba2a56c@oss.qualcomm.com>
-Date: Mon, 21 Jul 2025 13:10:33 +0200
+        Mon, 21 Jul 2025 04:13:49 -0700 (PDT)
+Message-ID: <b38accf6-c7f5-4728-9507-2d380207935f@linaro.org>
+Date: Mon, 21 Jul 2025 13:13:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,67 +81,72 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] arm64: dts: qcom: sc7280: Flatten primary usb
- controller node
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com>
+Subject: Re: [PATCH v2 4/4] iio: Add Qualcomm Sensor Manager driver
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com>
+To: y.oudjana@protonmail.com, Manivannan Sadhasivam <mani@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor
+ <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>,
+ Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>,
+ =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+ linux-iio@vger.kernel.org
+References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com>
+ <20250710-qcom-smgr-v2-4-f6e198b7aa8e@protonmail.com>
+From: Casey Connolly <casey.connolly@linaro.org>
+In-Reply-To: <20250710-qcom-smgr-v2-4-f6e198b7aa8e@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: aPMlljAE29XGmgcDxxuhmZFucslaDlWz
-X-Authority-Analysis: v=2.4 cv=SYL3duRu c=1 sm=1 tr=0 ts=687e202f cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=3thKaPtOxDKtY4w2F4IA:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDA5OSBTYWx0ZWRfX7UKxQqcDXvhZ
- gJEuwGgvkvHgHN5WCGwEHJbwTWtWPWeOBbzqALjUNrQ4wk4gjWZk9ZwPi40hLUenFPGqo+p+EfV
- X5ugQEdRYpK3OgiDDtVVDXdhzVyJ36i/9cyeER37AYqr47a41arguNdPC4PrMLd5zfhhwGz1evp
- CJ+xLoVcISTTaKV2/7tyOOPuFZ9o7qt3aly2JVQwmUiRLxVYpILJ+zNz2kcIgXqbypjtwr4b6f9
- KZKiIEQRcs5fqbolX32F5/Vi2h5yWc5sATvGL3P0Tg15jnx+1bRsA1foWnn/zTluQMFg84DG4NK
- 3zauF7igf4qaul3YQrbi/F7t3dQGEPYNm8nvNTiVNaNIwbqEyJca9BHyijVlkrl60mMsYjw3W7s
- xPbI1d0JwX1v5AOPvhbvboMIRdlj1Ta0Nnd/9FTA0BceDXrZ/OgcjZkve4B9KXsEoff5ctyD
-X-Proofpoint-ORIG-GUID: aPMlljAE29XGmgcDxxuhmZFucslaDlWz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-21_03,2025-07-21_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0 mlxlogscore=875
- lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507210099
 
-On 7/20/25 9:21 AM, Krishna Kurapati wrote:
-> Flatten primary usb controller node and update to using latest
-> bindings and flattened driver approach.
+Hi Yassine,
+
+On 10/07/2025 10:06, Yassine Oudjana via B4 Relay wrote:
+> From: Yassine Oudjana <y.oudjana@protonmail.com>
 > 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> Add a driver for sensors exposed by the Qualcomm Sensor Manager service,
+> which is provided by SLPI or ADSP on Qualcomm SoCs. Supported sensors
+> include accelerometers, gyroscopes, pressure sensors, proximity sensors
+> and magnetometers.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 > ---
-
-[...]
-
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index b1cc3bc1aec8..e94e21301bdd 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -4245,13 +4245,9 @@ compute-cb@14 {
->  		};
+>  MAINTAINERS                                     |  13 +
+>  drivers/iio/accel/qcom_smgr_accel.c             | 138 ++++
+>  drivers/iio/common/Kconfig                      |   1 +
+>  drivers/iio/common/Makefile                     |   1 +
+>  drivers/iio/common/qcom_smgr/Kconfig            |  16 +
+>  drivers/iio/common/qcom_smgr/Makefile           |   8 +
+>  drivers/iio/common/qcom_smgr/qcom_smgr.c        | 840 ++++++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/Makefile       |   3 +
+>  drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.c | 713 ++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.h | 161 +++++
+>  include/linux/iio/common/qcom_smgr.h            |  80 +++
+>  11 files changed, 1974 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b5a472a544cfe2ad87691209c34d7bafe058ba42..0fb91c9bce431fc899776ff10b728ecdc957f51a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -20702,6 +20702,19 @@ F:	Documentation/networking/device_drivers/cellular/qualcomm/rmnet.rst
+>  F:	drivers/net/ethernet/qualcomm/rmnet/
+>  F:	include/linux/if_rmnet.h
 >  
->  		usb_1: usb@a6f8800 {
-> -			compatible = "qcom,sc7280-dwc3", "qcom,dwc3";
-> -			reg = <0 0x0a6f8800 0 0x400>;
-> +			compatible = "qcom,sc7280-dwc3", "qcom,snps-dwc3";
-> +			reg = <0 0x0a6f8800 0 0xfc100>;
+> +QUALCOMM SENSOR MANAGER IIO DRIVER
+> +M:	Yassine Oudjana <y.oudjana@protonmail.com>
+> +L:	linux-iio@vger.kernel.org
+> +L:	linux-arm-msm@vger.kernel.org
+> +S:	Maintained
 
-You forgot to change the base address
+Missing drivers/iio/accel/qcom_smgr_accel.c here
 
-Konrad
+Kind regards,
+
+-- 
+// Casey (she/her)
+
 
