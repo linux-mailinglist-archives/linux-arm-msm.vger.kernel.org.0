@@ -1,178 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-65875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55AA5B0C1A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:46:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3BC9B0C1FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:58:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D2797AEAEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 10:45:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C75173A8C57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 10:58:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BD8F2980DF;
-	Mon, 21 Jul 2025 10:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 446262918C8;
+	Mon, 21 Jul 2025 10:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uKMwD7tk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BgphFoUj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1A42989B4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 10:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F39E28DB77;
+	Mon, 21 Jul 2025 10:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753094672; cv=none; b=V8SY/nw5z6Y8ZPcIT9Q4xIlX/z+mkM8PguFohFplGRQjdwM/3gqZjLGtT1J/Yla2VD5dXQ5BBNbqJWxG63yOl+ZzCOcrv1IQ/qqPmRVukAf7z69zEEius7wdWCM4BP0CqB/cS4AKZ6zgNvb17vnJ0Mr+SP78/LyWq1EUekbfhyk=
+	t=1753095413; cv=none; b=SbUn9svZ75FLJ1cka8z1nQgYMQJYj6ntQex807VR1KV96tCBJwvVvMWiZtcjee5xx4269sREVIHxW6oR+/R1iDeZYNeymd/rKeuB1WwMXvl2aQgvoi8Ej13+43cZcku0p8dLr/cOKQMGSWHwRdE1kRXR5qw7YiRJQeA4ytX/kM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753094672; c=relaxed/simple;
-	bh=Jyg9VIduqhzzijMHnSKAC2B6G1xD8WFdq0kn3G+RX/E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SuAhFUj6oTCjgy8jPqz+y9KQg7mJ/lHXRW8jIKXEEvtsLQF4EaQ8IV2J0hfj8ZOjCC2NJMwQMeGs9HrOmMI1NVNUc25zggbHKe2WrF8Y9KF9jhEgUATKgPrFiWv1tjlM/t8F4Gj3d6Bgup7OVmSqIzcSWPlYL2VfZCmydkQyodM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uKMwD7tk; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a575a988f9so2422029f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 03:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753094668; x=1753699468; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jv8CKZAnBLUK/0fb5CiuD7Hp6E+b8QPJo8tRAQ5ZhDg=;
-        b=uKMwD7tkDvM6y1ai4Cu5EVRzwrIwC83suT5zEhID5qe2mwleN7zru6IM8MNu7+SUbd
-         vgX4l23PX6jIuXULkaJ+TZ3rQ8DgvCSmsxzitnTo+2P+xR1z05kAhjPbNO6apTwr4DNw
-         GmJgdxYa2PqJOo0U+EiI1aiKju5Ov4DsUZBp//Q+IZKwDwDBHfy4Cs5PN/+snhj940Cs
-         s+wcZA+nsqI0Ywhwe7pY9zH8/gYB6FboDPs8KArN3fVKdyB6hxVxGyqOE8f/YxHjxS5k
-         Qq3uIYladgqRGv6yBgyWOrT1rgbsPT1QMm9kqMQdY3DKEFtIM0h0D4TmxlDxvzaX1xRg
-         musA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753094668; x=1753699468;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jv8CKZAnBLUK/0fb5CiuD7Hp6E+b8QPJo8tRAQ5ZhDg=;
-        b=qk/7nEZa/pMTV1PysMvuOcUSsBieroe26yKq08QFaDPA3ZPqzMmR3oHXK4Ya7+Gp4e
-         LcfDvC5Ll1Jr5DHCqhyTLpHR00cRcBVhHJPKhrLH+U4hVyuRPg+4qk0gOay7YxlKeWPp
-         G/yu0c0T2ceq3/ddDtiIez/H0SOPWlgp9yzrqAHDvS4iExffj8W8BjF7kMTHGPkgdZ17
-         DbYOC75uO31aarRsDx0FDaV2wlpzERZVjXUN8mna4SktOjPAuWFFYZNDxOejqtc45SRu
-         Vvk21O4E2o+rjWTr10Xrn7w8AwNuzSHHFDG34g2tU9OhEPVWByUReSmyP6cInSjs23Ze
-         Vztg==
-X-Forwarded-Encrypted: i=1; AJvYcCWNP/SjTxumSiUQBBfyHnBzW2oz525IA7LDGcMMb5JTLvWvQgncDWkcT7/aSp0X15HT6asu/ry45pj4FyyJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz36kQ8gY/FC7xnAvMC1UuBKF6nuwd2mGJC4mvHYwisikiTMtT8
-	PKQVGDgrn2AiXxuXrdIyXwczE+A5OJVgdm/jkjT5er37Lg7vR/dYDVqnSl2uNJoDbAk=
-X-Gm-Gg: ASbGncsxH4lHArvCgdc+0Od8JXu2nj+Tc0guuucAMpWcYpHxCi4jWe0IagXy+fWlR2c
-	XSd4/QJbNNlpAoNlCNZ/t0Coruvu/XzrNDCVEzAWqYgRix3+eYNVhwkUEoFeIXdSHADaYrD4p4u
-	8aGAGeEd6L4RyKXeOZazFPaPi523KSarINrI7E9NqBN/WnE2v1+zjXu5+BXtDKEpD2DdWpUHT3A
-	inselafc/bMhzG4URTTIdHgsimHnxZPiwOTwdArJ6ZEYhO+HJe0+Ff6CNmP9EJPTlnjGM/O3Z5N
-	MEA+fbNu0VogJqGSgx7VOsjZnlujas9ehZVg1EWzzGxGKTdv9VVByFK7t5LPPgPxrD+W5ZzGi/W
-	xZ8KBloma2hqLXt5TAF8kfRgc0CSwvPUBtTF+/QtgtdjHJ4IqhKXKrhp5xOdsyP/2orB+kI4luA
-	==
-X-Google-Smtp-Source: AGHT+IHsr6BfHmmGvAFEpmk7FK7MXUXtHfZVvvvivtdI5mefMv0lLuRMGQqdMBTcEDjNOnr/mFRYmQ==
-X-Received: by 2002:a05:6000:4108:b0:3a4:dc42:a0c3 with SMTP id ffacd0b85a97d-3b61b22ec16mr7504872f8f.56.1753094668208;
-        Mon, 21 Jul 2025 03:44:28 -0700 (PDT)
-Received: from [192.168.1.36] (p549d4bd0.dip0.t-ipconnect.de. [84.157.75.208])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca48c40sm10159988f8f.58.2025.07.21.03.44.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jul 2025 03:44:27 -0700 (PDT)
-Message-ID: <e724e6a2-21a8-436a-8809-ce73c0afa433@linaro.org>
-Date: Mon, 21 Jul 2025 12:44:26 +0200
+	s=arc-20240116; t=1753095413; c=relaxed/simple;
+	bh=Rg8LnypdqotxPvwOM27B1HNnAB93oL3zBoV9AsYSp5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CXaYCifOHhOjmKbVIbQhLG0jDcwmDjhiJXG98/SHhwpQ1VUw8Sd+xYK4BMt7xQ4CY9iYoexyDH22eog0q9QL8V5YhYLzfXaqVuOVJGKhhmteZRcoAk99/M+8hLV3MhfjxxFYCDdPoZtLaPW1mOy0RKHxg4NxNv8Fd8zhLfTikb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BgphFoUj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBD2C4CEED;
+	Mon, 21 Jul 2025 10:56:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753095412;
+	bh=Rg8LnypdqotxPvwOM27B1HNnAB93oL3zBoV9AsYSp5U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BgphFoUj1iEnlym93p6H1QrGMhQNltjgtYaa3i9ZVdkRXJDctq8tEb6jdAv8fVIrz
+	 uNeyXE/2l8JCbygDdvoawXb3TMSfVs1o0JhnYWQjYLCgVcjk/8QoSVWU203JCFj6Qn
+	 xUiu21cScsiI9RTkV9FHZo6LKZDmAH+nBSlQlqekAc8QXAMiSmZ6m0kUtoAiNy5Tm+
+	 nIE11JhM0qotQiriWQuxVG+lXDLyGy1IOuOx9+EjvhaDuIV/+0mTfeBqHGvKF1CHXi
+	 41oS0glfvIceZXBSxCufw3mPZlmX/CSgZqEBbR9dDSNSzP1J4keaJFheOzd9RfXK/B
+	 pwc+eTdcFTqYg==
+Date: Mon, 21 Jul 2025 16:26:41 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: qcom: Switch to bus notifier for enabling ASPM
+ of PCI devices
+Message-ID: <rmltahsjvllae3or7jjk5kwvdkcqohj4bbjsfv4mnfbuq7376s@wtsha4zorf2p>
+References: <20250714-aspm_fix-v1-0-7d04b8c140c8@oss.qualcomm.com>
+ <20250714-aspm_fix-v1-1-7d04b8c140c8@oss.qualcomm.com>
+ <aH4JPBIk_GEoAezy@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Content-Language: en-US
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- sboyd@kernel.org
-Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
- andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
- srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org,
- krzysztof.kozlowski@linaro.org, u.kleine-koenig@baylibre.com,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org
-References: <20250721075525.29636-1-angelogioacchino.delregno@collabora.com>
- <20250721075525.29636-3-angelogioacchino.delregno@collabora.com>
-From: Casey Connolly <casey.connolly@linaro.org>
-In-Reply-To: <20250721075525.29636-3-angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aH4JPBIk_GEoAezy@hovoldconsulting.com>
 
-Hi Angelo,
-
-On 21/07/2025 09:55, AngeloGioacchino Del Regno wrote:
-> Some Qualcomm PMICs integrate a SDAM device, internally located in
-> a specific address range reachable through SPMI communication.
+On Mon, Jul 21, 2025 at 11:32:44AM GMT, Johan Hovold wrote:
+> On Mon, Jul 14, 2025 at 11:31:04PM +0530, Manivannan Sadhasivam wrote:
+> > Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0
+> > ops") allowed the Qcom controller driver to enable ASPM for all PCI devices
+> > enumerated at the time of the controller driver probe. It proved to be
+> > useful for devices already powered on by the bootloader as it allowed
+> > devices to enter ASPM without user intervention.
+> > 
+> > However, it could not enable ASPM for the hotplug capable devices i.e.,
+> > devices enumerated *after* the controller driver probe. This limitation
+> > mostly went unnoticed as the Qcom PCI controllers are not hotplug capable
+> > and also the bootloader has been enabling the PCI devices before Linux
+> > Kernel boots (mostly on the Qcom compute platforms which users use on a
+> > daily basis).
+> > 
+> > But with the advent of the commit b458ff7e8176 ("PCI/pwrctl: Ensure that
+> > pwrctl drivers are probed before PCI client drivers"), the pwrctrl driver
+> > started to block the PCI device enumeration until it had been probed.
+> > Though, the intention of the commit was to avoid race between the pwrctrl
+> > driver and PCI client driver, it also meant that the pwrctrl controlled PCI
+> > devices may get probed after the controller driver and will no longer have
+> > ASPM enabled. So users started noticing high runtime power consumption with
+> > WLAN chipsets on Qcom compute platforms like Thinkpad X13s, and Thinkpad
+> > T14s, etc...
 > 
-> Instead of using the parent SPMI device (the main PMIC) as a kind
-> of syscon in this driver, register a new SPMI sub-device for SDAM
-> and initialize its own regmap with this sub-device's specific base
-> address, retrieved from the devicetree.
+> Note the ASPM regression for ath11k/ath12k only happened in 6.15, so
+> commit b458ff7e8176 ("PCI/pwrctl: Ensure that pwrctl drivers are probed
+> before PCI client drivers") in 6.13 does not seem to be the immediate
+> culprit here.
 > 
-> This allows to stop manually adding the register base address to
-> every R/W call in this driver, as this can be, and is now, handled
-> by the regmap API instead.
 
-This is honestly a really nice improvement :D>
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> ---
->  drivers/nvmem/qcom-spmi-sdam.c | 41 +++++++++++++++++++++++++---------
->  1 file changed, 30 insertions(+), 11 deletions(-)
+This series was intented to fix the ASPM issue which exist even before the
+introduction of pwrctrl framework. But I also agree that the below commits made
+the issue more visible and caused regression on platforms where WLAN used to
+work.
+
+> Candidates from 6.15 include commits like
 > 
-> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-> index 4f1cca6eab71..1b80e8563a33 100644
-> --- a/drivers/nvmem/qcom-spmi-sdam.c
-> +++ b/drivers/nvmem/qcom-spmi-sdam.c
-> @@ -9,6 +9,7 @@
->  #include <linux/nvmem-provider.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
-> +#include <linux/spmi.h>
->  
->  #define SDAM_MEM_START			0x40
->  #define REGISTER_MAP_ID			0x40
-> @@ -20,7 +21,6 @@
->  struct sdam_chip {
->  	struct regmap			*regmap;
->  	struct nvmem_config		sdam_config;
-> -	unsigned int			base;
->  	unsigned int			size;
->  };
->  
-> @@ -73,7 +73,7 @@ static int sdam_read(void *priv, unsigned int offset, void *val,
->  		return -EINVAL;
->  	}
->  
-> -	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, bytes);
-> +	rc = regmap_bulk_read(sdam->regmap, offset, val, bytes);
->  	if (rc < 0)
->  		dev_err(dev, "Failed to read SDAM offset %#x len=%zd, rc=%d\n",
->  						offset, bytes, rc);
-> @@ -100,7 +100,7 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
->  		return -EINVAL;
->  	}
->  
-> -	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, bytes);
-> +	rc = regmap_bulk_write(sdam->regmap, offset, val, bytes);
->  	if (rc < 0)
->  		dev_err(dev, "Failed to write SDAM offset %#x len=%zd, rc=%d\n",
->  						offset, bytes, rc);
-> @@ -110,28 +110,47 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
->  
->  static int sdam_probe(struct platform_device *pdev)
->  {
-> +	struct regmap_config sdam_regmap_config = {
-> +		.reg_bits = 16,
-> +		.val_bits = 16,
+> 	957f40d039a9 ("PCI/pwrctrl: Move creation of pwrctrl devices to pci_scan_device()")
+> 	2489eeb777af ("PCI/pwrctrl: Skip scanning for the device further if pwrctrl device is created")
+> 
+> This is probably related to the reports of these drivers sometimes
+> failing to probe with
+> 
+> 	ath12k_pci 0004:01:00.0: of_irq_parse_pci: failed with rc=134
+> 
+> after pwrctrl was merged, and which since 6.15 should instead result in
+> the drivers not probing at all (as we've discussed off list).
+> 
 
-I believe registers are 8 bits wide, at least on Qualcomm platforms.
+We discussed about the ASPM issue IIRC. The above mentioned of_irq_parse_pci
+could also be related to the fact that we are turning off the supplies after
+pci_dev destruction. For this issue, I guess the patch from Brian could be the
+fix:
 
-Kind regards,
+https://lore.kernel.org/linux-pci/20250711174332.1.I623f788178c1e4c5b1a41dbfc8c7fa55966373c0@changeid/
+
+> > Obviously, it is the pwrctrl change that caused regression, but it
+> > ultimately uncovered a flaw in the ASPM enablement logic of the controller
+> > driver. So to address the actual issue, switch to the bus notifier for
+> > enabling ASPM of the PCI devices. The notifier will notify the controller
+> > driver when a PCI device is attached to the bus, thereby allowing it to
+> > enable ASPM more reliably. It should be noted that the
+> > 'pci_dev::link_state', which is required for enabling ASPM by the
+> > pci_enable_link_state_locked() API, is only set by the time of
+> > BUS_NOTIFY_BIND_DRIVER stage of the notification. So we cannot enable ASPM
+> > during BUS_NOTIFY_ADD_DEVICE stage.
+> > 
+> > So with this, we can also get rid of the controller driver specific
+> > 'qcom_pcie_ops::host_post_init' callback.
+> > 
+> > Cc: stable@vger.kernel.org # v6.7
+> > Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
+> 
+> So whatever form this fix ends up taking it only needs to be backported
+> to 6.15.
+> 
+> As you mention above these platforms do not support hotplug, but even if
+> they were, enabling ASPM for hotplugged devices is arguably more of a
+> new features than a bug fix.
+> 
+
+FYI, I'm going to drop this series in favor this (with one yet-to-be-submitted
+patch on top):
+https://lore.kernel.org/linux-pci/20250720190140.2639200-1-david.e.box@linux.intel.com/
+
+- Mani
+
 -- 
-// Casey (she/her)
-
+மணிவண்ணன் சதாசிவம்
 
