@@ -1,404 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-65884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A836B0C2E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:28:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30EEAB0C2FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:31:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2F431AA0FE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:28:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A28917AD844
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:30:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5187F29B772;
-	Mon, 21 Jul 2025 11:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCB5629B8DB;
+	Mon, 21 Jul 2025 11:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lj4ANwo0"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="djgJ2LvK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7CF29B8D2;
-	Mon, 21 Jul 2025 11:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D6F288C0C;
+	Mon, 21 Jul 2025 11:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753097318; cv=none; b=F6RLIU7deOpzjlQ+88lZw2gfVtSuqkm8Ba7UqZ02M8NRs5AMyOLtCtI5/MIlXZD0HYmb7A+6YXrzVXyajWNa0enWcD/fQpw1YWqMRoWLuh6I50v0eD6h6WSGlq7/R974segBjhXU0mph/3SRV/AM/juiwnjpJbDpq4DKhUHLxKU=
+	t=1753097480; cv=none; b=q7ZqPPLlMaS6bC++YTkRSSopJrAtARDdfcQb2o+TOH9OMic0qj6PUIc7nXxT3Wgc7r6h+E/SC8Qg7tgKNOFeXyDBOw6+yfyc9x/As0WWsVIyYSPLOJzQSruBexyhBrO5SDp39F02brIZIgO87dHc8qVMGZzhHOgYDWCWqfJ8JLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753097318; c=relaxed/simple;
-	bh=eQezYz66/+XQz7IKViqI2K/mgmBuRA+/oJUk8NS0y3M=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=bRDdGtPzT0AG8CqnX3duvmfJwP508WoNRsuq6Te8vQ9sw2s9YpweP5mL5dVwMS6N/BiNZghtngXuHgoOQUb0rkOJUFklXenbdVrHuqcBSryOYAcPddwQYtGvG3eQWAymD+Q5wBJ/yX15qqCnDGhJQf/7KJc85ZNOb3oX0uvkvWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lj4ANwo0; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1753097480; c=relaxed/simple;
+	bh=ni6NB75dBKeFo+kbnJ/UKz3oYO037eTbMmo0vF9YVBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O0FIz7RRNQohPO/WjPkpfDaoYtl+A9MDSzQQWZfdvYF4U8rdFilHVV3yw0fqhcJ+gU+OCjhEXo8c1ZUQxdiZA1J8qSS7pIL7MvzY/eYeHFoqNj/XK2I0kOwp1fiJ7aFWuR6xtz4NdG6yhrzfdPZ15/0zPlCPYLc91SdcQ8YucMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=djgJ2LvK; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753097316; x=1784633316;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=eQezYz66/+XQz7IKViqI2K/mgmBuRA+/oJUk8NS0y3M=;
-  b=lj4ANwo0meC48397Hxv9AzSuT6pQuuOOwuIznqYjjcp+5jxreqN2rytu
-   PI55FQJ+yfUoc3J2/s/3jDvhXQc4YmpQ6D09fKrDkUeUW6DgESUOIG6nW
-   JtsiDKjJAoklUbMNJYit2El20Z5vbk8V1TdwLWtZmIlDDUsfq7CRXx1rp
-   gSH0OI6n0eRPDvllh6nyHyKURGDnyRea2DNiSrE4LlhfGfk8LkQf6cDch
-   AgHRoHuf0YEKmifGQI2hJsg9jF9aiF367bFNTWsc9utOb3YvF7p6CC/oS
-   aZEBLc3c8i9q9HG2ypfjbNZzfcgUmzPvjR3nH0d+i8Pa4gUdGC8/95n8N
+  t=1753097479; x=1784633479;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ni6NB75dBKeFo+kbnJ/UKz3oYO037eTbMmo0vF9YVBU=;
+  b=djgJ2LvKrhEBOkBwBQifO/Q/QyUzV3BLX2WA0XiRML+AGGw6k+xeQ9hv
+   02L6kQjt3FcTLMRwkB4s9EOYiwa3oZqQ2FVv/IB1dtmhDQyIV4H98V+Nx
+   DGmuSARZrSLI0M/yb337DiEmaSi6kxTJZxgrQHjzCooIZuUTnMsof/aon
+   i8jETXzTQZHaPZsCU3mlye1arKbc1Gy1cYz0wQI82mYDBTwaodKiN95Nw
+   NNCZL8ncZw6SiU5hqyTs5dYFiVAwygqtPPswMly2+4LxHYvkQYRS7mWeT
+   y4wuyE34PkLBqR32XFu9i+tA9KpOP113zOH+Gsq598lRMEkeMI00ptUP7
    Q==;
-X-CSE-ConnectionGUID: 8UA/VAeMT2qYOz6pBKNj+Q==
-X-CSE-MsgGUID: B/JnR9MGQomVEL/8K0hrnA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11498"; a="65568039"
+X-CSE-ConnectionGUID: Ig2pPqOpSpyWsJ6vUXsiMA==
+X-CSE-MsgGUID: LUOa5WnMQi2rYhWHvUlSSw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11498"; a="72877893"
 X-IronPort-AV: E=Sophos;i="6.16,328,1744095600"; 
-   d="scan'208";a="65568039"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 04:28:35 -0700
-X-CSE-ConnectionGUID: 1/T2S8u1Q2a/5Zgu9KCCcA==
-X-CSE-MsgGUID: p+6P3nXnQ1a2p9PTO3h6zA==
+   d="scan'208";a="72877893"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 04:31:18 -0700
+X-CSE-ConnectionGUID: k3nqpQsRRV21/dckljTYhg==
+X-CSE-MsgGUID: IuA4pZulSxy2Xw8ORfd5PQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,328,1744095600"; 
-   d="scan'208";a="158471166"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.225])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 04:28:28 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 21 Jul 2025 14:28:24 +0300 (EEST)
-To: Manivannan Sadhasivam <mani@kernel.org>, 
-    "Rafael J. Wysocki" <rafael@kernel.org>
-cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-    Jeff Johnson <jjohnson@kernel.org>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
-    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-    Nirmal Patel <nirmal.patel@linux.intel.com>, 
-    Jonathan Derrick <jonathan.derrick@linux.dev>, 
-    linux-wireless@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    ath12k@lists.infradead.org, ath11k@lists.infradead.org, 
-    ath10k@lists.infradead.org, Bjorn Helgaas <helgaas@kernel.org>, 
-    linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    Qiang Yu <qiang.yu@oss.qualcomm.com>
-Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
- APIs to enable/disable ASPM states
-In-Reply-To: <je7sz6lgig3picksxv4ncfjcnnw2sdsp5ja6bwofqjuydhc4v6@b3kavwicxggu>
-Message-ID: <fdfcc2c8-c749-2616-9295-7f4aa37fb0a4@linux.intel.com>
-References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com> <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com> <7a97d075-2e37-5f40-5247-867146938613@linux.intel.com> <3q2gqo6ipzyqr7i64yhndtpg4etwep4lgffk7emxluxuhjfya5@vt7czmsgpbuw>
- <52baf40b-41ed-2588-7817-4d8cd859e0d1@linux.intel.com> <je7sz6lgig3picksxv4ncfjcnnw2sdsp5ja6bwofqjuydhc4v6@b3kavwicxggu>
+   d="scan'208";a="162855115"
+Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
+  by fmviesa003.fm.intel.com with ESMTP; 21 Jul 2025 04:31:13 -0700
+Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1udojf-000Gkz-0h;
+	Mon, 21 Jul 2025 11:31:11 +0000
+Date: Mon, 21 Jul 2025 19:30:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	sboyd@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, jic23@kernel.org, dlechner@baylibre.com,
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
+	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
+	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
+	u.kleine-koenig@baylibre.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org
+Subject: Re: [PATCH v1 5/7] misc: qcom-coincell: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <202507211953.9ai6l420-lkp@intel.com>
+References: <20250721075525.29636-6-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1126931654-1753097304=:69097"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250721075525.29636-6-angelogioacchino.delregno@collabora.com>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi AngeloGioacchino,
 
---8323328-1126931654-1753097304=:69097
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+kernel test robot noticed the following build errors:
 
-On Mon, 21 Jul 2025, Manivannan Sadhasivam wrote:
+[auto build test ERROR on next-20250718]
+[cannot apply to jic23-iio/togreg sre-power-supply/for-next char-misc/char-misc-testing char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.16-rc7 v6.16-rc6 v6.16-rc5 v6.16-rc7]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> On Mon, Jul 21, 2025 at 01:09:05PM GMT, Ilpo J=C3=A4rvinen wrote:
-> > On Mon, 21 Jul 2025, Manivannan Sadhasivam wrote:
-> > > On Mon, Jul 21, 2025 at 11:04:10AM GMT, Ilpo J=C3=A4rvinen wrote:
-> > > > On Wed, 16 Jul 2025, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.c=
-om>
-> > > > >=20
-> > > > > It is not recommended to enable/disable the ASPM states on the ba=
-ck of the
-> > > > > PCI core directly using the LNKCTL register. It will break the PC=
-I core's
-> > > > > knowledge about the device ASPM states. So use the APIs exposed b=
-y the PCI
-> > > > > core to enable/disable ASPM states.
-> > > > >=20
-> > > > > Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.=
-0_V2.0_SILICONZ-3
-> > > > >=20
-> > > > > Reported-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.q=
-ualcomm.com>
-> > > > > ---
-> > > > >  drivers/net/wireless/ath/ath.h        | 14 ++++++++++++++
-> > > > >  drivers/net/wireless/ath/ath12k/pci.c | 10 ++++------
-> > > > >  2 files changed, 18 insertions(+), 6 deletions(-)
-> > > > >=20
-> > > > > diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireles=
-s/ath/ath.h
-> > > > > index 34654f710d8a1e63f65a47d4602e2035262a4d9e..ef685123b66bf4f41=
-428fec67c1967f242a9ef27 100644
-> > > > > --- a/drivers/net/wireless/ath/ath.h
-> > > > > +++ b/drivers/net/wireless/ath/ath.h
-> > > > > @@ -21,6 +21,8 @@
-> > > > >  #include <linux/skbuff.h>
-> > > > >  #include <linux/if_ether.h>
-> > > > >  #include <linux/spinlock.h>
-> > > > > +#include <linux/pci.h>
-> > > > > +#include <linux/pci_regs.h>
-> > > > >  #include <net/mac80211.h>
-> > > > > =20
-> > > > >  /*
-> > > > > @@ -336,4 +338,16 @@ static inline const char *ath_bus_type_to_st=
-ring(enum ath_bus_type bustype)
-> > > > >  =09return ath_bus_type_strings[bustype];
-> > > > >  }
-> > > > > =20
-> > > > > +static inline int ath_pci_aspm_state(u16 lnkctl)
-> > > > > +{
-> > > > > +=09int state =3D 0;
-> > > > > +
-> > > > > +=09if (lnkctl & PCI_EXP_LNKCTL_ASPM_L0S)
-> > > > > +=09=09state |=3D PCIE_LINK_STATE_L0S;
-> > > > > +=09if (lnkctl & PCI_EXP_LNKCTL_ASPM_L1)
-> > > > > +=09=09state |=3D PCIE_LINK_STATE_L1;
-> > > > > +
-> > > > > +=09return state;
-> > > > > +}
-> > > > > +
-> > > > >  #endif /* ATH_H */
-> > > > > diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/=
-wireless/ath/ath12k/pci.c
-> > > > > index 489d546390fcdab8f615cc9184006a958d9f140a..a5e11509e3ab8faad=
-6638ff78ce6a8a5e9c3cbbd 100644
-> > > > > --- a/drivers/net/wireless/ath/ath12k/pci.c
-> > > > > +++ b/drivers/net/wireless/ath/ath12k/pci.c
-> > > > > @@ -16,6 +16,8 @@
-> > > > >  #include "mhi.h"
-> > > > >  #include "debug.h"
-> > > > > =20
-> > > > > +#include "../ath.h"
-> > > > > +
-> > > > >  #define ATH12K_PCI_BAR_NUM=09=090
-> > > > >  #define ATH12K_PCI_DMA_MASK=09=0936
-> > > > > =20
-> > > > > @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct at=
-h12k_pci *ab_pci)
-> > > > >  =09=09   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1))=
-;
-> > > > > =20
-> > > > >  =09/* disable L0s and L1 */
-> > > > > -=09pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> > > > > -=09=09=09=09   PCI_EXP_LNKCTL_ASPMC);
-> > > > > +=09pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PC=
-IE_LINK_STATE_L1);
-> > > >=20
-> > > > I'd remove to comment too as the code is self-explanatory after thi=
-s=20
-> > > > change.
-> > > >=20
-> > >=20
-> > > Ack
-> > >=20
-> > > > > =20
-> > > > >  =09set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
-> > > > >  }
-> > > > > @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct a=
-th12k_pci *ab_pci)
-> > > > >  {
-> > > > >  =09if (ab_pci->ab->hw_params->supports_aspm &&
-> > > > >  =09    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flag=
-s))
-> > > > > -=09=09pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_L=
-NKCTL,
-> > > > > -=09=09=09=09=09=09   PCI_EXP_LNKCTL_ASPMC,
-> > > > > -=09=09=09=09=09=09   ab_pci->link_ctl &
-> > > > > -=09=09=09=09=09=09   PCI_EXP_LNKCTL_ASPMC);
-> > > > > +=09=09pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_=
-pci->link_ctl));
-> > > > >  }
-> > > > > =20
-> > > > >  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
-> > > >=20
-> > > > As you now depend on ASPM driver being there, these should also add=
- to=20
-> > > > Kconfig:
-> > > >=20
-> > > > depends on PCIEASPM
-> > > >=20
-> > >=20
-> > > I thought about it, but since this driver doesn't necessarily enable =
-ASPM for
-> > > all the devices it supports, I didn't add the dependency. But looking=
- at it
-> > > again, I think makes sense to add the dependency since the driver can=
-not work
-> > > reliably without disabling ASPM (for the supported devices).
-> >=20
-> > PCIEASPM is already default y and if EXPERT so it is not something=20
-> > that is expected to be disabled.
-> >=20
-> > You also no longer need to move the ASPM link state defines LKP found o=
-ut=20
-> > about after adding the depends on.
-> >=20
->=20
-> Yes, it will fix the reported issue, but guarding the definitions feels w=
-rong to
-> me still. Maybe that's something we can worry later.
->=20
-> > I'm a bit worried this series will regress in the cases where OS doesn'=
-t=20
-> > control ASPM so it might be necessary to include something along the=20
-> > lines of the patch below too (the earlier discussion on this is in Link=
-=20
-> > tags):
-> >=20
->=20
-> atheros drivers didn't have such comment (why they were manually changing=
- the
-> LNKCTL register), but I agree that there is a chance that they could caus=
-e issue
-> on platforms where BIOS didn't give ASPM control to the OS.
->=20
-> But as a non-ACPI developer, I don't know what does 'ACPI doesn't give
-> permission to manage ASPM' mean exactly. Does ACPI allow to disable ASPM =
-but not
-> enable it?
+url:    https://github.com/intel-lab-lkp/linux/commits/AngeloGioacchino-Del-Regno/spmi-Implement-spmi_subdevice_alloc_and_add-and-devm-variant/20250721-155809
+base:   next-20250718
+patch link:    https://lore.kernel.org/r/20250721075525.29636-6-angelogioacchino.delregno%40collabora.com
+patch subject: [PATCH v1 5/7] misc: qcom-coincell: Migrate to devm_spmi_subdevice_alloc_and_add()
+config: x86_64-buildonly-randconfig-003-20250721 (https://download.01.org/0day-ci/archive/20250721/202507211953.9ai6l420-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14+deb12u1) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250721/202507211953.9ai6l420-lkp@intel.com/reproduce)
 
-While others are likely better qualified to answer this, my impression is=
-=20
-that even disabling ASPM is not allowed when OS does has not been granted=
-=20
-control over ASPM (OS should not change the value of ASPM Control in=20
-LNKCTL at all).
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507211953.9ai6l420-lkp@intel.com/
 
-The obvious trouble then is, if a driver/hw needs ASPM to be disabled over=
-=20
-certain period of its operation or entirely to ensure stable operation,=20
-and ASPM is enabled, we're between a rock and a hard place when changes to=
-=20
-ASPM Control field are disallowed.
+All errors (new ones prefixed by >>):
 
-Because the ASPM driver took a hard stance of conformance here and did=20
-not let touching the ASPM Control field, we ended up having drivers that=20
-then write ASPM Control on their own to work around HW problems (see e.g.=
-=20
-the comments in drivers/net/ethernet/intel/e1000e/netdev.c that make it=20
-very clear it was intentional from the driver) so it was considered that=20
-allowing disabling ASPM might be acceptable compromise over drivers doing=
-=20
-it on their own (and leaving the ASPM driver out of the loop because it=20
-cannot be relied to disable ASPM consistently in all cases).
+   ld: vmlinux.o: in function `qcom_coincell_probe':
+>> drivers/misc/qcom-coincell.c:111: undefined reference to `devm_spmi_subdevice_alloc_and_add'
+>> ld: drivers/misc/qcom-coincell.c:115: undefined reference to `__devm_regmap_init_spmi_ext'
 
---=20
- i.
 
-> > -----
-> > From: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> > Subject: [PATCH] PCI/ASPM: Always disable ASPM when driver requests it
-> >=20
-> > PCI core/ASPM service driver allows controlling ASPM state through
-> > pci_disable_link_state() API. It was decided earlier (see the Link
-> > below), to not allow ASPM changes when OS does not have control over it
-> > but only log a warning about the problem (commit 2add0ec14c25
-> > ("PCI/ASPM: Warn when driver asks to disable ASPM, but we can't do
-> > it")).
-> >=20
-> > A number of drivers have added workarounds to force ASPM off with own
-> > writes into the Link Control Register (some even with comments
-> > explaining why PCI core does not disable it under some circumstances).
-> > According to the comments, some drivers require ASPM to be off for
-> > reliable operation.
-> >=20
-> > Having custom ASPM handling in drivers is problematic because the state
-> > kept in the ASPM service driver is not updated by the changes made
-> > outside the link state management API.
-> >=20
-> > As the first step to address this issue, make pci_disable_link_state()
-> > to unconditionally disable ASPM so the motivation for drivers to come
-> > up with custom ASPM handling code is eliminated.
-> >=20
-> > To fully take advantage of the ASPM handling core provides, the drivers
-> > that need to quirk ASPM have to be altered depend on PCIEASPM and the
-> > custom ASPM code is removed. This is to be done separately. As PCIEASPM
-> > is already behind EXPERT, it should be no problem to limit disabling it
-> > for configurations that do not require touching ASPM.
-> >=20
-> > Make pci_disable_link_state() function comment to comply kerneldoc
-> > formatting while changing the description.
-> >=20
-> > Link: https://lore.kernel.org/all/CANUX_P3F5YhbZX3WGU-j1AGpbXb_T9Bis2Er=
-hvKkFMtDvzatVQ@mail.gmail.com/
-> > Link: https://lore.kernel.org/all/20230511131441.45704-1-ilpo.jarvinen@=
-linux.intel.com/
-> > Signed-off-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> >=20
-> > ---
-> >  drivers/pci/pcie/aspm.c | 33 ++++++++++++++++++++-------------
-> >  1 file changed, 20 insertions(+), 13 deletions(-)
-> >=20
-> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > index 5721ebfdea71..11732031e342 100644
-> > --- a/drivers/pci/pcie/aspm.c
-> > +++ b/drivers/pci/pcie/aspm.c
-> > @@ -1382,16 +1382,23 @@ static int __pci_disable_link_state(struct pci_=
-dev *pdev, int state, bool locked
-> >  =09=09return -EINVAL;
-> >  =09/*
-> >  =09 * A driver requested that ASPM be disabled on this device, but
-> > -=09 * if we don't have permission to manage ASPM (e.g., on ACPI
-> > +=09 * if we might not have permission to manage ASPM (e.g., on ACPI
-> >  =09 * systems we have to observe the FADT ACPI_FADT_NO_ASPM bit and
-> > -=09 * the _OSC method), we can't honor that request.  Windows has
-> > -=09 * a similar mechanism using "PciASPMOptOut", which is also
-> > -=09 * ignored in this situation.
-> > +=09 * the _OSC method), previously we chose to not honor disable
-> > +=09 * request in that case. Windows has a similar mechanism using
-> > +=09 * "PciASPMOptOut", which is also ignored in this situation.
-> > +=09 *
-> > +=09 * Not honoring the requests to disable ASPM, however, led to
-> > +=09 * drivers forcing ASPM off on their own. As such changes of ASPM
-> > +=09 * state are not tracked by this service driver, the state kept her=
-e
-> > +=09 * became out of sync.
-> > +=09 *
-> > +=09 * Therefore, honor ASPM disable requests even when OS does not hav=
-e
-> > +=09 * ASPM control. Plain disable for ASPM is assumed to be slightly
-> > +=09 * safer than fully managing it.
-> >  =09 */
-> > -=09if (aspm_disabled) {
-> > -=09=09pci_warn(pdev, "can't disable ASPM; OS doesn't have ASPM control=
-\n");
-> > -=09=09return -EPERM;
-> > -=09}
-> > +=09if (aspm_disabled)
-> > +=09=09pci_warn(pdev, "OS doesn't have ASPM control, disabling ASPM any=
-way\n");
-> > =20
-> >  =09if (!locked)
-> >  =09=09down_read(&pci_bus_sem);
-> > @@ -1418,13 +1425,13 @@ int pci_disable_link_state_locked(struct pci_de=
-v *pdev, int state)
-> >  EXPORT_SYMBOL(pci_disable_link_state_locked);
-> > =20
-> >  /**
-> > - * pci_disable_link_state - Disable device's link state, so the link w=
-ill
-> > - * never enter specific states.  Note that if the BIOS didn't grant AS=
-PM
-> > - * control to the OS, this does nothing because we can't touch the LNK=
-CTL
-> > - * register. Returns 0 or a negative errno.
-> > - *
-> > + * pci_disable_link_state - Disable device's link state
-> >   * @pdev: PCI device
-> >   * @state: ASPM link state to disable
-> > + *
-> > + * Disable device's link state so the link will never enter specific s=
-tates.
-> > + *
-> > + * Return: 0 or a negative errno
-> >   */
-> >  int pci_disable_link_state(struct pci_dev *pdev, int state)
-> >  {
-> >=20
-> > --=20
-> > tg: (9f4972a5d481..) aspm/disable-always (depends on: pci/set-default-c=
-omment2)
->=20
->=20
->=20
---8323328-1126931654-1753097304=:69097--
+vim +111 drivers/misc/qcom-coincell.c
+
+    83	
+    84	static int qcom_coincell_probe(struct platform_device *pdev)
+    85	{
+    86		struct regmap_config qcom_coincell_regmap_config = {
+    87			.reg_bits = 16,
+    88			.val_bits = 16,
+    89			.max_register = 0x100,
+    90			.fast_io = true
+    91		};
+    92		struct device_node *node = pdev->dev.of_node;
+    93		struct spmi_subdevice *sub_sdev;
+    94		struct spmi_device *sparent;
+    95		struct qcom_coincell chgr;
+    96		u32 rset = 0;
+    97		u32 vset = 0;
+    98		bool enable;
+    99		int rc;
+   100	
+   101		chgr.dev = &pdev->dev;
+   102	
+   103		rc = of_property_read_u32(node, "reg", &qcom_coincell_regmap_config.reg_base);
+   104		if (rc)
+   105			return rc;
+   106	
+   107		sparent = to_spmi_device(pdev->dev.parent);
+   108		if (!sparent)
+   109			return -ENODEV;
+   110	
+ > 111		sub_sdev = devm_spmi_subdevice_alloc_and_add(&pdev->dev, sparent);
+   112		if (IS_ERR(sub_sdev))
+   113			return PTR_ERR(sub_sdev);
+   114	
+ > 115		chgr.regmap = devm_regmap_init_spmi_ext(&sub_sdev->sdev,
+   116							&qcom_coincell_regmap_config);
+   117		if (!chgr.regmap) {
+   118			dev_err(chgr.dev, "Unable to get regmap\n");
+   119			return -EINVAL;
+   120		}
+   121	
+   122		enable = !of_property_read_bool(node, "qcom,charger-disable");
+   123	
+   124		if (enable) {
+   125			rc = of_property_read_u32(node, "qcom,rset-ohms", &rset);
+   126			if (rc) {
+   127				dev_err(chgr.dev,
+   128					"can't find 'qcom,rset-ohms' in DT block");
+   129				return rc;
+   130			}
+   131	
+   132			rc = of_property_read_u32(node, "qcom,vset-millivolts", &vset);
+   133			if (rc) {
+   134				dev_err(chgr.dev,
+   135				    "can't find 'qcom,vset-millivolts' in DT block");
+   136				return rc;
+   137			}
+   138		}
+   139	
+   140		return qcom_coincell_chgr_config(&chgr, rset, vset, enable);
+   141	}
+   142	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
