@@ -1,89 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-65849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24DF5B0BDAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 09:33:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7BD9B0BDC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 09:36:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE42C189D858
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 07:33:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72E5B1886DC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 07:36:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0274283CB1;
-	Mon, 21 Jul 2025 07:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF53283FE8;
+	Mon, 21 Jul 2025 07:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQVMx82I"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M+wuZtKU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8021C2836B4;
-	Mon, 21 Jul 2025 07:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AA126BF7;
+	Mon, 21 Jul 2025 07:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753083186; cv=none; b=okJ4BYliiaAEONJe5PxoUmRZlXHxPJ3vbdjgGODnl5f1j/PG4Lz9upMWwubLUFKeHJeNPw5ebuam/e9eP2hyNOpjPmwDF7GwZeZCsZ2aq4HuLoxEMWQzd2hF3EIBb7V1x4SRRwZJh28ljrnnCzTrZlss1Untq8+CoqyxXSEJrd4=
+	t=1753083387; cv=none; b=QcS7MLWsS30eU2OqZwEkacWeLurQGKzC1WuSmm3ctnhGoVs4g3rPLCTu4s/w/7I33HWw4OqHdHRWLC5NjdTD3V5cCmhPtBS/BDx8IqxTluYuMlyZ3xApdA0aL1EJqkfOGbwN+g04wiM9chbZLZpD88Q6aAG+6+c2H0Z939oX+R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753083186; c=relaxed/simple;
-	bh=mdw1CJUvpPFP7q0+Tbu+h7FrEywRakCiECzX+/r2WGE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gr9Q/cCP9PL5/vg4ZU7ahlHlm9P7/rPJgL8qYX7sjfiQwuH0Of60uFuVtNcfIspI+Mjw0hvs8FFtdlopdIcjIU4QtNkhlFnb0EDDC95m90JBYVtWaBVej7Cx5JTAk/2807mOgBr3kUQbEoBsUrVd3Ggo++GjKgRN44mfcW0OrWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQVMx82I; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6E1C4CEED;
-	Mon, 21 Jul 2025 07:33:05 +0000 (UTC)
+	s=arc-20240116; t=1753083387; c=relaxed/simple;
+	bh=nkI6N66P9qYEFq1N9Ho3IcR4AN93BL7mAD/A7fTOcoE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e9tG+LL83NLEgc2SOPfaTNUQbAsI4fikpQQtAXJOISF2wfbYwiczYQCCVbjKXf93iWlbGljr36MTlXf+rlQQsOpeomGEoHqKmstu0SOGb0oFBMWdns68YYO+MowmCdwqR5nWnLBIyzXYKab26sJG//VeBElBtuzdJJLl44eWfls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M+wuZtKU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8659CC4CEED;
+	Mon, 21 Jul 2025 07:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753083186;
-	bh=mdw1CJUvpPFP7q0+Tbu+h7FrEywRakCiECzX+/r2WGE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WQVMx82I8bVkS4iAB/XBcHjAZN+OhmUhogG2a6aPNGFZLGTIRUdJ+WBnlccVGR+8P
-	 LfxhMHXvqI8vOZ7ABVpKYeYoFLtLKhtW9T5yvCVp46/OM/CfrGPH1urmhIOAEWZSvX
-	 W2KZwAUGG/oTmXoaUgQ07oYeT+0gubuEN3FBGwfZWsmBQGS4vU8e2Jo1VAqehDPfqH
-	 J0e660hGsA067rNtYNL6MoNdw9AvRanwG93tWFmsX9hyJAI7qsg+74XlsaHZutiMVA
-	 ds9o1mVOzxHqahjQ2F2L5BBU+e0CuLzCqHO8O3IFZNypfMuE1lVKAPGq/v7Z8bnMYS
-	 BhZDW8+x+8IxA==
-Date: Mon, 21 Jul 2025 09:33:03 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
-	kernel@oss.qualcomm.com, Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Subject: Re: [PATCH v7 3/9] ASoC: dt-bindings: qcom,lpass-va-macro: Update
- bindings for clocks to support ADSP
-Message-ID: <20250721-fervent-panda-of-effort-f962b5@kuoka>
-References: <20250720173215.3075576-1-quic_pkumpatl@quicinc.com>
- <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
+	s=k20201202; t=1753083387;
+	bh=nkI6N66P9qYEFq1N9Ho3IcR4AN93BL7mAD/A7fTOcoE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=M+wuZtKUR5V404eSLlmMhp+IvYraPKevOeeUqKg98S349HoeDLkVMy4cQucR0WaN3
+	 T9aRAQ6RIBtGS8M35/kp14SZm57YGzfz3IdSYXBooDPts9aB2LcxR64Jyd/8blG4/3
+	 H8psPcX3aj833/2tG8J15iNZT2brUztQjfspKMQ7d8hwCIdoN1D8CThCZVBW01SIcJ
+	 v/Mo99a9OtlUtXxPP1TAYaagu73lkMbnrMAhCt5ann2MOmB0tnMfYONJxFWYIPeDDg
+	 EqQywd54BVexEJ17kXGRX7y61lzDjYswRkym1UvUfZ/LFZxihvVh2DLGwq79OkxIJD
+	 Gqz/7msvXjhPA==
+Message-ID: <d8955532-9a3b-451f-b5c7-549cee7d749e@kernel.org>
+Date: Mon, 21 Jul 2025 10:36:19 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] interconnect: qcom: Add Milos interconnect
+ provider driver
+To: Luca Weiss <luca.weiss@fairphone.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250709-sm7635-icc-v3-0-c446203c3b3a@fairphone.com>
+ <20250709-sm7635-icc-v3-2-c446203c3b3a@fairphone.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20250709-sm7635-icc-v3-2-c446203c3b3a@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jul 20, 2025 at 11:02:09PM +0530, Prasad Kumpatla wrote:
-> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Hi Luca,
+
+On 7/9/25 4:14 PM, Luca Weiss wrote:
+> Add driver for the Qualcomm interconnect buses found in Milos based
+> platforms. The topology consists of several NoCs that are controlled by
+> a remote processor that collects the aggregated bandwidth for each
+> master-slave pairs.
 > 
-> Manage clock settings for ADSP solution. On Existing ADSP bypass
-> solutions, the macro and dcodec GDSCs are enabled using power domains
-> in lpass-va-macro which is not applicable for ADSP based platform.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  .../bindings/sound/qcom,lpass-va-macro.yaml   | 23 +++++++++++++++----
->  1 file changed, 18 insertions(+), 5 deletions(-)
+>   drivers/interconnect/qcom/Kconfig  |    9 +
+>   drivers/interconnect/qcom/Makefile |    2 +
+>   drivers/interconnect/qcom/milos.c  | 1837 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 1848 insertions(+)
+> 
+[..]
+> +
+> +static struct qcom_icc_qosbox qhm_qup1_qos = {
+> +	.num_ports = 1,
+> +	.port_offsets = { 0xc000 },
+> +	.prio = 2,
+> +	.urg_fwd = 0,
+> +	.prio_fwd_disable = 1,
+> +};
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks for adding QoS!
 
-Best regards,
-Krzysztof
+> +
+> +static struct qcom_icc_node qhm_qup1 = {
+> +	.name = "qhm_qup1",
+> +	.channels = 1,
+> +	.buswidth = 4,
+> +	.qosbox = &qhm_qup1_qos,
+> +	.link_nodes = { &qns_a1noc_snoc, NULL },
+> +};
 
+It's very nice that you switched to the dynamic IDs, but please use the
+current style of links (like in v1), as the the NULL terminated lists
+are not merged yet. All the rest looks good!
+
+Thanks,
+Georgi
 
