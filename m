@@ -1,132 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-65893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D211FB0C3FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:22:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C071B0C423
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:30:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C0B217FFE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:22:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F4277A85A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 761972BE026;
-	Mon, 21 Jul 2025 12:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF882D3EF4;
+	Mon, 21 Jul 2025 12:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FSSQgbDm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+K9aBxx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16932C374B;
-	Mon, 21 Jul 2025 12:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0812A2D3EE5;
+	Mon, 21 Jul 2025 12:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753100558; cv=none; b=P+MSUpssBh1BdOUfyzK4pHg5qqibmwCX4ABL5ptX/PKjDepwztlweT/EFr7J/hwv/lV3N9al3EdHO8y6HMsq/w4Cim/plDADUBQZvC5s9rJP3IWeWwBMpYDOmdPt/0KWplfYDPcNRXBd4AXL0b6j55yLVB1KCw1/HTKWrTNVYrM=
+	t=1753101005; cv=none; b=SFBMuSJ8u0uRPkvXhjR/F16P4Ip7jJenuKV/OjWoKsk1XnTBpPLwVlBMg4MfrN1awQtNZwd4gbaGFFr8B3zg9p5cQgCYzXQaj2wO8z63Vs9U/Nxpk9OoMl0anNqz/4FX+g6/woPs1T6KN3OvCNBT/mB12Rh9TQ3f5abEA+djZcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753100558; c=relaxed/simple;
-	bh=3C686h11jQ44cFqomlzZu2sYzUWPMKguhYLmZCUvRLM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G/Vs8eVT867MFhKom+F6UgXUnC86M23AZ5W9WeOzNOpbq0bSN941TBDH4z5MS7D3gX8k2k1UOJqUU5VU8wx/1DyMvytALBJhoOgnUIUECf65tP4yuQh+rFEHEi1bFnIRu0cEDnlR+e5i/HfIuqo8u4qtsKhC3xv+2uACUv5LHQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FSSQgbDm; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753100556; x=1784636556;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=3C686h11jQ44cFqomlzZu2sYzUWPMKguhYLmZCUvRLM=;
-  b=FSSQgbDmfDDn0xi6MDMsHiByasy4kxG+iD3gJ6Ba8GoH17NazQizjAjn
-   DySOq7udHx8ZCfsrkXgGCWV3ag9+dWQijYf+P2OZy+GTatC1Mx1rnQ/nm
-   KJXbrD8S3+1hdx2VkeuaEG/zWQkON+QBbIlWGjhbHShbJf5tYXX+rl2xD
-   XOAdTjm5zm/UhDYC+xvF+Vqt3wOeAxJ0/0w0YHSd+sr3nmGVrz/lNfj8u
-   egDz0bg1SCGdgEbhf++F6PLp0qFgEmJjr5SYe7XTXdgceWoAW/lW7aixP
-   bVST5Z2qsSxQCOTx9/kQu4EoR11S7+ACRyHvDQGveEWVLE0yEfTsJR4jj
-   A==;
-X-CSE-ConnectionGUID: q/hH+/JJTPqXjw6hI2eJoA==
-X-CSE-MsgGUID: 0nZc40eUSxu1xQuNEpZG1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="65572955"
-X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
-   d="scan'208";a="65572955"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 05:22:36 -0700
-X-CSE-ConnectionGUID: 51MCPWwhTyuKi4jjJP9s+Q==
-X-CSE-MsgGUID: 4PAEh2SPTSe+Evo/JBggNw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,329,1744095600"; 
-   d="scan'208";a="163048713"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 05:22:22 -0700
-Message-ID: <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-Date: Mon, 21 Jul 2025 20:22:19 +0800
+	s=arc-20240116; t=1753101005; c=relaxed/simple;
+	bh=3/Mp/bZdiCCi6LZfAbd65m+AvvUXI4xEDl+vBkRyuFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f8cAsJvgxr9lxBUCBFQ6A+D/LYT4gOORC/iBEHBzMaLmDJceq4/6jMvTBZK4DURTah3vnCaFT0WRkNJaRgXt0nTn1LhmFOfOlL9dYubN+D09+f7t+MXkvxir6traCG/LnuVhp46xgdypPSrRsDQG6s6RKbUAFFjXXfJ5UMTVw/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+K9aBxx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC7C4CEED;
+	Mon, 21 Jul 2025 12:30:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753101004;
+	bh=3/Mp/bZdiCCi6LZfAbd65m+AvvUXI4xEDl+vBkRyuFQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q+K9aBxxeEfe6ql8kvSVGeQuzepLg/wW01yqaxnhUrqbEHylTeF3rN3YJFpy5mWXc
+	 yHewAQBFICtBu6MC/d0NG7d3SsgbCp7nepeKKPGDeTmsBJXdpYiDnC6rm+Ql2iNKbr
+	 HpnaC7P2Npe8SqqdHfWxO3YhLuZjheVIKut7kJesRLls9cr6MBCto+PCJtvhQ6RKyD
+	 at/okL098bmsMVQyuQ3uW6v+b0FdlAsCoA4qEKOoc1MFQ8fxQ8PRNdPtg662ZrSFrk
+	 ZD34bi/nb1qS7d7jfpqFE59LNOcrhU+ILSJWKnuqz3rITsxTfqsDIiJ2rnkhmeRrBb
+	 gjFuIeKo/oGlA==
+Date: Mon, 21 Jul 2025 13:29:58 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
+	kernel@oss.qualcomm.com,
+	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Subject: Re: [PATCH v7 3/9] ASoC: dt-bindings: qcom,lpass-va-macro: Update
+ bindings for clocks to support ADSP
+Message-ID: <33d963bd-c5a9-4b10-b348-bf713fbab8d5@sirena.org.uk>
+References: <20250720173215.3075576-1-quic_pkumpatl@quicinc.com>
+ <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-15-tabba@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250717162731.446579-15-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WQCEN1qteZ5BnNy0"
+Content-Disposition: inline
+In-Reply-To: <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
+X-Cookie: Falling rock.
 
-On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> + */
-> +#define kvm_arch_supports_gmem_mmap(kvm)		\
-> +	(IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&	\
-> +	 (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
 
-I want to share the findings when I do the POC to enable gmem mmap in QEMU.
+--WQCEN1qteZ5BnNy0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually, QEMU can use gmem with mmap support as the normal memory even 
-without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd 
-on KVM_SET_USER_MEMORY_REGION2.
+On Sun, Jul 20, 2025 at 11:02:09PM +0530, Prasad Kumpatla wrote:
+> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+>=20
+> Manage clock settings for ADSP solution. On Existing ADSP bypass
+> solutions, the macro and dcodec GDSCs are enabled using power domains
+> in lpass-va-macro which is not applicable for ADSP based platform.
 
-Since the gmem is mmapable, QEMU can pass the userspace addr got from 
-mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It 
-works well for non-coco VMs on x86.
+This doesn't apply against current code, please check and resend.
 
-Then it seems feasible to use gmem with mmap for the shared memory of 
-TDX, and an additional gmem without mmap for the private memory. i.e.,
-For struct kvm_userspace_memory_region, the @userspace_addr is passed 
-with the uaddr returned from gmem0 with mmap, while @guest_memfd is 
-passed with another gmem1 fd without mmap.
+--WQCEN1qteZ5BnNy0
+Content-Type: application/pgp-signature; name="signature.asc"
 
-However, it fails actually, because the kvm_arch_suports_gmem_mmap() 
-returns false for TDX VMs, which means userspace cannot allocate gmem 
-with mmap just for shared memory for TDX.
+-----BEGIN PGP SIGNATURE-----
 
-SO my question is do we want to support such case?
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmh+MsUACgkQJNaLcl1U
+h9BWwgf+NWAI0d/I/aIa6eGJwgfNj2DSfG0PWklhpdlVWh3zEes+nP5dCSNDhbVK
+MWKkwY0gF5I4o3GnSUowpdHoXqijOacNQonhwWf2RNYOfHty0725BYt2PV42bsdY
+QBOovExEfFTtHgw2w1LF/Tqtwwx1qxDLrMWD9r4KI2LFHYM2vIlav7NgzYOJ2ECN
+RhXTWEmm57JhZu+Z9uTPy9FtOdBJM+UPWtqt4TCSn7VbWpisle9LLEQQOCXHULlv
+VeKyvkGkjgRO0T0afl77fqyDk7p794L+X3oxhlVKLCbEKffQfhNbuMO7IsHhIh7e
+qnxQ8X9o61wHTSFsxMyF/7cG8tUtWw==
+=rl5U
+-----END PGP SIGNATURE-----
+
+--WQCEN1qteZ5BnNy0--
 
