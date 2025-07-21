@@ -1,167 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-65967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0DF1B0CBDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 22:33:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4235EB0CCBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 23:37:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2017C168AC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 20:33:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6485D545D58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 21:37:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC844239E8B;
-	Mon, 21 Jul 2025 20:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3F7243364;
+	Mon, 21 Jul 2025 21:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TBUXWeVl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a7Cs9nET"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A6C14A60D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 20:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6147E2417D4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 21:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753130005; cv=none; b=koQpwwWE4Lqvkun5xpr+JhpUMbCKItVo+wr9tgaF0remRYFsJMyHoNc3SIPayA59qUKj36Bcy79l7bqFqoyXLdWGGa7Z4imG9QbkvRfQk3SNm1qh3XUtn8xpZsHw8s2aUDShGlUfpB3kpEWHUQWj5r1qFo1nQJO7xqeqXSng1n0=
+	t=1753133824; cv=none; b=MdgSxyOfCQRcCc1vSQQsf7vpz1RJrn2tpXN+kCSkElPUe/RTODVZi5/QTGS1OM+jJHedjBr364EU0nG8IpF+7wjtql3TPdgrsxbLmw67dhE0/zl/J5SBvDFBJyfKwTbc7TjO2nsfrQM77nXAgH9Fp0lcJRqFegtr6Gs6k/ZtTaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753130005; c=relaxed/simple;
-	bh=9q738OSy5F3XSck6fQATo5Tzl7DSUQk68x8EkXY8TcI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HgWQG8L2i52gzAvoCRfvR8Q3plGlTFIbKmHffnQFfOA0nPGX5FUH+pxTCtLtEdSgTDF9Cke7htiQwOcjgHuVjfJSx4GxG1QcM3dUaEl56joEX3GVsB+J9HlWpvn/NUrupOXhvBbcEg7KJxL8goj2oGg4MQS2v32RCW6VoQgFESQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TBUXWeVl; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-23dd9ae5aacso14145ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 13:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753130004; x=1753734804; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tsRkrVSZ79KFOrHUZnkYB8zyV0FovPAw/7nSbgdf9SA=;
-        b=TBUXWeVledvYrz07Eu5Omg3SM6HVjM9DAbHE2pO6vreR6d58656dngCmV+32wOOfp3
-         I6kd5WuVHFZ4Nmqkfi0DWddm0eufSePTta65qXGaLPXVzO+nKl/1ZzNnpK6/S5TnVOiQ
-         h4mgJuG++BS8VBRXcaLKzNWp7rpfEaY9CfDHSeLXuDIT1CfWvqXpaVsFgINGpcYyWk6I
-         /+UeNhKzmiuSspkx+1ad9nO0b3X3iCvSddG17OOkWaTnAbTIcIZ3delq/sfXMlnNfOHm
-         XrQ5YZ31aK9L0WN6/PItX8g1VFxAIedQe1PQxt/qK9/eYwkPnskURq0WREyAj0IkQOgF
-         lXkQ==
+	s=arc-20240116; t=1753133824; c=relaxed/simple;
+	bh=NhZKKC0lMBkpQr5YwAYsG7J4EHYPJs4VzzhXBQifSEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WE/ePnj+ru7/Bb9LHVuDneusRWzbw4C9g2UJThME9jkBG7PhRd50TJvb/zLE5wQacazo4Dtgsd8mb8BfqaeoU3fyNmpZgEOW39kfRyH9zJrLMCUfbbBGACgy+uwJV+hcrdPPxT8FE76Ior8AYRz7gp5JuSZl4HcUH3QKqNzF/OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a7Cs9nET; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LIfxv4010665
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 21:37:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=XSeneYubwoKFVumkVWiLXeNw
+	ksNpoI4nzayH5GcuL7o=; b=a7Cs9nETT2sN9EK3jsfH7FtrU8CgqAwo9tVFk5g0
+	wkb797A1k4AlBoloSn2mci4IjK6bVR4nLUcJMJoW0kcMlwrHd/syVoym51qWUjAk
+	yZ6iNu3r0vS5nyOkIgN/8TDWRUsp8AkaHAiUIpHcY/jTL92mql8ymbDlwGfE6Q76
+	SemUdAD3yHBaa4pbrssgNQVPIc3rZlufh67xn0ePJfENPvCM0lnDdskEdqDPWwbS
+	tsScXZ+hTuN2EeoE4VHOWwPt5g3Imd3QBFzsvr9ptfzliRw8B6jCPAygPjRcuiKd
+	B+vjlF0AESonxfs5SYJRw5bra8wmqp21quhvVv5bNlu69A==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 480459nr2y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 21:37:01 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5bb68b386so1450216585a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 14:37:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753130004; x=1753734804;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tsRkrVSZ79KFOrHUZnkYB8zyV0FovPAw/7nSbgdf9SA=;
-        b=tB2TcPOijdVdkrWgnrCXnq9t96tSUsWTSlvhJt3s9zP8ChRKYoN5WSNQftKXIARgGd
-         vGiPfaTJUIwv15L7k3bPBadn5OfDGDGzhxahzG6hJyJdbD4//zDD8MJw0oqvEee3J0pF
-         ES2UAastIvcBleTdTMRwTc7Ch7HMYBe6LjWbSFvxlICEPC/JkKkadwcrdGkFx+umOf5P
-         rq+uOiZ+tHhzRuRYWjHTJHe8mLiuNOdsf7TWt/G0k0tbLfdz+MsmFv6E0s3BTyVq5Btt
-         zxs1r5Zcp62WG+9oPwjeunO+immFM8/k6PsyVSIj7UUiKRH/pJM4uORYncfx2yNDPFnA
-         o2jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVxxPboFUcKLBTlxKfOnOtl26nhdr5yDnPGjuzE+j7AHm0eePQRaS/+Zqi5yhT4BkwL7+OEWU5eBguBjvUU@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxFEiU5TH3l8ZB8Q3+mqMOLaHyQXL72diBpNcvHPBiuXF9aIdz
-	NzXT4EIxxdx/HMWgEcqPpF1KKE/+9OhD0U2gX2Q63f2NuYhsIRE4LkuJRGRADgyNAkWeoCMAggi
-	4RXt5PFHRoWo7JrNGs+fdumYVOQW+VFIT8lt7BfSp
-X-Gm-Gg: ASbGncsoFt7wrWXGLjlpf8jCRQPNED0yKmUfX4nknxLZT3wbi8yn0PQFPF6zWnaKuUl
-	U9grSWFGuSzwqsPUyttnbknnKaCA1X3ZEtkVlRGxYCZQ/3u1KUTeXyJEA2WPNWz8mx8ES4ePmJO
-	5sdK6gYSl1KTxEMvUGCHBX2i3nDaUjyQKL36J6TK9thQsWg40pxP2kCZTm7rn8aWa1gRIhjmtzb
-	UPIlZOek+Q5ozQNGFkzpgYaTD2RDEa2h2IVcpFN1IWDYo5g
-X-Google-Smtp-Source: AGHT+IFkWHBx/fnOdJ0fH9ksHzfcdY6F8RTAu24ALLaPBJXK759V2xcE3RRWajNRHJ7uflgEVtUatOGBWMqwE9pCFGw=
-X-Received: by 2002:a17:902:fc47:b0:235:e1d6:5343 with SMTP id
- d9443c01a7336-23f8b60e3e9mr699005ad.20.1753130002979; Mon, 21 Jul 2025
- 13:33:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753133820; x=1753738620;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XSeneYubwoKFVumkVWiLXeNwksNpoI4nzayH5GcuL7o=;
+        b=TAd0gWMs9A8Jsz7M3r1V0bEXhROcyiHEH66mMda1ps9PiYQ/2u/DpICC3wrBF1HaYT
+         +qiuhqqEP9GY3i6FxwL/2PzEJbbP3s3vKJusbeYSqB0twAu7vyW+U3Z9HGxeDwVWla4Z
+         Fyh99zwZFzJycMqRdk1G0OzfbU/FAoIhnduohdxXpFkLJeGtsf/hn6tko4fFH6tsXZME
+         BxzlwM48r5RVh6wL8TYkDOomfCh9WX1zL8IQypMHx1OdBS5/Si0A1gvV+Rck/2mNE5PJ
+         N5lg/EUUWcJABMtXpqb9UJxrtCiX6gGyOHA0nvoPU2jC1yNf4x+BdgefQ4WtF7rS89LG
+         62YQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVEgWJKlsfsnyKxI8+4IYO2BVeViy93BACQC0Xxc6Oq1uv2FMv7IVns9AWgReoDtgf0Uqv9puGpvv8Pg7Va@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdE9uDrKP45o3H1kqf0rIPqXJuXeltK/+5dLGMMjVb0pKcyDWX
+	znL+IMpR/IvUNRr73zOlsmw7Brqc8e3sDW8kOqsF28bc1u1kNiw1akWpXRi/Y/VOTKC/rT206dX
+	HlS7hkgg4ukmsQfCuscPnqzkFppDJh1u5sn0vbotQJ3rYfhqiEgW/sqCHl4UQMGB1LiMJ
+X-Gm-Gg: ASbGnctqSyK4EWkihWqDme9mp/VlkRX1aqHlvRq8uCpfBHZ0th2Cb5vXNNqNntksc4d
+	nTN8/USVIJBSS5grZ8xWhrg9aQk2McMAer0VDy47/Av47az4JHC3iMwYDVsakhpl5bjbgJQF2fd
+	QfORSLImN7aNdU0H7xY2+YIm8KvOsNGIk4tPXqO/R9brsr2IEiley+ISL/BjsgYwPrn55skY8oC
+	ZDtUy2UeiZqf3nfBXR/SO4+Ko0pgvWJhkWd0BIJtYV6j+uKSDJv57uBiBGUM2LQFf+fRZ2ciqL7
+	vSDOMQzGGEK6C8QJhXl7KeimYuj30x8Dsqw+Rle1ortmBAdXcoCWGPASzUIR/1h62PYcoOlEpr3
+	E4i/aAOvZQi5WEe2OUE6Obtq46lmeJcic+GhCeCRKe3abGcSvdhkd
+X-Received: by 2002:a05:620a:2852:b0:7e3:5129:db49 with SMTP id af79cd13be357-7e356b06e5dmr1803433685a.45.1753133819777;
+        Mon, 21 Jul 2025 14:36:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFF4jT0+GbYEvvHgqyFvbhxqSYTWAMQbDApGgQWdExppcPmAG6eo15SkHyeIVhHgv8/4M2flg==
+X-Received: by 2002:a05:620a:2852:b0:7e3:5129:db49 with SMTP id af79cd13be357-7e356b06e5dmr1803430085a.45.1753133819325;
+        Mon, 21 Jul 2025 14:36:59 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31d7c690sm1698974e87.110.2025.07.21.14.36.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jul 2025 14:36:58 -0700 (PDT)
+Date: Tue, 22 Jul 2025 00:36:56 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v12 1/8] power: reset: reboot-mode: Add device tree
+ node-based registration
+Message-ID: <33gq4iyx5jxrr6f5w3ctgy7l7om53jdvb4tmfmxzourhfvpc3t@cr5re2dab4tc>
+References: <20250721-arm-psci-system_reset2-vendor-reboots-v12-0-87bac3ec422e@oss.qualcomm.com>
+ <20250721-arm-psci-system_reset2-vendor-reboots-v12-1-87bac3ec422e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
- <aH5RxqcTXRnQbP5R@google.com> <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
- <aH55BLkx7UkdeBfT@google.com>
-In-Reply-To: <aH55BLkx7UkdeBfT@google.com>
-From: Vishal Annapurve <vannapurve@google.com>
-Date: Mon, 21 Jul 2025 13:33:10 -0700
-X-Gm-Features: Ac12FXygamzg8jas5GHmqT107kji5KSuvRb10tflFD6TWTFWMXuoj12Xx7V3ojk
-Message-ID: <CAGtprH8H2c=bK-7rA1wC1-9f=g8mK3PNXja54bucZ8DnWF7z3g@mail.gmail.com>
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Sean Christopherson <seanjc@google.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250721-arm-psci-system_reset2-vendor-reboots-v12-1-87bac3ec422e@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: -1OOERjiVEAoYv2e4MaRvwotAWh96LND
+X-Authority-Analysis: v=2.4 cv=fdyty1QF c=1 sm=1 tr=0 ts=687eb2fd cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=1bIxdRCwe99oYZTV_csA:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: -1OOERjiVEAoYv2e4MaRvwotAWh96LND
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE5MiBTYWx0ZWRfX6ibBJVJBzUEy
+ mE6BMHoehE4PhKmxctJcTQTJu4kRTJIytRoRK/dja3aPvyu1caX8IjyClAWNLQKOv3Z2FqHzDqn
+ ZxCIa81YPhpkV77S69DQmfSaENTfnzpqhYoFvndKA5UxRiR+wpyq0xxYYIMIdPpW1MSj1vk8q2z
+ Rqb0gD2gwtqvm7hgZ9xyIOaBW1S2/wAGGEB/cjsi3/HVqxiZkPzjuG96KUjjCFPoT+nrIu1i0KR
+ nJm3bul57qeCOS3wVjb6shXebmPMrsLN/2hT0wxIxwbtf4g+aA5C/teHQuZTp6f1azgicjQbE/V
+ tEAPElEWCDo6Ll4L3ZWsm6QwggOMfCE2m2feZX7PACws/Iug8tUD99/BM4vGW2NVBUp+aBwTSV/
+ KNSWjZ0kXG8kM8A5ptiZ8Mq7kmM4V2KuvdqNl1FCsaadlS5lHAGJ485K5xYOmFTAaEsADkHW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_05,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ mlxlogscore=999 mlxscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507210192
 
-On Mon, Jul 21, 2025 at 10:29=E2=80=AFAM Sean Christopherson <seanjc@google=
-.com> wrote:
->
-> >
-> > > > 2) KVM fetches shared faults through userspace page tables and not
-> > > > guest_memfd directly.
-> > >
-> > > This is also irrelevant.  KVM _already_ supports resolving shared fau=
-lts through
-> > > userspace page tables.  That support won't go away as KVM will always=
- need/want
-> > > to support mapping VM_IO and/or VM_PFNMAP memory into the guest (even=
- for TDX).
+On Mon, Jul 21, 2025 at 11:58:48PM +0530, Shivendra Pratap wrote:
+> The reboot-mode driver does not have a strict requirement for
+> device-based registration. It primarily uses the device's of_node
+> to read mode-<cmd> properties and the device pointer for logging.
+> 
+> Remove the dependency on struct device and introduce support for
+> Device Tree (DT) node-based registration. This enables drivers
+> that are not associated with a struct device to leverage the
+> reboot-mode framework.
+> 
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/power/reset/reboot-mode.c | 45 +++++++++++++++++++++++++++++----------
+>  include/linux/reboot-mode.h       |  6 +++++-
+>  2 files changed, 39 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index fba53f638da04655e756b5f8b7d2d666d1379535..5dd3f06ca88cb28606d9fd2100ce03383c14d215 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -3,13 +3,17 @@
+>   * Copyright (c) 2016, Fuzhou Rockchip Electronics Co., Ltd
+>   */
+>  
+> +#define pr_fmt(fmt)	"reboot-mode: " fmt
+> +
+>  #include <linux/device.h>
+>  #include <linux/init.h>
+>  #include <linux/kernel.h>
+> +#include <linux/list.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/reboot.h>
+>  #include <linux/reboot-mode.h>
+> +#include <linux/slab.h>
+>  
+>  #define PREFIX "mode-"
+>  
+> @@ -55,7 +59,9 @@ static int reboot_mode_notify(struct notifier_block *this,
+>  	unsigned int magic;
+>  
+>  	reboot = container_of(this, struct reboot_mode_driver, reboot_notifier);
+> +	mutex_lock(&reboot->rb_lock);
 
-As a combination of [1] and [2], I believe we are saying that for
-memslots backed by mappable guest_memfd files, KVM will always serve
-both shared/private faults using kvm_gmem_get_pfn(). And I think the
-same story will be carried over when we get the stage2 i.e.
-mmap+conversion support.
+This one should go into the get_reboot_mode_magic() function, otherwise
+it's not obvious why do you need it here.
 
-[1] https://lore.kernel.org/kvm/20250717162731.446579-10-tabba@google.com/
-[2] https://lore.kernel.org/kvm/20250717162731.446579-14-tabba@google.com/
+Also, please split mutex addition to a separate patch.
 
-> > >
-> > > > I don't see value in trying to go out of way to support such a usec=
-ase.
-> > >
-> > > But if/when KVM gains support for tracking shared vs. private in gues=
-t_memfd
-> > > itself, i.e. when TDX _does_ support mmap() on guest_memfd, KVM won't=
- have to go
-> > > out of its to support using guest_memfd for the @userspace_addr backi=
-ng store.
-> > > Unless I'm missing something, the only thing needed to "support" this=
- scenario is:
-> >
-> > As above, we need 1) mentioned by Vishal as well, to prevent userspace =
-from
-> > passing mmapable guest_memfd to serve as private memory.
->
-> Ya, I'm talking specifically about what the world will look like once KVM=
- tracks
-> private vs. shared in guest_memfd.  I'm not in any way advocating we do t=
-his
-> right now.
+>  	magic = get_reboot_mode_magic(reboot, cmd);
+> +	mutex_unlock(&reboot->rb_lock);
+>  	if (magic)
+>  		reboot->write(reboot, magic);
+>  
 
-I think we should generally strive to go towards single memory backing
-for all the scenarios, unless there is a real world usecase that can't
-do without dual memory backing (We should think hard before committing
-to supporting it).
-
-Dual memory backing was just a stopgap we needed until the *right*
-solution came along.
+-- 
+With best wishes
+Dmitry
 
