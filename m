@@ -1,221 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-65938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A4D8B0C92E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 19:01:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EA10B0C940
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 19:13:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B925F1AA6081
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:01:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A4AF4E7395
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:12:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F99C2E090A;
-	Mon, 21 Jul 2025 17:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6058F2E0B5F;
+	Mon, 21 Jul 2025 17:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1nNTy1lI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PIGkMBg+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE4121421A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 17:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC65E2E0924
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 17:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753117277; cv=none; b=gT1rgfpacqRqzP/715G071aif4ahz0rHuj4gR/6G45wWlzygAyMsJWzLw+MnUuqdwCXNgBRQanGrT73kCq25xHwpNgcQGudyVB2Lnv0nRwUS1vhuD50I0kQbCDofL1LnKDhHCIwWMs1nUat6ZBxZH0XPTM8dslRZ/z5pCrOif+E=
+	t=1753117995; cv=none; b=cyRF8AQDg3kx1ceyhQusqS4lELESjZBgh7A0Vt75gxUBRoCYLtzK4YpS5mfFL21qc4FaY1mkHrIFHbNUOqlRQ99S2U9G8GOCvISOQPOMBXKr5Pb9qXfRwI4IVl8OjNDUVqSRmoyz4lf1loynNsOzwsC8Qg3ERukxUlCEbtXqrIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753117277; c=relaxed/simple;
-	bh=nJ55EMQUPVLja/Qbkea12G4WKE4JetlEY4Fh5E8peDA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f9DH7rKkZlceaeUWeK9qwiOhjt9u1Lms5zG8uUw/KXKgzRKZ6pGggndUthsTmastelAnWfLTZFElwh0KCklzDZu+apvWBsFlC2TNKoIPI7DDM48QxIJ3SjKDokALur+33HLSMNd6GqxR3NN2K44YgcUjURuPwYJkizd7ChW+FMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1nNTy1lI; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4ab3ad4c61fso25421cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 10:01:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753117274; x=1753722074; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vt9ZwUF3fGDVyxUTkyz5qBpDl9or2ldYVWFaw2AS4MQ=;
-        b=1nNTy1lIj1DHahmeTWwMvBlJefNYx0UFSCIIbWQ1ElWtKUeaLVMsoLkkU1rm81bL3A
-         zbLrCjjd05rFmjEeIVA5bZTXSre7gN6oejv0TWpINB0BHJlc/h5bAIakpb6+qGB7mW1u
-         kpvc8HejQKx/TU2+UK3FjpuyWDB8wlwBpn67EbvYR/hFCnxg3hbxBLWlbfUwIZlGJ/8/
-         RO37SUw/O+gMMgRgA5whLW5dpTC+jEODF5ojmpkVAUazNoXxPpll+1/FGNgHhafYutfB
-         B1SqdaRuXWHcOW2OCddJVbYO0BL8+f4XaMLt5ZIpia+F8DxS6ZAvNwicAvrk8lqTgfYT
-         xNig==
+	s=arc-20240116; t=1753117995; c=relaxed/simple;
+	bh=XfILMrJpqF/tuCduLTWyeK1Shsuk0EcxoJjjw57ON60=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iic1RiULj98Xym4amUGNVpb33hHDyvnW+QvEX2NWUYaRT3GaDK4jMSRG6nzTbT40HYGs/RDbZ+rpgmGkol+pj05zND3nKgy42csDlrFalFURHNA67n3DF/hoH7JdPQ+JOxvG173uu2cNdi2Kn0/KB5zT81IoZRU25KCSi3S9+l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PIGkMBg+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LGxxmY016978
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 17:13:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DZ/4PF6N3vG+rQh7F+qrpcJmMG+VX0PeJtiX8Xsn9C4=; b=PIGkMBg+PDrOua3o
+	Bf9XtefUwHEa0dPJX+byF9cMvYGIEgfv1u4T0/BhuqIguPzjt1DNaSqDRYoMGitI
+	PZ36BouhUWFSYP/rG1uYmqRJLwJ3k7BtoDMQxDvD+emqNTwBluWh/emAZN+Dpv0Y
+	hzyYnZVN1aMn5zSZLGoB/PEK/QKV1DAIcO78kPY0C9iqTI+ni1JTgmmExWet9s5P
+	hTgmI/k0f7hKLzUjmJnk8RnhR9umCyK87B+Vka2iOOM1X3xDylUG6vMhuv7sutg1
+	iV0dkHPKDyyvLEPm1OCvsqaDDDLEk6R23aZJ5D56lpNj3Qbx7ojqFwMMW2fQL7k6
+	AwKAcQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045vw5kc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 17:13:12 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-75e28bcec3bso810421b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 10:13:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753117274; x=1753722074;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vt9ZwUF3fGDVyxUTkyz5qBpDl9or2ldYVWFaw2AS4MQ=;
-        b=Ck3RA1d61j/yDBv77Bqob1R+I8e7Klg2u9BiQGjNBA6WAatTRsSLkYxK6lQoMAoPy+
-         tvAWdbKw2Z64LASJlD3mf3fTJFYQJJFmV7L9BJE17Bz11tyoFqaZspY0a+ot/VaVE3tG
-         g1+U/zbc9Ena5utnkxK06ZQ3ZP5/J9xRHk4zfpEx3VPBfwOti34/8+hXw6FAc/1K7Y8h
-         gtu9KvID6MEr5t7AREPV3yRD0rWRnLqI+M5npwDzW975D6ddT5KMLWQ6Tmbmo0xrZtRp
-         4uDIJFb+U1oEQhk43gR7KNAvl97rwtfpx/krOjLt0EZPxbZa+wLTGwax22zNjqWtaDmV
-         tAAg==
-X-Forwarded-Encrypted: i=1; AJvYcCWOWoOBTG0omQbGU3bUll6NCTOw2j6g9Vqle1EmjFJrJElz1urs6FMYf1L3VR2ij0BmRhnqphYTvVqEEITd@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywuuu5bQ02TiP4iBgZooFU+Ezu0BxZjsiny28wpZQaR4oQO9xX3
-	yEhzrtpxc+caDUUHulvwOxp4oyvsEdLFmfyuElONGVuzjBezc+egZQxwVaEsHynfDd6t8tHExqz
-	5iExCCNq1XoH2QzrKV0X8VyLwTMS/b1NhQCVT9E0j
-X-Gm-Gg: ASbGncsfi/9ZSfUqsJfdffL0Y3b/OlEqLy8PAe+wE0CGWRUeEG4O+AKowe/PzXhZbWG
-	sv38npkuzxIhu0u1m5ENUMIpnvZcki6h6w8O8g7/WSC+LxoMr9r7KAvKyHOs/lXqVPBgp6i4/6/
-	XJCUhdKVTsB52O3YrKO+RHi7/UX7RHQrsgPeMBH3DVd/AXvKG2/HPOLNDg1emRDIf8TJdCmTUCV
-	+pbTCc=
-X-Google-Smtp-Source: AGHT+IE77xfZzLtUStJio5/gr2Lddfq0kwmTtubIneVZ36yQE9cl1kxCYy+WewT5qhlZD3J2u42dfcUp/sDkWx810Uk=
-X-Received: by 2002:a05:622a:58cf:b0:4a4:d827:7f93 with SMTP id
- d75a77b69052e-4ae5b42ef1dmr687911cf.0.1753117273637; Mon, 21 Jul 2025
- 10:01:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753117992; x=1753722792;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DZ/4PF6N3vG+rQh7F+qrpcJmMG+VX0PeJtiX8Xsn9C4=;
+        b=VEwxzWve60W6huBsyG81OsGQLeBOdOpXUsb0O1W72pvFM0c1Ltz63Ubk5I39Qd+pqx
+         nNZmIN1ENSv8DfJL6vPP3TRc2ogIMKwTmKqi5X5keZ6YocJn8pUVtanud6N+l1i4e7Tu
+         kf+Kpe5gwzKOphOJLJrVYbcuvbOciZIHZBsS0MzkzdZY/2z15GsHOuJy7csaDLd4NZXv
+         4zdYoz2DO+0d2EZW4vRRZgFK1AoEx/dv2uYRh5uXr8piU7q8o06p+jbxrD8M/4ZIXJ+b
+         Zyi2oukWQ/GTtl1/iDg+COL26Ew94MgpWQ59sIioJqry8a1lC3kgwflHaemiST1k6jCu
+         /Hww==
+X-Forwarded-Encrypted: i=1; AJvYcCVdUqzXSp1bPV0Nm+jdCdiz4BP4GRdD2OGw06mQSzHbMbh5o8L2mgvjGVyIyNUa7ZMI8iYE2LHyTK3Wcb7U@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKZ2I0NzOENk5rMs4vG69/vYOkfYnCs4Nt66L/4XDLQNJ4uCYj
+	EwjLWdg86tx1A6pZ7YbdTpKB1f1XEAYLc36Anevs9XytWe+mvuqH62zpqyS8Ma7jvL7H9RJyNii
+	SuLgKWVNTKjch0H1+LECXiEbETXA9vNgL/5FQVTW9Io1zRUAf6okGa7yFt25R2S4zjxgQ
+X-Gm-Gg: ASbGncvPOC8YGR91TEq66ynPh6HX3vLNXJ6I+IEnMNQJcl7Ab5hWydNOu8urr+1x0Kn
+	BVruoIF05nErvVADM+Aa7/kH3x3H1Mt4Ak6dT1NdB+L1PBnVhR6RPHvnD4HPU/7OA3ShltxFUkn
+	rx918Lmed1994781T69rcTbPt0daEEvYgp15ZNEyP5y+ZLATFlJ/4OuCPQc9R4iy9qkKvGKz5Wq
+	QuMDOMKRxOLWA4FCwpNKURqJyvIfqbts2HTnMa08foIUA2Ws2de0H2hw9WT2BY4JYH316MB3FaN
+	Ivhd71KWpMZCF/YeZP1fDVudhiRyDB05tPxnXQtm8Qr/eeiEBLPbwPXOHc2NNkEkjHrY
+X-Received: by 2002:a05:6a20:9392:b0:1f5:8a1d:3905 with SMTP id adf61e73a8af0-23810d55d86mr34423457637.7.1753117991869;
+        Mon, 21 Jul 2025 10:13:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGe2/ShNvywiZ+DxmeZg+ZMZ/GKOcyhXqBS+iKk7LMIrbdvIY81RYqsoTDycOuer7bfi9e1ag==
+X-Received: by 2002:a05:6a20:9392:b0:1f5:8a1d:3905 with SMTP id adf61e73a8af0-23810d55d86mr34423411637.7.1753117991359;
+        Mon, 21 Jul 2025 10:13:11 -0700 (PDT)
+Received: from [192.168.0.195] ([49.204.29.160])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f2fe659a5sm5633550a12.4.2025.07.21.10.13.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Jul 2025 10:13:10 -0700 (PDT)
+Message-ID: <5b569e5f-066b-4e12-8a05-d77852ce11f6@oss.qualcomm.com>
+Date: Mon, 21 Jul 2025 22:43:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-5-tabba@google.com>
- <aH5uqeQqvzgJOCN0@google.com>
-In-Reply-To: <aH5uqeQqvzgJOCN0@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Mon, 21 Jul 2025 18:00:36 +0100
-X-Gm-Features: Ac12FXwew5QLfnZj03go8Mjw4g5wc-UoRbU-fCLWG340Dw64JFHDBfVakMGYyDc
-Message-ID: <CA+EHjTw766UKoLVoxGWDS2adq4m0TWsxwTWMGsjMK=qkSx4iCQ@mail.gmail.com>
-Subject: Re: [PATCH v15 04/21] KVM: x86: Introduce kvm->arch.supports_gmem
-To: Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
+ Controller
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org,
+        mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_rjendra@quicinc.com,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
+ <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
+ <aHjJG2nrJJZvqxSu@linaro.org>
+ <40534488-24f6-4958-b032-d45a177dfd80@kernel.org>
+ <2f5b5e6e-5041-453e-b3f7-b10b40bc6f57@oss.qualcomm.com>
+ <52ytt5ag5l65hdjjmvjft2l7ofvt4rgdn6r3bytcpjvyqia7ry@uzajn7qjng4a>
+Content-Language: en-US
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+In-Reply-To: <52ytt5ag5l65hdjjmvjft2l7ofvt4rgdn6r3bytcpjvyqia7ry@uzajn7qjng4a>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=687e7528 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=7nFZtJUvBAfdOgjOLm7NAA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=9SSxU1ZdH87hVqYcdAkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: 4HjwTXCtkVxCgAmJ3jYe1mQ_9Rh5Ybgj
+X-Proofpoint-ORIG-GUID: 4HjwTXCtkVxCgAmJ3jYe1mQ_9Rh5Ybgj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE1MSBTYWx0ZWRfXwnH/OybcjGeS
+ oTAB9MyETI47ySo/z8fFG2g5RygZwBypANA4Wzwd/nlGRoWr5pWVrJ+bcq1d97ycrkUWL0e1ewO
+ Zhc3vT8V68XGIAByAEfxPAsqAhWseVxaLskl1S3YaPh7ICAySoNSLD/KsgK+5ceFnx+cJRThvuo
+ 2L7wUpQz2JEkN4gO8ShF3O+n4gVo832rpjmk0yq8Xrapk/yK/TbpR0+8Smphe2N8IYQhCfMk9fe
+ nLs7PjBOSnAyER0FfiCuydxB4f+DPdOB9WL5N5BHdtOHPGPoobQRBHWsA6pKVPQmY1CLUrCPX05
+ A6PdTKwLpMDTGJvfMRGTRTEhLGr1hfJf+zhPPZqo4f82ni8JjteiDzwjF2GUxj7aFL1vRl1krNO
+ e55AnfzNCyDmJ62h2uCoCj5/lA6Tjyif+lY4UQjKkLJkkIQvqfvLJISUUBV1HKqexoRv3dbn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_04,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507210151
 
-Hi Sean,
 
-On Mon, 21 Jul 2025 at 17:45, Sean Christopherson <seanjc@google.com> wrote:
->
-> On Thu, Jul 17, 2025, Fuad Tabba wrote:
-> > Introduce a new boolean member, supports_gmem, to kvm->arch.
-> >
-> > Previously, the has_private_mem boolean within kvm->arch was implicitly
-> > used to indicate whether guest_memfd was supported for a KVM instance.
-> > However, with the broader support for guest_memfd, it's not exclusively
-> > for private or confidential memory. Therefore, it's necessary to
-> > distinguish between a VM's general guest_memfd capabilities and its
-> > support for private memory.
-> >
-> > This new supports_gmem member will now explicitly indicate guest_memfd
-> > support for a given VM, allowing has_private_mem to represent only
-> > support for private memory.
-> >
-> > Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-> > Reviewed-by: Gavin Shan <gshan@redhat.com>
-> > Reviewed-by: Shivank Garg <shivankg@amd.com>
-> > Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Co-developed-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
->
-> NAK, this introduces unnecessary potential for bugs, e.g. KVM will get a false
-> negative if kvm_arch_supports_gmem() is invoked before kvm_x86_ops.vm_init().
->
-> Patch 2 makes this a moot point because kvm_arch_supports_gmem() can simply go away.
 
-Just to reiterate, this is a NAK to the whole patch (which if I recall
-correctly, you had suggested), since the newer patch that you propose
-makes this patch, and the function kvm_arch_supports_gmem()
-unnecessary.
+On 7/20/2025 9:30 AM, Bjorn Andersson wrote:
+> On Fri, Jul 18, 2025 at 11:07:23PM +0530, Taniya Das wrote:
+>>
+>>
+>> On 7/17/2025 3:38 PM, Krzysztof Kozlowski wrote:
+>>> On 17/07/2025 11:57, Abel Vesa wrote:
+>>>> On 25-07-16 20:50:17, Pankaj Patil wrote:
+>>>>> From: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>>>
+>>>>> Add support for Global clock controller for Glymur platform.
+>>>>>
+>>>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+>>>>> ---
+>>>>>  drivers/clk/qcom/Kconfig      |   10 +
+>>>>>  drivers/clk/qcom/Makefile     |    1 +
+>>>>>  drivers/clk/qcom/gcc-glymur.c | 8623 +++++++++++++++++++++++++++++++++
+>>>>>  3 files changed, 8634 insertions(+)
+>>>>>  create mode 100644 drivers/clk/qcom/gcc-glymur.c
+>>>>>
+>>>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>>>>> index 051301007aa6..1d9e8c6aeaed 100644
+>>>>> --- a/drivers/clk/qcom/Kconfig
+>>>>> +++ b/drivers/clk/qcom/Kconfig
+>>>>> @@ -645,6 +645,16 @@ config SAR_GPUCC_2130P
+>>>>>  	  Say Y if you want to support graphics controller devices and
+>>>>>  	  functionality such as 3D graphics.
+>>>>>  
+>>>>> +config SC_GCC_GLYMUR
+>>>>
+>>>> Wait, are we going back to this now?
+>>>>
+>>>> X Elite had CLK_X1E80100_GCC, so maybe this should be CLK_GLYMUR_GCC
+>>>> then.
+>>>
+>>>
+>>> Yeah, the SC is meaningless here, unless you call it CLK_SC8480XP_GCC,
+>>> so the authors need to decide on one naming. Not mixtures..
+>>>
+>>>
+>> Glymur follows the "SC" naming convention, and historically we've
+>> adhered to the format: "SC/SM/SDX/SA_<Clock Controller>_<Target Name or
+>> Chipset>". This structure has helped maintain consistency and clarity
+>> across platforms.
+>>
+> 
+> The platform isn't named SCGLYMUR - which is where the SC prefix would
+> come from.
+> 
+> I'm not sure there's a benefit to quickly be able to know if a clock
+> controller is for a SC, SM, SA, MSM, etc platform. Please let me know if
+> I'm missing something.
+> 
 
-Fewer patches is fine by me :)
+Bjorn it was more of an alignment for "Compute", "Mobile" and so on and
+such was the definition to be used for the clock controllers as well.
 
+>> The case of X1E80100 appears to be an exception—likely influenced by its
+>> unique naming convention at the time.
+>>
+>> That said, I’d prefer to stay aligned with the established convention
+>> used for earlier chipsets to preserve continuity. I’d appreciate hearing
+>> your thoughts on this as well.
+>>
+> 
+> We're changing the naming model completely, so there is no continuity.
+> In fact the Hamoa "exception" would suite us very well for Glymur.
+> 
+> And look how nicely the CLK_X1E80100_* entries are grouped together in
+> the Kconfig.
+> 
+> Change to CLK_GLYMUR_* please.
+> 
+
+Sure, will align, but hope we are all good with the clock driver name
+<cc>-<target>.c.
+
+-- 
 Thanks,
-/fuad
+Taniya Das
 
-> > ---
-> >  arch/x86/include/asm/kvm_host.h | 3 ++-
-> >  arch/x86/kvm/svm/svm.c          | 1 +
-> >  arch/x86/kvm/vmx/tdx.c          | 1 +
-> >  arch/x86/kvm/x86.c              | 4 ++--
-> >  4 files changed, 6 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> > index bde811b2d303..938b5be03d33 100644
-> > --- a/arch/x86/include/asm/kvm_host.h
-> > +++ b/arch/x86/include/asm/kvm_host.h
-> > @@ -1348,6 +1348,7 @@ struct kvm_arch {
-> >       u8 mmu_valid_gen;
-> >       u8 vm_type;
-> >       bool has_private_mem;
-> > +     bool supports_gmem;
-> >       bool has_protected_state;
-> >       bool pre_fault_allowed;
-> >       struct hlist_head mmu_page_hash[KVM_NUM_MMU_PAGES];
-> > @@ -2277,7 +2278,7 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
-> >
-> >  #ifdef CONFIG_KVM_GMEM
-> >  #define kvm_arch_has_private_mem(kvm) ((kvm)->arch.has_private_mem)
-> > -#define kvm_arch_supports_gmem(kvm) kvm_arch_has_private_mem(kvm)
-> > +#define kvm_arch_supports_gmem(kvm)  ((kvm)->arch.supports_gmem)
-> >  #else
-> >  #define kvm_arch_has_private_mem(kvm) false
-> >  #define kvm_arch_supports_gmem(kvm) false
-> > diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-> > index ab9b947dbf4f..d1c484eaa8ad 100644
-> > --- a/arch/x86/kvm/svm/svm.c
-> > +++ b/arch/x86/kvm/svm/svm.c
-> > @@ -5181,6 +5181,7 @@ static int svm_vm_init(struct kvm *kvm)
-> >               to_kvm_sev_info(kvm)->need_init = true;
-> >
-> >               kvm->arch.has_private_mem = (type == KVM_X86_SNP_VM);
-> > +             kvm->arch.supports_gmem = (type == KVM_X86_SNP_VM);
-> >               kvm->arch.pre_fault_allowed = !kvm->arch.has_private_mem;
-> >       }
-> >
-> > diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-> > index f31ccdeb905b..a3db6df245ee 100644
-> > --- a/arch/x86/kvm/vmx/tdx.c
-> > +++ b/arch/x86/kvm/vmx/tdx.c
-> > @@ -632,6 +632,7 @@ int tdx_vm_init(struct kvm *kvm)
-> >
-> >       kvm->arch.has_protected_state = true;
-> >       kvm->arch.has_private_mem = true;
-> > +     kvm->arch.supports_gmem = true;
-> >       kvm->arch.disabled_quirks |= KVM_X86_QUIRK_IGNORE_GUEST_PAT;
-> >
-> >       /*
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 357b9e3a6cef..adbdc2cc97d4 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> > @@ -12780,8 +12780,8 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
-> >               return -EINVAL;
-> >
-> >       kvm->arch.vm_type = type;
-> > -     kvm->arch.has_private_mem =
-> > -             (type == KVM_X86_SW_PROTECTED_VM);
-> > +     kvm->arch.has_private_mem = (type == KVM_X86_SW_PROTECTED_VM);
-> > +     kvm->arch.supports_gmem = (type == KVM_X86_SW_PROTECTED_VM);
-> >       /* Decided by the vendor code for other VM types.  */
-> >       kvm->arch.pre_fault_allowed =
-> >               type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
-> > --
-> > 2.50.0.727.gbf7dc18ff4-goog
-> >
 
