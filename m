@@ -1,180 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-65866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 345E4B0BEE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 10:29:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63830B0BF7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 10:58:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2ED03160AA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 08:29:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9677E17B283
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 08:58:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85C7E21D3C6;
-	Mon, 21 Jul 2025 08:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C1C22868A6;
+	Mon, 21 Jul 2025 08:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aXPPLrKr"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXWstyCx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DFA21C190;
-	Mon, 21 Jul 2025 08:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B581D284687;
+	Mon, 21 Jul 2025 08:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753086556; cv=none; b=pF0ryWGmL3zrqZlN4KFCsRqoqsVImCoFBygf355j1ToBjeRYGrvPIzscFePKivhooRIowjbyH2vPVkJD1ZTUCPV9TKuQcNNg8/VVPOCrnSHYnMMTNzZauBzbuzuXQ0qWqourE2zc/U90vJi1E1+g8aItLmmn09lqklU88FR/Ymo=
+	t=1753088313; cv=none; b=kwOrKQjzJ8hBcnXFKHqKR+0cAxWbonsLKDGW43Y68Q4bN/sb/r7htodTyyO2KYJomEXi1zup/dBVsDt2u4VExevbbZypGtOQj4DqOJ2ttIXtzuEQM7wiUc9h7c0f4rFMW4H3PEC86UCH8ssK8+md/VV94ItSJI0FsiAgeZG+4pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753086556; c=relaxed/simple;
-	bh=JBnNlikKn4hKl1kwixnp+zTVImmONrxMYvjBn6S0QSk=;
+	s=arc-20240116; t=1753088313; c=relaxed/simple;
+	bh=wWzhLjHGZJcD5noQr983sn3nffxSA3p1GlMP8Z76gKM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lrruRI9gNv5u9qQwGyXhXgiQ+rlFPdUQa4SlrW8UxttLFTPy8vTv6H3N7PWuV7vVw+RQRgaXH146jqb+nfUVYO4JwZmzSE8ZpV4muedieKcs/qc44qv4ktSuU/wovwvqHxlkAL1OZKLPxoBHtt2/vW0CWrOhTVKfCgwudZQ/XPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aXPPLrKr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F534C4CEED;
-	Mon, 21 Jul 2025 08:29:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753086554;
-	bh=JBnNlikKn4hKl1kwixnp+zTVImmONrxMYvjBn6S0QSk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=bGd3OSYgothRiXPlAIeqD0sW8R0TqmUeq7oNZLvn1VJyoICocop4pDE9fe9g/v8xFL40xKFhddZj4FKI2xRa/OUlslMFrT/QXuuTl0+zXGuklxIOwBL0yCzGHVCZG139azTp48Drk4quTqQXZtNzUniN7HZY+HVziAvab8LFDwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXWstyCx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51A2C4CEED;
+	Mon, 21 Jul 2025 08:58:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1753088311;
+	bh=wWzhLjHGZJcD5noQr983sn3nffxSA3p1GlMP8Z76gKM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aXPPLrKrfVEHpfv/xEQxunALtEua2TyseOCciF04kWCyerh+94NLHyENnQ4xgGbJp
-	 Ot5/SDQEDpcxKockpY3CbHDncQciOgV5bU5mHZLvN+6c8/6e3FSJKPq18YX8w94/VF
-	 3tTrEzgekpqPv7tQNNCj0bpVjkbdjUj2WknJiALpVXInaoGV8rg0EMokckWDTlE9qE
-	 LwMZmfz1Yk/u4YghxZ6lKBpbw8AyWqufQK41tbH5YlTl6ifHv34+DeOK03N1aGO/Yk
-	 dybOPhz/IkxFBHoCUDYLbu1OyQF9/RZVxOvw/1tEcI7BwR1ABmDFFdtPKVtfEatpLO
-	 DVLFg5JuL4jWg==
-Date: Mon, 21 Jul 2025 13:59:03 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, 
-	LKML <linux-kernel@vger.kernel.org>, ath12k@lists.infradead.org, ath11k@lists.infradead.org, 
-	ath10k@lists.infradead.org, Bjorn Helgaas <helgaas@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>
-Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
- APIs to enable/disable ASPM states
-Message-ID: <3q2gqo6ipzyqr7i64yhndtpg4etwep4lgffk7emxluxuhjfya5@vt7czmsgpbuw>
-References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
- <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
- <7a97d075-2e37-5f40-5247-867146938613@linux.intel.com>
+	b=wXWstyCxPGPIJO8pzpKzr6nvQfsFBff1Najfu2/05gZZgbXC1ByTffziSA3Qw5tpD
+	 cQFrp6jsLrGFu3p+kvXYhKIGWg1xtJeUW7/wJHW0xfO3MPxuXsS6fEd+s7rRBg5sij
+	 Nk04tBj8sC5stOAgwzyqxU9bK4Pl8oDyk/84ktYE=
+Date: Mon, 21 Jul 2025 10:58:27 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	sre@kernel.org, krzysztof.kozlowski@linaro.org,
+	u.kleine-koenig@baylibre.com, linux-arm-msm@vger.kernel.org,
+	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+	kernel@collabora.com, wenst@chromium.org
+Subject: Re: [PATCH v1 5/7] misc: qcom-coincell: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <2025072120-swaddling-fencing-3dc0@gregkh>
+References: <20250721075525.29636-1-angelogioacchino.delregno@collabora.com>
+ <20250721075525.29636-6-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7a97d075-2e37-5f40-5247-867146938613@linux.intel.com>
+In-Reply-To: <20250721075525.29636-6-angelogioacchino.delregno@collabora.com>
 
-On Mon, Jul 21, 2025 at 11:04:10AM GMT, Ilpo Järvinen wrote:
-> On Wed, 16 Jul 2025, Manivannan Sadhasivam via B4 Relay wrote:
+On Mon, Jul 21, 2025 at 09:55:23AM +0200, AngeloGioacchino Del Regno wrote:
+> Some Qualcomm PMICs integrate a charger for coincells, usually
+> powering an RTC when external (or main battery) power is missing.
 > 
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > 
-> > It is not recommended to enable/disable the ASPM states on the back of the
-> > PCI core directly using the LNKCTL register. It will break the PCI core's
-> > knowledge about the device ASPM states. So use the APIs exposed by the PCI
-> > core to enable/disable ASPM states.
-> > 
-> > Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-> > 
-> > Reported-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
-> >  drivers/net/wireless/ath/ath.h        | 14 ++++++++++++++
-> >  drivers/net/wireless/ath/ath12k/pci.c | 10 ++++------
-> >  2 files changed, 18 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
-> > index 34654f710d8a1e63f65a47d4602e2035262a4d9e..ef685123b66bf4f41428fec67c1967f242a9ef27 100644
-> > --- a/drivers/net/wireless/ath/ath.h
-> > +++ b/drivers/net/wireless/ath/ath.h
-> > @@ -21,6 +21,8 @@
-> >  #include <linux/skbuff.h>
-> >  #include <linux/if_ether.h>
-> >  #include <linux/spinlock.h>
-> > +#include <linux/pci.h>
-> > +#include <linux/pci_regs.h>
-> >  #include <net/mac80211.h>
-> >  
-> >  /*
-> > @@ -336,4 +338,16 @@ static inline const char *ath_bus_type_to_string(enum ath_bus_type bustype)
-> >  	return ath_bus_type_strings[bustype];
-> >  }
-> >  
-> > +static inline int ath_pci_aspm_state(u16 lnkctl)
-> > +{
-> > +	int state = 0;
-> > +
-> > +	if (lnkctl & PCI_EXP_LNKCTL_ASPM_L0S)
-> > +		state |= PCIE_LINK_STATE_L0S;
-> > +	if (lnkctl & PCI_EXP_LNKCTL_ASPM_L1)
-> > +		state |= PCIE_LINK_STATE_L1;
-> > +
-> > +	return state;
-> > +}
-> > +
-> >  #endif /* ATH_H */
-> > diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-> > index 489d546390fcdab8f615cc9184006a958d9f140a..a5e11509e3ab8faad6638ff78ce6a8a5e9c3cbbd 100644
-> > --- a/drivers/net/wireless/ath/ath12k/pci.c
-> > +++ b/drivers/net/wireless/ath/ath12k/pci.c
-> > @@ -16,6 +16,8 @@
-> >  #include "mhi.h"
-> >  #include "debug.h"
-> >  
-> > +#include "../ath.h"
-> > +
-> >  #define ATH12K_PCI_BAR_NUM		0
-> >  #define ATH12K_PCI_DMA_MASK		36
-> >  
-> > @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
-> >  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
-> >  
-> >  	/* disable L0s and L1 */
-> > -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> > -				   PCI_EXP_LNKCTL_ASPMC);
-> > +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
+> Instead of using the parent SPMI device (the main PMIC) as a kind
+> of syscon in this driver, register a new SPMI sub-device and
+> initialize its own regmap with this sub-device's specific base
+> address, retrieved from the devicetree.
 > 
-> I'd remove to comment too as the code is self-explanatory after this 
-> change.
+> This allows to stop manually adding the register base address to
+> every R/W call in this driver, as this can be, and is now, handled
+> by the regmap API instead.
 > 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
+>  drivers/misc/qcom-coincell.c | 37 ++++++++++++++++++++++++++----------
+>  1 file changed, 27 insertions(+), 10 deletions(-)
 
-Ack
-
-> >  
-> >  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
-> >  }
-> > @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
-> >  {
-> >  	if (ab_pci->ab->hw_params->supports_aspm &&
-> >  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
-> > -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> > -						   PCI_EXP_LNKCTL_ASPMC,
-> > -						   ab_pci->link_ctl &
-> > -						   PCI_EXP_LNKCTL_ASPMC);
-> > +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
-> >  }
-> >  
-> >  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
-> 
-> As you now depend on ASPM driver being there, these should also add to 
-> Kconfig:
-> 
-> depends on PCIEASPM
-> 
-
-I thought about it, but since this driver doesn't necessarily enable ASPM for
-all the devices it supports, I didn't add the dependency. But looking at it
-again, I think makes sense to add the dependency since the driver cannot work
-reliably without disabling ASPM (for the supported devices).
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
