@@ -1,108 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-65894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C071B0C423
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:30:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65422B0C430
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:35:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F4277A85A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:28:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B0C67A9800
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 12:33:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF882D3EF4;
-	Mon, 21 Jul 2025 12:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 016B82D0C68;
+	Mon, 21 Jul 2025 12:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+K9aBxx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bh0gqTXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0812A2D3EE5;
-	Mon, 21 Jul 2025 12:30:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B02D0C8C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 12:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753101005; cv=none; b=SFBMuSJ8u0uRPkvXhjR/F16P4Ip7jJenuKV/OjWoKsk1XnTBpPLwVlBMg4MfrN1awQtNZwd4gbaGFFr8B3zg9p5cQgCYzXQaj2wO8z63Vs9U/Nxpk9OoMl0anNqz/4FX+g6/woPs1T6KN3OvCNBT/mB12Rh9TQ3f5abEA+djZcw=
+	t=1753101310; cv=none; b=bMHL4OHGLDWhfIusYIU1sldCCDlu/S0bIaic6PlfpSrftiwAeE4rb9KvmD9WyqEg7SVkyqq+AnJa4VQnLfLRccMdXmnHyEw9CZ+/59hInI76aiNeujhNzxZo8NQV9rcwUJ44J6wTTaufxpWabXvX9fLHIEee0RtNkG4JmH1MCqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753101005; c=relaxed/simple;
-	bh=3/Mp/bZdiCCi6LZfAbd65m+AvvUXI4xEDl+vBkRyuFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f8cAsJvgxr9lxBUCBFQ6A+D/LYT4gOORC/iBEHBzMaLmDJceq4/6jMvTBZK4DURTah3vnCaFT0WRkNJaRgXt0nTn1LhmFOfOlL9dYubN+D09+f7t+MXkvxir6traCG/LnuVhp46xgdypPSrRsDQG6s6RKbUAFFjXXfJ5UMTVw/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+K9aBxx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC7C4CEED;
-	Mon, 21 Jul 2025 12:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753101004;
-	bh=3/Mp/bZdiCCi6LZfAbd65m+AvvUXI4xEDl+vBkRyuFQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=q+K9aBxxeEfe6ql8kvSVGeQuzepLg/wW01yqaxnhUrqbEHylTeF3rN3YJFpy5mWXc
-	 yHewAQBFICtBu6MC/d0NG7d3SsgbCp7nepeKKPGDeTmsBJXdpYiDnC6rm+Ql2iNKbr
-	 HpnaC7P2Npe8SqqdHfWxO3YhLuZjheVIKut7kJesRLls9cr6MBCto+PCJtvhQ6RKyD
-	 at/okL098bmsMVQyuQ3uW6v+b0FdlAsCoA4qEKOoc1MFQ8fxQ8PRNdPtg662ZrSFrk
-	 ZD34bi/nb1qS7d7jfpqFE59LNOcrhU+ILSJWKnuqz3rITsxTfqsDIiJ2rnkhmeRrBb
-	 gjFuIeKo/oGlA==
-Date: Mon, 21 Jul 2025 13:29:58 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-	kernel@oss.qualcomm.com,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Subject: Re: [PATCH v7 3/9] ASoC: dt-bindings: qcom,lpass-va-macro: Update
- bindings for clocks to support ADSP
-Message-ID: <33d963bd-c5a9-4b10-b348-bf713fbab8d5@sirena.org.uk>
-References: <20250720173215.3075576-1-quic_pkumpatl@quicinc.com>
- <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
+	s=arc-20240116; t=1753101310; c=relaxed/simple;
+	bh=O91kV79pVlyB1aw34aHO5FvLamb5mNiEO23N/U5+fiE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mjLz1Pm6ZCTRAwTwlhll1+ze7UQwH3l6HpQVT4C5OSmW4usPQ/Oj2YHlUouPDZ7hcZpAyzcYRWbrMTuYDu5nm51nIxmoMauG5qwmEfV6gQCr1sKo5oCM9W/QRE2olITCcLKcwdaNHuu0rmTdLlRFbc/u8t/r0se9TPEm+XQHmSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bh0gqTXl; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4560d176f97so46182765e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 05:35:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753101306; x=1753706106; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zWeKKFmXQT7g0C6PVGMg3GNyP6pXlJ0on9vzRpXs9c4=;
+        b=Bh0gqTXllfuQAbX1jAH13X2R6upqB9cDUxtOFUyimTjLPImC5H6L7mQY9IoZF3hM1K
+         pAzRHdEKqRK/9YiMhol4+o+KrOIQQ3U4NQ06hyQVo29yi+MGGc8Tzj7ZPjcuyszZfb38
+         mUlyb4PcVlbZ5ap9X6kBznsVWZNjkoOKi32ngdi8JsqC+AR1jBryInHM5eps+obQ/iqC
+         hOM0CPBmb2ailGfuuWh8slauVngyWYdJrsaAhOA+TXocfn4KlZmEhLl/d00xCQJw5f1y
+         99XPGYEOm5R4nl58lg6duoJ1S+f6q2lgPIGGN+01ETMe27gtjWTLwmKbJ+AyrtPagEFA
+         Fl1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753101306; x=1753706106;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zWeKKFmXQT7g0C6PVGMg3GNyP6pXlJ0on9vzRpXs9c4=;
+        b=dP9JnzSKeJylYeL8LeYIzfpPqBzm+xJEAAcy/Denff0VKh9njnAMwTmzYF7zlB7IzG
+         VfZt9/TAnQixm/uFsSKRApbSnQbhwRQQmLvQlcVciOcTjlmrvAqLVGfhJqSrhrbmlxWx
+         Gd+LHqtFIZ05czJNF4df6WPZAOmdxVV+LGypy9OKmyDRqvdlzosVituTTCfKtRfY4bTZ
+         fyztdrZXU/L0ccu5OADzBqJ6UYnjynQjMB2DO6TUxLzAGt4DC4rAIFaoQ9jTBONODP0v
+         P2LD4Ws46mloxAfD1v+rpuyVs6XaX6h8SOElcKtEfatVeigsHnrCnM4H8rzqEdkTbiyC
+         xJyA==
+X-Gm-Message-State: AOJu0YykRLfr45U2QaIQRW3omCKm92GMg1V3iQZu7FuYVpDQHo3zJ4Q/
+	WVyBDbSAengkpTrUiWTPfjyzil8GceJVoqX8KjQnyyKTchxvyjTmkqwdU2fUMBFqK+0=
+X-Gm-Gg: ASbGncuKtIXderfociX4WSXQY97syhBv5SxugDy8ZD6EAblS7lcF8Q6Xyw4uADE7Cyh
+	y3St40PTzJqF9gz7huL98y4wmHcWBaI89olWll7Msg+FtcBNg7/jq8c/AZh+DOCUPkVlgiylrYq
+	1cQPpuN5489GMcW/ikLwPD/aii8D/3uVxVGebqxfcbl+idxASlViacJZMnjmP65XJLqsNj6xhnC
+	QWIP2B/KvLAT6zHA3lhdK6t285O2MpqGVN/y2KT4fTr07uZzUBsi5s0vzGpIk7tNnMMkfvjRU5d
+	FGdlR+HeU2j6zN7AXaPcr0Z8cjVOdhTUuwoV+0gpMhpw9K96uPMtbwlQEb2ZWGUHPvLyGfyQUF8
+	hVTSkGgzKBC1xunWCqzE7PyiKBgzKRuZHKCU0/Gvez6w=
+X-Google-Smtp-Source: AGHT+IFG4kXXmx0zh4K9sMcn1V0MOV16G+IB8ljJaAKXFE9c5b/lozHQb27C8mLcsiUk1H5j42FfJA==
+X-Received: by 2002:a05:600c:468b:b0:456:2419:dc05 with SMTP id 5b1f17b1804b1-4562e33db7fmr212236965e9.12.1753101306277;
+        Mon, 21 Jul 2025 05:35:06 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca25643sm10026654f8f.16.2025.07.21.05.35.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jul 2025 05:35:05 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Mon, 21 Jul 2025 14:35:04 +0200
+Subject: [PATCH] drm/msm: adreno: a6xx: enable GMU bandwidth voting for
+ x1e80100 GPU
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WQCEN1qteZ5BnNy0"
-Content-Disposition: inline
-In-Reply-To: <20250720173215.3075576-4-quic_pkumpatl@quicinc.com>
-X-Cookie: Falling rock.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250721-topic-x1e80100-gpu-bwvote-v1-1-946619b0f73a@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPczfmgC/x3MOw6DMBBF0a2gqRlpbEIS2AqiSJxnMg22bH4SY
+ u+xUp7i3pMykiJTX52UsGnWMBeYuiL3fc0TWD/FZMW28rCGlxDV8WHwFCPCU1z5vW9hAXfe3e6
+ deLRoqPQxwevxfw/jdf0AHSMKJWsAAAA=
+X-Change-ID: 20250721-topic-x1e80100-gpu-bwvote-9fc4690fe5e3
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1510;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=O91kV79pVlyB1aw34aHO5FvLamb5mNiEO23N/U5+fiE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBofjP4kJcyfWacvsCCp1u6bg1wWUMn/RjwQ3GLOc9C
+ buFsCgGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaH4z+AAKCRB33NvayMhJ0SkJD/
+ 9OjSOM3gWCnvasEhptI4hBy1sc2kjQQqMcjy4dCSE18KxSG0hBpJR8LsXVJSKvWxed/zdmPse9wB8i
+ HcwrX68tuo1Y11kf/IohKZOmW43zSu9X/ox0+Imq/1UxirYaezrAy6Le19D/H4Dcvy87PbsW+zck2j
+ w6VZiu2Y21LHow4N4a1hA3uuwAtGV0WLdLyrLcBVIqO0msQIi8gF3Tt1fP0KNeokd4z4z2l3U8i7i5
+ 8YTxW0yGHZneLcYUqk1LxyIoaFnWtVNij/ON4QsDMCb0bHIoZMgzTLuOfygHEuAWXQTdR3nseFhAii
+ E8XMDPkbMglGxCMiXjU92LeKm9YfZrHp2KmLom4BEpMvPsHYObpICMEy542dA3uOwm/6UqUS5TMVRT
+ /c+ijayc/i+vJYFerhzCuJXZb9pvkNa7kOsCDYeDpBQU7q7TB0cHP9Ky0wWUTo+gvB3Uge6MFcELSf
+ IEy3qCw0zLvTFkQloYfz73QsIPeTfLDvhZSdFpCIATKjydKx0HtfywRLv0E7cc2Pvi4dnkcAFcR2uh
+ wYs2X/BVkhYBw47WQu3xqu4ccKVfH4uhPdXiJJliS0HqE4VME4lcYBl5E6ksB4Ohhl2zWABz3xUEi5
+ A2vtwhF+C/qxPPoZxGDdr2DKhrLZhZgU7wc7wTNR/X5te04h5yPne7BZuP/g==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+The Adreno GPU Management Unit (GMU) can also scale DDR Bandwidth along
+the Frequency and Power Domain level, but by default we leave the
+OPP core scale the interconnect ddr path.
 
---WQCEN1qteZ5BnNy0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Declare the Bus Control Modules (BCMs) and the corresponding parameters
+in the GPU info struct to allow the GMU to vote for the bandwidth.
 
-On Sun, Jul 20, 2025 at 11:02:09PM +0530, Prasad Kumpatla wrote:
-> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->=20
-> Manage clock settings for ADSP solution. On Existing ADSP bypass
-> solutions, the macro and dcodec GDSCs are enabled using power domains
-> in lpass-va-macro which is not applicable for ADSP based platform.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-This doesn't apply against current code, please check and resend.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 00e1afd46b81546eec03e22cda9e9a604f6f3b60..b313505e665ba50e46f2c2b7c34925b929a94c31 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1440,6 +1440,17 @@ static const struct adreno_info a7xx_gpus[] = {
+ 			.pwrup_reglist = &a7xx_pwrup_reglist,
+ 			.gmu_chipid = 0x7050001,
+ 			.gmu_cgc_mode = 0x00020202,
++			.bcms = (const struct a6xx_bcm[]) {
++				{ .name = "SH0", .buswidth = 16 },
++				{ .name = "MC0", .buswidth = 4 },
++				{
++					.name = "ACV",
++					.fixed = true,
++					.perfmode = BIT(2),
++					.perfmode_bw = 10687500,
++				},
++				{ /* sentinel */ },
++			},
+ 		},
+ 		.preempt_record_size = 4192 * SZ_1K,
+ 		.speedbins = ADRENO_SPEEDBINS(
 
---WQCEN1qteZ5BnNy0
-Content-Type: application/pgp-signature; name="signature.asc"
+---
+base-commit: 97987520025658f30bb787a99ffbd9bbff9ffc9d
+change-id: 20250721-topic-x1e80100-gpu-bwvote-9fc4690fe5e3
 
------BEGIN PGP SIGNATURE-----
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmh+MsUACgkQJNaLcl1U
-h9BWwgf+NWAI0d/I/aIa6eGJwgfNj2DSfG0PWklhpdlVWh3zEes+nP5dCSNDhbVK
-MWKkwY0gF5I4o3GnSUowpdHoXqijOacNQonhwWf2RNYOfHty0725BYt2PV42bsdY
-QBOovExEfFTtHgw2w1LF/Tqtwwx1qxDLrMWD9r4KI2LFHYM2vIlav7NgzYOJ2ECN
-RhXTWEmm57JhZu+Z9uTPy9FtOdBJM+UPWtqt4TCSn7VbWpisle9LLEQQOCXHULlv
-VeKyvkGkjgRO0T0afl77fqyDk7p794L+X3oxhlVKLCbEKffQfhNbuMO7IsHhIh7e
-qnxQ8X9o61wHTSFsxMyF/7cG8tUtWw==
-=rl5U
------END PGP SIGNATURE-----
-
---WQCEN1qteZ5BnNy0--
 
