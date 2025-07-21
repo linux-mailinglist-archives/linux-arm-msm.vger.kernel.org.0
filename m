@@ -1,156 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-65914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87850B0C6E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 16:51:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6960EB0C70B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 16:56:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A59927A1C0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:50:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D069E1893CA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 14:56:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E87928C03B;
-	Mon, 21 Jul 2025 14:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 613392957BA;
+	Mon, 21 Jul 2025 14:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="InnDm18Q"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="e/GrPlEF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FEC22EF4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 14:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E352874E5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 14:55:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753109502; cv=none; b=s6FPdCTMwhL68thUhk46vtC8uE5N8VEDPdXhOE0/hreNqs9cGl4OLPo87xZPpp32vtFBVj97ECkbwi6V2U9FE1lGSFlz0IY0UDh67TAkEjl0U5tToZO6QxMtV65PEGh6o1zp1uojvNLnZYGPQLtlQir/kcgWw7RpT2lxo5U9j1k=
+	t=1753109745; cv=none; b=CinSY9SXpCu9lkk+VBJVE0w0CVTAwrpwB8SWjLVn3pbRSK6NiUKN9U0bc1hhtuEa25L3B2XjvuO6lhx8az46Wi6WKuALYlgT/d4qAu5uNwaLQFWSdeQTRKCF7qTR+0bblpmjVPt/1SmYyZWByMVOy3/ypYpNjwZajHG+DDxZS58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753109502; c=relaxed/simple;
-	bh=2pvWMH07iqrBXEk2OWRv81HLnHYw7YmDApBoBqzjtKc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gsCHI+XDAw43Hr6YvR3YqqERuMwQOP0BEJNvcv6Nf5mdqy69H5+Wh6HwFWtWHk6kSAPW7AghYweabVEhvgQ9A0ZZQyEumUXpQ1NIUQUEOgKYF69o618XNrqQJMehQ2Uah5MtW9N3ofAIJ3mnYAMQDxsddU8ov5lxoJO4i1+s49g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=InnDm18Q; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LACvrx001178
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 14:51:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nMgkULWhFnNfv8reCcAzyxz1uD+6zucjoyW4qz2tQPU=; b=InnDm18QKyUuvqHl
-	Jdk1ho/XBnLd4JMnlT4ifi3Zo+uNU29WAVqEvZTjgY2sfqNPG1vb8Yvl30w9SkJk
-	6G4k8qy6ZJTMRPW7B33vmbJqh/GMelvuRlQNNO9ItELvZGB85WXP5vO1cCGG54Ji
-	dfGEmJ0t6RNIyd3TyMt7HJ8dyQSnxgE5ENng0mlvr9knV5Er+Fbla4GuuDapmTvy
-	S523aTo4lJ/44NS9XZY3uXU2NzMGiQqrAs3Uv4EVFH4C2WJczyMDN2akB2MEFGMi
-	n9ScBSouhPqeXb7WnLgxppDaIbsLBQn3u9ldA9GjT0uzlVgLtpaqiG0EPIkDLW2L
-	+F3m/Q==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48044ddmy4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 14:51:39 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e344f333beso31842185a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 07:51:39 -0700 (PDT)
+	s=arc-20240116; t=1753109745; c=relaxed/simple;
+	bh=T92uPXfYGURbpMpAnfHw3K02jpN+sfhbXqSdhB3YZ0Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kk6MtHc3gHIvI2Lts1mYebdmP9HPZJDO9RXRFTQxbIqPZgE5AY6xalstlXoRak1CPADIf73S+eGINxXIaljDQ0Rb34h7WDaG1I/978bSbzB6zAKihIuGP73xirW6XK+5cVx3X1UcNvKfHVCP5f5TY42EJAIvsWDMYl3MSWFWt2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=e/GrPlEF; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4ab86a29c98so597521cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 07:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753109743; x=1753714543; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=62Qcferz2ta5LRJ88jGpd09cdn6J94mnG93fNoCzAck=;
+        b=e/GrPlEFbHjYDpwQ/sGuuB1+ZW9ujlouj5PLG9kXZs065JKJVUzUczDkq4Pw4HlFV0
+         /MaBfJzRHU2YiUDUohCUwgrjbJJ3SeK9jRT3+iLeD8R2f0hM6tUyr4UuJG4paZYrc5xr
+         Ag/P85DwnBDxuveiR7x5LeWOURkmZViATZHgPrgUt9FKPNFLDHwnvY1Jgbh8T8cdU4U7
+         7pE2tQhwbd94CySXB8EpCR0SRiWoDE/LjsQt4MocpMiqVRGosdvIdq6p227dHbw3rV0Y
+         Su7BVxOmAFPTjWUzx/YsYd1+5aaikFoQZqMVbiv59JCVdT2KCsRI0J2EYA8eNZWjFSMh
+         /KsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753109498; x=1753714298;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nMgkULWhFnNfv8reCcAzyxz1uD+6zucjoyW4qz2tQPU=;
-        b=qdB5hiMv7+Dmbs1H1unwQXpp3fe7OezRfxmKMxgX7YpQuwYegDTGeZREJ7mP/r48DP
-         9OPzpSKx/uJnnpegplz0+ogT9sdkU+jf6LelpDMemOmp3yM9ZUsnC3dbR8a66No82Ttt
-         VJaGFjzK11LcN8e1bga6OaDPktrBhUz3yTOiSZVaOfNAZsa7wnDqguuukzyVirBMUHUb
-         j7QOZTfTv/6kussHXtK/JwDEF1XVpp2pj5JEicu6m4hMOiAlq1jUMMbxrrwyz11cPRB/
-         Vxgtgixuvg1ssuqy66jPVjAGThweMJK1MX+PWaVDE828fUw27kCUwNcCsnW7pz0AmcAM
-         BCFQ==
-X-Gm-Message-State: AOJu0YySu17S/MY0HqyrD82E/wzjYbi3O09ZYVLxHwaFJOCR6axW7Mgb
-	+PddcSck76RSQD/FMpjtc4R4wjvgmLz3cz/aNOwPYMe6gnMKHOKdr9ngHUswgktMFpsXVZfJJVX
-	cvfSbnN45KE55aRqeLWivxV2CRLFYhHs5we6hEpBYqCEP/v4g4YdtR02GNDyCOYQqyrxv7BwhXw
-	hB
-X-Gm-Gg: ASbGncseXHeBQDaaA+TMKtljyA6nubvLslmj2uUvKunVkWrbi4af0HiULZDbrLZPtzY
-	U0gPZOKFMk6ph257dH5cfwA9Qv6mcoXHg1gxzzXjV1cMxoYeiGB/q+ddKZe1rlo5klNwN2fD1aa
-	jTfTjggUgRtdfyQfYMiX6z6trsQxLkV5Pw896pg23Hl+IUB543J+3ci+lafqPgU0iF1KaZ/Somd
-	LSZcZY0nSUDDWysjs9Kj062vbdxQKsxrziKosAsG82DI8WaTbdFjZOiRedKweQsaL3JHhHviSjJ
-	gIRsxZjYI5mYscbona8S1h/8F7o0oHGDS7sGduv1/0uC9WX2R0StfS8tZ+jzAbbGlcJ+UeijC5P
-	oVK8OlIAypwu7YeFuYvWV
-X-Received: by 2002:a05:620a:4014:b0:7e3:39d4:4286 with SMTP id af79cd13be357-7e342a8e398mr1151687385a.1.1753109497892;
-        Mon, 21 Jul 2025 07:51:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSt5/RDO783Jsf0Dpjg6Xj5kzj9H3igzttfEVO974rPIh65MJIGlIMPiuiECbGupg7YZMCMg==
-X-Received: by 2002:a05:620a:4014:b0:7e3:39d4:4286 with SMTP id af79cd13be357-7e342a8e398mr1151685785a.1.1753109497420;
-        Mon, 21 Jul 2025 07:51:37 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca315d5sm693468166b.98.2025.07.21.07.51.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jul 2025 07:51:36 -0700 (PDT)
-Message-ID: <21c75060-eb8b-45f8-bddb-816fce787240@oss.qualcomm.com>
-Date: Mon, 21 Jul 2025 16:51:34 +0200
+        d=1e100.net; s=20230601; t=1753109743; x=1753714543;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=62Qcferz2ta5LRJ88jGpd09cdn6J94mnG93fNoCzAck=;
+        b=fPl+Msd27n5j5PR9dyC3Z7AK5ex8p+RmHCD5XqaehdpW8u4pr6ZNG+Iq1PFCGDHlTM
+         GJIK36zrTMRb1Ut4+qVFtmocnIv5+vtB1xIYCEAeIU7Q48k5K8Nm6I1Rz4NGOSUVWPZE
+         58YuxsHbaBOCXvmrBgp0yyQHEekxbpuIQ0Jcu8ZpGhDhpQqMUZTj30K7++oc/QzIoeT1
+         o2KV90H0vo+iKxkS9P01UcjJzNJDIkwnYJsFJJ884Anhn2irFKs7c/SDLdXR1Kyj5Nqu
+         wTCku+Vveuce25CZ8Jb5Q0VnHwLTHbpreJh0RWP2gUFSW6Os+CqFa8DYp2g8oXtfHzXe
+         eMag==
+X-Forwarded-Encrypted: i=1; AJvYcCWvSJv+xmg9RViSmjm2IyPD/7FYr6zKVKWyNHADFqWhCgHbFgK71sUtDGimMnmmVMBNgtD2sKQtUQbr2Tv1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0lOIEa5Dsskz6fi4QV1JZGAprjOXkYE142l6fVLg+Rdrv8uwV
+	YrS0GFM2L3+SA7asCMHoKqZ34zGDd4m5dX1dfqQEQ8GoX7kwm+Gvtc88OtnMg5qb5hqM4JF66LH
+	XYO9FKXzXo3ZwwLNTBTyBp31TR7aY0Bkcps6dEg8r
+X-Gm-Gg: ASbGncvz06iMiAwKANI4pY1NDz2b/5A2NO3DTGh230Mb4YroEbe3GXJUTe3fdC7mzHx
+	LfwawAmONkV9LJrar2P+lKhjx9S9/LUoQAmHDexmPYPTy7sqpMX9CW9g23QgvyPJmUCU/qQhCPy
+	UEVDXSXF4Z/c1pnUZukqio0mri24i7EKDggFnTOr0ca2ZGA5bj4aDea4T/ekZjUu+72Drc1RTf2
+	qUB5uQ=
+X-Google-Smtp-Source: AGHT+IGTWuuHynD3kVjQ3ZKHxL2xoSxYhOwKveCXiaEd28ZSrOCHoXsuUfMk6n8k1GpDWeaMa4Ky635f1p2QoKHv8Vw=
+X-Received: by 2002:a05:622a:8389:b0:4a9:b6e1:15a with SMTP id
+ d75a77b69052e-4ae5adc307cmr26501cf.24.1753109741967; Mon, 21 Jul 2025
+ 07:55:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add glymur pinctrl driver
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, andersson@kernel.org,
-        linus.walleij@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, quic_rjendra@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250721143037.20983-1-pankaj.patil@oss.qualcomm.com>
- <20250721143037.20983-3-pankaj.patil@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250721143037.20983-3-pankaj.patil@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=BJ6zrEQG c=1 sm=1 tr=0 ts=687e53fb cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=PtIsU_pUeB5Sheknjl0A:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: OIPgn2iDc5FBGCfCDzRldHjr1pe4UGKv
-X-Proofpoint-ORIG-GUID: OIPgn2iDc5FBGCfCDzRldHjr1pe4UGKv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDEzMSBTYWx0ZWRfX/lucYVdt3Uhe
- s2fntBKdGDCX6XbadpitwhknJdf7pJsKPfQiPDJltakpyzTZpi8eoSNuWDL06LuoOcbhBjHfVDE
- sw+v1OaZjiuN6hNpMBN84mJMinKeovXo9FDrmSXk2J36TH0vhWL1R4VrS5mHsDxViYOXoD0ikTC
- 8qmRPRLplVG/0dNJS25im5AE+G+LIkzGcimOQMIbTmB+mLoNMS1mrwZ3ArabNDnmVbNbDeiNwdO
- X185MumQTSjXONd8uDyr0dPxYUDQ5twN0KvDjhjAvFy7OoT2cmBItx88ft0dA6vBCtWPSar4gfD
- 5rGXz22mrYLluhZzlwRBhFiFed6dAADAUrDHkZBOldidZZHW4aqI0V87XblW/s+MjM9v/yXKfCv
- eLLFxxI4Jb1XqiuBgoNfg825i1Px7S06B/vymYCH0q4GkRhmpb/l9YGu+WCVKKjp5jQBn580
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-21_04,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507210131
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-4-tabba@google.com>
+ <ffb23653-058a-426e-9571-51784a77ad3d@intel.com>
+In-Reply-To: <ffb23653-058a-426e-9571-51784a77ad3d@intel.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 21 Jul 2025 15:55:05 +0100
+X-Gm-Features: Ac12FXxjOmMLuWpZC_TS5imBaYfBYtso3IHhWRxC85v1TVvpzPnUuCfabMiBMwM
+Message-ID: <CA+EHjTz3Fq99q0cbkEK9KKzpSUBGfmnn_fTrQ1cOuUAQDz7=ng@mail.gmail.com>
+Subject: Re: [PATCH v15 03/21] KVM: Introduce kvm_arch_supports_gmem()
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/21/25 4:30 PM, Pankaj Patil wrote:
-> Add TLMM pinctrl driver to support pin configuration with pinctrl
-> framework for Glymur SoC.
-> ---
-> Changes in v2:
-> UFS_RESET macro updated
-> Removed obsolete comment for msm_pingroup glymur_groups
-> Update gpio count in glymur_tlmm struct via .ngpio
-> 
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> ---
+On Fri, 18 Jul 2025 at 02:43, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>
+> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+> > -/* SMM is currently unsupported for guests with private memory. */
+> > +/* SMM is currently unsupported for guests with guest_memfd private memory. */
+> >   # define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_has_private_mem(kvm) ? 1 : 2)
+>
+> As I commented in the v14, please don't change the comment.
+>
+> It is checking kvm_arch_has_private_mem(), *not*
+> kvm_arch_supports_gmem(). So why bother mentioning guest_memfd here?
 
-As Krzysztof pointed out, your s-o-b is not part of the commit message
-(include blurbs under the --- line, which Git will ignore)
+Ack.
 
-[...]
+Thanks,
+/fuad
 
-> +static const struct of_device_id glymur_tlmm_of_match[] = {
-> +	{ .compatible = "qcom,glymur-tlmm", .data = &glymur_tlmm },
-> +	{},
-
-Nit: "{ }"
-
-(no comma, as this is the sentinel and we most definitely don't want
-the list to grow beyond it)
-
-Konrad
+>
 
