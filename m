@@ -1,162 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-65904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3976B0C572
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:45:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1144AB0C5A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:57:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C6593A549E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:45:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA27E1AA3BED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:57:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9D7D2D9797;
-	Mon, 21 Jul 2025 13:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F6E2D9EDD;
+	Mon, 21 Jul 2025 13:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Vte6I+vD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WhYyygO8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC6128726D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 13:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738F21F03C5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 13:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753105535; cv=none; b=ZySkI36UFrvPnoE2hDv0gAG1d51oA4vCpjHizhDayQQVrJ/88ce9kFEViecWruhW0VYJDwde8+Ca4dGhU4Oi+2s1Ncufc7hYFl7U0kIyZqoN4UgQ+36daY2OuIUL/fnR9hOqfIb7cpl6BfOdL4+cKv4u/Bho4YR31sBm3FsWKWo=
+	t=1753106219; cv=none; b=GiKY27XX7TBZurWXYhsSE949W2c1g255bIIiWikhjj5rElktiZGA5J1frMMMAMWCpgf4AmWIe7G7wbjuBPuErL1DrrppoWWq8/okR3d1vowQ1u0IpeNaS94LOHYgPDQSMmZro7km/KEI57jexFWflvDoFMeKzxYta5eqM2c9NIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753105535; c=relaxed/simple;
-	bh=xS8FHRQqRz1nSiwIVN6mTqgxMWHxF+OgzCsTtwKG9q8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B739w7NUTAzIG//AyjFoUThR9M4bnSqOHn6NAXIwEU3/okHykC0TnOSi3KpSgQK/RcXFEy8+9OGfEAbXkEN6IYX/XIs6/ZxMl2RSy6wM6iZhgeILeXFaRzCSXZzZpSZZGwko4q9bJ9HCdgZgbJkj0kLoHPUuOiXiJDTm2EAMm7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Vte6I+vD; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-23dd9ae5aacso243945ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 06:45:33 -0700 (PDT)
+	s=arc-20240116; t=1753106219; c=relaxed/simple;
+	bh=rHLuKPZS15Ci3FRNHUt3wjlIpfOccnEveLsn8wj5Hzw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iYmZfVoFlbFEnDIkHAql6Zk5pGfo9H7Lebu4YBDOKrxWygBtpENL6O4z9UOsuJXsyFiSR6RqD6DOkQx65xThfvKYE9yVjnvbL0w3duc1OhMKhhVsEdSDc6+UAYvzPAj2XGsHdqGHBdgRNA4pizprOXvLBoDFUb+M70UZxAXituk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WhYyygO8; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-451d6ade159so31860105e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 06:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753105533; x=1753710333; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gQBY4/lqxzZEDnjripdA0AMheXR9IyeEye91HdZllXE=;
-        b=Vte6I+vD9fYDazndsFJj/rDQDq+8es01LC3aDMSYeVS/I9s9Fc3Ll0i4h0q5u+yLrk
-         8NLTKyR0+fojoiYkXClZycP53CnRT6PSHnHHqQ5U4ZQUbc64gb8Suz0wP5g54d64m5Ae
-         Ws0+soheNjFo92xaGQVt/6FDYUd1K6EDXDT4TrdVO7bezLy+YW8ljlMKSNu81Y7uZ10c
-         GFDI5ReMG7fdepXx1gh3aWKwp3q4NxBf47R+UsUv10FXrJswbYH+CM58C8VU5W5oUvsQ
-         LlBzdTc4RYVeE3BpfSeKngjkIPwTzbe8jaawVzABQOSTmQJT39RNXJ66TkuYe11JOCtN
-         P2gA==
+        d=linaro.org; s=google; t=1753106216; x=1753711016; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JHT+Ky9a2/UvB6vMaIGkjzmNbUyHiZwcZw1UdHqqBQM=;
+        b=WhYyygO8jgGzYI+zkSc+DW7KHpdJolupUWNMnoXZO9w4t/kEKBLwxtsEYKC918bc9W
+         yOtksjzd+qwKmn2sVZ+nvf2nHjSGq4459z6ls0xJ3XIuHTFUPESfb1Ac3gRVmEA1WRiT
+         q5Mvj5yyFsY3d/8cCcukAD7Yzg/SPYsnWK8rwyCzICQilZMpc7uFnicEXh0vdAoVJ3VJ
+         kFNFiRvuHR3oGrn8RQtJokNY+7/QkAurx5uB3nFqUYf7T0/MYolXouQCUt/nJgc+dBKT
+         Nqib2YMojLqI2lRu3MjuKC3dZvWlroLH32cAWKLZZmIAphW5A89lJmJdR4m2n0D/KFNM
+         xaWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753105533; x=1753710333;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gQBY4/lqxzZEDnjripdA0AMheXR9IyeEye91HdZllXE=;
-        b=TTQCCpeKL9RdLFfI8IT4iyaQzmI4QeTUYQE1aBlheh5TGSZkFQRMBGTXedeVbMIZim
-         b/V0+1Xj3JrHzR8MsWl7ih60hJVIiVwe+RGvqBCNCDKno9UPBnl9kJI45ij1WuFSUDOK
-         ZzFzhdNUjvkFJtVidOWCbN8kWlDkR3YGhGvjxNxmEc1Rr4i4jLLH5GzsikxJH3q0Xl6A
-         BmizsVxciHgY2ykwPZDuzsD+5n/EI4X4TaVMcrUcFnj6BuiVAAVf6RjjWkovxWLUlqfE
-         F+gC3wi6bBSsHAhb0FdY1gi8UMRV5f7YomFxlEQOKQQGEK+0czMMg5eaZynn5Vrif3wK
-         aZtg==
-X-Forwarded-Encrypted: i=1; AJvYcCXKj5rmd+HPkGNAqcf3/X2D04Kb7ECOXLWaX3ukNkM43x1vtGsb/4zuz9bqnTM+tbNz++2FJmDEjBcXbKXm@vger.kernel.org
-X-Gm-Message-State: AOJu0YxaeTzscWoRSdtzIH0l7y+k1+es9GKZhH6+oANEnMMJQJjYlUM4
-	eGr1LpZnZE6zH3KP0ojQWqrymwXRbFcLITuWandxVUH864llq+ygJhuVU13f80Bwd8txfEXO+12
-	Jeo//bv2y7EDUZS8DCz9UX1N5dLNC9ofYZwhvH3Hi
-X-Gm-Gg: ASbGncuFo3+Iqr2M23i6yQq9ezcSpl0ASf3yRbBdANHifU8a8MW10RSWzgKX4yn+Mfn
-	GyW6eNxMhmq0LRxnrgqJOsnJllLQT+JZq0cbYOfv3k/6NOXpD4JOrAw6P+KOyoydzlS/oRldP7i
-	JiSDPD61KjdMFOcjcGBFsHoGOViI74PEXl65gGcYv4IJXhCeIG0/LoAcKx0jY/zhPbBcE42n935
-	f9AAmtXOIDMCLAQrqDvCiXmKKxx+5jJ5IVwTpEm
-X-Google-Smtp-Source: AGHT+IHgNq4HFEWMWRcmuIn4waZQ8L7YkPL51NiUKU8DKiTWVp4UcwGMr4KoSHwclm773Kr4g3s26lBtxz0ISLcojo0=
-X-Received: by 2002:a17:903:3c30:b0:23c:7be2:59d0 with SMTP id
- d9443c01a7336-23f72bde123mr4371025ad.23.1753105532950; Mon, 21 Jul 2025
- 06:45:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753106216; x=1753711016;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JHT+Ky9a2/UvB6vMaIGkjzmNbUyHiZwcZw1UdHqqBQM=;
+        b=tRmLigDukaJPjD7XWl+VuKj9eUMLrPa4MhRmb4T7fy8Dg8m90kEPReweBqWbMB5/WS
+         Zv1SkU4WRsVC5o01n/ESwRa767QatAfPfUx8sLwCWLlwMmZ1FRl9TELTz7+XFITcTW/M
+         yNfnDRz+mQJAaZalZisPhJ3uqJa7PreCKnWOe+zA1BkvfBCK/dnRy0dlLWBS/9D13sKJ
+         bIPCb+obsMdWsR/8JT6ttwaMjzc4Sal7lvQncW6XE1dehGZno3QLxTAB98I0R4nxKoff
+         9gNcmWzhDd4nQpOQbffXUgA7AMZDULEYn4JM+XbDIUbE5vZF29Q15folHckCkOsLeNDd
+         ICrA==
+X-Forwarded-Encrypted: i=1; AJvYcCWeMOTMcnKNSmSOGdqGzl2waIqjWltXBqsnEtMnvWb1e02X1UzCtEiWsLdUUu5mxIS1BiOrED3/5YcGJzgI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDbjrrKuclfXUWr+h1XTnCXEOM66f75uP7YHZhYaHAxUNvciRa
+	FhSS3cyGI+FFiAYXPvvt5gIyUwMuoR6AtEPBNeJ18H8ouLqUKSPGy+vfCWr6J4dIvQY=
+X-Gm-Gg: ASbGncuvNQX0guMM41YeH1GAC0NwdT7YMQ4gWplW38H3JSXlcpjCqn8wRrMOv76r5xf
+	ysLQQlqWABdq3gD4/ONrs35JirAu7GkoIYZFzFy5Uy+Y2LFdrghAYZi80jrV/7u5Hb5nfE/pVkj
+	/egLGTnkl9G+sdTeEgdg8QXlOTaHWHsLHBXSCao+nBC63mRkL1WNCRSSYUST/Sr2xj1n/wIoZWm
+	j1yPvf3EhdczqUHgbjKvBpt+fMx1oOTbYtjGLEpXSyi8fPvBlCm7uOh2RJs0q+F/ZziREo8pHNs
+	zkt89DKrBZjJgfwlrPL1PshkCRqCyVCSGdhieNJCvkwBwOpA24PhDa8TsKfvFm2+opmH1gwzCop
+	V1w6VAo4z2B37tsSgP4bEHkguFUGwmHwvWxINkxde2/lSHjw7ybpL3v/T95mswIg=
+X-Google-Smtp-Source: AGHT+IEnENRwxRTagl2ObT85GvHrjPuSySOktSH3L1SkrP+cMadSvWvWuVZBD4+Hw6mPbY0X9wHrDg==
+X-Received: by 2002:a05:600c:4706:b0:456:19eb:2e09 with SMTP id 5b1f17b1804b1-4562edaa08cmr189313405e9.8.1753106215717;
+        Mon, 21 Jul 2025 06:56:55 -0700 (PDT)
+Received: from [192.168.1.36] (p549d4bd0.dip0.t-ipconnect.de. [84.157.75.208])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4563b74f9c0sm102889435e9.28.2025.07.21.06.56.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Jul 2025 06:56:54 -0700 (PDT)
+Message-ID: <c21ff3ce-c81a-4419-84fd-d394d0a06af6@linaro.org>
+Date: Mon, 21 Jul 2025 15:56:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-In-Reply-To: <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-From: Vishal Annapurve <vannapurve@google.com>
-Date: Mon, 21 Jul 2025 06:45:20 -0700
-X-Gm-Features: Ac12FXxBtzFRH5FT7AkkjtuMY19h9DQ20jtILflp5xgXgKiIQbsSMqanr3p0fog
-Message-ID: <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Content-Language: en-US
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ sboyd@kernel.org
+Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
+ andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org,
+ krzysztof.kozlowski@linaro.org, u.kleine-koenig@baylibre.com,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org
+References: <20250721075525.29636-1-angelogioacchino.delregno@collabora.com>
+ <20250721075525.29636-3-angelogioacchino.delregno@collabora.com>
+ <e724e6a2-21a8-436a-8809-ce73c0afa433@linaro.org>
+ <b06969d2-0c35-44c7-bb2c-162942186c53@collabora.com>
+From: Casey Connolly <casey.connolly@linaro.org>
+In-Reply-To: <b06969d2-0c35-44c7-bb2c-162942186c53@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 21, 2025 at 5:22=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
-rote:
->
-> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> > +/*
-> > + * CoCo VMs with hardware support that use guest_memfd only for backin=
-g private
-> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping en=
-abled.
-> > + */
-> > +#define kvm_arch_supports_gmem_mmap(kvm)             \
-> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&   \
-> > +      (kvm)->arch.vm_type =3D=3D KVM_X86_DEFAULT_VM)
->
-> I want to share the findings when I do the POC to enable gmem mmap in QEM=
-U.
->
-> Actually, QEMU can use gmem with mmap support as the normal memory even
-> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
-> on KVM_SET_USER_MEMORY_REGION2.
->
-> Since the gmem is mmapable, QEMU can pass the userspace addr got from
-> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
-> works well for non-coco VMs on x86.
->
-> Then it seems feasible to use gmem with mmap for the shared memory of
-> TDX, and an additional gmem without mmap for the private memory. i.e.,
-> For struct kvm_userspace_memory_region, the @userspace_addr is passed
-> with the uaddr returned from gmem0 with mmap, while @guest_memfd is
-> passed with another gmem1 fd without mmap.
->
-> However, it fails actually, because the kvm_arch_suports_gmem_mmap()
-> returns false for TDX VMs, which means userspace cannot allocate gmem
-> with mmap just for shared memory for TDX.
 
-Why do you want such a usecase to work?
 
-If kvm allows mappable guest_memfd files for TDX VMs without
-conversion support, userspace will be able to use those for backing
-private memory unless:
-1) KVM checks at binding time if the guest_memfd passed during memslot
-creation is not a mappable one and doesn't enforce "not mappable"
-requirement for TDX VMs at creation time.
-2) KVM fetches shared faults through userspace page tables and not
-guest_memfd directly.
+On 21/07/2025 14:45, AngeloGioacchino Del Regno wrote:
+> Il 21/07/25 12:44, Casey Connolly ha scritto:
+>> Hi Angelo,
+>>
+>> On 21/07/2025 09:55, AngeloGioacchino Del Regno wrote:
+>>> Some Qualcomm PMICs integrate a SDAM device, internally located in
+>>> a specific address range reachable through SPMI communication.
+>>>
+>>> Instead of using the parent SPMI device (the main PMIC) as a kind
+>>> of syscon in this driver, register a new SPMI sub-device for SDAM
+>>> and initialize its own regmap with this sub-device's specific base
+>>> address, retrieved from the devicetree.
+>>>
+>>> This allows to stop manually adding the register base address to
+>>> every R/W call in this driver, as this can be, and is now, handled
+>>> by the regmap API instead.
+>>
+>> This is honestly a really nice improvement :D>
+> 
+> Thanks! :-D
+> 
+>>> Signed-off-by: AngeloGioacchino Del Regno
+>>> <angelogioacchino.delregno@collabora.com>
+>>> ---
+>>>   drivers/nvmem/qcom-spmi-sdam.c | 41 +++++++++++++++++++++++++---------
+>>>   1 file changed, 30 insertions(+), 11 deletions(-)
+>>>
+>>> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-
+>>> spmi-sdam.c
+>>> index 4f1cca6eab71..1b80e8563a33 100644
+>>> --- a/drivers/nvmem/qcom-spmi-sdam.c
+>>> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+>>> @@ -9,6 +9,7 @@
+>>>   #include <linux/nvmem-provider.h>
+>>>   #include <linux/platform_device.h>
+>>>   #include <linux/regmap.h>
+>>> +#include <linux/spmi.h>
+>>>     #define SDAM_MEM_START            0x40
+>>>   #define REGISTER_MAP_ID            0x40
+>>> @@ -20,7 +21,6 @@
+>>>   struct sdam_chip {
+>>>       struct regmap            *regmap;
+>>>       struct nvmem_config        sdam_config;
+>>> -    unsigned int            base;
+>>>       unsigned int            size;
+>>>   };
+>>>   @@ -73,7 +73,7 @@ static int sdam_read(void *priv, unsigned int
+>>> offset, void *val,
+>>>           return -EINVAL;
+>>>       }
+>>>   -    rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val,
+>>> bytes);
+>>> +    rc = regmap_bulk_read(sdam->regmap, offset, val, bytes);
+>>>       if (rc < 0)
+>>>           dev_err(dev, "Failed to read SDAM offset %#x len=%zd,
+>>> rc=%d\n",
+>>>                           offset, bytes, rc);
+>>> @@ -100,7 +100,7 @@ static int sdam_write(void *priv, unsigned int
+>>> offset, void *val,
+>>>           return -EINVAL;
+>>>       }
+>>>   -    rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val,
+>>> bytes);
+>>> +    rc = regmap_bulk_write(sdam->regmap, offset, val, bytes);
+>>>       if (rc < 0)
+>>>           dev_err(dev, "Failed to write SDAM offset %#x len=%zd,
+>>> rc=%d\n",
+>>>                           offset, bytes, rc);
+>>> @@ -110,28 +110,47 @@ static int sdam_write(void *priv, unsigned int
+>>> offset, void *val,
+>>>     static int sdam_probe(struct platform_device *pdev)
+>>>   {
+>>> +    struct regmap_config sdam_regmap_config = {
+>>> +        .reg_bits = 16,
+>>> +        .val_bits = 16,
+>>
+>> I believe registers are 8 bits wide, at least on Qualcomm platforms.
+>>
+> 
+> I used 16 because usually that's the usual default for SPMI - but if
+> you're sure
+> about Qualcomm platforms having 8-bits wide registers and you can
+> confirm that,
+> I can change both of those to 8 in a jiffy.
 
-I don't see value in trying to go out of way to support such a usecase.
+reg_bits should be 16, only val_bits needs changing.
 
->
-> SO my question is do we want to support such case?
+> 
+> I anyway have to send a v2 because I forgot an error check - so changing
+> this is
+> not a problem at all for me.
+> 
+> But.
+> 
+> Before me changing - can you please please please double check and confirm?
+> 
+> If you can also check the register width of the others that I converted,
+> I'd really
+> appreciate that (I have no datasheets for qcom so it's a bit of a
+> guessing game for
+> me here... :-P), just so that we get everything right from the get-
+> go ... even if
+> a mismatch wouldn't really cause issues in the current state of things.
+> 
+> That's because - I just noticed - in qcom-spmi-pmic.c, reg_bits is 16,
+> but val_bits
+> is 8 (which basically means "the registers are 16-bits wide, but we
+> always only
+> care about the lower 8 bits).
+
+yeah that's right, so as of today where we don't have the subdevices we
+always get 8 bit values from the registers.
+
+I don't have so much access to docs anymore but I only ever remember
+seeing 8 bit wide registers on Qualcomm PMICs, I've never seen anything
+wider, I can think of a few drivers where changing this to 16 would for
+sure cause havoc.
+
+Kind regards,
+
+> 
+> Thanks again!
+> 
+> Cheers,
+> Angelo
+-- 
+// Casey (she/her)
+
 
