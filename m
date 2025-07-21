@@ -1,83 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-65924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E956B0C7F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:47:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43AACB0C84F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 17:58:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D34AF3A7C56
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:46:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E00B545675
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 15:58:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA8BB2D9489;
-	Mon, 21 Jul 2025 15:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 030492E03FD;
+	Mon, 21 Jul 2025 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ajoXNZX0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GoXhyD+Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007932989B4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186442DEA79
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753112817; cv=none; b=N2kwEAtypoX4+T4XQurqAl69hE/FOX0xsoaQoXVlvtP6kjG1pq00qCSRxwLlJeRtsfDi/9CRyLl5WOgCy72FvxoZTbkh7tOJWPb3OjHdq6ioTAxx8ZLNaGMxe66okpLR1LzeYERKdt37NezJmZem7vct78nJ2RqPlFeDCQ4XrcA=
+	t=1753113486; cv=none; b=e0ZRMYC5lUdEB8I71q5phIgRah3yPUf3Z8Nohb2onmGjznykLKdfhUONIVUzwGvP0t6Slxcl61JJMLMr6VpS6PqbmOf3Zh6dI2ndp3YUNsxa1bx+znqQ22inrJbBOD/mjRZAxHo7h2NvucWF6hdnfmpGXIq16G/SJ8NLmeau5oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753112817; c=relaxed/simple;
-	bh=pEmFK3YtX71Ss7IoSfHexKR6lboNbFxDMXbiAmk0Md8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ZCwgCHz4S4KAH6Hh4Y19bZwb6RxGkT0iLzbchbcHhqU32UPyCAMVDE1r8oiEV0nEyCBI3WaNEkgcRaGXz6NGs/XACPvLt45KHjm2NqzQef/V8C8MaePCLwgkVCSpUVGpLtva71JB7jN3T6y4tfnNtuumZmYHVNZEQ0UotsdZMMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ajoXNZX0; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b611665b96so2478518f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 08:46:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753112814; x=1753717614; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=71JdOjhcRzTfEZ2kGP13U0soxm4bQUZhtALxxJcwpGY=;
-        b=ajoXNZX0nijaUEfy6fHi3fC+TeAleT4F5zR/05w7v0YqoY3AhHQn2guCyCAhfeFheX
-         WX7lTiAolW5qSUZF/AFiQjtCoH4Pg95uSKJb7vMD6gcF+70gmOGEG8/bNGHlp8qFdJ/U
-         +yB2RMpJ7FmjQdsaQe2iO6R+kwfZv8tPhXEDyeYxCnTfJo7q3SS/6MVswKZiIWYeQkrh
-         papCUYMV4k/0geWEw1lxpJiqZBr4yvHPxSU325G+r5Khi0EFxqTBUEGzLQriJtfyucd0
-         bWvx97pCqWuQrmqbACEMKYdCc16haDnDnUgOaXlBx7tTL/7MbEIWnQKyj85D3CmhK0vj
-         jC5g==
+	s=arc-20240116; t=1753113486; c=relaxed/simple;
+	bh=Aeb+cBaDP6mCJ/kvpMM3pvMOYo5DtWUCf8qOisApiNA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CzNN1/HNKlWtZVCzUbE8Gx48pcMHfr0lK1RcnUiMhWQ87n5Cl3F7POZ/pr4KKa73KMcVa1ReYiGg7rQhP760+XNnpydsaiT1TsAe2nlIwzBZwzr8sDtK5wjeZBigo95RfAmtSEHnkciVe/37FXrKywcXMszDfXj/TCJ/Wu+KK4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GoXhyD+Q; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56L9pAMF016582
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:58:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7eaykh2jpr4tDzQ/ml8eASCLk5tz1CCA/grPwuJlCtA=; b=GoXhyD+Qx6sZ84f5
+	Lw9+R7ToqBXi7jfqR+wvz34jza0wQeaCbxhOP36MJNguhVMXL5LymKf9pLVjeR6/
+	/csboVapjS5vGcrZ63JRIA0EeuTNuLM5rdUA6kw2hA1eYMEdrUunMSFtxkacgLnr
+	TaEEXoguHDC7Dc+GUcFnb7NEmhfFYxaiXzdLp4a6uRXLGPat0uqdYV509Tvm0VQH
+	fgRlrUs6+Lj6mrt6aBXml2tAAMEykShAi7Jw1bT3fkV94eHfxAPv0pqbIlUIw5Yz
+	FLqIS9Y/Knt5/TBTOeAMEiCxIWvHtJ1rib1DWX3iSseOPWDJpUYYO4r/t/uiMeuJ
+	QyPHqw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048rx3f6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 15:58:03 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-23692793178so36899185ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 08:58:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753112814; x=1753717614;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=71JdOjhcRzTfEZ2kGP13U0soxm4bQUZhtALxxJcwpGY=;
-        b=b0B0x+1XHimnFxWgZ9aypzdJIHk+YvU7ZqJfpEkFClxytRwS/9CBPrewyzWiWuwrvA
-         Wd8n77KJnQGqB5uLbYKbKvtqefh802KILMSum6Qojg8v4YkPHzYIbl0a2GUzp++KONjl
-         9jCbT8N/E5VJlA3jUR+rUXfXMdRSHALxOeDe0xYF840QT+9t7bfcbpBbBAKIYvilrx3H
-         UBBMxdQ7pyZ2o35rghq6OrZMqfJJR1zOo+sZNqm6iknb2kroNE38CXM3cRv5CzSbNlps
-         U9To/M2lUJyYmeezlU+CyNXDKvevQmRhfkvZd4xW8HCq4ej6DdmK4XAO/foef3pVOf3f
-         yKSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW1SlJlYE2Gxn0ju/MgGQEDvo9Qrnuy4tvW4mVRoeYrKvY6dsjfXFX2RmdVk+7Wk/93AtWbaerjhyOrIWRO@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFTsBumIf8X8VtBkGUL79fO4Xz6THDRREFCgdlu3bzY0Gdx10X
-	TXlr0An0VU//yheDYN7elf6wTtd48j894AuXxEk1PZW4P8etKuxcfqFsgse0LLoEzVs=
-X-Gm-Gg: ASbGncvN4sNinH51mCTXqjhC4H+yd59dR7SSU8CqTXamhZwMp1d/1SDX4Cpzolf8jvH
-	/Kg8A1u3Sf0NrnEkZcSbw4li2yPMPDb8z9C47Wx8c/AYbzDuJX4IOW/mXr5U5x3IH4S6nakoclg
-	dDhCQ4jq3CP8U24JaZCr49kGOBxFb3HZF3b4P/ChHGrCzgvz1uB6XTGEPM4jGVV7vXBosyxklSH
-	cnQ/fjOnYR1fJ+a9zMdZLbEgnDcOZrHrkrJmucg1PtY1x0+/XoZ4VYUTeaicvd96vTeJ0XCXe+9
-	7jPjvqcgu3SFRH+GjURVpiURfyRKnWaZS+3wRJ0xisdm1SMoOP99ABfGHAr4IQj8n0jlU4b7EpO
-	AgFXhNcSgBCx7BwkNebt5UGgqS1n/KNeMCmo1P27U1OPKzM9WrGCTAROQh569PDZCkb17NeVYyD
-	0=
-X-Google-Smtp-Source: AGHT+IE18IBrQLiihCAuzNQ8PIrN0f+oNCcFrb048tnw4oH4ReNy5YSqf9fO8yU7sBsWjafeYv0hqA==
-X-Received: by 2002:a5d:64c1:0:b0:3a6:d967:380e with SMTP id ffacd0b85a97d-3b60e4c521dmr14461783f8f.3.1753112814028;
-        Mon, 21 Jul 2025 08:46:54 -0700 (PDT)
-Received: from ?IPV6:2001:861:c12:13d0:4146:67eb:7420:1c39? ([2001:861:c12:13d0:4146:67eb:7420:1c39])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e8ab7a1sm164661725e9.34.2025.07.21.08.46.53
+        d=1e100.net; s=20230601; t=1753113483; x=1753718283;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7eaykh2jpr4tDzQ/ml8eASCLk5tz1CCA/grPwuJlCtA=;
+        b=sVo5xLv7a5kQnbCutUSvAI0J/WsOY7Goqtt9U0yOj+7l218V1w1HFQGhFNfXtlLlg4
+         3iXlIgZ1VPaW0KBVpH5Md2gm6H6539Ue9yhsH9SUgC5us9wz4IYRmkQQaH3ywvQFnqH3
+         FCYm0IV8BdH9DR2WJlUU8HIX42lBha5j5Dc5NOPy3ozG7Ir6+0UWvzrG36Uuje8f4BPa
+         7pnBgZo+X5GNo/XrsQTI/LKIJAywCUiHC6S1XR7U3evbr/SlFQir03bLEPLNd+DRC7vx
+         lGjsV0kS4kUNf1hJx6BF9rIF+YClVuidT1ZWqaRwncSfe24RwNOpW0zHMkLraQhR6q/0
+         xb5w==
+X-Gm-Message-State: AOJu0YzSaJWU63lIRREoZMBQn6Ofcf+hBQjrxHXecy9+ua5YqxkOC6G1
+	HlxI2OgNCGJ0RDm8yoLF0dTJBaBHyS7O7NT0yXSmsDnG877NLunRw+YIvL/6ZfWmZMSfaRlviSM
+	ag1ekemtHM4LxtHv0jBjpxi9lyQhpVxPYNB/9MQ4Ps/SfLLdmdrxNuQyTXBBzyjStjyPD
+X-Gm-Gg: ASbGncuMwZDbXE3vDxVPRQJ3ohcIlR3H4ATFO3WOvqignFHdNmmKKIAW9ukQ/osfvNU
+	ZBW9l1mS9DxPfai2fgA/dmLl48yFpz2ilUSlXbJhm3A3maBH6NlwTiTOlEjjavLk6bofjb4Sw5U
+	Q+VAUl5xSo///cDnrVZs8Gw7m5p4L857B8VYq0qjBnRc7RiEqIRP6It99t302Suu9UfyKO1jAHQ
+	FDYFF5DAIkDD8HNWcDdzijkrRWmw7ueNnGi/qG6MReekbmZk8XajAlwpVwYCQWD07g4cL6l6H7O
+	2YHYkQyH84koUjr5hV3ESos/wxc/pbxaAg+HJHFXn/oyVDqla0oHphcI3FFHtLEFZkEuVofiO74
+	1/lc8gnLiQVP3Rz+EKUeUqY2GkuFOUFVZFh5Jrj7JQrefxqPkf/X9
+X-Received: by 2002:a17:903:3d0d:b0:234:f4da:7eed with SMTP id d9443c01a7336-23e3b84f72emr209498205ad.44.1753113482589;
+        Mon, 21 Jul 2025 08:58:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfxVD4xFyUDm77aId4Mxba2CamnraZ59KFcCKOXsR0AXPmtHwmcTsp614S8u5McuJQ6G4ayg==
+X-Received: by 2002:a17:903:3d0d:b0:234:f4da:7eed with SMTP id d9443c01a7336-23e3b84f72emr209497835ad.44.1753113482146;
+        Mon, 21 Jul 2025 08:58:02 -0700 (PDT)
+Received: from [10.50.52.170] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6eeb9csm59786515ad.186.2025.07.21.08.57.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jul 2025 08:46:53 -0700 (PDT)
-Message-ID: <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
-Date: Mon, 21 Jul 2025 17:46:52 +0200
+        Mon, 21 Jul 2025 08:58:01 -0700 (PDT)
+Message-ID: <32facbb3-3cdb-42dc-9e65-3daa0b3899a8@oss.qualcomm.com>
+Date: Mon, 21 Jul 2025 21:27:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,157 +89,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vinod Koul
- <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
- <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
- <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
- <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
- <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
- <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
- <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
- <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
- <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
- <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
- <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add glymur pinctrl driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+        linus.walleij@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_rjendra@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250721143037.20983-1-pankaj.patil@oss.qualcomm.com>
+ <20250721143037.20983-3-pankaj.patil@oss.qualcomm.com>
+ <21c75060-eb8b-45f8-bddb-816fce787240@oss.qualcomm.com>
+Content-Language: en-US
+From: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+In-Reply-To: <21c75060-eb8b-45f8-bddb-816fce787240@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE0MSBTYWx0ZWRfX1zqfQWVzqmbB
+ x0H15QQ7Uu09UdSotkltY9t6gLJp+HS9PBhKdC7mVrF4RR204DYQPRlawY2pl8dkan3VMNb+1M5
+ 7HjNpnF+LZtvwpHzCc+zCk5mTnC34gganJIdpQXeY5BeHZtWO+jwMCqpixDXD5dzwGCmNL0xU47
+ eOKNBYszDPTB0vCpj9Bni4LyYKeMrhBVE3h1POcwxiewpa2wGvzD9U25Tuc9QJ42pFiPnS5dZZ2
+ 51BZttFPPf1AsuLtJTcX+rgm/aDY+ML+SvnfMTT6b4aixUe/d0rNTZoKsiXcoCJrE/6E/TrlZ4D
+ qNjMAgF5qOlhNFI7iWBOkir1Bm2Ja1RlCDYWVg52rgVu/SCN2+3RWHpompIcgGYrOQzk5GqfACY
+ IVZrBS/NHHTGNFSKl9gPMktjqRcMrSzTwrooZNdZcKbiKK8DVLPabFHOXV55BcVpaQNhmVJ9
+X-Proofpoint-ORIG-GUID: JxmCfo2gua3OyD1-OWNPt4H5tfpp2lhu
+X-Proofpoint-GUID: JxmCfo2gua3OyD1-OWNPt4H5tfpp2lhu
+X-Authority-Analysis: v=2.4 cv=OPUn3TaB c=1 sm=1 tr=0 ts=687e638b cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=TZC3DJ3nR-gMiTPXGEMA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_04,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507210141
 
-On 15/07/2025 11:33, Konrad Dybcio wrote:
-> On 7/15/25 11:20 AM, Vladimir Zapolskiy wrote:
->> On 7/15/25 12:01, Konrad Dybcio wrote:
->>> On 7/15/25 8:35 AM, Vladimir Zapolskiy wrote:
->>>> On 7/15/25 03:13, Bryan O'Donoghue wrote:
->>>>> On 14/07/2025 16:30, Vladimir Zapolskiy wrote:
->>>>>>>
->>>>>>> I think that is genuinely something we should handle in camss-csid.c
->>>>>>> maybe with some meta-data inside of the ports/endpoints..
->>>>>>>
->>>>>>
->>>>>> This is a CSIPHY property, a CSIPHY hardware configuration and a wiring
->>>>>> of sensors to a CSIPHY. Where is the relation to CSID here? There is no.
->>>>>
->>>>> All the PHY really needs to know is the # of lanes in aggregate, which
->>>>> physical lanes to map to which logical lanes and the pixel clock.
->>>>>
->>>>> We should add additional support to the Kernel's D-PHY API parameters
->>>>> mechanism to support that physical-to-logical mapping but, that's not
->>>>> required for this series or for any currently know upstream user of CAMSS.
->>>>>
->>>>>> Please share at least a device tree node description, which supports
->>>>>> a connection of two sensors to a single CSIPHY, like it shall be done
->>>>>> expectedly.
->>>>> &camss {
->>>>>         port@0 {
->>>>>             csiphy0_lanes01_ep: endpoint0 {
->>>>>                 data-lanes = <0 1>;
->>>>>                 remote-endpoint = <&sensor0_ep>;
->>>>>             };
->>>>>
->>>>>             csiphy0_lanes23_ep: endpoint0 {
->>>>>                 data-lanes = <2 3>;
->>>>>                 remote-endpoint = <&sensor1_ep>;
->>>>>             };
->>>>>          };
->>>>> };
->>>>
->>>> Don't you understand that this is broken?.. That's no good.
->>>>
->>>> Please listen and reread the messages given to you above, your proposed
->>>> "solution" does not support by design a valid hardware setup of two
->>>> sensors connected to the same CSIPHY.
->>>>
->>>> I would propose to stop force pushing an uncorrectable dt scheme, it
->>>> makes no sense.
->>>
->>> If all you're asking for is an ability to grab an of_graph reference
->>> from the camss (v4l2) driver, you can simply do something along the
->>> lines of of_graph_get_remote_port(phy->dev->of_node)
->>>
+On 7/21/2025 8:21 PM, Konrad Dybcio wrote:
+> On 7/21/25 4:30 PM, Pankaj Patil wrote:
+>> Add TLMM pinctrl driver to support pin configuration with pinctrl
+>> framework for Glymur SoC.
+>> ---
+>> Changes in v2:
+>> UFS_RESET macro updated
+>> Removed obsolete comment for msm_pingroup glymur_groups
+>> Update gpio count in glymur_tlmm struct via .ngpio
 >>
->> It's not about the driver specifics, my comment is about a proper
->> hardware description in dts notation, please see the device tree node
->> names.
-> 
-> I'm a little lost on what you're trying to argue for..
-> 
-> I could make out:
-> 
-> 1. "the phy should be a multimedia device"
-> 2. "There is no ports at all, which makes the device tree node unusable,
->    since you can not provide a way to connect any sensors to the phy."
-> 
-> I don't really understand #1.. maybe that could be the case if the PHY
-> has a multitude of tunables (which I don't know if it does, but wouldn't
-> be exactly surprised if it did) that may be usecase/pipeline-specific
-> 
-> As for #2, I do think it makes sense to connect the sensors to the PHY,
-> as that's a representation of electrical signals travelling from the
-> producer to the consumer (plus the data passed in e.g. data-lanes is
-> directly related to the PHY and necessarily consumed by its driver)
-
-The port/endpoint should represent the data flow, and if the signal is the following:
-
-sensor -> csiphy -> csid
-
-and in addition the "csiphy" can handle up to two sensors by splitting the lanes,
-then the DT should take this in account and effectively the "csiphy" should be
-an element of the graph and should take it's configuration from the DT graph
-to properly configure the lanes configuration.
-
-While it can feel simpler to simply move the csiphy code into standalone
-PHY device and just replace camss code with phy_*() calls, it doesn't
-solve the proper representation on the data flow and doesn't fix how
-the combo mode could be handled.
-
-The solution shared by Vladimir (I think the "csiphy" node should be out
-of the camss node), solves all this and will be able to handle more
-complex situations with shared resources between "csiphys" and start
-moving elements out of the gigantic camss node.
-
-Neil
-
-
-> 
+>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+>> ---
+> As Krzysztof pointed out, your s-o-b is not part of the commit message
+> (include blurbs under the --- line, which Git will ignore)
+>
+> [...]
+>
+>> +static const struct of_device_id glymur_tlmm_of_match[] = {
+>> +	{ .compatible = "qcom,glymur-tlmm", .data = &glymur_tlmm },
+>> +	{},
+> Nit: "{ }"
+>
+> (no comma, as this is the sentinel and we most definitely don't want
+> the list to grow beyond it)
+>
 > Konrad
-> 
-
+Fixing the review comments in v3,
+Formatting issues in my setup, will take care of s-o-b in v3.
+Thanks
 
