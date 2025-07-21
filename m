@@ -1,309 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-65880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF8F5B0C23D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:10:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE7D0B0C243
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 13:10:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 554FB18C33BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:10:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B9AB188E2D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 11:10:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86E30295513;
-	Mon, 21 Jul 2025 11:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57BC62951D3;
+	Mon, 21 Jul 2025 11:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2Iwqp4D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WjIwYztp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0BB21CA0A;
-	Mon, 21 Jul 2025 11:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A63294A1C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 11:09:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753096144; cv=none; b=V+oeRw51jYXXlginp0xb3ZBDQ2rwIjGx7mYhC8dE51u6PztI5/k/fjAWHMp9NDroV8GOsFxYpoc9lcNew5/eE0p94dlIvWKBHifuj4sxBiddYiBzopJLgs+H8OuYDfpNOyIqyQmF5xcVNVQZC3YcX+f24a8HPdc7PJgKNFWG6CA=
+	t=1753096146; cv=none; b=BfuP05fiZpqtfzQpbNvI2voUpUeouyr1JAn7znhm/Tt4YOcUv44T4vPrkMMk3VYvFeOW7gZ37TEMicF+VNdTHoXchtfRFYQOdMQ8qXI1zteimVx58pPgCcNwRnzaYdkOM+dhjME0+H1srHx8ohfqdI/eW31zHRNe3BItAnJZ2wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753096144; c=relaxed/simple;
-	bh=FY4CSPRbHnGtUTrzGgop5iipKH10dKMnMwEEENK6YLM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s9OQ9eApUDisjsyZfaa5P1N7vfQs609LSxToKZsAL420KonEqpe5NexMeJK/bS4NL1i2ANk6blxVbSxhlgEiSxaadQFrlk9FbAp2kXlsIPtBPuHRfJBEiOEiN/ZfFI63ICnATMkZckrwuFOmEvGqJ6sPd3iRPurdS7HgjkHc1pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R2Iwqp4D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672E7C4CEED;
-	Mon, 21 Jul 2025 11:08:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753096143;
-	bh=FY4CSPRbHnGtUTrzGgop5iipKH10dKMnMwEEENK6YLM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R2Iwqp4D6Xy2w607ZcBfyGxUQ+ADCXiljXuOVgY7TRQ1Vtoe4yZMtV2AQI/8OfPJo
-	 hjp2e9X9Fgdp7+2qgAU6EnrFv4a7JPofRoSLC9w97/sU7nKtcRsFozt9hAiWW0uoq8
-	 PjRPmclKGh75welK99aYH7ArSh2rUncPqG8m5HDdyrO1+pGL73lOHR1VX7rtjnmDI/
-	 473hR+d7GxtA6mZR4NpRea0GldPHPu/jU/VLfqd2RiA1XyjsySOhjky93KQeFSxIaB
-	 ZwVM+dtWGuy6t74W75lOnMAnkMNKtw0+C2it4xxBL2yv/VaFMvOjl3RZtb6uvTHR0m
-	 VoO21ROhy9bBw==
-Date: Mon, 21 Jul 2025 16:38:52 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-	Jonathan Derrick <jonathan.derrick@linux.dev>, linux-wireless@vger.kernel.org, 
-	LKML <linux-kernel@vger.kernel.org>, ath12k@lists.infradead.org, ath11k@lists.infradead.org, 
-	ath10k@lists.infradead.org, Bjorn Helgaas <helgaas@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>
-Subject: Re: [PATCH 4/6] wifi: ath12k: Use pci_{enable/disable}_link_state()
- APIs to enable/disable ASPM states
-Message-ID: <je7sz6lgig3picksxv4ncfjcnnw2sdsp5ja6bwofqjuydhc4v6@b3kavwicxggu>
-References: <20250716-ath-aspm-fix-v1-0-dd3e62c1b692@oss.qualcomm.com>
- <20250716-ath-aspm-fix-v1-4-dd3e62c1b692@oss.qualcomm.com>
- <7a97d075-2e37-5f40-5247-867146938613@linux.intel.com>
- <3q2gqo6ipzyqr7i64yhndtpg4etwep4lgffk7emxluxuhjfya5@vt7czmsgpbuw>
- <52baf40b-41ed-2588-7817-4d8cd859e0d1@linux.intel.com>
+	s=arc-20240116; t=1753096146; c=relaxed/simple;
+	bh=SsD61A8hR5q9MQ8QKFckZ6cN9hCMs+AKO11xNPKYjkA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q/ZyOd+RCodER9+VQmSEKIiLFPvJETxl1nzB2N3k0oJv1rh+5p2daobXRS65j9SG/Ux7DjtXrHXzpHZf24kzufq8Mb7IFrSIFt/X6PQk5rFX1juHIHldMV40Qz189C/kosBo9z619PKkOvy5CN9DRR+hd7cdRyxgX7lXLO+4G90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WjIwYztp; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45619d70c72so39483265e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 04:09:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753096141; x=1753700941; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KmtXN5LOpsy9wnbFF88f1TFJAOYpmO6pOglF7c6OjGE=;
+        b=WjIwYztphIyNa3/uYZOZTtxJcn7ek7HtPzVIWEzMj0zXwnLZfy5p3X72oOCPdJzP2V
+         uiIa2taSc2Gb3PIvaNbDVedfyUPhT1IdGGFnl11ayRDQlOcyw5pLovDkCrV33b+TynG+
+         fJuSXgYxR5xGpyqN2YGXNYqV0buURma4ZGlDStiMkOZjTTLUUtXP8fp8S2vK582ZufQT
+         YybMsb6p/+q3+jTw+8xI67H2uGWWnYQUixh9zsBE1zwABUwgLLOPW7LLck8f9E89T0pm
+         6tLCcTHk4KaLmgZaLVOGOw7M7g2oBiFtZTpQOCSa10CCfNxnhEI+Mi8pTG1U6uREzA4p
+         ffEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753096141; x=1753700941;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KmtXN5LOpsy9wnbFF88f1TFJAOYpmO6pOglF7c6OjGE=;
+        b=P3N17yTawoth7WOdhNjH0Fy7SH09I3zliJnNSGOgyT945cIZUzmOieR+yWUCJSxDsT
+         0PQwhpWwdsxMNBZfR7SCCecjW1nb/eh5CiKTsnNvAAR/ME0uD6WtLmg8/RBMWM1nfkt0
+         AG+Wwtkpm/wgy3XUOVyqIF76gK+0N08XwvLjHiTqLvD937ba7uWrooCP2qXKjvvtV2t9
+         wXFFjQZcJSbbrUP5QI5iUZWu+BkPTasr/LCE0tgTL1d6P2L2ha6e1SMDlye3VT0pDFi6
+         OzAASJCIFI/1eof3BwkyO9JwsbgMDPTLVhU96EKgtJ/JesMWzFgL+NtK+fjrcY3Uz8c/
+         WCRw==
+X-Gm-Message-State: AOJu0YxNSYuNq+2EtzSrp/1xTlaOKrvAliTS+l3MrHzNmaDiyrW+mvFB
+	caij87XC3GOPH+pp8Hi2UTprluiEdw4Msl1DhH58u6gMrocLeSAG1wpu6VHTckoJjzI=
+X-Gm-Gg: ASbGnct+7ECadL302cZGVFg0jcirjbC983CmErdeLvC9EhrxVvbqeHkx5F3J9JToYld
+	BxsBxbXVJpSj47Mg/rlrcz1ZWP205g/58Fto+GxQLdSgje/L7SnRHm4p0L/vc7hhOCauw/B+hra
+	JyuWhCamJfwPRtpO4gGAxJLJVuTfHn+rWEJ962AnYPegAwQCRUeLdbzVOiuYrJ2hPAXrq6zjxlv
+	sltff7yJiC4fSCtzpy1iYkc4YadPqVxWxRSqKxvbNLZH9kpmvnXhgNHVm5HI/DUrL8YptvUrOQ1
+	gX9rr/EdjbOFFYTk9uHiqcF+2p1fX+ULz98/MfPmEDdvYsmZnT9inHsP8kmFZYK9w+1IGTpJQCf
+	jOjdBlzKH6QZ8LyCk5pKCOpxKr8hyQaEmiA4qkBnghB+CEYvmn+X4Q2PjlGafh18=
+X-Google-Smtp-Source: AGHT+IF/p9/8BzW3lB8bZPpYYHRczY58A+Ne9dELqgeiVrztj+TKGERiYVH004vi+cnHyij4U7BDBg==
+X-Received: by 2002:a05:600c:c4a6:b0:455:f7b8:235c with SMTP id 5b1f17b1804b1-456348c644emr159193895e9.14.1753096141413;
+        Mon, 21 Jul 2025 04:09:01 -0700 (PDT)
+Received: from [192.168.1.36] (p549d4bd0.dip0.t-ipconnect.de. [84.157.75.208])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca5c813sm10201962f8f.84.2025.07.21.04.08.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Jul 2025 04:09:00 -0700 (PDT)
+Message-ID: <68251793-d1d2-4f7d-be00-a47a4fd5f80e@linaro.org>
+Date: Mon, 21 Jul 2025 13:08:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <52baf40b-41ed-2588-7817-4d8cd859e0d1@linux.intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] QRTR bus and Qualcomm Sensor Manager IIO drivers
+Content-Language: en-US
+To: y.oudjana@protonmail.com, Manivannan Sadhasivam <mani@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor
+ <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>,
+ Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>,
+ =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+ linux-iio@vger.kernel.org
+References: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com>
+From: Casey Connolly <casey.connolly@linaro.org>
+In-Reply-To: <20250710-qcom-smgr-v2-0-f6e198b7aa8e@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 21, 2025 at 01:09:05PM GMT, Ilpo Järvinen wrote:
-> On Mon, 21 Jul 2025, Manivannan Sadhasivam wrote:
-> > On Mon, Jul 21, 2025 at 11:04:10AM GMT, Ilpo Järvinen wrote:
-> > > On Wed, 16 Jul 2025, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > 
-> > > > It is not recommended to enable/disable the ASPM states on the back of the
-> > > > PCI core directly using the LNKCTL register. It will break the PCI core's
-> > > > knowledge about the device ASPM states. So use the APIs exposed by the PCI
-> > > > core to enable/disable ASPM states.
-> > > > 
-> > > > Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-> > > > 
-> > > > Reported-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > ---
-> > > >  drivers/net/wireless/ath/ath.h        | 14 ++++++++++++++
-> > > >  drivers/net/wireless/ath/ath12k/pci.c | 10 ++++------
-> > > >  2 files changed, 18 insertions(+), 6 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
-> > > > index 34654f710d8a1e63f65a47d4602e2035262a4d9e..ef685123b66bf4f41428fec67c1967f242a9ef27 100644
-> > > > --- a/drivers/net/wireless/ath/ath.h
-> > > > +++ b/drivers/net/wireless/ath/ath.h
-> > > > @@ -21,6 +21,8 @@
-> > > >  #include <linux/skbuff.h>
-> > > >  #include <linux/if_ether.h>
-> > > >  #include <linux/spinlock.h>
-> > > > +#include <linux/pci.h>
-> > > > +#include <linux/pci_regs.h>
-> > > >  #include <net/mac80211.h>
-> > > >  
-> > > >  /*
-> > > > @@ -336,4 +338,16 @@ static inline const char *ath_bus_type_to_string(enum ath_bus_type bustype)
-> > > >  	return ath_bus_type_strings[bustype];
-> > > >  }
-> > > >  
-> > > > +static inline int ath_pci_aspm_state(u16 lnkctl)
-> > > > +{
-> > > > +	int state = 0;
-> > > > +
-> > > > +	if (lnkctl & PCI_EXP_LNKCTL_ASPM_L0S)
-> > > > +		state |= PCIE_LINK_STATE_L0S;
-> > > > +	if (lnkctl & PCI_EXP_LNKCTL_ASPM_L1)
-> > > > +		state |= PCIE_LINK_STATE_L1;
-> > > > +
-> > > > +	return state;
-> > > > +}
-> > > > +
-> > > >  #endif /* ATH_H */
-> > > > diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-> > > > index 489d546390fcdab8f615cc9184006a958d9f140a..a5e11509e3ab8faad6638ff78ce6a8a5e9c3cbbd 100644
-> > > > --- a/drivers/net/wireless/ath/ath12k/pci.c
-> > > > +++ b/drivers/net/wireless/ath/ath12k/pci.c
-> > > > @@ -16,6 +16,8 @@
-> > > >  #include "mhi.h"
-> > > >  #include "debug.h"
-> > > >  
-> > > > +#include "../ath.h"
-> > > > +
-> > > >  #define ATH12K_PCI_BAR_NUM		0
-> > > >  #define ATH12K_PCI_DMA_MASK		36
-> > > >  
-> > > > @@ -928,8 +930,7 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
-> > > >  		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
-> > > >  
-> > > >  	/* disable L0s and L1 */
-> > > > -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> > > > -				   PCI_EXP_LNKCTL_ASPMC);
-> > > > +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
-> > > 
-> > > I'd remove to comment too as the code is self-explanatory after this 
-> > > change.
-> > > 
-> > 
-> > Ack
-> > 
-> > > >  
-> > > >  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
-> > > >  }
-> > > > @@ -958,10 +959,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
-> > > >  {
-> > > >  	if (ab_pci->ab->hw_params->supports_aspm &&
-> > > >  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
-> > > > -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-> > > > -						   PCI_EXP_LNKCTL_ASPMC,
-> > > > -						   ab_pci->link_ctl &
-> > > > -						   PCI_EXP_LNKCTL_ASPMC);
-> > > > +		pci_enable_link_state(ab_pci->pdev, ath_pci_aspm_state(ab_pci->link_ctl));
-> > > >  }
-> > > >  
-> > > >  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
-> > > 
-> > > As you now depend on ASPM driver being there, these should also add to 
-> > > Kconfig:
-> > > 
-> > > depends on PCIEASPM
-> > > 
-> > 
-> > I thought about it, but since this driver doesn't necessarily enable ASPM for
-> > all the devices it supports, I didn't add the dependency. But looking at it
-> > again, I think makes sense to add the dependency since the driver cannot work
-> > reliably without disabling ASPM (for the supported devices).
-> 
-> PCIEASPM is already default y and if EXPERT so it is not something 
-> that is expected to be disabled.
-> 
-> You also no longer need to move the ASPM link state defines LKP found out 
-> about after adding the depends on.
-> 
+Hi Yassine,
 
-Yes, it will fix the reported issue, but guarding the definitions feels wrong to
-me still. Maybe that's something we can worry later.
+On 10/07/2025 10:06, Yassine Oudjana via B4 Relay wrote:
+> Sensor Manager is a QMI service available on several Qualcomm SoCs which
+> exposes available sensors and allows for getting data from them. This
+> service is provided by either:
+> 
+> - SSC (Snapdragon Sensor Core): Also known as SLPI (Sensor Low Power
+>   Island). Has its own set of pins and peripherals to which sensors are
+>   connected. These peripherals are generally inaccessible from the AP,
+>   meaning sensors need to be operated exclusively through SSC. The only
+>   known SoCs in this category are MSM8996 and MSM8998 (and their
+>   derivatives).
+> - ADSP (Audio DSP): Shares pins and peripherals with the AP. At least on
+>   some devices, these pins could be configured as GPIOs which allows the AP
+>   to access sensors by bit-banging their interfaces. Some SoCs in this
+>   category are SDM630/660, MSM8953, MSM8974 and MSM8226.
+> 
+> Before Sensor Manager becomes accessible, another service known as Sensor
+> Registry needs to be provided by the AP. The remote processor that provides
+> Sensor Manager will then request data from it, and once that process is
+> done, will expose several services including Sensor Manager.
 
-> I'm a bit worried this series will regress in the cases where OS doesn't 
-> control ASPM so it might be necessary to include something along the 
-> lines of the patch below too (the earlier discussion on this is in Link 
-> tags):
-> 
+arguably a bit of a nit pick, but it might be worth clarifying that
+newer SoCs starting with sdm845 also work in much the same way, except
+the actual data is packed into protobuf messages which are sent over
+QMI, rather than using QMI itself for the sensor data (and hence aren't
+supported by this series).
 
-atheros drivers didn't have such comment (why they were manually changing the
-LNKCTL register), but I agree that there is a chance that they could cause issue
-on platforms where BIOS didn't give ASPM control to the OS.
+That said, this is really awesome :D
 
-But as a non-ACPI developer, I don't know what does 'ACPI doesn't give
-permission to manage ASPM' mean exactly. Does ACPI allow to disable ASPM but not
-enable it?
-
-- Mani
-
-> -----
-> From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-> Subject: [PATCH] PCI/ASPM: Always disable ASPM when driver requests it
+Kind regards,>
+> This series adds a kernel driver for the Sensor Manager service, exposing
+> sensors accessible through it as IIO devices. To facilitate probing of this
+>  driver, QRTR is turned into a bus, with services being exposed as devices.
+> Once the Sensor Manager service becomes available, the kernel attaches its
+> device to the driver added in this series. This allows for dynamic probing
+> of Sensor Manager without the need for static DT bindings, which would also
+> not be ideal because they would be describing software rather than
+> hardware. Sensor Manager is given as a working example of the QRTR bus.
+> Kernel drivers for other services may also be able to benefit from this
+> change.
 > 
-> PCI core/ASPM service driver allows controlling ASPM state through
-> pci_disable_link_state() API. It was decided earlier (see the Link
-> below), to not allow ASPM changes when OS does not have control over it
-> but only log a warning about the problem (commit 2add0ec14c25
-> ("PCI/ASPM: Warn when driver asks to disable ASPM, but we can't do
-> it")).
+> As previously mentioned, a Sensor Registry server must run on the AP to
+> provide the remote processor (either SLPI or ADSP) with necessary data.
+> A userspace implementation of this server is made[1]. The server can be
+> supplied with the necessary data in the form of a plain-text configuration
+> file that can be pulled from the Android vendor partition (sample[2]), or
+> generated from a binary file that can be pulled from the persist partition.
+> A more recently developed kernel implementation of the Sensor Registry
+> server[3] can also be used. This last implementation only supports reading
+> data from the binary file pulled from persist. Sensor Registry remains out
+> of the scope of this patch series, as the Sensor Registry server and Sensor
+> Manager client (this series) are fully independent components.
 > 
-> A number of drivers have added workarounds to force ASPM off with own
-> writes into the Link Control Register (some even with comments
-> explaining why PCI core does not disable it under some circumstances).
-> According to the comments, some drivers require ASPM to be off for
-> reliable operation.
+> Due to the total lack of documentation on Sensor Manager, this driver was
+> almost entirely the result of a process of capturing transactions between
+> SSC and the proprietary Android daemons with several methods and manually
+> decoding and interpreting them, sometimes by comparing with values acquired
+> from Android APIs. A blog post[4] describes part of this process more
+> detail. A little piece of downstream Android open-source code[5] was also
+> used as reference during later stages of development. All of this, as well
+> as a lack of time on my side for the last couple of years, meant that this
+> driver had to go through a slow and intermittent development process for
+> more than 3 years before reaching its current state.
 > 
-> Having custom ASPM handling in drivers is problematic because the state
-> kept in the ASPM service driver is not updated by the changes made
-> outside the link state management API.
+> Currently supported sensor types include accelerometers, gyroscopes,
+> magentometers, proximity and pressure sensors. Other types (namely
+> light and temperature sensors) are close to being implemented.
 > 
-> As the first step to address this issue, make pci_disable_link_state()
-> to unconditionally disable ASPM so the motivation for drivers to come
-> up with custom ASPM handling code is eliminated.
+> Some testing instructions may also be found here[6].
 > 
-> To fully take advantage of the ASPM handling core provides, the drivers
-> that need to quirk ASPM have to be altered depend on PCIEASPM and the
-> custom ASPM code is removed. This is to be done separately. As PCIEASPM
-> is already behind EXPERT, it should be no problem to limit disabling it
-> for configurations that do not require touching ASPM.
+> [1] https://gitlab.com/msm8996-mainline/sns-reg
+> [2] https://github.com/nian0114/android_vendor_xiaomi_scorpio/blob/mkn-mr1/proprietary/etc/sensors/sensor_def_qcomdev.conf
+> [3] https://github.com/sdm660-mainline/linux/pull/57
+> [4] https://emainline.gitlab.io/2022/04/08/Unlocking_SSC_P2.html
+> [5] https://android.googlesource.com/platform/system/chre/+/android-8.0.0_r2/platform/slpi
+> [6] https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_requests/4118
 > 
-> Make pci_disable_link_state() function comment to comply kerneldoc
-> formatting while changing the description.
+> Changes since v1:
+> - Split qdev renaming into separate patch
+> - Export new QRTR symbols with namespace
+> - Change struct initialization style
+> - Remove redundant NULL initialization of qdev->dev.driver
+> - Remove redundant devm_kfree
+> - Use variable in sizeof rather than type
+> - Change error return style in qcom_smd_qrtr_init
+> - Change order of operations in qcom_smd_qrtr_exit
+> - Use FIELD_PREP and GENMASK in QRTR_INSTANCE macro and add a CONST variant
+> - Remove per-sensor subdrivers and eliminate use of platform devices
+> - Put year range in copyright statements
+> - Use dev_err_probe for error messages in probe
+> - Remove unused include of linux/of.h
+> - Avoid casting away const in qcom_smgr_buffering_report_handler
+> - Use iio_push_to_buffers instead of iio_push_to_buffers_with_timestamp
+> - Preprocess proximity sensor data before pushing to buffer
+> - Add warning message for report with unknown ID received
+> - Change sentinel value style in array of struct initialization
+> - Refuse to set sampling frequency when buffer enabled
+> - Return -EINVAL inside default case in all applicable switch statements
+> - Move samp_freq_vals in qcom_smgr_iio_read_avail to priv and fix maximum
+> - Add devm_add_action_or_reset for releasing QMI handle and get rid of
+>   qcom_smgr_remove
+> - Add service versions and instance IDs found on some platforms to QRTR
+>   match table
+> - Fix null pointer dereference on registering unsupported sensor
 > 
-> Link: https://lore.kernel.org/all/CANUX_P3F5YhbZX3WGU-j1AGpbXb_T9Bis2ErhvKkFMtDvzatVQ@mail.gmail.com/
-> Link: https://lore.kernel.org/all/20230511131441.45704-1-ilpo.jarvinen@linux.intel.com/
-> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 > ---
->  drivers/pci/pcie/aspm.c | 33 ++++++++++++++++++++-------------
->  1 file changed, 20 insertions(+), 13 deletions(-)
+> Yassine Oudjana (4):
+>       net: qrtr: smd: Rename qdev to qsdev
+>       net: qrtr: Turn QRTR into a bus
+>       net: qrtr: Define macro to convert QMI version and instance to QRTR instance
+>       iio: Add Qualcomm Sensor Manager driver
 > 
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index 5721ebfdea71..11732031e342 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -1382,16 +1382,23 @@ static int __pci_disable_link_state(struct pci_dev *pdev, int state, bool locked
->  		return -EINVAL;
->  	/*
->  	 * A driver requested that ASPM be disabled on this device, but
-> -	 * if we don't have permission to manage ASPM (e.g., on ACPI
-> +	 * if we might not have permission to manage ASPM (e.g., on ACPI
->  	 * systems we have to observe the FADT ACPI_FADT_NO_ASPM bit and
-> -	 * the _OSC method), we can't honor that request.  Windows has
-> -	 * a similar mechanism using "PciASPMOptOut", which is also
-> -	 * ignored in this situation.
-> +	 * the _OSC method), previously we chose to not honor disable
-> +	 * request in that case. Windows has a similar mechanism using
-> +	 * "PciASPMOptOut", which is also ignored in this situation.
-> +	 *
-> +	 * Not honoring the requests to disable ASPM, however, led to
-> +	 * drivers forcing ASPM off on their own. As such changes of ASPM
-> +	 * state are not tracked by this service driver, the state kept here
-> +	 * became out of sync.
-> +	 *
-> +	 * Therefore, honor ASPM disable requests even when OS does not have
-> +	 * ASPM control. Plain disable for ASPM is assumed to be slightly
-> +	 * safer than fully managing it.
->  	 */
-> -	if (aspm_disabled) {
-> -		pci_warn(pdev, "can't disable ASPM; OS doesn't have ASPM control\n");
-> -		return -EPERM;
-> -	}
-> +	if (aspm_disabled)
-> +		pci_warn(pdev, "OS doesn't have ASPM control, disabling ASPM anyway\n");
->  
->  	if (!locked)
->  		down_read(&pci_bus_sem);
-> @@ -1418,13 +1425,13 @@ int pci_disable_link_state_locked(struct pci_dev *pdev, int state)
->  EXPORT_SYMBOL(pci_disable_link_state_locked);
->  
->  /**
-> - * pci_disable_link_state - Disable device's link state, so the link will
-> - * never enter specific states.  Note that if the BIOS didn't grant ASPM
-> - * control to the OS, this does nothing because we can't touch the LNKCTL
-> - * register. Returns 0 or a negative errno.
-> - *
-> + * pci_disable_link_state - Disable device's link state
->   * @pdev: PCI device
->   * @state: ASPM link state to disable
-> + *
-> + * Disable device's link state so the link will never enter specific states.
-> + *
-> + * Return: 0 or a negative errno
->   */
->  int pci_disable_link_state(struct pci_dev *pdev, int state)
->  {
+>  MAINTAINERS                                     |  13 +
+>  drivers/iio/accel/qcom_smgr_accel.c             | 138 ++++
+>  drivers/iio/common/Kconfig                      |   1 +
+>  drivers/iio/common/Makefile                     |   1 +
+>  drivers/iio/common/qcom_smgr/Kconfig            |  16 +
+>  drivers/iio/common/qcom_smgr/Makefile           |   8 +
+>  drivers/iio/common/qcom_smgr/qcom_smgr.c        | 840 ++++++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/Makefile       |   3 +
+>  drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.c | 713 ++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/qmi_sns_smgr.h | 161 +++++
+>  drivers/soc/qcom/qmi_interface.c                |   5 +-
+>  include/linux/iio/common/qcom_smgr.h            |  80 +++
+>  include/linux/mod_devicetable.h                 |   9 +
+>  include/linux/soc/qcom/qrtr.h                   |  46 ++
+>  net/qrtr/af_qrtr.c                              |  23 +-
+>  net/qrtr/qrtr.h                                 |   3 +
+>  net/qrtr/smd.c                                  | 252 ++++++-
+>  scripts/mod/devicetable-offsets.c               |   4 +
+>  scripts/mod/file2alias.c                        |  10 +
+>  19 files changed, 2302 insertions(+), 24 deletions(-)
+> ---
+> base-commit: 835244aba90de290b4b0b1fa92b6734f3ee7b3d9
+> change-id: 20250710-qcom-smgr-8db96d370b10
 > 
-> -- 
-> tg: (9f4972a5d481..) aspm/disable-always (depends on: pci/set-default-comment2)
-
+> Best regards,
 
 -- 
-மணிவண்ணன் சதாசிவம்
+// Casey (she/her)
+
 
