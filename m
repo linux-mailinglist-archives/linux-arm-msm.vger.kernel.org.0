@@ -1,292 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-66113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 645B4B0DF04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:41:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C090CB0DF2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:43:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96007189F2D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:37:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD8FBAA6AAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC6112EB5B9;
-	Tue, 22 Jul 2025 14:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7CFA2EACFF;
+	Tue, 22 Jul 2025 14:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HkNAr99t";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="xjaK24uY";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HkNAr99t";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="xjaK24uY"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ujMbsYaV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF672EAD11
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E7A94F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753195005; cv=none; b=Q8bU7ms96e2SBlJhmXumXmGN3gkWnEf9JvGoBzkOQZZOu57OAiHhUpzdphiGO0cQG+8bVw2XPhwr57Fv+ZFhGBDL8FhE6O6SWCsoTdUqeXK7+o8c5AMLJ3+h2+UV40BFgbdHR1ioTGe56epQ+DKtdrOOuxLndY2wOLrr8pw2Cog=
+	t=1753195036; cv=none; b=lSso9PfTs6EwFw1bcBB/r1Ol10lJWLj02CEXYYGeeQtLoxTdMv754fgkoP2OqGVLCyibdkOXaELUWpEC+svcxgv6uWRYWiuTK5qHRfUtv9NMZCN49Sfqi0o9j8anDKY988O6XxAizsfch+miwDLrpUIpIacYygSi+fka9ObiXl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753195005; c=relaxed/simple;
-	bh=U38vHwYvj/snWXvCq8nA+Zbfq/F5HTG8jvr3xzABwS4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u33noZ4RbKE6Hwau/nLr2x5NafGIlV0lxpXVlBnpQVQsnP5U5k7JWFml6JMF//SLnD8qnV+WshwdvGXvnbVDZj+vCBoXOzo9BPo8+twDQYo6DYQ5mrJQxHLy82ywgiE09uEhc7PMVMGzqosF/52HhYlSSZfauQzguJ+pHdXyY4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HkNAr99t; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=xjaK24uY; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HkNAr99t; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=xjaK24uY; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 78A45211CF;
-	Tue, 22 Jul 2025 14:36:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1753195001; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AYaGKdibHtzw4fA/0MfIQrIP4w9AF7TLkj3JQ1iP4C4=;
-	b=HkNAr99tGIBqUgCRhmCW9rD1j50SonENlFbfH0MtJBJHTKkCeFuUhsQE1jolCxWHzSKIQc
-	4eKVstQcJwVsADzWHRSSbhmRrMPzOGnGpUBQlVzffTitT64t7PcJHW18/gszLGMllbC+Om
-	aRtF/BkDKNjhdrHtc5Z0FPNIg/p+yLg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1753195001;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AYaGKdibHtzw4fA/0MfIQrIP4w9AF7TLkj3JQ1iP4C4=;
-	b=xjaK24uYmPjCkFM0ssUCyZJ6kBuqE835ky/2krTcOOWZMPec3/BHPdPNyLWF41Z0kLvsYa
-	TlbwdTSzzKPcOnAQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=HkNAr99t;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xjaK24uY
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1753195001; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AYaGKdibHtzw4fA/0MfIQrIP4w9AF7TLkj3JQ1iP4C4=;
-	b=HkNAr99tGIBqUgCRhmCW9rD1j50SonENlFbfH0MtJBJHTKkCeFuUhsQE1jolCxWHzSKIQc
-	4eKVstQcJwVsADzWHRSSbhmRrMPzOGnGpUBQlVzffTitT64t7PcJHW18/gszLGMllbC+Om
-	aRtF/BkDKNjhdrHtc5Z0FPNIg/p+yLg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1753195001;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AYaGKdibHtzw4fA/0MfIQrIP4w9AF7TLkj3JQ1iP4C4=;
-	b=xjaK24uYmPjCkFM0ssUCyZJ6kBuqE835ky/2krTcOOWZMPec3/BHPdPNyLWF41Z0kLvsYa
-	TlbwdTSzzKPcOnAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D574132EA;
-	Tue, 22 Jul 2025 14:36:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id ED+DKPChf2jxKQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 22 Jul 2025 14:36:32 +0000
-Message-ID: <638111c1-454a-40c6-b3ce-6842a76ae11e@suse.de>
-Date: Tue, 22 Jul 2025 16:36:23 +0200
+	s=arc-20240116; t=1753195036; c=relaxed/simple;
+	bh=mx4M38Pifod+TTsFyCyeW51ExTlxELB+CIMDHDK7b5s=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=JVnCgiOWKRriJCPuzVsjtvaNYKNaHf0/k1BTu50Cd2M1igrIq1ra7TIpa+QpVcvJyFpeRA2lCP7asrKsFjGB9xJ6/OS5FmX8QC83mdkf0klAc3YBQxnE4lUVteKDPbAlMye2vAjjINduofCjU+9diZ9jpXXfaN4VsFPusSrbUTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ujMbsYaV; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-31cb5c75e00so5356938a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:37:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753195035; x=1753799835; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dUACzvPgQEm4XYWd11I1pPmyiARplQU6zhTfmXThj6g=;
+        b=ujMbsYaVvKXPwTbsp7THR0kg3wJ2N00FKW/7oAJfJVqQ/9vYePBhoiXhBNMSnosW7h
+         X5R07b/7eL0raeu5gU1+5xs3tiJ6Br7xMKMLKYBDTqGQ5EO1DR1CuIBD8D2+89CcufkV
+         7/wKhURT1onzejlFTUZqPH9NGS062Pk7oSuWIRd5uOvVOYOyXsyka0tQxWThWYqS5lVE
+         QXV0yy87Xb5kkXT5sHo468o9Dt8hTPAE/oWWyeA1TzvrB41qUaGbIVc6UPH5BG7loe60
+         5gUTudqFTTq+3Tl3Qfv/kkIkBtCxhWBfIpZCDoLsKNrB9ACKKp/ucQ3GnbMi0pm5oHTD
+         OagA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753195035; x=1753799835;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dUACzvPgQEm4XYWd11I1pPmyiARplQU6zhTfmXThj6g=;
+        b=GZAN5Iq9vbzCgQiAKnXG5ZI55L5oZyUSLPsfG/9UOFteaUsGqeLh45hqa/Ltc7ihqV
+         kRcykcZ3GHXR70lk/TsemxeH+LW854oRkcTFuOd4GpMu21HK3uudgu/f85V9XSyBD33Q
+         nUs67HBRKr4+G7FFRsS234grDFtiEFoNwErueaVEwM1uyYSFHIPkv2oI8tyjfb6P7PDE
+         z7x3YG1UtX4+Tqz87zIc07SNwEfTOn6i/WbT+VC6LxEQIdxT6Cl2qKwm5uA17AIIasuG
+         1zieX0izMQJoQOKVccon7lXxZ5I+ny65oXrthWgBcrfwD5jfuUd5Fvsqnf5kqH/TStss
+         uZmA==
+X-Forwarded-Encrypted: i=1; AJvYcCXnbqsbyxbqAtY6frwm07jgx+mGb3mHxbyrR4BtPNCC8FfjXu486d2ALmOVhD1l/s6V6+gOMIirrU0aP0rR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyT0L4rLXqYgKZM1bz4vNEhuFIrzbzDY2Mb6vUaCjFxWtcIjbdg
+	bozwXZPpDQUgfu4gOR9egKm/XoiSOTHK642ugYGW3ZVXCcgqXTtUCVFLPfyhir5uIJKb3U+Lkpy
+	Ohfo0aw==
+X-Google-Smtp-Source: AGHT+IE8C9J3LvK/phm20LbST6qjzlg3ADXumanwajQGLHBmnJo5nov+CCWKM1So3cCPJD4+nPzceM8mbdg=
+X-Received: from pjbqo11.prod.google.com ([2002:a17:90b:3dcb:b0:311:7d77:229f])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:38d1:b0:30a:9feb:1e15
+ with SMTP id 98e67ed59e1d1-31e3e153417mr4923710a91.8.1753195034488; Tue, 22
+ Jul 2025 07:37:14 -0700 (PDT)
+Date: Tue, 22 Jul 2025 07:37:12 -0700
+In-Reply-To: <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/25] drm/dumb-buffers: Fix and improve buffer-size
- calculation
-To: simona@ffwll.ch, airlied@gmail.com, mripard@kernel.org,
- maarten.lankhorst@linux.intel.com, geert@linux-m68k.org,
- tomi.valkeinen@ideasonboard.com
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org
-References: <20250613090431.127087-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20250613090431.127087-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[ffwll.ch,gmail.com,kernel.org,linux.intel.com,linux-m68k.org,ideasonboard.com];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_DN_NONE(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqtkr6cif1ebgurukgmwdm7xc)];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns]
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 78A45211CF
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.01
+Mime-Version: 1.0
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
+ <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
+Message-ID: <aH-iGMkP3Ad5yncW@google.com>
+Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
+ VM type
+From: Sean Christopherson <seanjc@google.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ping for additional reviews. Especially patches 3, 4, and 5, which cover 
-a wide range of drivers..
+On Tue, Jul 22, 2025, Xiaoyao Li wrote:
+> On 7/21/2025 8:22 PM, Xiaoyao Li wrote:
+> > On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+> > > +/*
+> > > + * CoCo VMs with hardware support that use guest_memfd only for
+> > > backing private
+> > > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping
+> > > enabled.
+> > > + */
+> > > +#define kvm_arch_supports_gmem_mmap(kvm)=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 \
+> > > +=C2=A0=C2=A0=C2=A0 (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&=C2=
+=A0=C2=A0=C2=A0 \
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 (kvm)->arch.vm_type =3D=3D KVM_X86_DEFAULT_=
+VM)
+> >=20
+> > I want to share the findings when I do the POC to enable gmem mmap in Q=
+EMU.
+> >=20
+> > Actually, QEMU can use gmem with mmap support as the normal memory even
+> > without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
+> > on KVM_SET_USER_MEMORY_REGION2.
+> >=20
+> > Since the gmem is mmapable, QEMU can pass the userspace addr got from
+> > mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
+> > works well for non-coco VMs on x86.
+>=20
+> one more findings.
+>=20
+> I tested with QEMU by creating normal (non-private) memory with mmapable
+> guest memfd, and enforcily passing the fd of the gmem to struct
+> kvm_userspace_memory_region2 when QEMU sets up memory region.
+>=20
+> It hits the kvm_gmem_bind() error since QEMU tries to back different GPA
+> region with the same gmem.
+>=20
+> So, the question is do we want to allow the multi-binding for shared-only
+> gmem?
 
-Am 13.06.25 um 11:00 schrieb Thomas Zimmermann:
-> Dumb-buffer pitch and size is specified by width, height, bits-per-pixel
-> plus various hardware-specific alignments. The calculation of these
-> values is inconsistent and duplicated among drivers. The results for
-> formats with bpp < 8 are sometimes incorrect.
->
-> This series fixes this for most drivers. Default scanline pitch and
-> buffer size are now calculated with the existing 4CC helpers. There is
-> a new helper drm_mode_size_dumb() that calculates scanline pitch and
-> buffer size according to driver requirements.
->
-> The series fixes the common GEM implementations for DMA, SHMEM and
-> VRAM. It further changes most implementations of dumb_create to use
-> the new helper. A small number of drivers has more complicated
-> calculations and will be updated by a later patches.
->
-> v5:
-> - use check_mul_overflow() for overflow test (Tomi)
-> - imx: fix intermediate code (Tomi)
-> - rz-du: include dumb-buffers header
-> v4:
-> - improve UAPI documentation
-> - document bpp special cases
-> - use drm_warn_once()
-> - add TODO lists
-> - armada: fix pitch alignment
-> v3:
-> - document UAPI semantics
-> - fall back to bpp-based allocation for unknown color modes
-> - cleanups
-> v2:
-> - rewrite series
-> - convert many individual drivers besides the shared GEM helpers
->
-> Thomas Zimmermann (25):
->    drm/dumb-buffers: Sanitize output on errors
->    drm/dumb-buffers: Provide helper to set pitch and size
->    drm/gem-dma: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gem-shmem: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gem-vram: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/armada: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/exynos: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gma500: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/hibmc: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/imx/ipuv3: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/loongson: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/mediatek: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/msm: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/nouveau: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/omapdrm: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/qxl: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/renesas/rcar-du: Compute dumb-buffer sizes with
->      drm_mode_size_dumb()
->    drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/rockchip: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/tegra: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/virtio: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/vmwgfx: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xe: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xen: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
->
->   Documentation/gpu/todo.rst                    |  27 +++
->   drivers/gpu/drm/armada/armada_gem.c           |  16 +-
->   drivers/gpu/drm/drm_dumb_buffers.c            | 170 ++++++++++++++++--
->   drivers/gpu/drm/drm_gem_dma_helper.c          |   7 +-
->   drivers/gpu/drm/drm_gem_shmem_helper.c        |  16 +-
->   drivers/gpu/drm/drm_gem_vram_helper.c         |  89 +++------
->   drivers/gpu/drm/exynos/exynos_drm_gem.c       |   8 +-
->   drivers/gpu/drm/gma500/gem.c                  |  21 +--
->   .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  25 ++-
->   drivers/gpu/drm/imx/ipuv3/imx-drm-core.c      |  29 ++-
->   drivers/gpu/drm/loongson/lsdc_gem.c           |  29 +--
->   drivers/gpu/drm/mediatek/mtk_gem.c            |  13 +-
->   drivers/gpu/drm/msm/msm_gem.c                 |  27 ++-
->   drivers/gpu/drm/nouveau/nouveau_display.c     |   7 +-
->   drivers/gpu/drm/omapdrm/omap_gem.c            |  15 +-
->   drivers/gpu/drm/qxl/qxl_dumb.c                |  17 +-
->   drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c |   7 +-
->   drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c  |   8 +-
->   drivers/gpu/drm/rockchip/rockchip_drm_gem.c   |  12 +-
->   drivers/gpu/drm/tegra/gem.c                   |   8 +-
->   drivers/gpu/drm/virtio/virtgpu_gem.c          |  11 +-
->   drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       |  21 +--
->   drivers/gpu/drm/xe/xe_bo.c                    |   8 +-
->   drivers/gpu/drm/xen/xen_drm_front.c           |   7 +-
->   drivers/gpu/drm/xlnx/zynqmp_kms.c             |   7 +-
->   include/drm/drm_dumb_buffers.h                |  14 ++
->   include/drm/drm_gem_vram_helper.h             |   6 -
->   include/uapi/drm/drm_mode.h                   |  50 +++++-
->   28 files changed, 447 insertions(+), 228 deletions(-)
->   create mode 100644 include/drm/drm_dumb_buffers.h
->
->
-> base-commit: 75238c32deae15ee4120b42a5be556ec36807a84
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-> prerequisite-patch-id: 719d09751d38f5da743beed6266585ee063e1e29
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
+Can you elaborate, maybe with code?  I don't think I fully understand the s=
+etup.
 
