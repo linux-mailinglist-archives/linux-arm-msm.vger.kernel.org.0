@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-66093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FF9DB0DB16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:39:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F08D2B0DB2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:44:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 642BF1C812C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:39:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2362E176774
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:44:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFE122E9EB9;
-	Tue, 22 Jul 2025 13:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9BFE2E9EDA;
+	Tue, 22 Jul 2025 13:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="opGsLQ5t"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Of93aJyQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50E12E498E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1915028CF4A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753191577; cv=none; b=ky9EpfGkhivPkJIxjavhCYpl7d4JqhOosFP4dsbgkCvGrxdcSYRvR8a51HdCrgk/AKM86JP0o+viZVst8xKLlNcSnJy/qcM9wdeqV+z51oXjlFghfEg6ZWNkO3GJI7DByByG9MRdpYNeCZC/5XcuzEVmtpWIZ2iTfdRNXL9IFEo=
+	t=1753191864; cv=none; b=ejmxHxqIZI9pRyCD/Wwf2MaK7hAg8R/6XY+HX8AlKUWCTU3iBsEpMVMpGVB+s+Ic8CWyCo8HOLrr2VW0K+U9067ibHRCcQomb0uZp+vwOqlLHDnuJBi9DQ/MCy9Izb4dvzhyMPF+wp6bmLxb/OX3HUINm5JvyDJRksg9fxGP1n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753191577; c=relaxed/simple;
-	bh=P7CZhpr4+5Zeq4LJPJNDI2y80s9ZygaDR15AlHLHptQ=;
+	s=arc-20240116; t=1753191864; c=relaxed/simple;
+	bh=dTywX+BFLFdP4+hIWj9tRp0IJ9gnnMfS5H4sld7dZvU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bxvw/95GSGNgQAbItUgLpnWI07lmPB7bbuOaOT4fwNxYczCRS2n59ggc7aS8+WIDe2JY6jCM0BRwmtpAeNBYGm8D6MFErHCTNaSdt+xDuPROv+Lmxq/NEbkfPY5ypzvGa12imXhtOIv5ETKM6lv59HwD22SHpfReBa62UL+ppJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=opGsLQ5t; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=DrF7FJchxUp3VdOfDxfM3907+xRBQ+7ISO4x4te6fJR1YYhDWtz6brYB9NqD9dkDdiWNiMjVqGHNr3gZ5H4Y+XEbygTEukbXNAqabAXbGdEHkoJSe466vhd47FYga3uk48+IDT4mvbajRdMduj767V1gDBebxvje0xqbsd0kq5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Of93aJyQ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MCY4CT001048
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:39:35 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7LTf0013263
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=4w3F0joZHW750KxFalsn9QVx
-	Ns0FPKKZPb2uX1yiarA=; b=opGsLQ5tSzq299+AcwZy9AxOaTjfrG7Vq/UQSF0g
-	hTPLYon4gdQzd5Hv3rvlsy1dxpv7549YPoSBbF7HXwDnRagGztr1FyBNT4Ki0O1r
-	Ib5ompQdFhVzwomnNGgwEKTmt6OCWSFlSXaxphsUH7eEy2HKJwaH80Dk+20bWRRD
-	51NjxrKzOWOhnARKS69h9VSclxz9jS1PpTo55/JUcLsqYdCOCiqJFPghUY5RpWJs
-	aeINXIeim2ECvUImYEkdcX4jiqGB+foL7Cyb3s0OaxUx/0uTfkZzyNhCdMsWZSYG
-	MtrbCYK9hoQ9a2eWw2yAb3w5dJujpgQkgGTvhPpOv7qBng==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48044dhetw-1
+	:references:subject:to; s=qcppdkim1; bh=/PlvjBmBNhRqz0BnasHFhjw6
+	BKLI8rWtueB1348TmAU=; b=Of93aJyQ8B2IXq//kHIuNs5oNAeHAckqmlzzEHin
+	JB0jbnxK3HwqmVrHsXdArPWFtS5InJJECABp1JqgOORgL/j51qy9VArRt/ZqegY7
+	SRXubWmx6w4Ca6cx60eifdX/A6beIlp2D9WPZSHC3R9A0aI0KRADO8OF3K/uGbg6
+	xnelwe9XrpQ1rA1wqz8L2sclzfUaBBp1hNSBcvmZdzz8PcxkT+6dD9iJfze8djQt
+	chkRh1WJpqmcvOdijECtCl+fHhCvFt7+BgcAVx6TcFLsC2z40n14TNybb1T7L7y4
+	0Eu76qghAovYfV294L5ZFHuqm1ERp1Dc82PxjHmIcW20Dg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3emdew-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:39:34 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e06402c7daso792650985a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 06:39:34 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e33d32c501so1266506785a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 06:44:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753191573; x=1753796373;
+        d=1e100.net; s=20230601; t=1753191861; x=1753796661;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4w3F0joZHW750KxFalsn9QVxNs0FPKKZPb2uX1yiarA=;
-        b=kfIIKuK0yLhTkVBFfJasCqzEEcGLznfQxw1Lnde6jxYj7QnZvd0h6SvfFtPo1DHWf8
-         p4+sM2Q09aG22ktwU8zql1+UfzdeKv4TnJN6D9umu9+9fGB0eBNIJ8MmuC+tWqR8ie0X
-         9p8BgaV5aEpZOqQawW/fB51CCgUVMIuqvhspkUjpvvJd/9LNjU3yXWlQhK7HBrrj8N46
-         7B8yEL1rtoZhJ4P/DbOO4bOXjCNKUe1RqNySMrqUeyF21HfIMS2Hh0ply9YGZRC+SlKT
-         c9tsketRHLCGdYU4rwPB1LstP0R1LK2kVKSt/wY7jgJfB+TLBMI0uWDLwpARW/MGrcib
-         rdyA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7/wT+owgiAUjP5Ah5pp9ZTOmhmdmlgx8eJrkGvC3vCvseWQE4uH/JYLbRITr9SFk1HxX57lXBM1GDrJAE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKfQDbr5pExd4GBSycGl21ksjrIPL5KNlH6W4zai0EwaeAxE7n
-	2aSR2gr7f8EBbz9FoC14yaztDNWtAG/muw/ocWgg3QuS1sZo03bXmx/Ylzn9x2FmxArZKl7MQ6V
-	VakU24t/g2Cvcsk/QxOqPh6baNeo76jTdni/LwOwQGgtaZi27HdlGHTnN6KBQdV+ldpjg
-X-Gm-Gg: ASbGncsn8Pcn1R4eJPytvV4qB+8k64adXB1vWiHuxHco7I4nJA1hj2mBWIojN1IY/NF
-	7DwpytrhJgcKqzbmnBVw/WH9CrV9DBoBytO5GxL4qW2LdnMEZK1Ew+oeQD//6jM+VmGyit/Do6E
-	WQsYJdpi1L7mV0mBf7TvBLiK83oi+6t9nCTXGQI4iDNc7NVJc42mdkv6SVt2VYWVhzlp7hSifQ4
-	+3K2EaZ6yOra2AFANBO1DacRhEZw2dMF2iGCpFu9EwEhu6Fi4HizhFCs+iYUXtn+M+ucpUV9+yL
-	aTFF1oU9EvCHhaeVkO3ArTBa/Bt/a0EPWfTzsNdxJZ6m6phtqKJl2xLH+6xQGGH1Gu9HvYNyjZH
-	MmZoOPreRSshwCqdtnfYMAQkywIORtRknr7yAT5ikBUE7eb4yXv+H
-X-Received: by 2002:a05:620a:19a5:b0:7e3:52f6:66e5 with SMTP id af79cd13be357-7e352f6672amr2503268485a.35.1753191573276;
-        Tue, 22 Jul 2025 06:39:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWXNAeEBRYm0Qc899vTrFNNPTNnIjLTPXDWYSnbj33m9VCWWBjQI/8iRumSgWsa8P13k24+Q==
-X-Received: by 2002:a05:620a:19a5:b0:7e3:52f6:66e5 with SMTP id af79cd13be357-7e352f6672amr2503264185a.35.1753191572771;
-        Tue, 22 Jul 2025 06:39:32 -0700 (PDT)
+        bh=/PlvjBmBNhRqz0BnasHFhjw6BKLI8rWtueB1348TmAU=;
+        b=aOO5YN1wewNLtvD1UfEOvw7Nd4uWnR9FKEV8s8Mxnf61XLyF8NS9Cw5ieb5+PoOukE
+         jIl1WOFy9Rr7A1EyuoCAO8SIoBKVK5GyIdTAIuw83KzGDpGGXzD7mmTY8sGFQ+JZyphK
+         wRmoxaclT+FGRbUy14gQUU1WC7BODj5J37Di/YcQ4U5ANYANvO8glznBfnNqcZpc2R5o
+         KY4oo0IqDTEwJ6iQVqKhRRV/VjkhOMJfyMXKPJHGa4Tm6h1fltzeUaBOP5QiwjQIExzy
+         4rs4C6FbhfXe5+biA8HDcI7iM7Y9eNbn4PPv3NRjGULOmazwyOKvqXGfTDQmhuvduWWk
+         QRMg==
+X-Forwarded-Encrypted: i=1; AJvYcCXVTDlLPcMhaPQbhbCuTy0Krlz2ZDkN2EEWVaSv6MWRLMLCYVGL69HnEhFHtTdB81CtuVszRsvAEg3Rm5s5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUYTH8aTUR5b13myyoRIigFXe9MphIpWIPP5hDAUBRi2UQsbF7
+	VPovo5L3arBFIxi4hQIwGEGCJzrh80UcXHBftm1/UykHoYu5D2Wg7Zi5ajcBSBdBpR75Z4nQo7N
+	IfvbJIxssDEdngSCEpAl/0xYpqCjISoC4J/YzlKAabKpVmQkrpzQ2wzPlBuSug/h+JTWS
+X-Gm-Gg: ASbGnctZ2Cxi+bs7Zap+hWrVaHmdH14UIEJtrdbVX3VHdh1sTWXzOirLgAoOWDZDuiY
+	dNJWPAS0o3m8UejSsjBPBI2qKY2ezxHhO+BKwnwArc3apJ/TZeKenFrkeeR+4qJJPVNCTFIbOk+
+	CRIGUXDQSJEsIANHFCq8O9Bzb4cZZpkhPTr3FIxl1YTm7deRQVvXU3/OE9OCazSYipGHSZDFUTU
+	Nce8MmtgqcCus4n5BVvfW/xCp+DX/uHR75HrSXALeH/zGuz2EpYBM5zRC0JcDDpRHxwmkC3hriM
+	trNXnf85ndq3jc4Zxc63pT+GUhncya8GxiW+0TzoU+LZ/4PofkK/zvDoCYaMhyEzlUK4TPcji9U
+	Z4vMuQPN38dESx1FeX80t5XS/EvOSuR1Kfzl2e+fY92K8B+j3WD63
+X-Received: by 2002:a05:620a:d96:b0:7e6:2167:6fb with SMTP id af79cd13be357-7e6216707e1mr450345385a.57.1753191860627;
+        Tue, 22 Jul 2025 06:44:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJYjfAd2lPvfeopVnQTvfIiKF4FZMT25Jj8QNn5OT3bmUYHUVmlPAwFf/7JubdQINFF9syIw==
+X-Received: by 2002:a05:620a:d96:b0:7e6:2167:6fb with SMTP id af79cd13be357-7e6216707e1mr450339985a.57.1753191859973;
+        Tue, 22 Jul 2025 06:44:19 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a91f640csm16330041fa.91.2025.07.22.06.39.31
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a9109c31sm16373981fa.43.2025.07.22.06.44.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 06:39:31 -0700 (PDT)
-Date: Tue, 22 Jul 2025 16:39:30 +0300
+        Tue, 22 Jul 2025 06:44:17 -0700 (PDT)
+Date: Tue, 22 Jul 2025 16:44:16 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
@@ -92,10 +92,10 @@ Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/17] drm/msm/adreno: Add fenced regwrite support
-Message-ID: <tyjkwrdmsj7k7tkqqxdd65l5v5jxugr5me3ivg5onn3hbffkwp@7uhsbzolqiyd>
+Subject: Re: [PATCH 08/17] drm/msm/a6xx: Set Keep-alive votes to block IFPC
+Message-ID: <jvn44gmttkidyy4emnz6mytqqjbwltlxibywfr6bfbqjfbq35e@fuvvefesqbzw>
 References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-7-9347aa5bcbd6@oss.qualcomm.com>
+ <20250720-ifpc-support-v1-8-9347aa5bcbd6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,215 +104,153 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250720-ifpc-support-v1-7-9347aa5bcbd6@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=BJ6zrEQG c=1 sm=1 tr=0 ts=687f9496 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=A7g6f4VAW18hdwHdu84A:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: X53n1KgRTpf9WMvt41viy8Rk6d9oZxzO
-X-Proofpoint-ORIG-GUID: X53n1KgRTpf9WMvt41viy8Rk6d9oZxzO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDExMiBTYWx0ZWRfX6RR/rClRz0Yz
- IOaJPsk+hnMnSwHTC6KrPF2CQAbuhULVtJGQ8KIcBzcx0ZQhw0wYOl19mj1RmzzYDorzUW8Ht3o
- 1XthqP+Yh9cS7xqjfTLGClaD7LxR8iwCuFjJBPJGLh4ELq4TSlSuigrE5gYD/ix5kC8Sky+i4+J
- kRZ7koFB/l1QSy4tpCxVqtOsyBygiAObhj3cJrt1SeNgy6avcyNUy4eyUzhxULA5MbU7qpUH3Z6
- pelQKKxywWUTQt/UpLYNnDJhkUCJmfeDNt4OPPCtkLxi33xzO/AHdfF4y8Ec4+Gmb1vUHUk0Px2
- a0t7qun5KRNN3sxqXypTkMT7wNDeAHtKCSXMDXz/pWqai7FSzXr6mUh85Zu6+kXbJGj8LnfjBnK
- klkbeP0uNJHnXek0pZy7UAFlf+P/B4kPnHOHAcXFKPiJs+a91aRnd1j23Bf/l4kHROt0w6sR
+In-Reply-To: <20250720-ifpc-support-v1-8-9347aa5bcbd6@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: usotjw4iWPUp_W985wf8IgeYiBEEI6ZC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDExMiBTYWx0ZWRfXx265HGxHOhtd
+ Te7ptLyD88QQNv6Hpvho2hx5loXknLoYRIjlnEAx8GkeZYiHVXyvm9C6Kfst4R0a1+rdc6tyGOO
+ HavvGWAETzakUU8W+x8IozTbN3H5TzeQgC44J8tWPnNJQMd25gmHLfQkKtzMMl5Z1mydSgkUs7V
+ 35tggLGTBZO57261kNhxZd7DUSQAtQ6kMxJlopGfjD1sXvb6/X6S6+ntOyBKcv0VUNKhaX2RMVX
+ YLuFSDPR//WX44UYSoNn0n1987khDNK6XqLOnEWxHspsOL8pKGx0OgDi4BI/O8kOVaZmLn+BzGm
+ h02LMWJNNodgG5o+5uueWUYYXu+J3c2EmZ7lgLDBvt9bPEwKpilSu1JP223LlPsekrqZ18YRFXb
+ Ym6O7M3fnfVV02yjN0zpAdWsStMz8tRvJleymGhGgPUAoqjUFlSWUajT4cgZFWyAQN4TbAQu
+X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=687f95b6 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=kzfAnjQGA3Um0d4qlLMA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: usotjw4iWPUp_W985wf8IgeYiBEEI6ZC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507220112
+ clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220112
 
-On Sun, Jul 20, 2025 at 05:46:08PM +0530, Akhil P Oommen wrote:
-> There are some special registers which are accessible even when GX power
-> domain is collapsed during an IFPC sleep. Accessing these registers
-> wakes up GPU from power collapse and allow programming these registers
-> without additional handshake with GMU. This patch adds support for this
-> special register write sequence.
+On Sun, Jul 20, 2025 at 05:46:09PM +0530, Akhil P Oommen wrote:
+> Set Keepalive votes at appropriate places to block IFPC power collapse
+> until we access all the required registers. This is required during gpu
+> IRQ handling and also during preemption.
 > 
 > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 63 ++++++++++++++++++++++++++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 +++++-----
->  3 files changed, 73 insertions(+), 11 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 26 +++++++++++++++++---------
+>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 ++++++++++++++++++++
+>  2 files changed, 37 insertions(+), 9 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 491fde0083a202bec7c6b3bca88d0e5a717a6560..8c004fc3abd2896d467a9728b34e99e4ed944dc4 100644
+> index 8c004fc3abd2896d467a9728b34e99e4ed944dc4..6770f0363e7284e4596b1188637a4615d2c0779b 100644
 > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -16,6 +16,67 @@
+> @@ -1752,8 +1752,6 @@ static void a6xx_cp_hw_err_irq(struct msm_gpu *gpu)
 >  
->  #define GPU_PAS_ID 13
->  
-> +static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
-> +{
-> +	/* Success if !writedropped0/1 */
-> +	if (!(status & mask))
-> +		return true;
-> +
-> +	udelay(10);
-
-Why do we need udelay() here? Why can't we use interval setting inside
-gmu_poll_timeout()?
-
-> +
-> +	/* Try to update fenced register again */
-> +	gpu_write(gpu, offset, value);
-> +	return false;
-> +}
-> +
-> +static int fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u32 value, u32 mask)
-> +{
-> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	struct msm_gpu *gpu = &adreno_gpu->base;
-> +	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-> +	u32 status;
-> +
-> +	gpu_write(gpu, offset, value);
-> +
-> +	/* Nothing else to be done in the case of no-GMU */
-> +	if (adreno_has_gmu_wrapper(adreno_gpu))
-> +		return 0;
-> +
-> +	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
-> +			fence_status_check(gpu, offset, value, status, mask), 0, 1000))
-> +		return 0;
-> +
-> +	dev_err_ratelimited(gmu->dev, "delay in fenced register write (0x%x)\n",
-> +			offset);
-> +
-> +	/* Try again for another 1ms before failing */
-> +	gpu_write(gpu, offset, value);
-> +	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
-> +			fence_status_check(gpu, offset, value, status, mask), 0, 1000))
-> +		return 0;
-> +
-> +	dev_err_ratelimited(gmu->dev, "fenced register write (0x%x) fail\n",
-> +			offset);
-> +
-> +	return -ETIMEDOUT;
-> +}
-> +
-> +int a6xx_fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u64 value, u32 mask, bool is_64b)
-> +{
-> +	int ret;
-> +
-> +	ret = fenced_write(a6xx_gpu, offset, lower_32_bits(value), mask);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!is_64b)
-> +		return 0;
-> +
-> +	ret = fenced_write(a6xx_gpu, offset + 1, upper_32_bits(value), mask);
-
-no need for a separate ret assignment.
-
-> +
-> +	return ret;
-> +}
-> +
->  static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
+>  static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
 >  {
->  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> @@ -86,7 +147,7 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->  	/* Update HW if this is the current ring and we are not in preempt*/
->  	if (!a6xx_in_preempt(a6xx_gpu)) {
->  		if (a6xx_gpu->cur_ring == ring)
-> -			gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-> +			a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
-
-I can't stop but notice that we don't handle a6xx_fenced_write() errors.
-Is it fine? Or will it result in some sort of crash / reset?
-
->  		else
->  			ring->restore_wptr = true;
->  	} else {
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> index 9201a53dd341bf432923ffb44947e015208a3d02..2be036a3faca58b4b559c30881e4b31d5929592a 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> @@ -291,5 +291,6 @@ int a6xx_gpu_state_put(struct msm_gpu_state *state);
+> -	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> -	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>  	struct msm_ringbuffer *ring = gpu->funcs->active_ring(gpu);
 >  
->  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
->  void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
-> +int a6xx_fenced_write(struct a6xx_gpu *gpu, u32 offset, u64 value, u32 mask, bool is_64b);
+>  	/*
+> @@ -1765,13 +1763,6 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+>  	if (gpu_read(gpu, REG_A6XX_RBBM_STATUS3) & A6XX_RBBM_STATUS3_SMMU_STALLED_ON_FAULT)
+>  		return;
 >  
->  #endif /* __A6XX_GPU_H__ */
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> index 3b17fd2dba89115a8e48ba9469e52e4305b0cdbb..5b0fd510ff58d989ab285f1a2497f6f522a6b187 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> @@ -41,7 +41,7 @@ static inline void set_preempt_state(struct a6xx_gpu *gpu,
+> -	/*
+> -	 * Force the GPU to stay on until after we finish
+> -	 * collecting information
+> -	 */
+> -	if (!adreno_has_gmu_wrapper(adreno_gpu))
+> -		gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 1);
+> -
+>  	DRM_DEV_ERROR(&gpu->pdev->dev,
+>  		"gpu fault ring %d fence %x status %8.8X rb %4.4x/%4.4x ib1 %16.16llX/%4.4x ib2 %16.16llX/%4.4x\n",
+>  		ring ? ring->id : -1, ring ? ring->fctx->last_fence : 0,
+> @@ -1810,9 +1801,24 @@ static void a7xx_sw_fuse_violation_irq(struct msm_gpu *gpu)
+>  	}
 >  }
 >  
->  /* Write the most recent wptr for the given ring into the hardware */
-> -static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-> +static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_ringbuffer *ring)
+> +static void set_keepalive_vote(struct msm_gpu *gpu, bool on)
+
+a6xx_set_keepalive_vote()
+
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +
+> +	if (adreno_has_gmu_wrapper(adreno_gpu))
+> +		return;
+> +
+> +	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, on);
+> +}
+> +
+>  static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
 >  {
->  	unsigned long flags;
->  	uint32_t wptr;
-> @@ -51,7 +51,7 @@ static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->  	if (ring->restore_wptr) {
->  		wptr = get_wptr(ring);
+>  	struct msm_drm_private *priv = gpu->dev->dev_private;
+> +
+> +	/* Set keepalive vote to avoid power collapse after RBBM_INT_0_STATUS is read */
+> +	set_keepalive_vote(gpu, true);
+> +
+>  	u32 status = gpu_read(gpu, REG_A6XX_RBBM_INT_0_STATUS);
 >  
-> -		gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-> +		a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
+>  	gpu_write(gpu, REG_A6XX_RBBM_INT_CLEAR_CMD, status);
+> @@ -1849,6 +1855,8 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
+>  	if (status & A6XX_RBBM_INT_0_MASK_CP_SW)
+>  		a6xx_preempt_irq(gpu);
 >  
->  		ring->restore_wptr = false;
->  	}
-> @@ -172,7 +172,7 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
+> +	set_keepalive_vote(gpu, false);
+> +
+>  	return IRQ_HANDLED;
+>  }
 >  
->  	set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> index 5b0fd510ff58d989ab285f1a2497f6f522a6b187..1c8ec1911010c00a000d195116fc950c4d947cac 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> @@ -136,6 +136,21 @@ static void preempt_disable_postamble(struct a6xx_gpu *a6xx_gpu)
+>  	a6xx_gpu->postamble_enabled = false;
+>  }
 >  
-> -	update_wptr(gpu, a6xx_gpu->cur_ring);
-> +	update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
+> +/*
+> + * Set preemption keepalive vote. Please note that this vote is different from the one used in
+> + * a6xx_irq()
+> + */
+> +static void set_keepalive_vote(struct msm_gpu *gpu, bool on)
+
+a6xx_set_preempt_keepalive_vote();
+
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +
+> +	if (adreno_has_gmu_wrapper(adreno_gpu))
+> +		return;
+> +
+> +	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_PWR_COL_PREEMPT_KEEPALIVE, on);
+> +}
+> +
+>  void a6xx_preempt_irq(struct msm_gpu *gpu)
+>  {
+>  	uint32_t status;
+> @@ -176,6 +191,8 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
 >  
 >  	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
 >  
-> @@ -268,7 +268,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
->  	 */
->  	if (!ring || (a6xx_gpu->cur_ring == ring)) {
->  		set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
-> -		update_wptr(gpu, a6xx_gpu->cur_ring);
-> +		update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
->  		set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->  		spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
->  		return;
-> @@ -302,13 +302,13 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
+> +	set_keepalive_vote(gpu, false);
+> +
+>  	trace_msm_gpu_preemption_irq(a6xx_gpu->cur_ring->id);
+>  
+>  	/*
+> @@ -302,6 +319,9 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
 >  
 >  	spin_unlock_irqrestore(&ring->preempt_lock, flags);
 >  
-> -	gpu_write64(gpu,
-> -		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
-> -		a6xx_gpu->preempt_smmu_iova[ring->id]);
-> +	a6xx_fenced_write(a6xx_gpu,
-> +		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_smmu_iova[ring->id],
-> +		BIT(1), true);
->  
-> -	gpu_write64(gpu,
-> +	a6xx_fenced_write(a6xx_gpu,
->  		REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
-> -		a6xx_gpu->preempt_iova[ring->id]);
-> +		a6xx_gpu->preempt_iova[ring->id], BIT(1), true);
->  
->  	a6xx_gpu->next_ring = ring;
->  
-> @@ -328,7 +328,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
->  	set_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED);
->  
->  	/* Trigger the preemption */
-> -	gpu_write(gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl);
-> +	a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl, BIT(1), false);
->  }
->  
->  static int preempt_init_ring(struct a6xx_gpu *a6xx_gpu,
+> +	/* Set the keepalive bit to keep the GPU ON until preemption is complete */
+> +	set_keepalive_vote(gpu, true);
+> +
+>  	a6xx_fenced_write(a6xx_gpu,
+>  		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_smmu_iova[ring->id],
+>  		BIT(1), true);
 > 
 > -- 
 > 2.50.1
