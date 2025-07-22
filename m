@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E71C2B0D7A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:04:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22266B0D7B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:07:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BAEC1880820
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:04:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16CFE3A707C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:06:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3C32E11CA;
-	Tue, 22 Jul 2025 11:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C5F22E3393;
+	Tue, 22 Jul 2025 11:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gTRM5A+Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eI6CL/zW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B18298CD7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:04:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EADE2D77EF;
+	Tue, 22 Jul 2025 11:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753182242; cv=none; b=K9NHwSL8tooJdmUGcy3sQ2nm1wK869hcgA0ewn5L/yaJJ4XbYNyxpxqauQmdTtDHJKEYnNYQ8tzh8vwcJFSb66tohXOXT8ti8mmRkA1AJ4F4b2Btxjg6/S1rzPzoa4It5CFP24j0vqx8ttV6G3GeEeltGCI2ECOXy60egBQXqvQ=
+	t=1753182391; cv=none; b=a+4uZcH11cINDNxzGzhWkKUeL/wD+kWQXzTXV5AxPJh52tMa0ulaRGcExeItLQsJNuJDO71Dw0Qs3xGpBWDtCkUD0KPUsRgyvBM35fRWKHY7ZPdzD29cHDj8OhGaKqz9iumGVh2mQY1qC4dTAFaSUbZCNnCmvTyyLplEGpfTHyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753182242; c=relaxed/simple;
-	bh=kWCUG31bkJ6dZkQu4ecUTQJmDb9akcJNyNVIFUvX4So=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CwSeSp/syAxabQb4fMUj2fXXaVWaft/ZEd9UQKJ6x1wXp1nWaIAchdTveoED7a2U0HPpK+8pNSvGaOlSKsXNRugXGhuaCeVVsPwtYkMyvdjUcNp013Ynw4s28s1AVn4or0cnvVJBYQPzHmq20ltblqraugzKXqWp9+TUA3ith98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gTRM5A+Z; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M75UXs015514
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:03:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jCcIy69ciDOUcVdtD2bZCMzRk/SyBUFRLG70HN1E2+Q=; b=gTRM5A+ZXBV1LYZH
-	oVBmEosxHP33U+7/2sCjFSscWe4nGK/f+gXjn5xNeKKUV1yqF6yNb7EFMn0i8LRR
-	16mhIwk9iplEJHanlgtA783cn44423NPSDypNTK0L/GbZUsgmTL96QEYBUm2ko7+
-	CCrwFohoQJjQPt91kyCR0aCn/iyGBgFhB9XNH2kIRlEqGPsCnkJC7LxqSY4jPrOK
-	iKo5zANUOwW6Vw3jcKypisxjmS7VHgiZciDZS5sxKjBkPOG7Frg4d/zFg28Spfp2
-	khieEqYk/0ri3+2XImGWUKMe1zVosO5/wq3L5wzBpx7TPhMmX8RXHM7QrMGYc6kr
-	cbL36g==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w29xs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:03:59 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-75494e5417bso5051856b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 04:03:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753182238; x=1753787038;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jCcIy69ciDOUcVdtD2bZCMzRk/SyBUFRLG70HN1E2+Q=;
-        b=CIo7pk09+NQsmq+ABQDsIIBgBOghg6NTnB5dDThM7EJdv4GAAjQ9NGEUj2lK6+QQjV
-         u9CU38AMykEYweR7XkGIwsV+eqiTUnY/lcq69bVJHxaWbbHTzOhTD3o+71kdistbdc/U
-         v3kIh5esD4a46hapWZrzNovpS6AGxh4rXINUEiLVqaHC7R5PkGREnpKbY36lRJo/dE4N
-         8NX4mrTthNPkA0DCsFcWqV6TpXqFv/Yt6ytxgW+F8UXwUwaBpLNuqpayWp6YrYHXjr42
-         91NE9CS+Bu/siHhDwU53odwvamB34KMrgCiKtu5UWe6MxweUqyvn+eNrN7XL2WWBfV1b
-         7QOw==
-X-Forwarded-Encrypted: i=1; AJvYcCUdZem5vTjiBIdfRjuR6eUuFqNff5nqbHKdVqVJs9ofyA83hVCSYQkFwuCID+V12nqy8J889zLPQ2iYHUaN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0mN+OOv+0hj2ZtBsnCYV3SryCXFTKp4sflYAOdBf/fW7MNpDb
-	2gMv2B+VZNlD8MrhX+rTx9B98JlI4SQPO0tmPhRYVyuTNggR6ZEt0MzXl6tDOucf+nFgr4cPU95
-	39UFE5Q5xqEsklg9qfXIeJH9c1NUS6KAFS0zr9QyIp5JA8DdA2eLsiR0t6wfT8kG3O931
-X-Gm-Gg: ASbGncvLThWwF3+RbNF0vvq5Sj9/WoNTYpf22OMwDIzwYWNdzDDJGkmZkPkRqkOgRa5
-	byRfqxR79qak2BPkZGVhOek2qKu1/XsO/Nh/5tIrEWDyyARO1M4Bgr/jqpML6U3T3jdA+PPqfuM
-	VsuNOQmVeUA5MQKipul0fAtr/5jbiLQb9We42GybTYZPtqtR0LTxk5auFySLchBQ6Xmjj1Ra2Sk
-	qtb+/2bs6vCQbslIncLx0SAcNlKOObH0a9/dE8F62GsuvlFcdAly0EWg2/llkmhzMZaCQrmolKX
-	E92cGTUTZG4/4kTJhHW5NVDZbRw3ulHQwLhWteYJ5HgMBB6Jwb0MrSsQPT9qyKGY0/aeGvUPog=
-	=
-X-Received: by 2002:a05:6a00:1817:b0:736:5969:2b6f with SMTP id d2e1a72fcca58-75ed156d03bmr3761907b3a.6.1753182238338;
-        Tue, 22 Jul 2025 04:03:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgZIDkCUV2AXz/9PK4/a4NCij1DJxFB71Da611o7fAf8jI0CKXgwVrcrLnlMSH3ym9h+L+Lw==
-X-Received: by 2002:a05:6a00:1817:b0:736:5969:2b6f with SMTP id d2e1a72fcca58-75ed156d03bmr3761869b3a.6.1753182237848;
-        Tue, 22 Jul 2025 04:03:57 -0700 (PDT)
-Received: from [10.218.37.122] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-759cbd67ed2sm7293938b3a.135.2025.07.22.04.03.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 04:03:57 -0700 (PDT)
-Message-ID: <d4078b6c-1921-4195-9022-755845cdb432@oss.qualcomm.com>
-Date: Tue, 22 Jul 2025 16:33:50 +0530
+	s=arc-20240116; t=1753182391; c=relaxed/simple;
+	bh=WmTyzbLH4oLKJgpVVgk7hwxo8f7Kv2pNKzivxS+yqXs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fgtXql4hTl2oEy/mmtqWID300LKzGuwf44G4pPOx4E4NRMBMXoD3XLn4jeXTYQtKqFjWqM8nNd/BW8TIeHUpqZ5Zxe8MCLOE12bFKzydy/zUaW0Xmi2lTtiw1XAI7WVwDm18c3BLslBJwgByVPwrWyr2fNjVEfevcn4kLp2dmbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eI6CL/zW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AC8C4CEF4;
+	Tue, 22 Jul 2025 11:06:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753182390;
+	bh=WmTyzbLH4oLKJgpVVgk7hwxo8f7Kv2pNKzivxS+yqXs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=eI6CL/zW2RxWAh0gdUpOCkIIZ2CjTyOMwXT6Kw0khI+yLqpmGmxphPQRrXePcJ+wN
+	 BAeP+sRmRe/0UhT/lOswVwyEWeWyHgcSCNI7JBlPuP7ZFH+uLcE6KaGUhCrOB9VWBx
+	 2TAe6VRpAjIa2trToznqyJ2bsGx0nCZjgdG15Jo7tV0wX++5kX9W+/a0+2m2YM4e4J
+	 ajA7v50mvLbelDh4reRr1XOmnITRN7elYcCbInXs49jhdR606/XlhkHFMpbN/R1PrJ
+	 JgHJi3O4XyNbU8UNPimcwpu/e5C+KyeyEPmQpZXRKh1DxP5D0VD62IoGmIFfQxNG0P
+	 1/BN7KiExH75w==
+Message-ID: <a006f099-578f-45aa-b165-64e28b8f930e@kernel.org>
+Date: Tue, 22 Jul 2025 13:06:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,137 +50,186 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/11] PCI/bwctrl: Add support to scale bandwidth
- before & after link re-training
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi
- <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-        qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-        quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-References: <20250711213602.GA2307197@bhelgaas>
- <55fc3ae6-ba04-4739-9b89-0356c3e0930c@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
+ for WSA883x speakers
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski
+ <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, quic_pkumpatl@quicinc.com,
+ kernel@oss.qualcomm.com
+References: <20250718104628.3732645-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20250718104628.3732645-3-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20250721-hairy-aardwolf-of-enterprise-bbc99f@kuoka>
+ <d614d8e3-963d-4d34-9b15-1544c7a22cf0@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <55fc3ae6-ba04-4739-9b89-0356c3e0930c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=687f701f cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=UU_a8xXafIRJjp1WqNEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA5MCBTYWx0ZWRfX0kcouL+EgEwN
- r815sY23tZBBgxFRS0b/0KjjcmZTG2D49sl0sOeKBBi9wHwzb2JOfc+qdwVFYhmQlzkSKts4ChK
- iAOylEMF+vLzL0YEF+EhZPTI9YoH1uCIJ0AprKFh9lPqDJ+RpKzJNYIGUO8zO1+tef0Y1lJxHMZ
- gvo7uwufZwQlscNydRTratfJ+53tfR0vRI2iAehdnqihzN44qRJWfHVWhcYJ3RgQwloZs0XvnLo
- WFge2x1PElYvqQhXuaim5opFTOqb4e9WfgFNM7oGssePIhJouD2gNz12qdeIgxBEZlcaD8LgbZW
- rXNUSIcG/+jl77DJw4Ghugcqp97qyOc33BvzLgEi+MQ/HMMRuz574jfPeq4p3TFFm1J+zzy6cLW
- lfXzLtoKTDddabPxowrMGNKs449yZ/3BHUnwDHaK8oSvTqsXyvE0bDzTZFt9fv45FxaLMquR
-X-Proofpoint-ORIG-GUID: ddp9Lp78H3z088tHe1mty-dl6ybeF5iO
-X-Proofpoint-GUID: ddp9Lp78H3z088tHe1mty-dl6ybeF5iO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507220090
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <d614d8e3-963d-4d34-9b15-1544c7a22cf0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 7/12/2025 4:36 AM, Krishna Chaitanya Chundru wrote:
+On 22/07/2025 12:56, Mohammad Rafi Shaik wrote:
 > 
 > 
-> On 7/12/2025 3:06 AM, Bjorn Helgaas wrote:
->> On Mon, Jun 09, 2025 at 04:21:23PM +0530, Krishna Chaitanya Chundru 
->> wrote:
->>> If the driver wants to move to higher data rate/speed than the 
->>> current data
->>> rate then the controller driver may need to change certain votes so that
->>> link may come up at requested data rate/speed like QCOM PCIe controllers
->>> need to change their RPMh (Resource Power Manager-hardened) state. Once
->>> link retraining is done controller drivers needs to adjust their votes
->>> based on the final data rate.
+> On 7/21/2025 1:53 PM, Krzysztof Kozlowski wrote:
+>> On Fri, Jul 18, 2025 at 04:16:28PM +0530, Mohammad Rafi Shaik wrote:
+>>> On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
+>>> WSA8830/WSA8835 speakers share a common reset (shutdown) GPIO.
+>>> To handle such cases, use the reset controller framework along
+>>> with the "reset-gpio" driver.
 >>>
->>> Some controllers also may need to update their bandwidth voting like
->>> ICC BW votings etc.
->>>
->>> So, add pre_link_speed_change() & post_link_speed_change() op to call
->>> before & after the link re-train. There is no explicit locking 
->>> mechanisms
->>> as these are called by a single client Endpoint driver.
->>>
->>> In case of PCIe switch, if there is a request to change target speed 
->>> for a
->>> downstream port then no need to call these function ops as these are
->>> outside the scope of the controller drivers.
+>>> Register devm action to safely disable the regulator on device removal
+>>> to prevents a potential release warning from _regulator_put().
 >>
->>> +++ b/include/linux/pci.h
->>> @@ -599,6 +599,24 @@ struct pci_host_bridge {
->>>       void (*release_fn)(struct pci_host_bridge *);
->>>       int (*enable_device)(struct pci_host_bridge *bridge, struct 
->>> pci_dev *dev);
->>>       void (*disable_device)(struct pci_host_bridge *bridge, struct 
->>> pci_dev *dev);
->>> +    /*
->>> +     * Callback to the host bridge drivers to update ICC BW votes, 
->>> clock
->>> +     * frequencies etc.. for the link re-train to come up in 
->>> targeted speed.
->>> +     * These are intended to be called by devices directly attached 
->>> to the
->>> +     * Root Port. These are called by a single client Endpoint 
->>> driver, so
->>> +     * there is no need for explicit locking mechanisms.
->>> +     */
->>> +    int (*pre_link_speed_change)(struct pci_host_bridge *bridge,
->>> +                     struct pci_dev *dev, int speed);
->>> +    /*
->>> +     * Callback to the host bridge drivers to adjust ICC BW votes, 
->>> clock
->>> +     * frequencies etc.. to the updated speed after link re-train. 
->>> These
->>> +     * are intended to be called by devices directly attached to the
->>> +     * Root Port. These are called by a single client Endpoint driver,
->>> +     * so there is no need for explicit locking mechanisms.
+>> It is not possible to remove the device - suppress bind attrs. How did
+>> you trigger that?
 >>
->> No need to repeat the entire comment.  s/.././
->>
->> These pointers feel awfully specific for being in struct
->> pci_host_bridge, since we only need them for a questionable QCOM
->> controller.  I think this needs to be pushed down into qcom somehow as
->> some kind of quirk.
->>
-> Currently these are needed by QCOM controllers, but it may also needed
-> by other controllers may also need these for updating ICC votes, any
-> system level votes, clock frequencies etc.
-> QCOM controllers is also doing one extra step in these functions to
-> disable and enable ASPM only as it cannot link speed change support
-> with ASPM enabled.
+> Ack,
 > 
-Bjorn, can you check this.
+> I encountered the warning as regulator was being released unexpectedly,
+> triggering _regulator_put() warnings. While the device itself isn't 
+> removed, Registering the devm action ensures safe cleanup without 
+> triggering warnings.
 
-For QCOM devices we need to update the RPMh vote i.e a power source
-votes for the link to come up in required speed. and also we need
-to update interconnect votes also. This will be applicable for
-other vendors also.
+Logs are cut - you do not see the most important part, who puts the
+regulator?
 
-If this is not correct place I can add them in the pci_ops.
-- Krishna Chaitanya.
-> - Krishna Chaitanya.
->>> +     */
->>> +    void (*post_link_speed_change)(struct pci_host_bridge *bridge,
->>> +                       struct pci_dev *dev, int speed);
+How unregistering regulator solves the incomplete get/put paths? It
+feels like you are hiding real problem instead of fixing it.
+
+> 
+> Please check the below logs.
+> 
+> I could use some suggestions for this issue. please help with some 
+> suggestions how i can approve this design.
+> 
+> Thanks,
+> Rafi.
+
+
+...
+
+> [   10.679294][   T90] ------------[ cut here ]------------
+> [   10.684772][   T90] WARNING: CPU: 1 PID: 90 at 
+> /drivers/regulator/core.c:2450 _regulator_put+0x50/0x60
+> [   10.694344][   T90] Modules linked in: snd_soc_hdmi_codec 
+> phy_qcom_edp venus_dec venus_enc videobuf2_dma_contig rpmsg_ctrl 
+> qrtr_smd fastrpc rpmsg_char videobuf2_memops qcom_pd_mapper nb7vpq904m 
+> msm lontium_lt9611uxc ucsi_glink typec_ucsi pmic_glink_altmode 
+> qcom_battmgr aux_hpd_bridge ath11k_ahb ath11k hci_uart rtc_pm8xxx btqca 
+> coresight_stm bluetooth qcom_pon stm_core venus_core pwrseq_qcom_wcn 
+> drm_exec mac80211 ocmem v4l2_mem2mem gpu_sched videobuf2_v4l2 videodev 
+> nvmem_qcom_spmi_sdam qcom_spmi_adc_tm5 snd_soc_sc8280xp 
+> drm_display_helper qcom_vadc_common snd_soc_qcom_sdw coresight_tmc 
+> snd_soc_qcom_common videobuf2_common qcom_stats coresight_etm4x 
+> qcom_q6v5_pas phy_qcom_qmp_combo usb_f_qdss mc drm_dp_aux_bus 
+> ecdh_generic qcom_pil_info qcom_q6v5 ecc coresight_replicator aux_bridge 
+> coresight_csr qcom_sysmon coresight_funnel pwrseq_core gpi typec 
+> i2c_qcom_geni qcom_common coresight icc_bwmon llcc_qcom qcom_glink_smem 
+> qcrypto pinctrl_sc7280_lpass_lpi mdt_loader snd_soc_lpass_wsa_macro 
+> sha256_generic pinctrl_lpass_lpi
+> [   10.694524][   T90]  snd_soc_lpass_va_macro display_connector 
+> snd_soc_lpass_macro_common authenc drm_kms_helper libdes qrtr libarc4 
+> icc_osm_l3 qcom_rng pmic_glink cfg80211 rfkill drm fuse ipv6
+> [   10.804083][   T90] CPU: 1 UID: 0 PID: 90 Comm: kworker/u32:4 Not 
+> tainted 6.14.0 #1
+> [   10.811959][   T90] Hardware name: Qualcomm Technologies, Inc. 
+> Robotics RB3gen2 (DT)
+> [   10.819920][   T90] Workqueue: events_unbound deferred_probe_work_func
+> [   10.826643][   T90] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT 
+> -SSBS BTYPE=--)
+> [   10.834510][   T90] pc : _regulator_put+0x50/0x60
+> [   10.839362][   T90] lr : regulator_put+0x30/0x48
+> [   10.844118][   T90] sp : ffff8000809e3670
+> [   10.848244][   T90] x29: ffff8000809e3670 x28: 0000000000000000 x27: 
+> ffff70941a04a080
+> [   10.856300][   T90] x26: 0000000000000000 x25: ffffbfa860a9bee8 x24: 
+> ffffbfa860e79cb0
+> [   10.864354][   T90] x23: ffff709406e62640 x22: ffff709418668808 x21: 
+> ffff8000809e3710
+> [   10.872409][   T90] x20: ffff709415e81840 x19: ffffbfa86119b680 x18: 
+> 00000000ffffffff
+> [   10.880462][   T90] x17: ffffbfa86013d058 x16: ffffbfa8601cbac4 x15: 
+> ffff709419a70b48
+> [   10.888517][   T90] x14: 0000000000000000 x13: ffff709400032b10 x12: 
+> 0000000000000000
+> [   10.896573][   T90] x11: 0000000000000000 x10: ffffbfa85fdbcc60 x9 : 
+> ffffbfa85fdbc7e0
+> [   10.904627][   T90] x8 : ffff709418668ab0 x7 : ffff709418668ab0 x6 : 
+> ffff709418668ab0
+> [   10.912676][   T90] x5 : ffff709418668ab0 x4 : ffff709418668ab0 x3 : 
+> ffff709415e807c0
+> [   10.920727][   T90] x2 : ffff709406e62640 x1 : 0000000000000001 x0 : 
+
+Everything above is irrelevant.
+
+> ffff709415e81840
+> [   10.928781][   T90] Call trace:
+> [   10.932024][   T90]  _regulator_put+0x50/0x60 (P)
+> [   10.936877][   T90]  regulator_put+0x30/0x48
+> -----------
+
+And this is only relevant information which tells nothing. Are you sure
+you pasted FULL log?
+
+> 
+> Thanks & Regards,
+> Rafi.
+> 
+>> Best regards,
+>> Krzysztof
+>>
+> 
+
+
+Best regards,
+Krzysztof
 
