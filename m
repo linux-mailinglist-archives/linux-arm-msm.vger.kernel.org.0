@@ -1,234 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-66047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAA69B0D763
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:36:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D05AB0D770
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:37:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 604801C24E5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:36:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C76C56165B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:37:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825EC2DC35C;
-	Tue, 22 Jul 2025 10:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C462E336F;
+	Tue, 22 Jul 2025 10:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k/02Fx6v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vdww0zWn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EAC2BEFE3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215C92E1753
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753180571; cv=none; b=fOXy5gQICpQIZojccIsbfFec8WGXbpadU6ogSvUAmU9HwVQmc6eOq+QwpR8H+pA5emRR/N+guijadYKo+A7D98RWi7LFvkYywVl6kZLg5TVBZcHeGsTWCiQn5ERE0nRP3WHbe9Xcu2q+LjOurPB6oUG6B6n9APBjASKtZH9Rk58=
+	t=1753180641; cv=none; b=eQIvPVoYVLuaAwmmOzmZ3hmBdWL95BWSwso9/qOPFiIwU4zCcU+hA09pbZxzdleicpz/HDi86P6eFWNPg8FvCr6w6MW1f6ZOh2xqUzushfamHYeneCRuy4l+LVF8PXSX/ItTv9O//w1PLerI91/2Im5Qqu0IB81ozlZDXqcwEMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753180571; c=relaxed/simple;
-	bh=Es8rvtELoL3Efx2Ylf7dLNukFAd8ZQcCqR7sAg8srHw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H2fBr5Oh2dJGN8HeeIOHFutfJJ6FD4SbDoPn1FVKXAokwHjObS/LGc+yJlkpJRw9L7iXbk4u+bIkjRrt66Q83KW5AXePKo1aB7vQ0ArFciFWl+LBtJQJ/FASUSPofQVJ5KXSSmCjRx7HG34YTy3DLQqE6DSwpS8YaZ9zFf1U0Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k/02Fx6v; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4ab3855fca3so210161cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:36:09 -0700 (PDT)
+	s=arc-20240116; t=1753180641; c=relaxed/simple;
+	bh=EcaPmOZF17vzAybqgUPsCVqCSYrKhcslVWazMxbu63M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sTpVBFS1ZzpCKEsbBJ3tFPL8/DQCbPF6SdoN1FeJBfZXc+eZ0ZtQAB8TcKZrhWms45nICsIgdAt6FjfL7TgypW4iFkT3Um5c7MxZNo8QIpsK2j8eFN4MV+xJMdwU+iNTrCbCPpv43w7++CciUnORWC5xPeXq+n9rCLE2uB/af7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vdww0zWn; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b611665b96so2986865f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753180568; x=1753785368; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=h2sNENsiUXWZHkoFKe8iTv45YtKCJ7msVi+m+Dnfo0w=;
-        b=k/02Fx6vepOfFDyb7Tt0a0bgAXJiaNqe57wr/K45wcFqtcnHhZY4g2IR7+90OnZBtY
-         gEMMrJGqxSHa0G69LT9tQYOI+rtGKpHvdjclQ09JA4oxQgx2MAEB5QdcklxO4IjJCinO
-         ccCAfyDUPrS8QhJ7/bvIQvG8578iu31Xa3NnSo7vrcQ/FD/ujrsnLuh4A2DRbYABeu77
-         KiIpzyX+79cUU8cK7Rss5JgWOJuJ4UFMNZt3bIWwL92btvkW3Fo9jrYtbyy5UxdkFPkh
-         eJ8G3ipQsgiXScZ/CuxCWKD48tIR92eEVfweyuvIOzwfoaD2w5XGqGD0iGNFruVAnWrq
-         5Khg==
+        d=linaro.org; s=google; t=1753180637; x=1753785437; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/Y4ZK31qukkhLkAHxdpW7gih6/ZCt1oA0i9NknuiOE4=;
+        b=vdww0zWnoWp9QeU1u00mPbHHCE6Vq4Dszs2UlBmvmeWgey68lOYoQJnaur6eL3KcFv
+         0/+0RPu9W91z6Q3ecq4lE6WyCvswGAqgyIXkGWc4N8QlvXw2+Glzldt8KvssKewDUvj2
+         AyUJJ8y4pVZGU8GlvkrWyd3w2GOO5VrfBLw22K+KT08m+OevW7xqIcZSXScCbxAcX/Qc
+         xTQeXTIJOPa6+PIj23bDw236w5oaHfrMg/+WG7lCIvR5v1Z3ycsXL28iai6H11IlZB43
+         aLzrvNmbs8073u+Zd1Y2d2zfDnulnM8BvS54LdYeBxG0wND9tGGPf2PQYtgDTY5zxNB3
+         CDPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753180568; x=1753785368;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h2sNENsiUXWZHkoFKe8iTv45YtKCJ7msVi+m+Dnfo0w=;
-        b=c7fe916bNuD865D25/QoQH2qfcOFM+JgSYxyYppj0b6bvNq7Woz6okO9mOG1cYom0W
-         Z1Z4Awlh0cYXoxC0pTqNgYYFRgOmuno+hHym5EEpTHvkLEwjYEZD1oPxJct5mxevn5/7
-         Z+Zlai5fVBUGITIP7qiiPpdAN8VSfDGNM6oBVIlvE/JFsEDsEX7tnTV14Pkh/Ucr4Zng
-         8edS+ojG8yc1+OevuPka4FKBmNG7SW6MOCUqVFRLR76U5ykAqDAacGDY9wmwlBN8Eh48
-         5U+aVzqKQL4VmQ1mXY9m6XgIYqlzVx7neD5UT907Uv0CULQuuJUhoMoZE8SMxp1Z74LI
-         6T6g==
-X-Forwarded-Encrypted: i=1; AJvYcCXwUrNKlDCnENIMdd0TrRYDKfXQQf7k5yhrCR4OD9nGd+K7f0Yw0MSFf3ch1RorcX0wIi4dcKTQ5QvLbbIU@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTnFVa5rZO8vjehEW+yjBepgGHjsvhfGLRV4v7EypsKt4SZtVi
-	BkC634pAKmX4tVCkw62a8vkSFQjhIRaK1j0lAYGgS+xGn59zNeSbeZj8N40wAwTnGQPxfZnNnnR
-	GanoBnoQv95zpKBufPkyBWB7r6os/7yzk8ZLtxCOI
-X-Gm-Gg: ASbGncuuGAMwhU3k61RTSzwFqe11wX96kGH6eZd2PS9HZto+eYvpR88hgPGOaNuJEFE
-	CiptKbZ3/jdkW0xT87+MS8svLHPQiy2PVxqmDhYpvVVzd+J96SMq+zYkcCPke5MPGHOUHoY9QaE
-	m831fNh5dkoZftOR2O5GgfCefXZLfvc0OxsiDCiiuAS2HeVFGEGRKD6PXuusz3UpQfhhYhr3qUH
-	n85336Ps2hXxtMd8ok+NNxlWxFFbVcI5VZf
-X-Google-Smtp-Source: AGHT+IEvqsS58GzqZAYQQgB7BqYiKCpYg+Q8XL/j8/io4oCnmPzNh5X8oKUHq2YYykzKu368BpAYr2MBwji0MjUioSA=
-X-Received: by 2002:a05:622a:1dc6:b0:48a:ba32:370 with SMTP id
- d75a77b69052e-4ae5cc6a1d5mr4457581cf.10.1753180567987; Tue, 22 Jul 2025
- 03:36:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753180637; x=1753785437;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Y4ZK31qukkhLkAHxdpW7gih6/ZCt1oA0i9NknuiOE4=;
+        b=XKSv8V67FsX++TRVuW9PUr2F/r5MsbpxuvIDBw5UAROMob2s4d192U17PL+a6xg1zI
+         dnUW6rmQBRb1+pON6RST/z/TGfLPGopVs/Xl6U8GLfL/fArC746JtBj2mgmCgdVYokF0
+         BbJpE2oC9QmgQ1SvjSMtB5raF9igRCJR0BYc7kyrF1yYLeKYple+/nUzKITllCc8O3Ag
+         tDz/48iU42+xJgI5vSBerwtgxZ3XwLuKNn26RhPI0mngqC1N2P01OmnJx/Y42JIaDbXq
+         jrCzWIOEsGbfBfDNN7A+Qfe//AbbVfvFsmLqKFSE8pxtecqjD62FHg8852wjSRchaniS
+         modA==
+X-Gm-Message-State: AOJu0Yzahlf4oaJm6V4Zc41P6dF67KsGpm5Eqjc40sEw0bGzVLRoRNvr
+	Pa/5TXxyILyvLExPdlfDmJJ8LbuWRdRLx2GLOy8CEkZVXMfYkZSYWzsXpjmygkVPRqQ=
+X-Gm-Gg: ASbGnctTW3swtqlyhO9vyO6jVn7SePpM3erFnkfIQY/QCnDysVUyJ+zI/dPoSKDu0w/
+	z8EWQJSmg/vGZC44XO06bO316J1QkgEXnoFAGZmGtmL1qtgpqba6JFRB+kjzvXY350iIl9W/p3d
+	eKccZSm3cx/yx5BfNKzqcPapDyWl9D+Ekhy31Du74sgwipG7lpJFm8QLRkun8NVN3YyPNY85UZf
+	Au2B+PvbTFFXJMm/10OpYv/A7arNPasrSdANMbXrTJxmxO2v+F6ipssO6P6iy9Z8HO6ruaKtqYa
+	tuP2JjIOPw+LQUZu/X0k7tBkiEHya0RAw9twhhIjazb38e/6F+ZIgd9w06tCxfw1/wTXW7RdXSU
+	zy/1jTilVu3BlTujR8xXfl2nf64Dcw2aMEZDe7crRiSFW5/y3oH/lHShNaRLAsaQ=
+X-Google-Smtp-Source: AGHT+IGTCim13XVcGSW21AueFsi3fYd4EJtmzmvQeTtBGNVJD3KZN4i5HjdFzRy4dW3lSossDfE26A==
+X-Received: by 2002:a05:6000:288b:b0:3a5:8934:493a with SMTP id ffacd0b85a97d-3b60e51bb18mr20015822f8f.44.1753180637147;
+        Tue, 22 Jul 2025 03:37:17 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca4d581sm12938939f8f.64.2025.07.22.03.37.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jul 2025 03:37:16 -0700 (PDT)
+Message-ID: <7e1073da-6773-489e-80f5-97409f013acc@linaro.org>
+Date: Tue, 22 Jul 2025 11:37:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-12-tabba@google.com>
- <8340ec70-1c44-47a7-8c48-89e175501e89@intel.com> <aH7KghhsjaiIL3En@google.com>
-In-Reply-To: <aH7KghhsjaiIL3En@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Tue, 22 Jul 2025 11:35:31 +0100
-X-Gm-Features: Ac12FXxlfQG4ofD1slov5tvKwsHTWTtSvMayWg2TOJeHuE2UtcTH2RrcWmi_y7k
-Message-ID: <CA+EHjTwAVSRU=3FHqV5xrvi5-RfhYDhpoAoYuaU7atSuOv_r_Q@mail.gmail.com>
-Subject: Re: [PATCH v15 11/21] KVM: x86/mmu: Allow NULL-able fault in kvm_max_private_mapping_level
-To: Sean Christopherson <seanjc@google.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
+ <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
+ <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
+ <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
+ <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
+ <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
+ <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
+ <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
+ <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
+ <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
+ <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
+ <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
+ <3UXVZ6ANM9mDjVdMV4SXsiIx_pT3S1lp3RC_Q7mh_o7jF2dpYsni1Sl2TAWv6OCMCRTFmi9aE6BxDquGkOnwEg==@protonmail.internalid>
+ <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
+ <57501e81-7e9c-4cb1-9a37-18307d1e06ca@linaro.org>
+ <33d76d7f-ab14-4e76-8ffb-eb370901a046@linaro.org>
+ <4edefe21-27b6-4884-befa-ddb451bb9376@linaro.org>
+ <84eea632-02d8-4b7f-a4ca-36ce7159a170@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <84eea632-02d8-4b7f-a4ca-36ce7159a170@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 22 Jul 2025 at 00:17, Sean Christopherson <seanjc@google.com> wrote:
->
-> On Fri, Jul 18, 2025, Xiaoyao Li wrote:
-> > On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> > > From: Ackerley Tng <ackerleytng@google.com>
-> > >
-> > > Refactor kvm_max_private_mapping_level() to accept a NULL kvm_page_fault
-> > > pointer and rename it to kvm_gmem_max_mapping_level().
-> > >
-> > > The max_mapping_level x86 operation (previously private_max_mapping_level)
-> > > is designed to potentially be called without an active page fault, for
-> > > instance, when kvm_mmu_max_mapping_level() is determining the maximum
-> > > mapping level for a gfn proactively.
-> > >
-> > > Allow NULL fault pointer: Modify kvm_max_private_mapping_level() to
-> > > safely handle a NULL fault argument. This aligns its interface with the
-> > > kvm_x86_ops.max_mapping_level operation it wraps, which can also be
-> > > called with NULL.
-> >
-> > are you sure of it?
-> >
-> > The patch 09 just added the check of fault->is_private for TDX and SEV.
->
-> +1, this isn't quite right.  That's largely my fault (no pun intended) though, as
-> I suggested the basic gist of the NULL @fault handling, and it's a mess.  More at
-> the bottom.
->
-> > > Rename function to kvm_gmem_max_mapping_level(): This reinforces that
-> > > the function's scope is for guest_memfd-backed memory, which can be
-> > > either private or non-private, removing any remaining "private"
-> > > connotation from its name.
-> > >
-> > > Optimize max_level checks: Introduce a check in the caller to skip
-> > > querying for max_mapping_level if the current max_level is already
-> > > PG_LEVEL_4K, as no further reduction is possible.
-> > >
-> > > Acked-by: David Hildenbrand <david@redhat.com>
-> > > Suggested-by: Sean Christoperson <seanjc@google.com>
-> > > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > > ---
-> > >   arch/x86/kvm/mmu/mmu.c | 16 +++++++---------
-> > >   1 file changed, 7 insertions(+), 9 deletions(-)
-> > >
-> > > diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> > > index bb925994cbc5..6bd28fda0fd3 100644
-> > > --- a/arch/x86/kvm/mmu/mmu.c
-> > > +++ b/arch/x86/kvm/mmu/mmu.c
-> > > @@ -4467,17 +4467,13 @@ static inline u8 kvm_max_level_for_order(int order)
-> > >     return PG_LEVEL_4K;
-> > >   }
-> > > -static u8 kvm_max_private_mapping_level(struct kvm *kvm,
-> > > -                                   struct kvm_page_fault *fault,
-> > > -                                   int gmem_order)
-> > > +static u8 kvm_gmem_max_mapping_level(struct kvm *kvm, int order,
-> > > +                                struct kvm_page_fault *fault)
-> > >   {
-> > > -   u8 max_level = fault->max_level;
-> > >     u8 req_max_level;
-> > > +   u8 max_level;
-> > > -   if (max_level == PG_LEVEL_4K)
-> > > -           return PG_LEVEL_4K;
-> > > -
-> > > -   max_level = min(kvm_max_level_for_order(gmem_order), max_level);
-> > > +   max_level = kvm_max_level_for_order(order);
-> > >     if (max_level == PG_LEVEL_4K)
-> > >             return PG_LEVEL_4K;
-> > > @@ -4513,7 +4509,9 @@ static int kvm_mmu_faultin_pfn_private(struct kvm_vcpu *vcpu,
-> > >     }
-> > >     fault->map_writable = !(fault->slot->flags & KVM_MEM_READONLY);
-> > > -   fault->max_level = kvm_max_private_mapping_level(vcpu->kvm, fault, max_order);
-> > > +   if (fault->max_level >= PG_LEVEL_4K)
-> > > +           fault->max_level = kvm_gmem_max_mapping_level(vcpu->kvm,
-> > > +                                                         max_order, fault);
-> >
-> > I cannot understand why this change is required. In what case will
-> > fault->max_level < PG_LEVEL_4K?
->
-> Yeah, I don't get this code either.  I also don't think KVM should call
-> kvm_gmem_max_mapping_level() *here*.  That's mostly a problem with my suggested
-> NULL @fault handling.  Dealing with kvm_gmem_max_mapping_level() here leads to
-> weirdness, because kvm_gmem_max_mapping_level() also needs to be invoked for the
-> !fault path, and then we end up with multiple call sites and the potential for a
-> redundant call (gmem only, is private).
->
-> Looking through surrounding patches, the ordering of things is also "off".
-> "Generalize private_max_mapping_level x86 op to max_mapping_level" should just
-> rename the helper; reacting to !is_private memory in TDX belongs in "Consult
-> guest_memfd when computing max_mapping_level", because that's where KVM plays
-> nice with non-private memory.
->
-> But that patch is also doing too much, e.g. shuffling code around and short-circuting
-> the non-fault case, which makes it confusing and hard to review.  Extending gmem
-> hugepage support to shared memory should be "just" this:
->
-> @@ -3335,8 +3336,9 @@ int kvm_mmu_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *fault,
->         if (max_level == PG_LEVEL_4K)
->                 return PG_LEVEL_4K;
->
-> -       if (is_private)
-> -               host_level = kvm_max_private_mapping_level(kvm, fault, slot, gfn);
-> +       if (is_private || kvm_memslot_is_gmem_only(slot))
-> +               host_level = kvm_gmem_max_mapping_level(kvm, fault, slot, gfn,
-> +                                                       is_private);
->         else
->                 host_level = host_pfn_mapping_level(kvm, gfn, slot);
->         return min(host_level, max_level);
->
-> plus the plumbing and the small TDX change.  All the renames and code shuffling
-> should be done in prep patches.
->
-> The attached patches are compile-tested only, but I think they get use where we
-> want to be, and without my confusing suggestion to try and punt on private mappings
-> in the hugepage recovery paths.  They should slot it at the right patch numbers
-> (relative to v15).
->
-> Holler if the patches don't work, I'm happy to help sort things out so that v16
-> is ready to go.
+On 22/07/2025 10:59, Neil Armstrong wrote:
+> On 22/07/2025 11:08, Bryan O'Donoghue wrote:
+>> On 22/07/2025 09:32, Neil Armstrong wrote:
+>>> The whole key point here is the combo mode, as I understood the combo 
+>>> mode feature
+>>> makes the PHY lanes available as 2 separate streams, like if you got 
+>>> 2 "controllers"
+>>> attached to the same PHY. So in fact, the PHY should have a single 
+>>> node, but 2 PHY
+>>> interfaces in combo mode.
+>>>
+>>> This makes all this controller/phy model very complex to handle and 
+>>> add a lot of
+>>> logic in the camss side. Moving the "csiphy" as an independent media 
+>>> device that
+>>> can declare up to 2 endpoints in combo mode makes things much 
+>>> simpler, and allows
+>>> us to attach each "csiphy" stream to any "controller" side of camss.
+>>
+>> I think there should be a generic extension to PHY/linux-media to 
+>> support that instead of something Qualcomm specific.
+> 
+> Can you point out what's missing ? AFAIK it's more a matter of proper 
+> representation of all
+> the CAMSS components with a proper ports/endpoint graph design that 
+> adding new kernel APIs.
 
-These patches apply, build, and run. I'll incorporate them, test them
-a bit more with allmodconf and friends, along with the other patch
-that you suggested, and respin v16 soon.
+Perhaps I'm not understanding the pushback.
 
-Cheers,
-/fuad
+Vlad's design puts the CSIPHY nodes under CAMSS and doesn't use the 
+upstream PHY API, which if I've understood right is done to facilitate 
+multiple sensors on the same CSIPHY.
+
+If the kernel APIs or standard representations of CSIPHYs in the 
+upstream kernel are insufficent to facilitate this model, then I think 
+that change should be done separately so that all of the existing 
+upstream stuff can benefit.
+
+CAMSS should have a standard PHY interface. That's what this series 
+provides.
+
+If multiple sensors on the CSIPHY can't fit into that standard model, 
+then we need a series to rectify.
+
+I've given an example of how two sensors could be routed to one CSIPHY 
+in DT. Another possibility is virtual channels.
+
+I don't know if your sensors support VCs, have you explored that ?
+
+If the message is "we need a custom PHY interface in CAMSS for multiple 
+sensors" then I think in fact what that points to additional work that 
+needs to be done in CAMSS and perhaps in the kernel linux-media and PHY 
+layer to facilitate.
+
+Like I say I'm happy to help you guys do that, ship me some hardware.
+
+---
+bod
 
