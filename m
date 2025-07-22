@@ -1,149 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-66114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C090CB0DF2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:43:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED257B0DF76
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:50:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD8FBAA6AAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:37:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B43657B382E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:49:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7CFA2EACFF;
-	Tue, 22 Jul 2025 14:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4B12ECE8A;
+	Tue, 22 Jul 2025 14:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ujMbsYaV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A3mPqrWL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E7A94F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3A32EBBB7;
+	Tue, 22 Jul 2025 14:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753195036; cv=none; b=lSso9PfTs6EwFw1bcBB/r1Ol10lJWLj02CEXYYGeeQtLoxTdMv754fgkoP2OqGVLCyibdkOXaELUWpEC+svcxgv6uWRYWiuTK5qHRfUtv9NMZCN49Sfqi0o9j8anDKY988O6XxAizsfch+miwDLrpUIpIacYygSi+fka9ObiXl8=
+	t=1753195799; cv=none; b=cHEmNku/tzazmlFXpoh8AhRm7jtAg0+reWHt2FCcO8OtJHTHuBqInpOU8mnQtWDsSzQBT4oXTiOcGD6HH9M7ggM+9nGQsmehwG2utQ4Hg3mZr2homRoReQR7/rLGatjFLb4gfeg9d0M+n74Io+ZtoUYWwCCvoP5d4K37qvzLcwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753195036; c=relaxed/simple;
-	bh=mx4M38Pifod+TTsFyCyeW51ExTlxELB+CIMDHDK7b5s=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=JVnCgiOWKRriJCPuzVsjtvaNYKNaHf0/k1BTu50Cd2M1igrIq1ra7TIpa+QpVcvJyFpeRA2lCP7asrKsFjGB9xJ6/OS5FmX8QC83mdkf0klAc3YBQxnE4lUVteKDPbAlMye2vAjjINduofCjU+9diZ9jpXXfaN4VsFPusSrbUTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ujMbsYaV; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-31cb5c75e00so5356938a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:37:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753195035; x=1753799835; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dUACzvPgQEm4XYWd11I1pPmyiARplQU6zhTfmXThj6g=;
-        b=ujMbsYaVvKXPwTbsp7THR0kg3wJ2N00FKW/7oAJfJVqQ/9vYePBhoiXhBNMSnosW7h
-         X5R07b/7eL0raeu5gU1+5xs3tiJ6Br7xMKMLKYBDTqGQ5EO1DR1CuIBD8D2+89CcufkV
-         7/wKhURT1onzejlFTUZqPH9NGS062Pk7oSuWIRd5uOvVOYOyXsyka0tQxWThWYqS5lVE
-         QXV0yy87Xb5kkXT5sHo468o9Dt8hTPAE/oWWyeA1TzvrB41qUaGbIVc6UPH5BG7loe60
-         5gUTudqFTTq+3Tl3Qfv/kkIkBtCxhWBfIpZCDoLsKNrB9ACKKp/ucQ3GnbMi0pm5oHTD
-         OagA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753195035; x=1753799835;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dUACzvPgQEm4XYWd11I1pPmyiARplQU6zhTfmXThj6g=;
-        b=GZAN5Iq9vbzCgQiAKnXG5ZI55L5oZyUSLPsfG/9UOFteaUsGqeLh45hqa/Ltc7ihqV
-         kRcykcZ3GHXR70lk/TsemxeH+LW854oRkcTFuOd4GpMu21HK3uudgu/f85V9XSyBD33Q
-         nUs67HBRKr4+G7FFRsS234grDFtiEFoNwErueaVEwM1uyYSFHIPkv2oI8tyjfb6P7PDE
-         z7x3YG1UtX4+Tqz87zIc07SNwEfTOn6i/WbT+VC6LxEQIdxT6Cl2qKwm5uA17AIIasuG
-         1zieX0izMQJoQOKVccon7lXxZ5I+ny65oXrthWgBcrfwD5jfuUd5Fvsqnf5kqH/TStss
-         uZmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXnbqsbyxbqAtY6frwm07jgx+mGb3mHxbyrR4BtPNCC8FfjXu486d2ALmOVhD1l/s6V6+gOMIirrU0aP0rR@vger.kernel.org
-X-Gm-Message-State: AOJu0YyT0L4rLXqYgKZM1bz4vNEhuFIrzbzDY2Mb6vUaCjFxWtcIjbdg
-	bozwXZPpDQUgfu4gOR9egKm/XoiSOTHK642ugYGW3ZVXCcgqXTtUCVFLPfyhir5uIJKb3U+Lkpy
-	Ohfo0aw==
-X-Google-Smtp-Source: AGHT+IE8C9J3LvK/phm20LbST6qjzlg3ADXumanwajQGLHBmnJo5nov+CCWKM1So3cCPJD4+nPzceM8mbdg=
-X-Received: from pjbqo11.prod.google.com ([2002:a17:90b:3dcb:b0:311:7d77:229f])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:38d1:b0:30a:9feb:1e15
- with SMTP id 98e67ed59e1d1-31e3e153417mr4923710a91.8.1753195034488; Tue, 22
- Jul 2025 07:37:14 -0700 (PDT)
-Date: Tue, 22 Jul 2025 07:37:12 -0700
-In-Reply-To: <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
+	s=arc-20240116; t=1753195799; c=relaxed/simple;
+	bh=Gkijum+/cF05sdiirQp7PG6Bg9YiZtxdPAssIVYMGdQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oA3EZG8gm1WlLCm2T7hMl87hp/IWaXHIPquwaMCk+pae2qyB2PrgJ8So2KNwZv80ysTXq0ON7J9jy5fyx4HpJq6+z5zaxgbYVXnTJVHMWJUYvP4hAq4H1GlpXxR5dIbyFABZPcGn5KScq/yLOoRTrdgm+LA8jKGWdvRlful0+lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A3mPqrWL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7LToS013263;
+	Tue, 22 Jul 2025 14:49:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=O/QsSZsXSgzmgVXTzIiUaQ2Gg9Y9QMw5v46
+	xfMg3alU=; b=A3mPqrWLgz0TtUFAeIWsbBq++pfUlEHKYEVgeySFY864VYMyWiz
+	fCYkCjtd3+xRPV3ZFTyHzJLmeHUhPvx3d7QsWrcD16/rEYuHEeVexqBvmnLb7HOM
+	ow5S3CXlHTaf7Tjm4OmIJgnK/PIGgWh2teoDbmCS+9TW1XIQaP4Tl75zP+ExYfXa
+	lCCnDmQYuvopfmPleazWG7wJNxP5LP0lob+ig78vjFGiLUuAz41kJDnPyKLy7oIx
+	0tT5AgYNzhdY+NtlEiAtVskKtargqH0R9LMsKKhpqc1rm2R608WXS8MkjblozZA/
+	M4eSInVxVs6gm6lpyAd1FBuFi/dVVtHCLYA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3emmw8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Jul 2025 14:49:52 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56MEnlWm023766;
+	Tue, 22 Jul 2025 14:49:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4804ekgevf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Jul 2025 14:49:47 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MEnlWc023734;
+	Tue, 22 Jul 2025 14:49:47 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 56MEnk17023728
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Jul 2025 14:49:47 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
+	id D58A75B9; Tue, 22 Jul 2025 20:19:45 +0530 (+0530)
+From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        kernel@oss.qualcomm.com, Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Subject: [PATCH 0/7] Refactor sa8775p/qcs9100 to common names lemans-auto/lemans
+Date: Tue, 22 Jul 2025 20:19:19 +0530
+Message-ID: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
-Message-ID: <aH-iGMkP3Ad5yncW@google.com>
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-From: Sean Christopherson <seanjc@google.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bQ2RvgxggAsLJMJLfpTNF3QyAA-8s_M4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEyMyBTYWx0ZWRfX5w3HvNbQndOj
+ NSTJ7/ZfE/DmGaUg5M7jEL1T76Tn1ZBKoTKGOm/ImOF0k7zKZdHoavHhDSgmZhKjMJDkObWUN6O
+ G51uFPTiupj3ChuLvhiZ50iscoCbLO3kbfe8NDxprL/ZvlUX17df1rr+jQAA7ZOQWHIVb8F7zRu
+ rt1JYebMw+78ig+1s9U+i6dbNCJvqMfUpeGpgDxmucbOTOXVXdP8G+aEbPK56FsQxvOoyTpsx9t
+ pmOojkQQZtkg48mSI20rVMaMzFeNsXkbVSaO7oXOwzXx/Udm9iLRKf9Hij/uB64liXWfFUZbRwh
+ iaFC2RydIbgY6+okmSW17F5NjgNLCcq7cctNlCDeJ4/DjFL+xnwiMwxF7tuxd5SO/EGjGLB9+7H
+ 793QIjIxLwJIsXHAUpsQoiALIuST+LxPhbDgL8QRYafa8dUgbbu81WP903lhiOe3fUEDVRW7
+X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=687fa510 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=RWv2qh-SFfS6v_r1XzEA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: bQ2RvgxggAsLJMJLfpTNF3QyAA-8s_M4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220123
 
-On Tue, Jul 22, 2025, Xiaoyao Li wrote:
-> On 7/21/2025 8:22 PM, Xiaoyao Li wrote:
-> > On 7/18/2025 12:27 AM, Fuad Tabba wrote:
-> > > +/*
-> > > + * CoCo VMs with hardware support that use guest_memfd only for
-> > > backing private
-> > > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping
-> > > enabled.
-> > > + */
-> > > +#define kvm_arch_supports_gmem_mmap(kvm)=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 \
-> > > +=C2=A0=C2=A0=C2=A0 (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&=C2=
-=A0=C2=A0=C2=A0 \
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 (kvm)->arch.vm_type =3D=3D KVM_X86_DEFAULT_=
-VM)
-> >=20
-> > I want to share the findings when I do the POC to enable gmem mmap in Q=
-EMU.
-> >=20
-> > Actually, QEMU can use gmem with mmap support as the normal memory even
-> > without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
-> > on KVM_SET_USER_MEMORY_REGION2.
-> >=20
-> > Since the gmem is mmapable, QEMU can pass the userspace addr got from
-> > mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
-> > works well for non-coco VMs on x86.
->=20
-> one more findings.
->=20
-> I tested with QEMU by creating normal (non-private) memory with mmapable
-> guest memfd, and enforcily passing the fd of the gmem to struct
-> kvm_userspace_memory_region2 when QEMU sets up memory region.
->=20
-> It hits the kvm_gmem_bind() error since QEMU tries to back different GPA
-> region with the same gmem.
->=20
-> So, the question is do we want to allow the multi-binding for shared-only
-> gmem?
+This patch series refactors the sa8775p and qcs9100 platforms and introduces
+a unified naming convention for current and future platforms (qcs9075).
 
-Can you elaborate, maybe with code?  I don't think I fully understand the s=
-etup.
+The motivation behind this change is to group similar platforms under a
+consistent naming scheme and to avoid using numeric identifiers.
+For example, qcs9100 and qcs9075 differ only in safety features provided by
+the Safety-Island (SAIL) subsystem but safety features are currently
+unsupported, so both can be categorized as the same chip today.
+
+Since, most of our platforms are IoT-based so "lemans" can be served as the
+default IoT variant, with "lemans-auto" derived from it. Accordingly:
+  - qcs9100/qcs9075 and its associated IoT platforms are renamed to lemans
+    which needs different memory-map. So, latest memory-map is updated
+    here as per IOT requirements.
+  - sa8775p and its associated platforms are renamed to "lemans-auto", which
+    is derived from "lemans", that retains the old automotive memory map to
+    support legacy use cases.
+  - Both lemans & lemans-auto are serving as non-safe chip and if needed
+    additional dtsi can be appended in the future to enable safety features.
+
+Additionally:
+  - Refactor common daughter cards used in Ride/Ride-R3 platforms into a
+    common configuration. Also, introduce new files for different ethernet
+    capabilities in Ride/Ride-r3. Since Ethernet functionality in Ride/Ride-r3
+    is currently broken upstream, this patch focuses only on refactoring.
+  - Include support for qcs9075 EVK[1] platform as lemans-evk. Currently,
+    basic features are enabled supporting 'boot to shell'.
+  - Remove support for qcs9100-ride, as no platform currently exists for it.
+
+Funtional impact to current boards with refactoring:
+  - No functional change on auto boards i.e sa8775p ride/ride-r3 boards
+    (renamed as lemans-auto ride/ride-r3), and it is verified by comparing
+    decompiled DTB (dtx_diff).
+  - qcs9100 ride-r3 (renamed as lemans-ride-r3) is having new memory-map
+    and rest other functionalities are still same.
+
+[1] https://lore.kernel.org/all/20250612155437.146925-1-quic_wasimn@quicinc.com/
+
+
+---
+Wasim Nazir (7):
+  arm64: dts: qcom: Rename sa8775p SoC to "lemans"
+  arm64: dts: qcom: Update memory-map for IoT platforms in lemans
+  arm64: dts: qcom: lemans: Separate out ethernet card for ride &
+    ride-r3
+  arm64: dts: qcom: lemans: Refactor ride/ride-r3 boards based on
+    daughter cards
+  arm64: dts: qcom: lemans: Rename boards and clean up unsupported
+    platforms
+  dt-bindings: arm: qcom: Refactor QCS9100 and SA8775P board names to
+    reflect Lemans variants
+  arm64: dts: qcom: Add lemans evaluation kit (EVK) initial board
+    support
+
+ .../devicetree/bindings/arm/qcom.yaml         |  16 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   8 +-
+ ...8775p-ride.dts => lemans-auto-ride-r3.dts} |  44 +--
+ ...{qcs9100-ride.dts => lemans-auto-ride.dts} |  14 +-
+ arch/arm64/boot/dts/qcom/lemans-auto.dtsi     | 104 +++++++
+ arch/arm64/boot/dts/qcom/lemans-evk.dts       | 291 ++++++++++++++++++
+ .../{sa8775p-pmics.dtsi => lemans-pmics.dtsi} |   0
+ ...775p-ride.dtsi => lemans-ride-common.dtsi} | 168 ----------
+ .../qcom/lemans-ride-ethernet-88ea1512.dtsi   | 205 ++++++++++++
+ .../qcom/lemans-ride-ethernet-aqr115c.dtsi    | 205 ++++++++++++
+ ...qcs9100-ride-r3.dts => lemans-ride-r3.dts} |  12 +-
+ .../dts/qcom/{sa8775p.dtsi => lemans.dtsi}    |  75 +++--
+ arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts  |  47 ---
+ 13 files changed, 884 insertions(+), 305 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sa8775p-ride.dts => lemans-auto-ride-r3.dts} (11%)
+ rename arch/arm64/boot/dts/qcom/{qcs9100-ride.dts => lemans-auto-ride.dts} (18%)
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-auto.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-evk.dts
+ rename arch/arm64/boot/dts/qcom/{sa8775p-pmics.dtsi => lemans-pmics.dtsi} (100%)
+ rename arch/arm64/boot/dts/qcom/{sa8775p-ride.dtsi => lemans-ride-common.dtsi} (87%)
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-ride-ethernet-88ea1512.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-ride-ethernet-aqr115c.dtsi
+ rename arch/arm64/boot/dts/qcom/{qcs9100-ride-r3.dts => lemans-ride-r3.dts} (36%)
+ rename arch/arm64/boot/dts/qcom/{sa8775p.dtsi => lemans.dtsi} (99%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+
+
+base-commit: 05adbee3ad528100ab0285c15c91100e19e10138
+--
+2.49.0
+
 
