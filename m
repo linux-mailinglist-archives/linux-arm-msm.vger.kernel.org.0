@@ -1,217 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-66106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B85AB0DEC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:36:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B6DAB0DEB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:33:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6F4E170BA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:29:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 19A121889E05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:30:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 239C02EA154;
-	Tue, 22 Jul 2025 14:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988282EA748;
+	Tue, 22 Jul 2025 14:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="rNamLTE7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lj7T5EAb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2688E17548
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0874628C5D5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753194584; cv=none; b=S85HvE81gNgjebNo8WAgXl0Ddmj36aWndMKA+q74Kkn/ov2XKTasI/uqs5ro8xw358crzLbGjNATvtr3jy9gw6KDQUNyDaclzWlfZ0tkrnAPMR2q+NtgB+ILmhCfCPAjnRKs7AIkkaf/vbDjq6C49DtkTHmvFcrlELavNaHR1rM=
+	t=1753194586; cv=none; b=SlrQ4PfBpcnPMrXb7U2jc+w1lwrhoSAOJIjHkqEH9faqsKHL4gQvhwLRlWU8vfkZ6LCKHVek1iLiyVILZpWh/J9rSsyDrUF2zgNDEOnx8lthKO7vtLDEQfVQhk76zFYPQaY3dj+Alf8JZv0Pi6vrtFxu7iy9LQPgaZnGIGRX+ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753194584; c=relaxed/simple;
-	bh=eJBssySJGcFKIYVJchM+wWdNFawpVuNYlagTrqAI8XQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=V85LPndPbhlfHxdaMCPaW+JTkVl4KoIT68YCaalxHhIwy7c//yEv09HFkJBBqZYZ3cO5xDbd4dT5n5adeDMvdZfJdufmvKNAYX6cL5uT4ucBXA7yrWGwJaq9nAceKGhpgYn5J+ouJVobsu217xQjt5EdSZg5Q8OpLa+9KDkJrro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=rNamLTE7; arc=none smtp.client-ip=209.85.208.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-60cc11b34f6so11652233a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1753194579; x=1753799379; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BZnozY3BLIkuA8NA4eNUY0Vf/U8jemAXm7Mzb6ICDTM=;
-        b=rNamLTE723bJTXI7ZBoxsG7cNlEsJTes3JImaUswENXFlgLnmch4J4c8WvQPXYkKPq
-         26Q9qxivCT0AJu8qI8t4DcVHUP7WrYX+yslstetmG1LcTPsNdFwabIVIbK4rAokBcBqq
-         u3MoOOkhTxoiKQwbsLrtGTdhiQFJGNKuROOjgjlTWUS2GVS83cgjwVPJMUhoAR9qARRO
-         C43Ps6hY1X769nrHdxzOnON/h0W/lDDNsngRZlqQrPmdHmFBuOesxW1bZe5bhjH7lTT6
-         l5zUL+O8/iMX3cAFIgWZboHxw/Ac/r4c4apx3wJiSo61HkH58MFhttnf8ykJBnyz26Zo
-         I9ow==
+	s=arc-20240116; t=1753194586; c=relaxed/simple;
+	bh=6h7M2j7iYVmxSttxjJYuI3hDLp/c/0UAguzQiPIXY0Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wq1V47ho8egyCiHijcAXU5b3OWh7ucJQVcfzfRXgNXSBoBRbKExSCVzOKZvvfHEPatFSiOTFb/Le9xXqy5d1p1+mGtN0aHQGnY9Im4ja4xmh3zDaScKWWogm+tvreddob8RFOZsv9dIFCBjQ7VXeqZcZ/982iGCe6crjTIUixEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lj7T5EAb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M6vlxQ020539
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:29:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FzPhboyOjslZUt0VHvhF43FfMzKfZPvUsmiSEH6qne4=; b=lj7T5EAbtTYnJ8lY
+	OcKfaaqAg1a6mhmvAKblH2UwnOecvy6XcsyK8vx1sJicghiCPEFeka2t6KcMb7zt
+	cW0ldg00qmlbhIhnPo0ZPyx0mbCqy2czHksmu73Fxx0EfKOXQaQSA91SQscKhZQL
+	qVvAk/bxSc2bSbeZ4lymUddmDZN2N6AcewFEDH5/dlU6ieBtUtNpLJki+TIcJb9P
+	iifHurbGqqXf2WjwNXqDQye0Cv6qiTAbC2B5PNTWb3deRrJiELLygWUs2W4n/bus
+	q31XA+ml2lWgco7As21db/2SXhBxpWMsEnSNE2/r9ToqDIa32gAlIREzyN3DOzzA
+	9vk63w==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4804na04ay-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:29:44 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-234906c5e29so63774275ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:29:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753194579; x=1753799379;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BZnozY3BLIkuA8NA4eNUY0Vf/U8jemAXm7Mzb6ICDTM=;
-        b=rVIhEu33WpOjq06YZ/iPwRJDMWeVE4GtQBPimNSphdxM8jvNxK1d0/fzKm+S4tYYZ6
-         7Tu75YJpKNuLEaMxL2lfbIxAaZa9jDLtJg1onTACShREr8un5a5I5/WZnF64YyRCIv/F
-         2Us9vS488hBSOkqLwSf0VmqoY0/TwfcBIlTFrQG1k7vlk+g2BiPpxspBXTerQsoDqbgS
-         wP+4RzU34jSBSWts30xzYLNWAfXwQjXXBVMFQ9fp/U3tW3fK7edsm5BVxXgth7kyNEPx
-         LaW67B4qd7vn0KfS8/W9hkFE5dslhqhHOoebjQVty9Yx6Wc+lCYEBX22MWLvvmrq1Xru
-         /wJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6DBaFSLmwE0gixrG/dZqne8v0QcoV3X3+UetRk3cjFGhzXohncboJPNBigGnOSZCUmymy7yaft6FI3tym@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuuLdNYaWKqqfqgiddNtIhV7r3wYxByFKVlc4THjqqicHVlobz
-	w82h+HFGsa/oCb1qvB1re4+NxtyS5HvCDTRsxxEMF2dDc1UFUfEOdAPEBapH87siQQk=
-X-Gm-Gg: ASbGncuWA44loaU9IjP4aXJSZVW+cZ/UVPh6c7A821Hg9iTE85dNblB38YrtO/uFtgF
-	p/9hRJzGE6gQN2YMUwGsSgyW9NuymMZ/QfrgpB+n28htIbluCPUYki8StT7GRCESx7BOV6U98H+
-	G+hd/h9Xm9JrcUbIqGJNyOvuAc57sME4vlLfTuD11cMEqjCOxK4hRRbaxhPUhIg3IPuemOI13Ic
-	0iiK80UT+NyrW5Jx0Q7sp19GJbJTkfU1LGsHSgMHqPgqzuiINWnWN1f3ET4W+zEDeCu9rKH8yT9
-	KGU3+olnheDypbCS5MFVkWMwh0Lx2cVJb0J7shX/H7dDviWjS2gktAkeB0KrJSNJQ9MsR/emf7V
-	/fFL2G3ybR2Zv7cnxEnUZjuNGeqAp4DKZ3Wm7htuWIlrgSP4qZBQUj3juT5RWkTVCvbQ=
-X-Google-Smtp-Source: AGHT+IFc0VSLFdvV9Ws91KCXp/O3L8BaZaJSH/na/fmYztuvihQfOOHv47U3zveM369mJJJnN+Pi7g==
-X-Received: by 2002:a17:907:9812:b0:ae6:d51a:4ca3 with SMTP id a640c23a62f3a-af153e3379fmr374990166b.25.1753194579181;
-        Tue, 22 Jul 2025 07:29:39 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca2f1a7sm869524866b.91.2025.07.22.07.29.38
+        d=1e100.net; s=20230601; t=1753194583; x=1753799383;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FzPhboyOjslZUt0VHvhF43FfMzKfZPvUsmiSEH6qne4=;
+        b=GuqYFavedB6h+L+RtNtdw6ON4FJ5eYnalaakGIgtyOB2ozXmUoIhCRsc6MEogkNfdm
+         nplXBB0EaxY3jfaDh8/L/x0VQnn/60CD4HRCp1jm0qhmWQxtLDUh3NBmrGtcDhq86MQb
+         e295lu+oy7ksQzWX/3ZtnYJWOxc2yQF7U/geqDEJqXxMcBoKd/nvs3aZIRiuzZass4W5
+         wVO86iltTgXCazklO8FSMB+73guwNjcmpq6qKyg9lT8LMV9oPVPSdG2pToJ1ucwQZqrG
+         SFx2weUk9gajcc9molMhhOkqa3EmOE8YU0kelBFvOxGvjk+AQ2+OQAsxTw53maZe9pOD
+         G86A==
+X-Gm-Message-State: AOJu0Yy2TwE7Njfpt3q4reg9I1s5YGxCN9vAZxC+hC7RXY9gvkswHQj2
+	1q8mUWOOFym8CAP9kwwma7bp18MjOKlk5pSEiRVg/E3Jiz6A1KKJLaKLTwbi2bf+jcsOpIU23mz
+	NuHobO0mXLLAfMMENAOLPZrzlBodNF5PneUq4KqCtCfgXeo4oU49zaH6IxiN/9TuNqGt7Lf7gPW
+	9c
+X-Gm-Gg: ASbGnctCb489rlD3wP7w04nh7QajsdMxDkjw2bmT+RHKK65jKOJzf7BZXnYRW/IP7Kz
+	7rDWw2Q6kK6bSwq/6KVa933hVzJ++wM24oHxhhfBXQxxSqgtRDKWF4Pg8rhgiw8dY52c55vMmDd
+	BCkGB5UNWJ1qxxvTFdGTTy3HzqFhogfMxkbsKS3v7qG1PCWTEjG9v/Z33IDRcE9k85YPRqhVWFC
+	T6T+oQqWW+gO4fFbikXtwKoxRSZp/6ORv57E24Llvl0XVhd1mYGAkX/QhdyB2BKDHo4vcKMh5SR
+	MZcVKPr7wKBQTEzVnDVvRSBE23lTZ3ekLVfMyMFsXwofcY3r1nSem0aEI86qJgn1viVHiO1HqjC
+	RwzA4kdLYdU0qgg==
+X-Received: by 2002:a17:902:f785:b0:235:a9b:21e0 with SMTP id d9443c01a7336-23e255200a6mr393318755ad.0.1753194582952;
+        Tue, 22 Jul 2025 07:29:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2b7G6eNgC1oxJdeC6LGJ0xVz+a9PdxklFhiJXvaqJNZPCy6ZWWTPLxxcWZx3Opj/2cSX2/g==
+X-Received: by 2002:a17:902:f785:b0:235:a9b:21e0 with SMTP id d9443c01a7336-23e255200a6mr393318415ad.0.1753194582490;
+        Tue, 22 Jul 2025 07:29:42 -0700 (PDT)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b4adeb8sm78707285ad.0.2025.07.22.07.29.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 07:29:38 -0700 (PDT)
+        Tue, 22 Jul 2025 07:29:42 -0700 (PDT)
+Message-ID: <67824fb5-a7b4-4635-a2f3-43929a35f1c5@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 08:29:41 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 22 Jul 2025 16:29:38 +0200
-Message-Id: <DBINLYI68WWM.398758X1RE3VW@fairphone.com>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Linus Walleij"
- <linus.walleij@linaro.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Milos Top
- Level Mode Multiplexer
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Rob Herring" <robh@kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
- <20250702-sm7635-pinctrl-v2-1-c138624b9924@fairphone.com>
- <20250711182216.GA974600-robh@kernel.org>
-In-Reply-To: <20250711182216.GA974600-robh@kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update email address for Carl Vanderlip
+To: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20250721220811.962509-1-carl.vanderlip@oss.qualcomm.com>
+Content-Language: en-US
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20250721220811.962509-1-carl.vanderlip@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 1W7-NnoacGM3ZsHKfFciqprTz8zZQATE
+X-Proofpoint-ORIG-GUID: 1W7-NnoacGM3ZsHKfFciqprTz8zZQATE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEyMCBTYWx0ZWRfXyLQAokFqZI2X
+ 65goaPWOlxZTI2Vxxu5FHhQ1k2NbQ2xFLMYwwKSOCFLLY7+4oRImEQuRdsIQT9YTletgWnj52kX
+ lIAR38YmjvDUYq8JusqwQC/UyEmndnkk54RcCCC0hhFlhn4ARWQrqeZfycALT1nPeIY4AHEh/6q
+ EFNeHy/fu9CJIHGYnr0ivyIgbt34ROShrR+4bpG/hTjdRalmhLXukAasHfgJw7764SNTL2LNlSU
+ S1W+dk/5t3cZoz13TnU66454mxMgtavDKzTIjfJzahZAooqxxigX+axK0p+LXx2rkoM2ZySRp35
+ 65RyNwenob6Cv5EjH6WkQuQH8CIV3nOt8LZdr9PVV6OXiqBpk5UlxIimyDVF2+g/u1hK3ST4MMa
+ tCHRN5JIXDbbfyxwSFdPsDMb796VHDgPdX7esVUHs0nO98Ie3sGMcZj7b4hZTEMhk4+BHmtV
+X-Authority-Analysis: v=2.4 cv=DoFW+H/+ c=1 sm=1 tr=0 ts=687fa058 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=XHUaY7U8O4OWe9Nk0CgA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 clxscore=1015 mlxscore=0 mlxlogscore=487
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220120
 
-Hi Rob,
+On 7/21/2025 4:08 PM, Carl Vanderlip wrote:
+> Qualcomm is changing open source email address policy.
+> LKML and other busy mailing lists use the oss.qualcomm.com domain.
+> 
+> Signed-off-by: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
 
-On Fri Jul 11, 2025 at 8:22 PM CEST, Rob Herring wrote:
-> On Wed, Jul 02, 2025 at 05:56:16PM +0200, Luca Weiss wrote:
->> Document the Top Level Mode Multiplexer on the Milos Platform.
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  .../bindings/pinctrl/qcom,milos-tlmm.yaml          | 133 ++++++++++++++=
-+++++++
->>  1 file changed, 133 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.y=
-aml b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..0091204df20a0eca7d0d0e76=
-6afcb8d08042b015
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
->> @@ -0,0 +1,133 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pinctrl/qcom,milos-tlmm.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Technologies, Inc. Milos TLMM block
->> +
->> +maintainers:
->> +  - Luca Weiss <luca.weiss@fairphone.com>
->> +
->> +description:
->> +  Top Level Mode Multiplexer pin controller in Qualcomm Milos SoC.
->> +
->> +allOf:
->> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,milos-tlmm
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  gpio-reserved-ranges:
->> +    minItems: 1
->> +    maxItems: 84
->> +
->> +  gpio-line-names:
->> +    maxItems: 167
->> +
->> +patternProperties:
->> +  "-state$":
->
->        type: object
->
-> Because a boolean "foo-state;" would actually pass without.
-
-While the patch has been applied already, I'm happy to fix this for all
-Qualcomm pinctrl schemas, since pretty much all have this issue.
-
-Are you looking for a change like the following for all
-60+ pinctrl/qcom,* schemas?
-
-If that's fine, I will prepare the changes and send them soon. Different
-sorting of properties, or moving "type: object" just below "-state$":
-would also work, not sure what you prefer.
-
-++++++++++++++
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl=
-.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
-index 38877d8b97ff..1d17abde246b 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
-@@ -34,6 +34,7 @@ patternProperties:
-       - patternProperties:
-           "-pins$":
-             $ref: "#/$defs/qcom-apq8084-tlmm-state"
-+        type: object
-         additionalProperties: false
-=20
- $defs:
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml=
- b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
-index 0091204df20a..e277b884bf5c 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
-@@ -39,6 +39,7 @@ patternProperties:
-       - patternProperties:
-           "-pins$":
-             $ref: "#/$defs/qcom-milos-tlmm-state"
-+        type: object
-         additionalProperties: false
-=20
- $defs:
-++++++++++++++
-
-Regards
-Luca
-
->
-> With that,
->
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
->
->> +    oneOf:
->> +      - $ref: "#/$defs/qcom-milos-tlmm-state"
->> +      - patternProperties:
->> +          "-pins$":
->> +            $ref: "#/$defs/qcom-milos-tlmm-state"
->> +        additionalProperties: false
-
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 
