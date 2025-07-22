@@ -1,249 +1,326 @@
-Return-Path: <linux-arm-msm+bounces-66015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2527BB0D4B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:32:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D416B0D4CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:38:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0E35189502F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 08:32:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CBC833A6DBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 08:37:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FEAE21127D;
-	Tue, 22 Jul 2025 08:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D08DE2D3EDA;
+	Tue, 22 Jul 2025 08:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xfjmor6s"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BoVWvkHA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5282922D9E6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F90621CFF6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753173142; cv=none; b=clO1K0Mwbj+Bn6jveegXGVcfEANGPbG0egSQHUybcQo6JzR9VKeoV2mqashLNM8qOECsom2akRfYBem5w9wD/HOafDMYikGDEmGoOOpQVBiNgF1qBZagYWVoZnmzqHKgtx3wWcL9RLt8RJU9t0SirTYWd4wh6K5IDDdprasd8jI=
+	t=1753173495; cv=none; b=cZcFbpFr6QDLxvQpXDOLOPiSWyNLl1k3waRUOeLmHTC6hp20GtCpsEobf6t+JssTKvU07X5ZJzn6qimi9A6zQD0OupeoaIpJqyeXaXdj/ZY4HwVa7KcOztpCQJIoE/sjcSqAdynG8yp0vLFqFa+hpBZC2Joe3KmdxnXyDeEMhQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753173142; c=relaxed/simple;
-	bh=rAgS6t6wG20qiV2by2xORtgcZUviNn8FpaxxBJIUk60=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bxIojQPYbmWfJxIdzv1+gHrd/O8k3c5VHBwDae09fItMCKeNNoZxVSlBS0ootKFeMrwk30s9i/guOUMiw3+WyCmccMz/oOuueecqcO3Xg/nUFo8rupqp3bAWLhLQe8djzC3MGAsYbULhgI9uUhrKPeQGwTAQuMzaFbIT3o9FhO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xfjmor6s; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4555f89b236so51593335e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 01:32:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753173139; x=1753777939; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EmqRihQE4cEXI6g+dRmCaPE8w5nJ7dL9XpOBOkXpgns=;
-        b=xfjmor6svATxlZ8LmTGr1Kz+UJlTuyf42SExZT6xP2k5IRtpvKYnU3zc51KFLKd4LY
-         DhO+a/BU9307Tg1eP9znKspXzKV7qvox0KHNs3UKr2FJ9Z9j0H74kz8W1JiYtDS/rUY0
-         BFpsprylV4JvPDkot+SlkOZd6NKQqDjnNxCIKn6FY6ucsfyd0Sbb7Ydk4VJ3xdEm1ReE
-         bcLaxrGmYCSfGeHoHokKxIJ5LjuIFRGv2pwIHpzzr6gj73A7fPxP+SEtFofU7cp49AFu
-         riVtijoonipwwopdDsXELOX+ygzJAwDGgj6PNZkIxK7xv5Wpqb3kX6+0PLhP8vH4TcPo
-         WiYA==
+	s=arc-20240116; t=1753173495; c=relaxed/simple;
+	bh=lmIvWyBDeEiVaN97TTNHpP5KW9wFUzTN08PUdWFTNPQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pK2vjLxMzo0AjCOlXx/MtF3nCGo4DIidaYv97S4KxcS6l0tXHafMvNYSNxSaKeD8JfPBLPqYHSW+V3F8rrv4UllL7RW/n7nDrHcfaZpoBMz2FClAC1hnEFthF3CyAUMKK1yyaJfLVEnea+9uaTTHU4V3Uug/XjVZlDQhbwrFFRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BoVWvkHA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M2mg2u017547
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:38:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=1LN3juNr35Nerg/PZAItQ7sh
+	/peCDRI4YAsD2qwMZyw=; b=BoVWvkHAGvdAI4rzH7r1eOMj16IDjtqa4Ny/iBq+
+	mwlDIczIE1TwFupSa1JXzY8AWNzdlKSQY+kkxCOFOZiGfZpkCxbUnjdP6Ie6J75I
+	aDS46WDDUjsAL08I9iJyVSvdz0UqXSxx2TBpTrCGaNtYvWqMjuiDA9IQ34yZBwYp
+	Pc/+E3AAvKXl6JwXRqZXWzdPr82LHGc9+wOKc4Qayh3nMELJ2qlpjr9LX3Kv0ik6
+	E8bKze18XmZJgAtwgKCk2EXECWMnKR1qWv3usaIlgwQw/r4T6bdbAmVJgNjlWzQk
+	PMfmjttFiIhSKnyBKOYL8pk+qolWY5Oosb3qmA8+bzKAvg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048s0u4a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:38:12 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e095227f5dso825778285a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 01:38:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753173139; x=1753777939;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EmqRihQE4cEXI6g+dRmCaPE8w5nJ7dL9XpOBOkXpgns=;
-        b=Zn5QDOHl1TMMcwpEX/DzP7qUeeiJTW2F9qlv82RarzHooEoAO4Q29hb+17fAUP9yDh
-         /rnroIPAhEOwCiY8zY6cX39Nob+QRnl4HycPemiflfjMDXiweOES8DqV8sxoQtaEQML/
-         70z+hoQmWjx9bXY/cYZoSVFiwppMM6LNJlpydC/bhNr50o9fInHz4jsyUS00HL47fbZf
-         OcIWGUD8l2NC7r6ha/bAKs4fqQiK6CySYpp+F9GZQ3hAv6+Yk0IPFMn7Vdz6FM3XoPMu
-         a4FNTu9Au3oHFzH1GpoXgHO3hGckkoG8S2FiKK3slkLPXHmYbVOa7EoBMHhLklE6lsUM
-         y4vA==
-X-Gm-Message-State: AOJu0YxlZ6CodMrBfUkaahUu9oNt7kmUgCVWmgK+DzjMt2XTkqTOLIAE
-	3aXWfV2Kc6055Ym226L9bkoQK4UJvltFel+mVKBwTr1Diyk+eB7GnnKqYDLn/GHLZ/U=
-X-Gm-Gg: ASbGnctpbCb1BReo0C076B6VeZMHCfzBh8oB3tF6NB/R2kgHQmhqDTw1BXP0AKu5yLf
-	XJRh4xwUkGwE46tM2TEdunUfDUGYMLui+XC3jfn5CW0N2tIw/FpAnCdBfHH0NVwwb61ms9IqVwR
-	XNlS/QEdkr68dqUIp8C/wW25nEYSgI7dmURTsJgeqLMofL/scNc0FOvWUqYV31EMTEs65o5Z2iR
-	TeUoh6Qk1V4Og0tOeI82tCmNPSE08gupgNg1Lgx3m5igRiAr0T/EFYOLvZV+4HLC10Gk77Bnjjw
-	K1RPQqgkt+IEbPuecUoUaTX3WQ4eSiAeaySK2dVcwBARFfw+7HZHbykxQuS4aQoy35T3+rPA4hu
-	kurw4IC/4f2DMFBDDZGBZ/FeEFYnwmLilvNicFI2eEhiZwfqGaqwza3hREEi5ZWkc6cj2MdqLek
-	M=
-X-Google-Smtp-Source: AGHT+IGZH+cXUgzHi50tWmYat0JhKpfjMAywO/xvrjiS+LeEv8IM/8RbRGSLqjTRz/gsQJZp0D0k7Q==
-X-Received: by 2002:a05:600c:1c88:b0:455:fc16:9ed8 with SMTP id 5b1f17b1804b1-4562e3b9144mr229030715e9.30.1753173138546;
-        Tue, 22 Jul 2025 01:32:18 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:bce4:725d:6922:d1ba? ([2a01:e0a:3d9:2080:bce4:725d:6922:d1ba])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4563b5a4055sm126753905e9.5.2025.07.22.01.32.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 01:32:18 -0700 (PDT)
-Message-ID: <33d76d7f-ab14-4e76-8ffb-eb370901a046@linaro.org>
-Date: Tue, 22 Jul 2025 10:32:15 +0200
+        d=1e100.net; s=20230601; t=1753173492; x=1753778292;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1LN3juNr35Nerg/PZAItQ7sh/peCDRI4YAsD2qwMZyw=;
+        b=rGnqEWYu5O3hzXDwRVmvWTPt+mppi6lVyCXIO//6CZD/ewSmsnixw0hYo+/sYVddp9
+         6hkl4161cbEF+2DD33ugQjvI6Al3Ir9Iw+ujGOHOEdVuZXbr/8iISimFTdFPjQZnLxvP
+         RJqcCNsSkYrFGAU5ZGslqsAxFdHntDiZa4rdFp/tHDGI3ZA5gC5sh9P6UQogxItVi9Uz
+         6oRqX/JELp5g4cwcZ0ShbcaJqICzBUMBpvjZ+S8Ts0P1O/APKZjOfQfa5ekyJswlT4lx
+         i/6rlOpwZWhNuWRtOtPs8zMKxIX2tKISI1wMi/9leIWJ3DTI0AyYVRJ0daBRhuJHs8in
+         GJsA==
+X-Forwarded-Encrypted: i=1; AJvYcCXFxBQEjiXeD52t3KBOIYFOpYwcGWhb8BV1K585NqBImtoKxumLHPcIlm+fV7BbKk+r5a3MPwzwrfsUNO2z@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxt/LIOHcxPlt2QTxPG3pXSvyZgNM7OE2C5qkNxm83UKdE2YBEh
+	unS+ergDR1aDecRdiLfLh3uAJBCDpZvGsvBcB0huhoskogVdkPgKwqvqImTDazrTIsj4MUuixZ2
+	SI2bmEm+9zIorj/T3N0dJqiKc3nstdtPbRo4J5T+ZjNAd9o75XsfnI5OmcYVJOxws+plH
+X-Gm-Gg: ASbGnct4ZpE3YSPXVVnPPVUyuGP8CJZoQuB5ouUuEJgGP2CYI/4U45uGZ8HUryZG7Sj
+	0Qk8Vu25jSVbmHflEK9IkIgu+yd2X647ySoO9EJYxhgHHJ8mJG0nW9Atx890a7frwVVL6KdS+ko
+	QjEvnmcq556m8/QqXXlOP5REMNWkgvdOBH28MOI7UACMXMfl2LOWRpWmZ3u7Otv0+NXzQX1cPLs
+	6P7/E6LLvbYUCyiZB6THTt38eiUZEzijpwL0u+upW2/XqJ1LQPMQFkmveMe3MWT9sWRlfDAzcr3
+	eofBDQlM1g/Jouy0cf9bn2De6V5fHZjTlm7JQBkBrmxC/L9h+7IV7ME8WbBKFAz42LhjRjE03DP
+	1E86LG8O0Y14W98xvDWls77xSBV3SOT7KTqYY4Livq3+JsE/fILeR
+X-Received: by 2002:a05:620a:406:b0:7e3:4413:e493 with SMTP id af79cd13be357-7e34413e881mr2290742585a.59.1753173491900;
+        Tue, 22 Jul 2025 01:38:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFbsL3wu7P/XdnVzAH3W4UCqCA/Ov1LUyaPJbXnyrUZTuDLtE4QZ32mMPQ6V1IvABbTSx6EA==
+X-Received: by 2002:a05:620a:406:b0:7e3:4413:e493 with SMTP id af79cd13be357-7e34413e881mr2290739285a.59.1753173491349;
+        Tue, 22 Jul 2025 01:38:11 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a4ba29d2esm101582e87.59.2025.07.22.01.38.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 01:38:10 -0700 (PDT)
+Date: Tue, 22 Jul 2025 11:38:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        konrad.dybcio@oss.qualcomm.com, fange.zhang@oss.qualcomm.com,
+        quic_lliu6@quicinc.com, quic_yongmou@quicinc.com
+Subject: Re: [PATCH v2 02/13] dt-bindings: phy: Add binding for QCS615
+ standalone QMP DP PHY
+Message-ID: <jemfu5sy7k4a2iar55im5bhyhxzlrwpftmpqmps3b2tco7r6a2@oodls7gi45yy>
+References: <20250722-add-displayport-support-for-qcs615-platform-v2-0-42b4037171f8@oss.qualcomm.com>
+ <20250722-add-displayport-support-for-qcs615-platform-v2-2-42b4037171f8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
- <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
- <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
- <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
- <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
- <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
- <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
- <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
- <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
- <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
- <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
- <3UXVZ6ANM9mDjVdMV4SXsiIx_pT3S1lp3RC_Q7mh_o7jF2dpYsni1Sl2TAWv6OCMCRTFmi9aE6BxDquGkOnwEg==@protonmail.internalid>
- <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
- <57501e81-7e9c-4cb1-9a37-18307d1e06ca@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <57501e81-7e9c-4cb1-9a37-18307d1e06ca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250722-add-displayport-support-for-qcs615-platform-v2-2-42b4037171f8@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA3MSBTYWx0ZWRfXyDeNZYfsju4c
+ 09eUiYOtm1IqPPVQFpCDSsGOF0kJCugvdL8tds9gJcYauZZylTxLVBcwbMnpbYpO4/hwB0Td2tj
+ 9HLCIPsNNNdTiP8B+Cs+8uwgRgiyUVAWPv4HKLs99cfTcqMQtZnQk4H9tvwbrf0FrIHTDskLpIk
+ iesi/T2nmcxBtmJSJbUUJWkrnWn4H0oKbeosiVZhl2RZ4Ma7aOyahj3Lyp+pBuygdZcTt07Wk7P
+ sN80/fPILuwQJZnXua0qQuwcm4pUqCwpZXyEg39qAowE+kD7Nt4MBl0CvuuWmU3TDgA9ajfEh2u
+ Sk+8nCaMLPj7+4QpOI4ASZgZCtZ2RtG0e9SVS1ySd7/9xu2Iwckb0nrjTd1eVIYwdzlNOyvK87x
+ Yi13iw3h1UwhfVn4m5NSs/ZAnsY6ou7U5Cy3rNX6grkrbEgyQWtaXzBSVd5UiCGzQe9Mk0bn
+X-Proofpoint-ORIG-GUID: gibYSLGY5GGoCj-1sBZDn5p1cE-QuC7t
+X-Proofpoint-GUID: gibYSLGY5GGoCj-1sBZDn5p1cE-QuC7t
+X-Authority-Analysis: v=2.4 cv=OPUn3TaB c=1 sm=1 tr=0 ts=687f4df4 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=BMzRNCE2on2YpiivjS8A:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_01,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220071
 
-On 21/07/2025 18:16, Bryan O'Donoghue wrote:
-> On 21/07/2025 16:46, neil.armstrong@linaro.org wrote:
->> On 15/07/2025 11:33, Konrad Dybcio wrote:
->>> On 7/15/25 11:20 AM, Vladimir Zapolskiy wrote:
->>>> On 7/15/25 12:01, Konrad Dybcio wrote:
->>>>> On 7/15/25 8:35 AM, Vladimir Zapolskiy wrote:
->>>>>> On 7/15/25 03:13, Bryan O'Donoghue wrote:
->>>>>>> On 14/07/2025 16:30, Vladimir Zapolskiy wrote:
->>>>>>>>>
->>>>>>>>> I think that is genuinely something we should handle in camss-csid.c
->>>>>>>>> maybe with some meta-data inside of the ports/endpoints..
->>>>>>>>>
->>>>>>>>
->>>>>>>> This is a CSIPHY property, a CSIPHY hardware configuration and a wiring
->>>>>>>> of sensors to a CSIPHY. Where is the relation to CSID here? There is no.
->>>>>>>
->>>>>>> All the PHY really needs to know is the # of lanes in aggregate, which
->>>>>>> physical lanes to map to which logical lanes and the pixel clock.
->>>>>>>
->>>>>>> We should add additional support to the Kernel's D-PHY API parameters
->>>>>>> mechanism to support that physical-to-logical mapping but, that's not
->>>>>>> required for this series or for any currently know upstream user of CAMSS.
->>>>>>>
->>>>>>>> Please share at least a device tree node description, which supports
->>>>>>>> a connection of two sensors to a single CSIPHY, like it shall be done
->>>>>>>> expectedly.
->>>>>>> &camss {
->>>>>>>          port@0 {
->>>>>>>              csiphy0_lanes01_ep: endpoint0 {
->>>>>>>                  data-lanes = <0 1>;
->>>>>>>                  remote-endpoint = <&sensor0_ep>;
->>>>>>>              };
->>>>>>>
->>>>>>>              csiphy0_lanes23_ep: endpoint0 {
->>>>>>>                  data-lanes = <2 3>;
->>>>>>>                  remote-endpoint = <&sensor1_ep>;
->>>>>>>              };
->>>>>>>           };
->>>>>>> };
->>>>>>
->>>>>> Don't you understand that this is broken?.. That's no good.
->>>>>>
->>>>>> Please listen and reread the messages given to you above, your proposed
->>>>>> "solution" does not support by design a valid hardware setup of two
->>>>>> sensors connected to the same CSIPHY.
->>>>>>
->>>>>> I would propose to stop force pushing an uncorrectable dt scheme, it
->>>>>> makes no sense.
->>>>>
->>>>> If all you're asking for is an ability to grab an of_graph reference
->>>>> from the camss (v4l2) driver, you can simply do something along the
->>>>> lines of of_graph_get_remote_port(phy->dev->of_node)
->>>>>
->>>>
->>>> It's not about the driver specifics, my comment is about a proper
->>>> hardware description in dts notation, please see the device tree node
->>>> names.
->>>
->>> I'm a little lost on what you're trying to argue for..
->>>
->>> I could make out:
->>>
->>> 1. "the phy should be a multimedia device"
->>> 2. "There is no ports at all, which makes the device tree node unusable,
->>>     since you can not provide a way to connect any sensors to the phy."
->>>
->>> I don't really understand #1.. maybe that could be the case if the PHY
->>> has a multitude of tunables (which I don't know if it does, but wouldn't
->>> be exactly surprised if it did) that may be usecase/pipeline-specific
->>>
->>> As for #2, I do think it makes sense to connect the sensors to the PHY,
->>> as that's a representation of electrical signals travelling from the
->>> producer to the consumer (plus the data passed in e.g. data-lanes is
->>> directly related to the PHY and necessarily consumed by its driver)
->>
->> The port/endpoint should represent the data flow, and if the signal is the following:
->>
->> sensor -> csiphy -> csid
+On Tue, Jul 22, 2025 at 03:22:03PM +0800, Xiangxu Yin wrote:
+> Introduce device tree binding documentation for the Qualcomm QMP DP PHY
+> on QCS615 SoCs. This PHY supports DisplayPort functionality and is
+> designed to operate independently from the USB3 PHY.
 > 
-> I'll be honest.
-> 
-> I looked at your upstreamed code
-> 
-> drivers/phy/amlogic/phy-meson-axg-mipi-dphy.c Documentation/devicetree/bindings/parch/arm64/boot/dts/amlogic/meson-khadas-vim3-ts050.dtsoc/meson-axg.dtsi
-> 
-> And didn't really think CSIPHY needed to be included in the data-graph.
+> Unlike combo PHYs found on other platforms, the QCS615 DP PHY is
+> standalone and does not support USB/DP multiplexing. The binding
+> describes the required clocks, resets, TCSR configuration, and clock/PHY
+> cells for proper integration.
 
-This is DSI, but I understand your point.
+Simply put: no, this is not correct. Even if you go to the SM6150 block
+diagram, it points out that DP uses the USB3 PHY, not a separate DP PHY.
 
-The whole key point here is the combo mode, as I understood the combo mode feature
-makes the PHY lanes available as 2 separate streams, like if you got 2 "controllers"
-attached to the same PHY. So in fact, the PHY should have a single node, but 2 PHY
-interfaces in combo mode.
+I thought that we have discussed it beforehand.
 
-This makes all this controller/phy model very complex to handle and add a lot of
-logic in the camss side. Moving the "csiphy" as an independent media device that
-can declare up to 2 endpoints in combo mode makes things much simpler, and allows
-us to attach each "csiphy" stream to any "controller" side of camss.
+I can quote my comment from the previous thread:
 
-Neil
+>> No. It means replacing extending existing entries with bigger reg and
+>> #phy-cells = <1>. The driver must keep working with old node definitions
+>> as is to ensure backwards compatibility. New nodes should make it
+>> register two PHYs (USB3 and DP). On the driver side modify generic code
+>> paths, all platforms supported by the driver should be able to support
+>> USB3+DP combination.
+
+Looking at the hardware memory maps:
+
+MSM8998: USB3 PHY regs at 0xc010000, DP PHY regs at 0xc011000
+SDM660: USB3 PHY regs at 0xc010000, DP PHY regs at 0xc011000
+QCM2290: USB3 PHY regs at 0x1615000, DP PHY regs at 0x1616000
+SM6115: USB3 PHY regs at 0x1615000, DP PHY regs at 0x1616000
+
+Now:
+SM6150: USB3 PHY regs at 0x88e6000
+        USB3 PHY regs at 0x88e8000, DP PHY regs at 0x88e9000
+
+I do not know, why msm-4.14 didn't describe second USB3 PHY. Maybe you
+can comment on it.
+
+But based on that list, the only special case that we need to handle is
+the first USB3 PHY, which doesn't have a corresponding DP PHY block. But
+it will be handled anyway by the code that implements support for the
+existing DT entries. All other hardware blocks are combo USB+DP PHYs.
+
+Having all of that in mind, please, for v3 patchset implement USB+DP
+support in the phy-qcom-qmp-usbc driver and add the following logic
+that also was requested in v1 review:
+
+>> Not quite. Both USB3 and DP drivers should be calling power_on / _off.
+>> If USB3 is on, powering on DP PHY should fail. Vice versa, if DP is on,
+>> powering on USB should fail.
 
 > 
+> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > ---
-> bod
+>  .../bindings/phy/qcom,qcs615-qmp-dp-phy.yaml       | 111 +++++++++++++++++++++
+>  1 file changed, 111 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..17e37c1df7b61dc2f7aa35ee106fd94ee2829c5f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml
+> @@ -0,0 +1,111 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,qcs615-qmp-dp-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QMP PHY controller (DP, QCS615)
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description:
+> +  The QMP DP PHY controller supports DisplayPort physical layer functionality
+> +  on Qualcomm QCS615 SoCs. This PHY is independent from USB3 PHY and does not
+> +  support combo mode.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qcs615-qmp-dp-phy
+> +
+> +  reg:
+> +    maxItems: 4
+> +
+> +  clocks:
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: cfg_ahb
+> +      - const: ref
+> +
+> +  clock-output-names:
+> +    maxItems: 2
+> +    description:
+> +      Names of the clocks provided by the PHY.
+> +
+> +  qcom,tcsr-reg:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      - items:
+> +          - description: phandle to TCSR hardware block
+> +          - description: offset of the DP PHY moode register
+> +    description:
+> +      DP PHY moode register present in the TCSR
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +
+> +  vdda-phy-supply: true
+> +
+> +  vdda-pll-supply: true
+> +
+> +  "#clock-cells":
+> +    const: 1
+> +    description:
+> +      See include/dt-bindings/phy/phy-qcom-qmp.h
+> +
+> +  "#phy-cells":
+> +    const: 1
+> +    description:
+> +      See include/dt-bindings/phy/phy-qcom-qmp.h
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - clock-output-names
+> +  - qcom,tcsr-reg
+> +  - resets
+> +  - reset-names
+> +  - vdda-phy-supply
+> +  - vdda-pll-supply
+> +  - "#clock-cells"
+> +  - "#phy-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +
+> +    phy@88e9000 {
+> +      compatible = "qcom,qcs615-qmp-dp-phy";
+> +      reg = <0x088e9000 0x200>,
+> +            <0x088e9400 0x10c>,
+> +            <0x088e9800 0x10c>,
+> +            <0x088e9c00 0x200>;
+> +
+> +      clocks = <&gcc GCC_AHB2PHY_WEST_CLK>,
+> +               <&gcc GCC_USB3_SEC_CLKREF_CLK>;
+> +      clock-names = "cfg_ahb", "ref";
+> +      clock-output-names = "dp_phy_link_clk", "dp_phy_vco_div_clk";
+> +
+> +      qcom,tcsr-reg = <&tcsr 0xb24c>;
+> +
+> +      resets = <&gcc GCC_USB3_DP_PHY_SEC_BCR>;
+> +      reset-names = "phy";
+> +
+> +      vdda-phy-supply = <&vreg_l11a>;
+> +      vdda-pll-supply = <&vreg_l5a>;
+> +
+> +      #clock-cells = <1>;
+> +      #phy-cells = <1>;
+> +    };
+> 
+> -- 
+> 2.34.1
+> 
 
+-- 
+With best wishes
+Dmitry
 
