@@ -1,150 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-66105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC5FDB0DEC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B85AB0DEC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:36:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91B6C5436E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:28:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6F4E170BA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBD281D7E37;
-	Tue, 22 Jul 2025 14:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 239C02EA154;
+	Tue, 22 Jul 2025 14:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="btKdHQNS"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="rNamLTE7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B10B288CA2;
-	Tue, 22 Jul 2025 14:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2688E17548
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753194505; cv=none; b=ngW1wfAEt38R0l+fnuL/VB9AZE0uDg+Szy7Ul2KD0zH7ATQJswmZla2EhQXhftLYBDTaaBi93JFyyQALcuBJDKNcuDS+AAQu8+iSaM2oJixyiAN0tJ+EYDpfaIRPDXrty3pAe0frs4ihj3I98NT3mcXlzfzUUA3/b9Fwj+Upaf4=
+	t=1753194584; cv=none; b=S85HvE81gNgjebNo8WAgXl0Ddmj36aWndMKA+q74Kkn/ov2XKTasI/uqs5ro8xw358crzLbGjNATvtr3jy9gw6KDQUNyDaclzWlfZ0tkrnAPMR2q+NtgB+ILmhCfCPAjnRKs7AIkkaf/vbDjq6C49DtkTHmvFcrlELavNaHR1rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753194505; c=relaxed/simple;
-	bh=CMfdm9bpoW6wxCW8WngkMggnv8KINp/BSbU+OViMmvQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=eBvfozcvXYuHnh3Ew24hNX6LWZI8xZqn/eY+hrZvJEoQKgqF92HS/MK36zisAiXwYqy6v6eaUwpem4U9Ffoqp7Tj0x56waw+D4jR5mN02zty0VH8uCoqs6U+Y7Z1SrU/PqSsX8VRmFM+juIsx7lmJVM/s+aoTt0etfNdNcTqq0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=btKdHQNS; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753194504; x=1784730504;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=CMfdm9bpoW6wxCW8WngkMggnv8KINp/BSbU+OViMmvQ=;
-  b=btKdHQNSSLUuraiQ/1dgkYRqHonJObylk81WYWV/2OxzjZfZ6/K7abG1
-   jNNs0+jwKFg8p2p2huseRqijnRmh9TUFfQujBHJqNBxTgJCRiIB9AWo+1
-   HLJiOE8PU/eZqKUEYigcJXGxEbEHwBqT9YQZgpyaLt5Wlm7oMmpbQkJNj
-   cUF87VgBdspRmtRuCgfUVE6y2CMNDfzk6pavJGLn0Dsg/IeSnsw66U/FW
-   nGNKSWXglzEBRsPkpTu3ImdjbR+cWiFK8DV8hW6bg71XX0SCvqHw2AOSY
-   8LUEXo+IsaLrql6YY9Zx2BLvvHiVPZUX+HvuGvTwoqd1yfzoD1OlYAJ6f
-   w==;
-X-CSE-ConnectionGUID: 95URano7TxifN+dkD8yUSw==
-X-CSE-MsgGUID: JE9fm0NQSsG072jWHMIjbg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="65709135"
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="65709135"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 07:28:23 -0700
-X-CSE-ConnectionGUID: 5acaJGK5Tm2vQvo6sRx0lQ==
-X-CSE-MsgGUID: MJKyMwlDRwWPoO8Bms4RAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="158827953"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 07:28:09 -0700
-Message-ID: <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
-Date: Tue, 22 Jul 2025 22:28:07 +0800
+	s=arc-20240116; t=1753194584; c=relaxed/simple;
+	bh=eJBssySJGcFKIYVJchM+wWdNFawpVuNYlagTrqAI8XQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=V85LPndPbhlfHxdaMCPaW+JTkVl4KoIT68YCaalxHhIwy7c//yEv09HFkJBBqZYZ3cO5xDbd4dT5n5adeDMvdZfJdufmvKNAYX6cL5uT4ucBXA7yrWGwJaq9nAceKGhpgYn5J+ouJVobsu217xQjt5EdSZg5Q8OpLa+9KDkJrro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=rNamLTE7; arc=none smtp.client-ip=209.85.208.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-60cc11b34f6so11652233a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1753194579; x=1753799379; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BZnozY3BLIkuA8NA4eNUY0Vf/U8jemAXm7Mzb6ICDTM=;
+        b=rNamLTE723bJTXI7ZBoxsG7cNlEsJTes3JImaUswENXFlgLnmch4J4c8WvQPXYkKPq
+         26Q9qxivCT0AJu8qI8t4DcVHUP7WrYX+yslstetmG1LcTPsNdFwabIVIbK4rAokBcBqq
+         u3MoOOkhTxoiKQwbsLrtGTdhiQFJGNKuROOjgjlTWUS2GVS83cgjwVPJMUhoAR9qARRO
+         C43Ps6hY1X769nrHdxzOnON/h0W/lDDNsngRZlqQrPmdHmFBuOesxW1bZe5bhjH7lTT6
+         l5zUL+O8/iMX3cAFIgWZboHxw/Ac/r4c4apx3wJiSo61HkH58MFhttnf8ykJBnyz26Zo
+         I9ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753194579; x=1753799379;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BZnozY3BLIkuA8NA4eNUY0Vf/U8jemAXm7Mzb6ICDTM=;
+        b=rVIhEu33WpOjq06YZ/iPwRJDMWeVE4GtQBPimNSphdxM8jvNxK1d0/fzKm+S4tYYZ6
+         7Tu75YJpKNuLEaMxL2lfbIxAaZa9jDLtJg1onTACShREr8un5a5I5/WZnF64YyRCIv/F
+         2Us9vS488hBSOkqLwSf0VmqoY0/TwfcBIlTFrQG1k7vlk+g2BiPpxspBXTerQsoDqbgS
+         wP+4RzU34jSBSWts30xzYLNWAfXwQjXXBVMFQ9fp/U3tW3fK7edsm5BVxXgth7kyNEPx
+         LaW67B4qd7vn0KfS8/W9hkFE5dslhqhHOoebjQVty9Yx6Wc+lCYEBX22MWLvvmrq1Xru
+         /wJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX6DBaFSLmwE0gixrG/dZqne8v0QcoV3X3+UetRk3cjFGhzXohncboJPNBigGnOSZCUmymy7yaft6FI3tym@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuuLdNYaWKqqfqgiddNtIhV7r3wYxByFKVlc4THjqqicHVlobz
+	w82h+HFGsa/oCb1qvB1re4+NxtyS5HvCDTRsxxEMF2dDc1UFUfEOdAPEBapH87siQQk=
+X-Gm-Gg: ASbGncuWA44loaU9IjP4aXJSZVW+cZ/UVPh6c7A821Hg9iTE85dNblB38YrtO/uFtgF
+	p/9hRJzGE6gQN2YMUwGsSgyW9NuymMZ/QfrgpB+n28htIbluCPUYki8StT7GRCESx7BOV6U98H+
+	G+hd/h9Xm9JrcUbIqGJNyOvuAc57sME4vlLfTuD11cMEqjCOxK4hRRbaxhPUhIg3IPuemOI13Ic
+	0iiK80UT+NyrW5Jx0Q7sp19GJbJTkfU1LGsHSgMHqPgqzuiINWnWN1f3ET4W+zEDeCu9rKH8yT9
+	KGU3+olnheDypbCS5MFVkWMwh0Lx2cVJb0J7shX/H7dDviWjS2gktAkeB0KrJSNJQ9MsR/emf7V
+	/fFL2G3ybR2Zv7cnxEnUZjuNGeqAp4DKZ3Wm7htuWIlrgSP4qZBQUj3juT5RWkTVCvbQ=
+X-Google-Smtp-Source: AGHT+IFc0VSLFdvV9Ws91KCXp/O3L8BaZaJSH/na/fmYztuvihQfOOHv47U3zveM369mJJJnN+Pi7g==
+X-Received: by 2002:a17:907:9812:b0:ae6:d51a:4ca3 with SMTP id a640c23a62f3a-af153e3379fmr374990166b.25.1753194579181;
+        Tue, 22 Jul 2025 07:29:39 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca2f1a7sm869524866b.91.2025.07.22.07.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jul 2025 07:29:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-Content-Language: en-US
-In-Reply-To: <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 22 Jul 2025 16:29:38 +0200
+Message-Id: <DBINLYI68WWM.398758X1RE3VW@fairphone.com>
+Cc: "Bjorn Andersson" <andersson@kernel.org>, "Linus Walleij"
+ <linus.walleij@linaro.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Milos Top
+ Level Mode Multiplexer
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Rob Herring" <robh@kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
+ <20250702-sm7635-pinctrl-v2-1-c138624b9924@fairphone.com>
+ <20250711182216.GA974600-robh@kernel.org>
+In-Reply-To: <20250711182216.GA974600-robh@kernel.org>
 
-On 7/21/2025 8:22 PM, Xiaoyao Li wrote:
-> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
->> +/*
->> + * CoCo VMs with hardware support that use guest_memfd only for 
->> backing private
->> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping 
->> enabled.
->> + */
->> +#define kvm_arch_supports_gmem_mmap(kvm)        \
->> +    (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&    \
->> +     (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
-> 
-> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
-> 
-> Actually, QEMU can use gmem with mmap support as the normal memory even 
-> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd 
-> on KVM_SET_USER_MEMORY_REGION2.
-> 
-> Since the gmem is mmapable, QEMU can pass the userspace addr got from 
-> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It 
-> works well for non-coco VMs on x86.
+Hi Rob,
 
-one more findings.
+On Fri Jul 11, 2025 at 8:22 PM CEST, Rob Herring wrote:
+> On Wed, Jul 02, 2025 at 05:56:16PM +0200, Luca Weiss wrote:
+>> Document the Top Level Mode Multiplexer on the Milos Platform.
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  .../bindings/pinctrl/qcom,milos-tlmm.yaml          | 133 ++++++++++++++=
++++++++
+>>  1 file changed, 133 insertions(+)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.y=
+aml b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..0091204df20a0eca7d0d0e76=
+6afcb8d08042b015
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+>> @@ -0,0 +1,133 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,milos-tlmm.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. Milos TLMM block
+>> +
+>> +maintainers:
+>> +  - Luca Weiss <luca.weiss@fairphone.com>
+>> +
+>> +description:
+>> +  Top Level Mode Multiplexer pin controller in Qualcomm Milos SoC.
+>> +
+>> +allOf:
+>> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,milos-tlmm
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  gpio-reserved-ranges:
+>> +    minItems: 1
+>> +    maxItems: 84
+>> +
+>> +  gpio-line-names:
+>> +    maxItems: 167
+>> +
+>> +patternProperties:
+>> +  "-state$":
+>
+>        type: object
+>
+> Because a boolean "foo-state;" would actually pass without.
 
-I tested with QEMU by creating normal (non-private) memory with mmapable 
-guest memfd, and enforcily passing the fd of the gmem to struct 
-kvm_userspace_memory_region2 when QEMU sets up memory region.
+While the patch has been applied already, I'm happy to fix this for all
+Qualcomm pinctrl schemas, since pretty much all have this issue.
 
-It hits the kvm_gmem_bind() error since QEMU tries to back different GPA 
-region with the same gmem.
+Are you looking for a change like the following for all
+60+ pinctrl/qcom,* schemas?
 
-So, the question is do we want to allow the multi-binding for 
-shared-only gmem?
+If that's fine, I will prepare the changes and send them soon. Different
+sorting of properties, or moving "type: object" just below "-state$":
+would also work, not sure what you prefer.
 
-> Then it seems feasible to use gmem with mmap for the shared memory of 
-> TDX, and an additional gmem without mmap for the private memory. i.e.,
-> For struct kvm_userspace_memory_region, the @userspace_addr is passed 
-> with the uaddr returned from gmem0 with mmap, while @guest_memfd is 
-> passed with another gmem1 fd without mmap.
-> 
-> However, it fails actually, because the kvm_arch_suports_gmem_mmap() 
-> returns false for TDX VMs, which means userspace cannot allocate gmem 
-> with mmap just for shared memory for TDX.
-> 
-> SO my question is do we want to support such case?
-> 
+++++++++++++++
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl=
+.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
+index 38877d8b97ff..1d17abde246b 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
+@@ -34,6 +34,7 @@ patternProperties:
+       - patternProperties:
+           "-pins$":
+             $ref: "#/$defs/qcom-apq8084-tlmm-state"
++        type: object
+         additionalProperties: false
+=20
+ $defs:
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml=
+ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+index 0091204df20a..e277b884bf5c 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+@@ -39,6 +39,7 @@ patternProperties:
+       - patternProperties:
+           "-pins$":
+             $ref: "#/$defs/qcom-milos-tlmm-state"
++        type: object
+         additionalProperties: false
+=20
+ $defs:
+++++++++++++++
+
+Regards
+Luca
+
+>
+> With that,
+>
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+>
+>> +    oneOf:
+>> +      - $ref: "#/$defs/qcom-milos-tlmm-state"
+>> +      - patternProperties:
+>> +          "-pins$":
+>> +            $ref: "#/$defs/qcom-milos-tlmm-state"
+>> +        additionalProperties: false
 
 
