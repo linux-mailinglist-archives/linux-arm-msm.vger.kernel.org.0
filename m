@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-66121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52982B0DF7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:51:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EBA3B0DFA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:55:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7341D7B4898
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:49:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8DE46176948
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718EE2ED174;
-	Tue, 22 Jul 2025 14:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5C032ECE9D;
+	Tue, 22 Jul 2025 14:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mq76anGx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dVWrdTHq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46B32EBDF6;
-	Tue, 22 Jul 2025 14:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B796C2DF3CF;
+	Tue, 22 Jul 2025 14:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753195800; cv=none; b=Aje0gGb1doWjmclncm5J3RkGbxuwoJ+WFt1FCXsutIomHbwtHBvf4zwuK3mWuUZYvH6m2XP43DwFdG1RxDsdsHeJSO52FqowMeqlGnir4BGKwOGjUsWY61EuqjQap6UprEgBD8pyGssEwG3Rqnlrttv1hzNEX/ILRNMNHwaDzZc=
+	t=1753195799; cv=none; b=nBwxAx7kIkovcKr3dvfB09dhZySNfWaxerUJz5iNCgnj/3PxNw9ff7U2D9Mj7/um69BE86iG2YWWDGdq8NxiwjeCvpRrWVnj9SEgtTg3T/l04mgGchh/jkM2E5kzNN51Fzc+AF6+ifHs3JAl/9S7y0vJfJizqTArRFG8X4bV14E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753195800; c=relaxed/simple;
-	bh=211uyGxKSx8i9e/JVEAuSRVXP0SH88Ajrq//nX18ZhY=;
+	s=arc-20240116; t=1753195799; c=relaxed/simple;
+	bh=ZDHlzVOF+RK96B24o7j42nVX5R9+BETkS6nWvT0fTAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MidfNWMmfIZm2rJKUe2ar8oH8k9a4X5ycP2R9tz9DwnEzrm6xyLkDsu2Om8xAEdJn0biOh8Z3Y0dORwgicX0eo6QeSQOnrAKGGgp4wu2q9JkpcMO7Gw1rxDl1Jje3+qi7EFdtgyiWu/PNjqho7xmmgH49ozrBZDPMOI1gsZsxQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mq76anGx; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=rHS7yhCKpLHkHO/FE10C1s4qlo/x+5JDbA0opf2u5NQIh+7J4CQfGiYVJ3seQgAyaN0LJPQVva0hef7HJqUktBUazMY/RH63gZKrX3HiMAbSycpxy+6jBcRg/Y8PmmDaev3wMasbAi89XXa17joqrI7+2K2shJGOf5cXc8O055g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dVWrdTHq; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MCrin2018099;
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7WIU6009369;
 	Tue, 22 Jul 2025 14:49:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=+Rmk5PJtvGL
-	2PtAnwMtP6YM8VGll8/AGwwvaCoApa+4=; b=mq76anGxwXZxzBrXn1qAu/Kv/42
-	bqrQ+ncAIX38f8upFEoyBEXqa8fjAygDO99zshSc44x3zb+AsnejHDiy3sM1hP7R
-	5Cem1m3PDwQTIuoqhH4GCjd1wVTup5wmJnP5nKEygxUd5yMrLZBiYxBFgsiTdiwe
-	BvmMLZPEKe1a8oR+UYwVtC2RQquDB+N4ZSpmsImm1PJVfsGfpltjvx+e5aVINJVk
-	+w3rw2WiKOcNNBXqcSjJWSeJZ3HwQJpLxuookM8lQYmdVVEx5Q0xC+tpsmGkcHcg
-	7xBpgxs+qT+sMuRtShlRFaF80IEVEuvJIhEWC6hKfWq/O/V8jhsvqA9g7og==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=YYgr/mzNPvZ
+	/3Dozih2AOOmCOubYHKe7WtXOAp+ZmHg=; b=dVWrdTHqLDh7q9wJHvbt6FvLaF+
+	EKRiqL5J3jvmoYgZYwe0qcFlw1owT/NtcozuWfz8H9MHVYCFAyqIBenB0KqrIdRx
+	t7KNMnK/240EEbWasXipverYviTlUQqFX2i4xeK4BTXYwP6AGmQuxYsEj3wWlW/j
+	JsZ1pbLWSfmcibxWTDmxZTvc8FcM2ZLT4NlbN0kMRVkSXFAjZmN4HhzgYy43Zzpe
+	K1b1bZ1MkJ1wdh16S7jsWY8Y2MFJ4zmjBwtWlJ8nR7k5XS+HsPjkRvrSHNwaSDnS
+	tyJmBNyDVTsCIdOXpch4qqg1KyOz+HtloZvtnQ6tAFT8xiAlg4i73zcKhrw==
 Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 482b1u8ckb-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045w06vh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Jul 2025 14:49:52 +0000 (GMT)
+	Tue, 22 Jul 2025 14:49:51 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56MEnlvb023767;
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56MEnlUR023764;
 	Tue, 22 Jul 2025 14:49:47 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4804ekgevc-1
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4804ekgevd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 22 Jul 2025 14:49:47 +0000
 Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MEnlqE023735;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MEnlW7023732;
 	Tue, 22 Jul 2025 14:49:47 GMT
 Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 56MEnkMY023729
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 56MEnk2I023726
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 22 Jul 2025 14:49:47 +0000
 Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
-	id DADC85E5; Tue, 22 Jul 2025 20:19:45 +0530 (+0530)
+	id DEB975E6; Tue, 22 Jul 2025 20:19:45 +0530 (+0530)
 From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -71,12 +71,10 @@ To: Bjorn Andersson <andersson@kernel.org>,
         Richard Cochran <richardcochran@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        kernel@oss.qualcomm.com, Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-        Pratyush Brahma <quic_pbrahma@quicinc.com>,
-        Prakash Gupta <quic_guptap@quicinc.com>
-Subject: [PATCH 2/7] arm64: dts: qcom: Update memory-map for IoT platforms in lemans
-Date: Tue, 22 Jul 2025 20:19:21 +0530
-Message-ID: <20250722144926.995064-3-wasim.nazir@oss.qualcomm.com>
+        kernel@oss.qualcomm.com, Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Subject: [PATCH 3/7] arm64: dts: qcom: lemans: Separate out ethernet card for ride & ride-r3
+Date: Tue, 22 Jul 2025 20:19:22 +0530
+Message-ID: <20250722144926.995064-4-wasim.nazir@oss.qualcomm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
 References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
@@ -91,330 +89,757 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=LdY86ifi c=1 sm=1 tr=0 ts=687fa510 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=687fa510 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=gsKajC6rj_jpGAwFQswA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEyMyBTYWx0ZWRfXx64vTnh7CsTs
- CM2rrXCGpIrfv7XFPLy1MAZC6/p8arNbmfaLF1Z//S3poQlm2rUQ2JoFg1FRvsIiKGkTetUWHeq
- t6LWtXVd4g3AC3XVoz4FwEjv1HdlnsphQ3HnDMllW/CB9y9ucu4ZyO/DyfTLF2RuBiYsGoQffxZ
- z5dfkNRga6mQBMBVWcEy0rfpF1xSyTkY/e00B5n+WdeejBtC8H1YuhJknBCHkk3Z3PCp49K8m9D
- WH1ghtJxFkVN4MPuJL7Futni8VkLXcXGMn8tdyoN01yPjGcSBfM5jdkRGKn4xa4jZUmgilCvefp
- /3IGhsqABYSQXS0fFBAJ4P05grSj2qi83l7TilWkUEZJCZWmdBQM3FLtr0WymvQpx73scE7kWHa
- 8kj2sqT2fzELJwHc+mImIz8nLgeCYIBv6poXiBwg+3EIl3CqziXeVHrn4o/uHUwod2xfO5bd
-X-Proofpoint-ORIG-GUID: dG-lk2yCjbIjEUDSKBHry80EA4PLinAt
-X-Proofpoint-GUID: dG-lk2yCjbIjEUDSKBHry80EA4PLinAt
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=iKZuLqDWvF8HZk_ksXwA:9
+X-Proofpoint-GUID: UIi_OY-LvUkidEtscZ8FYfYexjFE92dK
+X-Proofpoint-ORIG-GUID: UIi_OY-LvUkidEtscZ8FYfYexjFE92dK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEyMyBTYWx0ZWRfXyhlgh5SFyprw
+ QqwqKPAlU9zRdrR/8U0XPubMP4xKnMUB8gRFe7+6mZwjRD0nto3k+imDI3eu2XC2txnzE2l7UPC
+ jmEAAqTJ6NPTv2nouvXZFa4txHJQGxyyXdJ5+rVIchpkszbhO1fMtuyDZt3hFqvok9OYR3qrFy8
+ fS1fPoVcOZ3BlBeqF+twwqvn3Np1ud4q1yVMZYoygPxJBIwf6Pnhxb2fQ4UcdJhMaA4LkeN6T02
+ zAFN1k7GiFQ+n5IGmdspPRTc2kL1u0OMYd1ZqwGC6nyYOmz6XozIZzMRrnxej1BRCIha4lExfFG
+ nefmQEB1WdpuHQyAYU/ZU1zQAD/GEGlLKHvDNUUEPAomy3JsECgLmBtJh8lLPCboHq55RGGglnk
+ 77sNeDRDDFKc2eAwRHheKwq6GM2q3xYCQ6CGj7xJVRijmbKcKEh3TjmzlgtFQdq61DRVcY0p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0 phishscore=0
- malwarescore=0 lowpriorityscore=0 mlxlogscore=821 bulkscore=0 spamscore=0
- suspectscore=0 clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507220123
+ priorityscore=1501 mlxlogscore=999 clxscore=1011 mlxscore=0 adultscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507220123
 
-Stop using the outdated automotive memory map for Lemans; update it to
-meet IoT requirements.
+Ride & Ride-r3 in lemans/lemans-auto uses different ethernet cards
+with different phy capabilities. Separate out the ethernet card
+information from main board so that it can be reused for all the
+variants of ride & ride-r3 platforms in lemans/lemans-auto.
 
-Since, most platforms are IoT-based, treat IoT as the default variant
-under "lemans" and apply it to all platforms, except those requiring the
-old memory-map (e.g., sa8775p, ride, and ride-r3).
-Introduce "lemans-auto" as a derivative of "lemans" that retains the old
-automotive memory map to support legacy use cases.
+Lemans/lemans-auto Ride uses 1G phy while Lemans/lemans-auto Ride-r3
+uses 2.5G phy.
 
-As part of the IoT memory map updates:
-  - Introduce new carveouts for gunyah_md and pil_dtb. Adjust the size and
-    base address of the PIL carveout to accommodate these changes.
-  - Increase the size of the video/camera PIL carveout without affecting
-    existing functionality.
-  - Reduce the size of the trusted apps carveout to meet IoT-specific
-    requirements.
-  - Remove audio_mdf_mem, tz_ffi_mem, and their corresponding SCM references,
-    as they are not required for IoT platforms.
+Introduce ethernet cards with 1G & 2.5G phy capabilities respectively:
+  *-88ea1512.dtsi is for 2x 1G - SGMII (Marvell 88EA1512-B2) phy
+  *-aqr115c.dtsi is for 2x 2.5G - HSGMII (Marvell AQR115c) phy
 
-Co-developed-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Co-developed-by: Prakash Gupta <quic_guptap@quicinc.com>
-Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
 Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/lemans-auto.dtsi  | 104 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/lemans.dtsi       |  75 +++++++++------
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |   2 +-
- 3 files changed, 149 insertions(+), 32 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/lemans-auto.dtsi
+ .../qcom/lemans-ride-ethernet-88ea1512.dtsi   | 205 ++++++++++++++++++
+ .../qcom/lemans-ride-ethernet-aqr115c.dtsi    | 205 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts  |  35 +--
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  35 +--
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi    | 163 --------------
+ 5 files changed, 412 insertions(+), 231 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-ride-ethernet-88ea1512.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/lemans-ride-ethernet-aqr115c.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans-auto.dtsi b/arch/arm64/boot/dts/qcom/lemans-auto.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-88ea1512.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-88ea1512.dtsi
 new file mode 100644
-index 000000000000..8db958d60fd1
+index 000000000000..9d6bbe1447a4
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/lemans-auto.dtsi
-@@ -0,0 +1,104 @@
++++ b/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-88ea1512.dtsi
+@@ -0,0 +1,205 @@
 +// SPDX-License-Identifier: BSD-3-Clause
 +/*
 + * Copyright (c) 2023, Linaro Limited
 + */
 +
-+/dts-v1/;
++/*
++ * Ethernet card for Lemans based Ride boards.
++ * It supports 2x 1G - SGMII (Marvell 88EA1512-B2) phy for Main domain
++ */
 +
-+#include "lemans.dtsi"
-+
-+/delete-node/ &pil_camera_mem;
-+/delete-node/ &pil_adsp_mem;
-+/delete-node/ &q6_adsp_dtb_mem;
-+/delete-node/ &q6_gdsp0_dtb_mem;
-+/delete-node/ &pil_gdsp0_mem;
-+/delete-node/ &pil_gdsp1_mem;
-+/delete-node/ &q6_gdsp1_dtb_mem;
-+/delete-node/ &q6_cdsp0_dtb_mem;
-+/delete-node/ &pil_cdsp0_mem;
-+/delete-node/ &pil_gpu_mem;
-+/delete-node/ &pil_cdsp1_mem;
-+/delete-node/ &q6_cdsp1_dtb_mem;
-+/delete-node/ &pil_cvp_mem;
-+/delete-node/ &pil_video_mem;
-+/delete-node/ &gunyah_md_mem;
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
 +
 +/ {
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		tz_ffi_mem: tz-ffi@91c00000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x0 0x91c00000 0x0 0x1400000>;
-+			no-map;
-+		};
-+
-+		pil_camera_mem: pil-camera@95200000 {
-+			reg = <0x0 0x95200000 0x0 0x500000>;
-+			no-map;
-+		};
-+
-+		pil_adsp_mem: pil-adsp@95c00000 {
-+			reg = <0x0 0x95c00000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		pil_gdsp0_mem: pil-gdsp0@97b00000 {
-+			reg = <0x0 0x97b00000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		pil_gdsp1_mem: pil-gdsp1@99900000 {
-+			reg = <0x0 0x99900000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		pil_cdsp0_mem: pil-cdsp0@9b800000 {
-+			reg = <0x0 0x9b800000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		pil_gpu_mem: pil-gpu@9d600000 {
-+			reg = <0x0 0x9d600000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		pil_cdsp1_mem: pil-cdsp1@9d700000 {
-+			reg = <0x0 0x9d700000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		pil_cvp_mem: pil-cvp@9f500000 {
-+			reg = <0x0 0x9f500000 0x0 0x700000>;
-+			no-map;
-+		};
-+
-+		pil_video_mem: pil-video@9fc00000 {
-+			reg = <0x0 0x9fc00000 0x0 0x700000>;
-+			no-map;
-+		};
-+
-+		audio_mdf_mem: audio-mdf-region@ae000000 {
-+			reg = <0x0 0xae000000 0x0 0x1000000>;
-+			no-map;
-+		};
-+
-+		hyptz_reserved_mem: hyptz-reserved@beb00000 {
-+			reg = <0x0 0xbeb00000 0x0 0x11500000>;
-+			no-map;
-+		};
-+
-+		trusted_apps_mem: trusted-apps@d1900000 {
-+			reg = <0x0 0xd1900000 0x0 0x3800000>;
-+			no-map;
-+		};
++	aliases {
++		ethernet0 = &ethernet0;
++		ethernet1 = &ethernet1;
 +	};
++};
 +
-+	firmware {
-+		scm {
-+			memory-region = <&tz_ffi_mem>;
++&tlmm {
++	ethernet0_default: ethernet0-default-state {
++		ethernet0_mdc: ethernet0-mdc-pins {
++			pins = "gpio8";
++			function = "emac0_mdc";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		ethernet0_mdio: ethernet0-mdio-pins {
++			pins = "gpio9";
++			function = "emac0_mdio";
++			drive-strength = <16>;
++			bias-pull-up;
 +		};
 +	};
 +};
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 9997a29901f5..bf273660e0cb 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -514,7 +514,6 @@ firmware {
- 		scm {
- 			compatible = "qcom,scm-sa8775p", "qcom,scm";
- 			qcom,dload-mode = <&tcsr 0x13000>;
--			memory-region = <&tz_ffi_mem>;
- 		};
- 	};
-
-@@ -773,6 +772,11 @@ sail_ota_mem: sail-ss@90e00000 {
- 			no-map;
- 		};
-
-+		gunyah_md_mem: gunyah-md@91a80000 {
-+			reg = <0x0 0x91a80000 0x0 0x80000>;
-+			no-map;
++
++&ethernet0 {
++	phy-handle = <&sgmii_phy0>;
++	phy-mode = "sgmii";
++
++	pinctrl-0 = <&ethernet0_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		sgmii_phy0: phy@8 {
++			compatible = "ethernet-phy-id0141.0dd4";
++			reg = <0x8>;
++			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
++			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
 +		};
 +
- 		aoss_backup_mem: aoss-backup@91b00000 {
- 			reg = <0x0 0x91b00000 0x0 0x40000>;
- 			no-map;
-@@ -798,12 +802,6 @@ cdt_data_backup_mem: cdt-data-backup@91ba0000 {
- 			no-map;
- 		};
-
--		tz_ffi_mem: tz-ffi@91c00000 {
--			compatible = "shared-dma-pool";
--			reg = <0x0 0x91c00000 0x0 0x1400000>;
--			no-map;
--		};
--
- 		lpass_machine_learning_mem: lpass-machine-learning@93b00000 {
- 			reg = <0x0 0x93b00000 0x0 0xf00000>;
- 			no-map;
-@@ -815,62 +813,77 @@ adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@94a00000 {
- 		};
-
- 		pil_camera_mem: pil-camera@95200000 {
--			reg = <0x0 0x95200000 0x0 0x500000>;
-+			reg = <0x0 0x95200000 0x0 0x700000>;
- 			no-map;
- 		};
-
--		pil_adsp_mem: pil-adsp@95c00000 {
--			reg = <0x0 0x95c00000 0x0 0x1e00000>;
-+		pil_adsp_mem: pil-adsp@95900000 {
-+			reg = <0x0 0x95900000 0x0 0x1e00000>;
- 			no-map;
- 		};
-
--		pil_gdsp0_mem: pil-gdsp0@97b00000 {
--			reg = <0x0 0x97b00000 0x0 0x1e00000>;
-+		q6_adsp_dtb_mem: q6-adsp-dtb@97700000 {
-+			reg = <0x0 0x97700000 0x0 0x80000>;
- 			no-map;
- 		};
-
--		pil_gdsp1_mem: pil-gdsp1@99900000 {
--			reg = <0x0 0x99900000 0x0 0x1e00000>;
-+		q6_gdsp0_dtb_mem: q6-gdsp0-dtb@97780000 {
-+			reg = <0x0 0x97780000 0x0 0x80000>;
- 			no-map;
- 		};
-
--		pil_cdsp0_mem: pil-cdsp0@9b800000 {
--			reg = <0x0 0x9b800000 0x0 0x1e00000>;
-+		pil_gdsp0_mem: pil-gdsp0@97800000 {
-+			reg = <0x0 0x97800000 0x0 0x1e00000>;
- 			no-map;
- 		};
-
--		pil_gpu_mem: pil-gpu@9d600000 {
--			reg = <0x0 0x9d600000 0x0 0x2000>;
-+		pil_gdsp1_mem: pil-gdsp1@99600000 {
-+			reg = <0x0 0x99600000 0x0 0x1e00000>;
- 			no-map;
- 		};
-
--		pil_cdsp1_mem: pil-cdsp1@9d700000 {
--			reg = <0x0 0x9d700000 0x0 0x1e00000>;
-+		q6_gdsp1_dtb_mem: q6-gdsp1-dtb@9b400000 {
-+			reg = <0x0 0x9b400000 0x0 0x80000>;
- 			no-map;
- 		};
-
--		pil_cvp_mem: pil-cvp@9f500000 {
--			reg = <0x0 0x9f500000 0x0 0x700000>;
-+		q6_cdsp0_dtb_mem: q6-cdsp0-dtb@9b480000 {
-+			reg = <0x0 0x9b480000 0x0 0x80000>;
- 			no-map;
- 		};
-
--		pil_video_mem: pil-video@9fc00000 {
--			reg = <0x0 0x9fc00000 0x0 0x700000>;
-+		pil_cdsp0_mem: pil-cdsp0@9b500000 {
-+			reg = <0x0 0x9b500000 0x0 0x1e00000>;
- 			no-map;
- 		};
-
--		audio_mdf_mem: audio-mdf-region@ae000000 {
--			reg = <0x0 0xae000000 0x0 0x1000000>;
-+		pil_gpu_mem: pil-gpu@9d300000 {
-+			reg = <0x0 0x9d300000 0x0 0x2000>;
- 			no-map;
- 		};
-
--		firmware_mem: firmware-region@b0000000 {
--			reg = <0x0 0xb0000000 0x0 0x800000>;
-+		q6_cdsp1_dtb_mem: q6-cdsp1-dtb@9d380000 {
-+			reg = <0x0 0x9d380000 0x0 0x80000>;
- 			no-map;
- 		};
-
--		hyptz_reserved_mem: hyptz-reserved@beb00000 {
--			reg = <0x0 0xbeb00000 0x0 0x11500000>;
-+		pil_cdsp1_mem: pil-cdsp1@9d400000 {
-+			reg = <0x0 0x9d400000 0x0 0x1e00000>;
-+			no-map;
++		sgmii_phy1: phy@a {
++			compatible = "ethernet-phy-id0141.0dd4";
++			reg = <0xa>;
++			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
++			reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++		};
++	};
++
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
 +		};
 +
-+		pil_cvp_mem: pil-cvp@9f200000 {
-+			reg = <0x0 0x9f200000 0x0 0x700000>;
-+			no-map;
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
 +		};
 +
-+		pil_video_mem: pil-video@9f900000 {
-+			reg = <0x0 0x9f900000 0x0 0x1000000>;
-+			no-map;
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
 +		};
 +
-+		firmware_mem: firmware-region@b0000000 {
-+			reg = <0x0 0xb0000000 0x0 0x800000>;
- 			no-map;
- 		};
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
++&ethernet1 {
++	phy-handle = <&sgmii_phy1>;
++	phy-mode = "sgmii";
++
++	snps,mtl-rx-config = <&mtl_rx_setup1>;
++	snps,mtl-tx-config = <&mtl_tx_setup1>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mtl_rx_setup1: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup1: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
+diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-aqr115c.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-aqr115c.dtsi
+new file mode 100644
+index 000000000000..2d2d9ee5f0d9
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/lemans-ride-ethernet-aqr115c.dtsi
+@@ -0,0 +1,205 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2023, Linaro Limited
++ */
++
++/*
++ * Ethernet card for Lemans based Ride r3 boards.
++ * It supports 2x 2.5G - HSGMII (Marvell hsgmii) phy for Main domain
++ */
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++
++/ {
++	aliases {
++		ethernet0 = &ethernet0;
++		ethernet1 = &ethernet1;
++	};
++};
++
++&tlmm {
++	ethernet0_default: ethernet0-default-state {
++		ethernet0_mdc: ethernet0-mdc-pins {
++			pins = "gpio8";
++			function = "emac0_mdc";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		ethernet0_mdio: ethernet0-mdio-pins {
++			pins = "gpio9";
++			function = "emac0_mdio";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++	};
++};
++
++&ethernet0 {
++	phy-handle = <&hsgmii_phy0>;
++	phy-mode = "2500base-x";
++
++	pinctrl-0 = <&ethernet0_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		hsgmii_phy0: phy@8 {
++			compatible = "ethernet-phy-id31c3.1c33";
++			reg = <0x8>;
++			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
++			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++		};
++
++		hsgmii_phy1: phy@0 {
++			compatible = "ethernet-phy-id31c3.1c33";
++			reg = <0x0>;
++			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
++			reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++		};
++	};
++
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
++&ethernet1 {
++	phy-handle = <&hsgmii_phy1>;
++	phy-mode = "2500base-x";
++
++	snps,mtl-rx-config = <&mtl_rx_setup1>;
++	snps,mtl-tx-config = <&mtl_tx_setup1>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mtl_rx_setup1: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup1: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+index ae065ae92478..a7f377dc4733 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+@@ -6,42 +6,9 @@
+ /dts-v1/;
 
-@@ -915,7 +928,7 @@ deepsleep_backup_mem: deepsleep-backup@d1800000 {
- 		};
-
- 		trusted_apps_mem: trusted-apps@d1900000 {
--			reg = <0x0 0xd1900000 0x0 0x3800000>;
-+			reg = <0x0 0xd1900000 0x0 0x1c00000>;
- 			no-map;
- 		};
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index bcd284c0f939..a9ec6ded412e 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -8,7 +8,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-
--#include "lemans.dtsi"
-+#include "lemans-auto.dtsi"
- #include "sa8775p-pmics.dtsi"
+ #include "sa8775p-ride.dtsi"
++#include "lemans-ride-ethernet-aqr115c.dtsi"
 
  / {
+ 	model = "Qualcomm SA8775P Ride Rev3";
+ 	compatible = "qcom,sa8775p-ride-r3", "qcom,sa8775p";
+ };
+-
+-&ethernet0 {
+-	phy-mode = "2500base-x";
+-};
+-
+-&ethernet1 {
+-	phy-mode = "2500base-x";
+-};
+-
+-&mdio {
+-	compatible = "snps,dwmac-mdio";
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+-
+-	sgmii_phy0: phy@8 {
+-		compatible = "ethernet-phy-id31c3.1c33";
+-		reg = <0x8>;
+-		device_type = "ethernet-phy";
+-		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+-		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
+-		reset-assert-us = <11000>;
+-		reset-deassert-us = <70000>;
+-	};
+-
+-	sgmii_phy1: phy@0 {
+-		compatible = "ethernet-phy-id31c3.1c33";
+-		reg = <0x0>;
+-		device_type = "ethernet-phy";
+-		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
+-		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
+-		reset-assert-us = <11000>;
+-		reset-deassert-us = <70000>;
+-	};
+-};
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+index 2e87fd760dbd..b765794f7e54 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+@@ -6,42 +6,9 @@
+ /dts-v1/;
+
+ #include "sa8775p-ride.dtsi"
++#include "lemans-ride-ethernet-88ea1512.dtsi"
+
+ / {
+ 	model = "Qualcomm SA8775P Ride";
+ 	compatible = "qcom,sa8775p-ride", "qcom,sa8775p";
+ };
+-
+-&ethernet0 {
+-	phy-mode = "sgmii";
+-};
+-
+-&ethernet1 {
+-	phy-mode = "sgmii";
+-};
+-
+-&mdio {
+-	compatible = "snps,dwmac-mdio";
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+-
+-	sgmii_phy0: phy@8 {
+-		compatible = "ethernet-phy-id0141.0dd4";
+-		reg = <0x8>;
+-		device_type = "ethernet-phy";
+-		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+-		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
+-		reset-assert-us = <11000>;
+-		reset-deassert-us = <70000>;
+-	};
+-
+-	sgmii_phy1: phy@a {
+-		compatible = "ethernet-phy-id0141.0dd4";
+-		reg = <0xa>;
+-		device_type = "ethernet-phy";
+-		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
+-		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
+-		reset-assert-us = <11000>;
+-		reset-deassert-us = <70000>;
+-	};
+-};
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+index a9ec6ded412e..f512363f6222 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+@@ -13,8 +13,6 @@
+
+ / {
+ 	aliases {
+-		ethernet0 = &ethernet0;
+-		ethernet1 = &ethernet1;
+ 		i2c11 = &i2c11;
+ 		i2c18 = &i2c18;
+ 		serial0 = &uart10;
+@@ -443,151 +441,6 @@ vreg_l8e: ldo8 {
+ 	};
+ };
+
+-&ethernet0 {
+-	phy-handle = <&sgmii_phy0>;
+-
+-	pinctrl-0 = <&ethernet0_default>;
+-	pinctrl-names = "default";
+-
+-	snps,mtl-rx-config = <&mtl_rx_setup>;
+-	snps,mtl-tx-config = <&mtl_tx_setup>;
+-	snps,ps-speed = <1000>;
+-
+-	status = "okay";
+-
+-	mdio: mdio {
+-		compatible = "snps,dwmac-mdio";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-	};
+-
+-	mtl_rx_setup: rx-queues-config {
+-		snps,rx-queues-to-use = <4>;
+-		snps,rx-sched-sp;
+-
+-		queue0 {
+-			snps,dcb-algorithm;
+-			snps,map-to-dma-channel = <0x0>;
+-			snps,route-up;
+-			snps,priority = <0x1>;
+-		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-			snps,map-to-dma-channel = <0x1>;
+-			snps,route-ptp;
+-		};
+-
+-		queue2 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x2>;
+-			snps,route-avcp;
+-		};
+-
+-		queue3 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x3>;
+-			snps,priority = <0xc>;
+-		};
+-	};
+-
+-	mtl_tx_setup: tx-queues-config {
+-		snps,tx-queues-to-use = <4>;
+-
+-		queue0 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue2 {
+-			snps,avb-algorithm;
+-			snps,send_slope = <0x1000>;
+-			snps,idle_slope = <0x1000>;
+-			snps,high_credit = <0x3e800>;
+-			snps,low_credit = <0xffc18000>;
+-		};
+-
+-		queue3 {
+-			snps,avb-algorithm;
+-			snps,send_slope = <0x1000>;
+-			snps,idle_slope = <0x1000>;
+-			snps,high_credit = <0x3e800>;
+-			snps,low_credit = <0xffc18000>;
+-		};
+-	};
+-};
+-
+-&ethernet1 {
+-	phy-handle = <&sgmii_phy1>;
+-
+-	snps,mtl-rx-config = <&mtl_rx_setup1>;
+-	snps,mtl-tx-config = <&mtl_tx_setup1>;
+-	snps,ps-speed = <1000>;
+-
+-	status = "okay";
+-
+-	mtl_rx_setup1: rx-queues-config {
+-		snps,rx-queues-to-use = <4>;
+-		snps,rx-sched-sp;
+-
+-		queue0 {
+-			snps,dcb-algorithm;
+-			snps,map-to-dma-channel = <0x0>;
+-			snps,route-up;
+-			snps,priority = <0x1>;
+-		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-			snps,map-to-dma-channel = <0x1>;
+-			snps,route-ptp;
+-		};
+-
+-		queue2 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x2>;
+-			snps,route-avcp;
+-		};
+-
+-		queue3 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x3>;
+-			snps,priority = <0xc>;
+-		};
+-	};
+-
+-	mtl_tx_setup1: tx-queues-config {
+-		snps,tx-queues-to-use = <4>;
+-
+-		queue0 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue2 {
+-			snps,avb-algorithm;
+-			snps,send_slope = <0x1000>;
+-			snps,idle_slope = <0x1000>;
+-			snps,high_credit = <0x3e800>;
+-			snps,low_credit = <0xffc18000>;
+-		};
+-
+-		queue3 {
+-			snps,avb-algorithm;
+-			snps,send_slope = <0x1000>;
+-			snps,idle_slope = <0x1000>;
+-			snps,high_credit = <0x3e800>;
+-			snps,low_credit = <0xffc18000>;
+-		};
+-	};
+-};
+-
+ &i2c11 {
+ 	clock-frequency = <400000>;
+ 	status = "okay";
+@@ -960,22 +813,6 @@ dp1_hot_plug_det: dp1-hot-plug-det-state {
+ 		bias-disable;
+ 	};
+
+-	ethernet0_default: ethernet0-default-state {
+-		ethernet0_mdc: ethernet0-mdc-pins {
+-			pins = "gpio8";
+-			function = "emac0_mdc";
+-			drive-strength = <16>;
+-			bias-pull-up;
+-		};
+-
+-		ethernet0_mdio: ethernet0-mdio-pins {
+-			pins = "gpio9";
+-			function = "emac0_mdio";
+-			drive-strength = <16>;
+-			bias-pull-up;
+-		};
+-	};
+-
+ 	io_expander_intr_active: io-expander-intr-active-state {
+ 		pins = "gpio98";
+ 		function = "gpio";
 --
 2.49.0
 
