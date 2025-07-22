@@ -1,163 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-65975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD256B0D038
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 05:21:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AEEEB0D049
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 05:29:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 089C13A4DC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 03:21:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71008540E9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 03:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B7471C5D6A;
-	Tue, 22 Jul 2025 03:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C71FD27380E;
+	Tue, 22 Jul 2025 03:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jke8srCC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Edum0jjp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0BE2E3701;
-	Tue, 22 Jul 2025 03:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931BB22EF4;
+	Tue, 22 Jul 2025 03:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753154487; cv=none; b=PP5mIR83pT3ciaCTraJVNGmW42Svr1X9/teh0Z9BWR3vA8WIcPxnnUNtdP4vlpU5N1IFFJye6sZsmW8p1i+hV55NfiSgK/VKwCio2jg4gaEoWjvamcS2KNXrSF6RaLQtvXuhAh9vuDLNsEoLqsse1xzRT8QjGXO+Uqw8iAdkzFI=
+	t=1753154936; cv=none; b=USs7gsCOcjRW2UCCUJVKHZmb+K+qUtLkxnTC5hKFfXGvrjuLsoP2O6w6eOkVRPrYKwonNZCkLUsMsqHjroWKmhFhp5YURNpb0hWMHS60po2GS73F2RfouRdUxsAAViHzmH90Ar49tK8EjCiDONh7vDbQgfUzpjs+urJqD+nhI3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753154487; c=relaxed/simple;
-	bh=l5nvcoPWvqijod9BzVer5L//kq709mQgNUUoDuY2hbs=;
+	s=arc-20240116; t=1753154936; c=relaxed/simple;
+	bh=kJw5y/pTKzs+28qiU9DcV11vaetOeUeIzA0KMoRkwUw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fAXQItNK+wYCutHSmSG+QtJh/DoKlaeAo22VKawToNBvuaoColG5hVAGjJK5dbblSFeMIBJTZC6XT8VggPC2QFVXq3PUaWn3+e6jQELvcfBfeK0TyUf3wHJJ82bI9EoClhfI8EfJlHwaMXqCsTh3HEFqm8zQ79GeU3SvV7BYGGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jke8srCC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A367C4CEEB;
-	Tue, 22 Jul 2025 03:21:25 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=A2jrxV716qxrFntqUGpMZJeitaJ81Rj6DDUcitdo2Kqfjo52fA8/7sgrNYwgLH4IfHYHRx42O7dT/XFPprmrvSENYRzKmw4TvY2sNgYwtXSUHP8e+8F04/G0LOabjOudprzEJKHoBWEartPkeYtJg5IKkaNE3RVsdHbiZYMxv7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Edum0jjp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46001C4CEEB;
+	Tue, 22 Jul 2025 03:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753154486;
-	bh=l5nvcoPWvqijod9BzVer5L//kq709mQgNUUoDuY2hbs=;
+	s=k20201202; t=1753154936;
+	bh=kJw5y/pTKzs+28qiU9DcV11vaetOeUeIzA0KMoRkwUw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jke8srCCtAwuFdnsD0+Y3hEYpVrLMZcUNZMoEIhpWxL6h+Tm9XCROW/TTy+yLxEqP
-	 YK9AfV7xPrHwpjIf1vMR94hnyvCWrMIApYt51DGd+Knas8TuMmymfutUmEx4JTmQFf
-	 aFzOcKI06NukyRq6aW7OcVaH7/I90jslMmuKanv8f5/IdhNBJ7ztYbhwCLIF4aCli6
-	 qQ3d7dosDz59P/uhFfMexHH/1DWnqHpzUUhIDlC+5+tE7VMMerGKWOCL6maxBqGzOA
-	 HbLR0q0SJI9c869SPzaROkqlaVEgHbmXyNd7k12/x6gIVz756dmmmgI/LfjoCmU75i
-	 ueKUZSU1F8kcA==
-Date: Mon, 21 Jul 2025 22:21:23 -0500
+	b=Edum0jjpxzTw1Zcr2ZQfQ0YJBn/OKDz+KbEw5VRXLgEdjSdKnBi6XXMdg7DVQzqLG
+	 tMp8xDDOyh4+W99O6mWTg2zIOWBZB5A5cx84e6XAVUGo9Sx8uu7zpQuUKOU/LxLKYR
+	 tTFvO6bWDFg9nEGElUDe08AU+7CdAA9x/RtWYUSgPpIpNQ+OZuWZkx+VKVp0IKXVMT
+	 3Tvau/AomJ0IvUErTDQ72XDptrcqnAyiHhDYI6TM2zoxbqBRjkmqfGI4mZYLnvax6T
+	 7sJJsDhATA2CnSMSrQujEcNcv8YoLHbJeHEUpPieQES+as6qoCnnZYUEToAJaBzgN4
+	 ZmxVNXVja1bUw==
+Date: Mon, 21 Jul 2025 22:28:53 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org, 
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org, 
 	mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	quic_rjendra@quicinc.com, linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+	quic_rjendra@quicinc.com, taniya.das@oss.qualcomm.com, linux-clk@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
  Controller
-Message-ID: <keb6ljkvjdoi2pcfrgj2nvnytwprw3lmlv72f6zpcbzulzpw6n@vn62zoqlr7vu>
+Message-ID: <digzi2kxw3aexslmyx3hspwjptrjm5yd4kzkgz6gg45inadmmr@6zerdpg5njdb>
 References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
  <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
- <aHjJG2nrJJZvqxSu@linaro.org>
- <40534488-24f6-4958-b032-d45a177dfd80@kernel.org>
- <2f5b5e6e-5041-453e-b3f7-b10b40bc6f57@oss.qualcomm.com>
- <52ytt5ag5l65hdjjmvjft2l7ofvt4rgdn6r3bytcpjvyqia7ry@uzajn7qjng4a>
- <5b569e5f-066b-4e12-8a05-d77852ce11f6@oss.qualcomm.com>
+ <28ea2b11-a269-4536-8306-185bf272bd60@kernel.org>
+ <2yekmjqihkzsfjr223vepigfj4hfruleigguhrlekp6s7riuxk@ta5kghr2kafi>
+ <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5b569e5f-066b-4e12-8a05-d77852ce11f6@oss.qualcomm.com>
+In-Reply-To: <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
 
-On Mon, Jul 21, 2025 at 10:43:05PM +0530, Taniya Das wrote:
-> 
-> 
-> On 7/20/2025 9:30 AM, Bjorn Andersson wrote:
-> > On Fri, Jul 18, 2025 at 11:07:23PM +0530, Taniya Das wrote:
+On Sun, Jul 20, 2025 at 02:18:19PM +0200, Krzysztof Kozlowski wrote:
+> On 20/07/2025 05:46, Bjorn Andersson wrote:
+> > On Wed, Jul 16, 2025 at 06:28:15PM +0200, Krzysztof Kozlowski wrote:
+> >> On 16/07/2025 17:20, Pankaj Patil wrote:
+> > [..]
+> >>> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+> >>> new file mode 100644
+> >>> index 000000000000..a1a6da62ed35
+> >>> --- /dev/null
+> >>> +++ b/drivers/clk/qcom/gcc-glymur.c
+> >>> @@ -0,0 +1,8623 @@
+> >>> +// SPDX-License-Identifier: GPL-2.0-only
+> >>> +/*
+> >>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 > >>
-> >>
-> >> On 7/17/2025 3:38 PM, Krzysztof Kozlowski wrote:
-> >>> On 17/07/2025 11:57, Abel Vesa wrote:
-> >>>> On 25-07-16 20:50:17, Pankaj Patil wrote:
-> >>>>> From: Taniya Das <taniya.das@oss.qualcomm.com>
-> >>>>>
-> >>>>> Add support for Global clock controller for Glymur platform.
-> >>>>>
-> >>>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> >>>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> >>>>> ---
-> >>>>>  drivers/clk/qcom/Kconfig      |   10 +
-> >>>>>  drivers/clk/qcom/Makefile     |    1 +
-> >>>>>  drivers/clk/qcom/gcc-glymur.c | 8623 +++++++++++++++++++++++++++++++++
-> >>>>>  3 files changed, 8634 insertions(+)
-> >>>>>  create mode 100644 drivers/clk/qcom/gcc-glymur.c
-> >>>>>
-> >>>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> >>>>> index 051301007aa6..1d9e8c6aeaed 100644
-> >>>>> --- a/drivers/clk/qcom/Kconfig
-> >>>>> +++ b/drivers/clk/qcom/Kconfig
-> >>>>> @@ -645,6 +645,16 @@ config SAR_GPUCC_2130P
-> >>>>>  	  Say Y if you want to support graphics controller devices and
-> >>>>>  	  functionality such as 3D graphics.
-> >>>>>  
-> >>>>> +config SC_GCC_GLYMUR
-> >>>>
-> >>>> Wait, are we going back to this now?
-> >>>>
-> >>>> X Elite had CLK_X1E80100_GCC, so maybe this should be CLK_GLYMUR_GCC
-> >>>> then.
-> >>>
-> >>>
-> >>> Yeah, the SC is meaningless here, unless you call it CLK_SC8480XP_GCC,
-> >>> so the authors need to decide on one naming. Not mixtures..
-> >>>
-> >>>
-> >> Glymur follows the "SC" naming convention, and historically we've
-> >> adhered to the format: "SC/SM/SDX/SA_<Clock Controller>_<Target Name or
-> >> Chipset>". This structure has helped maintain consistency and clarity
-> >> across platforms.
+> >> Missing date.
 > >>
 > > 
-> > The platform isn't named SCGLYMUR - which is where the SC prefix would
-> > come from.
+> > Per updated company guidelines we don't want a year here. Please let us
+> > know if you have any concerns with this.
 > > 
-> > I'm not sure there's a benefit to quickly be able to know if a clock
-> > controller is for a SC, SM, SA, MSM, etc platform. Please let me know if
-> > I'm missing something.
-> > 
+> I remember the guidelines and they were about publishing your code, not
+> about contributing to open-source projects. And whatever you have
+> internally does not cover us at all. You can have internal guideline
+> saying you need to buy me a beer or I need to buy you a beer. Does not
+> matter.
 > 
-> Bjorn it was more of an alignment for "Compute", "Mobile" and so on and
-> such was the definition to be used for the clock controllers as well.
+> That above copyright statement without date does not adhere to expected
+> format. Explanation how this should be written:
 > 
-
-Right and look at e.g. SC7280, which should be SC, MSM, QCM, and QCS.
-This is one of the main reasons for my push to use the SoC code names
-instead.
-
-> >> The case of X1E80100 appears to be an exception—likely influenced by its
-> >> unique naming convention at the time.
-> >>
-> >> That said, I’d prefer to stay aligned with the established convention
-> >> used for earlier chipsets to preserve continuity. I’d appreciate hearing
-> >> your thoughts on this as well.
-> >>
-> > 
-> > We're changing the naming model completely, so there is no continuity.
-> > In fact the Hamoa "exception" would suite us very well for Glymur.
-> > 
-> > And look how nicely the CLK_X1E80100_* entries are grouped together in
-> > the Kconfig.
-> > 
-> > Change to CLK_GLYMUR_* please.
-> > 
+> https://www.gnu.org/licenses/gpl-howto.en.html#copyright-notice
 > 
-> Sure, will align, but hope we are all good with the clock driver name
-> <cc>-<target>.c.
+> The GPL-2.0 license in the kernel also uses date:
+> 
+> "Copyright (C) <year>  <name of author>    "
+> 
+> There is no option without date in the license or GPL faq. I am not a
+> lawyer, so no clue whether this is what we want, but I also should not
+> be my task to figure out whether different copyright statement is okay
+> or not. It's your burden.
 > 
 
-Yeah, let's stick with that format.
+It's the guidelines/directives from our lawyers that has been updated to
+not include the year. I will bring this back for confirmation.
+Thanks for the link.
 
-Thanks,
+> Or drop the Copyright statement complete to avoid any questions.
+> 
+
+That I don't think we can do for new files.
+
+@Pankaj, please include the year as you resubmit this, until we get
+other clarification on how to proceed.
+
+Regards,
 Bjorn
+
+> Best regards,
+> Krzysztof
 
