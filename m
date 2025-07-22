@@ -1,161 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-66108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 578ADB0DEDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:37:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 126D0B0DEC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:35:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A320BAC31AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:30:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 083E5188421A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:32:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E7532EAB6C;
-	Tue, 22 Jul 2025 14:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DF892EA485;
+	Tue, 22 Jul 2025 14:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RxG/FZr4"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Wg57HqWd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9BA1A3178
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2C2D59E8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753194625; cv=none; b=lAVhVtyB5q0C+/QbOXbqUIX4J43d5Pq1cBJDBAKFV72Qb4/A7okJQU6QeEdluNkFZqt6ARsdQqnQ361XyWbzGW+UOuQ85tzRSItyevtbNM9D3X8RddTnbKMkAPWecsqcrDLcaQ9c3wHBL+vVenVXuYV8fA+5fw9/X5Nal70IbWk=
+	t=1753194746; cv=none; b=P1Jmnd91mt54o+9ytl9/WmGn48E5ReV5+mdHQhr3jYMB3YA2a9EWfwyP2X0CFT8k0TPNyBp0PkZxu5dXss1AVqGWS4ZWXdNdqDOsJom6Yzw/R7WCQLGa6L9T7qreYTwMQ6gwziUnguRllmdwlYr63X2VAQcLUzwZNhRPIA+aljo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753194625; c=relaxed/simple;
-	bh=Bxv9ni4w1PYvtb96P2XChyJnbKJIDZlbHmmvm46D96Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VnD0T6E0fZNFE8oPtic8CqoFSJHdY9iFikdqZODZdD92ZtsU6PVN0t4fuDEBtu4/DTBbUUpdzqNgaNcETzXmiY/4mYORALtl3ErFqDCx8BvCP9a9DduL+50ZqdmbO1h4tn7Yu8Jepjapr1dvFvUj0ngswMkCBR5/ZY23YQ6mdZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RxG/FZr4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M8Wt0M012550
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:30:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	x/SZ0lHFoJHSAX7MLV7k/Qc97OKQJ9c7d2vsYjpczs4=; b=RxG/FZr4xEQeY5vn
-	qX0sSrMzgTq88IcR0hMrfzu1DG7zz++O/Lr4qUiZ4BpYMf1H1giGoptn5fgASdYu
-	1ObLnGbCwr1ZmFHNUcOOmgpWZl25DwCALBpE2u5ybbdzbmO1VPC05IU2x5xntwY2
-	9LvZmsMFtEBiobzrI4UnwVd5wAWazVZpkFS0un7Gj8j2sF23onazRJsScif5oee+
-	DdN63Eqg1ZaLwfSLz8/hoH5rdt49Rib7jtZxL+HW5gCDDYuHT42RWz2axWsv5Sru
-	YnJ56uXovMXv+pKNUgcbcA0r8R+R+h2H+krvNdnxXN4vapRvF8XVPE9IGygnMAZy
-	+oeBJg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481qh6m16d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:30:22 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6fac0b29789so20617906d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:30:22 -0700 (PDT)
+	s=arc-20240116; t=1753194746; c=relaxed/simple;
+	bh=Dv6BrDzEnKemRZ1oJtfVg2+TPtO27uklV4NgxZkoI0M=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=KOyp8lYcV5a+N859ZUupRy07b4HBqnfrBxjKc7vRSuny9RvmdGAUaYDGdMpvtr22pWdL4L9kYasXdxmtQDYuf6LI4ofL5WwadO2tTFIKQuaUR5VCzUL39Z98WixedZyDEv3B5FWZG1G5nrowc2rlWg6sH0HxIhEUx6YbXhSFx6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Wg57HqWd; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-3141f9ce4e2so8431939a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:32:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753194744; x=1753799544; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=se7GGG6+kEUdCY1BG7ucwwvP5WO24MC0HMwFM3DCv0c=;
+        b=Wg57HqWdGVMyTDGo1SmXCaZPWHG4KtdXzDKreb36DG5noKReEQ1Fy29mzysg40Bp2P
+         uhPtpWshNOOhOXgh221t5rZsjACnggbPxpopSSL6BUrZWJ/HpDKC2+08PdzFL3SjI2dA
+         brpHz0P5IOzdBHhmlN8QPMwsYbqUP2uOQDHGbs98ZHolMwt0Tf+pi2rP1msHNYAJooK+
+         0xGZ9kxXdlnqYgmAcJdo7WeWjx17aXrr+rYAbdJsCqxcpHlVLhkDkQT0OlrUIOo3mMCM
+         6oAIAGcQme2pB5D67vT2f3znKnv3nnENXJieskUeIrAxzvHFfcbW+phSHgGukfcF0XBs
+         imJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753194622; x=1753799422;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x/SZ0lHFoJHSAX7MLV7k/Qc97OKQJ9c7d2vsYjpczs4=;
-        b=fTF5j1Ht/MMUenHIo9XRMKroobU/ET8DNYsgNKmTa2zi6xXWJlaymjkWcanm4O+uxB
-         +PlOFm+XFSw47Urn1241328qLAyX/MWkA0/duc2L+Mb3xwHdqet6TiqSduhSvsEkRsmq
-         ccB5hnaAp0MzTWsYMQXTwobG0z82gd7wN4GjnADVTD+b7rHSItFsi8c9U0Q3bGxhj7ZR
-         gruLFW6dHABdoKO6hncPxGj9toE+HEVNlv82IzI1+G52hK6Rz2vZqbHae+lZiPmwMhsl
-         rSEcGu87fuFXNywr7nQmwIWrSVWGF8/oGdph+ByoA9BIxyZ3LwMKkys7veJ1rNi+tloV
-         a3iQ==
-X-Gm-Message-State: AOJu0YyVGPKMQ1R9XCJ7s9lw5q3ltjuBfPJTIkiZCu7cGxoYl/D/JAFe
-	+V9Pr4cBiLSym0RwKia/RzqACbrRcO7XFJhv+jakfBCVnJqn+GbZeAbFjx9CrI6ryZdrZTrFDKN
-	0aha9JQTS4W7O7SR3reTtJmzj4iDg5yw1B/oL+nUgMHi/2Up/wJSe6QZoREYlAciai98x
-X-Gm-Gg: ASbGnctbfESbINJnvREagWpFE+eT/JPCYScBTqEUPOdMxZESnJJBpqKVJ26YHIt74Vi
-	r52Fc9QHVtzgwoG0+O15q4LK+GLJZlLrC1BWy6r8X30+RHPPBeWGoIoeOQUp/8NM10tXUAjB1EN
-	AUD0bsrVc7SHevnIjE+0V4TfMUgHqHBv07FFdqGfTYGe1ubT/91R9ec4DiblYLnM4w8DgZcNW1d
-	c90F5YSi8vxfNOFka+Bs5NGcChe+aqsVhU0pAIHzsF4Ji+bjrz2ZJdEHGlGzfefKPRk892pOdBW
-	GTWq5swiDqcPc49P/yKbPRUTpoU6HJXbZaNxweEzZltb6DCDwQsdEUfvZFCDqdP3XKcm0RhykVj
-	MEDYg315C10mnC4s5gMHu
-X-Received: by 2002:a05:620a:a48b:b0:7e6:2435:b6a4 with SMTP id af79cd13be357-7e62435bac5mr97899585a.12.1753194621243;
-        Tue, 22 Jul 2025 07:30:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELIFe7dttYXlWKLb8+yk+ojhPQpxXLFbOGTgUNnufmtAMzR7XiOb6CgD79dyMxVD6171XqNg==
-X-Received: by 2002:a05:620a:a48b:b0:7e6:2435:b6a4 with SMTP id af79cd13be357-7e62435bac5mr97890885a.12.1753194619840;
-        Tue, 22 Jul 2025 07:30:19 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aeefb091e4dsm486326866b.12.2025.07.22.07.30.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 07:30:19 -0700 (PDT)
-Message-ID: <d4b46652-c4d0-44b4-aef5-e8bcf606de06@oss.qualcomm.com>
-Date: Tue, 22 Jul 2025 16:30:16 +0200
+        d=1e100.net; s=20230601; t=1753194744; x=1753799544;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=se7GGG6+kEUdCY1BG7ucwwvP5WO24MC0HMwFM3DCv0c=;
+        b=S6cy2qwDn9t0yTLtpncyBguPKL65SHdOVyGdVhx2ePUSk3ly6phGE/vBXKeNbDpvji
+         tO86kMGANg03A5uKgJ4P3btlEpV/OWNTrHDDRqeXvE/50p+ebApLvzanCFXb26oXRRKg
+         PD2tFLlmI4bWRiGo7V95T+RQmzawvFrdcSuJYFQoqYo8PihLsQWpeeHkGMNMV3trTR1i
+         lnWy+s2fblHvKMku9E30mf1Ro92tAzrZKkvmI+MIjjp63G2PRqWQQDqT/lSwuzbvOHRF
+         G0tCdqd3K40Q0EjSj3iOvMI9laPmBUoU4nWppV++sR7UmtcAHiEy/G7E7W36WMmXP5zA
+         p7Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCUPGQT0q8y/B54w5A7BDRFzU77f23XMQg3pluQqnoyCjWXibNsKLjGdno1MZ0hL6oWH2b9unvagjV7c+cWp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyyl8W2gPr85Y9u8gMXEIWs3ppWT55FerJgO6W93R5MIIkUPPMV
+	6SjcRb3slc6o4iaEowVdDBgaZDnr7F9nzQIY1Zqlir8Mf6aWLhS+Dq80X+hKXum1Q0ux62dAr52
+	jOZx9Dw==
+X-Google-Smtp-Source: AGHT+IFIvlEtw+vvXuklNdKzQemd9/qAa+tLiT5GFxA8ZHdhEreiJmuSQiQSjn9cwR/4RhPfN9d6Db/7dsE=
+X-Received: from pjbqd16.prod.google.com ([2002:a17:90b:3cd0:b0:31c:15e1:d04])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:134f:b0:312:639:a064
+ with SMTP id 98e67ed59e1d1-31c9f43748bmr36022174a91.28.1753194744117; Tue, 22
+ Jul 2025 07:32:24 -0700 (PDT)
+Date: Tue, 22 Jul 2025 07:32:22 -0700
+In-Reply-To: <CA+EHjTzNDrwzdpoEuiqvzk3-A7LAsdJ-6y-Gcj7h7+dUTh=6pw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/17] drm/msm: a6xx: Refactor a6xx_sptprac_enable()
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-2-9347aa5bcbd6@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250720-ifpc-support-v1-2-9347aa5bcbd6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=CZ4I5Krl c=1 sm=1 tr=0 ts=687fa07e cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=68B5CXoyvkL1tjfyVhIA:9
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-ORIG-GUID: UV3l9oLVBwTuL1hbYQxsmwa6g2ulIowj
-X-Proofpoint-GUID: UV3l9oLVBwTuL1hbYQxsmwa6g2ulIowj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEyMCBTYWx0ZWRfXwDrXSrPlE5rO
- z+1A7xdHfufk74qYIVsITcE9atAVmoRshiuFB7Qx8S+OhyE8l5NiAiUjn0BkHc0/6Nr8LOUhFtN
- GeEJCxbhsVpztRsET4PoLPLXwoVxs+qtlX78aDnIiTjBoFY+zLnz3qwR+tGGDkDUIUMQPNEyhDD
- Dm6+Co9Pf1xOrduGgdmYq3PxBPFWTDO8Xi2/8pMHMg/SieL2qGo2PxGeuzmHF60JiCvVegEl4GJ
- tdBr0Ha/J+T4T7bzjEQdEX+0E7uuXQZaOLBDbDOoygml8DaRCTdCb7ISx4fCRiosy0ouGBReOtp
- hkeWhpd+cFlRZ3h8n8prR3zcQ42ESYp4p7dJ4oo0zxq7K4b+srcu8IWkBWOPIgTolKjuyzoggl7
- rag16YeFHiv5OrfJXXQv56fZAmRjJbVh49inyQyxMS23lILtI6g7Iq65Zj7sixiBXHZEbqbO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 mlxlogscore=824 impostorscore=0
- clxscore=1015 mlxscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- bulkscore=0 spamscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507220120
+Mime-Version: 1.0
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-12-tabba@google.com>
+ <8340ec70-1c44-47a7-8c48-89e175501e89@intel.com> <aH7KghhsjaiIL3En@google.com>
+ <c35b8c34-2736-45fe-8a97-bfedbf72537e@intel.com> <CA+EHjTzNDrwzdpoEuiqvzk3-A7LAsdJ-6y-Gcj7h7+dUTh=6pw@mail.gmail.com>
+Message-ID: <aH-g9o5hSMvVRxAP@google.com>
+Subject: Re: [PATCH v15 11/21] KVM: x86/mmu: Allow NULL-able fault in kvm_max_private_mapping_level
+From: Sean Christopherson <seanjc@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="us-ascii"
 
-On 7/20/25 2:16 PM, Akhil P Oommen wrote:
-> A minor refactor to combine the subroutines for legacy a6xx GMUs under
-> a single check. This helps to avoid an unnecessary check and return
-> early from the subroutine for majority of a6xx gpus.
+On Tue, Jul 22, 2025, Fuad Tabba wrote:
+> On Tue, 22 Jul 2025 at 06:36, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+> > - In 0010-KVM-x86-mmu-Rename-.private_max_mapping_level-to-.gm.patch,
+> > there is double gmem in the name of vmx/vt 's callback implementation:
+> >
+> >      vt_gmem_gmem_max_mapping_level
+> >      tdx_gmem_gmem_max_mapping_level
+> >      vt_op_tdx_only(gmem_gmem_max_mapping_level)
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> Sean's patches do that, then he fixes it in a later patch. I'll fix
+> this at the source.
+
+Dagnabbit.  I goofed a search+replace, caught it when re-reading things, and
+fixed-up the wrong commit.  Sorry :-(
+
+> > - In 0013-KVM-x86-mmu-Extend-guest_memfd-s-max-mapping-level-t.patch,
+> >    kvm_x86_call(gmem_max_mapping_level)(...) returns 0 for !private case.
+> >    It's not correct though it works without issue currently.
+> >
+> >    Because current gmem doesn't support hugepage so that the max_level
+> >    gotten from gmem is always PG_LEVEL_4K and it returns early in
+> >    kvm_gmem_max_mapping_level() on
+> >
+> >         if (max_level == PG_LEVEL_4K)
+> >                 return max_level;
+> >
+> >    But just look at the following case:
+> >
+> >      return min(max_level,
+> >         kvm_x86_call(gmem_max_mapping_level)(kvm, pfn, is_private));
+> >
+> >    For non-TDX case and non-SNP case, it will return 0, i.e.
+> >    PG_LEVEL_NONE eventually.
+> >
+> >    so either 1) return PG_LEVEL_NUM/PG_LEVEL_1G for the cases where
+> >    .gmem_max_mapping_level callback doesn't have specific restriction.
+> >
+> >    or 2)
+> >
+> >         tmp = kvm_x86_call(gmem_max_mapping_level)(kvm, pfn, is_private);
+> >         if (tmp)
+> >                 return min(max_level, tmp);
+> >
+> >         return max-level;
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 38c0f8ef85c3d260864541d83abe43e49c772c52..41129692d127b70e9293b82bea5ccb6b911b0bfb 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -403,7 +403,10 @@ int a6xx_sptprac_enable(struct a6xx_gmu *gmu)
->  	int ret;
->  	u32 val;
->  
-> -	if (!gmu->legacy)
-> +	WARN_ON(!gmu->legacy);
-> +
-> +	/* Nothing to do if GMU does the power management */
-> +	if (gmu->idle_level > GMU_IDLE_STATE_ACTIVE)
+> Sean? What do you think?
 
-This isn't quite a no-op, but I can't seem to find what the '1' value
-would map to, even in 845 kernel sources. Do we have to worry about it?
+#2, because KVM uses a "ret0" static call when TDX is disabled (and KVM should
+do the same when SEV is disabled, but the SEV #ifdefs are still a bit messy).
+Switching to any other value would require adding a VMX stubs for the !TDX case.
 
-Konrad
+I think it makes sense to explicitly call that out as the "CoCo level", to help
+unfamiliar readers understand why vendor code has any say in the max
+mapping level.
+
+And I would say we adjust max_level instead of having an early return, e.g. to
+reduce the probability of future bugs due to adding code between the call to
+.gmem_max_mapping_level() and the final return.
+
+This as fixup? 
+
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index eead5dca6f72..a51013e0992a 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -3279,9 +3279,9 @@ static u8 kvm_gmem_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *fau
+                                     const struct kvm_memory_slot *slot, gfn_t gfn,
+                                     bool is_private)
+ {
++       u8 max_level, coco_level;
+        struct page *page;
+        kvm_pfn_t pfn;
+-       u8 max_level;
+ 
+        /* For faults, use the gmem information that was resolved earlier. */
+        if (fault) {
+@@ -3305,8 +3305,16 @@ static u8 kvm_gmem_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *fau
+        if (max_level == PG_LEVEL_4K)
+                return max_level;
+ 
+-       return min(max_level,
+-                  kvm_x86_call(gmem_max_mapping_level)(kvm, pfn, is_private));
++       /*
++        * CoCo may influence the max mapping level, e.g. due to RMP or S-EPT
++        * restrictions.  A return of '0' means "no additional restrictions",
++        * to allow for using an optional "ret0" static call.
++        */
++       coco_level = kvm_x86_call(gmem_max_mapping_level)(kvm, pfn, is_private);
++       if (coco_level)
++               max_level = min(max_level, coco_level);
++
++       return max_level;
+ }
+ 
+ int kvm_mmu_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *fault,
 
