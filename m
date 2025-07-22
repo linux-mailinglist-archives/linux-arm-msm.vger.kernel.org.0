@@ -1,169 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-65973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F414CB0CE6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 01:51:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7E0BB0CEDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 02:49:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 755177AF19C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jul 2025 23:49:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DF416C5E51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 00:49:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69F824679D;
-	Mon, 21 Jul 2025 23:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC96413D8A4;
+	Tue, 22 Jul 2025 00:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ccFs8bJu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DhTYHwIR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34241219A6B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 23:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB8D13C81B;
+	Tue, 22 Jul 2025 00:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753141848; cv=none; b=LOrwgsKohs4qV75G8TCIvGkGGfE9TCOUWMhwBIlLiAIkAfoO93BL5JH1N6qZuLzedHnig28aGBQB3/IFDUt5aVlumc+2YlYukzAc+kMcF43a2p+/30zaZlyTM0KcrFWXw1szJ0jIPgbN3HM1yHaS3kd+tVXxtfguTi15Ag7svcM=
+	t=1753145390; cv=none; b=S7ht1t3MnXzEHPe9RCXiHNp+ouXidOJ36GcL3jsmDB3M5Nk1yAdcChFYvWu5z8cuKWDr+8dBNLZL3Ky6nXJc1EqkYAv6wIgkPOHvbhh/h5QVz/2XHCf9c9gX0xNKwbEgOky/87FxGLlCM85zG55Ln7m+6Btborfwu6t0YuJXMU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753141848; c=relaxed/simple;
-	bh=X76sqgXUjd4+zPeFBazIpld1nyyNRqan5r6plQcLZq0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uZO2IIGD4Ed+0d+jm8w3lbTVVEDjVp0s+870CifKtRQUOQvkT3pxaVb22X8uARvRoWf4IkaA7otzwrCs79728XdjxdkxoNM6b7F2ObvGpZ3Lj0kQhaohox7u4HDxhf87XGA6ShWZUvmJ7YH9R0M9OR0FJ61HbKskZOcFI/sHWAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ccFs8bJu; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-235e389599fso90505ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jul 2025 16:50:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753141845; x=1753746645; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8IB72aB1pAV9dq+XvFFbs2e0X7c42HGWgrt5SuJCD/0=;
-        b=ccFs8bJuzPsfEgvfxPBigj44wAN/DeMFP7GMiWJFVygsGtKFg+hIsAlTjcRq+mVEkg
-         BHP5haV3earx2WX2yZQ0sDPqMUdT4c6JaRAHzOYI1lE2LW/zAufhrcHC9eppfD2W7ILW
-         eLP2tH+WHwq77I2bnryrBsaUfeDwbLI0Ajfc6Lu0J+nfX3yzPXD4cHlTxMGkQmzW5cyQ
-         fwwi1vP1YSE6HtSyFXsbrxN6VhqiGtC3e19lWXtZYNxnydcufcS5UHbMvTcfWNPyxxx7
-         nad+knBaAd5liuZyP2xfwOvti/EUsKzjGx8DfBN/+LWt4v+eosCF9SEghwkEr1F4t6OD
-         rUpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753141845; x=1753746645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8IB72aB1pAV9dq+XvFFbs2e0X7c42HGWgrt5SuJCD/0=;
-        b=wvXLlSCeXHMEkxXqbkpwFgt98hpRb+4oeRL+kQ/7yj61L7dPRhhwma/PFTR1aQonrS
-         7RXI4Db4NNL3A5SgIuhk9PXvK8c+dGPuZ3AYsiOnEjcCARmqFwcQZMbe3C+S3ksW2AEm
-         ommXkgE8Ud9jSyjsEJPfs9Dz17NYLgdcBgwKzmSiSRDtCMxMOQ6hF5oh3hE0j4sgRUcD
-         gyd457XXLaj7XJOeW0JsQNy1mK3dY6xgNby49gcAMlMT36qkaj4G5M36gVqCsxkinVsp
-         dse7j5dNzAtGqMocFPi+UbL9A9vpbxqkXSehrsDSi2yBfgJ9fXHjH5DkNSUpbnUYTHhq
-         63KA==
-X-Forwarded-Encrypted: i=1; AJvYcCU5f94XFgj9KZ6VfjOOGgdfBodf+xH9WMqgHha6I/Na4QNfxb7Mi8P4Ry33pFll4nWa6aWfuN7GO3v992r4@vger.kernel.org
-X-Gm-Message-State: AOJu0YytpegooO+3TH5tjwOePK1G63URiJnNRrdzjxT64ct61vtdyEzC
-	PfyKN1Xc+FFiKEisnsifb3k9gmAPz82Nd3v1AIWcumqLo7HzQoGbvsK5+oaXorJULUPmOXXPEyo
-	MulaON/CyF48UD6Gef52ztHjItA/+JJzZhoeA+AzQ
-X-Gm-Gg: ASbGnctYMN33X5UzVRQrejAL1IZNY48SYwzOtVFDci/Iy1+FxekAhB1jV4EhErnt2AY
-	Jq/+s16fdoikxt5awbINLUaCKjXWjasB/5ot6BtFeXKsD6UIbbf/UlMtWTjXpRdJT9eycKviMMg
-	xya/ruEgEUD9jqLz3MaVqZsPeTjr8b527rVgdHZAyDET/a4WhhA2zXhyBolfNDKiXs80F1RlwZi
-	cAu1OZl5BtKc7O3GMrZgerGy/oWBUHb6uiIMZq6zVgl9JgN
-X-Google-Smtp-Source: AGHT+IH3YiQMKqSdvOi3Hl2chQEQjKBZYYncsqU52df1Cul+060EhTbwEXWwh9jGrpqKQQvBZjZc/wdEQOaLY9BZwWk=
-X-Received: by 2002:a17:902:e5ca:b0:215:65f3:27ef with SMTP id
- d9443c01a7336-23f8b590f46mr1250935ad.12.1753141844936; Mon, 21 Jul 2025
- 16:50:44 -0700 (PDT)
+	s=arc-20240116; t=1753145390; c=relaxed/simple;
+	bh=qqVtg7wIZdHVzZMMsK9AjxJx4S/Xq3p0wGOEHw6p0V4=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=uCY52bX0RUXAG+izheYhhSvPY+RSVqYczvXkECPm5oeVqoH5i/1fDC6CMm4O974LGqpNr/znf0NRoPxcevjJX4dxea5G54EbV8ondKYDlSugD9MM8ijLxWdKeUnzxpZ9V+n1+3s0G5wr5FNWvKNYHG7rRN944yteCLb1eYncGNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DhTYHwIR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C89C4CEED;
+	Tue, 22 Jul 2025 00:49:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753145390;
+	bh=qqVtg7wIZdHVzZMMsK9AjxJx4S/Xq3p0wGOEHw6p0V4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=DhTYHwIRAQuW4LM7++mtXEFNLpWYAjOi0dkD4mGH/Az+QiTol5w/HG6Cu0ARKO/NF
+	 qw/+DC+3c5eksZhZmV9AFsXploQrV+hjHiAxdr1z1Cm3OHqT8eKVlf4kSk0ee1Dzgx
+	 LJVHbWa1yWNNO0c9Dqr9t/ujCrJP7zZ3tmuBaDzI0ak3C2OBcgHJcXsCbWEPUymHlm
+	 34MHuY67ipSRXUDxJz43vRz6uBaS7p8Pk0T/Xo3rQ8IrINrmotTPMFagJDqZSjoagC
+	 MLzHgklQmR5iTMiFxC0pqKPzD3IFTbC21LM6wJPbC9F9BKWjbn+ZZHq/UIZqQQeTIt
+	 v0f0MVA50XDeg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id E1767383B267;
+	Tue, 22 Jul 2025 00:50:09 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com> <CAGtprH8swz6GjM57DBryDRD2c6VP=Ayg+dUh5MBK9cg1-YKCDg@mail.gmail.com>
- <aH5RxqcTXRnQbP5R@google.com> <1fe0f46a-152a-4b5b-99e2-2a74873dafdc@intel.com>
- <aH55BLkx7UkdeBfT@google.com> <CAGtprH8H2c=bK-7rA1wC1-9f=g8mK3PNXja54bucZ8DnWF7z3g@mail.gmail.com>
- <aH69a_CVJU0-P9wY@google.com>
-In-Reply-To: <aH69a_CVJU0-P9wY@google.com>
-From: Vishal Annapurve <vannapurve@google.com>
-Date: Mon, 21 Jul 2025 16:50:32 -0700
-X-Gm-Features: Ac12FXzatYxpj7dOmCOTU3y6raVwJgub7Hc67jtCHL8r3j1EPu7lx3yUXCqmwaM
-Message-ID: <CAGtprH_r+eQjdi8q5LABz7LHEhK-xAMi4ciz83j3GnMm5EZRqQ@mail.gmail.com>
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Sean Christopherson <seanjc@google.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next] net: phy: qcom: qca807x: Enable WoL support
+ using
+ shared library
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <175314540876.247888.8839150831029400214.git-patchwork-notify@kernel.org>
+Date: Tue, 22 Jul 2025 00:50:08 +0000
+References: <20250718-qca807x_wol_support-v1-1-cfe323cbb4e8@quicinc.com>
+In-Reply-To: <20250718-qca807x_wol_support-v1-1-cfe323cbb4e8@quicinc.com>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, maxime.chevallier@bootlin.com
 
-On Mon, Jul 21, 2025 at 3:21=E2=80=AFPM Sean Christopherson <seanjc@google.=
-com> wrote:
->
-> On Mon, Jul 21, 2025, Vishal Annapurve wrote:
-> > On Mon, Jul 21, 2025 at 10:29=E2=80=AFAM Sean Christopherson <seanjc@go=
-ogle.com> wrote:
-> > >
-> > > >
-> > > > > > 2) KVM fetches shared faults through userspace page tables and =
-not
-> > > > > > guest_memfd directly.
-> > > > >
-> > > > > This is also irrelevant.  KVM _already_ supports resolving shared=
- faults through
-> > > > > userspace page tables.  That support won't go away as KVM will al=
-ways need/want
-> > > > > to support mapping VM_IO and/or VM_PFNMAP memory into the guest (=
-even for TDX).
-> >
-> > As a combination of [1] and [2], I believe we are saying that for
-> > memslots backed by mappable guest_memfd files, KVM will always serve
-> > both shared/private faults using kvm_gmem_get_pfn().
->
-> No, KVM can't guarantee that with taking and holding mmap_lock across hva=
-_to_pfn(),
-> and as I mentioned earlier in the thread, that's a non-starter for me.
+Hello:
 
-I think what you mean is that if KVM wants to enforce the behavior
-that VMAs passed by the userspace are backed by the same guest_memfd
-file as passed in the memslot then KVM will need to hold mmap_lock
-across hva_to_pfn() to verify that.
+This patch was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-What I understand from the implementation of [1] & [2], all guest
-faults on a memslot backed by mappable guest_memfd will pass the
-fault_from_gmem() check and so will be routed to guest_memfd i.e.
-hva_to_pfn path is skipped for any guest faults. If userspace passes
-in VMA mapped by a different guest_memfd file then the guest and
-userspace will have a different view of the memory for shared faults.
+On Fri, 18 Jul 2025 21:57:48 +0800 you wrote:
+> The Wake-on-LAN (WoL) functionality for the QCA807x series is identical
+> to that of the AT8031. WoL support for QCA807x is enabled by utilizing
+> the at8031_set_wol() function provided in the shared library.
+> 
+> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> 
+> [...]
 
-[1] https://lore.kernel.org/kvm/20250717162731.446579-10-tabba@google.com/
-[2] https://lore.kernel.org/kvm/20250717162731.446579-14-tabba@google.com/
+Here is the summary with links:
+  - [net-next] net: phy: qcom: qca807x: Enable WoL support using shared library
+    https://git.kernel.org/netdev/net-next/c/14e710d7080f
 
->
-> For a memslot without a valid slot->gmem.file, slot->userspace_addr will =
-be used
-> to resolve faults and access guest memory.  By design, KVM has no knowled=
-ge of
-> what lies behind userspace_addr (arm64 and other architectures peek at th=
-e VMA,
-> but x86 does not).  So we can't say that mmap()'d guest_memfd instance wi=
-ll *only*
-> go through kvm_gmem_get_pfn().
->
->
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
