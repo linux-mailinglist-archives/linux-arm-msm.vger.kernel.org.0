@@ -1,205 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-66131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 850DDB0E085
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 17:31:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 695E7B0E0B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 17:38:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED7B56C0AB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:31:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 158E6AC0BE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:38:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3C772777FE;
-	Tue, 22 Jul 2025 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAEFF279780;
+	Tue, 22 Jul 2025 15:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N8lKJN4y"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DWBVwOIA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A55267B90;
-	Tue, 22 Jul 2025 15:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF7625C833
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:38:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753198305; cv=none; b=NS4ZCSDY6mniBa788bRPhYE1aFVfuBKy0x3CbISydJLxjRNxE4Hy+tlYaMW4u9RSjWD2OP1POy5NQhWryWkEkRbS6u+UENuvrK4LAuHwvc7EhloRKhYov++Q/RI6qKoWKpIu1LNrpqLQuNz2ruWtY7SJwQ5JwQnYyhxljkPCtQg=
+	t=1753198712; cv=none; b=aaKO3Mx8HJLjtZUvbuZYjfmcxAc5oSnuLQRn9C11V0ObvelqNIxqAMrKbWmReJcLZR6clOu93LPqwb3ijwok3Uk7+Vw27hLH8LsVvT8mEnsLqb4wwOGlsuqMa4UFPDEeTrOf56eOypCI825PXP61yCPOqbCtc0DcwQl158tfnIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753198305; c=relaxed/simple;
-	bh=eMOvJum6/yj2AFgesWxtWNZbW5eBwagvx40YMuSBJSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eDsjEZsR42VjtdL4WOCac3qIYLHxkXt67BsJXWzykHANuRLf1lHPEQXdR8ip6t+iyqk4u5VadwYvyyFKGWGNK2h2E/9wQFmeuPJcAofnEE3YvwX+2D5t6S2GZoQInz7BIeBVPMzPmh4u9vbkBuQfKmcqVPrL8txy9XUHWGs4dLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N8lKJN4y; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753198304; x=1784734304;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=eMOvJum6/yj2AFgesWxtWNZbW5eBwagvx40YMuSBJSs=;
-  b=N8lKJN4yOrqBa1dUAKVkHyt3m+lNNUGJ3wmrpmx5AVYbOTx6WI5bXOl2
-   RVgacJrsx8KpG8UaQv0JlIldG4d4hFrwaVnlBQ2Dt34elfPUdmIQvqsdX
-   uAAuvekursTavUWB50Ar3HisSRhgbq0lO93yVvIBsVc6lI6yJaO2ac40W
-   rm8qCMWYq4T2EI5lGbIFhDJAhRf5J6aSkq4avKlupQSOhR64vclVFkjmv
-   OAlxVWvVba1o0KInae4SVjzz0uJUeHZ2sTMEBxLk82trlVkzD6loLrGKu
-   KWn+7H1RqbsibH/qOA+IVClgQG83ZTDrU7fF0q4rTc93VVYE5t+t/skhe
-   Q==;
-X-CSE-ConnectionGUID: qh6vnHQ0Tc2gmFUoWhqhZw==
-X-CSE-MsgGUID: H+giYodBQ6u8MpkoCqebYw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="59255538"
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="59255538"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 08:31:36 -0700
-X-CSE-ConnectionGUID: jwBETCkjRh2RI6ObMFZZ4g==
-X-CSE-MsgGUID: nwHPGSaPTBCnDP5i0GeW2w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="182888359"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 08:31:20 -0700
-Message-ID: <13654746-3edc-4e4a-ac4f-fa281b83b2ae@intel.com>
-Date: Tue, 22 Jul 2025 23:31:17 +0800
+	s=arc-20240116; t=1753198712; c=relaxed/simple;
+	bh=Se1qNxd0/PJHDHrQnmbz978qyVDnEVYemj1tOhBLP/E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sJrw4eHWgTwBcTu5ISebczvYArMGm32f+KVI0yUy4coZ0lgHFG2HfoW0LmO8DHnjRkteTT/SSgmD11XNk6kYdEOQ/WgSeYlCN77ESd3eJu4QmuWDc7Zs9KRdH+lcr9SY5LZrGtBHAVRR4pS3RCOF+LyzuHsPiXa7xCC4rInyciQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DWBVwOIA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MEgAMG009366
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:38:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=5v7ZQEbIAiB0+2jIBiZJ/zlAz5qzyamJW6N+8IwXK2g=; b=DW
+	BVwOIAfZamAYOhpztOGGNnXgLreZMfJCH5mBPagIOcmoQtv0nLI8Pa0HO0quJCLN
+	6Wi5edUrWF31LX6kjoCOtQuQhE43+E0HUqaXGGKjot+d3RpcjeDgjnf4lxKYGK/J
+	MlP643aCQbvi0Adpa3rW9FFu9ZiNWV06gvJGXWAwV96fJ65UGvl8y6WxC/IKl38u
+	JDbG08GBvw5qD1ohkOR1YoJVUFd6qD9vS0dlCal0awFo4rMqfifnEVS9g45Gfbq3
+	tpjwgde6iVAr6OIro43Q73w/4iatt9HgaWmod/QXC7tPo3x1ua6DEDlDm201eHMm
+	OfX1PfU/HsHKvQzByM/w==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045w0bwp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:38:28 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-41d9efce29cso4297783b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:38:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753198708; x=1753803508;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5v7ZQEbIAiB0+2jIBiZJ/zlAz5qzyamJW6N+8IwXK2g=;
+        b=J2IZeSVWePD6StYtvPVRL2FjaeyoWcM7TQEqkluLVueUnZ741Tox9LesYnLU7JD+iq
+         wEGj+z4CCYmok3m0mpWNIVtHSXgr/ZAZCbL2Cherxs4r4MsYfC7pH3mn6YgZxx/0jcxM
+         /OguE7OOxad3lZGA5xxEN5UEBwY/NFNvX/IgSIGh7ixIt/ySCN0Ohzz4qnrbcBNFPjA3
+         du/os/5WRhB1VKNl7Z1bxVzGbRGF6JFU8Qu75YCsXRnY/O0qsUkwoneWr4XGsd5S8Mjs
+         UhOvy5VagVIffpM993vYjLT9nIzBC+I2w6+2gHBW21W2iIcTqq2OZI6lTOIYxkne14j5
+         wbNA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjMPUBLeAtKbn54tSLbTiPu6X0ZL/rHVTTbMerWLGmah4LnRtfhGkfYpQI2dR4pm+iICqMKSbC8FD4NzDQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNZ3U2vHE/4J0JX65/MjHohzZHzawhKK2oc007zpCrYcpkf/IB
+	YQ8gghVVIQMGmwBXNeDW7G4UE66qJbgsCxY6EdcEdFIDbobTTHmCBp8wVdQ9Ge+XCsn+5sudxVL
+	vLngYbSFi9Ad3mj0NkTqQGKgOdSdtQBa0kbbMhmxwPT2jfrYVem4vIZ+UdlMJRmnq76Z2J8+n+1
+	CSW49rA0ZvubhJBNT1QYndMOyvApBAOve88+9MzDAOsEQ=
+X-Gm-Gg: ASbGnct8XSO/QztR1LZJr46tJNOcr2UtB4dXhH+bzkfkDj2TsL++YCrgENkTJGALIYD
+	cz62G0fJggpkmX5bofhZNuwnTFoM/KjBFPl+NJr9/H8m44rCyEQx63+vjcjyLxedmxt2S6ZhP17
+	JF7F/vZa2+g3qQ9DMCf7/o2eiMvk71MYfZt2XYFFE4Xf8EDv5lIReE
+X-Received: by 2002:a05:6808:680a:b0:40b:2566:9569 with SMTP id 5614622812f47-41d04c92c9cmr13430201b6e.24.1753198707609;
+        Tue, 22 Jul 2025 08:38:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1GJFYfKEf/2vfcM24SVmmRuQ+5KIZBxPBd7aDQfDJlhTZLhTkv+JowWe/tlkItYgNDaaLaguNHER2f1sJAMA=
+X-Received: by 2002:a05:6808:680a:b0:40b:2566:9569 with SMTP id
+ 5614622812f47-41d04c92c9cmr13430177b6e.24.1753198707155; Tue, 22 Jul 2025
+ 08:38:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Sean Christopherson <seanjc@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org,
- willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com,
- chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
- dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
- <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
- <aH-iGMkP3Ad5yncW@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aH-iGMkP3Ad5yncW@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
+ <20250720-ifpc-support-v1-12-9347aa5bcbd6@oss.qualcomm.com> <vng6tut4sv3zfbwogsb74omqsbqutpeskqdnezbs4ftsanqyb4@nv35r7mqmcva>
+In-Reply-To: <vng6tut4sv3zfbwogsb74omqsbqutpeskqdnezbs4ftsanqyb4@nv35r7mqmcva>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 08:38:16 -0700
+X-Gm-Features: Ac12FXyqViKjRhthyqXadlDIINRduJGIQgMSW9SK6xnSnnCzfXGivfqsWQaTERE
+Message-ID: <CACSVV01EhWWohUDQ8n=FQeDuaDcgmYnMBJDMJ8D1Gist1NR4QQ@mail.gmail.com>
+Subject: Re: [PATCH 12/17] drm/msm: Skip devfreq IDLE when possible
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=687fb074 cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=19W1w_CfSDR24Ta8X3MA:9 a=QEXdDO2ut3YA:10
+ a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-GUID: OBZzcl_T1n-nm6A6v-e-uoqV3zlQKqpG
+X-Proofpoint-ORIG-GUID: OBZzcl_T1n-nm6A6v-e-uoqV3zlQKqpG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEzMSBTYWx0ZWRfX4bNZcpUfJH15
+ FlOqw+nPoDN/GY4PZUigQ9MjNZKFr4YRXDw8TRELL+uP94nNMVE/M06DtnB/MJKDs8ADNxsFXZL
+ kRcLLLlSqoqK6AWgN4kUATgOAmubRJCH79VzX/3Njq9n+l5A7v2waU2RBn1m+LhG6HvgrgTtcdF
+ yDg1dl3/vuXHJPGiG1Yelh/17yqqLby9SM1236brAPEZcwTIQfz6pRGmHEAntrqeQq7JD/vb8om
+ 9XU43BqP5UspVzwqfOPOU4b0HP1fThGsheEJej0dhr88OadfSFznIrGqmUAHRcjN+3U1t72IqLN
+ pj8/yuOtAStTUAoRrxYorCiBpRImSMN5QtdETC3EswuH8LvLRVZ3d0gN891bWawkr+0PBIHYkbF
+ O0o35l08G+MDAD+GeM7AGcO1NO0tAV7P+rvZWf1f+yl9P6Zy/Z/3sbLUm2O++LCC2u4zrLE1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507220131
 
-On 7/22/2025 10:37 PM, Sean Christopherson wrote:
-> On Tue, Jul 22, 2025, Xiaoyao Li wrote:
->> On 7/21/2025 8:22 PM, Xiaoyao Li wrote:
->>> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
->>>> +/*
->>>> + * CoCo VMs with hardware support that use guest_memfd only for
->>>> backing private
->>>> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping
->>>> enabled.
->>>> + */
->>>> +#define kvm_arch_supports_gmem_mmap(kvm)        \
->>>> +    (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&    \
->>>> +     (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
->>>
->>> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
->>>
->>> Actually, QEMU can use gmem with mmap support as the normal memory even
->>> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
->>> on KVM_SET_USER_MEMORY_REGION2.
->>>
->>> Since the gmem is mmapable, QEMU can pass the userspace addr got from
->>> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
->>> works well for non-coco VMs on x86.
->>
->> one more findings.
->>
->> I tested with QEMU by creating normal (non-private) memory with mmapable
->> guest memfd, and enforcily passing the fd of the gmem to struct
->> kvm_userspace_memory_region2 when QEMU sets up memory region.
->>
->> It hits the kvm_gmem_bind() error since QEMU tries to back different GPA
->> region with the same gmem.
->>
->> So, the question is do we want to allow the multi-binding for shared-only
->> gmem?
-> 
-> Can you elaborate, maybe with code?  I don't think I fully understand the setup.
+On Tue, Jul 22, 2025 at 6:50=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sun, Jul 20, 2025 at 05:46:13PM +0530, Akhil P Oommen wrote:
+> > When IFPC is supported, devfreq idling is redundant and adds
+> > unnecessary pm suspend/wake latency. So skip it when IFPC is
+> > supported.
+>
+> With this in place we have a dummy devfreq instance which does nothing.
+> Wouldn't it be better to skip registering devfreq if IFPC is supported
+> on the platform?
 
-well, I haven't fully sorted it out. Just share what I get so far.
+devfreq is still scaling the freq.  What is being bypassed is
+essentially a CPU based version of IFPC (because on sc7180 we didn't
+have IFPC
 
-the problem hit when SMM is enabled (which is enabled by default).
+Currently only a618 and 7c3 enable gpu_clamp_to_idle.. if at some
+point those grew IFPC support we could remove the trickery to drop GPU
+to min freq when it is idle altogether.
 
-- The trace of "-machine q35,smm=off":
+BR,
+-R
 
-kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0x80000000 
-ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#1 flags=0x4 gpa=0x100000000 
-size=0x80000000 ua=0x7f57b3fff000 guest_memfd=15 
-guest_memfd_offset=0x80000000 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#2 flags=0x2 gpa=0xffc00000 
-size=0x400000 ua=0x7f5840a00000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x0 gpa=0x0 size=0x0 
-ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0xc0000 
-ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#3 flags=0x2 gpa=0xc0000 
-size=0x20000 ua=0x7f5841000000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#4 flags=0x2 gpa=0xe0000 
-size=0x20000 ua=0x7f5840de0000 guest_memfd=-1 
-guest_memfd_offset=0x3e0000 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#5 flags=0x4 gpa=0x100000 
-size=0x7ff00000 ua=0x7f57340ff000 guest_memfd=15 
-guest_memfd_offset=0x100000 ret=0
-
-- The trace of "-machine q35"
-
-kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0x80000000 
-ua=0x7f8faffff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#1 flags=0x4 gpa=0x100000000 
-size=0x80000000 ua=0x7f902ffff000 guest_memfd=15 
-guest_memfd_offset=0x80000000 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#2 flags=0x2 gpa=0xffc00000 
-size=0x400000 ua=0x7f90bd000000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-kvm_set_user_memory AddrSpace#0 Slot#3 flags=0x4 gpa=0xfeda0000 
-size=0x20000 ua=0x7f8fb009f000 guest_memfd=15 guest_memfd_offset=0xa0000 
-ret=-22
-qemu-system-x86_64: kvm_set_user_memory_region: 
-KVM_SET_USER_MEMORY_REGION2 failed, slot=3, start=0xfeda0000, 
-size=0x20000, flags=0x4, guest_memfd=15, guest_memfd_offset=0xa0000: 
-Invalid argument
-kvm_set_phys_mem: error registering slot: Invalid argument
-
-
-where QEMU tries to setup the memory region for [0xfeda0000, +0x20000], 
-which is back'ed by gmem (fd is 15) allocated for normal RAM, from 
-offset 0xa0000.
-
-What I have tracked down in QEMU is mch_realize(), where it sets up some 
-memory region starting from 0xfeda0000.
-
-If you want to reproduce it yourself, here is my QEMU branch
-
-   https://github.com/intel-staging/qemu-tdx.git lxy/gmem-mmap-poc
-
-To boot a VM with guest memfd:
-
-   -object memory-backend-guest-memfd,id=gmem0,size=$mem
-   -machine memory-backend=gmem0
-
+> >
+> > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/ms=
+m/msm_gpu_devfreq.c
+> > index 2e1d5c3432728cde15d91f69da22bb915588fe86..53ef2add5047e7d6b6371af=
+949cab36ce8409372 100644
+> > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> > @@ -4,6 +4,7 @@
+> >   * Author: Rob Clark <robdclark@gmail.com>
+> >   */
+> >
+> > +#include "adreno/adreno_gpu.h"
+> >  #include "msm_gpu.h"
+> >  #include "msm_gpu_trace.h"
+> >
+> > @@ -300,6 +301,8 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+> >       if (!has_devfreq(gpu))
+> >               return;
+> >
+> > +     if (to_adreno_gpu(gpu)->info->quirks & ADRENO_QUIRK_IFPC)
+> > +             return;
+> >       /*
+> >        * Cancel any pending transition to idle frequency:
+> >        */
+> > @@ -370,6 +373,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+> >       if (!has_devfreq(gpu))
+> >               return;
+> >
+> > +     if (to_adreno_gpu(gpu)->info->quirks & ADRENO_QUIRK_IFPC)
+> > +             return;
+> > +
+> >       msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
+> >                              HRTIMER_MODE_REL);
+> >  }
+> >
+> > --
+> > 2.50.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
