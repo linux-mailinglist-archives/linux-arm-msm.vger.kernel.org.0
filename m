@@ -1,392 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-66060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67A6EB0D8DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:04:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E6B2B0D8EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:05:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B6B87A7EC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:03:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 684086C30ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359242E2EFF;
-	Tue, 22 Jul 2025 12:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE5022E3384;
+	Tue, 22 Jul 2025 12:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iHpK7gm0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cQ3mzrxN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4802E1C4E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:04:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E142E427B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:05:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753185865; cv=none; b=G81PJ8RAMj1YFMbltKDqk76SK/jVkl32vbIw3HYlhuYXysLpHNjJ1pWx/H382V9aiRmwoKBHC6C06LAfVFcc2gG7r2GXVNWblxebTmKKA6zH+hQgBCz7I6ueeBPDpgMmOdEemuUJrqXT32jUmsPTNqqp5lQwOO4GTvFryCitWDs=
+	t=1753185922; cv=none; b=Eu1Wyx6t4VYUJZvTux/bKIbXCkFe6ypZpnZHqvlT9ZEzMfgtBVK4ENMK+jrmwdV/ha9lLuI/iav4Y4Q6yF1o6v2HfKiiqQ/FPFmseujv81Opv4mAgkZ3ndty5OqTXKklJ1kmn+PHVBzT7dvSMGvngAcYtFD8SNwoMGEw8kwQX74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753185865; c=relaxed/simple;
-	bh=w5eOi1dZCOz5BoRdHIIAPqoVyn6NH5m8G7Ay3W5vMlA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SdE53sQwSss8lXkFWruPW5qP+Urku840j8jgKFdXIrF3tVP//gX/GBBbSq9WiAYkmX/siQe6sT/U1biCUtsj2bHo0nVfXuFeYrhqsBpOdspO+/xMiJz0vrDCVGNFPU3dvpqUBUtRhrJujTfkEEWaaE60HnSJXh3sv0ZhozoZeIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iHpK7gm0; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1753185922; c=relaxed/simple;
+	bh=vAjk5EdrVfsB9uNIF3ywSNNttFckv3DpPn6PfbgJzX8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Boh0a/i9vJwmv2pq4yJahTjXEd+p1W+uWO1YHmUDwhtbNISbal5WtZFdH7vYDVYXj831dG5DX2H4zNUoMkv588Gu7EegSl9c/EzyZTGr8BhkwByD1YcwSOanjflpVjIfjWM4UuM7THLrLBTouPhnkFN+Mq3u5xMdSmgzs6c9rRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cQ3mzrxN; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M78AF4009627
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:04:22 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M8mSZK012594
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:05:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+XG90C/um6yxXD5+3AqDRLT4qWkqNRjAHgyLRjePWmw=; b=iHpK7gm01yqL68ho
-	w6aYJlpsBxQGMZxx07WGAIQDw6Pi1yVgXo2GVTyHu+NIzq2acs18/7n1qPRZaXmt
-	EPOBGNJ/rey0N22VULsXpgGZGucedm6UabuVM4SN9EEm7B80jBpQKOU0nA1mUfwE
-	lTKkLsGqehH1c8jqLamXg2h3Uy/X5LoauF1mRy9IQC3iKLXaJGGxfBRpdDtyu7/+
-	GwQ2NPAuhTTGpp2oJ7pM5N+80YPNfmRv75DCSlTEugFwWdm79R7jfVHn06Tb0g0R
-	u4tMjMVmeFV7gQaTXPjMzigGSuPBs3OKtpEY92SkuRzwN2YvqDTdJL+OVM/sjxpZ
-	2XQvqQ==
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045vynuw-1
+	iyIbCMFrlPdmkgoKqjBfMM2i4HyJIcVeeKjewThJMrU=; b=cQ3mzrxNu4xA2qQl
+	15LSXW1qN4oae5WXWOBB3WKRr0CFk0URXkVWpuv8FyM3dDfrh1enzJIjYxsz1Nw5
+	C+uTK+VtUmdGuo0uI2ojVSs8csmJvW5dPwV79wAH8Sxyz3mtsXWfXiBtb2kXZjfr
+	MtF83WGtuMThSBrpjkvSjGFdNbzBfz8m5s9xpQ/mzXMkcWYqKx8v+YpQ/z9manIv
+	wKE0UO8Z7FDY6XTjii8KQlLk0KgjDIKRH4P2HjWEYzZWPRzuLMUdloGJRKZdUyMM
+	129Et38wqLP+ex0G+B3BfAGPQFZR5sGQESMY6IorZlseTIgDAgcXjOblYigbiiJM
+	uyeibQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481qh6km03-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:04:21 +0000 (GMT)
-Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-41b398d3704so4993690b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 05:04:21 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:05:19 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-23c8f16343eso17437705ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 05:05:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753185861; x=1753790661;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+XG90C/um6yxXD5+3AqDRLT4qWkqNRjAHgyLRjePWmw=;
-        b=ZtQxXZrHHxltl20DmYAR/henmqH1Zkw+84PeEiLmMSG7sagRdglDMeeis7SpLcQhm6
-         +FdAxR/MbEwIy4ZLlrRRZGZkJspqsWmzUoTmbp0qlpHA2OLjeWfAY31EdzwS9j4UrRCi
-         0flVDxSJV3b3AZhF+K8z/x33JFHWSobB/W8s5YnJWRDMgzqrtXOZRQD9CWRHT+252JJi
-         WESgi53hPEzFJqE2Rt0Qt34l3F7e95JSd+U3hus565r9rTVOSfbuchOYAwl/w05UGcIE
-         NBW6z0bSHQUNNa6IyK0SYQbURb8FIMbSM3Px7o4X90GleB9laYDDA6jjFKb82nrO19LU
-         S4Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCUY4qDU+XdG1MY1FWbZk1xLKQGCLd6NseIaaeBues4Er2tiTFjrR/tYsPwmlFaa92Vj5x18ErJeB0C3hE8A@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5aCPUd/1/dRdMZN4pUgATf7PTxh5fKwDpJz9Gu6DK8DXh8Rn/
-	Iy3KiHnf8hq9PPGtGOtOzuKNYIMe6UwB8xrbZcd6ly5keT44uVPU0Nke2iGKU5z8PCTYFi6i9lP
-	6YgGRLd3C+pSRQCRzS9gyQKFtuUF/Ad1fMpzqaU++MOv7qYU3yYzX46jhVTRqpNZcvCIR
-X-Gm-Gg: ASbGncvNcKKOt/ll8DhnDv1iKV7n/XF5kxOLJWdIGDAjqpfZvvjo2nL9zAI+x5Gu1DK
-	mf38BKmbUVQugLogv+ku9fz/KhjMQSxATM95BJywOcwVkzpJNNYWA4fhbn/UU0XkVz7zjqK3hWA
-	t1UQ0qrgG94wKlMVAN8HRkFHHGl8/QLPTI6/s1RmOqUdqTWcRg2DHVoYOwAgtXSmjqqe58d2++/
-	2nlH68B18Afzq4N2GRJzbR0jn5gNo2xKGGY6PkfIS6zSuxkFKk0dEkNcjKcanJgoK6NUv0W+9rf
-	NV3mMuzG/Gq+3k7oAQYE7f9V+4QL3NG1YHjC7M207QleCbJknpgWmsqgD3XFB0k4/ckL2/wuyzJ
-	BOL78GUrnvmfu82ebdzGyjDjhty5AvSSH+kKMU6G3LSl+KdCRwvZ+
-X-Received: by 2002:a05:6808:2384:b0:407:59ac:d73f with SMTP id 5614622812f47-41cefe09d5cmr17438878b6e.21.1753185860641;
-        Tue, 22 Jul 2025 05:04:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtOpeAIrEejTxoISQ16qIfCCckK6NW452J8VXPtxZ/pM+GeGglMjw99eFXvizXAXL3yitDqg==
-X-Received: by 2002:a05:6808:2384:b0:407:59ac:d73f with SMTP id 5614622812f47-41cefe09d5cmr17438811b6e.21.1753185860015;
-        Tue, 22 Jul 2025 05:04:20 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31d7c6dcsm1937261e87.101.2025.07.22.05.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 05:04:19 -0700 (PDT)
-Date: Tue, 22 Jul 2025 15:04:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 10/12] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-Message-ID: <bxual3dbzffgbe6vziwumaqpyxrnjbvnljy2pg2o5mtgixufbm@mjvg5em2xklf>
-References: <20250707-v6-16-rc2-quad-pipe-upstream-v12-0-67e3721e7d83@linaro.org>
- <20250707-v6-16-rc2-quad-pipe-upstream-v12-10-67e3721e7d83@linaro.org>
- <khu6gwzn7gulubwoshdutl4d2nu3c6exnkv4cimjljc5wbxf7l@ho4gxsolq3hn>
- <CABymUCPhjugvyQ2KQabjTn3XNEDRSnQgRX5te-tHKT8hBLPdMQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1753185918; x=1753790718;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iyIbCMFrlPdmkgoKqjBfMM2i4HyJIcVeeKjewThJMrU=;
+        b=TQiehPSUFwXUpW4cNEdHxo6KWpsZ6GaGw5oUDjCoElTJNsjfbMH4EzFx4rzrA0HHJb
+         PbzoLNykm3dlgAzddKTc1OnBQ8A/tefoMvoAZFIHOVSWAHRiyNGK6j0+RqAdc5+PVGeM
+         vMKrb9dVu3MXZBT1MqDb8PZSUD8ot5LYiPZTCWoWZ3PZO+thm7r+ZEQKE1tDitWfKoNX
+         D0m6gs/W+6Bo372ntb6A5oDHvDb/nO+WJq2rbjavq6uKYjRvRIyRLwqf0uFmgxYHGXdR
+         v79/Kk2X3G4SVt8pijBXERHhxrrePFYvH+q4c1ufV2EW8btelni2U/ksCJ/V2GPyJKaE
+         524w==
+X-Forwarded-Encrypted: i=1; AJvYcCXF6yvLQuaO8R783nAW9St1tkl98l+lUzu3kRauXT8q+PxeILEvIxAed2QvwBU6LXiyPDE8mnYtrdVIsZO8@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH74/wRFSAUMjX0AkWzhyCHHNXkbxUPSZQBJh1x6FyH91mUpPo
+	vpSQKy11FNN/l67SQhp2fsSAOb7HQG05hP6R2ZLpOe2KiVTBM2JJfUXmL4qvXZZCT3OWPqq2uBk
+	p2i7bojTRbbMYYO0YltnmCqzQGPE/ZR+TJZNKwruMJqkAXU0QdaBBifT6G6kRl/jvAORz
+X-Gm-Gg: ASbGncsVdpsGjvXfaDEGhJVAKl29zASFCy+pC2nztQ9wt9MbXVn4Qigr+xhB6HjtzSS
+	zUfP8+O1VbI2W3e9Y0T3Pc6ajanoLGAJxVyGxqVk+YNQbz6T2MnYBTu2Atqep/qx34Kw+Rq8EK5
+	u4Xh0FzO5b4em9LpxTpjaPk32Dr+FlXW2E3F/haFTfnS84fdO4RcNVzwqDzAFc2al1H8HEoK2rm
+	6t/9WDHjphN+kepmIvIotVX/OMLOCvpF7GqGvb7HJ9mVY3VKeXlucUnYRN6NIBaH34aagldyBuh
+	6r+T4fMNQXi6PYiB6qHxpR9M4fuEJCkuRbWMXRqGYMqEDiaBu2kt67JVzFnh5woY0qxfx4B8S4N
+	dlRWHs3DyUGK4ZLVp6pXwJgBkjyKf
+X-Received: by 2002:a05:6a00:4fc9:b0:736:559f:eca9 with SMTP id d2e1a72fcca58-756e99fe5afmr14912584b3a.3.1753185917419;
+        Tue, 22 Jul 2025 05:05:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoGJCKiTPaM45TrN+M/E5LCa63vjhB/iRPsOdQ17RiEy//OhqN7LQOTuKba6p+/2B4x4JuLw==
+X-Received: by 2002:a05:6a00:4fc9:b0:736:559f:eca9 with SMTP id d2e1a72fcca58-756e99fe5afmr14912493b3a.3.1753185915178;
+        Tue, 22 Jul 2025 05:05:15 -0700 (PDT)
+Received: from [10.133.33.17] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f2fe8dc8fsm6980846a12.28.2025.07.22.05.05.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jul 2025 05:05:14 -0700 (PDT)
+Message-ID: <e673a3a3-6924-49db-9040-e34b82199a43@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 20:05:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/13] dt-bindings: phy: Add binding for QCS615
+ standalone QMP DP PHY
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        konrad.dybcio@oss.qualcomm.com, fange.zhang@oss.qualcomm.com,
+        quic_lliu6@quicinc.com, quic_yongmou@quicinc.com
+References: <20250722-add-displayport-support-for-qcs615-platform-v2-0-42b4037171f8@oss.qualcomm.com>
+ <20250722-add-displayport-support-for-qcs615-platform-v2-2-42b4037171f8@oss.qualcomm.com>
+ <jemfu5sy7k4a2iar55im5bhyhxzlrwpftmpqmps3b2tco7r6a2@oodls7gi45yy>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <jemfu5sy7k4a2iar55im5bhyhxzlrwpftmpqmps3b2tco7r6a2@oodls7gi45yy>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABymUCPhjugvyQ2KQabjTn3XNEDRSnQgRX5te-tHKT8hBLPdMQ@mail.gmail.com>
-X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=687f7e46 cx=c_pps
- a=WJcna6AvsNCxL/DJwPP1KA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=sWKEhP36mHoA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=S6PJxlnTzXtoPlSZMcIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=_Y9Zt4tPzoBS9L09Snn2:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: mu6qNV9l4lnumN2iv5BpmEcLsxgtvd4G
-X-Proofpoint-ORIG-GUID: mu6qNV9l4lnumN2iv5BpmEcLsxgtvd4G
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA5OCBTYWx0ZWRfX617Cyqv/xnfI
- n0oySrYCKsZ4E5Fmwtqjn/y4AYxSOfBMn+6gWslTXsk/CMbVf991HK9co8lcuHnGZFsefGB823L
- 8ivOkzNcPbhFmkr2qh2/n0tlwscIlRYE2z286PhykBqAzTYD/RCmxQblqio1Yky8S8JuOZmIIKR
- S45z3BQpb/pdV+AJnPnPzSOq7fv0Xh3fVh9UHd6K5QjJH2BJAyLUSMWd0Le9dWgduLN3/o5Ff8b
- aC5s1yJMIbU2fq8MwQE4TiR2xYem76Pan3i7M9otIJdZp5Q1YnLoe7VBsrG0T7DpPXPCZv2pSav
- 7QiAfcAm4XYAK0xOispLEhZW+P7sjt1N2dBHSuSx29KVyRWbXkiBuMWbbtr365zAIZbAaPv/oPK
- RQ9fxeZVNocN7e3CkJmnwjtMjEYVTQckh64YMfaXeHVbIYnOLXSUTvr8nCPnVj/HueY/qxOi
+X-Authority-Analysis: v=2.4 cv=CZ4I5Krl c=1 sm=1 tr=0 ts=687f7e7f cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=Oh2cFVv5AAAA:8 a=gEfo2CItAAAA:8
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=cRT8ne84DSJdP7yTid4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=7KeoIwV6GZqOttXkcoxL:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: QCt7WK1dk7tYNJd5YBOUpXgbA406pIDR
+X-Proofpoint-GUID: QCt7WK1dk7tYNJd5YBOUpXgbA406pIDR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA5OCBTYWx0ZWRfX6zr8MsKJUXyJ
+ 8O+hWbcXJsQvbErXtlr6ChdX/+4WXD3JKu62jfw+DyaUlshTK+tJl+UUn37sh4BngQxqTzgkocS
+ YiCFLFP9Tcv2chPLbf1vjSBJXvJEg6F9siTiRYu/nlDYodzSSMIDORGnxqrAK5BwPB4RmE3QAb0
+ ntt2/nwgkohcyMbRx58UAcEIqxiZ/Gtm6dYNCSWX/GmCmxTI9VwbYzZWCYYQLnFFN0vkfWM217M
+ H9JLrgNWgflhkufn7mRy8Ojp/x40l+Jdg1F8K/gC+DKXNP5PFwucE2lK90g/zqSGdvTHKoBzpXk
+ c6xhVEuMM9EuRsYyqgqhnJjIKMYNHXSNku6vVNulIJRegimI0UseVbAw3nN8RGlOjLu/ppNXR7n
+ J3qG5sZ5mDx9ru1tMWrQvD8G+WX9GTZ6JmdOfnCaIXRpCdabIiQ8AhnrmJjTDDmdgL1vQ3W4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0
- suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 impostorscore=0
+ clxscore=1015 mlxscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2507220098
 
-On Mon, Jul 21, 2025 at 04:06:13PM +0800, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> 于2025年7月19日周六 18:09写道：
-> >
-> > On Mon, Jul 07, 2025 at 02:18:05PM +0800, Jun Nie wrote:
-> > > Currently, SSPPs are assigned to a maximum of two pipes. However,
-> > > quad-pipe usage scenarios require four pipes and involve configuring
-> > > two stages. In quad-pipe case, the first two pipes share a set of
-> > > mixer configurations and enable multi-rect mode when certain
-> > > conditions are met. The same applies to the subsequent two pipes.
-> > >
-> > > Assign SSPPs to the pipes in each stage using a unified method and
-> > > to loop the stages accordingly.
-> > >
-> > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 143 +++++++++++++++++++-----------
-> > >  1 file changed, 89 insertions(+), 54 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > index 149e7066480b07f9f6d422748d89ffd6f9416f33..ecfebf7a2406d65930075cc2a4b8a8a7d40b3d3c 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > @@ -954,6 +954,30 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
-> > >               dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
-> > >  }
-> > >
-> > > +static bool dpu_plane_get_single_pipe(struct dpu_plane_state *pstate,
-> > > +                                   struct dpu_sw_pipe **single_pipe,
-> > > +                                   struct dpu_sw_pipe_cfg **single_pipe_cfg,
-> > > +                                   int *stage_index)
-> > > +{
-> > > +     int stage_idx, pipe_idx, i, valid_pipe = 0;
-> > > +
-> > > +     for (stage_idx = 0; stage_idx < STAGES_PER_PLANE; stage_idx++) {
-> > > +             for (i = 0; i < PIPES_PER_STAGE; i++) {
-> > > +                     pipe_idx = stage_idx * PIPES_PER_STAGE + i;
-> > > +                     if (drm_rect_width(&pstate->pipe_cfg[pipe_idx].src_rect) != 0) {
-> > > +                             valid_pipe++;
-> > > +                             if (valid_pipe > 1)
-> > > +                                     return false;
-> > > +
-> > > +                             *single_pipe = &pstate->pipe[pipe_idx];
-> > > +                             *single_pipe_cfg = &pstate->pipe_cfg[pipe_idx];
-> > > +                             *stage_index = stage_idx;
-> > > +                     }
-> > > +             }
-> > > +     }
-> > > +
-> > > +     return valid_pipe == 1;
-> > > +}
-> > >
-> > >  static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
-> > >                                      struct drm_atomic_state *state,
-> > > @@ -1021,18 +1045,23 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
-> > >                                         const struct msm_format *fmt,
-> > >                                         uint32_t max_linewidth)
-> > >  {
-> > > -     struct dpu_sw_pipe *pipe = &pstate->pipe[0];
-> > > -     struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
-> > > -     struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
-> > > -     struct dpu_sw_pipe *prev_pipe = &prev_adjacent_pstate->pipe[0];
-> > > -     struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_adjacent_pstate->pipe_cfg[0];
-> > > +     struct dpu_sw_pipe *pipe, *prev_pipe;
-> > > +     struct dpu_sw_pipe_cfg *pipe_cfg, *prev_pipe_cfg;
-> > >       const struct msm_format *prev_fmt = msm_framebuffer_format(prev_adjacent_pstate->base.fb);
-> > > +     int stage_index, prev_stage_index;
-> > >       u16 max_tile_height = 1;
-> > >
-> > > -     if (prev_adjacent_pstate->pipe[1].sspp != NULL ||
-> > > +     if (!dpu_plane_get_single_pipe(pstate, &pipe, &pipe_cfg, &stage_index))
-> > > +             return false;
-> > > +
-> > > +     if (!dpu_plane_get_single_pipe(prev_adjacent_pstate, &prev_pipe,
-> > > +                                    &prev_pipe_cfg, &prev_stage_index) ||
-> > >           prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
-> > >               return false;
-> > >
-> > > +     if (stage_index != prev_stage_index)
-> > > +             return false;
-> >
-> > This should be handled other way around: save N pstates and then loop
-> > over stage indices. If there is no rect at the corresponding stage for a
-> > plane, skip assignment (and use prev_adjacent_pstate for the next plane).
-> 
-> You mean dpu_plane_virtual_assign_resources() shall notify its caller
-> dpu_assign_plane_resources() to skip updating prev_adjacent_plane_state
-> if dpu_plane_try_multirect_shared() return false? If so, we can add an
-> argument "bool pipe_shared" in dpu_plane_virtual_assign_resources() to
-> get the status. But that is an optimization to share pipes across multiple
-> planes. Can we add new patches based on current patch set later?
-> 
-> Or my understanding is not aligned with your thoughts?
 
-Not quite. I think we need to store all NUM_STAGES 'prev_adjancent' states and
-update them as the driver loops through the stages for each plane.
-
-> 
-> - Jun
-> >
-> > > +
-> > >       if (!dpu_plane_is_multirect_capable(pipe->sspp, pipe_cfg, fmt) ||
-> > >           !dpu_plane_is_multirect_capable(prev_pipe->sspp, prev_pipe_cfg, prev_fmt))
-> > >               return false;
-> > > @@ -1043,11 +1072,6 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
-> > >       if (MSM_FORMAT_IS_UBWC(prev_fmt))
-> > >               max_tile_height = max(max_tile_height, prev_fmt->tile_height);
-> > >
-> > > -     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > -     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > -
-> > > -     r_pipe->sspp = NULL;
-> > > -
-> > >       if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
-> > >           dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
-> > >           (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
-> > > @@ -1176,6 +1200,44 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
-> > >       return 0;
-> > >  }
-> > >
-> > > +static int dpu_plane_assign_resource_in_stage(struct dpu_sw_pipe *pipe,
-> > > +                                           struct dpu_sw_pipe_cfg *pipe_cfg,
-> > > +                                           struct drm_plane_state *plane_state,
-> > > +                                           struct dpu_global_state *global_state,
-> > > +                                           struct drm_crtc *crtc,
-> > > +                                           struct dpu_rm_sspp_requirements *reqs)
-> > > +{
-> > > +     struct drm_plane *plane = plane_state->plane;
-> > > +     struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
-> > > +     struct dpu_sw_pipe *r_pipe = pipe + 1;
-> > > +     struct dpu_sw_pipe_cfg *r_pipe_cfg = pipe_cfg + 1;
-> > > +
-> > > +     if (drm_rect_width(&pipe_cfg->src_rect) != 0) {
-> > > +             pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
-> > > +             if (!pipe->sspp)
-> > > +                     return -ENODEV;
-> > > +     }
-> > > +
-> > > +     if (drm_rect_width(&r_pipe_cfg->src_rect) != 0 &&
-> > > +         dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> > > +                                           pipe->sspp,
-> > > +                                           msm_framebuffer_format(plane_state->fb),
-> > > +                                           dpu_kms->catalog->caps->max_linewidth)) {
-> > > +             goto stage_assinged;
-> > > +     }
-> > > +
-> > > +     if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
-> > > +             r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
-> > > +             if (!r_pipe->sspp)
-> > > +                     return -ENODEV;
-> > > +             r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > +             r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > +     }
-> > > +
-> > > +stage_assinged:
-> > > +     return 0;
-> > > +}
-> > > +
-> > >  static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
-> > >                                             struct dpu_global_state *global_state,
-> > >                                             struct drm_atomic_state *state,
-> > > @@ -1188,11 +1250,9 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
-> > >       struct dpu_rm_sspp_requirements reqs;
-> > >       struct dpu_plane_state *pstate, *prev_adjacent_pstate;
-> > >       struct dpu_sw_pipe *pipe;
-> > > -     struct dpu_sw_pipe *r_pipe;
-> > >       struct dpu_sw_pipe_cfg *pipe_cfg;
-> > > -     struct dpu_sw_pipe_cfg *r_pipe_cfg;
-> > >       const struct msm_format *fmt;
-> > > -     int i;
-> > > +     int i, stage_id, ret;
-> > >
-> > >       if (plane_state->crtc)
-> > >               crtc_state = drm_atomic_get_new_crtc_state(state,
-> > > @@ -1202,11 +1262,6 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
-> > >       prev_adjacent_pstate = prev_adjacent_plane_state ?
-> > >               to_dpu_plane_state(prev_adjacent_plane_state) : NULL;
-> > >
-> > > -     pipe = &pstate->pipe[0];
-> > > -     r_pipe = &pstate->pipe[1];
-> > > -     pipe_cfg = &pstate->pipe_cfg[0];
-> > > -     r_pipe_cfg = &pstate->pipe_cfg[1];
-> > > -
-> > >       for (i = 0; i < PIPES_PER_PLANE; i++)
-> > >               pstate->pipe[i].sspp = NULL;
-> > >
-> > > @@ -1220,44 +1275,24 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
-> > >
-> > >       reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
-> > >
-> > > -     if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
-> > > -             if (!prev_adjacent_pstate ||
-> > > -                 !dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
-> > > -                                                 dpu_kms->catalog->caps->max_linewidth)) {
-> > > -                     pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> > > -                     if (!pipe->sspp)
-> > > -                             return -ENODEV;
-> > > -
-> > > -                     r_pipe->sspp = NULL;
-> > > -
-> > > -                     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > -                     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > -
-> > > -                     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > -                     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > -             }
-> > > -     } else {
-> > > -             pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> > > -             if (!pipe->sspp)
-> > > -                     return -ENODEV;
-> > > -
-> > > -             if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> > > -                                                   pipe->sspp,
-> > > -                                                   msm_framebuffer_format(plane_state->fb),
-> > > -                                                   dpu_kms->catalog->caps->max_linewidth)) {
-> > > -                     /* multirect is not possible, use two SSPP blocks */
-> > > -                     r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> > > -                     if (!r_pipe->sspp)
-> > > -                             return -ENODEV;
-> > > -
-> > > -                     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > -                     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > +     if (prev_adjacent_pstate &&
-> > > +         dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
-> > > +                                         dpu_kms->catalog->caps->max_linewidth)) {
-> > > +             goto assigned;
-> > > +     }
-> > >
-> > > -                     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > -                     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > -             }
-> > > +     for (stage_id = 0; stage_id < STAGES_PER_PLANE; stage_id++) {
-> > > +             pipe = &pstate->pipe[stage_id * PIPES_PER_STAGE];
-> > > +             pipe_cfg = &pstate->pipe_cfg[stage_id * PIPES_PER_STAGE];
-> > > +             ret = dpu_plane_assign_resource_in_stage(pipe, pipe_cfg,
-> > > +                                                      plane_state,
-> > > +                                                      global_state,
-> > > +                                                      crtc, &reqs);
-> > > +             if (ret)
-> > > +                     return ret;
-> > >       }
-> > >
-> > > +assigned:
-> > >       return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
-> > >  }
-> > >
-> > >
-> > > --
-> > > 2.34.1
-> > >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
--- 
-With best wishes
-Dmitry
+On 7/22/2025 4:38 PM, Dmitry Baryshkov wrote:
+> On Tue, Jul 22, 2025 at 03:22:03PM +0800, Xiangxu Yin wrote:
+>> Introduce device tree binding documentation for the Qualcomm QMP DP PHY
+>> on QCS615 SoCs. This PHY supports DisplayPort functionality and is
+>> designed to operate independently from the USB3 PHY.
+>>
+>> Unlike combo PHYs found on other platforms, the QCS615 DP PHY is
+>> standalone and does not support USB/DP multiplexing. The binding
+>> describes the required clocks, resets, TCSR configuration, and clock/PHY
+>> cells for proper integration.
+> Simply put: no, this is not correct. Even if you go to the SM6150 block
+> diagram, it points out that DP uses the USB3 PHY, not a separate DP PHY.
+>
+> I thought that we have discussed it beforehand.
+>
+> I can quote my comment from the previous thread:
+>
+>>> No. It means replacing extending existing entries with bigger reg and
+>>> #phy-cells = <1>. The driver must keep working with old node definitions
+>>> as is to ensure backwards compatibility. New nodes should make it
+>>> register two PHYs (USB3 and DP). On the driver side modify generic code
+>>> paths, all platforms supported by the driver should be able to support
+>>> USB3+DP combination.
+> Looking at the hardware memory maps:
+>
+> MSM8998: USB3 PHY regs at 0xc010000, DP PHY regs at 0xc011000
+> SDM660: USB3 PHY regs at 0xc010000, DP PHY regs at 0xc011000
+> QCM2290: USB3 PHY regs at 0x1615000, DP PHY regs at 0x1616000
+> SM6115: USB3 PHY regs at 0x1615000, DP PHY regs at 0x1616000
+>
+> Now:
+> SM6150: USB3 PHY regs at 0x88e6000
+>         USB3 PHY regs at 0x88e8000, DP PHY regs at 0x88e9000
+>
+> I do not know, why msm-4.14 didn't describe second USB3 PHY. Maybe you
+> can comment on it.
+>
+> But based on that list, the only special case that we need to handle is
+> the first USB3 PHY, which doesn't have a corresponding DP PHY block. But
+> it will be handled anyway by the code that implements support for the
+> existing DT entries. All other hardware blocks are combo USB+DP PHYs.
+>
+> Having all of that in mind, please, for v3 patchset implement USB+DP
+> support in the phy-qcom-qmp-usbc driver and add the following logic
+> that also was requested in v1 review:
+>
+>>> Not quite. Both USB3 and DP drivers should be calling power_on / _off.
+>>> If USB3 is on, powering on DP PHY should fail. Vice versa, if DP is on,
+>>> powering on USB should fail.
+> I think our understanding might not be fully aligned. 
+> Perhaps this is because I didn’t accurately update the mutual exclusion relationships and test results for the different PHYs. 
+> Let me clarify my latest findings and explain why I believe these are separate PHYs that require mutual exclusion via TCSR.
+>
+> 1. About the TCSR DP_PHYMODE Registers
+>
+> MSM8998/SDM660:
+> 	Only one TCSR_USB3_DP_PHYMODE register at 0x1FCB248.
+> QCM2290/SM6115:
+> 	TCSR_USB3_0_DP_PHYMODE at 0x3CB248
+> 	TCSR_USB3_1_DP_PHYMODE at 0x3CB24C
+> SM6150:
+> 	TCSR_USB3_0_DP_PHYMODE at 0x1FCB248
+> 	TCSR_USB3_1_DP_PHYMODE at 0x1FCB24C
+> Even though MSM8998, SDM660, QCM2290, and SM6115 all have one USB3 PHY and one DP PHY, the TCSR DP_PHYMODE register configuration is different on each platform.
+>
+> Additionally, I found some interesting register documentation for QCM2290/SM6115:
+> 	TCSR_USB3_0_DP_PHYMODE: “In kamorta this one is for mobile usb. DP not supported.”
+> 	TCSR_USB3_1_DP_PHYMODE: “DP mode supported for Auto usb in kamorta.”
+> I think the reason for having two different TCSR registers is to allow both the USB3.0 and DP PHYs to be useds at the same time in certain product configurations.
+>
+> 2. SM6150 Test Results
+> When TCSR_DP_PHYMODE_0 is switched to DP, the USB3 primary PHY cannot work, and the DP PHY is also not functional (possibly due to clock lack or other configuration mismatch with this TCSR setting).
+> When TCSR_DP_PHYMODE_1 is switched to DP, both the USB3 primary PHY and the DP PHY work normally.
+> I think "why msm-4.14 didn't describe second USB3 PHY", because TCSR_DP_PHYMODE_1 always works in DP mode.
+> https://android.googlesource.com/kernel/msm/+/af03eef7d4c3cbd1fe26c67d4f1915b05d0c1488/drivers/gpu/drm/msm/dp/dp_catalog_v200.c
+>
+> Based on these info, I believe these are separate PHYs, and only the TCSR DP_PHYMODE registers determine which USB3/DP PHYs are paired or mutually exclusive. This is why I have maintained separate private data for each PHY and implemented Power on mutex control via TCSR, rather than using a qmp_combo-like structure.
+>
+> Given the above, do you think we still need to force USB and DP to be strictly bound together like a combo PHY?
+>
+>> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+>> ---
+>>  .../bindings/phy/qcom,qcs615-qmp-dp-phy.yaml       | 111 +++++++++++++++++++++
+>>  1 file changed, 111 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..17e37c1df7b61dc2f7aa35ee106fd94ee2829c5f
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-dp-phy.yaml
+>> @@ -0,0 +1,111 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/phy/qcom,qcs615-qmp-dp-phy.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm QMP PHY controller (DP, QCS615)
+>> +
+>> +maintainers:
+>> +  - Vinod Koul <vkoul@kernel.org>
+>> +
+>> +description:
+>> +  The QMP DP PHY controller supports DisplayPort physical layer functionality
+>> +  on Qualcomm QCS615 SoCs. This PHY is independent from USB3 PHY and does not
+>> +  support combo mode.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,qcs615-qmp-dp-phy
+>> +
+>> +  reg:
+>> +    maxItems: 4
+>> +
+>> +  clocks:
+>> +    maxItems: 2
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: cfg_ahb
+>> +      - const: ref
+>> +
+>> +  clock-output-names:
+>> +    maxItems: 2
+>> +    description:
+>> +      Names of the clocks provided by the PHY.
+>> +
+>> +  qcom,tcsr-reg:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    items:
+>> +      - items:
+>> +          - description: phandle to TCSR hardware block
+>> +          - description: offset of the DP PHY moode register
+>> +    description:
+>> +      DP PHY moode register present in the TCSR
+>> +
+>> +  resets:
+>> +    maxItems: 1
+>> +
+>> +  reset-names:
+>> +    items:
+>> +      - const: phy
+>> +
+>> +  vdda-phy-supply: true
+>> +
+>> +  vdda-pll-supply: true
+>> +
+>> +  "#clock-cells":
+>> +    const: 1
+>> +    description:
+>> +      See include/dt-bindings/phy/phy-qcom-qmp.h
+>> +
+>> +  "#phy-cells":
+>> +    const: 1
+>> +    description:
+>> +      See include/dt-bindings/phy/phy-qcom-qmp.h
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +  - clock-output-names
+>> +  - qcom,tcsr-reg
+>> +  - resets
+>> +  - reset-names
+>> +  - vdda-phy-supply
+>> +  - vdda-pll-supply
+>> +  - "#clock-cells"
+>> +  - "#phy-cells"
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+>> +    #include <dt-bindings/clock/qcom,rpmh.h>
+>> +
+>> +    phy@88e9000 {
+>> +      compatible = "qcom,qcs615-qmp-dp-phy";
+>> +      reg = <0x088e9000 0x200>,
+>> +            <0x088e9400 0x10c>,
+>> +            <0x088e9800 0x10c>,
+>> +            <0x088e9c00 0x200>;
+>> +
+>> +      clocks = <&gcc GCC_AHB2PHY_WEST_CLK>,
+>> +               <&gcc GCC_USB3_SEC_CLKREF_CLK>;
+>> +      clock-names = "cfg_ahb", "ref";
+>> +      clock-output-names = "dp_phy_link_clk", "dp_phy_vco_div_clk";
+>> +
+>> +      qcom,tcsr-reg = <&tcsr 0xb24c>;
+>> +
+>> +      resets = <&gcc GCC_USB3_DP_PHY_SEC_BCR>;
+>> +      reset-names = "phy";
+>> +
+>> +      vdda-phy-supply = <&vreg_l11a>;
+>> +      vdda-pll-supply = <&vreg_l5a>;
+>> +
+>> +      #clock-cells = <1>;
+>> +      #phy-cells = <1>;
+>> +    };
+>>
+>> -- 
+>> 2.34.1
+>>
 
