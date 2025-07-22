@@ -1,151 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-66058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFCD9B0D88E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:49:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B575DB0D8BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:00:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B54A1888E31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:49:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D59141884F88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:00:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 985D92E2F05;
-	Tue, 22 Jul 2025 11:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8827528A1D5;
+	Tue, 22 Jul 2025 12:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GqYDjf2t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mZISTQk5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEC3219A95
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D406B2356DA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 12:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753184952; cv=none; b=cRBhvM+cTsr7iz6Udzed6bpMGlL5wHyzZGvMvnSxhK6SnRp7aT/nXegFwPRV1ZZbdkk7BjFI6T+TQe3wiN9OgrcG53Tq5qrdCBW/Lmcvr2Rz2YFlx9oxPmwFMqnNFXVvy2jG2VHfxIeaMLaJOP0FT9bURcmOVykp3Bc+0KCI1zg=
+	t=1753185632; cv=none; b=Y6Uik44fp7cNMEzJzCaMJ/91lbYz0Kow6h19e9PJt+6/+03AzhyAPpqFK5b20pyWjRdFD4KSGtoUymg6Q4apclrRSSf87OO6VF7lAN7H8dlDWcYCPTbrR/gR9azCu5OVr91pUv7mViYYb3VHyJBqVeLvlVoJLc6dz7yrLFH1lk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753184952; c=relaxed/simple;
-	bh=g5o/NJLgr/+KZfh7NhSKbgenLoX8ddEIOkGuZqnLS+8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cKpSW4b6tJILJer1FwOmyP5Muja/NFo1jEvppXd/qneHPTpWKK1mAAQ9Ve0c2kaVA7WdfR32jOyzDevwbr7U6hRFxzTnv3iNlBDE/Rv7syI5iSidqLxwHFiDdHZF3lXAGDrMx6HckOFDuoQ9pQCMtFlAuBPjneM33rtANdjS8Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GqYDjf2t; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7W5WQ009759
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:49:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=B5yI/2W/uYPNoZ/4GmFrmy4p
-	o+IDogR9AhFLE+hirtk=; b=GqYDjf2t2uVqAHUeg3Vd+LkW1TXtE4eAV0g/7vUs
-	6jHuV78xQ3CAewTGWj8qF74gcbU2tLapuvs3S1xhEeImjZySEk3Y2gK4z9rrXO0u
-	mCcsGJ6zRqEk+KnldI4G5YOeYfwOySeckQ886d/PnjfQjenMoY4M2A8IbOZG7r5a
-	Tm6MMDQqJlnNhNYX0r6GdNfUmymuA5eiVE5e/XP2ZYP2Ww6XH01/ujjG93SpMyNI
-	y0FQhwkUbjYkZlurh8UQyjZqhpUhY+8vsut8KE9PDBbnAznLsSs/jx5/f7xUqX5F
-	fF8ShTYqTp3rewB1P0XS2xOfk0JHgdSZlcrihCn0QKm8dg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3em3b8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 11:49:10 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e33d32c501so1245575685a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 04:49:10 -0700 (PDT)
+	s=arc-20240116; t=1753185632; c=relaxed/simple;
+	bh=TyKN+XzYCkV6rwuA3vy4eTsqF3nFqVxpsgelQW7FRPI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ny+MlRrGWCKWEVZrEho2tdrcpcn0imqxaZj+htaP0qIWCq4eF3r472el4riPVNq4fVWbmnhdEMPrud5YtBI3BARDd8aK8+pEFBZwqWHKcyxRxq/NdPgHM+cIyESY/Ghv05Ux3WchJgeGc8n536682iNhqqjBXiLQMMFOGVGNOzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mZISTQk5; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-75bd436d970so1337134b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 05:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753185630; x=1753790430; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ptH7TdqJ1a9RBPR6TZDZBqzzcIS8gfN8+gNc7Nchtao=;
+        b=mZISTQk5ifn97Cs+yFblJMTrviWVKG6QQSiD+iA8OMiMRBYkg8b+LdCspi0PCwHWQ0
+         jqd+rYEbohqtz8veSa2zResH6/d/pcvlfHQZgaapnbVlhTU0gtZhHxNpnavAp95dM7Pb
+         gPOg4WTG//4iO97V6NPkEETpUzvYci3JosnJNb+aCO2CAsxtyXHvn6x2+qsDXuFFMTyv
+         aiFfw8lwb9r/fRQDeqKsElYQwo3q6EtOhzHj4bfeVJg7pYLXyoMyC0SiIZ3SfHtJIOXQ
+         IFv1raMvPBMck/ZkEaq0AazukXEfBTclmTIoxMEvLXnBR/OCVzICYs22CXiFYla738z4
+         0CJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753184949; x=1753789749;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B5yI/2W/uYPNoZ/4GmFrmy4po+IDogR9AhFLE+hirtk=;
-        b=rbxzEWQhZbIOIhw0HvD32C5OXvAYSUyW0ETqgorLsPmEaPi1spSrHxADYDkHS1GzeB
-         oLgfo7PZ/EEmrVBhDmiMjhPz5Zc+YH0IViI/wdzqW1T2Uxp8zH15A88B0aVp96/6uYAO
-         Pdxr3JdgR3zXBob0GMbQqAL/eDMbrU9SVoYWHG7WUoGvnzT3O5p1i+Bj1yVjSbkzq3gs
-         zBe8GBi7gp2nqoFtTOLe1gWoWxw9WLq1qJbtQtwjlqXrZ4S5TjMhfaNLQk9Xp2YzK2lg
-         ZuKrjLQjJZa3s0XIJU9k5GEips28o/nCTPdAn21b+F0qe48vHUnWCL/GURVMPEXqislJ
-         YXTg==
-X-Forwarded-Encrypted: i=1; AJvYcCVUVyb8GaZ4yixXZZ4I3UK64y2wDT/ierR8YFuhq9KG3VkLxVh+1NCMPV7e1MMFuORMNWP1z84C1GVn43qB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2IT04S2oAkb99KifDcvw8i2HVMzCs+w3QccLwPWXIkhkGBiL7
-	HldG22RPpQRdMgGS09V3xZlG23ZdYfuc/xQ5/gGtEPrwihwSiNjT1attLWcJswx1fIvhpWJNHob
-	e2zM87VvvEg5bu7jqRPGLAoR0Y3NY88GelEHRqdCkUhAdoUz+s6PgHyxCVDxz0pteeiWW
-X-Gm-Gg: ASbGncsK7N8dpGBSR6aK3ihtHDzVvRZZEfej15hk7jCH2QbLpfemIhtKN77W3QDXL8I
-	o/of3LUrp+oC8tXg6QypEGN3iPM3HsczSsxkIJPspWyzvZEoCjUdivMwl/rx3UCy8UuzbjhJvUW
-	5r6lzQGgY6WL6PDTkLYAgMLaOnJh2Di1YQDrX/h1BJ2Yi/PwvTZ2aZBohvMz870PitDx97ayyaP
-	15Q/VVuCAyzdi/RFz/cwh+wmrBOTcpxeM0mj7gKbJjCvq8tl4LKHXCtEsTTKXGZ+wytrhSlMVwP
-	uCETMm4LA5+wux4vucz9BSLwI2w5QYH/6a8Jdux5vuClXBPBXINrGtPRaFdpTm3nZFtPBGgHjmr
-	T4hykmfg202Pj0mRivtKcf9w/4xXBKWgnD8PplFOZGlG87LpFgQfg
-X-Received: by 2002:a05:620a:318b:b0:7e2:733:542 with SMTP id af79cd13be357-7e3435e9e32mr3649940585a.36.1753184948561;
-        Tue, 22 Jul 2025 04:49:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEePpw0gnZfgOgD+EN9ULc+lx2jNFrznEEMSRNdte1hYVihbfjQ0YCdAjzvf6azH9JLj3QIsA==
-X-Received: by 2002:a05:620a:318b:b0:7e2:733:542 with SMTP id af79cd13be357-7e3435e9e32mr3649936285a.36.1753184948067;
-        Tue, 22 Jul 2025 04:49:08 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a31a9cb18sm1909407e87.20.2025.07.22.04.49.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 04:49:07 -0700 (PDT)
-Date: Tue, 22 Jul 2025 14:49:05 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: adreno: a6xx: enable GMU bandwidth voting for
- x1e80100 GPU
-Message-ID: <uh2lkqa26lavl4evsckiontkmjaiiwvz6jj7zjwylrfojtd5ne@ibk4ckgrsygn>
-References: <20250721-topic-x1e80100-gpu-bwvote-v1-1-946619b0f73a@linaro.org>
+        d=1e100.net; s=20230601; t=1753185630; x=1753790430;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ptH7TdqJ1a9RBPR6TZDZBqzzcIS8gfN8+gNc7Nchtao=;
+        b=IQueEYe6HK7OCmzXnMvwXibt0zik2ABvv6I3aVZ8Po8FvR1MhnMqIua0wl61trl7zb
+         bBRuF4nVaCpv20esYf9zjAxiY7+HJvZEsUpHKDOa7YhXKcJQ9363hN/3POcF3kUJtUoS
+         wPU81kQB9yrf+JNplsKKdZ+EWQzvLwPtq6j5vT9CYPbzKPO8oWdTVebMZIM9HWoGa4rE
+         mye3beAq7cHzAheQ/wiPXH/ee6I+igoA6bvpT2aq+FB6YFDlKBBAwfZEhj8pwfkG6bcb
+         vrCvLrM61+O2sI8u+LZa9/LHE0f5qO/tLhja/XAFxLo8jmyM4hla/oFHJAUI3HZtioJ1
+         36mA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaFsA1pRIFO4Tz4SvqpGHX2LLu+GbLo7rWKtcHWLyvylHj0/NBfhP2CzQccbKalpjmAm/zsuv92yvp+96o@vger.kernel.org
+X-Gm-Message-State: AOJu0YylIT3g1bfWqV0mxMZ9iPj8q2wOHFVisPZrx5bXZnTUlqz8qR59
+	0G3zhIyP2JdgB4FrUunU/j5cLPZ9dXANGIAaF3xzej4G4dy95IZZpw7+s5DJdNc+XmBv85zmvJT
+	er5mWoBLIUPg/kOu4dCyDaErw3yDzVEN7ATHEvAu85A==
+X-Gm-Gg: ASbGncuElbXeF/FJBgGqGBtzzZzUv5ql6daTxRb5P6sMqDbOn8VfftKDozbtsU3X4iW
+	fFhVS4gyrA53FKwGtOIRdjFfZZLCA0f8Vt0bJQ963aC+vzOoRruv2ytD2hIxZCJ7jEbEsau87da
+	KbALRV2CpDkwSIcP2PufmAy2drCxsvGAspkSh/PfWw4R4LGSt6r8kiLZmZOvBfOPhM5oa3pzzG6
+	7iV3TxW
+X-Google-Smtp-Source: AGHT+IGTyCeY3UMh/uN26NrX+9pLVitYu44Yg1Cv05hntn0WmZXzyYQmgf2Srl3Zso4XLkxJAtt8NFNBvWJVP5c1/co=
+X-Received: by 2002:a05:6a21:6016:b0:1ee:a914:1d67 with SMTP id
+ adf61e73a8af0-23810e50f83mr36040966637.2.1753185629855; Tue, 22 Jul 2025
+ 05:00:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250721-topic-x1e80100-gpu-bwvote-v1-1-946619b0f73a@linaro.org>
-X-Proofpoint-ORIG-GUID: xOwVT__R_TOgLx00JelY2ZKdi28dXkQE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA5NiBTYWx0ZWRfXwTGjapsuvt3x
- tOnqr7dJcNhlf/90S+zarOypbKZ9WPgguYO1FzOb0KJ3LM3Zyg9DQs6knu809w22WT4DSeSgVSt
- 0QhNXkoRFVmppgmMXGNluzSSmQBYTiZrKyQWkDd/546skkk/IM/iP0zdmqFEsGfaSKuKhRE/8Le
- Ph8W2PV8q+KO5X77cwgk6r5LKfbxcdTNt79jkxc+XC3KSD9IubTWwv38in9QEOJ168w30AoHD7x
- D4Dc7GNp0+qoZ2ImcRcR//EYuH1ux9jKT0FRAkZa8tsk+6zXeiwKjZyZCeENcw6DPFSJzxnm1uG
- bVn6EO3EGcypgGbiMPSoHnSfH673f6Y0OQFkuQuOhgeVhEKRtsuYU74DKuFYU6swaLQWOSQkp5j
- KU7zj3rDrSZSQt+zEwM5fnWZ8+itTQ1PkrmOgW+6Nz7mov+7sEcREtGLDI8WyAlvnKQvRq0c
-X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=687f7ab6 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=bYW4DojQpC9BwyScwp0A:9
- a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: xOwVT__R_TOgLx00JelY2ZKdi28dXkQE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507220096
+References: <20250722081405.2947294-1-quic_jinlmao@quicinc.com>
+ <20250722081405.2947294-2-quic_jinlmao@quicinc.com> <727fa9f4-fe25-495e-9d8d-48e504fbe6b0@arm.com>
+ <20250722091425.GH3137075@e132581.arm.com>
+In-Reply-To: <20250722091425.GH3137075@e132581.arm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Tue, 22 Jul 2025 13:00:18 +0100
+X-Gm-Features: Ac12FXxwWOJchARr8CvJVCGpP9c_3WusEBTfWMpJDyd4T_uRT6DBiailwW2ufC8
+Message-ID: <CAJ9a7VhLLgAak_4FB=iW0izXprM4W+RsKfHUeo=XUHh9LwtUsA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: Add Qualcomm extended CTI
+To: Leo Yan <leo.yan@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, Mao Jinlong <quic_jinlmao@quicinc.com>, 
+	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Yingchao Deng <quic_yingdeng@quicinc.com>, coresight@lists.linaro.org, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jul 21, 2025 at 02:35:04PM +0200, Neil Armstrong wrote:
-> The Adreno GPU Management Unit (GMU) can also scale DDR Bandwidth along
-> the Frequency and Power Domain level, but by default we leave the
-> OPP core scale the interconnect ddr path.
-> 
-> Declare the Bus Control Modules (BCMs) and the corresponding parameters
-> in the GPU info struct to allow the GMU to vote for the bandwidth.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
+Hi
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On Tue, 22 Jul 2025 at 10:14, Leo Yan <leo.yan@arm.com> wrote:
+>
+> On Tue, Jul 22, 2025 at 09:49:28AM +0100, Suzuki Kuruppassery Poulose wrote:
+> > On 22/07/2025 09:14, Mao Jinlong wrote:
+> > > From: Yingchao Deng <quic_yingdeng@quicinc.com>
+> > >
+> > > Add Qualcomm extended CTI support in CTI binding file. Qualcomm
+> > > extended CTI supports up to 128 triggers.
+> > >
+> > > Signed-off-by: Yingchao Deng <quic_yingdeng@quicinc.com>
+> > > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> > > ---
+> > >   Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml | 4 +++-
+> > >   1 file changed, 3 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> > > index 2d5545a2b49c..1aa27461f5bc 100644
+> > > --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> > > +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> > > @@ -84,7 +84,9 @@ properties:
+> > >             - const: arm,coresight-cti
+> > >             - const: arm,primecell
+> > >         - items:
+> > > -          - const: arm,coresight-cti-v8-arch
+> > > +          - enum:
+> > > +              - arm,coresight-cti-v8-arch
+> > > +              - qcom,coresight-cti-extended
+> >
+> > Why not call it qcom,coresight-cti ?
+> >
+> > There are no other "qcom,coresight-cti", so "extended" is not required.
+> > Is this specific to CPU (i.e., CPU bound) ?
+>
+> I roughly went through the second path. Combining two patches in this
+> series, I am wandering if can directly check registers (e.g. PID/CID)
+> to find CTI with qcom extension. If so, you do not need an extra DT
+> binding, right?
+>
+> Thanks,
+> Leo
+>
+> > Suzuki
+> >
+> > >             - const: arm,coresight-cti
+> > >             - const: arm,primecell
+> >
+> > _______________________________________________
+> > CoreSight mailing list -- coresight@lists.linaro.org
+> > To unsubscribe send an email to coresight-leave@lists.linaro.org
+
+For a change of this magnitude to a CS component, that the ID
+registers will also have to change. This is a requirement of the
+Visible Component Architecture in the CoreSight specification.
+External tools cannot see the device tree.
+
+This is effectively no longer an ARM designed component, so the
+CoreSight specification requires that the DEVARCH register change to
+show qualcomm as the designer, and the architecture value change to
+represent this component.
+DEVID should be used to allow the driver to pick up parameters such as
+number of triggers as per the existing CTI component.
+
+If this component is Coresight compliant then the driver can use the
+ID registers to configure to the extended trigger architecture.
+
+With complete remapping of most of the registers, and the dropping of
+claim tag compatibility - which appears to be a breach of the
+CoreSight specification - it may be better to have a completely
+separate driver for this component.
+
+Regards
 
 
--- 
-With best wishes
-Dmitry
+Mike
+
+--
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
