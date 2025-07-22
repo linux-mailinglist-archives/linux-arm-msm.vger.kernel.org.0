@@ -1,175 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-66036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9945B0D6C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:04:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DF73B0D6C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:05:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B95F7562A30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:02:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8FE2E7A4311
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:02:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 659872E6112;
-	Tue, 22 Jul 2025 10:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E70742222A0;
+	Tue, 22 Jul 2025 10:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="F274qOZ5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AK7xyzVG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAF82E5B39
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:00:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2A62DFF04
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753178404; cv=none; b=kqrLd1dILs6vYLsx6O4TVPMfSVjz3zBpCy2F15VR7VEc2vr2TW8C19BUOmzNRNGLRWNvBcSH5CuKrRLAwUweV9FxPT/FnC9vhl8WhHTRS7KI44mI72Wdi5WqNJJ1YLpvY5gSZJPBVMzyCPr4YpsUo5CbWilL6QTVdB1wWMW5YaY=
+	t=1753178426; cv=none; b=GuklnOuiJLxYFoYsJMxqF8wTUZC78uhFzDCXCEL6bNkDqSUTctXIImykhlnSl98UmA9bK9+2q6z0TxkW0+va4SKCYryydMa4ugjg0H11CQ9nvuldlyr6w0Tmlx1zKWGWuHdViEa87W77cufe52fVmuw8ffCHE6N4gtc6VQFOo4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753178404; c=relaxed/simple;
-	bh=l9j2EV2tpH6xu+YOscGGd1tAx9tRjSTtnP2IboucQDk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ns7JURp6Vnc/08P8Fbl5eM929/WgWEMyQcY/WwSW3I684BnoHWsjqiY2Ra9pB+r1LCk8h2Dbduntjzic9NZ8IEGPJI2LEGeqLtnZuYdWdkMaWOSBACLEUuZ+NmA3nU4A5RXLO78cwG6dJKoC6yRJlWMYq/hN5yU/dBB4O1yoC70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=F274qOZ5; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4550709f2c1so40134065e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753178401; x=1753783201; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B9mVbnLu7a1SKXyW78ldUvJa6+GK0T8z2V8R3kTNrD4=;
-        b=F274qOZ5agzEmzUN7yQ8cFkFMCdb65/i3OlE2Cqe/K81aZQPq4bsEADh9BMesOEQYD
-         IHV9tS82OFkQGqjEPCDUwryjMglTgw2w2WwREREAiCIFm0NtStNHmjMACdH56DBGdKQN
-         6tiok5z4R8gR+1UyVQTXd+uWYncS0lJ5qViXemn/N7Bb07q7I7gmGX7D/InNVNxuraVs
-         sTqLi4kGPPGwmFs2GoXuJbT820vpMpSCnTspHaP0D+0TNCrSThZrZz5PMubiFNCFOMv9
-         qm97iFQ8evKPh+J3mccoxx+WOpepkdbU3ORdnQb3fqinbV/7nWIJlMtIZnDbs848hqsD
-         UuFg==
+	s=arc-20240116; t=1753178426; c=relaxed/simple;
+	bh=ZFUos+Yvil8dSKOPIWe/qIIyl/GJfQwWc76Kh9pE+Uc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nXd1Hw7xLw1/gYMo/numqjbD6ze3NYllidkAITMaAR7wygNt1QssLLWrtME8lpiXdKE1PQ+eWBno5onoSLb5554COD/yH+69JcZm2mvdSuvHsbfn76kh0I6V0aX4Y/b7/Fuchcd+XNW8mqTwVHr6yz9VUzrdgMRDFkb05/AHgjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AK7xyzVG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M3UgLe005655
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:00:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZFUos+Yvil8dSKOPIWe/qIIyl/GJfQwWc76Kh9pE+Uc=; b=AK7xyzVGs/M75xcM
+	7HScBwdSKjWDXCteKO3Qijnnm6X5oKWJGNH6gmYAzu/OHpaxpgs5UeuuMFCbEKux
+	dIAWqIdMH3rb6IOSjOr09BtaCZI6bxnoWDsO8ki9M6nTdxOPVUsiNzzBlqF9Dzss
+	LSQZNJijCVFtLfJa0ODUa6LMN6/DSU12JlhUsnKZBxpjYqdG/RNPOU+g5YsNN3G4
+	/s14+QMbGb/rhg3sMCviiq0rpBkm0jMcZ+6r0Db9zaM1az0c+2p/sdQRCaw119b3
+	JYuqY9/6xKkV3+Lpt4FktOqkxO7HfzBqzl3oR2FoAulf20zfsNGGtWHTCdttq66n
+	KlTKWA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48047q92gd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:00:24 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-706f8cac6edso8496d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:00:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753178401; x=1753783201;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B9mVbnLu7a1SKXyW78ldUvJa6+GK0T8z2V8R3kTNrD4=;
-        b=MlbC2WZ7XQemd/1DCCsnreWJ4xQB4CYzrmjp0EXEd2I62lmdrHSSt9+vJDaMyU4kzz
-         arcHWX2Xx2r6zx0mPaYKsGjjqZ6y9LKG0SojBGaRQg0Lq5ph9f2ump+shNpQFdcIWsOo
-         0WsHbregMqvgTYs+/T1E1LxRfU/bz7Xovgp9IKJ07bXB14nFexerqb5wmAMQAkZZLm8a
-         WeYOOb0Fv5X3/6Ljky3CCPTTIIX+05erPgyjdhZqW+mgMbZQ2tW7AK8OdlMWyNSGW8zM
-         wP4GnkZnIdcoW5KD4hl6hT3yL/cE2+phZ8PyVY27XOhmNLXhgwRHkjz44FNEs+Nm0QVU
-         fQZg==
-X-Gm-Message-State: AOJu0Yy/Zlsb94hdH1je9tSUpmykfoKbuluqpXlE5o8OwyLWTOboGMJ2
-	Q2SBzCK8F0ZMfSTbXNb8jNSFzeAblJuFsGsiR9ugpKBVVes07M/nj0AH21qJdta8afs=
-X-Gm-Gg: ASbGncs9KWi0bbqADAcsLtQPF9DW6s0jQi+XvpujQk/wTsL2TCku6REPq2i2a+csLOk
-	cgu/0Svptc8X10hdn1Z80jvmp0gIVgzhTkyp2RaLMIvlrytOpYfYdy56h0Gry+rLE4KM7jUlOKl
-	GeI60/e+Gto8P4MKvB7eS8JHInvIgfrgtwT4sDJj8tJJGi1MEmqzS4IIjpZo59f5nK906VjzYQA
-	zJD89IXxs8Oh5GFfHjS7SnPAQWVfhCRGwLYMuakVwcE5dQEB+08MqtowoKMqO9qk2yZputAexuS
-	x//7DenBwOmqA//4O3z/W4DrQP7XFmEaTULZ8mcgPmS3oTRkqRHGhwi54/Ke9Nr9O+Vp4tIvgde
-	W2FFWN1IWwgoCiDV1b3h/mJn0FZ1AXX49Ujnrx7/RSFldCYz/HRQOG407RbWgK8LaGZG3Z5VBWE
-	M=
-X-Google-Smtp-Source: AGHT+IGcJyJZcZl6JmFdEcmEQZt5L5wILaf0S4QQxyjYW5ekrqujhnwASeqFRVCxYUAXxFw93P/L3A==
-X-Received: by 2002:a05:6000:4b09:b0:3b5:f168:5e60 with SMTP id ffacd0b85a97d-3b61b0f1eadmr11797144f8f.19.1753178400603;
-        Tue, 22 Jul 2025 03:00:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:bce4:725d:6922:d1ba? ([2a01:e0a:3d9:2080:bce4:725d:6922:d1ba])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e88476csm189714485e9.21.2025.07.22.02.59.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 03:00:00 -0700 (PDT)
-Message-ID: <84eea632-02d8-4b7f-a4ca-36ce7159a170@linaro.org>
-Date: Tue, 22 Jul 2025 11:59:59 +0200
+        d=1e100.net; s=20230601; t=1753178423; x=1753783223;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZFUos+Yvil8dSKOPIWe/qIIyl/GJfQwWc76Kh9pE+Uc=;
+        b=wnoZxumkbl9tOLB65k6P21zhTNQrigQRSsZNYEAO3IQm9zviZ86BLXET8na2MwXfad
+         QHkVKGfKGiVsBW7anjz/hPOqyuSTj1dU+zp3fSaWTKa1q5DI2kpf7ZQYCh/JOKQRv1YM
+         GZSSP2+x9dabMJ7MSQEoeyWG8CuLZ7PknEqVFTBMBECXf0JET5GiSWVZHI2ZcSbuza9u
+         xDTjkw0xOEsD1vE9qanIOxaofOog87YaRfXm8zTRoheDLM20wcfk3YGDrg0ydOEAwYXw
+         K2LdArm0Dj3b9u14midkmsX/FwFTPaz00JG7kB00UUdUy6iVLtD3qSJXvOcWFUrt9Ug4
+         lWlA==
+X-Forwarded-Encrypted: i=1; AJvYcCXLh0DLcqeX8MEk+Daxa06yvoGljAPQF+EcigGn6g8B4Nei4zYtJ7/oadmmx4A9Y7V2Io1otOX9+xBpTHBm@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnIOC2E2V6jjdT5zBHUuoDRkpAJA2E/Qyso+8qE1BQHPlnLj1U
+	rgEBN2gnoJhvGDwPHNsMq4NV6MTFeJBBFmV+42o4FOV4v+O81vv9S1RzDBEd8kU1kRjQxjWdy+x
+	IU6o+8654sy0u1bnHsxhePU8MEtO2XWIWFr3AhSKc4Hdawlh4VqrPEZ0I/XSMhPaBrHvau3KN7P
+	spryWQqq+ddQ4Ib9wz6GBUQlcsMRj35AjI6QZHkKBf4IM=
+X-Gm-Gg: ASbGncuXG6e0nP3cHHd2XEkdmiNktRBB4lFX9sNITbtBsxkk7eJI++9yuvgZ7S07v5V
+	lFNWNG0uSmf1HGkycpoTnuvh0PXvDqf2XVY3IOQExUB9RmvTBqL55HAMaOIKWUddML/OlhLFIGw
+	4kD51O8d8yubSnr/ZEQkeE8A==
+X-Received: by 2002:a05:6214:d8d:b0:704:f7d8:efe9 with SMTP id 6a1803df08f44-706eb97e401mr41624856d6.24.1753178423050;
+        Tue, 22 Jul 2025 03:00:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnslX1INMW1ZcfY8C65651NT2OJbOZR/zoQ6vqkmc1Rh6IlkIlO7GZRBmqwzeh82/rHsXodp0l07CU5wDGjxc=
+X-Received: by 2002:a05:6214:d8d:b0:704:f7d8:efe9 with SMTP id
+ 6a1803df08f44-706eb97e401mr41624056d6.24.1753178422401; Tue, 22 Jul 2025
+ 03:00:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
- <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
- <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
- <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
- <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
- <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
- <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
- <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
- <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
- <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
- <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
- <3UXVZ6ANM9mDjVdMV4SXsiIx_pT3S1lp3RC_Q7mh_o7jF2dpYsni1Sl2TAWv6OCMCRTFmi9aE6BxDquGkOnwEg==@protonmail.internalid>
- <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
- <57501e81-7e9c-4cb1-9a37-18307d1e06ca@linaro.org>
- <33d76d7f-ab14-4e76-8ffb-eb370901a046@linaro.org>
- <4edefe21-27b6-4884-befa-ddb451bb9376@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <4edefe21-27b6-4884-befa-ddb451bb9376@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250721-eud_mode_manager_secure_access-v6-1-fe603325ac04@oss.qualcomm.com>
+ <2025072141-anointer-venus-d99f@gregkh>
+In-Reply-To: <2025072141-anointer-venus-d99f@gregkh>
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 15:30:11 +0530
+X-Gm-Features: Ac12FXyseMee9ZgXxpNxNQGaZuoVfGDn4Cm07lYWSuBy4v2nvFb9hxkyxtZvFQw
+Message-ID: <CAPHGfUOsk4BjhvGiN-b0UP-JZ48UvGeKFU=dhb=KOAvo8NCPZQ@mail.gmail.com>
+Subject: Re: [PATCH v6] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
+ secure calls
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA4MiBTYWx0ZWRfXwkVoiwBkPAkL
+ HLvIYJGd+qmu9DTFm2dxXdRbO5WvlmtgFiPo96gCbaaWRwwV66a1yHlK/m+Hq08xbxFELgM2vze
+ FRGVTkVm0QEKp3CC4f7qeHCovq8fkEFF8tpVHhLG8X7XQBTQ+LXqxAhqC1Rgg8EnGYV09B8m8nz
+ tQ6+mDa6CvGMN/2sFBvoqArMmZNaQpQU7wF2pGkQjfDrQEjomrMGvPHf4dqHasW4veDFGjkbAzu
+ ehFdLVaBF0sQmtHLxEC9nkADut0Eoq9I6L765lN0dO94SlMcNehQc+p1UTnl6Ckvm1fo4jqzhhh
+ 9Wm5AJbavnSaNIuuQo+lRZ5YwVDdaCeEA1WVbEtBYG1s1tODXaGJczGANbRZs5J/UUwcWdGcyrM
+ xzY3RaqcRafd5MYXAqjGf8+OwFBJ+DKx5DtYFrVVqrgcPndc8SvaZUBLX3XoWdhj3J6XSYhc
+X-Proofpoint-ORIG-GUID: tettLkUcGbHfFyH6dC5cuYWHAa21BPNy
+X-Proofpoint-GUID: tettLkUcGbHfFyH6dC5cuYWHAa21BPNy
+X-Authority-Analysis: v=2.4 cv=IrMecK/g c=1 sm=1 tr=0 ts=687f6138 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=ag1SF4gXAAAA:8 a=HSf_CmxJb-FKQ9LhJsQA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+ a=iYH6xdkBrDN1Jqds4HTS:22 a=Yupwre4RP9_Eg_Bd0iYG:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_01,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=774 phishscore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220082
 
-On 22/07/2025 11:08, Bryan O'Donoghue wrote:
-> On 22/07/2025 09:32, Neil Armstrong wrote:
->> The whole key point here is the combo mode, as I understood the combo mode feature
->> makes the PHY lanes available as 2 separate streams, like if you got 2 "controllers"
->> attached to the same PHY. So in fact, the PHY should have a single node, but 2 PHY
->> interfaces in combo mode.
->>
->> This makes all this controller/phy model very complex to handle and add a lot of
->> logic in the camss side. Moving the "csiphy" as an independent media device that
->> can declare up to 2 endpoints in combo mode makes things much simpler, and allows
->> us to attach each "csiphy" stream to any "controller" side of camss.
-> 
-> I think there should be a generic extension to PHY/linux-media to support that instead of something Qualcomm specific.
+On Mon, Jul 21, 2025 at 12:23=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Mon, Jul 21, 2025 at 12:08:41PM +0530, Komal Bajaj wrote:
+> > EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+> > as read-only for HLOS, enforcing access restrictions that prohibit
+> > direct memory-mapped writes via writel().
+>
+> What is "HLOS"?
+>
 
-Can you point out what's missing ? AFAIK it's more a matter of proper representation of all
-the CAMSS components with a proper ports/endpoint graph design that adding new kernel APIs.
-
-Neil
-
-> 
-> The first task is qcom/CAMSS specific which is separate the CSIPHYs out from the CAMSS block - done in this series and do so in a way that doesn't break the existing ABI - done in the context of adding Hamoa/x1e.
-> 
-> The second step should be to extend the existing linux-media and PHY API to support multiple sensors on the same CSIPHY in a generic way.
-> 
-> If you want to ship me some hardware, I'll help.
-> 
-> ---
-> bod
-
+By HLOS, I meant operating system running at EL1. Do you want me to
+change this in the patch?
 
