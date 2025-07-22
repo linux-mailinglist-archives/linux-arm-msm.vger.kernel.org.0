@@ -1,262 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-66094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F08D2B0DB2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:44:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35F49B0DB62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:49:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2362E176774
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:44:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56B84177FC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 13:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9BFE2E9EDA;
-	Tue, 22 Jul 2025 13:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6BAC28AB11;
+	Tue, 22 Jul 2025 13:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Of93aJyQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aua7JZUA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1915028CF4A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DE51A01B9;
+	Tue, 22 Jul 2025 13:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753191864; cv=none; b=ejmxHxqIZI9pRyCD/Wwf2MaK7hAg8R/6XY+HX8AlKUWCTU3iBsEpMVMpGVB+s+Ic8CWyCo8HOLrr2VW0K+U9067ibHRCcQomb0uZp+vwOqlLHDnuJBi9DQ/MCy9Izb4dvzhyMPF+wp6bmLxb/OX3HUINm5JvyDJRksg9fxGP1n0=
+	t=1753192131; cv=none; b=UWhqKmA4FNjlbIGKL4aCHjiZa17vsRwZTeIinJqXVWt/5PgPOnQ3R9px+g/WUElce5wL+GIuZFeSGXPCTnQ35e5Z1P0e4LEMhQDDCBODWfB1xY6DjvknB+xcBtLJeBgwxI8aULjE6jr7uYco3I3y+HRNq+0vTDUKK2mO4OokJwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753191864; c=relaxed/simple;
-	bh=dTywX+BFLFdP4+hIWj9tRp0IJ9gnnMfS5H4sld7dZvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DrF7FJchxUp3VdOfDxfM3907+xRBQ+7ISO4x4te6fJR1YYhDWtz6brYB9NqD9dkDdiWNiMjVqGHNr3gZ5H4Y+XEbygTEukbXNAqabAXbGdEHkoJSe466vhd47FYga3uk48+IDT4mvbajRdMduj767V1gDBebxvje0xqbsd0kq5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Of93aJyQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7LTf0013263
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/PlvjBmBNhRqz0BnasHFhjw6
-	BKLI8rWtueB1348TmAU=; b=Of93aJyQ8B2IXq//kHIuNs5oNAeHAckqmlzzEHin
-	JB0jbnxK3HwqmVrHsXdArPWFtS5InJJECABp1JqgOORgL/j51qy9VArRt/ZqegY7
-	SRXubWmx6w4Ca6cx60eifdX/A6beIlp2D9WPZSHC3R9A0aI0KRADO8OF3K/uGbg6
-	xnelwe9XrpQ1rA1wqz8L2sclzfUaBBp1hNSBcvmZdzz8PcxkT+6dD9iJfze8djQt
-	chkRh1WJpqmcvOdijECtCl+fHhCvFt7+BgcAVx6TcFLsC2z40n14TNybb1T7L7y4
-	0Eu76qghAovYfV294L5ZFHuqm1ERp1Dc82PxjHmIcW20Dg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3emdew-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 13:44:22 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e33d32c501so1266506785a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 06:44:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753191861; x=1753796661;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1753192131; c=relaxed/simple;
+	bh=1jvLzi+PABW8D5dB5D3oS0wH9SR2ZfgvF0LVM3mA5VI=;
+	h=From:Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:
+	 References:In-Reply-To; b=TbmL3tdrqd3hv0CAghEfNqpNwKthpESHAtWSyZtptbZxIK3gMhN2cJYv0aaGfQNz8i1ABlX/uRgLkEDK8s/oOuKnWSZvoY91HN0flCcaqYSqxIs5QHkZLL/1Wzdphxrqy6LWdBY5iCVLaipM0w7XCQ+LbTrSytadjBdPdF/M3Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Aua7JZUA; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-454f428038eso47687555e9.2;
+        Tue, 22 Jul 2025 06:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753192128; x=1753796928; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/PlvjBmBNhRqz0BnasHFhjw6BKLI8rWtueB1348TmAU=;
-        b=aOO5YN1wewNLtvD1UfEOvw7Nd4uWnR9FKEV8s8Mxnf61XLyF8NS9Cw5ieb5+PoOukE
-         jIl1WOFy9Rr7A1EyuoCAO8SIoBKVK5GyIdTAIuw83KzGDpGGXzD7mmTY8sGFQ+JZyphK
-         wRmoxaclT+FGRbUy14gQUU1WC7BODj5J37Di/YcQ4U5ANYANvO8glznBfnNqcZpc2R5o
-         KY4oo0IqDTEwJ6iQVqKhRRV/VjkhOMJfyMXKPJHGa4Tm6h1fltzeUaBOP5QiwjQIExzy
-         4rs4C6FbhfXe5+biA8HDcI7iM7Y9eNbn4PPv3NRjGULOmazwyOKvqXGfTDQmhuvduWWk
-         QRMg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVTDlLPcMhaPQbhbCuTy0Krlz2ZDkN2EEWVaSv6MWRLMLCYVGL69HnEhFHtTdB81CtuVszRsvAEg3Rm5s5@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUYTH8aTUR5b13myyoRIigFXe9MphIpWIPP5hDAUBRi2UQsbF7
-	VPovo5L3arBFIxi4hQIwGEGCJzrh80UcXHBftm1/UykHoYu5D2Wg7Zi5ajcBSBdBpR75Z4nQo7N
-	IfvbJIxssDEdngSCEpAl/0xYpqCjISoC4J/YzlKAabKpVmQkrpzQ2wzPlBuSug/h+JTWS
-X-Gm-Gg: ASbGnctZ2Cxi+bs7Zap+hWrVaHmdH14UIEJtrdbVX3VHdh1sTWXzOirLgAoOWDZDuiY
-	dNJWPAS0o3m8UejSsjBPBI2qKY2ezxHhO+BKwnwArc3apJ/TZeKenFrkeeR+4qJJPVNCTFIbOk+
-	CRIGUXDQSJEsIANHFCq8O9Bzb4cZZpkhPTr3FIxl1YTm7deRQVvXU3/OE9OCazSYipGHSZDFUTU
-	Nce8MmtgqcCus4n5BVvfW/xCp+DX/uHR75HrSXALeH/zGuz2EpYBM5zRC0JcDDpRHxwmkC3hriM
-	trNXnf85ndq3jc4Zxc63pT+GUhncya8GxiW+0TzoU+LZ/4PofkK/zvDoCYaMhyEzlUK4TPcji9U
-	Z4vMuQPN38dESx1FeX80t5XS/EvOSuR1Kfzl2e+fY92K8B+j3WD63
-X-Received: by 2002:a05:620a:d96:b0:7e6:2167:6fb with SMTP id af79cd13be357-7e6216707e1mr450345385a.57.1753191860627;
-        Tue, 22 Jul 2025 06:44:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJYjfAd2lPvfeopVnQTvfIiKF4FZMT25Jj8QNn5OT3bmUYHUVmlPAwFf/7JubdQINFF9syIw==
-X-Received: by 2002:a05:620a:d96:b0:7e6:2167:6fb with SMTP id af79cd13be357-7e6216707e1mr450339985a.57.1753191859973;
-        Tue, 22 Jul 2025 06:44:19 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-330a9109c31sm16373981fa.43.2025.07.22.06.44.17
+        bh=+ldRIZOo7b+ExrUWiM8bxC7vu6GZt+hWk+F7iitUy7Q=;
+        b=Aua7JZUAejOB0fhZc2esGbTDE+WtOmLUTjM9vuNg8+SmLf8uB+dtBETdFJFsRl8CSQ
+         fWNAtyhcm7MwtKND7NNdPAmNVo/P9QfFzVrPfNCm05sDG0Yyc5TPkrRMPu+JFw48fJYO
+         gkIL63Kd6+HN4u6tq+IM+b9y/26YaAI9ZfcOpZI+ltx9ZCguYS6LyhAtRM9Gm6RWIDDh
+         +3AsZCBeIXAFRNNn3n3JAm5QCLUjOOC9PHb8aGTMjsEhX+WRJgt/AiER5+NPc33jrsi2
+         u62C1uR1BBT7NGuNBal3Th39Ff1WMXT9FEJPHw037QHBgFi+oBUSQbEcGZytTsMGHWrR
+         jksA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753192128; x=1753796928;
+        h=in-reply-to:references:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+ldRIZOo7b+ExrUWiM8bxC7vu6GZt+hWk+F7iitUy7Q=;
+        b=EX1Q7cKHe1di/QVtylO0oNgkQPajKTxU3HurPB9qm4e4lxDAHArGRch8ILsuXRZSp1
+         q0NvWL5isNOr3KIqfbpZBM82IdztcaDNAm8AnqFevz2mt418JY4OZvkUGO6OUNtFBLJ/
+         kMcCbXHfSkPuWAJzS+MWtAImWAY7MbtZup50CMk73Zp1He7wxQ87NcZ2XOhMHXMvlWro
+         cl8inUqAJSYRGXuHw5GtHSGf7YH0oXxu8Y1GF52+RDteV+sAMbxqutO/sNjCSEJhvRDR
+         4sY7HhhEpgIPLrf31fby9W1gVj+urjDvm3rqEa9d3cvmNdl8y48eidIeTWl3k2W5/pez
+         1dyw==
+X-Forwarded-Encrypted: i=1; AJvYcCUImEnBc5737XxfnR1ZiTaH95tRf0y7ka9mTWZjpMsrfJT170Y3I9ifOxU+zT4TaOJygtHsSOA/MYC/mZm7bQ==@vger.kernel.org, AJvYcCUcztAvWa10n3WC5G+db81/wbkvCvWYtBivvIu6u6FkMDFw3Q8ZjVktkQ4HYNHamHZA79T+gRzMATPO@vger.kernel.org, AJvYcCUpSLM0rDLUYyFiIX+ebRXHlUIxwSgYphDvVvaOp0pseWoLCVI+FsB5KD51Lc03gp8V6jN0UTBDhgNqhbck@vger.kernel.org
+X-Gm-Message-State: AOJu0YxE40wi4e2uSq16UANiriI1p+gUMtD/X9kBpX0dwUwmS5X8AztS
+	8R49keNeande1ZsbdCNrVZz1zSCdsF69xZ4G3UvDHjQyhv3lB2iFFbsZ
+X-Gm-Gg: ASbGncsOzg1y/Lu+mmA6RMRt43CfQOhpN4N8JLa/+s21QSJ6n9apdsevzor9WYAhJPf
+	EbQ9fan3Qgpa546IM1fIjRkEtEXoLSt07QiMLVazr9HJRfmdRvG39pIXyS0stSw9lx6n1NIR4Ew
+	QlxJ9+BdAVdX+vlMi/PH5jyubklHeGsbRVGX+osm9LPKrkG0fTHrU7L0wVOSiUSZw+MXq5BMdjk
+	QDgKt1NA/KuUl2sPVrtLZjS8ep6NtKsrydk6MZ2MfSubaqqvkqxk4GQLT0mssLbG8SvzYmcCOfP
+	oY3bgYSjrCz4yqk9HEedVP/oNF4PG5+7D8UyPbmfcxDDMkhBvubzOpc3x3QqgGiEceO4NOAuGAb
+	gXXcuJT9lRzqafVsapGkj2/3hgWxk0/N0+trGYz7A22yst+uL4qrAJ0LuZwi0
+X-Google-Smtp-Source: AGHT+IHOsD2HonrK3ieI5Sd51hJX0fvzUE7WJgdLvFb4OsH0yW2r6mqQo7lyaumurv4xcpwqbOBCnQ==
+X-Received: by 2002:a05:600c:3496:b0:456:1b8b:b8c6 with SMTP id 5b1f17b1804b1-4562edaa066mr235088475e9.14.1753192127819;
+        Tue, 22 Jul 2025 06:48:47 -0700 (PDT)
+Received: from localhost (a95-94-245-170.cpe.netcabo.pt. [95.94.245.170])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-45863a131aasm17025115e9.2.2025.07.22.06.48.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 06:44:17 -0700 (PDT)
-Date: Tue, 22 Jul 2025 16:44:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/17] drm/msm/a6xx: Set Keep-alive votes to block IFPC
-Message-ID: <jvn44gmttkidyy4emnz6mytqqjbwltlxibywfr6bfbqjfbq35e@fuvvefesqbzw>
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-8-9347aa5bcbd6@oss.qualcomm.com>
+        Tue, 22 Jul 2025 06:48:47 -0700 (PDT)
+From: Rui Miguel Silva <rmfrfs@gmail.com>
+X-Google-Original-From: "Rui Miguel Silva" <rui.silva@linaro.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250720-ifpc-support-v1-8-9347aa5bcbd6@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: usotjw4iWPUp_W985wf8IgeYiBEEI6ZC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDExMiBTYWx0ZWRfXx265HGxHOhtd
- Te7ptLyD88QQNv6Hpvho2hx5loXknLoYRIjlnEAx8GkeZYiHVXyvm9C6Kfst4R0a1+rdc6tyGOO
- HavvGWAETzakUU8W+x8IozTbN3H5TzeQgC44J8tWPnNJQMd25gmHLfQkKtzMMl5Z1mydSgkUs7V
- 35tggLGTBZO57261kNhxZd7DUSQAtQ6kMxJlopGfjD1sXvb6/X6S6+ntOyBKcv0VUNKhaX2RMVX
- YLuFSDPR//WX44UYSoNn0n1987khDNK6XqLOnEWxHspsOL8pKGx0OgDi4BI/O8kOVaZmLn+BzGm
- h02LMWJNNodgG5o+5uueWUYYXu+J3c2EmZ7lgLDBvt9bPEwKpilSu1JP223LlPsekrqZ18YRFXb
- Ym6O7M3fnfVV02yjN0zpAdWsStMz8tRvJleymGhGgPUAoqjUFlSWUajT4cgZFWyAQN4TbAQu
-X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=687f95b6 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=kzfAnjQGA3Um0d4qlLMA:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: usotjw4iWPUp_W985wf8IgeYiBEEI6ZC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507220112
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 22 Jul 2025 14:48:46 +0100
+Message-Id: <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
+To: "Neil Armstrong" <neil.armstrong@linaro.org>, "Johan Hovold"
+ <johan@kernel.org>, "Christopher Obbard" <christopher.obbard@linaro.org>
+Cc: "Douglas Anderson" <dianders@chromium.org>, "Jessica Zhang"
+ <quic_jesszhan@quicinc.com>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, <dri-devel@lists.freedesktop.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, "Rui
+ Miguel Silva" <rui.silva@linaro.org>, "Abel Vesa" <abel.vesa@linaro.org>,
+ <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
+ Lenovo T14s Gen6
+References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org> <aCw9pYehCdfXXeiR@hovoldconsulting.com> <aG-QyF12rGY55gcG@hovoldconsulting.com> <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
+In-Reply-To: <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
 
-On Sun, Jul 20, 2025 at 05:46:09PM +0530, Akhil P Oommen wrote:
-> Set Keepalive votes at appropriate places to block IFPC power collapse
-> until we access all the required registers. This is required during gpu
-> IRQ handling and also during preemption.
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 26 +++++++++++++++++---------
->  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 ++++++++++++++++++++
->  2 files changed, 37 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 8c004fc3abd2896d467a9728b34e99e4ed944dc4..6770f0363e7284e4596b1188637a4615d2c0779b 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1752,8 +1752,6 @@ static void a6xx_cp_hw_err_irq(struct msm_gpu *gpu)
->  
->  static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
->  {
-> -	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> -	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->  	struct msm_ringbuffer *ring = gpu->funcs->active_ring(gpu);
->  
->  	/*
-> @@ -1765,13 +1763,6 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
->  	if (gpu_read(gpu, REG_A6XX_RBBM_STATUS3) & A6XX_RBBM_STATUS3_SMMU_STALLED_ON_FAULT)
->  		return;
->  
-> -	/*
-> -	 * Force the GPU to stay on until after we finish
-> -	 * collecting information
-> -	 */
-> -	if (!adreno_has_gmu_wrapper(adreno_gpu))
-> -		gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 1);
-> -
->  	DRM_DEV_ERROR(&gpu->pdev->dev,
->  		"gpu fault ring %d fence %x status %8.8X rb %4.4x/%4.4x ib1 %16.16llX/%4.4x ib2 %16.16llX/%4.4x\n",
->  		ring ? ring->id : -1, ring ? ring->fctx->last_fence : 0,
-> @@ -1810,9 +1801,24 @@ static void a7xx_sw_fuse_violation_irq(struct msm_gpu *gpu)
->  	}
->  }
->  
-> +static void set_keepalive_vote(struct msm_gpu *gpu, bool on)
+Hey Neil,
 
-a6xx_set_keepalive_vote()
+On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
 
-> +{
-> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +
-> +	if (adreno_has_gmu_wrapper(adreno_gpu))
-> +		return;
-> +
-> +	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, on);
-> +}
-> +
->  static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
->  {
->  	struct msm_drm_private *priv = gpu->dev->dev_private;
-> +
-> +	/* Set keepalive vote to avoid power collapse after RBBM_INT_0_STATUS is read */
-> +	set_keepalive_vote(gpu, true);
-> +
->  	u32 status = gpu_read(gpu, REG_A6XX_RBBM_INT_0_STATUS);
->  
->  	gpu_write(gpu, REG_A6XX_RBBM_INT_CLEAR_CMD, status);
-> @@ -1849,6 +1855,8 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
->  	if (status & A6XX_RBBM_INT_0_MASK_CP_SW)
->  		a6xx_preempt_irq(gpu);
->  
-> +	set_keepalive_vote(gpu, false);
-> +
->  	return IRQ_HANDLED;
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> index 5b0fd510ff58d989ab285f1a2497f6f522a6b187..1c8ec1911010c00a000d195116fc950c4d947cac 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> @@ -136,6 +136,21 @@ static void preempt_disable_postamble(struct a6xx_gpu *a6xx_gpu)
->  	a6xx_gpu->postamble_enabled = false;
->  }
->  
-> +/*
-> + * Set preemption keepalive vote. Please note that this vote is different from the one used in
-> + * a6xx_irq()
-> + */
-> +static void set_keepalive_vote(struct msm_gpu *gpu, bool on)
+> On 10/07/2025 12:07, Johan Hovold wrote:
+>> Hi Chris (and Neil),
+>>=20
+>> On Tue, May 20, 2025 at 10:30:29AM +0200, Johan Hovold wrote:
+>>=20
+>>> On Wed, Apr 02, 2025 at 03:36:31PM +0100, Christopher Obbard wrote:
+>>>> The Snapdragon Lenovo T14s Gen6 can be bought with a number of differe=
+nt
+>>>> panels. This patch series adds support for the OLED model which has a
+>>>> Samsung ATNA40YK20 panel.
+>>>>
+>>>> With this patch series the backlight of the OLED eDP panel does not
+>>>> illuminate since the brightness is incorrectly read from the eDP panel
+>>>> as (to be clear this is not a regression). This is fixed in [0].
+>>>>
+>>>> [0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-p=
+anel-brightness-v6-1-84ad1cd1078a@linaro.org/
+>>>
+>>> It would be good to get OLED support for the T14s merged. Are you
+>>> planning on sending another revision of this series?
+>>=20
+>> No reply for over a month. Do you intend to respin these or should
+>> someone else take over?
+>>=20
+>> Neil, do you have the OLED version now?
+>
+> I'm not sure, how do I determine that ? Is there something specific in th=
+e type number ?
 
-a6xx_set_preempt_keepalive_vote();
+Yes, yours is the OLED version, the exact models stated above.
 
-> +{
-> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +
-> +	if (adreno_has_gmu_wrapper(adreno_gpu))
-> +		return;
-> +
-> +	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_PWR_COL_PREEMPT_KEEPALIVE, on);
-> +}
-> +
->  void a6xx_preempt_irq(struct msm_gpu *gpu)
->  {
->  	uint32_t status;
-> @@ -176,6 +191,8 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
->  
->  	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->  
-> +	set_keepalive_vote(gpu, false);
-> +
->  	trace_msm_gpu_preemption_irq(a6xx_gpu->cur_ring->id);
->  
->  	/*
-> @@ -302,6 +319,9 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
->  
->  	spin_unlock_irqrestore(&ring->preempt_lock, flags);
->  
-> +	/* Set the keepalive bit to keep the GPU ON until preemption is complete */
-> +	set_keepalive_vote(gpu, true);
-> +
->  	a6xx_fenced_write(a6xx_gpu,
->  		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_smmu_iova[ring->id],
->  		BIT(1), true);
-> 
-> -- 
-> 2.50.1
-> 
+Cheers,
+     Rui
 
--- 
-With best wishes
-Dmitry
+>
+> Neil
+>
+>>=20
+>>>> Christopher Obbard (3):
+>>>>        arm64: dts: qcom: x1e80100: add epd hpd pinctrl
+>>>>        arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
+>>>
+>>>>        arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
+>>>
+>>> Strictly speaking you could have posted this last patch on it's own as
+>>> it doesn't depend on adding the hpd pinctrl.
+>>=20
+>> Johan
+
+
+
 
