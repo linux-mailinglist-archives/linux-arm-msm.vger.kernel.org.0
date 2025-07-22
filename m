@@ -1,276 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-66023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2CA6B0D577
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:13:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16CCEB0D581
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:14:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 025141C251A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 09:13:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C780617EF1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 09:13:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6211A2DECA0;
-	Tue, 22 Jul 2025 09:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65D182DC33C;
+	Tue, 22 Jul 2025 09:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SzVKdjg4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cOmEVJ0E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A682DC33F;
-	Tue, 22 Jul 2025 09:12:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BE2DC33B;
+	Tue, 22 Jul 2025 09:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753175537; cv=none; b=VAxUruPkI425wC2e9ITBOAfwJuKSg77Q/rU+CBdAWMfLm41ZyyjkC0i6Bad96sFU9WhycZty5vCgIB+Zb/EYIEa9G+rgUlU3fcvp7yT4rEC10V41PnI/xeCTx2m108qQR+HDnWOLUQHFmNuNxqEzu3dzoIAYw/KsOpc9xh1OqqA=
+	t=1753175628; cv=none; b=CZXEal/Y8v5ad6VJgHZEiX44kym7paw5qkoOLq0wHV0+2uMoRL/18TEpbdJeSTwNYfLCu/nlxgfHlZQHeo3HtevwlZsvIuXAV6J4eJE+kTc+QEmW0GafTpkgvUJ9cxzAG2UdC9wdSLY6gVxgigOxJYmW1YDci7MDBjUqFLa0rmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753175537; c=relaxed/simple;
-	bh=6l1b7InLD/CO33AXqnUGPVR6oq5wTfk704YDcX5Oxxw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EZveseNk9bgOG39Psed14skNdhkyFHWTCZFFhFEQh29hI6YoHsraj3b/iUBSvsD+0xBBL/BpuB4++JCpGnCknorBmn7rsGSoBwz9MNdzfLg1O210T5evKUJ8cBYRfhqkrRB7sgRK6n1PkFwidGTe9fVL9MLLia5D8t11JN/uBnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SzVKdjg4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M7WdWu009373;
-	Tue, 22 Jul 2025 09:12:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=jGU4UszTVjl
-	07iZLTGJkGYdlRfex/TCVBYWysgVcCd8=; b=SzVKdjg4bWVQV31RejnegVX1PMk
-	PMk6Hi0LtfEiqdQAZ7nmc0ParxfzOb13PUXtdb8uaeH1v2+dhDsJI+cgp3gd10G5
-	T4BjLgteo7N6BnUvhlCJXVUFcey4PIKcR8K84DfekwZaluJNLFGDMbif3aTHHyLQ
-	ensXp2dU+j8ntGkTHGod1NdsubhAglxyduGDAagl0LOnyrLy6KBz5YHds5g/Ea6D
-	QwAn5jgVEKtoeLi297IQFdnSmv6shDpqDuJ3heSzEMSGIp4nDLclB7CNXWZvl8/m
-	w6/j75JgjCGtV96FB/JiuW9ERFMPcKyldGxOMraM8XThWDc0+I0p6xy7myw==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045vy6um-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Jul 2025 09:12:04 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 56M9C2q8028242;
-	Tue, 22 Jul 2025 09:12:02 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4804em6vqv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Jul 2025 09:12:02 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56M9C15i028229;
-	Tue, 22 Jul 2025 09:12:02 GMT
-Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 56M9C1aW028212
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Jul 2025 09:12:01 +0000
-Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 4635958)
-	id 9538B40D28; Tue, 22 Jul 2025 17:12:00 +0800 (CST)
-From: Wenbin Yao <quic_wenbyao@quicinc.com>
-To: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-        robh@kernel.org, bhelgaas@google.com, sfr@canb.auug.org.au,
-        qiang.yu@oss.qualcomm.com, quic_wenbyao@quicinc.com,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc: krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-        quic_mrana@quicinc.com, quic_cang@quicinc.com,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v5 3/3] arm64: dts: qcom: x1e80100-qcp: enable pcie3 x8 slot for X1E80100-QCP
-Date: Tue, 22 Jul 2025 17:11:51 +0800
-Message-Id: <20250722091151.1423332-4-quic_wenbyao@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250722091151.1423332-1-quic_wenbyao@quicinc.com>
-References: <20250722091151.1423332-1-quic_wenbyao@quicinc.com>
+	s=arc-20240116; t=1753175628; c=relaxed/simple;
+	bh=KRsv54cqTUpZUL0BV5Mw8aYJWJw4xyvwVfuzWnaYFFw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mKp0flWG7GxalF6q0j4kNfwri3wTs8mRX/Ufk7nhJf7BT1+z9FYqqaP4P07vvSfpLSHS9i1RfM6LWA318y4Lj7g1PNvVC0mPkPXhg8qIoiFh+kuijv+LxU7diAWyW4/DYrlm90L+OSWsYA+lC+9aBmADmuumdeypxqMz7hYf8eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cOmEVJ0E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F381C4CEEB;
+	Tue, 22 Jul 2025 09:13:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753175627;
+	bh=KRsv54cqTUpZUL0BV5Mw8aYJWJw4xyvwVfuzWnaYFFw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cOmEVJ0EyAV7KzOnn44MHaZXzjabPuXnLbXJtS8kOPS+b5lDpbBBRKGa/M97/WlY1
+	 1Q98Z6G4XpXd1kqr8NnpSGv9BMH61xsKdEPLbCZOS1nT6tQPHEsu4Hr+CYFofu67rK
+	 e1Ks+Sh36r6+AYcm95gB8GhWL60Ps9a3VBInhsBiJgFLIHxF3ZCJiHjy76WXLx/yoD
+	 HTiwUDWJ2vmsdJ8zR79A+bmYzKqr5VelKclSNLg/i+n4hNbnYilDDTicOrkWMZMt86
+	 +dddeWgfGDaKCFP9OZ4dFFvoddjukFj1VcQYprPmkOwZA/hv16zZghomWEdnwZUY3a
+	 vSiiiyNcm38sQ==
+Message-ID: <e15df8ba-f058-4eb2-919c-bc327290e66a@kernel.org>
+Date: Tue, 22 Jul 2025 11:13:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=687f55e4 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=I4_V4ABcpVmACwlpt_QA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: t3NXWUxDLtnjKOFrKloTpIu8AYpNJ5kI
-X-Proofpoint-ORIG-GUID: t3NXWUxDLtnjKOFrKloTpIu8AYpNJ5kI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA3NSBTYWx0ZWRfX33nhxujHZd5R
- UhW6Yair9D4HsMKS3jYVeej7m7vetsvaHCmNE4IzqFm2d4jC83V2cKIGqXSixZH6q5j8lmtjApN
- IWi/nTz5C3oHtS7bBRooN6H1Q9a/JNgnICdjnu1m6VFAmSwfxyCrsOK+Q8k2pakh1w3KXBjMzVs
- hB3yCsc9HKE73kpgUX0x7s79fOvNb+yACacWfRMZbi6vzOYfAqzgMNkz1RtcBbhtO26WqFs1sGy
- d3J4bK2cf0VoQBhyh4IFvaM2kSCxZPnwjfUsLnZQJ8zU28uRQwy+12jS6zH7bDrhxs5bV5xuGk4
- 6rP3CTmyO7qZevlrJS9ClGukT3nQjLXoIFHoVURPn1pG2DlsC2MNwoIjWjZJ8ikA7KZoEpKvnxu
- ZSZL8fKhBBn0x9Xukc8JgpYGksXccM5losEhI9AU82B0tJRbK5fZCiEb9tBrPjbxVFKcc8S3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_01,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxlogscore=878 clxscore=1011 mlxscore=0 adultscore=0
- suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507220075
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/13] dt-bindings: display/msm: Document DP on QCS615
+To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
+ fange.zhang@oss.qualcomm.com, quic_lliu6@quicinc.com,
+ quic_yongmou@quicinc.com
+References: <20250722-add-displayport-support-for-qcs615-platform-v2-0-42b4037171f8@oss.qualcomm.com>
+ <20250722-add-displayport-support-for-qcs615-platform-v2-1-42b4037171f8@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250722-add-displayport-support-for-qcs615-platform-v2-1-42b4037171f8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+On 22/07/2025 09:22, Xiangxu Yin wrote:
+> The QCS615 platform is based on the SM6150 SoC. Since the DP hardware is
+> shared with SM6150, the compatible string qcom,sm6150-dp is used to
+> represent the DP controller on QCS615.
 
-Add perst, wake and clkreq sideband signals and required regulators in
-PCIe3 controller and PHY device tree node. Describe the voltage rails of
-the x8 PCI slots for PCIe3 port.
 
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 118 ++++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+No, you cannot use other SoC compatible for different one. Look at
+qcs615.dtsi and board DTS - there is nothing saying that this is the
+same die.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 4dfba835a..71c44e37a 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -318,6 +318,48 @@ vreg_wcn_3p3: regulator-wcn-3p3 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_pcie_12v: regulator-pcie-12v {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_PCIE_12V";
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+
-+		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&pcie_x8_12v>;
-+		pinctrl-names = "default";
-+	};
-+
-+	vreg_pcie_3v3_aux: regulator-pcie-3v3-aux {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_PCIE_3P3_AUX";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pmc8380_3_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&pm_sde7_aux_3p3_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	vreg_pcie_3v3: regulator-pcie-3v3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_PCIE_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pmc8380_3_gpios 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&pm_sde7_main_3p3_en>;
-+		pinctrl-names = "default";
-+};
-+
- 	usb-1-ss0-sbu-mux {
- 		compatible = "onnn,fsusb42", "gpio-sbu-mux";
- 
-@@ -908,6 +950,59 @@ &mdss_dp3_phy {
- 	status = "okay";
- };
- 
-+&pm8550ve_8_gpios {
-+	pcie_x8_12v: pcie-12v-default-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		output-enable;
-+		output-high;
-+		bias-pull-down;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pmc8380_3_gpios {
-+	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		output-enable;
-+		output-high;
-+		bias-pull-down;
-+		power-source = <0>;
-+	};
-+
-+	pm_sde7_main_3p3_en: pcie-main-3p3-default-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		output-enable;
-+		output-high;
-+		bias-pull-down;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pcie3 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie3_default>;
-+	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3_phy {
-+	vdda-phy-supply = <&vreg_l3c_0p8>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3_port {
-+	vpcie12v-supply = <&vreg_pcie_12v>;
-+	vpcie3v3-supply = <&vreg_pcie_3v3>;
-+	vpcie3v3aux-supply = <&vreg_pcie_3v3_aux>;
-+};
-+
- &pcie4 {
- 	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-@@ -1119,6 +1214,29 @@ nvme_reg_en: nvme-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	pcie3_default: pcie3-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio144";
-+			function = "pcie3_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio143";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio145";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie4_default: pcie4-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio147";
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
