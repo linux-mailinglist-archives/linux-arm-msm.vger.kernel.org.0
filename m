@@ -1,128 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-65976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-65977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AEEEB0D049
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 05:29:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA443B0D097
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 05:48:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71008540E9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 03:29:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF39F16D14C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 03:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C71FD27380E;
-	Tue, 22 Jul 2025 03:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A17028CF6D;
+	Tue, 22 Jul 2025 03:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Edum0jjp"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="AArSDzSu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931BB22EF4;
-	Tue, 22 Jul 2025 03:28:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CDA273810;
+	Tue, 22 Jul 2025 03:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753154936; cv=none; b=USs7gsCOcjRW2UCCUJVKHZmb+K+qUtLkxnTC5hKFfXGvrjuLsoP2O6w6eOkVRPrYKwonNZCkLUsMsqHjroWKmhFhp5YURNpb0hWMHS60po2GS73F2RfouRdUxsAAViHzmH90Ar49tK8EjCiDONh7vDbQgfUzpjs+urJqD+nhI3A=
+	t=1753156071; cv=none; b=ts1XGtJVcPh6bddPYYzjrgScPb5bMSDplXC1RIOPllKBPW0QafONlscaBH9dgeHFirs+BCKTHnvOSjP/uNKa/BRgv7LX5xBkh5oHrhvoxtsZBPIEoqFW6ATqy0Ujx084mYNq7XAHD5/BsQjFBosR6qD8tEuHRA2H3xbrx3E8VC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753154936; c=relaxed/simple;
-	bh=kJw5y/pTKzs+28qiU9DcV11vaetOeUeIzA0KMoRkwUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A2jrxV716qxrFntqUGpMZJeitaJ81Rj6DDUcitdo2Kqfjo52fA8/7sgrNYwgLH4IfHYHRx42O7dT/XFPprmrvSENYRzKmw4TvY2sNgYwtXSUHP8e+8F04/G0LOabjOudprzEJKHoBWEartPkeYtJg5IKkaNE3RVsdHbiZYMxv7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Edum0jjp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46001C4CEEB;
-	Tue, 22 Jul 2025 03:28:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753154936;
-	bh=kJw5y/pTKzs+28qiU9DcV11vaetOeUeIzA0KMoRkwUw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Edum0jjpxzTw1Zcr2ZQfQ0YJBn/OKDz+KbEw5VRXLgEdjSdKnBi6XXMdg7DVQzqLG
-	 tMp8xDDOyh4+W99O6mWTg2zIOWBZB5A5cx84e6XAVUGo9Sx8uu7zpQuUKOU/LxLKYR
-	 tTFvO6bWDFg9nEGElUDe08AU+7CdAA9x/RtWYUSgPpIpNQ+OZuWZkx+VKVp0IKXVMT
-	 3Tvau/AomJ0IvUErTDQ72XDptrcqnAyiHhDYI6TM2zoxbqBRjkmqfGI4mZYLnvax6T
-	 7sJJsDhATA2CnSMSrQujEcNcv8YoLHbJeHEUpPieQES+as6qoCnnZYUEToAJaBzgN4
-	 ZmxVNXVja1bUw==
-Date: Mon, 21 Jul 2025 22:28:53 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org, 
-	mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	quic_rjendra@quicinc.com, taniya.das@oss.qualcomm.com, linux-clk@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
- Controller
-Message-ID: <digzi2kxw3aexslmyx3hspwjptrjm5yd4kzkgz6gg45inadmmr@6zerdpg5njdb>
-References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
- <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
- <28ea2b11-a269-4536-8306-185bf272bd60@kernel.org>
- <2yekmjqihkzsfjr223vepigfj4hfruleigguhrlekp6s7riuxk@ta5kghr2kafi>
- <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
+	s=arc-20240116; t=1753156071; c=relaxed/simple;
+	bh=VlZoKkXfILCyhXWvhcKL/QC8xzbbAYgtnW23SdG77m8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iDOQHAt9XtBV1VqNmN8PEn/dBsiJGVSUkBkQ19cbSzDQJKsHWQi38UjAuKUWG4NFVHW591j0d7YLa1LjYVmyTRq+x8BgIAHTb+fKRZkqrvbBM8k9AtTMP2b8C099pDqYIsv6ldq9ZnAMtWd1WrmcWO36vDEHhxl46qfE634Pafg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=AArSDzSu; arc=none smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M1C55d019819;
+	Tue, 22 Jul 2025 03:47:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=0vRilnNnXZdvoasg9Ce1BQpVV8hGMzrXKEEvgSPViTI=; b=
+	AArSDzSuQOfdjNlakSBXL0hlENtl2zmfH+TpcG41Lr/o5db6ls/Iw+TUHN2D+KyF
+	tTgk3gE81SnQ/GSL3ojVFU6AEbsGmV13oUlyqiuf4Pd5L1wVGTiKGnJ0XXDE5NK6
+	CuuPH70ADgYdWYX5Gbolqobhi2ipOw1DNqtiarW82urV4miISjF+Aesk0NyGeqTn
+	o+LN6fQ8ZgJnmBDiUP6A7WyBLBA/KtbAZtcHbbUcvLDb7DsKxuBc14MjD30fE8Aj
+	+bBJ8SFwBUEWyBOdTsRayPb28r5+fhHmmK9xlaGS4Xw+2quYdiI3Gd9V9pfx4zJ0
+	M1+yqfwqSeyqRyvBu/N7yw==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 480576m5vt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 22 Jul 2025 03:47:40 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 56M0F3XL038366;
+	Tue, 22 Jul 2025 03:47:39 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4801t8tean-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 22 Jul 2025 03:47:39 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56M3lZjH031915;
+	Tue, 22 Jul 2025 03:47:39 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 4801t8te8u-10;
+	Tue, 22 Jul 2025 03:47:39 +0000
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: mani@kernel.org, James.Bottomley@HansenPartnership.com, bvanassche@acm.org,
+        avri.altman@wdc.com, ebiggers@google.com, neil.armstrong@linaro.org,
+        konrad.dybcio@oss.qualcomm.com,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH V5 0/3] ufs: ufs-qcom: Align programming sequence as per HW spec
+Date: Mon, 21 Jul 2025 23:47:03 -0400
+Message-ID: <175315388541.3946361.263020629496331023.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250714075336.2133-1-quic_nitirawa@quicinc.com>
+References: <20250714075336.2133-1-quic_nitirawa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_05,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 suspectscore=0
+ bulkscore=0 malwarescore=0 adultscore=0 spamscore=0 mlxlogscore=615
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507220028
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDAyOCBTYWx0ZWRfXye+kLrXN52Cn
+ EOWvh+kr5Iaw3eG0Jy1YUmg6vFaRLKk8WfdHZI0V77HLEpRjNwOdI+gPVX+J+6mmLZ2lBicPiCd
+ zJG1/NVmT0k7IYQvVViYAWhdoZbznjfKUcphfbOkm37L+fdlaPwWHbQBGc82SGNNLws1c10fudY
+ O/bLKof/isWpHe6r3BP7TCxRAi68gUI5flP2hp8vyFXTjPQzMZzEo/LKF2SyCBW55yiCRf41PEl
+ NH1cK3bWSoEZF+fTRPQdCJuMR1vEXAnBu/dVWndgGdVd5NxvQ1BtMLnRUqKDp8eMqHnD+mUTOxy
+ Lc07gwBK/Xbw0aBicQGVID1dVdHML/GoEHFRXPOCOuSbtBIRijqJ1b1Oiwn/TmYsjUQKqHWhAgz
+ /0hMQ+g9pUU7OdsPUTrfOEHQCp4Qgt3b7YlGiw8GQhZgSwLpUlnezL5RQWSc1NUl+n8d3ET8
+X-Authority-Analysis: v=2.4 cv=doDbC0g4 c=1 sm=1 tr=0 ts=687f09dc b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=lFOT_AtsMLTQ2iPLmPAA:9
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:12062
+X-Proofpoint-GUID: w_XxEuUbPxr4JrUdnduw_VYbu86WyTNK
+X-Proofpoint-ORIG-GUID: w_XxEuUbPxr4JrUdnduw_VYbu86WyTNK
 
-On Sun, Jul 20, 2025 at 02:18:19PM +0200, Krzysztof Kozlowski wrote:
-> On 20/07/2025 05:46, Bjorn Andersson wrote:
-> > On Wed, Jul 16, 2025 at 06:28:15PM +0200, Krzysztof Kozlowski wrote:
-> >> On 16/07/2025 17:20, Pankaj Patil wrote:
-> > [..]
-> >>> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-> >>> new file mode 100644
-> >>> index 000000000000..a1a6da62ed35
-> >>> --- /dev/null
-> >>> +++ b/drivers/clk/qcom/gcc-glymur.c
-> >>> @@ -0,0 +1,8623 @@
-> >>> +// SPDX-License-Identifier: GPL-2.0-only
-> >>> +/*
-> >>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> >>
-> >> Missing date.
-> >>
-> > 
-> > Per updated company guidelines we don't want a year here. Please let us
-> > know if you have any concerns with this.
-> > 
-> I remember the guidelines and they were about publishing your code, not
-> about contributing to open-source projects. And whatever you have
-> internally does not cover us at all. You can have internal guideline
-> saying you need to buy me a beer or I need to buy you a beer. Does not
-> matter.
-> 
-> That above copyright statement without date does not adhere to expected
-> format. Explanation how this should be written:
-> 
-> https://www.gnu.org/licenses/gpl-howto.en.html#copyright-notice
-> 
-> The GPL-2.0 license in the kernel also uses date:
-> 
-> "Copyright (C) <year>  <name of author>    "
-> 
-> There is no option without date in the license or GPL faq. I am not a
-> lawyer, so no clue whether this is what we want, but I also should not
-> be my task to figure out whether different copyright statement is okay
-> or not. It's your burden.
-> 
+On Mon, 14 Jul 2025 13:23:33 +0530, Nitin Rawat wrote:
 
-It's the guidelines/directives from our lawyers that has been updated to
-not include the year. I will bring this back for confirmation.
-Thanks for the link.
-
-> Or drop the Copyright statement complete to avoid any questions.
+> This patch series adds programming support for Qualcomm UFS
+> to align with Hardware Specification.
 > 
+> In this patch series below changes are taken care.
+> 
+> 1. Enable QUnipro Internal Clock Gating
+> 2. Update esi_vec_mask for HW major version >= 6
+> 
+> [...]
 
-That I don't think we can do for new files.
+Applied to 6.17/scsi-queue, thanks!
 
-@Pankaj, please include the year as you resubmit this, until we get
-other clarification on how to proceed.
+[1/3] ufs: ufs-qcom: Update esi_vec_mask for HW major version >= 6
+      https://git.kernel.org/mkp/scsi/c/7a9d5195a7f5
+[2/3] scsi: ufs: core: Add ufshcd_dme_rmw to modify DME attributes
+      https://git.kernel.org/mkp/scsi/c/c49601642f95
+[3/3] ufs: ufs-qcom: Enable QUnipro Internal Clock Gating
+      https://git.kernel.org/mkp/scsi/c/5a6f304f39c2
 
-Regards,
-Bjorn
-
-> Best regards,
-> Krzysztof
+-- 
+Martin K. Petersen	Oracle Linux Engineering
 
