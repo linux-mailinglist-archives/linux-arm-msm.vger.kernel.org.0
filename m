@@ -1,286 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-66101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431A0B0DDDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAB32B0DDE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:20:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 16C5E188D07E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:15:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A6E31893210
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:15:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126E82ECE9C;
-	Tue, 22 Jul 2025 14:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 596A02ED14D;
+	Tue, 22 Jul 2025 14:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u7QRbGpK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28C22ECE94;
-	Tue, 22 Jul 2025 14:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB602ECEB8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 14:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193381; cv=none; b=bX4IX3MOQD7+feUjTAQJAhJ87D1/wn6S0tYxtuMFOjbp4/IewuWCOOKdQHWFqauWa11ly2VXHYuyeKLQ2l/Bat3WiT++mf31yESZ3Du+qn30jpFYiC8A7T5z8U06B/DdmyJ/w0kOxM3/AcUN7jqpUsaiAx+/pXsw8kZllbLFJlA=
+	t=1753193384; cv=none; b=qaySVPkkOFtKJ8RAk7gk369A/6M0cL8HfK1mezO/vD+GIYmvat9j2G9hjrDhy9icglG88qlwOeNYALPaSo9RPyM8ESeU17OVbC79mbpnUDx3K5l0Ikbjebk/9o0wPLLt4wkdoobN9fX5+EoV/UApO4M4FSsxCq11+7VIMMjjjRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193381; c=relaxed/simple;
-	bh=PQbJ9nekolxPAktW5mDMSSTldp2ptas8ZeWIr2Slddk=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GNWwjMDhXhj+EtA4ugYjQMd9yvxyDIaiJ/da8b1CT1FovFRkZMtCOVmp9pRqiYkLh1MW83/iDHFLkQr7DfLlKwN97mQhmISU+oyYOLWNGUxpPmVtLBB84dFvaLGLcNByBebl0sLaNgrEg83hi6TZ5wunjHwaFSzTGam5qxzYWVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.231])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bmfHZ0kkCz6H7XD;
-	Tue, 22 Jul 2025 22:08:10 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
-	by mail.maildlp.com (Postfix) with ESMTPS id 17F4B140446;
-	Tue, 22 Jul 2025 22:09:34 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 22 Jul
- 2025 16:09:32 +0200
-Date: Tue, 22 Jul 2025 15:09:30 +0100
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-CC: <sboyd@kernel.org>, <jic23@kernel.org>, <dlechner@baylibre.com>,
-	<nuno.sa@analog.com>, <andy@kernel.org>, <arnd@arndb.de>,
-	<gregkh@linuxfoundation.org>, <srini@kernel.org>, <vkoul@kernel.org>,
-	<kishon@kernel.org>, <sre@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-	<u.kleine-koenig@baylibre.com>, <linux-arm-msm@vger.kernel.org>,
-	<linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-phy@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-	<kernel@collabora.com>, <wenst@chromium.org>, <casey.connolly@linaro.org>
-Subject: Re: [PATCH v2 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
- and devm variant
-Message-ID: <20250722150930.00000a2f@huawei.com>
-In-Reply-To: <20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
-References: <20250722101317.76729-1-angelogioacchino.delregno@collabora.com>
-	<20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+	s=arc-20240116; t=1753193384; c=relaxed/simple;
+	bh=4XRWNH6L4gNhJL4fjOK/VGXKWPQRjU+iw51yGIRXI7M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eb9zSxIniP8t5SP4QRI0EGlXz4d0U+t9hSzwca7Z9wQupkyfaj1Lo/iiDE2IY71R4MaZcU0iDmJBgliH3f11HEg9H8QqsWALyx3uWnKb4se9joJulCULb3YrZJO6Tg4apNmgOVbjVrGsSGmCgUT/BRsdVh6R/D3KSb/tgqkXFQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u7QRbGpK; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-75ab31c426dso2964734b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 07:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753193382; x=1753798182; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nYA6BM6RuT7QlZka2P+M+8292j7neabTFGbKg/RuP8A=;
+        b=u7QRbGpK/56BVZ8DwvD/zK2Pt6Zht3D56J5V4wgDVnT3X7nosZ9ODdV63CPWA6ephc
+         MrZNKNnCrGy12PU3v7DCbtkmSoOVlSzKRuHYqjUHGXBeYAq71KWlmckAXvMXnHZF5MQ9
+         gQSRL5vq8NaeVMq2/btL1NMajziBD6LdCYIx1vNIbpElRzrcXxn9JHMa42aijsgtdK7t
+         ls6PqnQM4Tn7cUSnMsG3TbPXUjfg0NzxKgDX8GxyWJny2BaTsNwcOgpxN4iNVagbar+X
+         8VhOLb0Uh4KHuj4QMHAULhIlmN2lpJdR+2xEwrgeBx8DxF6JISbXAq7zbFxobpKtbLre
+         cUsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753193382; x=1753798182;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nYA6BM6RuT7QlZka2P+M+8292j7neabTFGbKg/RuP8A=;
+        b=jt46Yt9Im2jp4PJp9zfus1PqmrXNslQsVMK9dj4QMw/jSpAcY4yWlkMOoS/v0Ehpj0
+         vUrsvjeY1Pl2j34DEzZf6vLizj3wwvELie0xRURxlzHbUSc2axHXvkYwfHnms32yl/1h
+         LuFrxmpVhPGNUGapg0Ub5wyxXt10gUlCjhFP7diHryJ/NZ8iMG05bC9ua0VBwT3cicMT
+         QVKNBOHoXaRawCZM0fr/f6QVPRmEYJLiJZsTWNRmV2kcDdPMYVqy5ee0dD0L6tH/08GK
+         tiAsHZnnUBDOReoVYAj+kHsDE1xV0IRqSLCMRStDjte9kweWtZuMTJQ5dMz8RHGFt8T+
+         5b4A==
+X-Forwarded-Encrypted: i=1; AJvYcCXV01cCO0fiWb9TQoxh8wS84PxCYh/SgY/jsj3MBYKUFhi4F/bCP4kexeeP6t+b77mpzJZWLRKSrBOrruri@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHYOE9+rl3S3NmCMOAEcY7tRCCtDwh6GzqL27crksY6Rw/rG64
+	0gLSu/k8Kmx5Ai+ohWzVC8kTrVMqWBp8evwgfeifMKEgYw3nejIdV63lOBsUR3buJDjVr8LcMIq
+	dhcNLZfBMu3pwlGgh2uh6SClnQGPV0PZt7EzRWWEykw==
+X-Gm-Gg: ASbGncuWgFtM2o/41RjDCZy5w/G5ThIB875FYlsD1Q6rjQjMuKMVVOAhQwBV3Ie6XQp
+	v55SwhvNYC7zDNGcAGlEdjBHii/ATqVmpcUX5lZJRYnNxl9eG3g+qIOBDpYqHLitjRn3VaxPcGb
+	YUFs5pUgvaOgAQakQG8uWq1DgnkFIIiHXMUmGyVf0MHNxDP4mBf4QCaxw1ud8z0pJ+DDh0ziuj0
+	aqcVcMHIH2DNldQ9Ss=
+X-Google-Smtp-Source: AGHT+IGFU4VWxlYJEYbLdchAtv1j2H85pNZPMbrhLD3/A1/ePknqXU8Y1b1MkhV+cBTSRgsa7pHyElQVUGu1ZTiaT3M=
+X-Received: by 2002:a05:6a00:3d53:b0:748:3385:a4a with SMTP id
+ d2e1a72fcca58-75724e89802mr35964790b3a.23.1753193381756; Tue, 22 Jul 2025
+ 07:09:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- frapeml500008.china.huawei.com (7.182.85.71)
+References: <20250714063109.591-1-jie.gan@oss.qualcomm.com> <20250714063109.591-9-jie.gan@oss.qualcomm.com>
+In-Reply-To: <20250714063109.591-9-jie.gan@oss.qualcomm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Tue, 22 Jul 2025 15:09:30 +0100
+X-Gm-Features: Ac12FXwqHXk4-Uo6jXL4Zzw0JmKbOZ72WWBz7IbZfbByNQJn0Pkpcd6_VysI01c
+Message-ID: <CAJ9a7VhLXrdP_CPQPgAYTAGWJfsVUa9SG9Bzv9dLtFzR4nFROg@mail.gmail.com>
+Subject: Re: [PATCH v3 RESEND 08/10] coresight: tmc: add a switch buffer
+ function for byte-cntr
+To: Jie Gan <jie.gan@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
+	Mao Jinlong <quic_jinlmao@quicinc.com>, Jie Gan <quic_jiegan@quicinc.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 22 Jul 2025 12:13:11 +0200
-AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> wrote:
+Hi,
 
-> Some devices connected over the SPMI bus may be big, in the sense
-> that those may be a complex of devices managed by a single chip
-> over the SPMI bus, reachable through a single SID.
-> 
-> Add new functions aimed at managing sub-devices of a SPMI device
-> spmi_subdevice_alloc_and_add() and a spmi_subdevice_put_and_remove()
-> for adding a new subdevice and removing it respectively, and also
-> add their devm_* variants.
-> 
-> The need for such functions comes from the existance of	those
-> complex Power Management ICs (PMICs), which feature one or many
-> sub-devices, in some cases with these being even addressable on
-> the chip in form of SPMI register ranges.
-> 
-> Examples of those devices can be found in both Qualcomm platforms
-> with their PMICs having PON, RTC, SDAM, GPIO controller, and other
-> sub-devices, and in newer MediaTek platforms showing similar HW
-> features and a similar layout with those also having many subdevs.
-> 
-> Also, instead of generally exporting symbols, export them with a
-> new "SPMI" namespace: all users will have to import this namespace
-> to make use of the newly introduced exports.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This buffer swap code looks OK in principle. The ETR is stopped,
+memory synced and set to be read.
+See other comments inline.
+
+On Mon, 14 Jul 2025 at 07:31, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
+>
+> Switching the sysfs_buf when current buffer is full or the timeout is
+> triggered and resets rrp and rwp registers after switched the buffer.
+> Disable the ETR device if it cannot find an available buffer to switch.
+>
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 > ---
->  drivers/spmi/spmi-devres.c | 23 +++++++++++
->  drivers/spmi/spmi.c        | 83 ++++++++++++++++++++++++++++++++++++++
->  include/linux/spmi.h       | 16 ++++++++
->  3 files changed, 122 insertions(+)
-> 
-> diff --git a/drivers/spmi/spmi-devres.c b/drivers/spmi/spmi-devres.c
-> index 62c4b3f24d06..7e00e38be2ff 100644
-> --- a/drivers/spmi/spmi-devres.c
-> +++ b/drivers/spmi/spmi-devres.c
-> @@ -60,5 +60,28 @@ int devm_spmi_controller_add(struct device *parent, struct spmi_controller *ctrl
+>  .../hwtracing/coresight/coresight-tmc-etr.c   | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> index 2b73bd8074bb..3e3e1b5e78ca 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> @@ -1287,6 +1287,58 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+>         return ret ? ERR_PTR(ret) : drvdata->sysfs_buf;
 >  }
->  EXPORT_SYMBOL_GPL(devm_spmi_controller_add);
->  
-> +static void devm_spmi_subdevice_remove(void *res)
+>
+> +static bool tmc_byte_cntr_switch_buffer(struct tmc_drvdata *drvdata,
+> +                                       struct ctcu_byte_cntr *byte_cntr_data)
 > +{
-> +	spmi_subdevice_remove((struct spmi_subdevice *)res);
 
-Why the cast?  Implicit casts are fine for void * to any other pointer type
-so
-	spmi_subdevice_remove(res);
-should be fine.
+This entire function should be in one of the byte_cntr source files,
+not in the main etr files. Please keep byte cntr code separate as far
+as possible
 
+> +       struct etr_buf_node *nd, *next, *curr_node, *picked_node;
+> +       struct etr_buf *curr_buf = drvdata->sysfs_buf;
+> +       bool found_free_buf = false;
+> +
+> +       if (WARN_ON(!drvdata || !byte_cntr_data))
+> +               return found_free_buf;
+> +
+> +       /* Stop the ETR before we start the switching process */
+> +       if (coresight_get_mode(drvdata->csdev) == CS_MODE_SYSFS)
 
+Can this function be called if the mode is not CS_MODE_SYSFS?
+
+> +               __tmc_etr_disable_hw(drvdata);
+> +
+> +       list_for_each_entry_safe(nd, next, &drvdata->etr_buf_list, node) {
+> +               /* curr_buf is free for next round */
+> +               if (nd->sysfs_buf == curr_buf) {
+> +                       nd->is_free = true;
+> +                       curr_node = nd;
+> +               }
+> +
+> +               if (!found_free_buf && nd->is_free && nd->sysfs_buf != curr_buf) {
+> +                       if (nd->reading)
+> +                               continue;
+> +
+> +                       picked_node = nd;
+> +                       found_free_buf = true;
+> +               }
+> +       }
+> +
+> +       if (found_free_buf) {
+> +               curr_node->reading = true;
+> +               curr_node->pos = 0;
+> +               drvdata->reading_node = curr_node;
+> +               drvdata->sysfs_buf = picked_node->sysfs_buf;
+> +               drvdata->etr_buf = picked_node->sysfs_buf;
+> +               picked_node->is_free = false;
+> +               /* Reset irq_cnt for next etr_buf */
+> +               atomic_set(&byte_cntr_data->irq_cnt, 0);
+> +               /* Reset rrp and rwp when the system has switched the buffer*/
+> +               CS_UNLOCK(drvdata->base);
+> +               tmc_write_rrp(drvdata, 0);
+> +               tmc_write_rwp(drvdata, 0);
+
+This cannot possibly be correct. RWP / RRP are pointers into the
+system memory where the ETR stores data.
+
+> +               CS_LOCK(drvdata->base);
+> +               /* Restart the ETR when we find a free buffer */
+> +               if (coresight_get_mode(drvdata->csdev) == CS_MODE_SYSFS)
+> +                       __tmc_etr_enable_hw(drvdata);
+
+What happens if the ETR is not restarted? Using __tmc_etr_disable_hw()
+is correct for this use case, but if you do not restart then the extra
+shutdown that would ordinarily happen in tmc_etr_disable_hw() does not
+occur. How is this handled in the rest of the update?
+
+> +       }
+> +
+> +       return found_free_buf;
 > +}
-
->  MODULE_LICENSE("GPL");
->  MODULE_DESCRIPTION("SPMI devres helpers");
-> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-> index 3cf8d9bd4566..62bb782b2bbc 100644
-> --- a/drivers/spmi/spmi.c
-> +++ b/drivers/spmi/spmi.c
-> @@ -19,6 +19,7 @@
->  
->  static bool is_registered;
->  static DEFINE_IDA(ctrl_ida);
-> +static DEFINE_IDA(spmi_subdevice_ida);
->  
->  static void spmi_dev_release(struct device *dev)
+> +
+>  static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
 >  {
-> @@ -31,6 +32,18 @@ static const struct device_type spmi_dev_type = {
->  	.release	= spmi_dev_release,
->  };
->  
-> +static void spmi_subdev_release(struct device *dev)
-> +{
-> +	struct spmi_device *sdev = to_spmi_device(dev);
-> +	struct spmi_subdevice *sub_sdev = container_of(sdev, struct spmi_subdevice, sdev);
-> +
-> +	kfree(sub_sdev);
-> +}
-> +
-> +static const struct device_type spmi_subdev_type = {
-> +	.release	= spmi_subdev_release,
-> +};
-> +
->  static void spmi_ctrl_release(struct device *dev)
->  {
->  	struct spmi_controller *ctrl = to_spmi_controller(dev);
-> @@ -90,6 +103,19 @@ void spmi_device_remove(struct spmi_device *sdev)
->  }
->  EXPORT_SYMBOL_GPL(spmi_device_remove);
->  
-> +/**
-> + * spmi_subdevice_remove() - Remove an SPMI subdevice
-> + * @sub_sdev:	spmi_device to be removed
-> + */
-> +void spmi_subdevice_remove(struct spmi_subdevice *sub_sdev)
-> +{
-> +	struct spmi_device *sdev = &sub_sdev->sdev;
-> +
-> +	device_unregister(&sdev->dev);
-> +	ida_free(&spmi_subdevice_ida, sub_sdev->devid);
+>         int ret = 0;
+> --
+> 2.34.1
+>
 
-Why not make the ida free part of the release? If not
-the device_unregister could (I think) result in a reference
-count drop and freeing of sub_sdev before you dereference it here.
+Regards
 
+Mike
 
-> +}
-> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_remove, "SPMI");
-> +
->  static inline int
->  spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
->  {
-> @@ -431,6 +457,63 @@ struct spmi_device *spmi_device_alloc(struct spmi_controller *ctrl)
->  }
->  EXPORT_SYMBOL_GPL(spmi_device_alloc);
->  
-> +/**
-> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
-> + * @sparent:	SPMI parent device with previously registered SPMI controller
-> + *
-> + * Returns:
-> + * Pointer to newly allocated SPMI sub-device for success or negative ERR_PTR.
-> + */
-> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
-> +{
-> +	struct spmi_subdevice *sub_sdev;
-> +	struct spmi_device *sdev;
-> +	int ret;
-> +
-> +	if (!sparent)
-> +		return ERR_PTR(-EINVAL);
-
-Is this protecting against a real possibility? Feels like something went
-very wrong if you are allocating a subdevice of 'nothing'.
-If it's just defensive programming I'd drop it.
-
-> +
-> +	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
-> +	if (!sub_sdev)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
-
-> +	if (ret < 0)
-> +		goto err_ida_alloc;
-> +
-> +	sdev = &sub_sdev->sdev;
-> +	sdev->ctrl = sparent->ctrl;
-> +	device_initialize(&sdev->dev);
-
-Read the device_initialize() documentation for what you need to do
-if an error occurs after this point. Specifically the last 'NOTE'.
-
-
-> +	sdev->dev.parent = &sparent->dev;
-> +	sdev->dev.bus = &spmi_bus_type;
-> +	sdev->dev.type = &spmi_subdev_type;
-> +
-> +	sub_sdev->devid = ret;
-> +	sdev->usid = sparent->usid;
-> +
-> +	ret = dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
-> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
-> +	if (ret)
-> +		goto err_set_name;
-> +
-> +	ret = device_add(&sdev->dev);
-> +	if (ret) {
-> +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
-> +			dev_name(&sdev->dev), ret);
-> +		put_device(&sdev->dev);
-> +		return ERR_PTR(ret);
-> +	}
-> +
-> +	return sub_sdev;
-> +
-> +err_set_name:
-> +	ida_free(&ctrl_ida, sub_sdev->devid);
-> +err_ida_alloc:
-> +	kfree(sub_sdev);
-> +	return ERR_PTR(ret);
-> +}
-> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
-> +
->  /**
->   * spmi_controller_alloc() - Allocate a new SPMI controller
->   * @parent:	parent device
-> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
-> index 28e8c8bd3944..7cea0a5b034b 100644
-> --- a/include/linux/spmi.h
-> +++ b/include/linux/spmi.h
-> @@ -69,6 +69,22 @@ int spmi_device_add(struct spmi_device *sdev);
->  
->  void spmi_device_remove(struct spmi_device *sdev);
->  
-> +/**
-> + * struct spmi_subdevice - Basic representation of an SPMI sub-device
-> + * @sdev:	Sub-device representation of an SPMI device
-> + * @devid:	Platform Device ID of an SPMI sub-device
-> + */
-> +struct spmi_subdevice {
-> +	struct spmi_device	sdev;
-
-Having something called a subdevice containing an instance of a device
-does seem a little odd.  Maybe the spmi_device naming is inappropriate after
-this patch?
-
-> +	unsigned int		devid;
-> +};
-> +
-> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent);
-> +void spmi_subdevice_remove(struct spmi_subdevice *sdev);
-> +
-> +struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
-> +							 struct spmi_device *sparent);
+--
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
