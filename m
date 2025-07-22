@@ -1,335 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-66046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3471B0D725
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:15:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAA69B0D763
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:36:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA0C33B6667
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:15:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 604801C24E5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:36:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5966C2E5410;
-	Tue, 22 Jul 2025 10:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825EC2DC35C;
+	Tue, 22 Jul 2025 10:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="HDMkXMLE"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k/02Fx6v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418742E4271;
-	Tue, 22 Jul 2025 10:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EAC2BEFE3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753179216; cv=none; b=mz2CNHW9NtD1NFPF0MmL3WjyfrCMOm2NKYLTazEoZy+7CMPAD1Oxksw2w11p/WTXjDzhM9rbczEEPVJkH9Oj/wvX4BlLL4DgoU51bJFl55GE8zKz2vbak5eN1yzjvrOj6xR8o7PLlKrJpATlIqVkGpT677c//iTDIGec7KWaOks=
+	t=1753180571; cv=none; b=fOXy5gQICpQIZojccIsbfFec8WGXbpadU6ogSvUAmU9HwVQmc6eOq+QwpR8H+pA5emRR/N+guijadYKo+A7D98RWi7LFvkYywVl6kZLg5TVBZcHeGsTWCiQn5ERE0nRP3WHbe9Xcu2q+LjOurPB6oUG6B6n9APBjASKtZH9Rk58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753179216; c=relaxed/simple;
-	bh=wDe4pGSIzfeJpl9n15NTs3K1CA3vRyhvLXXpR8wPThM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzHH1GbUkcfwqqOSrSEMyabaLQMU1PQ76AJaif+Ksg1Fz1Iu9Db+gKeWloFIVZrxTPnPqW+xjjwncUZv15VxjIbMn6K8jociLjqMeX7RGCyuetrKPD/N68fDKytIK/qX/efE32zrheFTywgAECe+FZg3ae8VAhuKvK8iQX1VzgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=HDMkXMLE; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1753179212;
-	bh=wDe4pGSIzfeJpl9n15NTs3K1CA3vRyhvLXXpR8wPThM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDMkXMLEugfN6BcAJWned35tNTjeu2P3ClBx9PV3H7sZN6B9XwAAlhU5H239POLEA
-	 u7mzOE0wADoOxkgk6fw51ikpSav0rEADWmSfDMpTw3ozbifuXmoQDoFvD9AZ4dIAtb
-	 czSQv+9umpqV/p5Qg/4M5cGbCT/HRrA04M3PyIfFHxlsuuCe+gEu7u62EY1F/cOX9O
-	 jDQAL8rlqreG3gsSPunKzkE5whxFKaLI1m6odtswR21Y8Z6ckvBbuxKHj5h5+zhXAD
-	 LVb3gYRHw3HZuv9z2HwwMKgwdIh6ZjJ87gBnJJ19Ii/tVnhwcpgXcBzLJi4EOcrElR
-	 rVTGlLlCasxHg==
-Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7E45917E1540;
-	Tue, 22 Jul 2025 12:13:31 +0200 (CEST)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: sboyd@kernel.org
-Cc: jic23@kernel.org,
-	dlechner@baylibre.com,
-	nuno.sa@analog.com,
-	andy@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org,
-	vkoul@kernel.org,
-	kishon@kernel.org,
-	sre@kernel.org,
-	krzysztof.kozlowski@linaro.org,
-	u.kleine-koenig@baylibre.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	kernel@collabora.com,
-	wenst@chromium.org,
-	casey.connolly@linaro.org
-Subject: [PATCH v2 7/7] iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
-Date: Tue, 22 Jul 2025 12:13:17 +0200
-Message-ID: <20250722101317.76729-8-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250722101317.76729-1-angelogioacchino.delregno@collabora.com>
-References: <20250722101317.76729-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1753180571; c=relaxed/simple;
+	bh=Es8rvtELoL3Efx2Ylf7dLNukFAd8ZQcCqR7sAg8srHw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H2fBr5Oh2dJGN8HeeIOHFutfJJ6FD4SbDoPn1FVKXAokwHjObS/LGc+yJlkpJRw9L7iXbk4u+bIkjRrt66Q83KW5AXePKo1aB7vQ0ArFciFWl+LBtJQJ/FASUSPofQVJ5KXSSmCjRx7HG34YTy3DLQqE6DSwpS8YaZ9zFf1U0Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k/02Fx6v; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4ab3855fca3so210161cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753180568; x=1753785368; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=h2sNENsiUXWZHkoFKe8iTv45YtKCJ7msVi+m+Dnfo0w=;
+        b=k/02Fx6vepOfFDyb7Tt0a0bgAXJiaNqe57wr/K45wcFqtcnHhZY4g2IR7+90OnZBtY
+         gEMMrJGqxSHa0G69LT9tQYOI+rtGKpHvdjclQ09JA4oxQgx2MAEB5QdcklxO4IjJCinO
+         ccCAfyDUPrS8QhJ7/bvIQvG8578iu31Xa3NnSo7vrcQ/FD/ujrsnLuh4A2DRbYABeu77
+         KiIpzyX+79cUU8cK7Rss5JgWOJuJ4UFMNZt3bIWwL92btvkW3Fo9jrYtbyy5UxdkFPkh
+         eJ8G3ipQsgiXScZ/CuxCWKD48tIR92eEVfweyuvIOzwfoaD2w5XGqGD0iGNFruVAnWrq
+         5Khg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753180568; x=1753785368;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h2sNENsiUXWZHkoFKe8iTv45YtKCJ7msVi+m+Dnfo0w=;
+        b=c7fe916bNuD865D25/QoQH2qfcOFM+JgSYxyYppj0b6bvNq7Woz6okO9mOG1cYom0W
+         Z1Z4Awlh0cYXoxC0pTqNgYYFRgOmuno+hHym5EEpTHvkLEwjYEZD1oPxJct5mxevn5/7
+         Z+Zlai5fVBUGITIP7qiiPpdAN8VSfDGNM6oBVIlvE/JFsEDsEX7tnTV14Pkh/Ucr4Zng
+         8edS+ojG8yc1+OevuPka4FKBmNG7SW6MOCUqVFRLR76U5ykAqDAacGDY9wmwlBN8Eh48
+         5U+aVzqKQL4VmQ1mXY9m6XgIYqlzVx7neD5UT907Uv0CULQuuJUhoMoZE8SMxp1Z74LI
+         6T6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXwUrNKlDCnENIMdd0TrRYDKfXQQf7k5yhrCR4OD9nGd+K7f0Yw0MSFf3ch1RorcX0wIi4dcKTQ5QvLbbIU@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTnFVa5rZO8vjehEW+yjBepgGHjsvhfGLRV4v7EypsKt4SZtVi
+	BkC634pAKmX4tVCkw62a8vkSFQjhIRaK1j0lAYGgS+xGn59zNeSbeZj8N40wAwTnGQPxfZnNnnR
+	GanoBnoQv95zpKBufPkyBWB7r6os/7yzk8ZLtxCOI
+X-Gm-Gg: ASbGncuuGAMwhU3k61RTSzwFqe11wX96kGH6eZd2PS9HZto+eYvpR88hgPGOaNuJEFE
+	CiptKbZ3/jdkW0xT87+MS8svLHPQiy2PVxqmDhYpvVVzd+J96SMq+zYkcCPke5MPGHOUHoY9QaE
+	m831fNh5dkoZftOR2O5GgfCefXZLfvc0OxsiDCiiuAS2HeVFGEGRKD6PXuusz3UpQfhhYhr3qUH
+	n85336Ps2hXxtMd8ok+NNxlWxFFbVcI5VZf
+X-Google-Smtp-Source: AGHT+IEvqsS58GzqZAYQQgB7BqYiKCpYg+Q8XL/j8/io4oCnmPzNh5X8oKUHq2YYykzKu368BpAYr2MBwji0MjUioSA=
+X-Received: by 2002:a05:622a:1dc6:b0:48a:ba32:370 with SMTP id
+ d75a77b69052e-4ae5cc6a1d5mr4457581cf.10.1753180567987; Tue, 22 Jul 2025
+ 03:36:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-12-tabba@google.com>
+ <8340ec70-1c44-47a7-8c48-89e175501e89@intel.com> <aH7KghhsjaiIL3En@google.com>
+In-Reply-To: <aH7KghhsjaiIL3En@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Tue, 22 Jul 2025 11:35:31 +0100
+X-Gm-Features: Ac12FXxlfQG4ofD1slov5tvKwsHTWTtSvMayWg2TOJeHuE2UtcTH2RrcWmi_y7k
+Message-ID: <CA+EHjTwAVSRU=3FHqV5xrvi5-RfhYDhpoAoYuaU7atSuOv_r_Q@mail.gmail.com>
+Subject: Re: [PATCH v15 11/21] KVM: x86/mmu: Allow NULL-able fault in kvm_max_private_mapping_level
+To: Sean Christopherson <seanjc@google.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-This driver doesn't need to add any register base address to any
-regmap call anymore since it was migrated to register as a SPMI
-subdevice with its own regmap reg_base, which makes the regmap
-API to automatically add such base address internally.
+On Tue, 22 Jul 2025 at 00:17, Sean Christopherson <seanjc@google.com> wrote:
+>
+> On Fri, Jul 18, 2025, Xiaoyao Li wrote:
+> > On 7/18/2025 12:27 AM, Fuad Tabba wrote:
+> > > From: Ackerley Tng <ackerleytng@google.com>
+> > >
+> > > Refactor kvm_max_private_mapping_level() to accept a NULL kvm_page_fault
+> > > pointer and rename it to kvm_gmem_max_mapping_level().
+> > >
+> > > The max_mapping_level x86 operation (previously private_max_mapping_level)
+> > > is designed to potentially be called without an active page fault, for
+> > > instance, when kvm_mmu_max_mapping_level() is determining the maximum
+> > > mapping level for a gfn proactively.
+> > >
+> > > Allow NULL fault pointer: Modify kvm_max_private_mapping_level() to
+> > > safely handle a NULL fault argument. This aligns its interface with the
+> > > kvm_x86_ops.max_mapping_level operation it wraps, which can also be
+> > > called with NULL.
+> >
+> > are you sure of it?
+> >
+> > The patch 09 just added the check of fault->is_private for TDX and SEV.
+>
+> +1, this isn't quite right.  That's largely my fault (no pun intended) though, as
+> I suggested the basic gist of the NULL @fault handling, and it's a mess.  More at
+> the bottom.
+>
+> > > Rename function to kvm_gmem_max_mapping_level(): This reinforces that
+> > > the function's scope is for guest_memfd-backed memory, which can be
+> > > either private or non-private, removing any remaining "private"
+> > > connotation from its name.
+> > >
+> > > Optimize max_level checks: Introduce a check in the caller to skip
+> > > querying for max_mapping_level if the current max_level is already
+> > > PG_LEVEL_4K, as no further reduction is possible.
+> > >
+> > > Acked-by: David Hildenbrand <david@redhat.com>
+> > > Suggested-by: Sean Christoperson <seanjc@google.com>
+> > > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> > > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > > ---
+> > >   arch/x86/kvm/mmu/mmu.c | 16 +++++++---------
+> > >   1 file changed, 7 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> > > index bb925994cbc5..6bd28fda0fd3 100644
+> > > --- a/arch/x86/kvm/mmu/mmu.c
+> > > +++ b/arch/x86/kvm/mmu/mmu.c
+> > > @@ -4467,17 +4467,13 @@ static inline u8 kvm_max_level_for_order(int order)
+> > >     return PG_LEVEL_4K;
+> > >   }
+> > > -static u8 kvm_max_private_mapping_level(struct kvm *kvm,
+> > > -                                   struct kvm_page_fault *fault,
+> > > -                                   int gmem_order)
+> > > +static u8 kvm_gmem_max_mapping_level(struct kvm *kvm, int order,
+> > > +                                struct kvm_page_fault *fault)
+> > >   {
+> > > -   u8 max_level = fault->max_level;
+> > >     u8 req_max_level;
+> > > +   u8 max_level;
+> > > -   if (max_level == PG_LEVEL_4K)
+> > > -           return PG_LEVEL_4K;
+> > > -
+> > > -   max_level = min(kvm_max_level_for_order(gmem_order), max_level);
+> > > +   max_level = kvm_max_level_for_order(order);
+> > >     if (max_level == PG_LEVEL_4K)
+> > >             return PG_LEVEL_4K;
+> > > @@ -4513,7 +4509,9 @@ static int kvm_mmu_faultin_pfn_private(struct kvm_vcpu *vcpu,
+> > >     }
+> > >     fault->map_writable = !(fault->slot->flags & KVM_MEM_READONLY);
+> > > -   fault->max_level = kvm_max_private_mapping_level(vcpu->kvm, fault, max_order);
+> > > +   if (fault->max_level >= PG_LEVEL_4K)
+> > > +           fault->max_level = kvm_gmem_max_mapping_level(vcpu->kvm,
+> > > +                                                         max_order, fault);
+> >
+> > I cannot understand why this change is required. In what case will
+> > fault->max_level < PG_LEVEL_4K?
+>
+> Yeah, I don't get this code either.  I also don't think KVM should call
+> kvm_gmem_max_mapping_level() *here*.  That's mostly a problem with my suggested
+> NULL @fault handling.  Dealing with kvm_gmem_max_mapping_level() here leads to
+> weirdness, because kvm_gmem_max_mapping_level() also needs to be invoked for the
+> !fault path, and then we end up with multiple call sites and the potential for a
+> redundant call (gmem only, is private).
+>
+> Looking through surrounding patches, the ordering of things is also "off".
+> "Generalize private_max_mapping_level x86 op to max_mapping_level" should just
+> rename the helper; reacting to !is_private memory in TDX belongs in "Consult
+> guest_memfd when computing max_mapping_level", because that's where KVM plays
+> nice with non-private memory.
+>
+> But that patch is also doing too much, e.g. shuffling code around and short-circuting
+> the non-fault case, which makes it confusing and hard to review.  Extending gmem
+> hugepage support to shared memory should be "just" this:
+>
+> @@ -3335,8 +3336,9 @@ int kvm_mmu_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *fault,
+>         if (max_level == PG_LEVEL_4K)
+>                 return PG_LEVEL_4K;
+>
+> -       if (is_private)
+> -               host_level = kvm_max_private_mapping_level(kvm, fault, slot, gfn);
+> +       if (is_private || kvm_memslot_is_gmem_only(slot))
+> +               host_level = kvm_gmem_max_mapping_level(kvm, fault, slot, gfn,
+> +                                                       is_private);
+>         else
+>                 host_level = host_pfn_mapping_level(kvm, gfn, slot);
+>         return min(host_level, max_level);
+>
+> plus the plumbing and the small TDX change.  All the renames and code shuffling
+> should be done in prep patches.
+>
+> The attached patches are compile-tested only, but I think they get use where we
+> want to be, and without my confusing suggestion to try and punt on private mappings
+> in the hugepage recovery paths.  They should slot it at the right patch numbers
+> (relative to v15).
+>
+> Holler if the patches don't work, I'm happy to help sort things out so that v16
+> is ready to go.
 
-Since the iadc_{read,write,read_result}() functions now only do
-call regmap_{read,write,bulk_read}() and nothing else, simplify
-the driver by removing them and by calling regmap APIs directly.
+These patches apply, build, and run. I'll incorporate them, test them
+a bit more with allmodconf and friends, along with the other patch
+that you suggested, and respin v16 soon.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/iio/adc/qcom-spmi-iadc.c | 83 ++++++++++++--------------------
- 1 file changed, 30 insertions(+), 53 deletions(-)
-
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 985967c85bca..98ed28d74bda 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -113,77 +113,59 @@ struct iadc_chip {
- 	struct completion complete;
- };
- 
--static int iadc_read(struct iadc_chip *iadc, u16 offset, u8 *data)
--{
--	unsigned int val;
--	int ret;
--
--	ret = regmap_read(iadc->regmap, offset, &val);
--	if (ret < 0)
--		return ret;
--
--	*data = val;
--	return 0;
--}
--
--static int iadc_write(struct iadc_chip *iadc, u16 offset, u8 data)
--{
--	return regmap_write(iadc->regmap, offset, data);
--}
--
- static int iadc_reset(struct iadc_chip *iadc)
- {
--	u8 data;
-+	u32 data;
- 	int ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_read(iadc, IADC_PERH_RESET_CTL3, &data);
-+	ret = regmap_read(iadc->regmap, IADC_PERH_RESET_CTL3, &data);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
- 	data |= IADC_FOLLOW_WARM_RB;
- 
--	return iadc_write(iadc, IADC_PERH_RESET_CTL3, data);
-+	return regmap_write(iadc->regmap, IADC_PERH_RESET_CTL3, data);
- }
- 
- static int iadc_set_state(struct iadc_chip *iadc, bool state)
- {
--	return iadc_write(iadc, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
-+	return regmap_write(iadc->regmap, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
- }
- 
- static void iadc_status_show(struct iadc_chip *iadc)
- {
--	u8 mode, sta1, chan, dig, en, req;
-+	u32 mode, sta1, chan, dig, en, req;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_MODE_CTL, &mode);
-+	ret = regmap_read(iadc->regmap, IADC_MODE_CTL, &mode);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_DIG_PARAM, &dig);
-+	ret = regmap_read(iadc->regmap, IADC_DIG_PARAM, &dig);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CH_SEL_CTL, &chan);
-+	ret = regmap_read(iadc->regmap, IADC_CH_SEL_CTL, &chan);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CONV_REQ, &req);
-+	ret = regmap_read(iadc->regmap, IADC_CONV_REQ, &req);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+	ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_EN_CTL1, &en);
-+	ret = regmap_read(iadc->regmap, IADC_EN_CTL1, &en);
- 	if (ret < 0)
- 		return;
- 
-@@ -199,34 +181,34 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 
- 	/* Mode selection */
- 	mode = (IADC_OP_MODE_NORMAL << IADC_OP_MODE_SHIFT) | IADC_TRIM_EN;
--	ret = iadc_write(iadc, IADC_MODE_CTL, mode);
-+	ret = regmap_write(iadc->regmap, IADC_MODE_CTL, mode);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Channel selection */
--	ret = iadc_write(iadc, IADC_CH_SEL_CTL, channel);
-+	ret = regmap_write(iadc->regmap, IADC_CH_SEL_CTL, channel);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Digital parameter setup */
- 	decim = IADC_DEF_DECIMATION << IADC_DIG_DEC_RATIO_SEL_SHIFT;
--	ret = iadc_write(iadc, IADC_DIG_PARAM, decim);
-+	ret = regmap_write(iadc->regmap, IADC_DIG_PARAM, decim);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* HW settle time delay */
--	ret = iadc_write(iadc, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
-+	ret = regmap_write(iadc->regmap, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
-+	ret = regmap_write(iadc->regmap, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (IADC_DEF_AVG_SAMPLES)
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
- 	else
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, 0);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, 0);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -239,19 +221,19 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 		return ret;
- 
- 	/* Request conversion */
--	return iadc_write(iadc, IADC_CONV_REQ, IADC_CONV_REQ_SET);
-+	return regmap_write(iadc->regmap, IADC_CONV_REQ, IADC_CONV_REQ_SET);
- }
- 
- static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- {
- 	unsigned int count, retry;
- 	int ret;
--	u8 sta1;
-+	u32 sta1;
- 
- 	retry = interval_us / IADC_CONV_TIME_MIN_US;
- 
- 	for (count = 0; count < retry; count++) {
--		ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+		ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -267,11 +249,6 @@ static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- 	return -ETIMEDOUT;
- }
- 
--static int iadc_read_result(struct iadc_chip *iadc, u16 *data)
--{
--	return regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
--}
--
- static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- {
- 	unsigned int wait;
-@@ -296,7 +273,7 @@ static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- 	}
- 
- 	if (!ret)
--		ret = iadc_read_result(iadc, data);
-+		ret = regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
- exit:
- 	iadc_set_state(iadc, false);
- 	if (ret < 0)
-@@ -392,10 +369,10 @@ static int iadc_update_offset(struct iadc_chip *iadc)
- 
- static int iadc_version_check(struct iadc_chip *iadc)
- {
--	u8 val;
-+	u32 val;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_PERPH_TYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_TYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -404,7 +381,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_PERPH_SUBTYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_SUBTYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -413,7 +390,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_REVISION2, &val);
-+	ret = regmap_read(iadc->regmap, IADC_REVISION2, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -428,7 +405,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- {
- 	int ret, sign, int_sense;
--	u8 deviation;
-+	u32 deviation;
- 
- 	ret = of_property_read_u32(node, "qcom,external-resistor-micro-ohms",
- 				   &iadc->rsense[IADC_EXT_RSENSE]);
-@@ -440,7 +417,7 @@ static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_NOMINAL_RSENSE, &deviation);
-+	ret = regmap_read(iadc->regmap, IADC_NOMINAL_RSENSE, &deviation);
- 	if (ret < 0)
- 		return ret;
- 
--- 
-2.50.1
-
+Cheers,
+/fuad
 
