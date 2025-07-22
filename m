@@ -1,268 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-66133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6270CB0E0E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 17:50:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7766B0E0FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 17:54:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86BD03B655C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:50:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F05FB580D80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 15:54:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D2E21FF28;
-	Tue, 22 Jul 2025 15:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E7B279354;
+	Tue, 22 Jul 2025 15:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MK3x2N9z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="phN7Gf5m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C1826B085
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:50:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6627815F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:54:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753199451; cv=none; b=mSiRzCtlzbA1tiZ36K1nNif93o+UT9X68ojCmIKegpsJbkbkJbWKH4BvXGnpJejG6Y19beCEZd7PklNgohVIpbOiQnP9ywrDh28zLRIPyinzcCUUAZLVlwzZsW4jwrrx4q3236tQ1jwQw5GtbDLmVe3PqUV5wABdlk9rPqUhrD8=
+	t=1753199644; cv=none; b=BCWEpbe59DNJ7FmZanmYRx9Z8UmXSGzhqSBBtfNTu2McMdit66BKQTsbvBqNsRO519cjqY1TvHByi6o7VyW75v25LP9W2r3QY7USrFsPT89ay8QlF/ZlrPpn6tf3TRHfFsx/2w/wOmI3ZQfAS/i4zReYyLL3Xtvdv+vBlYDuFcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753199451; c=relaxed/simple;
-	bh=nCWGwF+dZTYHZWsZ5yUGhCF6+4z1EWHqmqJTiWnr9D0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ShcqzVHPEZ1dl2UokKV/Zzm6pZa7vOb0GaZ8nBjY1Insl+viuKdrm9dLXwG5n1Zs9APF91R6YRuykSmnfVx7cjCXM2cw1eqsqk6ugBHztopcX4hPyY6QOl5tYC0SxMJPbe0B+GnwYRsmhraRjzpsWowB3/f6v03YMMUaeF1DeZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MK3x2N9z; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1753199448;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=1d39bdqnItomRQBDSV5BhuZCnSF482IcxM6Ke6+QbMc=;
-	b=MK3x2N9z7qnin1prKfT5errMU636qUNCFVLViP+ien7349Kg9DXFEij18iHaD+X0ZvJ4dU
-	D8hd48C3ds4D5V1h11wj/nqW1ZOYiP2vg6QxT8DkhLSzxeb3YOkE9M73ly1Egvrx07TSLz
-	KRr0Ojh6y4Ii5nWFw10GlOTaQkF/pVk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-onwuTWOnP46Mfx-XGR-6pg-1; Tue, 22 Jul 2025 11:50:46 -0400
-X-MC-Unique: onwuTWOnP46Mfx-XGR-6pg-1
-X-Mimecast-MFC-AGG-ID: onwuTWOnP46Mfx-XGR-6pg_1753199446
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-3a50049f8eeso3250681f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:50:46 -0700 (PDT)
+	s=arc-20240116; t=1753199644; c=relaxed/simple;
+	bh=xbOL1hi5iRadHG9rfEIf2bg+1nEcZrZ5+VgZN0WBB70=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IhrBaVJO4qzBPIGxBSZheK7qYJdarBD8ThNWDlqbZhycHHg8BwAjK0cRT+uYJpiHCsPeJxV3za04atnYNzAnoIPvKDBgqxaeeveSQ0c5A5kzZyuoY+IO9Qcuw0DVHUUu+/ba4DS3pk9fRucC0YGOY6hYUiMckOAOts0GwV8LdSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=phN7Gf5m; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MFrtFB010735
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:54:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Y6Xuurk2pjdpa5qe1QO08Rpr5zT9H7Qi5lcMEbAuGE4=; b=phN7Gf5mMGKXK1Vx
+	IImJOJYBCBnlTQQOzxWIH80Wuo9MdclQAcY42AcrG/ZPA6Df4gNMFeIJnoR4HAr5
+	MqfAssF7y2jkhLkBs4hOT56d5tlQ0rzR6wLnCWdJKYdzPAfsLOSW8qgnzAWGSjT9
+	i2mH0MtnP00xkjOlmnrZOMh1FkwdDRfhW8XiBcwwSSiopjd7yMUT8WPITMujRRPp
+	g1+onA8s5O4TbvhfQP33jjBgdSZsvdnfceXCu2Dnutvi8XgJT4eVqyUu84LNi+j2
+	JIXaxS/27/l31n/bTY8QZjbuQjRhDQwEjIDsTR1I+maUyxCukgL1eWoyc30571B4
+	9Z0bUQ==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4826t19dr3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 15:53:58 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6fb50d92061so91222996d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 08:53:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753199446; x=1753804246;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1d39bdqnItomRQBDSV5BhuZCnSF482IcxM6Ke6+QbMc=;
-        b=M9xNRnlANwwxhNT8/w89HUhVpIZWFmg6OiUyWsCpAu4v98C1We8maWdv+p9Q+LysDW
-         KiWDGrUlucZfkpWbCdbVDjnF1B1myhn5Ltn0yA6pN9JmIXSXlQhi4Ym7PSa4qm1Zlzqb
-         nrjHGm+Ns/lxKN0Wuve8ujdLYUmpbFKi/nWb+6d8jz7o/Xqlu7Ezv7WgJisYGHyvt7++
-         eQRofJHnIY+0FRmwJTVteH4aV7X1VuZjW2RG6nl1RSbyYf4VRZcxtAzzS68TI6/fmJmC
-         o6gxqUeX/vHDrmUHUMsDIISTi/DwSGXrtY8gM32L7/GxmTvDjLE1kO2GtbJnHWegNi/z
-         Zuvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWYCiJAAqWxNTzVMCHbxs+K+MdfsWXndsO/o7qDcH9TQt8Disy6zNnk3yZs6bQ303Z0Lw5VmYpilqTzvpGB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwF5tUZ+GCEp/nsC/OTsSWrmNnP6wUkXq+EVwc2eVmYCie8ygHL
-	zlcrqW9Gh9VmHhNM8ZRlJ5ZehonE64otB1lk7LnALx2qraSxgYcWeF7Xfem7+nrts9152Mz6n0X
-	CWsSjX4jh/mS+x15wWQZRDN6zUNcAS5rjq38SXDSw9V/mcXc/cpTBe9JUluin7QusKqM=
-X-Gm-Gg: ASbGncszWJwuGMJY1JzEnkF31k2MG5jrbC7K4pY7/9lqdMlojqvEA9wi/iVU2NSMErQ
-	bz8ACinoYvmI9EDZqfiW3lLEvA57z88PANrMzOJWoY7luzcq9L1dlTE486Mlrq6y2AxpRXkajbT
-	4tHMyqLOYQVdnvnNrobUT/EWSQ1CZerOTQoK/V1CG9kUb1y6c0cBOsVRk5GMhEcb/mH3UGaNabz
-	UGv/tD4D8UldyCvOd8mu2nw8XFu/gW/30C7ETPlku5b5gJzQvxfn1dWR5mitwnVLTnuVNeuvro0
-	P4dRvs8NRC6xszZLWa0YPZ19RT8xJqGGc4ZU1WgUOG8kQeJ46hSWr3FBh7zfGvgFjJmqggJ34oU
-	Z5r/athVI9qCIIgckw3kXhi77GgWXG3+3pysPtOdaMAlRFpyBgIpmj1J8vWojgKoxUkI=
-X-Received: by 2002:a05:6000:985:b0:3a4:ea8f:efe4 with SMTP id ffacd0b85a97d-3b61b0f1bd1mr10419430f8f.18.1753199445464;
-        Tue, 22 Jul 2025 08:50:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGm2frdCNOY1aH4JiQzplVhsf9wX7Yke0loRi54J0nEvdnAMQE71SJU05PcYhh7A1tnkUVGXQ==
-X-Received: by 2002:a05:6000:985:b0:3a4:ea8f:efe4 with SMTP id ffacd0b85a97d-3b61b0f1bd1mr10419384f8f.18.1753199444899;
-        Tue, 22 Jul 2025 08:50:44 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f28:de00:1efe:3ea4:63ba:1713? (p200300d82f28de001efe3ea463ba1713.dip0.t-ipconnect.de. [2003:d8:2f28:de00:1efe:3ea4:63ba:1713])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca5d018sm13686920f8f.90.2025.07.22.08.50.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 08:50:44 -0700 (PDT)
-Message-ID: <e7fee2b0-eb71-4556-a99b-ba9b44491519@redhat.com>
-Date: Tue, 22 Jul 2025 17:50:41 +0200
+        d=1e100.net; s=20230601; t=1753199627; x=1753804427;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y6Xuurk2pjdpa5qe1QO08Rpr5zT9H7Qi5lcMEbAuGE4=;
+        b=XVEnitx0sJ98aPWBJ3d8/D1P8W8ls2Q3x4cy6PPGY594njN9kQhuIIGe8bYE0P/5TS
+         e1lb2yhpGCk3z8XGKSXBpMdun7qmspbHi8CvNX2KDu/5r1TJp6OPM/nBKlpYotRwR8Qm
+         OWWxyaHSaCFkXdMAZkC8jyenOYUHL12+LOkiMBYpnVO+T4aYI2sywnaFxrvxFhc177R1
+         lGOEPFmfvV62ZLthieUvatxTCzCm3Zeap0+dsJeY2pov4XGYzLPqO6oU9PsgRY6U4AU1
+         dCljt5ma2v19ybMSgdhD8nCl4mWkuugW+m0NzFHh1ZfSdFkmECa7JphINY9p//gSzFau
+         +T7A==
+X-Forwarded-Encrypted: i=1; AJvYcCX/+HbRiyTZrrByUIQhHhvVJ9FHddNurSLKufgVyB46rWe5spsTGVpius4w/Q841KFWI1yb+Z2KriNk3fM1@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx+rM9FopAm4CbRcpXlTeqSoMGxvTN3dd/bWlyrQRxtmhysgCa
+	OGuGg8IkkQaVWnlLpDhtkE2bDr3EDsTIMeXsIlv5rSusOnOLvm4T1JyMoDeaNDywYSjr1WfTaXu
+	I0MNV6tweJaO0+2AwXofnXx05lfW7m7/Sc01HDcHVPV72nxKc3xberVa9tydKOhq4DFpyqDC3li
+	/ElZwVz7FBOHUBAEFbJ4Yikwy6jYbLLYAHza13A8fa/64=
+X-Gm-Gg: ASbGncukdOcQtb9lpOCqYDbsnjdca3/LgR7tNEZsIghjmpSxbec+HrM2FVGMIQTpQAo
+	lmZpmaCv7b754+Ivs5Ci4gpfQOwPMzYS0oyNwmqLH9PUIDHYESNiHvjRBVnqgo/OTOzUB7RXqBb
+	GpcCX0TpmtQPT2nNsDJuISzA==
+X-Received: by 2002:a05:6214:f26:b0:6ea:d6e1:f3f8 with SMTP id 6a1803df08f44-704f6b37f26mr380279986d6.45.1753199627108;
+        Tue, 22 Jul 2025 08:53:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5nYxnnUnkXLdUZwVijYybnyxwPgtN4DPlPTT28knZXVoav9qF4vOpNqIR9U6EZr2z1TuU8Trz36hSsmtbv8Y=
+X-Received: by 2002:a05:6214:f26:b0:6ea:d6e1:f3f8 with SMTP id
+ 6a1803df08f44-704f6b37f26mr380279526d6.45.1753199626575; Tue, 22 Jul 2025
+ 08:53:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 14/21] KVM: x86: Enable guest_memfd mmap for default
- VM type
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Sean Christopherson <seanjc@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org,
- willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com,
- chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
- dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250717162731.446579-1-tabba@google.com>
- <20250717162731.446579-15-tabba@google.com>
- <505a30a3-4c55-434c-86a5-f86d2e9dc78a@intel.com>
- <608cc9a5-cf25-47fe-b4eb-bdaff7406c2e@intel.com>
- <aH-iGMkP3Ad5yncW@google.com>
- <13654746-3edc-4e4a-ac4f-fa281b83b2ae@intel.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAmgsLPQFCRvGjuMACgkQTd4Q
- 9wD/g1o0bxAAqYC7gTyGj5rZwvy1VesF6YoQncH0yI79lvXUYOX+Nngko4v4dTlOQvrd/vhb
- 02e9FtpA1CxgwdgIPFKIuXvdSyXAp0xXuIuRPQYbgNriQFkaBlHe9mSf8O09J3SCVa/5ezKM
- OLW/OONSV/Fr2VI1wxAYj3/Rb+U6rpzqIQ3Uh/5Rjmla6pTl7Z9/o1zKlVOX1SxVGSrlXhqt
- kwdbjdj/csSzoAbUF/duDuhyEl11/xStm/lBMzVuf3ZhV5SSgLAflLBo4l6mR5RolpPv5wad
- GpYS/hm7HsmEA0PBAPNb5DvZQ7vNaX23FlgylSXyv72UVsObHsu6pT4sfoxvJ5nJxvzGi69U
- s1uryvlAfS6E+D5ULrV35taTwSpcBAh0/RqRbV0mTc57vvAoXofBDcs3Z30IReFS34QSpjvl
- Hxbe7itHGuuhEVM1qmq2U72ezOQ7MzADbwCtn+yGeISQqeFn9QMAZVAkXsc9Wp0SW/WQKb76
- FkSRalBZcc2vXM0VqhFVzTb6iNqYXqVKyuPKwhBunhTt6XnIfhpRgqveCPNIasSX05VQR6/a
- OBHZX3seTikp7A1z9iZIsdtJxB88dGkpeMj6qJ5RLzUsPUVPodEcz1B5aTEbYK6428H8MeLq
- NFPwmknOlDzQNC6RND8Ez7YEhzqvw7263MojcmmPcLelYbfOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCaCwtJQUJG8aPFAAKCRBN3hD3AP+DWlDnD/4k2TW+HyOOOePVm23F5HOhNNd7nNv3
- Vq2cLcW1DteHUdxMO0X+zqrKDHI5hgnE/E2QH9jyV8mB8l/ndElobciaJcbl1cM43vVzPIWn
- 01vW62oxUNtEvzLLxGLPTrnMxWdZgxr7ACCWKUnMGE2E8eca0cT2pnIJoQRz242xqe/nYxBB
- /BAK+dsxHIfcQzl88G83oaO7vb7s/cWMYRKOg+WIgp0MJ8DO2IU5JmUtyJB+V3YzzM4cMic3
- bNn8nHjTWw/9+QQ5vg3TXHZ5XMu9mtfw2La3bHJ6AybL0DvEkdGxk6YHqJVEukciLMWDWqQQ
- RtbBhqcprgUxipNvdn9KwNpGciM+hNtM9kf9gt0fjv79l/FiSw6KbCPX9b636GzgNy0Ev2UV
- m00EtcpRXXMlEpbP4V947ufWVK2Mz7RFUfU4+ETDd1scMQDHzrXItryHLZWhopPI4Z+ps0rB
- CQHfSpl+wG4XbJJu1D8/Ww3FsO42TMFrNr2/cmqwuUZ0a0uxrpkNYrsGjkEu7a+9MheyTzcm
- vyU2knz5/stkTN2LKz5REqOe24oRnypjpAfaoxRYXs+F8wml519InWlwCra49IUSxD1hXPxO
- WBe5lqcozu9LpNDH/brVSzHCSb7vjNGvvSVESDuoiHK8gNlf0v+epy5WYd7CGAgODPvDShGN
- g3eXuA==
-Organization: Red Hat
-In-Reply-To: <13654746-3edc-4e4a-ac4f-fa281b83b2ae@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <Zgp0ym-MGzX2eSZdlkVYbgvjkJ0CzKItjaC5pafzQnj1AOZnVAqvCIZfYoK7nwDhUgOA0U8eNolNtaWXbExOAQ==@protonmail.internalid>
+ <DAWJQ2NIKY28.1XOG35E4A682G@linaro.org> <5df11ee4-d645-4be2-841f-715343f1b7a4@linaro.org>
+In-Reply-To: <5df11ee4-d645-4be2-841f-715343f1b7a4@linaro.org>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 17:53:35 +0200
+X-Gm-Features: Ac12FXzzblHjmRwX3nirKO8RXdSrs18ryTc8DJ_DWk70nYnfPnAaEddYkwXyMlw
+Message-ID: <CAFEp6-0zwy2JdFOvRQ5ghMwD-J6b7F5YcVKNf-5R=8XdEpGDSw@mail.gmail.com>
+Subject: Re: [question, bug] regularly disconnecting wifi on RB1 and RB2
+ boards, ath10
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Alexey Klimov <alexey.klimov@linaro.org>, jjohnson@kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        jeff.johnson@oss.qualcomm.com, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: CaXEODPJ_De9Z4BwBWs-ET5dt-3rBGBe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEzMiBTYWx0ZWRfX+aMkOL779czQ
+ kssN4nO1RNAIkOI66ph9RSZRJL+s9CWlB9+ZS+hGfoUM8NqC97g160wNd5BfuhuGLLMKZGk+gpS
+ roVghTNw18QIH0N0pp90+QURJwNK51fQanIk/7Hr8h1/Zjpd+QKoMLtDv2pcEaDmrh9fabbIhkJ
+ ZzdskXh8FWNMnxTreDoLRXrYs2eHXSNNa4E00jNI+Sx5bcBpavixeNJLCsbZh+PlpI+ISkYrUQ8
+ Y8dDLdrhgAFfOpLykJ1Z4CSkYxk36tU7CFMQLHLWl+EdJEX8xAjz0HPCjPhCI6HzFXK0DDsXhGM
+ wZOZ+PMMFlvSnmK+pDitKFBDD1DiiO5rf61ShCYL7rd1B8he9uyaKzNiwd56bsK91pe2Da2ivVk
+ vuWA2Wf3jxNFx6D63Cd1LCmbFyGT4JjEQugrEypLcu/z0Jv94NC7lLygFBVVxQGqOipFNSNT
+X-Authority-Analysis: v=2.4 cv=E8/Npbdl c=1 sm=1 tr=0 ts=687fb416 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=mUlqW7PtAAAA:8 a=KKAkSRfTAAAA:8 a=vDtTJRS1lcAMuG6nZigA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=scG1X_LE5o0Lo5M-1hNW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: CaXEODPJ_De9Z4BwBWs-ET5dt-3rBGBe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1015 phishscore=0
+ mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220132
 
-On 22.07.25 17:31, Xiaoyao Li wrote:
-> On 7/22/2025 10:37 PM, Sean Christopherson wrote:
->> On Tue, Jul 22, 2025, Xiaoyao Li wrote:
->>> On 7/21/2025 8:22 PM, Xiaoyao Li wrote:
->>>> On 7/18/2025 12:27 AM, Fuad Tabba wrote:
->>>>> +/*
->>>>> + * CoCo VMs with hardware support that use guest_memfd only for
->>>>> backing private
->>>>> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping
->>>>> enabled.
->>>>> + */
->>>>> +#define kvm_arch_supports_gmem_mmap(kvm)        \
->>>>> +    (IS_ENABLED(CONFIG_KVM_GMEM_SUPPORTS_MMAP) &&    \
->>>>> +     (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM)
->>>>
->>>> I want to share the findings when I do the POC to enable gmem mmap in QEMU.
->>>>
->>>> Actually, QEMU can use gmem with mmap support as the normal memory even
->>>> without passing the gmem fd to kvm_userspace_memory_region2.guest_memfd
->>>> on KVM_SET_USER_MEMORY_REGION2.
->>>>
->>>> Since the gmem is mmapable, QEMU can pass the userspace addr got from
->>>> mmap() on gmem fd to kvm_userspace_memory_region(2).userspace_addr. It
->>>> works well for non-coco VMs on x86.
->>>
->>> one more findings.
->>>
->>> I tested with QEMU by creating normal (non-private) memory with mmapable
->>> guest memfd, and enforcily passing the fd of the gmem to struct
->>> kvm_userspace_memory_region2 when QEMU sets up memory region.
->>>
->>> It hits the kvm_gmem_bind() error since QEMU tries to back different GPA
->>> region with the same gmem.
->>>
->>> So, the question is do we want to allow the multi-binding for shared-only
->>> gmem?
->>
->> Can you elaborate, maybe with code?  I don't think I fully understand the setup.
-> 
-> well, I haven't fully sorted it out. Just share what I get so far.
-> 
-> the problem hit when SMM is enabled (which is enabled by default).
-> 
-> - The trace of "-machine q35,smm=off":
-> 
-> kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0x80000000
-> ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#1 flags=0x4 gpa=0x100000000
-> size=0x80000000 ua=0x7f57b3fff000 guest_memfd=15
-> guest_memfd_offset=0x80000000 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#2 flags=0x2 gpa=0xffc00000
-> size=0x400000 ua=0x7f5840a00000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x0 gpa=0x0 size=0x0
-> ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0xc0000
-> ua=0x7f5733fff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#3 flags=0x2 gpa=0xc0000
-> size=0x20000 ua=0x7f5841000000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#4 flags=0x2 gpa=0xe0000
-> size=0x20000 ua=0x7f5840de0000 guest_memfd=-1
-> guest_memfd_offset=0x3e0000 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#5 flags=0x4 gpa=0x100000
-> size=0x7ff00000 ua=0x7f57340ff000 guest_memfd=15
-> guest_memfd_offset=0x100000 ret=0
-> 
-> - The trace of "-machine q35"
-> 
-> kvm_set_user_memory AddrSpace#0 Slot#0 flags=0x4 gpa=0x0 size=0x80000000
-> ua=0x7f8faffff000 guest_memfd=15 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#1 flags=0x4 gpa=0x100000000
-> size=0x80000000 ua=0x7f902ffff000 guest_memfd=15
-> guest_memfd_offset=0x80000000 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#2 flags=0x2 gpa=0xffc00000
-> size=0x400000 ua=0x7f90bd000000 guest_memfd=-1 guest_memfd_offset=0x0 ret=0
-> kvm_set_user_memory AddrSpace#0 Slot#3 flags=0x4 gpa=0xfeda0000
-> size=0x20000 ua=0x7f8fb009f000 guest_memfd=15 guest_memfd_offset=0xa0000
-> ret=-22
-> qemu-system-x86_64: kvm_set_user_memory_region:
-> KVM_SET_USER_MEMORY_REGION2 failed, slot=3, start=0xfeda0000,
-> size=0x20000, flags=0x4, guest_memfd=15, guest_memfd_offset=0xa0000:
-> Invalid argument
-> kvm_set_phys_mem: error registering slot: Invalid argument
+On Fri, Jun 27, 2025 at 1:09=E2=80=AFAM Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 26/06/2025 15:48, Alexey Klimov wrote:
+> > Hi all,
+> >
+> > After a long time of testing it seems the problem narrows down to qrb22=
+10 rb1
+> > and qrb4210 rb2 boards.
+> >
+> > After booting, the board connects to the wifi network and after around =
+~5-10
+> > minutes it loses the connection (nothing in dmesg). A simple ping of an=
+other
+> > machine on the local network doesn't work. After, I guess, around 5000
+> > seconds the GROUP_KEY_HANDSHAKE_TIMEOUT message is printked:
+> >
+> > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 1=
+6=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+> > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addres=
+s=3D82:95:77:b1:05:a5)
+> > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+> > [ 5067.100192] wlan0: authenticated
+> > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+> > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11=
+ status=3D0 aid=3D2)
+> > [ 5067.193624] wlan0: associated
+> >
+> > and after that wireless connection works for ~5-10 minutes and then the=
+ cycle
+> > repeats. The longer log with more info and some info with firmware vers=
+ions,
+> > ids, etc is at the end of this email [1]. Simple wlan0 down and wlan0 u=
+p fixes
+> > things for a few minutes.
+> >
+> > iw wlan0 link reports the following when wireless network is working:
+> >
+> > root@rb1:~# iw wlan0 link
+> > Connected to 8c:58:72:d4:d1:8d (on wlan0)
+> >          SSID: void
+> >          freq: 5300
+> >          RX: 45802 bytes (424 packets)
+> >          TX: 71260 bytes (125 packets)
+> >          signal: -66 dBm
+> >          rx bitrate: 433.3 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 1
+> >
+> > bss flags:      short-slot-time
+> > dtim period:    1
+> > beacon int:     100
+> >
+> > and this when wireless connection doesn't work:
+> >
+> > Connected to 8c:58:72:d4:d1:8d (on wlan0)
+> >          SSID: void
+> >          freq: 5300
+> >          RX: 850615 bytes (9623 packets)
+> >          TX: 20372 bytes (247 packets)
+> >          signal: -61 dBm
+> >          rx bitrate: 6.0 MBit/s
+> >
+> >      bss flags:      short-slot-time
+> >      dtim period:    1
+> >      beacon int:     100
+> >
+> > This was tested with three different routers and different wifi network=
+s.
+> > Other devices here do not exhibit this behaviour.
+> >
+> > Any hints on how to debug this? Any debug switches I can toggle to debu=
+g this?
+> > I am happy to provide more info or test changes/patches if any.
+> >
+> > Thanks in advance.
+> > Best regards,
+> > Alexey
+> >
+> > [1]:
+> >
+> > [    7.758934] ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_family =
+0x4007 board_id 0xff soc_id 0x40670000
+> > [    7.769740] ath10k_snoc c800000.wifi: qmi fw_version 0x337703a3 fw_b=
+uild_timestamp 2023-10-14 01:26 fw_build_id QC_IMAGE_VERSION_STRING=3DWLAN.=
+HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+> > [   11.086123] ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x0000000=
+8 chip_id 0x00000000 sub 0000:0000
+> > [   11.095622] ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 trac=
+ing 0 dfs 0 testmode 0
+> > [   11.103998] ath10k_snoc c800000.wifi: firmware ver  api 5 features w=
+owlan,mgmt-tx-by-reference,non-bmi,single-chan-info-per-channel crc32 a79c5=
+b24
+> > [   11.144810] ath10k_snoc c800000.wifi: htt-ver 3.128 wmi-op 4 htt-op =
+3 cal file max-sta 32 raw 0 hwcrypto 1
+> > [   11.230894] ath10k_snoc c800000.wifi: invalid MAC address; choosing =
+random
+> > [   11.238128] ath: EEPROM regdomain: 0x0
+> > [   11.242060] ath: EEPROM indicates default country code should be use=
+d
+> > [   11.248582] ath: doing EEPROM country->regdmn map search
+> > [   11.253950] ath: country maps to regdmn code: 0x3a
+> > [   11.258805] ath: Country alpha2 being used: US
+> > [   11.263466] ath: Regpair used: 0x3a
+> > [   15.355756] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addres=
+s=3D82:95:77:b1:05:a5)
+> > [   15.363942] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+> > [   15.372142] wlan0: authenticated
+> > [   15.377928] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+> > [   15.386338] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11=
+ status=3D0 aid=3D2)
+> > [   15.466514] wlan0: associated
+> > [   23.167251] systemd-journald[195]: Oldest entry in /var/log/journal/=
+ec3e0078e5e0499bac67949f3edf3fcf/system.journal is older than the configure=
+d file retention duration (1month), suggesting rotation.
+> > [   23.185186] systemd-journald[195]: /var/log/journal/ec3e0078e5e0499b=
+ac67949f3edf3fcf/system.journal: Journal header limits reached or header ou=
+t-of-date, rotating.
+> > [   31.750177] l5: disabling
+> > [   31.753382] l11: disabling
+> > [   31.756385] l16: disabling
+> > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 1=
+6=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+>
+> So.
+>
+> I wonder what state the GTK - offload is in here.
+>
+>          WMI_GTK_OFFLOAD_CMDID =3D WMI_CMD_GRP(WMI_GRP_GTK_OFL),
+>
+> drivers/net/wireless/ath/ath10k/wmi-tlv.c:      cfg->gtk_offload_max_vdev=
+ =3D
+> __cpu_to_le32(2);
+>
+> Try toggling that offload off or on and see what happens.
+>
+> > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addres=
+s=3D82:95:77:b1:05:a5)
+> > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+> > [ 5067.100192] wlan0: authenticated
+> > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+> > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11=
+ status=3D0 aid=3D2)
+> > [ 5067.193624] wlan0: associated
+> > [10437.346541] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 1=
+6=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+> > [10440.340111] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addres=
+s=3D82:95:77:b1:05:a5)
+> > [10440.348408] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+> > [10440.356698] wlan0: authenticated
+> > [10440.361077] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+> > [10440.369516] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11=
+ status=3D0 aid=3D2)
+> > [10440.446661] wlan0: associated
+> >
+> You can put another device on your WiFi network into monitor mode and
+> sniff what is taking place.
+>
+> Kali Linux I've used in the past on an RPI for this purpose and it was
+> very easy todo.
+>
+> https://cyberlab.pacific.edu/resources/lab-network-wireless-sniffing
+>
+> Another thing to try is to do this same test on an open - unencrypted lin=
+k.
+>
+> If we really suspect firmware here, lets try switching off firmware
+> offload features one-by-one, starting with GTK offload.
+>
+> ---
+> bod
+>
 
-Weird. When splitting regions (I think that is what's happening), QEMU 
-should first remove the old slots to then insert the new slots.
+I configured the GTK rekey interval to one minute and encountered a
+similar issue. It appears that something may be going wrong after the
+GTK rekeying process completes.
 
-Otherwise there would be GPA overlaps as well?
+The GTK update is handled entirely by wpa_supplicant (not offloaded),
+and while the new key seems to be installed correctly, with frames
+still being transmitted and received (from aircap perspective), they
+appear to be dropped or mishandled in the RX firmware path.
 
--- 
-Cheers,
+This suggests there might be an issue with how the new keys are being
+applied or interpreted by the firmware. I=E2=80=99ll continue debugging to
+pinpoint the root cause.
 
-David / dhildenb
-
+Regards,
+Loic
 
