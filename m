@@ -1,79 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-66048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D05AB0D770
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:37:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A323B0D796
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 12:56:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C76C56165B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:37:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF68C1C23A89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 10:57:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C462E336F;
-	Tue, 22 Jul 2025 10:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8EA82E11BA;
+	Tue, 22 Jul 2025 10:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vdww0zWn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="egWukgoF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215C92E1753
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129B42E11BC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753180641; cv=none; b=eQIvPVoYVLuaAwmmOzmZ3hmBdWL95BWSwso9/qOPFiIwU4zCcU+hA09pbZxzdleicpz/HDi86P6eFWNPg8FvCr6w6MW1f6ZOh2xqUzushfamHYeneCRuy4l+LVF8PXSX/ItTv9O//w1PLerI91/2Im5Qqu0IB81ozlZDXqcwEMA=
+	t=1753181810; cv=none; b=LraeN0HPBvV4QBm8Mk4MibjgCQHukp/1zu/xbA9EAvK32Y52/q8KwOr/Ro/DjMvqm3AK37iinMRnwcezuLRfznQVMAGN/8KaopvP4LKqqkFwLRTTusoEPUOIkKca34Jgsq0HdoDi2YkrQyfpRj9/KibofHzt48sOu+7wI7a2T/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753180641; c=relaxed/simple;
-	bh=EcaPmOZF17vzAybqgUPsCVqCSYrKhcslVWazMxbu63M=;
+	s=arc-20240116; t=1753181810; c=relaxed/simple;
+	bh=VmcMpMv1o/xrcqGxrBQh966G5LBlrvi8MJ4jNjqHCfY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sTpVBFS1ZzpCKEsbBJ3tFPL8/DQCbPF6SdoN1FeJBfZXc+eZ0ZtQAB8TcKZrhWms45nICsIgdAt6FjfL7TgypW4iFkT3Um5c7MxZNo8QIpsK2j8eFN4MV+xJMdwU+iNTrCbCPpv43w7++CciUnORWC5xPeXq+n9rCLE2uB/af7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vdww0zWn; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b611665b96so2986865f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:37:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753180637; x=1753785437; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Y4ZK31qukkhLkAHxdpW7gih6/ZCt1oA0i9NknuiOE4=;
-        b=vdww0zWnoWp9QeU1u00mPbHHCE6Vq4Dszs2UlBmvmeWgey68lOYoQJnaur6eL3KcFv
-         0/+0RPu9W91z6Q3ecq4lE6WyCvswGAqgyIXkGWc4N8QlvXw2+Glzldt8KvssKewDUvj2
-         AyUJJ8y4pVZGU8GlvkrWyd3w2GOO5VrfBLw22K+KT08m+OevW7xqIcZSXScCbxAcX/Qc
-         xTQeXTIJOPa6+PIj23bDw236w5oaHfrMg/+WG7lCIvR5v1Z3ycsXL28iai6H11IlZB43
-         aLzrvNmbs8073u+Zd1Y2d2zfDnulnM8BvS54LdYeBxG0wND9tGGPf2PQYtgDTY5zxNB3
-         CDPg==
+	 In-Reply-To:Content-Type; b=tr4DYOY41QLxaG486rZX8SKoCQzJdu/SzC/MojWWlFXuKWtrhpNskqlhybuJ/58+S4p7C6I162uFBTcWSkqYfTbM/e7SJD7b0JfSIZJyl6As90lF5WNl9ZbSWmUfoKcPN2P2mkv6HIHuijqULLYOr1ecrlU43mW1nEgEPpIUdig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=egWukgoF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M3i6aJ015833
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:56:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	g7qM0Z+wf2GStDuKTmGsX7zzLsTCMG5C7nE0l4CouW0=; b=egWukgoFgVppj7xX
+	iusTxAI5opKABbqQShMnS5QxJtmiE+cepNnCJG8n2YZCxjiTmxuzHbV2/k7xZDRL
+	1MOhybQeF1bz7jSSRCPPYVYaaljLZRLtAVUb6z6woTBBNCJ1vz07/9OIOvz5V3tD
+	oP3MPTUmvqTYonFhCAlIs933VYDZMAD8dDcII/2xGcQASb+RjU92bBxrZGJLU2xi
+	gTt+Dw2J4fTY21dneHK6uSbbelwU2xO7ken5tRtdqCIc7Pj4Ggdj7Zu008MrGKvR
+	tC8zbEYL2jZwVORAXrWZBnv9RkQ3MiAei/GeG2E0CijURnhJpcOIMY3FsxdhwHWI
+	t4Ar+Q==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 480451h0ba-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 10:56:47 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-235eefe6a8fso40975175ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 03:56:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753180637; x=1753785437;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20230601; t=1753181806; x=1753786606;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Y4ZK31qukkhLkAHxdpW7gih6/ZCt1oA0i9NknuiOE4=;
-        b=XKSv8V67FsX++TRVuW9PUr2F/r5MsbpxuvIDBw5UAROMob2s4d192U17PL+a6xg1zI
-         dnUW6rmQBRb1+pON6RST/z/TGfLPGopVs/Xl6U8GLfL/fArC746JtBj2mgmCgdVYokF0
-         BbJpE2oC9QmgQ1SvjSMtB5raF9igRCJR0BYc7kyrF1yYLeKYple+/nUzKITllCc8O3Ag
-         tDz/48iU42+xJgI5vSBerwtgxZ3XwLuKNn26RhPI0mngqC1N2P01OmnJx/Y42JIaDbXq
-         jrCzWIOEsGbfBfDNN7A+Qfe//AbbVfvFsmLqKFSE8pxtecqjD62FHg8852wjSRchaniS
-         modA==
-X-Gm-Message-State: AOJu0Yzahlf4oaJm6V4Zc41P6dF67KsGpm5Eqjc40sEw0bGzVLRoRNvr
-	Pa/5TXxyILyvLExPdlfDmJJ8LbuWRdRLx2GLOy8CEkZVXMfYkZSYWzsXpjmygkVPRqQ=
-X-Gm-Gg: ASbGnctTW3swtqlyhO9vyO6jVn7SePpM3erFnkfIQY/QCnDysVUyJ+zI/dPoSKDu0w/
-	z8EWQJSmg/vGZC44XO06bO316J1QkgEXnoFAGZmGtmL1qtgpqba6JFRB+kjzvXY350iIl9W/p3d
-	eKccZSm3cx/yx5BfNKzqcPapDyWl9D+Ekhy31Du74sgwipG7lpJFm8QLRkun8NVN3YyPNY85UZf
-	Au2B+PvbTFFXJMm/10OpYv/A7arNPasrSdANMbXrTJxmxO2v+F6ipssO6P6iy9Z8HO6ruaKtqYa
-	tuP2JjIOPw+LQUZu/X0k7tBkiEHya0RAw9twhhIjazb38e/6F+ZIgd9w06tCxfw1/wTXW7RdXSU
-	zy/1jTilVu3BlTujR8xXfl2nf64Dcw2aMEZDe7crRiSFW5/y3oH/lHShNaRLAsaQ=
-X-Google-Smtp-Source: AGHT+IGTCim13XVcGSW21AueFsi3fYd4EJtmzmvQeTtBGNVJD3KZN4i5HjdFzRy4dW3lSossDfE26A==
-X-Received: by 2002:a05:6000:288b:b0:3a5:8934:493a with SMTP id ffacd0b85a97d-3b60e51bb18mr20015822f8f.44.1753180637147;
-        Tue, 22 Jul 2025 03:37:17 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca4d581sm12938939f8f.64.2025.07.22.03.37.15
+        bh=g7qM0Z+wf2GStDuKTmGsX7zzLsTCMG5C7nE0l4CouW0=;
+        b=f5aVDvVsoFT6pRyd3U//vJRo3Z8tIs6DsshwFs8dKb1naDs9x/tL0/t86d1tLk9xBo
+         r7sOLduhxY8mgaP8i204lmlMkfmvrvNkrfKtQoZNUcQGHNRl34HkS7S4QtRpOjYrAbbu
+         AY4Eipn1/mwjUE2OVr1byGPYS9B8c4KVhlU9GVr/b/jhrsBDSyICblEXzRNxhg/D7Bik
+         TrTONSo8IjLaT9kSyoORHDTRqMct91QDoyuSwF9Xc/1DgJgp/xDWw+CZhGfyp9OwXpps
+         2+laA25nowmFHtJxY504I/elRfeserUge7vn3/qU/e26gHimqWYqkA8hxSINKeg1bFED
+         zk5w==
+X-Forwarded-Encrypted: i=1; AJvYcCViv4ZgQ6ON5o51Qsy04LOntnUlJYeVjGbKQco7P6lyU8slwMp8tIOVhg+06CL2ep5a5aqYrOS3h/v8r40N@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPVTmBTLM7oY6mQqzaacO8q736wmx7BGtjnRYjhnhB2c297aar
+	Uc4L9ixcA4vLqzvdhlLzDoUbb0r0afzY7klLJoYNE8ifwhZJhmyip8uPVWF8G/LvEIip3NSTKFG
+	plQvIkcdqD3X4KpJSNir1AQ8ySC36aE3xpN40bvBFSa9hEVOWwUFJ1O8jS0LjwLuTB1vu
+X-Gm-Gg: ASbGncsh3zt9XyueDlyRaYqEqZCmFRwRnYKXiQIkIyHMu+pqD7iIcbNv5JAR+OSDMaa
+	Z9e2PKruYkdKL9elWGVr7E6O3qYL53dx1Mum4D4N6vT96/zi/ekyyMciggYl5ab1lvbErQJFESk
+	W0CXCWLPZmkf+CsjEdO5gyoaP+GMK+pMB15ZL3Z1tlltrKPqDBGZbC3r3Xhe8mVH6Xw015rFneP
+	h4N2+17y7mGFHaPbIVdnfxfop0+jRIGT0gysLGPcRr2o2MNKhkf+7gTMlDwN0at3PKutehIpVLC
+	YJwLg/9odDTzN1t+HueZ/fPB5PYWGJmMWM0XM3PzJCQ4qggO9ciFc29WYF8aPEjeAQvscMxdita
+	OSrQ=
+X-Received: by 2002:a17:903:3d0d:b0:234:f4da:7eed with SMTP id d9443c01a7336-23e3b84f72emr252315355ad.44.1753181806141;
+        Tue, 22 Jul 2025 03:56:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUt6A7hh/EP89XTAOzcg/lK9W717hw7dFv37fh4cCUg4RhbdxPMNKnk9K5jOdZTIMUErJkMw==
+X-Received: by 2002:a17:903:3d0d:b0:234:f4da:7eed with SMTP id d9443c01a7336-23e3b84f72emr252315085ad.44.1753181805624;
+        Tue, 22 Jul 2025 03:56:45 -0700 (PDT)
+Received: from [10.219.49.237] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b60e9b4sm74000165ad.56.2025.07.22.03.56.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 03:37:16 -0700 (PDT)
-Message-ID: <7e1073da-6773-489e-80f5-97409f013acc@linaro.org>
-Date: Tue, 22 Jul 2025 11:37:15 +0100
+        Tue, 22 Jul 2025 03:56:45 -0700 (PDT)
+Message-ID: <d614d8e3-963d-4d34-9b15-1544c7a22cf0@oss.qualcomm.com>
+Date: Tue, 22 Jul 2025 16:26:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,96 +90,192 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI D-PHY driver
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org>
- <20250710-x1e-csi2-phy-v1-2-74acbb5b162b@linaro.org>
- <11b573d5-ce4d-476c-b94c-216d427cd838@linaro.org>
- <08261aa4-689b-4d6b-bfd2-221c1976d254@linaro.org>
- <a7f64b31-4767-4281-b452-a2bc5351d745@mleia.com>
- <c93624bb-ee7b-45ac-8b53-b5391f11c9c9@linaro.org>
- <eac3a877-a4aa-4789-9013-ab8b6c91e0f3@linaro.org>
- <0a12879f-dc4a-47fb-87a0-ac4b8bcd4d75@linaro.org>
- <53a19b1d-5665-4937-a07c-5dd1fcde06c5@linaro.org>
- <3b760685-97db-46e3-80a3-7fad69ad31cd@oss.qualcomm.com>
- <94b75177-9401-4e0c-966b-5847a29cb6f7@linaro.org>
- <427548c0-b0e3-4462-a15e-bd7843f00c7f@oss.qualcomm.com>
- <3UXVZ6ANM9mDjVdMV4SXsiIx_pT3S1lp3RC_Q7mh_o7jF2dpYsni1Sl2TAWv6OCMCRTFmi9aE6BxDquGkOnwEg==@protonmail.internalid>
- <8b908a20-0bf3-447d-82ea-a5ecee1bf54c@linaro.org>
- <57501e81-7e9c-4cb1-9a37-18307d1e06ca@linaro.org>
- <33d76d7f-ab14-4e76-8ffb-eb370901a046@linaro.org>
- <4edefe21-27b6-4884-befa-ddb451bb9376@linaro.org>
- <84eea632-02d8-4b7f-a4ca-36ce7159a170@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
+ for WSA883x speakers
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski
+ <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
+        linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        quic_pkumpatl@quicinc.com, kernel@oss.qualcomm.com
+References: <20250718104628.3732645-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20250718104628.3732645-3-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20250721-hairy-aardwolf-of-enterprise-bbc99f@kuoka>
 Content-Language: en-US
-In-Reply-To: <84eea632-02d8-4b7f-a4ca-36ce7159a170@linaro.org>
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <20250721-hairy-aardwolf-of-enterprise-bbc99f@kuoka>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=EIMG00ZC c=1 sm=1 tr=0 ts=687f6e6f cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=i4jCgTYSAnVeQ-bZYmQA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: Zx5lqQlp2LVogb3U30UzhsFAj2RVk3yY
+X-Proofpoint-GUID: Zx5lqQlp2LVogb3U30UzhsFAj2RVk3yY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDA5MCBTYWx0ZWRfX8B9Y6TPlE0li
+ 4oKvl2dDl9Tkrx6QkBYxCwa3ma4yQgoFfJ1sErCLfkMWQ/oJFTXOW7W8cW352Gz8ONN0cOH8vwq
+ Gq911NQnXWI9aEPMgWmzB7BzHd92UvVxoaF4/4cZ8Ct6ZQu5AdvOEQ1BfokcxcCpPVkzoAtnhYM
+ nDSq6VQmgWCP+0r39XWCx85IqLt8aOVUTx6ug3a3MxoYkj5htdD4e6HHD7D88q9tY4UJHVi2VFm
+ NfGN3iL8uI1zSrx205naMmocw0jytaj7MBcW3cVYJCCrc/lI4E45WzNk5KW+DxzApUH1+E36jcJ
+ MzT2co7H35JZRR1wA++DZiSEr637Q2YxE1khd5qw91ysKFnbafb5KCMfA/TmOdMduK/BFI6dgtA
+ webR33A0YXjF6vGuhKCtji09PL4agRHbbx+dp/2FEvBck5i7m+sWqiQNrk7cb1LO8PgjTjrj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=999 phishscore=0 mlxscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220090
 
-On 22/07/2025 10:59, Neil Armstrong wrote:
-> On 22/07/2025 11:08, Bryan O'Donoghue wrote:
->> On 22/07/2025 09:32, Neil Armstrong wrote:
->>> The whole key point here is the combo mode, as I understood the combo 
->>> mode feature
->>> makes the PHY lanes available as 2 separate streams, like if you got 
->>> 2 "controllers"
->>> attached to the same PHY. So in fact, the PHY should have a single 
->>> node, but 2 PHY
->>> interfaces in combo mode.
->>>
->>> This makes all this controller/phy model very complex to handle and 
->>> add a lot of
->>> logic in the camss side. Moving the "csiphy" as an independent media 
->>> device that
->>> can declare up to 2 endpoints in combo mode makes things much 
->>> simpler, and allows
->>> us to attach each "csiphy" stream to any "controller" side of camss.
+
+
+On 7/21/2025 1:53 PM, Krzysztof Kozlowski wrote:
+> On Fri, Jul 18, 2025 at 04:16:28PM +0530, Mohammad Rafi Shaik wrote:
+>> On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
+>> WSA8830/WSA8835 speakers share a common reset (shutdown) GPIO.
+>> To handle such cases, use the reset controller framework along
+>> with the "reset-gpio" driver.
 >>
->> I think there should be a generic extension to PHY/linux-media to 
->> support that instead of something Qualcomm specific.
+>> Register devm action to safely disable the regulator on device removal
+>> to prevents a potential release warning from _regulator_put().
 > 
-> Can you point out what's missing ? AFAIK it's more a matter of proper 
-> representation of all
-> the CAMSS components with a proper ports/endpoint graph design that 
-> adding new kernel APIs.
+> It is not possible to remove the device - suppress bind attrs. How did
+> you trigger that?
+> 
+Ack,
 
-Perhaps I'm not understanding the pushback.
+I encountered the warning as regulator was being released unexpectedly,
+triggering _regulator_put() warnings. While the device itself isn't 
+removed, Registering the devm action ensures safe cleanup without 
+triggering warnings.
 
-Vlad's design puts the CSIPHY nodes under CAMSS and doesn't use the 
-upstream PHY API, which if I've understood right is done to facilitate 
-multiple sensors on the same CSIPHY.
+Please check the below logs.
 
-If the kernel APIs or standard representations of CSIPHYs in the 
-upstream kernel are insufficent to facilitate this model, then I think 
-that change should be done separately so that all of the existing 
-upstream stuff can benefit.
+I could use some suggestions for this issue. please help with some 
+suggestions how i can approve this design.
 
-CAMSS should have a standard PHY interface. That's what this series 
-provides.
+Thanks,
+Rafi.
+>>
+>> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+>> ---
+>>   sound/soc/codecs/wsa883x.c | 93 +++++++++++++++++++++++++++++---------
+>>   1 file changed, 71 insertions(+), 22 deletions(-)
+> 
+> ...
+> 
+>>   static int wsa883x_probe(struct sdw_slave *pdev,
+>>   			 const struct sdw_device_id *id)
+>>   {
+>> @@ -1566,13 +1615,18 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+>>   	if (ret)
+>>   		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
+>>   
+>> -	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
+>> -						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
+>> -	if (IS_ERR(wsa883x->sd_n)) {
+>> -		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
+>> -				    "Shutdown Control GPIO not found\n");
+>> -		goto err;
+>> -	}
+>> +	ret = wsa883x_get_reset(dev, wsa883x);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	/*
+>> +	 * Register devm action to safely disable the regulator on device removal.
+>> +	 * This prevents a potential release warning from _regulator_put().
+>> +	 */
+>> +	ret = devm_add_action_or_reset(dev, wsa883x_regulator_disable,
+>> +				       wsa883x);
+> 
+> If removal is possible (but then explain in commit msg how), then this
+> should be separate commit with fixes and cc-stable, because you are
+> fixing actual bug - lack of regulator release on unbind.
+> 
+Ack,
 
-If multiple sensors on the CSIPHY can't fit into that standard model, 
-then we need a series to rectify.
+The Reason to introduced this change in same patch,
 
-I've given an example of how two sensors could be routed to one CSIPHY 
-in DT. Another possibility is virtual channels.
+without devm_add_action_or_reset(dev, wsa883x_regulator_disable, wsa883x);
 
-I don't know if your sensors support VCs, have you explored that ?
+if i try to enable ->devm_reset_control_get_optional_shared_deasserted()
 
-If the message is "we need a custom PHY interface in CAMSS for multiple 
-sensors" then I think in fact what that points to additional work that 
-needs to be done in CAMSS and perhaps in the kernel linux-media and PHY 
-layer to facilitate.
+seeing below crash logs.  _regulator_put() release warning.
 
-Like I say I'm happy to help you guys do that, ship me some hardware.
+logs
+-----
+[   10.679294][   T90] ------------[ cut here ]------------
+[   10.684772][   T90] WARNING: CPU: 1 PID: 90 at 
+/drivers/regulator/core.c:2450 _regulator_put+0x50/0x60
+[   10.694344][   T90] Modules linked in: snd_soc_hdmi_codec 
+phy_qcom_edp venus_dec venus_enc videobuf2_dma_contig rpmsg_ctrl 
+qrtr_smd fastrpc rpmsg_char videobuf2_memops qcom_pd_mapper nb7vpq904m 
+msm lontium_lt9611uxc ucsi_glink typec_ucsi pmic_glink_altmode 
+qcom_battmgr aux_hpd_bridge ath11k_ahb ath11k hci_uart rtc_pm8xxx btqca 
+coresight_stm bluetooth qcom_pon stm_core venus_core pwrseq_qcom_wcn 
+drm_exec mac80211 ocmem v4l2_mem2mem gpu_sched videobuf2_v4l2 videodev 
+nvmem_qcom_spmi_sdam qcom_spmi_adc_tm5 snd_soc_sc8280xp 
+drm_display_helper qcom_vadc_common snd_soc_qcom_sdw coresight_tmc 
+snd_soc_qcom_common videobuf2_common qcom_stats coresight_etm4x 
+qcom_q6v5_pas phy_qcom_qmp_combo usb_f_qdss mc drm_dp_aux_bus 
+ecdh_generic qcom_pil_info qcom_q6v5 ecc coresight_replicator aux_bridge 
+coresight_csr qcom_sysmon coresight_funnel pwrseq_core gpi typec 
+i2c_qcom_geni qcom_common coresight icc_bwmon llcc_qcom qcom_glink_smem 
+qcrypto pinctrl_sc7280_lpass_lpi mdt_loader snd_soc_lpass_wsa_macro 
+sha256_generic pinctrl_lpass_lpi
+[   10.694524][   T90]  snd_soc_lpass_va_macro display_connector 
+snd_soc_lpass_macro_common authenc drm_kms_helper libdes qrtr libarc4 
+icc_osm_l3 qcom_rng pmic_glink cfg80211 rfkill drm fuse ipv6
+[   10.804083][   T90] CPU: 1 UID: 0 PID: 90 Comm: kworker/u32:4 Not 
+tainted 6.14.0 #1
+[   10.811959][   T90] Hardware name: Qualcomm Technologies, Inc. 
+Robotics RB3gen2 (DT)
+[   10.819920][   T90] Workqueue: events_unbound deferred_probe_work_func
+[   10.826643][   T90] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT 
+-SSBS BTYPE=--)
+[   10.834510][   T90] pc : _regulator_put+0x50/0x60
+[   10.839362][   T90] lr : regulator_put+0x30/0x48
+[   10.844118][   T90] sp : ffff8000809e3670
+[   10.848244][   T90] x29: ffff8000809e3670 x28: 0000000000000000 x27: 
+ffff70941a04a080
+[   10.856300][   T90] x26: 0000000000000000 x25: ffffbfa860a9bee8 x24: 
+ffffbfa860e79cb0
+[   10.864354][   T90] x23: ffff709406e62640 x22: ffff709418668808 x21: 
+ffff8000809e3710
+[   10.872409][   T90] x20: ffff709415e81840 x19: ffffbfa86119b680 x18: 
+00000000ffffffff
+[   10.880462][   T90] x17: ffffbfa86013d058 x16: ffffbfa8601cbac4 x15: 
+ffff709419a70b48
+[   10.888517][   T90] x14: 0000000000000000 x13: ffff709400032b10 x12: 
+0000000000000000
+[   10.896573][   T90] x11: 0000000000000000 x10: ffffbfa85fdbcc60 x9 : 
+ffffbfa85fdbc7e0
+[   10.904627][   T90] x8 : ffff709418668ab0 x7 : ffff709418668ab0 x6 : 
+ffff709418668ab0
+[   10.912676][   T90] x5 : ffff709418668ab0 x4 : ffff709418668ab0 x3 : 
+ffff709415e807c0
+[   10.920727][   T90] x2 : ffff709406e62640 x1 : 0000000000000001 x0 : 
+ffff709415e81840
+[   10.928781][   T90] Call trace:
+[   10.932024][   T90]  _regulator_put+0x50/0x60 (P)
+[   10.936877][   T90]  regulator_put+0x30/0x48
+-----------
 
----
-bod
+Thanks & Regards,
+Rafi.
+
+> Best regards,
+> Krzysztof
+> 
+
 
