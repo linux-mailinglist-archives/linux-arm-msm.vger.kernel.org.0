@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57AE4B0D5BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:20:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 376D4B0D5C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 11:21:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 38FF416B623
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 09:20:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 205EF188ACD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 09:22:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAAAA2D63F3;
-	Tue, 22 Jul 2025 09:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8D3F2DA749;
+	Tue, 22 Jul 2025 09:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iXUykyln"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cWn0jZkU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB5523A564;
-	Tue, 22 Jul 2025 09:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3BA1DFFC;
+	Tue, 22 Jul 2025 09:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753176007; cv=none; b=knzUF29lrp5zvouYhM00HG1e/MtVoH7nfq2v6vObftwlCgY/ihBcpZIznZFuQam+Mp416lFf4nCXjVw25q/VI8Mtmc3FcnNfeOfXkJUEERkoGpsJGvT0GyRQ2GgczkzUn1zbr36BHWc8a23/4HgCO9G+DzDvknWrBzPJfZ3XVFc=
+	t=1753176108; cv=none; b=dhjW644AP8T1bOzBu9af6yihf9gZuD94C+cOSvpsluzfVuqVT5eTVArtd/YbGJUuMEF45uZ+tLgU1f+qhis1dTlCYVGhHXtmIhyM8OyHh9q8bE7e7mpCutzNUZxhi7371mH9EBULRRO6wH/KDJhutg4JL+oE4fyLDSyhG7p7Gcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753176007; c=relaxed/simple;
-	bh=B1T2MWPDPDtUYOSFsDx/tfdQ/pEGziEZ3AKWuscvoqs=;
+	s=arc-20240116; t=1753176108; c=relaxed/simple;
+	bh=03h99rwdlaftyLCQRNswUUAcFdErDW9dGKOcWE+JySo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q8kmb/hDvsK5PFVvurG790yUVach2K1IK1dUAky0Xl6UWnqd2bvlYfraXgeapJr7ZgWpZxHSAySlF/xhvfRRXGyMOO0MmAl3k2v0QMzCadCbCrugwjiDEOEtYrM3LvWXOKpJtLpxFKHRKeYUajJbkrFFsatAjfrxMTEa3KHP80c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iXUykyln; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA3CC4CEEB;
-	Tue, 22 Jul 2025 09:20:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=n7O+haX7i0y4jKWX3plEq/XYSBp/Rc4Qv2XGP03MENtA61oK/WUPDuYA9SVY1zxU0ec8RGNlrp/7wTmPRnJ15XsqqJ6Gd1EIO+Zv/JKFAdHIYxDN3YdN4iox6dXTICSAkeoudsjEcw205OX0Ka1hM2oRccXzE885rKeUHElQNVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cWn0jZkU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC046C4CEEB;
+	Tue, 22 Jul 2025 09:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753176007;
-	bh=B1T2MWPDPDtUYOSFsDx/tfdQ/pEGziEZ3AKWuscvoqs=;
+	s=k20201202; t=1753176108;
+	bh=03h99rwdlaftyLCQRNswUUAcFdErDW9dGKOcWE+JySo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iXUykyln4dJhQGpxCRNG5+tveBFfMM/aZyBOVCGy/PEZz9eR8G5iK1skRzqTr0fHq
-	 kN0teNAZyFW9l2F+koQIDL7iZU03RH4YYLAd8CEV0PviK9kAPjeCVFV1fh2scUA2xe
-	 dBlku0E1DO2YV1HCqX3mZZCpqpdyxKVfk3A7scH8wkQ771S8yuJkbMATcAyI95r38W
-	 ORg2mmWFd0g3dlAVVN6cvqtBxpq2JNXja6QBPiGoWO3WMrBgyayUjFy0G5WSh6+1Qk
-	 rxbugE3vsX/PSap08fUMLLVLWKfh5YrypS4A1UMGSl2P0PYdWrwbKWxGebPbk95dTD
-	 kEDEgFR3jfiow==
-Message-ID: <2fd202a6-2c92-469c-81c0-8852562d4e35@kernel.org>
-Date: Tue, 22 Jul 2025 11:19:59 +0200
+	b=cWn0jZkUFZOluvKv6bmbyATKVWy1bkg+lnaGFGhNjCvP7/rYMSavgYwuJrgYP54lr
+	 gJgttUHbssF+a8ZyVhH7i6BcqJIPGltXcAL1ylzxzG8AqEVTk9MYgWelPCYj4nFiv4
+	 IpfLpo0Pg+lph878RN6vKNnwxue/S0Kbd69fXilhr60tG4MW3Y9IBY7y2siD/yWFvl
+	 T4aUobIZgT1RPIP/6MgfJQRzSOwD4JSzx6ox25pVf5DEy9cvJ5CcfZuzaMy5zf4iyF
+	 qyncpPdW259n2TQMntkRLq82EFyimrCcKa7WMY0UTyGsMtaNJrFXKHufUjtS/FrKek
+	 P8r9HEqg7kWYA==
+Message-ID: <bca68e7a-cb36-4903-bde9-15cb1945c71e@kernel.org>
+Date: Tue, 22 Jul 2025 11:21:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/13] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
- support dual TCSR registers
+Subject: Re: [PATCH v2 12/13] drm/msm/dp: Add DisplayPort support for QCS615
 To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
  Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
  <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
@@ -70,7 +69,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  fange.zhang@oss.qualcomm.com, quic_lliu6@quicinc.com,
  quic_yongmou@quicinc.com
 References: <20250722-add-displayport-support-for-qcs615-platform-v2-0-42b4037171f8@oss.qualcomm.com>
- <20250722-add-displayport-support-for-qcs615-platform-v2-3-42b4037171f8@oss.qualcomm.com>
+ <20250722-add-displayport-support-for-qcs615-platform-v2-12-42b4037171f8@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,54 +115,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250722-add-displayport-support-for-qcs615-platform-v2-3-42b4037171f8@oss.qualcomm.com>
+In-Reply-To: <20250722-add-displayport-support-for-qcs615-platform-v2-12-42b4037171f8@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 22/07/2025 09:22, Xiangxu Yin wrote:
-> Add support for specifying two TCSR register addresses in the
-> qcom,tcsr-reg property to enable DP-only mode switching. This change
-> maintains backward compatibility with the original single-register
-> format.
+> The Qualcomm QCS615 platform comes with a DisplayPort controller use the
+> same base offset as sc7180. add support for this in DP driver.
 > 
-> Also update #clock-cells and #phy-cells to <1> to support clock and PHY
-> provider interfaces, respectively. This is required for platforms that
-> consume the PHY clock and select PHY mode dynamically.
-> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > ---
->  .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    | 28 +++++++++++++++++-----
->  1 file changed, 22 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/msm/dp/dp_display.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-> index 1636285fbe535c430fdf792b33a5e9c523de323b..badfc46cda6c3a128688ac63b00d97dc2ba742d6 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-> @@ -44,13 +44,21 @@ properties:
->    vdda-pll-supply: true
->  
->    "#clock-cells":
-> -    const: 0
-> +    oneOf:
-> +      - description: Set to 0 for legacy platforms without clock provider
-> +        const: 0
-> +      - description: Set to 1 to expose PHY pipe clock.
-> +        const: 1
->  
->    clock-output-names:
->      maxItems: 1
->  
->    "#phy-cells":
-> -    const: 0
-> +    oneOf:
-> +      - description: Set to 0 for legacy platforms
-> +        const: 0
-> +      - description: Set to 1 to supports mode selection (e.g. USB/DP)
-> +        const: 1
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index d87d47cc7ec3eb757ac192c411000bc50b824c59..ddb22b50490035779904d4cab20e2fee7e0f9657 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -196,6 +196,7 @@ static const struct of_device_id msm_dp_dt_match[] = {
+>  	{ .compatible = "qcom,sc8280xp-dp", .data = &msm_dp_desc_sc8280xp },
+>  	{ .compatible = "qcom,sc8280xp-edp", .data = &msm_dp_desc_sc8280xp },
+>  	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sdm845 },
+> +	{ .compatible = "qcom,sm6150-dp", .data = &msm_dp_desc_sc7180 },
 
-I don't understand why EXISTING platforms now get more clocks. What did
-you change in the hardware? This you must explain in the commit msg.
 
+So devices are compatible? Why are you adding this entry instead of
+expressing compatibility?
 
 Best regards,
 Krzysztof
