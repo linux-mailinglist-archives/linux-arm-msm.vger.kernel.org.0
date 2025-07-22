@@ -1,106 +1,286 @@
-Return-Path: <linux-arm-msm+bounces-66100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3C92B0DD5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:12:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 431A0B0DDDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 16:20:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C1AF1C8683C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:09:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 16C5E188D07E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jul 2025 14:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 656252EB5D5;
-	Tue, 22 Jul 2025 14:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126E82ECE9C;
+	Tue, 22 Jul 2025 14:09:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ABB42EBBB9;
-	Tue, 22 Jul 2025 14:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28C22ECE94;
+	Tue, 22 Jul 2025 14:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193227; cv=none; b=VRK+dUxqc7ixbwrLljQkKT6Y7QnrOj5K3sBhYor9kb3vHyRil6MD5EatmVBA2EKWqDBYyQJOt1HOGOlsA4ShVtZc6rdTS8+J6RKdfa26ubawGyDMHbY5vQbYLhZtUUija6VVNq1L0c1kvss3jqoNYMMAt+gPfXLM881NLXcafDA=
+	t=1753193381; cv=none; b=bX4IX3MOQD7+feUjTAQJAhJ87D1/wn6S0tYxtuMFOjbp4/IewuWCOOKdQHWFqauWa11ly2VXHYuyeKLQ2l/Bat3WiT++mf31yESZ3Du+qn30jpFYiC8A7T5z8U06B/DdmyJ/w0kOxM3/AcUN7jqpUsaiAx+/pXsw8kZllbLFJlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193227; c=relaxed/simple;
-	bh=/mX9h5YKQzQFslBtOIGwHxGxd4RPUUrJGC0seadhRVw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BTeqr0QB2TpgbvhGnBoMKrJSsp6uJFwstvz4zxxk3vR0BzaVgmmpyHozAavt+c1umt2ugwlydi7N4lRjrRZSj0XWHyZ2t4vZeK2mJqKhCRaRNMOsndsfmothDQ1hg4dkUn3L7Lg0jlmgFbCT8HosFWMOwYeC86g2HOIVi30Vw2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BA639152B;
-	Tue, 22 Jul 2025 07:06:56 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EC11E3F5A1;
-	Tue, 22 Jul 2025 07:07:01 -0700 (PDT)
-Date: Tue, 22 Jul 2025 15:06:59 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Mike Leach <mike.leach@linaro.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mao Jinlong <quic_jinlmao@quicinc.com>,
-	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Yingchao Deng <quic_yingdeng@quicinc.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: Add Qualcomm extended CTI
-Message-ID: <20250722140659.GI3137075@e132581.arm.com>
-References: <20250722081405.2947294-1-quic_jinlmao@quicinc.com>
- <20250722081405.2947294-2-quic_jinlmao@quicinc.com>
- <727fa9f4-fe25-495e-9d8d-48e504fbe6b0@arm.com>
- <20250722091425.GH3137075@e132581.arm.com>
- <CAJ9a7VhLLgAak_4FB=iW0izXprM4W+RsKfHUeo=XUHh9LwtUsA@mail.gmail.com>
+	s=arc-20240116; t=1753193381; c=relaxed/simple;
+	bh=PQbJ9nekolxPAktW5mDMSSTldp2ptas8ZeWIr2Slddk=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GNWwjMDhXhj+EtA4ugYjQMd9yvxyDIaiJ/da8b1CT1FovFRkZMtCOVmp9pRqiYkLh1MW83/iDHFLkQr7DfLlKwN97mQhmISU+oyYOLWNGUxpPmVtLBB84dFvaLGLcNByBebl0sLaNgrEg83hi6TZ5wunjHwaFSzTGam5qxzYWVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bmfHZ0kkCz6H7XD;
+	Tue, 22 Jul 2025 22:08:10 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id 17F4B140446;
+	Tue, 22 Jul 2025 22:09:34 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 22 Jul
+ 2025 16:09:32 +0200
+Date: Tue, 22 Jul 2025 15:09:30 +0100
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+CC: <sboyd@kernel.org>, <jic23@kernel.org>, <dlechner@baylibre.com>,
+	<nuno.sa@analog.com>, <andy@kernel.org>, <arnd@arndb.de>,
+	<gregkh@linuxfoundation.org>, <srini@kernel.org>, <vkoul@kernel.org>,
+	<kishon@kernel.org>, <sre@kernel.org>, <krzysztof.kozlowski@linaro.org>,
+	<u.kleine-koenig@baylibre.com>, <linux-arm-msm@vger.kernel.org>,
+	<linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-phy@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+	<kernel@collabora.com>, <wenst@chromium.org>, <casey.connolly@linaro.org>
+Subject: Re: [PATCH v2 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+Message-ID: <20250722150930.00000a2f@huawei.com>
+In-Reply-To: <20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
+References: <20250722101317.76729-1-angelogioacchino.delregno@collabora.com>
+	<20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ9a7VhLLgAak_4FB=iW0izXprM4W+RsKfHUeo=XUHh9LwtUsA@mail.gmail.com>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
 
-On Tue, Jul 22, 2025 at 01:00:18PM +0100, Mike Leach wrote:
+On Tue, 22 Jul 2025 12:13:11 +0200
+AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> wrote:
 
-[...]
-
-> For a change of this magnitude to a CS component, that the ID
-> registers will also have to change. This is a requirement of the
-> Visible Component Architecture in the CoreSight specification.
-> External tools cannot see the device tree.
+> Some devices connected over the SPMI bus may be big, in the sense
+> that those may be a complex of devices managed by a single chip
+> over the SPMI bus, reachable through a single SID.
 > 
-> This is effectively no longer an ARM designed component, so the
-> CoreSight specification requires that the DEVARCH register change to
-> show qualcomm as the designer, and the architecture value change to
-> represent this component.
-> DEVID should be used to allow the driver to pick up parameters such as
-> number of triggers as per the existing CTI component.
+> Add new functions aimed at managing sub-devices of a SPMI device
+> spmi_subdevice_alloc_and_add() and a spmi_subdevice_put_and_remove()
+> for adding a new subdevice and removing it respectively, and also
+> add their devm_* variants.
 > 
-> If this component is Coresight compliant then the driver can use the
-> ID registers to configure to the extended trigger architecture.
+> The need for such functions comes from the existance of	those
+> complex Power Management ICs (PMICs), which feature one or many
+> sub-devices, in some cases with these being even addressable on
+> the chip in form of SPMI register ranges.
 > 
-> With complete remapping of most of the registers, and the dropping of
-> claim tag compatibility - which appears to be a breach of the
-> CoreSight specification - it may be better to have a completely
-> separate driver for this component.
+> Examples of those devices can be found in both Qualcomm platforms
+> with their PMICs having PON, RTC, SDAM, GPIO controller, and other
+> sub-devices, and in newer MediaTek platforms showing similar HW
+> features and a similar layout with those also having many subdevs.
+> 
+> Also, instead of generally exporting symbols, export them with a
+> new "SPMI" namespace: all users will have to import this namespace
+> to make use of the newly introduced exports.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
+>  drivers/spmi/spmi-devres.c | 23 +++++++++++
+>  drivers/spmi/spmi.c        | 83 ++++++++++++++++++++++++++++++++++++++
+>  include/linux/spmi.h       | 16 ++++++++
+>  3 files changed, 122 insertions(+)
+> 
+> diff --git a/drivers/spmi/spmi-devres.c b/drivers/spmi/spmi-devres.c
+> index 62c4b3f24d06..7e00e38be2ff 100644
+> --- a/drivers/spmi/spmi-devres.c
+> +++ b/drivers/spmi/spmi-devres.c
+> @@ -60,5 +60,28 @@ int devm_spmi_controller_add(struct device *parent, struct spmi_controller *ctrl
+>  }
+>  EXPORT_SYMBOL_GPL(devm_spmi_controller_add);
+>  
+> +static void devm_spmi_subdevice_remove(void *res)
+> +{
+> +	spmi_subdevice_remove((struct spmi_subdevice *)res);
 
-Good point. I'd like to confirm with the Qualcomm team: apart from the
-differences in register offsets and claim bits, does this CTI module
-have exactly the same bit layout and usage as CTI standard
-implementation?
+Why the cast?  Implicit casts are fine for void * to any other pointer type
+so
+	spmi_subdevice_remove(res);
+should be fine.
 
-If yes, then from a maintenance perspective, we probably don't want to
-have two CTI drivers with identical register settings. It seems plausible
-to encapsulate register access and claim logic into several functions.
 
-  void cti_reg_writel(u32 val, struct cti_drvdata *drvdata, bool relax);
-  u32 cti_reg_readl(struct cti_drvdata *drvdata, bool relax);
-  int cti_claim_device(struct cti_drvdata *drvdata);
-  int cti_disclaim_device(struct cti_drvdata *drvdata, bool unlocked);
+> +}
 
-Thanks,
-Leo
+>  MODULE_LICENSE("GPL");
+>  MODULE_DESCRIPTION("SPMI devres helpers");
+> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+> index 3cf8d9bd4566..62bb782b2bbc 100644
+> --- a/drivers/spmi/spmi.c
+> +++ b/drivers/spmi/spmi.c
+> @@ -19,6 +19,7 @@
+>  
+>  static bool is_registered;
+>  static DEFINE_IDA(ctrl_ida);
+> +static DEFINE_IDA(spmi_subdevice_ida);
+>  
+>  static void spmi_dev_release(struct device *dev)
+>  {
+> @@ -31,6 +32,18 @@ static const struct device_type spmi_dev_type = {
+>  	.release	= spmi_dev_release,
+>  };
+>  
+> +static void spmi_subdev_release(struct device *dev)
+> +{
+> +	struct spmi_device *sdev = to_spmi_device(dev);
+> +	struct spmi_subdevice *sub_sdev = container_of(sdev, struct spmi_subdevice, sdev);
+> +
+> +	kfree(sub_sdev);
+> +}
+> +
+> +static const struct device_type spmi_subdev_type = {
+> +	.release	= spmi_subdev_release,
+> +};
+> +
+>  static void spmi_ctrl_release(struct device *dev)
+>  {
+>  	struct spmi_controller *ctrl = to_spmi_controller(dev);
+> @@ -90,6 +103,19 @@ void spmi_device_remove(struct spmi_device *sdev)
+>  }
+>  EXPORT_SYMBOL_GPL(spmi_device_remove);
+>  
+> +/**
+> + * spmi_subdevice_remove() - Remove an SPMI subdevice
+> + * @sub_sdev:	spmi_device to be removed
+> + */
+> +void spmi_subdevice_remove(struct spmi_subdevice *sub_sdev)
+> +{
+> +	struct spmi_device *sdev = &sub_sdev->sdev;
+> +
+> +	device_unregister(&sdev->dev);
+> +	ida_free(&spmi_subdevice_ida, sub_sdev->devid);
+
+Why not make the ida free part of the release? If not
+the device_unregister could (I think) result in a reference
+count drop and freeing of sub_sdev before you dereference it here.
+
+
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_remove, "SPMI");
+> +
+>  static inline int
+>  spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
+>  {
+> @@ -431,6 +457,63 @@ struct spmi_device *spmi_device_alloc(struct spmi_controller *ctrl)
+>  }
+>  EXPORT_SYMBOL_GPL(spmi_device_alloc);
+>  
+> +/**
+> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
+> + * @sparent:	SPMI parent device with previously registered SPMI controller
+> + *
+> + * Returns:
+> + * Pointer to newly allocated SPMI sub-device for success or negative ERR_PTR.
+> + */
+> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
+> +{
+> +	struct spmi_subdevice *sub_sdev;
+> +	struct spmi_device *sdev;
+> +	int ret;
+> +
+> +	if (!sparent)
+> +		return ERR_PTR(-EINVAL);
+
+Is this protecting against a real possibility? Feels like something went
+very wrong if you are allocating a subdevice of 'nothing'.
+If it's just defensive programming I'd drop it.
+
+> +
+> +	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
+> +	if (!sub_sdev)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
+
+> +	if (ret < 0)
+> +		goto err_ida_alloc;
+> +
+> +	sdev = &sub_sdev->sdev;
+> +	sdev->ctrl = sparent->ctrl;
+> +	device_initialize(&sdev->dev);
+
+Read the device_initialize() documentation for what you need to do
+if an error occurs after this point. Specifically the last 'NOTE'.
+
+
+> +	sdev->dev.parent = &sparent->dev;
+> +	sdev->dev.bus = &spmi_bus_type;
+> +	sdev->dev.type = &spmi_subdev_type;
+> +
+> +	sub_sdev->devid = ret;
+> +	sdev->usid = sparent->usid;
+> +
+> +	ret = dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
+> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
+> +	if (ret)
+> +		goto err_set_name;
+> +
+> +	ret = device_add(&sdev->dev);
+> +	if (ret) {
+> +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+> +			dev_name(&sdev->dev), ret);
+> +		put_device(&sdev->dev);
+> +		return ERR_PTR(ret);
+> +	}
+> +
+> +	return sub_sdev;
+> +
+> +err_set_name:
+> +	ida_free(&ctrl_ida, sub_sdev->devid);
+> +err_ida_alloc:
+> +	kfree(sub_sdev);
+> +	return ERR_PTR(ret);
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
+> +
+>  /**
+>   * spmi_controller_alloc() - Allocate a new SPMI controller
+>   * @parent:	parent device
+> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+> index 28e8c8bd3944..7cea0a5b034b 100644
+> --- a/include/linux/spmi.h
+> +++ b/include/linux/spmi.h
+> @@ -69,6 +69,22 @@ int spmi_device_add(struct spmi_device *sdev);
+>  
+>  void spmi_device_remove(struct spmi_device *sdev);
+>  
+> +/**
+> + * struct spmi_subdevice - Basic representation of an SPMI sub-device
+> + * @sdev:	Sub-device representation of an SPMI device
+> + * @devid:	Platform Device ID of an SPMI sub-device
+> + */
+> +struct spmi_subdevice {
+> +	struct spmi_device	sdev;
+
+Having something called a subdevice containing an instance of a device
+does seem a little odd.  Maybe the spmi_device naming is inappropriate after
+this patch?
+
+> +	unsigned int		devid;
+> +};
+> +
+> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent);
+> +void spmi_subdevice_remove(struct spmi_subdevice *sdev);
+> +
+> +struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
+> +							 struct spmi_device *sparent);
 
