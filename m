@@ -1,405 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-66259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3497EB0F05A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:50:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72CC5B0F07F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:57:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 565C31671AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:50:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 66DA51C84BEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:58:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 964EC2E54DB;
-	Wed, 23 Jul 2025 10:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9981A2D879A;
+	Wed, 23 Jul 2025 10:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Il66BjPt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M+fY/Bks"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2592E540F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 10:47:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2E12C1590;
+	Wed, 23 Jul 2025 10:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753267662; cv=none; b=GKuuzeKCFPOim8K2MNyh8mf7NbGydL9qX02f8oOtcBDc+WIsyTMlDCv3b00A/VWgVvcvIUQm/AYaGAJUFe8rsHfYN5tbMEqymH8lWbg5hCkEp5lsKTr+Ag0HnNfbuNLllmHhr9ulYuv/kZtdmoFHAuABlw3XtO0f1ok+adT1Yqo=
+	t=1753268243; cv=none; b=Q+fKoB/6iLw6gIIdOg3H9c6h4zLWFYJFhf7nkeLukFyNSeqXylqXpyr+o2INYhonr6RC+t0ZDnR2w7KBljvNLsxkeIzvds+SSfqgaFQ1GXcj8ayt3pa50An27A6TldMYZjEEowxRtjTSylHOSjd4bz+v1XXWeWV9eUT9I+uPpFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753267662; c=relaxed/simple;
-	bh=Kq6PmXNVPVNZTGvw1rZ4Un1GI+UwNCa7BO9103toUi4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=iK+Y1kAplpT6AA+QXcVj++tOL97v8tdm70M8w287LrRaLOhM3fFYr21xbV8n8hwFpQQ6zSPp4ATHxBTBEDw7Q0A5Wdds/vt9eHvpOf+wSy9rQdVwdSec7lNJur52vvEEXaF8qBNBY4BnQXYEJlKZW1oK7zCqRYCGkyM3+F67K7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Il66BjPt; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-451d2037f1eso42569295e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 03:47:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753267659; x=1753872459; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d5hGo3nn+2nj2a3HbRALDwA7qk9YZQrlMbSjM7BcAIQ=;
-        b=Il66BjPtclsQz3m3u6LR/a7PfoUyIzHglA8Xqt3P+q9HB6y2W6GjxH6W61CYPPeLUU
-         0fLYbJ4FIa5N9wfZh1/hXwIRblXtlcGdNNv0TgZNXnZHJVIw/PhHQtlMmp+oBpMpitMB
-         NqGzAsyl6D2l1XPdbMh3dje0frbkGE0uJ3euCGMs/yYLT4QkAiYYhTu8cXZK5VMP6X0R
-         P9t4xjsw2qZI14U/BkSeDNmHoJCPJwSeMWnjY5MKsmBkXFvC54iiUoPiEsOn4QMu+m/k
-         4M/NgWhvxeXOPMSTqM1uu/EOjg0IeRJsDnMDARqfu5vUSgqbzzQE4U+eIptq4gBFWWlO
-         SBTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753267659; x=1753872459;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d5hGo3nn+2nj2a3HbRALDwA7qk9YZQrlMbSjM7BcAIQ=;
-        b=o7lEb4LtbYgux8A9I0JpTkkB53M01WAeE+/kgWd6yD51c6YxyWVwo4499SEd3VBC/B
-         Z8gGlAJx6n58cGj2Uu7rwvs6WHqxXofZmjK1bv82RaVgKZurHWKcSfn4y+Z6ascRTzpW
-         EUTvJoOTAOb1oTzLb8tgfsc8e969Y1UUsfkHImYk1zzb60TFRrK4inQyiUER1TsawWhV
-         mrdO6wA4AFHJHz/5iOEpd4EDRVDPJTERiVyx54e9242/YsyzMO5up4bQkszFoAavqhpO
-         1RR/yWqyEgfGbUzk2ELw+DntJDa7aRE/YGkQEReNw6LA3rEByLiNRltr1oWRrEU7zMvh
-         PHRw==
-X-Forwarded-Encrypted: i=1; AJvYcCUONHKTnL+NdcqcT01WKmv3yfgWutt5eDpvnoc4sQXfs7JMu2bF1IRvp68iIf1CEwZTkW//aFlnaMiGd4hT@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQJTaM2jePexUVljZSM2UxJy1Jdg9S5zGV775diwCqEpNsqCSZ
-	Phrvoa+KLvwI/RUz/LUQYU2jUU+bvQzFB8y9gKC7UCWeCpVN6BGi4W4jxGfwlNtaqrZnKi9Srfj
-	AFQ==
-X-Google-Smtp-Source: AGHT+IEN2ng1iBiQj/hOpJ7Jz7J3gbvaCwPkqEq6kCkN7K7pfMdbdTtgVfhLQcA0SIIMDYrrycOWegtIzA==
-X-Received: from wmbeq10.prod.google.com ([2002:a05:600c:848a:b0:456:257a:e323])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:8b2e:b0:43e:bdf7:7975
- with SMTP id 5b1f17b1804b1-45868d53277mr19005515e9.32.1753267658788; Wed, 23
- Jul 2025 03:47:38 -0700 (PDT)
-Date: Wed, 23 Jul 2025 11:47:14 +0100
-In-Reply-To: <20250723104714.1674617-1-tabba@google.com>
+	s=arc-20240116; t=1753268243; c=relaxed/simple;
+	bh=KQ+DgdtYLV7P/sqdXzO6H3+DTiNTfGo4K+XVrHhUoqc=;
+	h=Subject:To:References:CC:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=sVeQKxDhtndKq6STYbhEt66tsuD4cC7Ei1UkTC7l9/Nbtv9BV2iMe/PhGw4Ke8tOAC9ClWr00PJBlRZPHjNEDy8YCUj5TBFbYHZ4fyH9TM8pc/OPOrh076A78ofVHcEotbhCtXPBIhwCVuSfSCreTWwHP4z0gFvgZtUgSnRuvLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M+fY/Bks; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9GmO1025711;
+	Wed, 23 Jul 2025 10:57:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GrhgyfoxaqJvAt1Z3CG+5Rwh6hQq70QawGI24g23wFg=; b=M+fY/BksMp2Kd7RX
+	hgkmcelU4/CjenHeOastiFyLvQPBKoG1q2YoB1tLFNJufjwDdXRdxfSYox04Kh9f
+	AUiT68AXS4KeCMCLrjMvXZh10vU4prqsM8IwEoWttQ9DkC8t5Ng7MPqleo0l619S
+	2HNYGsRYn5MPQ/UTSEbEGPZpMqI6aBhq0bVEJsYs6P1eAXyCr8ieNsiU7dUVVlYS
+	yAPU4g2J23MyCOgMgzRYTdOFQNJeR6f4UnVO4GFdTX3Su6E0BZWcKw2DzVmOqytS
+	NeKW4X4EZB/z8nJXQxHRYbyMpU7EcPihZmmzKxpnra/l8peHVRQVfClp3uv308oR
+	INBW1Q==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 482b1ubdvg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 10:57:19 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56NAvJDL007418
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 10:57:19 GMT
+Received: from [10.218.49.64] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Jul
+ 2025 03:57:16 -0700
+Subject: Re: [PATCH v7] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
+ secure calls
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+References: <20250722-eud_mode_manager_secure_access-v7-1-40e9a4569895@oss.qualcomm.com>
+CC: <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Message-ID: <8ccc4e83-9645-4388-0941-ebeb3ac4d88e@quicinc.com>
+Date: Wed, 23 Jul 2025 16:26:56 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250723104714.1674617-1-tabba@google.com>
-X-Mailer: git-send-email 2.50.1.470.g6ba607880d-goog
-Message-ID: <20250723104714.1674617-23-tabba@google.com>
-Subject: [PATCH v16 22/22] KVM: selftests: guest_memfd mmap() test when mmap
- is supported
-From: Fuad Tabba <tabba@google.com>
-To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+In-Reply-To: <20250722-eud_mode_manager_secure_access-v7-1-40e9a4569895@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=LdY86ifi c=1 sm=1 tr=0 ts=6880c00f cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=aoTH-x754zP81mJImO0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA5MiBTYWx0ZWRfX/5xBlZ+jZ1lk
+ U+hRP+H5y7G7Ruxfa3zjMarfU7NyfcK07VIH5GWyjftpOe8xePsYV0qO+Cta1J60UsiyXOSnni5
+ vWsGPYujaZ9MCZLZ3Zpw/UFHJkJL+em83VK5ltJp9t+qhKUmSEeE+a9UKDO9T3RK7EMCuXUs7f2
+ yRnLzkm/knYXDCouoOkqSYNc5XPL1nuTL6JO1jQI+zXY0/FcIeRWPjbKwLSbo1hrPKPwTvJl48I
+ MbzmgLH1y6YaLFkPGJd5smHX8RK0SBB9ylfe7R/q9BvtYsCmOqC5uZBzUwmKV9YSgfoT9qNmOA6
+ w4O6RUDT/wgvMb+YloLgqeCPb6pxtxfAJ44LbusZpHY/p61pFtBkU9CA9UtEGXJNXKcRDt+QWha
+ x6RggoQVGg2WoWQCaGlG84HORBHKYLHFOMloWHmCssp2L2sUDG2fyL9uU5j5X7Oaqa6xpRiP
+X-Proofpoint-ORIG-GUID: 0rcmqnENa7bSepy5BlpYE6OCd_43fkqk
+X-Proofpoint-GUID: 0rcmqnENa7bSepy5BlpYE6OCd_43fkqk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0 phishscore=0
+ malwarescore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0 spamscore=0
+ suspectscore=0 clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507230092
 
-Expand the guest_memfd selftests to comprehensively test host userspace
-mmap functionality for guest_memfd-backed memory when supported by the
-VM type.
 
-Introduce new test cases to verify the following:
 
-* Successful mmap operations: Ensure that MAP_SHARED mappings succeed
-  when guest_memfd mmap is enabled.
-
-* Data integrity: Validate that data written to the mmap'd region is
-  correctly persistent and readable.
-
-* fallocate interaction: Test that fallocate(FALLOC_FL_PUNCH_HOLE)
-  correctly zeros out mapped pages.
-
-* Out-of-bounds access: Verify that accessing memory beyond the
-  guest_memfd's size correctly triggers a SIGBUS signal.
-
-* Unsupported mmap: Confirm that mmap attempts fail as expected when
-  guest_memfd mmap support is not enabled for the specific guest_memfd
-  instance or VM type.
-
-* Flag validity: Introduce test_vm_type_gmem_flag_validity() to
-  systematically test that only allowed guest_memfd creation flags are
-  accepted for different VM types (e.g., GUEST_MEMFD_FLAG_MMAP for
-  default VMs, no flags for CoCo VMs).
-
-The existing tests for guest_memfd creation (multiple instances, invalid
-sizes), file read/write, file size, and invalid punch hole operations
-are integrated into the new test_with_type() framework to allow testing
-across different VM types.
-
-Reviewed-by: James Houghton <jthoughton@google.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: Shivank Garg <shivankg@amd.com>
-Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-Signed-off-by: Fuad Tabba <tabba@google.com>
----
- .../testing/selftests/kvm/guest_memfd_test.c  | 194 ++++++++++++++++--
- 1 file changed, 173 insertions(+), 21 deletions(-)
-
-diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
-index 341ba616cf55..a0c5db8fd72d 100644
---- a/tools/testing/selftests/kvm/guest_memfd_test.c
-+++ b/tools/testing/selftests/kvm/guest_memfd_test.c
-@@ -13,6 +13,8 @@
- 
- #include <linux/bitmap.h>
- #include <linux/falloc.h>
-+#include <setjmp.h>
-+#include <signal.h>
- #include <sys/mman.h>
- #include <sys/types.h>
- #include <sys/stat.h>
-@@ -34,12 +36,83 @@ static void test_file_read_write(int fd)
- 		    "pwrite on a guest_mem fd should fail");
- }
- 
--static void test_mmap(int fd, size_t page_size)
-+static void test_mmap_supported(int fd, size_t page_size, size_t total_size)
-+{
-+	const char val = 0xaa;
-+	char *mem;
-+	size_t i;
-+	int ret;
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
-+	TEST_ASSERT(mem == MAP_FAILED, "Copy-on-write not allowed by guest_memfd.");
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT(mem != MAP_FAILED, "mmap() for guest_memfd should succeed.");
-+
-+	memset(mem, val, total_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(READ_ONCE(mem[i]), val);
-+
-+	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0,
-+			page_size);
-+	TEST_ASSERT(!ret, "fallocate the first page should succeed.");
-+
-+	for (i = 0; i < page_size; i++)
-+		TEST_ASSERT_EQ(READ_ONCE(mem[i]), 0x00);
-+	for (; i < total_size; i++)
-+		TEST_ASSERT_EQ(READ_ONCE(mem[i]), val);
-+
-+	memset(mem, val, page_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(READ_ONCE(mem[i]), val);
-+
-+	ret = munmap(mem, total_size);
-+	TEST_ASSERT(!ret, "munmap() should succeed.");
-+}
-+
-+static sigjmp_buf jmpbuf;
-+void fault_sigbus_handler(int signum)
-+{
-+	siglongjmp(jmpbuf, 1);
-+}
-+
-+static void test_fault_overflow(int fd, size_t page_size, size_t total_size)
-+{
-+	struct sigaction sa_old, sa_new = {
-+		.sa_handler = fault_sigbus_handler,
-+	};
-+	size_t map_size = total_size * 4;
-+	const char val = 0xaa;
-+	char *mem;
-+	size_t i;
-+	int ret;
-+
-+	mem = mmap(NULL, map_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT(mem != MAP_FAILED, "mmap() for guest_memfd should succeed.");
-+
-+	sigaction(SIGBUS, &sa_new, &sa_old);
-+	if (sigsetjmp(jmpbuf, 1) == 0) {
-+		memset(mem, 0xaa, map_size);
-+		TEST_ASSERT(false, "memset() should have triggered SIGBUS.");
-+	}
-+	sigaction(SIGBUS, &sa_old, NULL);
-+
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(READ_ONCE(mem[i]), val);
-+
-+	ret = munmap(mem, map_size);
-+	TEST_ASSERT(!ret, "munmap() should succeed.");
-+}
-+
-+static void test_mmap_not_supported(int fd, size_t page_size, size_t total_size)
- {
- 	char *mem;
- 
- 	mem = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
- 	TEST_ASSERT_EQ(mem, MAP_FAILED);
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT_EQ(mem, MAP_FAILED);
- }
- 
- static void test_file_size(int fd, size_t page_size, size_t total_size)
-@@ -120,26 +193,19 @@ static void test_invalid_punch_hole(int fd, size_t page_size, size_t total_size)
- 	}
- }
- 
--static void test_create_guest_memfd_invalid(struct kvm_vm *vm)
-+static void test_create_guest_memfd_invalid_sizes(struct kvm_vm *vm,
-+						  uint64_t guest_memfd_flags,
-+						  size_t page_size)
- {
--	size_t page_size = getpagesize();
--	uint64_t flag;
- 	size_t size;
- 	int fd;
- 
- 	for (size = 1; size < page_size; size++) {
--		fd = __vm_create_guest_memfd(vm, size, 0);
--		TEST_ASSERT(fd == -1 && errno == EINVAL,
-+		fd = __vm_create_guest_memfd(vm, size, guest_memfd_flags);
-+		TEST_ASSERT(fd < 0 && errno == EINVAL,
- 			    "guest_memfd() with non-page-aligned page size '0x%lx' should fail with EINVAL",
- 			    size);
- 	}
--
--	for (flag = BIT(0); flag; flag <<= 1) {
--		fd = __vm_create_guest_memfd(vm, page_size, flag);
--		TEST_ASSERT(fd == -1 && errno == EINVAL,
--			    "guest_memfd() with flag '0x%lx' should fail with EINVAL",
--			    flag);
--	}
- }
- 
- static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
-@@ -171,30 +237,116 @@ static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
- 	close(fd1);
- }
- 
--int main(int argc, char *argv[])
-+static bool check_vm_type(unsigned long vm_type)
- {
--	size_t page_size;
-+	/*
-+	 * Not all architectures support KVM_CAP_VM_TYPES. However, those that
-+	 * support guest_memfd have that support for the default VM type.
-+	 */
-+	if (vm_type == VM_TYPE_DEFAULT)
-+		return true;
-+
-+	return kvm_check_cap(KVM_CAP_VM_TYPES) & BIT(vm_type);
-+}
-+
-+static void test_with_type(unsigned long vm_type, uint64_t guest_memfd_flags)
-+{
-+	struct kvm_vm *vm;
- 	size_t total_size;
-+	size_t page_size;
- 	int fd;
--	struct kvm_vm *vm;
- 
--	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
-+	if (!check_vm_type(vm_type))
-+		return;
- 
- 	page_size = getpagesize();
- 	total_size = page_size * 4;
- 
--	vm = vm_create_barebones();
-+	vm = vm_create_barebones_type(vm_type);
- 
--	test_create_guest_memfd_invalid(vm);
- 	test_create_guest_memfd_multiple(vm);
-+	test_create_guest_memfd_invalid_sizes(vm, guest_memfd_flags, page_size);
- 
--	fd = vm_create_guest_memfd(vm, total_size, 0);
-+	fd = vm_create_guest_memfd(vm, total_size, guest_memfd_flags);
- 
- 	test_file_read_write(fd);
--	test_mmap(fd, page_size);
-+
-+	if (guest_memfd_flags & GUEST_MEMFD_FLAG_MMAP) {
-+		test_mmap_supported(fd, page_size, total_size);
-+		test_fault_overflow(fd, page_size, total_size);
-+
-+	} else {
-+		test_mmap_not_supported(fd, page_size, total_size);
-+	}
-+
- 	test_file_size(fd, page_size, total_size);
- 	test_fallocate(fd, page_size, total_size);
- 	test_invalid_punch_hole(fd, page_size, total_size);
- 
- 	close(fd);
-+	kvm_vm_free(vm);
-+}
-+
-+static void test_vm_type_gmem_flag_validity(unsigned long vm_type,
-+					    uint64_t expected_valid_flags)
-+{
-+	size_t page_size = getpagesize();
-+	struct kvm_vm *vm;
-+	uint64_t flag = 0;
-+	int fd;
-+
-+	if (!check_vm_type(vm_type))
-+		return;
-+
-+	vm = vm_create_barebones_type(vm_type);
-+
-+	for (flag = BIT(0); flag; flag <<= 1) {
-+		fd = __vm_create_guest_memfd(vm, page_size, flag);
-+
-+		if (flag & expected_valid_flags) {
-+			TEST_ASSERT(fd >= 0,
-+				    "guest_memfd() with flag '0x%lx' should be valid",
-+				    flag);
-+			close(fd);
-+		} else {
-+			TEST_ASSERT(fd < 0 && errno == EINVAL,
-+				    "guest_memfd() with flag '0x%lx' should fail with EINVAL",
-+				    flag);
-+		}
-+	}
-+
-+	kvm_vm_free(vm);
-+}
-+
-+static void test_gmem_flag_validity(void)
-+{
-+	uint64_t non_coco_vm_valid_flags = 0;
-+
-+	if (kvm_has_cap(KVM_CAP_GUEST_MEMFD_MMAP))
-+		non_coco_vm_valid_flags = GUEST_MEMFD_FLAG_MMAP;
-+
-+	test_vm_type_gmem_flag_validity(VM_TYPE_DEFAULT, non_coco_vm_valid_flags);
-+
-+#ifdef __x86_64__
-+	test_vm_type_gmem_flag_validity(KVM_X86_SW_PROTECTED_VM, 0);
-+	test_vm_type_gmem_flag_validity(KVM_X86_SEV_VM, 0);
-+	test_vm_type_gmem_flag_validity(KVM_X86_SEV_ES_VM, 0);
-+	test_vm_type_gmem_flag_validity(KVM_X86_SNP_VM, 0);
-+	test_vm_type_gmem_flag_validity(KVM_X86_TDX_VM, 0);
-+#endif
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
-+
-+	test_gmem_flag_validity();
-+
-+	test_with_type(VM_TYPE_DEFAULT, 0);
-+	if (kvm_has_cap(KVM_CAP_GUEST_MEMFD_MMAP))
-+		test_with_type(VM_TYPE_DEFAULT, GUEST_MEMFD_FLAG_MMAP);
-+
-+#ifdef __x86_64__
-+	test_with_type(KVM_X86_SW_PROTECTED_VM, 0);
-+#endif
- }
--- 
-2.50.1.470.g6ba607880d-goog
+On 7/22/2025 5:01 PM, Komal Bajaj wrote:
+> EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+> as read-only for operating system running at EL1, enforcing access
+> restrictions that prohibit direct memory-mapped writes via writel().
+>
+> Attempts to write to this region from HLOS can result in silent failures
+> or memory access violations, particularly when toggling EUD (Embedded
+> USB Debugger) state. To ensure secure register access, modify the driver
+> to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
+> Secure Channel Monitor (SCM). SCM has the necessary permissions to access
+> protected memory regions, enabling reliable control over EUD state.
+>
+> SC7280, the only user of EUD is also affected, indicating that this could
+> never have worked on a properly fused device.
+>
+> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+Reviewed-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> Changes in v7:
+> - Updated the commit message as per Greg's comment
+> - Link to v6: https://lore.kernel.org/r/20250721-eud_mode_manager_secure_access-v6-1-fe603325ac04@oss.qualcomm.com
+>
+> Changes in v6:
+> - Propagating the error code from disable_eud(), per Dmitry's suggestion
+> - Link to v5: https://lore.kernel.org/r/20250715-eud_mode_manager_secure_access-v5-1-e769be308d4a@oss.qualcomm.com
+>
+> usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through secure calls
+>
+> Changes in v5:
+> * Changed select QCOM_SCM to depends on QCOM_SCM in Kconfig per Greg's review
+> * Link to v4: https://lore.kernel.org/all/20250709065533.25724-1-komal.bajaj@oss.qualcomm.com/
+>
+> Changes in v4:
+> * Added error logging in disable_eud() for SCM write failures, per Konrad’s suggestion
+> * Link to v3: https://lore.kernel.org/all/20250708085208.19089-1-komal.bajaj@oss.qualcomm.com/
+>
+> Changes in v3:
+> * Moved secure write before normal writes
+> * Added error checking in disable_eud()
+> * Use ENOMEM error code if platform_get_resource() fails
+> * Select QCOM_SCM driver if USB_QCOM_EUD is enabled
+> * Link to v2: https://lore.kernel.org/all/20250627125131.27606-1-komal.bajaj@oss.qualcomm.com/
+>
+> Changes in v2:
+> * Drop separate compatible to be added for secure eud
+> * Use secure call to access EUD mode manager register
+> * Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
+> ---
+>   drivers/usb/misc/Kconfig    |  1 +
+>   drivers/usb/misc/qcom_eud.c | 33 ++++++++++++++++++++++++---------
+>   2 files changed, 25 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+> index 6497c4e81e951a14201ad965dadc29f9888f8254..73ebd3257625e4567f33636cdfd756344b9ed4e7 100644
+> --- a/drivers/usb/misc/Kconfig
+> +++ b/drivers/usb/misc/Kconfig
+> @@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
+>   config USB_QCOM_EUD
+>   	tristate "QCOM Embedded USB Debugger(EUD) Driver"
+>   	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on QCOM_SCM
+>   	select USB_ROLE_SWITCH
+>   	help
+>   	  This module enables support for Qualcomm Technologies, Inc.
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index 83079c414b4f281b2136d0d1eb39418c7f94ff8c..05c8bdc943a88dab6159a05c2d770484c084f7b7 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -15,6 +15,7 @@
+>   #include <linux/slab.h>
+>   #include <linux/sysfs.h>
+>   #include <linux/usb/role.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+>   
+>   #define EUD_REG_INT1_EN_MASK	0x0024
+>   #define EUD_REG_INT_STATUS_1	0x0044
+> @@ -34,7 +35,7 @@ struct eud_chip {
+>   	struct device			*dev;
+>   	struct usb_role_switch		*role_sw;
+>   	void __iomem			*base;
+> -	void __iomem			*mode_mgr;
+> +	phys_addr_t			mode_mgr;
+>   	unsigned int			int_status;
+>   	int				irq;
+>   	bool				enabled;
+> @@ -43,18 +44,29 @@ struct eud_chip {
+>   
+>   static int enable_eud(struct eud_chip *priv)
+>   {
+> +	int ret;
+> +
+> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 1);
+> +	if (ret)
+> +		return ret;
+> +
+>   	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+>   	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+>   			priv->base + EUD_REG_INT1_EN_MASK);
+> -	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+>   
+>   	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+>   }
+>   
+> -static void disable_eud(struct eud_chip *priv)
+> +static int disable_eud(struct eud_chip *priv)
+>   {
+> +	int ret;
+> +
+> +	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 0);
+> +	if (ret)
+> +		return ret;
+> +
+>   	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+> -	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
+> +	return 0;
+>   }
+>   
+>   static ssize_t enable_show(struct device *dev,
+> @@ -82,11 +94,12 @@ static ssize_t enable_store(struct device *dev,
+>   			chip->enabled = enable;
+>   		else
+>   			disable_eud(chip);
+> +
+>   	} else {
+> -		disable_eud(chip);
+> +		ret = disable_eud(chip);
+>   	}
+>   
+> -	return count;
+> +	return ret < 0 ? ret : count;
+>   }
+>   
+>   static DEVICE_ATTR_RW(enable);
+> @@ -178,6 +191,7 @@ static void eud_role_switch_release(void *data)
+>   static int eud_probe(struct platform_device *pdev)
+>   {
+>   	struct eud_chip *chip;
+> +	struct resource *res;
+>   	int ret;
+>   
+>   	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+> @@ -200,9 +214,10 @@ static int eud_probe(struct platform_device *pdev)
+>   	if (IS_ERR(chip->base))
+>   		return PTR_ERR(chip->base);
+>   
+> -	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+> -	if (IS_ERR(chip->mode_mgr))
+> -		return PTR_ERR(chip->mode_mgr);
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +	if (!res)
+> +		return -ENODEV;
+> +	chip->mode_mgr = res->start;
+>   
+>   	chip->irq = platform_get_irq(pdev, 0);
+>   	if (chip->irq < 0)
+>
+> ---
+> base-commit: 347e9f5043c89695b01e66b3ed111755afcf1911
+> change-id: 20250715-eud_mode_manager_secure_access-6e57e3c71ec2
+>
+> Best regards,
 
 
