@@ -1,131 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-66291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBB95B0F260
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:35:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E61BBB0F28D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:51:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D14697AFD48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:34:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2E85AC0261
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:50:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E354B2E5B3C;
-	Wed, 23 Jul 2025 12:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5D01D2FF;
+	Wed, 23 Jul 2025 12:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Q46Jvvlp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dDinBmuR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138142DAFDB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB472E54A1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:51:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753274140; cv=none; b=H0+tRzpPjbDasZxdl425tcLbPVnIHJXVCsN2DyolYxN+K9wEKEgXEiPsK0ZfQgDsVE0PbDXA4VOZgoqFdsyRy+j9isBM5CMb4sqBGIta+5nqf+m4czAC5ngkTthPI+d2Pav3wAyazsyQmw66PtlK2frt8Bj9xYa+u8oWF8eSwzQ=
+	t=1753275073; cv=none; b=RTQDd5LbddaU+SJCH17F2zsNCfRFv7aW79HnLaCvgCa6NdeyLkTxgh9RDB2avDT+n2KmipfiMgQllcNhCv8v3kag+ONRnufsWHmFgpNjG6XOyL2A99cP16vQ33vYPUJcoilsKjXUFhzCM1Ppdpv813QwVWSGQbB4Xn+lM0sYR/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753274140; c=relaxed/simple;
-	bh=0EFY2t7da13tTNsn0kil1sRIUFA9tzt2B90v+UiI8vw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=ESV7J3fCI5fV82lST521HvF6RZumytQg9Ja9UmsKYaRCS6s3xgb9kW0S+Le9aUkAiqcgAoJkcnNhq3itcGY1LkNF7652nDXwi6SnOgU5Czq6N8X2LaHpHQ3rLx4AQvJYibv+JTos2iGRAl3w9Wusdbe1sD7wFhfXYvt8O+2KexQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Q46Jvvlp; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6077dea37easo10276602a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 05:35:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1753274137; x=1753878937; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z+L8u4oiexjWpNgCligb/vTUSVa660rSwO8FUFGgqs0=;
-        b=Q46JvvlphqQ3wb249gRqcxWSAE5qFicgBvNrgzFqq8cWqrqvmhLJVqITQf74A/I91K
-         001QS+vxKAkNmjGOhTHzBrF+jTsnClICVLkoPQU6jmkp+TDIQIIHdT20Uj2LWFSefGT6
-         sV87Tf6ZU36xpQ37iXH7HxmWAnvKFMaFs1Kbrxoy8/VUIs/09PkiVOk9r6vnWBmIez0G
-         KY4WCQzWW9cg3Q731ZYzI5aRC3HfYD0sBwdv7aYkCo/m9BnNL6cRVNfUTP01mhqzfY5o
-         YsDp2KS8dJd5dK1zzpxpp7oIb4omo+VHvZDHvGGFucHuThdmjqsIIeQfqcyE6EFZ6XAB
-         HNIQ==
+	s=arc-20240116; t=1753275073; c=relaxed/simple;
+	bh=irsV9FvgKnX6e/zN2HFo2i6k5xtyMkY6IvJrcT1VaGA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oretbo5m+wKq+p0UaKgW4iMfzyXrsqdglxHiGqiOUAb3w8x8pgHzfzksUfzdIZrQyjvsmP1Jo9LdwHu+eeclPKhFv0HuiuVwhwLpWd3RWFzKHO9sO7jtWRvnRQm4IFZ22qWQtiyJK+PVDUgYT+Gum/DNyYKujj3BuZankdFsm6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dDinBmuR; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9ekme007879
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:51:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NlfFWNr1gSSRPt5bMOhvfRkXF20NFj8tEIaK0raN8ek=; b=dDinBmuRNisA5rNB
+	XgMKeEw5GdSGxEr4JXPZufn/J56dDaC09T/WtKAaClRF9MIJVU9pGxwZuLw7qHx8
+	ZHLt3VK82SfyOBmrni0/ZizBueHvWbOPK67NJPIb/wgWIM6PgbSEVNcKwHg8Ikk7
+	X0MaPDkHZS9LX66AAOmfl+TpmevMdaBDmzpthHF1Av8FOMnI7D2Pu+1n7yQYwas9
+	y7jXcP05ZuBw8oP5YEAt1GTBjcNn9iC3jIGuTmMLhiX+fXqgdYzNaeMo3pTiH7G1
+	Qrgpxn8ZxlvYFTzU2WHOSnM25vW4DlvjUgFYhULGw4XAbkeLinLKbLv5Xa79p0gA
+	US7m4A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48047qd5f7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:51:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e33e133f42so32419785a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 05:51:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753274137; x=1753878937;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z+L8u4oiexjWpNgCligb/vTUSVa660rSwO8FUFGgqs0=;
-        b=Mv65T781tJxin7jth2l6QTuOOnydAhO5a+3XGahztK26XuLt3afymq3fsxm9vqLDdC
-         WiuWdhQ/IDj8KdfGMLhNia3RDyJYUK/rptiyXIniTPIcsSuHtxM4BFKl6a+J05nQp6y/
-         Z+HXO8hQl+sVAaaSxwj4dHSX5dBw8u5i8VOA4hjJICYYXrcmXuwX86Dr0QmNRoMsZski
-         z+bbwgPDjkwcp8fChWyn3OL4vp8/L0dFtzLfuRKEcKJmjJrOg5ZpvH9I8+ZYCz83MzjD
-         lqyuyLAPTChLjM09VsiuOMAjYziA2y9uvLWKbl5sVkgvPqkVcHskjryD/jpECYV8S1PO
-         Ytrw==
-X-Forwarded-Encrypted: i=1; AJvYcCWm60b/foaIh4ntEazCz3SNMWh551/x3qsaesAPcy4Tnfz0ibkBfWp31zxbHHZhfvSN0wIAWXo9b9rNeKRU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt2vIdovhPrS2ZHok1REi1dcxe2dsm7aJgA14N18Z/P31pnRUE
-	U1Gfh1CZxvzNOZuO4D0DMqchyBWWjQgAxq3S4EFgSD2j+Vgh11MoH2psqIkCDSIF9G4=
-X-Gm-Gg: ASbGncuTVipg8AX4Pzn/Qj9bVVUVUxFcFq9sCaqE/T2tyBjjFVvfy6q8OyaK0rrCdVa
-	qPFQyP4rrp8F3EfY+6NPONl/GplxndBrlu9gE/JlirAVl5CkFhhzsQhTYY1gU2yyzQRkigaHJbw
-	HpzpEJgAY+IFsE2mU8ZOb5CM0LDjU+/+EZYI/SI0jjbc7n/I8GBZ57VJQtZTSM00XxIu8WQkPvu
-	f+nxlvh9foIyAvlIyg4eo2flFCyljnSJHJaC3NpoX48CXGJSOrD8TH0rwaLo8Zh8350YPkmd6y9
-	FQaOY/ffuitIWnxtH2upc559PK8/dfqiWw5E0C6CcYqpuRc0Ut73sBi7SCA5cE4FMIkS8TaLXUe
-	9qJOp/0ofW5MypBKk4yIAG9yRCMtqIao+0LknMXVKu1/jacp564ErJ6i1eDpHcO/2utQ=
-X-Google-Smtp-Source: AGHT+IHiFY0lG9mRPneADgyis/AcrbOpYfn7ovZrGfkcXUWNCou+f8RDQqROv1F9QSh2mViYt+ozOQ==
-X-Received: by 2002:a17:906:9fc6:b0:ae3:4f99:a5aa with SMTP id a640c23a62f3a-af2f64bcdf5mr272122666b.4.1753274137382;
-        Wed, 23 Jul 2025 05:35:37 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca817b7sm1038885766b.135.2025.07.23.05.35.36
+        d=1e100.net; s=20230601; t=1753275070; x=1753879870;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NlfFWNr1gSSRPt5bMOhvfRkXF20NFj8tEIaK0raN8ek=;
+        b=R3VFgj47/h5kqaTCArNsOL8BDMwhBhVqQZq4WvyvRBThJPqzspiclnOn4lJxgKTYFw
+         uMspACk1xNbMB9I4uv9LUOkHe1e4bkFl3cfBIWQkSbDcLpT0aeOVezN8FjuyNywXc8yZ
+         b3Cvkjvlb4sdTzSpdRS2MtWEM67WB0iH2e9em8WCQXVUn3GND4PwUKAAHKOuM+uD69Kx
+         9pZwIpSFlGoeiS49CKR3ScmjChnTo+h0zqMnSVcB6jd3aBGveh4+8/J15cK9LUHycbna
+         jLMq/gBILVfw7b29EMjKqDhAxeR3YhQQppDyj59rFYKRtyXbZlZhGaBsvfE6C0RQ2GT5
+         GKhA==
+X-Forwarded-Encrypted: i=1; AJvYcCUjOOLayiDyZtVEExEjd94OR/GGs9f8o6wVWeiFHuryOUiLQxQw1NZi612HCQk6sk6uJCAAVDOrhN13BpbS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7tGLdLHfAa51Kno+bIkyPuxBxIwCQdmMf9jL/ifRClXV5t9lN
+	PF3rIvwVBR75O3mZQ+9de9Cdz4ibSca9qk5/uZATas6GX5h/S3lGlB+5IfHJ2XKScJhnWwJ7G/F
+	1V1R8cdmJSRRu7nUssPsyGxl+A0KIBXkvZN6Va9sYdMAsklg7o4cJ5mhCVGHEUTE+0sae
+X-Gm-Gg: ASbGnctz/jAWNv7L4MPLtP5wkgkKNpBZwQc0t3jUIlqgD44QfGVQ98I+6Oj92O1zz7F
+	7L+lk2R77+8XaRewgmoQYkbZVREHASnofCRX92d83tyVSV9FZBUzq5sgOyBSfvuaal6V/fuQvNv
+	4k++5wat+chhSdCZAkSyi+vtC1eJQE5sehz0tr/hrk7QTvFxDlXNmNRC79fMn5ogHjvBRhqUKPK
+	NArx2cScfZblYmubH8RMN8pcIworTb3+W6ztWC4sClyzw6sMdnjRW/KHmTjL9kqiGDCE3zKexB9
+	Bdukp2lNMrVziXFlv1zXJbI81FcIZS7cUaytkuQdAnsdkM5c02HCv5QOT+pfEfZI6kmlkWwSJuq
+	XrF5f1u21Ho1uIQE0vQ==
+X-Received: by 2002:a05:6214:c2f:b0:706:c5eb:9b5e with SMTP id 6a1803df08f44-70700638cb8mr17930246d6.7.1753275069675;
+        Wed, 23 Jul 2025 05:51:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5cFZGvvUDm1Gyr3QcLnUy4HpdRyf2Pph18NiIjxKW/XL6y8cizNodgiBEKYQU+iXlSkj/wQ==
+X-Received: by 2002:a05:6214:c2f:b0:706:c5eb:9b5e with SMTP id 6a1803df08f44-70700638cb8mr17930076d6.7.1753275069154;
+        Wed, 23 Jul 2025 05:51:09 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6cad7967sm1039883066b.144.2025.07.23.05.51.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 05:35:37 -0700 (PDT)
+        Wed, 23 Jul 2025 05:51:08 -0700 (PDT)
+Message-ID: <ba37a9c9-3fd3-46fc-8d72-e57be45fc562@oss.qualcomm.com>
+Date: Wed, 23 Jul 2025 14:51:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] bus: mhi: host: pci_generic: Remove MHI driver and
+ ensure graceful device recovery
+To: Vivek Pernamitta <quic_vpernami@quicinc.com>, Vivek.Pernamitta@quicinc.com,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250710-sriov_vdev_next-20250630-v2-0-4bd862b822e8@quicinc.com>
+ <20250710-sriov_vdev_next-20250630-v2-3-4bd862b822e8@quicinc.com>
+ <68f18f09-913d-4ef9-bd13-ad32c1d5f8ca@oss.qualcomm.com>
+ <43424518-e73c-4136-bb0c-d4cb30062d7b@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <43424518-e73c-4136-bb0c-d4cb30062d7b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 23 Jul 2025 14:35:36 +0200
-Message-Id: <DBJFT72B59MC.RIRP9YSHOX98@fairphone.com>
-To: "Mark Brown" <broonie@kernel.org>
-Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Felipe Balbi" <balbi@kernel.org>, "Srinivas
- Kandagatla" <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>,
- "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Wesley Cheng" <quic_wcheng@quicinc.com>,
- "Stephan Gerhold" <stephan.gerhold@linaro.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski@linaro.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-sound@vger.kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4
- smartphone
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
- <DBDAPORDD5IM.1BHXPK225E2PP@fairphone.com>
- <DBHIM4SA3OIK.PXX6HMDE93B8@fairphone.com>
- <ac3f1eb2-5830-4bda-bc57-c4d29c22aba0@sirena.org.uk>
- <DBJDZBYHR94V.1QGVALCL60M1X@fairphone.com>
- <00c2ac7c-763f-467f-8199-76de9f5d71b0@sirena.org.uk>
-In-Reply-To: <00c2ac7c-763f-467f-8199-76de9f5d71b0@sirena.org.uk>
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDEwOSBTYWx0ZWRfX9Cj3Sy9GWr7X
+ 1CVS64xY/PWUBZI474Dz2y8aJCQUE54cizna5hzmzB9aEiv1cBY44cMnzJjWYLSlIqQ+x+lA5rl
+ aSVpXyKpcK3d5mPFqjzrNmfnv7hzsvANllADrtp9yM0yA6zrotJl7o8n9/9EwsxyZn2bGlUB1sh
+ NR5xAuTyYPMyrhTNcCivREtKundgbIG3t5b348p9+ldAuUTlujo0s3vDUesjrszCFIgv1Dme1mj
+ ex6M0q4oWrH+8nzDz1HmljWiGVe8BEPPlfM7BYKiqXM+b0dmC66x00TU4vBfid4/7d7UtU8qGcY
+ xCRvc83aqrHbCGDGtInpkFQOEWEn1JWwT4sWPHxZsFXXXz/NITP/YWK10Y+iUTqz59XpJeoaexw
+ iQxaPKk0O4woCeKMO7HjW2zQu7sTkCehbaVV3QaXDGLchl9yPpBmEeJ40dDkWCUrHdkCmvX3
+X-Proofpoint-ORIG-GUID: lef24m-TOIOTkvcuSylzvm85HYfHrKYi
+X-Proofpoint-GUID: lef24m-TOIOTkvcuSylzvm85HYfHrKYi
+X-Authority-Analysis: v=2.4 cv=IrMecK/g c=1 sm=1 tr=0 ts=6880dabe cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=ICarcIS45CnasG25CU0A:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999 phishscore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507230109
 
-On Wed Jul 23, 2025 at 2:19 PM CEST, Mark Brown wrote:
-> On Wed, Jul 23, 2025 at 01:09:35PM +0200, Luca Weiss wrote:
->> On Wed Jul 23, 2025 at 12:57 PM CEST, Mark Brown wrote:
->
->> > As previously discussed they won't apply until after the merge window.
->
->> Sorry about that, I thought the conflict was for the 6.16 merge window,
->> not 6.17?
->
-> There is a conflict.  You could check this yourself...
+On 7/23/25 2:11 PM, Vivek Pernamitta wrote:
+> 
+> 
+> On 7/10/2025 6:12 PM, Konrad Dybcio wrote:
+>> On 7/10/25 10:58 AM, Vivek.Pernamitta@quicinc.com wrote:
+>>> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+>>>
+>>> When the MHI driver is removed from the host side, it is crucial to ensure
+>>> graceful recovery of the device. To achieve this, the host driver will
+>>> perform the following steps:
+>>>
+>>> 1. Disable SRIOV for any SRIOV-enabled devices on the Physical Function.
+>>> 2. Perform a SOC_RESET on Physical Function (PF).
+>>>
+>>> Disabling SRIOV ensures that all virtual functions are properly shut down,
+>>> preventing any potential issues during the reset process. Performing
+>>> SOC_RESET on each physical function guarantees that the device is fully
+>>> reset and ready for subsequent operations.
+>>>
+>>> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+>>> ---
 
-I see now where the conflict is, due to an updated previous patch.
+[...]
 
-I will send a v3 shortly with that resolved. Then it applies on your
-for-next branch cleanly.
+>> It seems rather unlikely that out off all MHI devices, only QDU100
+>> needs this quirk when working under SR-IOV
+> The reset_on_driver_unbind flag has been explicitly added for the QDU100
+> device. While other devices might enter RAMDUMP mode and wait when a SOC
+> reset is issued, the QDU100 device will pass through without entering
+> RAMDUMP mode
 
-Regards
-Luca
+Rather inconveniently, this is not something that you mentioned in
+the commit message.. Especially in the middle of a series that focuses
+on enabling SR-IOV which suggests it's strictly related to virtualization,
+making it difficult or impossible to understand the problem that this
+patch is actually solving.
+
+Please rewrite the commit message.
+
+Konrad
 
