@@ -1,125 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-66206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0D0B0ED67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:38:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A8FBB0ED83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:44:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9AAF3B7094
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:37:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F2CE16DF7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:44:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C9E5280330;
-	Wed, 23 Jul 2025 08:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75C43280330;
+	Wed, 23 Jul 2025 08:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RiqrWl5G"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q5fbrSFO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7B6279DB6;
-	Wed, 23 Jul 2025 08:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0D26C3A6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 08:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753259889; cv=none; b=dJ/XUR2EcBsohV9Ok0jTFn5j2gVfvIoBSbDo721vM4C6V1f2+JkdMgUsgGRekciYgHlY0tPPYm+WHZ0Mf05rVtqAeibLxhVRfNOw9zCWaRbpw+o3iYrUlKu1XQ0txhG66zu/PV5cE9D5L2A9PBkZH0YUZ/D+pt4JJi9SPLrCFVs=
+	t=1753260243; cv=none; b=FynZi9Yy4WzBVZQf8YXvLcs29RJPv7DXbB1IVCqkvT/pQz6z/x/aEaIsIpbMWG+uUfeOyIX4JU5pAeZPocwvRvQFRMCBH+aLYvZny0txjO4ID+A8802X4+vZGF8V+gTdhXmPjYWm3TBsgR89GQlE9AfwB/dvPsTQ2H0dt32QD+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753259889; c=relaxed/simple;
-	bh=4qbZQMMBOmmLEL/u4/6u8vCeedLqEVOr855SNhW0HrM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sWgEHxN7hCn/ZSdan1l2l0XGSfC9Kmjzps4h6sUQPusCX7iXrceF5BBAAwy5wFBIsXb2ZcFxMxDsPLCyunCqCfVMo3oCJ9jzPgOUsoYVFgBQyn2nWiyzjxmqYFHHSRAklibPU98Akh49T116iGnRHDmRr1+G3tu8v1y/ei0TNyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RiqrWl5G; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753259888; x=1784795888;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4qbZQMMBOmmLEL/u4/6u8vCeedLqEVOr855SNhW0HrM=;
-  b=RiqrWl5GowWx3Srs9SRg7+hG0m3Ro3fTeyzxmo+483Mu0bdHamqiBtOy
-   GJv+PMcwEZlkalAuElG6T7bVntGo4kGDVrVuFxLfiawzGm8rpTFMg/Trs
-   nsWJEOo/oKozKAFB8AgUrB8fsDuLoLCoGUQVMrTxQ9h6LqcsEqObQG2zV
-   wmGL8t9f2sgIkp2CxsS9hreY7Fe88Rt1OAHVY/qvVB4Q/LuIyImGfMHgB
-   MHjTPeSJ/MIVx3hdRbmSswTVkQN3HEe4MrEZYE7BweQ1zFtR82UTOUpU9
-   EaTdvgekkY3lfBngJIHzusG2nQDkkDEp2q3FzAKg+OpuAA1Q+zQ4qGI2X
-   Q==;
-X-CSE-ConnectionGUID: iNqMaG8TRvqB7/6uL7Wt5g==
-X-CSE-MsgGUID: 0TtN8cwiQauhS0EMwAQleg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="55382773"
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
-   d="scan'208";a="55382773"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 01:38:07 -0700
-X-CSE-ConnectionGUID: LQ9Qcj+iT52wKy4Bwqf+PQ==
-X-CSE-MsgGUID: i1lLUci5QUGmNhtoGsrTIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
-   d="scan'208";a="190348638"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 23 Jul 2025 01:38:01 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ueUz9-000J8l-16;
-	Wed, 23 Jul 2025 08:37:59 +0000
-Date: Wed, 23 Jul 2025 16:37:30 +0800
-From: kernel test robot <lkp@intel.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	sboyd@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, jic23@kernel.org, dlechner@baylibre.com,
-	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
-	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
-	u.kleine-koenig@baylibre.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
-	casey.connolly@linaro.org
-Subject: Re: [PATCH v2 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
- and devm variant
-Message-ID: <202507231529.OH2sdMoF-lkp@intel.com>
-References: <20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1753260243; c=relaxed/simple;
+	bh=XUasQFYoY490T8WsoG5vluLO+2GFii8wwDKUuvEBYbY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=c1dEoXu/5UsN+cyDMh0x92JjCWZQa0wMi1njglENhG0bbLhGltU7InzdguhYFJeXewUYei9Feu7K7w9kUJyBIHGTTLTM5XDqj1nVx2uedHQaQqjIU7bHwNDX8AhRjsYDtyBWZ2l1dFTcSGi8Q2CIXXl0T/8ZwaeX471x1Eszdyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q5fbrSFO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MMNvsV020008
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 08:44:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=C81n/IdXv7ES+6R3S+HgxZx6XJbHygDB5cl
+	Xpax9EVE=; b=Q5fbrSFON+NBCVlx4cQaAoXSoRk5Kfqds4QO0/GsECEK58+T5yg
+	+dSo7cd0Bei1MV7cIOsKMOBOWFZ/53ebcjv7SkdWxdsfSF24ya4i6gUDDWh4tFf5
+	xdZWMn+C3lkVJufdnJak6MdPoPSkDVIpno46hO3nn4DdPvcWkRWZmsXChnzj9XWr
+	N5su4QsEZLLGg0ntD6cUUHhnwst8PevKWoNz/FNg63Tt+HTIPcz7WVGGwd0amVFQ
+	/oB7OdtQZtveED7wEaZlh+HfkThOvd6bB2XEXWTO/M5W1zKkrhA4uSpZk+ZRjrie
+	9x/VFJQ8mHHdR6fMSVkBiYNoohLbWwphb7g==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3eq8kr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 08:44:01 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-234f1acc707so60091845ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 01:44:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753260240; x=1753865040;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C81n/IdXv7ES+6R3S+HgxZx6XJbHygDB5clXpax9EVE=;
+        b=CVhS4Bn6Vd1SyqTgtwsjQfCBDp2YBxnmjhvJplbUaF7mlZyrzeJbJpvxHPoTjSHeWC
+         goR4fmrglv+aiS6f6PfXLyYlMaLpZdNIB07NOVLBTmznPTXoQVIklm6CHfYN+M9UEL8d
+         mKd3T1Nq0FcX1xxeU/r+F+D0BYiJb25o9aFll1u8i40O+kPOc8seyB7KGBNZn4u+lYHd
+         QmRvLeoSWj1SXl3PumR3X/zPP4BXCNynHm2oAJS8IQC3RsGCm+IbVPz4UNfg84RKHf8K
+         vT8GvjjzB6XsGm7B+oTTB4Dv5JjkI3UWmU4o+20AcXwXBi1CqpeHU08Q1Rh2CvroI00k
+         y2OQ==
+X-Gm-Message-State: AOJu0Yzw6NwiN4Emzs/jkUzcLjyvI1/qmu8/xPrl996CXNEdOjWDDYYj
+	Mcb4pVMCMqjx2bGs//luTUy1BdZVDJm6LaG1C7NZxpgIBCH9kLXO6/CESkWyvU2Eiesb6jNJcC+
+	VqCk/vY1W9GAYb6CVVODvqOh03atqkYKCVGO7U5CYguy4FMsm4xEWHjdU8yaYSWJSJxPD
+X-Gm-Gg: ASbGncsBcldEhkQiJcNlua19ortTfObBzpJb8gXJB7HuqCLsMREHKif6gguzJKvi4h5
+	yC5QFLeqE21MSsFyQ3lNo7k4YQ3idPaO7629KfpYqv374buHqPE3CqsjcjeO4I/maJdd79AXa3J
+	vB125h0OH1t3qFXD0qHiJvWFHS4/Ebznf00ogbshYn+kAD3/03JZFF/v2QNokrMO5480I5CFplX
+	O8lPjVFEe8HIB/7TSa/KFlQz4rYEoYSt/2vpb0RsSZaWip3Qti6GoXhcq4suZ3hXuT+oFRJLMqx
+	g7A3cbmygWqwkItoRqtb1FRHfYMWutgfiQlJ3sctftjp/OWXJyexpHQmnyAMba69NhkHyShYKQe
+	KlRNzVsSFZzR8BPc=
+X-Received: by 2002:a17:902:cccd:b0:234:98eb:8eda with SMTP id d9443c01a7336-23f981b445cmr27163905ad.28.1753260240179;
+        Wed, 23 Jul 2025 01:44:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtRsvM3+AQBUPzMzqkonNubNB+b5qEeLhTQ4cIhxEqCbs6BelcoQshzWdlOA/REzw7hsekzQ==
+X-Received: by 2002:a17:902:cccd:b0:234:98eb:8eda with SMTP id d9443c01a7336-23f981b445cmr27163655ad.28.1753260239761;
+        Wed, 23 Jul 2025 01:43:59 -0700 (PDT)
+Received: from yuanjiey.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b5e3c95sm91696645ad.34.2025.07.23.01.43.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Jul 2025 01:43:59 -0700 (PDT)
+From: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_tingweiz@quicinc.com,
+        quic_yuanjiey@quicinc.com, kernel@oss.qualcomm.com
+Subject: [PATCH] arm64: dts: qcom: qcs615-ride: remove redundant gpio header file
+Date: Wed, 23 Jul 2025 16:43:51 +0800
+Message-Id: <20250723084351.4627-1-yuanjie.yang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250722101317.76729-2-angelogioacchino.delregno@collabora.com>
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 9d5l7sH_2lgHU9FOfjN8ILW7mZrnekzR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA3MyBTYWx0ZWRfX2kd/ImtTWAUb
+ FgyLB30/tCh9HaNDo8oKzoHikBLD6VI25AB9a4vk+v54kp2pqdgveg+Nfa02WtJsFIl/nnxbcft
+ oSnu3URZMZShYAvUO6cMYTUk34JzQgTqmh6gbXnRoqciSpVJcrUYOBTnpHYS+PX2Zz0eJ682hFi
+ G5EWEKgfUqWqF6b+dO7qEMbP9nau2VFT9R0TrQhYXmEMV/QYXvISWz7EKI+ciQ6fISU+kEfuN5L
+ Z2q4ylozlwu7Pk+Xy0jxRDVDMs2V2WyzHw01kKjtTl76OJRYIGSlxBCvmltpni6fLj+Pv8Z3SE9
+ kXcqVXJ+0rF7BnAjMsjzTaleP1xPErpf3mXKNXvdyIsIyogqhnfglTuCAE36zz66t3BOw3zj5eg
+ 3ut4rDFGu+PrcBYtl3Ym88BhiIUrNwiMHNpv4IbVCN3vN0p437ROILNqtPvYUjscNpGb2hDD
+X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=6880a0d1 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=EiXXGwTVnQMrs5tmZeoA:9
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-GUID: 9d5l7sH_2lgHU9FOfjN8ILW7mZrnekzR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_01,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=935 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507230073
 
-Hi AngeloGioacchino,
+From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 
-kernel test robot noticed the following build warnings:
+Remove redundant gpio header file in QCS615 RIDE DTS.
 
-[auto build test WARNING on next-20250722]
-[also build test WARNING on v6.16-rc7]
-[cannot apply to jic23-iio/togreg sre-power-supply/for-next char-misc/char-misc-testing char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.16-rc7 v6.16-rc6 v6.16-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/AngeloGioacchino-Del-Regno/spmi-Implement-spmi_subdevice_alloc_and_add-and-devm-variant/20250722-181911
-base:   next-20250722
-patch link:    https://lore.kernel.org/r/20250722101317.76729-2-angelogioacchino.delregno%40collabora.com
-patch subject: [PATCH v2 1/7] spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
-config: sparc-randconfig-001-20250723 (https://download.01.org/0day-ci/archive/20250723/202507231529.OH2sdMoF-lkp@intel.com/config)
-compiler: sparc-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250723/202507231529.OH2sdMoF-lkp@intel.com/reproduce)
+---
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507231529.OH2sdMoF-lkp@intel.com/
+diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+index fdad6388f6f7..55b9a62cafae 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+@@ -6,7 +6,6 @@
+ 
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+-#include <dt-bindings/gpio/gpio.h>
+ #include "sm6150.dtsi"
+ #include "pm8150.dtsi"
+ / {
 
-All warnings (new ones prefixed by >>, old ones prefixed by <<):
-
->> WARNING: modpost: module spmi-devres uses symbol spmi_subdevice_remove from namespace SPMI, but does not import it.
->> WARNING: modpost: module spmi-devres uses symbol spmi_subdevice_alloc_and_add from namespace SPMI, but does not import it.
-
+base-commit: a933d3dc1968fcfb0ab72879ec304b1971ed1b9a
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
