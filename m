@@ -1,266 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-66214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0633B0EE4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 11:23:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB6FB0EE54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 11:24:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B26D53A772C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:22:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EED4016C605
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D690C2820C6;
-	Wed, 23 Jul 2025 09:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D72D28640B;
+	Wed, 23 Jul 2025 09:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="09MKU2zb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GCY8O4jQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1860E285C90
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C899327A90A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753262580; cv=none; b=SIXMN7ln0FisRXEO6mQgpDqxqC66qQ316oMfbQ9GToEjFQz6wMknW24NL3cJGaJk4XiXnH7OTUMppxoHi9HX3axFtIXQZncyD3ThnlSY57Frzeniy+ms1M67Gs4EAZMl3Q0BMRTSDkr9RUbkpY+dvZ7pS8ZbwlBqCJa9zvkB0UE=
+	t=1753262657; cv=none; b=NNywrpM5VuzPMrTjTnWf6fJZLqgKslZ1xPxrtM7egtio0OexMcdqCdSTlY0RI6Y9QltVbgS2ECYIfXr+/hHJe33IfhwL2IDm7iY8R3qEmTo0DBemdd6oRlNZMfv7y/M+tea7JVdv6GkM2uz0J6VSdX08pM4xnK+/I2WybS8AaQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753262580; c=relaxed/simple;
-	bh=vAA1Lv7W544jmjXnmOIpPcLBsrN3AE3t7Hfl5SQXlKE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PR1f+K3jM9O0uSUdK7mzlQTtEyO4r2cI1TGHRMp0A4WhH6BK5LMrYPUOff9YYBt4YclQhFDRodAWNWM4QvP0dq0WO7/r6XYAc5nKloYkkLnswmT4ECyei8E8j5rEMKa8b4NnkTWv0WzZJ0f8xmAPdRiZbUYamhIDY0R1cgH2eDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=09MKU2zb; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4aaf43cbbdcso127581cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 02:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753262576; x=1753867376; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q1l9DC9s6bqSZlXl3hk+96usOVx+LGIZFtzxNIqVYEY=;
-        b=09MKU2zb8s9g82Pd6b2dy2Mh7mho49wOe0iNYpSOyXSQLZvwdYDq18/RcD/jcrUGG6
-         bc1hDjfMZhnziXAM79G5dX6HPS7d3T5aooRcREwL67O0g3zokaeRHuJh9F1e4zj17PDl
-         Dx96dLyfDZNPwJo18QkC8C7hbBEklq7Xlzg9ibVzCZR/+3nZMsKkBUEUtNa+GDjlRTXb
-         NuZXJnyjy9c+LjuUgMugBiL6jgU7WT3o7CE60nJ4aTWFw67cmDIRxHQfKy0SNFmY5u/i
-         53Etzjo2E3p5IxltPsk9UQFqrjjCiG0Y11SnrDytvqnvTr85o0SzLydyPcqfrAxpCXmI
-         ZEgw==
+	s=arc-20240116; t=1753262657; c=relaxed/simple;
+	bh=4+wq30tYrS+hasxmkNFAkgFt+v2Bn03QvpeOwwRgrrc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C6KmOeT0SJFyj/Sob1zSDvmrO/5zd92fHcspDd1rlIXNrEPlH9l3Hg/D4EFGiExe1tvbyYf/4FDu+VERGCKZOM8nhuS4RhjKG9ghvXgsJ6loH/cEJ/TN90PjVBK2guv7a4T9Ypz6JNCApPR9aPoue1tNwLZ800Zzc7YdIzYqQlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GCY8O4jQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9EJiO024807
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:24:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4+wq30tYrS+hasxmkNFAkgFt+v2Bn03QvpeOwwRgrrc=; b=GCY8O4jQ5lKWecVN
+	j7nkCPQ6+HK9KWWJ7KVC4kGOZcCj44hO+hKh5nTLB/RUtqqlxH8QIbS9+Rpj44v2
+	NLdBg/zr4jHrbihqcreqR2Vqwk3zxnIfswDUS+pQcNeK4pKerSXKGjtRhFZ32zCq
+	5jUlj26OAIQYCrYv+qs1afF9jKJH3X1JJyH9KLk0xjyX5kqbCJ4zF6kB/KFUU8kt
+	ni/zRJNaAGHOOtL6u/T/7bqDynoFu6Y5Cfo00Ewp87l4Eygory76eMwHudp1TVdy
+	WmnZA/OqDqgEdqOh7D0BhuvDN7KT4YzQaPZOOPoF7Nimma5nfGcuYR1+QQi1o1J4
+	yVIB3w==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48044dme56-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:24:14 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-74927be2ec0so8303911b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 02:24:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753262576; x=1753867376;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q1l9DC9s6bqSZlXl3hk+96usOVx+LGIZFtzxNIqVYEY=;
-        b=fQHZL8SS+2DTz8ReZA7PaKdRiTy2/o6XyFVoUqG7//NBsccXFqX3Tj9LUGo8Kkk0/O
-         0cPr788RJ0sY54hCyY2uxc1tGWadxB7LWf36FeSBiNEvxG+7jR6YSKn6AytTiYVrqSZF
-         wrKZ9CA/uqKtf8qHPIlyZdSf0YpgaBrkhXuiwWq/yAxOsx+ovT+xhkPDmi8obQF4RWjI
-         H0Vkz1M6yK/Nm8Eg8PGFb7n70iAoMG/nQ+6aZtAkut2s8t3auU/4vMwwNTP2lwwjF+U3
-         N70Sljced7yncckCjP6xdcW/m+gXOo7MdGiXusftua51KKEhH0z0SzscKV1xvuJ/pSQD
-         9+Pg==
-X-Forwarded-Encrypted: i=1; AJvYcCUm83PN45/IeDzF9wWXGpkWJQSaZSnYpH1nDd11Jl4068NwUAz4K4oqNzpxy9RD3OdP4X2wZEwbkzsMMoSe@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzHb6VWFcVR4tOdXb6xFatlEaBF4jzXl1rQ8+2Ci/qDGcnucO5
-	Tsi+KVXVzgoXPRmCHQJVlGqOo4cwDytadsQ3Ml+yYkosAnydh1WYNVwXKkCGy62ib8eWsJXYw+3
-	eOxjuBmKg239AE8kfn1z87TSEDhlXM6BSTQXNMxSS
-X-Gm-Gg: ASbGncvZGCs4H8aAq/JReEihS9CJtVPNULyE1fV6/dIwTAjNpFTQGriASOVJPFzKQ4Y
-	rlr5+qJcj0RVRSXbRhJDkLO1a0m0BsJlkddRl59TSL3FsY9wyemVALSn7pBpcgYIOeH1085WgST
-	1z7iyd+Q3a13RLyCo30fHCAL/zgJCR8mnXUolWpOKQsB3KOrY78wYEboaBy8Aj7bzpw4C87vsJ5
-	6gKskNaci1YuTwSmNc7r3CVDcG4iAIHL0Sj
-X-Google-Smtp-Source: AGHT+IHpGSWUb20Op9Qp28Uz72zppWmO/fpdDBu9sBC5ToKI3zBiTnA4LkrTZ+17aXYm0O7UQ4tqXYX6jHbEEiExdf0=
-X-Received: by 2002:a05:622a:551a:b0:4a8:eb0:c528 with SMTP id
- d75a77b69052e-4ae6f066032mr2643391cf.15.1753262575605; Wed, 23 Jul 2025
- 02:22:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753262653; x=1753867453;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4+wq30tYrS+hasxmkNFAkgFt+v2Bn03QvpeOwwRgrrc=;
+        b=vYkv5fLiIlBMjvC+QtWsoyVbE1ttTZkUgSu9vGjl2zvet8w8ECSOOVPdCGExXbBFGJ
+         jk22EScSJC+E6t7DraZEV2hTNr4z0tFN24Yczkwlys+1DM5kekGvn6KyDxM092kVPe8N
+         dod2MG30YYOAxXbUID74Z6Dz7577xSGjioKQmtS0vA0aBqFXkpI8wv0VKkH6CfHCLQ4C
+         h28EOyC9aqbiAhg44vFjL7igVsOmMviW0tEN/XwvK55+b14wKwC1Rgv5mdtdp5s9f4qy
+         Hr9sC2l89GGppNOcfTL0NSvcwPVd0puzQVwqchfpSCIW5/wAA1su4yUJ6iKVKfkh23DF
+         7QRw==
+X-Forwarded-Encrypted: i=1; AJvYcCViUryYbZI/RqcjD08iWqQvE4o5yTxO4s/6pL06Sw4COepz4nt/sXXMKQcu87Ya5F5WSLa+9AbyKODrf0IT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3e2zfgFg29y5Qiyx4lTPqFBr9TMGT5Q9XNhZq5PLhBUXpOGr3
+	mAZkMUhp+EBkWkBumgqOxeqizWMTrmgG5m8ScCxfskay2x6zei8/AP6xKYFp1GL4v09hIOQCanP
+	51R/ekaf6acvXzv2Xb3kpEEPNivpcvjtPlc+UccK6TCt7ah+24C05FVUWYNzUTXdSVfL0
+X-Gm-Gg: ASbGncvkbT2P/PLxtEFLoADhDvK0VnYN/DepW8yrLWEcH9HClT+PjTkLG23gK5JFwIY
+	Rr6h+DlI/gjaXSP+DZkoT+7mqQkWTA+vFLLqWis5BmwQKvGj7VNITn0t5aZ3xmVUJ3cQOtI8dDl
+	yB/iHGxLpZDXIlKNYgJ848COBjUTAtVZQ5k/Dpf8FQHsQXnf6FDJObQ1dQ9gZLf7DFdTFR+Gg4g
+	xncuq3jKOMDtg/M9LBk+U+4b3gcKKe8RR3k2osmCO0WbHOm7ysvz/WRPoGmNpSXYU8s7AwHp0NU
+	71YomjBMQMy5iCZRwMsgQ28K+9Uh78daehkKoSc47KYhR+l6iRFy/An3ofBBYxIMs8Y9ryo=
+X-Received: by 2002:a05:6a20:9147:b0:220:1af3:d98f with SMTP id adf61e73a8af0-23d491221d4mr3493432637.26.1753262653282;
+        Wed, 23 Jul 2025 02:24:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLdbjhjnYdkfyrjU5ffjGqKzviUX7fhzbfayZMX0Fs1jRE595puZVjT4iJO4hden7j7BS+zw==
+X-Received: by 2002:a05:6a20:9147:b0:220:1af3:d98f with SMTP id adf61e73a8af0-23d491221d4mr3493411637.26.1753262652840;
+        Wed, 23 Jul 2025 02:24:12 -0700 (PDT)
+Received: from [10.206.107.125] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f2feabe7bsm8441323a12.32.2025.07.23.02.24.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Jul 2025 02:24:12 -0700 (PDT)
+Message-ID: <5af0c2ad-de58-4858-b94d-f7dfc6359e22@oss.qualcomm.com>
+Date: Wed, 23 Jul 2025 14:54:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250717162731.446579-1-tabba@google.com> <20250717162731.446579-3-tabba@google.com>
- <aH5uY74Uev9hEWbM@google.com> <CA+EHjTxcgCLzwK5k+rTf2v_ufgsX0AcEzhy0EQL-pvmsg9QQeg@mail.gmail.com>
- <aH552woocYo1ueiU@google.com> <CA+EHjTwPnFLZ1OxKkV5gqk_kU_UU_KdupAGDoLbRyK__0J+YeQ@mail.gmail.com>
- <aH-1JeJH2cEvyEei@google.com> <CA+EHjTw46a+NCcgGXQ1HA+a3MSZD9Q97V8W-Xj5+pYuTh4Z2_w@mail.gmail.com>
- <aIAh3xkU52Z100xK@google.com>
-In-Reply-To: <aIAh3xkU52Z100xK@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 23 Jul 2025 10:22:19 +0100
-X-Gm-Features: Ac12FXy0a_zhWCTWrmc8iH91Uu03l4tlmUMT8pdCRl-WsFj9mim4tPfVNS6-H9U
-Message-ID: <CA+EHjTy_82ADyf05-ySq-+901bT+W30EXm7t4ppvVAd5Eds40Q@mail.gmail.com>
-Subject: Re: [PATCH v15 02/21] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
-To: Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 23 Jul 2025 at 00:42, Sean Christopherson <seanjc@google.com> wrote:
->
-> On Tue, Jul 22, 2025, Fuad Tabba wrote:
-> > On Tue, 22 Jul 2025 at 16:58, Sean Christopherson <seanjc@google.com> wrote:
-> > >
-> > > On Tue, Jul 22, 2025, Fuad Tabba wrote:
-> > > > On Mon, 21 Jul 2025 at 18:33, Sean Christopherson <seanjc@google.com> wrote:
-> > > > >
-> > > > > On Mon, Jul 21, 2025, Fuad Tabba wrote:
-> > > > > > > The below diff applies on top.  I'm guessing there may be some intermediate
-> > > > > > > ugliness (I haven't mapped out exactly where/how to squash this throughout the
-> > > > > > > series, and there is feedback relevant to future patches), but IMO this is a much
-> > > > > > > cleaner resting state (see the diff stats).
-> > > > > >
-> > > > > > So just so that I am clear, applying the diff below to the appropriate
-> > > > > > patches would address all the concerns that you have mentioned in this
-> > > > > > email?
-> > > > >
-> > > > > Yes?  It should, I just don't want to pinky swear in case I botched something.
-> > > >
-> > > > Other than this patch not applying, nah, I think it's all good ;P. I
-> > > > guess base-commit: 9eba3a9ac9cd5922da7f6e966c01190f909ed640 is
-> > > > somewhere in a local tree of yours. There are quite a few conflicts
-> > > > and I don't think it would build even if based on the right tree,
-> > > > e.g.,  KVM_CAP_GUEST_MEMFD_MMAP is a rename of KVM_CAP_GMEM_MMAP,
-> > > > rather an addition of an undeclared identifier.
-> > > >
-> > > > That said, I think I understand what you mean, and I can apply the
-> > > > spirit of this patch.
-> > > >
-> > > > Stay tuned for v16.
-> > >
-> > > Want to point me at your branch?  I can run it through my battery of tests, and
-> > > maybe save you/us from having to spin a v17.
-> >
-> > That would be great. Here it is:
-> >
-> > https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestmem-basic-6.16-v16
-> >
-> > No known issues from my end. But can you have a look at the patch:
-> >
-> > KVM: guest_memfd: Consolidate Kconfig and guest_memfd enable checks
-> >
-> > In that I collected the changes to the config/enable checks that
-> > didn't seem to fit well in any of the other patches.
->
-> Regarding config stuff, patch 02, KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
-> CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE, is missing a KVM_GMEM => KVM_GUEST_MEMFD rename.
->
-> While playing with this, I also discovered why this code lives in the KVM_X86 config:
->
->   select KVM_GENERIC_PRIVATE_MEM if KVM_SW_PROTECTED_VM
->
-> Commit ea4290d77bda ("KVM: x86: leave kvm.ko out of the build if no vendor module
-> is requested") didn't have all the vendor netural configs depend on KVM_X86, and
-> so it's possible to end up with unmet dependencies.  E.g. KVM_SW_PROTECTED_VM can
-> be selected with KVM_X86=n, and thus with KVM_GUEST_MEMFD=n.
->
-> We could punt on that mess until after this series, but that'd be a even more
-> churn, and I'm not sure I could stomach giving acks for the continued addition
-> of ugly kconfig dependencies. :-)
->
-> Lastly, regarding "Consolidate Kconfig and guest_memfd enable checks", that needs
-> to land before f6a5f3a22bbe ("KVM: guest_memfd: Allow host to map guest_memfd pages"),
-> otherwise KVM will present a weird state where guest_memfd can be used for default
-> VMs, but if and only KVM_GUEST_MEMFD happens to be selected by something else.
-> That also provides a better shortlog: "KVM: x86: Enable KVM_GUEST_MEMFD for all
-> 64-bit builds".  The config cleanups and consolidations are a nice side effect,
-> but what that patch is really doing is enabling KVM_GUEST_MEMFD more broadly.
->
-> Actually, all of the arch patches need to come before f6a5f3a22bbe ("KVM: guest_memfd:
-> Allow host to map guest_memfd pages"), otherwise intermediate builds will have
-> half-baked support for guest_memfd mmap().  Or rather, KVM shouldn't let userspace
-> enable GUEST_MEMFD_FLAG_MMAP until all the plumbing is in place.  I suspect that
-> trying to shuffle the full patches around will create cyclical dependency hell.
-> It's easy enough to hold off on adding GUEST_MEMFD_FLAG_MMAP until KVM is fully
-> ready, so I think it makes sense to just add GUEST_MEMFD_FLAG_MMAP along with the
-> capability.
->
-> Rather than trying to pass partial patches around, I pushed a branch to:
->
->   https://github.com/sean-jc/linux.git x86/gmem_mmap
->
-> Outside of the x86 config crud, and deferring GUEST_MEMFD_FLAG_MMAP until KVM is
-> fully prepped, there _shouldn't_ be any changes relatively to what you have.
->
-> Note, it's based on:
->
->   https://github.com/kvm-x86/linux.git next
->
-> as there are x86 kconfig dependencies/conflicts with changes that are destined
-> for 6.17 (and I don't think landing this in 6.17 is realistic, i.e. this series
-> will effectively follow kvm-x86/next no matter what).
->
-> I haven't done a ton of runtime testing yet, but it passes all of my build tests
-> (I have far too many configs), so I'm reasonably confident all the kconfig stuff
-> isn't horribly broken.
->
-> Oh, and I also squashed this into the very last patch.  The curly braces, line
-> wrap, and hardcoded boolean are all superfluous.
-
-Thank you for this. These patches look good to me.
-
-I've tested them on x86 and arm64, and everything runs fine. I'll have
-a closer look at them, and probably send v16 later today.
-
-I know that it's probably too late for 6.17, but it would be great if
-we could queue this for 6.18.
-
-Cheers,
-/fuad
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add missing unmapping
+ user-requested remote heap
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
+References: <22uccyp5m2szry7bpitqcav5nlvwch5eqh4mdacfedidgrnyhx@vsjobngwdkmb>
+ <dc67df54-2a19-4318-acd4-b96b8549b64d@oss.qualcomm.com>
+ <7ogkoxsowpd2x5qmjog4qx5eu4eiinvtnyjz5hfufgna2hz7na@oxzmowlnelxb>
+ <61dd2c3f-20ac-484e-8a45-f42fd5f42b86@oss.qualcomm.com>
+ <CAO9ioeX1uE3ty5oSezYOLJKqf8G5dLYAS5nRiNvryWTk0RPdEQ@mail.gmail.com>
+ <f3d376cc-6e2d-4ac3-88f6-3104eec67acf@oss.qualcomm.com>
+ <qw64xqfnyy76f6oawtaecvraejcwyml5k7oxdy67adj2rh46lq@nupxbuy3vwu4>
+ <7505f0e8-222d-4052-8614-c12109d14bce@oss.qualcomm.com>
+ <cq3qfx32dallivdcwjwqgq7kggiwucpcyhwqqlbrf6n4efkmuc@htjwnigojag2>
+ <8b877eeb-941a-47c5-a67d-450dfb772d6e@oss.qualcomm.com>
+ <lmytte3p2eq7fsjsbogzrqjyimlw42v2x2zystx32nuvnm62yb@wzqrmhqcrzl3>
+Content-Language: en-US
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <lmytte3p2eq7fsjsbogzrqjyimlw42v2x2zystx32nuvnm62yb@wzqrmhqcrzl3>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=BJ6zrEQG c=1 sm=1 tr=0 ts=6880aa3e cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8
+ a=kN03k85zHqnGvZpLErYA:9 a=Zd2r3LNXiuh2AZG0:21 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: VH8iEvERG73EKrRnsgxa9KGamIwva0I0
+X-Proofpoint-ORIG-GUID: VH8iEvERG73EKrRnsgxa9KGamIwva0I0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA3OSBTYWx0ZWRfX9E0+978fEdyp
+ 0MebXzduRwcyb0d4JzF/bJlXzkiiLabRuLEmfGSDu0xUTrwlFHyxBBqcv/Gy/hHM7gWVR5OrH34
+ d6LnTnKFT0gJJ6Sjml7OoS4TQWFXWbEn14HFUiSjoqgSPQ8PpNCeNKWUTUdoZcVP1xO528hB6b9
+ 318HAXFd9G0kK1S5ysxyft9wO8boFGjIt5ZXs4lmKYmiG1sY/8N49ecS55KemRJN8D4JmbmhLqX
+ m/lhfRlOJZN1f+MBqpyy/85KnxafjLZYIXzlNV3Z938tNYQGm4nZt0Uw+i0XgMGp8MIJ815ol8n
+ xUqe9zSvW9RosPPQ7PHIGZEgVTqcw8OBTwUALspIxbOLd+8KD0XWhr2CKWBmQHxclJipLbJYRho
+ GxsJs9vAQeD2xWhT4ZgdfwNpTJdzDTO8oXKzG/SMG4JiP90V54FwWxxQVNoPKqfYMuMneiFN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_01,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
+ mlxlogscore=999 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
+ mlxscore=0 malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507230079
 
 
-> diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
-> index 4cdccabc160c..a0c5db8fd72d 100644
-> --- a/tools/testing/selftests/kvm/guest_memfd_test.c
-> +++ b/tools/testing/selftests/kvm/guest_memfd_test.c
-> @@ -249,8 +249,7 @@ static bool check_vm_type(unsigned long vm_type)
->         return kvm_check_cap(KVM_CAP_VM_TYPES) & BIT(vm_type);
->  }
+
+On 7/19/2025 3:14 PM, Dmitry Baryshkov wrote:
+> On Wed, Jul 09, 2025 at 11:13:49AM +0530, Ekansh Gupta wrote:
+>>
+>> On 6/12/2025 3:54 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Jun 12, 2025 at 03:02:52PM +0530, Ekansh Gupta wrote:
+>>>> On 6/12/2025 1:35 PM, Dmitry Baryshkov wrote:
+>>>>> On Thu, Jun 12, 2025 at 10:50:10AM +0530, Ekansh Gupta wrote:
+>>>>>> On 5/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+>>>>>>> On Thu, 22 May 2025 at 08:01, Ekansh Gupta
+>>>>>>> <ekansh.gupta@oss.qualcomm.com> wrote:
+>>>>>>>> On 5/19/2025 7:04 PM, Dmitry Baryshkov wrote:
+>>>>>>>>> On Mon, May 19, 2025 at 04:28:34PM +0530, Ekansh Gupta wrote:
+>>>>>>>>>> On 5/19/2025 4:22 PM, Dmitry Baryshkov wrote:
+>>>>>>>>>>> On Tue, May 13, 2025 at 09:58:25AM +0530, Ekansh Gupta wrote:
+>>>>>>>>>>>> User request for remote heap allocation is supported using ioctl
+>>>>>>>>>>>> interface but support for unmap is missing. This could result in
+>>>>>>>>>>>> memory leak issues. Add unmap user request support for remote heap.
+>>>>>>>>>>> Can this memory be in use by the remote proc?
+>>>>>>>>>> Remote heap allocation request is only intended for audioPD. Other PDs
+>>>>>>>>>> running on DSP are not intended to use this request.
+>>>>>>>>> 'Intended'. That's fine. I asked a different question: _can_ it be in
+>>>>>>>>> use? What happens if userspace by mistake tries to unmap memory too
+>>>>>>>>> early? Or if it happens intentionally, at some specific time during
+>>>>>>>>> work.
+>>>>>>>> If the unmap is restricted to audio daemon, then the unmap will only
+>>>>>>>> happen if the remoteproc is no longer using this memory.
+>>>>>>>>
+>>>>>>>> But without this restriction, yes it possible that some userspace process
+>>>>>>>> calls unmap which tries to move the ownership back to HLOS which the
+>>>>>>>> remoteproc is still using the memory. This might lead to memory access
+>>>>>>>> problems.
+>>>>>>> This needs to be fixed in the driver. We need to track which memory is
+>>>>>>> being used by the remoteproc and unmap it once remoteproc stops using
+>>>>>>> it, without additional userspace intervention.
+>>>>>> If it's the audio daemon which is requesting for unmap then it basically means that
+>>>>>> the remoteproc is no longer using the memory. Audio PD can request for both grow
+>>>>>> and shrink operations for it's dedicated heap. The case of grow is already supported
+>>>>>> from fastrpc_req_mmap but the case of shrink(when remoteproc is no longer using the
+>>>>>> memory) is not yet available. This memory is more specific to audio PD rather than
+>>>>>> complete remoteproc.
+>>>>>>
+>>>>>> If we have to control this completely from driver then I see a problem in freeing/unmapping
+>>>>>> the memory when the PD is no longer using the memory.
+>>>>> What happens if userspace requests to free the memory that is still in
+>>>>> use by the PD
+>>>> I understand your point, for this I was thinking to limit the unmap functionality to the process
+>>>> that is already attached to audio PD on DSP, no other process will be able to map/unmap this
+>>>> memory from userspace.
+>>> Ugh... and what if the adsprpcd misbehaves?
+>>>
+>>>>> How does PD signal the memory is no longer in use?
+>>>> PD makes a reverse fastrpc request[1] to unmap the memory when it is no longer used.
+>>> I don't see how this can be made robust. I fear that the only way would
+>>> be to unmap the memory only on audio PD restart / shutdown. Such
+>>> requests should never leave the kernel.
+>>>
+>>> Moreover, the payload should not be trusted, however you don't validate
+>>> the length that you've got from the remote side.
+>> I was thinking of giving the entire reserved memory to audio PD when
+>> init_create_static_process is called. This way, we can avoid any need to
+>> support grow/free request from user process and the audio PD pool on
+>> DSP will have sufficient memory support the use cases.
+>>
+>> This way the free can be moved to fastrpc_rpmsg_remove(When DSP
+>> is shutting down) or during Audio PD restart(Static PD restart is not
+>> yet supported, but clean-up can be done when PDR framework is
+>> implemented in the future).
+>>
+>> Do you see any drawbacks with this design?
+> I'm sorry for the delay in responding to your email.
 >
-> -static void test_with_type(unsigned long vm_type, uint64_t guest_memfd_flags,
-> -                          bool expect_mmap_allowed)
-> +static void test_with_type(unsigned long vm_type, uint64_t guest_memfd_flags)
->  {
->         struct kvm_vm *vm;
->         size_t total_size;
-> @@ -272,7 +271,7 @@ static void test_with_type(unsigned long vm_type, uint64_t guest_memfd_flags,
+> I think this is a perfect idea. Can we be sure that there will be no
+> extra requests from the DSP?
+Thanks for the review!
+
+With the existing design, maximum available memory from reserved_memory section
+can be allocated and after that it the requests are expected to fail.
+
+With the proposed design, as the entire memory is sent to audio PD, usually grow
+request is not expected, but even if there is any grow request, it is expected to fail.
+
+I'll send out a patch with this new design for more clear understanding.
+
+//Ekansh
 >
->         test_file_read_write(fd);
->
-> -       if (expect_mmap_allowed) {
-> +       if (guest_memfd_flags & GUEST_MEMFD_FLAG_MMAP) {
->                 test_mmap_supported(fd, page_size, total_size);
->                 test_fault_overflow(fd, page_size, total_size);
->
-> @@ -343,13 +342,11 @@ int main(int argc, char *argv[])
->
->         test_gmem_flag_validity();
->
-> -       test_with_type(VM_TYPE_DEFAULT, 0, false);
-> -       if (kvm_has_cap(KVM_CAP_GUEST_MEMFD_MMAP)) {
-> -               test_with_type(VM_TYPE_DEFAULT, GUEST_MEMFD_FLAG_MMAP,
-> -                              true);
-> -       }
-> +       test_with_type(VM_TYPE_DEFAULT, 0);
-> +       if (kvm_has_cap(KVM_CAP_GUEST_MEMFD_MMAP))
-> +               test_with_type(VM_TYPE_DEFAULT, GUEST_MEMFD_FLAG_MMAP);
->
->  #ifdef __x86_64__
-> -       test_with_type(KVM_X86_SW_PROTECTED_VM, 0, false);
-> +       test_with_type(KVM_X86_SW_PROTECTED_VM, 0);
->  #endif
->  }
+>>>> [1] https://github.com/quic/fastrpc/blob/development/src/apps_mem_imp.c#L231
+
 
