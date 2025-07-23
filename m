@@ -1,170 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-66190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C700B0EBF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:32:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13E8CB0EC57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:50:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE1DD1C84EC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:32:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FC553ABB60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:49:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72A1C277C90;
-	Wed, 23 Jul 2025 07:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF8B278142;
+	Wed, 23 Jul 2025 07:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h+rEbbDo"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="S6Gj6Muf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com [209.85.218.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C91A274B32
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 07:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6938277815
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 07:50:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753255919; cv=none; b=bCX1eINHPGmKhVXblq6TF1dPFOAjEOMS9B3CXFasqQmWWwq8nDy2RKR3k4B+0+M7xhBYLFhwAbuD7eichM1RDHA+Xa3l6Ko5fGzdE3MNQpGedHsNhIJEEj3RcYoWaIwdNrRf2Fy/ZLhjSrclYdQRAjwYEbIb0uwhN/eIi7kRd3g=
+	t=1753257016; cv=none; b=ckts4T2LUCToP/p4y5xMmEC7NT+cpBq7kfE9+VGKBBP/O20ywwWyRtjyW7gkM9jcaKj0wMnd9qCUxOTq0HcZX01xn2EjGY9XIfGzUNZWytyU9QP6RHy1CSUkotz0BBZDZJ1Xr2j+L7Cw8Q3N5bzVfNSZ4NQn6A7Qp4hfnLCpObI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753255919; c=relaxed/simple;
-	bh=aCVdLlPepbdE0li+hKmSqvbLYzrRG0cEPf/H2ErtKEs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tWpdbj9cpjiW/X8HcrbGpzytIwqCdKaQg8T7b+OqPm6px2lP+MFBLwYIQFEwxXxwEky5dliFyHpgBH2lHfnS4nv8UGcPMMgyM4W54wgHJYMWS88+Y1nI1TNY/s/jc8xhaltoy88gr5iRVKzra6Xkn7NMEpP4A0VAywPSuxN2Opw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h+rEbbDo; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a57c8e247cso5934499f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 00:31:57 -0700 (PDT)
+	s=arc-20240116; t=1753257016; c=relaxed/simple;
+	bh=s2qj4W5nR9VUDrxKDMTXYV/rhF67N9Fs+yw/DNr1OSo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=SXPGOse1ZbHnOWmIvTygG5UEYqd01FcayYXjhF+UJ+c9a7PKtatXZCgZr4IUS28xqvKaQnXS0W7xsRqao/N6tIAF1N1XdTrRbVlKc/D+6JGgzgjNCvZLDG+UDPdOWdt3tuDWNQ8oQrNM03jRnhfj9pIhzIdMB5EsOLADYXg7nNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=S6Gj6Muf; arc=none smtp.client-ip=209.85.218.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f68.google.com with SMTP id a640c23a62f3a-ae9c2754a00so1081503366b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 00:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753255916; x=1753860716; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tsMQjx0LxGiew+0kejpLbcOVNd/QskKUIRO4t/3V5tc=;
-        b=h+rEbbDo2rKFhsWcFUjfS+c4xY2y033Ovi/w8dnKs7eFxKPi1LVyu756lz5tweSGIv
-         IqJz8Y6DTCoE88a7xOJgpChHql0ibR9FsKomO9+nj23XK2W3yJoabUlqTFDBfjPUY5w6
-         yW8Rg67KBpovWQ7WJYnHpUykcqyU24sOp4LCrbirstqoN6dpq6vp2HeZHotfppWZ50BD
-         ILf4OxOYsXelaNwBbrQX9Pavw/YPUmbFqDTNPYTTyqf1rmQAVc/sDY0m9jKbETfrJjg6
-         PkvyPazgLNJQKjH53GSy5s8ukQNQpnBf7DEp2cpC/tq44Pqyi7bkrw4wxxMKb4KbR/8S
-         VrTQ==
+        d=fairphone.com; s=fair; t=1753257012; x=1753861812; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yXbXFwg+K/BsGGE3U/llO+SOTqkjirp29B31EDd6IJk=;
+        b=S6Gj6MufZogpDpLD6OLyGKZX/hTJuAUAJNpsUDAc8SjitpcO7ixApOaV/R6FMUvHST
+         xdEfFa7EWx7RzmWJUSUvk25MKqph6eFmU9HuZeaBTdJ19+3/e0h6eG4SWwCJDdGEvMUx
+         waiirmurZmFKL0axF8ccNzWmfgeLCuYXpB6SyuMDtEPR2EgE4mWn42dIOnV8V8+AA3ub
+         Up3HcipiK5+uiprTVbJma/b4cYsc6QpfGyX2lg9nmOPWc2SY6HLSl660UM8rlVCHTRaL
+         NkYe6ttE+iAidnzJLsHG3rTmravT3xMAgeW2ngDEOlGiCHvsVnGcqhHfW4Gy2+jlBaB0
+         SoAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753255916; x=1753860716;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=tsMQjx0LxGiew+0kejpLbcOVNd/QskKUIRO4t/3V5tc=;
-        b=f76ue8SWz/iviKE7S2f5ObeEjMuWsFUB1GG1AVlPyEP3JW5QVbdk1Ua/0FXt5b65xL
-         OGfzxbC1PGwdIz9EaMo6NFmJQbugwRkSMmzyI16KxN1Gz5WD8oBkQtnBK27OtJ7ixz9x
-         ufN2j1IY9RF64OGjSy4SU0rxDF6CODEs9w6avtledks7kTC7e1Qz7DcouWyF1/VjjFO6
-         bvsU/Wq3auYnT9Agdjt8jVnDuXVIx7VAvKl4nXFtoObrd5Wp2pSyLUc4oF3KtpLvDXYq
-         9/R4j4mCQg8NDTdw+NAsTeERx14qKOAkDhbQIl5/Io+q/Riuv0A/lWFaP6BSteI1FjCR
-         qYzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMeeg+YPgMop/7FMgNac1T3l6CTHVqW30OrexLZDLXVqyqVVbWXctU8+XYiyZovtglVs2DNpldFBHUQSvk@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXF29wealpvbrAVZRM4D9K10JVAqN+66VtWasUhMeKqw3C/S/z
-	cJ3nG4s+HJaiKMQ6MPWSe6eZJiSYQjXBarr2wpC7aw18m0jr8PLRnTUFaujBwYTywuY=
-X-Gm-Gg: ASbGncu0iINXgDuM/p0v/Z60ji21nZsnaO+w8P5Xbqwjdf5g1YPOGL+kPsbMxL35XiV
-	4iulnRlPwSuCXxMoulJadLe1RwXLB5PGOoLZjCrN00UmfnCzKtYKuGWDZGx9q6ZIsCPAun0i44C
-	cOaTzxPm1xAnt68gX/C85av4wlJZzVLx99jFmiKUSaOuVpMi1yUzvoc+JfWnezAna0LpmO2NFrG
-	qrdfF+6TBcy9O/h5UZ/LG0xy76ACHigWnOfcaD5GIUit1f3Cd3ccECDfVzmX6z1xidKKyckE7b0
-	Xm/7jYkUpfysKntI1znd5E5Yy5iFcJqqHYsBP9KUpThAKnZajII7QI0Wx5ek8O5OTVd6+gA6dUL
-	EhrqJWDqsbdSao7Nw55w3wfR4ZOTbVa5YHPXzzDpMucbIGr/NQXwslNQY5kymzo/Ltq2bK8chzn
-	A=
-X-Google-Smtp-Source: AGHT+IEnTNf5B70Qm5PHVrXvXMMmuSQu9ZW3WQXoalvSypYkFRNdLXjfNz5NQe9X9fAdbT+v/+bFzQ==
-X-Received: by 2002:a05:6000:26c6:b0:3b6:2f9:42b1 with SMTP id ffacd0b85a97d-3b768eedb05mr1434526f8f.13.1753255915643;
-        Wed, 23 Jul 2025 00:31:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:8813:2f0d:f9e0:5294? ([2a01:e0a:3d9:2080:8813:2f0d:f9e0:5294])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca2bb96sm15602630f8f.30.2025.07.23.00.31.53
+        d=1e100.net; s=20230601; t=1753257012; x=1753861812;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yXbXFwg+K/BsGGE3U/llO+SOTqkjirp29B31EDd6IJk=;
+        b=DlxuYAbwGz58McroDrn74MfLqEdsSPkb4Dxhr93P3e2WHwr93yv1WYzf+rsey7UeiO
+         uw3ckeyqdBjnpcTVG8clRkuDkUjc2f5xRbch4lENz1zSK0Ijwbm8fCXQJ7aqZePLatyB
+         UBtnNkfADsyTsubF0hwITTiW8MSHuLc58lz0eHzPW/yR1ynehK6g/3un4efDapW998o6
+         lfJ4yAabStZzvJNmEuOL/sWQeeuc1ChobeAwTAsYYnuDA+VOXhKa/saGG5c9kdjRFSJB
+         VTgCAoQoEL1Lo8gSCVUTkgYKVTmKKcs6yluPq9VEM2tOUfWlkc8yxBAF1bxYWRF+1cnE
+         N4KQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpcsk4RUd2xfhKOgJ0VmtUAt9BfGLM/sUM/5x4l+xCW2mLIrL7b09HL4n3P9VYLt9SVaH4wxmUyTaAIF9A@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzZUWcICp75ixKXA2ioPVQ/FzQKS5lra5OqCn3sSYSe50hXTVV
+	QRQOJU0uYpXJRvys9AAFKKpOiBSYd1kDoPcA+hxoUmG68zIF2xWPt+xYoMjYeDZ0Zcs=
+X-Gm-Gg: ASbGncuSJNGWOFEDVq3FujyaEBe+kMWufHI9Egv4C/IYGrRA/6T241QfVoWLWOsqJAG
+	6UeqUjOh98okOQKxNXUaT/iHPeUqrxL3wb1Tu+BdFPz8NNWREdAHzXXEfwrdNULDg8k8WAp2Lg4
+	xIDRxVB5AOyxGYtXWGKakYDTa/q/OzVw7euoPTfCi75WIDNdvmZYRPPenWHvZl00kEMCCjTX5f4
+	J2jxYi4AfVsQYWBHbf5w7rx2QyqVqCux9unNNawP+ExeQ/NmfPcIJYS0I3//VDDvizjZWJlY7m1
+	7nHDL81Rs5Hhbfnh+mZMSLsIofMCVxNk5o0YMgYxbDPWdoToeH8eK/FOGZwQQRtKFaFmFwDmu++
+	50nixjXEU7TIezLqJ7tH06ulcMjPFoOWpbUcXtT2bnUPajEwQZ06r8Zqxc/4h4Kkt2GU=
+X-Google-Smtp-Source: AGHT+IHwBbnn1eUxlgv795d4NlYs1iTsVyOVnuelCygX33CjO30R0OB3cx1QUaH2Utrn1rESZ1YrZQ==
+X-Received: by 2002:a17:907:986:b0:ad8:9e80:6bc3 with SMTP id a640c23a62f3a-af2f66c2165mr184740066b.1.1753257011912;
+        Wed, 23 Jul 2025 00:50:11 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca2ee01sm1007709266b.81.2025.07.23.00.50.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 00:31:55 -0700 (PDT)
-Message-ID: <c36f3ae4-8bd1-45fe-ae98-253b45b158a9@linaro.org>
-Date: Wed, 23 Jul 2025 09:31:53 +0200
+        Wed, 23 Jul 2025 00:50:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
- Lenovo T14s Gen6
-To: Johan Hovold <johan@kernel.org>
-Cc: Rui Miguel Silva <rmfrfs@gmail.com>,
- Christopher Obbard <christopher.obbard@linaro.org>,
- Douglas Anderson <dianders@chromium.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
-References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
- <aCw9pYehCdfXXeiR@hovoldconsulting.com>
- <aG-QyF12rGY55gcG@hovoldconsulting.com>
- <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
- <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
- <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
- <aICO0CXxp4Vu331u@hovoldconsulting.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <aICO0CXxp4Vu331u@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Jul 2025 09:50:10 +0200
+Message-Id: <DBJ9QNML12CU.1RONWUJAZHQK7@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Georgi Djakov"
+ <djakov@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] interconnect: qcom: Add Milos interconnect
+ provider driver
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250709-sm7635-icc-v3-0-c446203c3b3a@fairphone.com>
+ <20250709-sm7635-icc-v3-2-c446203c3b3a@fairphone.com>
+ <d8955532-9a3b-451f-b5c7-549cee7d749e@kernel.org>
+ <DBHKBSK14XHM.E3ZUQMEJKEOJ@fairphone.com>
+In-Reply-To: <DBHKBSK14XHM.E3ZUQMEJKEOJ@fairphone.com>
 
-On 23/07/2025 09:27, Johan Hovold wrote:
-> On Wed, Jul 23, 2025 at 08:51:22AM +0200, Neil Armstrong wrote:
->> On 22/07/2025 15:48, Rui Miguel Silva wrote:
->>> On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
->>>> On 10/07/2025 12:07, Johan Hovold wrote:
-> 
->>>>> Neil, do you have the OLED version now?
->>>>
->>>> I'm not sure, how do I determine that ? Is there something specific in the type number ?
->>>
->>> Yes, yours is the OLED version, the exact models stated above.
+Hi Georgi,
+
+On Mon Jul 21, 2025 at 9:42 AM CEST, Luca Weiss wrote:
+> Hi Georgi,
+>
+> On Mon Jul 21, 2025 at 9:36 AM CEST, Georgi Djakov wrote:
+>> Hi Luca,
 >>
->> Ack thx, I'll test and re-spin this patchset then.
-> 
-> Thanks. Note that this depends on this series as well which also needs a
-> minor update:
-> 
-> 	https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
-> 
-> Can you respin that one as well?
+>> On 7/9/25 4:14 PM, Luca Weiss wrote:
+>>> Add driver for the Qualcomm interconnect buses found in Milos based
+>>> platforms. The topology consists of several NoCs that are controlled by
+>>> a remote processor that collects the aggregated bandwidth for each
+>>> master-slave pairs.
+>>>=20
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>>   drivers/interconnect/qcom/Kconfig  |    9 +
+>>>   drivers/interconnect/qcom/Makefile |    2 +
+>>>   drivers/interconnect/qcom/milos.c  | 1837 +++++++++++++++++++++++++++=
++++++++++
+>>>   3 files changed, 1848 insertions(+)
+>>>=20
+>> [..]
+>>> +
+>>> +static struct qcom_icc_node qhm_qup1 =3D {
+>>> +	.name =3D "qhm_qup1",
+>>> +	.channels =3D 1,
+>>> +	.buswidth =3D 4,
+>>> +	.qosbox =3D &qhm_qup1_qos,
+>>> +	.link_nodes =3D { &qns_a1noc_snoc, NULL },
+>>> +};
+>>
+>> It's very nice that you switched to the dynamic IDs, but please use the
+>> current style of links (like in v1), as the the NULL terminated lists
+>> are not merged yet. All the rest looks good!
+>
+> Is what's in todays linux-next a good base? Or what branch should I base
+> this on? But correct, I currently have v2 of dynamic ID patches in the
+> base for this.
+>
+> Also If I send the next revision by e.g. Wednesday can it still go into
+> 6.17? Just wondering how quick I need to work on this.
 
-Sure
+In case you didn't receive my message on IRC, your icc-milos branch plus
+the following patch works fine:
+https://public.lucaweiss.eu/tmp/0001-fixup-interconnect-qcom-Add-Milos-inte=
+rconnect-provi.patch
 
-> 
-> Johan
+One num_nodes was wrong, and alloc_dyn_id needs to still be set without
+the extra patches from the mailing list.
+
+Regards
+Luca
+
+>
+> Regards
+> Luca
+>
+>>
+>> Thanks,
+>> Georgi
 
 
