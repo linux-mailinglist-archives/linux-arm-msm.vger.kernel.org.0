@@ -1,87 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-66183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70416B0EACE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:44:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83AD6B0EAFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:51:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0BFE1700A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:44:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C9FB1AA17CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:51:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8EEE26F469;
-	Wed, 23 Jul 2025 06:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8221523E346;
+	Wed, 23 Jul 2025 06:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e6p8O1ca"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lyJqum4I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B25920C037
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 06:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED4B22259E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 06:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753253062; cv=none; b=G5ce0eREA06vIT6foN389Q5RMQrtPwaIZyKX46KN9TjgUE81TIV8PfTwOhpFRjS6Hg9QmxtaPXAS2pWY1U8JdfB3jgwMmeDHne2erk8Z5EzpscQLBubS2ofUB7EKsIg3Ne4M0IdFVswyqeUDZ8GgyAgeazNrBHZ32YhlK+001+M=
+	t=1753253487; cv=none; b=hdhIpPJuGp7Zdt1QqT3w+mzMFrz+U1MIWpPqwstFesuh5bHV4qFhreWv1k+PLwpTuD1rCR7Di5IH9qmRsEzp2mqfuwwxVZJO6T+wH49MivShIhNlw/Ye2ZdzU4V7kvuxf604cM+P7eoEb2O63BLu/cvc1lxCf8kKrUGneb62/kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753253062; c=relaxed/simple;
-	bh=ucEy6fLRjgf0oRmbifVYNVYN0IvdlBC98Fcz1R8viJA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SKS8HZvas4qCKffb4D55UR4kw4b1XaZg+jHvhBpZFB+gwxYA84aVgxw4Mfp8XyjlTJObKJtTniUd+XDFu75TBzjVPFTSTVXMQ78a019431UxboFWN0tr5HO7pDFkyslklKdkzh5sR65oQATD2Z+qGHyQR0J6zvoNlhdZMicCLWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e6p8O1ca; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MMPFPI005825
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 06:44:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6JRtXfXWNAwsFUIN8mSiqpepSISde2xx5Vvzm/Pm6/w=; b=e6p8O1ca/CMYTbYb
-	8V9N/8eFOrn5IAr/t/LDhmq4XF9NBku76JQYh0D0VzJG1qalhcJh1bi102A9KqIs
-	GrxkdIXOxIgun6dnKL87bCKC1xIbr7rep9e+Gz/ZxOwqBOnRe5EElXqtJ099iM+1
-	h9Ll0VVuY9c2rAazMjPCY9DI0fmfAm4W9/vXWwSjgjqOzmdPu8OgUG9XfuVFhV8n
-	qnjJtihOCUuPW6gKDxPVWvtL9cqK031OHwa6vPXyTja2tAIk4GJlU0W436hBoYFH
-	T8O7/oWUXoLbDwJ8a0mZ24nKWbz8V7BAMKFmHhM+NqcDmPovtiBVpNMPskxYZJsT
-	2EPD7w==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w58t3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 06:44:20 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b31df10dfadso4410321a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 23:44:20 -0700 (PDT)
+	s=arc-20240116; t=1753253487; c=relaxed/simple;
+	bh=jwzBPgPewamRNsaxEfFNMIFmvlapYYp5J3XKIArutF8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Of1QBH+ioHlmZmiLK7C0XhJksMIpewzmh8qrGkyltKt8Bx/Kp3WJXwiSpNPxmhpHcjogazvPHNLsHVOOj201SvjhYIn27c0gKOIJOivbXSKUirvbS/CaRA7YteYzpc5xLhE1djyN0fmfoEohKXNa7/YGghTlOJuIjZaJOFgS+8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lyJqum4I; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-451d6ade159so45444685e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jul 2025 23:51:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753253484; x=1753858284; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HmDQpPxfKm8bqCiPdWg9uZmJGwJELrN8lL27X6M5AKY=;
+        b=lyJqum4IK5euPOQqRk07RkpDOt9Rhq477gNSqyyjz+ju4EZcOMBd5pjfBZdZx2mSF5
+         eWAzBJeUkw867eX1ZI9B4tvtwFp3lZ/U2fgj16DBUzCGv/+7txRfxEExgT3aQmrarlhb
+         B1X5WKIlvduQvoC8iofjnpk+bfKu34OByXeSJPprpn3bJLTdMTkMbuIb+V0JqWlHwiiK
+         l2f4YnXtk2EWuvjtGyZTOPKVC7WKmtKeCCNUE0m49JEtJpOIGrl60nBKyPXGstC3+T2O
+         L4nUW070zqDA6rqG2z3jvE4EjaVXkif9wCc5JgXJn62OzwvZJoH19InY5a2vrG2lZ2xI
+         ob+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753253060; x=1753857860;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6JRtXfXWNAwsFUIN8mSiqpepSISde2xx5Vvzm/Pm6/w=;
-        b=DLi/8kTt4fZC4B+sABcclvlNnfiArJVF6R7k3FtdJWBtojF3MOSutePD/HgozueFP0
-         vWeCFbtp1vwsR4O9ufdUSplQQAkn89qznywgAw2LJoCZW5C7vZ19zFOZxWDmv9ZfEbAb
-         0Ass4XnB1x7aiZQpGjwCB/1enEG0BsGLxusFobRZJUirmIlqzV3quY3XUQbDO5hvRva4
-         hLhadhR81NBng0ML6JH1yAjrMJ96UV40amsLU74aJ/BZygw0fGzUlBoMiw0980gHXBj9
-         4q1rTqdM4pSR0cnPID/1BHInHKDVbRAMO9+2qNgPQyAL1b+JKmmmG1JogdxjnxSXGLb1
-         o6wA==
-X-Gm-Message-State: AOJu0YzlP2SncPSxg2fkiPxfqNccRqCU4vVxbcvpNyndHPSItmmoZ+CG
-	b0KOt9wxCgExXQx/pXNvnC45kllrOn3pAeMgfSbVG9GSkOB0nDs1tchJugJdMvEM2hk81K8MKsy
-	SfWGCk3h6qn/coxRNEwBKXj0oxZX4m5lzaox8lXP65R1De7AdrUByn1TOjizZsjdu3at2
-X-Gm-Gg: ASbGncvPoXoiVt1SRO1I4XjiQ4gvBBJFlaG4i333+VpwL/0CazQofY/Fqf36yYJbUNJ
-	b22KXaLGOAknvnovwNY1+/aKfBhqwDKKKP/UewbN29CINpSxpZwUhWlwPPNbnUVw+2Q7lDpp9eR
-	xuDmtVLkijNztajqFGnTP8Hr8wWVoXLCgx3GJdOgul/edAE8iLzv37a6sVYC/mNvKDItYsY+sMM
-	nUY1RlU7Vulz2IyPMDtcrxQQyTVYLOE4ivXYJjuLNlnRG3V/DuQ5mlzX5vkR56kuKof6nHUPodD
-	BevNzlvSU3Y61dfBgIakSWKQgU7NGW7mxH8W/m7PyOLLH8/xDpfs3en6xGyNxPIuD+eGTH6Dv8B
-	6hb/aCg2Jdt+2hw1f0zY05S81APY=
-X-Received: by 2002:a17:903:1a87:b0:234:ef42:5d75 with SMTP id d9443c01a7336-23f98172251mr31235645ad.20.1753253059862;
-        Tue, 22 Jul 2025 23:44:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFVH+w80Ld1jep2IXncJykzXgw95JBuzB7zrCNRM6xwTzer0RyGCP4PzDfAs0mSYUYgo7b2A==
-X-Received: by 2002:a17:903:1a87:b0:234:ef42:5d75 with SMTP id d9443c01a7336-23f98172251mr31235365ad.20.1753253059416;
-        Tue, 22 Jul 2025 23:44:19 -0700 (PDT)
-Received: from [10.133.33.46] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3bdfe68csm88659925ad.183.2025.07.22.23.44.16
+        d=1e100.net; s=20230601; t=1753253484; x=1753858284;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HmDQpPxfKm8bqCiPdWg9uZmJGwJELrN8lL27X6M5AKY=;
+        b=kRnezawM1HyS/BPdYfjKVOtEWPH+0u5oTR59QR+61Zq8gPU3zXBpKP6bXozjc16pr6
+         b7+xuTiPUlEGF6SA0Pl1qrG40dmZDDApaBA/McEted5cgg5lWTpF5hT7ueJTUvUmznvA
+         0AdJMGN7CPkv5CWw9BSdZ56cs8h4qNOhH5eG3uR/j71oHGpZXZpnE5ykmd/9P8bPf91B
+         8fxppy8Rhby95ER8/3spbBd/ETw3dH0ccCrTf3A0ThHOqJ9zJF/fZAs5f79lvu6d+OsA
+         4nrgX3s/OTsikFFflc9DzrSj3V4QJi1y1ZumVNIiEb+7FgltyfZUWffuXM/YBxM11cJ8
+         yVFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCcU1WpHwqFTnTghKOtF2YCBOa1H6wsVy/htt5eQYyEBTRcANYeSot2STcvbPN56iH3N1rcYUnlFJR2enP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7h7R1m+HbCJaKaDNifEd9Q5lWi+iqyLYn9w4IQg/eNffz5EC9
+	4FvDMgXoodlx7pjVkGQhMO2Y7UYW+2SaN9t5Y/VvOyPlv/iKCf2uhQMQ+GMVt6ZhqRQ=
+X-Gm-Gg: ASbGncuZfGC0UYFPY9NrYgNhC48fo4K9Yg6AGC4dE9CVj8V8j1KGr/rfCIbJN8Z06wF
+	j7YLiWApCnHToIhYSymQNEPw/gUR6cMq5QHL6t1MkrXlly9vjcRxHyfnQ2JUVbvNpnThrB2W8gv
+	CIEnJcvr4r1HYRa1JQTOidAQGR4z6zXw4/Cp+zFFc/xHdr7oWyMUxz0gq9sVgnMPtJPKFc7vD6b
+	j8rqPL/+Tp1Sy+HgiczKge6HLa/W8d2WDo7vuvaQws5JySJO+NFRZ8jztlZCeM0z3gdoeqAW3Lh
+	wdfNi1jOtW10aQFPxq+DGy4yzMLVFk3o3jUSmQRDOxNc25mhgrM63gPp231r7+YnFHxvSQGZdCo
+	CGy2wieBZ7aHAY7ETiKa4BPXYS8SCktBl1FxWI8ErC75ZtzpWzLWR+iQ082A8xDkzfFAMgJ7+Qx
+	8=
+X-Google-Smtp-Source: AGHT+IEoaOAXH2QorgnFzRzUfqE4JxvZBAunYUky46cjn0XM/7dCjKSv+Bq3sv4bmyNmd02W6oc5ww==
+X-Received: by 2002:a05:600c:a08e:b0:455:f6cd:8703 with SMTP id 5b1f17b1804b1-45868d5326cmr11861405e9.31.1753253483979;
+        Tue, 22 Jul 2025 23:51:23 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:8813:2f0d:f9e0:5294? ([2a01:e0a:3d9:2080:8813:2f0d:f9e0:5294])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4586918b65dsm12638235e9.10.2025.07.22.23.51.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 23:44:19 -0700 (PDT)
-Message-ID: <67ca3b6f-3cd3-430e-886a-0443f6d630dc@oss.qualcomm.com>
-Date: Wed, 23 Jul 2025 14:44:14 +0800
+        Tue, 22 Jul 2025 23:51:23 -0700 (PDT)
+Message-ID: <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
+Date: Wed, 23 Jul 2025 08:51:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,87 +85,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
- <20250716-hamoa_initial-v1-3-f6f5d0f9a163@oss.qualcomm.com>
- <0f9eebfe-21f8-48b8-9b49-a35126aa6dd1@kernel.org>
-Content-Language: en-US
-From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-In-Reply-To: <0f9eebfe-21f8-48b8-9b49-a35126aa6dd1@kernel.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
+ Lenovo T14s Gen6
+To: Rui Miguel Silva <rmfrfs@gmail.com>, Johan Hovold <johan@kernel.org>,
+ Christopher Obbard <christopher.obbard@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
+References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+ <aCw9pYehCdfXXeiR@hovoldconsulting.com>
+ <aG-QyF12rGY55gcG@hovoldconsulting.com>
+ <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
+ <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=688084c4 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=DGOirDVRF9kFrzJQLnUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA1NiBTYWx0ZWRfX5pmht4z+vbdr
- 97pwK/8iuP5B83lpVgPPjqiXlqeIhemETZJrfsxOy/VnmMRva/S1kssamBSenCQgTrVnpB34M0j
- 4R2ZPGHlZEdeAEFx/cmevXJY231xwnecyVuL78CnELmFvjyepOmy7ktlgjis+MnidrGjfv67XwI
- rmuQHcRPhtNRpX5ao03CR2YmT8s+EE4zIdRB26B513hFGomatyBXofEmDSYwK4PeIulF41xpsW+
- 5FaL/46kUxjKf+xPoaABZPcZjDvuJJm10nDXAquqafO3rO2YjDwqHIiWKgrzDGuYCoQkoSJKU7C
- Bi6nhA08QFA4skwqR2m1W5ZCUEqxDxbpAnSPOtVhcX1D/TixQqSDE6SHGwojOKwfBYyYSO1SErs
- /Np9V6Sm162WiU/MlrVBXKnx2XnWopAgPdL9EDxbgAAw8M33F2olnkE7NrDCCfDps60ZK0bC
-X-Proofpoint-ORIG-GUID: i2f-Zl3da7UQuyApcz6FhhduDCBMpkF_
-X-Proofpoint-GUID: i2f-Zl3da7UQuyApcz6FhhduDCBMpkF_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_01,2025-07-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507230056
+Content-Transfer-Encoding: 7bit
 
-
-
-On 2025-07-23 14:28, Krzysztof Kozlowski wrote:
-> On 16/07/2025 11:08, Yijie Yang wrote:
->> The HAMOA-IOT-SOM is a compact computing module that integrates a System
->> on Chip (SoC) — specifically the x1e80100 — along with essential
->> components optimized for IoT applications. It is designed to be mounted on
->> carrier boards, enabling the development of complete embedded systems.
->>
->> This change enables and overlays the following components:
->> - Regulators on the SOM
->> - Reserved memory regions
->> - PCIe6a and its PHY
->> - PCIe4 and its PHY
->> - USB0 through USB6 and their PHYs
->> - ADSP, CDSP
->> - WLAN, Bluetooth (M.2 interface)
->>
->> Written with contributions from Yingying Tang (added PCIe4 and its PHY to
->> enable WLAN).
->>
->> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
->> ---
+On 22/07/2025 15:48, Rui Miguel Silva wrote:
+> Hey Neil,
 > 
-> As pointed out by "arm64: dts: qcom: hamoa-iot-evk: Enable display
-> support" this is incomplete. Adding new SoM or board is one commit. Not
-> two. Don't split board DTS, which is already prepared/ready, into
-> multiple fake commits. This is not a release early approach. This is
-> opposite!
+> On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
+> 
+>> On 10/07/2025 12:07, Johan Hovold wrote:
+>>> Hi Chris (and Neil),
+>>>
+>>> On Tue, May 20, 2025 at 10:30:29AM +0200, Johan Hovold wrote:
+>>>
+>>>> On Wed, Apr 02, 2025 at 03:36:31PM +0100, Christopher Obbard wrote:
+>>>>> The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
+>>>>> panels. This patch series adds support for the OLED model which has a
+>>>>> Samsung ATNA40YK20 panel.
+>>>>>
+>>>>> With this patch series the backlight of the OLED eDP panel does not
+>>>>> illuminate since the brightness is incorrectly read from the eDP panel
+>>>>> as (to be clear this is not a regression). This is fixed in [0].
+>>>>>
+>>>>> [0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
+>>>>
+>>>> It would be good to get OLED support for the T14s merged. Are you
+>>>> planning on sending another revision of this series?
+>>>
+>>> No reply for over a month. Do you intend to respin these or should
+>>> someone else take over?
+>>>
+>>> Neil, do you have the OLED version now?
+>>
+>> I'm not sure, how do I determine that ? Is there something specific in the type number ?
+> 
+> Yes, yours is the OLED version, the exact models stated above.
 
-The inclusion of display support was not intended in the initial patch, 
-and it was not ready at the time this series was submitted. Since the 
-display patch set was not submitted by me, its timing could not be 
-controlled. If preferred, the display-related changes can be merged into 
-this patch in the next revision to maintain consistency.
+Ack thx, I'll test and re-spin this patchset then.
+
+Neil
 
 > 
-> Best regards,
-> Krzysztof
-
--- 
-Best Regards,
-Yijie
+> Cheers,
+>       Rui
+> 
+>>
+>> Neil
+>>
+>>>
+>>>>> Christopher Obbard (3):
+>>>>>         arm64: dts: qcom: x1e80100: add epd hpd pinctrl
+>>>>>         arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
+>>>>
+>>>>>         arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
+>>>>
+>>>> Strictly speaking you could have posted this last patch on it's own as
+>>>> it doesn't depend on adding the hpd pinctrl.
+>>>
+>>> Johan
+> 
+> 
+> 
 
 
