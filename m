@@ -1,137 +1,286 @@
-Return-Path: <linux-arm-msm+bounces-66322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E075B0F4D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:04:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26600B0F4D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:05:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC8903A8FCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:03:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C059580AA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E036F2F3624;
-	Wed, 23 Jul 2025 14:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74FE52F3C28;
+	Wed, 23 Jul 2025 14:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="j/Mx/3+x"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bBofrdTE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89EE2F2C4E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 14:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9C52F2C6F;
+	Wed, 23 Jul 2025 14:04:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753279452; cv=none; b=oNGa8W7PX2wQxLr6Ap79Uky6lyKsAux/k6UCYBK/YN48dD3Jc0G9O9UPfK2CNqXDPwI+mb2hYsdgJ9RbCa5d6IyJ6bsEX20rSULHhUIOaTqf8355GdCIx1gvxB41IzEE4J1yp2ndq2xSi+K/wAu1jTDWEtrtkID4C3QRwBCCmG8=
+	t=1753279454; cv=none; b=uOb3Mj5C/I0ojsU2klAEfy4fmFdN+oww+35KbYB3wo6vzevyeERDfFN0dSpar0nuX3yPGhHOdyyZx/1qko51kRQAlT6qC3Zxwth4ymRMws0zwss80hwnjeHoV/n1Wkzx8wqQ4B7BfnlH6L2SjbVlbKPAr+F0t92uMbbGpx06VHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753279452; c=relaxed/simple;
-	bh=0DEgaxktWtylE9tS47CHiAD37SUMRWPVx+JL0++K0w4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DT8W7zsvNRj7oQqScf2ZMkaL1DNQtq5PTQgsEpj9TC9A94S8y1hrS4PXdOMseGpGHY0FJo5wua/t7189f//3FtAYuuRB3Us2VfIgdKCZyYBmXLxdth3A9blwqIPah0ThXN2aMORDdFjAoQeeEehk/xojz6VEKZEPLAxeY05AxRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=j/Mx/3+x; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-60c93c23b08so12754466a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 07:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1753279449; x=1753884249; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CBk3e+ZeNvt/w69kQtejS7uDHZHCYnTulCyNIFzv8gY=;
-        b=j/Mx/3+xc/XSy5nydHMfiBdlGr7U38LNfvKfdufoxuXRNy5/pvHa/sTcLcN3HU8j3L
-         UFdH3pQwEGMDh4e2L0NukJJ/Lym1TSPKzcZnj8pgfyb5YJrPQpNCk/WATy47ebJtVhs3
-         K2Ln9tXAXbv3imWTEg4myxpgFAxEoyWbwjobRdRX2xG8aM95TAWkQh3gi4MLNui6PdYz
-         LgM7hAPOcZ8ejCyzbCmwtMTcfiwdFHec7BwRCzg8WgKxfZ8LjV16Jwfvd0WHeLvnutXy
-         OL4Xw4UXh4z4G7PnsznF06MM2H3ShvFoUCf0N3m2lNUaBoETGYNOWGymixRrI32RhdiL
-         fN0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753279449; x=1753884249;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CBk3e+ZeNvt/w69kQtejS7uDHZHCYnTulCyNIFzv8gY=;
-        b=lvaAccCDmyhbrgI9DRL6uOpT8J7tMWr+WVTReWqc3eFOmG2o/iw813pu6bCAzt7n+X
-         LSlwxTDUn1oN1Z8jY1vr2+imrUj4c520ha9bqChOWz2e2Ob/M7gjRxDFlDybf05w4BRq
-         nBHhBzQWXozI51r8zpSg3PsSX/xTvOosQ0m2u50ZS4jt4n3ACpSpOrgKhN49R3fmQWhJ
-         XKNNWLucYDR6QxxUSxH2yWFaCmOpXWh6pP4zHYh1llBBatdDlzA9X1AjO4gfMoOP/kG2
-         Z8oKfIj+EBSjyWewcUOvUsQClwNPNpy5GvZflZAl3U4JU6Aclwpvrl94X90Is4tB8sAP
-         DFug==
-X-Forwarded-Encrypted: i=1; AJvYcCWxac8c46vfnk2pOh0fkRYsU3jK6vmQqTSw2VzHzVyEfhYdg2cpPdhczth6WyjS2vUoG2Eq1lHKcXdJCOk1@vger.kernel.org
-X-Gm-Message-State: AOJu0YwpuaMvDXndUzMmajoSXa6rl1bDIZs4VVq82yIfS9KAjeJqZE+y
-	vgwx1EsPrVosBj5lrz5KhUh43LU6l8m9LvdzVsYxLXRej8AXvQRXDgMVgCkdmtiSSFwmCNxnkgv
-	mloMlZXk=
-X-Gm-Gg: ASbGncvLSWgSSAUILPTBBOhbWndLfnFCzwE2T16sf4cZ5MiDDwDzvgu8xyD6pv88/Pi
-	fKVsxNHa2d61XldAYLlGZgs0m1zLe89Ag8WAtmzpa8sDWuQVuT2utVsZY2XF2E3mSYiiLFQ9ncq
-	GWDFyQoz/OBOq9QEnExipeHG7hkDmI2gFNOL/mvqVt9TfRPdL41ouULR+DHh54Vz8XENOHG9YE5
-	R9P4zUFc/bViCdUafCYvoKumfAp7MpgjzMYfT0bAOBONhYmGSOgfJc/h4t+VnL687If9/XcuS4h
-	bl+kWQGI+ZV9ginK6tSZDoPaqpNN7uHwDtOmVX/doRugCyNORpGwSFsaBOPJwcVkVmfXZJXKxz3
-	xOIIjToEaBABIC+jUT6J8tM+910ZYueCeJ6+9KovtSjQX5oYv9gHMfJeiQUxu7p7nT8V9
-X-Google-Smtp-Source: AGHT+IFIf87TC3ZSe5JBmPzIIxrTRzYL4zD8nVpLsuTYwJfJNPVnPKmaSJbEvn9fuMpNBzzUCHRPOw==
-X-Received: by 2002:a17:907:3ea6:b0:ae0:be38:64bf with SMTP id a640c23a62f3a-af2f9178962mr309369766b.58.1753279448707;
-        Wed, 23 Jul 2025 07:04:08 -0700 (PDT)
-Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6c7d46ffsm1054830466b.42.2025.07.23.07.04.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 07:04:08 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 23 Jul 2025 16:03:40 +0200
-Subject: [PATCH v3 3/3] ASoC: qcom: sm8250: Add Fairphone 4 soundcard
- compatible
+	s=arc-20240116; t=1753279454; c=relaxed/simple;
+	bh=lC7D423FBBscRuryASHtu4WfamrsmdENxp22E1bBitw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HPcxZH9Oac4As1EoG5Y5Y3iGYG8YimHOzrjbkL47a6EZ5rPX46AzCDz/rqYvN9K6ePAwSsaQv2HclVjemXMWbaUjOV4NAxhFsjBKKX6AMRxIgXYdEeYoXJKzkMxLmIELAxNiwRLjtvFY63CnT5TIt+syphSZrVaayE0o3eKo92c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bBofrdTE; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1753279452; x=1784815452;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lC7D423FBBscRuryASHtu4WfamrsmdENxp22E1bBitw=;
+  b=bBofrdTEAMIY7guFeKDjZLSKjB+lLza/ppMcwL/epxpAq14HSIUI0oIM
+   fh0tpoJ3s5dzuFsGEXHjk6d7/yUcICdOeyHJNCqguahsAPROgO1BLI7Qn
+   N+F3Cj/75cVdAHJbdQFuUA4P1dsegypIKwwJYV9AjvLcAZL155zoDT93h
+   Sw8Vl+DysSAHhFXmJRxK5xjnbH3lkUj+GsbcArUjinEpOkQYPNTRfvJ5V
+   WBonXaizcaFAYti/6/Kj/lm6dXl7n5QvOhDletwUwCgrxnKPI22T1NS8S
+   kQxW9EV7xjxNpxufmToUded0AT2yoKp14QO6AgRZLyyvm3RgI76O5UoMj
+   w==;
+X-CSE-ConnectionGUID: aJclpD6KTtKMFTzAdc0pvA==
+X-CSE-MsgGUID: 1pzUyU9/Qae7FjD8+Gd9xQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="55505242"
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
+   d="scan'208";a="55505242"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 07:04:11 -0700
+X-CSE-ConnectionGUID: MEc0+Hk+ToyvuSHaf8ZX5A==
+X-CSE-MsgGUID: agVwp6nNQBG9waDbKb6Pjw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
+   d="scan'208";a="190480304"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 07:03:57 -0700
+Message-ID: <c301ec11-9d24-4cc6-9dc7-46800df4d5a8@intel.com>
+Date: Wed, 23 Jul 2025 22:03:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 10/22] KVM: guest_memfd: Add plumbing to host to map
+ guest_memfd pages
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250723104714.1674617-1-tabba@google.com>
+ <20250723104714.1674617-11-tabba@google.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250723104714.1674617-11-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250723-fp4-usb-audio-offload-v3-3-6be84ed4fc39@fairphone.com>
-References: <20250723-fp4-usb-audio-offload-v3-0-6be84ed4fc39@fairphone.com>
-In-Reply-To: <20250723-fp4-usb-audio-offload-v3-0-6be84ed4fc39@fairphone.com>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753279445; l=935;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=0DEgaxktWtylE9tS47CHiAD37SUMRWPVx+JL0++K0w4=;
- b=hPyNXoVJuPYBMO+z6fAdDJs+EMudff8F0d7QdXv5K9C7/1HEfTM0wMp+5A3PFEbn7KuJ2hALH
- IImnnwDdPE8A7AM4nyhN1JunBzXdF5RT/1FdCq0Vv2juqAMDtAEm055
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Add a compatible for the SM7225-based Fairphone 4 which can use this
-machine driver.
+On 7/23/2025 6:47 PM, Fuad Tabba wrote:
+> Introduce the core infrastructure to enable host userspace to mmap()
+> guest_memfd-backed memory. This is needed for several evolving KVM use
+> cases:
+> 
+> * Non-CoCo VM backing: Allows VMMs like Firecracker to run guests
+>    entirely backed by guest_memfd, even for non-CoCo VMs [1]. This
+>    provides a unified memory management model and simplifies guest memory
+>    handling.
+> 
+> * Direct map removal for enhanced security: This is an important step
+>    for direct map removal of guest memory [2]. By allowing host userspace
+>    to fault in guest_memfd pages directly, we can avoid maintaining host
+>    kernel direct maps of guest memory. This provides additional hardening
+>    against Spectre-like transient execution attacks by removing a
+>    potential attack surface within the kernel.
+> 
+> * Future guest_memfd features: This also lays the groundwork for future
+>    enhancements to guest_memfd, such as supporting huge pages and
+>    enabling in-place sharing of guest memory with the host for CoCo
+>    platforms that permit it [3].
+> 
+> Enable the basic mmap and fault handling logic within guest_memfd, but
+> hold off on allow userspace to actually do mmap() until the architecture
+> support is also in place.
+> 
+> [1] https://github.com/firecracker-microvm/firecracker/tree/feature/secret-hiding
+> [2] https://lore.kernel.org/linux-mm/cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com
+> [3] https://lore.kernel.org/all/c1c9591d-218a-495c-957b-ba356c8f8e09@redhat.com/T/#u
+> 
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Shivank Garg <shivankg@amd.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- sound/soc/qcom/sm8250.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index 69c514fad0b1babafae4b61bb5ac944c6b4906dd..f5b75a06e5bd20e00874f4cd29d1b947ee89d79f 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -208,6 +208,7 @@ static int sm8250_platform_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id snd_sm8250_dt_match[] = {
-+	{ .compatible = "fairphone,fp4-sndcard", .data = "sm7225" },
- 	{ .compatible = "fairphone,fp5-sndcard", .data = "qcm6490" },
- 	{ .compatible = "qcom,qrb4210-rb2-sndcard", .data = "sm4250" },
- 	{ .compatible = "qcom,qrb5165-rb5-sndcard", .data = "sm8250" },
+> ---
+>   arch/x86/kvm/x86.c       | 11 +++++++
+>   include/linux/kvm_host.h |  4 +++
+>   virt/kvm/guest_memfd.c   | 70 ++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 85 insertions(+)
+> 
+> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> index a1c49bc681c4..e5cd54ba1eaa 100644
+> --- a/arch/x86/kvm/x86.c
+> +++ b/arch/x86/kvm/x86.c
+> @@ -13518,6 +13518,16 @@ bool kvm_arch_no_poll(struct kvm_vcpu *vcpu)
+>   }
+>   EXPORT_SYMBOL_GPL(kvm_arch_no_poll);
+>   
+> +#ifdef CONFIG_KVM_GUEST_MEMFD
+> +/*
+> + * KVM doesn't yet support mmap() on guest_memfd for VMs with private memory
+> + * (the private vs. shared tracking needs to be moved into guest_memfd).
+> + */
+> +bool kvm_arch_supports_gmem_mmap(struct kvm *kvm)
+> +{
+> +	return !kvm_arch_has_private_mem(kvm);
+> +}
+> +
 
--- 
-2.50.1
+I think it's better to move the kvm_arch_supports_gmem_mmap() stuff to 
+patch 20. Because we don't know how kvm_arch_supports_gmem_mmap() is 
+going to be used unitll that patch.
+
+>   #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_PREPARE
+>   int kvm_arch_gmem_prepare(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn, int max_order)
+>   {
+> @@ -13531,6 +13541,7 @@ void kvm_arch_gmem_invalidate(kvm_pfn_t start, kvm_pfn_t end)
+>   	kvm_x86_call(gmem_invalidate)(start, end);
+>   }
+>   #endif
+> +#endif
+>   
+>   int kvm_spec_ctrl_test_value(u64 value)
+>   {
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index 4d1c44622056..26bad600f9fa 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -726,6 +726,10 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+>   }
+>   #endif
+>   
+> +#ifdef CONFIG_KVM_GUEST_MEMFD
+> +bool kvm_arch_supports_gmem_mmap(struct kvm *kvm);
+> +#endif
+> +
+>   #ifndef kvm_arch_has_readonly_mem
+>   static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
+>   {
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index a99e11b8b77f..67e7cd7210ef 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -312,7 +312,72 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>   	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>   }
+>   
+> +static bool kvm_gmem_supports_mmap(struct inode *inode)
+> +{
+> +	return false;
+> +}
+> +
+> +static vm_fault_t kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
+> +{
+> +	struct inode *inode = file_inode(vmf->vma->vm_file);
+> +	struct folio *folio;
+> +	vm_fault_t ret = VM_FAULT_LOCKED;
+> +
+> +	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
+> +		return VM_FAULT_SIGBUS;
+> +
+> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> +	if (IS_ERR(folio)) {
+> +		int err = PTR_ERR(folio);
+> +
+> +		if (err == -EAGAIN)
+> +			return VM_FAULT_RETRY;
+> +
+> +		return vmf_error(err);
+> +	}
+> +
+> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
+> +		ret = VM_FAULT_SIGBUS;
+> +		goto out_folio;
+> +	}
+> +
+> +	if (!folio_test_uptodate(folio)) {
+> +		clear_highpage(folio_page(folio, 0));
+> +		kvm_gmem_mark_prepared(folio);
+> +	}
+> +
+> +	vmf->page = folio_file_page(folio, vmf->pgoff);
+> +
+> +out_folio:
+> +	if (ret != VM_FAULT_LOCKED) {
+> +		folio_unlock(folio);
+> +		folio_put(folio);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
+> +	.fault = kvm_gmem_fault_user_mapping,
+> +};
+> +
+> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+> +{
+> +	if (!kvm_gmem_supports_mmap(file_inode(file)))
+> +		return -ENODEV;
+> +
+> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+> +	    (VM_SHARED | VM_MAYSHARE)) {
+> +		return -EINVAL;
+> +	}
+> +
+> +	vma->vm_ops = &kvm_gmem_vm_ops;
+> +
+> +	return 0;
+> +}
+> +
+>   static struct file_operations kvm_gmem_fops = {
+> +	.mmap		= kvm_gmem_mmap,
+>   	.open		= generic_file_open,
+>   	.release	= kvm_gmem_release,
+>   	.fallocate	= kvm_gmem_fallocate,
+> @@ -391,6 +456,11 @@ static const struct inode_operations kvm_gmem_iops = {
+>   	.setattr	= kvm_gmem_setattr,
+>   };
+>   
+> +bool __weak kvm_arch_supports_gmem_mmap(struct kvm *kvm)
+> +{
+> +	return true;
+> +}
+> +
+>   static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
+>   {
+>   	const char *anon_name = "[kvm-gmem]";
 
 
