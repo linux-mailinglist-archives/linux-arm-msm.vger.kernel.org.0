@@ -1,200 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-66288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC02B0F20A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:16:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E442B0F20F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:19:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CEB8B7A63C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:14:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B36397AF81D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29F9B28C2BC;
-	Wed, 23 Jul 2025 12:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A2E2E5412;
+	Wed, 23 Jul 2025 12:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PGl1tZdb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OR6+JZHd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D68283C9E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:15:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E60289E3D;
+	Wed, 23 Jul 2025 12:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753272956; cv=none; b=eqTOt557O26Ll3y6e+5xBCbewvKAPEXgXIMPi17rI9tJyY6Rzybya0SYq6aWpY57RfB3TeeStxwOCE/7y6CxQguUK7leW7W0o9XWowz1r4h9g/YsrkDi5s8leEgi3kNDSXY+dHJVcI8COf9epkhauxH2m4yUmCu9rIJ/75AVwnI=
+	t=1753273157; cv=none; b=g67mA9JMb+5G5o/L5VlfWhJ/cCufOEN+Gbuocd261CrORw6+g5BGAuqXb0o3fv+14QxJRPlabXiDDQxiDiTIbSgCoKbYkiWG2BoKHQ+FDg73euLZSj1N4NJzA4mvCcH4GQuQLmoFnhFY6CFJ7pQl9uGK8GhmoJg1rpitN6RQsw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753272956; c=relaxed/simple;
-	bh=4yf87upMWwhGsF9DAmAfKfFZbJLVqqANDgrKL/+BAbI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y9QYGAMoqksK+XJ1dvCtC0ZTFljSmY6nuMefVnx2kX2hkqJJM1yV7nGZc0KCBDSpRl8128klf3xX4a2aL3eM6PzJSgXwPM+MInTCK6UfJrcpZ3r+q8Q1Iyt9Gvnsqxe9C1z/0MOawYtayFHGQ1d4gNb0YHZcQ3JT/YFVfw79pGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PGl1tZdb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9c0c8024778
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:15:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=ktRoF5Kfb5cPS6qeC6LMCiTAb0WRcSIgGMsrYXoDOhs=; b=PG
-	l1tZdbV8MVqulIE6u6qV1K75QvmND5uvQ7j+pGzdSxgwfTBpimtl4IHlLk9MGXZ/
-	9ZKZwpx8jfq+gjGiF5kI1Ajm10mLZw6VEE1uT7weesW1KekQ9RJqs2t4OLFMP0JP
-	+3AELmWW19xwevCsCp/Q68ND40klEQ0G2bQsZbimOaZpGG4RV69nzFuzNSPeqXv9
-	rqEbYG0FaNacR00SuGg0ITBlOXKgS6muTBYwLs5I0dSaFYyraO/P70d0Ah1+zIzr
-	n3FDEuH1G4GwTu5bVL7Wp8wPgMAnUgafKsE/UPXEErlE3qRU5RzL7IAx+vgm8Iwt
-	VvPWwUytqnDLvpgsZg9g==
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48044dmwcn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:15:53 +0000 (GMT)
-Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-73c874ac31dso7916744a34.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 05:15:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753272952; x=1753877752;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ktRoF5Kfb5cPS6qeC6LMCiTAb0WRcSIgGMsrYXoDOhs=;
-        b=upQ1g5o+IMX8pXnA6+eiIoYF2RfsU+SFCqItpvRjlFlNGsjTduQIpeWR73tpcgPVqt
-         ihsG/817CTEy40dacP/S7phTTkBKkC0TL/bertMWaN/Uo7i51jDy7wCF5w25G6ATlOsJ
-         FUjFjIHTm+H6L+UWL+4k6JRGNvRZMrmh0QfCJzmrvkXz/FUuFMS4mUIDxMOxKsWEnoMb
-         aP5NZ5HaYhNaFtsPf6b0cJ36A6o4E5DvAudo0MVyT+KctjEW63YA8TbzSvtuqa7QNEO3
-         VVQ7LryaiAJWPBT6f6oORQCt+61gamY08Uc5AF4mXOz2rWCQJa7A+1tyxxhx6kO7a7DL
-         VQdg==
-X-Forwarded-Encrypted: i=1; AJvYcCVSQy5y6Q4nF9s48kKLgD1IqtxK9HlkA5ZuxRexq57GU3qxQIXOhR3b9NUA3gjryM39rVn93jzwHNSACDIO@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeNzdfY4DWGu42ufa8WWbD+bjZ9+hk5WscgL6cBhu5zwUJitpg
-	K1qItkj6lUkf0sPKGdzVqwqHCAM6zV+6/y4Yks+bJwpR7C/p5HV98EBh9Q3orZylf9ab1ea6E2W
-	yKoAgyqLXdiCNNm+OvJBIGZy3WjfNt8F1w7/KMcn8wNbljvk4GcaFaLUcyA9sokRAB9me0IpNGT
-	Hu3ilrObE88Se+v+cZyRoywegMYK2esAr7jQbxF+FlMqs=
-X-Gm-Gg: ASbGncv1/kPlYVyXmbvtH2yxFBHDY24Q2eEQJ3r/adPMzjybe9eN7QveFWlxfa9ck6z
-	tc8qv2rz7XqMbId14WOcNPi8V6qd2VQjM6Ywf6AYqKljN/PSEBJ2oRif4WG9o0H5bO9i+nBHZb1
-	1niP+fc4Otow8PGUl0+XbKho1PxP3p3pi1nJeikeSdM6Hv+iYaPbbC
-X-Received: by 2002:a05:6820:2981:b0:611:ffa0:3863 with SMTP id 006d021491bc7-6187d88903dmr2053790eaf.3.1753272952434;
-        Wed, 23 Jul 2025 05:15:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeb2Xwhvp+2DKFatcw4dSTUfUVWmQm3U2bXlTN1qoo5uB13l7WiQFxbIahvNdDFYo6nkhPPzon4nKaKEBWyz8=
-X-Received: by 2002:a05:6820:2981:b0:611:ffa0:3863 with SMTP id
- 006d021491bc7-6187d88903dmr2053745eaf.3.1753272951969; Wed, 23 Jul 2025
- 05:15:51 -0700 (PDT)
+	s=arc-20240116; t=1753273157; c=relaxed/simple;
+	bh=POuTDoQ9PpSydluEqziXn2gVwFFvN6mDSjaJOEBnvUY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TtBe2mNt67vWBRI5gqVJUMyc7kzuBpupaL2kBF9cj84UvSJBfbTYhwv6QQjalXrPqQxpdI2Oz2puEyQswTYC/kXbs9M2jn6meTzOq+xHBISsjJSclLwWR0l0w754Ql3r9iwHBhoGirBJLkDxTIAukVoHvGAjdO5srSh1Wg8/Zdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OR6+JZHd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DB4C4CEE7;
+	Wed, 23 Jul 2025 12:19:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753273155;
+	bh=POuTDoQ9PpSydluEqziXn2gVwFFvN6mDSjaJOEBnvUY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OR6+JZHdfGfBB+GjdRuPEkv2fUmvV3Ihf86Qs1cb/Z2FB/mmmnxMuw1YFMmB5a2h0
+	 2H6dDlD51Jglq3WSNPep/Ejjoyx6PxIdM8B0OFienVPR46GBB0MsV/9eN29M0Jw/vK
+	 fPAkga3FScth/T8fyiZLSl276bRhWpFYq/hoU9N4gmtqT6qqPTeMwlGhWV6O0e74Rl
+	 lh8312qzlCEJRCXLtKZrl+ywkQ74zVBuHKoXHD0/JG4DIaFZlHnR+c8NXNd066Z96d
+	 nCeyO0DkJPuxvZXtlkg1hhGz0+mYQYA0B1DTXSJyohf+bitKllSbVONZBpdY7FLy94
+	 BgaEPHKAfq2nA==
+Date: Wed, 23 Jul 2025 13:19:08 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4
+ smartphone
+Message-ID: <00c2ac7c-763f-467f-8199-76de9f5d71b0@sirena.org.uk>
+References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
+ <DBDAPORDD5IM.1BHXPK225E2PP@fairphone.com>
+ <DBHIM4SA3OIK.PXX6HMDE93B8@fairphone.com>
+ <ac3f1eb2-5830-4bda-bc57-c4d29c22aba0@sirena.org.uk>
+ <DBJDZBYHR94V.1QGVALCL60M1X@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-9-9347aa5bcbd6@oss.qualcomm.com> <0a2188e7-3919-48f7-b5c1-8f779f617f28@oss.qualcomm.com>
-In-Reply-To: <0a2188e7-3919-48f7-b5c1-8f779f617f28@oss.qualcomm.com>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Wed, 23 Jul 2025 05:15:41 -0700
-X-Gm-Features: Ac12FXwc8FFwXUKsmQ1l4f_2KQZK5PKdoGUYbUEsnP7UlhQh-lQcLU2tfqdZY8E
-Message-ID: <CACSVV02x1s9oBSV8khgPhqPJdT1igOzRSOp5wYUZowKvXsb-Dw@mail.gmail.com>
-Subject: Re: [PATCH 09/17] drm/msm/a6xx: Switch to GMU AO counter
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="s26ZamLLlGnPk0Qb"
+Content-Disposition: inline
+In-Reply-To: <DBJDZBYHR94V.1QGVALCL60M1X@fairphone.com>
+X-Cookie: List was current at time of printing.
+
+
+--s26ZamLLlGnPk0Qb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=BJ6zrEQG c=1 sm=1 tr=0 ts=6880d279 cx=c_pps
- a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=EUspDBNiAAAA:8 a=AnF7TAvy4Dos9zI8ue0A:9 a=QEXdDO2ut3YA:10
- a=eYe2g0i6gJ5uXG_o6N4q:22
-X-Proofpoint-GUID: M_8rS94vKDTHkMTe8HYjfUstt4hRAAk8
-X-Proofpoint-ORIG-GUID: M_8rS94vKDTHkMTe8HYjfUstt4hRAAk8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDEwNCBTYWx0ZWRfX4kTEsut1GjqS
- OQchwUYbecBfP46r5nOR3HE+LjvJ3kwklF4R5gDnvWmOE66Kv9WVMWIpF6uDfZRN58bk7C/gc2U
- ibtZ5/K4M4dZedZd0tWNF0l/5N4yBauXHjkoUWtjB/R87Ue0kK2lgxtolTelfqYaZOm71bm0bzx
- Hl8GM6Ila+Kwa1K/aTOh2k8CzxqYPUI5uRd/qPLJscqy8stqz83p2P1D+SoqIwPETi2UTIgdmDf
- juolT47fsxoBI+3FEQki9G3n10OcL0+8p0YAv3UBDarRnip0GtY+05kiGR3ax305Yg9f2OlNFzQ
- JS8x+0JZbXp0inuj0Y3kqaMJX2D6O0UUtg1PN7BsVQCNFRtFJKPBynTO9ONZcTdpXGTFP0hK5n1
- x2ry4y5yg8ZMAGRZQbTgkfPF758P1Sw423slXmZFsW9/spdlIPc/xiMu/DtktoZnep9qe/L8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507230104
 
-On Wed, Jul 23, 2025 at 3:19=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 7/20/25 2:16 PM, Akhil P Oommen wrote:
-> > CP_ALWAYS_ON counter falls under GX domain which is collapsed during
-> > IFPC. So switch to GMU_ALWAYS_ON counter for any CPU reads since it is
-> > not impacted by IFPC. Both counters are clocked by same xo clock source=
-.
+On Wed, Jul 23, 2025 at 01:09:35PM +0200, Luca Weiss wrote:
+> On Wed Jul 23, 2025 at 12:57 PM CEST, Mark Brown wrote:
+
+> > As previously discussed they won't apply until after the merge window.
+
+> Sorry about that, I thought the conflict was for the 6.16 merge window,
+> not 6.17?
+
+There is a conflict.  You could check this yourself...
+
+> So I'm not aware of another conflict, that's why I was asking in the
+> first place.
+
+You were sending a content free ping:
+
+> > Please don't send content free pings and please allow a reasonable time
+> > for review.  People get busy, go on holiday, attend conferences and so=
+=20
+> > on so unless there is some reason for urgency (like critical bug fixes)
+> > please allow at least a couple of weeks for review.  If there have been
+> > review comments then people may be waiting for those to be addressed.
 > >
-> > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 30 ++++++++++++++++-----------=
----
-> >  1 file changed, 16 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.c
-> > index 6770f0363e7284e4596b1188637a4615d2c0779b..f000915a4c2698a85b45bd3=
-c92e590f14999d10d 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -16,6 +16,19 @@
-> >
-> >  #define GPU_PAS_ID 13
-> >
-> > +static u64 read_gmu_ao_counter(struct a6xx_gpu *a6xx_gpu)
-> > +{
-> > +     u64 count_hi, count_lo, temp;
-> > +
-> > +     do {
-> > +             count_hi =3D gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS=
-_ON_COUNTER_H);
-> > +             count_lo =3D gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS=
-_ON_COUNTER_L);
-> > +             temp =3D gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS_ON_=
-COUNTER_H);
-> > +     } while (count_hi !=3D temp);
->
-> The original logic is as follows:
->
-> static u64 gen7_read_alwayson(struct adreno_device *adreno_dev)
-> {
->         struct kgsl_device *device =3D KGSL_DEVICE(adreno_dev);
->         u32 lo =3D 0, hi =3D 0, tmp =3D 0;
->
->         /* Always use the GMU AO counter when doing a AHB read */
->         gmu_core_regread(device, GEN7_GMU_ALWAYS_ON_COUNTER_H, &hi);
->         gmu_core_regread(device, GEN7_GMU_ALWAYS_ON_COUNTER_L, &lo);
->
->         /* Check for overflow */
->         gmu_core_regread(device, GEN7_GMU_ALWAYS_ON_COUNTER_H, &tmp);
->
->         if (hi !=3D tmp) {
->                 gmu_core_regread(device, GEN7_GMU_ALWAYS_ON_COUNTER_L,
->                                 &lo);
->                 hi =3D tmp;
->         }
->
->         return (((u64) hi) << 32) | lo;
-> }
->
-> Doing this in a while-loop almost looks like you want a lot of time to
-> pass - REG_WIDTH(u32?)/19.2 MHz
+> > Sending content free pings adds to the mail volume (if they are seen at
+> > all) which is often the problem and since they can't be reviewed
+> > directly if something has gone wrong you'll have to resend the patches
+> > anyway, so sending again is generally a better approach though there are
+> > some other maintainers who like them - if in doubt look at how patches
+> > for the subsystem are normally handled.
 
-would:
+--s26ZamLLlGnPk0Qb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-   } while (unlikely(count_hi !=3D temp));
+-----BEGIN PGP SIGNATURE-----
 
-make it more clear?
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiA0zsACgkQJNaLcl1U
+h9AH6wf9ELo4l0meQaRhE0Vx8YMY2nfByC9Ukip/Q3TFsZ5P/t2r7WBg6LpGuB6G
+eCQe8Ij3e4NeK/gM1DOpSm4hAq9psN/hQJJ4TuTeIpXnHYj9xHWI7f6BD7Shl8TL
+rUdsxAdhmqFtks04vjgVBFI9ZzCKVrVgCgllgkv3qJFv24jPU89FED508O4v923I
+sh/95oHEe1SIsylpxWabv/qiV85mGyjzAwua1880+N4cTQb4+qpfPOJ5sF4Y26uv
+HePGs4rN7eQcf2EtrQTqIYkN3yjJwZ1FWSdmflPEgVh7jAEgy2/TPKwGV0hCvadt
+q9LG+Te7yykwpR31TYO4CecQNXSFJw==
+=FMQf
+-----END PGP SIGNATURE-----
 
-> Konrad
+--s26ZamLLlGnPk0Qb--
 
