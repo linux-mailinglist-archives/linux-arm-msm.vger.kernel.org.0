@@ -1,166 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-66344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50B8CB0FAB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 21:05:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0EB1B0FAC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 21:09:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CAFE540BB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 19:05:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 95DD6567AF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 19:09:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D35C1F12FB;
-	Wed, 23 Jul 2025 19:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99A0E22D795;
+	Wed, 23 Jul 2025 19:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l1hsHUTr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dY9FdImd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2722B2153F1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AA82222BF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753297508; cv=none; b=djl6A+iQpvEv2T57sYvCOPSVEiFbHNzzcq0d7Rf15BzzfjJaXDm+S2S4eMhUFIsPD7W5nxdjnR7aqOMvjyY1dZzMZLMYch+Cjx+tsNA+EW2SWC/rviZ2KjnAcWiG43qUckJ/EJpgpCW3bg/e25H49s2UAOPqKvDySIbXVZuHesw=
+	t=1753297738; cv=none; b=qC0nJuqpXI0zNocWyGKxI7BzMoK6Fktj6ncZxeyXBxAJRfSiQLb1xuHCsx4O4g+uajLGAbkZ8FGv0hiTV3FTLRmSZRTJlvbqeBtc8qgxJbij7u/v0IADWJhsYPiCy5Ql341/aYeu+Ax5TJerEyxdqhnhfB0vbwBQwgoFUpILZxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753297508; c=relaxed/simple;
-	bh=yuRgU9ho4OYuBDxZyBu1mHslN88EoGKlcfGO9z9njaQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FS9NEcB9/XG4P7VaaHVsD6rRSs6vgymLOur4SBpfqJy6YJYtn5DccUMeEA+e/rMZmSb/r2psrwTk7lyxqTtrWKNJ3HvY1HgM6H/ejH+qUZKyGV6eeQ1bKZG/gaXB9HGvYut0cy45rbz1BKNyLP88lIxNeawlbF9Zx3sb1AAGVbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l1hsHUTr; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1753297738; c=relaxed/simple;
+	bh=acgo5G7ZdqTzyYB04nooD5h9TSK7dGPPQPyvW67Wy/Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=itlDmIcaqYTo7V50IDwWj7tiaasOcii/iofY2I2JalJWgYZOlx+4OAaoFCC7xm/9h0xV3sLkzKAJvQjYuhTWRdot4/UZGNZ7DMFSqIPJlZYz5G3m0CrYlKdeFyJRfYW332fcX2KzmS3wz8c82zTflp0POPnOujdL0eN5ye/mfdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dY9FdImd; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NH6DMW015991
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:05:06 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NH0HhT001899
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:08:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=LlwxGzbxOFLE6tNUdLnrCDcI
-	n1YFSoVX4yc5JSgu4+8=; b=l1hsHUTrgTE7qd/eAxzIIAPPwarGjdXcx56NN52j
-	F+j9zlJ6VRNZp825RrlRrIUojTEpFyP6CU8DHN3zQj9uhORUL9BRsCaPaGL5OQwg
-	Zzat7JfrFHTsTWFHXhub+YhJWBF1s0tOXv6vkP9YIST3k/Aulb06J2NhkND3lg5k
-	1Ttuwtd1HB+WuEYWXcwjGJSxatj+yu7GnHQfeaPBGwGApIttVhUPQ/hElc+DnSL0
-	sktYR5LPlavblOMiiRdz4Xvkq5+mkNq229iK8Ux4j1Qgeow4CKqGcy3yo0IBDvc7
-	Lbjo9VLg3MAVDp2AgV/+NRwpvbybNozyDgyLdZ6KFSVjoQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048vcmy3-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=mASOgsCi7NBq5T98FPC/x55U6eCvkphaYtG
+	YjqMVya8=; b=dY9FdImdDR9/7eLvB5z/muueEDREJzyboWBxSOLntKGdkenKupL
+	19gbBWE4IN96sEDEKmNnsOorRLY3yOZ+ScfhLcoIaJknbgmpeM6GhRtjl47DnT21
+	0Pf8v6kEfnLz2upXp/AV9L84pvK+0z7fIakSAwmSpI4RrPdV7s/0xIpP3BIvNmdD
+	bCGYaMDGJR+9X/p5PTONCcTrvic+qz0zipnngxozjzjntjyH/YAjujokB6OtqjNy
+	8fiea5orKNWNkTp3mnlaJYDJBkiCe+Ev/Bzfuf0OLl4CeL0YkimmGhv88mHszUYQ
+	aR7BOf9iBfUkoKvEd34q6MAiC+oZUcgcQ5g==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w7f2h-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:05:06 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5e2872e57so28800685a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:05:06 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 19:08:56 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2382607509fso865555ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 12:08:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753297505; x=1753902305;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LlwxGzbxOFLE6tNUdLnrCDcIn1YFSoVX4yc5JSgu4+8=;
-        b=f6T9+W/cohyqumW6eIomINWYSSjVuwZ86AHHLmYV41+iao+IDvOGQj3XyiFlANWMTF
-         42+lAyR00WKC0Ij9TSuTM4ZmR1WPeMEnrfnlPbRNzMgy7TM/bsV1xx+xArsi8BSPJ3LF
-         8rpOZo5fqvdu6IPu5+D5rI0ek/3WOtyTDRQEZXPNQsWmJTnCw5EDlImPPsse6Hi0uGC+
-         +7nG9MFDK3SUnsZS2eVQZ1d/QbFPUhNcEoeFbr7RkiTyB1Mbjci55iNCGK+U+0nAego2
-         culG+pc77aClbqznAiMH/CQn9qwzZV7nWU/dTuDWKisqfzWvkgdJmUVCxxojR4+f30Oy
-         KSTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU5E5xIsY8nEJnvElGpqxcJWq5AFqY0vKQlCnndwD/NBpG4BgibkkWrcHAxK3ANjTM6vE4U3wJlb0gU6/NM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGngJg6leA7hbFqkk6yhKDjhGNQubeXaQzPUuOKpOK4LO0wTWL
-	CrgHrmbyOAIbhVD539uJRlkO3i3N7YWkS1UHlX+SwWxM76XdpXAxlrpjzbsI4T5t0q44sMg+rZT
-	TBh9qvwMu3R+NG6SgdgkbZRMw11fGEbAek6O2lH1KtRjI/+0VZeGP8mT3OyAOXfs9x6MO
-X-Gm-Gg: ASbGncs6I/3bS20Yer6+KhwGBUeYPbPhX3wt4NJxUs8HFnh60ZLrSvrr/Gw3AuY8pIZ
-	DmuL2p9ivTRbfFOb12dc5X5CrYgXkQB5q1oLrIX1rXNO3n3KTMq3WEoaGiuZ4BpicfuGo0Jxk+L
-	EOXIm+wd8teQkvkXQBJVvAGvQhrk4GtD91kl7hVYwrAvx1vGUC6Lh9geecuGUlNVenoqp2iMM/M
-	oQNMkmW2dwgehWUrKYwCF2axdPRFEwatAxhOI049MOCsP86XNLwa+eaCHfFp6Gd82//FYyhNlUM
-	t8sc03/904J8Vmt574hCuNlbIsuRkkilXrabwgC/byFxcClT4PH127Qnm3qy0Huil8Lo0IQPO1a
-	zKZMMuWpI4wKeqqvgcY8hB2Q2DEca2mUnaNPY6VDVNiw9VBKsLgpw
-X-Received: by 2002:a05:620a:a201:b0:7d3:f883:6047 with SMTP id af79cd13be357-7e62a19e6bdmr438161685a.51.1753297504550;
-        Wed, 23 Jul 2025 12:05:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVikEHzskkn5r6WHCg2DXMAwpPQxlleG1dXDP5Na0HIBh6BhiLe+Oy1cOXXzmZ/m6sol52RQ==
-X-Received: by 2002:a05:620a:a201:b0:7d3:f883:6047 with SMTP id af79cd13be357-7e62a19e6bdmr438155485a.51.1753297503926;
-        Wed, 23 Jul 2025 12:05:03 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55a4e0338casm527398e87.190.2025.07.23.12.05.01
+        d=1e100.net; s=20230601; t=1753297735; x=1753902535;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mASOgsCi7NBq5T98FPC/x55U6eCvkphaYtGYjqMVya8=;
+        b=Pjhr2XXS2Mxs83RSmdepSakela0t1hsqgCD3pnJq8mbBMosyLE1y5TpY/VuKJ3nQA2
+         YbdLpY5YukiY0RjlBHh+46qs28sDAOxyd39NzSG98ijwEIzWgrFsJSivQozLfeAHsxpo
+         +FRw8PnWpKdMnuyVIk5IONhcFjVqyXt4JSHFeagCRzugdtu1VJxajjrPYEDUkQciXXzP
+         pMw4TA1p1nifzosH97XUybaL4kGbbtJz6FySdOODUmT9crdcgZno2hwqXD8QcCGd3E0t
+         GZIx9f8BuS3XDeNr+vCNXvuN6UQbkq+TqkN4gDaNW3MovbEIxEgreDyS1OCa8E3hXGmc
+         xqjg==
+X-Gm-Message-State: AOJu0YxJEml191qqwLq2M1sdZD9kwk1MVMk9z++OgpjwL0Y6uvAfaDKa
+	W59OOqwQWhE7gWXDhskQRRFIbAColGXHlvvU3Rrxfy6s7MqmasY6aqMuMn1nmzYFXTfJ99B0kSk
+	wEXOVbecPP93mnU3t5s6AeTo2DI3oLnrfscaamHhXTdQNDfsZcDJ5tRH7a2Ju5XJMLiZ/
+X-Gm-Gg: ASbGncvKkeOjh2geoaqpbLv6QfX6apEAlUq4l1TB8eaOZA6nWvg27rtG0XcIs0jPRvT
+	aiLF6ZGMsV3b1yGDSLZOv/M7029JAYYazP73A73SpLrncRLwLtqax5kTgNzHZ9oX9JEwryPir5a
+	CKzsT3GBcFM26qnPFfDL5MM5betj+NI+jHlZoZKQaI4ZSphz1owaqmR7d4mOOdQASf1UHIcIXvx
+	MMkDAAOUzaG7XOe3UHBoS4l+VWYrmdi81ngo/F4v+TtERmB2ZQ24bHI826VAx/vlgK6RRxUNkf5
+	eLxgJk0JYW9rIU8BIpVp/AHz3/o8vcW/gruYHIQY0pjstmMeGOU=
+X-Received: by 2002:a17:903:1109:b0:235:c973:ba20 with SMTP id d9443c01a7336-23f9820283dmr69182865ad.49.1753297735510;
+        Wed, 23 Jul 2025 12:08:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhVi/6gfyiJ69GTvshRkz/NQIrNp1El4Pbp2UDbBc4h/tVujCiVC1TqjgOnUvKlvGS+Ua0kA==
+X-Received: by 2002:a17:903:1109:b0:235:c973:ba20 with SMTP id d9443c01a7336-23f9820283dmr69182405ad.49.1753297735019;
+        Wed, 23 Jul 2025 12:08:55 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6ef9aesm101308975ad.211.2025.07.23.12.08.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 12:05:03 -0700 (PDT)
-Date: Wed, 23 Jul 2025 22:05:00 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Chenyuan Yang <chenyuan0y@gmail.com>
-Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-        jessica.zhang@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
-        tglx@linutronix.de, krzysztof.kozlowski@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Add a null ptr check for
- dpu_encoder_needs_modeset
-Message-ID: <ciawdvjevycjjuowmykfux2v25lvr66kzey4jklq7t5cjzqalj@qfcva77k2bvr>
-References: <20250722211740.3697191-1-chenyuan0y@gmail.com>
+        Wed, 23 Jul 2025 12:08:54 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        linux-kernel@vger.kernel.org (open list),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
+Subject: [PATCH 0/2] drm/msm: Error path fixes
+Date: Wed, 23 Jul 2025 12:08:48 -0700
+Message-ID: <20250723190852.18394-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250722211740.3697191-1-chenyuan0y@gmail.com>
-X-Proofpoint-GUID: vP43AoPQDsVTOKtQ2Xcifb_fcu8Pluko
-X-Authority-Analysis: v=2.4 cv=SYL3duRu c=1 sm=1 tr=0 ts=68813262 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=pGLkceISAAAA:8 a=_XfERVBWgaszTNbD_PYA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE2MSBTYWx0ZWRfX2bSjw5R/k+8Y
- zZ9/LfH2yCM0Xn5fxnP06siAORUdPPMZF7bFkBL/wITKikqiCXwLE9JU8vV56BTKUZzyh4u64gM
- k6tbsUPOuv5ZRCWQxOx3DYjH2WL0EKbPX4BgH8nXbxwtOWUb5fVD8D1C14irPhLRXdMPySathsT
- kNoxrwqntZkSl0xY5hIOAjT0RgtqNnPsgYPdiHkQDWiwTQiva6FWxHW+xFoCXDMUEc3l9GdR1XB
- CB6FeVtySnkcMjy0thLVT2xzN1POQvIF2NKi8uqfJyjIPF/0S5Fo/z4mF3PIpVHw8MlKQyqcDYc
- nBjLIF7Omz4hTE6wfGkfIY2MM9HEJSQDq1I5gghWprCpga7mQBKdzt5VKiBdsArNn0piTNHUdg7
- s++9x2qaB6irf8bHybA/j+Ykb5FluPes9NZYwOS8LD9BkG7g+76VLD6EQio2PF1kDOOFyeAu
-X-Proofpoint-ORIG-GUID: vP43AoPQDsVTOKtQ2Xcifb_fcu8Pluko
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=68813348 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10
+ a=eljiBBwz-SQjAQrFlygA:9 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE2MiBTYWx0ZWRfX6XjYck4hxs7r
+ TB59KIgE/KpuZ2mQ4bcBlFUuwLMXq20UChIZZC3bIlEcPXFDTMSwqPtCJQAOWjRVWSDTANO1Po6
+ qzmuoLoV3yuLLNneGvGKqZ0/Xum1ol7gzYyu5XVAC82T1MwDwE1zs4Q2UosfLcDD6rs3IJSO1tW
+ Jaco6O+ZnuAzgijXIqlLLWcrly9PAlKGlE7ItnQW2vCbZwwf6izSMudftHKYSfCUehE31qqyQqN
+ J0C58VKK2z3lBsGgGXdAuleFpjqOUxj+8TYOvZ1YO3Pn4maXyleHk9Bym2fd4EZ4yvOQtSCXg63
+ 2vt85lxdNLT22lGPRTlY/jWkU0zYgKvK4GIAxaozXoWY3LWYsoECZj4DbGSaxDyHaPJIrPDFvF/
+ SlhQbYTqSQCDCyYXmMdO67Ze0YChh2W+yqh9OVH1Y5+hM73/UJFtloiaAvkqYzXT0KwYGNSo
+X-Proofpoint-ORIG-GUID: BxlB0A5dfRKDX95bCxrw23Y113AFEaue
+X-Proofpoint-GUID: BxlB0A5dfRKDX95bCxrw23Y113AFEaue
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
+ spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=988 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507230161
+ engine=8.19.0-2505280000 definitions=main-2507230162
 
-On Tue, Jul 22, 2025 at 04:17:40PM -0500, Chenyuan Yang wrote:
-> The drm_atomic_get_new_connector_state() can return NULL if the
-> connector is not part of the atomic state. Add a check to prevent
-> a NULL pointer dereference.
-> 
-> This follows the same pattern used in dpu_encoder_update_topology()
-> within the same file, which checks for NULL before using conn_state.
-> 
-> Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-> Fixes: 1ce69c265a53 ("drm/msm/dpu: move resource allocation to CRTC")
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index c0ed110a7d30..4bddb9504796 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -729,6 +729,8 @@ bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_st
->  		return false;
->  
->  	conn_state = drm_atomic_get_new_connector_state(state, connector);
-> +	if (!conn_state)
-> +		return false;
+For reasons unknown to me, systemd-udev recently started limiting
+max-files to 64k (at least in f42), which exposed some problematic
+allocation related error paths.
 
-Did this happen in a real case or is it just
-yet-another-static-analysys?
+Rob Clark (2):
+  drm/msm: Fix refcnt underflow in error path
+  drm/msm: Fix submit error path cleanup
 
->  
->  	/**
->  	 * These checks are duplicated from dpu_encoder_update_topology() since
-> -- 
-> 2.34.1
-> 
+ drivers/gpu/drm/msm/msm_gem.c        | 4 +++-
+ drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.50.1
+
 
