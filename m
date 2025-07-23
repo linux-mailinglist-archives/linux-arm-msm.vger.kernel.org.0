@@ -1,341 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-66236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25B61B0F025
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:43:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B775FB0F034
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:47:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE1601896B56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:43:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A58FB3B0CDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:46:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B0EE2580F9;
-	Wed, 23 Jul 2025 10:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B255B285CB8;
+	Wed, 23 Jul 2025 10:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BmO4y5zY"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vR582phs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8161424E4BD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 10:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F4D24BC09
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 10:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753267374; cv=none; b=f7G3Cd3Os+l3ixHONdRHMuaFVxSutnnrRvt+KbvV+87KqfwsO0+QtnAXcu3gPsYBBHrWxk3aT6Wr0iQV41na40qPglLNJgkH9UT0IFoqLJ8TCp//KcKeBhKsIwfo7mOg+Cmv4X02nUqoyoSh73YzlQPJLJPDyzd0FL7Hu+Hav+Q=
+	t=1753267638; cv=none; b=GdwsVAX5iNFnxYFtgJHzVYUyoFwdiOPoYknkJRWarogFnI0c40zQwDt3ofTlcvayFl77BCSs34VO9hrU3gt/ioY0CkKigdBvhcRYOVftafxYYNEclx2kDGfn0Mv4ig6qp2T8PKo8Jo6iydrnH6MSFdONv/rgz8jpw3pNPI4Urtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753267374; c=relaxed/simple;
-	bh=JKpDpZiMse2D5M9fAuVjCtrhFa064H3YLe7cVnhhXMY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=poYBWhtlFuiwqX33VEqUdMh23YLaxbj+E+ic9n7OlDcVRoimo7rDwoHyyaxwWo0NGWk5rewPYHtYjkiJ+wGw3Rtu48CdxoNUBOGikyd2yizzsr3Ib0jre774dw4Ot04FykbxIoGT48baPcNdnF1gEKrra72um6LQ8vkYQTC+rNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BmO4y5zY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N94uWg012515
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 10:42:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lShYL7ZMyd/pc+FPnDTj+pUS2q913Y4tFXrMgYdQFi4=; b=BmO4y5zYqfWqfcYx
-	30wMwurjal9olbK0JKUFnevj4eCMDXj25h9R2gJIqu78AM1qOQk0bR0/Ewov1OuN
-	pN9ukuc+GLUZCDyhKyZ8M+LvLBIA7uGK3BLUryhrAeUyNjsSbTJE2NR7OIebW/an
-	Io4TF0xwfsOo25jHTgo/urTfUDK49uXZiK2M/KGMzwXLYOAwj+SL1G9XVNydpgxq
-	9AgwNV90V79z+EZg7ozTkLEcLiQT5eXhrNWcFez4oE0h2w/uk6XNuMlTNP/UXCul
-	EfYuVGkZdxdNdIrBpJf+0rpoV06ksL1ByTu5BRDsTsqT4MEwb7PIDaPOTlo3t4U6
-	uWJRgA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4804na389e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 10:42:51 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-478f78ff9beso165747461cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 03:42:51 -0700 (PDT)
+	s=arc-20240116; t=1753267638; c=relaxed/simple;
+	bh=HWvZky1qMx/mo2bgy4sdkXFjDXSB0hJpLlSaYWm8CpY=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=awFhMIs1yS8UNwk9GGoKhf94QX615k6etrZz+mRLr8YxM/OndELxwQC24bUT9ZipnuFLSI1qd8wlojpCYKwM9WSOxZYX/udbmWmUpnJ0fuUOcbhT6yt5Q5PXnYTAD+Tric9HZEZXtuE24UoExD4cz3wAOQ/H+BmBFLuaA7ITBbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vR582phs; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-4561dfd07bcso38739905e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 03:47:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753267635; x=1753872435; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=57m6jReu/89PVW3YULNXA1rx8Q7Z0K2J7QywXGEHimQ=;
+        b=vR582phs7a2VeWjFETUFtT1yC6PWlBQgWk48VC0hcUov/P54vYUf9r1zMbmU1JdMi4
+         Ddp1e3VTNFdRTJasqo+9M5wr2nZymKc0K1yafz3q4dMpSYoN0E0uA43pLg4CkMwO8J2B
+         63fBY66IWCjLNsilkgdHX6SZm4PT/v3t+wckWhEsJIzOX4MknX07+8XGZQKy9Icvla80
+         uLvOPquo9YaWUzjH4p7vQ0tpuxS7/w+UiwI2cEfEcKQkIiZuOkZNHKDw9n8TcJzM/dI+
+         TcUNT1W3iyKklS5HK1i1YA2bdsIu7UFnGmN+KFCQVtG462586jAqskxHbMgGII2eN+Zl
+         a3uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753267370; x=1753872170;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lShYL7ZMyd/pc+FPnDTj+pUS2q913Y4tFXrMgYdQFi4=;
-        b=V4N5gYbeshYXMVurts1l9uNrfHO40MxYpk3XL5KlcLL7AqmPh43WCBNK/B9wHQeVf4
-         UnwnaQPGWfADKpqr9onTHIKlPgT2QoegKaDVb6DwCof5Pfd9b9KT4wNMZwbJA3E/6djS
-         FRngTppvjkdKzBUSRqZsAhkwlfY0kORh4Sql3Yx1rpY01eQB8gofLhZLG6Q9KZ+EWeVe
-         fP/ODXkGwZUuvNJ0xnaiDfKBIXld5Gfd2+eykpmWbw+17VIamOXQe+/E6NEsLptB8qX3
-         aAEWuU4RJ0HNYq6Xl9sIQxTLS5G6k6O6bzzMcC4o8UU6pfHy33WDZcFzVBwOxPEdBobZ
-         Gc2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXGWzPKwV5bYTAsY3uuq4NFOLXDxmIooWnm7TDAynAjXjfZYjheaBBDbMHV/3Wsasidt0/k3AAiN365k/rs@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMDYF2XcH8lqbk33T34WOurdvPHn9VFp4eogpY4P/4S4CtRjp+
-	JEOaw7mtPk9h/GWMTYr5g3NIUy6AxgniKVUyK+tEZN+f46Mqz/MbqONK2Oc3WTlIcr0IClbdnuP
-	dSl65/Al5ikofQT0wvgQm+zvZJv/GS+RESb6lR3w809xNfFIwrWUIt8NNPk/nqdHSN6AUk8VPWA
-	qXbex68I90/j4H6FiAwYY+OUPioUcxwZefBE7SII6dUNk=
-X-Gm-Gg: ASbGncs7BSYHmU4yzGSrb19GMMQ8smoXYcc0px0jpS91ELSze7J9b4svVrp1qw1qZ49
-	zeaiwVfZO6FhwYhIQDXGZglzTZWavk6MxUtbZX3UV3F/GztuvslTZbJURYnA0R2oA3C2qeKXCGy
-	BE0igEkX0kdwnMQqom3wzDvA==
-X-Received: by 2002:ac8:59c9:0:b0:4ab:76d2:1982 with SMTP id d75a77b69052e-4ae6de5f491mr31453031cf.2.1753267369766;
-        Wed, 23 Jul 2025 03:42:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCWcR+zHzMZYaCkssZyjftuwIjbu7hjNB9Q91wbaotDw8ZV2l/gUSxM/5/yVifA/Vhu/UGwHBAadMVZfP3QKo=
-X-Received: by 2002:ac8:59c9:0:b0:4ab:76d2:1982 with SMTP id
- d75a77b69052e-4ae6de5f491mr31452661cf.2.1753267369182; Wed, 23 Jul 2025
- 03:42:49 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753267635; x=1753872435;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=57m6jReu/89PVW3YULNXA1rx8Q7Z0K2J7QywXGEHimQ=;
+        b=O07IvzMz/gP8L3S/jthKdTACZZRw5kg2W8e1xeNnPSPN/FCYn+YvJI5fWoIo9JyNff
+         Ime/5W3KUR63Qel6OYWaIK8jOH3Pahhp+8wmvClh6NgQ+UZvxG8/AxuBHBfvjXfkcm5q
+         QIWaEKO0MoCUAiOWSVHDyvox0ZnznhQ9xM2MHCMhdpq+yqxex11jlncszRFavgB3+hLA
+         N/gUCJ1uUWvc9Q9JpVlJ0N9eBD+QRlABpJTS4hRDfbZKooKd3QMJGsamim9hGrqrjvHq
+         ATGlZHwWDmtEhM7IlJUa7o+DaBZTL5SYEzLzL+Dfatz+kPhav9kSvNwIvmI6wuuLSCT5
+         5xfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUXjUAcKyzXVBWvFxYRtkTHIj4sIYcFYddsyhG6TtWquTLzLawIJA2EerVOpc4T4pGYmBW8BHvV2Z+zL6mS@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDHDY5VqPPE/yxAFRF4cAptuHVd9ZGxlErxdsUuwxIPzVuLmAb
+	OSaFs1C5l0775w4Kk3/fZXfJZjjJO0GkYmsfQi4unyHhaWGDcHbUbP5nD1DBPaCJA/8i1Qt+ReN
+	sXw==
+X-Google-Smtp-Source: AGHT+IG8guHep8zGOe2nsK6QLt0Shc7PDC8FbYnWdhDsCUpgn83x1Mq6gF7ZIdM6iSjg+GCiMUXCi3Qg1A==
+X-Received: from wmbeq10.prod.google.com ([2002:a05:600c:848a:b0:456:257a:e323])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:3585:b0:456:8eb:a35c
+ with SMTP id 5b1f17b1804b1-45868d6b6d3mr19171885e9.31.1753267635103; Wed, 23
+ Jul 2025 03:47:15 -0700 (PDT)
+Date: Wed, 23 Jul 2025 11:46:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <Zgp0ym-MGzX2eSZdlkVYbgvjkJ0CzKItjaC5pafzQnj1AOZnVAqvCIZfYoK7nwDhUgOA0U8eNolNtaWXbExOAQ==@protonmail.internalid>
- <DAWJQ2NIKY28.1XOG35E4A682G@linaro.org> <5df11ee4-d645-4be2-841f-715343f1b7a4@linaro.org>
- <CAFEp6-0zwy2JdFOvRQ5ghMwD-J6b7F5YcVKNf-5R=8XdEpGDSw@mail.gmail.com>
-In-Reply-To: <CAFEp6-0zwy2JdFOvRQ5ghMwD-J6b7F5YcVKNf-5R=8XdEpGDSw@mail.gmail.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Wed, 23 Jul 2025 12:42:37 +0200
-X-Gm-Features: Ac12FXxdFEfoRoEup7njhCc4_7HGosXKamXGoITcHok5gWf4sO9R5vimfHVCyZY
-Message-ID: <CAFEp6-1wO9xwisOAtv6D__nb3Uo=8_f9rHifi-JAQ0oPD+JSVg@mail.gmail.com>
-Subject: Re: [question, bug] regularly disconnecting wifi on RB1 and RB2
- boards, ath10
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: jjohnson@kernel.org, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        jeff.johnson@oss.qualcomm.com, linux-arm-msm@vger.kernel.org
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.1.470.g6ba607880d-goog
+Message-ID: <20250723104714.1674617-1-tabba@google.com>
+Subject: [PATCH v16 00/22] KVM: Enable host userspace mapping for
+ guest_memfd-backed memory for non-CoCo VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com, tabba@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: 7DvCNKj7qR8w_SYJVi9ZhYzUP_gPBshP
-X-Proofpoint-ORIG-GUID: 7DvCNKj7qR8w_SYJVi9ZhYzUP_gPBshP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA5MSBTYWx0ZWRfXwyjNqd2U7BPM
- OzTaBVZIxfcc2P2mTMh/WHLBJRao6bZoJecyUHvOXysoT1LVUQUe1aajdVz92WLQpiDkgRBE5Po
- DsLoEPy8DjH7Gj2uqY9p5eXZStVyxQUdl3iD2IXFMLk5m92mizA7Y3133gC9rUsKsdzDDB0WZSW
- d6XmXDdn1t/QQRUwSE3CwVuLEM8PUlTqH72g2s1MFUAy+pY9R3P75ZJwTEt2fimQrMeB40kKdaB
- CRaWYq4Otva1G/4rm2ckSBrnwJ//l70dzGKpEQSbf+yEtTPkssXGfjHNjRdS33RX6pG2PYLQlnE
- OefB2tptMIWAt3PEgHzQZ/sp4rGJK3gxkfMRCM6n2VFSTE44X0+PxYJmSk04SGdZj7sumW2j0OU
- 531rxkBBcuV/YVMsUc7SHeTtTeAg3+HkdgaGYTRKJwe1lXPMZcFSoSOVffQIIAOVKRlpCZ/U
-X-Authority-Analysis: v=2.4 cv=DoFW+H/+ c=1 sm=1 tr=0 ts=6880bcab cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=mUlqW7PtAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=kilpmZN9Kjp5B5WS9hoA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=scG1X_LE5o0Lo5M-1hNW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507230091
 
-Hi Alexey,
+Main changes since v15 [1]:
 
-On Tue, Jul 22, 2025 at 5:53=E2=80=AFPM Loic Poulain
-<loic.poulain@oss.qualcomm.com> wrote:
->
-> On Fri, Jun 27, 2025 at 1:09=E2=80=AFAM Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
-> >
-> > On 26/06/2025 15:48, Alexey Klimov wrote:
-> > > Hi all,
-> > >
-> > > After a long time of testing it seems the problem narrows down to qrb=
-2210 rb1
-> > > and qrb4210 rb2 boards.
-> > >
-> > > After booting, the board connects to the wifi network and after aroun=
-d ~5-10
-> > > minutes it loses the connection (nothing in dmesg). A simple ping of =
-another
-> > > machine on the local network doesn't work. After, I guess, around 500=
-0
-> > > seconds the GROUP_KEY_HANDSHAKE_TIMEOUT message is printked:
-> > >
-> > > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason:=
- 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
-> > > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addr=
-ess=3D82:95:77:b1:05:a5)
-> > > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
-> > > [ 5067.100192] wlan0: authenticated
-> > > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
-> > > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x=
-11 status=3D0 aid=3D2)
-> > > [ 5067.193624] wlan0: associated
-> > >
-> > > and after that wireless connection works for ~5-10 minutes and then t=
-he cycle
-> > > repeats. The longer log with more info and some info with firmware ve=
-rsions,
-> > > ids, etc is at the end of this email [1]. Simple wlan0 down and wlan0=
- up fixes
-> > > things for a few minutes.
-> > >
-> > > iw wlan0 link reports the following when wireless network is working:
-> > >
-> > > root@rb1:~# iw wlan0 link
-> > > Connected to 8c:58:72:d4:d1:8d (on wlan0)
-> > >          SSID: void
-> > >          freq: 5300
-> > >          RX: 45802 bytes (424 packets)
-> > >          TX: 71260 bytes (125 packets)
-> > >          signal: -66 dBm
-> > >          rx bitrate: 433.3 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 1
-> > >
-> > > bss flags:      short-slot-time
-> > > dtim period:    1
-> > > beacon int:     100
-> > >
-> > > and this when wireless connection doesn't work:
-> > >
-> > > Connected to 8c:58:72:d4:d1:8d (on wlan0)
-> > >          SSID: void
-> > >          freq: 5300
-> > >          RX: 850615 bytes (9623 packets)
-> > >          TX: 20372 bytes (247 packets)
-> > >          signal: -61 dBm
-> > >          rx bitrate: 6.0 MBit/s
-> > >
-> > >      bss flags:      short-slot-time
-> > >      dtim period:    1
-> > >      beacon int:     100
-> > >
-> > > This was tested with three different routers and different wifi netwo=
-rks.
-> > > Other devices here do not exhibit this behaviour.
-> > >
-> > > Any hints on how to debug this? Any debug switches I can toggle to de=
-bug this?
-> > > I am happy to provide more info or test changes/patches if any.
-> > >
-> > > Thanks in advance.
-> > > Best regards,
-> > > Alexey
-> > >
-> > > [1]:
-> > >
-> > > [    7.758934] ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_famil=
-y 0x4007 board_id 0xff soc_id 0x40670000
-> > > [    7.769740] ath10k_snoc c800000.wifi: qmi fw_version 0x337703a3 fw=
-_build_timestamp 2023-10-14 01:26 fw_build_id QC_IMAGE_VERSION_STRING=3DWLA=
-N.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
-> > > [   11.086123] ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000=
-008 chip_id 0x00000000 sub 0000:0000
-> > > [   11.095622] ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tr=
-acing 0 dfs 0 testmode 0
-> > > [   11.103998] ath10k_snoc c800000.wifi: firmware ver  api 5 features=
- wowlan,mgmt-tx-by-reference,non-bmi,single-chan-info-per-channel crc32 a79=
-c5b24
-> > > [   11.144810] ath10k_snoc c800000.wifi: htt-ver 3.128 wmi-op 4 htt-o=
-p 3 cal file max-sta 32 raw 0 hwcrypto 1
-> > > [   11.230894] ath10k_snoc c800000.wifi: invalid MAC address; choosin=
-g random
-> > > [   11.238128] ath: EEPROM regdomain: 0x0
-> > > [   11.242060] ath: EEPROM indicates default country code should be u=
-sed
-> > > [   11.248582] ath: doing EEPROM country->regdmn map search
-> > > [   11.253950] ath: country maps to regdmn code: 0x3a
-> > > [   11.258805] ath: Country alpha2 being used: US
-> > > [   11.263466] ath: Regpair used: 0x3a
-> > > [   15.355756] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addr=
-ess=3D82:95:77:b1:05:a5)
-> > > [   15.363942] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
-> > > [   15.372142] wlan0: authenticated
-> > > [   15.377928] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
-> > > [   15.386338] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x=
-11 status=3D0 aid=3D2)
-> > > [   15.466514] wlan0: associated
-> > > [   23.167251] systemd-journald[195]: Oldest entry in /var/log/journa=
-l/ec3e0078e5e0499bac67949f3edf3fcf/system.journal is older than the configu=
-red file retention duration (1month), suggesting rotation.
-> > > [   23.185186] systemd-journald[195]: /var/log/journal/ec3e0078e5e049=
-9bac67949f3edf3fcf/system.journal: Journal header limits reached or header =
-out-of-date, rotating.
-> > > [   31.750177] l5: disabling
-> > > [   31.753382] l11: disabling
-> > > [   31.756385] l16: disabling
-> > > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason:=
- 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
-> >
-> > So.
-> >
-> > I wonder what state the GTK - offload is in here.
-> >
-> >          WMI_GTK_OFFLOAD_CMDID =3D WMI_CMD_GRP(WMI_GRP_GTK_OFL),
-> >
-> > drivers/net/wireless/ath/ath10k/wmi-tlv.c:      cfg->gtk_offload_max_vd=
-ev =3D
-> > __cpu_to_le32(2);
-> >
-> > Try toggling that offload off or on and see what happens.
-> >
-> > > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addr=
-ess=3D82:95:77:b1:05:a5)
-> > > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
-> > > [ 5067.100192] wlan0: authenticated
-> > > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
-> > > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x=
-11 status=3D0 aid=3D2)
-> > > [ 5067.193624] wlan0: associated
-> > > [10437.346541] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason:=
- 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
-> > > [10440.340111] wlan0: authenticate with 8c:58:72:d4:d1:8d (local addr=
-ess=3D82:95:77:b1:05:a5)
-> > > [10440.348408] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
-> > > [10440.356698] wlan0: authenticated
-> > > [10440.361077] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
-> > > [10440.369516] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x=
-11 status=3D0 aid=3D2)
-> > > [10440.446661] wlan0: associated
-> > >
-> > You can put another device on your WiFi network into monitor mode and
-> > sniff what is taking place.
-> >
-> > Kali Linux I've used in the past on an RPI for this purpose and it was
-> > very easy todo.
-> >
-> > https://cyberlab.pacific.edu/resources/lab-network-wireless-sniffing
-> >
-> > Another thing to try is to do this same test on an open - unencrypted l=
-ink.
-> >
-> > If we really suspect firmware here, lets try switching off firmware
-> > offload features one-by-one, starting with GTK offload.
-> >
-> > ---
-> > bod
-> >
->
-> I configured the GTK rekey interval to one minute and encountered a
-> similar issue. It appears that something may be going wrong after the
-> GTK rekeying process completes.
->
-> The GTK update is handled entirely by wpa_supplicant (not offloaded),
-> and while the new key seems to be installed correctly, with frames
-> still being transmitted and received (from aircap perspective), they
-> appear to be dropped or mishandled in the RX firmware path.
->
-> This suggests there might be an issue with how the new keys are being
-> applied or interpreted by the firmware. I=E2=80=99ll continue debugging t=
-o
-> pinpoint the root cause.
->
-> Regards,
-> Loic
+* Rework and simplify Kconfig selection and dependencies.
+* Always enable guest_memfd for KVM x86 (64-bit) and arm64, which
+  simplifies the enablement checks.
+* Based on kvm-x86/next: commit 33f843444e28 ("Merge branch 'vmx'").
 
-Could you check if this change helps:
+This patch series enables host userspace mapping of guest_memfd-backed
+memory for non-CoCo VMs. This is required for several evolving KVM use
+cases:
 
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c
-b/drivers/net/wireless/ath/ath10k/mac.c
-index c61b95a928da..4fa7dd62aeac 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -288,8 +288,10 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
-                key->flags |=3D IEEE80211_KEY_FLAG_GENERATE_IV;
+* Allows VMMs like Firecracker to run guests entirely backed by
+  guest_memfd [2]. This provides a unified memory management model for
+  both confidential and non-confidential guests, simplifying VMM design.
 
-        if (cmd =3D=3D DISABLE_KEY) {
--               arg.key_cipher =3D ar->wmi_key_cipher[WMI_CIPHER_NONE];
--               arg.key_data =3D NULL;
-+               /*  Not all hardware supports key deletion operations. so w=
-e
-+                *  replace the key with a junk value to invalidate it.
-+                */
-+               memset(arg.key_data, 0, arg.key_len);
-        }
+* Enhanced Security via direct map removal: When combined with Patrick's
+  series for direct map removal [3], this provides additional hardening
+  against Spectre-like transient execution attacks by eliminating the
+  need for host kernel direct maps of guest memory.
 
-Regards,
-Loic
+* Lays the groundwork for *restricted* mmap() support for
+  guest_memfd-backed memory on CoCo platforms [4] that permit in-place
+  sharing of guest memory with the host.
+
+Patch breakdown:
+
+* Patches 1-9: Primarily infrastructure refactoring, Kconfig cleaning,
+  and renames to decouple guest_memfd from the concept of "private"
+  memory.
+
+* Patches 10-11: Add support for the host to map guest_memfd backed
+  memory for non-CoCo VMs, which includes support for mmap() and fault
+  handling. This is gated by a new configuration option, toggled by a
+  new flag, and advertised to userspace by a new capability (introduced
+  in patch 20).
+
+* Patches 12-15: Implement x86 guest_memfd mmap support.
+
+* Patches 16-19: Implement arm64 guest_memfd mmap support.
+
+* Patch 20: Introduce the new capability to advertise this support and
+  update the documentation.
+
+* Patches 21-22: Update and expand selftests for guest_memfd to include
+  mmap functionality and improve portability.
+
+To test this patch series and boot a guest utilizing the new features,
+please refer to the instructions in v8 of the series [5]. Note that
+kvmtool for Linux 6.16 (available at [6]) is required, as the
+KVM_CAP_GMEM_MMAP capability number has changed, additionally, drop the
+--sw_protected kvmtool parameter to test with the default VM type.
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/20250717162731.446579-1-tabba@google.com/
+[2] https://github.com/firecracker-microvm/firecracker/tree/feature/secret-hiding
+[3] https://lore.kernel.org/all/20250221160728.1584559-1-roypat@amazon.co.uk/
+[4] https://lore.kernel.org/all/20250328153133.3504118-1-tabba@google.com/
+[5] https://lore.kernel.org/all/20250430165655.605595-1-tabba@google.com/
+[6] https://android-kvm.googlesource.com/kvmtool/+/refs/heads/tabba/guestmem-basic-6.16
+
+Ackerley Tng (1):
+  KVM: x86/mmu: Rename .private_max_mapping_level() to
+    .gmem_max_mapping_level()
+
+Fuad Tabba (15):
+  KVM: Rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GUEST_MEMFD
+  KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+    CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE
+  KVM: Rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
+  KVM: Fix comments that refer to slots_lock
+  KVM: Fix comment that refers to kvm uapi header path
+  KVM: x86: Enable KVM_GUEST_MEMFD for all 64-bit builds
+  KVM: guest_memfd: Add plumbing to host to map guest_memfd pages
+  KVM: guest_memfd: Track guest_memfd mmap support in memslot
+  KVM: arm64: Refactor user_mem_abort()
+  KVM: arm64: Handle guest_memfd-backed guest page faults
+  KVM: arm64: nv: Handle VNCR_EL2-triggered faults backed by guest_memfd
+  KVM: arm64: Enable support for guest_memfd backed memory
+  KVM: Allow and advertise support for host mmap() on guest_memfd files
+  KVM: selftests: Do not use hardcoded page sizes in guest_memfd test
+  KVM: selftests: guest_memfd mmap() test when mmap is supported
+
+Sean Christopherson (6):
+  KVM: x86: Have all vendor neutral sub-configs depend on KVM_X86, not
+    just KVM
+  KVM: x86: Select KVM_GENERIC_PRIVATE_MEM directly from
+    KVM_SW_PROTECTED_VM
+  KVM: x86: Select TDX's KVM_GENERIC_xxx dependencies iff
+    CONFIG_KVM_INTEL_TDX=y
+  KVM: x86/mmu: Hoist guest_memfd max level/order helpers "up" in mmu.c
+  KVM: x86/mmu: Enforce guest_memfd's max order when recovering
+    hugepages
+  KVM: x86/mmu: Extend guest_memfd's max mapping level to shared
+    mappings
+
+ Documentation/virt/kvm/api.rst                |   9 +
+ arch/arm64/kvm/Kconfig                        |   1 +
+ arch/arm64/kvm/mmu.c                          | 203 ++++++++++++-----
+ arch/arm64/kvm/nested.c                       |  41 +++-
+ arch/x86/include/asm/kvm-x86-ops.h            |   2 +-
+ arch/x86/include/asm/kvm_host.h               |   6 +-
+ arch/x86/kvm/Kconfig                          |  26 ++-
+ arch/x86/kvm/mmu/mmu.c                        | 143 +++++++-----
+ arch/x86/kvm/mmu/mmu_internal.h               |   2 +-
+ arch/x86/kvm/mmu/tdp_mmu.c                    |   2 +-
+ arch/x86/kvm/svm/sev.c                        |   6 +-
+ arch/x86/kvm/svm/svm.c                        |   2 +-
+ arch/x86/kvm/svm/svm.h                        |   4 +-
+ arch/x86/kvm/vmx/main.c                       |   7 +-
+ arch/x86/kvm/vmx/tdx.c                        |   5 +-
+ arch/x86/kvm/vmx/x86_ops.h                    |   2 +-
+ arch/x86/kvm/x86.c                            |  11 +
+ include/linux/kvm_host.h                      |  38 ++--
+ include/uapi/linux/kvm.h                      |   2 +
+ tools/testing/selftests/kvm/Makefile.kvm      |   1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  | 205 +++++++++++++++---
+ virt/kvm/Kconfig                              |  15 +-
+ virt/kvm/Makefile.kvm                         |   2 +-
+ virt/kvm/guest_memfd.c                        |  81 ++++++-
+ virt/kvm/kvm_main.c                           |  12 +-
+ virt/kvm/kvm_mm.h                             |   4 +-
+ 26 files changed, 623 insertions(+), 209 deletions(-)
+
+
+base-commit: 33f843444e28920d6e624c6c24637b4bb5d3c8de
+-- 
+2.50.1.470.g6ba607880d-goog
+
 
