@@ -1,160 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-66201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79050B0ED37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:29:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0693B0ED3C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:31:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96CFD17A5DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:29:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3B9A3AAE3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:30:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 925F5279DB1;
-	Wed, 23 Jul 2025 08:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333F725A631;
+	Wed, 23 Jul 2025 08:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U+NEuPjY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bYn6ZMBY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6693727990E;
-	Wed, 23 Jul 2025 08:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044151E2834;
+	Wed, 23 Jul 2025 08:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753259366; cv=none; b=SdS2ZwoETugFfzWzcT9oAgH/gWLT/R9+/K7Nw7n/OP+KPyKvVLleD+pnb5MNPuBs3eIDCHfgfV0UoTzlETnyD+SPcmtnwTtOo4qwSroZXY3pWuznbyccys7bKW4egDmgFPUt6PJ4NItSq6EkBzPLVjI/Kyh5o6OzZQ1u6k2dP9c=
+	t=1753259482; cv=none; b=rb5OebLeDFhL42nveRS3RpvbfcJhoFEDAD1o+bsgvFLTUMQUtjKbNJcm6K6WsDWeG5iLR+LNK+81IZ+dkhGp8X7YfIN7srMWR0Aohrtr5j/Aapd7jQ8QQiWxcOWJiMXV32LDZDUdIGWjIQqnzu4jN5/+UHfB4P5APgdLcuty+Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753259366; c=relaxed/simple;
-	bh=yZzDzspz/hbs+ZI2bARhhg1NrwdEQ/R1WgItfyvWZ64=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o7zEwm2DahNZcAOvUe6kaVlZRnkh5yO0TweYlS0/qw65ekqi4gjHvH5S+xc50n9uyDxZM9vIS9KU+qjly7S/ZBdKD8wxA1gv0LpMyY0r39r4BEUmrEfcMU4XG4QRF55hC9erUomEAXBqkaIWWWfSNpXZJzX5RkFxM3fbA/nDJK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U+NEuPjY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4194C4CEE7;
-	Wed, 23 Jul 2025 08:29:25 +0000 (UTC)
+	s=arc-20240116; t=1753259482; c=relaxed/simple;
+	bh=Yv2j22Qo5jPgR1rVLrYGgJrexiV+ALN2HPlv6/TwoRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RW0vq+o9Zfros6Do7UObg/d/sCQaqvHBbmadJgPBMomMVYhhS6Ob33Eu4EefSI+AWMpvH6jqg82ik97LMx5RgUmSQIL7i1NzA6R+wRHN3/MPVI2/wrqN3xgP+vP6ERcGi4alg8QXhF+B6sL0O+32Yqml22WYGlrt9RmGBRTCRBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bYn6ZMBY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EAAC4CEE7;
+	Wed, 23 Jul 2025 08:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753259365;
-	bh=yZzDzspz/hbs+ZI2bARhhg1NrwdEQ/R1WgItfyvWZ64=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=U+NEuPjYVaMphb588UKQdnFGh8jYQIaGAFO5RSZHHS2uTzxjbffJ0wV4RvByDdefU
-	 /yAbktW7knDpaELNN+dmSB3mYqfeH46gUiJQvPoUWU1sRxnpQEcNRc5SovTJQpGxx0
-	 MX5wycFo6RF4QbJ6mD/LrV9SeGtSHRPRI/ZrUiIsxHcf3ofChhVSa5fb/YtRPuuVz4
-	 /NhVhbIKE79+8AeB5pLHK98D1jqVlLWG4xV/X3wBGY4Z2dgXyioYf3DdxMkfhIiKCh
-	 Tdm2s0Mn57hQU+44blC2fsrBL65MJMZlNp9/6m39D/5Bdr7xxK0cFMKlj06FkNGjb6
-	 IintvPIq5gWUg==
-Received: from 82-132-236-66.dab.02.net ([82.132.236.66] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1ueUqp-000bs6-Dx;
-	Wed, 23 Jul 2025 09:29:23 +0100
-Date: Wed, 23 Jul 2025 09:29:17 +0100
-Message-ID: <87ms8vtin6.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-mm@kvack.org,
-	kvmarm@lists.linux.dev,
-	pbonzini@redhat.com,
-	chenhuacai@kernel.org,
-	mpe@ellerman.id.au,
-	anup@brainfault.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	seanjc@google.com,
-	viro@zeniv.linux.org.uk,
-	brauner@kernel.org,
-	willy@infradead.org,
-	akpm@linux-foundation.org,
-	xiaoyao.li@intel.com,
-	yilun.xu@intel.com,
-	chao.p.peng@linux.intel.com,
-	jarkko@kernel.org,
-	amoorthy@google.com,
-	dmatlack@google.com,
-	isaku.yamahata@intel.com,
-	mic@digikod.net,
-	vbabka@suse.cz,
-	vannapurve@google.com,
-	ackerleytng@google.com,
-	mail@maciej.szmigiero.name,
-	david@redhat.com,
-	michael.roth@amd.com,
-	wei.w.wang@intel.com,
-	liam.merwick@oracle.com,
-	isaku.yamahata@gmail.com,
-	kirill.shutemov@linux.intel.com,
-	suzuki.poulose@arm.com,
-	steven.price@arm.com,
-	quic_eberman@quicinc.com,
-	quic_mnalajal@quicinc.com,
-	quic_tsoni@quicinc.com,
-	quic_svaddagi@quicinc.com,
-	quic_cvanscha@quicinc.com,
-	quic_pderrin@quicinc.com,
-	quic_pheragu@quicinc.com,
-	catalin.marinas@arm.com,
-	james.morse@arm.com,
-	yuzenghui@huawei.com,
-	oliver.upton@linux.dev,
-	will@kernel.org,
-	qperret@google.com,
-	keirf@google.com,
-	roypat@amazon.co.uk,
-	shuah@kernel.org,
-	hch@infradead.org,
-	jgg@nvidia.com,
-	rientjes@google.com,
-	jhubbard@nvidia.com,
-	fvdl@google.com,
-	hughd@google.com,
-	jthoughton@google.com,
-	peterx@redhat.com,
-	pankaj.gupta@amd.com,
-	ira.weiny@intel.com
-Subject: Re: [PATCH v15 17/21] KVM: arm64: nv: Handle VNCR_EL2-triggered faults backed by guest_memfd
-In-Reply-To: <20250717162731.446579-18-tabba@google.com>
-References: <20250717162731.446579-1-tabba@google.com>
-	<20250717162731.446579-18-tabba@google.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20201202; t=1753259481;
+	bh=Yv2j22Qo5jPgR1rVLrYGgJrexiV+ALN2HPlv6/TwoRo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bYn6ZMBYnETAyWdsGNd5VHMeDCzHx5hb/UT8nY0S5DdTR0NWuETC4odeUF0ZY+yP0
+	 SKFEbtsfxhbKndsI7zZqmISv3uqbmDPbqDNcu/d9Fwf+9kMQZCyCVXaZykixwRncuY
+	 mb/TQ6aM2AUPX4hNcIR2dlm4Z1pMCblZzxTBQuMED5aLdjLiTqX11Ahn4MG8oaaskz
+	 obkmecWufQEasLaB84FGIMaP+pc2ssl5BNGg93zOJGmBDJpGAQXoCrp3YBU0JMKiHp
+	 77jFeyklpiWQ/142OvytoE8AS//hRp15RAoRGNFbuEvI2fM77FbnyHK4A5zWV5jIu4
+	 raNBgBfYDxiJQ==
+Date: Wed, 23 Jul 2025 10:31:18 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@oss.qualcomm.com
+Subject: Re: [PATCH 5/7] arm64: dts: qcom: lemans: Rename boards and clean up
+ unsupported platforms
+Message-ID: <20250723-foamy-stallion-of-competence-e8d900@kuoka>
+References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
+ <20250722144926.995064-6-wasim.nazir@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 82.132.236.66
-X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
- in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250722144926.995064-6-wasim.nazir@oss.qualcomm.com>
 
-On Thu, 17 Jul 2025 17:27:27 +0100,
-Fuad Tabba <tabba@google.com> wrote:
+On Tue, Jul 22, 2025 at 08:19:24PM +0530, Wasim Nazir wrote:
+> Rename qcs9100 based ride-r3 board to lemans ride-r3 and use it for all
+> the IoT ride-r3 boards.
+> Rename sa8775p based ride/ride-r3 boards to lemans-auto ride/ride-r3,
+> to allow users to run with old automotive memory-map.
 > 
-> Handle faults for memslots backed by guest_memfd in arm64 nested
-> virtualization triggerred by VNCR_EL2.
+> Remove support for qcs9100-ride, as no platform currently uses it.
 > 
-> * Introduce is_gmem output parameter to kvm_translate_vncr(), indicating
->   whether the faulted memory slot is backed by guest_memfd.
-> 
-> * Dispatch faults backed by guest_memfd to kvm_gmem_get_pfn().
-> 
-> * Update kvm_handle_vncr_abort() to handle potential guest_memfd errors.
->   Some of the guest_memfd errors need to be handled by userspace,
->   instead of attempting to (implicitly) retry by returning to the guest.
-> 
-> Suggested-by: Marc Zyngier <maz@kernel.org>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile                    |  7 +++----
+>  .../{sa8775p-ride-r3.dts => lemans-auto-ride-r3.dts} |  6 +++---
+>  .../qcom/{sa8775p-ride.dts => lemans-auto-ride.dts}  |  6 +++---
+>  .../qcom/{sa8775p-pmics.dtsi => lemans-pmics.dtsi}   |  0
+>  .../qcom/{qcs9100-ride-r3.dts => lemans-ride-r3.dts} | 12 +++++++++---
 
-Reviewed-by: Marc Zyngier <maz@kernel.org>
+I cannot stress more how HUGE MESS you made over the time.
 
-	M.
+All the discussions one and two years ago about SA8775p mess.... and now
+you just call everything lemans.
 
--- 
-Jazz isn't dead. It just smells funny.
+Srsly, this is just irresponsibler. It's like random moves from
+Qualcomm. Whatever you decided, stay with it. Take ownership and
+responsibility, not change minds just because manager asked you to do
+something. Say no to the manager.
+
+NAK.
+
+Best regards,
+Krzysztof
+
 
