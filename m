@@ -1,89 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-66200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A573B0ED35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:29:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79050B0ED37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 10:29:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA5781C23136
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:29:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96CFD17A5DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD122A95C;
-	Wed, 23 Jul 2025 08:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 925F5279DB1;
+	Wed, 23 Jul 2025 08:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V3XTApcN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U+NEuPjY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EA227990C;
-	Wed, 23 Jul 2025 08:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6693727990E;
+	Wed, 23 Jul 2025 08:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753259354; cv=none; b=bSMva54aK14znflxh9/nEbj0V4iKUeW25asli9McIkceSBHcJ+cZcisHwtozbaWTFNwwD333E7M8uDWAGuaLX3Ov0B577B/m5GW2Xz6pSwMgQbJnSXeeMbcFjypU06njC65jft4ju/GNmqU3TIOHQISk/8rD9+5iLfF8M7oEqXc=
+	t=1753259366; cv=none; b=SdS2ZwoETugFfzWzcT9oAgH/gWLT/R9+/K7Nw7n/OP+KPyKvVLleD+pnb5MNPuBs3eIDCHfgfV0UoTzlETnyD+SPcmtnwTtOo4qwSroZXY3pWuznbyccys7bKW4egDmgFPUt6PJ4NItSq6EkBzPLVjI/Kyh5o6OzZQ1u6k2dP9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753259354; c=relaxed/simple;
-	bh=SJ8fc2NpnCO+no1eSN/RzEnPIgifibyaw8VNSVwphgY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PE9VGJ3Iyslzo5soG4hMoUvpG3N4iF0yROYzzbm0z5lUzI2QKwUU3oJfy6jjz7boZEAdhNtcvVl/Sj2o1hkA+ljlW5pRMlpChxv3a7t/tTWCsKsUxlAHMgrhIGCcPEq03YhPPqzxpeL0sI/ZTbgn2KPiV2ph4vNWOTucw9xBdks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V3XTApcN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFFAC4CEE7;
-	Wed, 23 Jul 2025 08:29:13 +0000 (UTC)
+	s=arc-20240116; t=1753259366; c=relaxed/simple;
+	bh=yZzDzspz/hbs+ZI2bARhhg1NrwdEQ/R1WgItfyvWZ64=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=o7zEwm2DahNZcAOvUe6kaVlZRnkh5yO0TweYlS0/qw65ekqi4gjHvH5S+xc50n9uyDxZM9vIS9KU+qjly7S/ZBdKD8wxA1gv0LpMyY0r39r4BEUmrEfcMU4XG4QRF55hC9erUomEAXBqkaIWWWfSNpXZJzX5RkFxM3fbA/nDJK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U+NEuPjY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4194C4CEE7;
+	Wed, 23 Jul 2025 08:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753259354;
-	bh=SJ8fc2NpnCO+no1eSN/RzEnPIgifibyaw8VNSVwphgY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V3XTApcNWd1pc3mPG8K5ztgs6uCHnGz1/oExjWITCGHivkYc0nk5s7d0YtkUSrGZC
-	 cQIbzh/vP89MG37vfY1FOUHkT5kcLyMWTT2+mjcJUmpCCEIfXrQHuk0HgIWVh5RD8i
-	 4oVcAPPOlrz2ANTg3qY0jAAlcvYrQYpQOwlE31mwXAGc80jfP54N528mjU5n1hpQNa
-	 2bdybs6fVpaIwkjii1nDaYd1W/42J7niU+rgk5omiNgktxnTNV+Yjy22SpaU9L4W2q
-	 PkkLjGfX3uKBw2L0wMHN1UOibsBNFLyfGoTVgtQg73IBQRMJ9iKKWHopvGVcVk0OQB
-	 CGPiKOyD+eucA==
-Date: Wed, 23 Jul 2025 10:29:11 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@oss.qualcomm.com
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: Rename sa8775p SoC to "lemans"
-Message-ID: <20250723-swinging-chirpy-hornet-eed2f2@kuoka>
-References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
- <20250722144926.995064-2-wasim.nazir@oss.qualcomm.com>
+	s=k20201202; t=1753259365;
+	bh=yZzDzspz/hbs+ZI2bARhhg1NrwdEQ/R1WgItfyvWZ64=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=U+NEuPjYVaMphb588UKQdnFGh8jYQIaGAFO5RSZHHS2uTzxjbffJ0wV4RvByDdefU
+	 /yAbktW7knDpaELNN+dmSB3mYqfeH46gUiJQvPoUWU1sRxnpQEcNRc5SovTJQpGxx0
+	 MX5wycFo6RF4QbJ6mD/LrV9SeGtSHRPRI/ZrUiIsxHcf3ofChhVSa5fb/YtRPuuVz4
+	 /NhVhbIKE79+8AeB5pLHK98D1jqVlLWG4xV/X3wBGY4Z2dgXyioYf3DdxMkfhIiKCh
+	 Tdm2s0Mn57hQU+44blC2fsrBL65MJMZlNp9/6m39D/5Bdr7xxK0cFMKlj06FkNGjb6
+	 IintvPIq5gWUg==
+Received: from 82-132-236-66.dab.02.net ([82.132.236.66] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1ueUqp-000bs6-Dx;
+	Wed, 23 Jul 2025 09:29:23 +0100
+Date: Wed, 23 Jul 2025 09:29:17 +0100
+Message-ID: <87ms8vtin6.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	pbonzini@redhat.com,
+	chenhuacai@kernel.org,
+	mpe@ellerman.id.au,
+	anup@brainfault.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	seanjc@google.com,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	willy@infradead.org,
+	akpm@linux-foundation.org,
+	xiaoyao.li@intel.com,
+	yilun.xu@intel.com,
+	chao.p.peng@linux.intel.com,
+	jarkko@kernel.org,
+	amoorthy@google.com,
+	dmatlack@google.com,
+	isaku.yamahata@intel.com,
+	mic@digikod.net,
+	vbabka@suse.cz,
+	vannapurve@google.com,
+	ackerleytng@google.com,
+	mail@maciej.szmigiero.name,
+	david@redhat.com,
+	michael.roth@amd.com,
+	wei.w.wang@intel.com,
+	liam.merwick@oracle.com,
+	isaku.yamahata@gmail.com,
+	kirill.shutemov@linux.intel.com,
+	suzuki.poulose@arm.com,
+	steven.price@arm.com,
+	quic_eberman@quicinc.com,
+	quic_mnalajal@quicinc.com,
+	quic_tsoni@quicinc.com,
+	quic_svaddagi@quicinc.com,
+	quic_cvanscha@quicinc.com,
+	quic_pderrin@quicinc.com,
+	quic_pheragu@quicinc.com,
+	catalin.marinas@arm.com,
+	james.morse@arm.com,
+	yuzenghui@huawei.com,
+	oliver.upton@linux.dev,
+	will@kernel.org,
+	qperret@google.com,
+	keirf@google.com,
+	roypat@amazon.co.uk,
+	shuah@kernel.org,
+	hch@infradead.org,
+	jgg@nvidia.com,
+	rientjes@google.com,
+	jhubbard@nvidia.com,
+	fvdl@google.com,
+	hughd@google.com,
+	jthoughton@google.com,
+	peterx@redhat.com,
+	pankaj.gupta@amd.com,
+	ira.weiny@intel.com
+Subject: Re: [PATCH v15 17/21] KVM: arm64: nv: Handle VNCR_EL2-triggered faults backed by guest_memfd
+In-Reply-To: <20250717162731.446579-18-tabba@google.com>
+References: <20250717162731.446579-1-tabba@google.com>
+	<20250717162731.446579-18-tabba@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250722144926.995064-2-wasim.nazir@oss.qualcomm.com>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 82.132.236.66
+X-SA-Exim-Rcpt-To: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderr
+ in@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Tue, Jul 22, 2025 at 08:19:20PM +0530, Wasim Nazir wrote:
-> SA8775P, QCS9100 and QCS9075 are all variants of the same die,
-> collectively referred to as lemans. Most notably, the last of them
-> has the SAIL (Safety Island) fused off, but remains identical
-> otherwise.
+On Thu, 17 Jul 2025 17:27:27 +0100,
+Fuad Tabba <tabba@google.com> wrote:
 > 
-> In an effort to streamline the codebase, rename the SoC DTSI, moving
-> away from less meaningful numerical model identifiers.
+> Handle faults for memslots backed by guest_memfd in arm64 nested
+> virtualization triggerred by VNCR_EL2.
 > 
-> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/{sa8775p.dtsi => lemans.dtsi} | 0
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi             | 2 +-
+> * Introduce is_gmem output parameter to kvm_translate_vncr(), indicating
+>   whether the faulted memory slot is backed by guest_memfd.
+> 
+> * Dispatch faults backed by guest_memfd to kvm_gmem_get_pfn().
+> 
+> * Update kvm_handle_vncr_abort() to handle potential guest_memfd errors.
+>   Some of the guest_memfd errors need to be handled by userspace,
+>   instead of attempting to (implicitly) retry by returning to the guest.
+> 
+> Suggested-by: Marc Zyngier <maz@kernel.org>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 
-No, stop with this rename.
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 
-There is no policy of renaming existing files. It's ridicilous. Just
-because you introduced a new naming model for NEW SOC, does not mean you
-now going to rename all boards which you already upstreamed.
+	M.
 
-Best regards,
-Krzysztof
-
+-- 
+Jazz isn't dead. It just smells funny.
 
