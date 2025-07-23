@@ -1,55 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-66189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC9B1B0EBE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:27:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 451ABB0EBF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:32:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96DFB1C838C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:27:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 328B91C84F82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:32:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A37F273D6A;
-	Wed, 23 Jul 2025 07:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7ED7277CB4;
+	Wed, 23 Jul 2025 07:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpFNvuK4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvSDty53"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCCF2737EB;
-	Wed, 23 Jul 2025 07:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB892777E0;
+	Wed, 23 Jul 2025 07:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753255641; cv=none; b=H05vgrBBjTLZljurW30bw2e9WdOAKU0seUzluAYPBMjJasVq9XJKCckCBvT36RP5qCDV/4Tz5N6SYgyf1ZaMgQZHQpIkaXa8lMtA+Cm3DZPbJ5UncsZt9wrHnS3gJhrkaiqDTtk31TGnfmJXQ3wTtoaaNKOAmhYqyzpwWzIF1/s=
+	t=1753255920; cv=none; b=X9DPbSoQ73Mtv/KxojVJwjVGK15C1MtvTiyej1JOPHB8Mz5mA/B/r6BGKqemfra/rs1R36vNhHFncGrgOAG6dayqqRgHcrXjq5Pjw7JvQzuXz905CH0Qdab7O90pzIpCJDD/7NUPTE1gYubqbENWE8tisAVHsZ2dK9StuPDAtCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753255641; c=relaxed/simple;
-	bh=bf9PaPOgFqxUTKwmAInneVFpDKX7U1g8t0Uc+GYu1J4=;
+	s=arc-20240116; t=1753255920; c=relaxed/simple;
+	bh=/QBxlH5zQrdTKHeyh1iGe7dLjZTdGC5Aeaobly9L2QU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jvDnEk6Mjwk0SLGBbAC1deBngmyWk0dK13VLiIRmenDOpGpLnou9fGH4F79pPTiMD8HkwludA7bC979/G3e8y45eDl8Z0tc/+OynzCLTEVKcuGCoZfz9WKBd4KAXUkn8Rs8wsrlE9HFJwwljyGZ89KWqmpEZl8I2QvFUw22Hkuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpFNvuK4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC38C4CEE7;
-	Wed, 23 Jul 2025 07:27:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMeDEaPS0N2e+Y6tZj6nGLVNXM9FDV5sd0++fc4MVtiZ2kCbdblyAyDpKxaIiYzIguQ7ft6cqfEPCeVBJf2gKaNWR7vbXnBwx632BsRrl0IRN9O/GarsWTOprpXthrwqT/PI1p4IULoNrg2EttQRIA/YilZnCDjUuy/5cEhpJn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvSDty53; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C844CC4CEFB;
+	Wed, 23 Jul 2025 07:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753255640;
-	bh=bf9PaPOgFqxUTKwmAInneVFpDKX7U1g8t0Uc+GYu1J4=;
+	s=k20201202; t=1753255918;
+	bh=/QBxlH5zQrdTKHeyh1iGe7dLjZTdGC5Aeaobly9L2QU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WpFNvuK4W+NWoO0APgZK0qaJgYMa1bmENI+725ngQ1ZO7xDvrjsl/XH5iB42a78+B
-	 XX64eGz5ahvmKit9daWehUGcQ7pql1G9jml0RCqf6SJIN+xYF9hKbbMBiS1PIhPcNJ
-	 NgqjV9NGxPPyxLd2VBTgcOI7H6kCq05eOp3CSHbf0NG44UNx5T8wtKN9R4BYH/T5nK
-	 xHfinbRCaxD9z6WKbxsU/lmtyF1UeA+MIhu1j9aoczze0KKAMVZRKPvL4HftRzY/3O
-	 A1PNVJAppIami1epkhtj79mPoG0JH/mihT0AaUKsF9pT0gHZb1gKh9Z99pJdbY08BW
-	 E3XaM5y0qy4Ug==
+	b=nvSDty53hPukhZjxVudDihFZMxMriSEyT4HyGfP2MoxKHuFW9YUCOTXBbIdAo87oD
+	 w8dBRgA/gkGnu6MUyvmStlhdQB2wmAwBVFq188hHHRtvQFg5AYEcNcKy0H6xGDgDbY
+	 f8VbuwXvIIKhdcUKa9rKAFYIccGUzt/CS2c1CDUhYtpKBzmaVLE5xycAmDDBBXTm+9
+	 NyOQacP57fboxfeXojJVdZUKbL8I9KwK+ohJl/0Tz3eAGrUbcOTipniK076iiNHcAU
+	 5AeLFubD7Rop0sHqdOf7kxhSYACixY5ijEk6Yizy18IgyPija/aWeQkBD38C05CLJb
+	 U1MVZ8SlH3AWw==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1ueTse-000000002Jb-1bvS;
-	Wed, 23 Jul 2025 09:27:12 +0200
-Date: Wed, 23 Jul 2025 09:27:12 +0200
+	id 1ueTx8-000000002OG-1g36;
+	Wed, 23 Jul 2025 09:31:50 +0200
+Date: Wed, 23 Jul 2025 09:31:50 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Rui Miguel Silva <rmfrfs@gmail.com>,
-	Christopher Obbard <christopher.obbard@linaro.org>,
+Cc: Christopher Obbard <christopher.obbard@linaro.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -66,15 +65,12 @@ Cc: Rui Miguel Silva <rmfrfs@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
 	Rui Miguel Silva <rui.silva@linaro.org>,
 	Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
- Lenovo T14s Gen6
-Message-ID: <aICO0CXxp4Vu331u@hovoldconsulting.com>
+Subject: Re: [PATCH v5 1/3] arm64: dts: qcom: x1e80100: add epd hpd pinctrl
+Message-ID: <aICP5pE6oXFIxHVk@hovoldconsulting.com>
 References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
- <aCw9pYehCdfXXeiR@hovoldconsulting.com>
- <aG-QyF12rGY55gcG@hovoldconsulting.com>
- <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
- <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
- <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
+ <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-1-ff33f4d0020f@linaro.org>
+ <Z_kB3jOH04-zFnym@hovoldconsulting.com>
+ <bc65cf3e-22ca-4383-bf7a-24a3d343eb26@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,27 +79,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
+In-Reply-To: <bc65cf3e-22ca-4383-bf7a-24a3d343eb26@linaro.org>
 
-On Wed, Jul 23, 2025 at 08:51:22AM +0200, Neil Armstrong wrote:
-> On 22/07/2025 15:48, Rui Miguel Silva wrote:
-> > On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
-> >> On 10/07/2025 12:07, Johan Hovold wrote:
-
-> >>> Neil, do you have the OLED version now?
-> >>
-> >> I'm not sure, how do I determine that ? Is there something specific in the type number ?
+On Wed, Jul 23, 2025 at 09:03:40AM +0200, Neil Armstrong wrote:
+> On 11/04/2025 13:49, Johan Hovold wrote:
+> > On Wed, Apr 02, 2025 at 03:36:32PM +0100, Christopher Obbard wrote:
+> >> Add edp_hpd_active pinctrl to the X1E80100 device tree.
 > > 
-> > Yes, yours is the OLED version, the exact models stated above.
+> > Please squash this one with the patch adding the user.
+> >   
+> >> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 5 +++++
+> >>   1 file changed, 5 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> >> index 46b79fce92c90d969e3de48bc88e27915d1592bb..5b1b80c445404fd02e9f6e5dab207610b03ff9c5 100644
+> >> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> >> @@ -6389,6 +6389,11 @@ data-pins {
+> >>   					bias-pull-up;
+> >>   				};
+> >>   			};
+> >> +
+> >> +			edp_hpd_active: edp-hpd-active-state {
+> > 
+> > Please keep the nodes sorted by name.
+> > 
+> >> +				pins = "gpio119";
+> >> +				function = "edp_hot";
+> > 
+> > There is no "edp_hot" function on x1e so I wonder how this has been
+> > tested.
+> > 
+> > As I mentioned in a comment to an earlier revision this pin has been
+> > configured by the firmware as "edp0_hot".
 > 
-> Ack thx, I'll test and re-spin this patchset then.
+> With edp_hot, screen stays black with UI comes up, with edp0_hot it works again.
 
-Thanks. Note that this depends on this series as well which also needs a
-minor update:
+Right.
 
-	https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
+> > Since there is also an "edp1_hot" pin, this needs to be reflected in the
+> > node name and label.
+> > 
+> > Pin configurations really do belong in board files, but unfortunately
+> > this was not followed for x1e. You should still include the bias
+> > configuration (somewhere).
+> 
+> Which bias ? do this pin config needs an additional bias config ?
 
-Can you respin that one as well?
+The boot firmware has disabled the bias, but we should not rely on the
+firmware to have configured the pin for us.
 
 Johan
 
