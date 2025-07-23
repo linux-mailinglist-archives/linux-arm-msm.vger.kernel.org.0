@@ -1,104 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-66367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AAAB0FC8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 00:12:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBDE3B0FC8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 00:13:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FD721C87259
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 22:13:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 86BEE7B2097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 22:11:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D6027055F;
-	Wed, 23 Jul 2025 22:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A446027146E;
+	Wed, 23 Jul 2025 22:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BKX9qAAC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WH2Qal3p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBBD1F1909
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:12:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280A71E7C08
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753308762; cv=none; b=Uv0TyuJH/iGdm/mvWIaBKNrsurH1fCSCrZFMou3Ek4KqJ3A3tmE0P6P0Wd/QcHO9zv2IUM+NPqfKWnw6Hz87DGKZhANm3XTKJK6TnvEi7BFrN/QUPen2r9gWX2YaRZFNX3tFUi3Sw3NRDVNVL8CKW2LL7wzJQKfZO+Q0j9HP9hM=
+	t=1753308784; cv=none; b=tsbsE9cJQ2cLVCFhYZY2XAcSF4/sOO5uuwHEsIbrFKXG8j1ILXmn6VBV//fKMVKRC/uJjqgWuVaSzp6tRUSZ28iRlB3TVI9mRe02JfnSaEtpL+O3xN+aa2b6SbnEUnNgeNExcl4czMY2z7tiIOoeu+8Sp1raJkB5QKrOehEdwwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753308762; c=relaxed/simple;
-	bh=Clo23ghhSm2S7QltgVOxt609m/8rT+3RDFaZP5pLYcg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u3ChFnceNcxmyhoQZgexxkOf+INiucRMtOkWwqlZghHYpMmNWCTxYAxGOP9C3vnDcoBtiXi7JGGGnafukIe8thOPvdk6XWFw/r7IHf7+du5EnlAiZ5QmngRB8N6oEOR+yz8UWRrlGZVVRNdnRSXwV/a+eY1I2whhb+w+9jWnMPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BKX9qAAC; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1753308784; c=relaxed/simple;
+	bh=kU5tnUZsyEuyHklDhh5yeQn+qDm5dvdkXwyv73f959s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gvW3TYh0CJ61+w2jPwOUGjsBy5pIbtBV5grEFN7hLSdVSWj4Br9GHSID4B5csfDznlGE4C6PKvftJVWYx4Jj72BsEjfvSv2+e6M34XVKnPoi4fY2NY+NHqC2R5n1brGKc2UIsuif1kzYDKOuG2IP+NjIuHvkoDgO8DJz3mN8l30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WH2Qal3p; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NHBlPO024657
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:12:39 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NH87th024377
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:13:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=Es8yYGkoaL9WsWMGWRUXzp1VH7ftdQ84HcS
-	owvwXJBw=; b=BKX9qAACOypq9Ag3a8Xu0cg0OGsi6d8peARGUYNgHeyAeVeMLC6
-	/d5xKbC77jzx63L3x8nsw1HKEHHaiMNzoptPWhtADvfZ2+VS9FNxn3e969zHmbrx
-	ZwwpDowpS/xwL1f+JeqfdOX3wphq+JUArvuO5wMHQGR59Wb1FTf27Y2F55dxi9PW
-	E5TqDpnUrfo+rEwAVKUbMwmHFzqxOY8yDh6ZVQj6Qv9yyjPxHbZu52Jj49o3w9PE
-	0OmYQxXFjwj20Gjpo5/3v/CyLdzceHWam08SQwgiv98y/jpvKh/pOmr2ssoL55ol
-	n6Rd5jrXEgHQv6Mgdz9VAhQHCn7hZHYJVFg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48047qenpg-1
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=ZELAXz6pi1p
+	iurD84MhBWtClaTyOdSezyB1Jeim0QzA=; b=WH2Qal3p+RSmJGpTQU+BzLQTAhR
+	xcroTPq2W4RSLcU9LWJ6C/zOlzRsFj1FyvukNxvSsU3I0Vr/syn8YWXUHsZiFrz5
+	qN3S0IehHR60iwRZmiHZk6+FHE6phaygUMYvtaTbTw4R272AEBtlSCyLN4yXKutb
+	z3o0Ods6XELRTtIV2KhB4dFk61xQMfnp2exYrruytEZIBE/y/fZOGZKWH3QFcsn9
+	GXKePkOQ06I3WqQk5LgK0WOe1Lrh52QSHhS749CryYQbX7IqJ3es1JnzqBtWuk/v
+	ZrMq6f7vX9yF/DgkXHLVkI08bMqeRgmwbHaDTv8lrLEI5+aR+4ibuiNqCug==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3esfxj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:12:39 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-311ef4fb5fdso324840a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 15:12:23 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:13:02 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b3beafa8d60so489789a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 15:13:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753308742; x=1753913542;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Es8yYGkoaL9WsWMGWRUXzp1VH7ftdQ84HcSowvwXJBw=;
-        b=I6NITqpK6vcZiZcsSY0lrOu+fm8kfjZkOCsEVBd6YIDVSA7pDpWqUvF0Hgkb0PLf+j
-         y1nk6DHQ++rR+fuYConvsxiDfPYR9Km35MbcBxDWzkTVSQ6tqUY3yQrBWEj/ZknosEVW
-         xycY1Nh1VVUABOGfLqd9ihwmiJ4xLDgzKlRxqeFUgkzvgccwf0QQCnh7K0XEJPn+P0CA
-         nRqq5q8h6k00XhzHCO0pwnO23gmyrWsPH9W6y3YkqYdiLvZGbnbgoohDmsnZNCVumfpo
-         YIWg0djfVXpMgil4B6FR6WsTplUV8nLJ/TUdqm24JZdN4ctj0PFYq/iflbA9SNO/zzcV
-         iqXQ==
-X-Gm-Message-State: AOJu0Yz+ZMdA7i+d+dLhm1H/aEynOmq1Y2FsFrkxNMHTpyRhUtLEGcbn
-	YFUJNPQwLcpRqaavf9/fZvr5r2BEdt/tFpfXKqKcprQCMzdAyqzyCjh4Tegr9K2Y2cHgsqkJaZv
-	tauzcpCaxyhRyFfNZcPK0hb9l3T6wgNRq+bIi1LKFObaly/Dke9yDLUNrRr9VH0oPAopx
-X-Gm-Gg: ASbGnctGnB5CVlQZr9TBXDJSRM2efzeWBGFEb8pgiE0aCrfEBjITepXdgU9wG4ZFvzK
-	0qmTY6x3BlNSr6/ziYk9XNVx4h85OJcfMzFLFIrS12oQmUyFXk7H/kKxz2iKD3DhJCoxR5JTc97
-	Zkd2IUL+S//d2WTZvysiHeqNb/Xw2Nz5kthtJNWQevwyvOximH50vi9QohMSiQPYxrWp2tG1D+7
-	OIOcqgQpZTNEYlNNy2GmynNMacvADJFG+SzkP9LEJBPf3Pgw0Cd4/NrenvX+JxsWajn4QDaASuE
-	A7QDiS2vlSzoxFeidOSrQFxTU/NqfW5Edy0U0/MX1EK0eqWrhyU=
-X-Received: by 2002:a17:90b:3d4c:b0:313:f6fa:5bca with SMTP id 98e67ed59e1d1-31e507c451bmr5990920a91.22.1753308742102;
-        Wed, 23 Jul 2025 15:12:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzd56I31a4tiJMX9/aFKEr6IuO0MhOWD335Z5swX27LPpZumR9v/x7YlbWBlBa4lwLXzCKwQ==
-X-Received: by 2002:a17:90b:3d4c:b0:313:f6fa:5bca with SMTP id 98e67ed59e1d1-31e507c451bmr5990882a91.22.1753308741676;
-        Wed, 23 Jul 2025 15:12:21 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753308743; x=1753913543;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZELAXz6pi1piurD84MhBWtClaTyOdSezyB1Jeim0QzA=;
+        b=dw82kCbYOgsvgOvGB9Yn3R5fu8pkiFE9Fadav9uohZB9s5goRz0IAShDHq9PjwDOT8
+         Y8AzFvyxy42/0eu0jY3O+aX/BnNIpbOpebDK3r3enf5vn6Hlk2ckJ0qOr2vJfb3QLE/k
+         vO3adVXsdGulLpAFPoj26/rC8B8vQLAtARd5dmcYAydMBYNdQBgshvNNStC8Y9/SgOym
+         vMUqDeLvPW3ihN8pKIl067SOKAFTBevFqWLASiQM63O9Z5Wt85cvAauqwq3ISFCOOyma
+         c2BiO+41f8BJuw/GqZLXIs2bJtYzHR4gbrRhPAe4jMTq+VNw3Ddu3i0xqurRGjG7lL4Y
+         I7TA==
+X-Gm-Message-State: AOJu0YwKFNQYNcFgwbTTQ6upKiLsGWZwNyP3RPK/aoNIFVV1qsA0tOFg
+	Gqvswa5/3Eh2++M/RpQO033l3s0ATBwcZZ4f8A1v4PHsF26NEvRYBy8xJ6aR2hPAm954c9Jh6vm
+	X7I2JxfTOP9ataxsa/pl3JSeaxuK/pTmI57AxiMdsnSjzkTcR9kjvcePBg6T21zDJFuT3
+X-Gm-Gg: ASbGncsicLdjPm1Mo1wmiessxsioXzqurc0218sUbYeWMBU91WpwxjYKYVRVwjb9UCO
+	i9PtRFC/zDOvRVnReL7wGpgo8VOBnya/6F3f4y4CGN2yiFZjRgKS+qnAyo7VOuxfsUR+OSugGCf
+	d3TH+i+qPIQLbakDd6miI1U88Je1Yjyf6P66VBhgHcT3Mn6/M6hUY3vbu9yLmy2n7L/SQJL64rw
+	3jnGjLlxFWXn28UBZZ81oPpcJoS5nFRmOuPKxKvF/dGGd0fU27UVGrNQxXrNyefJhulCMzWzAqV
+	hg5dnexrjg5y0MbpvOSZRSzrmWRzVj2Rkp+ihNwCiXVvXsuTBTc=
+X-Received: by 2002:a17:903:3d0d:b0:23d:ddf0:c93b with SMTP id d9443c01a7336-23f981b5ff3mr53931495ad.37.1753308743462;
+        Wed, 23 Jul 2025 15:12:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPg+91DANEGZGB4JkXB+cUWEzypyPnxOCrFXbrqyTcN8cw8Ruqrae2h0FkcANM7PlMM5SM5A==
+X-Received: by 2002:a17:903:3d0d:b0:23d:ddf0:c93b with SMTP id d9443c01a7336-23f981b5ff3mr53931225ad.37.1753308743040;
+        Wed, 23 Jul 2025 15:12:23 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e639f6c1esm72938a91.14.2025.07.23.15.12.21
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23fa475f3d3sm644605ad.40.2025.07.23.15.12.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 15:12:21 -0700 (PDT)
+        Wed, 23 Jul 2025 15:12:22 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Danilo Krummrich <dakr@redhat.com>,
         Connor Abbott <cwabbott0@gmail.com>,
         Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        linux-kernel@vger.kernel.org (open list),
-        Lyude Paul <lyude@redhat.com>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         Maxime Ripard <mripard@kernel.org>,
-        nouveau@lists.freedesktop.org (open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS),
-        Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 0/2] drm/gpuvm+msm: Handle in-place remaps
-Date: Wed, 23 Jul 2025 15:12:10 -0700
-Message-ID: <20250723221213.36325-1-robin.clark@oss.qualcomm.com>
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Lyude Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>,
+        linux-kernel@vger.kernel.org (open list),
+        nouveau@lists.freedesktop.org (open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS)
+Subject: [PATCH 1/2] drm/gpuvm: Send in-place re-maps to the driver as remap
+Date: Wed, 23 Jul 2025 15:12:11 -0700
+Message-ID: <20250723221213.36325-2-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250723221213.36325-1-robin.clark@oss.qualcomm.com>
+References: <20250723221213.36325-1-robin.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,53 +104,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MSBTYWx0ZWRfX0IfuaYU5Nzfp
- I+W/fBHozr59oXp4wt9Sz1/Jxj2Sg6qeiwJoZgoaVsesRaM1z0Bhq+rjNIlwY0KqpuxvYLhXdZu
- 8h16sa5TnDZlhlmHf258QzWhyCBgPcNfYCQpvafSmmJkbGOAibXaagGud2N1JDOWJo12n74bPAz
- Z1lOlD9iWw+YnqzoQWEl4wLZTGVa3/75GR8/ospXio6alsRnztKTqetTNz2NLMsoxNsW9yCY8FU
- RAqFtV2/iBi0wUgPhreMAU3T65CIfkgO7HU7bLQ1WYPL5BsjOCi5Pck6O4VAy1keSUy58jmvX6x
- ZWKryBMCweDP/0WKvBWChQYut3CSjjo/AZH5WeCQ2hB6hbfJqSXh6vEQXgCxS1IYktsk/RrMr8T
- ljkpFF26WE5KdGd0Kb7dCU5JW5eSWi4BC2hvbsYCXGQmqsVngz4Hhuv7wPbH52A26ZeEYKn7
-X-Proofpoint-ORIG-GUID: dO8uwT4ewTArvXHSK73KQtGfCfeNxd4p
-X-Proofpoint-GUID: dO8uwT4ewTArvXHSK73KQtGfCfeNxd4p
-X-Authority-Analysis: v=2.4 cv=IrMecK/g c=1 sm=1 tr=0 ts=68815e57 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10
- a=r9eiMqSCUvIwoLEqkV8A:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: tmQ1ymJu3bdKeqyK3g-fQ0sINrjW-eeY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MSBTYWx0ZWRfX7pQi3+ezG2kZ
+ M8eJx+2kLLmGbtV0Xr/4OE3siLwlpjimr9ZqJvSpKEshJBATx3KrqaEQL+mfKkWBTnL2VXIWMCq
+ 1x7jVvvikfJ1ECY34YYbn+D8/kWMmIYXyogQnVslEqm1WOsK8wLmzlgzYGujMoulyzDZUKaUrUN
+ HbE+2yeGBsPt71ZzDCVAXUd9sG/+91S9z8ai6beCPM5gqHzpWnyRO78W8wGy1Z8fORqkSogQW3o
+ Nv5gvM8FxmsKNL/AzuCFeyori65ONQuiKl5IiXh9sMuMGqh/o+yl57SlbOzwmScLOa5XimDscI1
+ rjhzdbtzWpTIE+ue4Zy3T2Xij2rEaiUEgugnXGxuDj1nEBEfPbxCjEk8ixSmvQHI/Kd/iCYbVW4
+ usFtxjadKvJKbwvvtpdLhyaFylzq7TjaYl6yd1pzGyqT23UFw50sE6e/tDCHU/vlPAVYzYiV
+X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=68815e6e cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=kOSSLaVpcPouW256lEMA:9 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: tmQ1ymJu3bdKeqyK3g-fQ0sINrjW-eeY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
- priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=758 phishscore=0
- impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2507230191
 
-turnip+msm uses a DUMP flag on the gpuva to indicate VA ranges to dump
-(ie. for devcoredump).  In most cases (internal BOs like shader
-instructions) this is known at the time the BO is MAPd, and the DUMP
-flag can be set at the same time as the BO is initially bound into the
-VM.  But for descriptor buffers, this isn't known until VkBuffer is
-bound to the already mapped VkDeviceMemory, requiring an atomic remap
-to set the flag.
+The 'keep' hint on the unmap is only half useful, without being able to
+link it to a map cb.  Instead combine the two ops into a remap op to
+give the driver a chance to figure things out.
 
-The problem is that drmvm turns this into discreet unmap and remap
-steps.  So there is a window where the VA is not mapped, which can
-race with cmdstream exec (SUBMIT).
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+---
+In theory, drivers should treat an unmap+map combined in a remap step
+the same as discreet unmap+map steps.
 
-This series attempts to avoid that by turning an exact-remap into a
-remap op instead, where the driver can handle the special case since
-it can see both the unmap and map steps at the same time.
+AFAICT nouveau is only driver using the keep hint, and this was missing
+for the remap callback.  So I've added that.
 
-Rob Clark (2):
-  drm/gpuvm: Send in-place re-maps to the driver as remap
-  drm/msm: Handle in-place remaps
+But this is only tested on msm.
 
  drivers/gpu/drm/drm_gpuvm.c            | 21 +++++++++++++++++++++
- drivers/gpu/drm/msm/msm_gem_vma.c      | 17 +++++++++++++++--
  drivers/gpu/drm/nouveau/nouveau_uvmm.c |  3 ++-
- 3 files changed, 38 insertions(+), 3 deletions(-)
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index bbc7fecb6f4a..e21782a97fbe 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -2125,6 +2125,27 @@ __drm_gpuvm_sm_map(struct drm_gpuvm *gpuvm,
+ 				 offset == req_offset;
+ 
+ 			if (end == req_end) {
++				if (merge) {
++					/*
++					 * This is an exact remap of the existing
++					 * VA (potentially flags change)?  Pass
++					 * this to the driver as a remap so it can
++					 * do an in-place update:
++					 */
++					struct drm_gpuva_op_map n = {
++						.va.addr = va->va.addr,
++						.va.range = va->va.range,
++						.gem.obj = va->gem.obj,
++						.gem.offset = va->gem.offset,
++					};
++					struct drm_gpuva_op_unmap u = {
++						.va = va,
++						.keep = true,
++					};
++
++					return op_remap_cb(ops, priv, NULL, &n, &u);
++				}
++
+ 				ret = op_unmap_cb(ops, priv, va, merge);
+ 				if (ret)
+ 					return ret;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+index 48f105239f42..c3e3a15eb3c8 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+@@ -820,7 +820,8 @@ op_remap(struct drm_gpuva_op_remap *r,
+ 	if (r->next)
+ 		end = r->next->va.addr;
+ 
+-	op_unmap_range(u, addr, end - addr);
++	if (!u->keep)
++		op_unmap_range(u, addr, end - addr);
+ }
+ 
+ static int
 -- 
 2.50.1
 
