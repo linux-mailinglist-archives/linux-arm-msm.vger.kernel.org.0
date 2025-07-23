@@ -1,135 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-66289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E442B0F20F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2C7B0F23D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:29:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B36397AF81D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:17:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0CAC7AF4B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 12:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A2E2E5412;
-	Wed, 23 Jul 2025 12:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4881E2E5B32;
+	Wed, 23 Jul 2025 12:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OR6+JZHd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BbxWN2ii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E60289E3D;
-	Wed, 23 Jul 2025 12:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3CF210F4A;
+	Wed, 23 Jul 2025 12:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753273157; cv=none; b=g67mA9JMb+5G5o/L5VlfWhJ/cCufOEN+Gbuocd261CrORw6+g5BGAuqXb0o3fv+14QxJRPlabXiDDQxiDiTIbSgCoKbYkiWG2BoKHQ+FDg73euLZSj1N4NJzA4mvCcH4GQuQLmoFnhFY6CFJ7pQl9uGK8GhmoJg1rpitN6RQsw4=
+	t=1753273769; cv=none; b=g3rLZL+g0NX/Q0P1NWjW7D5Y+muSBe/ahbMGBo/oPmgxusliTtlu8v/0gCBM47O+xRvrKaXL2AnOiirf7NKqVNGEWFnQJY4Nzxk8uXUZ7oRz+dUaBH7Nty8kJl+NbTswXytL1shRUV54/mNeOWxOG+M5TB7rZNE8n+khpeilUZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753273157; c=relaxed/simple;
-	bh=POuTDoQ9PpSydluEqziXn2gVwFFvN6mDSjaJOEBnvUY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TtBe2mNt67vWBRI5gqVJUMyc7kzuBpupaL2kBF9cj84UvSJBfbTYhwv6QQjalXrPqQxpdI2Oz2puEyQswTYC/kXbs9M2jn6meTzOq+xHBISsjJSclLwWR0l0w754Ql3r9iwHBhoGirBJLkDxTIAukVoHvGAjdO5srSh1Wg8/Zdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OR6+JZHd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DB4C4CEE7;
-	Wed, 23 Jul 2025 12:19:10 +0000 (UTC)
+	s=arc-20240116; t=1753273769; c=relaxed/simple;
+	bh=Z1m4e0F1hHnK+GgkCb3mXzRDsiQSoSWfTycNxdXFiQA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kvaP0YTXD7mJINlqJ/Z/9L1S3c6VxzZXCmY1gO7A+iqUoDuTGkT7KQ+yG+/uZGOiE2pT7zwQ0ywoK/tTAN/m7MbM0IrjRZFuLhDaNjRrkEMwdwkpvtLhQ3cokYe7iCyGc0b7uKXGPTvGv4ZBmflknm6wRFSMv9XY2kKTwSd2B+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BbxWN2ii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A97C4CEE7;
+	Wed, 23 Jul 2025 12:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753273155;
-	bh=POuTDoQ9PpSydluEqziXn2gVwFFvN6mDSjaJOEBnvUY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OR6+JZHdfGfBB+GjdRuPEkv2fUmvV3Ihf86Qs1cb/Z2FB/mmmnxMuw1YFMmB5a2h0
-	 2H6dDlD51Jglq3WSNPep/Ejjoyx6PxIdM8B0OFienVPR46GBB0MsV/9eN29M0Jw/vK
-	 fPAkga3FScth/T8fyiZLSl276bRhWpFYq/hoU9N4gmtqT6qqPTeMwlGhWV6O0e74Rl
-	 lh8312qzlCEJRCXLtKZrl+ywkQ74zVBuHKoXHD0/JG4DIaFZlHnR+c8NXNd066Z96d
-	 nCeyO0DkJPuxvZXtlkg1hhGz0+mYQYA0B1DTXSJyohf+bitKllSbVONZBpdY7FLy94
-	 BgaEPHKAfq2nA==
-Date: Wed, 23 Jul 2025 13:19:08 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4
- smartphone
-Message-ID: <00c2ac7c-763f-467f-8199-76de9f5d71b0@sirena.org.uk>
-References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
- <DBDAPORDD5IM.1BHXPK225E2PP@fairphone.com>
- <DBHIM4SA3OIK.PXX6HMDE93B8@fairphone.com>
- <ac3f1eb2-5830-4bda-bc57-c4d29c22aba0@sirena.org.uk>
- <DBJDZBYHR94V.1QGVALCL60M1X@fairphone.com>
+	s=k20201202; t=1753273768;
+	bh=Z1m4e0F1hHnK+GgkCb3mXzRDsiQSoSWfTycNxdXFiQA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=BbxWN2iia6X+T0YTzqCa0lzRsuHPvCJ5QX+LmE48P1hm5OC5R7jeFmX7hewOHccRB
+	 bbeiGVmB04NkvEUFNZXOW6xBMNEvaHdLVmbdr2vHrUWwsIl0j+b42DUCOCsDqfwQpT
+	 yW/iXcFL4g/1QmQASU0L2BzNXoKkURTHx5iW5CHzRnmtNuem9+YNuBrVnwrIOxN35p
+	 wsTTqHhpRx+oBYR+jptDxSBYH6VAP1AydNWsa60XDSCaICvcPJUSX4Xg87bcsEM8R7
+	 A9vO5yLmWDx41p7QuExKuEP6u1uaYC/7z4vBjxSCf+iOehR5vplf1xRUTfL9gbBTcg
+	 sJNCFNnH/CZhw==
+From: Vinod Koul <vkoul@kernel.org>
+To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Herbert Xu <herbert@gondor.apana.org.au>, 
+ "David S. Miller" <davem@davemloft.net>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>, 
+ Das Srinagesh <quic_gurus@quicinc.com>, 
+ Thomas Gleixner <tglx@linutronix.de>, Jassi Brar <jassisinghbrar@gmail.com>, 
+ Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-mmc@vger.kernel.org
+In-Reply-To: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+Subject: Re: (subset) [PATCH v2 00/15] Various dt-bindings for Milos and
+ The Fairphone (Gen. 6) addition
+Message-Id: <175327375916.189941.14207583854602372511.b4-ty@kernel.org>
+Date: Wed, 23 Jul 2025 17:59:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="s26ZamLLlGnPk0Qb"
-Content-Disposition: inline
-In-Reply-To: <DBJDZBYHR94V.1QGVALCL60M1X@fairphone.com>
-X-Cookie: List was current at time of printing.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
 
---s26ZamLLlGnPk0Qb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, 13 Jul 2025 10:05:22 +0200, Luca Weiss wrote:
+> Document various bits of the Milos SoC in the dt-bindings, which don't
+> really need any other changes.
+> 
+> Then we can add the dtsi for the Milos SoC and finally add a dts for
+> the newly announced The Fairphone (Gen. 6) smartphone.
+> 
+> Dependencies:
+> * The dt-bindings should not have any dependencies on any other patches.
+> * The qcom dts bits depend on most other Milos patchsets I have sent in
+>   conjuction with this one. The exact ones are specified in the b4 deps.
+> 
+> [...]
 
-On Wed, Jul 23, 2025 at 01:09:35PM +0200, Luca Weiss wrote:
-> On Wed Jul 23, 2025 at 12:57 PM CEST, Mark Brown wrote:
+Applied, thanks!
 
-> > As previously discussed they won't apply until after the merge window.
+[09/15] dt-bindings: dma: qcom,gpi: document the Milos GPI DMA Engine
+        commit: b330d77c5da2cfece98a89cbb51b8ef948691e6f
 
-> Sorry about that, I thought the conflict was for the 6.16 merge window,
-> not 6.17?
+Best regards,
+-- 
+~Vinod
 
-There is a conflict.  You could check this yourself...
 
-> So I'm not aware of another conflict, that's why I was asking in the
-> first place.
-
-You were sending a content free ping:
-
-> > Please don't send content free pings and please allow a reasonable time
-> > for review.  People get busy, go on holiday, attend conferences and so=
-=20
-> > on so unless there is some reason for urgency (like critical bug fixes)
-> > please allow at least a couple of weeks for review.  If there have been
-> > review comments then people may be waiting for those to be addressed.
-> >
-> > Sending content free pings adds to the mail volume (if they are seen at
-> > all) which is often the problem and since they can't be reviewed
-> > directly if something has gone wrong you'll have to resend the patches
-> > anyway, so sending again is generally a better approach though there are
-> > some other maintainers who like them - if in doubt look at how patches
-> > for the subsystem are normally handled.
-
---s26ZamLLlGnPk0Qb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiA0zsACgkQJNaLcl1U
-h9AH6wf9ELo4l0meQaRhE0Vx8YMY2nfByC9Ukip/Q3TFsZ5P/t2r7WBg6LpGuB6G
-eCQe8Ij3e4NeK/gM1DOpSm4hAq9psN/hQJJ4TuTeIpXnHYj9xHWI7f6BD7Shl8TL
-rUdsxAdhmqFtks04vjgVBFI9ZzCKVrVgCgllgkv3qJFv24jPU89FED508O4v923I
-sh/95oHEe1SIsylpxWabv/qiV85mGyjzAwua1880+N4cTQb4+qpfPOJ5sF4Y26uv
-HePGs4rN7eQcf2EtrQTqIYkN3yjJwZ1FWSdmflPEgVh7jAEgy2/TPKwGV0hCvadt
-q9LG+Te7yykwpR31TYO4CecQNXSFJw==
-=FMQf
------END PGP SIGNATURE-----
-
---s26ZamLLlGnPk0Qb--
 
