@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC544B0EDE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 11:00:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 009D1B0EE12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 11:09:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EA2517E4A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:59:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4C9E3B45D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:08:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59D2B2820A0;
-	Wed, 23 Jul 2025 08:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D8802836B5;
+	Wed, 23 Jul 2025 09:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inc5BQJg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rBP0VGWu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C17E2E36FA;
-	Wed, 23 Jul 2025 08:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D494227FB1F;
+	Wed, 23 Jul 2025 09:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753261183; cv=none; b=jVSm5DWu8DPzX0q5TsI2vb9pcH0YvvuG+BM5Hzp8NGsJbcLL7Non7e8WmVuyW5bSRQy1OJA8WMTk+bo1vqJjj0XyH5AN+MiivbNHQWQut/e3xUG7OAH3vh/5TyD6jrCki5E57SL/GdZNz73EfDTSrJojYfql//DKJscZAxkA6uE=
+	t=1753261741; cv=none; b=LmsR9wS3eadvMbgHKuha/OWBmp4T0QQcwW5+QY1NDUWkY5Wfa/8xc/jyCqFND8/plAaYCzp/h7LvIk8OGiWCBJ/PDy5mZM37xlsCaRG0iMoNirgt5meGOMvMcnHmsG+sGOwGQxAkww01+C2ExE5eKVkMeYMbGCKdPq7MWOJOKuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753261183; c=relaxed/simple;
-	bh=ed2JaOJR5dOBUDINT/O/3MnJ6uPl2DqDrKd95czTVeQ=;
+	s=arc-20240116; t=1753261741; c=relaxed/simple;
+	bh=g49COW3IKwTguPh7akA80Qh//lQu38pjD9W2/2yJCeY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZOGLE5bVTA+2nwgkJunz/q/DfLHbd9bPDlChqlUFcxU/1PtnoFlrDE68Xv21Or65pHf0E+3855kIU6iax0IAPfNpOLFKVJYQ79M2ZbFKM+bNYZUhsPyJa4JNSMkMApalJ7wGd/MOEUPMpCwEC1rOVqwRrpZFBJ+FFQYnAbP2eBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inc5BQJg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1279C4CEE7;
-	Wed, 23 Jul 2025 08:59:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sQwavZqqldX7VmZfDcqPvG8Lr1SNp6agDblSfgi87hnUHE9Ucg532XK4v0LzqKkhG7YXtPGL64iUtNzne1qjDul1c1Lljlyw8kZYXSrCIAHhJGDWgzN5fGT/Ot9p0we3ryDotezYnVfTfiT7DVG7LfPW95GJp0nLk7WmhDsoN80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rBP0VGWu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A543C4CEE7;
+	Wed, 23 Jul 2025 09:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753261182;
-	bh=ed2JaOJR5dOBUDINT/O/3MnJ6uPl2DqDrKd95czTVeQ=;
+	s=k20201202; t=1753261741;
+	bh=g49COW3IKwTguPh7akA80Qh//lQu38pjD9W2/2yJCeY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=inc5BQJgj4hjnX5gpBReEJ6o6IwE0Y+E5UYLFfMaUVRuv2HRXGuTvmNqsnV0hqea2
-	 o136bAvkNwrx++rZudUBCkFl6+Q0sjP+bhveoGHai4BbHLSqoMiWT+HybcmlWtcjNm
-	 jGMTvugd49JSmrZ3zsyEcMPM54Nuf8b+dwiTDzyjTOmE8PdQYe2FTODP+zZxfmcAxF
-	 opRShCpg7+qCcHTvmHYJAAn2eezobvpUSbhN3xpVEmVhw15eKVEpXEiwtLiL7wHQUQ
-	 ccqnzHqQdSZBDkPiD/Svwj19Psun/ZkCJTRjhHA6HMCdLzTlBYichFC3YLXMn6VpUh
-	 qdupEZfx9V8Xw==
-Message-ID: <ae1310d3-12e1-4856-8f34-1c51bdfbf44a@kernel.org>
-Date: Wed, 23 Jul 2025 10:59:38 +0200
+	b=rBP0VGWutY6cfmAFLSDNl5/cp0H+HD0Xl7nh0jYjE3BhuqtAdPPr5gkiTD4g2UtD1
+	 ZZCiRn8Vg2pEug44w4H+xgI2ryObQk1CtCS8tkJzWmrt0AeWOnIjHI0towp0/YmbLi
+	 bDtE0c4dzQEe46Vw9EWmMKVClX4MFFILdaQCaBjalM+DUydUhf2GCrcAR+jBGucRYB
+	 BvqatwQW0GtIdLqK5euLH0zGaNXMlhvzpzcqmYFTYQbtWQhCgQQcVUfY02PnYl5Ihd
+	 SjjIK4N0zOo+2nUjmq3zrDXsHabB5TqigX4O8vpBrpeqK9+kvTNpolL0EAJndAaQn/
+	 kJfLUkJkcR1ow==
+Message-ID: <f5f30f4e-50ee-4539-893b-4a7667a16651@kernel.org>
+Date: Wed, 23 Jul 2025 11:08:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615-ride: remove redundant gpio
- header file
-To: yuanjiey <yuanjie.yang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_tingweiz@quicinc.com, quic_yuanjiey@quicinc.com, kernel@oss.qualcomm.com
-References: <20250723084351.4627-1-yuanjie.yang@oss.qualcomm.com>
- <e0c9e620-a331-43c8-9c62-f9769744a484@kernel.org>
- <aICjeK+gC1yxPb9I@yuanjiey.ap.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: hamoa-iot-evk: Enable display support
+To: Yongxing Mou <quic_yongmou@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250723-x1e-evk-dp-v1-1-be76ce53b9b8@quicinc.com>
+ <ad436d4f-dff2-4063-9b9b-e1218f6dc3c7@kernel.org>
+ <aa18a24f-a16a-46a1-a66c-732999acb63e@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,29 +105,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aICjeK+gC1yxPb9I@yuanjiey.ap.qualcomm.com>
+In-Reply-To: <aa18a24f-a16a-46a1-a66c-732999acb63e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/07/2025 10:55, yuanjiey wrote:
-> On Wed, Jul 23, 2025 at 10:49:10AM +0200, Krzysztof Kozlowski wrote:
->> On 23/07/2025 10:43, yuanjie yang wrote:
->>> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
->>>
->>> Remove redundant gpio header file in QCS615 RIDE DTS.
+On 23/07/2025 10:08, Yongxing Mou wrote:
+>>> ---
+>>> This change made top of initial DTS:
+>>> https://lore.kernel.org/all/20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com/
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 156 +++++++++++++++++++++++++++++
+>>>   1 file changed, 156 insertions(+)
 >>
->> I do not see it redundant at all. Just look at the file - it is used.
-> qcs615-ride.dts: file
-> 
-> line:
-> 7:#include <dt-bindings/gpio/gpio.h>
-> 8:#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> 9:#include <dt-bindings/gpio/gpio.h>
-> 
-> I see line 7 and line 9 include the same <dt-bindings/gpio/gpio.h>,
-> I think we can remove one header file. 
-> 
-So say that it is there twice...
+>> Just squash it there. Why are you posting knowingly incomplete DTS just
+>> to fix it later?
+>>
+>> Best regards,
+>> Krzysztof
+> Hi, sorry, I'm just want to enable display based initial DTS. Should 
+> this patch merge into the initial DTS?
+
+
+Yes, initial DTS is not merged and being reviewed. Adding new board is
+one commit, not two.
+
 
 Best regards,
 Krzysztof
