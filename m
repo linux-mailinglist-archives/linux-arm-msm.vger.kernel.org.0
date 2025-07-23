@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-66310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B70A2B0F3F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 15:27:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65F15B0F3FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 15:28:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E51371672DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 13:27:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86E3E16390F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 13:28:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D427E256C71;
-	Wed, 23 Jul 2025 13:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 277312E5B18;
+	Wed, 23 Jul 2025 13:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n3K8z28X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fhaHuC2V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7E42080C0;
-	Wed, 23 Jul 2025 13:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6351F2E54A1;
+	Wed, 23 Jul 2025 13:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753277251; cv=none; b=c9yUACzuXaw1u3z8Eg1DqrK7FMrt+ns8/0ZK31u2DS5jOpRe7F+l7ApfqmZG/pY9QJbG2c4xDzc7E1z+BGTqdY9TvcrzvXXnshsq0fwqQNrIluwWWF3LB+ZNrcJW80SDmPpyxYhR/SS8MCFQJushg/hb07AoU9/4j1B7W3lRE8I=
+	t=1753277298; cv=none; b=KOMYx13G7yTvzaEagA7X+QcHUtWWzK3x7cRTMiYfIASnDlN8jDG2VAXpYHgA2p/mjzqCpG1U6qfb5KR9yroNOjacn6SwaRI3K2kwGAdRxLbfLka2LrtHdHd9nigExz5nDaz3Egt4kBbmFpnNecLNM4pxW1f5+KeprVfP4I2Vuck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753277251; c=relaxed/simple;
-	bh=chDTWX5a3R65VeyMPmWT/vUkB2Kxq9PV37cbFxZXFmA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uvm68S4f7K3LIGSiL7nEcTwt5Q3hD6j5tlrS0t7UYdmRCbD8edvh99cjCBUzzPLhWb6bSZxkIhZinng6CvFYlzVnE8ln1AQ+gclSXjWfm9HZu2N1bkCz+0UnJbAIY81cFCC1Hsfm6igC5n3/K9YcbrH2QErpA5rFjAkRnqTLDGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=n3K8z28X; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753277250; x=1784813250;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=chDTWX5a3R65VeyMPmWT/vUkB2Kxq9PV37cbFxZXFmA=;
-  b=n3K8z28Xzx1cstO7O1SVcuJHj4aVOz91OVWiaUAMjCDyEAr73fmXIewR
-   tHp7CuxMnb4yongyhx0dIR6jBIJpACkoqlqzzbPkxzWu+wvy+hAav6lSv
-   7AwBYsZ7s6C5fO53po285GS9SCTdRGg/w2f8Y5YlzDR2VuDGv6omKDk8a
-   Y8WDmCz0s7WhEkEPN1C4vFvx1gItY02HcW4ofhUyipyWvBy/MF3m40TKc
-   ij1mivjpKYW68r3yOQYmz5xeiGpDXODwWvbzL/hRg20NC2Q2ahdlYO9xK
-   zt0pISLw2/f37EshziSGEMAkYIF2+qTaNT59bnBBe0qa4uRDF9c2dB5B3
-   A==;
-X-CSE-ConnectionGUID: fHlp2vUVSP2dg+g/K0JRRA==
-X-CSE-MsgGUID: ueNlV+C7QOGaHuiq5VPsLQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="58173891"
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
-   d="scan'208";a="58173891"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 06:27:29 -0700
-X-CSE-ConnectionGUID: SWccDMwzSMqd/Mz7ntxyHA==
-X-CSE-MsgGUID: rSy2YXBLRKqFAWkzayDTnw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
-   d="scan'208";a="159275110"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 06:27:13 -0700
-Message-ID: <a438c189-4152-4ad4-977e-6a5291a7dd40@intel.com>
-Date: Wed, 23 Jul 2025 21:27:09 +0800
+	s=arc-20240116; t=1753277298; c=relaxed/simple;
+	bh=QyIANA/YmMM91NwDCoF+V1ARjFsotI66Qxoz2mA9wjE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CAuBYf8nfs/S/CB+CCwKq93QK2NK4Ydv4Krz4QLQL3MsdiOlqOuPOBH3r8+AUAIkSZ8DIzzBT6+rVJCvVpUfQ4B0cUJmbbQFh5834eyW33HdnVA7B2pdrN/3l+xYSKgu5sceaSjx6oUiAsRX5iNFx/6ZK7+cmBi9C0MUKyZ2AP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fhaHuC2V; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9dP43015739;
+	Wed, 23 Jul 2025 13:28:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vc6acNw7VKdUlL2hxIk3Pgcz058l1S3DheUPIX5KL2s=; b=fhaHuC2VkxDqH+Yu
+	mJvvNaQecQ3tyg5ysY1/ExXm2cx67+9DyNA3aUhFzE4pLuaeYP+ufAhMEtYrCJEX
+	tXjoCpPt3v+av8tfJWc7nNNXNEalZCEzloxy79hCO8BPH+piHbvkp3iNBFswLb28
+	9G40CsX3QUCzBlQCviBbcjityn+/80z/UTJMAtAwK2izrqgoCYlcoN1sEXa0ZTPL
+	qbjOAcygPgOS7F7/zDMRFVG8NdJ3QqB1MPoBwk7k9pY+rC78aKV6APgA+tPpkuk5
+	3oENAV8jTgSLfsGL0zWUl+OEc2LVtZdn+vw3XvHknAkYFxIwTcXZLUevX/MfUidl
+	9VjkQg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048vbm9u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 13:28:08 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56NDS767028829
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 13:28:07 GMT
+Received: from [10.231.216.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Jul
+ 2025 06:28:04 -0700
+Message-ID: <4f506337-3481-41db-a2a4-5b4676f22eda@quicinc.com>
+Date: Wed, 23 Jul 2025 21:28:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,175 +65,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 05/22] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
- CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250723104714.1674617-1-tabba@google.com>
- <20250723104714.1674617-6-tabba@google.com>
+Subject: Re: arm64 dragonboard 410c Internal error Oops dev_pm_opp_put
+ core_clks_enable
+To: Arnd Bergmann <arnd@arndb.de>, Naresh Kamboju <naresh.kamboju@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        <lkft-triage@lists.linaro.org>,
+        Linux Regressions <regressions@lists.linux.dev>,
+        linux-clk
+	<linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>
+CC: <quic_vgarodia@quicinc.com>, <quic_dikshita@quicinc.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Anders Roxell <anders.roxell@linaro.org>,
+        Dan Carpenter
+	<dan.carpenter@linaro.org>,
+        Benjamin Copeland <ben.copeland@linaro.org>
+References: <CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com>
+ <ef216301-a7e6-4c9d-9153-8ce8b0a4111f@app.fastmail.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250723104714.1674617-6-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <ef216301-a7e6-4c9d-9153-8ce8b0a4111f@app.fastmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 41uk5J6Doifpz8Rljm64WqMWN2v_GWrs
+X-Authority-Analysis: v=2.4 cv=SYL3duRu c=1 sm=1 tr=0 ts=6880e368 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=OV94zteYR8qjsgGYDZ0A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDExNiBTYWx0ZWRfX4bIXuGom4Gbx
+ CmiYBEy/O+sPHd6rheAZ5lNc3INz3HzOdEJkJs7A+J+h2tF6asANepC+/MFJ3kLTEzSPQbbC7pc
+ XwpeAZMS5+XCh2mKvB0KMPWPOzctbyvMHTEAQctrSnbwcytVbtUNBbvV03b4Nfpi8fxB49XR/tS
+ SGwOGNJu42AVTeisQXTFAd0ZPpL6WfjusnFKWbx5qFvEB8ywyiSjcVMl3a8608OIRCn+fV5DjCt
+ IxT+0o3jpN1YQjiQV4EausUfc00yKczD4v96Z5aSTxg12qVs2i6bIOvh3MHlXJiggL0OKwiQe5j
+ phELmLB12nKuFnQ9whgikE/CCfXQqkalnZ6TCyjRslHTqegBAKGld0KK6edvTfnTOAxPUoP4KI4
+ FL+DntGak+/j6qJBHbgyiWLQG7iKrQ5MAYvQHQ141XITcFODJLC8WIpMEsxdKqmCcUzkwnUo
+X-Proofpoint-ORIG-GUID: 41uk5J6Doifpz8Rljm64WqMWN2v_GWrs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 clxscore=1011
+ priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507230116
 
-On 7/23/2025 6:46 PM, Fuad Tabba wrote:
-> The original name was vague regarding its functionality. This Kconfig
-> option specifically enables and gates the kvm_gmem_populate() function,
-> which is responsible for populating a GPA range with guest data.
-> 
-> The new name, HAVE_KVM_ARCH_GMEM_POPULATE, describes the purpose of the
-> option: to enable arch-specific guest_memfd population mechanisms. It
-> also follows the same pattern as the other HAVE_KVM_ARCH_* configuration
-> options.
-> 
-> This improves clarity for developers and ensures the name accurately
-> reflects the functionality it controls, especially as guest_memfd
-> support expands beyond purely "private" memory scenarios.
-> 
-> Note that the vm type KVM_X86_SW_PROTECTED_VM does not need the populate
-> function. Therefore, ensure that the correct configuration is selected
-> when KVM_SW_PROTECTED_VM is enabled.
-
-the changelog needs to be enhanced. At least it doesn't talk about 
-KVM_X86_PRIVATE_MEM at all.
-
-If Sean is going to queue this version, I think he can help refine it 
-when queuing.
-
-> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Reviewed-by: Shivank Garg <shivankg@amd.com>
-> Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> Co-developed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> Co-developed-by: Sean Christopherson <seanjc@google.com>
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-> ---
->   arch/x86/kvm/Kconfig     | 14 ++++++++++----
->   include/linux/kvm_host.h |  2 +-
->   virt/kvm/Kconfig         |  9 ++++-----
->   virt/kvm/guest_memfd.c   |  2 +-
->   4 files changed, 16 insertions(+), 11 deletions(-)
-> 
-> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-> index 13ab7265b505..c763446d9b9f 100644
-> --- a/arch/x86/kvm/Kconfig
-> +++ b/arch/x86/kvm/Kconfig
-> @@ -79,11 +79,16 @@ config KVM_WERROR
->   
->   	  If in doubt, say "N".
->   
-> +config KVM_X86_PRIVATE_MEM
-> +	select KVM_GENERIC_MEMORY_ATTRIBUTES
-> +	select KVM_GUEST_MEMFD
-> +	bool
-> +
->   config KVM_SW_PROTECTED_VM
->   	bool "Enable support for KVM software-protected VMs"
->   	depends on EXPERT
->   	depends on KVM_X86 && X86_64
-> -	select KVM_GENERIC_PRIVATE_MEM
-> +	select KVM_X86_PRIVATE_MEM
->   	help
->   	  Enable support for KVM software-protected VMs.  Currently, software-
->   	  protected VMs are purely a development and testing vehicle for
-> @@ -133,8 +138,8 @@ config KVM_INTEL_TDX
->   	bool "Intel Trust Domain Extensions (TDX) support"
->   	default y
->   	depends on INTEL_TDX_HOST
-> -	select KVM_GENERIC_PRIVATE_MEM
-> -	select KVM_GENERIC_MEMORY_ATTRIBUTES
-> +	select KVM_X86_PRIVATE_MEM
-> +	select HAVE_KVM_ARCH_GMEM_POPULATE
->   	help
->   	  Provides support for launching Intel Trust Domain Extensions (TDX)
->   	  confidential VMs on Intel processors.
-> @@ -157,9 +162,10 @@ config KVM_AMD_SEV
->   	depends on KVM_AMD && X86_64
->   	depends on CRYPTO_DEV_SP_PSP && !(KVM_AMD=y && CRYPTO_DEV_CCP_DD=m)
->   	select ARCH_HAS_CC_PLATFORM
-> -	select KVM_GENERIC_PRIVATE_MEM
-> +	select KVM_X86_PRIVATE_MEM
->   	select HAVE_KVM_ARCH_GMEM_PREPARE
->   	select HAVE_KVM_ARCH_GMEM_INVALIDATE
-> +	select HAVE_KVM_ARCH_GMEM_POPULATE
->   	help
->   	  Provides support for launching encrypted VMs which use Secure
->   	  Encrypted Virtualization (SEV), Secure Encrypted Virtualization with
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 8cdc0b3cc1b1..ddfb6cfe20a6 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -2534,7 +2534,7 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
->   int kvm_arch_gmem_prepare(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn, int max_order);
->   #endif
->   
-> -#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
-> +#ifdef CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE
->   /**
->    * kvm_gmem_populate() - Populate/prepare a GPA range with guest data
->    *
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index e4b400feff94..1b7d5be0b6c4 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -116,11 +116,6 @@ config KVM_GUEST_MEMFD
->          select XARRAY_MULTI
->          bool
->   
-> -config KVM_GENERIC_PRIVATE_MEM
-> -       select KVM_GENERIC_MEMORY_ATTRIBUTES
-> -       select KVM_GUEST_MEMFD
-> -       bool
-> -
->   config HAVE_KVM_ARCH_GMEM_PREPARE
->          bool
->          depends on KVM_GUEST_MEMFD
-> @@ -128,3 +123,7 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->   config HAVE_KVM_ARCH_GMEM_INVALIDATE
->          bool
->          depends on KVM_GUEST_MEMFD
-> +
-> +config HAVE_KVM_ARCH_GMEM_POPULATE
-> +       bool
-> +       depends on KVM_GUEST_MEMFD
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 7d85cc33c0bb..b2b50560e80e 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -627,7 +627,7 @@ int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
->   }
->   EXPORT_SYMBOL_GPL(kvm_gmem_get_pfn);
->   
-> -#ifdef CONFIG_KVM_GENERIC_PRIVATE_MEM
-> +#ifdef CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE
->   long kvm_gmem_populate(struct kvm *kvm, gfn_t start_gfn, void __user *src, long npages,
->   		       kvm_gmem_populate_cb post_populate, void *opaque)
+On 7/18/2025 7:28 PM, Arnd Bergmann wrote:
+> On Fri, Jul 18, 2025, at 13:13, Naresh Kamboju wrote:
+>> The following Boot regressions are noticed on the Linux
+>> next-20250708with gcc-13 and clang-20 toolchains for the dragonboard
+>> 410c device.
+>> [   12.629924] x5 : 0000000000000002 x4 : 00000000c0000000 x3 :
+>> 0000000000000001
+>> [   12.629939] x2 : 0000000000000002 x1 : ffffffffffffffde x0 :
+>> ffffffffffffffee
+>> [   12.629956] Call trace:
+>> [   12.629962]  dev_pm_opp_put+0x24/0x58 (P)
+>> [   12.629981]  core_clks_enable+0x54/0x148 venus_core
+>> [   12.630064]  core_power_v1+0x78/0x90 venus_core
+>> [   12.691130]  venus_runtime_resume+0x6c/0x98 venus_core
+>> [   12.817608] Code: 910003fd f9000bf3 91004013 aa1303e0 (f9402821)
+>> All code
+>> ========
+>>     0: 910003fd mov x29, sp
+>>     4: f9000bf3 str x19, [sp, #16]
+>>     8: 91004013 add x19, x0, #0x10
+>>     c: aa1303e0 mov x0, x19
+>>    10:* f9402821 ldr x1, [x1, #80] <-- trapping instruction
+> It's loading from 'x1', which is an error pointer ffffffffffffffde
+> (-EISCONN).  The caller was modified by Renjiang Han (added to Cc)
+> in commit b179234b5e59 ("media: venus: pm_helpers: use opp-table
+> for the frequency").
+>
+> The new version of the code is now
+>
+> static int core_clks_enable(struct venus_core *core)
 >   {
+>          const struct venus_resources *res = core->res;
+> +       struct device *dev = core->dev;
+> +       unsigned long freq = 0;
+> +       struct dev_pm_opp *opp;
+>          unsigned int i;
+>          int ret;
+>   
+> +       opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+> +       dev_pm_opp_put(opp);
+>   
+> Where the 'opp' pointer is the error code and gets passed
+> into dev_pm_opp_put() without checking for the error condition.
+Thank you for pointing it out.
+I have submitted the following patch to fix this issue.
+https://lore.kernel.org/linux-arm-msm/20250723-fallback_of_opp_table-v1-1-20a6277fdded@quicinc.com
+>
+>      Arnd
+
+-- 
+Best Regards,
+Renjiang
 
 
