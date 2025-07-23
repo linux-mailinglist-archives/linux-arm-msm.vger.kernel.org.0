@@ -1,157 +1,367 @@
-Return-Path: <linux-arm-msm+bounces-66178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D836EB0EA51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:09:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F4B8B0EA70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:15:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DBA01C23B9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:10:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81BEC16B62F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:15:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06BA0248864;
-	Wed, 23 Jul 2025 06:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D657D262FE2;
+	Wed, 23 Jul 2025 06:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9Sic9Q0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="di3HiSrc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66761DF270;
-	Wed, 23 Jul 2025 06:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B8F2620D2;
+	Wed, 23 Jul 2025 06:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753250985; cv=none; b=Lr/DBnA49eteDi7kzCR3Q1RUm3vrI469H85dhwvkhLfN4NvEe40BIV7XuK7zIdCFoyi8q4cOS0sLgkx4qJ51GrowHJe2VTuZEm8blZmYXK10WLIYk4hwoJQIHDcHY+HKVTFAgRLAWW2RBgsh8eX+tIGNV81Ot/UIR9NIfK3XPSc=
+	t=1753251331; cv=none; b=C3ACZPy8q6iarYvdGRDo5mRCysEl6fPvguPlmkeFm4mB9Wmwbo8em2/m/eZf+I4gO5pIfvMxrRBf0R839kV2EMG1B41A3csFV/E5HaGSjF87sKCpjSKCxWI6SWOcPsnHctvxkTv/NSSxZGZm4bARFyYqNEcq02MS3DloiNPKXBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753250985; c=relaxed/simple;
-	bh=yeOS69AHCtLgXhVGSxn5RYqgot+67kfHP3kAGczl9cY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HAns6r/RrudJ8BFNwc4Etb2PHFRDpChAD6WZ7ezt5y5LSOPs8O96k+qeN1wxjW1lZ5Vi+xbk0P6xL2ZvEsWoK6BIJVcyJmpgXygp03z8FqwonDRXObOnuAOvx4ulrDRG89Qd0gjmGhnJc0jFzRACTRjDeQZdf/H2/tKVKoaDffw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s9Sic9Q0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15403C4CEE7;
-	Wed, 23 Jul 2025 06:09:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753250985;
-	bh=yeOS69AHCtLgXhVGSxn5RYqgot+67kfHP3kAGczl9cY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s9Sic9Q0tQ1hek+AJ6SMXi8CAYjRzZhjJdaGBe2A07HLNQLChHYD5iBiUrBB4dj52
-	 PbxmTmDLJTULAtj8ryHWH96NZVN+ykwAUPV08y7t8YRJon9UbpZBH+EeevWWorv1Qb
-	 rKJA7glwUtGkdRYwKQmGVOuMK8YzS/+/LtRBQmS9GJfFOmn8ClGtqIdBMNm/6TszAj
-	 uiYKOupRYs2iH6/0tnGkORSkEd+9BCQGOLnnioAPAPw0NzDxgH2Mfa34aB6MnT1UkQ
-	 7z+xNRGcPp8P/MtweajG6TRPL8LQHAVhkMtmpoPR6mT/8/fxu/5ED2L8GHkBTRXwG2
-	 Q+pEk+ISOnsKw==
-Message-ID: <0ec295d5-19a2-4a3e-b246-1eb5860560ac@kernel.org>
-Date: Wed, 23 Jul 2025 08:09:41 +0200
+	s=arc-20240116; t=1753251331; c=relaxed/simple;
+	bh=N43cuG+pOVZm2ZWrnVJ4hATknbK5R9DIZewNsfCzvxQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=UYOQZppY7y8MwzR2hQVJOLaO6p0vv+EVTsbgEbmccgYhSOGmmBw10LUP2bOeMrJm5xYmJSv2dL4kAQtAy8jfQAjg7EAujPvST/30nJS6kX7ljWhMJHSTlf7BImr3C5HPFGO8+BiuBQIVAITtXCqFTbhJljJerw5BlLx7OR7utOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=di3HiSrc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MMOBak030875;
+	Wed, 23 Jul 2025 06:15:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=IFkELXFUB9NvN6iEc0gNji
+	OsBXFmLuigfQwdoPldwz8=; b=di3HiSrcI6q+ZcuwhWao0ZE7zcmiXAYPazFKQh
+	MoPZvOLUb16pOieu6dzEMa+1Mq1yp9GSuIT4k9f6NiI43NQuoqX1cH5K6c4yEl4R
+	CF93+qgynGBqGWrkIVNeXtcZDU7BpX6Vv4/TXt0TohIUCEUTyhZFaPfeYs2HyvGY
+	mGR7GOuDMOBT2XaLdN3701k1wJUr0j1u3aSfgb97wti4XLxZ7mZCpaF9olN7IUqO
+	VAsXjqOrvaviG1z6cXGF95p0LKHYWFjmGA9NL3kDZfyjvrVnFCFKqKMsh+SSM5ZP
+	wNq9VuM2bt76NHxSLjHZGrK/gp/cT0LVEavYSW1yp0HA0sNg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48045w2cyv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 06:15:26 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56N6FQBg020134
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Jul 2025 06:15:26 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Tue, 22 Jul 2025 23:15:23 -0700
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+Date: Wed, 23 Jul 2025 14:14:55 +0800
+Subject: [PATCH] arm64: dts: qcom: hamoa-iot-evk: Enable display support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -resend] drm/msm: use dev_fwnode()
-To: Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-kernel@vger.kernel.org, tglx@linutronix.de,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20250723055512.1800438-1-jirislaby@kernel.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20250723055512.1800438-1-jirislaby@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20250723-x1e-evk-dp-v1-1-be76ce53b9b8@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAOF9gGgC/22Py2rDMBBFf8Vo3QkayZYflJL/KKHoMapFYyuxH
+ JMS/O+V7W03A3dgzpz7YommQIl1xYtNtIQU4pgDvhXM9nr8JgguZya4qHgtEJ5IQMsPuBtgicS
+ dr6pWOpYPbhP58Nxhn5cjT3R/ZOZ8LNlAKemd2RXvBxIV9HqI+iuMYQ76CgsCB6985bhvNSp5j
+ imd7g99tXEYTnl8bM+MTgTbJsxdwQ0J2SAnKUg5rrF2vracjHZNWxktrEDubck2rT6kOU6/e+U
+ Fd6//2mUPBONQ+rZUUpnmnKvYMNpNgV3Wdf0DBIjS9T0BAAA=
+X-Change-ID: 20250721-x1e-evk-dp-141e0df5593d
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Yongxing Mou <quic_yongmou@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753251323; l=5750;
+ i=quic_yongmou@quicinc.com; s=20241121; h=from:subject:message-id;
+ bh=N43cuG+pOVZm2ZWrnVJ4hATknbK5R9DIZewNsfCzvxQ=;
+ b=BIHmQvD11heOY1w/Ayue2uG9a2oAdsKNf2dIws3gwjjnG31rHNwQI7iIV/t6VmuUhYAhm++6c
+ ukz47R2GSmCAYWoFZDxDjBPoiskEeDNd2ZHFHViUXUM7KkIifw/p1Mi
+X-Developer-Key: i=quic_yongmou@quicinc.com; a=ed25519;
+ pk=zeCnFRUqtOQMeFvdwex2M5o0Yf67UHYfwCyBRQ3kFbU=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=LL1mQIW9 c=1 sm=1 tr=0 ts=68807dfe cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=zAb8Bd7FbwY5RvWIoh4A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: eQYtpGGk5R-7V113rRgmn2d48J8vHPl2
+X-Proofpoint-ORIG-GUID: eQYtpGGk5R-7V113rRgmn2d48J8vHPl2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDA1MCBTYWx0ZWRfX6/DCITRFyYn+
+ fVqoMtEh0ogxQWj4+pivW1zlXLGo2e4R4xjVb4rXtrz2uF6fG5vAbrNiYUap1+mQdFSYu2kBdk8
+ wXiL5hceBoepFxJOswMUe4d1jxXHar9RkvU6g6U60xP4I2K1WiqYWQjtX5bW1RxdapyYtl3HReV
+ bbLME2MLlAoIpMkLM0NbL8L3UVKkUODTWgE+SIqH3/GoBgA1kPPuX/wsbiiVvYap0EdhCf3SE4q
+ ghn0Xt2kcpxzlaS+rJX3oopaXjEW+SIISVFC0ZR9NRN6LdgfVNG+ddTBCeLVigTwmSPS0Dv0A7z
+ o9nYHYHGP4cjdFPiWk6dcfXhZfGh1DoHR+QZsO2qy5PmSP9AN1DIsNMSZ+cLS4bZ1tQwjJXTNrV
+ bHEND8T03tB4jkpuXU2FV0X+L8DhOjoSs7hImN3k2bifMC6NSkF7ob6apOPb8/G8zX+IRtf/
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_01,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507230050
 
-Hmm, I got: "Dmitry Baryshkov no longer works for Linaro.". "To:" field 
-fixed using @kernel.org address (was in Cc).
+Enable DisplayPort support on all three USB-C ports of the
+hamoa-iot-evk platform.
 
-On 23. 07. 25, 7:55, Jiri Slaby (SUSE) wrote:
-> irq_domain_create_simple() takes fwnode as the first argument. It can be
-> extracted from the struct device using dev_fwnode() helper instead of
-> using of_node with of_fwnode_handle().
-> 
-> So use the dev_fwnode() helper.
-> 
-> Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <lumag@kernel.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Simona Vetter <simona@ffwll.ch>
-> 
-> ---
-> 
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> ---
->   drivers/gpu/drm/msm/msm_mdss.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 1f5fe7811e01..ec7d83831b83 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -154,8 +154,7 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
->   
->   	dev = msm_mdss->dev;
->   
-> -	domain = irq_domain_create_linear(of_fwnode_handle(dev->of_node), 32,
-> -			&msm_mdss_irqdomain_ops, msm_mdss);
-> +	domain = irq_domain_create_linear(dev_fwnode(dev), 32, &msm_mdss_irqdomain_ops, msm_mdss);
->   	if (!domain) {
->   		dev_err(dev, "failed to add irq_domain\n");
->   		return -EINVAL;
+Unlike most X1E-based boards, this platform uses FSUSB42 USB
+switches for the USB0 Type-C port, while USB1 and USB2 rely on
+Parade PS8830 retimers for Alt Mode switching.
 
+Support for the PS8830 retimers was already included in the
+initial DTS, so this change adds support for the FSUSB42 switches.
 
+Due to limitations in the USB/DP combo PHY driver, DisplayPort
+functionality is limited to 2 lanes instead of the maximum 4,
+consistent with other X1E-based platforms.
+
+The platform also supports embedded DisplayPort (eDP) by default.
+
+Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+---
+This change made top of initial DTS:
+https://lore.kernel.org/all/20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com/
+---
+ arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 156 +++++++++++++++++++++++++++++
+ 1 file changed, 156 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+index 843f39c9d59286a9303a545411b2518d7649a059..f32e03f15ae702ba457cf3de35b779c9c267d3b6 100644
+--- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
++++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+@@ -48,6 +48,22 @@ pmic_glink_ss0_hs_in: endpoint {
+ 						remote-endpoint = <&usb_1_ss0_dwc3_hs>;
+ 					};
+ 				};
++
++				port@1 {
++					reg = <1>;
++
++					pmic_glink_ss0_ss_in: endpoint {
++						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					pmic_glink_ss0_sbu: endpoint {
++						remote-endpoint = <&usb_1_ss0_sbu_mux>;
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -135,6 +151,23 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-boot-on;
+ 	};
+ 
++	vreg_edp_3p3: regulator-edp-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_EDP_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&edp_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
+ 	vreg_nvme: regulator-nvme {
+ 		compatible = "regulator-fixed";
+ 
+@@ -353,6 +386,25 @@ vreg_wwan: regulator-wwan {
+ 		regulator-boot-on;
+ 	};
+ 
++	usb-1-ss0-sbu-mux {
++		compatible = "onnn,fsusb42", "gpio-sbu-mux";
++
++		enable-gpios = <&tlmm 168 GPIO_ACTIVE_LOW>;
++		select-gpios = <&tlmm 167 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&usb_1_ss0_sbu_default>;
++		pinctrl-names = "default";
++
++		mode-switch;
++		orientation-switch;
++
++		port {
++			usb_1_ss0_sbu_mux: endpoint {
++				remote-endpoint = <&pmic_glink_ss0_sbu>;
++			};
++		};
++	};
++
+ 	wcn7850-pmu {
+ 		compatible = "qcom,wcn7850-pmu";
+ 
+@@ -572,6 +624,76 @@ retimer_ss1_con_sbu_out: endpoint {
+ 	};
+ };
+ 
++&mdss {
++	status = "okay";
++};
++
++&mdss_dp0 {
++	status = "okay";
++};
++
++&mdss_dp0_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
++
++&mdss_dp1 {
++	status = "okay";
++};
++
++&mdss_dp1_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
++
++&mdss_dp2 {
++	status = "okay";
++};
++
++&mdss_dp2_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
++
++&mdss_dp3 {
++	/delete-property/ #sound-dai-cells;
++
++	status = "okay";
++
++	aux-bus {
++		panel {
++			compatible = "edp-panel";
++			power-supply = <&vreg_edp_3p3>;
++
++			port {
++				edp_panel_in: endpoint {
++					remote-endpoint = <&mdss_dp3_out>;
++				};
++			};
++		};
++	};
++
++	ports {
++		port@1 {
++			reg = <1>;
++			mdss_dp3_out: endpoint {
++				data-lanes = <0 1 2 3>;
++				link-frequencies = /bits/ 64 <1620000000 2700000000
++							      5400000000 8100000000>;
++
++				remote-endpoint = <&edp_panel_in>;
++			};
++		};
++	};
++};
++
++&mdss_dp3_phy {
++	vdda-phy-supply = <&vreg_l3j_0p8>;
++	vdda-pll-supply = <&vreg_l2j_1p2>;
++
++	status = "okay";
++};
++
+ &pcie6a {
+ 	vddpe-3v3-supply = <&vreg_nvme>;
+ };
+@@ -646,6 +768,13 @@ &smb2360_2_eusb2_repeater {
+ };
+ 
+ &tlmm {
++	edp_reg_en: edp-reg-en-state {
++		pins = "gpio70";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++	};
++
+ 	eusb3_reset_n: eusb3-reset-n-state {
+ 		pins = "gpio6";
+ 		function = "gpio";
+@@ -733,6 +862,29 @@ usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
+ 		bias-disable;
+ 	};
+ 
++	usb_1_ss0_sbu_default: usb-1-ss0-sbu-state {
++		mode-pins {
++			pins = "gpio166";
++			function = "gpio";
++			bias-disable;
++			drive-strength = <2>;
++			output-high;
++		};
++
++		oe-n-pins {
++			pins = "gpio168";
++			function = "gpio";
++			bias-disable;
++			drive-strength = <2>;
++		};
++
++		sel-pins {
++			pins = "gpio167";
++			function = "gpio";
++			bias-disable;
++			drive-strength = <2>;
++		};
++	};
+ 
+ 	wcn_bt_en: wcn-bt-en-state {
+ 		pins = "gpio116";
+@@ -795,6 +947,10 @@ &usb_1_ss0_hsphy {
+ 	phys = <&smb2360_0_eusb2_repeater>;
+ };
+ 
++&usb_1_ss0_qmpphy_out {
++	remote-endpoint = <&pmic_glink_ss0_ss_in>;
++};
++
+ &usb_1_ss1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_ss1_hs_in>;
+ };
+
+---
+base-commit: 0be23810e32e6d0a17df7c0ebad895ba2c210fc4
+change-id: 20250721-x1e-evk-dp-141e0df5593d
+prerequisite-message-id: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
+prerequisite-patch-id: 3c553b55d143eafc1036ce2e88df558ec61c4e83
+prerequisite-patch-id: a4b2dabd376d32ecb159141c17113a8f3fc4ddfa
+prerequisite-patch-id: 24bf2ada12dc10f9980ed2c56347e5b6f7964ebd
+prerequisite-patch-id: c764e86c94055e56aaf9e701341bba52a54a998b
+
+Best regards,
 -- 
-js
-suse labs
+Yongxing Mou <quic_yongmou@quicinc.com>
+
 
