@@ -1,44 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-66400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF496B0FD6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 01:27:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 653E2B0FD6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 01:27:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 21163584F0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 23:27:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5CC11CC392A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 23:27:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95E5279331;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D595827978C;
 	Wed, 23 Jul 2025 23:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="GHF8wjn8"
+	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="IdfokopZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.ionic.de (ionic.de [145.239.234.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C6B274FC2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691F3274B5F;
 	Wed, 23 Jul 2025 23:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.239.234.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753313079; cv=none; b=BV1A8PgWni53pHe08QnKd9GPMOCJrkmnWNeocOP4G9FdjcKBy6ntDt5rQWjz0d17c2L282aSAdAmAnm7/0UvKdrt0Pfm4J6GyT845jzc6Cm9xOX+uvrxRh9zxCa4MkX8uHBwZbLrfmsEIYL0TTGFNLfi8rij6Fe52PgmzW5X0SA=
+	t=1753313079; cv=none; b=ubZa93P0RLYUfoX3Lf61yFozDE025HFdqHKzqJqiCbwLaiMRm6xkBi4lRKecuJdpB3los/eGHdHvmz+kc5wtepF09rMQ6ugsSDKQb6aOYR0rE6ueO/PBobO3X/5ZoG5CkT5Iw2iqCNJ4JViDeG2+YJBeRyFHjTzbBP/qFc5F0gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1753313079; c=relaxed/simple;
-	bh=dLmLootIwDWz7HMCxoF81qoWZ5lCPPT1GMJxSIlBhUA=;
+	bh=V6R/KHiQF1E7ZSZL4kSEaODLY01NnMRxT2a1tkvHMRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYkJJwhlBuE+2NhIz2p7vzIrukUYbYXKuftgy7oCpEVnhY/LqQBSw2GUkzd3+7d82hVtUd50Ps0FZY7vekIdrXpyUhxRGuLxnIzQ3Ci3O6g4yTdh1gQHX820UNxSfaZ9CYugIqBg7B8Iy98anBUNd3Rm6uFJ8s/RYIIXNvxlIDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=GHF8wjn8; arc=none smtp.client-ip=145.239.234.145
+	 MIME-Version; b=sakkuPja5HEeo5YmYvQ7IofpcA3IviAyJNjMKoFxLZWsv730EtqrWc/4eXf04ZFXZx/eIjMxobB71S+dKKQXHW22f9NJaGBwnxnDOP+43Gmo/NkIvkiUovU4dVARmORuBfmH4axe9vFbxgkDlZDVRv5Vs0hubLF5ljrOdbQHlmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=IdfokopZ; arc=none smtp.client-ip=145.239.234.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionic.de
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ionic.de; s=default;
-	t=1753313066; bh=dLmLootIwDWz7HMCxoF81qoWZ5lCPPT1GMJxSIlBhUA=;
+	t=1753313066; bh=V6R/KHiQF1E7ZSZL4kSEaODLY01NnMRxT2a1tkvHMRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHF8wjn8FHR9DMM4WaDCGmuLqTKsV/+Usk78KFAUk4k65rADbAxieRqb7iSDRDmJ4
-	 9BhqbmS7jAO6bYtZapgi0k05akWaL5SDBf8QCCjr48j+kKIz2AnyPQpPrEd6UJPNx8
-	 Rk6IY0fi/VzYsvmxRHeONozn3hpokPSmFwAaGoYg=
+	b=IdfokopZKcUl0q/HNovCluvh+JFTXkafLynFUMX3QcZ1O9Fs0od4LexFTpkdjyw/Q
+	 lV67wVzG2nSMcMaUyPJNQlqKVr+j8s6Y63TaA+ExN09plxmkZxeXfg0v6vhOhfx3Lt
+	 xXDBqdvtCY1Q9L5J2TKYAAAfjy4g9ivoPO67CzAk=
 Received: from grml.local.home.ionic.de (unknown [IPv6:2a00:11:fb41:7a00:21b:21ff:fe5e:dddc])
-	by mail.ionic.de (Postfix) with ESMTPSA id 249691488F7C;
+	by mail.ionic.de (Postfix) with ESMTPSA id 5C11B14890D7;
 	Thu, 24 Jul 2025 01:24:26 +0200 (CEST)
 From: Mihai Moldovan <ionic@ionic.de>
 To: linux-arm-msm@vger.kernel.org,
@@ -53,9 +53,9 @@ Cc: Denis Kenzior <denkenz@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org
-Subject: [PATCH v3 05/11] net: qrtr: Report sender endpoint in aux data
-Date: Thu, 24 Jul 2025 01:24:02 +0200
-Message-ID: <30c2c4547108dd0baa638f8ed3cf493a3bc06bc2.1753312999.git.ionic@ionic.de>
+Subject: [PATCH v3 06/11] net: qrtr: Report endpoint for locally generated messages
+Date: Thu, 24 Jul 2025 01:24:03 +0200
+Message-ID: <ad993f8e1c8f983026e036c1291347901cb2d47b.1753312999.git.ionic@ionic.de>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <cover.1753312999.git.ionic@ionic.de>
 References: <cover.1753312999.git.ionic@ionic.de>
@@ -69,16 +69,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Denis Kenzior <denkenz@gmail.com>
 
-Introduce support for reporting the remote endpoint that generated a
-given QRTR message to clients using AF_QIPCRTR family sockets. This is
-achieved by including QRTR_ENDPOINT auxiliary data, which carries the
-endpoint identifier of the message sender.  To receive this auxiliary
-data, clients must explicitly opt-in by using setsockopt with the
-QRTR_REPORT_ENDPOINT option enabled.
-
-Implementation of getsockopt and setsockopt is provided.  An additional
-level 'SOL_QRTR' is added to socket.h for use by AF_QIPCRTR family
-sockets.
+For messages generated by the local endpoint destined
+to the local endpoint, report the local endpoint identifier.  Same
+QRTR_ENDPOINT auxiliary data and QRTR_REPORT_ENDPOINT socket option
+semantics apply as for messages generated by remote endpoints.
 
 Signed-off-by: Denis Kenzior <denkenz@gmail.com>
 Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
@@ -89,184 +83,136 @@ Signed-off-by: Mihai Moldovan <ionic@ionic.de>
 
 v3:
   - rebase against current master
-  - fix checkpatch.pl whitespace warning
-  - Link to v2: https://msgid.link/8dc0c9f99f617db348af5b176bb03b4c11ac9138.1752947108.git.ionic@ionic.de
+  - fix checkpatch.pl function definition warnings
+  - Link to v2: https://msgid.link/5b08be230cd2e5faf24297ee04beb7616861fe5b.1752947108.git.ionic@ionic.de
 
 v2:
   - rebase against current master
-  - dropped socket locking in qrtr_setsockopt() and qrtr_getsockopt() as
-    per review comment
-  - Link to v1: https://msgid.link/20241018181842.1368394-5-denkenz@gmail.com
+  - Link to v1: https://msgid.link/20241018181842.1368394-6-denkenz@gmail.com
 ---
- include/linux/socket.h    |  1 +
- include/uapi/linux/qrtr.h |  6 +++
- net/qrtr/af_qrtr.c        | 77 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 84 insertions(+)
+ net/qrtr/af_qrtr.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/socket.h b/include/linux/socket.h
-index 3b262487ec06..0698a11bb2e2 100644
---- a/include/linux/socket.h
-+++ b/include/linux/socket.h
-@@ -386,6 +386,7 @@ struct ucred {
- #define SOL_MCTP	285
- #define SOL_SMC		286
- #define SOL_VSOCK	287
-+#define SOL_QRTR	288
- 
- /* IPX options */
- #define IPX_TYPE	1
-diff --git a/include/uapi/linux/qrtr.h b/include/uapi/linux/qrtr.h
-index f7e2fb3d752b..6d0911984a05 100644
---- a/include/uapi/linux/qrtr.h
-+++ b/include/uapi/linux/qrtr.h
-@@ -46,4 +46,10 @@ struct qrtr_ctrl_pkt {
- 	};
- } __packed;
- 
-+/* setsockopt / getsockopt */
-+#define QRTR_REPORT_ENDPOINT 1
-+
-+/* CMSG */
-+#define QRTR_ENDPOINT 1
-+
- #endif /* _LINUX_QRTR_H */
 diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index d6efd7f2eddf..0d21acb465ee 100644
+index 0d21acb465ee..68f899b16e95 100644
 --- a/net/qrtr/af_qrtr.c
 +++ b/net/qrtr/af_qrtr.c
-@@ -26,6 +26,10 @@
+@@ -184,9 +184,11 @@ struct qrtr_tx_flow {
+ #define QRTR_TX_FLOW_LOW	5
  
- #define QRTR_PORT_CTRL_LEGACY 0xffff
+ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
++			      u32 endpoint_id,
+ 			      int type, struct sockaddr_qrtr *from,
+ 			      struct sockaddr_qrtr *to);
+ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
++			      u32 endpoint_id,
+ 			      int type, struct sockaddr_qrtr *from,
+ 			      struct sockaddr_qrtr *to);
+ static struct qrtr_sock *qrtr_port_lookup(int port);
+@@ -401,6 +403,7 @@ static int qrtr_tx_flow_failed(struct qrtr_node *node, int dest_node,
  
-+enum {
-+	QRTR_F_REPORT_ENDPOINT,
-+};
-+
- /**
-  * struct qrtr_hdr_v1 - (I|R)PCrouter packet header version 1
-  * @version: protocol version
-@@ -79,6 +83,7 @@ struct qrtr_cb {
- 	u32 src_port;
- 	u32 dst_node;
- 	u32 dst_port;
-+	u32 endpoint_id;
- 
- 	u8 type;
- 	u8 confirm_rx;
-@@ -92,6 +97,7 @@ struct qrtr_sock {
- 	struct sock sk;
- 	struct sockaddr_qrtr us;
- 	struct sockaddr_qrtr peer;
-+	unsigned long flags;
- };
- 
- static inline struct qrtr_sock *qrtr_sk(struct sock *sk)
-@@ -575,6 +581,8 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 	if (cb->dst_port == QRTR_PORT_CTRL_LEGACY)
- 		cb->dst_port = QRTR_PORT_CTRL;
- 
-+	cb->endpoint_id = ep->id;
-+
- 	if (!size || len != ALIGN(size, 4) + hdrlen)
- 		goto err;
- 
-@@ -1134,6 +1142,7 @@ static int qrtr_recvmsg(struct socket *sock, struct msghdr *msg,
- 			size_t size, int flags)
+ /* Pass an outgoing packet socket buffer to the endpoint driver. */
+ static int qrtr_node_enqueue(struct qrtr_node *node, struct sk_buff *skb,
++			     u32 endpoint_id,
+ 			     int type, struct sockaddr_qrtr *from,
+ 			     struct sockaddr_qrtr *to)
  {
- 	DECLARE_SOCKADDR(struct sockaddr_qrtr *, addr, msg->msg_name);
-+	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
- 	struct sock *sk = sock->sk;
- 	struct sk_buff *skb;
- 	struct qrtr_cb *cb;
-@@ -1159,6 +1168,10 @@ static int qrtr_recvmsg(struct socket *sock, struct msghdr *msg,
- 		msg->msg_flags |= MSG_TRUNC;
+@@ -748,7 +751,8 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
+ 		skb = qrtr_alloc_ctrl_packet(&pkt, GFP_ATOMIC);
+ 		if (skb) {
+ 			pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
+-			qrtr_local_enqueue(NULL, skb, QRTR_TYPE_BYE, &src, &dst);
++			qrtr_local_enqueue(NULL, skb, endpoint_id,
++					   QRTR_TYPE_BYE, &src, &dst);
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
+@@ -815,8 +819,8 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+ 		pkt->client.port = cpu_to_le32(ipc->us.sq_port);
+ 
+ 		skb_set_owner_w(skb, &ipc->sk);
+-		qrtr_bcast_enqueue(NULL, skb, QRTR_TYPE_DEL_CLIENT, &ipc->us,
+-				   &to);
++		qrtr_bcast_enqueue(NULL, skb, qrtr_local_nid,
++				   QRTR_TYPE_DEL_CLIENT, &ipc->us, &to);
  	}
  
-+	if (cb->endpoint_id && test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags))
-+		put_cmsg(msg, SOL_QRTR, QRTR_ENDPOINT,
-+			 sizeof(cb->endpoint_id), &cb->endpoint_id);
-+
- 	rc = skb_copy_datagram_msg(skb, 0, msg, copied);
- 	if (rc < 0)
- 		goto out;
-@@ -1304,6 +1317,68 @@ static int qrtr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 	return rc;
- }
+ 	if (port == QRTR_PORT_CTRL)
+@@ -956,6 +960,7 @@ static int qrtr_bind(struct socket *sock, struct sockaddr *saddr, int len)
  
-+static int qrtr_setsockopt(struct socket *sock, int level, int optname,
-+			   sockptr_t optval, unsigned int optlen)
-+{
-+	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
-+	unsigned int val = 0;
-+	int rc = 0;
-+
-+	if (level != SOL_QRTR)
-+		return -ENOPROTOOPT;
-+
-+	if (optlen >= sizeof(val) &&
-+	    copy_from_sockptr(&val, optval, sizeof(val)))
-+		return -EFAULT;
-+
-+	switch (optname) {
-+	case QRTR_REPORT_ENDPOINT:
-+		assign_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags, val);
-+		break;
-+	default:
-+		rc = -ENOPROTOOPT;
-+	}
-+
-+	return rc;
-+}
-+
-+static int qrtr_getsockopt(struct socket *sock, int level, int optname,
-+			   char __user *optval, int __user *optlen)
-+{
-+	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
-+	unsigned int val;
-+	int len;
-+	int rc = 0;
-+
-+	if (level != SOL_QRTR)
-+		return -ENOPROTOOPT;
-+
-+	if (get_user(len, optlen))
-+		return -EFAULT;
-+
-+	if (len < sizeof(val))
-+		return -EINVAL;
-+
-+	switch (optname) {
-+	case QRTR_REPORT_ENDPOINT:
-+		val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
-+		break;
-+	default:
-+		rc = -ENOPROTOOPT;
-+	}
-+
-+	if (rc)
-+		return rc;
-+
-+	len = sizeof(int);
-+
-+	if (put_user(len, optlen) ||
-+	    copy_to_user(optval, &val, len))
-+		rc = -EFAULT;
-+
-+	return rc;
-+}
-+
- static int qrtr_release(struct socket *sock)
+ /* Queue packet to local peer socket. */
+ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
++			      u32 endpoint_id,
+ 			      int type, struct sockaddr_qrtr *from,
+ 			      struct sockaddr_qrtr *to)
  {
- 	struct sock *sk = sock->sk;
-@@ -1351,6 +1426,8 @@ static const struct proto_ops qrtr_proto_ops = {
- 	.shutdown	= sock_no_shutdown,
- 	.release	= qrtr_release,
- 	.mmap		= sock_no_mmap,
-+	.setsockopt	= qrtr_setsockopt,
-+	.getsockopt	= qrtr_getsockopt,
- };
+@@ -973,6 +978,7 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ 	cb = (struct qrtr_cb *)skb->cb;
+ 	cb->src_node = from->sq_node;
+ 	cb->src_port = from->sq_port;
++	cb->endpoint_id = endpoint_id;
  
- static struct proto qrtr_proto = {
+ 	if (sock_queue_rcv_skb(&ipc->sk, skb)) {
+ 		qrtr_port_put(ipc);
+@@ -987,6 +993,7 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ 
+ /* Queue packet for broadcast. */
+ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
++			      u32 endpoint_id,
+ 			      int type, struct sockaddr_qrtr *from,
+ 			      struct sockaddr_qrtr *to)
+ {
+@@ -998,11 +1005,11 @@ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ 		if (!skbn)
+ 			break;
+ 		skb_set_owner_w(skbn, skb->sk);
+-		qrtr_node_enqueue(node, skbn, type, from, to);
++		qrtr_node_enqueue(node, skbn, endpoint_id, type, from, to);
+ 	}
+ 	mutex_unlock(&qrtr_node_lock);
+ 
+-	qrtr_local_enqueue(NULL, skb, type, from, to);
++	qrtr_local_enqueue(NULL, skb, endpoint_id, type, from, to);
+ 
+ 	return 0;
+ }
+@@ -1010,12 +1017,15 @@ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ {
+ 	DECLARE_SOCKADDR(struct sockaddr_qrtr *, addr, msg->msg_name);
+-	int (*enqueue_fn)(struct qrtr_node *, struct sk_buff *, int,
+-			  struct sockaddr_qrtr *, struct sockaddr_qrtr *);
++	int (*enqueue_fn)(struct qrtr_node *node, struct sk_buff *skb,
++			  u32 endpoint_id, int type,
++			  struct sockaddr_qrtr *from,
++			  struct sockaddr_qrtr *to);
+ 	__le32 qrtr_type = cpu_to_le32(QRTR_TYPE_DATA);
+ 	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
+ 	struct sock *sk = sock->sk;
+ 	struct qrtr_node *node;
++	u32 endpoint_id = qrtr_local_nid;
+ 	struct sk_buff *skb;
+ 	size_t plen;
+ 	u32 type;
+@@ -1099,7 +1109,7 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 	}
+ 
+ 	type = le32_to_cpu(qrtr_type);
+-	rc = enqueue_fn(node, skb, type, &ipc->us, addr);
++	rc = enqueue_fn(node, skb, endpoint_id, type, &ipc->us, addr);
+ 	if (rc >= 0)
+ 		rc = len;
+ 
+@@ -1131,7 +1141,8 @@ static int qrtr_send_resume_tx(struct qrtr_cb *cb)
+ 	pkt->client.node = cpu_to_le32(cb->dst_node);
+ 	pkt->client.port = cpu_to_le32(cb->dst_port);
+ 
+-	ret = qrtr_node_enqueue(node, skb, QRTR_TYPE_RESUME_TX, &local, &remote);
++	ret = qrtr_node_enqueue(node, skb, cb->endpoint_id,
++				QRTR_TYPE_RESUME_TX, &local, &remote);
+ 
+ 	qrtr_node_release(node);
+ 
 -- 
 2.50.0
 
