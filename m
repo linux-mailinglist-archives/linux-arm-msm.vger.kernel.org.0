@@ -1,93 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-66378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 451A2B0FCC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 00:29:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 068FDB0FCCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 00:29:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C864E1AA5ED4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 22:29:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C83C58731C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 22:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3960D274FCA;
-	Wed, 23 Jul 2025 22:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51199274FF2;
+	Wed, 23 Jul 2025 22:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HsF8EWMg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PiObdMZw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6987727380A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869C9274B51
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753309685; cv=none; b=o9Mdrk8f6tFxDmpXvnSQzlT11CcCSjZSQxZZyWjDhK6sAOfOEOM4On7cBee5wUnSrryquqb7hkGvr1OZJsqHihJy1EV68l4LzkZiYy2WMSlF7rOPcHdQHnOYV+XcMW+XzX5QOPB9Bzp/ZPCejW+ofvZd9OeMVwL+EuPpfoRZqlQ=
+	t=1753309686; cv=none; b=tj/XU8adjljjw7L4DF/3x+Gm1xWPu45UJnAmYs63LQqeQHN02LdJz+D/xR+YbZOcy/lQZv5bKH3b+DpKfP/Ss/ZOaUlkUJWfYn0tkHjOjVTsmiasrp3UzwRDiL/Lp8QkD7+CYABKebIfFQ95EKsezZ4xHR1WHQDqQ3kyM6PAWAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753309685; c=relaxed/simple;
-	bh=Cg83Awss9xDJ8pD6V8b280JJheNN/NsF7gBEpQIitPA=;
+	s=arc-20240116; t=1753309686; c=relaxed/simple;
+	bh=u5YnQTCt8dVSb/Fugq9BHu8/dHungUrT8rTY9TBDuw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cU2E0l+xnX/0VKUQiUgpqzSfoTdNeZ61w8zyaT3NmSv6QOR/fRh2vCuqZEWgF1JqM/nssLr+381qxtzc0rA2sClWY9SlUcueEsrEX/L3e79w5u4G3Lo7vj5NPgMQJCltLvimO7uhr5Orv/q/ytcCP4r/AF0BXKTpiMC0BIPYFqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HsF8EWMg; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=Dl89L9xJ88r6pckXCoi4EeH9PLk6fMQ5+kdXIA4KFle1Yq6EdjBhN0baoJ9/CiDfdP633iUb9eUhDCfh5o27zXg0uO3C4xqlzH6/CoRdfwlVXOdGWfDnAQPNlBww0mqRB1Z73nh2ffwkW4gTKxZvISOdiOQn3HLnIGVjPBARmew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PiObdMZw; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NGNecj019543
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:02 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NGNf0L019569
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=UVdcT72FVIp
-	eN7V8jAd3K81D8qxPn0qt4t1IzEdxF/o=; b=HsF8EWMgb6+ou7u78qKCbPsQwfr
-	2iMmEFET0YeLF/PwYQi/GF7BRTjQXQs0q7wjClwEh6+DVgJERa4cEbYzUf0S2U1K
-	HyY1IyevmD3P95KQBbR8gjLQgOmKqa1Dwm2dfcluxxSnMcDIyG5EqHKMfcrb8vkq
-	PDetoaJig8URNTSNlq6cEOuDlzbSQmrlSXOxZsUD3CgHWk/l+NSErYejYErLwcYR
-	w0x/+c+H0REOBwAFhTxONxoVyhX4vFq2VcWarNHtu4wc1MM1Tmvs99p3araLl37h
-	ggN7v8HkqFRpCHUCvtUDgaoqnUryh56VpWldNO5N2lAt1b2BSx7QeoJwbQg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 483379ru52-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=5ftBTXL9LYh
+	4w82ALN9D5Q1Okarhm8+FZmAriFPFydI=; b=PiObdMZw8FadvApD7FHOOI1j2G2
+	zhqs4ifQv3MGDoymwI1OHMCw/zU9KHjnq/yGY3uRVEuMNa2MjASmMqQYjC+fjZFo
+	shYIqZG6J8p+VfHNDC+97vd7tqQz9/mhSqMcgH5PE/Mvg9JZiP89pu3JidhCe09E
+	ejXiN0XZ1x4KD7z091hBvEXg5MbAK3XP+0NdOUqHd1DMW7FRAxlqa4l5DsWMDM62
+	0Pe0Ym4xtnxDPNZVg183pedT0//7k4ZyXWtfaoczTj/mnfxMuCTTYdghgZp7Uxei
+	KAGkpW+fNSMeTcDDNBrT5QUcJrMVzSridCceDsVwuoCK7h2fK7Sm2iPZemQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 483379ru59-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:02 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-704b4b61d10so8395016d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 15:28:02 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 22:28:03 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70708748fbaso5597426d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 15:28:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753309681; x=1753914481;
+        d=1e100.net; s=20230601; t=1753309682; x=1753914482;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UVdcT72FVIpeN7V8jAd3K81D8qxPn0qt4t1IzEdxF/o=;
-        b=pDeceo+JwjI35nNzj5r4P8OHdxdd53UVVlRmnpeWNZzEhDhVdFvCj8mbr11VNgOa8A
-         z3HxzZ3B6D69wFAgT91DVQ1xhPAOhxAxh4r9bqAoNUpM5WOZc+6KhpGCatBFxUsR2oLq
-         TcBHZnXJ3bCVc+fEGxaZo13jq+A8rF4r/AKpNQ0/VsTD9Zeuj9uvw2BtyfG4TRy4ZoAR
-         m4F12a3oDM7rzKQL1PZtGLilFi1IxHu475Teq0bvQhIhAiBD/FtC5UAKtIjoacbRxzop
-         xkIvqCOE8I7V2pNxhsiCZ0QuIsjenIdBHXMYY3ihctrAbgDNl0Tkdmw161VxSlhR0MrI
-         8iMg==
-X-Forwarded-Encrypted: i=1; AJvYcCXV92tjsyumzDQQ+3rGwJFqEhRkXD5Pvd0/IGhZBxaKSDmWpQx+pqlh5NHUrkYUa5Ki2o8LGVOjLcparrz4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2rZCiiLOc0Z7672vg5tpqkAtKnzG1ECfDmdN1di6W0/KZXCvf
-	+ukarlJ/pU+Ycr1oQtkeATi/TPrMK9CST9JihqSh+V3I0AXVHivEZGTfTx/Gv53WfRwmQ6qlsCJ
-	j3KEDomMOpX/JwBt0iF9isKlimwN9rCaCuORaYIdSNCTe0L6zrdMtsLWtVYCU/58EezY0
-X-Gm-Gg: ASbGncv8m0htN2h4UWQUf4Ddi1SXSpkcz7TzVB+o1qRIv9IJz7zd3BKwJGzB6P7ZxUz
-	aCaINC9KcYToPAhhAhK6Q57vOh2u3tfrDviWgMviGG776I8Mco6zodoSSgZRzBubTcmtqM2AD5s
-	ioeO/63PmFSG5U6oo2o49yr+8WQXvKOoDOKzp08QfaXiUJVt6jhqJLeVuyVKj06TYHHAmnWuCCp
-	1jShuHUoSww6J7NFwqIl7xu+n0DTEMGn0BGugZGiK8YdlRi+7RC5DMGTUZmxQ6nWYlU40lWLjv8
-	3e4puO548auLfm5/JuxmzjLmAt5B1RH3rhWDMox8H3wrAlmT9OYrJA==
-X-Received: by 2002:a05:6214:e66:b0:702:da1d:7b6 with SMTP id 6a1803df08f44-7070065dddcmr75000896d6.39.1753309681179;
+        bh=5ftBTXL9LYh4w82ALN9D5Q1Okarhm8+FZmAriFPFydI=;
+        b=NDXCAHUMRvtQTxp9zMsRNJtWo50+dj6Ir5EyK8kCyQwoMSKZc7QW6vLGkdrIMRbZk4
+         Qvbk4DnpWl0/CrCa7RwrmvHDvUnR9M2EXzkloh1G28V+9IrkXOpBKxaabe1XaOYAflxU
+         7UgL/0pt1OvKBUnuZZ7weTkI5Ix8+gXDmlS80U5H35WvBcYMhi44DVXwaVysZL/vkqIR
+         LeJqr+oZmGPJsIi247ItsWkFi8OP4x+mfHFbk4kY7WCXB6C86SGVHx7tbM4cstcWZG17
+         F91e0WJQ0xf7hPn2o5Kchj8cfQWXWaN7YU830P6/q3PM1OYnmo/XeCjfyF45c4WEkVfd
+         y/7g==
+X-Forwarded-Encrypted: i=1; AJvYcCV8CN2jLJ/vKLecPZ/7WaH6HPoE+TseOH1DXB53JnP9FOhbtS3Cx0PsvBoxo1qX/PZv8SKlNsINn7DzSb1r@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKg3uqrEtBZ4qtvRgbQlZbkNZxwrF6qk7MJofRdU13sexJHPMH
+	Tpra0tlWZdiSu2OKabq4vVmYUcK28tTK2MKxKktd6l75SHADI4j9S7DInHLciVGuaa3uaLiaGRZ
+	5MUJNutZi6K/NnaM+fVVszl4tKiR4Z1TPJfB9AhmmIzkQKMR6pwEoTDmSnisI12OiDqr24jFPKB
+	S1
+X-Gm-Gg: ASbGnct8QHE/R3GPZrUQfv6INfMhrx0+cXDYrX2F5YiPD555DRfk27pmmFsKHFzaILh
+	+NrXygsEZbGfI8EeABEqZWRw1GXdmSfR10ZYtLbzAjWMGsiJ9FjTu8Y0Ax53BGfs4Y+eRrSITHJ
+	toy5LqO9kmreKG4+LDqu52MEiZWXYIjGezeLtpi79C5jSc2OU3D7SrpCB1ZJ8xsbcoyleg4dSWD
+	/DRz3PJOVKmbFel+SzL3KFITuACho2u4Arz8OZ5JHeyk/a2TUPgiKYSpr2qBxcFzklGgTdHJ2gP
+	GsvA/mns/SLJCG0RI4ZHws49bj9tJRE9tYZ0QToQ8Mmcyax50zUFxQ==
+X-Received: by 2002:a05:6214:4115:b0:704:b906:eaa4 with SMTP id 6a1803df08f44-70700736c73mr71555196d6.37.1753309682230;
+        Wed, 23 Jul 2025 15:28:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNLAHZ8fpDxJ7lJK4dFDOw2FUpqvS5WNssMuZLaUDjr+J/WR6798RpyyA4BQnkgiXAuhAs8w==
+X-Received: by 2002:a05:6214:4115:b0:704:b906:eaa4 with SMTP id 6a1803df08f44-70700736c73mr71554856d6.37.1753309681719;
         Wed, 23 Jul 2025 15:28:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFR3Y70iRxurvn67ZH8uU8lWluwQrFXrLFgiTwqmBUbTtJeR6aH4EXz7NfsamMhwO5FbuMS8A==
-X-Received: by 2002:a05:6214:e66:b0:702:da1d:7b6 with SMTP id 6a1803df08f44-7070065dddcmr75000536d6.39.1753309680763;
-        Wed, 23 Jul 2025 15:28:00 -0700 (PDT)
 Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcad23bsm248520f8f.44.2025.07.23.15.27.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcad23bsm248520f8f.44.2025.07.23.15.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 15:28:00 -0700 (PDT)
+        Wed, 23 Jul 2025 15:28:01 -0700 (PDT)
 From: srinivas.kandagatla@oss.qualcomm.com
 To: andersson@kernel.org, konradybcio@kernel.org
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
         cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH 08/23] arm64: dts: qcom: sm8250: use dedicated elite dtsi
-Date: Wed, 23 Jul 2025 23:27:22 +0100
-Message-ID: <20250723222737.35561-9-srinivas.kandagatla@oss.qualcomm.com>
+Subject: [PATCH 09/23] arm64: dts: qcom: sm6115: use dedicated elite dtsi
+Date: Wed, 23 Jul 2025 23:27:23 +0100
+Message-ID: <20250723222737.35561-10-srinivas.kandagatla@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
 References: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
@@ -98,24 +99,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: YX299rY99IbVCRRfXYKY7ZNl25xuEWyA
-X-Authority-Analysis: v=2.4 cv=btxMBFai c=1 sm=1 tr=0 ts=688161f2 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=He3Dqnl9yZ_pUDwKbX0A:9
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MiBTYWx0ZWRfXzy+2CDRIz1Ik
- HO15XsYBYvaT1Kvea9fBtcyBtD9u7he/rmitXrYmhlgC++EeyiBWs90EaIH+LOi2vV84kyyvYro
- HpxgHJdM2kM7iGSaNUsz/1OWa74EOsmO6+NbSXBaXf1cbPqaZ3yE++K3oSgF2Oq8DOV7Cvi2w49
- 7PWslGV/8r9L5drOUrhB77ljJO2K84JmoWUfZ9AAMF5f/PTAte0UmiArG3Xd5WapuRIR76qM+tL
- 7m5etBIFROL/30YsV79LU888LTTQKVeLVEPpURMrYfUBETfNYBvh0ECndbFHTKvvS0DFpGT5k9P
- uIhnvFocGQwOpDCEJwNGp2mppcGV8E5n6p+hYwAvzXkx43HFwjEKKT5ExFjaM73fl0dsOj3tcUx
- zDxK63LSk++lvoZ5VGNT4Nbf/FqVNV1/z1lvLPmUbWK0hx4rk6Zfoa+LBLrY4mJa8fZPcNxV
-X-Proofpoint-ORIG-GUID: YX299rY99IbVCRRfXYKY7ZNl25xuEWyA
+X-Proofpoint-GUID: u9Q7G5vBKWJNuUqLKOtVzddZYMQCFTcu
+X-Authority-Analysis: v=2.4 cv=btxMBFai c=1 sm=1 tr=0 ts=688161f3 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=h0svG2ZG1csubjrOInMA:9
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MiBTYWx0ZWRfX99hgSLgzoTV1
+ QWRj4N7d9YPiZU8EpIXyiH3Zj6myzDnXSuc+QjSPALrwwEaqXfU0uhnGRsFnTWuh2lkEwCsW6Qw
+ z4zu3eeWZ9935sTYajn4PL7PVZ3sYwatZpBCVQtwT+eD7mB+uHIFiE0gutKgY8MlOR4W+c/Ih/f
+ QaBTZzHcSYu9qpEgTcb7XPXCXVlWS2VLRZXzkJGzAvNQHN62GSHC2pWhYtuqnGT67a7fg3x5N1b
+ RZPq+6+zoiAykImTRKyDw0vgbuYTcsbkVlwxpYk5AvoU5gQg2/rWAVPy9GdhmSOr6wg8Zne4jJL
+ IiZoOSdzuwAVat2ZqSLOodnC8Y9wqa2O4fr+YMYzineK8LJaMmX73KiQVtfHRiAZ2gsSYJUF1ni
+ 3E+XH9HFg9cvIgis3Q0dFMc1E54aO0uOjPfXoR/KdUYM/DfV5GAxt/VpUQfrKpEagImZ/XmX
+X-Proofpoint-ORIG-GUID: u9Q7G5vBKWJNuUqLKOtVzddZYMQCFTcu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=724 impostorscore=0 mlxscore=0 clxscore=1015
+ malwarescore=0 mlxlogscore=744 impostorscore=0 mlxscore=0 clxscore=1015
  adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
  lowpriorityscore=0 spamscore=0 bulkscore=0 classifier=spam authscore=0
  authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
@@ -128,34 +129,31 @@ This move removes duplication.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  1 +
- arch/arm64/boot/dts/qcom/sm8250-audio.dtsi    |  8 +++
- arch/arm64/boot/dts/qcom/sm8250-hdk.dts       |  1 +
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts       |  1 +
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi |  1 +
- .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  |  1 +
- .../boot/dts/qcom/sm8250-xiaomi-pipa.dts      |  1 +
- arch/arm64/boot/dts/qcom/sm8250.dtsi          | 53 +------------------
- 8 files changed, 15 insertions(+), 52 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8250-audio.dtsi
+ arch/arm64/boot/dts/qcom/sm4250.dtsi          |  1 +
+ arch/arm64/boot/dts/qcom/sm6115-audio.dtsi    |  8 +++
+ .../boot/dts/qcom/sm6115-fxtec-pro1x.dts      |  1 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 69 +------------------
+ .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  1 +
+ 5 files changed, 12 insertions(+), 68 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm6115-audio.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 33ecbc81997c..71f0fb36a96e 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -11,6 +11,7 @@
- #include <dt-bindings/sound/qcom,q6asm.h>
- #include <dt-bindings/usb/pd.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-audio.dtsi b/arch/arm64/boot/dts/qcom/sm8250-audio.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/sm4250.dtsi b/arch/arm64/boot/dts/qcom/sm4250.dtsi
+index cd8c8e59976e..64ff6f2f1c23 100644
+--- a/arch/arm64/boot/dts/qcom/sm4250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm4250.dtsi
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include "sm6115.dtsi"
++#include "sm6115-audio.dtsi"
+ 
+ &cpu0 {
+ 	compatible = "qcom,kryo240";
+diff --git a/arch/arm64/boot/dts/qcom/sm6115-audio.dtsi b/arch/arm64/boot/dts/qcom/sm6115-audio.dtsi
 new file mode 100644
-index 000000000000..4ff49550460a
+index 000000000000..d8f32f533609
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8250-audio.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115-audio.dtsi
 @@ -0,0 +1,8 @@
 +// SPDX-License-Identifier: BSD-3-Clause
 +/*
@@ -163,83 +161,35 @@ index 000000000000..4ff49550460a
 + */
 +#include "elite-audio.dtsi"
 +&q6asmdai{
-+	iommus = <&apps_smmu 0x1801 0x0>;
++	iommus = <&apps_smmu 0x1c1 0x0>;
 +};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-hdk.dts b/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
-index f5c193c6c5f9..3499ea6576ed 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
-@@ -7,6 +7,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+index ad347ccd1975..e74423bd8913 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+@@ -6,6 +6,7 @@
+ /dts-v1/;
  
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 7f592bd30248..277a89261a79 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -10,6 +10,7 @@
- #include <dt-bindings/sound/qcom,q6asm.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index d8289b2698f3..6570946fd9ef 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index 465fd6e954a3..b239732b09d8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/usb/pd.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
-index 668078ea4f04..d6688616fb4a 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
-@@ -9,6 +9,7 @@
- #include <dt-bindings/phy/phy.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8250.dtsi"
-+#include "sm8250-audio.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
- #include "pm8150l.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index b0197602c677..74ea5e2d8279 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -17,7 +17,6 @@
- #include <dt-bindings/phy/phy-qcom-qmp.h>
+ #include "sm6115.dtsi"
++#include "sm6115-audio.dtsi"
+ #include "pm6125.dtsi"
+ #include "pmi632.dtsi"
+ #include <dt-bindings/arm/qcom,ids.h>
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 91fc36b59abf..b0ff09aca6d5 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -15,7 +15,6 @@
+ #include <dt-bindings/interconnect/qcom,sm6115.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
  #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/power/qcom,rpmhpd.h>
 -#include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
  #include <dt-bindings/thermal/thermal.h>
-@@ -5999,58 +5998,8 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 				label = "lpass";
+@@ -2729,74 +2728,8 @@ glink-edge {
  				qcom,remote-pid = <2>;
+ 				mboxes = <&apcs_glb 8>;
  
 -				apr {
 -					compatible = "qcom,apr-v2";
@@ -252,13 +202,15 @@ index b0197602c677..74ea5e2d8279 100644
 -					service@3 {
 -						reg = <APR_SVC_ADSP_CORE>;
 -						compatible = "qcom,q6core";
--						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-						qcom,protection-domain = "avs/audio",
+-									 "msm/adsp/audio_pd";
 -					};
 -
 -					q6afe: service@4 {
 -						compatible = "qcom,q6afe";
 -						reg = <APR_SVC_AFE>;
--						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-						qcom,protection-domain = "avs/audio",
+-									 "msm/adsp/audio_pd";
 -						q6afedai: dais {
 -							compatible = "qcom,q6afe-dais";
 -							#address-cells = <1>;
@@ -275,20 +227,34 @@ index b0197602c677..74ea5e2d8279 100644
 -					q6asm: service@7 {
 -						compatible = "qcom,q6asm";
 -						reg = <APR_SVC_ASM>;
--						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-						qcom,protection-domain = "avs/audio",
+-									 "msm/adsp/audio_pd";
 -						q6asmdai: dais {
 -							compatible = "qcom,q6asm-dais";
 -							#address-cells = <1>;
 -							#size-cells = <0>;
 -							#sound-dai-cells = <1>;
--							iommus = <&apps_smmu 0x1801 0x0>;
+-							iommus = <&apps_smmu 0x1c1 0x0>;
+-
+-							dai@0 {
+-								reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
+-							};
+-
+-							dai@1 {
+-								reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
+-							};
+-
+-							dai@2 {
+-								reg = <MSM_FRONTEND_DAI_MULTIMEDIA3>;
+-							};
 -						};
 -					};
 -
 -					q6adm: service@8 {
 -						compatible = "qcom,q6adm";
 -						reg = <APR_SVC_ADM>;
--						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-						qcom,protection-domain = "avs/audio",
+-									 "msm/adsp/audio_pd";
 -						q6routing: routing {
 -							compatible = "qcom,q6adm-routing";
 -							#sound-dai-cells = <0>;
@@ -297,6 +263,18 @@ index b0197602c677..74ea5e2d8279 100644
  				};
  
  				fastrpc {
+diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+index c17545111f49..b461a09781d5 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+@@ -6,6 +6,7 @@
+ /dts-v1/;
+ 
+ #include "sm6115.dtsi"
++#include "sm6115-audio.dtsi"
+ #include "pm6125.dtsi"
+ 
+ / {
 -- 
 2.50.0
 
