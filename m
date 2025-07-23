@@ -1,88 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-66316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E5F2B0F41A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 15:34:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24C50B0F44F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 15:43:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 883B3188026E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 13:34:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C7BE3A9712
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 13:42:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E3F92E7F22;
-	Wed, 23 Jul 2025 13:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C19B72E7F07;
+	Wed, 23 Jul 2025 13:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QQUR6D7s"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KSsXCZDr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D232E888B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 13:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AFE2E7BD9;
+	Wed, 23 Jul 2025 13:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753277645; cv=none; b=o1pCxHaF6l6ZgSuWBWPU2A0v+H/xOlBhM3/Y/3nM72QOS8OhlhOqD405c1Ygf/2fsOrP7kqxfITQm7Fk/6fqJHA5Cm8IC3KN5N4Y/agVjpkTnYB157OJ6ppDBtCvQkJ/IeiUvdpDdRuimMhC36MaN+XFddj5bqu+WxfLvF3aaKU=
+	t=1753278172; cv=none; b=fObjgVPlS42X5R7j1OFUOYbdj1PTa1OmV6fUdv5YmjBft5pkHEOo1TAe88dsT+9Zbn9GbRDgJ8P+2gS6iGZ30QQBy7ETfydEe5OJi1pPXozCUhult/WtOe5c0FQ9CEVYKsQfCuqIyxfsbQXTQ+NP2JTzm1ycjeKxr6HE0eqOgFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753277645; c=relaxed/simple;
-	bh=I/HwupANQZNrDN72YfoYISTR/jnhtFvcCce7OTyzEPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nSwsXrs7rJlxRmjT4H60pbVhJoifHVnI2xrENem/s9Z1s1Q9UZKrzaNOZrXqemQOCEtleRoDkqlNNMYuBg66cb+QWfYoKN2tzCrna5wMIsGEEf0Dg/8vev3Jy1JgRSh6qwSkTdM5kRsIJEErIYnvonYrn91LuVBUdn6xN/CWk3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QQUR6D7s; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9WRiw020620
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 13:34:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cErycuEc1BPG/yLEfc2IRSm6016iTOA8t+hzUspH65U=; b=QQUR6D7sbLdLbO7d
-	yk0ql2PNHiYYPDXcKRtlvJXdUeyMAX3dfjIr6QyFopjtEXCHWPxIDnXR5/PG3mPi
-	5Se8D9MZ4f6/CRj8oe2kwsJCm2aqBIzXcdwcc2Xxyyc78f+1DHRFfmKJvE+uBHAG
-	4gSa6iBRSdidOG3jn8QLG6w6DtK9dRGg7Ey92LLo1V5kwUnOgdSXDVRzGU3UL/cJ
-	PpaVEhWllGgwv7d5V0tJLBkuv6UIDh2k3QBC0bM+1i5ZK2LYp35khqrADTVs24w4
-	ules2YRfLEqpH4phg8zWziSpbgKWdnXSCnqmlD9x2HWepMHdeAkbMiFDOQX7T/Me
-	kJNbjQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481g3er3ks-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 13:34:02 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4abc1e8bd11so16003311cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 06:34:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753277641; x=1753882441;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cErycuEc1BPG/yLEfc2IRSm6016iTOA8t+hzUspH65U=;
-        b=pz8CafXGOF/gpBAamIyIB6q3Uvttz29sUczIYa2dngdnf+JCjWVeRqWJcKnhUp6LdS
-         MkDc4Fq/qDJZlOjiqr904xNvUK/SXblcHkg+LNL/HGPKd1UJq8wUJKZBK888X3eFzaZC
-         kfulclSlf2Cs8Fu8QvS1vftTLFIorLu5PkmEnDMJlQvfSY6572RbLMhJ+vobUFyDNAHe
-         fOyFvGvw8RdjhByMOTRgk00KOE8DRk5S8vz8YyhZaYQg2mBsOTHmzs5FCW457DiFFUxu
-         cjPSlaOrXhJ5vWeoiFC67oP+HjNeWzQ+mKengRBidq/XGvrVbSyEDOgmbRBF6DsQLf8c
-         ewVg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4+j/KgoqPLYlMUPkVaN2OeipxG0yThreEwqFKE19zjowJpymnyr/OpFYKLASzMlFlsKL8A1QGLtRuFQOM@vger.kernel.org
-X-Gm-Message-State: AOJu0YywiFydXsgglxx1G6eQM1CFLZn32lgD9Ty1Ur54mZrw3NZouuv2
-	OEFsv073t4YfgKOyAcKRK03ewRUi6qHlOLKBDmICi/pNamQFwCa0dfwEsMpTYkc/cPi4AzE6ods
-	SDk2GJFnzXvlpZsDvSuDtNus5cfxsxnFhwV7IplnELhXQRDNFuPfTcXgxDGTL7k9FFYo0
-X-Gm-Gg: ASbGncvmyEOAp7UwUpTxP53/hCc4/18pkBXiAuPRjqG9r5CVLioQ7Dmd6CuRyOyq3S8
-	tvjcOQPJ0HHCoxG+h9AoxGA7+sInK4QpuxK+CnydfFVqf2XMHoxSb7lJ7cPxh5xMSyduQAy2Ge+
-	UG06Oo5UqcfdaoU7CinP+KN+TYYouXvH888oezYTZAGAHyidKpDfMFPQ7XXPbc9A1Zo4UpyrD65
-	3kZQMFNUKMmXywqNtPjx4FTlpk8iohdVjloGFy93PQzstmk2LmmyfX1zYmtrFx9QH/9v1Hqla+7
-	YWXg75rhP03LHfKfamJdIFFQ40BQhsEgzItml+zn8C62rpHDCp6SaVR1wd5gXxRFhU55d9Xijsz
-	QsJYZnmOmTdNQp5ba3g==
-X-Received: by 2002:a05:620a:48e:b0:7e3:3c61:564a with SMTP id af79cd13be357-7e62a1da96amr124749285a.13.1753277641271;
-        Wed, 23 Jul 2025 06:34:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzYMNLS1GUA8u7+fQK+6rKxw7iDDU93TXDtPnP5+2dDFuZKetwr7kiUpYLhhOQk9KpRqg1Eg==
-X-Received: by 2002:a05:620a:48e:b0:7e3:3c61:564a with SMTP id af79cd13be357-7e62a1da96amr124746785a.13.1753277640829;
-        Wed, 23 Jul 2025 06:34:00 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af244a659a4sm236451266b.22.2025.07.23.06.33.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 06:34:00 -0700 (PDT)
-Message-ID: <277971b8-09d5-444d-b0eb-1e658b68029f@oss.qualcomm.com>
-Date: Wed, 23 Jul 2025 15:33:57 +0200
+	s=arc-20240116; t=1753278172; c=relaxed/simple;
+	bh=aTj4lm8xWfLVsbNbqAfL0zQElnzrlfjF/NquOyDaCJE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hSx5yCC+/OUrBQRVWROA/J2hE9WS1hJkqpT4d6D4kWDdNzDoel267B489F45MUkHD7HiTpNAkdN1/jP7fPceCCMQzODJIC7XfIBYdeCjSk0/Z47h6JBuUsdyNDn05A+gv+yoVcChMu9CwBaOuu/H6k1bu2nl6IhcXpgDfLEiVRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KSsXCZDr; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1753278172; x=1784814172;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=aTj4lm8xWfLVsbNbqAfL0zQElnzrlfjF/NquOyDaCJE=;
+  b=KSsXCZDrhn267c3ReT12aVabYTQJMLrAlCQ31c7pm36IAV///VLUuM0I
+   3olAMvQidzXx7r06Pe7lGn5zPXkFdq5ArJiLiBJsex/ss4BIjFi/YVh7N
+   rcxPgbnJFyhdzRwkdPTVZu3Er6nOdR985hB6eG4cg1Gq4uXEvxiOsamBq
+   9pzZmUm9JFGByH65DUYrQ4JXjDMJgJVVZjCgbq+AAh0lKD6Go1ikaF+O5
+   YMWrZc6gitTUJeKHtz82+tnM1/+V+U3SA6fcf1g7aQ7AVWbbb+TuBCcJB
+   rxKn4ECbGCE7tsS7FpQecGTKt3dTkpnfgl/Q5djpfZ1hyI4clXzTQgKTe
+   g==;
+X-CSE-ConnectionGUID: YliyFdmWT3enLofwYk+vbw==
+X-CSE-MsgGUID: dOuN/Ps1SO2BI3dRVCniEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="55407397"
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
+   d="scan'208";a="55407397"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 06:42:50 -0700
+X-CSE-ConnectionGUID: yTIVkg39RNaz72vCTkFDrQ==
+X-CSE-MsgGUID: fJ/Nw4uCQcucq0aN5JJTDg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; 
+   d="scan'208";a="196630738"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2025 06:42:29 -0700
+Message-ID: <ab349c70-1d16-4203-a63d-3fa48b7286cd@intel.com>
+Date: Wed, 23 Jul 2025 21:42:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,85 +67,181 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: ipq5424: Enable cpufreq
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
-        djakov@kernel.org, quic_srichara@quicinc.com, quic_mdalam@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20250723110815.2865403-1-quic_varada@quicinc.com>
- <20250723110815.2865403-5-quic_varada@quicinc.com>
+Subject: Re: [PATCH v16 09/22] KVM: x86: Enable KVM_GUEST_MEMFD for all 64-bit
+ builds
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250723104714.1674617-1-tabba@google.com>
+ <20250723104714.1674617-10-tabba@google.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250723110815.2865403-5-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250723104714.1674617-10-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 1ltOqjCugepnNcBc3R6tpAKklNzrTjyg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDExNiBTYWx0ZWRfX4naJI98l5veG
- AwhJTeNL0A5my4ndjx9c7IJKwVjngX2lCf5iAFQKfmQCBGH0khlD/9OTPANax7FU9zs+nOCPOOi
- 4ogKG9xXr0HV9We6J+drl/SZe59vMvFtDvBTElz47YYPrnccrux+azt5hPiRdEDvAv0GCTIvk3f
- RvqZa3/Z471usXj5a5YFKF16N7L/JnHUMxO1uq8dDCjkVHkoamZDz7DZSMS0OPUV67fXhs9npE4
- bltVJKF+3C05+pQ5K14dUIrVs9p49QyKNA0IuljQVNg95HtXzAosJWY1+vLYDZlY3vWXp90bMA+
- 0z8UvIRVcszoQKEbptlKdnteO36b0SUnfc92wXoELuHcQRn6LLlrNVfdsZ8QnbBZBAxDSZDjpVJ
- NmsRP/3wQI4p11mU3Ut7j+1zYGbwt6lXLjlE/SPjhsLbVdNGkVt02CtiQTuu/Fjy4Jjp1bbk
-X-Authority-Analysis: v=2.4 cv=Q+fS452a c=1 sm=1 tr=0 ts=6880e4ca cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=R0CBZZInQid6lz33ABQA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 1ltOqjCugepnNcBc3R6tpAKklNzrTjyg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_02,2025-07-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507230116
 
-On 7/23/25 1:08 PM, Varadarajan Narayanan wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On 7/23/2025 6:47 PM, Fuad Tabba wrote:
+> Enable KVM_GUEST_MEMFD for all KVM x86 64-bit builds, i.e. for "default"
+> VM types when running on 64-bit KVM.  This will allow using guest_memfd
+> to back non-private memory for all VM shapes, by supporting mmap() on
+> guest_memfd.
 > 
-> Add the qfprom, cpu clocks, A53 PLL and cpu-opp-table required for
-> CPU clock scaling.
+> Opportunistically clean up various conditionals that become tautologies
+> once x86 selects KVM_GUEST_MEMFD more broadly.  Specifically, because
+> SW protected VMs, SEV, and TDX are all 64-bit only, private memory no
+> longer needs to take explicit dependencies on KVM_GUEST_MEMFD, because
+> it is effectively a prerequisite.
 > 
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> [ Added interconnect related entries, fix dt-bindings errors ]
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Suggested-by: Sean Christopherson <seanjc@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+It matches with my thought on v14 that gmem can be allowed for all x86 
+VM types[*]. Get rid of .supports_gmem and achieve it through 
+CONFIG_KVM_GUEST_MEMFD looks much cleaner!
+
+[*] 
+https://lore.kernel.org/all/b5fe8f54-64df-4cfa-b86f-eed1cbddca7a@intel.com/
+
 > ---
-> v2: Add 'interconnects' to cpu nodes
->     Add 'opp-peak-kBps' to opp table
->     Add '#interconnect-cells' to apss_clk
->     Remove unnecessary comment
->     Fix dt-binding-errors in qfprom node
-> ---
->  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 65 +++++++++++++++++++++++++++
->  1 file changed, 65 insertions(+)
+>   arch/x86/include/asm/kvm_host.h |  4 +---
+>   arch/x86/kvm/Kconfig            | 12 ++++--------
+>   include/linux/kvm_host.h        |  9 ++-------
+>   virt/kvm/kvm_main.c             |  4 ++--
+>   4 files changed, 9 insertions(+), 20 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> index 2eea8a078595..39d394f49789 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> @@ -7,6 +7,7 @@
->   */
->  
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,apss-ipq.h>
->  #include <dt-bindings/clock/qcom,ipq5424-cmn-pll.h>
->  #include <dt-bindings/clock/qcom,ipq5424-gcc.h>
->  #include <dt-bindings/reset/qcom,ipq5424-gcc.h>
-> @@ -52,6 +53,12 @@ cpu0: cpu@0 {
->  			reg = <0x0>;
->  			enable-method = "psci";
->  			next-level-cache = <&l2_0>;
-> +			clocks = <&apss_clk APSS_SILVER_CORE_CLK>,
-> +				 <&apss_clk L3_CORE_CLK>;
+> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> index 7b0f2b3e492d..50366a1ca192 100644
+> --- a/arch/x86/include/asm/kvm_host.h
+> +++ b/arch/x86/include/asm/kvm_host.h
+> @@ -2276,10 +2276,8 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
+>   		       int tdp_max_root_level, int tdp_huge_page_level);
+>   
+>   
+> -#ifdef CONFIG_KVM_GUEST_MEMFD
+> +#ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+>   #define kvm_arch_has_private_mem(kvm) ((kvm)->arch.has_private_mem)
+> -#else
+> -#define kvm_arch_has_private_mem(kvm) false
+>   #endif
+>   
+>   #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
+> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+> index c763446d9b9f..4e43923656d0 100644
+> --- a/arch/x86/kvm/Kconfig
+> +++ b/arch/x86/kvm/Kconfig
+> @@ -47,6 +47,7 @@ config KVM_X86
+>   	select KVM_GENERIC_HARDWARE_ENABLING
+>   	select KVM_GENERIC_PRE_FAULT_MEMORY
+>   	select KVM_WERROR if WERROR
+> +	select KVM_GUEST_MEMFD if X86_64
+>   
+>   config KVM
+>   	tristate "Kernel-based Virtual Machine (KVM) support"
+> @@ -79,16 +80,11 @@ config KVM_WERROR
+>   
+>   	  If in doubt, say "N".
+>   
+> -config KVM_X86_PRIVATE_MEM
+> -	select KVM_GENERIC_MEMORY_ATTRIBUTES
+> -	select KVM_GUEST_MEMFD
+> -	bool
+> -
+>   config KVM_SW_PROTECTED_VM
+>   	bool "Enable support for KVM software-protected VMs"
+>   	depends on EXPERT
+>   	depends on KVM_X86 && X86_64
+> -	select KVM_X86_PRIVATE_MEM
+> +	select KVM_GENERIC_MEMORY_ATTRIBUTES
+>   	help
+>   	  Enable support for KVM software-protected VMs.  Currently, software-
+>   	  protected VMs are purely a development and testing vehicle for
+> @@ -138,7 +134,7 @@ config KVM_INTEL_TDX
+>   	bool "Intel Trust Domain Extensions (TDX) support"
+>   	default y
+>   	depends on INTEL_TDX_HOST
+> -	select KVM_X86_PRIVATE_MEM
+> +	select KVM_GENERIC_MEMORY_ATTRIBUTES
+>   	select HAVE_KVM_ARCH_GMEM_POPULATE
+>   	help
+>   	  Provides support for launching Intel Trust Domain Extensions (TDX)
+> @@ -162,7 +158,7 @@ config KVM_AMD_SEV
+>   	depends on KVM_AMD && X86_64
+>   	depends on CRYPTO_DEV_SP_PSP && !(KVM_AMD=y && CRYPTO_DEV_CCP_DD=m)
+>   	select ARCH_HAS_CC_PLATFORM
+> -	select KVM_X86_PRIVATE_MEM
+> +	select KVM_GENERIC_MEMORY_ATTRIBUTES
+>   	select HAVE_KVM_ARCH_GMEM_PREPARE
+>   	select HAVE_KVM_ARCH_GMEM_INVALIDATE
+>   	select HAVE_KVM_ARCH_GMEM_POPULATE
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index 56ea8c862cfd..4d1c44622056 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -719,11 +719,7 @@ static inline int kvm_arch_vcpu_memslots_id(struct kvm_vcpu *vcpu)
+>   }
+>   #endif
+>   
+> -/*
+> - * Arch code must define kvm_arch_has_private_mem if support for guest_memfd is
+> - * enabled.
+> - */
+> -#if !defined(kvm_arch_has_private_mem) && !IS_ENABLED(CONFIG_KVM_GUEST_MEMFD)
+> +#ifndef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+>   static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+>   {
+>   	return false;
+> @@ -2505,8 +2501,7 @@ bool kvm_arch_post_set_memory_attributes(struct kvm *kvm,
+>   
+>   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>   {
+> -	return IS_ENABLED(CONFIG_KVM_GUEST_MEMFD) &&
+> -	       kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
+> +	return kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
+>   }
+>   #else
+>   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> index aa86dfd757db..4f57cb92e109 100644
+> --- a/virt/kvm/kvm_main.c
+> +++ b/virt/kvm/kvm_main.c
+> @@ -1588,7 +1588,7 @@ static int check_memory_region_flags(struct kvm *kvm,
+>   {
+>   	u32 valid_flags = KVM_MEM_LOG_DIRTY_PAGES;
+>   
+> -	if (kvm_arch_has_private_mem(kvm))
+> +	if (IS_ENABLED(CONFIG_KVM_GUEST_MEMFD))
+>   		valid_flags |= KVM_MEM_GUEST_MEMFD;
+>   
+>   	/* Dirty logging private memory is not currently supported. */
+> @@ -4917,7 +4917,7 @@ static int kvm_vm_ioctl_check_extension_generic(struct kvm *kvm, long arg)
+>   #endif
+>   #ifdef CONFIG_KVM_GUEST_MEMFD
+>   	case KVM_CAP_GUEST_MEMFD:
+> -		return !kvm || kvm_arch_has_private_mem(kvm);
+> +		return 1;
+>   #endif
+>   	default:
+>   		break;
 
-You exposed the latter clock through the interconnect framework. Now,
-every set_rate/set_bw call will be fighting for whoever completes first.
-
-Konrad
 
