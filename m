@@ -1,60 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-66328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3018B0F574
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:36:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A65FFB0F599
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:42:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D13E6AC51FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:34:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A79F6AA363B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 14:40:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CBC92F5312;
-	Wed, 23 Jul 2025 14:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64D9C2E92D5;
+	Wed, 23 Jul 2025 14:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OGuCA5ca"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5j4cQOM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165682E7BBD;
-	Wed, 23 Jul 2025 14:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131EE2E7F19;
+	Wed, 23 Jul 2025 14:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753281298; cv=none; b=LeKvIJtyRl4AzHV9zTFtwSU2Kx2eXxe3ZxABAUPpa7GWjzCvj7rtZIAKBvmCgFu96Z/aYpG0t/FY20aMaAE91XRfuevPo6rpVTVNPBFwcpNfmQs5w48vLvi9VjePFN2sFQoxuX/yuNENf2qUGZS/YJYFNVoCcRt+eEoQ+lhZQFE=
+	t=1753281674; cv=none; b=oTHdWRh/9APmxH+nsSxtrNTuuizfhXLd4eQ7vV1RxZaQyYjm+goIHyPDEidR4LkiMXvVZ4ZLfeSO8SXZB/uk4TreP3EgPhd9H7wV26iQgNvbx+GCG3FZ7FofQOXQDp1Jj6Whs44GdZnqF+b/lj092tv9VlsQwpJolcvOV0qPcmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753281298; c=relaxed/simple;
-	bh=hqQgXXO/2Sxe0qvV4ysJSFDc0vsyketKesbfM+KBHTo=;
+	s=arc-20240116; t=1753281674; c=relaxed/simple;
+	bh=spxFbuCrDuTnv+sdA7w8h/okvSGm6H+gea+90kVlwiM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UqXOU+UdB72JrcHmHcLOe7fd+QrRiXinxn+2xsOfh/5oS1ecOeznvNl1jGga6vHJXC3JZPjWWqGdOAyJiACN0xmRkvoeu1Q5iPU/MBe0YOcZPbdI06+xlsWCu7RVipUVBqThMxOIM5hJUdd096TAdts25FRfudjm+DqPOgAWwrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OGuCA5ca; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D19C4CEF1;
-	Wed, 23 Jul 2025 14:34:50 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Eje1r8bjJV2vOF0pktnZjIv4O2OWBPcYp/+qaLsxqhs2yJBxnpgrKcJxSeKefemwgy8TSfj4WDVb0pWaZDpYzkiBNK8Xow7zHiqBxkMne9LDyhNS/xScYxmm7kIFIicc7q9HUn0W7556GWS44DiFs4jmolz8ABh8Zmkg5NXM6co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5j4cQOM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD08C4CEE7;
+	Wed, 23 Jul 2025 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753281297;
-	bh=hqQgXXO/2Sxe0qvV4ysJSFDc0vsyketKesbfM+KBHTo=;
+	s=k20201202; t=1753281673;
+	bh=spxFbuCrDuTnv+sdA7w8h/okvSGm6H+gea+90kVlwiM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OGuCA5caY3RTuxc6BqatpaaL7WVJccOd+gLxQA/lKzjEzu/CcJ5sfCJgjkcB3p8qT
-	 0HzTnwQJOYZ7Eea4+VY4e2K91DiL/S6topwdE/Cr0xMovGlvW4qcvZ/D0oTNMLcAQx
-	 0WJ1EVJ8P+BA4+U1qWwpw0Ldi9iX2MwEfdZrVmbiMAZLndOgBn6CcV8R9bJ8O/QB2a
-	 4XSCnK+/kLmGyGPyLeZzjPY4rQgrw48Mj1d/WFbxtSRgIsU91XkieImQVehzzzp+T9
-	 EBrTWhjGqZEwUZrA5Uf8OT+oSXtdP6Y/AWI0ixHUHVlrvTYwKdE4gHeCKKji/2bZiZ
-	 KMeAdnXzlINRw==
-Date: Wed, 23 Jul 2025 20:04:46 +0530
+	b=M5j4cQOMl/TurLTv8Soh2IDnvM3wRP5z2sfkcYJ5aXlsOjV/mb03z/ET8ClfEiv8k
+	 2pGXyMI695U7qlEkyKJ17GOsdOjvC3+GCD09XrRGKbCsLA28O8mg7cMXLyAe/errbi
+	 cS1Vj2SEpezAFRVmgU1TI9UyYZswGXrZL3xLvIeYIouUudrjKK/s76mZu59jQ9PSod
+	 q+blNge2oQvLDO9eNAI8bmjYPSJLaY+7nOM/dZadkYk/02qCd5Z4EQxpEauiJr6O+t
+	 qErmToXfCSDee0j5QFeObtskQOPCgufyE/qD8gwYMVuxukeq8j76p88P9YChxbej+0
+	 8TbYEXG3z3UTA==
+Date: Wed, 23 Jul 2025 20:11:03 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Wenbin Yao <quic_wenbyao@quicinc.com>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, robh@kernel.org, 
-	bhelgaas@google.com, sfr@canb.auug.org.au, qiang.yu@oss.qualcomm.com, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, krishna.chundru@oss.qualcomm.com, 
-	quic_vbadigan@quicinc.com, quic_mrana@quicinc.com, quic_cang@quicinc.com
-Subject: Re: [PATCH v5 1/3] PCI: dwc: enable PCI Power Control Slot driver
- for QCOM
-Message-ID: <g4vti733clyly7uludeypp55s2s3ajznw4g3mjgo3segah3zdm@uixreuvty7px>
-References: <20250722091151.1423332-1-quic_wenbyao@quicinc.com>
- <20250722091151.1423332-2-quic_wenbyao@quicinc.com>
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
+	konradybcio@kernel.org, James.Bottomley@hansenpartnership.com, 
+	martin.petersen@oracle.com, agross@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 0/3] Add DT-based gear and rate limiting support
+Message-ID: <tc57sqskjmjloocxzvhay2i5q6xdjjsaia566tmi2yknp5kwx5@3ae2gm3mgzgg>
+References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,36 +61,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250722091151.1423332-2-quic_wenbyao@quicinc.com>
+In-Reply-To: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
 
-On Tue, Jul 22, 2025 at 05:11:49PM GMT, Wenbin Yao wrote:
-> From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+On Tue, Jul 22, 2025 at 09:41:00PM GMT, Ram Kumar Dwivedi wrote:
+> This patch series adds support for limiting the maximum high-speed
+> gear and rate used by the UFS controller on Qualcomm platforms via
+> device tree.
 > 
-> Enable the pwrctrl driver, which is utilized to manage the power supplies
-> of the devices connected to the PCI slots. This ensures that the voltage
-> rails of the standard PCI slots on some platforms eg. X1E80100-QCP can be
-> correctly turned on/off if they are described under PCIe port device tree
-> node.
-> 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> index ff6b6d9e1..deafc512b 100644
-> --- a/drivers/pci/controller/dwc/Kconfig
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -298,6 +298,7 @@ config PCIE_QCOM
->  	select CRC8
->  	select PCIE_QCOM_COMMON
->  	select PCI_HOST_COMMON
-> +	select PCI_PWRCTRL_SLOT
+> Some automotive platforms, such as SA8155, require restricting the
+> maximum gear or rate due to hardware limitations. To support this,
 
-I guess you also need 'if HAVE_PWRCTRL'
+What do you mean by 'hardware limitation'? Please explain.
 
 - Mani
+
+> the driver is extended to parse two new optional DT properties and
+> apply them during initialization. The default behavior remains
+> unchanged if these properties are not specified.
+> 
+> Ram Kumar Dwivedi (3):
+>   scsi: ufs: qcom: Add support for DT-based gear and rate limiting
+>   arm64: dts: qcom: sa8155: Add gear and rate limit properties to UFS
+>   dt-bindings: ufs: qcom: Document HS gear and rate limit properties
+> 
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 10 +++++++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          |  3 ++
+>  drivers/ufs/host/ufs-qcom.c                   | 29 +++++++++++++++----
+>  3 files changed, 36 insertions(+), 6 deletions(-)
+> 
+> -- 
+> 2.50.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
