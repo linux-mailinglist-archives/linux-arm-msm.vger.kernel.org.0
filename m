@@ -1,118 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-66188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54A44B0EB8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:15:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC9B1B0EBE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 09:27:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E3A5188654A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:15:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96DFB1C838C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 07:27:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DF07272814;
-	Wed, 23 Jul 2025 07:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A37F273D6A;
+	Wed, 23 Jul 2025 07:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ryz3mPKK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpFNvuK4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3926E25C833;
-	Wed, 23 Jul 2025 07:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCCF2737EB;
+	Wed, 23 Jul 2025 07:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753254930; cv=none; b=mVosIi6q0vdqEy75zIuFQIKjFyKkV205OxalL2sYVsj+8pOufjfTTWhGP5QbVOOQqNVNS1UaplMvAb735IkTRAv+X+yp0Lh5+k7NvDOcMLR6c7LRih/2y9L+TKhZ7TRt6s3mvqHIjV9io864KfYzZxES6rr+JyUVhkTBl6v/MO4=
+	t=1753255641; cv=none; b=H05vgrBBjTLZljurW30bw2e9WdOAKU0seUzluAYPBMjJasVq9XJKCckCBvT36RP5qCDV/4Tz5N6SYgyf1ZaMgQZHQpIkaXa8lMtA+Cm3DZPbJ5UncsZt9wrHnS3gJhrkaiqDTtk31TGnfmJXQ3wTtoaaNKOAmhYqyzpwWzIF1/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753254930; c=relaxed/simple;
-	bh=aoQqriX7CooIPgMf9W7uo25rnfymCO1WAzndg4imAxs=;
+	s=arc-20240116; t=1753255641; c=relaxed/simple;
+	bh=bf9PaPOgFqxUTKwmAInneVFpDKX7U1g8t0Uc+GYu1J4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F1L7qOpc3qCa3/ll8FLToB+t2etZMtHvpNsstK3C6IG0KyRqbox5AfNsdea6n3DGAMkKtkxZ/5bCeIQR+g8FsAG4S0Ub9tWFumdhL6pLbi0c9w2lY+HpNSLj1UdGJpkFEtHxoqA/YPb6dw0gi55oa8TRRxyxHydIma9CTJAuRqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ryz3mPKK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEA7C4CEE7;
-	Wed, 23 Jul 2025 07:15:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jvDnEk6Mjwk0SLGBbAC1deBngmyWk0dK13VLiIRmenDOpGpLnou9fGH4F79pPTiMD8HkwludA7bC979/G3e8y45eDl8Z0tc/+OynzCLTEVKcuGCoZfz9WKBd4KAXUkn8Rs8wsrlE9HFJwwljyGZ89KWqmpEZl8I2QvFUw22Hkuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpFNvuK4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC38C4CEE7;
+	Wed, 23 Jul 2025 07:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753254929;
-	bh=aoQqriX7CooIPgMf9W7uo25rnfymCO1WAzndg4imAxs=;
+	s=k20201202; t=1753255640;
+	bh=bf9PaPOgFqxUTKwmAInneVFpDKX7U1g8t0Uc+GYu1J4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ryz3mPKKqpMYfFdxtdLwsLUNADzvjjWOQj9xApvRL/oZjV4pGyNB2CcAVql1LM8gG
-	 1OF9dXIptw4qYkMUmgtx+r9Vp/wvKnGmqsj/PV77SOobPPfX7QQQ3jHGzTw3TdaEqp
-	 k9Z9zcaC1+9uZRm3Llky+X0MyyzfgEK2GILXMURVCyZV6vZAUrBZSrsyoTi2S0Supq
-	 1n0X1Y8POOkozkFMTU5KAB9sxAqzQQZRkqNSJpjrGJIA8ME/leaiOBYrfGni7yGH4K
-	 jcZ0K4UK0HtJs8RpnVR3qiQEqUeIoTK9cVtc9oXU7KT5bDUpV4tGlAvAI5jKFzuvm2
-	 crjsI7K7CdRXQ==
-Date: Wed, 23 Jul 2025 12:45:25 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-Message-ID: <aICMDROkyjzBZFHo@vaman>
-References: <644oygj43z2um42tmmldp3feemgzrdoirzfw7pu27k4zi76bwg@wfxbtgqqgh4p>
- <dc7358a1-ddc5-402e-9024-283f8e46e3b6@quicinc.com>
- <CAO9ioeVuAO6mYpBSpiTW0jhFRPtkubZ5eEskd1yLBHVdR8_YMA@mail.gmail.com>
- <1b55d9d4-f3ff-4cd9-8906-5f370da55732@quicinc.com>
- <28d26c70-178f-413b-b7f8-410c508cfdd7@quicinc.com>
- <CAO9ioeXBwFYL8q7x7_fHvx5YO+qyAXk4wpnfPrku4iY9yBsk0Q@mail.gmail.com>
- <cac5e84b-fbdb-47a9-860d-16a7fa4dc773@quicinc.com>
- <4q3vlydi5xgltd3pcez54alxgrehhfn4pppg47ngwp6y5k7n33@d4d4htntj64k>
- <53dd18ec-9a65-4bf7-8490-ca3eb56ce2a5@quicinc.com>
- <iang2jpe4s6wmbypmtq5uswcm6n6xntqdulyhekcz5k6zxddu3@re3rrr4dso5p>
+	b=WpFNvuK4W+NWoO0APgZK0qaJgYMa1bmENI+725ngQ1ZO7xDvrjsl/XH5iB42a78+B
+	 XX64eGz5ahvmKit9daWehUGcQ7pql1G9jml0RCqf6SJIN+xYF9hKbbMBiS1PIhPcNJ
+	 NgqjV9NGxPPyxLd2VBTgcOI7H6kCq05eOp3CSHbf0NG44UNx5T8wtKN9R4BYH/T5nK
+	 xHfinbRCaxD9z6WKbxsU/lmtyF1UeA+MIhu1j9aoczze0KKAMVZRKPvL4HftRzY/3O
+	 A1PNVJAppIami1epkhtj79mPoG0JH/mihT0AaUKsF9pT0gHZb1gKh9Z99pJdbY08BW
+	 E3XaM5y0qy4Ug==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1ueTse-000000002Jb-1bvS;
+	Wed, 23 Jul 2025 09:27:12 +0200
+Date: Wed, 23 Jul 2025 09:27:12 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rui Miguel Silva <rmfrfs@gmail.com>,
+	Christopher Obbard <christopher.obbard@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Rui Miguel Silva <rui.silva@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
+ Lenovo T14s Gen6
+Message-ID: <aICO0CXxp4Vu331u@hovoldconsulting.com>
+References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+ <aCw9pYehCdfXXeiR@hovoldconsulting.com>
+ <aG-QyF12rGY55gcG@hovoldconsulting.com>
+ <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org>
+ <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
+ <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <iang2jpe4s6wmbypmtq5uswcm6n6xntqdulyhekcz5k6zxddu3@re3rrr4dso5p>
+In-Reply-To: <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
 
-On 22-07-25, 15:46, Dmitry Baryshkov wrote:
-> On Tue, Jul 22, 2025 at 05:50:08PM +0530, Jyothi Kumar Seerapu wrote:
-> > On 7/19/2025 3:27 PM, Dmitry Baryshkov wrote:
-> > > On Mon, Jul 07, 2025 at 09:58:30PM +0530, Jyothi Kumar Seerapu wrote:
-> > > > On 7/4/2025 1:11 AM, Dmitry Baryshkov wrote:
-> > > > > On Thu, 3 Jul 2025 at 15:51, Jyothi Kumar Seerapu
+On Wed, Jul 23, 2025 at 08:51:22AM +0200, Neil Armstrong wrote:
+> On 22/07/2025 15:48, Rui Miguel Silva wrote:
+> > On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
+> >> On 10/07/2025 12:07, Johan Hovold wrote:
 
-[Folks, would be nice to trim replies]
-
-> > > > Could you please confirm if can go with the similar approach of unmap the
-> > > > processed TREs based on a fixed threshold or constant value, instead of
-> > > > unmapping them all at once?
-> > > 
-> > > I'd still say, that's a bad idea. Please stay within the boundaries of
-> > > the DMA API.
-> > >
-> > I agree with the approach you suggested—it's the GPI's responsibility to
-> > manage the available TREs.
+> >>> Neil, do you have the OLED version now?
+> >>
+> >> I'm not sure, how do I determine that ? Is there something specific in the type number ?
 > > 
-> > However, I'm curious whether can we set a dynamic watermark value perhaps
-> > half the available TREs) to trigger unmapping of processed TREs ? This would
-> > allow the software to prepare the next set of TREs while the hardware
-> > continues processing the remaining ones, enabling better parallelism and
-> > throughput.
+> > Yes, yours is the OLED version, the exact models stated above.
 > 
-> Let's land the simple implementation first, which can then be improved.
-> However I don't see any way to return 'above the watermark' from the DMA
-> controller. You might need to enhance the API.
+> Ack thx, I'll test and re-spin this patchset then.
 
-Traditionally, we set the dma transfers for watermark level and we get a
-interrupt. So you might want to set the callback for watermark level
-and then do mapping/unmapping etc in the callback. This is typical model
-for dmaengines, we should follow that well
+Thanks. Note that this depends on this series as well which also needs a
+minor update:
 
-BR
--- 
-~Vinod
+	https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
+
+Can you respin that one as well?
+
+Johan
 
