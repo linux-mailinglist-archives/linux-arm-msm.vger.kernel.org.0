@@ -1,187 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-66339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8993B0F80A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 18:25:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8598EB0F863
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 18:49:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D9971CC03BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:26:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C8B216D150
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:49:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE651EA7CE;
-	Wed, 23 Jul 2025 16:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E40F20B81B;
+	Wed, 23 Jul 2025 16:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8H4yG2s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DKRPkjjk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4E92E36F0;
-	Wed, 23 Jul 2025 16:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBED17A2E8;
+	Wed, 23 Jul 2025 16:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753287943; cv=none; b=Myz5xvF0sxexxb8axWfFtHp8Rr9upz/28iKJJy38xuCZryxQnycA6FIFux+tuRfhDWiQViCEW0q11Msf8kdZ/v9gZHyO5E1tRTf5N53AdJqYm3k9tanrcoEh8n/TUP+pOvqQsyem/nXQ4Q0bVWSkcE9RlUlIl8wD+zmcm2FFFZU=
+	t=1753289334; cv=none; b=rfCT7/Cm9eK47Zo9YW5n1NPljLVntIfV8jzZ9txW24x17ou5CJiw34CYaFNF1E6xFnJKxLDfTg7hwncU50DEKHaAZh2KdGvS9ybSucdl2CLhew3U+XHssooa85F+1Tgq8BORVc0Mi9LREScApxMK24m5ti1bRp+xe2/89GNkZHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753287943; c=relaxed/simple;
-	bh=nLC91lUvP3zaJg6UlqQrBSAOMHuwcblVye+egF7o2Tw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YpjOaDEpkqh4jAWPWXzEbNgJxXluHWDAHXMOWKIdo0s3oTsczaHV7OLkTDUfmp9SgjSOrIv94pVwNpPoY5QkKLUlrRD1hLeHMZM6Z/RmwbU/B0f+rqBNFeZ4luFeUO6FEm2rEs0OHKa5Qbzd6a8wH+urbpawOYRYNfNnlIFyDAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8H4yG2s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9E0C4CEE7;
-	Wed, 23 Jul 2025 16:25:35 +0000 (UTC)
+	s=arc-20240116; t=1753289334; c=relaxed/simple;
+	bh=Tv5MXYJWzsY90WmBLspDcy0thO2AOlGxw9qBnGijwJ8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=tbQpaxMmRaGjcUOqOAfiWayj9varu8JqAI531hUFCFRHw6/IJP3gViKhNasaPJJ9kuLzBDIm/q3rG0YFlsufRnc7jNBuMu1cqJALhKUMmmU8o9bNWJxtq4X0dY7y5OARlco9OK48taLKIjGDVhgSupB5Azz/U9V2DdOxNJc04gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DKRPkjjk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBF6C4CEF4;
+	Wed, 23 Jul 2025 16:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753287942;
-	bh=nLC91lUvP3zaJg6UlqQrBSAOMHuwcblVye+egF7o2Tw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E8H4yG2sLM3EtMIyyp3VER+MZNetfiBhRLouHhWKhwRpYBCBdtJfBQFI+9fmQ1for
-	 8B/wEdAoNqSUu4VOesl07v6HNCu9olofUWlx2A60mZ4MN7T7gyajRq/Uup2WndNjuC
-	 QiLjGI9EjELN+U/L030mP1AVQip63ygQ/teTrGgUprT9PwdmwWeqF0KCfuFpEY7SrF
-	 nF9t4CDiztR5/YLRw29ipCNmcuWXkuhx00rl0yPHncOgoNmLVOlpxtwSJ7xazqd+rx
-	 kFBfz1V69Pwb9Ie/DvVGG/DLUwYV6/jN14DRnmo5aWGyi6xNYJPfLzAfaIdj0woL3O
-	 ICHkDV7g6cfwQ==
-Date: Wed, 23 Jul 2025 21:55:31 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	mhi@lists.linux.dev, linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-	qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com, 
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v4 04/11] bus: mhi: host: Add support for Bandwidth scale
-Message-ID: <76txeoaa7k3nquvegvmivjazlzdtsnsxa3jtfrlfzbndffc7dx@c2nfzty73scj>
-References: <20250609-mhi_bw_up-v4-0-3faa8fe92b05@qti.qualcomm.com>
- <20250609-mhi_bw_up-v4-4-3faa8fe92b05@qti.qualcomm.com>
- <j24c2ii33yivc7rb3vwbwljxwvhdpqwbfgt3gid2njma6t47i4@uhykehw23h2q>
- <31c192f7-cd69-46ad-9443-5d57ae2aa86e@oss.qualcomm.com>
- <eg2v3kctnztxcaulffu7tvysljimmyhnramyjj5gpa4vrv3yxu@g3pgwpwx37iq>
- <2c42bbe7-79aa-42f6-8af8-65d1be7253a5@oss.qualcomm.com>
+	s=k20201202; t=1753289333;
+	bh=Tv5MXYJWzsY90WmBLspDcy0thO2AOlGxw9qBnGijwJ8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=DKRPkjjkzFN7HHda4O+bD3mLMfc2IDdfyATq5ezaULle8jZ4S9pOqLCrBJDXiyaGc
+	 zO7ZJ41b5AMIAReuhjx5UP9XqTKluma2VBqUfTJDECXZSkvzx9mBt7QQxY/tuGYlW+
+	 BIaOqu62RkvWY+WWqjBHWgqmfBVV0cVgJ3Bq4pyqjc6DAn3++PG1c2clZA5HMFX0bt
+	 joBUmrDsugiYAyFNtOIfdeL4pzT6VbmKZz2+tFntKWHuJskFg4ljVoUnQ7sr7FjjVS
+	 Dn3PXCZx5SY++TtbLPbmwNQADo7WYLZSZfDuqi/Zx0FapncOLL/JcKUUfNjtr/VET6
+	 hJNqXNFPYD+Sw==
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
+References: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
+Subject: Re: (subset) [PATCH v2 0/5] Enable USB audio offloading on
+ Fairphone 4 smartphone
+Message-Id: <175328932957.84720.16658134148834686492.b4-ty@kernel.org>
+Date: Wed, 23 Jul 2025 17:48:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2c42bbe7-79aa-42f6-8af8-65d1be7253a5@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-cff91
 
-On Fri, Jul 11, 2025 at 12:25:30PM GMT, Krishna Chaitanya Chundru wrote:
-
-[...]
-
-> > > > > +static int mhi_init_bw_scale(struct mhi_controller *mhi_cntrl,
-> > > > > +			     int bw_scale_db)
-> > > > > +{
-> > > > > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> > > > > +	u32 bw_cfg_offset, val;
-> > > > > +	int ret, er_index;
-> > > > > +
-> > > > > +	ret = mhi_find_capability(mhi_cntrl, MHI_BW_SCALE_CAP_ID, &bw_cfg_offset);
-> > > > > +	if (ret)
-> > > > > +		return ret;
-> > > > > +
-> > > > > +	er_index = mhi_get_er_index(mhi_cntrl, MHI_ER_BW_SCALE);
-> > > > > +	if (er_index < 0)
-> > > > > +		return er_index;
-> > > > > +
-> > > > > +	bw_cfg_offset += MHI_BW_SCALE_CFG_OFFSET;
-> > > > > +
-> > > > > +	/* Advertise host support */
-> > > > > +	val = (__force u32)cpu_to_le32(FIELD_PREP(MHI_BW_SCALE_DB_CHAN_ID, bw_scale_db) |
-> > > > > +				       FIELD_PREP(MHI_BW_SCALE_ER_INDEX, er_index) |
-> > > > > +				       MHI_BW_SCALE_ENABLED);
-> > > > > +
-> > > > 
-> > > > It is wrong to store the value of cpu_to_le32() in a non-le32 variable.
-> > > > mhi_write_reg() accepts the 'val' in native endian. writel used in the
-> > > > controller drivers should take care of converting to LE before writing to the
-> > > > device.
-> > > > 
-> > > ok then I will revert to u32.
-> > > 
-> > > I think we need a patch in the controller drivers seperately to handle
-> > > this.
-> > 
-> > Why?
-> > 
-> what I understood from your previous comment is from here we need to
-> send u32 only and the controller drivers should take care of
-> converting u32 to le32.
-> As of today controller drivers are not considering this and writing
-> u32 only.
-> So we need a seperate patch in the controller driver to convert it to
-> le32.
-
-No. All controller drivers are using writel() to write the register. Since
-writel() converts the value to little endian from native endian, you do not need
-to do anything.
-
-> > > > > +	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, bw_cfg_offset, val);
-> > > > > +
-> > > > > +	dev_dbg(dev, "Bandwidth scaling setup complete with event ring: %d\n",
-> > > > > +		er_index);
-> > > > > +
-> > > > > +	return 0;
-> > > > > +}
-> > > > > +
-
-[...]
-
-> > > > > +	link_info.target_link_speed = MHI_TRE_GET_EV_LINKSPEED(dev_rp);
-> > > > > +	link_info.target_link_width = MHI_TRE_GET_EV_LINKWIDTH(dev_rp);
-> > > > > +	link_info.sequence_num = MHI_TRE_GET_EV_BW_REQ_SEQ(dev_rp);
-> > > > > +
-> > > > > +	dev_dbg(dev, "Received BW_REQ with seq:%d link speed:0x%x width:0x%x\n",
-> > > > > +		link_info.sequence_num,
-> > > > > +		link_info.target_link_speed,
-> > > > > +		link_info.target_link_width);
-> > > > > +
-> > > > > +	/* Bring host and device out of suspended states */
-> > > > > +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-> > > > 
-> > > > Looks like mhi_device_get_sync() is going runtime_get()/runtime_put() inside
-> > > > mhi_trigger_resume(). I'm wondering why that is necessary.
-> > > > 
-> > > Before mhi_trigger_resume we are doing wake_get, which will make sure
-> > > device will not transition to the low power modes while servicing this
-> > > event. And also make sure mhi state is in M0 only.
-> > > 
-> > > As we are in workqueue this can be scheduled at some later time and by
-> > > that time mhi can go to m1 or m2 state.
-> > > 
-> > 
-> > My comment was more about the behavior of mhi_trigger_resume(). Why does it call
-> > get() and put()? Sorry if I was not clear.
-> > Get() needed for bringing out of suspend, put() is for balancing the
-> get() I belive the intention here is to trigger resume only and balance
-> pm framework.
+On Thu, 01 May 2025 08:48:46 +0200, Luca Weiss wrote:
+> Since the series for the USB sound offloading driver was finally merged,
+> we can add the sm6350 dts and enable it on Fairphone 4.
 > 
-> That said mhi_device_get_sync() has a bug we are doing wake_get() before
-> triggering resume and also trigger resume will not guarantee that device
-> had resumed, it is not safe to do wake_get untill device is out of
-> suspend, we might need to introduce runtime_get_sync() function and new
-> API for this purpose.
-> mhi_trigger_resume makes sense in the place like this[1], where ever
-> there are register writes after trigger resume it may need  to be
-> replaced with runtime_get_sync().
+> A few devicetree binding bits have also been missing in that series, so
+> there's some extra patches for the basics in this series.
 > 
-> This function needs to do mhi_cntrl->runtime_get_sync(mhi_cntrl); first
-> to make sure controller is not in suspend and then mhi_device_get_sync()
-> to make sure device is staying in M0. and in the end we balance these
-> with mhi_cntrl->runtime_put(mhi_cntrl) & mhi_device_put().
+> Depends on:
+> - For qcom,sm8250.yaml & sm8250.c:
+>   https://lore.kernel.org/linux-arm-msm/20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com/T/
+> - For dts:
+>   https://lore.kernel.org/linux-arm-msm/20250321-sm6350-apr-v1-1-7805ce7b4dcf@fairphone.com/
 > 
+> [...]
 
-Sounds good to me.
+Applied to
 
-- Mani
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks!
+
+[1/5] ASoC: dt-bindings: qcom,q6afe: Document q6usb subnode
+      commit: b102c9d89fecd72be83eaab9b384285e2d0dc940
+[2/5] ASoC: dt-bindings: qcom,sm8250: Add Fairphone 4 sound card
+      commit: d664e75317e19bb79b6d207f7729e35eca504a6a
+[3/5] ASoC: qcom: sm8250: Add Fairphone 4 soundcard compatible
+      commit: c58c35ef6ae62e36927f506a5afc66610b7261d9
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
