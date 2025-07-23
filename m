@@ -1,158 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-66337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C52B5B0F7C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 18:04:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF419B0F7E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 18:16:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3A725853F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:04:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89F55188B9FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 16:17:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B051F30BB;
-	Wed, 23 Jul 2025 16:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303BF23A6;
+	Wed, 23 Jul 2025 16:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kju2Vkh5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Sth27BLK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5431F3B85
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7662E36EB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753286657; cv=none; b=lpEFpudTqP4qF8l8BIF0V+xtY2ocOxv5NUdnO6YphYU3D0nWC/+SSJrym0VVUlgtZ//+7GmsHVr4cTPUjmJ2O33dImj4y07KkwcrGeFgtRUoIha52XB09NdCL+eYQ0jUsg/WrOx0nColIrzJRbf1WgRsbR5D1GlFRWxJzLEWzQw=
+	t=1753287407; cv=none; b=dqiKqxRV2/75ShZ99sePGsoljJA7v/MR2Hjt4ZBSF1TXI+q80OCm23O5Oz4AQ77aZGXu7TO0Sq0TVdr4hleddrFmG6a0smdVtVt9MqDkMcw+dUkIm8sdSoKD9CxKyiSvzPuxHZDJFqzJv/SvTUBe9H1y3JRr7lRN1XeUp236ntE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753286657; c=relaxed/simple;
-	bh=KCfstuN77De2m94GHTvsNHvFZ1vdK9nOTEgDVUINVok=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=fcvxX0ti/1aYvinZXt70SSa5SJWXhJqoQ8qbOmzoPoKb2x3xUXrzn+81wDsnsHZHREH3Jiu0Ue0RGGZfUCaDT5vpUTBNaWsdEd9FjlPVOc3Nk9ZVQURR2D7QjnNHKAQceJMiECXQlIk016iwZWqm91m6ot6sqVYXaJjXceJBXTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kju2Vkh5; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1753287407; c=relaxed/simple;
+	bh=TeAfo5XC+SYG/qzz2DoAru3zKW8ugDTeZdQCUfzlipY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W3Y/BEgHy7f6Dlu11QZGNyzWMQuUNQDL2kZEEPJK0gVSPci4FDxMlgLEmKxvW07EdTEwSEh8T9QYNLzSDrEk12K3LS6zoeTzxTeULClHjhZcDtOMrZXTt+xHsJ7JojNa9m5aXG4NXG0s2u9M2YuQJ/PCs7LjWJHYKLf9SrvUfgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Sth27BLK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N9ILli025883
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:04:15 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56N8rs9M009238
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:16:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1IVq+bSzc+i0gbcHvdWX5X0gFlHkos8QZkR6QJHMwvk=; b=kju2Vkh5qgJixjmy
-	0LuCVz/DmtBSHrsGDasQ2Tu4i4rfNXAg2XZijdJlxWiM0RpwLAZbVFKCm8Hoovgd
-	WyypJ2Tp2ECJ6/D1ZBIJHVqwaTsrmnVKfxO05S/8LVeJ0NmZJe+U7mjn8HyvKFW5
-	WcNqfS5NM8YhZeMkOp0DKg7PAe1X3OEvU2mHfm1mF6KDDKQijF22o/x9jptCNyUh
-	BOS1stNXo85wblzZy+glcyioFMYcaFb4KIcBZXUd5gJC3WFcJPxUA5DOEv/iR8ME
-	wjI4qeGDb7YbpAdubb2R/ukaMSlVLcn4TxEL7E+S9nP8vhm/uE+yAodgIFoYaY9w
-	wTDMiA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 482b1ucbq6-1
+	8ahHdpK2wt442MUxN/a81ci6TCouisGheQufqHd76VQ=; b=Sth27BLKQyLoRJBW
+	octAOqjeROU581klddfMxELv0V+1wzEVdpo/zAljqSjNZ5Aa2NwDJYbOJfw6+CV7
+	yZFHHSa4hsx2Hp+XgXqjkKyZncOSpNF0Mto9BGmPHr21x+KtDIimVPttQASlxzc/
+	g3RBazqqeVZtAbcExNlhYKs03x2sbMFHlgu32IJA4cvvsAVnSLmVZt/VTyik6Hvy
+	bQ41Kli5UHdcIWp3iIlp2/8g81tAOMw6f5BQsdCzlxZYEdZ9nYOixdZB9B1Qza4S
+	EwYNLap08aEw/7t5EqBrZJfOEEMFCRgpoCxh8Ls2j5U0c8d1OQcDoexJCiqg7yB1
+	cf/bfA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4804na499d-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:04:15 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e350826d99so7298885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:04:15 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 16:16:44 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-237e6963f70so113030295ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 09:16:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753286654; x=1753891454;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1IVq+bSzc+i0gbcHvdWX5X0gFlHkos8QZkR6QJHMwvk=;
-        b=LXRorFRhVV5aJ9DgyxCGibQj4e3N1L6IHgNjN16Bm3ANyuwqqOJg2JcEHXymdkiO3C
-         XNfvSCrDsGQ68GMYu50j2X1RaerBLxalbJMjewz5NY2sezD/r2rWtlawQVmgZYSXmle5
-         41HZ450jpG6e2CjoI7b6BPL2BPgPnKgoTDJ5rP0dJojmV5ieIIvqcZvim8ICVLraF1SZ
-         f3/3xcADiE9aZDi6Lj0/EpDxQ4bj0pXOR9uYNO+atOCEky8Aiv+Gpu+fqpSVBOrL9P7U
-         65U6IvkEmP/S5HKue7o1YMkggY3o90YjKjVIAE9LWdqxc1k+n6nHbp1kCytwAXewuzxU
-         97Fw==
-X-Gm-Message-State: AOJu0Yzoc3I2e2wQNduZ+5OSLbI82jGktKznifazFmrhD2wKgMldAiXh
-	k3NZeAZ0GX3KEZT00K2BXaZ++CSvUKtdFOLFJRgweCvjgbIwNpR1SS4mv/YKEpYyYhckGSkFxaX
-	wLA6AtLs1S4g20WnhTWwqb6guelNnb9/O00z+dFSK+ExLArGlNCsuI7kMalv0dVxJC6a1
-X-Gm-Gg: ASbGncvHLyl5PLfRHEbGWQlpgS3/QmvSi3cfJoCKksOlQPFEV7neBqO7/SJtnW7Ft6D
-	6LlwJs7J/PrCcisMncehk14JsfZPWrt416sy4bmt8pk/bltiZQ5CSvr+wIJIYYZOkTPQMWROj0A
-	yzsmFNQB/UnRRkTBIfR3xUV3YeQlZLtU25GEfnU3NvdMRPmft9yie6jfwnTvxPDLjYkWjNRdDU1
-	/nfLmXC2dlPwSNHvqdEnwuHurlfR5LD66j9PCR05xMaQCxHdwO/hMryoSjJJgETGNG2KhZi2GoD
-	Btj5OfYK4mqjXslPu9yqBeCbtPWOJiGN9A4=
-X-Received: by 2002:a05:6214:1c86:b0:6fa:c81a:6231 with SMTP id 6a1803df08f44-707006aa843mr42537796d6.8.1753286653654;
-        Wed, 23 Jul 2025 09:04:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhZaSVPPcM0H02S0SyrGlN2YH/RRRuvuVz7tS54TmJPI+kAWBGLQw4aW0+GxosM+D8oehJNQ==
-X-Received: by 2002:a05:6214:1c86:b0:6fa:c81a:6231 with SMTP id 6a1803df08f44-707006aa843mr42536996d6.8.1753286652887;
-        Wed, 23 Jul 2025 09:04:12 -0700 (PDT)
-Received: from [192.168.1.17] ([61.2.112.87])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7051b8bc2dasm64468956d6.12.2025.07.23.09.04.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 09:04:12 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Google-Original-From: Manivannan Sadhasivam <mani@kernel.org>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
-        johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-In-Reply-To: <20250718081718.390790-1-ziyue.zhang@oss.qualcomm.com>
-References: <20250718081718.390790-1-ziyue.zhang@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v5 0/4] pci: qcom: drop unrelated clock and
- add link_down reset for sa8775p
-Message-Id: <175328664500.29282.12330427204137280127.b4-ty@kernel.org>
-Date: Wed, 23 Jul 2025 21:34:05 +0530
+        d=1e100.net; s=20230601; t=1753287403; x=1753892203;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8ahHdpK2wt442MUxN/a81ci6TCouisGheQufqHd76VQ=;
+        b=oeQOCHNtB5xTW0xRHscoiKo/Uri3pDJn7EvQggT7tnncD6btGMiLp+T5tDEnINUagi
+         3M8N6FxMwhc48s4SsQLyc/7vxprMIIS2E6sML4AKTXxX5HMe9Grs1mETUNqZR974YIqh
+         mbFYG2YR6DLaFyNUuu4pm2axK6PfXZF3dX9hlDliSCbSawpvYs0bIgUEUDim15VLu+A9
+         n0jcaVKXjABTvwr970jmfB4xc0bV1TOF/t6+AutCEattoZBHTqlcarSWCf70Lk/hBHC9
+         SXvTV1ywdRNtuyxbRivkRtBIMt665KOENulajKTpYFxCmFXcWXX0BOwQqqr47EYH17Pk
+         hCvA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKLQtA7ZpqvUfrittQFaN4NKcGn6gYCTY2B8xkM3YoX+cOC2Rf/07F017NOFsJ0ydjrB7dm4GLu5VP0HIj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKG/BIxf4Korku+AUOZg0xjnO+1GYByj6aU6apaNiRucysrqdZ
+	/q4Jx3ZZm0VHKv3EMvSo0MNXx68oP4KHCcGgWkpkLX26PEue3G8DGg8/B13vW2++51C7DP+Wzu+
+	ZRNofoNmUWTJLefJOaSdNXhsVbV1QGDN2J7RBjTwRncbQM0uKOer2dBBdDekl6dC3L2iO
+X-Gm-Gg: ASbGncvmK8GVigxi5ug2DqJ3KcfrpjnJlxmDZ9wasV6nh6R5YN9qynCva7C0PNAIW0z
+	ZZLQZsM99CORkWkuzf5T8Zx6tdDVg7W8qM2T5La9Z5uhcExWu6Cjg5BRdVApq3fBhTrnPtUn0DC
+	ncy6yZ8kP3mgJKneVR0aQtkJSmT+FGl6U10G1YJ28J1eQ41foREy9wq18YCuivAZ99LaGYxOdOi
+	rCYnSfeLBAVrZ/MboVEBcBiIzOZs4+KNm7JY1vw8wOeB9IiY2ndJhmDBoZcj+RzVjmYlhjbf0W3
+	6R8JbZptmKMFvMqBt7ieVUClIrOy4piFMW31iuXH4XNS23vjlHashHujRVK3Mw8p
+X-Received: by 2002:a17:903:2281:b0:236:748f:541f with SMTP id d9443c01a7336-23f98195113mr42556565ad.33.1753287403365;
+        Wed, 23 Jul 2025 09:16:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH32GBYmFHtSz/Uwh2EzZr1vWg4+DmelFbNwMgWwGmiVYzlCyNqOtYbX5pVtof8b7I5J1rvKg==
+X-Received: by 2002:a17:903:2281:b0:236:748f:541f with SMTP id d9443c01a7336-23f98195113mr42556075ad.33.1753287402781;
+        Wed, 23 Jul 2025 09:16:42 -0700 (PDT)
+Received: from [192.168.1.4] ([106.222.235.133])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b60ecbdsm100314065ad.82.2025.07.23.09.16.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Jul 2025 09:16:42 -0700 (PDT)
+Message-ID: <77e344a4-ab45-4999-8864-2ba443dc0391@oss.qualcomm.com>
+Date: Wed, 23 Jul 2025 21:46:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
-X-Authority-Analysis: v=2.4 cv=LdY86ifi c=1 sm=1 tr=0 ts=688107ff cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=L2vWZV9GmkZVUxua0bORKQ==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=AxdmJqN1ex9b-t5leqYA:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDEzOCBTYWx0ZWRfX9yToa7ptcUyy
- uiY4gDc9iuR6MR+TIj7+qlSS9hgVkbfpTTUSMPWMZyaBoKYZjSzaN+Z/PjwANzn3MMrlmTda8Y9
- rJBUeCcZpJeNQmaf5B0F8fh+nFhzPB8JJZuyqiMw/hdGzxZ6M24th/c6VnXc71FgvmU2SG0crJK
- 6YWfNaf+nDGaXXpjSpyEkrHjEWIZ5PMPFRr5359oP2e9mbfvpDfNV4DgJIofCMUA+hBKG1UKpLX
- d2SgGY1VfrkT9yj1wZvd9XFNmSzeLRdVJA+LTXHNOA+dLY4I/IPLh1vdVZlOgkuWPye7gLpuXpx
- xV9Bf1IA5F2RmDo6tPDs+ud+04NQQCPZfFvonbSlLoVdX81lO7YiKaQxHHj3uXZ6UKYSillqK7F
- TB9scMFqD9JhN7M88PdHG2BGV6p1UyPqZ9zvqmYa50Ev9PJGH9VkRDUzd8LkD/9khWCYNRVm
-X-Proofpoint-ORIG-GUID: -_kuc9M3WLs6JYV-EiKRosSZ_i94gbJx
-X-Proofpoint-GUID: -_kuc9M3WLs6JYV-EiKRosSZ_i94gbJx
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Fix error return values in
+ mdt_header_valid()
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+References: <db57c01c-bdcc-4a0f-95db-b0f2784ea91f@sabinyo.mountain>
+ <aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org>
+ <c052931d-9bbf-42d0-9ccf-4fdc62d408bb@linaro.org>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <c052931d-9bbf-42d0-9ccf-4fdc62d408bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 7t2Cs0lmCOld7MtPm4-xS96i7J1wxBhE
+X-Proofpoint-ORIG-GUID: 7t2Cs0lmCOld7MtPm4-xS96i7J1wxBhE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE0MCBTYWx0ZWRfX0TjRxXg9G70a
+ C2P7/Drv9Jtjroj0F2VbVhg8UkEpvYGlPP4s/LvXWwx7f4mUUkb21RLyKkzUMrRZFpzvIpLjjFK
+ 9ilvFI+fMBFLBjYpRvXnzkS/ijbn2RqDs6kEZ40G4zGKqyQwuFS7aJsbM4B7e5+z4cx/C1q8nwE
+ 69G5clD63ulq/s4izqxPfRl1gwY+M+7JvVOcqKvI7kfI20DA4668X19HzHRFplHSCj8Y1p93wQK
+ H06od8/YkMZDGdgoBnm/N3G4i7IxMVoLb3adh4RlP175yiYbWPIz52KoOS/kRL63OSdfrtOaFB5
+ UN4Aust/YTxtyEFnlc/Dne6dhkdDbOtfqHMVp6fZK4vzkncyaQmEUvQ+vAJAhrxPvA0uWX7qXPu
+ CXFaVBwm6hQk5xT7h9Yn+XwXZGICzAg9qJNzyBjFQIm7NmjfaaHdZoTbna8mihnuDL8SwktO
+X-Authority-Analysis: v=2.4 cv=DoFW+H/+ c=1 sm=1 tr=0 ts=68810aec cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=4dphQItTPUswyQvINXrzgA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=qC_FGOx9AAAA:8 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=7eR1o1z8CW6_ZOpSCJ0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22 a=fsdK_YakeE02zTmptMdW:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-23_02,2025-07-23_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0 phishscore=0
- malwarescore=0 lowpriorityscore=0 mlxlogscore=842 bulkscore=0 spamscore=0
- suspectscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ suspectscore=0 phishscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507230138
+ definitions=main-2507230140
 
-
-On Fri, 18 Jul 2025 16:17:14 +0800, Ziyue Zhang wrote:
-> This series drop gcc_aux_clock in pcie phy, the pcie aux clock should
-> be gcc_phy_aux_clock. And sa8775p platform support link_down reset in
-> hardware, so add it for both pcie0 and pcie1 to provide a better user
-> experience.
+On 7/23/2025 9:16 PM, Neil Armstrong wrote:
+> On 23/07/2025 16:46, neil.armstrong@linaro.org wrote:
+>> Hi,
+>>
+>> On 25/06/2025 17:22, Dan Carpenter wrote:
+>>> This function is supposed to return true for valid headers and false for
+>>> invalid.  In a couple places it returns -EINVAL instead which means the
+>>> invalid headers are counted as true.  Change it to return false.
+>>>
+>>> Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
+>>> past the ELF header")
+>>> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+>>> ---
+>>>   drivers/soc/qcom/mdt_loader.c | 4 ++--
+>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/
+>>> mdt_loader.c
+>>> index 1b4ebae458f3..0ca268bdf1f8 100644
+>>> --- a/drivers/soc/qcom/mdt_loader.c
+>>> +++ b/drivers/soc/qcom/mdt_loader.c
+>>> @@ -33,14 +33,14 @@ static bool mdt_header_valid(const struct
+>>> firmware *fw)
+>>>           return false;
+>>>       if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
+>>> -        return -EINVAL;
+>>> +        return false;
+>>>       phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr-
+>>> >e_phnum), ehdr->e_phoff);
+>>>       if (phend > fw->size)
+>>>           return false;
+>>>       if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
+>>> -        return -EINVAL;
+>>> +        return false;
+>>>       shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr-
+>>> >e_shnum), ehdr->e_shoff);
+>>>       if (shend > fw->size)
+>>
+>> This patch on linux-next breaks loading DSP firmwares on at least
+>> SM8550, SM8650, X1E8:
+>>
+>> [    7.572665] remoteproc remoteproc1: Booting fw image qcom/sm8550/
+>> adsp.mbn, size 28342616
+>> [    7.615176] remoteproc remoteproc1: Failed to load program
+>> segments: -22
 > 
-> Have follwing changes:
->   - Update pcie phy bindings for sa8775p.
->   - Document link_down reset.
->   - Remove aux clock from pcie phy.
->   - Add link_down reset for pcie.
+> It also breaks GMU loading on the same platforms:
+
+we don't use mdt_loader for GMU fw. This must be due to the zap fw
+loading has some issues with this change.
+
+-Akhil
+
+> [    7.418330] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu
+> [msm]] *ERROR* gpu hw init failed: -22
 > 
-> [...]
-
-Applied, thanks!
-
-[2/4] dt-bindings: PCI: qcom,pcie-sa8775p: document link_down reset
-      commit: 10e7298dc0f14c52d9b5c52fb52558f567815b7c
-
-Best regards,
--- 
-Manivannan Sadhasivam <mani@kernel.org>
+> Neil
+> 
+>>
+>> CI runs:
+>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/
+>> jobs/248846#L1323
+>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/
+>> jobs/248850#L2037
+>>
+>> Bisect log:
+>> # bad: [a933d3dc1968fcfb0ab72879ec304b1971ed1b9a] Add linux-next
+>> specific files for 20250723
+>> # good: [89be9a83ccf1f88522317ce02f854f30d6115c41] Linux 6.16-rc7
+>> git bisect start 'a933d3dc1968fcfb0ab72879ec304b1971ed1b9a' 'v6.16-rc7'
+>> # bad: [a56f8f8967ad980d45049973561b89dcd9e37e5d] Merge branch 'main'
+>> of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git
+>> git bisect bad a56f8f8967ad980d45049973561b89dcd9e37e5d
+>> # bad: [f6a8dede4030970707e9bae5b3ae76f60df4b75a] Merge branch 'fs-
+>> next' of linux-next
+>> git bisect bad f6a8dede4030970707e9bae5b3ae76f60df4b75a
+>> # bad: [b863560c5a26fbcf164f5759c98bb5e72e26848d] Merge branch 'for-
+>> next' of git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git
+>> git bisect bad b863560c5a26fbcf164f5759c98bb5e72e26848d
+>> # good: [6fe8797df6f2e3a7e3c736d5bd4862915a06a690] Merge branch 'for-
+>> next/core' of git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux
+>> git bisect good 6fe8797df6f2e3a7e3c736d5bd4862915a06a690
+>> # good: [c522d00e1b4b00c5224c2acb9c2738bcc9c04ff5] Merge tag 'ti-k3-
+>> dt-for-v6.17' of https://git.kernel.org/pub/scm/linux/kernel/git/ti/
+>> linux into soc/dt
+>> git bisect good c522d00e1b4b00c5224c2acb9c2738bcc9c04ff5
+>> # good: [6a323f22a8b925f3646c884e2f9c733c79393f1d] Merge branch 'soc/
+>> drivers' into for-next
+>> git bisect good 6a323f22a8b925f3646c884e2f9c733c79393f1d
+>> # good: [5d8b3562faac8030b5c26efc1cd739a41c4db722] Merge branch 'soc/
+>> dt' into for-next
+>> git bisect good 5d8b3562faac8030b5c26efc1cd739a41c4db722
+>> # bad: [b79c0d780e519d760c2529f0bf849111b9270192] Merge tag 'apple-
+>> soc-drivers-6.17' of https://git.kernel.org/pub/scm/linux/kernel/git/
+>> sven/linux into soc/drivers
+>> git bisect bad b79c0d780e519d760c2529f0bf849111b9270192
+>> # good: [9841d92754d0f3846977a39844c3395ee2463381] Merge tag 'memory-
+>> controller-drv-6.17' of https://git.kernel.org/pub/scm/linux/kernel/
+>> git/krzk/linux-mem-ctrl into soc/drivers
+>> git bisect good 9841d92754d0f3846977a39844c3395ee2463381
+>> # good: [64a026dd896e423a177fe87e11aa69bf5348c27b] soc: qcom: socinfo:
+>> Add support to retrieve TME build details
+>> git bisect good 64a026dd896e423a177fe87e11aa69bf5348c27b
+>> # good: [9cea10a4f5a39fde32bf7b8addfa5f9175174e0e] dt-bindings: sram:
+>> qcom,imem: Add a number of missing compatibles
+>> git bisect good 9cea10a4f5a39fde32bf7b8addfa5f9175174e0e
+>> # good: [0445eee835d6e59d635e242ba1d9273f168035fa] soc: apple: rtkit:
+>> Make shmem_destroy optional
+>> git bisect good 0445eee835d6e59d635e242ba1d9273f168035fa
+>> # bad: [5b8141596b06fba7313cdfbd5f589649d7fde662] Merge tag 'qcom-
+>> drivers-for-6.17' of https://git.kernel.org/pub/scm/linux/kernel/git/
+>> qcom/linux into soc/drivers
+>> git bisect bad 5b8141596b06fba7313cdfbd5f589649d7fde662
+>> # bad: [9f35ab0e53ccbea57bb9cbad8065e0406d516195] soc: qcom:
+>> mdt_loader: Fix error return values in mdt_header_valid()
+>> git bisect bad 9f35ab0e53ccbea57bb9cbad8065e0406d516195
+>> # first bad commit: [9f35ab0e53ccbea57bb9cbad8065e0406d516195] soc:
+>> qcom: mdt_loader: Fix error return values in mdt_header_valid()
+>>
+>> Neil
+> 
+> 
 
 
