@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9580CB0EA96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:26:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E54DB0EAA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 08:28:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0C653BC5CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:26:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 271274E7A9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jul 2025 06:28:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 981C126CE07;
-	Wed, 23 Jul 2025 06:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1CB26CE06;
+	Wed, 23 Jul 2025 06:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhnlAkih"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qkBECvOl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCC226C3A8;
-	Wed, 23 Jul 2025 06:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EADC26C3BD;
+	Wed, 23 Jul 2025 06:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753251983; cv=none; b=nE66nBThBp7NRjQONW+LPwJmvWxfMB4sfdUlm/HNm0ppY+kQ63RLkX47Tu+Z6ldA7gijqxNoMUpJeXpb0UQaluDDNHmIVh/6zr1EsYp/PMJ8rQfqdS/9tUtZ0HOsRWngYGQufYo0Gqw5X952rPQP6nyRLxJQl8Ik9+1s+oglhYw=
+	t=1753252129; cv=none; b=VT5B5KghFaWXYzj6vafAhyunAd8Qp4e7kWqF3zigmDc9zombLpC+JdITXoPi9FNaqIL5GxEhOtysM9Ic/82ox/vjdzYUbf8SpKL3zGHFFFeGEH9hTvAa+YnyJ6HVT7FLoZn087nHB2Nv8ID0Ze4NlIoE/izZAMogVcNZxWGfgbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753251983; c=relaxed/simple;
-	bh=LnrD8j6A6IP6Np52z5Pd8BifMztiHrozoMLVmvNqVoc=;
+	s=arc-20240116; t=1753252129; c=relaxed/simple;
+	bh=XMeCFVwbC3kdcKFTe94TBPeje0KGcPnqQl4IHrHk6Xw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S+oMJ3eCoP+M5sjHqiHH7pgFPujwbzdUrLEgeB80FoyhQr5WRq8RS6Vlb2R9gt6ampIrs/Q3Wa8rTQQ990lvATnZc15LqY/6vrIkSNC2bT3AOq+TRTNLqtVneZV6vsV+zebgX4mJDtfUoZqZTIDe121qZAoHRcGIuLlnZP5u3vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhnlAkih; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8D3C4CEF1;
-	Wed, 23 Jul 2025 06:26:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gxFikZ4sUUSXSwra+1ivdS1b58dRo9QEcPivO0KXpeRHBf0Eb70YvE6hr4tiT8pP0pa5r0tTg5uhlgH1dtkssVyxWoeK+bJM0znqmbQCQyoWQQbUIHQVCYceb1E8wx59ALX9pZdZ6tcMVCEkEJkum8j0jE9f8RIK2cCLOScPRP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qkBECvOl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F232C4CEF1;
+	Wed, 23 Jul 2025 06:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753251983;
-	bh=LnrD8j6A6IP6Np52z5Pd8BifMztiHrozoMLVmvNqVoc=;
+	s=k20201202; t=1753252128;
+	bh=XMeCFVwbC3kdcKFTe94TBPeje0KGcPnqQl4IHrHk6Xw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fhnlAkihZFPFRcl/fPVooy0s5OaI/vtCS17CIi/yZoF8YvVu5+WqmuMZvQpPB6b5L
-	 x1sUqqkawoQUqq3+GkjXcSmIIsk6EPaeyHyTJRiVrNOSYUB9L759XSS0XDqPNctVCG
-	 35MeixYHKwqFW++acUvxOSpJZffTrG0qW0ggAMZigcoHYFQRGC1fN/bqO+BL5rHx80
-	 5dP2VC6WbgKxa0Sr5HYn5t1VXiTqQawBE9lMICKmy4urY/b4OIvkjrNNJKloI4DXXY
-	 QLCo3z9DOUlSjoQFM5Gve+fWD+fXuHrEniYaYsqQr7GcAwSnHJzG+5y92be96wzB1d
-	 t73n8VGyGAgAA==
-Message-ID: <ad436d4f-dff2-4063-9b9b-e1218f6dc3c7@kernel.org>
-Date: Wed, 23 Jul 2025 08:26:19 +0200
+	b=qkBECvOlAZHDe2vXNQ3vlvNuvEl2gJ63JoRPL2br8Y87svseiV1qnspLIbLCTrKy5
+	 2jsQG4g9TwpA2TZA2N8DDF4fjYzBtuKYK5zABKnJEqZcTiEKW4uS3uOVtaKDeaNSj5
+	 ls3Xr8UUcsFTpAcSYqbG/deTqh2p88qlPso+WDyaO65rSJwBajgz+rGjeQwvdA/4V/
+	 86Fk7KEAbwFS5creW39sjgv5FJRJprDaiKQ8WVOsFfL302CYMdmdnatDo4AfGi4Mfm
+	 XxaMt/K2oRmkV65okBxYLLYrXqToq1MZCc5yBoNU9zhe4ydBRidnfh6AyYJ98+OsoG
+	 vIRv6qUhyitiQ==
+Message-ID: <0f9eebfe-21f8-48b8-9b49-a35126aa6dd1@kernel.org>
+Date: Wed, 23 Jul 2025 08:28:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: hamoa-iot-evk: Enable display support
-To: Yongxing Mou <quic_yongmou@quicinc.com>,
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20250723-x1e-evk-dp-v1-1-be76ce53b9b8@quicinc.com>
+References: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
+ <20250716-hamoa_initial-v1-3-f6f5d0f9a163@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,37 +104,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250723-x1e-evk-dp-v1-1-be76ce53b9b8@quicinc.com>
+In-Reply-To: <20250716-hamoa_initial-v1-3-f6f5d0f9a163@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 23/07/2025 08:14, Yongxing Mou wrote:
-> Enable DisplayPort support on all three USB-C ports of the
-> hamoa-iot-evk platform.
+On 16/07/2025 11:08, Yijie Yang wrote:
+> The HAMOA-IOT-SOM is a compact computing module that integrates a System
+> on Chip (SoC) — specifically the x1e80100 — along with essential
+> components optimized for IoT applications. It is designed to be mounted on
+> carrier boards, enabling the development of complete embedded systems.
 > 
-> Unlike most X1E-based boards, this platform uses FSUSB42 USB
-> switches for the USB0 Type-C port, while USB1 and USB2 rely on
-> Parade PS8830 retimers for Alt Mode switching.
+> This change enables and overlays the following components:
+> - Regulators on the SOM
+> - Reserved memory regions
+> - PCIe6a and its PHY
+> - PCIe4 and its PHY
+> - USB0 through USB6 and their PHYs
+> - ADSP, CDSP
+> - WLAN, Bluetooth (M.2 interface)
 > 
-> Support for the PS8830 retimers was already included in the
-> initial DTS, so this change adds support for the FSUSB42 switches.
+> Written with contributions from Yingying Tang (added PCIe4 and its PHY to
+> enable WLAN).
 > 
-> Due to limitations in the USB/DP combo PHY driver, DisplayPort
-> functionality is limited to 2 lanes instead of the maximum 4,
-> consistent with other X1E-based platforms.
-> 
-> The platform also supports embedded DisplayPort (eDP) by default.
-> 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
 > ---
-> This change made top of initial DTS:
-> https://lore.kernel.org/all/20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com/
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 156 +++++++++++++++++++++++++++++
->  1 file changed, 156 insertions(+)
 
-Just squash it there. Why are you posting knowingly incomplete DTS just
-to fix it later?
+As pointed out by "arm64: dts: qcom: hamoa-iot-evk: Enable display
+support" this is incomplete. Adding new SoM or board is one commit. Not
+two. Don't split board DTS, which is already prepared/ready, into
+multiple fake commits. This is not a release early approach. This is
+opposite!
 
 Best regards,
 Krzysztof
