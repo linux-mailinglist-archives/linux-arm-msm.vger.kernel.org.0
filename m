@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFE13B10B43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 15:20:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AE01B10B46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 15:21:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B29CB3AF397
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 13:20:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B6013B1631
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 13:21:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88A02D5C9E;
-	Thu, 24 Jul 2025 13:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 098212D63FB;
+	Thu, 24 Jul 2025 13:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJVU6jbi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E6fCah3p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BFE267B9B;
-	Thu, 24 Jul 2025 13:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96F62AF03;
+	Thu, 24 Jul 2025 13:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753363234; cv=none; b=W0xUEEcJmLxqb98mkCh6VhVcZ/jh4qmH2wRy8tKbEesCJDpJKaJERVejGzrroApgvFOnJxpZCkOfgfVRh2RFonsg3UYcF2iqfkUaPkeUmOvkjekjGWIL1CYi4W1EM/0VBRcf8obfnWeBZx+hgZyfmhiB1QNK3EjgECf2+I3GfH4=
+	t=1753363289; cv=none; b=YY/jjS3izlEMoq/6kPC55DL3LK2BZ8vsgmvC5qTfEaG+Nt/0XB2Z2/qtHFFJprQiNS0DUJZvmBFzuZ6x9cUssVzXKTE31tA9ApCsDxCN8ROuTOnQ/D4DYWBOAmXrjWjURhlag23kAxqN74gyweMday8dXl166dm8rklfYSWYMcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753363234; c=relaxed/simple;
-	bh=OjErf/on7Hr9VLr/pwmO5V9uQXm+jUzp0cJzJ5Yqijw=;
+	s=arc-20240116; t=1753363289; c=relaxed/simple;
+	bh=ituzBDn856hlt33VW1UTAz5KYbLL2bWaUwfAHXMovwA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GnifbqK0Lz3jtCTuAOV5fs/sDjWqVWJAs3TyhEMdUrcOsbt6bWuduarkSjOTuk7b8hDY7/m1vy7CPVJB03RQ/CQFtVHuyjgHnfgAHdSlUPDTWZUOvGeCeAPibn23vImf3evP9HTjocFJZOn2USjHMuUhXViB1cnInWYX9q5n8tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJVU6jbi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E5BC4CEED;
-	Thu, 24 Jul 2025 13:20:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=cDyHIO7aeS/lJgLepCZZrDKloKXyNBvMYJH9e0b2JRFQsYnHaXx+JBaZWM/bKMAhvV226zmK/Xlt8PeI+8glMxvrcolttJvaurTrN9eMx7zDslqwV0ju+Hu5epo2xEHd1EtZF5K4g3ZWp7B58YsD6DPapz4W50PUy/d5dPKwtmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E6fCah3p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E7AC4CEED;
+	Thu, 24 Jul 2025 13:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753363234;
-	bh=OjErf/on7Hr9VLr/pwmO5V9uQXm+jUzp0cJzJ5Yqijw=;
+	s=k20201202; t=1753363289;
+	bh=ituzBDn856hlt33VW1UTAz5KYbLL2bWaUwfAHXMovwA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RJVU6jbiRqtjqaSUd0tuxqBFxpnonHoeDo7bmnB1+sEhaTx1TCs4r1doF6gjqnrGA
-	 da7wfuTsYQ94wD7KLevM3IJp/BamHctRXgr8jtg05KY2FCAS2y6rRIg4d7j1lsl0Zg
-	 pKThyyNrLUhvC4PJ0vXRE4H3qHQQqCb8zpnWLs20iQxI9CXtSvDbh8B8Fr3QWp/NeJ
-	 LQ09eSQ3YOAnRHg/ipbw5mRXYjUkvEyBVK4hPBrYR0KymVhKT5eS9+bTJeAKzqoCrb
-	 DCNY5rzaATwDPmVJjcGl0YNNWS7q/wvpUx/d2UDju0hxPRZXG2xrzx4lXyiolVP7As
-	 K6snAsMpfZKYA==
-Message-ID: <3cbbace5-eff9-470e-a530-36895d562556@kernel.org>
-Date: Thu, 24 Jul 2025 15:20:29 +0200
+	b=E6fCah3pGB/JwG9sSI2wDPfgeHJf0vywQPdPM5CUxh/wPlRzr/3rIMnTj4q7CQYDv
+	 98BWYn/ciNFccPPytHqpOXRFEMOn1MoTOj1XzGCh9k8XRPmP2oqzZMx7bgWuOt7x7J
+	 PuyZf5iVjxE4WVbDA33SPLViMCVbfd/z5u4RPsd+9xTDTmKDvJzkUGujdn6LuSmdo0
+	 15XhXfwcUkUboSoiS87u1pmRfmZIn9eT77ctq+uisfuQdzt+62YQn7vulFYMR09dJi
+	 dJvUxqX1510nrCCGFRyuCB2JaucFPqdWqZeeYGpO/ei+UGuaSibKEta8A1Y+I6Nzad
+	 5WtX3U4Qy/oZQ==
+Message-ID: <68051d34-9fff-4362-a27f-7abf596e662e@kernel.org>
+Date: Thu, 24 Jul 2025 15:21:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: Rename sa8775p SoC to "lemans"
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH 6/7] dt-bindings: arm: qcom: Refactor QCS9100 and SA8775P
+ board names to reflect Lemans variants
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@oss.qualcomm.com
 References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
- <20250722144926.995064-2-wasim.nazir@oss.qualcomm.com>
- <20250723-swinging-chirpy-hornet-eed2f2@kuoka>
- <159eb27b-fca8-4f7e-b604-ba19d6f9ada7@oss.qualcomm.com>
- <e718d0d8-87e7-435f-9174-7b376bf6fa2f@kernel.org>
- <fd1a9f2f-3314-4aef-a183-9f6439b7db26@oss.qualcomm.com>
+ <20250722144926.995064-7-wasim.nazir@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,94 +106,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <fd1a9f2f-3314-4aef-a183-9f6439b7db26@oss.qualcomm.com>
+In-Reply-To: <20250722144926.995064-7-wasim.nazir@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/07/2025 15:11, Konrad Dybcio wrote:
-> On 7/24/25 2:51 PM, Krzysztof Kozlowski wrote:
->> On 24/07/2025 14:47, Konrad Dybcio wrote:
->>> On 7/23/25 10:29 AM, 'Krzysztof Kozlowski' via kernel wrote:
->>>> On Tue, Jul 22, 2025 at 08:19:20PM +0530, Wasim Nazir wrote:
->>>>> SA8775P, QCS9100 and QCS9075 are all variants of the same die,
->>>>> collectively referred to as lemans. Most notably, the last of them
->>>>> has the SAIL (Safety Island) fused off, but remains identical
->>>>> otherwise.
->>>>>
->>>>> In an effort to streamline the codebase, rename the SoC DTSI, moving
->>>>> away from less meaningful numerical model identifiers.
->>>>>
->>>>> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/{sa8775p.dtsi => lemans.dtsi} | 0
->>>>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi             | 2 +-
->>>>
->>>> No, stop with this rename.
->>>>
->>>> There is no policy of renaming existing files.
->>>
->>> There's no policy against renaming existing files either.
->>
->> There is, because you break all the users. All the distros, bootloaders
->> using this DTS, people's scripts.
-> 
-> Renames happen every now and then, when new variants are added or
-> discovered (-oled/lcd, -rev-xyz etc.) and they break things as well.
+On 22/07/2025 16:49, Wasim Nazir wrote:
+>          sa8155p
+>          sa8540p
+> -        sa8775p
+> +        sa8775p    # lemans
 
-There is a reason to add new variant. Also it does not break existing
-users, so not a good example.
+I already commented on other patch on this and I am dissapointed this
+pattern keeps growing.
 
-> Same way as (non-uapi) headers move around and break compilation for
-> external projects as well.
-
-Maybe they should not...
-
-> 
->>
->>>
->>>> It's ridicilous. Just
->>>> because you introduced a new naming model for NEW SOC, does not mean you
->>>> now going to rename all boards which you already upstreamed.
->>>
->>> This is a genuine improvement, trying to untangle the mess that you
->>> expressed vast discontent about..
->>>
->>> There will be new boards based on this family of SoCs submitted either
->>> way, so I really think it makes sense to solve it once and for all,
->>> instead of bikeshedding over it again and again each time you get a new
->>> dt-bindings change in your inbox.
->>>
->>> I understand you're unhappy about patch 6, but the others are
->>> basically code janitoring.
->>
->> Renaming already accepted DTS is not improvement and not untangling
->> anything. These names were discussed (for very long time) and agreed on.
-> 
-> We did not have clearance to use the real name of the silicon back then,
-> so this wasn't an option.
-> 
->> What is the point of spending DT maintainers time to discuss the sa8775p
->> earlier when year later you come and start reversing things (like in
->> patch 6).
-> 
-> It's quite obviously a huge mess.. but we have a choice between sitting on
-> it and complaining, or moving on.
-> 
-> I don't really see the need for patch 6, but I think the filename changes
-> are truly required for sanity going forward.
-> We don't want to spawn meaningless .dts files NUM_SKUS * NUM_BOARDS times.
-
-Renaming will not change that. You will have still that amount of boards.
-
-> 
-> So far these are basically Qualcomm-internal boards, or at the very least
-> there was zero interest shown from people that weren't contracted to work
-> on them.
-
-They committed them to upstream for a reason. This comes with
-obligations and responsibility, especially for big vendor like Qualcomm.
-Qualcomm does not want to commit? No problem, don't upstream...
-
+Linux kernel is not the place to store map of your internal company
+names/codenames and products.
 
 Best regards,
 Krzysztof
