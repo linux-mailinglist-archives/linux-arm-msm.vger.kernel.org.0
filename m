@@ -1,119 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-66429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF8B5B1022B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:47:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 622F3B10230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:48:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 114015874E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:47:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B58A3B6696
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:47:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A888266B6C;
-	Thu, 24 Jul 2025 07:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1019266574;
+	Thu, 24 Jul 2025 07:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NLQ4F0Gy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VeblxB6V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8CC1FDE09
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:47:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C50821771C;
+	Thu, 24 Jul 2025 07:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753343268; cv=none; b=JWK0117OWJxv3qjbJaublNVBqJOKkrzWs/5T1HzEqnyBdyFWUn4ocz50sk530v7En9Tus8BD6oFXx0gluIZPtLBzQVWpA+zO1JLH9cFl1rY/r+wkAxHCVR1yekpaqVzzmuTvcYiYHeJP78t2Jeh4deyQD037AzZpJWZPZXiFJU4=
+	t=1753343289; cv=none; b=pU1ZhkWcJL0cUq7jxwk/jiE5ISkMfyeDVjlGlZZQ7MK6ID8xOCFu6CS2jXTGvLLcZ8VlKkZX2Ns/4fWNqOBhkZMeDEP460Xo3zaEikpG7anfRKyeEj5XaqrZSZ5bQ4l7GsDx9/gjc5pHdV2RmQQyMK2mTTipp0aYO/fAHUH/1ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753343268; c=relaxed/simple;
-	bh=GkZlzMsbwC9NT9A0zr+vZfjTAZdKR7nPqVFGiO0aDRg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c8NqclsjmME+rKBaFkCg7MHVgRjvr5OBBEW51RieloHVmVk/pnyhilPUZRpjS2uZejHtPH+f1eXKQVLjsII4JiRmRP2sRTO2gpj3XkcGCIjZ6mq0ZdDu/s5fTWSxpy/861hw0mp9zhwo0mTx13tfcbbQs4gEgbHAsMBZH4hvHTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NLQ4F0Gy; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-60c01f70092so1173255a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 00:47:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753343263; x=1753948063; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BCsHGBvSyrUsLsBAqIRdWHViyxCBqekwJoXqBFYbpq4=;
-        b=NLQ4F0GyGE/Z3lhtFN1g4098p75UQi5NWkYAs09ZPc61C5l5A5ms7zPiU5OJOgR2DN
-         adlsmqPDcF6be7+BdLrmhZy8B99jUVRDSs9XhxAhSM/o7xtBokS0X5ciYf+/W6DBBCrK
-         UQTENyqEcvHGFF8zYUZG6Zpx3QWBeJAOMAe9OcFVw5qxRTuKpXt5QcQxLVSUnDXZabi/
-         8pVsvOh7OPhU8ouNeN1uEn8P8V7BE359hOCzpzIY8Ui8ANpXYFarotuSUldTuQAC+OTM
-         kn0GNoi/HVNb18mWUsA3VacocGXE2chlvOR0JkoNp/BGtuTHNvLPtt9vsRUn35IC7FV7
-         HlBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753343264; x=1753948064;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BCsHGBvSyrUsLsBAqIRdWHViyxCBqekwJoXqBFYbpq4=;
-        b=fZKLtvYOzp+n33NTVuMORlV1td1+aptxbMTBtRo5Cm0AAu0x2WGUwJmHFEFK8+Sz+b
-         gnZ74PwQd2NRz5MdM+D+RHHFM6ZhHfK49MmtOcWeH9qrcn+c8pZnpL0taVEOGnBTPiMI
-         T2t2P6B/ErNJOVpBqqffUfXSA0KM0Xj4Nug5Yw9DCW7zuBSyqFURmEub649wY7LD3co5
-         v7bbsTt2aysl76/WgC7QIhBHZi0cvX6NZmTk8eCsCXEvW2/Ww2nLyXqzli9igLEZby/f
-         /+TaPs+ilYvYCVeyVgZeXn2fuDHChWCTRVbqr/s63izwQJ56LZgKEDuWPv3b0S50dReV
-         uIVg==
-X-Forwarded-Encrypted: i=1; AJvYcCWuxn9dCDwtugqovF3rnXhcmP7IlAHli9bdQsY1uEBsYRMqt4/v6PCWDfVoX7HVKsCw3ifHaSkhULG9A+Lw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxa+ab3mk6Km/1Kq4R4xKKoGAlP2shJMhf45hoyqNhWTKp4jglv
-	eaTMgpMrSObt/6s9Mew/djVVFf3TNfJhZpoGtEsBZJWgkctH6xfe2ciQah7OjwUpOj0=
-X-Gm-Gg: ASbGncss0NJ2F6qv71m5C4oLPaiaToC3hpxkjK0FcZA7RdXVGMGSWHao7lp2RqiI8FY
-	7qkNYYUCWuzEs/t4tJxR+fAeEmiy5mv4RimNh+/wGbs1DaDDtQ+4YkOLi/UtZCxKx/6bIYWhUO3
-	1o2nmPtx1sy9uNi8cEkLAK0dP3/fcyWs5c03/IOi6Y5OcoMeDIrX6rahMtLGuNyqaJ1vp0QBx9w
-	e4wLQ7jW+iuRK4srJPX4rX7KNlfGCfNFp9a0tr5Cgw1vq49pD1Mf4Bera9Qe3RonlFKmbPVInrb
-	3TXK0Frd+vjDfu6SKB0iYGwH+IqCdbOgyxZbhI6B5zOvtrtj9iZLZ+ouMbnW6wHkHQkjH0T4R5I
-	LlJLS7DTC+Wwf6dqphZ0epRoibsXN4dcIEw==
-X-Google-Smtp-Source: AGHT+IEhhV27yTiJ5gFBxDikiEPBXQLvhGeDpwVDGw+Zc0stcC9d5cV/zCr60GkDvp8aoPbA1HE8EQ==
-X-Received: by 2002:a05:6402:42c9:b0:612:a996:5cfe with SMTP id 4fb4d7f45d1cf-6149b5b01d5mr4946103a12.31.1753343263494;
-        Thu, 24 Jul 2025 00:47:43 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:706f:1fb4:134c:465d])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-614cd31abd2sm480951a12.56.2025.07.24.00.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 00:47:43 -0700 (PDT)
-Date: Thu, 24 Jul 2025 09:47:41 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: srinivas.kandagatla@oss.qualcomm.com, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 20/23] arm64: dts: qcom: sm8450: add sound prefix for wsa2
-Message-ID: <aIHlHZiy0ArPwSMg@linaro.org>
-References: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250723222737.35561-21-srinivas.kandagatla@oss.qualcomm.com>
- <g5ymyqh5soso5fj5mzdssz4ovqovecmvja4lvcgnfncnsvep3l@qsip7x3l5err>
+	s=arc-20240116; t=1753343289; c=relaxed/simple;
+	bh=eBzvW6M39tqMJ4rxOkl6YZpIClcLSUK00ZQDKJiwXUw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uKgKmHMugmUJcY8FZH9IepMijD4NOPZNyWwi2lkyiAJ34lzTzQxQ33U05JRUl1anmNpIt9lfisuB7k78to0/FeW9+In0vs/YWTRxydKY/OEk9Qr2H1pYhXSbXoC2U6DSN+cpY8Dea7SWBABVrYfrnm+lIJoXOi5cNVuXzJnaKLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VeblxB6V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E163BC4CEED;
+	Thu, 24 Jul 2025 07:48:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753343289;
+	bh=eBzvW6M39tqMJ4rxOkl6YZpIClcLSUK00ZQDKJiwXUw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VeblxB6VUxXQ8EIejbIoSsIoHV2FCz9C/FulBfjeFCU/9x2LKmuESaHCTOMu9wZbB
+	 aGVQ2jbor/y2povHuIISKTvXgQ5E0AcmJtbVhASVWHWGbtO8oAZyg3smvbe3R7CMwn
+	 M7TCA3E4O9NcQjwaDnzPn/NmWaEQbDXofweU42EcjowQMOc+rb2RY+g5tyFnnlAxn9
+	 x6Aehrn3s9cXPO82bmhcYdpixgpx41j4Ip/Lu8cv8q7BxWFuAWJmSSPnOJhqO02Jv7
+	 LnYtPJYSQsA2su+pMDKPcsxiDL5DZiFV87v3OhoiIiIIjk1NKjzaOY8cyIcnZo+U+D
+	 uUN6P4GsOnI3Q==
+Message-ID: <962d6db3-af85-45b9-9c1d-5369847dcfb4@kernel.org>
+Date: Thu, 24 Jul 2025 09:48:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <g5ymyqh5soso5fj5mzdssz4ovqovecmvja4lvcgnfncnsvep3l@qsip7x3l5err>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] dt-bindings: ufs: qcom: Document HS gear and rate
+ limit properties
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+ bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
+ agross@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
+ <20250722161103.3938-4-quic_rdwivedi@quicinc.com>
+ <6yhnlwyuimkrlifmmdihcsuhws6qkdjzmjxdupu6cevu24nmi6@f4vk5dffjie2>
+ <cbe1f27d-44ad-41d2-9bc7-fa9211d52a30@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <cbe1f27d-44ad-41d2-9bc7-fa9211d52a30@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 24, 2025 at 01:44:09AM +0300, Dmitry Baryshkov wrote:
-> On Wed, Jul 23, 2025 at 11:27:34PM +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
-> > From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> > 
-> > WSA and WSA2 are two instances of WSA codec macro, this can lead
-> > dupicate dapm widgets and mixers resulting in failing to probe
-> > soundcard if both of these instances are part of the dai-link.
-> > 
-> > Correct way to address this is to add sound-name-prefix to WSA2
-> > instances to avoid such confilcting mixers and dapm widgets.
+On 24/07/2025 09:36, Ram Kumar Dwivedi wrote:
+>>>        GPIO connected to the RESET pin of the UFS memory device.
+>>>  
+>>> +  limit-hs-gear:
+>>
+>> If the properties are generic, they should go to the ufs-common.yaml. If
+>> not (but why?), then they should be prefixed with 'qcom,' prefix, as
+>> usual.
 > 
-> This looks like a fix for an issue. Please mark it accordinggly and move
-> towards the start of the series.
+> Hi Dmitry,
 > 
+> I have added qcom prefix in latest patchset.
 
-It doesn't really have anything to do with the rest of the series at
-all, so those should be ideally sent as a separate series. They can be
-picked up much easier compared to the large refactoring of the other
-patches.
+Unlike this patchset here, are you going to test before sending it?
 
-Thanks,
-Stephan
+Best regards,
+Krzysztof
 
