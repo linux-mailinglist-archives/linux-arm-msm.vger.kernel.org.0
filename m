@@ -1,184 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-66419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC22EB1014C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:07:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94F8EB1019A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:24:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84F9E3AEB63
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:06:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C01D71CC692F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:24:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02FA2222562;
-	Thu, 24 Jul 2025 07:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC55233711;
+	Thu, 24 Jul 2025 07:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bdlKtXYw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TRntSL8t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646FF1F582F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:06:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CFB22DA06
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:23:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753340811; cv=none; b=Tr+5WiM2S8+OwN6AhkqU5fBI5jZ9k0IYN7Dv2JJ5L8eF1fzyA+tAowIEsULrXP0ec8/+IrsTLH7bO71zWPq8z0ZjWD6UfCDG+psfliyoJ4eg/kwz1m4ujIGlHJaFdGWLx2gJ/YTERp/+z2Ng4Uq+d9Oam5IF3yBFpFCyfY+7kFo=
+	t=1753341823; cv=none; b=DBSUz/0WwQ2Jsxp/C/SCXK/eteflfnj6jm9NZtlG3hqlIEUdh1pAz/iKx3/nZClsF1xQHQrnatM7uipQyn/sXxpgLtaagvgIOoJSvTxmeKgMSE2FYf1tbay3iGXKGlKjDjoFtx+fePZnJwjose15YxjjPiGSqaz5FEQIeXueprA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753340811; c=relaxed/simple;
-	bh=MOg9l889BalL1NxkmWg+3mRYNIkpecKw26ZBBFEefgE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e2g2CGcMNJx8BDUIS3UwIRadLipxjpPOuieWRvQ0PIqRaLGpk1se8F9mqHEBR7VBM+Mw7Zk+uwYHJap7qpHajd2kTMp/wIVXMMwxvX/IiWahO7Qf1uI5xvBpltZuWzaTNY6E0K1X4apJRK40YZp2f8v8ljTAqqbvnpjcc6b9Mh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bdlKtXYw; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NMXGJ2028516
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:06:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	o8QZLrnCjykC/+h/YYhXm9p3/5D3IDBg6T9aCMPtCFs=; b=bdlKtXYw8EGkJrfb
-	shGhZspzTTcJayrsOIYu/VyeOSF8XE0pSvEIdGZIZvOuxRMIIoHTE12hHwQgm5pm
-	n+u6gX5m7cDskQwIWPOx4arnWLrZ1icg/kmbVWHI/EamccgHXYs8msRgaBJSnDTy
-	/E7qpp4Z1bZFG8H+HSPeLc9Yqpnh26LSJM7lZ7dvI3C2RqStuI6YokQ7DG9T6uTv
-	GB1K8NGbnqDVwa7U2Kb1KhSw0Ndj55ebbbj1JZnBc5z4MS5ZmGitpXpPgAR+OynO
-	J7gd4/vIEN6DcQLhAhZ1w/sSgQvfIPtweK+l+ddOVDwHT/KhcDeTg3hCZsSBdWcO
-	hULS2Q==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4826t1f2yd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:06:49 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-313ff01d2a6so753492a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 00:06:48 -0700 (PDT)
+	s=arc-20240116; t=1753341823; c=relaxed/simple;
+	bh=6nGhBLrN5DA7nUAfm4ui0pjF3M8jgR8PyNJ6paQnnZE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sUX8qv7MXWGA4Kkm8QeD79NTiBwV3EKRH9WIUKTKbKrqzvXKq7NT5N6GijXWuherCMwU/BjhsDyZ0FDO/6CipBZDMmbklqlmNyGUI+8CnKpQIxXS5kf9N0q8auuGImdrXuJdJsCOXV7kIGcudebFsZIpPRjFCJ1yzbhfIoHUTA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TRntSL8t; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ae6fa02d8feso98402466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 00:23:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753341818; x=1753946618; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0IyRqFhbkdETB9+gjPBBcsm9FuFvhp1ffUr7fYiNkiU=;
+        b=TRntSL8taFtiDd3IvSfUoMnliRqvXjYTQCRY8CoZ64WS+vxP3hiov0KBwWvZz4rn1T
+         ZVCpNpjeq96SJlDpruHyqbhQ4Z/XkETrLMDfEoI8Hycv2PKUD/kwZjA6ql8MZdcNrW9l
+         rhzYQiaobcqEKFIqPpEi3ybVddWnmWR+2uLN7tBmv5sIAjgTxbBpD32T+Ev/ybTaws+Z
+         DmCriHfgyyd0ckvaLa2URN+ky7PkVIcB2i43fq05NeqmO34vVBoxVnFzlrGJgeB8Z9xQ
+         uYKWYTBCVYsp09/1Mag+qMB5gkdClg2kdNOZlJVy5+8iyB5fufm6+66bl7g+4TeaoIBF
+         WyTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753340808; x=1753945608;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o8QZLrnCjykC/+h/YYhXm9p3/5D3IDBg6T9aCMPtCFs=;
-        b=nbUEgcpBFjSl9aTnrdWjSXWFoTGw8uh58C6Iwmj4vEkb5r9s/i6ekgVLQbcFUihZ/7
-         uiAifOcQaDnuStHbPvK4kO1nJ/qqVPusJfNGA5KMmdIS02FJbNfqjfPkRSmtNcqYDAA0
-         FElyUyLHR0d59XtxfqhSz6+X1+lDPYAufZR97q+wGfWN2CWdymsCekSz5jg+D22Hpkcy
-         YK1kWJYw/6BMYHwCCe3G4NFJxT29I7l3ZHKc0N2sR8c27K3zTS+BaNc/Eazx5AisYsHp
-         smNVQnPBj/twYQktNxdxeTq5joIYGA/POdUmWkWkNsTli3GAt1j+/nw8x0xcanym1u3A
-         U5Vw==
-X-Gm-Message-State: AOJu0YzkbOVjzmnd2TgXLT4D/mybO6wFgvf7a37sjZWUB2Bss9HVGk4c
-	FrvwbxSJGtGstYa/VsJR1eFZWIyvkoroDBc+FlRHu0FoBUAsxVNU8gCvWIvv7v/cEYMkSUo8AMJ
-	s6Wlf2o0zcJ6sGUJsUAWKwmGOaklb1WPksV+ojgvdKrcRdbhV+ovosG/qciuAb82gGbTi
-X-Gm-Gg: ASbGncv0ZkG64+UzU8uUQ3jmV+2IVOTBc8hAlz5xRj7UuNXQOYSdMX2xFWEORSSb7a0
-	cShf51gTjnI7g0QY4t+Gt/nanhxxjH8awct62WVqXKGTGEr9qa9MBjeIactlV8S4xX3xX8kY2eS
-	U6Bc8EOCgh+2hAuTDSjMq23dlIUxsiqlygPg3hbZqL4jVBbiCe6bYXh+DFn5YTmBbWEvmvss1KZ
-	C8z3zzFxeFN+vgoglC4mXM7WYFEqWwlVl5FxRV1Zw5ZqGhvHVmNk5GRxBV6CJUmuPjhfuiXAcNs
-	FTT0WzPVOKZ/e+A57maBfF6AdDSqjaI/ltcrNGv1UuOEY/XjPdPFqsbDqf1ONA6hkVdgvDdLR7b
-	cs4lm/1OefQ8YieI=
-X-Received: by 2002:a17:90a:da8f:b0:313:283e:e87c with SMTP id 98e67ed59e1d1-31e506eea04mr7799978a91.3.1753340807835;
-        Thu, 24 Jul 2025 00:06:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFhoV7Y/qXx9naOCUMQRNHNOXb6Xr53WH5YOfO1E3P29Maf46gRTRCMU2dKiugt9qy2W439cA==
-X-Received: by 2002:a17:90a:da8f:b0:313:283e:e87c with SMTP id 98e67ed59e1d1-31e506eea04mr7799942a91.3.1753340807381;
-        Thu, 24 Jul 2025 00:06:47 -0700 (PDT)
-Received: from [10.110.12.211] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e6637a33asm614159a91.31.2025.07.24.00.06.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 00:06:46 -0700 (PDT)
-Message-ID: <8f10fc34-20ab-4edb-b4d1-d2e361f47751@oss.qualcomm.com>
-Date: Thu, 24 Jul 2025 15:06:42 +0800
+        d=1e100.net; s=20230601; t=1753341818; x=1753946618;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0IyRqFhbkdETB9+gjPBBcsm9FuFvhp1ffUr7fYiNkiU=;
+        b=RY3bZtu71JyF+ytdm/1ofoSxiZHH+8Kc8UKyFxB3t6eUBngR+7AEMyEWP5D5kh5CrB
+         0uK0Yayo7nBq9k1Ar74UzqN72zT842eUIBlJ2VvwYlR4vQv8P019OpZpAA9wchdB+7D1
+         MxC0noYUpPT99ZWOI0zWNMUY0cnSwYrJI1Fpv8APA/J1I8K/XX7IhXUdkgK6JShPf44k
+         cQRGCLGz+Y1OZqZPs/bO2fcExY0WhNmVk1gDhvOl060OMmOijITJ5ramtv2NMVkbV+gr
+         1Ox8b26HRg4LUDEiW7NMteK9W8JJzUngM4dDNnm5NaBjQeFUNvph9K6f8BPwCycamd+Q
+         1BLw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8XiKSEY4d4DcbNt6sRY0yqh3S6f1Xkuar18h66nAQInPosTu3+gq6NwqqEwtDg9G8OVaD6aCSYh7JgBQs@vger.kernel.org
+X-Gm-Message-State: AOJu0YyB1Ih+pfwZSse6bFw184cuxNV4rs7Bo+SkCN/SgQDaNBkyeIRM
+	RVUQv70rbtSjaBZAMXdfXEAQ3ZcWCDkGMUh5j+WBsza5hKVnyxd6fo5aclX4+CQAkG3A65Liqg8
+	YYjE/
+X-Gm-Gg: ASbGncuoZrLljBeJ5WwLwLxa8kvW0IIuqbbDj3Sdax0Ad8GOvoLIvfj3bSiIEZU5Sum
+	VHmlwrEJajz0YpwaMUMcD6AhP9UvLbAbzNuVwQYOTXqUTmDWqHi4LQwLw6unYFP5VQ0wK911XMl
+	uT157nHZP2n2hMe/XXeZhaza6sdLjSzHLQIkGcRFetH5HYvZ85kttcXKAYacoT/8iW4VIteEDMb
+	Grm9wTOzpCBa9Chmr6UffnGwq87A97na+UExBztnDRevba30Q0ICAyYk2f2mNIsgkZYny1N9Z2o
+	XisSVUlqEsPZUhPvHHil4rlcs68sjJwSgIFwkAlKN0VKeKF2wrfWatC9RyaR8NUDxJ06DnQpIHN
+	8BF7KdjnzDpTm37/x4AYKZxao1/iEVGimTFp/YUUQ7yeq
+X-Google-Smtp-Source: AGHT+IGoRj4xEQVnuuhDhkJ4U07sNs7To6AmXU1yyMNvclDRha0FEWE1smSmNDjqs2kffoiWB7fDbA==
+X-Received: by 2002:a17:906:794b:b0:ae6:abe9:4daa with SMTP id a640c23a62f3a-af2f717a556mr684315766b.27.1753341818029;
+        Thu, 24 Jul 2025 00:23:38 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:706f:1fb4:134c:465d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47c496e28sm71571766b.1.2025.07.24.00.23.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jul 2025 00:23:37 -0700 (PDT)
+Date: Thu, 24 Jul 2025 09:23:32 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: srinivas.kandagatla@oss.qualcomm.com
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/23] arm64: dts: qcom: x1e80100: move dsp audio nodes
+ to dedicated dts
+Message-ID: <aIHfPZaRmTjI7w8D@linaro.org>
+References: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20250723222737.35561-2-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs615-ride: add WiFi/BT nodes
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250707-615-v4-0-1a2f74d167d7@oss.qualcomm.com>
- <20250707-615-v4-2-1a2f74d167d7@oss.qualcomm.com>
- <446cd45a-0284-4782-949e-2e5321545b96@kernel.org>
-Content-Language: en-US
-From: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
-In-Reply-To: <446cd45a-0284-4782-949e-2e5321545b96@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: -drGKrVX8yFzOOYcfAUFlAPGlIpCmgf7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA0OCBTYWx0ZWRfX7OG/Dpj8S/V1
- EpfrRwaFaomt3mI0nRZechDBynQ9IJGClcXmW9bAEeHapbKuKpoBIRT9IInBb89rqqo1qVwGtyd
- FpH/Rz7sjEXOJD/JtU1khzMlXf9qxg4vQuHal9PIHFKoMMg8CJ3eygHhQv08J98ZXa7JkaQvAWl
- v6Kdx8uv+zEsDgxfqtQ39YmMrZyo6Ay6VfLSEk13fbWhn3loGRGyIwh0DNl93yfjmpwUPX2wl5O
- 93rEhMV/8+1jtzOcnpMCPytBJQX2+pLPOgFBXHK0TW2yAIzu+j/7iaP13qtFCB4Hik9hRdv5bij
- E9Dq8VZyUlZi7kpSbiIvBLlHVak2HHRvvZzWMTdKok7ZF6H+FbvKQiRU47MlGQTgmZEWtgwkESX
- chJj9MOrBc1DFZCMEN8rDOHp9Rer0uIDD0YhIRMM1YY/1bV9TwqhL+rz+YFWLu/dTyjXMu/T
-X-Authority-Analysis: v=2.4 cv=E8/Npbdl c=1 sm=1 tr=0 ts=6881db89 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=oRJlAaeS_37yXmdwZpAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: -drGKrVX8yFzOOYcfAUFlAPGlIpCmgf7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1015 phishscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507240048
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250723222737.35561-2-srinivas.kandagatla@oss.qualcomm.com>
 
-
-
-On 7/23/2025 8:12 PM, Krzysztof Kozlowski wrote:
-> On 07/07/2025 04:51, Yu Zhang(Yuriy) wrote:
->> Add a node for the PMU module of the WCN6855 present on the qcs615 ride
->> board. Assign its LDO power outputs to the existing WiFi/BT module.
->>
->> Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 135 +++++++++++++++++++++++++++++++
->>   1 file changed, 135 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> index 011f8ae077c256f079ce1b07720374a9bf721488..2df8e7e3c1d3b6d6353a6753b8387c7411edd927 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> @@ -18,6 +18,7 @@ aliases {
->>   		mmc0 = &sdhc_1;
->>   		mmc1 = &sdhc_2;
->>   		serial0 = &uart0;
->> +		serial1 = &uart7;
->>   	};
->>   
->>   	chosen {
->> @@ -47,6 +48,85 @@ regulator-usb2-vbus {
->>   		enable-active-high;
->>   		regulator-always-on;
->>   	};
->> +
->> +	vreg_conn_1p8: vreg_conn_1p8 {
+On Wed, Jul 23, 2025 at 11:27:15PM +0100,
+srinivas.kandagatla@oss.qualcomm.com wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > 
+> All the device tree nodes for audioreach dsp are duplicated across all
+> the SoC dtsi files, Move this to a dedicated dtsi file so to remove some
+> duplication, make it consistent across all device trees and also make it
+> easy for new SoC's to add audio support.
 > 
-> Are you going to keep sending the same? Third or fourth time, even
-> though there were comments? Please take comments seriously and implement
-> them or at least RESPOND.
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> ---
+>  .../arm64/boot/dts/qcom/audioreach-audio.dtsi | 45 +++++++++++++++++++
+>  .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    |  1 +
+>  arch/arm64/boot/dts/qcom/x1-crd.dtsi          |  1 +
+>  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  |  1 +
+>  .../qcom/x1e78100-lenovo-thinkpad-t14s.dtsi   |  1 +
+>  .../dts/qcom/x1e80100-asus-vivobook-s15.dts   |  1 +
+>  arch/arm64/boot/dts/qcom/x1e80100-audio.dtsi  |  6 +++
+>  .../dts/qcom/x1e80100-dell-xps13-9345.dts     |  1 +
+>  .../dts/qcom/x1e80100-hp-omnibook-x14.dts     |  1 +
+>  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  1 +
+>  .../dts/qcom/x1e80100-microsoft-romulus.dtsi  |  1 +
+>  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     |  1 +
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 43 ++----------------
+>  13 files changed, 64 insertions(+), 40 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/audioreach-audio.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-audio.dtsi
 > 
-I appreciate your comments and apologize for the repeated submissions. 
-Due to a possible issue with my Thunderbird client, I did not receive 
-earlier replies and was unaware of additional feedback.
+> [...]
+> diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> index c771fd1d8029..1d8a75fba301 100644
+> --- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> @@ -11,6 +11,7 @@
+>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  
+> +#include "x1e80100-audio.dtsi"
+>  #include "x1e80100-pmics.dtsi"
+>  
+>  / {
+> diff --git a/arch/arm64/boot/dts/qcom/x1-crd.dtsi b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
+> index c9f0d5052670..19b993fdd17f 100644
+> --- a/arch/arm64/boot/dts/qcom/x1-crd.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
+> @@ -9,6 +9,7 @@
+>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  
+> +#include "x1e80100-audio.dtsi"
+>  #include "x1e80100-pmics.dtsi"
+>  
+>  / {
+> diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> index 2d9627e6c798..6df3ee553bc7 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> @@ -10,6 +10,7 @@
+>  
+>  #include "x1e80100.dtsi"
+>  #include "x1e80100-pmics.dtsi"
+> +#include "x1e80100-audio.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. X1E001DE Snapdragon Devkit for Windows";
+> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> index ac1dddf27da3..cf2cf3e520fa 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> @@ -13,6 +13,7 @@
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  
+>  #include "x1e80100.dtsi"
+> +#include "x1e80100-audio.dtsi"
+>  #include "x1e80100-pmics.dtsi"
+>  
+>  / {
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> index 71b2cc6c392f..82b08350da17 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> @@ -13,6 +13,7 @@
+>  
+>  #include "x1e80100.dtsi"
+>  #include "x1e80100-pmics.dtsi"
+> +#include "x1e80100-audio.dtsi"
+>  
+>  / {
+>  	model = "ASUS Vivobook S 15";
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-audio.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-audio.dtsi
+> new file mode 100644
+> index 000000000000..e03441bb2a79
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-audio.dtsi
+> @@ -0,0 +1,6 @@
+> +#include "audioreach-audio.dtsi"
+> +
+> +&q6apmdai{
+> +	iommus = <&apps_smmu 0x1001 0x80>,
+> +		 <&apps_smmu 0x1061 0x0>;
+> +};
 
-The v3 and v4 revisions were based solely on Rob Herring’s suggestions 
-and included some dependency adjustments and rebasing.
+I think you should inline this into x1e80100.dtsi and drop the extra
+#include from all the device DTs. x1e80100.dtsi already references
+audioreach nodes, so it's not possible to build without including
+x1e80100-audio.dtsi anyway:
 
-I will ensure to properly address and respond to all comments in future 
-revisions.
+../arch/arm64/boot/dts/qcom/x1e80100.dtsi:4098.34-4114.5: ERROR (phandle_references): /soc@0/codec@6aa0000: Reference to non-existent node or label "q6prmcc"
+../arch/arm64/boot/dts/qcom/x1e80100.dtsi:4320.31-4436.5: ERROR (phandle_references): /soc@0/pinctrl@6e80000: Reference to non-existent node or label "q6prmcc"
 
-Thanks a lot.
-
-> NAK
-> 
-> Best regards,
-> Krzysztof
-
+Thanks,
+Stephan
 
