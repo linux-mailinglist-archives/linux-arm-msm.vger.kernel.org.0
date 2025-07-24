@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-66630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF687B11407
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 00:34:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0682B1142E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 00:38:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2759AE5E39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 22:33:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F09AF16B2CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 22:38:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913F623F419;
-	Thu, 24 Jul 2025 22:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DFB323A99E;
+	Thu, 24 Jul 2025 22:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tkjiDh74"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sIiQ3nzq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1356023BCEE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 22:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FC0241122
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 22:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753396420; cv=none; b=gDw7RbZCkoc39k7ltH8t5jUAPYoJkADsd7ClO2zyLdGO1OQg7H27HtcnK4vzVfnNmr1OTK0478XsTOysUn164zlisuVvcB95qEbJyj2naWA5snR6NYiLrHNUEXiA8NLpikgDv9DHgJ62+Z3sltInxcd1D1/4bslgv1FU9ZbsE6s=
+	t=1753396516; cv=none; b=MWgHZmg/xZNLHkSlMYThz1U2v6R5D/oKIHtHn0T3VErU52ZWS0jpObdc72GHU+qzlz1TGD8mEGZDP3nrzDMNhDjuiB6x86FFIPBZKMjC0T6iw9F2IApacQst6eU2sMdkTkDtue50G6HdNb+Kp2zsg1RZhc9iq5BGWodPv/5ENLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753396420; c=relaxed/simple;
-	bh=fR04mv39CqWH9hOwlExnLKnmwlLVKhJNGIGbrPJHvtY=;
+	s=arc-20240116; t=1753396516; c=relaxed/simple;
+	bh=r5SzxM2o3YDT3MM6mgAjKy7bmQnwJvTgu0zUuOAYsqk=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qf/oD73ZgSXaaQoh3CB2H3E07+UewY6jcLvJLulnqYFwlhtZuc/xHxaBa1fqqyQrJZ/VTh8WeoyWRT8r53vLlKCT/T/bhWYWo2ouBvmaBu6Qgd5eWXtxLAAu4Sa+GhN0J2Mc8k4XWxGRHjVNVXHUqX26EIzMaIklOhRG4ESZeRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tkjiDh74; arc=none smtp.client-ip=209.85.215.202
+	 To:Cc:Content-Type; b=UFBLhf0dm5O89jRroQC7nuve749yPbuwbyTvB1npEAaMlVPJRsVofrN5dPHYcT3BPqQSxBOz6dBXv9nGOTxSHe/RVmWHqQjk7HCud8Wn6VdVyScgltxA3BXPJPUTUp2cEpaqnZbNGgLYjHEWDAaHgGeWPC7w+8erWMCz/NfakrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sIiQ3nzq; arc=none smtp.client-ip=209.85.216.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-b31cc625817so1909244a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 15:33:38 -0700 (PDT)
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-313fab41f4bso2244979a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 15:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753396418; x=1754001218; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1753396512; x=1754001312; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=inLy5vcBNILr3/MOBz76JuwhCqWg6KJsocdJKuHsHow=;
-        b=tkjiDh74RUnF0/IRfnpT70/TXT91ya+rk2ck+drbYaFsfyzRpCdynFm96YM/q7gORK
-         +z/KAuF2z3vV1eZaJFW2Y0D6Phvg2MNQDEVpfO9apKmQLEMTCC/pNgw0E1re3n7SBePQ
-         dPADMe6euklqPlPQD5+WTjH2Dr5IBSGDpFYAyD/alEj3XWXY4Wgb92NuM6HzkVMH5BdC
-         8IQ3aGV3iAamrLx3qsC6NCbpv3VVAhjmVXhSRuffcagx9zYxtmIvMGQEb4e2kdiGEWBg
-         7Teqy4j4qbLmwJSLG2HrVNuAxHjw3pNaPRTw7ongDssGEinyvVGWCDP/Bwf/3+yBXOGv
-         Rwmg==
+        bh=PFqcIXETNfo8GzEn6hB6Ya7g4JGq3t1ggKMLi3jyaSw=;
+        b=sIiQ3nzqahZJBdJcoBBuhDt5ZLMFJokPPT1WsQ7kl/6WE3atgZD9D2TspEBYmVtsCt
+         +XuYU4ZvwJVaXCSFufs/fosO6Syv+fVqkepM2fuzQe/gF5DO51lChg9O9qBsxG6Wuw9f
+         QARv9PnzKPpbErLpJLmcvfvkggnl0OtGvunnXM0OEgZwKtWIr7DSeJld/mk3mdsZc8nd
+         FPXsceFEGoLNhNjd4lBJmTVnAY1z6NlZ+XfzGrqDKv3McNciYjHedouL3TB0ayn4tJGr
+         esewq65DmPBQN2QtZ9RJjH80S1tCLyVpOmNyjif7QYLUQ+uvxskShOv0AU/yxpe78TuM
+         SDqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753396418; x=1754001218;
+        d=1e100.net; s=20230601; t=1753396512; x=1754001312;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=inLy5vcBNILr3/MOBz76JuwhCqWg6KJsocdJKuHsHow=;
-        b=KmOItgfQpKO0JVxHB3MnfcOwHXbz7Eze4j1K4OZaRApJsOZRzA42KJmu328FlUGEJ+
-         nP6UuXg+MpbelmOyukUfkix1D8a0R5JPvX6sQG8kgp+QLqJZdgWWlEDG2BIiV+oZYDFU
-         Lbs6p8U/BOrnYaVxvZ3v/sU1Tz/tsfJlGTp9UEosTtCbrg8e9ohDoCPihUj3wzj2IALB
-         3NeC8u5dOCW2S9drdy7HU8+goREHAxAnxWRb9PNH/X3KK2eiXhSJ5uonjCHLzd+Kdelv
-         3UUJUTvC+HB/CWznaXinvrbPKtDRpRRE597EiJCvG/ZVIVk2+Oze51mXRqqBb3FxIrWn
-         k05w==
-X-Forwarded-Encrypted: i=1; AJvYcCV8pV8h7cY30o0caK4nIyOjhujFv3JKgc6KF0RlP9syyaE+OMh2xvNI/HlxEHn1K1Fq7F/5OGcqfiAEl+mc@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywd+pC4BzgNnSrTqnT4NmohAMesrLXq00yUC8awS3kvJo/G9ch0
-	U+NONFSNcKyu54GBqIy2vCUZOzEX56OjPo30RCOQ6VSC2ntfD9BEp1GhNGNzj+FlT60+u7mYYba
-	CUZZWng==
-X-Google-Smtp-Source: AGHT+IE9v+AMqISEN6fUyAdtK8mFeHQvOl0cmpRw928j7ZGnBCeUKwILml7veHgu+g+g3U0uNgaRQdu3bsM=
-X-Received: from pjbsy11.prod.google.com ([2002:a17:90b:2d0b:b0:31a:aa02:8c50])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:1e0b:b0:30a:3e8e:ea30
- with SMTP id 98e67ed59e1d1-31e662e841emr4851203a91.11.1753396418146; Thu, 24
- Jul 2025 15:33:38 -0700 (PDT)
-Date: Thu, 24 Jul 2025 15:33:36 -0700
-In-Reply-To: <c301ec11-9d24-4cc6-9dc7-46800df4d5a8@intel.com>
+        bh=PFqcIXETNfo8GzEn6hB6Ya7g4JGq3t1ggKMLi3jyaSw=;
+        b=OIC2dQEe4Kx8/BYWOjQlDzJiy3K+s4JITabMfbU2l9lD5Pb0zOBen/OSW4mjCrIF25
+         s1w3Cb7jncDKJd2H0bq26yKc8fb+pUo60V6F4dbeWyxzVFbbrVY0wmLLE+9HlDnL5M8h
+         SPC6sBG+4GVdcGJ0QiqIwMegPUuJRiOepIeSXbfWZ/LQyo7WhYbEp5zAeiHojYLHYPA4
+         IbKlEzKYFQvhJIBXywQ4KIp7q7C+VHgYvc09S0iN5P5iFXz/n/vdrDmQxHPcYhdZ44TK
+         wgO6mOaZIEFlhG0QroshdlPgYs8y0yI2TIXfOpC6/EOZcu6k3dXZZMMLNsZ3TOKlNcgO
+         UaXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUuh5iL0RNvgTQ2Ionh2SSdCuIyPOERhArNpNM6aFUDoUvD2hXW+ilDL1+CRfs2+GqfzLgcrpZWoELsw9Np@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaiTP37N7u2oFU5TmA4WP33HjzWQNq5oQNXJj4HQ5qZOjQtgfs
+	2BYVHcnmDydKVPxx023u/pHA244QpNgsFW/9WeqTvQg0PvRz4L1Ws8E77QAgJeDzV6RC7Zd5saQ
+	04M6r2w==
+X-Google-Smtp-Source: AGHT+IHuVeukYr6lWMjvsRkjvN6oFU8CQPzldpvdB/N9yisxOdKopu5kObxNBBArWTOrC8zyhULTFJAICEM=
+X-Received: from pjbsu16.prod.google.com ([2002:a17:90b:5350:b0:301:1bf5:2f07])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:3809:b0:308:7270:d6ea
+ with SMTP id 98e67ed59e1d1-31e50855de1mr10081085a91.30.1753396511877; Thu, 24
+ Jul 2025 15:35:11 -0700 (PDT)
+Date: Thu, 24 Jul 2025 15:35:10 -0700
+In-Reply-To: <3f337306-e79f-4ac7-bb86-60b88b262e88@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-11-tabba@google.com>
- <c301ec11-9d24-4cc6-9dc7-46800df4d5a8@intel.com>
-Message-ID: <aIK0wHgP91XhNEMC@google.com>
-Subject: Re: [PATCH v16 10/22] KVM: guest_memfd: Add plumbing to host to map
- guest_memfd pages
+References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-5-tabba@google.com>
+ <3f337306-e79f-4ac7-bb86-60b88b262e88@intel.com>
+Message-ID: <aIK1Hp4jZRY4zVTW@google.com>
+Subject: Re: [PATCH v16 04/22] KVM: x86: Select TDX's KVM_GENERIC_xxx
+ dependencies iff CONFIG_KVM_INTEL_TDX=y
 From: Sean Christopherson <seanjc@google.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
@@ -103,28 +103,49 @@ Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kerne
 Content-Type: text/plain; charset="us-ascii"
 
 On Wed, Jul 23, 2025, Xiaoyao Li wrote:
-> On 7/23/2025 6:47 PM, Fuad Tabba wrote:
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index a1c49bc681c4..e5cd54ba1eaa 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> > @@ -13518,6 +13518,16 @@ bool kvm_arch_no_poll(struct kvm_vcpu *vcpu)
-> >   }
-> >   EXPORT_SYMBOL_GPL(kvm_arch_no_poll);
-> > +#ifdef CONFIG_KVM_GUEST_MEMFD
-> > +/*
-> > + * KVM doesn't yet support mmap() on guest_memfd for VMs with private memory
-> > + * (the private vs. shared tracking needs to be moved into guest_memfd).
-> > + */
-> > +bool kvm_arch_supports_gmem_mmap(struct kvm *kvm)
-> > +{
-> > +	return !kvm_arch_has_private_mem(kvm);
-> > +}
-> > +
+> On 7/23/2025 6:46 PM, Fuad Tabba wrote:
+> > From: Sean Christopherson <seanjc@google.com>
+> > 
+> > Select KVM_GENERIC_PRIVATE_MEM and KVM_GENERIC_MEMORY_ATTRIBUTES directly
+> > from KVM_INTEL_TDX, i.e. if and only if TDX support is fully enabled in
+> > KVM.  There is no need to enable KVM's private memory support just because
+> > the core kernel's INTEL_TDX_HOST is enabled.
+> > 
+> > Signed-off-by: Sean Christopherson <seanjc@google.com>
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
 > 
-> I think it's better to move the kvm_arch_supports_gmem_mmap() stuff to patch
-> 20. Because we don't know how kvm_arch_supports_gmem_mmap() is going to be
-> used unitll that patch.
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> 
+> > ---
+> >   arch/x86/kvm/Kconfig | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+> > index 402ba00fdf45..13ab7265b505 100644
+> > --- a/arch/x86/kvm/Kconfig
+> > +++ b/arch/x86/kvm/Kconfig
+> > @@ -95,8 +95,6 @@ config KVM_SW_PROTECTED_VM
+> >   config KVM_INTEL
+> >   	tristate "KVM for Intel (and compatible) processors support"
+> >   	depends on KVM && IA32_FEAT_CTL
+> > -	select KVM_GENERIC_PRIVATE_MEM if INTEL_TDX_HOST
+> > -	select KVM_GENERIC_MEMORY_ATTRIBUTES if INTEL_TDX_HOST
+> >   	help
+> >   	  Provides support for KVM on processors equipped with Intel's VT
+> >   	  extensions, a.k.a. Virtual Machine Extensions (VMX).
+> > @@ -135,6 +133,8 @@ config KVM_INTEL_TDX
+> >   	bool "Intel Trust Domain Extensions (TDX) support"
+> >   	default y
+> >   	depends on INTEL_TDX_HOST
+> > +	select KVM_GENERIC_PRIVATE_MEM
+> > +	select KVM_GENERIC_MEMORY_ATTRIBUTES
+> 
+> I had a similar patch internally, while my version doesn't select
+> KVM_GENERIC_MEMORY_ATTRIBUTES here since it's selected by
+> KVM_GENERIC_PRIVATE_MEM.
+> 
+> Anyway, next patch clean it up as well.
 
-No strong preference on my end.
+Yeah, I saw this oddity when writing this patch, and decided it'd be easier to
+just deal with it in the next patch.
 
