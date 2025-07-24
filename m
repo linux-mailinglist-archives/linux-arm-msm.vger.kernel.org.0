@@ -1,275 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-66445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71B4BB1037E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 10:26:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A09B104E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 10:53:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E6B217A272
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 08:26:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 394C45A3056
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 08:52:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01F35274B3E;
-	Thu, 24 Jul 2025 08:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7AF274B49;
+	Thu, 24 Jul 2025 08:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="edpBLqTw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EcsQUE6o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF37F274B2D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383BD2750F9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753345582; cv=none; b=bhMypbn4LXuQJfw7JBrLftSvOZ83n0nYzIpnx6PGNtrUrLI/rwpcXQQiNb+8V5QZN7Rv/uTqDbdzINiPy4am4HZE0mKqlcKTeKQJS7SOWRgsuwOFL2BWDLOu53FBGmKetJMsIenAtnXaUWRe9jXnz7bEZY+z98uqzaWcq+ZsA1o=
+	t=1753346515; cv=none; b=AU034NQg9kgg6tH0KWqH6ZTUwcQLWRslUGx4bwh8tFEITxYtmLmhbOIOZYDewzvbD0yLQikwcKAiBxIAJLGTfyb5RupVX+BZIUX1kXHUe80BUlKA1SLpVRQAUG5XlG1tBDiJfLz4rPBwuPo5nf0B+09NTFzBj5nvXCDJxM3yUAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753345582; c=relaxed/simple;
-	bh=nl+6DslWkdknEma/1FpgDAcjZ5mCaQrKJgFsrcaUu04=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Y6p+SV8Ji2wOjMk3o/z85Xfqqp6TGThjF5fN5ZJannqP/AifSGXMt9U5OgcE66C6wv7RTAtZCuTRdn/SE0TSu5/0pdzG+/3miwzoBM+f3Du2wMSnei/cdcisUB2m7rSjwWMlO1UM71+/evJjGRM2MHOYHEiSM1fhP9Oqm6MLsqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=edpBLqTw; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4537edf2c3cso6926485e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 01:26:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753345579; x=1753950379; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p+qr0F23e5u4tMQJsE/K/fpOfgQdON5nkMPyqMgykI8=;
-        b=edpBLqTwbS/CC8CfMSTuq00neIeuYG6hFbS1BHGXzAkwD8GRtY0lO2pAY6MXZBgkmS
-         +yOFvHzDUWz7KlqkDdy48flIXT9vEBfYCKWt6EUHWlrhLRTofqG2B1+/Ac/rUorxnpwt
-         UIOvHB2yVD3STh1udQueorPss5Oq6CDB8Jv4Yrgz1KM3wBcF50ts//a4xwyHltLw/wuR
-         UO7mSjhnYyMsG8Ssj0WT7jcp3rK0Jrp33ZAMHHLWSAUch+Mn3LqX+yPUBbG6JbqcENTE
-         i90A8qIUf58wxbWvOXeaiDca2Q5i0bSxN8R8u5Xx+MOopXBwefNDwWJ/TBfXe4zIo/g5
-         QheA==
+	s=arc-20240116; t=1753346515; c=relaxed/simple;
+	bh=rnF+oib9L2Skeeylwk63DB1XU4v0B5lhktdPZQZmpLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cuUCl6cl9YDFap5fJ9v31AJuJEXBQmRL2uwHQ4HIIkCq7QgIVs1Lm3zBntFNBObmJCV0BKVT3TvxHk8k9o5HKOT6QeykVfCSjlC408l+pVWF5Lx3OIqZKC+sQxxlmfOmEQdCxXmHMdodANRSSPjBJiU4Oju/xRYfH/RrucS41Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EcsQUE6o; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NMXMSG010365
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NcSQxl+jVI7Me55KCzMwMtBdepNG4E+Ro3RKSYD+KgE=; b=EcsQUE6oQbOB6gV6
+	fW/e8YgGlrgDCPe8iUIYyzlH1uzn9SPmPUnU+2ZfPKsBW6tH/Ck9pAdfr2SipWGI
+	gnTv2/ZWNtn+tLNtKoYxPtE6JxXssP9L8/dSb9jGG3/8x5j5zQlAN/5odq9Er/Rx
+	zMRa1rAYymBg7RREKjyl+ovZLSChN5CHnMQW843I4B/Z1etqA2DbAEHgrhM54sCv
+	4bcgBT+Sq45J0Gqh6tAxnzz49whXpnbEWATBkH6ME4EjmlmsdQcFo1GR3pOubVLF
+	fq6DjTVR3fugEK1hc0j4RPdQK3F1aNuPaw59RKl82uoGm0QJJi6CdqirS4ZjwAUA
+	PtF60g==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w96tg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:53 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2355651d204so7690135ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 01:41:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753345579; x=1753950379;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=p+qr0F23e5u4tMQJsE/K/fpOfgQdON5nkMPyqMgykI8=;
-        b=xKeIlvaQ1R/AgH0ay2Dck8Kr0gi7x1JkIYWeHS50aYen3+cLbbuhAlZOdZdacITkOn
-         t/pd1Bj/iZ8MkFbMIrVPJWLxFYy6Z5TF3ALVaHCbtk1quPnBkhL0l0K/iiYAcM6MTo9p
-         mI3zUIC0kEcCPQjg+02p4xN5HVPHAK0DUFKBGc96w6LIZFzW79LEvvgls6myg333YJ2k
-         jOeF+HoRijxvzMYL+EoEQoIRgINq1uES+Rl6npvv2v89Fu7QvffCAHWhC8g22nt19Fcj
-         TUoLNXFKcm7LL/KvJIqZWw5ESOgxk2DnnzZU3r81WMX2gCzpXH7GA58NG2wDN6HKz1dt
-         2a5g==
-X-Forwarded-Encrypted: i=1; AJvYcCWHtjfHi9ZPbTUfyQEKZ+zLbrkntmmU9Opb/sHNWsOyCG3AG9+ry1zf2iBRVqDQUdyDh7lbSymrlhM/eHRq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxF6v6Iw4LGljWMB0H6d0V+wY4cD9FJuzZVgdq7NVNU/NIbIBJq
-	qjyBUK0K2eUdxBbZdDCfvs4pNuS9gNY58nMOfmqUDM0WDvg9ZWadodcAyo1UIipA0SzRajAG6YD
-	mokWt
-X-Gm-Gg: ASbGnctfgDGjPzluD7oXpQxzNUc++i5SJPQQnC2non2Zm4wQKtWs6ZRt2a3gHDpMytm
-	gnxDaA1aBv9ZGf0EdoUlcETCx/5MmcPvCOjCaI1cLzYwAoTaS4WyPR+b8SytQmpBOGAaqMxAVfP
-	hmtwxEBS7rIXlRRbzsPdN734WR7AKgcSc2jt+59SdAypo1qF3SpreK9tIDEZ3KtgcFiMUPHCd+T
-	lnHxAh6Ukegi004KOZfhotYDxzYEkXhMzM12dLlFOv4YXI3QqU2yY+utDw9rg7q+PWJg4HfeJTc
-	ht+KSBiUhxsj4sQup3S3JEmPXsQ0Blh0ox3x6+COJ3BkMBM63cdNqK5ptSRRKnl0/Y7gtSF1VZT
-	GekDnh85eGByO9678CYiuorYX0yUVxMfj
-X-Google-Smtp-Source: AGHT+IGTvw2r1ZkAjtPeWV/yG76d/Vji9taNRA/Wmxkm4UGIwrCCLgWEqwuwDjAwl8Njt6FkI3kJVw==
-X-Received: by 2002:a05:600d:4:b0:439:9b2a:1b2f with SMTP id 5b1f17b1804b1-4586974aeccmr46225235e9.3.1753345578879;
-        Thu, 24 Jul 2025 01:26:18 -0700 (PDT)
-Received: from [172.20.10.3] ([78.246.240.195])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4586f88cfe3sm8750465e9.0.2025.07.24.01.26.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 01:26:18 -0700 (PDT)
-Message-ID: <93d80822-afa0-4bff-9e73-3ece36e8c23a@linaro.org>
-Date: Thu, 24 Jul 2025 10:26:16 +0200
+        d=1e100.net; s=20230601; t=1753346512; x=1753951312;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NcSQxl+jVI7Me55KCzMwMtBdepNG4E+Ro3RKSYD+KgE=;
+        b=pMWOG59YQSDSHTFtBJPAZSLsW+GpVNgzPccSaxolkE/U3pZdz7/Cx8cEd1+cmyjFxf
+         XookLweX7i20L2jp/EoHydaKYT04lC9mjQmP0fUQQOHJpPt9jx8dNeL4x+O9s2t8pSKA
+         ohjfTaVhcR1fUQYcWFrU+uQmvGY35Cvs/2aCgRJfnMK+OWsCb8ZBOq/gUgxyUG2B3pDY
+         RvMfZn4v5zP8z1mZ5DN0MsX89w+5McUT2L/0FO/FiW7scHBC4u8CC5K5fdFqiTVnzOWu
+         VzDXwmYqzZRiqu+OCwiBDiRedYRw6/TIythkgw3ePeO0+uexZkUk8xHyeIBZ9xZP6oWd
+         pLKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUuznijdc3j9LR8HlbBFJf4ISD5u1t2SV7I0Q04LBMhjBwZ2JaZ6euvSPweNr71dVrR1kn1gL7xXiaoc4Ky@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFWMu+HjhyfgksSN96neLOvs2/O5AROaA+6cOWfVISvyN5j9Wm
+	UbRvIq41jPtA/Cap/MwVQxYCn5b3qaUFrlvvtHWLqbAAETAbbdJ4Zbl3tSOCBGFcY415Wtr5FiI
+	q7084ryKXbFQFmkqHYy22LSqrtrE3oMQP+KFcSnC8IhJt8TWwBqbh+3iGQxEEP0nCWOUYOOPDQm
+	CnKl2kivyumG1B3eu8HU8qP0QS3QGGOneDo9OGBcQXUD8=
+X-Gm-Gg: ASbGncuVW3Ksmm196+t+V1KEToF7Nsu/rN7H1s5gfyMjgDosjwHpeGvUypNeqvyHux/
+	KmF3/NXChYosNtI1LEEZfN6Sxim71Jgp+VGvixj8AegrAGWrflA1/lRuWHB+7SG6PqU9xsVZZ7v
+	0eMmEPwrPj1HjdfxRMZH3I7orW+GrviIkTt0E=
+X-Received: by 2002:a17:903:40ce:b0:234:ef42:5d6d with SMTP id d9443c01a7336-23f98160d78mr85101315ad.23.1753346512449;
+        Thu, 24 Jul 2025 01:41:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSyCdU8c5GLoMY06XIHDleMAFGJhzG6lduNlXjRkOM6bAsMFhgLYqcBatDA4hvNaRMBi5/zQqFRDpuPCkf3pg=
+X-Received: by 2002:a17:903:40ce:b0:234:ef42:5d6d with SMTP id
+ d9443c01a7336-23f98160d78mr85100995ad.23.1753346512006; Thu, 24 Jul 2025
+ 01:41:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 03/23] arm64: dts: qcom: sm8650: use dedicated audioreach
- dtsi
-To: srinivas.kandagatla@oss.qualcomm.com, andersson@kernel.org,
- konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250723222737.35561-4-srinivas.kandagatla@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250723222737.35561-4-srinivas.kandagatla@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
+ <20250722161103.3938-2-quic_rdwivedi@quicinc.com> <2ihbf52nryduic5vzlqdldzgx2fe4zidt4hzcugurqsuosiawq@qs66zxptpmqf>
+ <f61ac7b6-5e63-49cb-b051-a749037e0c8b@quicinc.com>
+In-Reply-To: <f61ac7b6-5e63-49cb-b051-a749037e0c8b@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Thu, 24 Jul 2025 11:41:40 +0300
+X-Gm-Features: Ac12FXzMKMuF_0OUA3EGJwZLmjVM8hRhGRUkVzF5il0fHysdmUBOWLdVHSEcSgQ
+Message-ID: <CAO9ioeWLLW1UgJfByBAXp9-v81AqmRV9Acs5Eae9k4Gkr1U0MA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] ufs: ufs-qcom: Add support for DT-based gear and rate limiting
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=6881f1d1 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=COk6AnOGAAAA:8 a=kyiDCW8mUpRo50OuNtQA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA2MiBTYWx0ZWRfXxRRcyWLG55Wg
+ wyVqY3ykXbuUuECcpJkIzEqrgpfF/nFVmL4pbhNBLwE94LUogX7tXIeZMVyq5V3pI1G8NJ7yF4Z
+ zVmsahlG9aDLN4G5Nyk/9htArf52UUqPsjoAWkRemjSFweDLKEXHdH5haw5V4n/XTisxQ6Hrq/t
+ lrZgiNzOMq2F22xSXK68NHfloDsskVQOIW9CC8EQSOc2/AFcOwFsV3USvZhR288cob4PkiLqUL7
+ IxFrV97ZfxNyvi5IXckfytAFAVBUxRCzmT1rg83u9osex5icbh/4OBv5cqRQO1n4z/bfg/v5gi6
+ FlNwBlrCUoxTIUQ17u6sA7a8zka1wTqhO1+TjzqkJ35Hwnq75Nhc8P0YdbKkTsaXk0hD0Fw7ltx
+ rb/VMcAsLJdxQzZb7A22gwg0OV+hDIHjeyj90R6ZPC1E5eR+ZXwyZQBJ8bnIT7vSHBv+h8cr
+X-Proofpoint-ORIG-GUID: YUROhONYp6kVTgD1M8vA_LqjyT2cFXyb
+X-Proofpoint-GUID: YUROhONYp6kVTgD1M8vA_LqjyT2cFXyb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507240062
 
-On 24/07/2025 00:27, srinivas.kandagatla@oss.qualcomm.com wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> 
-> Make use of audioreach-audio.dtsi and remove the gpr nodes from SoC dtsi.
-> This move removes duplication.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650-audio.dtsi | 10 +++++
->   arch/arm64/boot/dts/qcom/sm8650-hdk.dts    |  1 +
->   arch/arm64/boot/dts/qcom/sm8650-mtp.dts    |  1 +
->   arch/arm64/boot/dts/qcom/sm8650-qrd.dts    |  1 +
->   arch/arm64/boot/dts/qcom/sm8650.dtsi       | 43 ++--------------------
->   5 files changed, 16 insertions(+), 40 deletions(-)
->   create mode 100644 arch/arm64/boot/dts/qcom/sm8650-audio.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-audio.dtsi b/arch/arm64/boot/dts/qcom/sm8650-audio.dtsi
-> new file mode 100644
-> index 000000000000..14ae50e72e4b
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-audio.dtsi
-> @@ -0,0 +1,10 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +#include "audioreach-audio.dtsi"
-> +
-> +&q6apmdai{
-> +	iommus = <&apps_smmu 0x1001 0x80>,
-> +		 <&apps_smmu 0x1061 0x0>;
+On Thu, 24 Jul 2025 at 10:35, Ram Kumar Dwivedi
+<quic_rdwivedi@quicinc.com> wrote:
+>
+>
+>
+> On 23-Jul-25 12:24 AM, Dmitry Baryshkov wrote:
+> > On Tue, Jul 22, 2025 at 09:41:01PM +0530, Ram Kumar Dwivedi wrote:
+> >> Add optional device tree properties to limit Tx/Rx gear and rate durin=
+g UFS
+> >> initialization. Parse these properties in ufs_qcom_init() and apply th=
+em to
+> >> host->host_params to enforce platform-specific constraints.
+> >>
+> >> Use this mechanism to cap the maximum gear or rate on platforms with
+> >> hardware limitations, such as those required by some automotive custom=
+ers
+> >> using SA8155. Preserve the default behavior if the properties are not
+> >> specified in the device tree.
+> >>
+> >> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> >> ---
+> >>  drivers/ufs/host/ufs-qcom.c | 28 ++++++++++++++++++++++------
+> >>  1 file changed, 22 insertions(+), 6 deletions(-)
+> >>
+> >> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> >> index 4bbe4de1679b..5e7fd3257aca 100644
+> >> --- a/drivers/ufs/host/ufs-qcom.c
+> >> +++ b/drivers/ufs/host/ufs-qcom.c
+> >> @@ -494,12 +494,8 @@ static int ufs_qcom_power_up_sequence(struct ufs_=
+hba *hba)
+> >>       * If the HS-G5 PHY gear is used, update host_params->hs_rate to =
+Rate-A,
+> >>       * so that the subsequent power mode change shall stick to Rate-A=
+.
+> >>       */
+> >> -    if (host->hw_ver.major =3D=3D 0x5) {
+> >> -            if (host->phy_gear =3D=3D UFS_HS_G5)
+> >> -                    host_params->hs_rate =3D PA_HS_MODE_A;
+> >> -            else
+> >> -                    host_params->hs_rate =3D PA_HS_MODE_B;
+> >> -    }
+> >> +    if (host->hw_ver.major =3D=3D 0x5 && host->phy_gear =3D=3D UFS_HS=
+_G5)
+> >> +            host_params->hs_rate =3D PA_HS_MODE_A;
+> >
+> > Why? This doesn't seem related.
+>
+> Hi Dmitry,
+>
+> I have refactored the patch to put this part in a separate patch in lates=
+t patchset.
+>
+> Thanks,
+> Ram.
+>
+> >
+> >>
+> >>      mode =3D host_params->hs_rate =3D=3D PA_HS_MODE_B ? PHY_MODE_UFS_=
+HS_B : PHY_MODE_UFS_HS_A;
+> >>
+> >> @@ -1096,6 +1092,25 @@ static void ufs_qcom_set_phy_gear(struct ufs_qc=
+om_host *host)
+> >>      }
+> >>  }
+> >>
+> >> +static void ufs_qcom_parse_limits(struct ufs_qcom_host *host)
+> >> +{
+> >> +    struct ufs_host_params *host_params =3D &host->host_params;
+> >> +    struct device_node *np =3D host->hba->dev->of_node;
+> >> +    u32 hs_gear, hs_rate =3D 0;
+> >> +
+> >> +    if (!np)
+> >> +            return;
+> >> +
+> >> +    if (!of_property_read_u32(np, "limit-hs-gear", &hs_gear)) {
+> >
+> > These are generic properties, so they need to be handled in a generic
+> > code path.
+>
+> Hi Dmitry,
+>
+>
+> Below is the probe path for the UFS-QCOM platform driver:
+>
+> ufs_qcom_probe
+>   =E2=94=94=E2=94=80 ufshcd_platform_init
+>        =E2=94=94=E2=94=80 ufshcd_init
+>             =E2=94=94=E2=94=80 ufs_qcom_init
+>                  =E2=94=94=E2=94=80 ufs_qcom_set_host_params
+>                       =E2=94=94=E2=94=80 ufshcd_init_host_params (initial=
+ized with default values)
+>                            =E2=94=94=E2=94=80 ufs_qcom_get_hs_gear (overr=
+ides gear based on controller capability)
+>                                 =E2=94=94=E2=94=80 ufs_qcom_set_phy_gear =
+(further overrides based on controller limitations)
+>
+>
+> The reason I added the logic in ufs-qcom.c is that even if it's placed in=
+ ufshcd-platform.c, the values get overridden in ufs-qcom.c.
+> If you prefer, I can move the parsing logic API to ufshcd-platform.c but =
+still it needs to be called from ufs-qcom.c.
 
-As patch 1 comment, I'm not fan either of this intermediate dtsi, or perhaps there's
-some bigger plans for those files ?
+I was thinking about ufshcd_init() or similar function.
 
-Anyway per-se, it's not necessary and it should be in the SoC dtsi.
+>
+> Thanks,
+> Ram.
+>
+>
+> >
+> > Also, the patch with bindings should preceed driver and DT changes.
+>
+> Hi Dmitry,
+>
+> I have reordered the patch series to place the DT binding change as the f=
+irst patch in latest patchset.
+>
+> Thanks,
+> Ram.
+>
+>
+> >
+> >> +            host_params->hs_tx_gear =3D hs_gear;
+> >> +            host_params->hs_rx_gear =3D hs_gear;
+> >> +            host->phy_gear =3D hs_gear;
+> >> +    }
+> >> +
+> >> +    if (!of_property_read_u32(np, "limit-rate", &hs_rate))
+> >> +            host_params->hs_rate =3D hs_rate;
+> >> +}
+> >> +
+> >>  static void ufs_qcom_set_host_params(struct ufs_hba *hba)
+> >>  {
+> >>      struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
+> >> @@ -1337,6 +1352,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+> >>      ufs_qcom_advertise_quirks(hba);
+> >>      ufs_qcom_set_host_params(hba);
+> >>      ufs_qcom_set_phy_gear(host);
+> >> +    ufs_qcom_parse_limits(host);
+> >>
+> >>      err =3D ufs_qcom_ice_init(host);
+> >>      if (err)
+> >> --
+> >> 2.50.1
+> >>
+> >
+>
 
-Thanks,
-Neil
 
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-> index 259649d7dcd7..94fa52437d79 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-> @@ -8,6 +8,7 @@
->   #include <dt-bindings/leds/common.h>
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->   #include "sm8650.dtsi"
-> +#include "sm8650-audio.dtsi"
->   #include "pm8010.dtsi"
->   #include "pm8550.dtsi"
->   #include "pm8550b.dtsi"
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-> index 8a957adbfb38..07e62918422e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-> @@ -7,6 +7,7 @@
->   
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->   #include "sm8650.dtsi"
-> +#include "sm8650-audio.dtsi"
->   #include "pm8010.dtsi"
->   #include "pm8550.dtsi"
->   #include "pm8550b.dtsi"
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> index 7552d5d3fb40..7f26095e6f07 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> @@ -8,6 +8,7 @@
->   #include <dt-bindings/leds/common.h>
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->   #include "sm8650.dtsi"
-> +#include "sm8650-audio.dtsi"
->   #include "pm8010.dtsi"
->   #include "pm8550.dtsi"
->   #include "pm8550b.dtsi"
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index e14d3d778b71..5212000bf34c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -23,7 +23,6 @@
->   #include <dt-bindings/power/qcom,rpmhpd.h>
->   #include <dt-bindings/power/qcom-rpmpd.h>
->   #include <dt-bindings/reset/qcom,sm8650-gpucc.h>
-> -#include <dt-bindings/soc/qcom,gpr.h>
->   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->   #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->   #include <dt-bindings/thermal/thermal.h>
-> @@ -4447,6 +4446,9 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->   
->   				label = "lpass";
->   
-> +				gpr: gpr {
-> +				};
-> +
->   				fastrpc {
->   					compatible = "qcom,fastrpc";
->   
-> @@ -4506,45 +4508,6 @@ compute-cb@7 {
->   					};
->   				};
->   
-> -				gpr {
-> -					compatible = "qcom,gpr";
-> -					qcom,glink-channels = "adsp_apps";
-> -					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-> -					qcom,intents = <512 20>;
-> -					#address-cells = <1>;
-> -					#size-cells = <0>;
-> -
-> -					q6apm: service@1 {
-> -						compatible = "qcom,q6apm";
-> -						reg = <GPR_APM_MODULE_IID>;
-> -						#sound-dai-cells = <0>;
-> -						qcom,protection-domain = "avs/audio",
-> -									 "msm/adsp/audio_pd";
-> -
-> -						q6apmbedai: bedais {
-> -							compatible = "qcom,q6apm-lpass-dais";
-> -							#sound-dai-cells = <1>;
-> -						};
-> -
-> -						q6apmdai: dais {
-> -							compatible = "qcom,q6apm-dais";
-> -							iommus = <&apps_smmu 0x1001 0x80>,
-> -								 <&apps_smmu 0x1061 0x0>;
-> -						};
-> -					};
-> -
-> -					q6prm: service@2 {
-> -						compatible = "qcom,q6prm";
-> -						reg = <GPR_PRM_MODULE_IID>;
-> -						qcom,protection-domain = "avs/audio",
-> -									 "msm/adsp/audio_pd";
-> -
-> -						q6prmcc: clock-controller {
-> -							compatible = "qcom,q6prm-lpass-clocks";
-> -							#clock-cells = <2>;
-> -						};
-> -					};
-> -				};
->   			};
->   		};
->   
-
+--=20
+With best wishes
+Dmitry
 
