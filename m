@@ -1,304 +1,354 @@
-Return-Path: <linux-arm-msm+bounces-66550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E610CB10C3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 15:56:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9B80B10C3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 15:56:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42DCAAC025B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 13:53:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DF531887663
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 13:56:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279AD2DE714;
-	Thu, 24 Jul 2025 13:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ECE02DE71C;
+	Thu, 24 Jul 2025 13:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Q6mze2Uq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RpN6PYIz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2304D2DE6E1;
-	Thu, 24 Jul 2025 13:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050522DBF45
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 13:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753365189; cv=none; b=H5MVdgSA0awDgPQrjyKCLyNW/FybCOb8E7ZO6tCaYmTK4fNIUqJVUQoX6RqYPFGIEHIcaPjcvEOFM929IVsCmJLGDpKBNouUnZBlQVl+8ubEGXyioXVwJ0tnjTEjwW434UWhderA7cXzAp9RgSoeTsU67WD7I8XP2/YCmoURZ54=
+	t=1753365384; cv=none; b=TtzJUtNT04FuRWr3avkFFcDuTe6AgSvBQNNkPCHintWd6bdge+RivD1qKe+SxKsGrZspiEdJm0KTqRxmOoGS0kRaVlSIAlTIQ9dPU9blb2cdyFYS3ydafFvqJ0sxp30fZXV+c3M3Qh/hyBKeWzlBOlVFLGEDU3TG+8NzH2NOcic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753365189; c=relaxed/simple;
-	bh=yqn7eXWGIicat6ACtQ06fChq2+bwHai2eNzsQEGAiZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pFmujNQ7x0dtmyexmvoy87HPyAvVMLSGWuJVfFihC0h0F/3uruyJui8+B/jJWY39Pzd0zxrudIdndUcoRZ023s0j/ADBy1vZkYTSUWKxbeqfVDiKVzoMOZWvNsudQwyXVdr33HeJOQEMiNc1xbNbd4YjVAWHBsDrNsiO5/OtGYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=Q6mze2Uq; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 129698BF;
-	Thu, 24 Jul 2025 15:52:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1753365144;
-	bh=yqn7eXWGIicat6ACtQ06fChq2+bwHai2eNzsQEGAiZc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q6mze2UqXFwh86Xtgaeu1xH+pGVtu3y3IGXfrWbM+IHtdZvLvV+KWdf1wPiHxCUUG
-	 wS5S2sHAqnfWVi4xOY5PgiM4mfRjJBG6AOYbYILNPM0dyegcAMR3HcMAvOJldHPuDH
-	 FFIaeNm6i+BIst7SC7YtTgFSfK9ibU/PTOGR506o=
-Date: Thu, 24 Jul 2025 16:52:59 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Tarang Raval <tarang.raval@siliconsignals.io>
-Cc: "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	=?utf-8?B?QW5kcsOp?= Apitzsch <git@apitzsch.eu>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Arec Kao <arec.kao@intel.com>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Daniel Scally <djrscally@gmail.com>,
-	Dongcheng Yan <dongcheng.yan@intel.com>,
-	Dongchun Zhu <dongchun.zhu@mediatek.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Hans de Goede <hansg@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>, Hao Yao <hao.yao@intel.com>,
-	Heimir Thor Sverrisson <heimir.sverrisson@gmail.com>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Jason Chen <jason.z.chen@intel.com>, Jimmy Su <jimmy.su@intel.com>,
-	Jingjing Xiong <jingjing.xiong@intel.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Leon Luo <leonl@leopardimaging.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Matthew Majewski <mattwmajewski@gmail.com>,
-	Matthias Fend <matthias.fend@emfend.at>,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Pavel Machek <pavel@kernel.org>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Rob Herring <robh@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Shunqian Zheng <zhengsq@rock-chips.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Todor Tomov <todor.too@gmail.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Tony Lindgren <tony@atomide.com>, Zhi Mao <zhi.mao@mediatek.com>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
-	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
-	"linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>
-Subject: Re: [PATCH 00/72] media: i2c: Reduce cargo-cult
-Message-ID: <20250724135259.GR11202@pendragon.ideasonboard.com>
-References: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
- <PN3P287MB1829DD1254FB74391A750F498B5EA@PN3P287MB1829.INDP287.PROD.OUTLOOK.COM>
- <20250724115202.GK11202@pendragon.ideasonboard.com>
- <PN3P287MB1829C9E8C78ADD70259A68F08B5EA@PN3P287MB1829.INDP287.PROD.OUTLOOK.COM>
+	s=arc-20240116; t=1753365384; c=relaxed/simple;
+	bh=l5FKs8lj4ICNZL5kPDl+VFbyoWav9JdlXxCqM0nnWdw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pI9U8I77bgVqx94Gv3HhPMTCrVyV8vxAYHoi7EJSPjvdaJBu23jALID+tsjdh5mCMP+dYUAWGIad5Zwo5kylw8OreQQjM6y9q5A+A6GGcJ+9CYVNexU9LSU/sVgjgRL1ZJGQK0dd91SCdGVZTI/bO4W6AvLpHd3qOpS+yLoBbGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RpN6PYIz; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a51481a598so536286f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 06:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753365380; x=1753970180; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=doj4VgkcPMuCm07rkZxbId/BUVze9/Fe8T+2B7NuuHU=;
+        b=RpN6PYIzfXGQWq3fRJ/2+66Emnshp20pJsiUTxf9Pl7nT/VfM8Ng97QZiNDI4oyDnc
+         P/SjIPavob1mhkcfmdui60lnIGbHmmLcaA9idDCPvO4KXJ+YBjZBZr0HJB/vYXuGd0Pe
+         QJi6R38wz7ynmb5qoKebH3pTFlpojCC14vE3bMRmimYlEmuFxIltAeYzUJoQi5gfRR+S
+         rxLD44SwiyG5ggCYRwcroRVIhT0BUUwitVdKP/mYbKqtjQ2lady5eptL+9I7M3XESWbZ
+         60wNOJlB/3MSK7+6ko6Tr4sNk7oNUpvS3kr5tYDvhGhXg6QLB+npbOtrnp2V2+fYZLpl
+         rtWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753365380; x=1753970180;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=doj4VgkcPMuCm07rkZxbId/BUVze9/Fe8T+2B7NuuHU=;
+        b=qz+NPB9T8DBBhYsMCb4U7PBwEiCEcLTpS/VWWZIZylIml1o+ysSIPFKwlogccIn3dA
+         w6Aeqegtc0zEhWIwOgzo760VFBXyu66jmfitkl0vm03ECwE9LkaxkZe9HdF3tOZAkXTU
+         lOkr2I9vTzReByPdbrN33YFIBaeS0HQ4R97l0xR1OlmLWqJLz/hiPQQPX3TSoYIiP9SU
+         mPUVwFBhycImWRFy5duKPROaaS5QjhwTomWgQXSG0nyr8Pje2mrRz1AdSnBRE/8nyn0D
+         udpLhmPXAQW+Sc5gntjsr0rgPahWKZ3ajMSS1XB0KiIf6bBChJlclcTRquwdoGccIq+a
+         YeCw==
+X-Forwarded-Encrypted: i=1; AJvYcCXc4mzEZVU4WI/e2rKHcINSTqG6LAyMJ2Of8W1+tM7YkRDpYo/UefSB+aB055PGAxEjHZh3hGe9sd+O8guU@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywk2A5K36CuVLnzJGfv/ahlM4Vdes1WvF0ZE+AJoCpyZ4MI0GZ+
+	aUzuKohztdsDXuOG8BXz5RQZBL8as7jw60s+4xGlJgKkHmqMa9PnSuT9m1USgK30g/o=
+X-Gm-Gg: ASbGnctP1VWp26HO4yV29trLYKIkP/OnhTj97BgY0g85sOvwHXF9oHNjCZsi7jyS9jy
+	N3P66vjKcGkxIDyavBWFOWrvjPqp751NTzNuHm8q2QDCixlLMRWDsfZCv4R+CDeiPq/fliel+al
+	grv9mGSXoS6s9H+SuIWil8YFGJbNSMTJNM788Z0WkOBK5MJPRfvB1ixjq8fLgmyBPEp5JHV2Kzf
+	m5/zbea6B5KfF9UPVEML2/Na28LlTo5yRajV38OdU2klKg5wuj5QxGOutLka5ozlC4efj61PeOQ
+	k9HfZODr84gI2j3iEPW7zoOUCXtFxLwqBxf/k1sqK7d/XdtVycGYSJF8qo7gHhICmbXeYv2wfeV
+	WFVdWvmBUhZYPnq8GahKcAg2DxiAN84Qizm9G1/k+s+z46q++4m1nX5yD+EgFwozPae+MTDfkA5
+	Kk1tgX6R2pXPNv
+X-Google-Smtp-Source: AGHT+IEgB2qGK5rHK/xrXroIqjpgxM1xiUoTO/MHHfQIsCwn5d+nXDbe5Qo7CYSHLXnX07gaTNJQKQ==
+X-Received: by 2002:a05:6000:4026:b0:3a6:d26a:f0f5 with SMTP id ffacd0b85a97d-3b768ea0591mr7040730f8f.21.1753365380179;
+        Thu, 24 Jul 2025 06:56:20 -0700 (PDT)
+Received: from eugen-station.. (cpc148880-bexl9-2-0-cust354.2-3.cable.virginm.net. [82.11.253.99])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4587054e37dsm20889375e9.14.2025.07.24.06.56.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jul 2025 06:56:19 -0700 (PDT)
+From: Eugen Hristev <eugen.hristev@linaro.org>
+To: linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	linux-mm@kvack.org,
+	tglx@linutronix.de,
+	andersson@kernel.org,
+	pmladek@suse.com
+Cc: linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org,
+	eugen.hristev@linaro.org,
+	corbet@lwn.net,
+	mojha@qti.qualcomm.com,
+	rostedt@goodmis.org,
+	jonechou@google.com,
+	tudor.ambarus@linaro.org
+Subject: [RFC][PATCH v2 00/29] introduce kmemdump
+Date: Thu, 24 Jul 2025 16:54:43 +0300
+Message-ID: <20250724135512.518487-1-eugen.hristev@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <PN3P287MB1829C9E8C78ADD70259A68F08B5EA@PN3P287MB1829.INDP287.PROD.OUTLOOK.COM>
 
-On Thu, Jul 24, 2025 at 01:24:24PM +0000, Tarang Raval wrote:
-> > On Thu, Jul 24, 2025 at 11:42:55AM +0000, Tarang Raval wrote:
-> > > Hi Laurent,
-> > >
-> > > > This patch series build on top of Mehdi's introduction of the
-> > > > devm_v4l2_sensor_clk_get() helper (see [1]) to drastically reduce
-> > > > cargo-cult in camera sensor drivers.
-> > > >
-> > > > A large number of camera sensor drivers directly use the
-> > > > "clock-frequency" property to retrieve the effective or desired external
-> > > > clock rate. This is standard behaviour on ACPI platforms that don't
-> > > > implement MIPI DisCo for Imaging, but usage of the property has leaked
-> > > > to OF-based platforms, due to a combination of historical reasons (using
-> > > > "clock-frequency" was initially considered right until before the
-> > > > introduction of "assigned-clock-rates") and plain cargo-cult.
-> > > >
-> > > > A large number of camera sensor drivers also set the rate of the
-> > > > external clock with clk_set_rate(). This behaviour is also fine on ACPI
-> > > > platforms, and has also leaked to OF-based platforms for the same
-> > > > reasons.
-> > > >
-> > > > Mehdi's "[PATCH v2 00/48] media: Add a helper for obtaining the clock
-> > > > producer" series improves the situation by centralizing clock handling
-> > > > for camera sensor in one helper function that implements the correct
-> > > > behaviour for all types of platforms (and should later allow support of
-> > > > MIPI DisCo for Imaging transparently for camera sensor drivers). It
-> > > > doesn't however address direct access of the "clock-frequency" property
-> > > > or direct calls to clk_set_rate() in drivers.
-> > > >
-> > > > This series builds on top of the new helper to replace manual handling
-> > > > of the clock frequency in camera sensor drivers. It starts by addressing
-> > > > the DT bindings and reprecating the clock-frequency property for camera
-> > > > sensor drivers in all YAML bindings (01/72) and in the et8ek8 text
-> > > > bindings (02/72). After that, patches 03/72 and 04/72 make the clocks
-> > > > property mandatory in the two camera sensor DT bindings that specified
-> > > > it as optional. Finally for the DT side, patches 05/72 to 14/72 replace
-> > > > clock-frequency with assigned-clock-rates, or drops the property
-> > > > altogether when the source clock has a fixed rate. This aligns the DT
-> > > > bindings and device tree sources to the current recommended practice.
-> > > >
-> > > > After that, the next 5 patches are assorted drive-by changes. Patch
-> > > > 15/72 drops an unused header the belonged to a long gone driver, and
-> > > > patch 17/72 drops unusued support for platform data in the mt9v032
-> > > > driver. Patch 18/72 is the first that addresses clock rate handling by
-> > > > dropping unneeded clock rate setting in the mt9v111 driver. Patch 19/72
-> > > > takes a harsher approach for the ov6650 by dropping the driver
-> > > > completely as the driver hasn't been used since v5.9.
-> > > >
-> > > > The next part of the series replaces manual clock rate handling with
-> > > > usage of the devm_v4l2_sensor_clk_get() helper in a large number of
-> > > > camera sensor drivers that implement clock rate handling in a standard
-> > > > way. This is done in patches 20/72 to 54/72. This interleaves the clock
-> > > > rate handling changes with drive-by refactoring (in separate patches) to
-> > > > make the code easier to deal with.
-> > > >
-> > > > The final part of the series addresses the remaining drivers that
-> > > > implement non-standard behaviours. It starts in 55/72 by adding a new
-> > > > devm_v4l2_sensor_clk_get_legacy() helper function for those drivers,
-> > > > similar to devm_v4l2_sensor_clk_get() but with a few more quirks. This
-> > > > function should not be used in any new driver. The remaining patches,
-> > > > from 53/72 to 72/72, use the new helper in drivers, interleaved with
-> > > > drive-by refactoring similarly to the previous part.
-> > > >
-> > > > Before this series, with Mehdi's series applied, 29 drivers read the
-> > > > "clock-frequency" property and 18 drivers set the external clock rate.
-> > > > With these series we go down to 1 and 3 respectively, namely the ccs,
-> > > > mt9p031 and mt9v032 drivers. Clock handling in the CCS driver is a bit
-> > > > more convoluted so I will leave to Sakari the honour of dropping the
-> > > > last direct user of "clock-frequency" :-) As for the mt9p031 and mt9v032
-> > > > driver, addressing the issue there is more difficult and likely not
-> > > > worth it.
-> > > >
-> > > > [1] https://lore.kernel.org/linux-media/
-> cover.1750942967.git.mehdi.djait@linux.intel.com
-> > > >
-> > > > Laurent Pinchart (72):
-> > > >   dt-bindings: media: Deprecate clock-frequency property for camera sensors
-> > > >   dt-bindings: media: et8ek8: Deprecate clock-frequency property
-> > > >   dt-bindings: media: imx258: Make clocks property required
-> > > >   dt-bindings: media: imx274: Make clocks property required
-> > > >   ARM: dts: nxp: imx6qdl-pico: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: nxp: imx6qdl-wandboard: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: samsung: exynos4210-i9100: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: samsung: exynos4412-midas: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: ti: omap3-n900: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: ti: omap3-n950: Replace clock-frequency in camera sensor node
-> > > >   ARM: dts: ti: omap3-n9: Replace clock-frequency in camera sensor node
-> > > >   arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Replace clock-frequency in camera sensor node
-> > > >   arm64: dts: renesas: aistarvision-mipi-adapter-2.1: Drop clock-frequency from camera sensor node
-> > > >   arm64: dts: renesas: rzg2l-smarc: Drop clock-frequency from camera sensor node
-> > > >   media: i2c: mt9v022: Drop unused mt9v022.h header
-> > > >   media: i2c: mt9v032: Replace client->dev usage
-> > > >   media: i2c: mt9v032: Drop support for platform data
-> > > >   media: i2c: mt9v111: Do not set clock rate manually
-> > > >   media: i2c: ov6650: Drop unused driver
-> > > >   media: i2c: hi556: Replace client->dev usage
-> > > >   media: i2c: hi556: Use V4L2 sensor clock helper
-> > > >   media: i2c: hi847: Replace client->dev usage
-> > > >   media: i2c: hi847: Use V4L2 sensor clock helper
-> > > >   media: i2c: imx208: Replace client->dev usage
-> > > >   media: i2c: imx208: Use V4L2 sensor clock helper
-> > > >   media: i2c: imx319: Replace client->dev usage
-> > > >   media: i2c: imx319: Use V4L2 sensor clock helper
-> > > >   media: i2c: imx355: Replace client->dev usage
-> > > >   media: i2c: imx335: Use V4L2 sensor clock helper
-> > > >   media: i2c: og01a1b: Replace client->dev usage
-> > > >   media: i2c: og01a1b: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov02c10: Replace client->dev usage
-> > > >   media: i2c: ov02c10: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov02e10: Replace client->dev usage
-> > > >   media: i2c: ov02e10: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov08d10: Replace client->dev usage
-> > > >   media: i2c: ov08d10: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov08x40: Replace client->dev usage
-> > > >   media: i2c: ov08x40: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov13858: Replace client->dev usage
-> > > >   media: i2c: ov13858: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov13b10: Replace client->dev usage
-> > > >   media: i2c: ov13b10: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov2740: Replace client->dev usage
-> > > >   media: i2c: ov2740: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov4689: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov5670: Replace client->dev usage
-> > > >   media: i2c: ov5670: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov5675: Replace client->dev usage
-> > > >   media: i2c: ov5675: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov5693: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov7251: Use V4L2 sensor clock helper
-> > > >   media: i2c: ov9734: Replace client->dev usage
-> > > >   media: i2c: ov9734: Use V4L2 sensor clock helper
-> > > >   media: v4l2-common: Add legacy camera sensor clock helper
-> > > >   media: i2c: et8ek8: Drop support for per-mode external clock frequency
-> > > >   media: i2c: et8ek8: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: gc05a2: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: gc08a3: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: imx258: Replace client->dev usage
-> > > >   media: i2c: imx258: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: imx290: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: ov02a10: Replace client->dev usage
-> > > >   media: i2c: ov02a10: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: ov2685: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: ov5645: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: ov5695: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: ov8856: Replace client->dev usage
-> > > >   media: i2c: ov8856: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: s5c73m3: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: s5k5baf: Use V4L2 legacy sensor clock helper
-> > > >   media: i2c: s5k6a3: Use V4L2 legacy sensor clock helper
-> > >
-> > > If you are planning a v2 version of this patch series, please consider
-> > > incorporating the following improvements:
-> > >
-> > > 1. In the imx219 driver, you can also replace direct client->dev usage.
-> > 
-> > The series doesn't touch the imx219 driver. The patches that replace
-> > client->dev usage were meant to simplify the other changes. Additional
-> > client->dev removal should be done on top (and likely through all camera
-> > sensor drivers in one go).
-> 
-> Okay, great
-> 
-> > > 2. In the regulator code, you can reduce boilerplate by using
-> > >    devm_regulator_bulk_get_enable().
-> > 
-> > devm_regulator_bulk_get_enable() doesn't seem to be a good idea. You
-> > generally don't want to enable power everywhere unconditionally, and
-> > sensors very often need a guaranteed power up sequence.
-> 
-> The regulators are optional, we supply power to the camera sensor directly
-> through dedicated power rails and there is no strict enable sequence 
-> required in this case.
+kmemdump is a mechanism which allows the kernel to mark specific memory
+areas for dumping or specific backend usage.
+Once regions are marked, kmemdump keeps an internal list with the regions
+and registers them in the backend.
+Further, depending on the backend driver, these regions can be dumped using
+firmware or different hardware block.
+Regions being marked beforehand, when the system is up and running, there
+is no need nor dependency on a panic handler, or a working kernel that can
+dump the debug information.
+The kmemdump approach works when pstore, kdump, or another mechanism do not.
+Pstore relies on persistent storage, a dedicated RAM area or flash, which
+has the disadvantage of having the memory reserved all the time, or another
+specific non volatile memory. Some devices cannot keep the RAM contents on
+reboot so ramoops does not work. Some devices do not allow kexec to run
+another kernel to debug the crashed one.
+For such devices, that have another mechanism to help debugging, like
+firmware, kmemdump is a viable solution.
 
-What exactly do you mean by "this case" ? Are you talking about one
-particular sensor ? One particular camera module ?
+kmemdump can create a core image, similar with /proc/vmcore, with only
+the registered regions included. This can be loaded into crash tool/gdb and
+analyzed.
+To have this working, specific information from the kernel is registered,
+and this is done at kmemdump init time, no need for the kmemdump user to
+do anything.
 
-> However, if you feel it's better to retain explicit handling for clarity 
-> and flexibility, I’m happy to stick with the current approach.
+This version of the kmemdump patch series includes two backend drivers:
+one is the Qualcomm Minidump backend, and the other one is the Debug Kinfo
+backend for Android devices, reworked from this source here:
+https://android.googlesource.com/kernel/common/+/refs/heads/android-mainline/drivers/android/debug_kinfo.c
+written originally by Jone Chou <jonechou@google.com>
+
+Initial version of kmemdump and discussion is available here:
+https://lore.kernel.org/lkml/20250422113156.575971-1-eugen.hristev@linaro.org/
+
+Kmemdump has been presented and discussed at Linaro Connect 2025,
+including motivation, scope, usability and feasability.
+Video of the recording is available here for anyone interested:
+https://www.youtube.com/watch?v=r4gII7MX9zQ&list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK&index=14
+
+The implementation is based on the initial Pstore/directly mapped zones
+published as an RFC here:
+https://lore.kernel.org/all/20250217101706.2104498-1-eugen.hristev@linaro.org/
+
+The back-end implementation for qcom_minidump is based on the minidump
+patch series and driver written by Mukesh Ojha, thanks:
+https://lore.kernel.org/lkml/20240131110837.14218-1-quic_mojha@quicinc.com/
+
+*** How to use kmemdump with minidump backend on Qualcomm platform guide ***
+
+Prerequisites:
+Crash tool with target=ARM64 and minor changes required for usual crash mode
+(minimal mode works without the patch)
+A patch can be applied from here https://p.calebs.dev/49a048
+This patch will be eventually sent in a reworked way to crash tool.
+
+Target kernel must be built with :
+CONFIG_DEBUG_INFO_REDUCED=n ; this will have vmlinux include all the debugging
+information needed for crash tool.
+
+Otherwise, the kernel requires these as well:
+CONFIG_KMEMDUMP, CONFIG_KMEMDUMP_COREIMAGE, and the backend
+CONFIG_KMEMDUMP_QCOM_MINIDUMP_BACKEND
+
+Kernel arguments:
+Kernel firmware must be set to mode 'mini' by kernel module parameter
+like this : qcom_scm.download_mode=mini
+
+After the kernel boots, and qcom_minidump module is loaded, everything is ready for
+a possible crash.
+
+Once the crash happens, the firmware will kick in and you will see on
+the console the message saying Sahara init, etc, that the firmware is
+waiting in download mode. (this is subject to firmware supporting this
+mode, I am using sa8775p-ride board)
+
+Example of log on the console:
+"
+[...]
+B -   1096414 - usb: init start
+B -   1100287 - usb: qusb_dci_platform , 0x19
+B -   1105686 - usb: usb3phy: PRIM success: lane_A , 0x60
+B -   1107455 - usb: usb2phy: PRIM success , 0x4
+B -   1112670 - usb: dci, chgr_type_det_err
+B -   1117154 - usb: ID:0x260, value: 0x4
+B -   1121942 - usb: ID:0x108, value: 0x1d90
+B -   1124992 - usb: timer_start , 0x4c4b40
+B -   1129140 - usb: vbus_det_pm_unavail
+B -   1133136 - usb: ID:0x252, value: 0x4
+B -   1148874 - usb: SUPER , 0x900e
+B -   1275510 - usb: SUPER , 0x900e
+B -   1388970 - usb: ID:0x20d, value: 0x0
+B -   1411113 - usb: ENUM success
+B -   1411113 - Sahara Init
+B -   1414285 - Sahara Open
+"
+
+Once the board is in download mode, you can use the qdl tool (I
+personally use edl , have not tried qdl yet), to get all the regions as
+separate files.
+The tool from the host computer will list the regions in the order they
+were downloaded.
+
+Once you have all the files simply use `cat` to put them all together,
+in the order of the indexes.
+For my kernel config and setup, here is my cat command : (you can use a script
+or something, I haven't done that so far):
+
+`cat memory/md_KELF1.BIN memory/md_Kvmcorein2.BIN memory/md_Kconfig3.BIN \
+memory/md_Kmemsect4.BIN memory/md_Ktotalram5.BIN memory/md_Kcpu_poss6.BIN \
+memory/md_Kcpu_pres7.BIN memory/md_Kcpu_onli8.BIN memory/md_Kcpu_acti9.BIN \
+memory/md_Kjiffies10.BIN memory/md_Klinux_ba11.BIN memory/md_Knr_threa12.BIN \
+ memory/md_Knr_irqs13.BIN memory/md_Ktainted_14.BIN memory/md_Ktaint_fl15.BIN \
+memory/md_Kmem_sect16.BIN memory/md_Knode_dat17.BIN memory/md_Knode_sta18.BIN \
+memory/md_K__per_cp19.BIN memory/md_Knr_swapf20.BIN memory/md_Kinit_uts21.BIN \
+memory/md_Kprintk_r22.BIN memory/md_Kprintk_r23.BIN memory/md_Kprb24.BIN \
+memory/md_Kprb_desc25.BIN memory/md_Kprb_info26.BIN memory/md_Kprb_data27.BIN \
+memory/md_Krunqueue28.BIN memory/md_Khigh_mem29.BIN memory/md_Kinit_mm30.BIN \
+memory/md_Kinit_mm_31.BIN memory/md_Kunknown32.BIN memory/md_Kunknown33.BIN \
+memory/md_Kunknown34.BIN  memory/md_Kunknown35.BIN memory/md_Kunknown36.BIN \
+memory/md_Kunknown37.BIN memory/md_Kunknown38.BIN memory/md_Kunknown39.BIN \
+memory/md_Kunknown40.BIN memory/md_Kunknown41.BIN memory/md_Kunknown42.BIN \
+memory/md_Kunknown43.BIN memory/md_Kunknown44.BIN memory/md_Kunknown45.BIN \
+memory/md_Kunknown46.BIN memory/md_Kunknown47.BIN  memory/md_Kunknown50.BIN \
+memory/md_Kunknown51.BIN memory/md_Kunknown52.BIN \
+memory/md_Kunknown53.BIN > ~/minidump_image`
+
+Once you have the resulted file, use `crash` tool to load it, like this:
+`./crash --no_modules --no_panic --no_kmem_cache --zero_excluded vmlinux minidump_image`
+
+There is also a --minimal mode for ./crash that would work without any patch applied
+to crash tool, but you can't inspect symbols, etc.
+
+Once you load crash you will see something like this :
+
+   KERNEL: /home/eugen/linux-minidump/vmlinux  [TAINTED]
+    DUMPFILE: /home/eugen/new
+        CPUS: 8 [OFFLINE: 7]
+        DATE: Thu Jan  1 02:00:00 EET 1970
+      UPTIME: 00:00:29
+       TASKS: 0
+    NODENAME: qemuarm64
+     RELEASE: 6.16.0-rc7-next-20250721-00029-gf8cffdbf0479-dirty
+     VERSION: #5 SMP PREEMPT Tue Jul 22 18:44:57 EEST 2025
+     MACHINE: aarch64  (unknown Mhz)
+      MEMORY: 34.2 GB
+       PANIC: ""
+crash> log
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd4b2]
+[    0.000000] Linux version 6.16.0-rc7-next-20250721-00029-gf8cffdbf0479-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #5 SMP PREEMPT Tue Jul 22 18:44:57 EEST 2025
+
+
+*** Debug Kinfo backend driver ***
+I don't have any device to actually test this. So I have not.
+I hacked the driver to just use a kmalloc'ed area to save things instead
+of the shared memory, and dumped everything there and checked whether it looks
+sane. If someone is willing to try it out, thanks ! and let me know.
+I know there is no binding documentation for the compatible either.
+
+Thanks for everyone reviewing and bringing ideas into the discussion.
+
+Eugen
+
+Changelog since the v1 of the RFC:
+- Reworked the whole minidump implementation based on suggestions from Thomas Gleixner.
+This means new API, macros, new way to store the regions inside kmemdump
+(ditched the IDR, moved to static allocation, have a static default backend, etc)
+- Reworked qcom_minidump driver based on review from Bjorn Andersson
+- Reworked printk log buffer registration based on review from Petr Mladek
+
+I appologize if I missed any review comments. I know there is still lots of work
+on this series and hope I will improve it more and more.
+Patches are sent on top of next-20250721
+
+Eugen Hristev (29):
+  kmemdump: introduce kmemdump
+  Documentation: add kmemdump
+  kmemdump: add coreimage ELF layer
+  Documentation: kmemdump: add section for coreimage ELF
+  kmemdump: introduce qcom-minidump backend driver
+  soc: qcom: smem: add minidump device
+  init/version: Annotate static information into Kmemdump
+  cpu: Annotate static information into Kmemdump
+  genirq/irqdesc: Annotate static information into Kmemdump
+  panic: Annotate static information into Kmemdump
+  sched/core: Annotate static information into Kmemdump
+  timers: Annotate static information into Kmemdump
+  kernel/fork: Annotate static information into Kmemdump
+  mm/page_alloc: Annotate static information into Kmemdump
+  mm/init-mm: Annotate static information into Kmemdump
+  mm/show_mem: Annotate static information into Kmemdump
+  mm/swapfile: Annotate static information into Kmemdump
+  mm/percpu: Annotate static information into Kmemdump
+  mm/mm_init: Annotate static information into Kmemdump
+  printk: Register information into Kmemdump
+  kernel/configs: Register dynamic information into Kmemdump
+  mm/numa: Register information into Kmemdump
+  mm/sparse: Register information into Kmemdump
+  kernel/vmcore_info: Register dynamic information into Kmemdump
+  kmemdump: Add additional symbols to the coreimage
+  init/version: Annotate init uts name separately into Kmemdump
+  kallsyms: Annotate static information into Kmemdump
+  mm/init-mm: Annotate additional information into Kmemdump
+  kmemdump: Add Kinfo backend driver
+
+ Documentation/debug/index.rst      |  17 ++
+ Documentation/debug/kmemdump.rst   | 104 +++++++++
+ MAINTAINERS                        |  18 ++
+ drivers/Kconfig                    |   4 +
+ drivers/Makefile                   |   2 +
+ drivers/debug/Kconfig              |  55 +++++
+ drivers/debug/Makefile             |   6 +
+ drivers/debug/kinfo.c              | 304 +++++++++++++++++++++++++
+ drivers/debug/kmemdump.c           | 239 +++++++++++++++++++
+ drivers/debug/kmemdump_coreimage.c | 223 ++++++++++++++++++
+ drivers/debug/qcom_minidump.c      | 353 +++++++++++++++++++++++++++++
+ drivers/soc/qcom/smem.c            |  10 +
+ include/asm-generic/vmlinux.lds.h  |  13 ++
+ include/linux/kmemdump.h           | 219 ++++++++++++++++++
+ init/version.c                     |   6 +
+ kernel/configs.c                   |   6 +
+ kernel/cpu.c                       |   5 +
+ kernel/fork.c                      |   2 +
+ kernel/irq/irqdesc.c               |   2 +
+ kernel/kallsyms.c                  |  10 +
+ kernel/panic.c                     |   4 +
+ kernel/printk/printk.c             |  28 ++-
+ kernel/sched/core.c                |   2 +
+ kernel/time/timer.c                |   3 +-
+ kernel/vmcore_info.c               |   3 +
+ mm/init-mm.c                       |  12 +
+ mm/mm_init.c                       |   2 +
+ mm/numa.c                          |   5 +-
+ mm/page_alloc.c                    |   2 +
+ mm/percpu.c                        |   3 +
+ mm/show_mem.c                      |   2 +
+ mm/sparse.c                        |  16 +-
+ mm/swapfile.c                      |   2 +
+ 33 files changed, 1670 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/debug/index.rst
+ create mode 100644 Documentation/debug/kmemdump.rst
+ create mode 100644 drivers/debug/Kconfig
+ create mode 100644 drivers/debug/Makefile
+ create mode 100644 drivers/debug/kinfo.c
+ create mode 100644 drivers/debug/kmemdump.c
+ create mode 100644 drivers/debug/kmemdump_coreimage.c
+ create mode 100644 drivers/debug/qcom_minidump.c
+ create mode 100644 include/linux/kmemdump.h
 
 -- 
-Regards,
+2.43.0
 
-Laurent Pinchart
 
