@@ -1,130 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-66432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7140B10240
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:50:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E42F3B10266
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:54:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E6BDAC3884
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:49:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CBD2B3A31B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3CAB263F3C;
-	Thu, 24 Jul 2025 07:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5E027056F;
+	Thu, 24 Jul 2025 07:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AapSjLHu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XSqoxeqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E1219882B;
-	Thu, 24 Jul 2025 07:49:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C5A2701AB;
+	Thu, 24 Jul 2025 07:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753343389; cv=none; b=OyO4ljAOabsoWqICV2n1aST+WGza8104qD6ppNLZ+SPoetUoMTr5fhXHo7EGY0WiXhp/g78JbzKjtRRWpjhO/WxsRxjatprlq1REdLV+q144RCNTQhmzDMyY7pxrsUdhEg56jvk3okj4HiFXJPESJW1xtHM/pCCsKgRbV/p9l0E=
+	t=1753343657; cv=none; b=F6L0AwzhopcBCDRhwdAS8aUG6LUmTWLOLkBd0oqiIKewJh2sew/GpRiACZhrb9Qr7Q5FWGy7W7KLwIDN70et2Yioxwg4KjKkzd4lPX6SzziKeH7fKtee5qWKMS6LGac9JZ+FbUS1hWFMfdmLWE6cpij0RlnP33N4ipm9MS2Tfwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753343389; c=relaxed/simple;
-	bh=HC7IYoXji6jKfEBrN293aCaxM5q93xg9Cf9+C3xf31Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DsrvYZl82EQsmbgCVlRR0S/jH6OUoASCXOG93R+pgdoErVGPUK+tJQQEmlF5GWLpKQioJAae5djs3IzosXtmcUSFsebBKnon77xCjP0ojEaDHDOMRVMrh0L5HW+QXQM/1hVvVG6QSdwIagKw4nD6EmtvwKqJF8d9DK6he0XPt80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AapSjLHu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274A9C4CEED;
-	Thu, 24 Jul 2025 07:49:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753343389;
-	bh=HC7IYoXji6jKfEBrN293aCaxM5q93xg9Cf9+C3xf31Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AapSjLHubWxWfQD5G3m2rU72aqMAoUxcKdrPDWe5Y0pP1wxGHv7ycAFG8SbnAsrCi
-	 CzVeaFiNljXRoMy34cSQZ+/QWNGvZVWlRiX+brBk9O2hd764dvO2stDmKRNErH/3hj
-	 BnY9cvYJGHDFFgvNaTnsyqHnTPrQ/vPhhrC0sAhRjL2fvjoTEQ02HR0drE1ksWNk88
-	 6uQaacGqy/sWpIKMp1JKP8n1nZ4C38/qiGgjcao0VXfLVWPpsiRuihAnF/rMI34yj0
-	 Twfi4o33e76hvmMlfwaU7EiISzV0BFTiHt5Qsd+6ozuxv4OGh+8wR9/fsTWD4c9uhq
-	 umHDeoK6ef9AA==
-Message-ID: <a759f9fb-8e91-42ed-8709-b45281b8e964@kernel.org>
-Date: Thu, 24 Jul 2025 09:49:43 +0200
+	s=arc-20240116; t=1753343657; c=relaxed/simple;
+	bh=01z5r7pzyGnwU30Kt6BGrDhM1m3MtGbY5IYkxPTylo4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=DpGeIl/dPkkqJ1UITci5GlJsY26bTdl0vp1thHCAPqWJxMfuN8afLG/KusJ9IM7Pjb9Qi+DCTd4/qAq0DmXeSTVbcpSVEJvKwrmbcIrIr8sG80YyiK4gHsGPlRMHqw8LjzoKMZnMQQv01gk2sH5CuNmShBro155ETrdPSO9zNU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XSqoxeqY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NMXTan022844;
+	Thu, 24 Jul 2025 07:54:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+a9knVtomRDK4xoiMkxLuA
+	MIfy1jDHEmobLdNyqhHfI=; b=XSqoxeqYH/OyEpozgI9+kFU86f66X3zZ8+Noi6
+	plFurpiCdOFySpHbUZv+F6hq4ihKTpMtev9V/5o86N/xEtxObJe0GG70yqBa5T3J
+	HJoihvef5t/Q5nDzeNJB5XUBj36ZFYAe6adjrVZP2DzH0Xh899hDdmkzMWFQPHCw
+	/MYiC8QTYjeVO0ehiyWxBFkyNcmcXYksDaOGUaZOSD9b4qjKkRNWQweQ3+6JQqn7
+	vpGvsLyZsQeQvOWO43ptZtTGHGZi2mLTCyqVm2NKxCxsLfWk9pSt/E/eiU2Qz8Ni
+	OhUbtW+xpF/ytEZL/havv0vKfw5ahSD7BCyN7wdRBsEOOHeg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48313kjja9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Jul 2025 07:54:11 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56O7sAb4006049
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Jul 2025 07:54:10 GMT
+Received: from hu-renjiang-sha.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Thu, 24 Jul 2025 00:54:07 -0700
+From: Renjiang Han <quic_renjiang@quicinc.com>
+Date: Thu, 24 Jul 2025 13:23:39 +0530
+Subject: [PATCH v2] media: venus: pm_helpers: add fallback for the
+ opp-table
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] ufs: ufs-qcom: Add support for DT-based gear and rate
- limiting
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
- alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org,
- James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
- agross@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
- <20250722161103.3938-2-quic_rdwivedi@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250722161103.3938-2-quic_rdwivedi@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20250724-fallback_of_opp_table-v2-1-2fc61f2407dc@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAILmgWgC/3WOQW7DIBBFr2LNulSAEzBZ5R5RZA0wNKiOccCxE
+ kW+e6nTbRezeCP9p/eCQjlSgUPzgkxLLDGNFeRHA+6C4xex6CuD5HLPtRQs4DBYdN99Cn2apn5
+ GOxDbEbam1SoooaFup0whPjbv6fzmTLd71c/vJ1gsxFy6XuN8aDzvlOvqkTVhbzyhci0aj6TJd
+ oZ0x1FyZ+DXdYllTvm5JS9ik/3Vtf/ULYIJJjkqqXXwnvyxprg4us8aAOd1XX8At0xpAwgBAAA
+ =
+X-Change-ID: 20250721-fallback_of_opp_table-4ea39376f617
+To: <quic_qiweil@quicinc.com>, <quic_wangaow@quicinc.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>,
+        Renjiang Han <quic_renjiang@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753343647; l=2733;
+ i=quic_renjiang@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=01z5r7pzyGnwU30Kt6BGrDhM1m3MtGbY5IYkxPTylo4=;
+ b=e6nbWWHQZ4qFyZ6wb8Mp6paySaRWV8zoIcUxqDLme1l4Wskr+OYhiTYF55RsYLRh55gDnyGKI
+ ikqqvVa4+z8AmTKI7+i19NVPO2cMyp/1jbpdetv2vIJvcG0q9WASAsB
+X-Developer-Key: i=quic_renjiang@quicinc.com; a=ed25519;
+ pk=8N59kMJUiVH++5QxJzTyHB/wh/kG5LxQ44j9zhUvZmw=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA1NiBTYWx0ZWRfX7KxaXFiGuxdb
+ eHTA8sJ7D462lQQU15tvoHiTN4Rk+eJKFJfbBjumeZw4RVsf2wZdYvDGIoRHLHiLOzRI2v8AVn/
+ Jm6abtNP0AegPPBlVof0TrHRNyqpaxSbyehPK/Dmm41CF0X9ZzWIxtVFpZickeCdguCPBVE0J3e
+ OU+ddgnO8NV4GLIAyyiY22JALe2w0ItB55LYPycZYwLNcck+LIE5deOIKIJbUDZ7mOKvA7TyoJE
+ stDPcpkPN/D9Z89otNIJUE4/Hfp6OHmHiwJZhiCFsTcI5bsFX3KzvMwed7fre9pcBrC6MB+MVRJ
+ WdUqIHo97GiEETdkSznNIswfsMZ8LvddNVtj9xhuyOM+gVZcDo+blfCxwBgSE700ypgetqJB2ak
+ O6tMxLByms74D/IHtEhS8XkOpncOlxFvEQ7lq7sH55ExT+B8WZW7jCvaRkLqMDkifrftS39k
+X-Proofpoint-ORIG-GUID: Zl4ocbwZZRtVUelQrwqnqf-76Otpd0VT
+X-Proofpoint-GUID: Zl4ocbwZZRtVUelQrwqnqf-76Otpd0VT
+X-Authority-Analysis: v=2.4 cv=C/TpyRP+ c=1 sm=1 tr=0 ts=6881e6a3 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=GQTSHeq3D-DV7XfM2MAA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 mlxscore=0 clxscore=1015 impostorscore=0
+ mlxlogscore=999 bulkscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507240056
 
-On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
-> +static void ufs_qcom_parse_limits(struct ufs_qcom_host *host)
-> +{
-> +	struct ufs_host_params *host_params = &host->host_params;
-> +	struct device_node *np = host->hba->dev->of_node;
-> +	u32 hs_gear, hs_rate = 0;
-> +
-> +	if (!np)
-> +		return;
-> +
-> +	if (!of_property_read_u32(np, "limit-hs-gear", &hs_gear)) {
+Since the device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX
+do not include an opp-table and have not configured opp-pmdomain, they
+still need to use the frequencies defined in the driver's freq_tbl.
 
-You cannot use ABI before you document it. Read submitting patches in DT.
+Both core_power_v1 and core_power_v4 functions require core_clks_enable
+function during POWER_ON. Therefore, in the core_clks_enable function,
+if calling dev_pm_opp_find_freq_ceil to obtain the frequency fails,
+it needs to fall back to the freq_tbl to retrieve the frequency.
+
+Fixes: b179234b5e59 ("media: venus: pm_helpers: use opp-table for the frequency")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+---
+Since device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX do not
+contain an opp-table and have not configured opp-pmdomain, they still
+need to use the frequencies defined in the driver's freq_tbl.
+
+Therefore, if calling dev_pm_opp_find_freq_ceil to obtain the frequency
+fails in the core_clks_enable, it needs to fall back to the freq_tbl to
+retrieve the frequency.
+
+Validated this series on QCS615 and msm8916.
+---
+Changes in v2:
+- 1. Update the returned error value as per the feedback.
+- Link to v1: https://lore.kernel.org/r/20250723-fallback_of_opp_table-v1-1-20a6277fdded@quicinc.com
+---
+ drivers/media/platform/qcom/venus/pm_helpers.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390..77c12273dbb9505244e260fc8fa635e4fe045236 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -40,6 +40,8 @@ static int core_clks_get(struct venus_core *core)
+ 
+ static int core_clks_enable(struct venus_core *core)
+ {
++	const struct freq_tbl *freq_tbl = core->res->freq_tbl;
++	unsigned int freq_tbl_size = core->res->freq_tbl_size;
+ 	const struct venus_resources *res = core->res;
+ 	struct device *dev = core->dev;
+ 	unsigned long freq = 0;
+@@ -48,7 +50,14 @@ static int core_clks_enable(struct venus_core *core)
+ 	int ret;
+ 
+ 	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+-	dev_pm_opp_put(opp);
++	if (IS_ERR(opp)) {
++		if (!freq_tbl)
++			return -ENODEV;
++		freq = freq_tbl[freq_tbl_size - 1].freq;
++	} else {
++		dev_pm_opp_put(opp);
++	}
++
+ 
+ 	for (i = 0; i < res->clks_num; i++) {
+ 		if (IS_V6(core)) {
+
+---
+base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
+change-id: 20250721-fallback_of_opp_table-4ea39376f617
 
 Best regards,
-Krzysztof
+-- 
+Renjiang Han <quic_renjiang@quicinc.com>
+
 
