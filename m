@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 622F3B10230
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:48:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82BC7B10235
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:49:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B58A3B6696
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:47:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B2E3AC2DA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:48:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1019266574;
-	Thu, 24 Jul 2025 07:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB7F525D1FC;
+	Thu, 24 Jul 2025 07:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VeblxB6V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DEEBXjYh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C50821771C;
-	Thu, 24 Jul 2025 07:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82AF1C6FF5;
+	Thu, 24 Jul 2025 07:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753343289; cv=none; b=pU1ZhkWcJL0cUq7jxwk/jiE5ISkMfyeDVjlGlZZQ7MK6ID8xOCFu6CS2jXTGvLLcZ8VlKkZX2Ns/4fWNqOBhkZMeDEP460Xo3zaEikpG7anfRKyeEj5XaqrZSZ5bQ4l7GsDx9/gjc5pHdV2RmQQyMK2mTTipp0aYO/fAHUH/1ME=
+	t=1753343339; cv=none; b=QPuB0tpKbUOXbt4Es4TTIg0xNu3EVqM/RoZ9EgxAX8IeLkRWtsvHTY7UOw154Q6yn19p3V7sJ1pB/eztN0IimrFA/x1+qHubkPiqbqUzsPpQA2ie/Apk3pQeKoHzXsP+46SpYWpEzKSp25xoy5kR6jfXrgauDKUem4TBNi0lxBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753343289; c=relaxed/simple;
-	bh=eBzvW6M39tqMJ4rxOkl6YZpIClcLSUK00ZQDKJiwXUw=;
+	s=arc-20240116; t=1753343339; c=relaxed/simple;
+	bh=NI4Xsn+AHphq0nQmPKGkseyydMYAdKQD92tE9tB2Yo8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uKgKmHMugmUJcY8FZH9IepMijD4NOPZNyWwi2lkyiAJ34lzTzQxQ33U05JRUl1anmNpIt9lfisuB7k78to0/FeW9+In0vs/YWTRxydKY/OEk9Qr2H1pYhXSbXoC2U6DSN+cpY8Dea7SWBABVrYfrnm+lIJoXOi5cNVuXzJnaKLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VeblxB6V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E163BC4CEED;
-	Thu, 24 Jul 2025 07:48:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=TvLCX8qY2zRSH463yabTSRP+6zqev3pz1sJ0knnvyeNnRyuV+tAWlmh4sougIu5RTIzVx0jGIeAuB2cyT5NEkjw6YAZaqbkGmfsHtkOECBX0bIujd9E8lg1wo59GerPzhTTrAiSfzcXoT+chn/P2MPBHEOzVaS1wwTs1N16AVFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DEEBXjYh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70549C4CEED;
+	Thu, 24 Jul 2025 07:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753343289;
-	bh=eBzvW6M39tqMJ4rxOkl6YZpIClcLSUK00ZQDKJiwXUw=;
+	s=k20201202; t=1753343339;
+	bh=NI4Xsn+AHphq0nQmPKGkseyydMYAdKQD92tE9tB2Yo8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VeblxB6VUxXQ8EIejbIoSsIoHV2FCz9C/FulBfjeFCU/9x2LKmuESaHCTOMu9wZbB
-	 aGVQ2jbor/y2povHuIISKTvXgQ5E0AcmJtbVhASVWHWGbtO8oAZyg3smvbe3R7CMwn
-	 M7TCA3E4O9NcQjwaDnzPn/NmWaEQbDXofweU42EcjowQMOc+rb2RY+g5tyFnnlAxn9
-	 x6Aehrn3s9cXPO82bmhcYdpixgpx41j4Ip/Lu8cv8q7BxWFuAWJmSSPnOJhqO02Jv7
-	 LnYtPJYSQsA2su+pMDKPcsxiDL5DZiFV87v3OhoiIiIIjk1NKjzaOY8cyIcnZo+U+D
-	 uUN6P4GsOnI3Q==
-Message-ID: <962d6db3-af85-45b9-9c1d-5369847dcfb4@kernel.org>
-Date: Thu, 24 Jul 2025 09:48:02 +0200
+	b=DEEBXjYhmecN4W6Z8V6tqr5IE9X2qaqUtzLTbvlWH3DCqOskhO+VPyxbYdex/c19i
+	 +VK9DZD3Sw93tGYyc3wJ9IDra0MMftOribqRTKY6nlu8VQgVeyim3HWVXB504+OlAw
+	 t/ADpJFr6xo/EoZZqXW2ezL6vwpZY8nmbyXK4coOSVQk/Y5xz8iUUJ+3HCJh4Csv8v
+	 Vj82lSauaY/H10iG4kOo142YeHVVvO80l4Y0ynpTCug4+2reT/teOV98Wz4oKyL8xx
+	 v4cRR3JoZHD2bZabJ53t/bQ6RfkjjJ6CPy5J65M8puOWMqtnjpjpen1HtsxcBIHvgG
+	 Mvxb0TaTpkyYw==
+Message-ID: <2a3c8867-7745-4f0a-8618-0f0f1bea1d14@kernel.org>
+Date: Thu, 24 Jul 2025 09:48:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] dt-bindings: ufs: qcom: Document HS gear and rate
- limit properties
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
- bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
- agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org,
+ James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+ agross@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
- <20250722161103.3938-4-quic_rdwivedi@quicinc.com>
- <6yhnlwyuimkrlifmmdihcsuhws6qkdjzmjxdupu6cevu24nmi6@f4vk5dffjie2>
- <cbe1f27d-44ad-41d2-9bc7-fa9211d52a30@quicinc.com>
+ <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,24 +107,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <cbe1f27d-44ad-41d2-9bc7-fa9211d52a30@quicinc.com>
+In-Reply-To: <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/07/2025 09:36, Ram Kumar Dwivedi wrote:
->>>        GPIO connected to the RESET pin of the UFS memory device.
->>>  
->>> +  limit-hs-gear:
->>
->> If the properties are generic, they should go to the ufs-common.yaml. If
->> not (but why?), then they should be prefixed with 'qcom,' prefix, as
->> usual.
-> 
-> Hi Dmitry,
-> 
-> I have added qcom prefix in latest patchset.
+On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
+> Add optional limit-hs-gear and limit-rate properties to the UFS node to
+> support automotive use cases that require limiting the maximum Tx/Rx HS
+> gear and rate due to hardware constraints.
 
-Unlike this patchset here, are you going to test before sending it?
+What hardware constraints? This needs to be clearly documented.
+
 
 Best regards,
 Krzysztof
