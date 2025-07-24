@@ -1,190 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-66598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74FA9B10DEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:44:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69222B10E08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:50:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC24A1890A30
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:44:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 473063B9998
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:50:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A738A23D287;
-	Thu, 24 Jul 2025 14:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376502E92C3;
+	Thu, 24 Jul 2025 14:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d49lz9kE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FCSV5YTo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A1F2E2652
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 14:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFF62E88B6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 14:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753368254; cv=none; b=o8qQsWk8Jgg9iqnxcO+Ce8b6WrWqJQ1TugYkOXIMWKFPJlAJNcA9PBavMp9JEerbdZ1ydCLpiNkLsddwAjbA2l/zYp1YZFV7wgYj0J6H5qcLEaCz1BHBTw1BmvMAELAHeYuHvUI6Jod0X8TAw+sOZfpBXG0cyzIdukDapHtKzZE=
+	t=1753368628; cv=none; b=X0k6etDK++TRZiN8KxxOUbqDCQqZTmBKEkrFQsm9XwTCUsutA88tF+aRXyjja5Mx8achinfzhqBWTpOuGndS7IE9Pu3Uf4GKkvZ62dX/lWr3vpUawBnKIcdP7pTIq5ibDHpNcOfU8DY7CilUuAGJkXBlviZV9ZEI+WL4BdQpyUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753368254; c=relaxed/simple;
-	bh=wvW6Hz2DgVHLdOrh27MlC5dgHBHuWnEVmc6aahJ/o7U=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CciwnJ9W8P9JQCHo44gWWx47HMhgLe8ijOaMTtpSEZQAdv18OJyXEBvk/zWhWEXSJODUnVFceBtUVS+DNBR1ngfulji9y3Qw3kn1UiNesA3CixLxdyqxOF+3oxTUiomM6KV70LUpomowr4XVj7CPsGZxY1gON7TRsnEGcx5N9Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d49lz9kE; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1753368628; c=relaxed/simple;
+	bh=XAP17spDcb8GdNS6F0/P/JgmBvwZhLkmaAPDLuiFmhs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=n33H+vP1aGF0BZNFo4fvFFqR2yexxzUaKun8lGbyKnk4PbIS5VbLI/lCDYBN6n58NvC87gUKXvntrnMcuXH93ByOoq4N+RFZMPSnr7LDYmUFYg9Cox9eB/Bg017nygxDpHmkbTSMksaISU0wrZxLs2AqcVRht4JQ/STxDutN9Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FCSV5YTo; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-456108bf94bso7040275e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:44:12 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-455b00283a5so6938085e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753368251; x=1753973051; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h61dAcV4h+YntxpGoUH8VGIIIUvkHb2+OkdP23t55x8=;
-        b=d49lz9kEkZ3aZlAutVtwrkYcY7nKPl0qQNfiWIIbWZbpPCghMPS0n70hdoCulDr98T
-         aE7BK4fS84FgjWW2nYb05WVyvWVhhAMbDquvH4w70jp5jGbP8HEQ/F0qErxmnrCzDpOR
-         AJeHlSBq74odCow7QZhFrAOW8nZ8KcBXLopKtCe/Y7tIGOe+GwXKKGIpNIAd5xtXieru
-         pm8PRUvaWwHRvIveQejsnEtOnIVZGmsjVTzlJlD+PcnK9u63Sd7Kw2rpwRXnGLuTEoLG
-         1q9Hv4vWca1OsnFxIp3dnHVujvnYwmN/Pix2Y0Xz7dor5ERLLSmpBLC+lIASWKkAt0R6
-         D2LQ==
+        d=linaro.org; s=google; t=1753368624; x=1753973424; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TSQ2e5Ukh+OSMFXmOt+aMGcava2/LQ659PBJk/zaZDA=;
+        b=FCSV5YTovPEap6u46I71Q9EQ4fnm7KpaxAcozlQ3f4koX5UVaUk7UUdv1cSP2fUxtl
+         CKU1bgGDk3piHoj+QRGfeSoPEZojvN17H6ZShHlerG+AOe4Mw++gfoUUcSbTHyxRZ7Qz
+         IceYekN2iiMDkxkpumeo8aTXIwW9OxwmJyuHJ+MiSMs9HlRJzKVPOdGTFv8Ve93OqnrT
+         6uletx80QFE0w4dXa8FIRezG42Yzx6fGt+4MdelLYIASprYnZpWgaklBRKALSiO/BElb
+         PxeOGOiLoZI1I3cPET09eTMNDql7hbCGdQQwf7/VS/SxYCVpNxLWPM4HYHt1mdQIYlP2
+         CBwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753368251; x=1753973051;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=h61dAcV4h+YntxpGoUH8VGIIIUvkHb2+OkdP23t55x8=;
-        b=owZ394UlWe88BAsUoZHFlHfrDQMd//z0oeyKdbvtd0YGgfR9164ah14sliP3VdO+Nl
-         YfjaCfh+1yamKjAEPogR2LMyvq/tF/7anhBNgEroHHnQW0NS3TtwD6udq1zYRsDfjNAi
-         Eqn9RKIdR8tkg46WuL6+lI/cTVcRPYHKe+D2SzZ3QsZge1m6gnOTj+aMAZyqgPMJiwc3
-         43p9U4aksCrWBeP1woME6h3VYQRFqw6PdvOJNEnL06SvLvC9KHFTgc1HaRtCseG/4ZPi
-         EE0SrXCQg1/Vh8iN2pkao0yHh2Sqxzk5dK4KECDDkh4FsK89pLtKFVTqeGSvVS9X+1b+
-         LjKQ==
-X-Gm-Message-State: AOJu0YzMNi+3/e6MuQ7joz9EXuMgi0OQ2VgaPhsHkxTaEWuQhG8p2Xmd
-	hO8Vf6UmQSSQ2ide8cmwF00453eMsj0cMCUNXxwp4GA0vYAFXYnuw2cz0Q9VFJIaU1o=
-X-Gm-Gg: ASbGncsFhMj0ZraAlO/+3ThM/wPVCddxxUEJRf17i4n6GNTY1pcCXimLesr8bPmEH3s
-	eoVRpXM7ebEzBXsJAbMH3m24qotqRiArllvFYR0aGPqcOfIOz23tDiotTIXQcoyOwXBA3RWG8XA
-	JXOVKIE5XKpjpAAXAC/qoE8UTM/K2SoCCaQq/ZlFLcJ5E4IWif2TlVN5PsIuyqY7cMJu3RFUyWK
-	FUiGx17W0qCYeBGkOZH1X36cbl9r2Dkd0TTiMwlebx9zpkMbR89PF4wfHNAM/vv3ADQvm8GFbgq
-	v1iIyZkon3WmOGskymSHTJ0SYQcR4NyvrvLQqdkcAQaeIJNeoveB2x3EUbPNTtkR49vuSTtdnBw
-	kamKT7V3XZD/5qKODaqsZJo5KhLVlP6HnwXRYYaaj4pX/PtFHYDWLthSvyC67wiSwva+qj3g9Ye
-	1IGaGeNyH9dQ==
-X-Google-Smtp-Source: AGHT+IFGgQDhmKjsxwQeeanUSBp4sAHQ1P3xwlEiMitDwLsVw1OyZFVplMZ/sj3w25qrYF6TJH+r9w==
-X-Received: by 2002:a05:6000:25c2:b0:3a4:dd16:a26d with SMTP id ffacd0b85a97d-3b768ef3c59mr6524335f8f.38.1753368250912;
-        Thu, 24 Jul 2025 07:44:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:e2d3:d328:dc00:f187? ([2a01:e0a:cad:2140:e2d3:d328:dc00:f187])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcb89a5sm2326994f8f.65.2025.07.24.07.44.08
+        d=1e100.net; s=20230601; t=1753368624; x=1753973424;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TSQ2e5Ukh+OSMFXmOt+aMGcava2/LQ659PBJk/zaZDA=;
+        b=ILK6JoDrDPJQ+DzN8Uc8exVQTYXdvOslAuWiYv6Uyw3q1rvfFSbQjGWBX4Ptr9lQKQ
+         K8mfS72vo6rGePcsBvpyyhk5xIacHq7uhl9Aw+sLsG5a2/M0+LqrJVoQ6aH+ICcdo/PN
+         djrdnm0s2CjV5SPMr7WdrAJCBQmuoPFi1CgBi14QGb+uG5W/QbwkoyiX0MmBpSKoh3N0
+         dd1rTUOyeF45H62M1rAnu6d64tDnmUpNiEX7FXCBsHB3d83SncnJfuIY3UcNA8o58u/M
+         Xbe22iJUSnlAaAa2W1UQ01b8NredsII0qmPk1rCHrPGT0Jjn+dGKmjVp8IYSnn2Ye2lg
+         2OUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvBNlZIVH2A02BmbSJZLiKIaZNFQ4GBeKvZF6+95KMxMjOURMOFRaNcNsIi/VyyPT0E7yReSeuTQI6RzU4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2biStE3dcUjrUHggwIuKgAMVTfSGoQP7YHaOS5cx8C8EgmvKc
+	Zuq539uMSu6knepxJMVdeh8oW4yXk00Kk5/8uUR35RBsOxpdoDi0VXtBld4JVyajKHi9IobePZJ
+	4VlGb
+X-Gm-Gg: ASbGncs5xAiPSHXhS/77n8V/+DPVlLm7BeI0b2GdSSk38hwZ8uPp8RR/yUA5+R1gFV4
+	wZiXDQiU1H5WIolTXBJfvDrFb/sQ+qGv6R/KCzVfDq92kaxR1bliCvGSyQ3Moj0uaPFpBWAag70
+	vB0wJIvbLeIBfAgBO0xK2uRlZygJSVm/aFi3DR1L1MZRIK5S3W72ad9dBdt1Yp1HgquUYKbqiAp
+	QOqShnbMvzSroAh0V1zVjYiH9z9caXGfVPeQH1lnIprb2hq7kXPZWSrDe7eZ1dU3IB2ofK4H4l/
+	3RoDDRg+mrN2uJKDxE0zG5BzCV4UXymyjzeD4Phj0cO6YEVxDFDH9ZkKIrxFWJ0jaOJYph7VtXK
+	z/7/hVwB6lwCIF3Y5OZ9xXlbs6qg=
+X-Google-Smtp-Source: AGHT+IFqO4ntehoEF4kO6OCrr9ISOQHx6+YtV7vjh6jjeQE1JlhK4Ccrv+abJqQBg4d7I+32KHeQZg==
+X-Received: by 2002:a05:600c:45c3:b0:43d:b3:fb1 with SMTP id 5b1f17b1804b1-45868d69d8emr64877745e9.27.1753368624162;
+        Thu, 24 Jul 2025 07:50:24 -0700 (PDT)
+Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458705c4dbdsm23975875e9.25.2025.07.24.07.50.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 07:44:10 -0700 (PDT)
-Message-ID: <53e0ae24-c32a-4b6b-a0ea-b056540c2f3d@linaro.org>
-Date: Thu, 24 Jul 2025 16:44:06 +0200
+        Thu, 24 Jul 2025 07:50:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] drm/msm: adreno: a6xx: enable GMU bandwidth voting for
- x1e80100 GPU
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250721-topic-x1e80100-gpu-bwvote-v1-1-946619b0f73a@linaro.org>
- <ac476949-d0e7-4058-ad76-c3cc45691092@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <ac476949-d0e7-4058-ad76-c3cc45691092@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 24 Jul 2025 15:50:22 +0100
+Message-Id: <DBKDAXJ0V9U0.10YYX5H5HAJBT@linaro.org>
+Cc: <jjohnson@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+ <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+ <jeff.johnson@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [question, bug] regularly disconnecting wifi on RB1 and RB2
+ boards, ath10
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Loic Poulain" <loic.poulain@oss.qualcomm.com>
+X-Mailer: aerc 0.20.0
+References: <Zgp0ym-MGzX2eSZdlkVYbgvjkJ0CzKItjaC5pafzQnj1AOZnVAqvCIZfYoK7nwDhUgOA0U8eNolNtaWXbExOAQ==@protonmail.internalid> <DAWJQ2NIKY28.1XOG35E4A682G@linaro.org> <5df11ee4-d645-4be2-841f-715343f1b7a4@linaro.org> <CAFEp6-0zwy2JdFOvRQ5ghMwD-J6b7F5YcVKNf-5R=8XdEpGDSw@mail.gmail.com> <CAFEp6-1wO9xwisOAtv6D__nb3Uo=8_f9rHifi-JAQ0oPD+JSVg@mail.gmail.com>
+In-Reply-To: <CAFEp6-1wO9xwisOAtv6D__nb3Uo=8_f9rHifi-JAQ0oPD+JSVg@mail.gmail.com>
 
-On 24/07/2025 16:35, Akhil P Oommen wrote:
-> On 7/21/2025 6:05 PM, Neil Armstrong wrote:
->> The Adreno GPU Management Unit (GMU) can also scale DDR Bandwidth along
->> the Frequency and Power Domain level, but by default we leave the
->> OPP core scale the interconnect ddr path.
+Hi Loic,
+
+On Wed Jul 23, 2025 at 11:42 AM BST, Loic Poulain wrote:
+> Hi Alexey,
+>
+> On Tue, Jul 22, 2025 at 5:53=E2=80=AFPM Loic Poulain
+> <loic.poulain@oss.qualcomm.com> wrote:
 >>
->> Declare the Bus Control Modules (BCMs) and the corresponding parameters
->> in the GPU info struct to allow the GMU to vote for the bandwidth.
+>> On Fri, Jun 27, 2025 at 1:09=E2=80=AFAM Bryan O'Donoghue
+>> <bryan.odonoghue@linaro.org> wrote:
+>> >
+>> > On 26/06/2025 15:48, Alexey Klimov wrote:
+>> > > Hi all,
+>> > >
+>> > > After a long time of testing it seems the problem narrows down to qr=
+b2210 rb1
+>> > > and qrb4210 rb2 boards.
+>> > >
+>> > > After booting, the board connects to the wifi network and after arou=
+nd ~5-10
+>> > > minutes it loses the connection (nothing in dmesg). A simple ping of=
+ another
+>> > > machine on the local network doesn't work. After, I guess, around 50=
+00
+>> > > seconds the GROUP_KEY_HANDSHAKE_TIMEOUT message is printked:
+>> > >
+>> > > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason=
+: 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+>> > > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local add=
+ress=3D82:95:77:b1:05:a5)
+>> > > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [ 5067.100192] wlan0: authenticated
+>> > > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0=
+x11 status=3D0 aid=3D2)
+>> > > [ 5067.193624] wlan0: associated
+>> > >
+>> > > and after that wireless connection works for ~5-10 minutes and then =
+the cycle
+>> > > repeats. The longer log with more info and some info with firmware v=
+ersions,
+>> > > ids, etc is at the end of this email [1]. Simple wlan0 down and wlan=
+0 up fixes
+>> > > things for a few minutes.
+>> > >
+>> > > iw wlan0 link reports the following when wireless network is working=
+:
+>> > >
+>> > > root@rb1:~# iw wlan0 link
+>> > > Connected to 8c:58:72:d4:d1:8d (on wlan0)
+>> > >          SSID: void
+>> > >          freq: 5300
+>> > >          RX: 45802 bytes (424 packets)
+>> > >          TX: 71260 bytes (125 packets)
+>> > >          signal: -66 dBm
+>> > >          rx bitrate: 433.3 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 1
+>> > >
+>> > > bss flags:      short-slot-time
+>> > > dtim period:    1
+>> > > beacon int:     100
+>> > >
+>> > > and this when wireless connection doesn't work:
+>> > >
+>> > > Connected to 8c:58:72:d4:d1:8d (on wlan0)
+>> > >          SSID: void
+>> > >          freq: 5300
+>> > >          RX: 850615 bytes (9623 packets)
+>> > >          TX: 20372 bytes (247 packets)
+>> > >          signal: -61 dBm
+>> > >          rx bitrate: 6.0 MBit/s
+>> > >
+>> > >      bss flags:      short-slot-time
+>> > >      dtim period:    1
+>> > >      beacon int:     100
+>> > >
+>> > > This was tested with three different routers and different wifi netw=
+orks.
+>> > > Other devices here do not exhibit this behaviour.
+>> > >
+>> > > Any hints on how to debug this? Any debug switches I can toggle to d=
+ebug this?
+>> > > I am happy to provide more info or test changes/patches if any.
+>> > >
+>> > > Thanks in advance.
+>> > > Best regards,
+>> > > Alexey
+>> > >
+>> > > [1]:
+>> > >
+>> > > [    7.758934] ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_fami=
+ly 0x4007 board_id 0xff soc_id 0x40670000
+>> > > [    7.769740] ath10k_snoc c800000.wifi: qmi fw_version 0x337703a3 f=
+w_build_timestamp 2023-10-14 01:26 fw_build_id QC_IMAGE_VERSION_STRING=3DWL=
+AN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+>> > > [   11.086123] ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x0000=
+0008 chip_id 0x00000000 sub 0000:0000
+>> > > [   11.095622] ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 t=
+racing 0 dfs 0 testmode 0
+>> > > [   11.103998] ath10k_snoc c800000.wifi: firmware ver  api 5 feature=
+s wowlan,mgmt-tx-by-reference,non-bmi,single-chan-info-per-channel crc32 a7=
+9c5b24
+>> > > [   11.144810] ath10k_snoc c800000.wifi: htt-ver 3.128 wmi-op 4 htt-=
+op 3 cal file max-sta 32 raw 0 hwcrypto 1
+>> > > [   11.230894] ath10k_snoc c800000.wifi: invalid MAC address; choosi=
+ng random
+>> > > [   11.238128] ath: EEPROM regdomain: 0x0
+>> > > [   11.242060] ath: EEPROM indicates default country code should be =
+used
+>> > > [   11.248582] ath: doing EEPROM country->regdmn map search
+>> > > [   11.253950] ath: country maps to regdmn code: 0x3a
+>> > > [   11.258805] ath: Country alpha2 being used: US
+>> > > [   11.263466] ath: Regpair used: 0x3a
+>> > > [   15.355756] wlan0: authenticate with 8c:58:72:d4:d1:8d (local add=
+ress=3D82:95:77:b1:05:a5)
+>> > > [   15.363942] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [   15.372142] wlan0: authenticated
+>> > > [   15.377928] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [   15.386338] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0=
+x11 status=3D0 aid=3D2)
+>> > > [   15.466514] wlan0: associated
+>> > > [   23.167251] systemd-journald[195]: Oldest entry in /var/log/journ=
+al/ec3e0078e5e0499bac67949f3edf3fcf/system.journal is older than the config=
+ured file retention duration (1month), suggesting rotation.
+>> > > [   23.185186] systemd-journald[195]: /var/log/journal/ec3e0078e5e04=
+99bac67949f3edf3fcf/system.journal: Journal header limits reached or header=
+ out-of-date, rotating.
+>> > > [   31.750177] l5: disabling
+>> > > [   31.753382] l11: disabling
+>> > > [   31.756385] l16: disabling
+>> > > [ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason=
+: 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+>> >
+>> > So.
+>> >
+>> > I wonder what state the GTK - offload is in here.
+>> >
+>> >          WMI_GTK_OFFLOAD_CMDID =3D WMI_CMD_GRP(WMI_GRP_GTK_OFL),
+>> >
+>> > drivers/net/wireless/ath/ath10k/wmi-tlv.c:      cfg->gtk_offload_max_v=
+dev =3D
+>> > __cpu_to_le32(2);
+>> >
+>> > Try toggling that offload off or on and see what happens.
+>> >
+>> > > [ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local add=
+ress=3D82:95:77:b1:05:a5)
+>> > > [ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [ 5067.100192] wlan0: authenticated
+>> > > [ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0=
+x11 status=3D0 aid=3D2)
+>> > > [ 5067.193624] wlan0: associated
+>> > > [10437.346541] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason=
+: 16=3DGROUP_KEY_HANDSHAKE_TIMEOUT)
+>> > > [10440.340111] wlan0: authenticate with 8c:58:72:d4:d1:8d (local add=
+ress=3D82:95:77:b1:05:a5)
+>> > > [10440.348408] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [10440.356698] wlan0: authenticated
+>> > > [10440.361077] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+>> > > [10440.369516] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0=
+x11 status=3D0 aid=3D2)
+>> > > [10440.446661] wlan0: associated
+>> > >
+>> > You can put another device on your WiFi network into monitor mode and
+>> > sniff what is taking place.
+>> >
+>> > Kali Linux I've used in the past on an RPI for this purpose and it was
+>> > very easy todo.
+>> >
+>> > https://cyberlab.pacific.edu/resources/lab-network-wireless-sniffing
+>> >
+>> > Another thing to try is to do this same test on an open - unencrypted =
+link.
+>> >
+>> > If we really suspect firmware here, lets try switching off firmware
+>> > offload features one-by-one, starting with GTK offload.
+>> >
+>> > ---
+>> > bod
+>> >
 >>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
+>> I configured the GTK rekey interval to one minute and encountered a
+>> similar issue. It appears that something may be going wrong after the
+>> GTK rekeying process completes.
 >>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->> index 00e1afd46b81546eec03e22cda9e9a604f6f3b60..b313505e665ba50e46f2c2b7c34925b929a94c31 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->> @@ -1440,6 +1440,17 @@ static const struct adreno_info a7xx_gpus[] = {
->>   			.pwrup_reglist = &a7xx_pwrup_reglist,
->>   			.gmu_chipid = 0x7050001,
->>   			.gmu_cgc_mode = 0x00020202,
->> +			.bcms = (const struct a6xx_bcm[]) {
->> +				{ .name = "SH0", .buswidth = 16 },
->> +				{ .name = "MC0", .buswidth = 4 },
->> +				{
->> +					.name = "ACV",
->> +					.fixed = true,
->> +					.perfmode = BIT(2),
->> +					.perfmode_bw = 10687500,
-> 
-> This configurations should be similar to X1-45.
-
-Including the perfmode bit ?
-
-+					.perfmode = BIT(3),
-+					.perfmode_bw = 16500000,
-
-
-Neil
-
-> 
-> -Akhil
-> 
->> +				},
->> +				{ /* sentinel */ },
->> +			},
->>   		},
->>   		.preempt_record_size = 4192 * SZ_1K,
->>   		.speedbins = ADRENO_SPEEDBINS(
+>> The GTK update is handled entirely by wpa_supplicant (not offloaded),
+>> and while the new key seems to be installed correctly, with frames
+>> still being transmitted and received (from aircap perspective), they
+>> appear to be dropped or mishandled in the RX firmware path.
 >>
->> ---
->> base-commit: 97987520025658f30bb787a99ffbd9bbff9ffc9d
->> change-id: 20250721-topic-x1e80100-gpu-bwvote-9fc4690fe5e3
+>> This suggests there might be an issue with how the new keys are being
+>> applied or interpreted by the firmware. I=E2=80=99ll continue debugging =
+to
+>> pinpoint the root cause.
 >>
->> Best regards,
-> 
+>> Regards,
+>> Loic
+>
+> Could you check if this change helps:
+>
+> diff --git a/drivers/net/wireless/ath/ath10k/mac.c
+> b/drivers/net/wireless/ath/ath10k/mac.c
+> index c61b95a928da..4fa7dd62aeac 100644
+> --- a/drivers/net/wireless/ath/ath10k/mac.c
+> +++ b/drivers/net/wireless/ath/ath10k/mac.c
+> @@ -288,8 +288,10 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
+>                 key->flags |=3D IEEE80211_KEY_FLAG_GENERATE_IV;
+>
+>         if (cmd =3D=3D DISABLE_KEY) {
+> -               arg.key_cipher =3D ar->wmi_key_cipher[WMI_CIPHER_NONE];
+> -               arg.key_data =3D NULL;
+> +               /*  Not all hardware supports key deletion operations. so=
+ we
+> +                *  replace the key with a junk value to invalidate it.
+> +                */
+> +               memset(arg.key_data, 0, arg.key_len);
+>         }
+
+Thank you. I'll check and respond.
+
+Best regards,
+Alexey
 
 
