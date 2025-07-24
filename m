@@ -1,165 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-66415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CD21B10101
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 08:45:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07C27B10108
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 08:46:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 16916189A88B
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE9CF3BE92A
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 06:46:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C777D1FF5EC;
-	Thu, 24 Jul 2025 06:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1A92221555;
+	Thu, 24 Jul 2025 06:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WbRRe7Rm"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="a797IIi8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D87F9E8;
-	Thu, 24 Jul 2025 06:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E191217F55
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 06:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753339539; cv=none; b=oNOYAXU4aatfSHpnzIInnYTYJOl/S+04IW6ECOAs/0kdQ/p0H8Kj2qPV9W2O5j+xMjQngLfoxziltFdlsE7N5CtLMEQJi+fwg3sWGkgva1F7vm1GGZGyxl3XL6BwTBaCMio/N4DEuykb0aNW7dfus9kv/36XnQ8ORgE4qmslIhk=
+	t=1753339568; cv=none; b=Wz4rzxk21poFSprekqt45CmcZlVwoyvVIOA9gW6aQ1U5ZttvEdcBJ6HKT/j2kBI0STHABmNsokZcfi3NqoZMoZFNNK8LbjldWlZEre0gAZySBqAgy+tM/GfiWX8OnrfEXNpT85wVBVUWZY0GyyuV+k9gkpjBQlzGeocglV7gk7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753339539; c=relaxed/simple;
-	bh=In2ZaHt9M+LWmQ0sSwKuoxXsnC1rS8lH2aElrRdeaQ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YNp+25C4j9C0mREXPUEmUh+GTxHWQtfy3iuUoRmq6u/QIVHCRRoEdC/mMKGm4D6Q6obC9qv5bpSYb1YQ//reW/c6t+GTbsEwKxOqx0II5cIOwH8PzM5Pe8bXtXqgBtyh6Wc632dznY8SL8nPNbYqZydJbZ5JIgmAavnb3VgBdgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WbRRe7Rm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NMXPXQ010594;
-	Thu, 24 Jul 2025 06:14:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+oE19LUWpup2wbKNnJtIWEuiKG44MZiibnge5c1NqQ0=; b=WbRRe7RmhSu4xDVs
-	QuQf2+RFRDLCxoStGOu5CRWR3VJemOF3yR0PWzQSuf0UO5D1MzBTiyxe4r4dHo4i
-	sZ/cmXMRKArnsGy182OQh+sli7iQe6ZplOjDvzbcYzbx8SETdyM03NKd/bQl9Dz7
-	bbC4MdRM9WCmDh1I+Zle6YuUIshSHcIIUD3QXDxMFkuGiTlc3O/0oyCrutIsJT0Y
-	6KoHtQ3F3zz80eVSMH800lrKqUb6oIG06u4kNE0I7nQx9h3GTNGP31pFkHryIuVq
-	48ySOt9MMM5Gj5zEivSxUG6EjupNzIsvJQaEGxHuGAMwVKDyIhTibHA8cXoDY8r/
-	CgPBjg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w8sgf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Jul 2025 06:14:01 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56O6E00M023028
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Jul 2025 06:14:00 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Jul
- 2025 23:13:58 -0700
-Message-ID: <5ba35986-b65f-4558-9101-4efdf7a92033@quicinc.com>
-Date: Thu, 24 Jul 2025 14:13:55 +0800
+	s=arc-20240116; t=1753339568; c=relaxed/simple;
+	bh=E8K92WFLqixwgt8J2cex/loEksjjno4gWYC7Q3w7a8g=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=G6cfLn7SixiFuCeGw2yvnbcCnZHI8QZv1EWW9XHNAElQvbNv/27FoAzYaE1tRCtWLiEdzhQWsskkBXDPhCCzvxe8qGGhhagexqET2RSa6oH8r6b8QwXlZE/sUVj9d+1moaN++Pv959d1MjSpqnaxQbLVH+BqDJtuuisTmxglpgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=a797IIi8; arc=none smtp.client-ip=209.85.218.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-ae35f36da9dso128049466b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jul 2025 23:46:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1753339565; x=1753944365; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O05wjEScA4kxCQO8+MTTv2LGUA2bVFgF29zptnElwW8=;
+        b=a797IIi8N3j5cNCflbBeedwgZ+4BEGPc8ZuLFQqDrJpHsBvRjT7it5c6GWTTCe6M9+
+         CSeoAAh9CsyUGQwpEemgRnaA0BuWG9r0VVnrsvVqwqi5T+hHGRgt0h62ZkelpnWRibIP
+         WQastMIl/Mpmb1JH9gdkd2P1QCkoyn6/RXW2BKs6vY6QF5ayAxsFTtF+P8RWbXWx/tWa
+         iwkncC9uhXG2BKuomXFXO5O0T2Pbg1ZM7gHA32+pC4h80xtWIl5Y74XCCBAZLfKVtusi
+         L/V7vA01Lb10Lr4yurpoBKIZ2QUkE5C9cp8ga8+wAWi/W0VHoECKVjJMa3rMkVuISVxp
+         0xFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753339565; x=1753944365;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=O05wjEScA4kxCQO8+MTTv2LGUA2bVFgF29zptnElwW8=;
+        b=sEbj12U2O6ZfssUU661M47C4N+tU1jkHAW/ypkGXjcv1Bj1UA4YWBBbodTlFWQYAYB
+         GZLcfDavm1CiWTmDXLheJ6/vAKiQ48NehuOZrRnUgaPaY6zD3PsGdMj3j/x/nqsvl/zM
+         thYvnGiSVi/fjc+64GKL4eEV5NIedYZgEgfPeCrlc+KYOLeM3Y09FZnolj8ZBtAGzlhi
+         hrrQk+qzygsp/WcyOb53jueo2qsYPVlrFM9GGE8qgw1PXoMSIxw/4jXH2YjPfv6NMdvt
+         3xsWG23Q3ap+jRaSd8rxad05Tb7If5aR80FNZ4H3dnQACN4nAYgD0Ades/mJOkpkzBv7
+         tz9g==
+X-Forwarded-Encrypted: i=1; AJvYcCU8Um9MA+d2RlI3LQp+Lv+Ray/ZaRizEUa83gahl7qJb6DN1t7X0XMAmWN8s2IF5+L8uVpIkmjdZBodtE+1@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIPK8hnXcY/IhR71ZPoWS5QY879VVzoDSjWDzcmQwNwMU2EVix
+	hqhDmbNBftk6BlWSldqsB/TU+E2bwMyds4MX/ilTxSSX6xWf5pK05j5t8s/0XiTwIk4=
+X-Gm-Gg: ASbGncsjl2V3I87stQkJg1m9kbE0kvc1DGa5HBSAzFNmgdcBKzEdUH7TaikKWf73Ksc
+	1++iyUm7ornLxKxGQRzyIUo5sqN7kTV48pU7qJe1SmPGD74caGQXR2sap4MQZYEN5FJEMYIxSeI
+	4avdMPIKD051t0Z0HFC99wpfa6v/U1cpqSM446BBPwon7CuUAO0GF4UfNOdjnis9n0VhLmzXm2h
+	OkoR27zRAu86FbyEGO8e7eBmbI5J4Bmu4UeUajGPfqV0MqYPe6TcpSn2oVKBC5wRsocOq/x0A+J
+	Z6iugF/wxn1rrIImS43ti8qjwDZ6gAvQ1kdELzYWllw2Ya3nsvoHdNz1P3SxQ2fqB8oZ8NuKk12
+	5qqbVmG26FsopSKS/2jJKUWvbvdgfY9O8NEUCYsCDDMUywU5oN9C8GcoKiJJMHCjPMczdBoVmI1
+	8xyA==
+X-Google-Smtp-Source: AGHT+IHOJhHzF3e38nSkhr/JtaCTAW1NS3tTTx4AD/Gh7AcSikLRvVdo/lBTRPnndwMlCRIqVf21aw==
+X-Received: by 2002:a17:906:f585:b0:ae9:bf1c:50a4 with SMTP id a640c23a62f3a-af2f866213bmr566893066b.36.1753339564518;
+        Wed, 23 Jul 2025 23:46:04 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47ff42cc4sm63770166b.139.2025.07.23.23.46.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Jul 2025 23:46:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: hamoa-iot-evk: Enable display support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250723-x1e-evk-dp-v1-1-be76ce53b9b8@quicinc.com>
- <bebf58c0-b340-4c2c-ab57-4be751d1d7b1@oss.qualcomm.com>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <bebf58c0-b340-4c2c-ab57-4be751d1d7b1@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=6881cf29 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=6oUO4QyBuBcHVGqS9G8A:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA0MSBTYWx0ZWRfXyML+dQCw86gv
- hLi1HUgx6OsfIbI3hrIlc/HqMY1sgAR8XV170be0tfAwraK3YU8tIB3t72613QKyUPAwsnn++Vj
- dRMw1VW04UcNFbPejgx95ItF8RgrItH+cSGQW2TFSVi6PBfUyRi1Z83hJ+CSDnfS0T8HRCN9pAm
- qKcuDC8k2BuVvpCm8a6BvPmZTZUDie105VwA1ihIaSyLxem+juB5xZz4CwQIj+8E/9E0+QFdY9M
- yU6f2F9IfW/tG27CtEUT/7T+8vjRz1tHrSwfO1t2D+lO/OrnwZrqnn8bIEt11XG5NeiiUnL+Dir
- xZSRdsPA2A3ixUsgVSDix17M2N/zHG1MpPO7lYDL/jebHqTifrGT6qrWNwsl6iShQ6YfGjKSbZd
- JP4XLgjVJIFeLSEuIkYReFNmZQ34JZmWff9LviBNMTY1IljlzTTfjLUQ711srZa9z3pdUW7F
-X-Proofpoint-ORIG-GUID: 2i_1AKeUkt0Z4NnzXvaZd7t_9T3ZvvyM
-X-Proofpoint-GUID: 2i_1AKeUkt0Z4NnzXvaZd7t_9T3ZvvyM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 mlxlogscore=743 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507240041
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 24 Jul 2025 08:46:03 +0200
+Message-Id: <DBK303WXZ3OB.8SX718AMMYH8@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Wesley
+ Cheng" <quic_wcheng@quicinc.com>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/3] Enable USB audio offloading on Fairphone 4
+ smartphone
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Mark Brown" <broonie@kernel.org>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi
+ Iwai" <tiwai@suse.com>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250723-fp4-usb-audio-offload-v3-0-6be84ed4fc39@fairphone.com>
+ <175328933413.84720.17376811405962157319.b4-ty@kernel.org>
+In-Reply-To: <175328933413.84720.17376811405962157319.b4-ty@kernel.org>
 
+On Wed Jul 23, 2025 at 6:48 PM CEST, Mark Brown wrote:
+> On Wed, 23 Jul 2025 16:03:37 +0200, Luca Weiss wrote:
+>> Updated description for v3:
+>> Add the missing bits for the sound subsystem to enable USB audio
+>> offloading on the Fairphone 4. This is mostly sndcard enablement now.
+>>=20
+>>=20
+>
+> Applied to
+>
+>    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-=
+next
+>
+> Thanks!
+>
+> [1/3] ASoC: dt-bindings: qcom,q6afe: Document q6usb subnode
+>       commit: b102c9d89fecd72be83eaab9b384285e2d0dc940
+> [2/3] ASoC: dt-bindings: qcom,sm8250: Add Fairphone 4 sound card
+>       commit: d664e75317e19bb79b6d207f7729e35eca504a6a
+> [3/3] ASoC: qcom: sm8250: Add Fairphone 4 soundcard compatible
+>       commit: c58c35ef6ae62e36927f506a5afc66610b7261d9
 
+Thanks, appreciate it!
 
-On 2025/7/23 19:38, Konrad Dybcio wrote:
-> On 7/23/25 8:14 AM, Yongxing Mou wrote:
->> Enable DisplayPort support on all three USB-C ports of the
->> hamoa-iot-evk platform.
->>
->> Unlike most X1E-based boards, this platform uses FSUSB42 USB
->> switches for the USB0 Type-C port, while USB1 and USB2 rely on
->> Parade PS8830 retimers for Alt Mode switching.
->>
->> Support for the PS8830 retimers was already included in the
->> initial DTS, so this change adds support for the FSUSB42 switches.
->>
->> Due to limitations in the USB/DP combo PHY driver, DisplayPort
->> functionality is limited to 2 lanes instead of the maximum 4,
->> consistent with other X1E-based platforms.
->>
->> The platform also supports embedded DisplayPort (eDP) by default.
->>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->> This change made top of initial DTS:
->> https://lore.kernel.org/all/20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com/
->> ---
-> 
-> [...]
-> 
->> +	ports {
->> +		port@1 {
->> +			reg = <1>;
->> +			mdss_dp3_out: endpoint {
-> 
-> Please keep a \n between properties and subnodes
-> 
-Okay. will update next patch.
-> [...]
-> 
->> base-commit: 0be23810e32e6d0a17df7c0ebad895ba2c210fc4
->> change-id: 20250721-x1e-evk-dp-141e0df5593d
->> prerequisite-message-id: <20250716-hamoa_initial-v1-0-f6f5d0f9a163@oss.qualcomm.com>
->> prerequisite-patch-id: 3c553b55d143eafc1036ce2e88df558ec61c4e83
->> prerequisite-patch-id: a4b2dabd376d32ecb159141c17113a8f3fc4ddfa
->> prerequisite-patch-id: 24bf2ada12dc10f9980ed2c56347e5b6f7964ebd
->> prerequisite-patch-id: c764e86c94055e56aaf9e701341bba52a54a998b
-> 
-> Having so many dependencies should raise your attention..
-> 
-> Konrad
-Okay, will merge into initial DTS, and this will remove dependencies.
+Regards
+Luca
+
+>
+> All being well this means that it will be integrated into the linux-next
+> tree (usually sometime in the next 24 hours) and sent to Linus during
+> the next merge window (or sooner if it is a bug fix), however if
+> problems are discovered then the patch may be dropped or reverted.
+>
+> You may get further e-mails resulting from automated or manual testing
+> and review of the tree, please engage with people reporting problems and
+> send followup patches addressing any issues that are reported if needed.
+>
+> If any updates are required or you are submitting further changes they
+> should be sent as incremental updates against current git, existing
+> patches will not be replaced.
+>
+> Please add any relevant lists and maintainers to the CCs when replying
+> to this mail.
+>
+> Thanks,
+> Mark
 
 
