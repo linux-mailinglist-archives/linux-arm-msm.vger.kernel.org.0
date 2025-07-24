@@ -1,224 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-66514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4286AB109D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:01:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1634EB109FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:22:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6446E5A4AA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 12:01:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2991C542828
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 12:22:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3CA42C2ACE;
-	Thu, 24 Jul 2025 12:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 985E72D12E0;
+	Thu, 24 Jul 2025 12:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M/5S5VVj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WOMptOOI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B73F29B8C0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 12:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F982E36E3;
+	Thu, 24 Jul 2025 12:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753358477; cv=none; b=dZnT2BiI1rXIajoG5Ukj7FKG0bjoa0D61zln46PZrM+/pCFQV8WzTJW5RJvc5fEhzy5ijs1EcsN+N/jf5SDsghZejSxA9AQSD3ZHjavWnduhl995PCMidEwIOjpNDBo/LspZahagrnf9t3p8FCI9C5z6kCiDiwRvt0Z0QSTujfA=
+	t=1753359753; cv=none; b=CS771sgrT4KrGXM6KavVFI1gtaYSlIqJ4UbvbYYvJR6GG7/WrFHDVpBgvVbJOiSFaNJFmdU+nFXx+/8YPpfHjHq08Gvtswi1JdPuMRYNHPku+Ke9iVekd2GnbPM8KwB14vFSFva8GDF/MeZV3U/IkH03W1UFk9VutlXQMckXNYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753358477; c=relaxed/simple;
-	bh=9uu1S1qj04g/juKK/9B5wbVnmOsk3FvMiKkw5w2j0+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QvRCYeGP4aaFQjk8HWjPFPcFfYgkPou/54Nml02nwV44IWkrAk627vTGXQId7voVcQ/CytqD1qPzFLcJjWgVb79OGoWWFSGpmqU3PE5/jwAJDvCDvuTMC4lfVcUPgfMguocDa8j4uxJW+dpBePpaACzfJZ7MshdEFum7W1hM15c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M/5S5VVj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56O6doSK028522
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 12:01:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5WrE6w+Y+/lZU3NCVD/cyIQyDMA0J81+VswNVXgVvAE=; b=M/5S5VVjf1KTAqru
-	xFleTf90vUOlmPvX/YZNXPtjcgzVwMXKbqFUEL8q+xNpDIhmm6IZ9PUFBBqNKM+A
-	0k/UslC5F6JYKuzyi5ptSDvi60GrOoFZqWDeEUe7IrIse5GxHHYTrbrf7At1lt2C
-	TUCaONH0Y3jnN3fC4EdsZvXjIWjSuM0Gg2L3cIP3jHzeqtFgVWWTp/EEtwKLJPZP
-	CbS4nNYu1kOcPqya5d4D1/dQWJBpYeDPIEyEy/zNaSlQBqaOaSVI0SPl4uI7ayyh
-	yDuafSFmHQNy8se5qkHue75vW1zx6sO2noT+nDK0+Xh+/l0VCpJP1mO0TJAwszou
-	GWkV4A==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 483frk0xck-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 12:01:15 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-4e9ba1b468eso183458137.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 05:01:15 -0700 (PDT)
+	s=arc-20240116; t=1753359753; c=relaxed/simple;
+	bh=SuuzfGDvzCnvi/bsKJ4BfINBu+QjHlhVEd84kJsyMAM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ueej2guU5yoyQwbFBkgjRRkCWSd64t/pzoOKr/qe6IsPwBpiNJYlASUgY6ix80LDzcqweURQSYU74/31KO13j4x6Y2Ty+Lq4GqRbB0ZapS8kfa8M4yIiCNva42IRRTFAlGDcM5hdCUChJcdREGoawcrfHfdpXS4F+JfhRhMozx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WOMptOOI; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so1568513a12.2;
+        Thu, 24 Jul 2025 05:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753359750; x=1753964550; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PCH9wMZuCq9rz+O+tflGRTfcHTnRU43/VMnWUAJfNWE=;
+        b=WOMptOOI6OyxX8JFa+JXKvi9t5HPBRxQNjZv1aOjNq88l924KQ83C6dDIHLWRJMzkj
+         AhnzomiGe61BrR6vFzGDvoAANg8jMFnHBtU4wqG2cpgLg0d3fSbl3jy28IDv7PXxcFVr
+         1tTSrRecR2cnrvJBEwyGNGXRnH4D7yFnJTcOIZVa6eBApo5VG1DlxfuFELSxei+uI8MF
+         OvtM5zSNquSHwPc3EyoUzHB2EP9npI1UVa4vzMHwZ38sB3cQtuPXzf3rT5uqg4FmHUag
+         LDdYORZt246bDpuhQlP+mwDpIyYInxNYzzqwN3RG7aKSZyGSB/A/fqNkL0vp/VpW0cG4
+         PY9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753358474; x=1753963274;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5WrE6w+Y+/lZU3NCVD/cyIQyDMA0J81+VswNVXgVvAE=;
-        b=GNXs91Os9JowJxj7ZiohzG6ykh6+wtgKx9s05HNGN1HT9MqyHksk4HUBqI1PuJGGLY
-         KA3p/7R4Lp70I2Is6xHSFbDZMpIwgUezJxTpUy50cXzuniTcDXjKhspIKy7ytpHCXsPE
-         Vrk4itLcsX9tOvnukSxGmq1CjFEfPNW4XzoMH77i+QKIGZAntF/6JGbDBWkh9LSIzR8b
-         WVU5LbZOxaqJnXHmy1mCk7xX1aLBzfFMdo7wpTq2rWQtjTGZQyyAYoDfRPJSK0lOL7mq
-         J9t8wPgSVOR/rE5A3cHqt/SCUEwxDsg67DR3n+A9xpZ/F5cVu9PwUtetdXM87saVcQIB
-         qqvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUWfOreajufCtaF9E/3JiiNU8GzOe0xK0ku6V6IzMXnhiizYazccXtrgLO3VsAL5nnDX7XGpE8xXoFQw7ij@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywgp1nl10RolAbB3KUYniaYewStADLiPEQcaZTaoFQ/g3urm6lE
-	G6A1TH6Ea+PhL/S7dbKhYFH8UVw+ZC374UzgCzM8xCIE10ESoGbSTCIht0SdgCETWHM3Y50xrf7
-	8YH6dzn+UBGmhE6XNZDBmmzbgiJwU7tMV4zGyJGeI9kVO8C/B6WC9+u7jbRisLDk7vorK
-X-Gm-Gg: ASbGnct2w07UYwEWecm3itdc9mLLGHf5q/bQ43kLTYeYbWNEXF3XqdpqlOwIB45UkIw
-	9OK31wzvqtRteIkP8XAZ0bWY7+NhqQbfX7poR0+8K5mp0De6/bA4dftjAIVH++0UVX56/oQMxgP
-	V/KB2xjM6RHUq3igB4csxJR4lK0OMXfXDQjp74N3ZqFHlxj4yoqtnj8IxvWn4+7zAncWPhXwGjv
-	9Gnj4ZMJjGCPcdjvobbNkNt68mAQRrJsh1BqIDaMKDLD1vRYOVOkYHo5c7qLTzhIXDGxlnpI5uN
-	zVik1/sAgw/gtFaXurceoNYyqbmcHYwnqM5R0tMrg5p2H8jf3xFqbN4JI96qcANblsBc2Rtt1wy
-	SIydbZSLvZB0LVphhVnNOBGG3xPacqk944iSg1Q1+mJR9m2IANwcL
-X-Received: by 2002:a05:6102:5a99:b0:4e9:968b:4414 with SMTP id ada2fe7eead31-4fa1521851fmr2754522137.22.1753358468134;
-        Thu, 24 Jul 2025 05:01:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETM2Dk540eywCV0gAGXNNbz9noJyr0KH7DW1dRdy4yZ58LU0VXkl2WQyJmUeGaYGW1uVpMTA==
-X-Received: by 2002:a05:6102:5a99:b0:4e9:968b:4414 with SMTP id ada2fe7eead31-4fa1521851fmr2753800137.22.1753358464426;
-        Thu, 24 Jul 2025 05:01:04 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b53b2288csm325180e87.23.2025.07.24.05.01.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 05:01:03 -0700 (PDT)
-Date: Thu, 24 Jul 2025 15:01:01 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Sarthak Garg <quic_sartgarg@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_bhaskarv@quicinc.com, kernel@quicinc.com
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Enable MMC_CAP_AGGRESSIVE_PM for
- qualcomm controllers
-Message-ID: <tpervpypkne6lasl3fn3v52xutl3zfuytalo3cveoe4us63rrb@p2w4cvt2jf7a>
-References: <konkbi4hvd7qc4rhokwrymzqntroy7gijk3ndwv5rluswdrykp@xsafrtrjzmuq>
- <10c90fee-ce7f-4034-9028-4252f19cb67f@quicinc.com>
- <CAA8EJpoLLDXFQk-ViuaioKrECzMV0aUrcOj4v+Ufs4oHY53mrw@mail.gmail.com>
- <064d3eed-c2ea-4b41-85b2-d2a5a922f8c7@quicinc.com>
- <ehgjdszjr34xppmkrkicb4pnq326nor26tqu2ekop6ew2j3y3h@pm45aiipzuc5>
- <48c73675-a73f-46f1-81a9-f701a2cf00a5@quicinc.com>
- <c1ebdaf1-92bb-4f73-bca9-35246d7c10e1@oss.qualcomm.com>
- <ca83b841-aea0-4233-93fe-02a7b5985af4@quicinc.com>
- <1a0a5178-fcf0-49b6-8e4c-1393c0f4f229@oss.qualcomm.com>
- <22848e2e-bd7d-486c-b481-c624d230d327@quicinc.com>
+        d=1e100.net; s=20230601; t=1753359750; x=1753964550;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PCH9wMZuCq9rz+O+tflGRTfcHTnRU43/VMnWUAJfNWE=;
+        b=r8nTFgEUTfS94C4tYB/GZ54NU0XQnuzDukS6pgsiZjA+gxRB/Pz96GY+lmNI2vefuw
+         jVFgN+VU3CZGU98g/pWCRE4kcSOEMJrUSAcYH7iB70bFLTLwMTAxn3id1AjwhqNcLgUP
+         FGYjWAuKp6gs4qcLLMyUhcZuqTf6Kx9XjpTzcsGCHyYlYToqWhIdwnRBiNeUzL1pRdX1
+         hxAP/dnWP67EeQK/F3xyKFHFcScLwFRMDT6f+Mf4EQIsdLXNdaXnPc69SjK5pfYfyrez
+         bfatceq0VQASXw9I/vRCb3b23jOAI8xKudhckIlOsP5c6mUcqIz6PeFQmv5zq9A4sDcH
+         vhnA==
+X-Forwarded-Encrypted: i=1; AJvYcCUCD+Mpnm1UFGnfqqaUG5qRBjKWeJCrw78u/f6cOKyC3QF6fIQJepWUGQGCyG40K5gxiIu91YW4xMyI7/38oCbQp5Y=@vger.kernel.org, AJvYcCUOIdmer+pt2B6HEW0UQyQF98tYReA3G+GaMy8DKAuTJmd4Di3gkkbNtJZ4YRlCn57qy3a6BY9LbFLHHw==@vger.kernel.org, AJvYcCUVDnuoFGSyj/Dy+Pck6CajX+OsP+/r8nPLLu6Fqz2rFIK+BV759YcD5+5SqGXLbWQVnNUoN14/ygWMpmum@vger.kernel.org, AJvYcCUj0umOhQJHYgmC5qcNw26n9PdlBTee3/TrO8Gp44+dM8fjltpxqz30GFFgQYZ2kUna1CRsSm6bLUnA4oxCSpsk@vger.kernel.org, AJvYcCW4i9HwrHUbDZmZPIdrV0oRZ+e9AUpxJ1ATa2kWHuqNlaFliR5QQGdCvRLxABiqdFVpJuqjUrPXjhpllw==@vger.kernel.org, AJvYcCWT8YtOTQoHVO1fuwWgCGqwQx8i6qua5/XKWNJt5YwmKU8fcsulQcp8+cTWG3y0VK8/8UDcOWa4z1WtJAr9@vger.kernel.org, AJvYcCWUVO1wd5lCx+cqGxbOaIwmfEB+6IlzIv4CQZveGyKVNYnPIcuO50Oc8beUrhn/FG9wJlkzZWM8KBAomg==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPwVYLVlSKSPSXVYPvrcEY+IwWwAy6wZObJylJCdZW/OSyMfnG
+	QjRLFqYv79Cud2WTwOddM+I0YuAuY0JkUoT5qBdVAgWF0LoCzRM1oLkeyydJpeOTS9Pw3FdYwOd
+	sH7lUwGtBup17bfyixerXnWRHOKOI0Nk=
+X-Gm-Gg: ASbGnctvj6CfyFUWgCDClji0GkdjsQIRvnH1zdybaon1HtEigg9+8wjSTzV8TtUMPJD
+	S5vjWTwn0klzO3BT2zn57+AxC4819L+4Od3+HEVuAc0Zg+BL9mnwsBLsZGcflSDXy+a23rvvwqj
+	npdKA3r/whUg7Xo9yfDVGx+DeSP02EvX60FWmSZVGH2C5h70XtjpSpzvGfCpfr4bXtEsZWYl7T3
+	qvPgObEJg==
+X-Google-Smtp-Source: AGHT+IHK0IoDJ6PED5zWXfzDhpKgh5VZvydISu4XMaUvDPUT/I7krIj8dXVVfHCUqibcmSSRfe/rVr8gG8zy8ado+mw=
+X-Received: by 2002:a17:907:60cb:b0:aec:6600:dbe3 with SMTP id
+ a640c23a62f3a-af2f9385acfmr671282766b.56.1753359749816; Thu, 24 Jul 2025
+ 05:22:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <22848e2e-bd7d-486c-b481-c624d230d327@quicinc.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA5MCBTYWx0ZWRfX7U/g/sG84uRZ
- VUhhLdM1RCB0f3Q5CyWfTGpsZwdxJKUlH5KH1DJmCKcgo4Reni6PPDROdOLQ/Ju3CFzHAM3MEUH
- Z6QoNI1esXV/HRY4/V2cH9xOBVdauh9+36Pu3uXe3PH3Jp0ZmoDIaQ26deqwjbd1dMEEIyIph+Y
- CmG+zE7SMog5os3O7H5jwrkGjpqzPfGc6QaBQaK7x/jZPkzP25T/vOIKBO/wXqJzjFZtQH9fesP
- WNQ/Tr6w1/BqFTbe2Xh/59W3/Ggl16ko3AxurlEPmAz+TMYQgqRiKHKVhynoJkb+8ixQVR7bl+S
- /uYqmCPaWbQwkOaxqFu48wxcag3CDy8uqPjPoFhaXJ3xaSuEVo0e/tLXy3pc+jgzi9c6Q2AiJ+Q
- yWAw/QrRr47ScR6bT2pWig1ewDgZR9tpfXOck+G7Xwla+7Fhp+zippicRgyruxotYjB72/RU
-X-Proofpoint-GUID: ZrznqxEeDZOMs1sqFKBRpHai5OdanVAc
-X-Authority-Analysis: v=2.4 cv=WbsMa1hX c=1 sm=1 tr=0 ts=6882208b cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=6h7372fjVO4yHBa2uBUA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=-aSRE8QhW-JAV6biHavz:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: ZrznqxEeDZOMs1sqFKBRpHai5OdanVAc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-24_02,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999 bulkscore=0
- spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507240090
+References: <20250724-pinctrl-gpio-pinfuncs-v3-0-af4db9302de4@linaro.org> <20250724-pinctrl-gpio-pinfuncs-v3-12-af4db9302de4@linaro.org>
+In-Reply-To: <20250724-pinctrl-gpio-pinfuncs-v3-12-af4db9302de4@linaro.org>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Thu, 24 Jul 2025 14:21:53 +0200
+X-Gm-Features: Ac12FXz2KOnsH_foq66JE5xieoDhq1Ik71OykKjuCvc1b-KzV3FeiggPCBwSd4M
+Message-ID: <CAHp75Vc4vsJh_-GbP+YO50veoGoGtfAPL4tjcF+73uophfmnGw@mail.gmail.com>
+Subject: Re: [PATCH v3 12/15] pinctrl: allow to mark pin functions as
+ requestable GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 24, 2025 at 04:45:38PM +0530, Sarthak Garg wrote:
-> 
-> 
-> On 5/21/2025 9:11 PM, Dmitry Baryshkov wrote:
-> > On 21/05/2025 18:36, Sarthak Garg wrote:
-> > > 
-> > > 
-> > > On 5/21/2025 8:19 PM, Dmitry Baryshkov wrote:
-> > > > On 21/05/2025 17:35, Sarthak Garg wrote:
-> > > > > 
-> > > > > 
-> > > > > On 5/21/2025 6:25 PM, Dmitry Baryshkov wrote:
-> > > > > > On Wed, May 21, 2025 at 12:46:49PM +0530, Sarthak Garg wrote:
-> > > > > > > 
-> > > > > > > 
-> > > > > > > On 11/15/2024 6:53 PM, Dmitry Baryshkov wrote:
-> > > > > > > > On Fri, 15 Nov 2024 at 12:23, Sarthak Garg
-> > > > > > > > <quic_sartgarg@quicinc.com> wrote:
-> > > > > > > > > 
-> > > > > > > > > 
-> > > > > > > > > 
-> > > > > > > > > On 11/4/2024 4:19 PM, Dmitry Baryshkov wrote:
-> > > > > > > > > > On Mon, Nov 04, 2024 at 11:37:22AM +0530, Sarthak Garg wrote:
-> > > > > > > > > > > Enable MMC_CAP_AGGRESSIVE_PM for qualcomm controllers.
-> > > > > > > > > > > This enables runtime PM for eMMC/SD card.
-> > > > > > > > > > 
-> > > > > > > > > > Could you please mention, which
-> > > > > > > > > > platforms were tested with this patch?
-> > > > > > > > > > Note, upstream kernel supports a lot of
-> > > > > > > > > > platforms, including MSM8974, I
-> > > > > > > > > > think the oldest one, which uses SDHCI.
-> > > > > > > > > > 
-> > > > > > > > > 
-> > > > > > > > > This was tested with qdu1000 platform.
-> > > > > > > > 
-> > > > > > > > Are you sure that it won't break other platforms?
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > Thanks for your valuable comment.
-> > > > > > > I am not sure about the older platforms so to avoid issues on older
-> > > > > > > platforms we can enable this for all SDCC version 5.0 targets ?
-> > > > > > 
-> > > > > > No, there are still a lot of platforms. Either explain why this is
-> > > > > > required for all v5 platforms (and won't break those) or
-> > > > > > find some other
-> > > > > > way, e.g. limit the change to QDU1000, explaining why it is _not_
-> > > > > > applicable to other platforms.
-> > > > > > 
-> > > > > 
-> > > > > Thanks for your comment.
-> > > > 
-> > > > No need to.
-> > > >  >> I agree with your concern but for me also its not possible
-> > > > to test on
-> > > > > all the platforms.
-> > > > 
-> > > > Sure.
-> > > > >> Lets say if I want to enable this caps for QDU1000 for which it has
-> > > > > been tested and on any other upcoming target after testing,
-> > > > > then how can I proceed to enable?
-> > > > 
-> > > > Let's start from the beginning: why do you want to enable it on QDU1000?
-> > > > 
-> > > 
-> > > QDU1000 is one latest available target where we have enabled this
-> > > and tested. This has been enabled to save power.
-> > 
-> > Isn't it a powered device? How much power is the save? Is it worth it?
-> > 
-> 
-> Sorry I just did basic sanity on QDU1000 device to confirm its not breaking
-> any eMMC functionality and we have also tested SD card on SM8550 as well.
-> For power no's we have stared internal discussions and based on target
-> available for power profiling with eMMC device we will come back.
+On Thu, Jul 24, 2025 at 11:25=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> The name of the pin function has no real meaning to pinctrl core and is
+> there only for human readability of device properties. Some pins are
+> muxed as GPIOs but for "strict" pinmuxers it's impossible to request
+> them as GPIOs if they're bound to a devide - even if their function name
+> explicitly says "gpio". Add a new field to struct pinfunction that
+> allows to pass additional flags to pinctrl core. While we could go with
 
-So, again, _why_ do we want to enable it? If you haven't measured the
-actual power savings, then it's obviously not a primary reason.
+passing
+to the pinctrl
 
-As for the v5 targets only, they start from SDM845. Have you tested it?
-Does it bring any actual benefits?
+> a boolean "is_gpio" field, a flags field is more future-proof.
+>
+> If the PINFUNCTION_FLAG_GPIO is set for a given function, the pin muxed
+> to it can be requested as GPIO even on strict pin controllers. Add a new
 
--- 
-With best wishes
-Dmitry
+"...the pin, which is muxed to it, ..."
+
+> callback to struct pinmux_ops - function_is_gpio() - that allows pinmux
+> core to inspect a function and see if it's a GPIO one. Provide a generic
+> implementation of this callback.
+
+...
+
+> -       if (ops->strict && desc->mux_usecount)
+> +       if (ops->function_is_gpio && mux_setting)
+
+Seems mux_setting presence is prior to the GPIO checks, I would swap
+the parameters of &&.
+
+> +               func_is_gpio =3D ops->function_is_gpio(pctldev,
+> +                                                    mux_setting->func);
+
+One line is okay.
+
+> +       if (ops->strict && desc->mux_usecount && !func_is_gpio)
+>                 return false;
+>
+>         return !(ops->strict && !!desc->gpio_owner);
+
+I think this whole if/return chain can be made slightly more readable,
+but I haven't had something to provide right now. Lemme think about
+it,
+
+...
+
+> +               if (ops->function_is_gpio && mux_setting)
+> +                       func_is_gpio =3D ops->function_is_gpio(pctldev,
+> +                                                            mux_setting-=
+>func);
+> +               if ((!gpio_range || ops->strict) && !func_is_gpio &&
+>                     desc->mux_usecount && strcmp(desc->mux_owner, owner))=
+ {
+
+This is very similar to the above check, I think at bare minimum here
+can be a helper for both cases.
+
+...
+
+> +/**
+> + * pinmux_generic_function_is_gpio() - returns true if given function is=
+ a GPIO
+> + * @pctldev: pin controller device
+> + * @selector: function number
+
+Missing Return section. Please run kernel-doc validator against new kernel-=
+docs.
+
+> + */
+> +bool pinmux_generic_function_is_gpio(struct pinctrl_dev *pctldev,
+> +                                    unsigned int selector)
+> +{
+> +       struct function_desc *function;
+> +
+> +       function =3D radix_tree_lookup(&pctldev->pin_function_tree,
+> +                                    selector);
+
+One line is okay.
+
+> +       if (!function)
+> +               return false;
+> +
+> +       return function->func->flags & PINFUNCTION_FLAG_GPIO;
+> +}
+
+...
+
+>  struct pinfunction {
+>         const char *name;
+>         const char * const *groups;
+>         size_t ngroups;
+> +       unsigned long flags;
+
+Not sure we need this. If the function is GPIO, pin control already
+knows about this. The pin muxing has gpio request / release callbacks
+that change the state. Why do we need an additional flag(s)?
+
+>  };
+
+--=20
+With Best Regards,
+Andy Shevchenko
 
