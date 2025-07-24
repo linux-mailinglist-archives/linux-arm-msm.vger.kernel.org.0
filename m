@@ -1,279 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-66446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8A09B104E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 10:53:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98B28B1053C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 11:08:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 394C45A3056
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 08:52:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 883123AB5F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:08:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7AF274B49;
-	Thu, 24 Jul 2025 08:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4AC92741B1;
+	Thu, 24 Jul 2025 09:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EcsQUE6o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s37Ae/bx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383BD2750F9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3189229B02
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 09:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753346515; cv=none; b=AU034NQg9kgg6tH0KWqH6ZTUwcQLWRslUGx4bwh8tFEITxYtmLmhbOIOZYDewzvbD0yLQikwcKAiBxIAJLGTfyb5RupVX+BZIUX1kXHUe80BUlKA1SLpVRQAUG5XlG1tBDiJfLz4rPBwuPo5nf0B+09NTFzBj5nvXCDJxM3yUAc=
+	t=1753348128; cv=none; b=pgE7RfoaDZKHRmgPlNas9UpmSL0NG7DMEXaXoYafTslgqRJ/57YES0qrBgOYZ59aK93na5bzBCff6wwD03g8HKIrh9GopIDODWX5t150DV7VjKWCmg+JBnBlrok8kvjfaK6yap9qVJYsg3zCPDiosyTYY6YtplcqqxEW3BbukDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753346515; c=relaxed/simple;
-	bh=rnF+oib9L2Skeeylwk63DB1XU4v0B5lhktdPZQZmpLE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cuUCl6cl9YDFap5fJ9v31AJuJEXBQmRL2uwHQ4HIIkCq7QgIVs1Lm3zBntFNBObmJCV0BKVT3TvxHk8k9o5HKOT6QeykVfCSjlC408l+pVWF5Lx3OIqZKC+sQxxlmfOmEQdCxXmHMdodANRSSPjBJiU4Oju/xRYfH/RrucS41Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EcsQUE6o; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NMXMSG010365
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NcSQxl+jVI7Me55KCzMwMtBdepNG4E+Ro3RKSYD+KgE=; b=EcsQUE6oQbOB6gV6
-	fW/e8YgGlrgDCPe8iUIYyzlH1uzn9SPmPUnU+2ZfPKsBW6tH/Ck9pAdfr2SipWGI
-	gnTv2/ZWNtn+tLNtKoYxPtE6JxXssP9L8/dSb9jGG3/8x5j5zQlAN/5odq9Er/Rx
-	zMRa1rAYymBg7RREKjyl+ovZLSChN5CHnMQW843I4B/Z1etqA2DbAEHgrhM54sCv
-	4bcgBT+Sq45J0Gqh6tAxnzz49whXpnbEWATBkH6ME4EjmlmsdQcFo1GR3pOubVLF
-	fq6DjTVR3fugEK1hc0j4RPdQK3F1aNuPaw59RKl82uoGm0QJJi6CdqirS4ZjwAUA
-	PtF60g==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481t6w96tg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 08:41:53 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2355651d204so7690135ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 01:41:53 -0700 (PDT)
+	s=arc-20240116; t=1753348128; c=relaxed/simple;
+	bh=idz6neG+xEFW8DuglK0GHFt/ADYPwEFKjyXReN4UL9w=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=NzcJRHOAUq8K/rOJKqjpVYOAMYYTbm/a5HA1jr/c5wviTSgYAmUR/tIHC/ToFktM2LsyaCSCnRO6VMUCdmgcbe5EXS3KT/fqTbOUX4YJO+wWnWSeh+RoySUTBDAOYd316bZnu2o8LXgNQBYna/OZZW4WjbXb5yraSseKczEx7HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s37Ae/bx; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a57c8e247cso661064f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 02:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753348125; x=1753952925; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VXg4u6HsqNdzWoo2/MvFuCGv7k9hvq/xa7ZnDdDOUkM=;
+        b=s37Ae/bxIFBYf/kd6N5C8xa5ctAsHpMWqTYdPidUq/s35LDohsQMhjHcpg0uZ4/8P8
+         3e79Ygy3dTyI8NRzBZ86gHOiQC/YnUC8yvsqab1yyILxJ5dL8exv5ifQ2cI/UB1QlRAy
+         YSQFmRzgXXF8dJrGWM0OqsuQ3a5OcRiM/kZfNXexCJ49mdcK3yogxou1z45fR0RdVuYs
+         R9JerQizrQxcZtCo9V5tqJAoz8JqgZxXX3w/6/gE55d5MdohfQGAkxetYQsMMkRHM9S1
+         /HO+s9MOEcx1R2y1T+DiaYDFuyBqGJPpFHt9r4v6AWJfPoi/OLVF+41K4dc5AQwCj14N
+         dUNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753346512; x=1753951312;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NcSQxl+jVI7Me55KCzMwMtBdepNG4E+Ro3RKSYD+KgE=;
-        b=pMWOG59YQSDSHTFtBJPAZSLsW+GpVNgzPccSaxolkE/U3pZdz7/Cx8cEd1+cmyjFxf
-         XookLweX7i20L2jp/EoHydaKYT04lC9mjQmP0fUQQOHJpPt9jx8dNeL4x+O9s2t8pSKA
-         ohjfTaVhcR1fUQYcWFrU+uQmvGY35Cvs/2aCgRJfnMK+OWsCb8ZBOq/gUgxyUG2B3pDY
-         RvMfZn4v5zP8z1mZ5DN0MsX89w+5McUT2L/0FO/FiW7scHBC4u8CC5K5fdFqiTVnzOWu
-         VzDXwmYqzZRiqu+OCwiBDiRedYRw6/TIythkgw3ePeO0+uexZkUk8xHyeIBZ9xZP6oWd
-         pLKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUuznijdc3j9LR8HlbBFJf4ISD5u1t2SV7I0Q04LBMhjBwZ2JaZ6euvSPweNr71dVrR1kn1gL7xXiaoc4Ky@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFWMu+HjhyfgksSN96neLOvs2/O5AROaA+6cOWfVISvyN5j9Wm
-	UbRvIq41jPtA/Cap/MwVQxYCn5b3qaUFrlvvtHWLqbAAETAbbdJ4Zbl3tSOCBGFcY415Wtr5FiI
-	q7084ryKXbFQFmkqHYy22LSqrtrE3oMQP+KFcSnC8IhJt8TWwBqbh+3iGQxEEP0nCWOUYOOPDQm
-	CnKl2kivyumG1B3eu8HU8qP0QS3QGGOneDo9OGBcQXUD8=
-X-Gm-Gg: ASbGncuVW3Ksmm196+t+V1KEToF7Nsu/rN7H1s5gfyMjgDosjwHpeGvUypNeqvyHux/
-	KmF3/NXChYosNtI1LEEZfN6Sxim71Jgp+VGvixj8AegrAGWrflA1/lRuWHB+7SG6PqU9xsVZZ7v
-	0eMmEPwrPj1HjdfxRMZH3I7orW+GrviIkTt0E=
-X-Received: by 2002:a17:903:40ce:b0:234:ef42:5d6d with SMTP id d9443c01a7336-23f98160d78mr85101315ad.23.1753346512449;
-        Thu, 24 Jul 2025 01:41:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSyCdU8c5GLoMY06XIHDleMAFGJhzG6lduNlXjRkOM6bAsMFhgLYqcBatDA4hvNaRMBi5/zQqFRDpuPCkf3pg=
-X-Received: by 2002:a17:903:40ce:b0:234:ef42:5d6d with SMTP id
- d9443c01a7336-23f98160d78mr85100995ad.23.1753346512006; Thu, 24 Jul 2025
- 01:41:52 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753348125; x=1753952925;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VXg4u6HsqNdzWoo2/MvFuCGv7k9hvq/xa7ZnDdDOUkM=;
+        b=MITtsqfF0+gvPrLyjtVapl+slcwR18UK1AtdvY+dIb/li0bFaXWgibFiSAGazNWYij
+         t9Hhzf1JpOj/4wJpoe5AMJppDiXRL60u3y0pboMfcL9jOeMmvORUDh7tStujvbIOK37v
+         VMoZmAvATKO6dKhr+g+dJ/yU/MtumBpR3pRexL4HtyuwYYMz7Zf0J8wHV4wpIWsVVueD
+         NbWxiQ5JEgurXaoPDxbvXtEvDiemVPLlT4S8fjeyEDdtc7n5T+1qKFMumRaad9xUcFup
+         Ij2yZIRqhGF5mzVpSorOAKM31xuoC/06rfzki0nCcmHXnQxzfV1INduhOKjB4+YXzhuK
+         bsYw==
+X-Forwarded-Encrypted: i=1; AJvYcCWtQ+bzbywrT5ouSl25/oaECNbelDZ06JsOnjJx8of3obUObQgiYS63hPcGuKej4RWG/0JUwhyrBq276um3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxjJ/T9oj5uYBSNaH9HxaKvNq277VI529II+bWj2MWERzglmIN
+	miF+JQlkGxpu35PpjHkox8PkUrqEkXF9nYDOZfkd1fDwcod/C1F79woiXm6d+EuB9OQ=
+X-Gm-Gg: ASbGncssZWGd9S0nSbYz4eEXY7PXD9ydMovitQl9i8BhJSGAtgFwgZ3RW2h0CzbQA+H
+	uo5zTsma7tHesjCpT10mPzAYeQ4OhLSSIT8eqZg6plJOw8/Abk5ObGVRSVBXKeVulmuio8AsEgV
+	26eLG+l99CBHOIJvOk/YSZG7cXCWoYaRsmxVDleFAi4uHIlnhoBlZCdISmfcp0Lyc2ZQjlWHTn/
+	EDYDzvVWRU4pJ+DVJAj91Gxljl1tsZpHB1UcjE7p48B3Aiktdtsjl+31jWGavFnSsVVmqvsvQ9Q
+	SE0nBFFxkuPOIbJXxhwNQ/TdAz8cL4pSL2JK2mfJnyTjZ3VkgDkxBnC7I7lg0tqqkpiucapNq1u
+	5010KxJ963SS6ULq3w1+0bcF8gkXmqwwT
+X-Google-Smtp-Source: AGHT+IFKG8HnhbGmxBNTv1ZYLJ7a+SRbz9HKwtsn6vRhAzmT1M6m6ODD7B0jDJBZ+2t3pP6qxWOddg==
+X-Received: by 2002:a05:6000:2282:b0:3aa:caea:aa7f with SMTP id ffacd0b85a97d-3b768f2fb02mr4904939f8f.56.1753348125129;
+        Thu, 24 Jul 2025 02:08:45 -0700 (PDT)
+Received: from [172.20.10.3] ([78.246.240.195])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcad036sm1549921f8f.46.2025.07.24.02.08.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Jul 2025 02:08:44 -0700 (PDT)
+Message-ID: <6612cd14-8353-4d3a-a248-5d32e0d3ca23@linaro.org>
+Date: Thu, 24 Jul 2025 11:08:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
- <20250722161103.3938-2-quic_rdwivedi@quicinc.com> <2ihbf52nryduic5vzlqdldzgx2fe4zidt4hzcugurqsuosiawq@qs66zxptpmqf>
- <f61ac7b6-5e63-49cb-b051-a749037e0c8b@quicinc.com>
-In-Reply-To: <f61ac7b6-5e63-49cb-b051-a749037e0c8b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 24 Jul 2025 11:41:40 +0300
-X-Gm-Features: Ac12FXzMKMuF_0OUA3EGJwZLmjVM8hRhGRUkVzF5il0fHysdmUBOWLdVHSEcSgQ
-Message-ID: <CAO9ioeWLLW1UgJfByBAXp9-v81AqmRV9Acs5Eae9k4Gkr1U0MA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ufs: ufs-qcom: Add support for DT-based gear and rate limiting
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
-        bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-        James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=SPpCVPvH c=1 sm=1 tr=0 ts=6881f1d1 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=COk6AnOGAAAA:8 a=kyiDCW8mUpRo50OuNtQA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA2MiBTYWx0ZWRfXxRRcyWLG55Wg
- wyVqY3ykXbuUuECcpJkIzEqrgpfF/nFVmL4pbhNBLwE94LUogX7tXIeZMVyq5V3pI1G8NJ7yF4Z
- zVmsahlG9aDLN4G5Nyk/9htArf52UUqPsjoAWkRemjSFweDLKEXHdH5haw5V4n/XTisxQ6Hrq/t
- lrZgiNzOMq2F22xSXK68NHfloDsskVQOIW9CC8EQSOc2/AFcOwFsV3USvZhR288cob4PkiLqUL7
- IxFrV97ZfxNyvi5IXckfytAFAVBUxRCzmT1rg83u9osex5icbh/4OBv5cqRQO1n4z/bfg/v5gi6
- FlNwBlrCUoxTIUQ17u6sA7a8zka1wTqhO1+TjzqkJ35Hwnq75Nhc8P0YdbKkTsaXk0hD0Fw7ltx
- rb/VMcAsLJdxQzZb7A22gwg0OV+hDIHjeyj90R6ZPC1E5eR+ZXwyZQBJ8bnIT7vSHBv+h8cr
-X-Proofpoint-ORIG-GUID: YUROhONYp6kVTgD1M8vA_LqjyT2cFXyb
-X-Proofpoint-GUID: YUROhONYp6kVTgD1M8vA_LqjyT2cFXyb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507240062
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v6] drm/dp: clamp PWM bit count to advertised MIN and MAX
+ capabilities
+To: Johan Hovold <johan@kernel.org>,
+ Christopher Obbard <christopher.obbard@linaro.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>
+References: <20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org>
+ <Z-pTcB0L33bozxjl@hovoldconsulting.com>
+ <CACr-zFAiKRTHyRAF5HkM2drCMD7Q_Z3ZUFAsSnevy38yD8XMwg@mail.gmail.com>
+ <Z--eRHaYw_vbgK2f@hovoldconsulting.com>
+ <CACr-zFA77ogDSNEOGd32Rdh3geqkL25T0BKtNdKzUdjrL0+9RA@mail.gmail.com>
+ <aCw4EK_8C1KLb6MD@hovoldconsulting.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <aCw4EK_8C1KLb6MD@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 24 Jul 2025 at 10:35, Ram Kumar Dwivedi
-<quic_rdwivedi@quicinc.com> wrote:
->
->
->
-> On 23-Jul-25 12:24 AM, Dmitry Baryshkov wrote:
-> > On Tue, Jul 22, 2025 at 09:41:01PM +0530, Ram Kumar Dwivedi wrote:
-> >> Add optional device tree properties to limit Tx/Rx gear and rate durin=
-g UFS
-> >> initialization. Parse these properties in ufs_qcom_init() and apply th=
-em to
-> >> host->host_params to enforce platform-specific constraints.
-> >>
-> >> Use this mechanism to cap the maximum gear or rate on platforms with
-> >> hardware limitations, such as those required by some automotive custom=
-ers
-> >> using SA8155. Preserve the default behavior if the properties are not
-> >> specified in the device tree.
-> >>
-> >> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> >> ---
-> >>  drivers/ufs/host/ufs-qcom.c | 28 ++++++++++++++++++++++------
-> >>  1 file changed, 22 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> >> index 4bbe4de1679b..5e7fd3257aca 100644
-> >> --- a/drivers/ufs/host/ufs-qcom.c
-> >> +++ b/drivers/ufs/host/ufs-qcom.c
-> >> @@ -494,12 +494,8 @@ static int ufs_qcom_power_up_sequence(struct ufs_=
-hba *hba)
-> >>       * If the HS-G5 PHY gear is used, update host_params->hs_rate to =
-Rate-A,
-> >>       * so that the subsequent power mode change shall stick to Rate-A=
-.
-> >>       */
-> >> -    if (host->hw_ver.major =3D=3D 0x5) {
-> >> -            if (host->phy_gear =3D=3D UFS_HS_G5)
-> >> -                    host_params->hs_rate =3D PA_HS_MODE_A;
-> >> -            else
-> >> -                    host_params->hs_rate =3D PA_HS_MODE_B;
-> >> -    }
-> >> +    if (host->hw_ver.major =3D=3D 0x5 && host->phy_gear =3D=3D UFS_HS=
-_G5)
-> >> +            host_params->hs_rate =3D PA_HS_MODE_A;
-> >
-> > Why? This doesn't seem related.
->
-> Hi Dmitry,
->
-> I have refactored the patch to put this part in a separate patch in lates=
-t patchset.
->
-> Thanks,
-> Ram.
->
-> >
-> >>
-> >>      mode =3D host_params->hs_rate =3D=3D PA_HS_MODE_B ? PHY_MODE_UFS_=
-HS_B : PHY_MODE_UFS_HS_A;
-> >>
-> >> @@ -1096,6 +1092,25 @@ static void ufs_qcom_set_phy_gear(struct ufs_qc=
-om_host *host)
-> >>      }
-> >>  }
-> >>
-> >> +static void ufs_qcom_parse_limits(struct ufs_qcom_host *host)
-> >> +{
-> >> +    struct ufs_host_params *host_params =3D &host->host_params;
-> >> +    struct device_node *np =3D host->hba->dev->of_node;
-> >> +    u32 hs_gear, hs_rate =3D 0;
-> >> +
-> >> +    if (!np)
-> >> +            return;
-> >> +
-> >> +    if (!of_property_read_u32(np, "limit-hs-gear", &hs_gear)) {
-> >
-> > These are generic properties, so they need to be handled in a generic
-> > code path.
->
-> Hi Dmitry,
->
->
-> Below is the probe path for the UFS-QCOM platform driver:
->
-> ufs_qcom_probe
->   =E2=94=94=E2=94=80 ufshcd_platform_init
->        =E2=94=94=E2=94=80 ufshcd_init
->             =E2=94=94=E2=94=80 ufs_qcom_init
->                  =E2=94=94=E2=94=80 ufs_qcom_set_host_params
->                       =E2=94=94=E2=94=80 ufshcd_init_host_params (initial=
-ized with default values)
->                            =E2=94=94=E2=94=80 ufs_qcom_get_hs_gear (overr=
-ides gear based on controller capability)
->                                 =E2=94=94=E2=94=80 ufs_qcom_set_phy_gear =
-(further overrides based on controller limitations)
->
->
-> The reason I added the logic in ufs-qcom.c is that even if it's placed in=
- ufshcd-platform.c, the values get overridden in ufs-qcom.c.
-> If you prefer, I can move the parsing logic API to ufshcd-platform.c but =
-still it needs to be called from ufs-qcom.c.
+On 20/05/2025 10:06, Johan Hovold wrote:
+> Hi Chris,
+> 
+> On Fri, Apr 04, 2025 at 02:24:32PM +0100, Christopher Obbard wrote:
+>> On Fri, 4 Apr 2025 at 09:54, Johan Hovold <johan@kernel.org> wrote:
+>>> On Fri, Apr 04, 2025 at 08:54:29AM +0100, Christopher Obbard wrote:
+>>>> On Mon, 31 Mar 2025 at 09:33, Johan Hovold <johan@kernel.org> wrote:
+>>>>>> @@ -4035,6 +4036,32 @@ drm_edp_backlight_probe_max(struct drm_dp_aux *aux, struct drm_edp_backlight_inf
+>>>>>>        }
+>>>>>>
+>>>>>>        pn &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+>>>>>> +
+>>>>>> +     ret = drm_dp_dpcd_read_byte(aux, DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN, &pn_min);
+>>>>>> +     if (ret < 0) {
+>>>>>> +             drm_dbg_kms(aux->drm_dev, "%s: Failed to read pwmgen bit count cap min: %d\n",
+>>>>>> +                         aux->name, ret);
+>>>>>> +             return -ENODEV;
+>>>>>> +     }
+>>>>>> +     pn_min &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+>>>>>> +
+>>>>>> +     ret = drm_dp_dpcd_read_byte(aux, DP_EDP_PWMGEN_BIT_COUNT_CAP_MAX, &pn_max);
+>>>>>> +     if (ret < 0) {
+>>>>>> +             drm_dbg_kms(aux->drm_dev, "%s: Failed to read pwmgen bit count cap max: %d\n",
+>>>>>> +                         aux->name, ret);
+>>>>>> +             return -ENODEV;
+>>>>>> +     }
+>>>>>> +     pn_max &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+>>>>>> +
+>>>>>> +     /*
+>>>>>> +      * Per VESA eDP Spec v1.4b, section 3.3.10.2:
+>>>>>> +      * If DP_EDP_PWMGEN_BIT_COUNT is less than DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN,
+>>>>>> +      * the sink must use the MIN value as the effective PWM bit count.
+>>>>>> +      * Clamp the reported value to the [MIN, MAX] capability range to ensure
+>>>>>> +      * correct brightness scaling on compliant eDP panels.
+>>>>>> +      */
+>>>>>> +     pn = clamp(pn, pn_min, pn_max);
+>>>>>
+>>>>> You never make sure that pn_min <= pn_max so you could end up with
+>>>>> pn < pn_min on broken hardware here. Not sure if it's something you need
+>>>>> to worry about at this point.
 
-I was thinking about ufshcd_init() or similar function.
+I'm trying to figure out what would be the behavior in this case ?
 
->
-> Thanks,
-> Ram.
->
->
-> >
-> > Also, the patch with bindings should preceed driver and DT changes.
->
-> Hi Dmitry,
->
-> I have reordered the patch series to place the DT binding change as the f=
-irst patch in latest patchset.
->
-> Thanks,
-> Ram.
->
->
-> >
-> >> +            host_params->hs_tx_gear =3D hs_gear;
-> >> +            host_params->hs_rx_gear =3D hs_gear;
-> >> +            host->phy_gear =3D hs_gear;
-> >> +    }
-> >> +
-> >> +    if (!of_property_read_u32(np, "limit-rate", &hs_rate))
-> >> +            host_params->hs_rate =3D hs_rate;
-> >> +}
-> >> +
-> >>  static void ufs_qcom_set_host_params(struct ufs_hba *hba)
-> >>  {
-> >>      struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
-> >> @@ -1337,6 +1352,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
-> >>      ufs_qcom_advertise_quirks(hba);
-> >>      ufs_qcom_set_host_params(hba);
-> >>      ufs_qcom_set_phy_gear(host);
-> >> +    ufs_qcom_parse_limits(host);
-> >>
-> >>      err =3D ufs_qcom_ice_init(host);
-> >>      if (err)
-> >> --
-> >> 2.50.1
-> >>
-> >
->
+- Warn ?
+- pn_max = pn_min ?
+- use BIT_COUNT as-is and ignore MIN/MAX ?
+- pm_max = max(pn_min, pn_max); pm_min = min(pn_min, pn_max); ?
+- reverse clamp? clamp(pn, pn_max, pn_min); ?
+- generic clamp? clamp(pn, min(pn_min, pn_max), max(pn_min, pn_max)); ?
 
+Or just bail out ?
 
---=20
-With best wishes
-Dmitry
+Neil
+
+>>>>
+>>>> I am honestly not sure. I would hope that devices follow the spec and
+>>>> there is no need to be too paranoid, but then again we do live in the
+>>>> real world where things are... not so simple ;-).
+>>>> I will wait for further feedback from someone who has more experience
+>>>> with eDP panels than I have.
+>>>
+>>> There's always going to be buggy devices and input should always be
+>>> sanitised so I suggest adding that check before calling clamp() (which
+>>> expects min <= max) so that the result here is well-defined.
+>>
+>> Makes sense, I will do so in the next revision.
+> 
+> It seems you never got around to respinning this one so sending a
+> reminder.
+> 
+> Johan
+> 
+
 
