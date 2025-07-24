@@ -1,251 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-66582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59968B10D34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:20:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B62BB10D50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:22:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EDB43B35E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:17:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A41FB5C1C3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:18:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80BEE2D8DBA;
-	Thu, 24 Jul 2025 14:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F41C82E4259;
+	Thu, 24 Jul 2025 14:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="pwq5tdM2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dryJ1YJs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970CB4C81;
-	Thu, 24 Jul 2025 14:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2F52E4256;
+	Thu, 24 Jul 2025 14:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753366422; cv=none; b=bwGVwBlaLzfSqth9D2+Ck/FjQB+R2VelZuQhJXTngNU32Li3pNwvjYwuPyCMGirFGo5M5O/AnAArXpKkADdOjwcGm2WH3/nvk9N3jU8FBzfyTv6g7miNEvO7ZsgCJC0rIBRQS8vQGgklOWEhSdhoPSCHBIr8uRHJZWkfhWDj5nQ=
+	t=1753366431; cv=none; b=V2b8llNOXzDfjviB+Bqgx8tutHG+k8AO5rmULzgsMDKTnfYugII1cdyBFcR6qnb5WdUKXMFAmjqFVCEhAOlp9wfj5zT6BRYtLOWeZdY5QfXBkWOEYnEFH3RZ5T398o465gca5fOu7xGWsbDV7LFe//sHmcUwyhNs81+gBBOg4DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753366422; c=relaxed/simple;
-	bh=uYaq9vVkbSUr+tB940oFmDR9L9mTXUEkazEXEditOQk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bh+sCBkZnXHrNkFI9nBBc7q+IzO4gx59UoupZp/dt2ufqXyeug6RiZvBk47YbYjtJMm31UFdAssXkuOON3uOEK0+BQ+4ub/ORScll0Q43aFoS1E0XM7AyV3lO5kPVlzBpDSgbqx/9P+37/CVfkHYXDS1Oxkbf1N1APtpeWtdjgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=pwq5tdM2; arc=none smtp.client-ip=45.79.88.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 3A3B040AD2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1753366414; bh=FDYBYXhi2fpIXmidMih0lla5P8/HwKyQKaeA3qjglN4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=pwq5tdM2vDY6APoBJuNEplILNdsyaU8ylKRxeCbXe8XwZITdA49KYYVSYTry8HpKV
-	 11JU1pkrDwmKYTn4Fl/PSS7PRD9lEUq9GYeo/HlJaKcFNthhWNgGaSbErWZpRksXU/
-	 2vcUlKH47OM35KhDFiJKYjv9eHZYQfJhlwveoisq76XE1Ph/wNujQEY4mwi+2EPI03
-	 C6Ge6wReBlahOFy06igmvLpUfGmMHNmMAtE5bIWSddnTvAo8pP5gNfRizJLIkJVMoq
-	 n+gO3mVS2lc+fqlOMygB0N/vI5gck9MYQxuB1GcL+iBGKHLpcflufHKZM8r4X1ng6W
-	 uqNwh/ttjzzkw==
-Received: from localhost (unknown [IPv6:2601:280:4600:2da9::1fe])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 3A3B040AD2;
-	Thu, 24 Jul 2025 14:13:34 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arch@vger.kernel.org,
- linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
- pmladek@suse.com
-Cc: linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- eugen.hristev@linaro.org, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org
-Subject: Re: [RFC][PATCH v2 02/29] Documentation: add kmemdump
-In-Reply-To: <20250724135512.518487-3-eugen.hristev@linaro.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-3-eugen.hristev@linaro.org>
-Date: Thu, 24 Jul 2025 08:13:33 -0600
-Message-ID: <87zfctad82.fsf@trenco.lwn.net>
+	s=arc-20240116; t=1753366431; c=relaxed/simple;
+	bh=iP21wARuzAVybuDfrhi/ZmKVWvFZlKJMhFjcyKMiDOo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKbt85Zm5o35TQnhmEcyfejg90OKvgqlqzfQoeBoq6bSWxsDBPNCR67mpcMLg+oG1L4bTSv2SQdWZJB2h5QcEHxGXp+GJ5UoadC/bG0vUI5siVm5rT6+sFfWusFanHO7IUoFvvrwNb+pZvldSZvk44ABTHVRbwULEv5ZVN8AP7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dryJ1YJs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D418C4CEED;
+	Thu, 24 Jul 2025 14:13:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753366431;
+	bh=iP21wARuzAVybuDfrhi/ZmKVWvFZlKJMhFjcyKMiDOo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dryJ1YJskl7pP6EZbhlVYPbvYngcJHHHtazegM1TgWqREeyogXTEgMG8ms5KvQMZ+
+	 8dUzPvtXyAkyS9XMhHK3obW288FKpbGjGbyjG/IPqimgdlHZL1Dvy5HDbSPwaW7270
+	 d86RbpCXyHX/QMs2ZVFrZcyfR7a06QLvEwdbdhQuNaiF1refGOiFIW63Nylaq1yCp5
+	 hEpYRAdAMUb6AUW55hjo+kH5H/KZFsgKcVLpT3jt8IcLUYWDmwBIN6vmWZnTz9UuOK
+	 51ekVxtKW6pMBGAr3akRpiXYjKPGgbMM8VKU3bKgdcJTL9XEISH4pVjCqye79YycuW
+	 G4XImgA+whU5Q==
+Date: Thu, 24 Jul 2025 19:43:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 2/3] PCI/pwrctrl: Allow pwrctrl core to control
+ PERST# GPIO if available
+Message-ID: <uh7r37l7a2btd3p5dighewfmat2caewrlyf2lwjtslolbr5bov@jgstvnfhxur6>
+References: <20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org>
+ <20250707-pci-pwrctrl-perst-v1-2-c3c7e513e312@kernel.org>
+ <aHGueAD70abjw8D_@google.com>
+ <k5rf5azftn4mpztcjtvdxiligngmaz7fecdryv244m726y5rfd@mobway4c4ueh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <k5rf5azftn4mpztcjtvdxiligngmaz7fecdryv244m726y5rfd@mobway4c4ueh>
 
-Eugen Hristev <eugen.hristev@linaro.org> writes:
+On Sat, Jul 12, 2025 at 01:59:34PM GMT, Manivannan Sadhasivam wrote:
+> On Fri, Jul 11, 2025 at 05:38:16PM GMT, Brian Norris wrote:
+> > Sorry for so many individual reviews, but I've passed over this a few
+> > times and had new questions/comments several times:
+> > 
+> 
+> That's fine. I'm happy to answer as someone other than me is interested in
+> pwrctrl :)
+> 
+> > On Mon, Jul 07, 2025 at 11:48:39PM +0530, Manivannan Sadhasivam wrote:
+> > > PERST# is an (optional) auxiliary signal provided by the PCIe host to
+> > > components for signalling 'Fundamental Reset' as per the PCIe spec r6.0,
+> > > sec 6.6.1.
+> > 
+> > >  void pci_pwrctrl_init(struct pci_pwrctrl *pwrctrl, struct device *dev)
+> > >  {
+> > > +	struct pci_host_bridge *host_bridge = to_pci_host_bridge(dev->parent);
+> > > +	int devfn;
+> > > +
+> > >  	pwrctrl->dev = dev;
+> > >  	INIT_WORK(&pwrctrl->work, rescan_work_func);
+> > > +
+> > > +	if (!host_bridge->perst)
+> > > +		return;
+> > > +
+> > > +	devfn = of_pci_get_devfn(dev_of_node(dev));
+> > > +	if (devfn >= 0 && host_bridge->perst[PCI_SLOT(devfn)])
+> > 
+> > This seems to imply a 1:1 correlation between slots and pwrctrl devices,
+> > almost as if you expect everyone is using drivers/pci/pwrctrl/slot.c.
+> > But there is also endpoint-specific pwrctrl support, and there's quite
+> > a bit of flexibility around what these hierarchies can look like.
+> > 
+> > How do you account for that?
+> > 
+> > For example, couldn't you have both a "port" and an "endpoint" pwrctrl? Would
+> > they both grab the same PERST# GPIO here? And might that incur excessive
+> > resets, possibly even clobbering each other?
+> > 
+> 
+> If both port and endpoint nodes are present, then only one will contain
+> 'reset-gpios'. Right now, the DT binding only supports PERST#, WAKE#, CLKREQ#
+> properties in RP node, but that won't work if we have multiple lines per slot/
+> controller. Ideally, we would want the properties to be present in endpoint node
+> if available. But if we have only standard expansion slots, then it makes sense
+> to define them in the port node. But doing so, we can only expect the slot to
+> have only one instance of these properties as we cannot reliably map which
+> property corresponds to the endpoint.
+> 
+> I've opened a dtschema issue for this:
+> https://github.com/devicetree-org/dt-schema/issues/168
+> 
 
-> Document the new kmemdump kernel feature.
+I realized that there is no need to define these properties (PERST#, WAKE#,
+CLKREQ#) in the endpoint node (the DT binding also doesn't allow now anyway).
+These properties should just exist in the Root Port node as there can be only
+one set per hierarchy i.e., Root Complex would only use one set of these GPIOs
+per Root Port and the endpoint need to share them.
 
-Thanks for including documentation!
+So I closed the dtschema issue.
 
-> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
-> ---
->  Documentation/debug/index.rst    | 17 ++++++
->  Documentation/debug/kmemdump.rst | 98 ++++++++++++++++++++++++++++++++
->  MAINTAINERS                      |  1 +
->  3 files changed, 116 insertions(+)
->  create mode 100644 Documentation/debug/index.rst
->  create mode 100644 Documentation/debug/kmemdump.rst
->
-> diff --git a/Documentation/debug/index.rst b/Documentation/debug/index.rst
-> new file mode 100644
-> index 000000000000..9a9365c62f02
-> --- /dev/null
-> +++ b/Documentation/debug/index.rst
-> @@ -0,0 +1,17 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +===
-> +kmemdump
-> +===
-> +
-> +.. toctree::
-> +   :maxdepth: 1
-> +
-> +   kmemdump
-> +
-> +.. only::  subproject and html
-> +
-> +   Indices
-> +   =======
-> +
-> +   * :ref:`genindex`
+- Mani
 
-Please don't create a new top-level directory for just this tool - I've
-been working for years to get Documentation/ under control.  This seems
-best placed under Documentation/dev-tools/ ?
-
-
-> diff --git a/Documentation/debug/kmemdump.rst b/Documentation/debug/kmemdump.rst
-> new file mode 100644
-> index 000000000000..3301abcaed7e
-> --- /dev/null
-> +++ b/Documentation/debug/kmemdump.rst
-> @@ -0,0 +1,98 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +==========================
-> +kmemdump
-> +==========================
-
-A nit, but it's nicer to match the markup line lengths with the enclosed
-text. 
-
-> +This document provides information about the kmemdump feature.
-> +
-> +Overview
-> +========
-> +
-> +kmemdump is a mechanism that allows any driver or producer to register a
-> +chunk of memory into kmemdump, to be used at a later time for a specific
-> +purpose like debugging or memory dumping.
-> +
-> +kmemdump allows a backend to be connected, this backend interfaces a
-> +specific hardware that can debug or dump the memory registered into
-> +kmemdump.
-> +
-> +kmemdump Internals
-> +=============
-> +
-> +API
-> +----
-> +
-> +A memory region is being registered with a call to `kmemdump_register` which
-
-Please just say kmemdump_register() - that will let our carefully
-written automatic markup machinery do its thing.  Among other things, it
-will create a cross-reference link to the kerneldoc documentation for
-this function (if any).  All function references should be written that
-way. 
-
-> +takes as parameters the ID of the region, a pointer to the virtual memory
-> +start address and the size. If successful, this call returns an unique ID for
-> +the allocated zone (either the requested ID or an allocated ID).
-> +IDs are predefined in the kmemdump header. A second registration with the
-> +same ID is not allowed, the caller needs to deregister first.
-> +A dedicated NO_ID is defined, which has kmemdump allocate a new unique ID
-> +for the request and return it. This case is useful with multiple dynamic
-> +loop allocations where ID is not significant.
-> +
-> +The region would be registered with a call to `kmemdump_unregister` which
-> +takes the id as a parameter.
-> +
-> +For dynamically allocated memory, kmemdump defines a variety of wrappers
-> +on top of allocation functions which are given as parameters.
-> +This makes the dynamic allocation easy to use without additional calls
-> +to registration functions. However kmemdump still exposes the register API
-> +for cases where it may be needed (e.g. size is not exactly known at allocation
-> +time).
-> +
-> +For static variables, a variety of annotation macros are provided. These
-> +macros will create an annotation struct inside a separate section.
-> +
-> +
-> +Backend
-> +-------
-> +
-> +Backend is represented by a `struct kmemdump_backend` which has to be filled
-
-Structures, too, can be mentioned without explicit markup.
-
-> +in by the backend driver. Further, this struct is being passed to kmemdump
-> +with a `backend_register` call. `backend_unregister` will remove the backend
-> +from kmemdump.
-> +
-> +Once a backend is being registered, all previously registered regions are
-> +being sent to the backend for registration.
-> +
-> +When the backend is being removed, all regions are being first deregistered
-> +from the backend.
-> +
-> +kmemdump will request the backend to register a region with `register_region`
-> +call, and deregister a region with `unregister_region` call. These two
-> +functions are mandatory to be provided by a backend at registration time.
-> +
-> +Data structures
-> +---------------
-> +
-> +`struct kmemdump_backend` represents the kmemdump backend and it has two
-> +function pointers, one called `register_region` and the other
-> +`unregister_region`.
-> +There is a default backend that does a no-op that is initially registered
-> +and is registered back if the current working backend is being removed.
-
-Rather than this sort of handwavy description, why not just use the
-kerneldoc comments you have written for this structure?
-
-> +The regions are being stored in a simple fixed size array. It avoids
-> +memory allocation overhead. This is not performance critical nor does
-> +allocating a few hundred entries create a memory consumption problem.
-> +
-> +The static variables registered into kmemdump are being annotated into
-> +a dedicated `.kemdump` memory section. This is then walked by kmemdump
-> +at a later time and each variable is registered.
-> +
-> +kmemdump Initialization
-> +------------------
-> +
-> +After system boots, kmemdump will be ready to accept region registration
-> +from producer drivers. Even if the backend may not be registered yet,
-> +there is a default no-op backend that is registered. At any time the backend
-> +can be changed with a real backend in which case all regions are being
-> +registered to the new backend.
-> +
-> +backend functionality
-> +-----------------
-> +
-> +kmemdump backend can keep it's own list of regions and use the specific
-> +hardware available to dump the memory regions or use them for debugging.
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7e8da575025c..ef0ffdfaf3de 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -13620,6 +13620,7 @@ F:	drivers/iio/accel/kionix-kx022a*
->  KMEMDUMP
->  M:	Eugen Hristev <eugen.hristev@linaro.org>
->  S:	Maintained
-> +F:	Documentation/debug/kmemdump.rst
->  F:	drivers/debug/kmemdump.c
->  F:	include/linux/kmemdump.h
-
-Thanks,
-
-jon
+-- 
+மணிவண்ணன் சதாசிவம்
 
