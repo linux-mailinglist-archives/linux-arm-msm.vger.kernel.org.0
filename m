@@ -1,331 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-66581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8A2AB10CAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:08:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59968B10D34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 16:20:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54CDE1890B57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:05:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EDB43B35E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 14:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF422DCBFC;
-	Thu, 24 Jul 2025 14:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80BEE2D8DBA;
+	Thu, 24 Jul 2025 14:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W+qSkHEo"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="pwq5tdM2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E661CD1F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 14:04:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970CB4C81;
+	Thu, 24 Jul 2025 14:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753365869; cv=none; b=CEprDQ/yZ2jAxzeK66SUs5u1aRtrdIIz8zRM/RbxuhpVuN4IYD8pyccVDFlYjhU3X+rfln5A3qfqrfq+pZdgyCjHZ7FRRSgHyoOZnEZTVYjmfUqBoMltKVOAphXf2i9RyCqz9t8AdNTfdXowca/qxGVGnQ6afzqLEN3RMpXC2ig=
+	t=1753366422; cv=none; b=bwGVwBlaLzfSqth9D2+Ck/FjQB+R2VelZuQhJXTngNU32Li3pNwvjYwuPyCMGirFGo5M5O/AnAArXpKkADdOjwcGm2WH3/nvk9N3jU8FBzfyTv6g7miNEvO7ZsgCJC0rIBRQS8vQGgklOWEhSdhoPSCHBIr8uRHJZWkfhWDj5nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753365869; c=relaxed/simple;
-	bh=euYDBiI52TaHhbSDj7p1OwmGXPGVNvatQPROiF44G5o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aQuzgscJtVk83sr6DhXXVDC8YiwZBXT9ApENbjBHdi1MwHIkUEWoaA7Ks1UKCaDh85W/1jHOAUaLsZJal6g3RNnUuyrUTZ+zjRHKu1kO0DDoH3PllNkAI0vSB5LnE7u4e9F4ywP75lgGd2J2E/cAJG4Co+3uhMD8CXkTGiHr064=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W+qSkHEo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56O9e2NM006593
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 14:04:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vgq0sS9bJuE54sZn99vBn48DqF4vg0XSEVpZVyXodU0=; b=W+qSkHEoDKvJqeGa
-	j9qzqsOiQGG3tf0XTfyzx7QwDXk5DI/xoPq9qJCLjDm8cOYm6hIxXufP7vtWMTwn
-	+DQBkJtaSF7Ff6gBisK/c82vyKR22b+RCCW5W0rJzbnl+91lQcFvypooKOQEspdu
-	YEa9IJxm97ilBHsHF7aXUfOgh6kHZ0vaJOzhW23pCRfUjyiJnY5SVz/O1vTpIt1s
-	adsG7yPAg1TR5rmuwncyn1OQu8jwFx/d1EfGjJRftiJHMyANiXF3jhdLs7V//apB
-	cR49Su2boGv9A8eiCQplxsEy9mvLOAMUG8n2MG2oJv/Cr0TNA5huNpqQykisxATa
-	aTuhbA==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48047qgye0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 14:04:24 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-74927be2ec0so1699415b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:04:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753365863; x=1753970663;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vgq0sS9bJuE54sZn99vBn48DqF4vg0XSEVpZVyXodU0=;
-        b=QvcxUGfEkd+vR8OKyjTAZsyz+RLUXZM1qfQ6auFOM85d5Pp6IXd22cDIZMCsEVs/lP
-         egz1Kc0C7pDsw3EnMqFj04I2/snIKP/YVBjLaV0dHdq8rDGDhQAfmkSJy81QDY0rHIZa
-         aEsfO8bFDDT9RNT6OgJPMNEDQXcVHqMo0aHUkvDHOrtlbh5Gzf5C0fLhuD5hZvusFvCU
-         ZtqeCM1NSecazMzVA0jtc711LX0OTQcWWGj8fPUh6PM8sG3G1x9lfM+97n8RHnTXJ3n4
-         OP6H+Fg5l5W+ReKZxDmqXjKgVPEj9FoeDmA9r4NfJ7YXm1G7Lb240LdxA7tdLc+yKnpo
-         7njg==
-X-Forwarded-Encrypted: i=1; AJvYcCVaZPmufxD8WoEvZ/6V0uZMYmScH6/Fs9VQ4C80vvcYunrXEEjSRLlvMvLGzLOCElShlUZRPycEQ42B0Vnb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5Uekf0QuVPGgEAinfHIj9jkj6VYYxlRpcHXh4pcsm3bBQsIiH
-	q1Ck505CFvOe/4Jt8xmA1dpBquqOT4IpllTi3gpqJGz5PHNljVTVnTtotM2TGfAuAybe/xHsXxS
-	YB5+gOK5yjekQH3wcrTvTcEuW7DJV46WX8LnXd2stUFGBxO0hG0XXqemAahvaDADmRds3
-X-Gm-Gg: ASbGncvXxC6fq1dlzTc6ldRdtVbYjPD+kqiETMlW3XyfXMEZRCJMBe2VA/nD+ML6zRh
-	BFa7hTcJwgtkmwYgZRr+DdJq1NqLMF36sp7tX4l1ITekKrzC36l9BdgESFcht1PP2cZzUV/hqHF
-	czVSPqW0yBM09SyKQmJj18O23jsz7JMwxGNMra0AMp7rU3xz67Mblax7nMr+6VeECGMRHfH62w7
-	/pxAWFwsUynHy7EBi/ZRDGUY92L/wunwlmbkMahA+kBKEw1tduDko5JbM4eaEyhj2xNpcWno1qU
-	W45fwzTtnRIXy32Df/VQMkMUBb/1a1X9fKHUHaqq9ZJGBY4b94I+zG245l9qWcTZvOE9NnzatQ=
-	=
-X-Received: by 2002:a05:6a20:d80f:b0:1f5:8a1d:3905 with SMTP id adf61e73a8af0-23d48fe0706mr11806713637.7.1753365863361;
-        Thu, 24 Jul 2025 07:04:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAk87SufmnhCrOrsDy9MKWBmmPKhBPtYqVHhRKiYJ5DGF4kGQc3VXG7/OhXCMjUqW31MLiAw==
-X-Received: by 2002:a05:6a20:d80f:b0:1f5:8a1d:3905 with SMTP id adf61e73a8af0-23d48fe0706mr11806617637.7.1753365862604;
-        Thu, 24 Jul 2025 07:04:22 -0700 (PDT)
-Received: from [10.219.57.35] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-761b06158acsm1757972b3a.109.2025.07.24.07.04.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 07:04:22 -0700 (PDT)
-Message-ID: <f4725f3f-1b45-ebd2-aaf4-4f986a44eb8e@oss.qualcomm.com>
-Date: Thu, 24 Jul 2025 19:34:13 +0530
+	s=arc-20240116; t=1753366422; c=relaxed/simple;
+	bh=uYaq9vVkbSUr+tB940oFmDR9L9mTXUEkazEXEditOQk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bh+sCBkZnXHrNkFI9nBBc7q+IzO4gx59UoupZp/dt2ufqXyeug6RiZvBk47YbYjtJMm31UFdAssXkuOON3uOEK0+BQ+4ub/ORScll0Q43aFoS1E0XM7AyV3lO5kPVlzBpDSgbqx/9P+37/CVfkHYXDS1Oxkbf1N1APtpeWtdjgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=pwq5tdM2; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 3A3B040AD2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1753366414; bh=FDYBYXhi2fpIXmidMih0lla5P8/HwKyQKaeA3qjglN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=pwq5tdM2vDY6APoBJuNEplILNdsyaU8ylKRxeCbXe8XwZITdA49KYYVSYTry8HpKV
+	 11JU1pkrDwmKYTn4Fl/PSS7PRD9lEUq9GYeo/HlJaKcFNthhWNgGaSbErWZpRksXU/
+	 2vcUlKH47OM35KhDFiJKYjv9eHZYQfJhlwveoisq76XE1Ph/wNujQEY4mwi+2EPI03
+	 C6Ge6wReBlahOFy06igmvLpUfGmMHNmMAtE5bIWSddnTvAo8pP5gNfRizJLIkJVMoq
+	 n+gO3mVS2lc+fqlOMygB0N/vI5gck9MYQxuB1GcL+iBGKHLpcflufHKZM8r4X1ng6W
+	 uqNwh/ttjzzkw==
+Received: from localhost (unknown [IPv6:2601:280:4600:2da9::1fe])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 3A3B040AD2;
+	Thu, 24 Jul 2025 14:13:34 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-arch@vger.kernel.org,
+ linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+ pmladek@suse.com
+Cc: linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ eugen.hristev@linaro.org, mojha@qti.qualcomm.com, rostedt@goodmis.org,
+ jonechou@google.com, tudor.ambarus@linaro.org
+Subject: Re: [RFC][PATCH v2 02/29] Documentation: add kmemdump
+In-Reply-To: <20250724135512.518487-3-eugen.hristev@linaro.org>
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <20250724135512.518487-3-eugen.hristev@linaro.org>
+Date: Thu, 24 Jul 2025 08:13:33 -0600
+Message-ID: <87zfctad82.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v12 0/8] Implement vendor resets for PSCI SYSTEM_RESET2
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik
- <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Elliot Berman <elliot.berman@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250721-arm-psci-system_reset2-vendor-reboots-v12-0-87bac3ec422e@oss.qualcomm.com>
- <beb26682-d2e4-40e6-89ac-87f18c0401d0@broadcom.com>
- <56599da9-0200-72b5-012e-942a1fc954b2@oss.qualcomm.com>
- <a1d3264f-a46a-42c4-b518-a66c8e0b70b4@kernel.org>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <a1d3264f-a46a-42c4-b518-a66c8e0b70b4@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDEwNyBTYWx0ZWRfX2BHI2+4v7goH
- FPKMhS6X6BaYccH1vwTJkrGWpPKp0UC9qWoyMYCkBWbvVF0eGRO3U2GpIOG/5EcAqwVTxTCCOlL
- EJBPYmtV45d7SnTfjxDbIFR45YvEREn01V2n0tU9I4Qv2xTDiJdQgapPIVxi8P3Z+WZu7o251UV
- IuJapHqRVetRhdHUNRRJUQiTN8J1YIDuH7SqWwC3pdzMSXg4ZCC9vmxhnneqdHDCbwQs7ASd92u
- sg6KZ6GbHdZYyT0M7fvxIHTa4SqgzsSV2MYfQtfJTulyC5UOESvUf1ecLlRH5OKA0yTZQoHN5Og
- dXLMaTK8KMUGrarMylWvP3FzegrOD0vjg8Nx1fKEYx1e4sFNDC5rCHlYcKIhFeGaxwPSNw8So/T
- FHlkoCFvx0SyfRylVSJ0VyOq20Tcvtuj19yf/e14LCTHbNTwG5cC498guQ7Rago/9QfqQVNx
-X-Proofpoint-ORIG-GUID: tp-SqEzVXRGz7wEgWRTOksKjx6LTyuQ3
-X-Proofpoint-GUID: tp-SqEzVXRGz7wEgWRTOksKjx6LTyuQ3
-X-Authority-Analysis: v=2.4 cv=IrMecK/g c=1 sm=1 tr=0 ts=68823d68 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=Q-fNiiVtAAAA:8 a=QDcQmLXp8I0AkLLIQucA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-24_02,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
- priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999 phishscore=0
- impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507240107
+Content-Type: text/plain
+
+Eugen Hristev <eugen.hristev@linaro.org> writes:
+
+> Document the new kmemdump kernel feature.
+
+Thanks for including documentation!
+
+> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+> ---
+>  Documentation/debug/index.rst    | 17 ++++++
+>  Documentation/debug/kmemdump.rst | 98 ++++++++++++++++++++++++++++++++
+>  MAINTAINERS                      |  1 +
+>  3 files changed, 116 insertions(+)
+>  create mode 100644 Documentation/debug/index.rst
+>  create mode 100644 Documentation/debug/kmemdump.rst
+>
+> diff --git a/Documentation/debug/index.rst b/Documentation/debug/index.rst
+> new file mode 100644
+> index 000000000000..9a9365c62f02
+> --- /dev/null
+> +++ b/Documentation/debug/index.rst
+> @@ -0,0 +1,17 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +===
+> +kmemdump
+> +===
+> +
+> +.. toctree::
+> +   :maxdepth: 1
+> +
+> +   kmemdump
+> +
+> +.. only::  subproject and html
+> +
+> +   Indices
+> +   =======
+> +
+> +   * :ref:`genindex`
+
+Please don't create a new top-level directory for just this tool - I've
+been working for years to get Documentation/ under control.  This seems
+best placed under Documentation/dev-tools/ ?
 
 
+> diff --git a/Documentation/debug/kmemdump.rst b/Documentation/debug/kmemdump.rst
+> new file mode 100644
+> index 000000000000..3301abcaed7e
+> --- /dev/null
+> +++ b/Documentation/debug/kmemdump.rst
+> @@ -0,0 +1,98 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +==========================
+> +kmemdump
+> +==========================
 
-On 7/24/2025 6:18 PM, Krzysztof Kozlowski wrote:
-> On 24/07/2025 14:24, Shivendra Pratap wrote:
->>
->>
->> On 7/24/2025 5:46 AM, Florian Fainelli wrote:
->>> On 7/21/25 11:28, Shivendra Pratap wrote:
->>>> The PSCI SYSTEM_RESET2 call allows vendor firmware to define
->>>> additional reset types which could be mapped to the reboot
->>>> argument.
->>>>
->>>> User-space should be able to reboot a device into different
->>>> operational boot-states supported by underlying bootloader and
->>>> firmware. Generally, some HW registers need to be written, based
->>>> on which the bootloader and firmware decide the next boot state
->>>> of device, after the reset. For example, a requirement on
->>>> Qualcomm platforms may state that reboot with "bootloader"
->>>> command, should reboot the device into bootloader flashing mode
->>>> and reboot with “edl” command, should reboot the device into an
->>>> Emergency flashing mode.  Setting up such reboots on Qualcomm
->>>> devices can be inconsistent across SoC platforms and may require
->>>> setting different HW registers, where some of these registers may
->>>> not be accessible to HLOS. These knobs evolve over product
->>>> generations and require more drivers.  PSCI defines a
->>>> vendor-specific reset in SYSTEM_RESET2 spec, which enables the
->>>> firmware to take care of underlying setting for any such
->>>> supported vendor-specific reboot. Qualcomm firmwares are
->>>> beginning to support and expose PSCI SYSTEM_RESET2
->>>> vendor-specific reset types to simplify driver requirements from
->>>> Linux. With such support added in the firmware, we now need a
->>>> Linux interface which can make use of the firmware calls for PSCI
->>>> vendor-specific resets. This will align such reboot requirement
->>>> across platforms and vendors.
->>>>
->>>> The current psci driver supports two types of resets –
->>>> SYSTEM_RESET2 Arch warm-reset and SYSTEM_RESET cold-reset. The
->>>> patchset introduces the PSCI SYSTEM_RESET2 vendor-specific reset
->>>> into the reset path of the psci driver and aligns it to work with
->>>> reboot system call - LINUX_REBOOT_CMD_RESTART2, when used along
->>>> with a supported string-based command in “*arg”.
->>>>
->>>> The patchset uses reboot-mode based commands, to define the
->>>> supported vendor reset-types commands in psci device tree node
->>>> and registers these commands with the reboot-mode framework.
->>>>
->>>> The PSCI vendor-specific reset takes two arguments, being,
->>>> reset_type and cookie as defined by the spec. To accommodate this
->>>> requirement, enhance the reboot-mode framework to support two
->>>> 32-bit arguments by switching to 64-bit magic values.
->>>>
->>>> Along this line, the patchset also extends the reboot-mode
->>>> framework to add a non-device-based registration function, which
->>>> will allow drivers to register using device tree node, while
->>>> keeping backward compatibility for existing users of reboot-mode.
->>>> This will enable psci driver to register for reboot-mode and
->>>> implement a write function, which will save the magic and then
->>>> use it in psci reset path to make a vendor-specific reset call
->>>> into the firmware. In addition, the patchset will expose a sysfs
->>>> entry interface within reboot-mode which can be used by userspace
->>>> to view the supported reboot-mode commands.
->>>>
->>>> The list of vendor-specific reset commands remains open due to
->>>> divergent requirements across vendors, but this can be
->>>> streamlined and standardized through dedicated device tree
->>>> bindings.
->>>>
->>>> Currently three drivers register with reboot-mode framework -
->>>> syscon-reboot-mode, nvmem-reboot-mode and qcom-pon. Consolidated
->>>> list of commands currently added across various vendor DTs:
->>>>   mode-loader
->>>>   mode-normal
->>>>   mode-bootloader
->>>>   mode-charge
->>>>   mode-fastboot
->>>>   mode-reboot-ab-update
->>>>   mode-recovery
->>>>   mode-rescue
->>>>   mode-shutdown-thermal
->>>>   mode-shutdown-thermal-battery
->>>>
->>>> Detailed list of commands being used by syscon-reboot-mode:
->>>>      arm64/boot/dts/exynos/exynosautov9.dtsi:
->>>>     mode-bootloader = <EXYNOSAUTOV9_BOOT_BOOTLOADER>;
->>>>     mode-fastboot = <EXYNOSAUTOV9_BOOT_FASTBOOT>;
->>>>     mode-recovery = <EXYNOSAUTOV9_BOOT_RECOVERY>;
->>>>
->>>>      arm64/boot/dts/exynos/google/gs101.dtsi:
->>>>          mode-bootloader = <0xfc>;
->>>>          mode-charge = <0x0a>;
->>>>          mode-fastboot = <0xfa>;
->>>>          mode-reboot-ab-update = <0x52>;
->>>>          mode-recovery = <0xff>;
->>>>          mode-rescue = <0xf9>;
->>>>          mode-shutdown-thermal = <0x51>;
->>>>          mode-shutdown-thermal-battery = <0x51>;
->>>>
->>>>      arm64/boot/dts/hisilicon/hi3660-hikey960.dts:
->>>>          mode-normal = <0x77665501>;
->>>>          mode-bootloader = <0x77665500>;
->>>>          mode-recovery = <0x77665502>;
->>>>
->>>>      arm64/boot/dts/hisilicon/hi6220-hikey.dts:
->>>>          mode-normal = <0x77665501>;
->>>>          mode-bootloader = <0x77665500>;
->>>>          mode-recovery = <0x77665502>;
->>>>
->>>>      arm64/boot/dts/rockchip/px30.dtsi:
->>>>          mode-bootloader = <BOOT_BL_DOWNLOAD>;
->>>>          mode-fastboot = <BOOT_FASTBOOT>;
->>>>          mode-loader = <BOOT_BL_DOWNLOAD>;
->>>>          mode-normal = <BOOT_NORMAL>;
->>>>          mode-recovery = <BOOT_RECOVERY>;
->>>>
->>>>      arm64/boot/dts/rockchip/rk3308.dtsi:
->>>>          mode-bootloader = <BOOT_BL_DOWNLOAD>;
->>>>          mode-loader = <BOOT_BL_DOWNLOAD>;
->>>>          mode-normal = <BOOT_NORMAL>;
->>>>          mode-recovery = <BOOT_RECOVERY>;
->>>>          mode-fastboot = <BOOT_FASTBOOT>;
->>>>
->>>>      arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts:
->>>>          mode-normal = <BOOT_NORMAL>;
->>>>          mode-loader = <BOOT_BL_DOWNLOAD>;
->>>>             mode-recovery = <BOOT_RECOVERY>;
->>>>             mode-bootloader = <BOOT_FASTBOOT>;
->>>>
->>>> Detailed list of commands being used by nvmem-reboot-mode:
->>>>      arm64/boot/dts/qcom/pmXXXX.dtsi:(multiple qcom DTs)
->>>>             mode-recovery = <0x01>;
->>>>             mode-bootloader = <0x02>;
->>>>
->>>> Previous discussions around SYSTEM_RESET2:
->>>> - https://lore.kernel.org/lkml/20230724223057.1208122-2-quic_eberman@quicinc.com/T/
->>>> - https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicinc.com/
->>>>
->>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->>>> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->>>
->>> On ARCH_BRCMSTB:
->>>
->>> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
->>>
->>> For the sysfs bits, should not we be seeing "psci" instead of "reboot-mode" twice in this path:
->>>
->>> # cat /sys/class/reboot-mode/reboot-mode/reboot_modes
->>> powercycle
->> As per current patch, we create a class named - "reboot-mode".
->> /sys/class/reboot-mode
->>
->> Then comes the DT node name of the registering driver.
->> /sys/class/reboot-mode/<DT node name of the registering driver>/
-> 
-> This means that node name becomes part of the ABI? I am not happy about
-> it. Where is such ABI documented? Because your last patch tells
-> something completely else!
-> 
-> I strongly insist using compatible as way to find your device, not node
-> names.
-It will look better to switch to compatible. Will define a compatible for
-psci reboot-mode binding and align the patch to use the compatible for sysfs.
-Current patch defines reboot-mode as a property to psci, hope its fine to
-define a compatible for this property like "psci-vendor-reset" or
-"psci-reboot-modes"?
+A nit, but it's nicer to match the markup line lengths with the enclosed
+text. 
 
-> 
-> In any case you need to document such ABI in Devicetree bindings,
-> because sysfs ABI is not enough.
-should reboot-mode Devicetree binding document this ABI? Can you
-please share some more detail on this?
+> +This document provides information about the kmemdump feature.
+> +
+> +Overview
+> +========
+> +
+> +kmemdump is a mechanism that allows any driver or producer to register a
+> +chunk of memory into kmemdump, to be used at a later time for a specific
+> +purpose like debugging or memory dumping.
+> +
+> +kmemdump allows a backend to be connected, this backend interfaces a
+> +specific hardware that can debug or dump the memory registered into
+> +kmemdump.
+> +
+> +kmemdump Internals
+> +=============
+> +
+> +API
+> +----
+> +
+> +A memory region is being registered with a call to `kmemdump_register` which
 
-thanks.
-> 
-> Best regards,
-> Krzysztof
+Please just say kmemdump_register() - that will let our carefully
+written automatic markup machinery do its thing.  Among other things, it
+will create a cross-reference link to the kerneldoc documentation for
+this function (if any).  All function references should be written that
+way. 
+
+> +takes as parameters the ID of the region, a pointer to the virtual memory
+> +start address and the size. If successful, this call returns an unique ID for
+> +the allocated zone (either the requested ID or an allocated ID).
+> +IDs are predefined in the kmemdump header. A second registration with the
+> +same ID is not allowed, the caller needs to deregister first.
+> +A dedicated NO_ID is defined, which has kmemdump allocate a new unique ID
+> +for the request and return it. This case is useful with multiple dynamic
+> +loop allocations where ID is not significant.
+> +
+> +The region would be registered with a call to `kmemdump_unregister` which
+> +takes the id as a parameter.
+> +
+> +For dynamically allocated memory, kmemdump defines a variety of wrappers
+> +on top of allocation functions which are given as parameters.
+> +This makes the dynamic allocation easy to use without additional calls
+> +to registration functions. However kmemdump still exposes the register API
+> +for cases where it may be needed (e.g. size is not exactly known at allocation
+> +time).
+> +
+> +For static variables, a variety of annotation macros are provided. These
+> +macros will create an annotation struct inside a separate section.
+> +
+> +
+> +Backend
+> +-------
+> +
+> +Backend is represented by a `struct kmemdump_backend` which has to be filled
+
+Structures, too, can be mentioned without explicit markup.
+
+> +in by the backend driver. Further, this struct is being passed to kmemdump
+> +with a `backend_register` call. `backend_unregister` will remove the backend
+> +from kmemdump.
+> +
+> +Once a backend is being registered, all previously registered regions are
+> +being sent to the backend for registration.
+> +
+> +When the backend is being removed, all regions are being first deregistered
+> +from the backend.
+> +
+> +kmemdump will request the backend to register a region with `register_region`
+> +call, and deregister a region with `unregister_region` call. These two
+> +functions are mandatory to be provided by a backend at registration time.
+> +
+> +Data structures
+> +---------------
+> +
+> +`struct kmemdump_backend` represents the kmemdump backend and it has two
+> +function pointers, one called `register_region` and the other
+> +`unregister_region`.
+> +There is a default backend that does a no-op that is initially registered
+> +and is registered back if the current working backend is being removed.
+
+Rather than this sort of handwavy description, why not just use the
+kerneldoc comments you have written for this structure?
+
+> +The regions are being stored in a simple fixed size array. It avoids
+> +memory allocation overhead. This is not performance critical nor does
+> +allocating a few hundred entries create a memory consumption problem.
+> +
+> +The static variables registered into kmemdump are being annotated into
+> +a dedicated `.kemdump` memory section. This is then walked by kmemdump
+> +at a later time and each variable is registered.
+> +
+> +kmemdump Initialization
+> +------------------
+> +
+> +After system boots, kmemdump will be ready to accept region registration
+> +from producer drivers. Even if the backend may not be registered yet,
+> +there is a default no-op backend that is registered. At any time the backend
+> +can be changed with a real backend in which case all regions are being
+> +registered to the new backend.
+> +
+> +backend functionality
+> +-----------------
+> +
+> +kmemdump backend can keep it's own list of regions and use the specific
+> +hardware available to dump the memory regions or use them for debugging.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 7e8da575025c..ef0ffdfaf3de 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -13620,6 +13620,7 @@ F:	drivers/iio/accel/kionix-kx022a*
+>  KMEMDUMP
+>  M:	Eugen Hristev <eugen.hristev@linaro.org>
+>  S:	Maintained
+> +F:	Documentation/debug/kmemdump.rst
+>  F:	drivers/debug/kmemdump.c
+>  F:	include/linux/kmemdump.h
+
+Thanks,
+
+jon
 
