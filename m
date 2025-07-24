@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-66428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52967B10223
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:45:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF8B5B1022B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 09:47:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4016FAA1A6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:44:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 114015874E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jul 2025 07:47:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02E823E350;
-	Thu, 24 Jul 2025 07:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A888266B6C;
+	Thu, 24 Jul 2025 07:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zh2SsGns"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NLQ4F0Gy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB6D1FDE09
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8CC1FDE09
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 07:47:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753343119; cv=none; b=qaQ9offP38c3G8ygiMG8McciU9KtIf+P5F6/oulMyGeBkXsbQVtN8mEKAIm0tTpoAqixRHWZ+eqP5PMeI73HNkEIwYHmwYo9Q0ejOzP5hS6l9Tx7dLKh3uvULp9B0lBdlfP8xggIbNaYL9mLDd3TCNxUAePymbQb9QQ/Fbg6Jrw=
+	t=1753343268; cv=none; b=JWK0117OWJxv3qjbJaublNVBqJOKkrzWs/5T1HzEqnyBdyFWUn4ocz50sk530v7En9Tus8BD6oFXx0gluIZPtLBzQVWpA+zO1JLH9cFl1rY/r+wkAxHCVR1yekpaqVzzmuTvcYiYHeJP78t2Jeh4deyQD037AzZpJWZPZXiFJU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753343119; c=relaxed/simple;
-	bh=AP3zgH1Nqn7tJA2K6pKR5f5J9I8lQYldylhzWfqJmyE=;
+	s=arc-20240116; t=1753343268; c=relaxed/simple;
+	bh=GkZlzMsbwC9NT9A0zr+vZfjTAZdKR7nPqVFGiO0aDRg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pcHXBYfrNsVRZ/WwtCFJOGiaQcO2eBG3JpKg+H2arj2wTnO07g9b2sBrD1Vhi+U8y6StRW7OTXX0c18enThWGNrqjcp6XFsDt1DYyGCxBZPuUjFtm5ktpDZtTDjG27G40gM94KSjuOqI8tqW0pvU5TiphxInlojnTjfDzZc9kX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zh2SsGns; arc=none smtp.client-ip=209.85.218.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=c8NqclsjmME+rKBaFkCg7MHVgRjvr5OBBEW51RieloHVmVk/pnyhilPUZRpjS2uZejHtPH+f1eXKQVLjsII4JiRmRP2sRTO2gpj3XkcGCIjZ6mq0ZdDu/s5fTWSxpy/861hw0mp9zhwo0mTx13tfcbbQs4gEgbHAsMBZH4hvHTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NLQ4F0Gy; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-acb5ec407b1so107189366b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 00:45:17 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-60c01f70092so1173255a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jul 2025 00:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753343116; x=1753947916; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1753343263; x=1753948063; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2vV2M1bsYJIVHm7EjRSWQZf5QaQ36BKAfq31S/kJ3UE=;
-        b=Zh2SsGnsMVirsRUjrDSUAcNfytfJCscCJS0b8mZvjLifwGZLVG8hN7nFLnvd4HJlXG
-         +nGH3NK3JuTdWhf2PZsCgJFPYyN8lMEx67/MBCBiBQQZJUunTnz4+hRXQBwQ9onR32AF
-         Puqu4z/1W2Y/Jjh/odKsd+nVVCoAfBf+4/PEFKWu8ZUlej1opBdkslkqi87GE4ayZI+X
-         YPGLAqWAyeY+GHjfOy/3CZO5qi5hCdEve77z/lZj9vSsRGVcq7RuevC+FJJBpNLyy/63
-         nJxQEYthyXfLa+UsEQBNjQIcUG5kCuP7PRfaWRMPDvBHsyUUPbGVWCVnXPH8A0SHScXn
-         85Dw==
+        bh=BCsHGBvSyrUsLsBAqIRdWHViyxCBqekwJoXqBFYbpq4=;
+        b=NLQ4F0GyGE/Z3lhtFN1g4098p75UQi5NWkYAs09ZPc61C5l5A5ms7zPiU5OJOgR2DN
+         adlsmqPDcF6be7+BdLrmhZy8B99jUVRDSs9XhxAhSM/o7xtBokS0X5ciYf+/W6DBBCrK
+         UQTENyqEcvHGFF8zYUZG6Zpx3QWBeJAOMAe9OcFVw5qxRTuKpXt5QcQxLVSUnDXZabi/
+         8pVsvOh7OPhU8ouNeN1uEn8P8V7BE359hOCzpzIY8Ui8ANpXYFarotuSUldTuQAC+OTM
+         kn0GNoi/HVNb18mWUsA3VacocGXE2chlvOR0JkoNp/BGtuTHNvLPtt9vsRUn35IC7FV7
+         HlBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753343116; x=1753947916;
+        d=1e100.net; s=20230601; t=1753343264; x=1753948064;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2vV2M1bsYJIVHm7EjRSWQZf5QaQ36BKAfq31S/kJ3UE=;
-        b=as6iO7TjJcz+BX+ykQGZaEOnGdUpAZtFiHjZY+wQA7Xpoenjg+L0Wb6NStB4h6tVP9
-         2O4IUG7kzMi5z8L2642/dQkRYRLfzY6ZCxGVka6zx9pclQRvVpEq8beRKYFDP8S8BpbJ
-         1yLx1vXKqPGvjjYYyCOLZP0QE5bbpc0bGZbUkdKoNd0PxHBuql+tPMtlqp8TSHOwYHV8
-         ZiA7gii96VTvqwgyW1DnGq2GRQr3zu5xabAD5fYzM8t1FHfRK6RPWJSVHbtH3Y1AYnAg
-         NVjbl8DIB+dAewdcq19cm7f8Psyz6S/k1TUXF5nDaG3a7l3Yo7E1H+FDBx0qYmLiMqAY
-         U+DA==
-X-Forwarded-Encrypted: i=1; AJvYcCWSCa9ecz1tmL1u2q9nOFk5Baf4oMeRsXkRp9lsteIIPINW0FQFfRcYWIHhUz9eSr5nynureMI/qRoPM0dN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPFbfzL5+Ucqr8LVBtgJt0fJlXEGmSXNidDt4zpQcXWg8imZaw
-	I+NaD2/KwUGdUtMrIYcRdiGkrmfok/T3qYJVsKcF0BkBVtOUV6514VHpejH51Me0kWU=
-X-Gm-Gg: ASbGnct2tLMNfjvOaVux5YdQ4zRaG5SSA0lEV8mA3qWZ4F8iKO5qJBBnOy4OlY7Kh5m
-	s5SIcJ7HqOd65VfIdQftDUPjk2JgRCdTnaxiquWgqqrfyficN2awEBBapQJrvyB0IyotKAzd5IP
-	1kcr92PfTqL2BarJICJjn9XqDnsnxeU/jI2UoXXHR/sh5ayuQE7SjiXhbPR7OQyw2OYF4wsC9/o
-	OUkt+kgcvBbKsa3XITGHgTijR5DV47HPzFzodP3uXnhKMU5qmxkU9fl0MdZEmcdkMOjBlHOo7Xz
-	bdM92B4sGool5O4x5HnumNCQhzD1QknR8nevh5pU7JBAoIv0ypCQilq851Bud5gHQNRq2nOu+UY
-	tPS+gY2J/iW+SrGD2ubnOpcBOvXdmiejFxQ==
-X-Google-Smtp-Source: AGHT+IGqk1fJgK3rWOc4Ks4tE3xn2mUJPMG6yF9MSruD3tjslLFEJpd4P2YhrhCZJbVOnLv7scDCDQ==
-X-Received: by 2002:a17:907:2d12:b0:ae0:bee7:ad7c with SMTP id a640c23a62f3a-af2f8d4fb14mr600672466b.46.1753343115955;
-        Thu, 24 Jul 2025 00:45:15 -0700 (PDT)
+        bh=BCsHGBvSyrUsLsBAqIRdWHViyxCBqekwJoXqBFYbpq4=;
+        b=fZKLtvYOzp+n33NTVuMORlV1td1+aptxbMTBtRo5Cm0AAu0x2WGUwJmHFEFK8+Sz+b
+         gnZ74PwQd2NRz5MdM+D+RHHFM6ZhHfK49MmtOcWeH9qrcn+c8pZnpL0taVEOGnBTPiMI
+         T2t2P6B/ErNJOVpBqqffUfXSA0KM0Xj4Nug5Yw9DCW7zuBSyqFURmEub649wY7LD3co5
+         v7bbsTt2aysl76/WgC7QIhBHZi0cvX6NZmTk8eCsCXEvW2/Ww2nLyXqzli9igLEZby/f
+         /+TaPs+ilYvYCVeyVgZeXn2fuDHChWCTRVbqr/s63izwQJ56LZgKEDuWPv3b0S50dReV
+         uIVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWuxn9dCDwtugqovF3rnXhcmP7IlAHli9bdQsY1uEBsYRMqt4/v6PCWDfVoX7HVKsCw3ifHaSkhULG9A+Lw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxa+ab3mk6Km/1Kq4R4xKKoGAlP2shJMhf45hoyqNhWTKp4jglv
+	eaTMgpMrSObt/6s9Mew/djVVFf3TNfJhZpoGtEsBZJWgkctH6xfe2ciQah7OjwUpOj0=
+X-Gm-Gg: ASbGncss0NJ2F6qv71m5C4oLPaiaToC3hpxkjK0FcZA7RdXVGMGSWHao7lp2RqiI8FY
+	7qkNYYUCWuzEs/t4tJxR+fAeEmiy5mv4RimNh+/wGbs1DaDDtQ+4YkOLi/UtZCxKx/6bIYWhUO3
+	1o2nmPtx1sy9uNi8cEkLAK0dP3/fcyWs5c03/IOi6Y5OcoMeDIrX6rahMtLGuNyqaJ1vp0QBx9w
+	e4wLQ7jW+iuRK4srJPX4rX7KNlfGCfNFp9a0tr5Cgw1vq49pD1Mf4Bera9Qe3RonlFKmbPVInrb
+	3TXK0Frd+vjDfu6SKB0iYGwH+IqCdbOgyxZbhI6B5zOvtrtj9iZLZ+ouMbnW6wHkHQkjH0T4R5I
+	LlJLS7DTC+Wwf6dqphZ0epRoibsXN4dcIEw==
+X-Google-Smtp-Source: AGHT+IEhhV27yTiJ5gFBxDikiEPBXQLvhGeDpwVDGw+Zc0stcC9d5cV/zCr60GkDvp8aoPbA1HE8EQ==
+X-Received: by 2002:a05:6402:42c9:b0:612:a996:5cfe with SMTP id 4fb4d7f45d1cf-6149b5b01d5mr4946103a12.31.1753343263494;
+        Thu, 24 Jul 2025 00:47:43 -0700 (PDT)
 Received: from linaro.org ([2a02:2454:ff21:ef30:706f:1fb4:134c:465d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47cc6e769sm73922266b.45.2025.07.24.00.45.15
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-614cd31abd2sm480951a12.56.2025.07.24.00.47.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 00:45:15 -0700 (PDT)
-Date: Thu, 24 Jul 2025 09:45:13 +0200
+        Thu, 24 Jul 2025 00:47:43 -0700 (PDT)
+Date: Thu, 24 Jul 2025 09:47:41 +0200
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: srinivas.kandagatla@oss.qualcomm.com
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 19/23] arm64: dts: qcom: msm8953: use dedicated
- elite-audio dtsi
-Message-ID: <aIHkicKQq0vy5U7o@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: srinivas.kandagatla@oss.qualcomm.com, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 20/23] arm64: dts: qcom: sm8450: add sound prefix for wsa2
+Message-ID: <aIHlHZiy0ArPwSMg@linaro.org>
 References: <20250723222737.35561-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250723222737.35561-20-srinivas.kandagatla@oss.qualcomm.com>
+ <20250723222737.35561-21-srinivas.kandagatla@oss.qualcomm.com>
+ <g5ymyqh5soso5fj5mzdssz4ovqovecmvja4lvcgnfncnsvep3l@qsip7x3l5err>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,116 +92,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250723222737.35561-20-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <g5ymyqh5soso5fj5mzdssz4ovqovecmvja4lvcgnfncnsvep3l@qsip7x3l5err>
 
-On Wed, Jul 23, 2025 at 11:27:33PM +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+On Thu, Jul 24, 2025 at 01:44:09AM +0300, Dmitry Baryshkov wrote:
+> On Wed, Jul 23, 2025 at 11:27:34PM +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
+> > From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> > 
+> > WSA and WSA2 are two instances of WSA codec macro, this can lead
+> > dupicate dapm widgets and mixers resulting in failing to probe
+> > soundcard if both of these instances are part of the dai-link.
+> > 
+> > Correct way to address this is to add sound-name-prefix to WSA2
+> > instances to avoid such confilcting mixers and dapm widgets.
 > 
-> Make use of elite-audio.dtsi and remove the arp nodes from SoC dtsi.
-> This move removes duplication.
-> Also msm8953 SoC level dtsi has q6asm-dai definations that should be
-> part of the board level dts, so clean this up as part of this patch.
+> This looks like a fix for an issue. Please mark it accordinggly and move
+> towards the start of the series.
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/msm8953-audio.dtsi |  5 ++
->  arch/arm64/boot/dts/qcom/msm8953.dtsi       | 78 +--------------------
->  2 files changed, 6 insertions(+), 77 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8953-audio.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-audio.dtsi b/arch/arm64/boot/dts/qcom/msm8953-audio.dtsi
-> new file mode 100644
-> index 000000000000..fe17bc28e825
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-audio.dtsi
-> @@ -0,0 +1,5 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +#include "elite-audio.dtsi"
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> index 273e79fb7569..aaf179c2eb53 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> @@ -2015,84 +2015,8 @@ smd-edge {
->  				qcom,smd-edge = <1>;
->  				qcom,remote-pid = <2>;
->  
-> -				apr {
-> -					compatible = "qcom,apr-v2";
-> +				apr: apr {
->  					qcom,smd-channels = "apr_audio_svc";
-> -					qcom,domain = <APR_DOMAIN_ADSP>;
-> -					#address-cells = <1>;
-> -					#size-cells = <0>;
-> -
-> -					q6core: service@3 {
-> -						reg = <APR_SVC_ADSP_CORE>;
-> -						compatible = "qcom,q6core";
-> -					};
-> -
-> -					q6afe: service@4 {
-> -						compatible = "qcom,q6afe";
-> -						reg = <APR_SVC_AFE>;
-> -						q6afedai: dais {
-> -							compatible = "qcom,q6afe-dais";
-> -							#address-cells = <1>;
-> -							#size-cells = <0>;
-> -							#sound-dai-cells = <1>;
-> -
-> -							dai@16 {
-> -								reg = <PRIMARY_MI2S_RX>;
-> -								qcom,sd-lines = <0 1>;
-> -							};
-> -							dai@20 {
-> -								reg = <TERTIARY_MI2S_TX>;
-> -								qcom,sd-lines = <0 1>;
-> -							};
-> -							dai@127 {
-> -								reg = <QUINARY_MI2S_RX>;
-> -								qcom,sd-lines = <0>;
-> -							};
 
-I don't think these belong into the SoC dtsi, but elite-audio.dtsi
-doesn't have the backend DAI definitions / sd-lines, so removing these
-will likely break audio.
+It doesn't really have anything to do with the rest of the series at
+all, so those should be ideally sent as a separate series. They can be
+picked up much easier compared to the large refactoring of the other
+patches.
 
-> -						};
-> -
-> -						q6afecc: clock-controller {
-> -							compatible = "qcom,q6afe-clocks";
-> -							#clock-cells = <2>;
-> -						};
-> -					};
-> -
-> -					q6asm: service@7 {
-> -						compatible = "qcom,q6asm";
-> -						reg = <APR_SVC_ASM>;
-> -						q6asmdai: dais {
-> -							compatible = "qcom,q6asm-dais";
-> -							#address-cells = <1>;
-> -							#size-cells = <0>;
-> -							#sound-dai-cells = <1>;
-> -
-> -							dai@0 {
-> -								reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> -								direction = <Q6ASM_DAI_RX>;
-> -							};
-> -							dai@1 {
-> -								reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
-> -								direction = <Q6ASM_DAI_TX>;
-> -							};
-> -							dai@2 {
-> -								reg = <MSM_FRONTEND_DAI_MULTIMEDIA3>;
-> -								direction = <Q6ASM_DAI_RX>;
-> -							};
-> -							dai@3 {
-> -								reg = <MSM_FRONTEND_DAI_MULTIMEDIA4>;
-> -								direction = <Q6ASM_DAI_RX>;
-> -								is-compress-dai;
-
-Same here for the compress DAI.
-
+Thanks,
 Stephan
 
