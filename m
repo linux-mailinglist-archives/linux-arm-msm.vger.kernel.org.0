@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-66705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B66D7B11DC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 13:43:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32EB5B11DC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 13:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D78F95670BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 11:43:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8D6AAC85AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 11:43:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF5F12E62D8;
-	Fri, 25 Jul 2025 11:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110002E7628;
+	Fri, 25 Jul 2025 11:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qXaCkhvx"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QCAvnuqa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A6223ABBB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 11:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAF82E7652
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 11:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753443790; cv=none; b=ntsgEeNPTDz9EaIvayZFtm3NmktR2zP+BfZuB36vDVASNg5VzJq8aPtbuR5j/ZIk6AW80AoofQycG+EgsOo63B76wpuRTHwRjznQIppy7wXLL3JwdOGKqMtaH9LjrzAfRq6QRPjvdUGA7+O1LgJ/bkPX0Yx16MBjsRXXQVpVMac=
+	t=1753443798; cv=none; b=A40QmCOGiUFlwtBIA/dFAz0Urhg7PFP84wH6xcbHXjKOjfep7I2nbvw7DREAIldr2+aAN3X22dj6r9+bB2UG5cBUeBP8b36drxSZ21V4L7jmkIw8uh9JOm0Lah2jXTiZf6usu1o/mA5MII2zLQAJcA8VnpKPlU4U+5D5nHwom28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753443790; c=relaxed/simple;
-	bh=GXLNulDQabBWfpqwEOqqKbLsnHwq2xpUC1OOyOnQmmk=;
+	s=arc-20240116; t=1753443798; c=relaxed/simple;
+	bh=xYkxiSGB3HiyrpwMmesA1Pdc4KekDGsxkxYb8FOqOsg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=eC+XI/qjD/wDVTmyZzRowaRKuiZrZtmbmDDhqZWKA4eVdRLNU9ywpYTU1BhOjPjVXMsjLxjMNvEsf15ZlzpsF1AxkJ6mV9cLTj/nr7C2287gOrn1QZYE4tXGNoAiMEavDWZmsuZ907sER0ocvwNOnjtlTHSocKHowLGtn2J8HuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qXaCkhvx; arc=none smtp.client-ip=209.85.221.74
+	 To:Cc:Content-Type; b=CW/vJcYb7a4lJemlxbwt/PwTanxpkq6mrDXINvSLjq3/0f5Vxjj9H/bfd1wBGXOZuuVVAlQJo/RRBOeHpRUpdOssTzCvJWosRjJLla4A+lx6lBwrmh4WO962Et4ArAU+jcHk4K57ub0t8m/QW8VAzaXSqdR621ZYYQNyJSeY9zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QCAvnuqa; arc=none smtp.client-ip=209.85.221.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-3b775f1236fso278858f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 04:43:07 -0700 (PDT)
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-3b77738050fso274526f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 04:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753443786; x=1754048586; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1753443794; x=1754048594; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GuK8hRsOqCoQx3bAPHZp3JDLbWcN4JdwmKp+T7NIltw=;
-        b=qXaCkhvxN/n1d2tGUk5b/pbmwq1h8i1OmZVeFZdCn/bfHtzBZDyJ84iCpl/RHMWS5n
-         0AlgtQqPAr4rdmrSqpr3RsQC9iMrMexGp3SlWsyCf3MhYn04RCujUOfGDysjDUhNBFgc
-         mZJSHR5WaE+cbkWOFpG0ILU4QstJrFCvcR2QpMnxPEQLTHOPC3VrwstRIP86zg/r5er7
-         wnoRPVhUYPLX43O76MglKGXfsh8RA+2G2TYu6+EjtQN9BEKprt1VTms5OnAFtUL9mIAk
-         uGoNBrybD4nOxxwimY6nt4sB9GN3Ey54JPEmJwkdQVhlHdCg+a1UqVAIygXs2EU6FQLW
-         JaeQ==
+        bh=c+a+TqK/s3X4ICiheNo2EUiGxut07xdB8F6iCq61W8U=;
+        b=QCAvnuqacFtjmtznrz5Pd1zL22ykpTdZFMU1I6Hzc1PUqlHTHDN+CAPtpAM6ixWSyN
+         J08IWfFgU26wJuycDnfjMJidbQlCqYWoeEo8qYgmzzEWdDXWiALyyopvrW7nqYtWwLwC
+         BHznZRmYr+ZG61nl80dluKe5Tt0CZN8E7XWdQUCETuFj88TMGt494LECKqnQ2Z08FeJ9
+         jzZYLlGs9SmxqZtrZUv6eaYKGNF3ziAvoj2llJ2r8lMQoRsguX1ZBuIhmShYAB9PT4gu
+         iRwa71mV/dpPjKmVZ8i+lKt2AVUxHno8VOOFM7S1iKPZCxV7leKn77MLGsiOUWzrS+M6
+         0Llg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753443786; x=1754048586;
+        d=1e100.net; s=20230601; t=1753443794; x=1754048594;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GuK8hRsOqCoQx3bAPHZp3JDLbWcN4JdwmKp+T7NIltw=;
-        b=YQqcLmAQGxEBBXN5TIFu7fZaVo4hM/qOdK/geHPX8RLpdtN29fNoOmutiOKvZfEE87
-         2V5QXEJdpikgpM0jAODZELiookw6V3WiN5KvdUdahnf/LlUjEvzkUkMu2dm9zUgVAPUi
-         WETQqkhNgfa8vAT0QcwNsnjMUbkcl+0HTemh2/26VqnqRhzulR+2hGR7iaPHazFTxn8z
-         UoOPW4PMkeZ7cFdFEvnXMmlTqO1vzxUy3gVRpGzgZ4QccLU6Q8kG9OCIVw48yiz1pQ9m
-         fyb2h7guD/7FC6DhoncmEbyaD4wEsHjOL1eAUcMwG+MCoupTc2D1Gwpa9BMCnwaec6rl
-         dqog==
-X-Forwarded-Encrypted: i=1; AJvYcCUjS/LrGChpeoaX4agQzvK3LzfJrmhQ4EFgBGssBuZBvnQXzbsqulp4DfVp0H73WT2MTEIp+lmAY53cKec6@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKUJpFMxDH3TkTEa6ybc0pBAsq7HvWd5BsIoX9FG7ker2Ms/j8
-	+iOiRm+Fahh4TnDQIx1jpSqz577bcEDNQczULSa89Jog5qMYc3IkzAxSDpzRTYU+uXcP9A4OtPh
-	6RnmOdjZLUU1BUQAKQg==
-X-Google-Smtp-Source: AGHT+IFD9z+xSUVrnF5nXmJYTC5l34ziLWKmKqasaaeNnwD89kH9jjglGFrqVED8BSkUpsmcjd8VdFQn6RcI30Y=
-X-Received: from wmsd11.prod.google.com ([2002:a05:600c:3acb:b0:456:83b:aa29])
+        bh=c+a+TqK/s3X4ICiheNo2EUiGxut07xdB8F6iCq61W8U=;
+        b=jFhxTuRo55fiobJdG0ionE8o+LSSrCbkTSLg8qD9UaKtXCzH+CfaMPYdIv+F7Rrlw1
+         KzI02AZUyCk8pyIbKAwdet8hvrZfRSTVf/WHS1WfL5yq+bvUnvtmgwU2dWTwgrGcRxfK
+         +EP/GdwsRS1BCD9/ny+vILOyk/1U4tcxP1iHF2wp5x9382lwpsWIswqQIxUlBgnvJRNN
+         9Oju+gZHcqj3Ex2jl/YWREHotmUeBMQa1xBTkq14QUt+vB5whTDWGC3/lU6vXL4FdniP
+         93ZVbt2lJ0mgDzUQeu60DYKbv1/qf1FTkbLQBpa+cYAyThzTxMqHs6Az7ZqeQzt6L0wb
+         yvqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWIHNtOXFVfODhRuqwMenMbAVzcxHDDEjfh49N+JcAe6o1gbtocAmRBIDVvSah215xiIuMcmXEPjvX7ohkX@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuSmI+Vlj3mbHw0BL02ZQB/bXQw/ImEX0OUJJ8XB6l1aXXlL6Q
+	jJlDOaDfuJovguadQeCiNoNbO0r/XTy2iq8VOeOBXW4de/gmN0Wral+ehKUB+RKX42iiakxjIJT
+	3EjirP1syOos03dH/Ug==
+X-Google-Smtp-Source: AGHT+IEjxdJR1uJLIOVLqBDV0bDsdc/XTQjcc+CXgCRPq1R1chA9MEbontl1NBvD61YpGImuSVWX6wytCW9/eOc=
+X-Received: from wrbee12.prod.google.com ([2002:a05:6000:210c:b0:3b7:6ea1:a86f])
  (user=verhaegen job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:2c0d:b0:3a4:f900:21c4 with SMTP id ffacd0b85a97d-3b7765f4e4emr1540944f8f.26.1753443786513;
- Fri, 25 Jul 2025 04:43:06 -0700 (PDT)
-Date: Fri, 25 Jul 2025 12:42:43 +0100
+ 2002:a05:6000:1889:b0:3a4:dc93:1e87 with SMTP id ffacd0b85a97d-3b7765e614amr1746678f8f.1.1753443794521;
+ Fri, 25 Jul 2025 04:43:14 -0700 (PDT)
+Date: Fri, 25 Jul 2025 12:42:44 +0100
 In-Reply-To: <20250725114249.2086974-1-verhaegen@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -74,8 +74,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20250725114249.2086974-1-verhaegen@google.com>
 X-Mailer: git-send-email 2.50.1.470.g6ba607880d-goog
-Message-ID: <20250725114249.2086974-2-verhaegen@google.com>
-Subject: [PATCH v3 1/3] ALSA: compress_offload: Add 64-bit safe timestamp infrastructure
+Message-ID: <20250725114249.2086974-3-verhaegen@google.com>
+Subject: [PATCH v3 2/3] ALSA: compress_offload: Add SNDRV_COMPRESS_TSTAMP64 ioctl
 From: Joris Verhaegen <verhaegen@google.com>
 To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
 	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -94,638 +94,100 @@ Cc: Joris Verhaegen <verhaegen@google.com>, kernel-team@android.com,
 	Miller Liang <millerliang@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-The copied_total field in struct snd_compr_tstamp is a 32-bit
-value that can overflow on long-running high-bitrate streams,
-leading to incorrect calculations for buffer availablility.
+The previous patch introduced the internal infrastructure for handling
+64-bit timestamps. This patch exposes this capability to user-space.
 
-This patch adds a 64-bit safe timestamping mechanism.
-A new UAPI struct, snd_compr_tstamp64, is added which uses 64-bit
-types for byte counters. The relevant ops structures across the
-ASoC and core compress code are updated to use this new struct.
-ASoC drivers are updated to use u64 counters.
+Define the new ioctl command SNDRV_COMPRESS_TSTAMP64, which allows
+applications to fetch the overflow-safe struct snd_compr_tstamp64.
 
-Internal timestamps being u64 now, a compatibility function is added
-to convert the 64-bit timestamp back to the 32-bit format for legacy
-ioctl callers.
+The ioctl dispatch table is updated to handle the new command by
+calling a new snd_compr_tstamp64 handler, while the legacy path is
+renamed to snd_compr_tstamp32 for clarity.
+
+This patch bumps the SNDRV_COMPRESS_VERSION to 0.4.0.
 
 Reviewed-by: Miller Liang <millerliang@google.com>
 Tested-by: Joris Verhaegen <verhaegen@google.com>
 Signed-off-by: Joris Verhaegen <verhaegen@google.com>
 ---
- include/sound/compress_driver.h               |  2 +-
- include/sound/soc-component.h                 |  4 +-
- include/sound/soc-dai.h                       |  7 +--
- include/uapi/sound/compress_offload.h         | 19 +++++++
- sound/core/compress_offload.c                 | 52 +++++++++++++------
- sound/soc/codecs/wm_adsp.c                    |  4 +-
- sound/soc/codecs/wm_adsp.h                    |  2 +-
- .../intel/atom/sst-mfld-platform-compress.c   | 12 +++--
- sound/soc/intel/atom/sst-mfld-platform.h      |  2 +-
- sound/soc/intel/atom/sst/sst_drv_interface.c  |  9 ++--
- sound/soc/qcom/qdsp6/q6apm-dai.c              | 26 ++++++----
- sound/soc/qcom/qdsp6/q6asm-dai.c              | 26 ++++++----
- sound/soc/soc-component.c                     |  2 +-
- sound/soc/soc-compress.c                      |  2 +-
- sound/soc/soc-dai.c                           |  2 +-
- sound/soc/sof/compress.c                      |  2 +-
- sound/soc/sprd/sprd-pcm-compress.c            |  6 +--
- sound/soc/sprd/sprd-pcm-dma.h                 |  4 +-
- sound/soc/uniphier/aio-compress.c             |  2 +-
- 19 files changed, 119 insertions(+), 66 deletions(-)
+ include/uapi/sound/compress_offload.h |  5 +++--
+ sound/core/compress_offload.c         | 19 +++++++++++++------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/include/sound/compress_driver.h b/include/sound/compress_driver.h
-index b55c9eeb2b54..9e3d801e45ec 100644
---- a/include/sound/compress_driver.h
-+++ b/include/sound/compress_driver.h
-@@ -161,7 +161,7 @@ struct snd_compr_ops {
- 			struct snd_compr_metadata *metadata);
- 	int (*trigger)(struct snd_compr_stream *stream, int cmd);
- 	int (*pointer)(struct snd_compr_stream *stream,
--			struct snd_compr_tstamp *tstamp);
-+		       struct snd_compr_tstamp64 *tstamp);
- 	int (*copy)(struct snd_compr_stream *stream, char __user *buf,
- 		       size_t count);
- 	int (*mmap)(struct snd_compr_stream *stream,
-diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
-index 61534ac0edd1..754627c6361a 100644
---- a/include/sound/soc-component.h
-+++ b/include/sound/soc-component.h
-@@ -47,7 +47,7 @@ struct snd_compress_ops {
- 		       struct snd_compr_stream *stream, int cmd);
- 	int (*pointer)(struct snd_soc_component *component,
- 		       struct snd_compr_stream *stream,
--		       struct snd_compr_tstamp *tstamp);
-+		       struct snd_compr_tstamp64 *tstamp);
- 	int (*copy)(struct snd_soc_component *component,
- 		    struct snd_compr_stream *stream, char __user *buf,
- 		    size_t count);
-@@ -499,7 +499,7 @@ int snd_soc_component_compr_get_codec_caps(struct snd_compr_stream *cstream,
- 					   struct snd_compr_codec_caps *codec);
- int snd_soc_component_compr_ack(struct snd_compr_stream *cstream, size_t bytes);
- int snd_soc_component_compr_pointer(struct snd_compr_stream *cstream,
--				    struct snd_compr_tstamp *tstamp);
-+				    struct snd_compr_tstamp64 *tstamp);
- int snd_soc_component_compr_copy(struct snd_compr_stream *cstream,
- 				 char __user *buf, size_t count);
- int snd_soc_component_compr_set_metadata(struct snd_compr_stream *cstream,
-diff --git a/include/sound/soc-dai.h b/include/sound/soc-dai.h
-index d19ab5572d2b..38ee6e158102 100644
---- a/include/sound/soc-dai.h
-+++ b/include/sound/soc-dai.h
-@@ -256,7 +256,7 @@ int snd_soc_dai_compr_ack(struct snd_soc_dai *dai,
- 			  size_t bytes);
- int snd_soc_dai_compr_pointer(struct snd_soc_dai *dai,
- 			      struct snd_compr_stream *cstream,
--			      struct snd_compr_tstamp *tstamp);
-+			      struct snd_compr_tstamp64 *tstamp);
- int snd_soc_dai_compr_set_metadata(struct snd_soc_dai *dai,
- 				   struct snd_compr_stream *cstream,
- 				   struct snd_compr_metadata *metadata);
-@@ -383,8 +383,9 @@ struct snd_soc_cdai_ops {
- 			struct snd_compr_metadata *, struct snd_soc_dai *);
- 	int (*trigger)(struct snd_compr_stream *, int,
- 			struct snd_soc_dai *);
--	int (*pointer)(struct snd_compr_stream *,
--			struct snd_compr_tstamp *, struct snd_soc_dai *);
-+	int (*pointer)(struct snd_compr_stream *stream,
-+		       struct snd_compr_tstamp64 *tstamp,
-+		       struct snd_soc_dai *dai);
- 	int (*ack)(struct snd_compr_stream *, size_t,
- 			struct snd_soc_dai *);
- };
 diff --git a/include/uapi/sound/compress_offload.h b/include/uapi/sound/compress_offload.h
-index d62eb93af0ed..abd0ea3f86ee 100644
+index abd0ea3f86ee..70b8921601f9 100644
 --- a/include/uapi/sound/compress_offload.h
 +++ b/include/uapi/sound/compress_offload.h
-@@ -56,6 +56,25 @@ struct snd_compr_tstamp {
- 	__u32 sampling_rate;
- } __attribute__((packed, aligned(4)));
+@@ -13,8 +13,7 @@
+ #include <sound/asound.h>
+ #include <sound/compress_params.h>
  
-+/**
-+ * struct snd_compr_tstamp64 - timestamp descriptor with fields in 64 bit
-+ * @byte_offset: Byte offset in ring buffer to DSP
-+ * @copied_total: Total number of bytes copied from/to ring buffer to/by DSP
-+ * @pcm_frames: Frames decoded or encoded by DSP. This field will evolve by
-+ *	large steps and should only be used to monitor encoding/decoding
-+ *	progress. It shall not be used for timing estimates.
-+ * @pcm_io_frames: Frames rendered or received by DSP into a mixer or an audio
-+ * output/input. This field should be used for A/V sync or time estimates.
-+ * @sampling_rate: sampling rate of audio
-+ */
-+struct snd_compr_tstamp64 {
-+	__u32 byte_offset;
-+	__u64 copied_total;
-+	__u64 pcm_frames;
-+	__u64 pcm_io_frames;
-+	__u32 sampling_rate;
-+} __attribute__((packed, aligned(4)));
-+
+-
+-#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 3, 0)
++#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 4, 0)
  /**
-  * struct snd_compr_avail - avail descriptor
-  * @avail: Number of bytes available in ring buffer for writing/reading
+  * struct snd_compressed_buffer - compressed buffer
+  * @fragment_size: size of buffer fragment in bytes
+@@ -208,6 +207,7 @@ struct snd_compr_task_status {
+  * Note: only codec params can be changed runtime and stream params cant be
+  * SNDRV_COMPRESS_GET_PARAMS: Query codec params
+  * SNDRV_COMPRESS_TSTAMP: get the current timestamp value
++ * SNDRV_COMPRESS_TSTAMP64: get the current timestamp value in 64 bit format
+  * SNDRV_COMPRESS_AVAIL: get the current buffer avail value.
+  * This also queries the tstamp properties
+  * SNDRV_COMPRESS_PAUSE: Pause the running stream
+@@ -230,6 +230,7 @@ struct snd_compr_task_status {
+ 						 struct snd_compr_metadata)
+ #define SNDRV_COMPRESS_TSTAMP		_IOR('C', 0x20, struct snd_compr_tstamp)
+ #define SNDRV_COMPRESS_AVAIL		_IOR('C', 0x21, struct snd_compr_avail)
++#define SNDRV_COMPRESS_TSTAMP64		_IOR('C', 0x22, struct snd_compr_tstamp64)
+ #define SNDRV_COMPRESS_PAUSE		_IO('C', 0x30)
+ #define SNDRV_COMPRESS_RESUME		_IO('C', 0x31)
+ #define SNDRV_COMPRESS_START		_IO('C', 0x32)
 diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index a66f258cafaa..d3164aa07158 100644
+index d3164aa07158..445220fdb6a0 100644
 --- a/sound/core/compress_offload.c
 +++ b/sound/core/compress_offload.c
-@@ -176,14 +176,25 @@ static int snd_compr_free(struct inode *inode, struct file *f)
- 	return 0;
+@@ -736,18 +736,23 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
+ 	return retval;
  }
  
-+static void
-+snd_compr_tstamp32_from_64(struct snd_compr_tstamp *tstamp32,
-+			   const struct snd_compr_tstamp64 *tstamp64)
-+{
-+	tstamp32->byte_offset = tstamp64->byte_offset;
-+	tstamp32->copied_total = (u32)tstamp64->copied_total;
-+	tstamp32->pcm_frames = (u32)tstamp64->pcm_frames;
-+	tstamp32->pcm_io_frames = (u32)tstamp64->pcm_io_frames;
-+	tstamp32->sampling_rate = tstamp64->sampling_rate;
-+}
-+
- static int snd_compr_update_tstamp(struct snd_compr_stream *stream,
--		struct snd_compr_tstamp *tstamp)
-+				   struct snd_compr_tstamp64 *tstamp)
+-static inline int
+-snd_compr_tstamp(struct snd_compr_stream *stream, unsigned long arg)
++static inline int snd_compr_tstamp(struct snd_compr_stream *stream,
++				   unsigned long arg, bool is_32bit)
  {
- 	if (!stream->ops->pointer)
- 		return -ENOTSUPP;
- 	stream->ops->pointer(stream, tstamp);
--	pr_debug("dsp consumed till %d total %d bytes\n",
--		tstamp->byte_offset, tstamp->copied_total);
-+	pr_debug("dsp consumed till %u total %llu bytes\n", tstamp->byte_offset,
-+		 tstamp->copied_total);
- 	if (stream->direction == SND_COMPRESS_PLAYBACK)
- 		stream->runtime->total_bytes_transferred = tstamp->copied_total;
- 	else
-@@ -194,8 +205,11 @@ static int snd_compr_update_tstamp(struct snd_compr_stream *stream,
- static size_t snd_compr_calc_avail(struct snd_compr_stream *stream,
- 		struct snd_compr_avail *avail)
- {
-+	struct snd_compr_tstamp64 tstamp64 = { 0 };
-+
- 	memset(avail, 0, sizeof(*avail));
--	snd_compr_update_tstamp(stream, &avail->tstamp);
-+	snd_compr_update_tstamp(stream, &tstamp64);
-+	snd_compr_tstamp32_from_64(&avail->tstamp, &tstamp64);
- 	/* Still need to return avail even if tstamp can't be filled in */
- 
- 	if (stream->runtime->total_bytes_available == 0 &&
-@@ -204,9 +218,9 @@ static size_t snd_compr_calc_avail(struct snd_compr_stream *stream,
- 		pr_debug("detected init and someone forgot to do a write\n");
- 		return stream->runtime->buffer_size;
- 	}
--	pr_debug("app wrote %lld, DSP consumed %lld\n",
--			stream->runtime->total_bytes_available,
--			stream->runtime->total_bytes_transferred);
-+	pr_debug("app wrote %llu, DSP consumed %llu\n",
-+		 stream->runtime->total_bytes_available,
-+		 stream->runtime->total_bytes_transferred);
- 	if (stream->runtime->total_bytes_available ==
- 				stream->runtime->total_bytes_transferred) {
- 		if (stream->direction == SND_COMPRESS_PLAYBACK) {
-@@ -223,7 +237,7 @@ static size_t snd_compr_calc_avail(struct snd_compr_stream *stream,
- 	if (stream->direction == SND_COMPRESS_PLAYBACK)
- 		avail->avail = stream->runtime->buffer_size - avail->avail;
- 
--	pr_debug("ret avail as %lld\n", avail->avail);
-+	pr_debug("ret avail as %llu\n", avail->avail);
- 	return avail->avail;
- }
- 
-@@ -274,8 +288,7 @@ static int snd_compr_write_data(struct snd_compr_stream *stream,
- 		      (app_pointer * runtime->buffer_size);
- 
- 	dstn = runtime->buffer + app_pointer;
--	pr_debug("copying %ld at %lld\n",
--			(unsigned long)count, app_pointer);
-+	pr_debug("copying %lu at %llu\n", (unsigned long)count, app_pointer);
- 	if (count < runtime->buffer_size - app_pointer) {
- 		if (copy_from_user(dstn, buf, count))
- 			return -EFAULT;
-@@ -318,7 +331,7 @@ static ssize_t snd_compr_write(struct file *f, const char __user *buf,
- 	}
- 
- 	avail = snd_compr_get_avail(stream);
--	pr_debug("avail returned %ld\n", (unsigned long)avail);
-+	pr_debug("avail returned %lu\n", (unsigned long)avail);
- 	/* calculate how much we can write to buffer */
- 	if (avail > count)
- 		avail = count;
-@@ -374,7 +387,7 @@ static ssize_t snd_compr_read(struct file *f, char __user *buf,
- 	}
- 
- 	avail = snd_compr_get_avail(stream);
--	pr_debug("avail returned %ld\n", (unsigned long)avail);
-+	pr_debug("avail returned %lu\n", (unsigned long)avail);
- 	/* calculate how much we can read from buffer */
- 	if (avail > count)
- 		avail = count;
-@@ -443,7 +456,7 @@ static __poll_t snd_compr_poll(struct file *f, poll_table *wait)
- #endif
- 
- 	avail = snd_compr_get_avail(stream);
--	pr_debug("avail is %ld\n", (unsigned long)avail);
-+	pr_debug("avail is %lu\n", (unsigned long)avail);
- 	/* check if we have at least one fragment to fill */
- 	switch (runtime->state) {
- 	case SNDRV_PCM_STATE_DRAINING:
-@@ -726,13 +739,18 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
- static inline int
- snd_compr_tstamp(struct snd_compr_stream *stream, unsigned long arg)
- {
--	struct snd_compr_tstamp tstamp = {0};
-+	struct snd_compr_tstamp64 tstamp64 = { 0 };
-+	struct snd_compr_tstamp tstamp32 = { 0 };
+ 	struct snd_compr_tstamp64 tstamp64 = { 0 };
+ 	struct snd_compr_tstamp tstamp32 = { 0 };
++	const void *copy_from = &tstamp64;
++	size_t copy_size = sizeof(tstamp64);
  	int ret;
  
--	ret = snd_compr_update_tstamp(stream, &tstamp);
--	if (ret == 0)
-+	ret = snd_compr_update_tstamp(stream, &tstamp64);
-+	if (ret == 0) {
-+		snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
- 		ret = copy_to_user((struct snd_compr_tstamp __user *)arg,
--			&tstamp, sizeof(tstamp)) ? -EFAULT : 0;
-+				   &tstamp32, sizeof(tstamp32)) ?
-+			      -EFAULT :
-+			      0;
-+	}
- 	return ret;
- }
+ 	ret = snd_compr_update_tstamp(stream, &tstamp64);
+ 	if (ret == 0) {
+-		snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
+-		ret = copy_to_user((struct snd_compr_tstamp __user *)arg,
+-				   &tstamp32, sizeof(tstamp32)) ?
++		if (is_32bit) {
++			snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
++			copy_from = &tstamp32;
++			copy_size = sizeof(tstamp32);
++		}
++		ret = copy_to_user((void __user *)arg, copy_from, copy_size) ?
+ 			      -EFAULT :
+ 			      0;
+ 	}
+@@ -1327,7 +1332,9 @@ static long snd_compr_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
  
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 8a1d5cc75d6c..f197034fd594 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -173,7 +173,7 @@ struct wm_adsp_compr {
- 	struct snd_compressed_buffer size;
- 
- 	u32 *raw_buf;
--	unsigned int copied_total;
-+	u64 copied_total;
- 
- 	unsigned int sample_rate;
- 
-@@ -1860,7 +1860,7 @@ static int wm_adsp_buffer_reenable_irq(struct wm_adsp_compr_buf *buf)
- 
- int wm_adsp_compr_pointer(struct snd_soc_component *component,
- 			  struct snd_compr_stream *stream,
--			  struct snd_compr_tstamp *tstamp)
-+			  struct snd_compr_tstamp64 *tstamp)
- {
- 	struct wm_adsp_compr *compr = stream->runtime->private_data;
- 	struct wm_adsp *dsp = compr->dsp;
-diff --git a/sound/soc/codecs/wm_adsp.h b/sound/soc/codecs/wm_adsp.h
-index 25210d404bf1..8035fda71f8d 100644
---- a/sound/soc/codecs/wm_adsp.h
-+++ b/sound/soc/codecs/wm_adsp.h
-@@ -131,7 +131,7 @@ int wm_adsp_compr_trigger(struct snd_soc_component *component,
- int wm_adsp_compr_handle_irq(struct wm_adsp *dsp);
- int wm_adsp_compr_pointer(struct snd_soc_component *component,
- 			  struct snd_compr_stream *stream,
--			  struct snd_compr_tstamp *tstamp);
-+			  struct snd_compr_tstamp64 *tstamp);
- int wm_adsp_compr_copy(struct snd_soc_component *component,
- 		       struct snd_compr_stream *stream,
- 		       char __user *buf, size_t count);
-diff --git a/sound/soc/intel/atom/sst-mfld-platform-compress.c b/sound/soc/intel/atom/sst-mfld-platform-compress.c
-index 89c9c5ad6b21..9dfb0a814b94 100644
---- a/sound/soc/intel/atom/sst-mfld-platform-compress.c
-+++ b/sound/soc/intel/atom/sst-mfld-platform-compress.c
-@@ -18,6 +18,7 @@
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include <sound/compress_driver.h>
-+#include <asm/div64.h>
- #include "sst-mfld-platform.h"
- 
- /* compress stream operations */
-@@ -202,15 +203,16 @@ static int sst_platform_compr_trigger(struct snd_soc_component *component,
- 
- static int sst_platform_compr_pointer(struct snd_soc_component *component,
- 				      struct snd_compr_stream *cstream,
--				      struct snd_compr_tstamp *tstamp)
-+				      struct snd_compr_tstamp64 *tstamp)
- {
- 	struct sst_runtime_stream *stream;
-+	u64 temp_copied_total = tstamp->copied_total;
- 
--	stream  = cstream->runtime->private_data;
-+	stream = cstream->runtime->private_data;
- 	stream->compr_ops->tstamp(sst->dev, stream->id, tstamp);
--	tstamp->byte_offset = tstamp->copied_total %
--				 (u32)cstream->runtime->buffer_size;
--	pr_debug("calc bytes offset/copied bytes as %d\n", tstamp->byte_offset);
-+	tstamp->byte_offset =
-+		do_div(temp_copied_total, cstream->runtime->buffer_size);
-+	pr_debug("calc bytes offset/copied bytes as %u\n", tstamp->byte_offset);
- 	return 0;
- }
- 
-diff --git a/sound/soc/intel/atom/sst-mfld-platform.h b/sound/soc/intel/atom/sst-mfld-platform.h
-index 8b5777d3229a..a0e33f7f01c5 100644
---- a/sound/soc/intel/atom/sst-mfld-platform.h
-+++ b/sound/soc/intel/atom/sst-mfld-platform.h
-@@ -105,7 +105,7 @@ struct compress_sst_ops {
- 	int (*stream_pause_release)(struct device *dev,	unsigned int str_id);
- 
- 	int (*tstamp)(struct device *dev, unsigned int str_id,
--			struct snd_compr_tstamp *tstamp);
-+		      struct snd_compr_tstamp64 *tstamp);
- 	int (*ack)(struct device *dev, unsigned int str_id,
- 			unsigned long bytes);
- 	int (*close)(struct device *dev, unsigned int str_id);
-diff --git a/sound/soc/intel/atom/sst/sst_drv_interface.c b/sound/soc/intel/atom/sst/sst_drv_interface.c
-index 8bb27f86eb65..2646c4632ca1 100644
---- a/sound/soc/intel/atom/sst/sst_drv_interface.c
-+++ b/sound/soc/intel/atom/sst/sst_drv_interface.c
-@@ -326,7 +326,7 @@ static int sst_cdev_stream_partial_drain(struct device *dev,
- }
- 
- static int sst_cdev_tstamp(struct device *dev, unsigned int str_id,
--		struct snd_compr_tstamp *tstamp)
-+			   struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_sst_tstamp fw_tstamp = {0,};
- 	struct stream_info *stream;
-@@ -349,10 +349,11 @@ static int sst_cdev_tstamp(struct device *dev, unsigned int str_id,
- 			(u64)stream->num_ch * SST_GET_BYTES_PER_SAMPLE(24));
- 	tstamp->sampling_rate = fw_tstamp.sampling_frequency;
- 
--	dev_dbg(dev, "PCM  = %u\n", tstamp->pcm_io_frames);
--	dev_dbg(dev, "Ptr Query on strid = %d  copied_total %d, decodec %d\n",
-+	dev_dbg(dev, "PCM  = %llu\n", tstamp->pcm_io_frames);
-+	dev_dbg(dev,
-+		"Ptr Query on strid = %d  copied_total %llu, decodec %llu\n",
- 		str_id, tstamp->copied_total, tstamp->pcm_frames);
--	dev_dbg(dev, "rendered %d\n", tstamp->pcm_io_frames);
-+	dev_dbg(dev, "rendered %llu\n", tstamp->pcm_io_frames);
- 
- 	return 0;
- }
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index 2cd522108221..09da26f712a6 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -11,6 +11,7 @@
- #include <sound/soc-dapm.h>
- #include <linux/spinlock.h>
- #include <sound/pcm.h>
-+#include <asm/div64.h>
- #include <asm/dma.h>
- #include <linux/dma-mapping.h>
- #include <sound/pcm_params.h>
-@@ -65,9 +66,9 @@ struct q6apm_dai_rtd {
- 	unsigned int pcm_size;
- 	unsigned int pcm_count;
- 	unsigned int periods;
--	unsigned int bytes_sent;
--	unsigned int bytes_received;
--	unsigned int copied_total;
-+	uint64_t bytes_sent;
-+	uint64_t bytes_received;
-+	uint64_t copied_total;
- 	uint16_t bits_per_sample;
- 	snd_pcm_uframes_t queue_ptr;
- 	bool next_track;
-@@ -575,15 +576,17 @@ static int q6apm_dai_compr_get_codec_caps(struct snd_soc_component *component,
- 
- static int q6apm_dai_compr_pointer(struct snd_soc_component *component,
- 				   struct snd_compr_stream *stream,
--				   struct snd_compr_tstamp *tstamp)
-+				   struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_compr_runtime *runtime = stream->runtime;
- 	struct q6apm_dai_rtd *prtd = runtime->private_data;
- 	unsigned long flags;
-+	uint64_t temp_copied_total;
- 
- 	spin_lock_irqsave(&prtd->lock, flags);
- 	tstamp->copied_total = prtd->copied_total;
--	tstamp->byte_offset = prtd->copied_total % prtd->pcm_size;
-+	temp_copied_total = tstamp->copied_total;
-+	tstamp->byte_offset = do_div(temp_copied_total, prtd->pcm_size);
- 	spin_unlock_irqrestore(&prtd->lock, flags);
- 
- 	return 0;
-@@ -760,21 +763,24 @@ static int q6apm_compr_copy(struct snd_soc_component *component,
- 	size_t copy;
- 	u32 wflags = 0;
- 	u32 app_pointer;
--	u32 bytes_received;
-+	uint64_t bytes_received;
-+	uint64_t temp_bytes_received;
- 	uint32_t bytes_to_write;
--	int avail, bytes_in_flight = 0;
-+	uint64_t avail, bytes_in_flight = 0;
- 
- 	bytes_received = prtd->bytes_received;
-+	temp_bytes_received = bytes_received;
- 
- 	/**
- 	 * Make sure that next track data pointer is aligned at 32 bit boundary
- 	 * This is a Mandatory requirement from DSP data buffers alignment
- 	 */
--	if (prtd->next_track)
-+	if (prtd->next_track) {
- 		bytes_received = ALIGN(prtd->bytes_received, prtd->pcm_count);
-+		temp_bytes_received = bytes_received;
-+	}
- 
--	app_pointer = bytes_received/prtd->pcm_size;
--	app_pointer = bytes_received -  (app_pointer * prtd->pcm_size);
-+	app_pointer = do_div(temp_bytes_received, prtd->pcm_size);
- 	dstn = prtd->dma_buffer.area + app_pointer;
- 
- 	if (count < prtd->pcm_size - app_pointer) {
-diff --git a/sound/soc/qcom/qdsp6/q6asm-dai.c b/sound/soc/qcom/qdsp6/q6asm-dai.c
-index a400c9a31fea..b616ce316d2f 100644
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -14,6 +14,7 @@
- #include <sound/pcm.h>
- #include <linux/spinlock.h>
- #include <sound/compress_driver.h>
-+#include <asm/div64.h>
- #include <asm/dma.h>
- #include <linux/dma-mapping.h>
- #include <sound/pcm_params.h>
-@@ -59,9 +60,9 @@ struct q6asm_dai_rtd {
- 	unsigned int pcm_count;
- 	unsigned int pcm_irq_pos;       /* IRQ position */
- 	unsigned int periods;
--	unsigned int bytes_sent;
--	unsigned int bytes_received;
--	unsigned int copied_total;
-+	uint64_t bytes_sent;
-+	uint64_t bytes_received;
-+	uint64_t copied_total;
- 	uint16_t bits_per_sample;
- 	uint16_t source; /* Encoding source bit mask */
- 	struct audio_client *audio_client;
-@@ -1026,16 +1027,18 @@ static int q6asm_dai_compr_trigger(struct snd_soc_component *component,
- 
- static int q6asm_dai_compr_pointer(struct snd_soc_component *component,
- 				   struct snd_compr_stream *stream,
--				   struct snd_compr_tstamp *tstamp)
-+				   struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_compr_runtime *runtime = stream->runtime;
- 	struct q6asm_dai_rtd *prtd = runtime->private_data;
- 	unsigned long flags;
-+	uint64_t temp_copied_total;
- 
- 	spin_lock_irqsave(&prtd->lock, flags);
- 
- 	tstamp->copied_total = prtd->copied_total;
--	tstamp->byte_offset = prtd->copied_total % prtd->pcm_size;
-+	temp_copied_total = tstamp->copied_total;
-+	tstamp->byte_offset = do_div(temp_copied_total, prtd->pcm_size);
- 
- 	spin_unlock_irqrestore(&prtd->lock, flags);
- 
-@@ -1050,23 +1053,26 @@ static int q6asm_compr_copy(struct snd_soc_component *component,
- 	struct q6asm_dai_rtd *prtd = runtime->private_data;
- 	unsigned long flags;
- 	u32 wflags = 0;
--	int avail, bytes_in_flight = 0;
-+	uint64_t avail, bytes_in_flight = 0;
- 	void *dstn;
- 	size_t copy;
- 	u32 app_pointer;
--	u32 bytes_received;
-+	uint64_t bytes_received;
-+	uint64_t temp_bytes_received;
- 
- 	bytes_received = prtd->bytes_received;
-+	temp_bytes_received = bytes_received;
- 
- 	/**
- 	 * Make sure that next track data pointer is aligned at 32 bit boundary
- 	 * This is a Mandatory requirement from DSP data buffers alignment
- 	 */
--	if (prtd->next_track)
-+	if (prtd->next_track) {
- 		bytes_received = ALIGN(prtd->bytes_received, prtd->pcm_count);
-+		temp_bytes_received = bytes_received;
-+	}
- 
--	app_pointer = bytes_received/prtd->pcm_size;
--	app_pointer = bytes_received -  (app_pointer * prtd->pcm_size);
-+	app_pointer = do_div(temp_bytes_received, prtd->pcm_size);
- 	dstn = prtd->dma_buffer.area + app_pointer;
- 
- 	if (count < prtd->pcm_size - app_pointer) {
-diff --git a/sound/soc/soc-component.c b/sound/soc/soc-component.c
-index 25f5e543ae8d..7976953b20f0 100644
---- a/sound/soc/soc-component.c
-+++ b/sound/soc/soc-component.c
-@@ -637,7 +637,7 @@ int snd_soc_component_compr_ack(struct snd_compr_stream *cstream, size_t bytes)
- EXPORT_SYMBOL_GPL(snd_soc_component_compr_ack);
- 
- int snd_soc_component_compr_pointer(struct snd_compr_stream *cstream,
--				    struct snd_compr_tstamp *tstamp)
-+				    struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
- 	struct snd_soc_component *component;
-diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
-index 01d1d6bee28c..7b81dffc6a93 100644
---- a/sound/soc/soc-compress.c
-+++ b/sound/soc/soc-compress.c
-@@ -457,7 +457,7 @@ static int soc_compr_ack(struct snd_compr_stream *cstream, size_t bytes)
- }
- 
- static int soc_compr_pointer(struct snd_compr_stream *cstream,
--			     struct snd_compr_tstamp *tstamp)
-+			     struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
- 	int ret;
-diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
-index a210089747d0..ff82effa48e5 100644
---- a/sound/soc/soc-dai.c
-+++ b/sound/soc/soc-dai.c
-@@ -772,7 +772,7 @@ EXPORT_SYMBOL_GPL(snd_soc_dai_compr_ack);
- 
- int snd_soc_dai_compr_pointer(struct snd_soc_dai *dai,
- 			      struct snd_compr_stream *cstream,
--			      struct snd_compr_tstamp *tstamp)
-+			      struct snd_compr_tstamp64 *tstamp)
- {
- 	int ret = 0;
- 
-diff --git a/sound/soc/sof/compress.c b/sound/soc/sof/compress.c
-index d7b044f33d79..90b932ae3bab 100644
---- a/sound/soc/sof/compress.c
-+++ b/sound/soc/sof/compress.c
-@@ -361,7 +361,7 @@ static int sof_compr_copy(struct snd_soc_component *component,
- 
- static int sof_compr_pointer(struct snd_soc_component *component,
- 			     struct snd_compr_stream *cstream,
--			     struct snd_compr_tstamp *tstamp)
-+			     struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_sof_pcm *spcm;
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
-diff --git a/sound/soc/sprd/sprd-pcm-compress.c b/sound/soc/sprd/sprd-pcm-compress.c
-index 57bd1a0728ac..4b6ebfa5b033 100644
---- a/sound/soc/sprd/sprd-pcm-compress.c
-+++ b/sound/soc/sprd/sprd-pcm-compress.c
-@@ -85,9 +85,9 @@ struct sprd_compr_stream {
- 	int info_size;
- 
- 	/* Data size copied to IRAM buffer */
--	int copied_total;
-+	u64 copied_total;
- 	/* Total received data size from userspace */
--	int received_total;
-+	u64 received_total;
- 	/* Stage 0 IRAM buffer received data size */
- 	int received_stage0;
- 	/* Stage 1 DDR buffer received data size */
-@@ -513,7 +513,7 @@ static int sprd_platform_compr_trigger(struct snd_soc_component *component,
- 
- static int sprd_platform_compr_pointer(struct snd_soc_component *component,
- 				       struct snd_compr_stream *cstream,
--				       struct snd_compr_tstamp *tstamp)
-+				       struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_compr_runtime *runtime = cstream->runtime;
- 	struct sprd_compr_stream *stream = runtime->private_data;
-diff --git a/sound/soc/sprd/sprd-pcm-dma.h b/sound/soc/sprd/sprd-pcm-dma.h
-index be5e385f5e42..c5935a1367e6 100644
---- a/sound/soc/sprd/sprd-pcm-dma.h
-+++ b/sound/soc/sprd/sprd-pcm-dma.h
-@@ -19,7 +19,7 @@ struct sprd_compr_playinfo {
- 	int total_time;
- 	int current_time;
- 	int total_data_length;
--	int current_data_offset;
-+	u64 current_data_offset;
- };
- 
- struct sprd_compr_params {
-@@ -46,7 +46,7 @@ struct sprd_compr_ops {
- 	int (*stop)(int str_id);
- 	int (*pause)(int str_id);
- 	int (*pause_release)(int str_id);
--	int (*drain)(int received_total);
-+	int (*drain)(u64 received_total);
- 	int (*set_params)(int str_id, struct sprd_compr_params *params);
- };
- 
-diff --git a/sound/soc/uniphier/aio-compress.c b/sound/soc/uniphier/aio-compress.c
-index 4a19d4908ffd..b18af98a552b 100644
---- a/sound/soc/uniphier/aio-compress.c
-+++ b/sound/soc/uniphier/aio-compress.c
-@@ -249,7 +249,7 @@ static int uniphier_aio_compr_trigger(struct snd_soc_component *component,
- 
- static int uniphier_aio_compr_pointer(struct snd_soc_component *component,
- 				      struct snd_compr_stream *cstream,
--				      struct snd_compr_tstamp *tstamp)
-+				      struct snd_compr_tstamp64 *tstamp)
- {
- 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
- 	struct snd_compr_runtime *runtime = cstream->runtime;
+ 	switch (cmd) {
+ 	case SNDRV_COMPRESS_TSTAMP:
+-		return snd_compr_tstamp(stream, arg);
++		return snd_compr_tstamp(stream, arg, true);
++	case SNDRV_COMPRESS_TSTAMP64:
++		return snd_compr_tstamp(stream, arg, false);
+ 	case SNDRV_COMPRESS_AVAIL:
+ 		return snd_compr_ioctl_avail(stream, arg);
+ 	case SNDRV_COMPRESS_PAUSE:
 -- 
 2.50.1.470.g6ba607880d-goog
 
