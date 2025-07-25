@@ -1,160 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-66714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B659B11F9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 15:53:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0B9DB11FA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 15:54:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 348547B65F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 13:51:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8823317FF57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 13:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C926B1DE896;
-	Fri, 25 Jul 2025 13:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67FAA1A2545;
+	Fri, 25 Jul 2025 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="b1UeBBQ2"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qkyxUIg/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="mylSVgUc";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qkyxUIg/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="mylSVgUc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4429F1D7E26
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 13:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E20D1ADC97
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 13:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753451586; cv=none; b=FTWxKR0V1h5VX/1aIZ70sOWRDJ/A6s+zLhs8q3g5Plv7v98RSrG6wJVYRbmHgksGxgwjPzFhNUf/hu2BpuCl8e1QHPnrt4nrsxEoOm8p83mhe9/sEJ2a2NjNBw8uWPKN0FMV8InY2cU5Nxnl4AWmiXNB8Mml+LmIF8YJ/eKa4Pg=
+	t=1753451628; cv=none; b=YSnk4rN98icQzmXkA7w82uUZiENgblELiwY9Of0+cEU3wsOjTbIlWvUSzDpoxCbv/ipnM9VldpL6wqn+Y548B1Wqu8wsJo5Bllv0AhDxkimBkJgqHfwUuK2qg9QeMBxWm6rWRu5s5tHGS4BzvDyby6K1H+N7An08R0iK5Ivq6eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753451586; c=relaxed/simple;
-	bh=N87jvq3BUY2gPXiuHgKyY6u8QFonP5K7Oiq3uLPHJa0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ebWdjn/r8WP1aL+Hp+2PKH3sTNlPGSu9xcQ+2m46BDURZ50Z1M0YCg+YYYqK3HWdSTRAkm1mOyqWYCsTd7eRRqWsa6jY+sPN1PBV739EyV5ekeZTWYeIUESt28lPXGr20gMzWPpQMZNR8go3+MvV4spO1JZD5pMiWyT4YvoGltk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=b1UeBBQ2; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-31220ecc586so2158742a91.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 06:53:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753451584; x=1754056384; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2IFcEZdb1xoyZWA8WbMS+NhaC+YIouhMl5iAhysDSTg=;
-        b=b1UeBBQ2CWeb3ihttbBMCVPLh4eQYLH7n5cSQDfQlTwnmz7znraryDdcYellm6Cxnh
-         Vja2/Zm61hz3jQ4MJ1Uw19HCXnAbOSTsUMSRpLzmdsFRc9pxRhevGRRiA03ziF2G8Ehg
-         nRqKQIcEP8Cxkr8RVIhSx3BoEpeiZ+09yj0yiEQmpNNv9g2xT1WyOsavPvncZDvZT5tN
-         J7i/Hc+jDywesaVRDi3/8DXtOwRieyuhrPEYnchmKRPTQQwU0R6Hfgk/te2Sx2LoK/xq
-         QBFb9joMAULbu2cRe3UX6k1dZYJKsQfigdAe5eptd5LK6whE80c4WFwLteRrLMLxjf4s
-         +uHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753451584; x=1754056384;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2IFcEZdb1xoyZWA8WbMS+NhaC+YIouhMl5iAhysDSTg=;
-        b=aPHOvWniOYfUI5HnZepzKMZk4rDYaSAqqcrBigLY0W3e+6EtyeSymZTCrX6cvNHW+H
-         cuNJx4zwfW/sQoQtcuttOPW7Xq2QJTap6vUdU0GBbA/ydmCtwsPA2jtuOB4uyDyZhvAd
-         TFxCekIk7ye/D6Ocqpw/+8k/JysyXj/BD4C//SPZ9CJg4h2SGXyKMjo0mvVROhl3KQ4M
-         BPXipnunvOPNyTHnuJaEs8FxIwpc61URi7tOLlvFcdZnn8UtCdeuNP2ylAfsll5oKdD0
-         Eusg6zW3Ybz6kRHIej8W8xFDF0aqV5veNI8G1Ei+HCShNPkWoxWwArYY+1bYvidxRDH6
-         2GFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXCb98sWVitjy9vO9h56ffZEV0AimGRH46U7SedyIonVvDOWnNsfLXWv4JXUEM/8vYIIceAJ2AuP6CT+nrR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwruxaS8rgMLREm/Ms2VFAtSwCULx1gOHxEyQ26Bno5gHNOCHW3
-	v/6MQm/zeMArH+woxmGtn7NrX+tr//zVG8jD6ndJFiIVY9N2cNN7I06zpQhFVAxjoKNLITlMncN
-	Yk1LtHQ==
-X-Google-Smtp-Source: AGHT+IFjGdSbLTJQeXBeF3KPsF2x5fp/wtnoZ2iNYJbBIB/HYs8Zqa8zIKSNCWliwPnicno1k0gnFATv6p4=
-X-Received: from pjbsp12.prod.google.com ([2002:a17:90b:52cc:b0:312:1af5:98c9])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:5804:b0:311:f99e:7f4e
- with SMTP id 98e67ed59e1d1-31e779fa061mr2853030a91.16.1753451584187; Fri, 25
- Jul 2025 06:53:04 -0700 (PDT)
-Date: Fri, 25 Jul 2025 06:53:02 -0700
-In-Reply-To: <diqza54tdv3p.fsf@ackerleytng-ctop.c.googlers.com>
+	s=arc-20240116; t=1753451628; c=relaxed/simple;
+	bh=IR/Vi22XVrrga8blVhc5NOXTYz8qtv3NSPAWFSX1P5k=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QmAP8wwoYV6GLC5yt2RJd8Rjj+/t226oYmw0CDLPcCHy7hJPcGMd9vJIkm5pPmjm+ba0FRK3kz48QncTja9syHb+aTRnrXutkk6wMI2+KLSLWUU1pGE2B8O5q6+ZtJtBOUgudshWaOOdUghY6sFBtS/WxR9sRtFcKuVMcUZm96A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qkyxUIg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=mylSVgUc; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qkyxUIg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=mylSVgUc; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B36081F76C;
+	Fri, 25 Jul 2025 13:53:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1753451624; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3cLK0Ic1lz58928Iz6K8Vh5T63JlZ6JcRUL5uTD0Itw=;
+	b=qkyxUIg/j6I2c6xZhFuAxziL5yLCr3g50BeV6GoGssj/qsdFAmnIUXHW7OPe/tbdDt2RsN
+	S4ttrCCXwQWLPoga/dRUVJ0uggiE7RSIZRs+frRE2uhRkuKw5xjPBvsGH52be/79yK6Cjg
+	rTEQjZvcULAQuNn9/bofiZK6UoFZBkk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1753451624;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3cLK0Ic1lz58928Iz6K8Vh5T63JlZ6JcRUL5uTD0Itw=;
+	b=mylSVgUcVKuEv9k7BkSdSINn67s4iOAFvfHbTAHh8KkZET+ZjUZdazgN/4GOtwNLO6kjme
+	3bU10snn4yapTXCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1753451624; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3cLK0Ic1lz58928Iz6K8Vh5T63JlZ6JcRUL5uTD0Itw=;
+	b=qkyxUIg/j6I2c6xZhFuAxziL5yLCr3g50BeV6GoGssj/qsdFAmnIUXHW7OPe/tbdDt2RsN
+	S4ttrCCXwQWLPoga/dRUVJ0uggiE7RSIZRs+frRE2uhRkuKw5xjPBvsGH52be/79yK6Cjg
+	rTEQjZvcULAQuNn9/bofiZK6UoFZBkk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1753451624;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3cLK0Ic1lz58928Iz6K8Vh5T63JlZ6JcRUL5uTD0Itw=;
+	b=mylSVgUcVKuEv9k7BkSdSINn67s4iOAFvfHbTAHh8KkZET+ZjUZdazgN/4GOtwNLO6kjme
+	3bU10snn4yapTXCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 16F511373A;
+	Fri, 25 Jul 2025 13:53:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id zCFeBGiMg2iXRwAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Fri, 25 Jul 2025 13:53:44 +0000
+Date: Fri, 25 Jul 2025 15:53:43 +0200
+Message-ID: <87cy9oidg8.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Joris Verhaegen <verhaegen@google.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	kernel-team@android.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	linux-arm-msm@vger.kernel.org,
+	sound-open-firmware@alsa-project.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 0/3] ALSA: compress_offload: Add 64-bit safe timestamp API
+In-Reply-To: <20250725114249.2086974-1-verhaegen@google.com>
+References: <20250725114249.2086974-1-verhaegen@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-16-tabba@google.com>
- <diqza54tdv3p.fsf@ackerleytng-ctop.c.googlers.com>
-Message-ID: <aIOMPpTWKWoM_O5J@google.com>
-Subject: Re: [PATCH v16 15/22] KVM: x86/mmu: Extend guest_memfd's max mapping
- level to shared mappings
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.80 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	TAGGED_RCPT(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,perex.cz,suse.com,gmail.com,intel.com,linux.intel.com,linux.dev,nxp.com,linux.alibaba.com,socionext.com,android.com,vger.kernel.org,opensource.cirrus.com,alsa-project.org,lists.infradead.org];
+	R_RATELIMIT(0.00)[to_ip_from(RLtwg9tyn6faipwn1aqsxq4m86)];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+X-Spam-Flag: NO
+X-Spam-Score: -1.80
 
-On Thu, Jul 24, 2025, Ackerley Tng wrote:
-> Fuad Tabba <tabba@google.com> writes:
-> >  int kvm_mmu_max_mapping_level(struct kvm *kvm, struct kvm_page_fault *=
-fault,
-> > @@ -3362,8 +3371,9 @@ int kvm_mmu_max_mapping_level(struct kvm *kvm, st=
-ruct kvm_page_fault *fault,
-> >  	if (max_level =3D=3D PG_LEVEL_4K)
-> >  		return PG_LEVEL_4K;
-> > =20
-> > -	if (is_private)
-> > -		host_level =3D kvm_max_private_mapping_level(kvm, fault, slot, gfn);
-> > +	if (is_private || kvm_memslot_is_gmem_only(slot))
-> > +		host_level =3D kvm_gmem_max_mapping_level(kvm, fault, slot, gfn,
-> > +							is_private);
-> >  	else
-> >  		host_level =3D host_pfn_mapping_level(kvm, gfn, slot);
->=20
-> No change required now, would like to point out that in this change
-> there's a bit of an assumption if kvm_memslot_is_gmem_only(), even for
-> shared pages, guest_memfd will be the only source of truth.
+On Fri, 25 Jul 2025 13:42:42 +0200,
+Joris Verhaegen wrote:
+> 
+> The current compress offload timestamping API relies on struct
+> snd_compr_tstamp, whose cumulative counters like copied_total are
+> defined as __u32. On long-running high-resolution audio streams, these
+> 32-bit counters can overflow, causing incorrect availability
+> calculations.
+> 
+> This patch series transitions to a 64-bit safe API to solve the problem
+> while maintaining perfect backward compatibility with the existing UAPI.
+> The pointer operation is reworked to use a new timestamp struct with
+> 64-bit fields for the cumulative counters, named snd_compr_tstamp64.
+> ASoC drivers are updated to use the 64-bit structures. Corresponding
+> ioctls are added to expose them to user-space.
+> 
+> The series is structured as follows:
+> 
+> Patch 1: Updates the pointer op, refactors the core logic and ASoC
+> drivers to use it, and defines the new UAPI structs.
+> 
+> Patch 2: Exposes the SNDRV_COMPRESS_TSTAMP64 ioctl.
+> 
+> Patch 3: Exposes the corresponding SNDRV_COMPRESS_AVAIL64 ioctl.
+> 
+> This series has been tested on a Pixel 9 device. All compress offload
+> use cases, including long-running playback, were verified to work
+> correctly with the new 64-bit API.
+> 
+> Thanks,
+> Joris (George) Verhaegen
+> 
+> Signed-off-by: Joris Verhaegen <verhaegen@google.com>
 
-It's not an assumption, it's a hard requirement.
+Through a quick glance, the patches look OK, but since it's too late
+for 6.17 merge window for such a non-trivial core API change, so I'll
+postpone the merge for 6.18.
 
-> This holds now because shared pages are always split to 4K, but if
-> shared pages become larger, might mapping in the host actually turn out
-> to be smaller?
 
-Yes, the host userspace mappens could be smaller, and supporting that scena=
-rio is
-very explicitly one of the design goals of guest_memfd.  From commit a7800a=
-a80ea4
-("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory=
-"):
+thanks,
 
- : A guest-first memory subsystem allows for optimizations and enhancements
- : that are kludgy or outright infeasible to implement/support in a generic
- : memory subsystem.  With guest_memfd, guest protections and mapping sizes
- : are fully decoupled from host userspace mappings.   E.g. KVM currently
- : doesn't support mapping memory as writable in the guest without it also
- : being writable in host userspace, as KVM's ABI uses VMA protections to
- : define the allow guest protection.  Userspace can fudge this by
- : establishing two mappings, a writable mapping for the guest and readable
- : one for itself, but that=E2=80=99s suboptimal on multiple fronts.
- :=20
- : Similarly, KVM currently requires the guest mapping size to be a strict
- : subset of the host userspace mapping size, e.g. KVM doesn=E2=80=99t supp=
-ort
- : creating a 1GiB guest mapping unless userspace also has a 1GiB guest
- : mapping.  Decoupling the mappings sizes would allow userspace to precise=
-ly
- : map only what is needed without impacting guest performance, e.g. to
- : harden against unintentional accesses to guest memory.
+Takashi
 
