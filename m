@@ -1,133 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-66725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BC55B12084
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 17:01:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4683FB120AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 17:13:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 389865884D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 15:01:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3C18E7B3547
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 15:12:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECFB12ECD25;
-	Fri, 25 Jul 2025 15:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4A842EE5ED;
+	Fri, 25 Jul 2025 15:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DkIOIGsn"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KAIGvhBQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1931B4121
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 15:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0936F2BDC19;
+	Fri, 25 Jul 2025 15:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753455647; cv=none; b=bq8tYhNelHvzLz6mb3xmtWOBggRELmIpwMIYKT3apyhB2ymhO0Vx0XW87vf03CqLQcBQU1cIAep5GfwdqlTt8he2u5KiS1dD8I7XFxpp5ofk/L92WlTuajjo0RRyT4XS0Vob0NXe6Zvqq2p4EBOubJ0rZPDE4crOwTl1417zWxA=
+	t=1753456414; cv=none; b=S3QkA6tOBrSNGTw8+bU7Uk6fXi31I7x5q7Q3JMz0xA3jE1AMWXyY6zmij4CzD2VfJ/3XzfyKU+d77ydQCfLuGx6RSnHl72fEBVmQ4X/adAHg3JoDK0YS3YzQt3tzGoL+M9fedqpeMX3CaUk126lgOQdsqlz6epTxl5krBCkfpwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753455647; c=relaxed/simple;
-	bh=Ur7y09Z1+O7SAhqfU0l+0bhkFIVqiFXfGXLpvOTzEww=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=IsDZIItQqr8DspwAAHnIIXyANaeQv6tWDqD3U+pVqAORYaH1Rl1T0q7nPJ4g3U5YCMeMmsNZVnJv9v3gGKkTjQiEtrB1GNuAUR1tdRChNtfb6kMv7ldDfrl1imK5yX5jWRWVN2K/KHEMnwg4KktssbQIVpuYHB8jh70or2dZGes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DkIOIGsn; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a6cdc27438so2015694f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 08:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753455644; x=1754060444; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rI9LR2cRzsXcwfbvdOvrXgKHQ7vsbcB6QBNYtkHWCP4=;
-        b=DkIOIGsnX57qG2z5S9FR0nuPKt9OviXOPgzqt9JwBGAXV7KD0UdXpbWWUSDEgXY7dp
-         v25PoOnpmtyCUX1ITnXQngfZpQk0GoRF1rhlOgRsH4isByrn59045rGQHQYX+qhgJLfs
-         wLM3MpGt1in57XR9FIe59BWIB1thT8ugpU1hOJ1DCtbXljMW5hdOPnfb55iq2QP8i86B
-         W5VpQiby/hxWSszI6jKjJvJ5McYE7MFmERhw70vYmQZPX6nHnG75uvvth0B0/oTZ+mol
-         f7n175VcB3kEdkyt71DQMiM9HAAEapS2sKrPM0XbO5N98ZWQPKmLGbgfi2kcR0IoL+AW
-         EVxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753455644; x=1754060444;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rI9LR2cRzsXcwfbvdOvrXgKHQ7vsbcB6QBNYtkHWCP4=;
-        b=lWwqQWV9/8eBsDvkVhOC/U1jA2aw+R8D1agyZFZPmhT7TAXXzkYHuJBhoHioksecLt
-         Y7CWbpBPVtSebuBPVmV6eM6XkpXvZAHGUy65dgXwI1a695A+xdpYjm0x2lCPSQeu/HVo
-         uVQH9EkPecjfJmgCLT2mQYpTXYKb+uRKLJV4cPiLlx1dyBz5vE4C+VEPp1h/UMwfV+Z+
-         aSlUBdCsf38HGfYNO/0tSoiBG7ZLXnUQvA77Vx2swhF2AgMtO7d1YFEMvAWaBR5RJbRi
-         SLx76uMmLP5ix4gxwbg6FwKUAdlNaD5FZUUbzKTUsMx5WEBH/pOfJT5sE09ziGcaAOzs
-         R68A==
-X-Forwarded-Encrypted: i=1; AJvYcCVa+mtm1o499OGsRXiLVqtSZcrYycmmHlLkPeNCls3o1iKWJBnk6XBJ+Lwb3rG+u3KO+F22T+Q8gLuPiU6V@vger.kernel.org
-X-Gm-Message-State: AOJu0Yye/dYpbOYfh4aMEhgrpKK7IMwkc7AQry8TbYCE2BBI32+sneRg
-	qSq1/OS71tZNa2HtcAyjJMMPlUfNWP5uzTWTnX8B3W3bWBLLG1u2Wz/j52Pgr8XZ25A=
-X-Gm-Gg: ASbGncsKkL4XUVHKMvkOBaxHEKGYIXrS78uS/q1lpDzuugNdzlItJITRTgnXijaL2AJ
-	+f3jFNQ3o/qW0hMTqNGZwVR3t+jSy0vKSV10C2qsfEvxO5m4SECvApve9BkKznEFowqgPMKFRf2
-	8nyR356v3sGvSVSNsoRJTi2BJOlgFwZEfkUl5VgRdIRY1FdjN8FKT22aYhBk3l8jx/23PG9Zl6p
-	R7okOtMF81wQaZ0TF9TiEevXVBvTtA7CUwcs2FRr4SmMT/ro+h374oooL+7W0ku/MCfkEbvZui8
-	ja48+1ukXWNfhirTh7AI22m0NkVo8UfKlAinfeuiF91FOmTqCAuX4dDDA3p8UyfVkK6BMqx2sth
-	+ZacHk8P+SDNz0Ep7K4tWgdp1Sw==
-X-Google-Smtp-Source: AGHT+IH1lZBQZz54Wo2dN2kyzN7dZPNkmJl+cdo/n5TC3R0Hp6JT1si9hRUAqGSlMvqiwpVRFDDeYA==
-X-Received: by 2002:a05:6000:22c8:b0:3a4:d6ed:8e00 with SMTP id ffacd0b85a97d-3b776664d53mr2246131f8f.33.1753455644207;
-        Fri, 25 Jul 2025 08:00:44 -0700 (PDT)
-Received: from [10.1.1.59] ([80.111.64.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778eb2a7asm160745f8f.1.2025.07.25.08.00.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jul 2025 08:00:43 -0700 (PDT)
-Message-ID: <bc14b93d49ee5ec022c29d5c5568c2c1d1c52ab1.camel@linaro.org>
-Subject: Re: [PATCH] scsi: ufs: core: move some irq handling back to hardirq
- (with time limit)
-From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
-To: Bart Van Assche <bvanassche@acm.org>, Alim Akhtar
- <alim.akhtar@samsung.com>,  Avri Altman <avri.altman@wdc.com>, "James E.J.
- Bottomley" <James.Bottomley@HansenPartnership.com>,  "Martin K. Petersen"
- <martin.petersen@oracle.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>, Tudor Ambarus	
- <tudor.ambarus@linaro.org>, Will McVicker <willmcvicker@google.com>, 
- Manivannan Sadhasivam	 <mani@kernel.org>, kernel-team@android.com,
- linux-arm-msm@vger.kernel.org, 	linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Date: Fri, 25 Jul 2025 16:00:42 +0100
-In-Reply-To: <2e7c2be8-dc58-4e18-9297-e8690565583b@acm.org>
-References: <20250724-ufshcd-hardirq-v1-1-6398a52f8f02@linaro.org>
-	 <2e7c2be8-dc58-4e18-9297-e8690565583b@acm.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1-1+build2 
+	s=arc-20240116; t=1753456414; c=relaxed/simple;
+	bh=G0r5tZJJ2DdnPw+tHoSqb+0jE/QYBRuw9Ad6PZ6f45o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UGV62gcSN4ySriYA7kz/og1QBW4yj+3QntoJbFzEac1VLo1xzhvi43zIDtEmZO0YBQORE/4Tg2wKjM13S4mb1tkjpm0O+Z4PFCj5JXhgx57KiV2JvtZ6BI9/Vak3AYetD/RYi4LhqDtM7XalOh4HRWQdzHyNLiztxizrkZ+gKq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KAIGvhBQ; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1753456413; x=1784992413;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=G0r5tZJJ2DdnPw+tHoSqb+0jE/QYBRuw9Ad6PZ6f45o=;
+  b=KAIGvhBQfpecl3lf5malPn946Kpz3G+O2RlE3xCWOmESC8D2/WmsFwYQ
+   4PilPmglhFZNDoAEmZSXpCAbdAZE7wyO0agpiwM2nWYTCeuiqRC8I8QR6
+   BiZwOO6VWxMVKsYnEc2Z7nebXfWa6Bz7dPy4+IrW13GjjeLi5FICPDckQ
+   2ApnvjNhpUGIY6l62+MgTMCj3O5kh4Vjc2e/nMRxhoFAIPwmqxB45Yea/
+   h1pE/eZleNdF6QhPG7+Df6JbsEThWnlzPX476YudURA+iZnw0CXvUkl80
+   KSG2cZHnIKnFC4mLXtIBBq90YhvPemFwFu7KdPPBKaSwQDavfV3qD7ivs
+   g==;
+X-CSE-ConnectionGUID: LVadVNMsTYy9KHFw+IGKHA==
+X-CSE-MsgGUID: I0Ifh21ETn6p6hHScQ1iOg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11503"; a="55005383"
+X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
+   d="scan'208";a="55005383"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 08:13:31 -0700
+X-CSE-ConnectionGUID: hPjDrZYZQOK8o9DuLcPc8A==
+X-CSE-MsgGUID: hhduVdRDT8KCUOMdux2CBg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
+   d="scan'208";a="160695227"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 08:13:17 -0700
+Message-ID: <da2237a8-c271-47b7-b658-fe0746f4100e@intel.com>
+Date: Fri, 25 Jul 2025 23:13:09 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 05/22] KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+ CONFIG_HAVE_KVM_ARCH_GMEM_POPULATE
+To: Sean Christopherson <seanjc@google.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
+ pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org,
+ willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com,
+ chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
+ dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
+ vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
+ mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250723104714.1674617-1-tabba@google.com>
+ <20250723104714.1674617-6-tabba@google.com>
+ <a438c189-4152-4ad4-977e-6a5291a7dd40@intel.com>
+ <aIK2p9TgiNeQOI4s@google.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aIK2p9TgiNeQOI4s@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 2025-07-24 at 09:02 -0700, Bart Van Assche wrote:
-> On 7/24/25 2:54 AM, Andr=C3=A9 Draszik wrote:
-> > @@ -5656,19 +5689,39 @@ static int ufshcd_poll(struct Scsi_Host *shost,=
- unsigned int queue_num)
-> > =C2=A0=C2=A0	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
-> > =C2=A0=C2=A0		=C2=A0 "completed: %#lx; outstanding: %#lx\n", completed_=
-reqs,
-> > =C2=A0=C2=A0		=C2=A0 hba->outstanding_reqs);
-> > -	if (queue_num =3D=3D UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
-> > -		/* Do not complete polled requests from interrupt context. */
-> > +	if (time_limit) {
-> > +		/* Do not complete polled requests from hardirq context. */
-> > =C2=A0=C2=A0		ufshcd_clear_polled(hba, &completed_reqs);
-> > =C2=A0=C2=A0	}
->=20
-> This if-statement and the code inside the if-statement probably can be
-> left out. This if-statement was introduced at a time when the block
-> layer did not support completing polled requests from interrupt context.
-> I think that commit b99182c501c3 ("bio: add pcpu caching for non-polling
-> bio_put") enabled support for completing polled requests from interrupt
-> context. Since this patch touches that if-statement, how about removing
-> it with a separate patch that comes before this patch? Polling can be
-> enabled by adding --hipri=3D1 to the fio command line and by using an I/O
-> engine that supports polling, e.g. pvsync2 or io_uring.
+On 7/25/2025 6:41 AM, Sean Christopherson wrote:
+> On Wed, Jul 23, 2025, Xiaoyao Li wrote:
+>> On 7/23/2025 6:46 PM, Fuad Tabba wrote:
+>>> The original name was vague regarding its functionality. This Kconfig
+>>> option specifically enables and gates the kvm_gmem_populate() function,
+>>> which is responsible for populating a GPA range with guest data.
+>>>
+>>> The new name, HAVE_KVM_ARCH_GMEM_POPULATE, describes the purpose of the
+>>> option: to enable arch-specific guest_memfd population mechanisms. It
+>>> also follows the same pattern as the other HAVE_KVM_ARCH_* configuration
+>>> options.
+>>>
+>>> This improves clarity for developers and ensures the name accurately
+>>> reflects the functionality it controls, especially as guest_memfd
+>>> support expands beyond purely "private" memory scenarios.
+>>>
+>>> Note that the vm type KVM_X86_SW_PROTECTED_VM does not need the populate
+>>> function. Therefore, ensure that the correct configuration is selected
+>>> when KVM_SW_PROTECTED_VM is enabled.
+>>
+>> the changelog needs to be enhanced. At least it doesn't talk about
+>> KVM_X86_PRIVATE_MEM at all.
+>>
+>> If Sean is going to queue this version, I think he can help refine it when
+>> queuing.
+> 
+> My bad, I simply forgot.  How's this?
 
-Bart, thank you for taking the time to explain and the background info on
-this, very helpful!
+looks good to me.
 
-Cheers,
-Andre'
+> --
+> 
+> The original name was vague regarding its functionality. This Kconfig
+> option specifically enables and gates the kvm_gmem_populate() function,
+> which is responsible for populating a GPA range with guest data.
+> 
+> The new name, HAVE_KVM_ARCH_GMEM_POPULATE, describes the purpose of the
+> option: to enable arch-specific guest_memfd population mechanisms. It
+> also follows the same pattern as the other HAVE_KVM_ARCH_* configuration
+> options.
+> 
+> This improves clarity for developers and ensures the name accurately
+> reflects the functionality it controls, especially as guest_memfd
+> support expands beyond purely "private" memory scenarios.
+> 
+> Temporarily keep KVM_GENERIC_PRIVATE_MEM as an x86-only config so as to
+> minimize the churn, and to hopefully make it easier to see what features
+> require HAVE_KVM_ARCH_GMEM_POPULATE.  On that note, omit GMEM_POPULATE
+> for KVM_X86_SW_PROTECTED_VM, as regular ol' memset() suffices for
+> software-protected VMs.
+> 
+> As for KVM_GENERIC_PRIVATE_MEM, a future change will select KVM_GUEST_MEMFD
+> for all 64-bit KVM builds, at which point the intermedidate config will
+> become obsolete and can/will be dropped.
+> 
+
 
