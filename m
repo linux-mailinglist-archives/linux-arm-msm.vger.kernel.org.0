@@ -1,165 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-66733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF0D5B124EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 21:53:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C6CCB12512
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 22:05:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66964E1840
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 19:52:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34D511CE3A30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 20:05:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4423B24DCEA;
-	Fri, 25 Jul 2025 19:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1909B253355;
+	Fri, 25 Jul 2025 20:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MNdOVYhW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tc23Ptee"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E531E766F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 19:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDB72528E1;
+	Fri, 25 Jul 2025 20:04:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753473168; cv=none; b=jR3n7/9AbekD2pRb9HIIYLKFpDSkdYgcCogAQHYoMMKbx4AAOtRsUliHIay8PgDM/gF2/kCEwUkivhitSXxDiu3OXlsUAwv2Li0PNOsa54C9ICVcLmNHWDjD1AfpqStCS9qUqMCheOAaXcyv/LgR4GwBDIYYavjX58T/0CZPseo=
+	t=1753473888; cv=none; b=PZGOT5v5t8rPKTmxU3p8LWFmXETlrRAmyDDNOxj2gx5GHDQjkRF1abXhzTMTEjHGKi7TGABxUtY2CU7Lq2Q0mucIIumYetYaNE8VR98bi9/gP5gUYCPvxaikap45qejKa8BbvAev4DsmsMGdZ+fX4fAb9yhiilbP1ZQRN5tWaNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753473168; c=relaxed/simple;
-	bh=D/BxQwI45NEctT9RKmkNXq7H6TV6FVvhywdeOEV7K08=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=dRAeb6g4WADIYUQKs6cQD6kU/ZEU0Ogo4omNF3U33zvsWi7l6mcLmyNV5d+EK92aVXGx9aFBg4OoHNIpqsZ4S9Ytnux8j8MgxCxkviWqfET1QSFqMNnJb/Ntb3lsR+QP7e/WYLM9qbPmAAcr8gI9Zf0V32rEOv4aClC8uHEtWYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MNdOVYhW; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2349fe994a9so19848655ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 12:52:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753473166; x=1754077966; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QGGwHKzNdqzja55fvEizh1HPckulPqbm51MIc4WTZ8o=;
-        b=MNdOVYhWreytd/dpsRBCwICFppehR0tFqdpKPXjuC/ahPcH02IaYNvh/P/QlCG3hZQ
-         bHuzFBe3ThTbDLbnzGt6p8D7L8CHzOGVWo65HlFscoSIVEgxthJFTUz/mqYxWBwpiZ2J
-         Sh96tEJ3SggJ398Qspp4Eew4aNbUF/YQNBuJmX/+Iqeg/r63KmHNTYLROHbbWpTABJ13
-         7ynmEz6F/WgSXJYi9RxtQsUI3GPxQvZE8h1M1GukcAWI99adcckXEtczw+feS9/tQOs3
-         6M1n7vzm2isJc7sR1bTz/QwcpQDBMse8K99O16Z69X/rbfg1B6WQObppx6y0n1WoSKTV
-         hGHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753473166; x=1754077966;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QGGwHKzNdqzja55fvEizh1HPckulPqbm51MIc4WTZ8o=;
-        b=Iakynp0mq2h4+iS9NA2nlz/XWUkIHzCdgJDJrpHyaU7uBv/fnhtM56SMRusYKGaMpc
-         d5OCQx7SryhR83EZ0JSH3s8OBI0YXve+DOGpJVM5EIRHiGbvFbxDbXG8CzmctPr+IZx5
-         lP6N+us0lLlljZ7sAHlsWj8aBpO4WI5q0+Y0SPSjf/WOoPkM3brWx2XpgUFVE9hEIhIL
-         SwKzi4tdnRoIJCrAHybdKWRQPrQffuOV7p5uwL6kA3SsMTeySqzQkDHDoiz7534qluVq
-         5PvynfbESkZD4sqEvuIsrRZOE66yp9coIVruVAn7W13Q4YFnQSKVJG6EyUc693v1JFuq
-         rYDg==
-X-Forwarded-Encrypted: i=1; AJvYcCVLYzQQbD3uzk0QTRPJd/T+XwpYneq+v+QYna0XdYbJ/Y4RFMOYC2EjV6gvynwyxXDhRJqG0Pje/RzyiifW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVCnnKa4kEab+CNWgOu6P9JKTY+rV2MUqZ93swg+fPRqjYAbIR
-	P/CKDbs/cSCCL5ckgPnzVy4qbHuljZ7D1evZEEuqfIhiw7PMrb38OYk9CYxb9dpA/YvHll66pfy
-	hVYDsvQ==
-X-Google-Smtp-Source: AGHT+IGKfp2ZEdZFD4nXV8opXXNSrJNr2MwInumKeRrkZ/nbSrnkah7OjJY3KrZp8KeOnG/KWd4mQPv9Jxk=
-X-Received: from pjbqd15.prod.google.com ([2002:a17:90b:3ccf:b0:314:d44:4108])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:d414:b0:23f:b4c4:710c
- with SMTP id d9443c01a7336-23fb4c4730amr32702405ad.38.1753473165998; Fri, 25
- Jul 2025 12:52:45 -0700 (PDT)
-Date: Fri, 25 Jul 2025 12:52:44 -0700
-In-Reply-To: <diqzseikcbef.fsf@ackerleytng-ctop.c.googlers.com>
+	s=arc-20240116; t=1753473888; c=relaxed/simple;
+	bh=XXKRhRbkPdtCnHz5AqzwvY5fPC+7Cnxs+88nTiPHBpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uqRK3cK/VNHAvDRcjHk08QvQE8SWFNMpyHGRcJ1ogNzAAsy+OlqOO49OayMlj6NY6f9K3jc6fw6TWK8IEMFUGG7fPhy1lj6X16Xse2dW57vO+HyiNxLKoa0uOuQfPb7m3KwK0YQpdeW8IsZWd54btP6Z8QEL4SSbNIx7kMwRuhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tc23Ptee; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D533C4CEE7;
+	Fri, 25 Jul 2025 20:04:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753473887;
+	bh=XXKRhRbkPdtCnHz5AqzwvY5fPC+7Cnxs+88nTiPHBpE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Tc23PteexjiHb5GWF3qs9ivHEy+H5q1OPzvdp+dh44jd8vBm5+0bhm0wPPLVviUXE
+	 h0YSPNOB3hyIqIx/PCzzoOv/mR81NhtPsZLpMBvgtvplYOR6JxNRmua2hgOMzNWGIW
+	 HJq5u0pfTtT/aEUinWJeIBcsw3S1rRKrb8sarmtlkB51WR2vJa4YvJmE9JYC/2fld2
+	 +esltBUXb6HBDed/ccndqjCLbsZmRc8tuAC6Mo7tlwtl3UdGQYyAQBXvcJLBrpf2ZD
+	 GH2ibsBbo78pPXzBPImolt7SgxMAUO8LoRnHNrnnVkGvf2ZMP7hpk50IBI7iE5H+WW
+	 tmW2/vlOh+DXA==
+Date: Fri, 25 Jul 2025 13:04:45 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Russell King
+ <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Christophe
+ Leroy <christophe.leroy@csgroup.eu>, Herve Codina
+ <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>, Heiner
+ Kallweit <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
+ =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
+ <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
+ <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
+ mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
+ devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
+ Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v10 00/15] net: phy: Introduce PHY ports
+ representation
+Message-ID: <20250725130445.32e0307f@kernel.org>
+In-Reply-To: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
+References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-16-tabba@google.com>
- <diqza54tdv3p.fsf@ackerleytng-ctop.c.googlers.com> <aIOMPpTWKWoM_O5J@google.com>
- <diqzy0sccjfz.fsf@ackerleytng-ctop.c.googlers.com> <aIO7PRBzpFqk8D13@google.com>
- <diqzseikcbef.fsf@ackerleytng-ctop.c.googlers.com>
-Message-ID: <aIPgjOLq8erW06gK@google.com>
-Subject: Re: [PATCH v16 15/22] KVM: x86/mmu: Extend guest_memfd's max mapping
- level to shared mappings
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 25, 2025, Ackerley Tng wrote:
-> Sean Christopherson <seanjc@google.com> writes:
-> > Invoking host_pfn_mapping_level() isn't just undesirable, it's flat out wrong, as
-> > KVM will not verify slot->userspace_addr actually points at the (same) guest_memfd
-> > instance.
-> >
-> 
-> This is true too, that invoking host_pfn_mapping_level() could return
-> totally wrong information if slot->userspace_addr points somewhere else
-> completely.
-> 
-> What if slot->userspace_addr is set up to match the fd+offset in the
-> same guest_memfd, and kvm_gmem_max_mapping_level() returns 2M but it's
-> actually mapped into the host at 4K?
-> 
-> A little out of my depth here, but would mappings being recovered to the
-> 2M level be a problem?
+On Tue, 22 Jul 2025 14:16:05 +0200 Maxime Chevallier wrote:
+> Here's V10 of the phy_port series. This version doesn't contain any
+> significant change, it fixes the conflict on the qualcom PHY driver, as
+> well as aggregates the reviews from Rob, K=C3=B6ry and Christophe (thanks
+> again).
 
-No, because again, by design, the host userspace mapping has _zero_ influence on
-the guest mapping.
-
-> For enforcement of shared/private-ness of memory, recovering the
-> mappings to the 2M level is okay since if some part had been private,
-> guest_memfd wouldn't have returned 2M.
-> 
-> As for alignment, if guest_memfd could return 2M to
-> kvm_gmem_max_mapping_level(), then userspace_addr would have been 2M
-> aligned, which would correctly permit mapping recovery to 2M, so that
-> sounds like it works too.
-> 
-> Maybe the right solution here is that since slot->userspace_addr need
-> not point at the same guest_memfd+offset configured in the memslot, when
-> guest_memfd responds to kvm_gmem_max_mapping_level(), it should check if
-> the requested GFN is mapped in host userspace, and if so, return the
-> smaller of the two mapping levels.
-
-NAK.
-
-I don't understand what problem you're trying to solve, at all.  Setting aside
-guest_memfd for the moment, GFN=>HVA mappings are 100% userspace controlled, via
-memslots.  If userspace is accessing guest memory, it is userspace's responsibility
-to ensure it's accessing the _right_ guest memory.
-
-That doesn't change in any way for guest_memfd.  It is still userspace's
-responsibility to ensure any accesses to guest memory through an HVA access the
-correct GFN.
-
-But for guest_memfd guest mappings, the HVA is irrelevant, period.  The only reason
-we aren't going to kill off slot->userspace_addr entirely is so that _KVM_ accesses
-to guest memory Just Work, without any meaningful changes to (a well-behaved)
-userspace.
-
-For CoCo VMs (including pKVM), guest_memfd needs to ensure it doesn't create a
-hugepage that contains mixed memory, e.g. must not create a 2MiB userspace mapping
-if the 2MiB range contains private memory.  But that is simply a sub-case of the
-generate requirement that untrusted entities don't have access to private memory,
-and that KVM doesn't induce memory corruption due to mapping memory as both shared
-and private. 
+Looks like we gathered no reviews from PHY maintainers here.
+We'll need to Defer this series to 6.18. Perhaps we should
+have pinged PHY maintainers a bit more for their input, sorry :(
+--=20
+pw-bot: cr
 
