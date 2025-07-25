@@ -1,133 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-66739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 809C6B125FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 23:09:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD46BB12623
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 23:32:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D8EF1CC0A1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 21:09:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 771763AB8C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 21:31:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F4EA25CC69;
-	Fri, 25 Jul 2025 21:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE7C51C700C;
+	Fri, 25 Jul 2025 21:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="Pb1/uN8e"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ets3r8As"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22818224225;
-	Fri, 25 Jul 2025 21:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB4126281
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 21:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753477738; cv=none; b=gm8BphntC+Ni8ELKurBGrtYo4U4OIpfoDr/5N1Y86vo/YJJiDeYpT2iHS1s0rZNCblQJ405dcWFOcEikaJuxljxZpUbhipe2sjPbhz5g8DuO/wvvOk/v2BOMiXgULnwKBUjPSnaNRAN5PpXN/OfZzGrkEriOWTZv+XGfBb3boJQ=
+	t=1753479120; cv=none; b=A7xaV+AO4/2qURIAdke1NOYFhn1h10Uma8x3iSHDRNspJPOYMLEfU3dfyDuNjuaCFhCQy4wyaTRujykLrJgzSHs+BMGiZVA6qszWKQw/3caQVY4ETAp3WOj3dmE3B0Rmz+zxaP5GQQG88hbgYRMVUKu6Q7ccnSKxU7Lks6I/aPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753477738; c=relaxed/simple;
-	bh=15RyTr4RmZ9HnrJ3N7IHIqyT4wgzIOUmPBJRpd+Hzoc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GFngUNjJfq0M3gMX2QA0r2DxeVaK55Tq+V7oo2W3IvTtQohsjNfOYu0Omkn1WDhHYigtI68tBdTTBVAbL7L+JbVfAmjjTA/FFYd3XxDdluuSgkWtnpCqyOqQTUp3AjAZIAc3vk+OBTjpRb7WgJckia6aXcvUOao7pBta7vbAbpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=Pb1/uN8e; arc=none smtp.client-ip=199.89.3.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 004.mia.mailroute.net (Postfix) with ESMTP id 4bpgTf6025zm174C;
-	Fri, 25 Jul 2025 21:08:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1753477731; x=1756069732; bh=bRiZPnDhWKDfdU+eRq8PCZeA
-	SI8wNiw7DOE1Rlr/5No=; b=Pb1/uN8epUgzcEivLUfApsnXyhMHKXDpnvyDke9Y
-	HHwLfr2d+HamUy0Y0ity/gc3+pPqFLm1GWkE1PBCyG2YLHZmC2keMtMGTZhKPnnb
-	e77Pd+B2Vvb1+mRseZNH3zKKtP4cS2qWjaSNVXuMw5KuzvZQjroHAxuTZlin2653
-	M5Fr6GtrQtjljqrMmkFfoAXSOhw4tkIJ3OvOsaI2KfVR0AkQHaIcEuqx+iVhdUrj
-	kddkr5de6Nnp1uKMNKJfQt9fZEPKG2uiLe4u+3fAHpKlNrnbUiwH2D/EUXRDytxP
-	xUYIKNUHFZ371ToUwhU2BGouxeCDpMOrUCsKvMCPVtI/Gg==
-X-Virus-Scanned: by MailRoute
-Received: from 004.mia.mailroute.net ([127.0.0.1])
- by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id Y5oojwscMG0B; Fri, 25 Jul 2025 21:08:51 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4bpgTN2xV8zm0yQP;
-	Fri, 25 Jul 2025 21:08:38 +0000 (UTC)
-Message-ID: <c57a2ca7-b0c9-4e52-9d9d-5c06c7f56f1a@acm.org>
-Date: Fri, 25 Jul 2025 14:08:37 -0700
+	s=arc-20240116; t=1753479120; c=relaxed/simple;
+	bh=s8EYSRl4Upj9AAeXNTjEnXg/I8gOZCm1XU7aiYdvk28=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=cq68TwBv8cnwgcY9bfBiX51VZD53LfdTZM8htt3cSQrBgdstW0zFfO7z8Eov/IpKFKAW7NCD4Q++DJlinATlzmmjbfIxf8RkmaKG+BhJKy6aeSYMAF1OWicCn20n9v48OkWsJx2akXeLs+kxWe5Wzsi29HJTnpKcfIPMFsW7EgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ets3r8As; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-74b29ee4f8bso2359742b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 14:31:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1753479119; x=1754083919; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=s/2wQleH7ITFpN7KmyE45uwJ+UkF1jVuCUBrc+xrmHs=;
+        b=Ets3r8AsbhuK//7edbGs8Jo5lqlhzrq8O1n0hExPRip6DcgDNb6unyOaqnCTHWlXZ9
+         /K4Sm8JsPgdMbfxoLP9SacqQkmNzniczb4oVeFbJ3tI/nnE6EI/lLMDzqJz7suwZGUnd
+         R7hVyfndtvrBGkte9FVnx2YbGwpsgIeMDqBlC7XrnpTfKCJWSxursCcOLTeDR3xZF36m
+         xOyexkudcp0dcPZV4P318l8zV9Nw6+hwWv7XPADExC4uwU0WsVi0/VaAfvgwwoG0TzAb
+         OAlJm7SBnFWuzgM8STyeX4ujatz2ZxGe8CsAqS/4b+7G6vBxROnBm7tRUTPkS7cwDxSx
+         1Mmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753479119; x=1754083919;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s/2wQleH7ITFpN7KmyE45uwJ+UkF1jVuCUBrc+xrmHs=;
+        b=u6PcqhvOpcfLRP3t3gAuTz3LdURLLqNkzNB65/lf/ZSjSSPyLWpdM5sufAZyVgfHeS
+         NPhY6hOWQJ18OAXUfAjPlLgRtolMgZ9UhAlev578XUdLsgTNxkkVSOeLa1fdPx1PKOjJ
+         YP8scUvs3jL/OVOrwrTcI4OMN777BGc8ZIvc8mPY64bGs8yoqpBhtJd1OBM2AuC+tJH2
+         dohS5qXpbC0hEBJ/VYhLbVkuHQw4xjLwyqUsp7Xd/K9u7dKfwtX7YNW1uFs2lW1+BTW3
+         iCfbbAOsZtoWyavDp7vJ/SRurcsIXaqMIK+0ViyacN0QkW6jwz8rJeZLbTVmPHjxaUrl
+         AjcA==
+X-Forwarded-Encrypted: i=1; AJvYcCXAKef7I9CszESd2VyayGqgUAU6ZwZAcToBsfOLV/kqov1wns7vfimj7026v5PplcpyRc688KSCVH323tVy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLmIs8uDArPyv4UDdZjeKXzc95qeRI1qVhXaGowP78SxDzmizi
+	vKR7v7R3dB49QtAH5rxxk4xNZ9OL4oYM7cdVZb8kiMHofCZyb1y1KM/3zwk7bYXM4XUnfkGmouq
+	QGIrrvC1LThYIghVrE8HOn3Oc6w==
+X-Google-Smtp-Source: AGHT+IGesKxQTKVmzs1CWmOLMYF7g3871uG3DVQpvVnVgh0Q1qhmnR88/PeohzOlETvzSfBr5Eb7p3CMiXA/OH+/rw==
+X-Received: from pfbfj4.prod.google.com ([2002:a05:6a00:3a04:b0:748:fa96:6db3])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:ac8:b0:74e:a9c0:9b5c with SMTP id d2e1a72fcca58-763358302abmr4894396b3a.13.1753479118583;
+ Fri, 25 Jul 2025 14:31:58 -0700 (PDT)
+Date: Fri, 25 Jul 2025 14:31:57 -0700
+In-Reply-To: <aIPgjOLq8erW06gK@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] scsi: ufs: core: move some irq handling back to
- hardirq (with time limit)
-To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>,
- Tudor Ambarus <tudor.ambarus@linaro.org>,
- Will McVicker <willmcvicker@google.com>,
- Manivannan Sadhasivam <mani@kernel.org>, kernel-team@android.com,
- linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
- <20250725-ufshcd-hardirq-v2-2-884c11e0b0df@linaro.org>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250725-ufshcd-hardirq-v2-2-884c11e0b0df@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-16-tabba@google.com>
+ <diqza54tdv3p.fsf@ackerleytng-ctop.c.googlers.com> <aIOMPpTWKWoM_O5J@google.com>
+ <diqzy0sccjfz.fsf@ackerleytng-ctop.c.googlers.com> <aIO7PRBzpFqk8D13@google.com>
+ <diqzseikcbef.fsf@ackerleytng-ctop.c.googlers.com> <aIPgjOLq8erW06gK@google.com>
+Message-ID: <diqzpldoc5yq.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v16 15/22] KVM: x86/mmu: Extend guest_memfd's max mapping
+ level to shared mappings
+From: Ackerley Tng <ackerleytng@google.com>
+To: Sean Christopherson <seanjc@google.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/25/25 7:16 AM, Andr=C3=A9 Draszik wrote:
-> -	for_each_set_bit(tag, &completed_reqs, hba->nutrs)
-> +	for_each_set_bit(tag, &completed_reqs, hba->nutrs) {
->   		ufshcd_compl_one_cqe(hba, tag, NULL);
-> +		__clear_bit(tag, &completed_reqs);
-> +		if (time_limit && time_after_eq(jiffies, time_limit))
-> +			break;
-> +	}
+Sean Christopherson <seanjc@google.com> writes:
 
-Has it been considered to use time_is_before_eq_jiffies(time_limit)
-instead of open-coding it?
+> On Fri, Jul 25, 2025, Ackerley Tng wrote:
+>> Sean Christopherson <seanjc@google.com> writes:
+>> > Invoking host_pfn_mapping_level() isn't just undesirable, it's flat out wrong, as
+>> > KVM will not verify slot->userspace_addr actually points at the (same) guest_memfd
+>> > instance.
+>> >
+>> 
+>> This is true too, that invoking host_pfn_mapping_level() could return
+>> totally wrong information if slot->userspace_addr points somewhere else
+>> completely.
+>> 
+>> What if slot->userspace_addr is set up to match the fd+offset in the
+>> same guest_memfd, and kvm_gmem_max_mapping_level() returns 2M but it's
+>> actually mapped into the host at 4K?
+>> 
+>> A little out of my depth here, but would mappings being recovered to the
+>> 2M level be a problem?
+>
+> No, because again, by design, the host userspace mapping has _zero_ influence on
+> the guest mapping.
+>
 
-> @@ -5636,15 +5670,34 @@ static int ufshcd_poll(struct Scsi_Host *shost,=
- unsigned int queue_num)
->   	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
->   		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
->   		  hba->outstanding_reqs);
-> -	hba->outstanding_reqs &=3D ~completed_reqs;
-> +
-> +	if (completed_reqs) {
-> +		pending =3D __ufshcd_transfer_req_compl(hba, completed_reqs,
-> +						      time_limit);
-> +		completed_reqs &=3D ~pending;
-> +		hba->outstanding_reqs &=3D ~completed_reqs;
-> +	}
-> +
->   	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
->  =20
-> -	if (completed_reqs)
-> -		__ufshcd_transfer_req_compl(hba, completed_reqs);
+Not trying to solve any problem but mostly trying to understand mapping
+levels better.
 
-This change moves the __ufshcd_transfer_req_compl() call from outside to
-inside the critical section. I expect this to impact performance
-negatively because it makes it significantly more likely that the
-command submission code will have to wait while the completion code is
-holding hba->outstanding_lock. Can this be avoided, e.g. by limiting the
-number of commands that are completed instead of the time spent in
-interrupt context? usecs_to_jiffies(HARDIRQ_TIMELIMIT) will round up
-the time limit anyway from 20 microseconds to 1/HZ (one millisecond?).
+Before guest_memfd, why does kvm_mmu_max_mapping_level() need to do
+host_pfn_mapping_level()?
 
-Thanks,
+Was it about THP folios?
 
-Bart.
+>> For enforcement of shared/private-ness of memory, recovering the
+>> mappings to the 2M level is okay since if some part had been private,
+>> guest_memfd wouldn't have returned 2M.
+>> 
+>> As for alignment, if guest_memfd could return 2M to
+>> kvm_gmem_max_mapping_level(), then userspace_addr would have been 2M
+>> aligned, which would correctly permit mapping recovery to 2M, so that
+>> sounds like it works too.
+>> 
+>> Maybe the right solution here is that since slot->userspace_addr need
+>> not point at the same guest_memfd+offset configured in the memslot, when
+>> guest_memfd responds to kvm_gmem_max_mapping_level(), it should check if
+>> the requested GFN is mapped in host userspace, and if so, return the
+>> smaller of the two mapping levels.
+>
+> NAK.
+>
+> I don't understand what problem you're trying to solve, at all.  Setting aside
+> guest_memfd for the moment, GFN=>HVA mappings are 100% userspace controlled, via
+> memslots.  If userspace is accessing guest memory, it is userspace's responsibility
+> to ensure it's accessing the _right_ guest memory.
+>
+> That doesn't change in any way for guest_memfd.  It is still userspace's
+> responsibility to ensure any accesses to guest memory through an HVA access the
+> correct GFN.
+>
+> But for guest_memfd guest mappings, the HVA is irrelevant, period.  The only reason
+> we aren't going to kill off slot->userspace_addr entirely is so that _KVM_ accesses
+> to guest memory Just Work, without any meaningful changes to (a well-behaved)
+> userspace.
+>
+> For CoCo VMs (including pKVM), guest_memfd needs to ensure it doesn't create a
+> hugepage that contains mixed memory, e.g. must not create a 2MiB userspace mapping
+> if the 2MiB range contains private memory.  But that is simply a sub-case of the
+> generate requirement that untrusted entities don't have access to private memory,
+> and that KVM doesn't induce memory corruption due to mapping memory as both shared
+> and private. 
 
