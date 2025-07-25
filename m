@@ -1,122 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-66722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FAD8B1202A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:33:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3503CB12065
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:55:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 407FF189EDA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:34:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF5974E7EFB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFA0A1C8626;
-	Fri, 25 Jul 2025 14:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA65822A1EF;
+	Fri, 25 Jul 2025 14:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YbLlQ58t"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="oi9+E1QU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C117C190472;
-	Fri, 25 Jul 2025 14:33:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398D51E766F;
+	Fri, 25 Jul 2025 14:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753454024; cv=none; b=G29ERqLzk1eqCfW7foSemCyVZNssewxztZGaQ7C7iWxcqHojpS/XHM3OXMPJIUjguLA4NMTEhSp/PzytrH7eIaMGkGreSX6VEfWyx1i2vy+c8g7il9s96iBAsXBOH5b4swvNyFvFhw9n8MhmcaZDIZtTgnDtwUesdTZd0S8tfR0=
+	t=1753455313; cv=none; b=HNRZuJGI9RCDER1H/S9D4RrTds1IOlXWzz5VEeOyL6al0+85sDmuZnj2jpjGV9Tgbyi3Enl+nAWY7YOWXMNIokS6lCGW05WPJKtBk46/5ARyp2AZHX4UJ4Fv64h/bFnqUlDE7+vwxc6aXd0ohU3KYCJNR7vJj555bKy6U3DBGko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753454024; c=relaxed/simple;
-	bh=dZJ+XcQoCX8HZqiKQVLfki/ABIy/u4NDULHsqYfvNe8=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=u5qDYMXxcNm058H7JpjD3rOvWHcyO1pvCgX+EE8gzE9nb4i+gDWXqVCkM+LilmztqZVR3OvyEWFkb0tDxh2dbybxJlpBRGGEPiRehT48PuiGY4V6mD0ioUgGO8m5yz53G3GIZebnSc/4pspgGRhhQamKbH9kivemgOZq6xq0WL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YbLlQ58t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F54C4CEE7;
-	Fri, 25 Jul 2025 14:33:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753454024;
-	bh=dZJ+XcQoCX8HZqiKQVLfki/ABIy/u4NDULHsqYfvNe8=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=YbLlQ58tkJJKVbeGdJP8IL64Amk0A7Ix7z7VFGT9r30GRlgjoXwjDmFguIX43y21S
-	 1QqHUcFGePVCD/Y1Vrn5N9oAJeVWJlXjykWWW4QrwZB/eO49Ud6BowN+2I/bLnSfQb
-	 yeqaKYjnDETgBeesKdvZ1cyVIM7k2EA1Ohr6sgpauTXihsI7Dy1AI+Y8U3g38zgov0
-	 yqQdHAeXQ2hvLmZRsAfLWrtCyDRTUcW1PRTpXOL69/hnQqfkQ2bt9SJdf5gMupVerV
-	 uz+16UqZ8ZRJQ4WaWrqMPKtUH7u5+FXeYLpdP+oYPr1ihIHSuLMrIjrBOahMMS9ZeW
-	 VuvXBxpqFN5tg==
-Date: Fri, 25 Jul 2025 09:33:43 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1753455313; c=relaxed/simple;
+	bh=ySsrQyQZsReDOvURUlTKLUyfDDo7OmT+KPfcJMZKqvA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gbyhAIkcdKHy7gMOsH+16vh8HJLqE7MVlwEHyQyUi7zLUm8mXRCyeBBlvJrztQLmBevGCGm3/ZdGKl23JVtqDNg1d7A9sDGtzuWuBgDJmeV8MiRVRfZAM/w8/k53Wi2A/ygUT1rdv2s2QFiwIA9NCXDlMySXyXv8u0M3yLapvyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=oi9+E1QU; arc=none smtp.client-ip=199.89.3.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 004.mia.mailroute.net (Postfix) with ESMTP id 4bpWBK4zvVzm0yVZ;
+	Fri, 25 Jul 2025 14:55:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1753455302; x=1756047303; bh=ySsrQyQZsReDOvURUlTKLUyf
+	DDo7OmT+KPfcJMZKqvA=; b=oi9+E1QUrqlM02IzDKeAMW93yVx5BAhLCZCxyAWr
+	kVCKJ/+Gg7jsl3WaWERWTi0fF7nneN6KEAVIXD3T5O7nbX2K0gVS/ZkIER/TTj/Z
+	Sreme/RjmXFL8VPBlh83v7+agKdok12gwiJFK5vOI7T7BvE551NwflZXNO+3mXRa
+	i6FjKdcVYlGjzPML7t9P1Xm8Es1LDVbOGlH1aUkHuV7a80/PxJ0eZJsAjnpcCnNG
+	vRAc+gbG/UnJsmbkDTtz0H7GX52vsKBh/AlwsPqoIErBoq4rRBJEvGkAyjp94Wox
+	0UBb+rh5/Jm+vyycRdS5kB4Mvf4DNWqUZi+Phslm9ndSog==
+X-Virus-Scanned: by MailRoute
+Received: from 004.mia.mailroute.net ([127.0.0.1])
+ by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id a7xvxFBIoncZ; Fri, 25 Jul 2025 14:55:02 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4bpW9t60Xszm0ySc;
+	Fri, 25 Jul 2025 14:54:41 +0000 (UTC)
+Message-ID: <1989e794-6539-4875-9e87-518da0715083@acm.org>
+Date: Fri, 25 Jul 2025 07:54:40 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: cros-qcom-dts-watchers@chromium.org, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <20250725050216.526327-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250725050216.526327-1-krishna.kurapati@oss.qualcomm.com>
-Message-Id: <175345393876.1190053.13346690295209363754.robh@kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Flatten primary usb
- controller node
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] scsi: ufs: core: Don't perform UFS clkscale if host
+ asyn scan in progress
+To: =?UTF-8?B?UGV0ZXIgV2FuZyAo546L5L+h5Y+LKQ==?= <peter.wang@mediatek.com>,
+ "beanhuo@micron.com" <beanhuo@micron.com>,
+ "avri.altman@wdc.com" <avri.altman@wdc.com>,
+ "quic_rampraka@quicinc.com" <quic_rampraka@quicinc.com>,
+ "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+ "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+ "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
+ "quic_ziqichen@quicinc.com" <quic_ziqichen@quicinc.com>,
+ "neil.armstrong@linaro.org" <neil.armstrong@linaro.org>,
+ "luca.weiss@fairphone.com" <luca.weiss@fairphone.com>,
+ "konrad.dybcio@oss.qualcomm.com" <konrad.dybcio@oss.qualcomm.com>,
+ "junwoo80.lee@samsung.com" <junwoo80.lee@samsung.com>,
+ "mani@kernel.org" <mani@kernel.org>,
+ "martin.petersen@oracle.com" <martin.petersen@oracle.com>
+Cc: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+ =?UTF-8?B?VHplLW5hbiBXdSAo5ZCz5r6k5Y2XKQ==?= <Tze-nan.Wu@mediatek.com>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
+ "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+ "James.Bottomley@HansenPartnership.com"
+ <James.Bottomley@HansenPartnership.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20250522081233.2358565-1-quic_ziqichen@quicinc.com>
+ <5f3911ffd2c09b6d86300c3905e9c760698df069.camel@mediatek.com>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <5f3911ffd2c09b6d86300c3905e9c760698df069.camel@mediatek.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
+On 7/25/25 2:13 AM, Peter Wang (=E7=8E=8B=E4=BF=A1=E5=8F=8B) wrote:
+> Could consider luns_avail instead mutex?
 
-On Fri, 25 Jul 2025 10:32:16 +0530, Krishna Kurapati wrote:
-> Flatten primary usb controller node and update to using latest
-> bindings and flattened driver approach.
-> 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> ---
-> Link to RFC:
-> https://lore.kernel.org/all/20250720072125.1514823-1-krishna.kurapati@oss.qualcomm.com/
-> 
-> Changes in v2:
-> Fixed base address.
-> 
->  .../boot/dts/qcom/qcm6490-fairphone-fp5.dts   |  6 +-
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      |  7 +--
->  .../boot/dts/qcom/qcm6490-shift-otter.dts     |  6 +-
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |  6 +-
->  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts       |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  6 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 59 ++++++++-----------
->  .../boot/dts/qcom/sm7325-nothing-spacewar.dts |  6 +-
->  9 files changed, 42 insertions(+), 66 deletions(-)
-> 
+That would be wrong. I think it is essential that scan_mutex is used in
+this patch. Additionally, the lock inversion is between devfreq->lock
+and (c->notifiers)->rwsem so it seems unlikely to me that Ziqi's patch
+is the patch that introduced the reported lock inversion.
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20250725 (exact match)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250725050216.526327-1-krishna.kurapati@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: usb@8cf8800 (qcom,sc7280-dwc3): 'dr_mode' does not match any of the regexes: '^pinctrl-[0-9]+$', '^usb@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+Bart.
 
