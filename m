@@ -1,528 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-66720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A22FB11FED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:16:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D43E5B12025
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:31:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50F231CC4A9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:17:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 290A67A055E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F79E2EBDC3;
-	Fri, 25 Jul 2025 14:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C5A339A8;
+	Fri, 25 Jul 2025 14:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e5RPjWqu"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MqESKguO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296D81F416A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 14:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA1F3234
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 14:31:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753452983; cv=none; b=q1NrpEbB6Jfj7yLugZBC5HhWnOxYN3S32oxZntMgRlBr45tuRK98Krhz+MbBYBZQ+KvmHrYtQq/98EAbXInHkfb0N5rKNLJG+OM5Tnwuw7qsi0zmn3MLIzZHZ08Y2O0/BHUOQ5pVH0Ti+aPA5dyLVXxOMBsUOW9InVZf8K9QePc=
+	t=1753453881; cv=none; b=FMZfDv5yvE2AXT5i0ptJwug01kHDwobuaC6mYAX57RhrW4Qq2o7HF4A7mA9gU6uNMiJKc9SJrBuXWX08E8p3xODY96DkHhK67uNFlJaVFMTsBdDAvQm3C/YGDUuWQRKIbTMv44P3b5pWfnUANvcyrWpxncw/awl5fBUT4HviWz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753452983; c=relaxed/simple;
-	bh=0iuv0CuwWYN9pVhM3tpd+X0oxmalOPxMD79ong3ip58=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B4MeaqCAEsWVesV4++kMUEeeReio1fJQ4MxkgudLZsYF+9UzzRR7zA9XFR1gR8CqIC7MZxb1RBNh7JjyWqu8bgeiCaqjjgKTRicHx9tKzxt+qBwoT7HZCSvQ5A720IVuSLB1fjv5OaDVAgG8OKNaW2XDSMcIZahnmdPyHn15y18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e5RPjWqu; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ae3ec622d2fso345796066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 07:16:20 -0700 (PDT)
+	s=arc-20240116; t=1753453881; c=relaxed/simple;
+	bh=hdTHRGzuOh2e7oTuO84AHI/Xh/FB6b40cEq3EBdmGL4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=V7gyQVTxhGTPTBumwqSKjc+GwRW3E8NCRavo7Gbt8ScaFf0HY3Tjv+AhmiGgd31UUUZvCwtQVimRxlCAkfis8uKUyR+FG+7XGMDs4nzLmBS6FV10jTWAwcAFSriXgeVcz99gBNf3niCYIiH28OWgz51Iib6WSVwtHRONhIcvAwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MqESKguO; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-3141f9ce4e2so3546175a91.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 07:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753452979; x=1754057779; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=19qwY/QEDYUm2dm/vqD5B4okN8i0fK7LHJFqpIvnT/E=;
-        b=e5RPjWqukl8RIJUw0JjYbCJsN0mafJL2ill17BoyPC8hDP9vsVaDdYIK3vqssYHc21
-         Fn1nSLnG5VTYifSwMGmIe9NURqmmZzOJ/P//ZZ34ymr5x8HCb8fhu9PDTxK8apmOOajb
-         lLu4D89IKYZTbWxS5kPGuzO7UJSQqdBkLOUERozlx0xpZJzS5fVB0h5seI/7V4LCDI4G
-         e+NkWShXdlVAYSNQa1sj3cIes+tQ846Y9Qc/rvXRDQYq/j4gN7aWg1AYInwv7eSME9/y
-         s2k2cCdCAzzZ7bxTzvHYm61ru+dGjNds4WpgC2bfveW7gVCLAugNvfO62giTDj+FdtS8
-         ugRQ==
+        d=google.com; s=20230601; t=1753453879; x=1754058679; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sC0769Xg1heGZH8J90EpA5X6mZA0yrvARhBoCeDTa5Y=;
+        b=MqESKguOeZZjpRcluSQ6ojKVAIWiRT9nnMRq07MJ2CmeJdeCvW61MsxT6nGM6MNOOy
+         AuRzb7jQcasRp+7mdvJiC9ZFn16DaGZSgg/xma5IpzQT7dQyVEp21NL6RIdDk3mfbQV6
+         cGnTuBI8aigRozGG62KfwQJR4Bvl5hNymXdbauZSM1mWF+ccG7aQnhDjzFbkLeXgKKqT
+         vNDKhmN4HFug7s3IyYW9HnnQ/cOYpre9x+8I/KL3sOZr/tfgsS692qpJC2kTWnhhhHs/
+         53Gf3cXwt8CExkGRNIZjL5aAXgrrUxj9rYoURN6/Up7fVDlJ7o1AcbeTVnnM0DkV0zDv
+         uCVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753452979; x=1754057779;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=19qwY/QEDYUm2dm/vqD5B4okN8i0fK7LHJFqpIvnT/E=;
-        b=TpAuAgQRiulzq9j6pb1TdAxSA1dSe9JLr4ofwZzqgdq2PdrIV9FQSY0GzPwmLImLtZ
-         Zr4QG+OFAFbMQvPeFmirP8ciQMje3m/AjyIqku97Q6GzVoiRwIoJrazxzJ9k+GBWdN5e
-         JsrdByGLZBGiMpaa7Yi9B5RNCElYwO1z1g1YW8+saF6mEWlP0qa/HxZ91hMOnCHNhSud
-         akhRvOCwyk7FuJEab6gQ4fm3Rpb1GWOytMXUvz9I5VM5RFC+0L6F/MM7aFFpAFj2YcFn
-         yRa1VZPBs8fvYTH9D7a190iuSqzdRrCqV3I5DpCTrYDWbYbUNMPOTvaN24Yh2o4T8cBe
-         sapw==
-X-Forwarded-Encrypted: i=1; AJvYcCWKQtO/GvR7NRhBhdJ4oEcWXguVcc+tDcNWskJxvswIABQ3QdzNSepqrO0dIGGdZwt64Q/XfBWqFtwOk0mL@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyUfOdyGV5fNxvK7S/gD9jLAna5c9PasAaRHcumDoQhgVnlay6
-	DJL4zH3uYGcWSot0Wct6CEYXyKmlMXS+1hIkSKwj9AX4zRU/FWrkqsqF3YiQwq37DC4=
-X-Gm-Gg: ASbGnct4maXUHxFsrY6wq+m2TiTKAt5+EulblgdpZEMvWaZaA/oBf42nWe+Uw1avk57
-	65ndhMnybgHAhdN7uCuV/U35BX/r3twX6LSkSYXZR2j6VmF8n1UwgNdLRa2ohR8Hy4hTW6Jyol/
-	hMlh/Cy/zENKd3zlLvP8AuRfMStqReVn+mlGW4MrTPEL8Zy74uLEN/fXj55oF+XPVcUkGqdrlcE
-	lrnjVrQoHctlRUWqLOvAXfcEGGXFoNsiRpjyrJCMrdSh5cTgMJchiQd0F8ibWY2JSlK+YO6B9d4
-	HlIs4i8CL74cwNp5AnQS1Pruv/2wa2lQdLHIhet4Th+KG/1EOp6/V6wxjl2v1xEiLjJujGCMejm
-	UUj69m0UAxE1Aq8shSNa48kVYPzwMwD0eGFOAtrcYRiF9A/su/7mxCzhEH3y2Tg0P6sTDEmqMc4
-	4FoZr9PQ==
-X-Google-Smtp-Source: AGHT+IEuW1ZoCs+ZSWwE5Bo66CeJoUWJvZNLBXvzG+Kl5PuCvUGyeu+LSCpZQqj+uLNwC/vztfLMOw==
-X-Received: by 2002:a17:907:9708:b0:ade:3bec:ea30 with SMTP id a640c23a62f3a-af61740d12dmr266751566b.1.1753452979088;
-        Fri, 25 Jul 2025 07:16:19 -0700 (PDT)
-Received: from puffmais.c.googlers.com (8.239.204.35.bc.googleusercontent.com. [35.204.239.8])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47f85e60bsm278398966b.96.2025.07.25.07.16.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jul 2025 07:16:18 -0700 (PDT)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Fri, 25 Jul 2025 15:16:16 +0100
-Subject: [PATCH v2 2/2] scsi: ufs: core: move some irq handling back to
- hardirq (with time limit)
+        d=1e100.net; s=20230601; t=1753453879; x=1754058679;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sC0769Xg1heGZH8J90EpA5X6mZA0yrvARhBoCeDTa5Y=;
+        b=HU2PxUueAV82FCIlwKwH1WI9mfwP3jlfLpQ6AO8+r2UGe/7USEGPvya5lY6ei0Jj8k
+         1O4qSkRMkoRAKXctbqsf6oiJCPjY6vXlH5H+4FvdZCabV5QjGH0iGi7MLfVTZ20UxSjd
+         b3WvlpZkEwamluUCLxl5S/wBnes6iXk+GgLx00pH/UH41aYF/ATGLz/8rOXVwAqCwadn
+         9+FdpmmF/4nn2qhYDM9lMwLLVe7lKzwEAupmMAZ4bj0lGOYDLg3kT53yKrb22BRzdfN2
+         N2GkqNdZ1WeNgOG27cC5P9x7gLcJyT5pmN3flaelj6QbL8fRmiqQQltyeS2aHHYfVomz
+         vO/g==
+X-Forwarded-Encrypted: i=1; AJvYcCXad5irWRdAzEjKMn9KTDj7EQhMvwn4a/sylpAEIBpLg6qVV7OyKde+0Gt1p0lbmHnmWMu9ynmlJsP7Lr2u@vger.kernel.org
+X-Gm-Message-State: AOJu0YwF7M2z1qlfE9OqYzGhaLvASxOOL/bnsLxJHq+QWD1Nqygh+9ox
+	F2Slaup4rFIqm5CBfY/x2DMH/TcsLgb+S2yw69JwIlIgF/zX5sVzjIVSgC9htCtlr3SqZNtJUtO
+	eQ7W5sw==
+X-Google-Smtp-Source: AGHT+IE8bQ5HIcB35TZztW6FFUKXkhZH35KfVngtYR8izSfmiidEbwmwtOeAPOCK2rACB2xK1aj7frwF+1I=
+X-Received: from pjbnr22.prod.google.com ([2002:a17:90b:2416:b0:31e:780c:e3d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:554d:b0:31e:3848:c9ee
+ with SMTP id 98e67ed59e1d1-31e77a2f69emr3502891a91.9.1753453879518; Fri, 25
+ Jul 2025 07:31:19 -0700 (PDT)
+Date: Fri, 25 Jul 2025 07:31:17 -0700
+In-Reply-To: <diqz7bzxduyv.fsf@ackerleytng-ctop.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250725-ufshcd-hardirq-v2-2-884c11e0b0df@linaro.org>
-References: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
-In-Reply-To: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, 
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Will McVicker <willmcvicker@google.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, kernel-team@android.com, 
- linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.14.2
+Mime-Version: 1.0
+References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-15-tabba@google.com>
+ <1ff6a90a-3e03-4104-9833-4b07bb84831f@intel.com> <aIK0ZcTJC96XNPvj@google.com>
+ <diqzcy9pdvkk.fsf@ackerleytng-ctop.c.googlers.com> <diqz7bzxduyv.fsf@ackerleytng-ctop.c.googlers.com>
+Message-ID: <aIOVNcp7p2hU-YHM@google.com>
+Subject: Re: [PATCH v16 14/22] KVM: x86/mmu: Enforce guest_memfd's max order
+ when recovering hugepages
+From: Sean Christopherson <seanjc@google.com>
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="us-ascii"
 
-Commit 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service
-routine to a threaded IRQ handler") introduced a massive performance
-drop for various work loads on UFSHC versions < 4 due to the extra
-latency introduced by moving all of the IRQ handling into a threaded
-handler. See below for a summary.
+On Thu, Jul 24, 2025, Ackerley Tng wrote:
+> Ackerley Tng <ackerleytng@google.com> writes:
+> 
+> > Sean Christopherson <seanjc@google.com> writes:
+> >> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> >> index 20dd9f64156e..c4ff8b4028df 100644
+> >> --- a/arch/x86/kvm/mmu/mmu.c
+> >> +++ b/arch/x86/kvm/mmu/mmu.c
+> >> @@ -3302,31 +3302,63 @@ static u8 kvm_max_level_for_order(int order)
+> >>  	return PG_LEVEL_4K;
+> >>  }
+> >>  
+> >> -static u8 kvm_max_private_mapping_level(struct kvm *kvm, kvm_pfn_t pfn,
+> >> -					u8 max_level, int gmem_order)
+> >> +static u8 kvm_max_private_mapping_level(struct kvm *kvm, struct kvm_page_fault *fault,
+> >> +					const struct kvm_memory_slot *slot, gfn_t gfn)
+> >
+> > Would you consider renaming this kvm_max_gmem_mapping_level()? Or
+> > something that doesn't limit the use of this function to private memory?
 
-To resolve this performance drop, move IRQ handling back into hardirq
-context, but apply a time limit which, once expired, will cause the
-remainder of the work to be deferred to the threaded handler.
+Heh, see the next patch, which does exactly that and is appropriately titled
+"KVM: x86/mmu: Extend guest_memfd's max mapping level to shared mappings".
 
-Above commit is trying to avoid unduly delay of other subsystem
-interrupts while the UFS events are being handled. By limiting the
-amount of time spent in hardirq context, we can still ensure that.
+> >> -	u8 req_max_level;
+> >> +	u8 max_level, coco_level;
+> >> +	struct page *page;
+> >> +	kvm_pfn_t pfn;
+> >>  
+> >> -	if (max_level == PG_LEVEL_4K)
+> >> -		return PG_LEVEL_4K;
+> >> +	/* For faults, use the gmem information that was resolved earlier. */
+> >> +	if (fault) {
+> >> +		pfn = fault->pfn;
+> >> +		max_level = fault->max_level;
+> >> +	} else {
+> >> +		/* TODO: Constify the guest_memfd chain. */
+> >> +		struct kvm_memory_slot *__slot = (struct kvm_memory_slot *)slot;
+> >> +		int max_order, r;
+> >> +
+> >> +		r = kvm_gmem_get_pfn(kvm, __slot, gfn, &pfn, &page, &max_order);
+> >> +		if (r)
+> >> +			return PG_LEVEL_4K;
+> >> +
+> >> +		if (page)
+> >> +			put_page(page);
+> >
+> > When I was working on this, I added a kvm_gmem_mapping_order() [1] where
+> > guest_memfd could return the order that this gfn would be allocated at
+> > without actually doing the allocation. Is it okay that an
+> > allocation may be performed here?
 
-The time limit itself was chosen because I have generally seen
-interrupt handling to have been completed within 20 usecs, with the
-occasional spikes of a couple 100 usecs.
+No, it's not.  From a guest_memfd semantics perspective, it'd be ok.  But allocating
+can block, and mmu_lock is held here.
 
-This commits brings UFS performance roughly back to original
-performance, and should still avoid other subsystem's starvation thanks
-to dealing with these spikes.
+I routed this through kvm_gmem_get_pfn(), because for this code to do the right
+thing, KVM needs to the PFN.  That could be plumbed in from the existing SPTE, but
+I don't love the idea of potentially mixing the gmem order for pfn X with pfn Y
+from the SPTE, e.g. if the gmem backing has changed and an invalidation  is pending.
 
-fio results for 4k block size on Pixel 6, all values being the average
-of 5 runs each:
-  read / 1 job      original      after  this commit
-    min IOPS        4,653.60   2,704.40     3,902.80
-    max IOPS        6,151.80   4,847.60     6,103.40
-    avg IOPS        5,488.82   4,226.61     5,314.89
-    cpu % usr           1.85       1.72         1.97
-    cpu % sys          32.46      28.88        33.29
-    bw MB/s            21.46      16.50        20.76
+KVM kinda sorta has such races with non-gmem memory, but for non-gmem KVM will never
+fully consume a "bad" PFN, whereas for this path, KVM could (at least in theory)
+immediately consume the pfn via an RMP lookup.  Which is probably fine?  but I
+don't love it.
 
-  read / 8 jobs     original      after  this commit
-    min IOPS       18,207.80  11,323.00    17,911.80
-    max IOPS       25,535.80  14,477.40    24,373.60
-    avg IOPS       22,529.93  13,325.59    21,868.85
-    cpu % usr           1.70       1.41         1.67
-    cpu % sys          27.89      21.85        27.23
-    bw MB/s            88.10      52.10        84.48
+I assume getting the order will basically get the page/pfn as well, so plumbing
+in the pfn from the SPTE, *knowing* that it could be stale, feels all kinds of
+wrong.
 
-  write / 1 job     original      after  this commit
-    min IOPS        6,524.20   3,136.00     5,988.40
-    max IOPS        7,303.60   5,144.40     7,232.40
-    avg IOPS        7,169.80   4,608.29     7,014.66
-    cpu % usr           2.29       2.34         2.23
-    cpu % sys          41.91      39.34        42.48
-    bw MB/s            28.02      18.00        27.42
+I also don't want to effectively speculatively add kvm_gmem_mapping_order() or
+expand kvm_gmem_get_pfn(), e.g. to say "no create", so what if we just do this?
 
-  write / 8 jobs    original      after  this commit
-    min IOPS       12,685.40  13,783.00    12,622.40
-    max IOPS       30,814.20  22,122.00    29,636.00
-    avg IOPS       21,539.04  18,552.63    21,134.65
-    cpu % usr           2.08       1.61         2.07
-    cpu % sys          30.86      23.88        30.64
-    bw MB/s            84.18      72.54        82.62
+	/* For faults, use the gmem information that was resolved earlier. */
+	if (fault) {
+		pfn = fault->pfn;
+		max_level = fault->max_level;
+	} else {
+		/* TODO: Call into guest_memfd once hugepages are supported. */
+		pfn = KVM_PFN_ERR_FAULT;
+		max_level = PG_LEVEL_4K;
+	}
 
-Closes: https://lore.kernel.org/all/1e06161bf49a3a88c4ea2e7a406815be56114c4f.camel@linaro.org
-Fixes: 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service routine to a threaded IRQ handler")
-Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+	if (max_level == PG_LEVEL_4K)
+		return max_level;
 
----
-v2:
-* update some inline & kerneldoc comments
-* mention 4k block size and 5 runs were used in fio runs
-* add missing jiffies.h include
----
- drivers/ufs/core/ufshcd.c | 191 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 154 insertions(+), 37 deletions(-)
+or alternatively:
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index d8e2eabacd3efbf07458e81cc4d15ba7f05d3913..404a4e075a21e73d22ae6bb89f77f69aebb7cd6a 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -19,6 +19,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/interrupt.h>
-+#include <linux/jiffies.h>
- #include <linux/module.h>
- #include <linux/pm_opp.h>
- #include <linux/regulator/consumer.h>
-@@ -111,6 +112,9 @@ enum {
- /* bMaxNumOfRTT is equal to two after device manufacturing */
- #define DEFAULT_MAX_NUM_RTT 2
- 
-+/* Time limit in usecs for hardirq context */
-+#define HARDIRQ_TIMELIMIT 20
-+
- /* UFSHC 4.0 compliant HC support this mode. */
- static bool use_mcq_mode = true;
- 
-@@ -5603,26 +5607,56 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
-  * __ufshcd_transfer_req_compl - handle SCSI and query command completion
-  * @hba: per adapter instance
-  * @completed_reqs: bitmask that indicates which requests to complete
-+ * @time_limit: time limit in jiffies to not exceed executing command completion
-+ *
-+ * This completes the individual requests as per @completed_reqs with an
-+ * optional time limit. If a time limit is given and it expired before all
-+ * requests were handled, the return value will indicate which requests have not
-+ * been handled.
-+ *
-+ * Return: Bitmask that indicates which requests have not been completed due to
-+ * time limit expiry.
-  */
--static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
--					unsigned long completed_reqs)
-+static unsigned long __ufshcd_transfer_req_compl(struct ufs_hba *hba,
-+						 unsigned long completed_reqs,
-+						 unsigned long time_limit)
- {
- 	int tag;
- 
--	for_each_set_bit(tag, &completed_reqs, hba->nutrs)
-+	for_each_set_bit(tag, &completed_reqs, hba->nutrs) {
- 		ufshcd_compl_one_cqe(hba, tag, NULL);
-+		__clear_bit(tag, &completed_reqs);
-+		if (time_limit && time_after_eq(jiffies, time_limit))
-+			break;
-+	}
-+
-+	/* any bits still set represent unhandled requests due to timeout */
-+	return completed_reqs;
- }
- 
--/*
-- * Return: > 0 if one or more commands have been completed or 0 if no
-- * requests have been completed.
-+/**
-+ * ufshcd_poll_impl - handle SCSI and query command completion helper
-+ * @shost: Scsi_Host instance
-+ * @queue_num: The h/w queue number, or UFSHCD_POLL_FROM_INTERRUPT_CONTEXT when
-+ *             invoked from the interrupt handler
-+ * @time_limit: time limit in jiffies to not exceed executing command completion
-+ * @__pending: Pointer to store any still pending requests in case of time limit
-+ *             expiry
-+ *
-+ * This handles completed commands with an optional time limit. If a time limit
-+ * is given and it expires, @__pending will be set to the requests that could
-+ * not be completed in time and are still pending.
-+ *
-+ * Return: true if one or more commands have been completed, false otherwise.
-  */
--static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
-+static int ufshcd_poll_impl(struct Scsi_Host *shost, unsigned int queue_num,
-+			    unsigned long time_limit, unsigned long *__pending)
- {
- 	struct ufs_hba *hba = shost_priv(shost);
- 	unsigned long completed_reqs, flags;
- 	u32 tr_doorbell;
- 	struct ufs_hw_queue *hwq;
-+	unsigned long pending = 0;
- 
- 	if (hba->mcq_enabled) {
- 		hwq = &hba->uhq[queue_num];
-@@ -5636,15 +5670,34 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
- 	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
- 		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
- 		  hba->outstanding_reqs);
--	hba->outstanding_reqs &= ~completed_reqs;
-+
-+	if (completed_reqs) {
-+		pending = __ufshcd_transfer_req_compl(hba, completed_reqs,
-+						      time_limit);
-+		completed_reqs &= ~pending;
-+		hba->outstanding_reqs &= ~completed_reqs;
-+	}
-+
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
- 
--	if (completed_reqs)
--		__ufshcd_transfer_req_compl(hba, completed_reqs);
-+	if (__pending)
-+		*__pending = pending;
- 
- 	return completed_reqs != 0;
- }
- 
-+/*
-+ * ufshcd_poll - SCSI interface of blk_poll to poll for IO completions
-+ * @shost: Scsi_Host instance
-+ * @queue_num: The h/w queue number
-+ *
-+ * Return: true if one or more commands have been completed, false otherwise.
-+ */
-+static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
-+{
-+	return ufshcd_poll_impl(shost, queue_num, 0, NULL);
-+}
-+
- /**
-  * ufshcd_mcq_compl_pending_transfer - MCQ mode function. It is
-  * invoked from the error handler context or ufshcd_host_reset_and_restore()
-@@ -5698,13 +5751,19 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
- /**
-  * ufshcd_transfer_req_compl - handle SCSI and query command completion
-  * @hba: per adapter instance
-+ * @time_limit: time limit in jiffies to not exceed executing command completion
-  *
-  * Return:
-- *  IRQ_HANDLED - If interrupt is valid
-- *  IRQ_NONE    - If invalid interrupt
-+ *  IRQ_HANDLED     - If interrupt is valid
-+ *  IRQ_WAKE_THREAD - If further interrupt processing should be delegated to the
-+ *                    thread
-+ *  IRQ_NONE        - If invalid interrupt
-  */
--static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
-+static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba,
-+					     unsigned long time_limit)
- {
-+	unsigned long pending;
-+
- 	/* Resetting interrupt aggregation counters first and reading the
- 	 * DOOR_BELL afterward allows us to handle all the completed requests.
- 	 * In order to prevent other interrupts starvation the DB is read once
-@@ -5720,12 +5779,18 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
- 		return IRQ_HANDLED;
- 
- 	/*
--	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED since we
--	 * do not want polling to trigger spurious interrupt complaints.
-+	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED or
-+	 * IRQ_WAKE_THREAD since we do not want polling to trigger spurious
-+	 * interrupt complaints.
- 	 */
--	ufshcd_poll(hba->host, 0);
-+	ufshcd_poll_impl(hba->host, 0, time_limit, &pending);
- 
--	return IRQ_HANDLED;
-+	/*
-+	 * If a time limit was set, some request completions might not have been
-+	 * handled yet and will need to be dealt with in the threaded interrupt
-+	 * handler.
-+	 */
-+	return pending ? IRQ_WAKE_THREAD : IRQ_HANDLED;
- }
- 
- int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask)
-@@ -6286,7 +6351,7 @@ static void ufshcd_complete_requests(struct ufs_hba *hba, bool force_compl)
- 	if (hba->mcq_enabled)
- 		ufshcd_mcq_compl_pending_transfer(hba, force_compl);
- 	else
--		ufshcd_transfer_req_compl(hba);
-+		ufshcd_transfer_req_compl(hba, 0);
- 
- 	ufshcd_tmc_handler(hba);
- }
-@@ -6988,12 +7053,16 @@ static irqreturn_t ufshcd_handle_mcq_cq_events(struct ufs_hba *hba)
-  * ufshcd_sl_intr - Interrupt service routine
-  * @hba: per adapter instance
-  * @intr_status: contains interrupts generated by the controller
-+ * @time_limit: time limit in jiffies to not exceed executing command completion
-  *
-  * Return:
-- *  IRQ_HANDLED - If interrupt is valid
-- *  IRQ_NONE    - If invalid interrupt
-+ *  IRQ_HANDLED     - If interrupt is valid
-+ *  IRQ_WAKE_THREAD - If further interrupt processing should be delegated to the
-+ *                    thread
-+ *  IRQ_NONE        - If invalid interrupt
-  */
--static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
-+static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status,
-+				  unsigned long time_limit)
- {
- 	irqreturn_t retval = IRQ_NONE;
- 
-@@ -7007,7 +7076,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
- 		retval |= ufshcd_tmc_handler(hba);
- 
- 	if (intr_status & UTP_TRANSFER_REQ_COMPL)
--		retval |= ufshcd_transfer_req_compl(hba);
-+		retval |= ufshcd_transfer_req_compl(hba, time_limit);
- 
- 	if (intr_status & MCQ_CQ_EVENT_STATUS)
- 		retval |= ufshcd_handle_mcq_cq_events(hba);
-@@ -7016,15 +7085,25 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
- }
- 
- /**
-- * ufshcd_threaded_intr - Threaded interrupt service routine
-+ * ufshcd_intr_helper - hardirq and threaded interrupt service routine
-  * @irq: irq number
-  * @__hba: pointer to adapter instance
-+ * @time_limit: time limit in jiffies to not exceed during execution
-+ *
-+ * Interrupts are initially served from hardirq context with a time limit, but
-+ * if there is more work to be done than can be completed before the limit
-+ * expires, remaining work is delegated to the IRQ thread. This helper does the
-+ * bulk of the work in either case - if @time_limit is set, it is being run from
-+ * hardirq context, otherwise from the threaded interrupt handler.
-  *
-  * Return:
-- *  IRQ_HANDLED - If interrupt is valid
-- *  IRQ_NONE    - If invalid interrupt
-+ *  IRQ_HANDLED     - If interrupt was fully handled
-+ *  IRQ_WAKE_THREAD - If further interrupt processing should be delegated to the
-+ *                    thread
-+ *  IRQ_NONE        - If invalid interrupt
-  */
--static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
-+static irqreturn_t ufshcd_intr_helper(int irq, void *__hba,
-+				      unsigned long time_limit)
- {
- 	u32 last_intr_status, intr_status, enabled_intr_status = 0;
- 	irqreturn_t retval = IRQ_NONE;
-@@ -7038,15 +7117,22 @@ static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
- 	 * if the reqs get finished 1 by 1 after the interrupt status is
- 	 * read, make sure we handle them by checking the interrupt status
- 	 * again in a loop until we process all of the reqs before returning.
-+	 * This is done until the time limit is exceeded, at which point further
-+	 * processing is delegated to the threaded handler.
- 	 */
--	while (intr_status && retries--) {
-+	while (intr_status && !(retval & IRQ_WAKE_THREAD) && retries--) {
- 		enabled_intr_status =
- 			intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
- 		ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
- 		if (enabled_intr_status)
--			retval |= ufshcd_sl_intr(hba, enabled_intr_status);
-+			retval |= ufshcd_sl_intr(hba, enabled_intr_status,
-+						 time_limit);
- 
- 		intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
-+
-+		if (intr_status && time_limit && time_after_eq(jiffies,
-+							       time_limit))
-+			retval |= IRQ_WAKE_THREAD;
- 	}
- 
- 	if (enabled_intr_status && retval == IRQ_NONE &&
-@@ -7063,6 +7149,20 @@ static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
- 	return retval;
- }
- 
-+/**
-+ * ufshcd_threaded_intr - Threaded interrupt service routine
-+ * @irq: irq number
-+ * @__hba: pointer to adapter instance
-+ *
-+ * Return:
-+ *  IRQ_HANDLED - If interrupt was fully handled
-+ *  IRQ_NONE    - If invalid interrupt
-+ */
-+static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
-+{
-+	return ufshcd_intr_helper(irq, __hba, 0);
-+}
-+
- /**
-  * ufshcd_intr - Main interrupt service routine
-  * @irq: irq number
-@@ -7070,20 +7170,37 @@ static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
-  *
-  * Return:
-  *  IRQ_HANDLED     - If interrupt is valid
-- *  IRQ_WAKE_THREAD - If handling is moved to threaded handled
-+ *  IRQ_WAKE_THREAD - If handling is moved to threaded handler
-  *  IRQ_NONE        - If invalid interrupt
-  */
- static irqreturn_t ufshcd_intr(int irq, void *__hba)
- {
- 	struct ufs_hba *hba = __hba;
-+	unsigned long time_limit = jiffies +
-+		usecs_to_jiffies(HARDIRQ_TIMELIMIT);
- 
--	/* Move interrupt handling to thread when MCQ & ESI are not enabled */
--	if (!hba->mcq_enabled || !hba->mcq_esi_enabled)
--		return IRQ_WAKE_THREAD;
-+	/*
-+	 * Directly handle interrupts when MCQ & ESI are enabled since MCQ
-+	 * ESI handlers do the hard job.
-+	 */
-+	if (hba->mcq_enabled && hba->mcq_esi_enabled)
-+		return ufshcd_sl_intr(hba,
-+				      ufshcd_readl(hba, REG_INTERRUPT_STATUS) &
-+				      ufshcd_readl(hba, REG_INTERRUPT_ENABLE),
-+				      0);
- 
--	/* Directly handle interrupts since MCQ ESI handlers does the hard job */
--	return ufshcd_sl_intr(hba, ufshcd_readl(hba, REG_INTERRUPT_STATUS) &
--				   ufshcd_readl(hba, REG_INTERRUPT_ENABLE));
-+	/*
-+	 * Otherwise handle interrupt in hardirq context until the time limit
-+	 * expires, at which point the remaining work will be completed in
-+	 * interrupt thread context.
-+	 */
-+	if (!time_limit)
-+		/*
-+		 * To deal with jiffies wrapping, we just add one so that other
-+		 * code can reliably detect if a time limit was requested.
-+		 */
-+		time_limit++;
-+	return ufshcd_intr_helper(irq, __hba, time_limit);
- }
- 
- static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
-@@ -7516,7 +7633,7 @@ static int ufshcd_eh_device_reset_handler(struct scsi_cmnd *cmd)
- 				__func__, pos);
- 		}
- 	}
--	__ufshcd_transfer_req_compl(hba, pending_reqs & ~not_cleared_mask);
-+	__ufshcd_transfer_req_compl(hba, pending_reqs & ~not_cleared_mask, 0);
- 
- out:
- 	hba->req_abort_count = 0;
-@@ -7672,7 +7789,7 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
- 		dev_err(hba->dev,
- 		"%s: cmd was completed, but without a notifying intr, tag = %d",
- 		__func__, tag);
--		__ufshcd_transfer_req_compl(hba, 1UL << tag);
-+		__ufshcd_transfer_req_compl(hba, 1UL << tag, 0);
- 		goto release;
- 	}
- 
+	/* For faults, use the gmem information that was resolved earlier. */
+	if (fault) {
+		pfn = fault->pfn;
+		max_level = fault->max_level;
+	} else {
+		/* TODO: Call into guest_memfd once hugepages are supported. */
+		return PG_LEVEL_4K;
+	}
 
--- 
-2.50.1.487.gc89ff58d15-goog
+	if (max_level == PG_LEVEL_4K)
+		return max_level;
 
+Functionally, it's 100% safe, even if/when guest_memfd supports hugepages.  E.g.
+if we fail/forget to update this code, the worst case scneario is that KVM will
+neglect to recover hugepages.
+
+While it's kinda weird/silly, I'm leaning toward the first option of setting
+max_level and relying on the common "max_level == PG_LEVEL_4K" check to avoid
+doing an RMP looking with KVM_PFN_ERR_FAULT.  I like that it helps visually
+captures that KVM needs to get both the max_level *and* the pfn from guest_memfd.
+
+> > [1] https://lore.kernel.org/all/20250717162731.446579-13-tabba@google.com/
+> >
+> >> +
+> >> +		max_level = kvm_max_level_for_order(max_order);
+> >> +	}
+> >>  
+> >> -	max_level = min(kvm_max_level_for_order(gmem_order), max_level);
+> >>  	if (max_level == PG_LEVEL_4K)
+> >> -		return PG_LEVEL_4K;
+> >> +		return max_level;
+> >
+> > I think the above line is a git-introduced issue, there probably
+> > shouldn't be a return here.
+> >
+> 
+> My bad, this is a correct short-circuiting of the rest of the function
+> since there's no smaller PG_LEVEL than PG_LEVEL_4K.
+
+Off topic: please trim your replies.
 
