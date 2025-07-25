@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-66718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26B87B11FE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:16:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A22DB11FE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 16:16:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35E371CC4064
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:16:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17CE93AEB54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 14:16:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D82A22DA1F;
-	Fri, 25 Jul 2025 14:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34381E833D;
+	Fri, 25 Jul 2025 14:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pBebP9rA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aewIODkE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D811B87C0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 14:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A741E5B70
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 14:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753452981; cv=none; b=PO/Kxp4ovyDk83SQDFTkBHbqJ19jACaKOvH1wOjDq5Z9XZpbtdxbqp4MhQaYnBx9n3JjEj7Q+QcTbYalX3MDQKZZ+UiZDJc/s0j2fyG1zfg3zxpVHEwJ7kV3rSrQFrLy/7fOscpsFhmqAdeslgoiDyPeR2Yu3jkxY1HSbfIDv0Q=
+	t=1753452982; cv=none; b=PrrQsRjunRTyPTQq+HwFqKQaB9xfLojBp2cKV42cY+dxeuqMep+4dlobZKtB9uY/EAZ+IOFwrZ+XHg+sPzVc6X0pNkDE8yoMVefFgvelVYqai2ycwejrhm15bfi2KHOOk6RAJDHOV9AiuyuFUp5/MVX1NwBnEmiAdUkQy8ezDsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753452981; c=relaxed/simple;
-	bh=8AW0wZtIdMTOecI8zEy7or/xRHq/+HDNB4Msky+fi4A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=F7YGUZjJkw3Nvt91P/gJikNBkpd6eT13dQmnSiftXErgkSmMk6zy1axbxzE86/88tj8LGMBupoDluQqN0XDF0CwM9FLB8bAEkJkiUM8s6oBD8TynzvVJqcHX2JIo0h6AR4+nR61vQyRNTnsLoyWlHWkGP5nIHZPvdQmp32YOKF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pBebP9rA; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1753452982; c=relaxed/simple;
+	bh=Xip8jE5pNwtMgx7ORp3HsgqbQwAw/yGfdOPBmn7/ojQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=GgRoBM7+6vo7twQotKrmvQuKPtM94+mL005WOi3kQvdlIT6t06LUMWZpY7w+08pJcnTBfSCBoZ+eZWupR+L3oSG6zd1MlMxbK+t4nekB534tXCIOXxsG6BCQJXPB3DxJtEK/07sFzo3/rVWNqsLaeW4F2k72oowhV46sPW5KiD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aewIODkE; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-60700a745e5so4646742a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 07:16:19 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ae3be3eabd8so472805466b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 07:16:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753452978; x=1754057778; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0GYrZkLXVXcOZgbWnPr9ONxYHIczwht5gJlvJdmNzQk=;
-        b=pBebP9rALtTAJKnpPJpllQiQY9VyHBqULO3QVOWmJ5tHTNwIFaXLluiQHWXyiL6Xy0
-         PhL6Ido0qCPelByNCaLUEzqA3kJel/6i8NBKeOVLVA6tfG6fWetUM75BBKojyvH3CemT
-         2aD6LpUKdXpATcx9W+fWh9va6Rdfrk+2QKO7HDcLplrwT+N4Eh6Ncv3b6qJyPOeKCoa+
-         3aXEpODFl5Y5Vt/SowT0DixTR1wlN/snGgxQ5cIYPuGCXYMlUqdnjTMObT//AVbIJjNa
-         ngCDvW/QKYOCyittTgnCCR7/Od/oT4wO9oTXE/PejAjzg7k/7gtTB8rV4kPMUUnkgjoj
-         /zEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753452978; x=1754057778;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1753452979; x=1754057779; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0GYrZkLXVXcOZgbWnPr9ONxYHIczwht5gJlvJdmNzQk=;
-        b=omkb3hH3ig1TewxbqfDvPKLhG4uTl3plueMDOXwQZ5VuejTHhJ0NeUxY/fO9B0X09q
-         Ek8akzEuhU1ryyNVvhpOE/MYWGQ1wbZmuWEOnLlZcS8teCfzUZ/Xmi0DSE7YT7CmDgXQ
-         mT5q+AFCNpjKkuF94xrMGbZOVjHrZUh5JS2+iGAv/W/J5WtsbpN7GiK8/7iNGseNzdKr
-         hv2eoFQrEuNcoMQVX+VVMQoX7QfMJJnDMYDU+rvyNSQu34kipxICazYqrhlmrQJzNLrN
-         ibCI3dycBGO1fHfMm92UhxH65jdIw4cIFOOtXnQuYFgc+ZaTIuu46uG4pIiFxzSqsxSu
-         9iNA==
-X-Forwarded-Encrypted: i=1; AJvYcCWlab2lfmXPyuUBzVP2r97AKSkf053ws4zZNRGKcbimIOv7c6+fyBGdoGBmVUYwz8sAFdterdeyGYXhLTJ2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBC5XIypwOyKkyfUzSD0ZyZ/wLTaI0iF9TvkkgHM2PV9UATQtR
-	V3UKxEauwf87OziAbJJuMI5EMryGenuQgmN+QKGeNR5mWzdfHhNNb5rtNY4R1PANzqw=
-X-Gm-Gg: ASbGncvyf9kSTCWuwoaY8rgIpfXzdcjQ4krWYi+xnVEkZTlQXQQ4GNSdhIsxe9xRaGO
-	EzGgkDYfD860UI03w9OMftVhmYd7xXbO5BGFQ5yv5kzbFTaKHXCGBdjH4LIqYgl1axut/W6g6p/
-	g682EC4m8EBDYfdl5ppFgtJnQCzOz8s/V/IkmuYdv2QeC0P803NKSaSkE2GKgvoUgrpRSO83mOR
-	mwngd6AU6ARygqStZQRqpNiG2rmM/kvvjAA+GWP+WSXydeoreHzdg1ZpWIOTSkW4x5QC2Y+PQSh
-	22yNAlFuu2f4Xe0JNAd0Qc2utEOye4GbNVJJ2HCkAXacU93WKelb1cf7zNfCDiDQQJeynRTZbvM
-	GAPo/2hfBcMGIHxtSH5vQL4FsleARnnIs7vR0ORUOCofw4ANBBlpypb7dtRutmCU/lBBnEF7S7T
-	2zDK2NNQ==
-X-Google-Smtp-Source: AGHT+IESxxtSVuTR7JcpPvCin5sJRXnxskX5QKzVI4SQNZf89ZEV5qKL5Ev6pflyXfFUSgm5m/ZQVA==
-X-Received: by 2002:a17:907:7205:b0:ae3:bb4a:91fb with SMTP id a640c23a62f3a-af61ef2e6demr228089066b.59.1753452977655;
-        Fri, 25 Jul 2025 07:16:17 -0700 (PDT)
+        bh=/zam/LW3oj60VYDi/BrVgQJFij9S3YsCyteAYO8PX1E=;
+        b=aewIODkEg9trFFgX/WyEvppxJW94tmdLOKvtTmykSw38iiLfu9oiNjJE6xHe1hrCh3
+         iHoUfrcynhhRA1UfQFVzNmfj/M1aHhH0yo2UBrcmGgsDgtKQd2c1vVb+ua6Bt++hrIVY
+         rDR4c+/PDEw50UjDQ+MLl4Up1EAPE4gwSXnDFpz6EMlVGNdQlgICbBJWLaF/tKDTC45b
+         Y7gdjGZKOJL+yh+HY1fjNGjFkNwFRDNYfxDoCtfk17uLPQmTf/1lVnMR9oInYC+QbhgL
+         x6vAdmccChLxrLfWtvEhrME5HlyZxSIEN5EpY0cmJ96rjhtEPGped9VPtIPHBIelUdW2
+         JCLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753452979; x=1754057779;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/zam/LW3oj60VYDi/BrVgQJFij9S3YsCyteAYO8PX1E=;
+        b=j6dDvmI3znijyPUDZ++Mkju1trFiLS4kYr/LnJ+jQZHardoISJXM/xTPPh4L19fRX1
+         c/CKVxkNNmj+bWBFCY+oTfCtBKoB3KbxKbhev8FxL346lC7pISNpSKwY5niceU8IbRQ0
+         ztz2scaji3Q49+C3fett5cno4lL1P4t4YAOtQRXJEu/sksWLI0oYb7HG4i5146kPLVh1
+         aIVj6GL+km2EH8uabCGe/KEBF14Mk4osHyK68+5+KvXsCZTcjLFxTfsfQx450Bn5MOZq
+         H3RQvVgT0pwlcES0FoimVoHBTb/xjxC+bBmMYuvEkqtPpCruSYcGL8Ns57cTgFpkDuw3
+         1H9A==
+X-Forwarded-Encrypted: i=1; AJvYcCXm/0cdnyp0fdzMG92wHm+AHZIv5RVzxnG+U1vKaWZROHBLVhhJvi+qHXShcrI7w8J724lfirqThGNeBL+1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU2UiloFk7PyGQMWr9ucLojEKRr/5m+Ejcf01wXgBgSXFNJjVV
+	x+YZ9nx0jF7ru0ATemNZVMQKiK85+fnyW1yc6PlL3Y5V5bR4XZ1zhlydO6Mw+wVtPw4=
+X-Gm-Gg: ASbGncusvjWIf/3JZvvhHFBKLCuE0oUK2V8zX6ZbhTCk8it9v/A2TPr2lxUe8WBVGFl
+	rBk/nYrkktmUMAMHQkBxPaKJO1EvjOQTSJKemfisk47wz16n0XB/6M/TrkqU+d0ywk94lGpZOzF
+	R133bRDkqNg5KGR2koMQTt5S1D+MV3+i8G6anZCtg23miwMUm0Pko1orrguCu0gJZ8AYJJ/W+cl
+	7291hD7ZK3kaFWbh4tiSMg32wW6EzsOsUD95bX7UZYHYOxaXTdztP9Uby+a3lIynCX9R8nZ6n2N
+	ez3hroWCuoN3TA3ZEernwLoLKL05xs7NV1wFnCJ9iU4gNdefYEnjDbIx33VR2tyFD1w5dDivCbH
+	6O3xlBzRaxZd1VX7zMYj5pT0k8D7/heQvECmIrVw1Ggp1JIv1rNLlAkDC85v7NPMPIFqTLfj/Wv
+	H/ICadAw==
+X-Google-Smtp-Source: AGHT+IFX5GnNzDHfFClTllxEfxM5knR3JPoKqdSRHH8rDBPQpxv4Ttm+JHD8dxakGBd8eBWGd9ILPw==
+X-Received: by 2002:a17:907:9623:b0:ae3:c777:6e5e with SMTP id a640c23a62f3a-af61df52d26mr252419366b.19.1753452978372;
+        Fri, 25 Jul 2025 07:16:18 -0700 (PDT)
 Received: from puffmais.c.googlers.com (8.239.204.35.bc.googleusercontent.com. [35.204.239.8])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47f85e60bsm278398966b.96.2025.07.25.07.16.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 25 Jul 2025 07:16:17 -0700 (PDT)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Subject: [PATCH v2 0/2] scsi: ufs: core: interrupt handling optimisations
-Date: Fri, 25 Jul 2025 15:16:14 +0100
-Message-Id: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
+Date: Fri, 25 Jul 2025 15:16:15 +0100
+Subject: [PATCH v2 1/2] scsi: ufs: core: complete polled requests also from
+ interrupt context
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,11 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAK6Rg2gC/13MQQrCMBCF4auUWRtpJ01aXXkP6SI0STMgjZ1oU
- Ervbiy4cfk/eN8KyTG5BOdqBXaZEsW5BB4qGIOZJyfIlgasUdUdSvH0KYxWBMOWeBFjJ1F73aJ
- TGsrpzs7TawevQ+lA6RH5vfu5+a4/qv2nciMaoeWpNwp972u83Gg2HI+RJxi2bfsAJzI6Da0AA
- AA=
-X-Change-ID: 20250723-ufshcd-hardirq-c7326f642e56
+Message-Id: <20250725-ufshcd-hardirq-v2-1-884c11e0b0df@linaro.org>
+References: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
+In-Reply-To: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
 To: Alim Akhtar <alim.akhtar@samsung.com>, 
  Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
  "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
@@ -100,37 +100,88 @@ Cc: Peter Griffin <peter.griffin@linaro.org>,
  Manivannan Sadhasivam <mani@kernel.org>, kernel-team@android.com, 
  linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
  linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- stable@vger.kernel.org
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-UFS performance for < v4 controllers has reduced quite a bit in 6.16.
-This series addresses this regression and brings numbers more or less
-back to the previous level.
+When commit ee8c88cab4af ("scsi: ufs: core: Fix the polling
+implementation") was added, the block layer did not support completing
+polled requests from interrupt context.
 
-See patch 2 for some benchmark (fio) results.
+This has changed since (presumably with commit b99182c501c3 ("bio: add
+pcpu caching for non-polling bio_put")) and it is possible to complete
+polled requests also from interrupt context.
 
+Therefore, this commit here changes the code to also complete polled
+requests from interrupt context, mostly reverting above referenced
+commit as it is not necessary anymore. We do keep the fix to make
+ufshcd_poll() return a positive number.
+
+The change has been verified using:
+    fio --name=randread --rw=randread --ioengine=pvsync2 --hipri=1 \
+        --direct=1 --bs=4k --numjobs=8 --size=32m --runtime=30 \
+        --time_based --end_fsync=1 --group_reporting --filename=/foo
+
+which appears to have completed with no errors with this commit.
+
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
-Changes in v2:
-- patch 1: new patch as suggested by Bart during v1 review
-- patch 2: update commit message and some inline & kerneldoc comments
-- patch 2: add missing jiffies.h include
-- Link to v1: https://lore.kernel.org/r/20250724-ufshcd-hardirq-v1-1-6398a52f8f02@linaro.org
+ drivers/ufs/core/ufshcd.c | 26 +-------------------------
+ 1 file changed, 1 insertion(+), 25 deletions(-)
 
----
-André Draszik (2):
-      scsi: ufs: core: complete polled requests also from interrupt context
-      scsi: ufs: core: move some irq handling back to hardirq (with time limit)
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 13f7e0469141619cfc5e180aa730171ff01b8fb1..d8e2eabacd3efbf07458e81cc4d15ba7f05d3913 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5613,26 +5613,6 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
+ 		ufshcd_compl_one_cqe(hba, tag, NULL);
+ }
+ 
+-/* Any value that is not an existing queue number is fine for this constant. */
+-enum {
+-	UFSHCD_POLL_FROM_INTERRUPT_CONTEXT = -1
+-};
+-
+-static void ufshcd_clear_polled(struct ufs_hba *hba,
+-				unsigned long *completed_reqs)
+-{
+-	int tag;
+-
+-	for_each_set_bit(tag, completed_reqs, hba->nutrs) {
+-		struct scsi_cmnd *cmd = hba->lrb[tag].cmd;
+-
+-		if (!cmd)
+-			continue;
+-		if (scsi_cmd_to_rq(cmd)->cmd_flags & REQ_POLLED)
+-			__clear_bit(tag, completed_reqs);
+-	}
+-}
+-
+ /*
+  * Return: > 0 if one or more commands have been completed or 0 if no
+  * requests have been completed.
+@@ -5656,10 +5636,6 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
+ 	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
+ 		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
+ 		  hba->outstanding_reqs);
+-	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
+-		/* Do not complete polled requests from interrupt context. */
+-		ufshcd_clear_polled(hba, &completed_reqs);
+-	}
+ 	hba->outstanding_reqs &= ~completed_reqs;
+ 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
+ 
+@@ -5747,7 +5723,7 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
+ 	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED since we
+ 	 * do not want polling to trigger spurious interrupt complaints.
+ 	 */
+-	ufshcd_poll(hba->host, UFSHCD_POLL_FROM_INTERRUPT_CONTEXT);
++	ufshcd_poll(hba->host, 0);
+ 
+ 	return IRQ_HANDLED;
+ }
 
- drivers/ufs/core/ufshcd.c | 211 +++++++++++++++++++++++++++++++++-------------
- 1 file changed, 152 insertions(+), 59 deletions(-)
----
-base-commit: 58ba80c4740212c29a1cf9b48f588e60a7612209
-change-id: 20250723-ufshcd-hardirq-c7326f642e56
-
-Best regards,
 -- 
-André Draszik <andre.draszik@linaro.org>
+2.50.1.487.gc89ff58d15-goog
 
 
