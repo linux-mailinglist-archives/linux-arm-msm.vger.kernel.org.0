@@ -1,185 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-66741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1F31B12667
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 00:01:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91506B126B6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 00:15:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AADE81C8099C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 22:01:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A24231CC48AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jul 2025 22:15:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 922821DE892;
-	Fri, 25 Jul 2025 22:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7406224C07A;
+	Fri, 25 Jul 2025 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TB2GmU0+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lL6ZzHkf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5242561D9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 22:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87324EF7F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 22:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753480879; cv=none; b=Ygq8trV6b8/a8YGcPwkZh4qh/0YoyuU75NAwVydjoU79Cd6K8ZD7GROvvLNkhBImHyk3u/mLB8DKK4CO+zLMRjyTuFXbkMaX7mtnLkwuuwHhW3nCsb8R+8lJl34B0VvFT/7UE/1Pk3YbQPHl7eYITD3qxobD4Qls6G7uJfcCTsg=
+	t=1753481555; cv=none; b=Oe6qoZlgBZ+X/T8mIUdTA/jSWvNs+ed+zfn76LAFaWYs9QNIqmxogFga1j/EXkjxupTWpQC02E0n81j/rRxhSuAZbKVlW78d2YJAd7YT8Ey+1rKmNPhOcoT5ObFNqCF/8ABZZqtqOeITk2W1uEslFfjoPRL/nDvL1HvkL072qvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753480879; c=relaxed/simple;
-	bh=ZVkE0eW5WS3kJhFfMGAaiYj5nZ5KOR05VaGSZwLtIr8=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=H+XST5ppT9/kdm4TyeN2BRwzWE0/s8TDabnd+q273EmkkNXpz62qaWdUOOLdHYdCRAkmf5e8VKjUQUp+xqx4BIcVZzuIo8Lfy/Xnby0We39dYxaZh6iBSdoUPjQeAB1k2kSvNionG6wuhCql+wBE8gUwAkIVRGsFQftdURdwlu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TB2GmU0+; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-313fb0ec33bso2993709a91.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 15:01:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753480875; x=1754085675; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+zp+aFgZ7sosVHgE1JVBc/YF4k2nO+/CVzJ2Y2OlSXk=;
-        b=TB2GmU0+VbRnbJ/bYc6EfPpMZYz0DGPlUbCVvE5RUp33GGsaVT7jyPVv4g16mLW4jc
-         /atZ07Dsj2pM2AichrjhCpTk+Bpqgc6fmDDCqFt/YD79Pi92+pgs/7QNskPJCadTuSfK
-         xwfafifBoazz1vSfqR+IabDPfgPzjXh+wZg2IawhgSIqxajwrWmeJWGzAsQ/qod5GXKE
-         RjinwDS+xzqmpjAsDTORRem1Y04Nny7WZAI4lSDcKBBMS/Ge5rpY6r4A6sDsXgYkF9MY
-         HooRYZoeH7PNLmfBwoSIgVf8ctnt+6FYPg5L5fZTByKkam1V+oH3uvgusuC7N3DV4o+6
-         jjrQ==
+	s=arc-20240116; t=1753481555; c=relaxed/simple;
+	bh=KQWx9JR8XfPV1euZdRm6djHu/EXFmRvTLXzEqVHd7J0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pxjbz+powS++jDZr+f4RWv61mtFmrG4rz6RlZoO5Fe9Re1C+31iIKdxT00GCu00g6hBUle6s/SwxqhkOCPtcJYmAJ7FAAxZb6xaXzUr77Jya3bG5l0wjnbWxvQR3pbh5OYcplR3pE/+5giCJD+cPEwwd3kN1wzIJHlmgVUnu5+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lL6ZzHkf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56PKAZRB004625
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 22:12:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4X1DTfh0h5zjGoQqDTegOhGV3+NK0W3zXpJbN3Ug020=; b=lL6ZzHkfdghUkzCj
+	+4epTCO/EMm1dleIOvZx5/ZN1w/THYMeOJF/itwdulsmsnMaMnMUgOc51+zk4lLI
+	UJePzvn8Dr7Ann5Cmy5jS/ZihRFvTagonVReUHrHwAIVjiyPN1d0ZwnHmC2OqVqA
+	LX2qTlolS4vJWbTFubBkxf0tYACpjcLLIdvlEX06E/6ySGXpIBInbIEYkZ4lhVBj
+	fGpzvBt48GEtiHv+T/O1lVIR/ar0ntS/0f3pI4sK2VGJPwNcZLzG3Jxz8FY9KJma
+	S1DrcigPAAxik2Znv0InKVYzUPveXD4NPQPtomz0UI52r3HZCHA6Z+Kf6u1n2qn8
+	RSDG9Q==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 483w53bhb0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 22:12:25 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b2c37558eccso1719184a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jul 2025 15:12:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753480875; x=1754085675;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+zp+aFgZ7sosVHgE1JVBc/YF4k2nO+/CVzJ2Y2OlSXk=;
-        b=FR/nEMr/1pMi7ZiW3U5w6pJKDEpzgwz/fqfPkNP7UsyMn7NbnN4luL3DcViDD0ss+1
-         6WSh1J75VBiQ2sU5NKWfMkRLz9hI3nQ5ViS5PBs6aAYvE2YP7QAH81G1VVluwtQiYxdK
-         qpVIgPyofv6JWTyqA+ABbPGpH4cDZLLu0vI0YRH7UGNjfLHVmGEdkFPe4tkNPtfHqBHO
-         xlt9MQqXQL9JDWSQ7DFaq/Gcyc9QqgWX5SmurFiGyRMvzaE2RSsMDY9FMwRjnptY6ox4
-         aH3yhMBL4BlxEJ2AQv08G6gvgMOtS0GtUnco6cqsHAtfILbAFwk0x0KrrcypemIZvWjE
-         mICw==
-X-Forwarded-Encrypted: i=1; AJvYcCW7BmJocDdGJr8DqWuUuIq9XVtI4gRivVxKGhP8yMFiqpIrLp5vEMxliOlwJyYUWSl+1+iEt3seeiZ7kN/f@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGx91bxzgez0Itlw/6B/xaX1x5+GldbXx2tsU7uAi0kqpn4E1R
-	PRP9+kmrV18M99cqpEKp59782VVQIEyWFqZHwCimL2mHl8rfLOmakryjX7LjKT7UxBR3JNyPmFD
-	47gPaVA==
-X-Google-Smtp-Source: AGHT+IFPjkF2xrZ/Gp6FwQl6jvIg14serRXFzYz5L/ExU8zpV9XgePnP6vcF1X9qmhlTmOaX+wV3Tt+ZntY=
-X-Received: from pjvf3.prod.google.com ([2002:a17:90a:da83:b0:312:ea08:fa64])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:e7c7:b0:31c:15d9:8aa
- with SMTP id 98e67ed59e1d1-31e77a45647mr3874947a91.34.1753480875031; Fri, 25
- Jul 2025 15:01:15 -0700 (PDT)
-Date: Fri, 25 Jul 2025 15:01:13 -0700
-In-Reply-To: <diqzpldoc5yq.fsf@ackerleytng-ctop.c.googlers.com>
+        d=1e100.net; s=20230601; t=1753481544; x=1754086344;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4X1DTfh0h5zjGoQqDTegOhGV3+NK0W3zXpJbN3Ug020=;
+        b=gHSqDmNn2bWsZ0P7xu7Op/dvy3BSZxMEr3oPhj4tGx7fGWy1aEez73M3d7d3NApNZf
+         21OMJ7LuBLYFKfF2ibjnBsd0qPAC/m2KPKrLUmHyrkqg3dXr1YL1/by/V8n/a9bfvgpC
+         IBeXZE7RkXWAi/KXE8F35iiNI01z59Ga3kyEXepXLOcw8cwKEuG1zcOp6yDoyu4/s+1i
+         jNZsw6rdBQewculIiBDi9Qi67jTzSdybRnAEJNIZlzcK/6YTfFnSV8N3KOowLp0ni4e2
+         Q3zFDdPdEgUsrxkbn4x94SM1nLBFlv8E4FFdRI21KKYfJduLh10pOm9IDTsE7/3+VSvX
+         W3BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV3hWRpamwBgDeKiqaNkFNX8L4VKGaItSAo1ch1qpaH+X5hHOIGfnuvC44CfDaey5Qr7em60eG5vaX5VTAW@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcYAWwmDgsBTxzjtaGOriskCQFjVIbNUCM/mbA/0lkH/pz52la
+	z6BvEGK6fl1rhx8hPI/XgGrfVJFYBCqGRTv3byg0aBHkfktQz0LiYvu1Mv3wnXMo1rYvXFzVsLF
+	yMt8fhQK+aBQhmqkJGRCbp4YWrUNXDyxv84QEEudftlm7/shCk/bBRxJix0c7Vfd7+0m/
+X-Gm-Gg: ASbGncu8tFLPr+TelqONUqVnKBWRYOxBLXc6gVMIFQNLmbTX8Ze3fExz3GB75AqSJf7
+	6Ux9eifNBb7JFvEN6II5lz6abm3+l3edaGPux7kQwibAZ33g8tjOb5dOhggx1VgiBbQMuZvuRTE
+	r1uZKgZWvee4oFFYcDy6Cyio1zR5X0PMo3fspXF1RCy98iRdTkDZXvCwkTw2aEZqwX1n/Ccz83v
+	F+onO66fbBY8PJevq9FGQy60qMO/oShA6QM9PTiHyMi2YsQIfyCeGspSslwOv4iq46PY85NNysk
+	4GfdZV5/5dNamSSnu+r08zNcRNrJsx110Axu+5tT7PpRjP3wqybTR0SQ0ZhgNA==
+X-Received: by 2002:a05:6a20:7291:b0:206:a9bd:a3a3 with SMTP id adf61e73a8af0-23d7019bfd6mr5713440637.24.1753481544390;
+        Fri, 25 Jul 2025 15:12:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHX44LpEE6pjx6vDy1KFy13/JWR3bwOHq1/KIsk5FhoYPJGajvnBuxDCj/wdjizthdytBpexg==
+X-Received: by 2002:a05:6a20:7291:b0:206:a9bd:a3a3 with SMTP id adf61e73a8af0-23d7019bfd6mr5713405637.24.1753481543909;
+        Fri, 25 Jul 2025 15:12:23 -0700 (PDT)
+Received: from [192.168.1.5] ([106.222.235.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7640b2ddf63sm436237b3a.102.2025.07.25.15.12.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jul 2025 15:12:22 -0700 (PDT)
+Message-ID: <8656b48d-2f27-4dd9-b29a-72ee1129d18a@oss.qualcomm.com>
+Date: Sat, 26 Jul 2025 03:42:18 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250723104714.1674617-1-tabba@google.com> <20250723104714.1674617-16-tabba@google.com>
- <diqza54tdv3p.fsf@ackerleytng-ctop.c.googlers.com> <aIOMPpTWKWoM_O5J@google.com>
- <diqzy0sccjfz.fsf@ackerleytng-ctop.c.googlers.com> <aIO7PRBzpFqk8D13@google.com>
- <diqzseikcbef.fsf@ackerleytng-ctop.c.googlers.com> <aIPgjOLq8erW06gK@google.com>
- <diqzpldoc5yq.fsf@ackerleytng-ctop.c.googlers.com>
-Message-ID: <aIP-qSnH1jjuykmP@google.com>
-Subject: Re: [PATCH v16 15/22] KVM: x86/mmu: Extend guest_memfd's max mapping
- level to shared mappings
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: Wait for MMU devcoredump when waiting for GMU
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: rob.clark@oss.qualcomm.com, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20250718-msm-gmu-fault-wait-v1-1-4dcadd3b0eb6@gmail.com>
+ <CACSVV023+6939fWvObBKg-rcoqP7TvxjQ2a8mY5+69dBh6cakA@mail.gmail.com>
+ <6cca1521-a806-4c43-a003-36a045cf007c@oss.qualcomm.com>
+ <CACu1E7EApr6Ne3XxFv4cUa2JuwNW2kfo1c5wSsAUN78iWyQ2sg@mail.gmail.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CACu1E7EApr6Ne3XxFv4cUa2JuwNW2kfo1c5wSsAUN78iWyQ2sg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=AfKxH2XG c=1 sm=1 tr=0 ts=68840149 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=pSIa2sKh8ADkebnh61Ypzg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=rrUdA_u0f1kXpUkxPP8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDE5MiBTYWx0ZWRfXz4x4AoXeb5x3
+ RXWkM1GRFPM4WxhkFPqjPctZSdZYN7UwfT5eqqN4VHWK4CCiQbbT5CPAaWiUrJX9Pp7AXkvNSpr
+ /6YtMrwqidEBSNbEEzaAS7GfiypDzBbrKF0ueb/ko6OFHrnroujHLjkP9ABO5LuLImTmwTVEee+
+ 0X57LgeKpMbW6wTD4pOyxBY1MeCDTePTpjsZqPoa5JiCFEhYpbAGrXOvrXP0nDvg1nQz0ujpi+1
+ /u56AuaPE3puARKMRRZbUEx2pJQM3uHBdcQ/E7PEaKxp11GEu9M43hBTxjOJcUCeSrErWtHHttv
+ IQCAD9F4626GcOL+RNpP3kJJPgKPjLYsf5R5BTlYRrlNlAF4G3Obi4XLsg2zOf4xOK25nWMUQeT
+ inl7cq4ldmkwteiKc/HY+Fb6EHPj8VAFpl/jU5ksjRdpF+On86v/hkvkqyjcfCEhF59Q04ez
+X-Proofpoint-GUID: PQF7qklDl6AMw9LcxVCaJVOIiJuPLNHE
+X-Proofpoint-ORIG-GUID: PQF7qklDl6AMw9LcxVCaJVOIiJuPLNHE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-25_06,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 mlxlogscore=774 suspectscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507250192
 
-On Fri, Jul 25, 2025, Ackerley Tng wrote:
-> Sean Christopherson <seanjc@google.com> writes:
+On 7/25/2025 1:31 AM, Connor Abbott wrote:
+> On Thu, Jul 24, 2025 at 3:48 PM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
+>>
+>> On 7/21/2025 9:02 PM, Rob Clark wrote:
+>>> On Fri, Jul 18, 2025 at 6:50 AM Connor Abbott <cwabbott0@gmail.com> wrote:
+>>>>
+>>>> If there is a flood of faults then the MMU can become saturated while it
+>>>> waits for the kernel to process the first fault and resume it, so that
+>>>> the GMU becomes blocked. This is mainly a problem when the kernel reads
+>>>> the state of the GPU for a devcoredump, because this takes a while. If
+>>>> we timeout waiting for the GMU, check if this has happened and retry
+>>>> after we're finished.
+>>>>
+>>>> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+>>>> ---
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c   | 21 ++++++++++++++++++---
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c   | 21 ++++++++++++++++++---
+>>>>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 11 +++++++++++
+>>>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
+>>>>  4 files changed, 49 insertions(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> index 28e6705c6da682c7b41c748e375dda59a6551898..6ec396fab22d194481a76d30b2d36ea5fb662241 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> @@ -340,6 +340,7 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+>>>>         int ret;
+>>>>         u32 val;
+>>>>         int request, ack;
+>>>> +       struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+>>>>
+>>>>         WARN_ON_ONCE(!mutex_is_locked(&gmu->lock));
+>>>>
+>>>> @@ -363,9 +364,23 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+>>>>         /* Trigger the equested OOB operation */
+>>>>         gmu_write(gmu, REG_A6XX_GMU_HOST2GMU_INTR_SET, 1 << request);
+>>>>
+>>>> -       /* Wait for the acknowledge interrupt */
+>>>> -       ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
+>>>> -               val & (1 << ack), 100, 10000);
+>>>> +       do {
+>>>> +               /* Wait for the acknowledge interrupt */
+>>>> +               ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
+>>>> +                       val & (1 << ack), 100, 10000);
+>>>> +
+>>>> +               if (!ret)
+>>>> +                       break;
+>>>> +
+>>>> +               if (completion_done(&a6xx_gpu->base.fault_coredump_done))
+>>
+>> I didn't get why this is required. Could you please add a comment?
 > 
-> > On Fri, Jul 25, 2025, Ackerley Tng wrote:
-> >> Sean Christopherson <seanjc@google.com> writes:
-> >> > Invoking host_pfn_mapping_level() isn't just undesirable, it's flat out wrong, as
-> >> > KVM will not verify slot->userspace_addr actually points at the (same) guest_memfd
-> >> > instance.
-> >> >
-> >> 
-> >> This is true too, that invoking host_pfn_mapping_level() could return
-> >> totally wrong information if slot->userspace_addr points somewhere else
-> >> completely.
-> >> 
-> >> What if slot->userspace_addr is set up to match the fd+offset in the
-> >> same guest_memfd, and kvm_gmem_max_mapping_level() returns 2M but it's
-> >> actually mapped into the host at 4K?
-> >> 
-> >> A little out of my depth here, but would mappings being recovered to the
-> >> 2M level be a problem?
-> >
-> > No, because again, by design, the host userspace mapping has _zero_ influence on
-> > the guest mapping.
+> Without this, if the GMU timed out for some other reason not related
+> to SMMU then we'd loop infinitely. This gives up if there isn't
+> currently a crashstate pending.
+
+Ah! That api doc somehow confused me.
+
 > 
-> Not trying to solve any problem but mostly trying to understand mapping
-> levels better.
+>>
+>>>> +                       break;
+>>>> +
+>>>> +               /* We may timeout because the GMU is temporarily wedged from
+>>>> +                * pending faults from the GPU and we are taking a devcoredump.
+>>>> +                * Wait until the MMU is resumed and try again.
+>>>> +                */
+>>>> +               wait_for_completion(&a6xx_gpu->base.fault_coredump_done);
+
+use the interruptible version? we may reach here from a process context.
+
+>>>> +       } while (true);
+>>>
+>>> It is a bit sad to duplicate this nearly identical code twice.  And I
+>>> wonder if other gmu_poll_timeout()'s need similar treatment?  Maybe
+>>> Akhil has an opinion about whether we should just build this into
+>>> gmu_poll_timeout() instead?
+>>
+>> Yeah. That make sense. A potential issue I see is that we might be
+>> holding both gpu and gmu locks here and the crashstate capture in the pf
+>> handler tries to lock gpu, which can result in a dead lock.
 > 
-> Before guest_memfd, why does kvm_mmu_max_mapping_level() need to do
-> host_pfn_mapping_level()?
-> 
-> Was it about THP folios?
+> I think there would already be a deadlock, or at least timeout in that
+> situation now. Any task waiting for the GMU to complete while holding
+> the GPU lock would block the crashstate capture from completing and
+> allowing the GMU to continue.
 
-And HugeTLB, and Device DAX, and probably at least one other type of backing at
-this point.
+Timeout is fine as there is progress eventually. But deadlock is not
+acceptable. Also, userspace can easily trigger this deadlock which makes
+it a security issue.
 
-Without guest_memfd, guest mappings are a strict subset of the host userspace
-mappings for the associated address space (i.e. process) (ignoring that the guest
-and host mappings are separate page tables).
+I agree, we need to improve the gmu error handling situation overall. I
+thought about this a few years ago actually. At that time, I thought it
+would be simpler if we always did coredump/recovery from a single
+thread. Not sure if that idea still makes sense.
 
-When mapping memory into the guest, KVM manages a Secondary MMU (in mmu_notifier
-parlance), where the Primary MMU is managed by mm/, and is for all intents and
-purposes synonymous with the address space of the userspace VMM.
+On a related topic, stall-on-fault cannot be used in production. GMU is
+very critical as it interacts directly with SoC power management
+subsystems and also every year, there is an additional responsibility on
+GMU to do a very time critical mitigation like CLX, thermal, BCL etc.
+And these mitigations should be handled within a few microseconds. So
+GMU should never be blocked, even for microseconds. Apart from that,
+even GPU's internal bus can get locked up in rare cases which can lead
+to a fatal system bus/NoC error when KMD access a register in the GPU space.
 
-To get a pfn to insert into the Secondary MMU's PTEs (SPTE, which was originally
-"shadow PTEs", but has been retrofitted to "secondary PTEs" so that it's not an
-outright lie when using stage-2 page tables), the pfn *must* be faulted into and
-mapped in the Primary MMU.  I.e. under no circumstance can a SPTE point at memory
-that isn't mapped into the Primary MMU.
+But stall-on-fault is useful while debugging. So any improvements in
+this area is useful.
 
-Side note, except for VM_EXEC, protections for Secondary MMU mappings must also
-be a strict subset of the Primary MMU's mappings.  E.g. KVM can't create a
-WRITABLE SPTE if the userspace VMA is read-only.  EXEC protections are exempt,
-so that guest memory doesn't have to be mapped executable in the VMM, which would
-basically make the VMM a CVE factory :-)
+-Akhil.
 
-All of that holds true for hugepages as well, because that rule is just a special
-case of the general rule that all memory must be first mapped into the Primary
-MMU.  Rather than query the backing store's allowed page size, KVM x86 simply
-looks at the Primary MMU's userspace page tables.  Originally, KVM _did_ query
-the VMA directly for HugeTLB, but when things like DAX came along, we realized
-that poking into backing stores directly was going to be a maintenance nightmare.
-
-So instead, KVM was reworked to peek at the userspace page tables for everything,
-and knock wood, that approach has Just Worked for all backing stores.
-
-Which actually highlights the brilliance of having KVM be a Secondary MMU that's
-fully subordinate to the Primary MMU.  Modulo some terrible logic with respect to
-VM_PFNMAP and "struct page" that has now been fixed, literally anything that can
-be mapped into the VMM can be mapped into a KVM guest, without KVM needing to
-know *anything* about the underlying memory.
-
-Jumping back to guest_memfd, the main principle of guest_memfd is that it allows
-_KVM_ to be the Primary MMU (mm/ is now becoming another "primary" MMU, but I
-would call KVM 1a and mm/ 1b).  Instead of the VMM's address space and page
-tables being the source of truth, guest_memfd is the source of truth.  And that's
-why I'm so adamant that host_pfn_mapping_level() is completely out of scope for
-guest_memfd; that API _only_ makes sense when KVM is operating as a Seconary MMU.
 
