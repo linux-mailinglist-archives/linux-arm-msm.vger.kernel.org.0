@@ -1,98 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-66756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30BC3B12AAE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 15:19:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B8CB12B5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 18:09:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE8CAAA1FE8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 13:19:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D78C3BC0BD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 16:09:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D57254841;
-	Sat, 26 Jul 2025 13:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26864276023;
+	Sat, 26 Jul 2025 16:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GG95piGR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OFeD3pzf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0CA253F03
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Jul 2025 13:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3DA1F473A;
+	Sat, 26 Jul 2025 16:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753535974; cv=none; b=piQky7tU7ChWhDvMlfw0i6JM6fzJYeZZ/XolOsoxJ/cTvtXnnAni7jkZ7ts/GxXbPuLZMIgAe1CeFJQUHNpx/EHdowu2rsRAXmdcL+PuZm6JTAgrVe64dABFVSh6Th0xxgnUTiNVkOecdWvP3jiMt2wE5Vt38SOLzy83dz6nMmM=
+	t=1753546174; cv=none; b=jTbB5FMoXmK65W5vxDez/DM/IV/knJH+jhYKPTo69Cojdcj5XiKnfrBRyRlkdHjrlv8QfU/NacGIfVSXaXT6JBvV0Z7NY+hLM6EsRj63vsby4U4JHhytM+aXTx6e3XlpN5Ax1C+JlOHxykVfzsLNm2Tbs4WXqufhnbabqgPqFrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753535974; c=relaxed/simple;
-	bh=kS9mTNecFI8kxGYFVb6bjLud3Ye7vR+V9xS9j4LHP6I=;
+	s=arc-20240116; t=1753546174; c=relaxed/simple;
+	bh=zGhm9cGrLInk87ZM6CuHQbsPnqmOPsIF+UQoiuaBFWc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HJReG4Y3x8DjlIloMjuIgp19Zt0i8ppTnd5o5jqA9cESXoehb40diaWa1Z34oLWUi1iG/2qPATLjNiuVxjeKoiW4U2zWw2oRyxmeXrlCHvkqg5v1hEHsWwIzdlGGwYJ+B7jUtcusYtWD5qM2GsldOcZCAGxfuslcAm87Sx8OLng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GG95piGR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56Q3t2J9003692
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Jul 2025 13:19:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=wKlRx43bg26GnzmWCYPgxvkf
-	BptJ5iTMD+pzuCHYoZo=; b=GG95piGR1Nr7fWfwhZdOyz5BftydJKVBeLiAIod/
-	4uwit/XW9Mj5nkVIjJACv0PpfxgeN9cyPGmBjeKD+Lo9jae8QNdq6Tv1mPcVT82c
-	PRv8wiKsULpFc/rcaMBiVVeryA3Zbn3ePxJi4b6ORtQ5fX1wPrkoWpzcDy9/3t4R
-	NRdX+1EICayksXj2pTwys76gL/AiaOAtQ9YMKN2snnz3Z39xFrKu+zPILzglJ/3U
-	YokN/pZbaQCjkyQ7n1BxTa8RwDBieUyd5Ni1zZBY/Wt5G3GGFKR1c31CY9AnUqVP
-	7oISdv2xTJMn3bEX21ErP/MxO/FZv/KRKNiFr+7U+aBLOQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484mcr0wag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Jul 2025 13:19:31 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70739adfaceso2218576d6.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Jul 2025 06:19:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753535971; x=1754140771;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wKlRx43bg26GnzmWCYPgxvkfBptJ5iTMD+pzuCHYoZo=;
-        b=fI/jrQ2H/zrVfETSZ1r7X2gqOG9m7EAwjrZGI9pSy6pId69G5k8j/1FZ5zdp/sWtYh
-         yYm6DPhm/ZD1EbnFbWvZ5KA7BZDwXNvzJza0PwwBhFdk3Uvuv6WqD+/LA7jq/IgYLZl4
-         A5ZkHBGXCpnx1FoPIFiy3lNaUHzMF0Px1EIR9MmPKiZdAkwq9VEQLNChnPFw2ch6Njl+
-         gXcucvqzVQ+M9QrInDW4Ei3H5a8fVJfFY65LheCqcicqKuYwqwtpMcdpA9oUVVrT0LC8
-         MmrjMl2G50JfFPrha0z3GfShOtl910lv0qybBxeleUVxDs5VvFbBFBLmKJcHt0yXoQJV
-         wKig==
-X-Forwarded-Encrypted: i=1; AJvYcCUxP8gbbWSr9gfVxxbDphYxTqL2XZnGETKue6AAqY2gRER28nHxwOajIAJdc9bDiUi7Ilx+w9reAiR1kQwD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfNpr8PDwdRGDOheHBd+WkwZL8H22RVni4JfxbPIECqBkB7HZ+
-	a210C3BpXf3/8yY1WZRp5iwC/YK21tPAkpsT0lnVK9y9Dm60xjS/g8Yk6sKKuKQIoYgl0rNcG5r
-	E8af32eXEUXPC0KshpddffwpYfx7a5zNvCKWQb9tVesztRTbHFmsQM3x6OiYHhSkgB2Qe
-X-Gm-Gg: ASbGncvk3VE21PsmMkkEIvpmr1BWPTfr8UAQgpRJpDEIOSfYK7cQLh6tQSC+O02wiJS
-	E0mQ9966eVunjXbheyLMpIUcFNXFOWCfbrwfTJQHXVJvRRGKuLir+6YR3Md0DasTwcpK0Pn7Yd1
-	Pw5ltrIDeWPNdZN5CecETy4/Ijlwik/DZrMjuTLRD4SLSeDpdmqqm8c9bRizxup6dPYKI7V0aZU
-	m5M4JcDkWs2e78XJCiz6Gq39g0DJBYRWQNPTmMGK1q4WSyiaZksgQKe44ztyEs+0lj3KIxNzYWe
-	aO5P9WRCU8xklCLIguF+8tX+zZ3vKZq92XDmRnQt969fOlKhB+kntkrZOtQ8YSV4OSzdUWISDg9
-	YxoHu+tKEqm/gxV7IIOYCgcTVwvtWSBksbg9EwnFDRPk1kanOo/2F
-X-Received: by 2002:a05:6214:c64:b0:6fb:265:a2c5 with SMTP id 6a1803df08f44-70713d6d5d8mr105345636d6.17.1753535970987;
-        Sat, 26 Jul 2025 06:19:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYWwkI5Fe219W83PqY4wtTeraw4eW8iJd8EByOKtLD5K1fGPdGZVddIcafeBoh4bciCapvXQ==
-X-Received: by 2002:a05:6214:c64:b0:6fb:265:a2c5 with SMTP id 6a1803df08f44-70713d6d5d8mr105345346d6.17.1753535970543;
-        Sat, 26 Jul 2025 06:19:30 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-331f407e39csm4495121fa.1.2025.07.26.06.19.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jul 2025 06:19:29 -0700 (PDT)
-Date: Sat, 26 Jul 2025 16:19:26 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: qcs615-ride: Enable WiFi/BT
- nodes
-Message-ID: <ad5d7zx3ztuouvqediihpj6ukmy7dvl4eampuirp5r6ftr4lh2@6fkebmfj25yj>
-References: <20250726-615-v6-0-42b8150bcdd6@oss.qualcomm.com>
- <20250726-615-v6-2-42b8150bcdd6@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZUbG2VtJdHFgIELjsrEH/8MGq4OiLfRnclS7iSjk+lHZEbjizsFSnt1UDLAUrzD2L0Fhwmsc6hdKnnumXnIA+UwFh+ZLX1Tf63ot/d2srqSpuuTMM3FBQ8UoWX4b4v4FGY8e90yzyQvZfmPKJOhXkQty2FjlISIJ1aa0IAmDRHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OFeD3pzf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC5FC4CEED;
+	Sat, 26 Jul 2025 16:09:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753546173;
+	bh=zGhm9cGrLInk87ZM6CuHQbsPnqmOPsIF+UQoiuaBFWc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OFeD3pzfrqawsjoygKNa2OYK1mUDi84CYqacznSznpb8EV/75vZsotw2VE1+O2k/T
+	 scsIKENP/t7K4OtgtRXw/3wX29CS27Li2lLuHiAF2TAOaIrA9Yl+TNCvezu9QAPKvN
+	 DNXVNRDOEsT672eZEIClpB0McFE2sgzMpUKTm45F65iUukO4fVJQqzbDdMPRaxMoX4
+	 N2qRum08MdcYEDg0XaW+zqLr8+KXK1qBaqI9YndKjYvpQMEwhE4ZBMwBAsTvmEOGY5
+	 MhfsKNJk04x9LvgLMis4rhQ6YQr0Erh90wI7ZF4q2+fERx9l60gz9RTZ4MGrnswwzo
+	 d94V/iB8FOOPA==
+Date: Sat, 26 Jul 2025 11:09:30 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Wasim Nazir <wasim.nazir@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@oss.qualcomm.com
+Subject: Re: [PATCH 0/7] Refactor sa8775p/qcs9100 to common names
+ lemans-auto/lemans
+Message-ID: <pzkceoriu5cgvidt4xekauyc2ovqkbuoi32bbornr2wbxmombh@7visdfuos6ml>
+References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
+ <20250723-angelic-aboriginal-waxbill-cd2e4c@kuoka>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,72 +62,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250726-615-v6-2-42b8150bcdd6@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI2MDExNSBTYWx0ZWRfX9MA3pbNcjmhD
- /ix/xKz2nvEjH2joeAKutOepgFeBgBpiJHPH+9l60Abq7JuTu3nF2K6arJZM3Rcltad3BomkHjQ
- fFuwcQ9JBrQcQffYR3dh+6kaBoN2th/se56ftb+fhxkVffviGM36jiPIYnsJfLmSZal5n3G/17u
- qFJqncdvupLSiVoxqYwB5peWVJdnYiDeLWsUlWyejXqPkxCs/1gA9ET+R9mZuDpgaqLoOV/kFmO
- FQqtl2swTV42l3AZoKZga8t0XtPLc3TdMSKkW/YwokR9h/Q+nzQO0meSnbD9hUxZ8olJpw/za/M
- 4IWQIdp+ObfQ0b9NmORkhln93sU3HISUsLjsiYXFV3PShJIIOOSJCE+KiGxg1Px9fP3c+tGVAU4
- N12Gdf5jcR1RRejgDEJY4i9t+LCQDyLJJtTsfgH46NxKFOq5dbHeXoYw7n8yeMFh3AXOPUl+
-X-Authority-Analysis: v=2.4 cv=Hth2G1TS c=1 sm=1 tr=0 ts=6884d5e3 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=15mc5X2mdMWtrc8z2E8A:9 a=CjuIK1q_8ugA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-GUID: -0tln1YLVxhGs7hmwIORCDGzA_YS78XW
-X-Proofpoint-ORIG-GUID: -0tln1YLVxhGs7hmwIORCDGzA_YS78XW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-26_03,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 mlxscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 mlxlogscore=950 clxscore=1015
- spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507260115
+In-Reply-To: <20250723-angelic-aboriginal-waxbill-cd2e4c@kuoka>
 
-On Sat, Jul 26, 2025 at 11:31:31AM +0800, Yu Zhang(Yuriy) wrote:
-> Enable WiFi/BT on qcs615-ride by adding a node for the PMU module of the
-> WCN6855 and assigning its LDO power outputs to the existing WiFi/BT
-> module.
+On Wed, Jul 23, 2025 at 10:32:43AM +0200, Krzysztof Kozlowski wrote:
+> On Tue, Jul 22, 2025 at 08:19:19PM +0530, Wasim Nazir wrote:
+> > This patch series refactors the sa8775p and qcs9100 platforms and introduces
+> > a unified naming convention for current and future platforms (qcs9075).
+> > 
+> > The motivation behind this change is to group similar platforms under a
+> > consistent naming scheme and to avoid using numeric identifiers.
+> > For example, qcs9100 and qcs9075 differ only in safety features provided by
+> > the Safety-Island (SAIL) subsystem but safety features are currently
+> > unsupported, so both can be categorized as the same chip today.
+> >
 > 
-> Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 135 +++++++++++++++++++++++++++++++
->  1 file changed, 135 insertions(+)
+> I expressed strong disagreement with this patchset in individual
+> patches. I expect NO NEW versions of it, but by any chance you send it,
+> then please always carry my:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> index 011f8ae077c256f079ce1b07720374a9bf721488..f6df6a88adc8cdc416a57d38b8eaabd53fbe3fcd 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> @@ -18,6 +18,7 @@ aliases {
->  		mmc0 = &sdhc_1;
->  		mmc1 = &sdhc_2;
->  		serial0 = &uart0;
-> +		serial1 = &uart7;
->  	};
->  
->  	chosen {
-> @@ -47,6 +48,85 @@ regulator-usb2-vbus {
->  		enable-active-high;
->  		regulator-always-on;
->  	};
-> +
-> +	vreg_conn_1p8: regulator-conn-1p8 {
 
-regulator-conn-1p8 < regulator-usb2-vbus
+I requested Wasim to prepare this patch set. Something that would have
+been useful to include in the cover letter and some of the patches...
 
-Please keep DT sorted
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_conn_1p8";
-> +		startup-delay-us = <4000>;
-> +		enable-active-high;
-> +		gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
+I definitely agree with your position when it comes to renaming working
+platforms and I also think there has been way too much churn in relation
+to this platform.
 
--- 
-With best wishes
-Dmitry
+But the thing we call SA8775P upstream is not SA8775P. The hardware +
+firmware that is described by sa8775p.dtsi doesn't exist.
+
+Reactively and without telling us the whole story, we seem to have
+gotten qcs9100-ride*.dts to represent what folks has been using to
+upstream the platform support.
+
+But the board where I see people actually running upstream (the EVK
+introduced in this series) is based on the QCS9075 variant, which is the
+same die but with some hardware features disabled.
+
+
+
+In other words, this is a mess resulting from lacking communication and
+reactive shortsighted attempts to get things merged. I don't want to
+maintain it in this form.
+
+> Nacked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+
+I'm fine carrying this token of disapproval for how we got here. 
+
+Regards,
+Bjorn
+
+> Best regards,
+> Krzysztof
+> 
 
