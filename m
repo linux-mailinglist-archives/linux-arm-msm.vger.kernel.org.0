@@ -1,80 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-66758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DACF2B12B6F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 18:29:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FB04B12B92
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 19:12:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 06EBF179892
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 16:29:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F18B1C2260A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 17:12:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43D8928688E;
-	Sat, 26 Jul 2025 16:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 549F02877D3;
+	Sat, 26 Jul 2025 17:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X29jtUK7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOqzOZOS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DA6242D68;
-	Sat, 26 Jul 2025 16:29:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A5C28750C;
+	Sat, 26 Jul 2025 17:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753547345; cv=none; b=RIHe6+kr+CYegu4ApPf4yKSlJ78aYwGasbBGrAfCNJ6l0HshEGRpi8rql7kH/MUVzONDdxXFXXBIABrJvRXp3N2wlq5WQw0EWEXIqHxLOyW5EPHE8I7GEEmMWesN3eVcHqjxD12HGwHX0eddncg/URSOWcBKjjyX8dhI5gv8p/Q=
+	t=1753549922; cv=none; b=Gg/DDw1l19ZmfeHLr2BOy0KuX77kNY/0W8z733+BofuMT6Jh8nt6ymMsH4SOnfMGjbkXGNnQvixq6oZvlIY1H+67FJsb7xEfAWG2JDoDEO1zt68aGLYtCfP3OrWW8SqvURk385Dw/tfMsVHO/P0BtN0965nC2u2mYn85CZXMrlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753547345; c=relaxed/simple;
-	bh=G/K8pyDeP9S9JTCEMrl6oTquQe3ReUsv74LpUNzL4K8=;
+	s=arc-20240116; t=1753549922; c=relaxed/simple;
+	bh=rbCHqu5g+PtQzNMLvBDPb0/RV2wi01i4KdX1ANI0vaY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GJSzGS2Bvxn5wYRp7KVmrIaxMFT/wYmQV5wwancsMgJZ3pLqgz9Z91//kv2CDnKRP3T6dWmlvUackMqlgEd8OdHIfuvu7Zj1/T7Rr/Tx1AoGKU4npgBYsrFtfCXnXaG1a8iM8ZAsGa7IxuITK7fgiealwUgBitHRhqIji8iuOQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X29jtUK7; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753547343; x=1785083343;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=G/K8pyDeP9S9JTCEMrl6oTquQe3ReUsv74LpUNzL4K8=;
-  b=X29jtUK7iHAWeyHaxTN83X/ogR3QFwM7NYr34+7qnw0/OJP1LmZfZq6X
-   Aj6sI05b48tYa0ofaJO0GsBRgBQsMS1WJxGKDtkp6X6h5NE6c9wxzIA2f
-   EKncTOcjbwMhJCWd4Uu+wWWld2aUdrIaYEqUhBvcOanaIE2afi3IbQ17w
-   Ygt05E44atzyERk6b7E570w9/0ikT4ns+CAa1vY3YYfCnIW2uFYrkCx61
-   yhGfiTJj/tMNdnQD2itLRQHiqpEPhkGhzP4IQ6CTHjGcTSECsuGuXtGpY
-   5QdHjjbKCVzEErz1gqbOw0Ph4WACgE+sN40dGxQobKlXsmm3j5VTImBRn
-   Q==;
-X-CSE-ConnectionGUID: mMNeMfRSQSCjITwq53loSw==
-X-CSE-MsgGUID: sKdgHIIeR26C1JA7Nsu2ig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11504"; a="56007404"
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
-   d="scan'208";a="56007404"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2025 09:29:02 -0700
-X-CSE-ConnectionGUID: 4sWF6xspS2OA3rgPzX1tuA==
-X-CSE-MsgGUID: yxtOoSrbTXyHdcniL0C43A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
-   d="scan'208";a="161531066"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by fmviesa006.fm.intel.com with ESMTP; 26 Jul 2025 09:28:59 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ufhlY-000M6L-2O;
-	Sat, 26 Jul 2025 16:28:56 +0000
-Date: Sun, 27 Jul 2025 00:28:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dmitry Baryshkov <lumag@kernel.org>, Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Jackie Liu <liuyun01@kylinos.cn>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] thermal: qcom: make LMH select QCOM_SCM
-Message-ID: <202507270042.KdK0KKht-lkp@intel.com>
-References: <20250725-lmh-scm-v1-1-84246981f435@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IroB+JaczGgPQzE9tR7yj5U3n4igUVxpPZlclTYZdCX/98pPvhomLMWfJNP2deOtqY0ATVCCiMHlBclXvJuHM76Y9tbzNMH3j4lpz6XneG9RUDye1U8HjPIYD42w8smpBACo0ud7yF4pMYHNDfN2jcxJMS/JpuJWoPH1jhiMGAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOqzOZOS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B162FC4CEED;
+	Sat, 26 Jul 2025 17:12:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753549921;
+	bh=rbCHqu5g+PtQzNMLvBDPb0/RV2wi01i4KdX1ANI0vaY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LOqzOZOSdy4bu3tujbaeZeDeyXdFKmVFMRi7oEDbsn5YWEg7yg4qGttFH/5s6nADo
+	 8QyY3nUKWaGqDH9JPJ2gUZTlcxOa6xrc2mJOj/9kmRr9EP//zWIbvVEasrXpUrXblK
+	 ILS3+raUWsO2aGz/Q2RbXAs9TLgmchrwDu7bpA6/dzCOy9PTnwVCFV0mOJWx3Q6SuB
+	 WeRidwQjxZ49ai8Y2Wlk2JwwCAQYWWqVXqZ6DgbqB+iaNHENwMBTwdLEcGYAxzHbYx
+	 5IZoHxqh8eOV8GiUAUExWOkUKLL3Gj+w5y8sUiH9M5jJ2ND0pQ7B3BcRhvwQDW7LW2
+	 ckApRb6hweqDg==
+Date: Sat, 26 Jul 2025 12:11:58 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Wasim Nazir <wasim.nazir@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, kernel@oss.qualcomm.com
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: Rename sa8775p SoC to "lemans"
+Message-ID: <vc2z57myldazay75qwbxotxr5siooqny2vviu6yznna3fdj3ed@6fpcy7dcg6t3>
+References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
+ <20250722144926.995064-2-wasim.nazir@oss.qualcomm.com>
+ <20250723-swinging-chirpy-hornet-eed2f2@kuoka>
+ <159eb27b-fca8-4f7e-b604-ba19d6f9ada7@oss.qualcomm.com>
+ <e718d0d8-87e7-435f-9174-7b376bf6fa2f@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,111 +65,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250725-lmh-scm-v1-1-84246981f435@oss.qualcomm.com>
+In-Reply-To: <e718d0d8-87e7-435f-9174-7b376bf6fa2f@kernel.org>
 
-Hi Dmitry,
+On Thu, Jul 24, 2025 at 02:51:54PM +0200, Krzysztof Kozlowski wrote:
+> On 24/07/2025 14:47, Konrad Dybcio wrote:
+> > On 7/23/25 10:29 AM, 'Krzysztof Kozlowski' via kernel wrote:
+> >> On Tue, Jul 22, 2025 at 08:19:20PM +0530, Wasim Nazir wrote:
+> >>> SA8775P, QCS9100 and QCS9075 are all variants of the same die,
+> >>> collectively referred to as lemans. Most notably, the last of them
+> >>> has the SAIL (Safety Island) fused off, but remains identical
+> >>> otherwise.
+> >>>
+> >>> In an effort to streamline the codebase, rename the SoC DTSI, moving
+> >>> away from less meaningful numerical model identifiers.
+> >>>
+> >>> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> >>> ---
+> >>>  arch/arm64/boot/dts/qcom/{sa8775p.dtsi => lemans.dtsi} | 0
+> >>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi             | 2 +-
+> >>
+> >> No, stop with this rename.
+> >>
+> >> There is no policy of renaming existing files.
+> > 
+> > There's no policy against renaming existing files either.
+> 
+> There is, because you break all the users. All the distros, bootloaders
+> using this DTS, people's scripts.
+> 
 
-kernel test robot noticed the following build warnings:
+None of these users are affected by the rename of the .dtsi file.
 
-[auto build test WARNING on a933d3dc1968fcfb0ab72879ec304b1971ed1b9a]
+Patch 5 does have user impact, so that one would be "controversial".
+From the answers I've gotten, I'm questioning which of thees files
+actually has users - but that's best done in a standalone patch removing
+or renaming them, with a proper commit message.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/thermal-qcom-make-LMH-select-QCOM_SCM/20250725-215843
-base:   a933d3dc1968fcfb0ab72879ec304b1971ed1b9a
-patch link:    https://lore.kernel.org/r/20250725-lmh-scm-v1-1-84246981f435%40oss.qualcomm.com
-patch subject: [PATCH] thermal: qcom: make LMH select QCOM_SCM
-config: s390-allyesconfig (https://download.01.org/0day-ci/archive/20250727/202507270042.KdK0KKht-lkp@intel.com/config)
-compiler: s390-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250727/202507270042.KdK0KKht-lkp@intel.com/reproduce)
+> > 
+> >> It's ridicilous. Just
+> >> because you introduced a new naming model for NEW SOC, does not mean you
+> >> now going to rename all boards which you already upstreamed.
+> > 
+> > This is a genuine improvement, trying to untangle the mess that you
+> > expressed vast discontent about..
+> > 
+> > There will be new boards based on this family of SoCs submitted either
+> > way, so I really think it makes sense to solve it once and for all,
+> > instead of bikeshedding over it again and again each time you get a new
+> > dt-bindings change in your inbox.
+> > 
+> > I understand you're unhappy about patch 6, but the others are
+> > basically code janitoring.
+> 
+> Renaming already accepted DTS is not improvement and not untangling
+> anything.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507270042.KdK0KKht-lkp@intel.com/
+No, but the rename of the dtsi file and avoiding introducing yet another
+qcs<random numbers> prefix in the soup is a huge improvement.
 
-All warnings (new ones prefixed by >>):
+> These names were discussed (for very long time) and agreed on.
+> What is the point of spending DT maintainers time to discuss the sa8775p
+> earlier when year later you come and start reversing things (like in
+> patch 6).
+> 
 
-   drivers/thermal/qcom/lmh.c: In function 'lmh_handle_irq':
-   drivers/thermal/qcom/lmh.c:46:17: error: implicit declaration of function 'generic_handle_irq' [-Wimplicit-function-declaration]
-      46 |                 generic_handle_irq(irq);
-         |                 ^~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c: In function 'lmh_enable_interrupt':
-   drivers/thermal/qcom/lmh.c:53:40: error: implicit declaration of function 'irq_data_get_irq_chip_data'; did you mean 'irq_domain_get_irq_data'? [-Wimplicit-function-declaration]
-      53 |         struct lmh_hw_data *lmh_data = irq_data_get_irq_chip_data(d);
-         |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
-         |                                        irq_domain_get_irq_data
-   drivers/thermal/qcom/lmh.c:53:40: error: initialization of 'struct lmh_hw_data *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-   drivers/thermal/qcom/lmh.c:56:9: error: implicit declaration of function 'writel' [-Wimplicit-function-declaration]
-      56 |         writel(0xff, lmh_data->base + LMH_REG_DCVS_INTR_CLR);
-         |         ^~~~~~
-   drivers/thermal/qcom/lmh.c: In function 'lmh_disable_interrupt':
-   drivers/thermal/qcom/lmh.c:62:40: error: initialization of 'struct lmh_hw_data *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-      62 |         struct lmh_hw_data *lmh_data = irq_data_get_irq_chip_data(d);
-         |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c: At top level:
-   drivers/thermal/qcom/lmh.c:67:15: error: variable 'lmh_irq_chip' has initializer but incomplete type
-      67 | static struct irq_chip lmh_irq_chip = {
-         |               ^~~~~~~~
-   drivers/thermal/qcom/lmh.c:68:10: error: 'struct irq_chip' has no member named 'name'
-      68 |         .name           = "lmh",
-         |          ^~~~
->> drivers/thermal/qcom/lmh.c:68:27: warning: excess elements in struct initializer
-      68 |         .name           = "lmh",
-         |                           ^~~~~
-   drivers/thermal/qcom/lmh.c:68:27: note: (near initialization for 'lmh_irq_chip')
-   drivers/thermal/qcom/lmh.c:69:10: error: 'struct irq_chip' has no member named 'irq_enable'
-      69 |         .irq_enable     = lmh_enable_interrupt,
-         |          ^~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:69:27: warning: excess elements in struct initializer
-      69 |         .irq_enable     = lmh_enable_interrupt,
-         |                           ^~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:69:27: note: (near initialization for 'lmh_irq_chip')
-   drivers/thermal/qcom/lmh.c:70:10: error: 'struct irq_chip' has no member named 'irq_disable'
-      70 |         .irq_disable    = lmh_disable_interrupt
-         |          ^~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:70:27: warning: excess elements in struct initializer
-      70 |         .irq_disable    = lmh_disable_interrupt
-         |                           ^~~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:70:27: note: (near initialization for 'lmh_irq_chip')
-   drivers/thermal/qcom/lmh.c: In function 'lmh_irq_map':
-   drivers/thermal/qcom/lmh.c:83:9: error: implicit declaration of function 'irq_set_lockdep_class' [-Wimplicit-function-declaration]
-      83 |         irq_set_lockdep_class(irq, &lmh_lock_key, &lmh_request_key);
-         |         ^~~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:84:9: error: implicit declaration of function 'irq_set_chip_and_handler' [-Wimplicit-function-declaration]
-      84 |         irq_set_chip_and_handler(irq, &lmh_irq_chip, handle_simple_irq);
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:84:54: error: 'handle_simple_irq' undeclared (first use in this function)
-      84 |         irq_set_chip_and_handler(irq, &lmh_irq_chip, handle_simple_irq);
-         |                                                      ^~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:84:54: note: each undeclared identifier is reported only once for each function it appears in
-   drivers/thermal/qcom/lmh.c:85:9: error: implicit declaration of function 'irq_set_chip_data'; did you mean 'irq_set_irqchip_state'? [-Wimplicit-function-declaration]
-      85 |         irq_set_chip_data(irq, lmh_data);
-         |         ^~~~~~~~~~~~~~~~~
-         |         irq_set_irqchip_state
-   drivers/thermal/qcom/lmh.c: In function 'lmh_probe':
-   drivers/thermal/qcom/lmh.c:219:9: error: implicit declaration of function 'irq_set_status_flags' [-Wimplicit-function-declaration]
-     219 |         irq_set_status_flags(lmh_data->irq, IRQ_NOAUTOEN);
-         |         ^~~~~~~~~~~~~~~~~~~~
-   drivers/thermal/qcom/lmh.c:219:45: error: 'IRQ_NOAUTOEN' undeclared (first use in this function); did you mean 'IRQF_NO_AUTOEN'?
-     219 |         irq_set_status_flags(lmh_data->irq, IRQ_NOAUTOEN);
-         |                                             ^~~~~~~~~~~~
-         |                                             IRQF_NO_AUTOEN
-   drivers/thermal/qcom/lmh.c: At top level:
-   drivers/thermal/qcom/lmh.c:67:24: error: storage size of 'lmh_irq_chip' isn't known
-      67 | static struct irq_chip lmh_irq_chip = {
-         |                        ^~~~~~~~~~~~
+There was no point, all the information wasn't brought to those
+discussions...
 
+What we know now is that QCS9100 and QCS9075 (and perhaps more?) are the
+Lemans IoT product line and the EVK is the main development board
+there on.
 
-vim +68 drivers/thermal/qcom/lmh.c
+It's unclear if there are any lingering users of sa8775p-ride, but
+the platform we describe in sa8775p.dtsi doesn't exist anymore. To the
+best of my understanding, any users of the ride hardware should be on
+qcs9100-ride...
 
-53bca371cdf7ad Thara Gopinath 2021-08-09  66  
-53bca371cdf7ad Thara Gopinath 2021-08-09 @67  static struct irq_chip lmh_irq_chip = {
-53bca371cdf7ad Thara Gopinath 2021-08-09 @68  	.name           = "lmh",
-53bca371cdf7ad Thara Gopinath 2021-08-09  69  	.irq_enable	= lmh_enable_interrupt,
-53bca371cdf7ad Thara Gopinath 2021-08-09  70  	.irq_disable	= lmh_disable_interrupt
-53bca371cdf7ad Thara Gopinath 2021-08-09  71  };
-53bca371cdf7ad Thara Gopinath 2021-08-09  72  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Regards,
+Bjorn
 
