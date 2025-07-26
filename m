@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-66766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B3BAB12C3A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 22:38:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE021B12C72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 22:50:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89E5B4E42E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 20:38:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82D077A6C20
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 20:49:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27844235354;
-	Sat, 26 Jul 2025 20:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD98D28A1FB;
+	Sat, 26 Jul 2025 20:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="N6zFuSXx"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ZW6cm0y+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7779F218AB4;
-	Sat, 26 Jul 2025 20:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4544B1E8338;
+	Sat, 26 Jul 2025 20:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753562327; cv=none; b=m8fE+xbrmVMdxG054wjGu70kyzmXsOJubAfnt4SozE0/MsFSkcQiQiXA+6Mk2Y0Lw8G1Pc3RxGOW1GLi41QynOKwbhXyyS17bSvGtO4wUybdvI/Po6ZtU+2XFqZLu/urgiqL3qK40QMfmudHslw8Nd5yhCOqcSUeP/RpJR4FPVU=
+	t=1753563024; cv=none; b=RjTqxly8ZCRZij01ObrYnCogjgl7kh8gZ5I+OSiaXa7CxP0bikk3G1Cm1mxeh3m2jL1fhIsX+kDEQ6qX7rp4t8mub8MPL/gwdYIItNTxyUjbhdJEYsNp3dXvT9tNwQ99ba8JwCah+oeqB516e3eCSRGNIr9ksF9Dixta/pBwsiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753562327; c=relaxed/simple;
-	bh=5YDCvTY4h79DMAWX/Vt2xwJMsU4mqVB/VaYI4FrTA1s=;
+	s=arc-20240116; t=1753563024; c=relaxed/simple;
+	bh=5CcbBLAvFqafwbDTuYRHBZTGQlGQDl+tdcBy7K/cZGw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y30ydv9MzZKxIpCVpHGp6dsGjk7aMLtCNM3G/oIvFz76ohfK1wwtCntUESVG7RSGdx8ypeMShW/5KmVxndoBq15qwZt2i55aMYHX51YtQMNf5tYu2XCMOSGK2KYMei94oOQduxINBIaCYQUrvpkcohHrd3+8zLKDXCO8iciflb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=N6zFuSXx; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=rEZhA1aGvdezAND48h0JaLG/bMTxBV9QkQ8ZW1PjaGw6I63lRQqte7MoSNwAr52IsquT4Ob7fYkpjIYseT3cUNy73xn+Wtv+Z/vh2oAK5hhv6hh8yIRg59E0TAWmExlFqK7BSzNgMRPhbCNC+9KiZkp2lxDOgT5lUBhzld+wb6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ZW6cm0y+; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=IdOZ/BpVWuZo4SXqhPcslF3K2uypFYqv/BJB8/Epd/U=; b=N6zFuSXx39EWTD28RZSXtzT2UI
-	5s014y1jMHntFTUyLiW+BSGmS0T+ZXfmQQwYAA4G7EuiAalogyD/zaY/Mr+r2s1b0RiS4bhGaPn9p
-	1j8T3MkambSaVb6OusqZd7+uzyPUE0F5Kaz2v+LZhefJlYGryYLxqcDPv2jnlja9OwNM=;
+	bh=EUlYzqAYpxnFteGA0rbRZWT0uzl0Of2A26AS9jfz3Wo=; b=ZW6cm0y+hFYTZGKm3HL1p2XLP1
+	8FbSV3vCcrpTwA/ix7DfXcxH5bVojJw1TxYnBB4IVWmeoGa+Uh5vm0wF0xKYfbVy70dIB2ssyQvcm
+	M+ooW4OZRVswmkrk2xlqbkGiFhn75Q/53d6lNjcO0+KYs19DJOjIjgVOADNhYRH4v49g=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1uflf6-002xsg-Fy; Sat, 26 Jul 2025 22:38:32 +0200
-Date: Sat, 26 Jul 2025 22:38:32 +0200
+	id 1uflqK-002xx0-Oy; Sat, 26 Jul 2025 22:50:08 +0200
+Date: Sat, 26 Jul 2025 22:50:08 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
@@ -68,11 +68,11 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v10 04/15] net: phy: Introduce PHY ports
- representation
-Message-ID: <bec1b52f-d33d-4088-9d88-3345ecd0fa69@lunn.ch>
+Subject: Re: [PATCH net-next v10 05/15] net: phy: dp83822: Add support for
+ phy_port representation
+Message-ID: <6721b691-bae8-4a91-b14b-276b14b89244@lunn.ch>
 References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
- <20250722121623.609732-5-maxime.chevallier@bootlin.com>
+ <20250722121623.609732-6-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,25 +81,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250722121623.609732-5-maxime.chevallier@bootlin.com>
+In-Reply-To: <20250722121623.609732-6-maxime.chevallier@bootlin.com>
 
-> +static int phy_default_setup_single_port(struct phy_device *phydev)
-> +{
-> +	struct phy_port *port = phy_port_alloc();
+> +#if IS_ENABLED(CONFIG_OF_MDIO)
+> +		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
+> +			dp83822->fx_signal_det_low =
+> +				device_property_present(&phydev->mdio.dev,
+> +							"ti,link-loss-low");
 > +
-> +	if (!port)
-> +		return -ENOMEM;
-> +
-> +	port->parent_type = PHY_PORT_PHY;
-> +	port->phy = phydev;
-> +
-> +	/* Let the PHY driver know that this port was never described anywhere.
-> +	 * This is the usual case, where we assume single-port PHY devices with
-> +	 * no SFP. In that case, the port supports exactly the same thing as
-> +	 * the PHY itself.
+> +		/* ti,fiber-mode is still used for backwards compatibility, but
+> +		 * has been replaced with the mdi node definition, see
+> +		 * ethernet-port.yaml
+> +		 */
+> +		if (!dp83822->fx_enabled)
+> +			dp83822->fx_enabled =
+> +				device_property_present(&phydev->mdio.dev,
+> +							"ti,fiber-mode");
 
-I wounder if you should hook into __set_phy_supported() so that DT
-max-speed, and the MAC driver calling phy_set_max_speed() are covered?
+Could be my grep fu is broken but:
 
-	   Andrew
+~/linux$ grep -r fiber-mode arch/*
+~/linux$ 
+
+So it does not even appear to be used. If it is not used, do we have
+to consider backwards compatibility?
+
+Maybe consider marking the property deprecated and point to the new
+binding?
+
+	Andrew
 
