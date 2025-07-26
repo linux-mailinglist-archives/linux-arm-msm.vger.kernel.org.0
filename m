@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-66771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CC26B12C98
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 23:17:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB500B12C9D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 23:24:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6951B1C21A5F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 21:17:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1F7297A69B8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 21:23:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E0B3217723;
-	Sat, 26 Jul 2025 21:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF6021ADC6;
+	Sat, 26 Jul 2025 21:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="oJVz5O3P"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="iZCBryEN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA666199924;
-	Sat, 26 Jul 2025 21:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA9A1BEF7E;
+	Sat, 26 Jul 2025 21:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753564643; cv=none; b=Jwn+9pW+h0pIO9aH3FKnHT6OAaxW4ywar1iX+SFmhiZf4QdaBxWHczriID3ag6IC2D7OyzuXe3CwFJOOD7JsUQ1i6kNK0RnvA0Bd8YTxDuzb4HQEcn8SzhVue5K/GPUO+KVvPHC2soALvMiqLGLpgKKTC29fgPDzX4TY9oYn3P0=
+	t=1753565089; cv=none; b=QQdjiVJF3bU9TDMFZ0t9Oc/4+4d3pC6vjsTyFgQwSqpR7uGYN3fH6o3mnZ6JyOv6NMySp6vjCAF0YdZXy0/g1g3JfxLAwR2T85/IMg9EiWUtF4+e656JL2lJ4saz1zxgWvaa6uLJYRwNH+LA/9Q83OGofZ2KVSTU+5l2YYkH80o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753564643; c=relaxed/simple;
-	bh=RGFBcNYwtvE1bQmu9UD7+TrQ2VnLnSDCTMyX6RsoTek=;
+	s=arc-20240116; t=1753565089; c=relaxed/simple;
+	bh=zX0JMI7Q3kU3P9tcEi3RFlmeubhAibQGoc85nzIr9a0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qrqi4WCR8MyAv8vTXyP+avs71XUH0BY0SnNXv76Ysf0kNt8eZqdMFGRE69zJjQtjN1rLei/bjlfA5GG8QWQ/Vs2OPfvDKybwV7Gy7P4RSbXeaeXQ96gncOex425l8BmtxjPzdS36AT0Ywdbby84uDfAgUFONtQRwopZIKrj8XQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=oJVz5O3P; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKixE5ampMyiQ1WRZLQHnTZCBDT/DN/p/TQg4S3aVUyGXiAfiFeYDDgOCq33PZeqHE1VtlBA0CA4HXi2bGO72FAfl74xk71FBSkmQAeY7ysHo+W/WdC29e+gzhM0WQkjawV1C5hgJ/OyTajB/pMoOZPlOXUWCnh+nRuHy4BokEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=iZCBryEN; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=RKHW63eS4vhsiq6w1j0xdaM2ua1lyfOxwy9A13DXxwY=; b=oJVz5O3PaIy0LU9cDnAZlXPyno
-	R+veBl7QJbWRkAf2pTm7637bQrp0MNhVqHYYJixxbfh5Vlvl34c/8wFRbagtFmR11sUCuNhTxaGg1
-	DX54ZfLTubSCixKIqtMnFDov/gMyBBn+HQScGGSxxyddsvg5ryJOJGKjBuB37+3ShNMk=;
+	bh=uqIsyHweDQuU/cfkFMj4zECHx2q4S7M+MS7iuNNPSZM=; b=iZCBryENHxBWgI+GZsRBHrXiTy
+	eErR82jHlEPktXtCg+QSTH37YVCSi7sIlSpVqU0b2jGd0mWdtMisbLN/AXuztAPonw18G1bt5j6pZ
+	Tuh5vGWU0kSOU6K4XV8BCmikFpoqOA15XyIbDgJ94v/SUxNFZwnUhBz9kykBYmvtxfoM=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1ufmGV-002y5Q-RC; Sat, 26 Jul 2025 23:17:11 +0200
-Date: Sat, 26 Jul 2025 23:17:11 +0200
+	id 1ufmNg-002y6t-0q; Sat, 26 Jul 2025 23:24:36 +0200
+Date: Sat, 26 Jul 2025 23:24:36 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
@@ -68,11 +68,11 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v10 10/15] net: phy: marvell10g: Support SFP
- through phy_port
-Message-ID: <b6498944-0d06-459f-9668-26813f037166@lunn.ch>
+Subject: Re: [PATCH net-next v10 11/15] net: phy: at803x: Support SFP through
+ phy_port interface
+Message-ID: <67dd0a3e-12ac-49ab-aec1-f238db7030e6@lunn.ch>
 References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
- <20250722121623.609732-11-maxime.chevallier@bootlin.com>
+ <20250722121623.609732-12-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,21 +81,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250722121623.609732-11-maxime.chevallier@bootlin.com>
+In-Reply-To: <20250722121623.609732-12-maxime.chevallier@bootlin.com>
 
-> +	} else if (port->not_described) {
-> +		/* This PHY can do combo-ports, i.e. 2 MDI outputs, usually one
-> +		 * of them going to an SFP and the other one to a RJ45
-> +		 * connector. If we don't have any representation for the port
-> +		 * in DT, and we are dealing with a non-SFP port, then we
-> +		 * mask the port's capabilities to report BaseT-only modes
-> +		 */
-> +		port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
-> +
-> +		phy_port_filter_supported(port);
+On Tue, Jul 22, 2025 at 02:16:16PM +0200, Maxime Chevallier wrote:
+> Convert the at803x driver to use the generic phylib SFP handling, via a
+> dedicated .attach_port() callback, populating the supported interfaces.
+> 
+> As these devices are limited to 1000BaseX, a workaround is used to also
+> support, in a very limited way, copper modules. This is done by
+> supporting SGMII but limiting it to 1G full duplex (in which case it's
+> somwhat compatible with 1000BaseX).
 
-That seems a little bit error prone. Maybe add a helper to set
-port->mediums, which also makes the phy_port_filter_supported() call?
+Missing e
+
+> +static int at8031_attach_port(struct phy_device *phydev, struct phy_port *port)
+>  {
+
+...
+
+> +	if (!port->is_mii)
+> +		return 0;
+
+That seems common to all these drivers? Can it be pulled into the
+core?
+
+> -	if (iface == PHY_INTERFACE_MODE_SGMII)
+> -		dev_warn(&phydev->mdio.dev, "module may not function if 1000Base-X not supported\n");
+
+I think we need to keep this warning. I don't remember the details,
+but i think this is the kernel saying the hardware is broken, this
+might not work, we will give it a go, but don't blame me if it does
+not work. We need to keep this disclaimer.
 
 	Andrew
 
