@@ -1,124 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-66763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286AAB12BCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 20:05:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80AAAB12C18
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 21:49:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4F263AFA22
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 18:04:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A4E33BDE4A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jul 2025 19:49:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11A94288C89;
-	Sat, 26 Jul 2025 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B11401EA7CC;
+	Sat, 26 Jul 2025 19:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mk60yALw"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="anaOAwDt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F7D1DE2D8;
-	Sat, 26 Jul 2025 18:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3C31401B;
+	Sat, 26 Jul 2025 19:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753553097; cv=none; b=J6+y9NP5wymz3Zbgpb+UtVA82W09ByvwaUJnVCKHdfud2cg+zuTXrvrXfRujvEv15m7FYbQM/+HCoukmReUZKmS5jceO4qA5VD1vb+eC5BANRNTJDO7jNV3AoMuE48zPb3S7p8pJIUOYl4qbQw++PyMCwcHDwz1RlmDdm3n6+bo=
+	t=1753559367; cv=none; b=jVikJWe7eSzEaK51Rh+JUItc+XODMKJHXdFJpKbzU8syxxIRnX5gFuhr/XHpZnYY418lusQdUrplSJ9vQ2OPdylghf7o2CzB+KGzR/6GFMJgCkSx5H0yMs5BEaEbqSgibrfSthWqKut/QSrO5ZG5Ky6tlPJ1X6ZKFlNkTdzHcAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753553097; c=relaxed/simple;
-	bh=dA3RQXEC+Ya4PmUpYs4RFw4idADWpDG4vWeL2fSZ6M4=;
+	s=arc-20240116; t=1753559367; c=relaxed/simple;
+	bh=jBF0oqWUqYKS8OhtkRMLwtvyBIhQM+gKrwZVKEhqJHo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WBKkF79+irqk9ufR7oerDhbbqJSux8US7y9p9aTdFHiEV63gbw7KTVCW14yA1oWVifzf3I31B4RJeZCosi3hVaMGET9DVQLRj3GTlcQwy0ohupWi6zKtQyF9OOCpA33zdFB1raU9f59Ulq4fjKLE6aK4Se7VkCbRvoCYO5vINws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mk60yALw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92186C4CEED;
-	Sat, 26 Jul 2025 18:04:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753553096;
-	bh=dA3RQXEC+Ya4PmUpYs4RFw4idADWpDG4vWeL2fSZ6M4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Mk60yALwghPokJKFHR7S9PFM88kTEYZYtfojXaZI+uiimFAPD9KIEv+wteV4f6jMs
-	 yd/HoAXf4N318Zl0XUPbbgv+DC5DmO+5aMbqR3rOykGrbHcx6W7Wv0hj3+KUVPaaHW
-	 VIcSuKVEuy3n7mDDX6SzQZM46jrOBu+JWpBlHPSRrPx3ksFMg5NnrtHCjLbLDEF27P
-	 pzbHJL5eWw952Uhpz3awLM5TmaJvuaanqxZ6wR89SG5si+cVb6cx61/k2znh4io9qP
-	 kzilZTDlNe2yAYnESP2zFJS4wi91yhuKrESL+HZYgt3Wucq8GxTs/hkpghqAADxiYs
-	 nRLgxFtzaraAA==
-Date: Sat, 26 Jul 2025 19:04:51 +0100
-From: Simon Horman <horms@kernel.org>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=jIVAzCpMbWftwMyMfJeJdouofnmDhVATQc5c+nCXH0H8TnHmcFW/9OZHq/aZ0vXnfmUrrNRX1Vp3dmdxHWQleJs03Ho40Q5vdGPcTD1BhewkJEKkYCngtumTVf2Hya2PTiI2k+1ZLk/PBO4vv0RuyNry6xrzeLYdtNIFMuwdz4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=anaOAwDt; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=Aw/7c/a8OLgnYaUzTv8cMEI87YfbQ4Gsk3r35pIOJiM=; b=anaOAwDt1I8LYFAqXfsid+9XKN
+	Mj/q33Ncdq3RzPp6/vCLe2Sfkq8FB34u1PU/gKhrJySj7Gs/jEcsHafcFPUc2oikf4AWQjXRSFFbc
+	KepNVxDcikkuwBx5S47LHPcaBW35fqjZUKytZblg1Tj5pOTsxtuVW1FMuiFC816c+kAU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1ufktH-002xhZ-RG; Sat, 26 Jul 2025 21:49:07 +0200
+Date: Sat, 26 Jul 2025 21:49:07 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
 	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	kernel@oss.qualcomm.com
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: Rename sa8775p SoC to "lemans"
-Message-ID: <20250726180451.GM1367887@horms.kernel.org>
-References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
- <20250722144926.995064-2-wasim.nazir@oss.qualcomm.com>
- <20250723-swinging-chirpy-hornet-eed2f2@kuoka>
- <159eb27b-fca8-4f7e-b604-ba19d6f9ada7@oss.qualcomm.com>
- <e718d0d8-87e7-435f-9174-7b376bf6fa2f@kernel.org>
- <CACSVV00jef8so-jqjCaqJehj-XN2OZ562_R+Dod64+C4-dmDhQ@mail.gmail.com>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v10 01/15] dt-bindings: net: Introduce the
+ ethernet-connector description
+Message-ID: <8d0029bc-74b7-44bc-ae0b-606d5fd2d7c3@lunn.ch>
+References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
+ <20250722121623.609732-2-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSVV00jef8so-jqjCaqJehj-XN2OZ562_R+Dod64+C4-dmDhQ@mail.gmail.com>
+In-Reply-To: <20250722121623.609732-2-maxime.chevallier@bootlin.com>
 
-On Thu, Jul 24, 2025 at 08:59:38AM -0700, Rob Clark wrote:
-> On Thu, Jul 24, 2025 at 5:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >
-> > On 24/07/2025 14:47, Konrad Dybcio wrote:
-> > > On 7/23/25 10:29 AM, 'Krzysztof Kozlowski' via kernel wrote:
-> > >> On Tue, Jul 22, 2025 at 08:19:20PM +0530, Wasim Nazir wrote:
-> > >>> SA8775P, QCS9100 and QCS9075 are all variants of the same die,
-> > >>> collectively referred to as lemans. Most notably, the last of them
-> > >>> has the SAIL (Safety Island) fused off, but remains identical
-> > >>> otherwise.
-> > >>>
-> > >>> In an effort to streamline the codebase, rename the SoC DTSI, moving
-> > >>> away from less meaningful numerical model identifiers.
-> > >>>
-> > >>> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> > >>> ---
-> > >>>  arch/arm64/boot/dts/qcom/{sa8775p.dtsi => lemans.dtsi} | 0
-> > >>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi             | 2 +-
-> > >>
-> > >> No, stop with this rename.
-> > >>
-> > >> There is no policy of renaming existing files.
-> > >
-> > > There's no policy against renaming existing files either.
-> >
-> > There is, because you break all the users. All the distros, bootloaders
-> > using this DTS, people's scripts.
-> 
-> I think that is a valid argument against renaming the toplevel .dts
-> (and therefore .dtb), but renaming .dtsi should be a harmless internal
-> detail to the kernel.  And less confusing, IMHO, than
-> qsc9100-myboard.dts #including sa8775p.dtsi.
-> 
-> So wouldn't the sensible way forward be to rename .dtsi but not .dts?
+>  - The number of lanes, which is a quite generic property that allows
+>    differentating between multiple similar technologies such as BaseT1
+>    and "regular" BaseT (which usually means BaseT4).
 
-FWIIW, and with the dual caveats that: I do not have the full context of
-this series; and SoCs are not somewhere where I am active these days:
+> +            mdi {
+> +                connector-0 {
+> +                    lanes = <2>;
+> +                    media = "BaseT";
 
-I am also under the impression that, in general, renames to
-match product or other organisational changes are a non-starter.
+This is correct when the port is Fast Ethernet. However, as you point
+out, now a days, the more normal case is 1G, with 4 lanes for BaseT.
+To avoid developers just copy/pasting without engaging brain, maybe
+add a comment about it being a Fast Ethernet port?
 
-But reading over this patchset, I also felt that renaming the .dsti files
-would improve things. And seems to have little scope to break things for
-users.
-
-</2c>
+	Andrew
 
