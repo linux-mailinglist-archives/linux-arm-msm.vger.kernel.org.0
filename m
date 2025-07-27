@@ -1,142 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-66781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31337B12ED1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 11:30:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD1B2B12EEB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 11:57:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 193377A4426
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 09:28:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01F76175E28
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 09:57:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA1A1F866A;
-	Sun, 27 Jul 2025 09:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8246A1FDE22;
+	Sun, 27 Jul 2025 09:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dCB3pcy2"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Rw9v4iQZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943A19460;
-	Sun, 27 Jul 2025 09:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3602B9BA;
+	Sun, 27 Jul 2025 09:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753608619; cv=none; b=OF/FRIvxmc2FDqxzunMZ6arjf9G5LkRLHoBcqTuQFWdqExTslhTWSCjI0+RWab2JcUv0v2V/6xiIMolcQCj0WRQyfZwN+YC5iQjmvEDpdGD7kulAyWJNWtmSyBmOQASZpE65yD2vCA+exgr+pn92aiSAMLTGWD4qBCQHQQMIXno=
+	t=1753610235; cv=none; b=mYCqOsIHb7SXbZi2yoEOs9/7FVFgJlKl1Jm9iheKqvLviP57nX+AdS7hkqJ2/Z5LQzlUjWAbNTm8yzTQoX3YM61clEmY5+Rged8S4w0bj8q2aEL4mm/bnPTsESpVP+9vbxZxCH+XC7QWOHDpMl9s/WY+cYDL4zppbYwr9vskQ0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753608619; c=relaxed/simple;
-	bh=1G8EBj+mLr6qao5CQ+yXFngGEjwUU5x6p8fIGY11ZQQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VNt92wn/eKoRnw8W3PiWBhv2/WSZWW2pA50VgdJcgbUXoBUPTnDTcGstHvBhLEmoGo56KHQcpJ0MkViIj9zUS5pEXgyETdswu/bAxeueRPweTuGASMK+/PVzHHM7r0C+w/gTHUXPABHLfpBdpiFfvoeMloBXExa507Mo0rhApdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dCB3pcy2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD411C4CEEB;
-	Sun, 27 Jul 2025 09:30:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753608617;
-	bh=1G8EBj+mLr6qao5CQ+yXFngGEjwUU5x6p8fIGY11ZQQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dCB3pcy2zaJG7lj+TOpcxPdADFKlNfDLfLL0AB8tklII7BnnHxSX7LbhtbFzDrNrC
-	 23/F/ev4yKLXpy3gnLDwcE+J2euOLXdBu1+jIKAH5w7BUL5/9r2jNnrSWQDLAi/Xc5
-	 VjOeaqDJjS1c7QiGuveUf6Fb87X25aJoRP+Xz4y1f8FCyPMFWbgzX1Zn4udJjADXIM
-	 3mfwV5UPEL+1ywzVBfYyyjcbd8Jda1htwZkRt+DInzc+OET7ZGetS58gxRki01J5Vf
-	 PaP/wGoh7odeWGVDqzPQuXfX/0VQliroXA9yS6CCU9utdP9uxVO0McCFSNZjmD92zT
-	 wP7HQ5zMjfs8w==
-Message-ID: <07faf0cc-a8e6-426d-b397-dfc321a7f3df@kernel.org>
-Date: Sun, 27 Jul 2025 11:30:11 +0200
+	s=arc-20240116; t=1753610235; c=relaxed/simple;
+	bh=KkWHTNsaRGw3IlGPku2eWteMZzaa5h0eTarLknTzXsY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c6Jdk0d8Sww8holXLkXrwSMBTVSXgpxQU4MKmYTrPq3cUvsTcJb4rdxZpt+e8WgL0db3IiRBdg8smaWc+X9kIGBqRzF1keQt9TBjhezEZKkghi3U+51L+RXQsZSGWg6wYQHrnjzPQnXbTz+zQigMJVf+09qnWwKyQdinfuBRyEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Rw9v4iQZ; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=bgcaSBrVCciGkW/9wHNmmtdtZky2ZFmyIYefiynEDqc=; b=Rw9v4iQZI8V77POV1SbIpK9YhU
+	h+gtpTCZNqbgj5sZ3e/6KTwa4J1ulOO5aS1V0/lEnzKagZx7etOLTPnaiOu3RoOCnwPydslEz4pu0
+	H8GSE6ZGDN5AGlB6A0yxJ4Eh4L9/EQfck95HGdfCXdarQRqlyGfmq8k/VFLQco2EEg/5c0/Rf5EMz
+	kingW6H8tyaFUVBH98+Cag2A9EGkfQ+cibNdNgwdhwM5zCwpS749KowgdCDpi87btXj7zcyMAevOm
+	Z8heZ2JV6vSzXhYtTDCji9wcvOdD01tdck1+9t+PSpk8UqlXdd5dDW8MDOiv5Je+iKDBQkd6sxTw1
+	bYCYZkMQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:47138)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1ufy7o-00079q-34;
+	Sun, 27 Jul 2025 10:57:01 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1ufy7g-0003fM-1B;
+	Sun, 27 Jul 2025 10:56:52 +0100
+Date: Sun, 27 Jul 2025 10:56:52 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v10 07/15] net: phy: Introduce generic SFP
+ handling for PHY drivers
+Message-ID: <aIX35MUxx-OkvX4G@shell.armlinux.org.uk>
+References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
+ <20250722121623.609732-8-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] ASoC: codecs: wsa883x: Add devm action to safely
- disable regulator on device removal
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, quic_pkumpatl@quicinc.com,
- kernel@oss.qualcomm.com
-References: <20250727083117.2415725-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250727083117.2415725-3-mohammad.rafi.shaik@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250727083117.2415725-3-mohammad.rafi.shaik@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250722121623.609732-8-maxime.chevallier@bootlin.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On 27/07/2025 10:31, Mohammad Rafi Shaik wrote:
-> To prevent potential warnings from _regulator_put() during device
+On Tue, Jul 22, 2025 at 02:16:12PM +0200, Maxime Chevallier wrote:
+> +static int phy_sfp_module_insert(void *upstream, const struct sfp_eeprom_id *id)
+> +{
+> +	struct phy_device *phydev = upstream;
+> +	struct phy_port *port = phy_get_sfp_port(phydev);
+> +
+> +	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
+> +	DECLARE_PHY_INTERFACE_MASK(interfaces);
+> +	phy_interface_t iface;
+> +
+> +	linkmode_zero(sfp_support);
+> +
+> +	if (!port)
+> +		return -EINVAL;
+> +
+> +	sfp_parse_support(phydev->sfp_bus, id, sfp_support, interfaces);
+> +
+> +	if (phydev->n_ports == 1)
+> +		phydev->port = sfp_parse_port(phydev->sfp_bus, id, sfp_support);
+> +
+> +	linkmode_and(sfp_support, port->supported, sfp_support);
+> +
+> +	if (linkmode_empty(sfp_support)) {
+> +		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	iface = sfp_select_interface(phydev->sfp_bus, sfp_support);
 
-Warning is either there or not. Either you fix real, specific issue or
-not. The code looks correct at first glance, so please describe exactly
-how these warnings happen or how what is the bug being fixed.
+I've been moving phylink away from using sfp_select_interface() because
+it requires two stages of translation - one from the module capabilties
+to linkmodes, and then linkmodes to interfaces.
 
-> removal, register a devm-managed cleanup action using
-> devm_add_action_or_reset() to safely disable the regulator
-> associated with the WSA883x codec, ensuring that the regulator
-> is properly disabled when the device is removed, even if the
+sfp_parse_support() now provides the interfaces that the optical module
+supports, and the possible interfaces that a copper module _might_
+support (but we don't know for certain about that until we discover a
+PHY.)
 
-Device cannot be removed/unloaded, AFAIK, because of suppressed bind.
-Regulator is already disabled during error paths, so that part of above
-sentences is just misleading.
+The only place in phylink where this function continues to be used is
+when there's an optical module which supports multiple different
+speeds, and we need to select it based on the advertising mask provided
+by userspace. Everywhere else shouldn't use this function, but should
+instead use the interfaces returned from sfp_parse_support().
 
-How can one trigger the warnings?
-
-
-> probe fails or the driver is unloaded unexpectedly.
-
-How driver can be unloaded unexpectedly?
-
-Best regards,
-Krzysztof
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
