@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4522AB139AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 13:09:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53685B13A11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 13:52:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F2F718837E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 11:09:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D091174C62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 11:52:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81ECD2580E2;
-	Mon, 28 Jul 2025 11:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 177BA25C81F;
+	Mon, 28 Jul 2025 11:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dDqCEAIL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRbksmGa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAA8217659;
-	Mon, 28 Jul 2025 11:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B96221FBD;
+	Mon, 28 Jul 2025 11:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753700938; cv=none; b=NpyInyaS3N8zQj4lRX8hO9p3AuB6ne5x0oMKw6YqtuIFlj6nud7oiwagYjlpGAHlFqaTWlP7BNfdiJunRTkih9NSIkt3xwHde92xMYRJgx2mV8jSM8Mru/T1fO+nuvIjJuEP3aZTNjlQb1lVyAWFnCn/f0KAaj08EjBWpZFM93w=
+	t=1753703551; cv=none; b=u9dLAm6sj8HDKv68zmRo/k6V+YuVXTK0gCfS2yh6wTa1+t+WZYhbQwqZWBMIMIxSD4H1FXFBsEopDytwnu0Km/RsSo9R+2NywZ4uVfIv8VO122Z2cvgTgD0wcMxMZsZg2GzeEJkVgFra6OS+EUgkS3AT+sAnunUJQq+MJHW7LUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753700938; c=relaxed/simple;
-	bh=Zqm7Z3Z/kdUKXzMqB4JXHSMfTfwdhlcb1iuBPmxSszg=;
+	s=arc-20240116; t=1753703551; c=relaxed/simple;
+	bh=n0J5JDKTqeiSZ0GT4nTGggSWytKhfzg7qr5qEFkmUNU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fFaUYroE3RyOiqjdpi6IUG9Ma7IoMdP+CG3qmFrByohTB3BsVqcRtTwlwkHqLPbdEdtesdyQZoU6RIpTjGTiGbLNqtF96AdQp4iHh/NtaIrTgJDBrvQEqzAuk5TRUS1XZJ23GitqViMMB0eF32lCahaKR5RVBP8YgRCixQDbRAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dDqCEAIL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA647C4CEE7;
-	Mon, 28 Jul 2025 11:08:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OKKuFYK07TiisyOcD0bUc8v4oyuO0egUykj0JQcPtnlJBeTfqlDM4cq/CD8PM6+zZCVkWPbfKz/WqCfm6Fvd+A/HG26f91pWoiollTqf01QlpRra0YDB7hU5TLDGCKEW1+Cni/DiNnit2uEq1We4D3UV6WRs7Br5UPwk8NCaL5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRbksmGa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6C3C4CEE7;
+	Mon, 28 Jul 2025 11:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753700937;
-	bh=Zqm7Z3Z/kdUKXzMqB4JXHSMfTfwdhlcb1iuBPmxSszg=;
+	s=k20201202; t=1753703550;
+	bh=n0J5JDKTqeiSZ0GT4nTGggSWytKhfzg7qr5qEFkmUNU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dDqCEAILEB7zAWESSNGDkZenpgoWqFuW12YTDRZ2lQDBA//junbXhzUyY4FtfkhSx
-	 g95qIDo+VcrOgjOj4vgF9tfUYs1r2vHvU8XEZSiCE0eXsBH3I5KunB5S2Ayog33iZx
-	 Dd4UbHbZDJiAYrqtR8JZmaURCl14yeCYlvTjJSxP9DEmfrtiykVqS9cE4lp/U/hHNv
-	 tdKOOd2ZrsDTePhVixhpYQvm4yIMnfm+GpnhEBFlYZYbeS8VNuTCMbgGtLOtVN3kUJ
-	 eb5M8WpMcpOTA7biFofmQruYQ4uRk0O34JYWpD5u3sZCVyvGgUyS2FccGCBPNFCVT4
-	 wZoDd3Iy16ABA==
-Message-ID: <172f1a38-d7a8-4799-ad44-f3eea69f297a@kernel.org>
-Date: Mon, 28 Jul 2025 13:08:53 +0200
+	b=oRbksmGapq9OYmr5bQZfbTnyAEOopzoaYZZzPo1tB1TP9ZpJZr+WnOqmdDUHOk5uh
+	 dOUb48Vfpe2P0N8Z0v1WaTEjVYl/YuwZXxZV4ZnZRvJvUxkdEx4oW61QXxqMLWyrKZ
+	 p2jM6GbxuMkfDU6sAuM03YhB2FwcBz9szLJtx2DCEFB++0YJh3gS0GJFvJTy18kuc8
+	 n2c/wYxTRZUNhrtHb7DooKhp5tCbUaOVVfsK+w0OOAVFdNg4601pOBifTghfyjli7L
+	 dL6Lb75oBuNuDDgPO+JxEnUhc+y3DXIF1V2tN+g1L4ekaVGKqW7CMROGdkWQxAVyXN
+	 ShtXfvTTP+uLQ==
+Message-ID: <bcef34c3-98b4-454c-8138-c73729e17081@kernel.org>
+Date: Mon, 28 Jul 2025 13:52:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add initial audio support for
- Hamoa-IOT-EVK
-To: leqi@qti.qualcomm.com, Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
+Subject: Re: [PATCH v13 07/10] firmware: psci: Implement vendor-specific
+ resets as reboot-mode
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+ Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+ Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Stephen Boyd <swboyd@chromium.org>, Andre Draszik
+ <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Srinivas Kandagatla <srini@kernel.org>
+References: <20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
+ <20250727-arm-psci-system_reset2-vendor-reboots-v13-7-6b8d23315898@oss.qualcomm.com>
+ <b81aa592-a66b-457b-9f42-df4505b28508@kernel.org>
+ <3gtlf5txxtioa5bvo6o467jupyoam4hjhm2mdiw5izv5vbl3tz@drndgp3tcrgo>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,40 +122,44 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
+In-Reply-To: <3gtlf5txxtioa5bvo6o467jupyoam4hjhm2mdiw5izv5vbl3tz@drndgp3tcrgo>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/07/2025 09:16, leqi via B4 Relay wrote:
-> From: leqi <leqi@qti.qualcomm.com>
+On 28/07/2025 11:44, Dmitry Baryshkov wrote:
+> On Mon, Jul 28, 2025 at 06:53:14AM +0200, Krzysztof Kozlowski wrote:
+>> On 27/07/2025 18:24, Shivendra Pratap wrote:
+>>> +
+>>> +static int __init psci_init_vendor_reset(void)
+>>> +{
+>>> +	struct reboot_mode_driver *reboot;
+>>> +	struct device_node *np;
+>>> +	int ret;
+>>> +
+>>> +	np = of_find_node_by_path("/psci/reboot-mode");
+>>
+>>
+>> Why are you looking by full path, not by compatible? Is the ABI - above
+>> path - expressed anywhere?
 > 
-> This patch adds initial audio codec support for the Hamoa-IOT-EVK board,
-> including WCD9385 configuration, micbias voltage settings, GPIO reset,
-> and power supply bindings. It enables basic audio functionality for
-> further development. Basic test is good in Hamoa-IOT-EVK board.
+> PSCI node is required to have a node name of psci, it doesn't have MMIO,
+
+This is true
+
+> so it resides in the root node
+
+This might be or not might be true. It is not defined by ABI. Anyway,
+you answered where the ABI would be documented, even though as I said it
+is not (/psci is not), but does not answer to first part: why you are
+not using compatibles which is always the preferred method?
+
+
+> and the reboot-mode is defined in the
+> previous patch. So, I'd assume, the path is defined.
+
+As I said, path is not. only psci/reboot-mode is.
+
 > 
-> Signed-off-by: leqi <leqi@qti.qualcomm.com>
-> ---
-> Changes in v2:
-> - Updated author email address to leqi@qti.qualcomm.com.
-> - Clarified that audio is validated with this change.
-> - Link to v1: https://lore.kernel.org/all/20250723-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v1-1-816991701952@quicinc.com/
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 232 +++++++++++++++++++++++++++++
->  1 file changed, 232 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> index 843f39c9d59286a9303a545411b2518d7649a059..91618e22e86c46c698b3639f60bc19314705b391 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> @@ -124,6 +124,94 @@ pmic_glink_ss2_con_sbu_in: endpoint {
-
-
-This was not merged, was it? Same comment as other patch, when you have
-entire code ready send entire board. Not chunk by chunk.
-
-You are not following properly release early, release often.
-
 Best regards,
 Krzysztof
 
