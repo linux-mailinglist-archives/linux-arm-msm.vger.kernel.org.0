@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-66848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DEAFB13B2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:15:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CFC1B13B36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:15:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E31213BE039
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 13:15:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F2333BE1AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 13:15:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2CCE26772C;
-	Mon, 28 Jul 2025 13:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0D9513957E;
+	Mon, 28 Jul 2025 13:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JZJjvXnL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vf0PzZTY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26020269B01
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 13:14:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AEC7261C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 13:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753708497; cv=none; b=k6P8q5biQiGku9vp0N7mkThAWC25IQd6k866KSlr9cEdTW8ctihDYMuBDbzuHzoHj9AIYGbHspe3FjmOPvI1Fy7HrZIyxH9/QRF6Lnl5oaV6WankPBR7r0JrXMXPe/rU4tjQ1AKzYFqZbQAwDK42CSNz05I65ZyZ8dCbdVHd8CE=
+	t=1753708506; cv=none; b=iz/pLNrHHlwQ8aLbf46UDcu4a32VpS0ZSYIco6VGpgsdGAtYBnsnmfKM49F0ZXfq+ZegUiJxTHdlALJgCKd5yu/5BPLPLvUi8RhqLF7Jqhbv0JcQwZKlr3KdGZUlrGVSEBuYup/4zfO3rrmURVZoZXcifoamoMXn2SEd/Dmyb9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753708497; c=relaxed/simple;
-	bh=KP97mkf4mFx6Hynpv+UvTtqAjJLhCHcsa39rmhW+j40=;
+	s=arc-20240116; t=1753708506; c=relaxed/simple;
+	bh=OO2Z7mIWJju/0AAWi0QFQrEeFkD+xuMhO5TmIsG9bFo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cHZvd6LFQ6j0C+i4waU/c/NeoB03oWqBFBt24AriTUM8sFbYbTg485Epw5KxFANbCXtLlPs7ZX4vGoa5ifeb75J4aEL+MoAejVJI2ANKKwsXWzt5rnbJhiouwvDU4mOhQVliTHsZIyoA2XQnbmHKPJDFBJaMKIT2K4mriaQOWvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JZJjvXnL; arc=none smtp.client-ip=209.85.210.177
+	 In-Reply-To:To:Cc; b=bj3yazdWudppBJgJlBHscYfedWrtTApvA0SsyAGDTvpFSrG/tT7t9Aq4WyuyBIZ+v5JbStruKu87T33ibRHWtFLvf+fu5iehqU4YxJ4rquT+p7WknHfrTctXOUDyPSY8MTgYfIjyyYqx77KowKTI23MxOkAADU1zat+sb/NuhCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vf0PzZTY; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-74264d1832eso5036910b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 06:14:55 -0700 (PDT)
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b3bcb168fd5so3917053a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 06:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753708495; x=1754313295; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1753708503; x=1754313303; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rf99YwbE+zk9ZgJ2ORD0W2vahwafwsW/a1Bh6B8t8K0=;
-        b=JZJjvXnLToSR1i6u+tODUj1ZPT687KDc0fMnTrCseKhuTqu0sVNI+eObzw4n/a/IEO
-         0Dl+fiWCH3fKGOQIb11wMKgyViSpS+wgASjiz86yuFz3DyT47uNyzbU2EtbZHmcQ5RmT
-         tzrzVjyJ7WrUcH+E8/yrxymTxhSdXV31A+hFx9TgKUkoeTJNmgh1wdlxRZAl8BvDi/JW
-         juPmNbr7y2+f8DgU3RGbpKFD87+xXwWM2bPgmTduDIINTlQUDQhCOmTxywLpKffGEuiD
-         eaD022ZTuh0J9segR1+0Qjb00U1FpL+LBhIyHA/TVz0fjS5RgjY7IpRNyhzJr1v7vbZl
-         8KjA==
+        bh=XDSLLULuQro4tZ+C6kFbdQGbu24iHgqnLikNbErS/QE=;
+        b=Vf0PzZTYTsOz3DpA6H5cYLiAUXmyTP8CRm4pQ2R0x1pwnVAjE5eXtnD4Sjc/iwsMsk
+         qUlAN44kSj1A3nXZx9U8Bfe+edo+FpzKdfBgLfGOQd64EqtoUl8Y0gAHwaoirz34t3lv
+         Zk654PPwEYrbXDKpkoXMOQbyN4hExUQUGJqh6GxI3F9yEcItqs2qsQ0snKkSri2iB0Lx
+         FdL40RCwJ8Zhea7ImrLuA4JuRmVJmlDYwm56xah5xs9fY0tolTIY/6SQyGGkxpT5gNJ6
+         8hCADk7URVyAZO8xdxTukLTCH+Aq43GJbbAd+d5ouOCNOcVcyRG+QXjrbxCEJleQ7Ixp
+         F80g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753708495; x=1754313295;
+        d=1e100.net; s=20230601; t=1753708503; x=1754313303;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rf99YwbE+zk9ZgJ2ORD0W2vahwafwsW/a1Bh6B8t8K0=;
-        b=Uf53n2XxdYv/tyVx0K5KMQ8XvXhquzJ8PfPzTlKAIHLCt4O65MNJwW/cHkAPfwisM2
-         KuCnjeSvt3/sTBXpbbFMxNPUKavQ5mPi2UuKI+qD9m8On+FZ1MfJ7M6JP1aFbPBXMPVW
-         PYYc4Gq8CugnkNANlU2Kz9GT2Vs0Pq5IdAgOB0JLINBRZCABdNrvx/gI1B6Htj97YF/W
-         +uxd2qxc8eoJLwFivw5LwDbJQj4dk/ut154kxel60nzU8UDdB0zyxEpdJkGLIdOkKvBB
-         RpSHycnPoG6TerDSqGGSdksZJqFpbKtm07JxlRhjedjiCeG+6fk7w+DcMt1BZLpwfWK7
-         gh8g==
-X-Gm-Message-State: AOJu0YxHG1eFDt0GunL7/3DQWNuyEcR/a2BRY1TS4oIO6ygS5mI8WaWv
-	GVKIsFRUyDbAX/G6zESuik1gILfdL0pDGu03oEHGbqHJv5AzNmrwLaQtqtmnlSdXeGU=
-X-Gm-Gg: ASbGncuop1tAXVSQVaUgr/MI060vAnWWsazz4rE/XVvnMrj7MF01eqGMsA2YMLzVPJg
-	hdw/JBpneQ7nrBEzPDUayke1yADOuM7wl+yvhJ2gVqaiTqYet+zRr67NSfzIYT0zlQb1VpMclwZ
-	TpKStCzfrk4rWVmwEUEmeARDJiJUnn3AfhBaAmtUX498oK/fbHfbAk3G1M6YqiS06/ML0vjDVVg
-	3x/hr0MBZI1kDHlWGf23gNchViYq+vnAi/MpObuGA76h1zn9eZU99nKAuUi5M0ThJ54IZ/nprk8
-	qe1ggRYnj7Sw0nLDHRkyCjLv+Gw106ED5Hmp8/uTaBp7C/2GGiRrTPQDHN1bdVzqGQlJzA3TxwF
-	C+qMk3Pva2qc53cAwuQ==
-X-Google-Smtp-Source: AGHT+IG/D20ljLwf5AcuzW3YqgNM4owFJUcPZ3fslmNc2hdmZkKFoi04pLcGuW1KmbQW5dWUBibnNw==
-X-Received: by 2002:a05:6a00:190d:b0:756:d026:10a7 with SMTP id d2e1a72fcca58-763379f0131mr18993904b3a.21.1753708495406;
-        Mon, 28 Jul 2025 06:14:55 -0700 (PDT)
+        bh=XDSLLULuQro4tZ+C6kFbdQGbu24iHgqnLikNbErS/QE=;
+        b=YUYA8hYJSIsmq86Ib96W9kBwe8uoVo6ZC8H5/tbhWulAi8jFl0hoOPpds8+goRprQh
+         v1Uv68NsiMCm8lImkW6bZyakdcYNS9VDnReEXUDgd3GIdlR51wFcHFOhZwR6Bg6ZJFxk
+         x59hIQ4nxiviLtiycZJqZKP2DinzwaGnkpgkuP0vskHNUxhCVNavuES8Sj3OVKPao3tN
+         ONiK6autl49ZuNmixHK6b5Y+OK5mBRet/+e40WXvDA0NG2cteju4k9fsEo85T6CG+uhM
+         kqSJL557copnSRDeFQe5Lzx/ZlgWD2HLLaw3fqiu7H/z9XKvd8+2mOeQr38Nsy8QJjvI
+         hklA==
+X-Gm-Message-State: AOJu0YxW0yhMaEXcTubrV+ycIL1B7xBQiHwMJm/VNIrJiK3MgljgAAN+
+	FUVP8TVco2D6gHSXZG4zjfc4F8WHbV8s63uxjW24p5uxd3UvuoOeeXtvcfIML39W4LM=
+X-Gm-Gg: ASbGncvQxrFaomo31n0z+VAKRb3uc0iLSOFIKwBqUNhcIxUOlr2raH5AO4jI5OTln9B
+	EPeUEMkRBDzl+UuHNIdOR0M3jn2W0ZsQKMV3mD/73TsRl7l9lgsK1vmdNNJlOufU3DwnvIU8cFf
+	bRukQh7bHQ40jetENQUyWt2Na0va9ImT/E1JwkPEmSYYBWWfOpLGs+Vhf1tYntIi5GLhBKJP1/2
+	oBg3kT8sPoxHIPjNhlLhYzno0S8zm0T92Zc0gTcH3kI/DUrFqLDb9ahusrtDVnshhj3J5BJS4Eu
+	3Zs4O//MivQ4A8d331wJMuqTkQyf3bDmt8rm6uuOVlahsrqFQyJVPed8F5FwS9Uy+HF5dUoPzPW
+	k4qfFjADZ9VcXUbYJ/A==
+X-Google-Smtp-Source: AGHT+IFj2E3U/6YpkOvYCA8ArMdplIVsCoa2oY8AWe4ZUCEotDWUm+laRMwrkmmmmbNPtBLZanSIFQ==
+X-Received: by 2002:a05:6a20:a121:b0:23d:54cb:2df6 with SMTP id adf61e73a8af0-23d70052901mr16496549637.3.1753708503406;
+        Mon, 28 Jul 2025 06:15:03 -0700 (PDT)
 Received: from [127.0.1.1] ([112.64.60.64])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76408c0287fsm5590318b3a.47.2025.07.28.06.14.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76408c0287fsm5590318b3a.47.2025.07.28.06.14.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 06:14:55 -0700 (PDT)
+        Mon, 28 Jul 2025 06:15:03 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Date: Mon, 28 Jul 2025 21:14:26 +0800
-Subject: [PATCH v13 02/12] drm/msm/dpu: decide right side per last bit
+Date: Mon, 28 Jul 2025 21:14:27 +0800
+Subject: [PATCH v13 03/12] drm/msm/dpu: fix mixer number counter on
+ allocation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250728-v6-16-rc2-quad-pipe-upstream-v13-2-954e4917fe4f@linaro.org>
+Message-Id: <20250728-v6-16-rc2-quad-pipe-upstream-v13-3-954e4917fe4f@linaro.org>
 References: <20250728-v6-16-rc2-quad-pipe-upstream-v13-0-954e4917fe4f@linaro.org>
 In-Reply-To: <20250728-v6-16-rc2-quad-pipe-upstream-v13-0-954e4917fe4f@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -96,56 +97,45 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Jun Nie <jun.nie@linaro.org>, Dmitry Baryshkov <lumag@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753708472; l=1985;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753708472; l=1366;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=KP97mkf4mFx6Hynpv+UvTtqAjJLhCHcsa39rmhW+j40=;
- b=ZmJJ2xnajYYZ10cD4MTxNnsob6Z2eKXOrG0hOMYC3PDZkQlNWn7dslvtXy+0zhgHpER50XAor
- EIFkXa35K7fAnUdjUnJ25DdlJ3xkpoimu8Hm2MxCMUMfW7WgWHvZg5r
+ bh=OO2Z7mIWJju/0AAWi0QFQrEeFkD+xuMhO5TmIsG9bFo=;
+ b=1mgRp4HOTSbHr7EQxPhuUonHpasr6Cq6GSUykYOQvvzIjqlRzPVAefXzpymPuLtdRZmR0RIlb
+ ZTopy74UAxhBMLncqhnjq7wEJ9ZjeYT4uM658ifKa6cUe5E0h6w6SJ6
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-Currently, only one pair of mixers is supported, so a non-zero counter
-value is sufficient to identify the correct mixer within that pair.
-However, future implementations may involve multiple mixer pairs. With
-the current implementation, all mixers within the second pair would be
-incorrectly selected as right mixer. To correctly select the mixer
-within a pair, test the least significant bit of the counter. If the
-least significant bit is not set, select the mixer as left one;
-otherwise, select the mixer as right one for all pairs.
+Current code only supports usage cases with one pair of mixers at
+most. To support quad-pipe usage case, two pairs of mixers need to
+be reserved. The lm_count for all pairs is cleared if a peer
+allocation fails in current implementation. Reset the current lm_count
+to an even number instead of completely clearing it. This prevents all
+pairs from being cleared in cases where multiple LM pairs are needed.
 
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index d4b545448d74657aafc96e9042c7756654b4f0e7..9a40492e5aa961f7180ba4ac6c86e06fcccef8c2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -377,11 +377,10 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
- static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
- {
- 	struct dpu_crtc_state *crtc_state;
--	int lm_idx, lm_horiz_position;
-+	int lm_idx;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 2c77c74fac0fda649da8ce19b7b3c6cb32b9535c..3f344322b7f214d0050986e675b32522f8eb0ba7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -374,7 +374,11 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+ 		if (!rm->mixer_blks[i])
+ 			continue;
  
- 	crtc_state = to_dpu_crtc_state(crtc->state);
+-		lm_count = 0;
++		/*
++		 * Reset lm_count to an even index. This will drop the previous
++		 * primary mixer if failed to find its peer.
++		 */
++		lm_count &= ~1;
+ 		lm_idx[lm_count] = i;
  
--	lm_horiz_position = 0;
- 	for (lm_idx = 0; lm_idx < crtc_state->num_mixers; lm_idx++) {
- 		const struct drm_rect *lm_roi = &crtc_state->lm_bounds[lm_idx];
- 		struct dpu_hw_mixer *hw_lm = crtc_state->mixers[lm_idx].hw_lm;
-@@ -392,7 +391,7 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
- 
- 		cfg.out_width = drm_rect_width(lm_roi);
- 		cfg.out_height = drm_rect_height(lm_roi);
--		cfg.right_mixer = lm_horiz_position++;
-+		cfg.right_mixer = lm_idx & 0x1;
- 		cfg.flags = 0;
- 		hw_lm->ops.setup_mixer_out(hw_lm, &cfg);
- 	}
+ 		if (!_dpu_rm_check_lm_and_get_connected_blks(rm, global_state,
 
 -- 
 2.34.1
