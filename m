@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-66917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85825B1409B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 18:46:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4964B140A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 18:47:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 557BE189EAA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:46:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC01B7AA31B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:45:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53689275B1B;
-	Mon, 28 Jul 2025 16:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCAF8279DCC;
+	Mon, 28 Jul 2025 16:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="WcqUx8b8"
+	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="LeaWIHMr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.ionic.de (ionic.de [145.239.234.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804C32185AA;
-	Mon, 28 Jul 2025 16:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF1A277804;
+	Mon, 28 Jul 2025 16:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.239.234.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753721149; cv=none; b=pgh62YsBSJXvlEw+D6DGg3+aJPsryRYLkC/9/ev9UKwLLgXJQ9SrCegaEtWta3yPSvfOWUHifLvdcoDh0PTCiwWITIIt60/34h9WcJdgVan7DopMc7zcLt8eypuZC3BXOMd20Q2aRgXkRX7OZGgexvsSELFBhQ8cWn6xzMeso+M=
+	t=1753721151; cv=none; b=qma7dkilZgDd3jec38U2iB8VriFJZSd9onj7McOA4X2QrzYaB5mdYAihJhe6nObjTSBFBvagQ5u1i9qmp7ws8gcj/9OnhQ7CvdsphMMPIW0GVo+V2iR/o0BBwKYJxfqpdXw0NnTUTFPGNNVES/eJkr8RRtMgco8nG4AGZLYKgjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753721149; c=relaxed/simple;
-	bh=kALUlUVsEq/Mv1CblPD6bvenfYe5rNHuDV3rD3NHVAk=;
+	s=arc-20240116; t=1753721151; c=relaxed/simple;
+	bh=gSHbkvq+YKqvOWWlGSpdOUOKV5DBXM24WmDfhBkcElU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJWuGelDxxwRP50e8P+LFJudHjAQwTjvAThE2ok7okKk7z/xmHyGaey2k6EqzBTd/yEiz73UsS98NlJVpWRN97gUWx9yV8SnBYSgIbCQZqEbAO5Q0WW7qclo1zbkMA7hdlqBNJIk4By4VEEjAJiTTUC1AUwEIJYLt7ocWlDrpXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=WcqUx8b8; arc=none smtp.client-ip=145.239.234.145
+	 MIME-Version; b=pQ0mttG1u8jW5Np9c1TxOFbWdTtbzwtN9WSqnXW1g5YTQo6u18hn3plgxKQVxKJe4K2HRpRX7o0qVkZ+Kc0ZScl8zyRUrLxYGIiK906u4ddbNIQ2EKiNOej7pgnkdp+AKG9TTFwjQxpo+hbkQ4VN3q2+PRtFdp90w9kOybolwAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=LeaWIHMr; arc=none smtp.client-ip=145.239.234.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionic.de
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ionic.de; s=default;
-	t=1753721138; bh=kALUlUVsEq/Mv1CblPD6bvenfYe5rNHuDV3rD3NHVAk=;
+	t=1753721138; bh=gSHbkvq+YKqvOWWlGSpdOUOKV5DBXM24WmDfhBkcElU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcqUx8b8a22m4pthwCWiuM/Y768KE1OINP0GVXiXLZgWlptnbbQKrtzMc0L5uavx6
-	 wvD9sFemOzHKhuqE3HkFQw2cjSOBENtiowOkj60PNU+2E7g8GKWbI6LniUqxd2ZM7w
-	 U9baWlGbpIy4Uo98e56CpXIrvgD3gofnj9hk7K8s=
+	b=LeaWIHMrALFsmkXNuT+SMLEsXZq6pKXo6jdnKHJUWMfBls9mqabR2dbpuC2VUB8gB
+	 m/gKrJKYHhe5LKAshPof8E+pAY216z5HY9V8pHDLIAdH7a4IKJvGIqM4BrVdZwEGug
+	 BKeoj63QCYKlIEj8jORHXnn3q6aAMG7KwmcmeGuk=
 Received: from grml.local.home.ionic.de (unknown [IPv6:2a00:11:fb41:7a00:21b:21ff:fe5e:dddc])
-	by mail.ionic.de (Postfix) with ESMTPSA id 0011214884DD;
-	Mon, 28 Jul 2025 18:45:37 +0200 (CEST)
+	by mail.ionic.de (Postfix) with ESMTPSA id 39AE414884DF;
+	Mon, 28 Jul 2025 18:45:38 +0200 (CEST)
 From: Mihai Moldovan <ionic@ionic.de>
 To: linux-arm-msm@vger.kernel.org,
 	Manivannan Sadhasivam <mani@kernel.org>
@@ -53,9 +53,9 @@ Cc: Denis Kenzior <denkenz@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org
-Subject: [PATCH v4 04/11] net: qrtr: support identical node ids
-Date: Mon, 28 Jul 2025 18:45:21 +0200
-Message-ID: <7a8e0d05e5c1dbff891e7e734ed42d2313275f96.1753720934.git.ionic@ionic.de>
+Subject: [PATCH v4 05/11] net: qrtr: Report sender endpoint in aux data
+Date: Mon, 28 Jul 2025 18:45:22 +0200
+Message-ID: <aa1fbb89108cd05874c2de6cbc35ec5dc303cac6.1753720934.git.ionic@ionic.de>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <cover.1753720934.git.ionic@ionic.de>
 References: <cover.1753720934.git.ionic@ionic.de>
@@ -69,15 +69,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Denis Kenzior <denkenz@gmail.com>
 
-Add support for tracking multiple endpoints that may have conflicting
-node identifiers. This is achieved by using both the node and endpoint
-identifiers as the key inside the radix_tree data structure.
+Introduce support for reporting the remote endpoint that generated a
+given QRTR message to clients using AF_QIPCRTR family sockets. This is
+achieved by including QRTR_ENDPOINT auxiliary data, which carries the
+endpoint identifier of the message sender.  To receive this auxiliary
+data, clients must explicitly opt-in by using setsockopt with the
+QRTR_REPORT_ENDPOINT option enabled.
 
-For backward compatibility with existing clients, the previous key
-schema (node identifier only) is preserved. However, this schema will
-only support the first endpoint/node combination.  This is acceptable
-for legacy clients as support for multiple endpoints with conflicting
-node identifiers was not previously possible.
+Implementation of getsockopt and setsockopt is provided.  An additional
+level 'SOL_QRTR' is added to socket.h for use by AF_QIPCRTR family
+sockets.
 
 Signed-off-by: Denis Kenzior <denkenz@gmail.com>
 Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
@@ -87,141 +88,189 @@ Signed-off-by: Mihai Moldovan <ionic@ionic.de>
 ---
 
 v4:
-  - fix lock without unlock in error case in qrtr_node_assign()
-  - fix wrong value for ret in some error cases in
-    qrtr_endpoint_post()
-  - Link to v3: https://msgid.link/8fc53fad3065a9860e3f44cf8853494dd6eb6b47.1753312999.git.ionic@ionic.de
+  - no changes
+  - Link to v3: https://msgid.link/30c2c4547108dd0baa638f8ed3cf493a3bc06bc2.1753312999.git.ionic@ionic.de
 
 v3:
   - rebase against current master
-  - port usage of [endpoint ID|node ID] key usage to the generic
-    solution already established for the [node ID|port number] usage
-  - Link to v2: https://msgid.link/4d0fe1eab4b38fb85e2ec53c07289bc0843611a2.1752947108.git.ionic@ionic.de
+  - fix checkpatch.pl whitespace warning
+  - Link to v2: https://msgid.link/8dc0c9f99f617db348af5b176bb03b4c11ac9138.1752947108.git.ionic@ionic.de
 
 v2:
   - rebase against current master
-  - no action on review comment regarding integer overflow on 32 bit
-    long platforms (thus far)
-  - Link to v1: https://msgid.link/20241018181842.1368394-4-denkenz@gmail.com
+  - dropped socket locking in qrtr_setsockopt() and qrtr_getsockopt() as
+    per review comment
+  - Link to v1: https://msgid.link/20241018181842.1368394-5-denkenz@gmail.com
 ---
- net/qrtr/af_qrtr.c | 57 ++++++++++++++++++++++++++++++++++------------
- 1 file changed, 42 insertions(+), 15 deletions(-)
+ include/linux/socket.h    |  1 +
+ include/uapi/linux/qrtr.h |  6 +++
+ net/qrtr/af_qrtr.c        | 77 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 84 insertions(+)
 
+diff --git a/include/linux/socket.h b/include/linux/socket.h
+index 3b262487ec06..0698a11bb2e2 100644
+--- a/include/linux/socket.h
++++ b/include/linux/socket.h
+@@ -386,6 +386,7 @@ struct ucred {
+ #define SOL_MCTP	285
+ #define SOL_SMC		286
+ #define SOL_VSOCK	287
++#define SOL_QRTR	288
+ 
+ /* IPX options */
+ #define IPX_TYPE	1
+diff --git a/include/uapi/linux/qrtr.h b/include/uapi/linux/qrtr.h
+index f7e2fb3d752b..6d0911984a05 100644
+--- a/include/uapi/linux/qrtr.h
++++ b/include/uapi/linux/qrtr.h
+@@ -46,4 +46,10 @@ struct qrtr_ctrl_pkt {
+ 	};
+ } __packed;
+ 
++/* setsockopt / getsockopt */
++#define QRTR_REPORT_ENDPOINT 1
++
++/* CMSG */
++#define QRTR_ENDPOINT 1
++
+ #endif /* _LINUX_QRTR_H */
 diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 1cb13242e41b..fdf05b6509b5 100644
+index fdf05b6509b5..e114489dbd36 100644
 --- a/net/qrtr/af_qrtr.c
 +++ b/net/qrtr/af_qrtr.c
-@@ -119,14 +119,15 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
+@@ -26,6 +26,10 @@
  
- /* The radix tree API uses fixed unsigned long keys and we will have to make
-  * do with that.
-- * These keys are often a combination of node IDs (currently u32) and
-- * port numbers (also currently u32).
-- * Using the high 32 bits for the node ID and the low 32 bits for the
-- * port number will work fine to create keys on platforms where unsigned long
-- * is 64 bits wide, but obviously is not be possible on platforms where
-- * unsigned long is smaller.
-+ * These keys are often a combination of node IDs and port numbers or
-+ * endpoint IDs and node IDs (all currently u32).
-+ * Using the high 32 bits for the node/endpoint ID and the low 32 bits for the
-+ * port number/node ID will work fine to create keys on platforms where
-+ * unsigned long is 64 bits wide, but obviously is not be possible on
-+ * platforms where unsigned long is smaller.
-  * Virtually split up unsigned long in half and assign the upper bits to
-- * node IDs and the lower bits to the port number, however big that may be.
-+ * node/endpoint IDs and the lower bits to the port number/node ID, however
-+ * big that may be.
-  */
- #define QRTR_INDEX_HALF_BITS (RADIX_TREE_INDEX_BITS >> 1)
+ #define QRTR_PORT_CTRL_LEGACY 0xffff
  
-@@ -465,19 +466,36 @@ static struct qrtr_node *qrtr_node_lookup(unsigned int nid)
-  *
-  * This is mostly useful for automatic node id assignment, based on
-  * the source id in the incoming packet.
-+ *
-+ * Return: 0 on success; negative error code on failure
-  */
--static void qrtr_node_assign(struct qrtr_node *node, unsigned int nid)
-+static int qrtr_node_assign(struct qrtr_node *node, unsigned int nid)
- {
- 	unsigned long flags;
-+	unsigned long key;
- 
- 	if (nid == QRTR_EP_NID_AUTO)
--		return;
-+		return 0;
++enum {
++	QRTR_F_REPORT_ENDPOINT,
++};
 +
-+	if (node->ep->id > QRTR_INDEX_HALF_UNSIGNED_MAX ||
-+	    nid > QRTR_INDEX_HALF_UNSIGNED_MAX)
-+		return -EINVAL;
- 
- 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
--	radix_tree_insert(&qrtr_nodes, nid, node);
-+
-+	/* Always insert with the endpoint_id + node_id */
-+	key = ((unsigned long)(node->ep->id) << QRTR_INDEX_HALF_BITS) |
-+	      ((unsigned long)(nid) & QRTR_INDEX_HALF_UNSIGNED_MAX);
-+	radix_tree_insert(&qrtr_nodes, key, node);
-+
-+	if (!radix_tree_lookup(&qrtr_nodes, nid))
-+		radix_tree_insert(&qrtr_nodes, nid, node);
-+
- 	if (node->nid == QRTR_EP_NID_AUTO)
- 		node->nid = nid;
- 	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
-+
-+	return 0;
- }
- 
  /**
-@@ -571,14 +589,18 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+  * struct qrtr_hdr_v1 - (I|R)PCrouter packet header version 1
+  * @version: protocol version
+@@ -79,6 +83,7 @@ struct qrtr_cb {
+ 	u32 src_port;
+ 	u32 dst_node;
+ 	u32 dst_port;
++	u32 endpoint_id;
  
- 	skb_put_data(skb, data + hdrlen, size);
+ 	u8 type;
+ 	u8 confirm_rx;
+@@ -92,6 +97,7 @@ struct qrtr_sock {
+ 	struct sock sk;
+ 	struct sockaddr_qrtr us;
+ 	struct sockaddr_qrtr peer;
++	unsigned long flags;
+ };
  
--	qrtr_node_assign(node, cb->src_node);
-+	ret = qrtr_node_assign(node, cb->src_node);
-+	if (ret)
-+		goto err;
+ static inline struct qrtr_sock *qrtr_sk(struct sock *sk)
+@@ -575,6 +581,8 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 	if (cb->dst_port == QRTR_PORT_CTRL_LEGACY)
+ 		cb->dst_port = QRTR_PORT_CTRL;
  
- 	if (cb->type == QRTR_TYPE_NEW_SERVER) {
- 		/* Remote node endpoint can bridge other distant nodes */
- 		const struct qrtr_ctrl_pkt *pkt;
++	cb->endpoint_id = ep->id;
++
+ 	if (!size || len != ALIGN(size, 4) + hdrlen)
+ 		goto err;
  
- 		pkt = data + hdrlen;
--		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-+		ret = qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-+		if (ret)
-+			goto err;
+@@ -1137,6 +1145,7 @@ static int qrtr_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			size_t size, int flags)
+ {
+ 	DECLARE_SOCKADDR(struct sockaddr_qrtr *, addr, msg->msg_name);
++	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
+ 	struct sock *sk = sock->sk;
+ 	struct sk_buff *skb;
+ 	struct qrtr_cb *cb;
+@@ -1162,6 +1171,10 @@ static int qrtr_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		msg->msg_flags |= MSG_TRUNC;
  	}
  
- 	if (cb->type == QRTR_TYPE_RESUME_TX) {
-@@ -587,10 +609,13 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 			goto err;
- 	} else {
- 		ipc = qrtr_port_lookup(cb->dst_port);
--		if (!ipc)
-+		if (!ipc) {
-+			ret = -EINVAL;
- 			goto err;
-+		}
++	if (cb->endpoint_id && test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags))
++		put_cmsg(msg, SOL_QRTR, QRTR_ENDPOINT,
++			 sizeof(cb->endpoint_id), &cb->endpoint_id);
++
+ 	rc = skb_copy_datagram_msg(skb, 0, msg, copied);
+ 	if (rc < 0)
+ 		goto out;
+@@ -1307,6 +1320,68 @@ static int qrtr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 	return rc;
+ }
  
--		if (sock_queue_rcv_skb(&ipc->sk, skb)) {
-+		ret = sock_queue_rcv_skb(&ipc->sk, skb);
-+		if (ret) {
- 			qrtr_port_put(ipc);
- 			goto err;
- 		}
-@@ -670,7 +695,9 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	INIT_RADIX_TREE(&node->qrtr_tx_flow, GFP_KERNEL);
- 	mutex_init(&node->qrtr_tx_lock);
++static int qrtr_setsockopt(struct socket *sock, int level, int optname,
++			   sockptr_t optval, unsigned int optlen)
++{
++	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
++	unsigned int val = 0;
++	int rc = 0;
++
++	if (level != SOL_QRTR)
++		return -ENOPROTOOPT;
++
++	if (optlen >= sizeof(val) &&
++	    copy_from_sockptr(&val, optval, sizeof(val)))
++		return -EFAULT;
++
++	switch (optname) {
++	case QRTR_REPORT_ENDPOINT:
++		assign_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags, val);
++		break;
++	default:
++		rc = -ENOPROTOOPT;
++	}
++
++	return rc;
++}
++
++static int qrtr_getsockopt(struct socket *sock, int level, int optname,
++			   char __user *optval, int __user *optlen)
++{
++	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
++	unsigned int val;
++	int len;
++	int rc = 0;
++
++	if (level != SOL_QRTR)
++		return -ENOPROTOOPT;
++
++	if (get_user(len, optlen))
++		return -EFAULT;
++
++	if (len < sizeof(val))
++		return -EINVAL;
++
++	switch (optname) {
++	case QRTR_REPORT_ENDPOINT:
++		val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
++		break;
++	default:
++		rc = -ENOPROTOOPT;
++	}
++
++	if (rc)
++		return rc;
++
++	len = sizeof(int);
++
++	if (put_user(len, optlen) ||
++	    copy_to_user(optval, &val, len))
++		rc = -EFAULT;
++
++	return rc;
++}
++
+ static int qrtr_release(struct socket *sock)
+ {
+ 	struct sock *sk = sock->sk;
+@@ -1354,6 +1429,8 @@ static const struct proto_ops qrtr_proto_ops = {
+ 	.shutdown	= sock_no_shutdown,
+ 	.release	= qrtr_release,
+ 	.mmap		= sock_no_mmap,
++	.setsockopt	= qrtr_setsockopt,
++	.getsockopt	= qrtr_getsockopt,
+ };
  
--	qrtr_node_assign(node, nid);
-+	rc = qrtr_node_assign(node, nid);
-+	if (rc < 0)
-+		goto free_node;
- 
- 	mutex_lock(&qrtr_node_lock);
- 	list_add(&node->item, &qrtr_all_nodes);
+ static struct proto qrtr_proto = {
 -- 
 2.50.0
 
