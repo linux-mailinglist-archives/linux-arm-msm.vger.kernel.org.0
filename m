@@ -1,581 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-66804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2ACA1B1318F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 21:37:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F7FAB132C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 03:09:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31B2D189771C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jul 2025 19:37:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1435D188A851
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 01:09:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C249225765;
-	Sun, 27 Jul 2025 19:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359B616A95B;
+	Mon, 28 Jul 2025 01:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s6LrkgeC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Kyth0jA/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55623224AF0
-	for <linux-arm-msm@vger.kernel.org>; Sun, 27 Jul 2025 19:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D20C12E1CD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 01:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753645024; cv=none; b=A2bwCaPeD4QpKW56CdUNDZ6rsq/44LiB5X0IcZmqiWReNMOifodP/RCi2TBegEHILhNQ5LusGnbiXS4yp5tl5H2fK76Z9Z+ooSx0tkmsOdP1V6iWnKU6Odt4Ed5DPiUnLG5x9yxGqynlmIiWeEkQA1bicw9yxNiol3bsOgNAtiU=
+	t=1753664947; cv=none; b=PVzPvYlobT5e5OzOlu7900pOLiRdgUR4ByE9MV5rFc5R5IqMBhM0AcXGMigirna++WL+jl4F7wED5NaF/p0GJF291PS8emkJbjsu6Oq+SSQ/V/P0X2ESr0j7qM7OpmTAXXOBk/2+MDPDUJ5yazjnOPGGxBoTfcxzZXcd+Tov4HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753645024; c=relaxed/simple;
-	bh=pCQCdRmlqteGXO1dI3JhZJOwDdd/l/sBFMVSJ+tKS4c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OzLLcHzXnL3MHtK82ZWt2ic2NkE0aDlkkW9VudD1FD8lneDK3YSFswDynwNLSx8g9gAx+7rl7FGpZhshskKMRm/uDzS5b9/wihRwLAIauZ18ZkV3hBoLDosWSGLJxWinAL6BsFvNBGRN8XM0/x6eFGFiQ00ObUHekvwkCIdPYL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s6LrkgeC; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-af240271376so33700766b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Jul 2025 12:37:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753645020; x=1754249820; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7y0vcHUdKY5HubRv6sWiVBOd/tgjmHnqruM1wM9dbQk=;
-        b=s6LrkgeC+hWkWa+ir8J+CtTAN+p4+uthXLN8vYGrG3a9reDJG3Ptzp+3pBtO22ky2B
-         Sgf4asUc5b1OkP7jk/+hPkGom30TBTou4ob1VoDj0TOt4weIAP1Edf8NCInGXaE2RVKi
-         PlAd0eMeC3YY8RVdT3DjGQPucJ7RNtVAyg+a5np9bcNZITOXE6PZmKzgMB16Ku4JIe+6
-         Y721bSWXIPMlnVehXY2tpud05in7hJ43C27iUX/pfjhfwaYvIq5D+TUuh0wgVX9eaeLv
-         EkMGoFCPVJRqu2VOGs0kryO6SQTk+qWKgjtjAeLW2wX1C4q1FfkBFUFwnTzJ+TAvOkOP
-         w3xg==
+	s=arc-20240116; t=1753664947; c=relaxed/simple;
+	bh=FjK326jnHvjwFx808KFt5yd2WXN/sAEkFru3nBqH234=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y5/jWqBDyv3uZ0p0Zjtvg2qxR7zgqMmF4QmXgw9MAUrJ4ZODhx+eEU+LAQZcPExjaZYnu2xTUI3XvnODwEhl7Xj0if8KH/lun/dJg4FceMgkQB4yWEBzvDmQYDdiVU2Ji41o+M+1oT6Uom1OMZ4i3LD9QyZ1TT7qHfo8rb+BHog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Kyth0jA/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56RNqmk7028376
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 01:09:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4+yvE7Zc9m9grQX8Who+7K4FyDxflGcLsbflzzwtT3k=; b=Kyth0jA/gnFttWj9
+	JIXmsod7UCWDn1iTISYqHJTV123OhHBQ+Vs1kzCnSm5R3AU4dlFAes+bGSq61T1d
+	GczUKUXSnqEEiKdvA4VDWiaMX9VD6uNBs6n2ikORaimTexAlbPAfBozQ90zcIAJ/
+	tTOvyRLzZG9/SYJ8kpUWRNQAOW8uo07OzOPQs86nbjte1tWcknKnn4NcGDDdGo2G
+	zZ4Dd5UftMtomtRz7uxcGBPXAqv6C1flc0LVZ3CTBNFnyhCpzWf6RahaF3buThXg
+	CC0Ewav4diYz76BmTwr6ALD7b1Qifs7CwgpfuYT/ytFMQx2GRCS2JSbfMr+fWubC
+	WIKtSA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484mcr331q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 01:09:04 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-23fe26e5a33so15086605ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Jul 2025 18:09:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753645020; x=1754249820;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7y0vcHUdKY5HubRv6sWiVBOd/tgjmHnqruM1wM9dbQk=;
-        b=a9BCzbvJchfGA5O+t0k0P4EjbPVDEV8Nl4qL+URoFg/Ga8Rbm/6ArWQ9P14btkrkpH
-         9LYN3buKAPnsfh8ydQmAzXRiwSZRhbwvL0yZ4uRY043rxGIJ2y/Da/XeVD8jJHqQkcg/
-         6R7uMFL2AhlWKGlnBZLwR3VMQ7L8uCbzVdhAsA1FtF6JYQ0kgx6BauMBVko1j38uSgZm
-         MlNvIHpCI52ljkWW2sAyAwGRK4e8gpt/g4QcZJzFf2uyckgPn/W+gRgqXlp2EIJYGMvb
-         XAuCVLLKtGZVoAZHgzz6FANjZwcY5RQJjhGhS4dZOcoysZulMO4rfnRo1K71VCBFRXTc
-         CStQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXmyjrPUe7yLIofjsxMuwXUvlFdZVDVWz2CA+fWt0MzhjVVrDIys5ZSwMRrwqTuePb6MUHcPngdT/zZ2rqz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDIBU2xg9sEmKbvhpFFblg7YVDLlJd0MymTszA7FOIVLegkWsh
-	0boeu7wAtst27ELTlPeghQb5uQRCnX97cRQqHSwJiP2SzfRA+hKwUrPSRl5PLWjHpGQ=
-X-Gm-Gg: ASbGncvW8bdMR1FqLj476KnGh0k0tV3NWJPqaWc+vns7G9qTV67N95relaasqMdud/e
-	oz8QC/eTK2DGMx4MAh/XB547sy4N8uljD8dCCOb5vyELmHt+pC2CXrNaHeNjiaxMHiTrIEYwmud
-	8HxIMP2kJqt/cpFzS7ppFbhtoXzHhiQiFTDwv5SrviqcuiVkU+vzo3MtC1AUiiEMfdWWzy5ZM/e
-	BcehbFkcb1k//tcnh8Rvoe2r7PYRq4qt1ta0VNFLyn5t88QVfpQOISeeaHzvc3aMLOyeBiiWnM7
-	x8TA2177zgMOw2vI3DEaFoXT0BdLjgCszYYTju+QnMA7FxZu8PFZxFccEBpWNXPIWDTubhMixhe
-	I+zwe9L9RvqzNiMDMxeXeNGbfrhmUZnUb
-X-Google-Smtp-Source: AGHT+IGnsqbLYepeBQlMegx0Lp4dkyiztC6rJSiVSH/e1bfIWi3D25Q5CqLCNjtZas5rY3E0iHNbaQ==
-X-Received: by 2002:a17:907:9628:b0:ae3:cd73:efb9 with SMTP id a640c23a62f3a-af61d779f94mr388208866b.12.1753645020391;
-        Sun, 27 Jul 2025 12:37:00 -0700 (PDT)
-Received: from kuoka.. ([178.197.203.90])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af6358a1c23sm318267066b.51.2025.07.27.12.36.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Jul 2025 12:36:59 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8650: Sort nodes by unit address
-Date: Sun, 27 Jul 2025 21:36:53 +0200
-Message-ID: <20250727193652.4029-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.48.1
+        d=1e100.net; s=20230601; t=1753664943; x=1754269743;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4+yvE7Zc9m9grQX8Who+7K4FyDxflGcLsbflzzwtT3k=;
+        b=T6LHi57AibFFFlEagw0fHv++/XnF7vlvKQ4KHIftxA7lanHU9y3hXGj45Kzh+cR4Hl
+         GjbTi371XU4fITnFkNhjEClUxn4X0MZo8uxBrUnkWDnd/UTJQk2ssm1kxVMeBMOL4vuc
+         IcuaKmAGR8+Vgek2NlR1g1TdjnuMJ1LVQ1nde3QMR7+9OCYx5x+GpDElmvQ7xLqNdnZt
+         f91GniqRfBjihGbfHZRPaC9vOKjipU2NbhqMK3eNPP7djEEnn4iLL2zX4SU4Hdz5MJUq
+         Z9o7cp61isxMuI/Cj32Tsa1UyMOvLX04+xfCGkkG3f45vCP/IdG8IvxfmjQwxPG8wwom
+         FPvw==
+X-Forwarded-Encrypted: i=1; AJvYcCVjwNcVP2BqdlXHSKaGCZiVba1afPFoFSDUeyv3xRJCsgOG0mUpv88rCVpvlEnIR4mpiCJzm6F5v1zn/1xZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzr9pnw9jPPTPZUs7cdZLY5tHERUpoZArLb6NHSIWLCxY4KNvwQ
+	/AVTCueDgAE+SoUOSwCfrkocgDj/RlzLQYJHecfbKHAchMUq4U7+jmw2OlLYBnU8VsTXGBmFO9p
+	FhdsttV5IGygheVdpzT2+wOFIg3ZF/T8fm6Rr/1FcmuBoJdy0/3UlpWTqtfGLJZrhizj1p6jbEg
+	+o
+X-Gm-Gg: ASbGncvqSiRkDlFIS0vpAxRb92hQvPH06aGZwhgSqiis7j8cyWeGWRq6zGId++yGHJs
+	lK7yNp4UM1v4zdqGAwYsD2WGw3Y1kSPaycnM4pGgL6shog+yOpuwMp/YC3QtzaIaFy3NYkuHL95
+	tN37dP+3/TmRQ6pblRQPfRRV7e46wOt7O9D7HOufHMmBSdruxXW1AVjLwns3ads6E5m9qhBSDVy
+	CwffwcrmFH+wHTwvH7uS0XZzszxmLMsLWnBCKufHFoHlyTK67aCSVPdw/ke4M7DaRBoOB0iXTsW
+	woe5cux4d9geXUNfqlsjfHNpno239mW0IuqOUQXZHQAp4LjJS5wmGW6XPWh5ZN2pcYsK6EkyJdU
+	XUsmBnUAlW+ymmhmvSMnhCHA=
+X-Received: by 2002:a17:902:e541:b0:23f:8bcc:e4f3 with SMTP id d9443c01a7336-23fb30ab8bbmr165783185ad.32.1753664942907;
+        Sun, 27 Jul 2025 18:09:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYCOfj1YqosY7nSWEJrErxiJ8bZl5MREmTEz579acUrZUOuf481S+vvg1qLmm7Mee+b84wXg==
+X-Received: by 2002:a17:902:e541:b0:23f:8bcc:e4f3 with SMTP id d9443c01a7336-23fb30ab8bbmr165782755ad.32.1753664942447;
+        Sun, 27 Jul 2025 18:09:02 -0700 (PDT)
+Received: from [10.133.33.67] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2401e95208bsm12447405ad.112.2025.07.27.18.08.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Jul 2025 18:09:01 -0700 (PDT)
+Message-ID: <c6f74d55-6ea8-498f-a05a-000599f93ac6@oss.qualcomm.com>
+Date: Mon, 28 Jul 2025 09:08:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11920; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=pCQCdRmlqteGXO1dI3JhZJOwDdd/l/sBFMVSJ+tKS4c=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBohn/U3EEL9lsA4gGgyw4soEmQ+T9mPFjc51imq
- SGyybgk7lOJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaIZ/1AAKCRDBN2bmhouD
- 178DD/4lZF18/08Yzvzw4qiqtSF/pGbR/jJj2qVZaM/GpMpRi+GufSA4BeTgMrFK7oxYRr0pc0S
- 7TevAv373OoKlhYRsE8PNguNRvDwcfLrqPU5XbVcXS/nh0DLMpJMpMbrQRjl0OpcxBh+NpMXmsF
- csL2DC9rs3f30DTHY4/S2+z+khXMyapTVf9I8pum+3uB6JFg/pYnxsYjKwSYFw2IMQm8YtxQNWH
- vk7Bkq8q0PX9cpWz99MqNo2EL6jwa5DHh+W2rYcynAJVCEWunj3lKLzEi8x60DXykI6nXOZhCw3
- kn4bv2LnE1LrNn29y6sTTAI9v+ZmcnhJuq+Rc3wl4DwkpoEIQsm6TNBk0DoWNU3AhShfA2QROHn
- y11Vtzcv5x60DQYmYVZfK7ZkPseCuMR6YJvRDLjFui4z3hGkiK+qJYnd2of43LehvtjA498J0Mn
- zO6K0ywoDSupG3yndZP5a0UasP11oeFm5XBoWVDFPi++ZDdXvQA8e0D+u0o1O9HwmhHXdMac29v
- 2O72/lzLDFnhum7PL7np7WG/ftYI+i5JCLSYuqSoI1pMN5AMfzuGBTk7veCm1CZrRlyrN5HZBZR
- 2MfSrK6AE1jY4NBgPtiOb3xkYHDaoLdM4TX9oDzSEwkQWHYrnicjEKeB87LNSzVJ7eeG71bg35F ZgD3tpNChMWjR4Q==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Enable CTCU device for QCS8300
+To: Jie Gan <jie.gan@oss.qualcomm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+ <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250624095905.7609-1-jie.gan@oss.qualcomm.com>
+ <c7cca483-f1d3-45b4-abef-ec5019ad57dd@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <c7cca483-f1d3-45b4-abef-ec5019ad57dd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDAwNiBTYWx0ZWRfX8xyLodk0bvPw
+ 9uJQlY8VOxHQj1sbddetfDCd9nyTFylhDOI0A3Yolc1pUkjiRmwgag5rN6v00qC+s3ERDJOqgQz
+ kAbh0FwlgRUs4YjT7JlomFXgQSa8S0KEVLMVb0RkEkE1vUE5EOwDNkhU0lG+0HdbpD3gaJE+Lv9
+ J4rlNNvZlJCnr4WUa0+AC5apI9L6YR2QMW3Vjp8rnS0R5d1svqYYDWD01okRWWWxpXPEtjf9Xtb
+ mmfU9AJUfJ6MvlSIw0ovoaYh1GrZUSotES2/fSXxtolH/npxv1DKCIsJ6muIbSRAuwMrOzO+Q6N
+ f8FR5+AfDsIAUDOSt/1S2YEPQa8y/c3/ubIMSIv4gVsBlWpJ1LnnlwxfcyEf/LtmE0C6AdhAit0
+ LsSFizgX1mMtK5EwW/rP0Catw8nrgL5O3kXJe3Dsklr1/i7CKeHLUxmortYks2pxJdT7w22l
+X-Authority-Analysis: v=2.4 cv=Hth2G1TS c=1 sm=1 tr=0 ts=6886cdb0 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=gW6MYXlkPblPBwbZtHMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-GUID: EoHU3T_buu1m5wYCvIa2GCNeDhx8XPfz
+X-Proofpoint-ORIG-GUID: EoHU3T_buu1m5wYCvIa2GCNeDhx8XPfz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_01,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 mlxscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 mlxlogscore=952 clxscore=1015
+ spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507280006
 
-Qualcomm DTS uses sorting of MMIO nodes by the unit address, so move
-few nodes in SM8650 DTSI to fix that.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 414 +++++++++++++--------------
- 1 file changed, 207 insertions(+), 207 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index e14d3d778b71..2360d560dc86 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -3490,6 +3490,11 @@ &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ACTIVE_ONLY>,
- 			};
- 		};
- 
-+		rng: rng@10c3000 {
-+			compatible = "qcom,sm8650-trng", "qcom,trng";
-+			reg = <0 0x010c3000 0 0x1000>;
-+		};
-+
- 		cnoc_main: interconnect@1500000 {
- 			compatible = "qcom,sm8650-cnoc-main";
- 			reg = <0 0x01500000 0 0x14080>;
-@@ -3561,11 +3566,6 @@ mmss_noc: interconnect@1780000 {
- 			#interconnect-cells = <2>;
- 		};
- 
--		rng: rng@10c3000 {
--			compatible = "qcom,sm8650-trng", "qcom,trng";
--			reg = <0 0x010c3000 0 0x1000>;
--		};
--
- 		pcie0: pcie@1c00000 {
- 			device_type = "pci";
- 			compatible = "qcom,pcie-sm8650", "qcom,pcie-sm8550";
-@@ -3926,38 +3926,6 @@ pcie1_phy: phy@1c0e000 {
- 			status = "disabled";
- 		};
- 
--		cryptobam: dma-controller@1dc4000 {
--			compatible = "qcom,bam-v1.7.0";
--			reg = <0 0x01dc4000 0 0x28000>;
--
--			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH 0>;
--
--			#dma-cells = <1>;
--
--			iommus = <&apps_smmu 0x480 0>,
--				 <&apps_smmu 0x481 0>;
--
--			qcom,ee = <0>;
--			qcom,num-ees = <4>;
--			num-channels = <20>;
--			qcom,controlled-remotely;
--		};
--
--		crypto: crypto@1dfa000 {
--			compatible = "qcom,sm8650-qce", "qcom,sm8150-qce", "qcom,qce";
--			reg = <0 0x01dfa000 0 0x6000>;
--
--			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
--					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
--			interconnect-names = "memory";
--
--			dmas = <&cryptobam 4>, <&cryptobam 5>;
--			dma-names = "rx", "tx";
--
--			iommus = <&apps_smmu 0x480 0>,
--				 <&apps_smmu 0x481 0>;
--		};
--
- 		ufs_mem_phy: phy@1d80000 {
- 			compatible = "qcom,sm8650-qmp-ufs-phy";
- 			reg = <0 0x01d80000 0 0x2000>;
-@@ -4079,6 +4047,38 @@ ice: crypto@1d88000 {
- 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
- 		};
- 
-+		cryptobam: dma-controller@1dc4000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0 0x01dc4000 0 0x28000>;
-+
-+			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH 0>;
-+
-+			#dma-cells = <1>;
-+
-+			iommus = <&apps_smmu 0x480 0>,
-+				 <&apps_smmu 0x481 0>;
-+
-+			qcom,ee = <0>;
-+			qcom,num-ees = <4>;
-+			num-channels = <20>;
-+			qcom,controlled-remotely;
-+		};
-+
-+		crypto: crypto@1dfa000 {
-+			compatible = "qcom,sm8650-qce", "qcom,sm8150-qce", "qcom,qce";
-+			reg = <0 0x01dfa000 0 0x6000>;
-+
-+			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+			interconnect-names = "memory";
-+
-+			dmas = <&cryptobam 4>, <&cryptobam 5>;
-+			dma-names = "rx", "tx";
-+
-+			iommus = <&apps_smmu 0x480 0>,
-+				 <&apps_smmu 0x481 0>;
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0 0x01f40000 0 0x20000>;
-@@ -4962,6 +4962,176 @@ opp-202000000 {
- 			};
- 		};
- 
-+		usb_1_hsphy: phy@88e3000 {
-+			compatible = "qcom,sm8650-snps-eusb2-phy",
-+				     "qcom,sm8550-snps-eusb2-phy";
-+			reg = <0 0x088e3000 0 0x154>;
-+
-+			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
-+			clock-names = "ref";
-+
-+			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_dp_qmpphy: phy@88e8000 {
-+			compatible = "qcom,sm8650-qmp-usb3-dp-phy";
-+			reg = <0 0x088e8000 0 0x3000>;
-+
-+			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+			clock-names = "aux",
-+				      "ref",
-+				      "com_aux",
-+				      "usb3_pipe";
-+
-+			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
-+				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
-+			reset-names = "phy",
-+				      "common";
-+
-+			power-domains = <&gcc USB3_PHY_GDSC>;
-+
-+			#clock-cells = <1>;
-+			#phy-cells = <1>;
-+
-+			orientation-switch;
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					usb_dp_qmpphy_out: endpoint {
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					usb_dp_qmpphy_usb_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_ss>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					usb_dp_qmpphy_dp_in: endpoint {
-+						remote-endpoint = <&mdss_dp0_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		usb_1: usb@a6f8800 {
-+			compatible = "qcom,sm8650-dwc3", "qcom,dwc3";
-+			reg = <0 0x0a6f8800 0 0x400>;
-+
-+			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH 0>,
-+					      <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH 0>,
-+					      <&pdc 14 IRQ_TYPE_EDGE_RISING>,
-+					      <&pdc 15 IRQ_TYPE_EDGE_RISING>,
-+					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "pwr_event",
-+					  "hs_phy_irq",
-+					  "dp_hs_phy_irq",
-+					  "dm_hs_phy_irq",
-+					  "ss_phy_irq";
-+
-+			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
-+				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-+				 <&tcsr TCSR_USB3_CLKREF_EN>;
-+			clock-names = "cfg_noc",
-+				      "core",
-+				      "iface",
-+				      "sleep",
-+				      "mock_utmi",
-+				      "xo";
-+
-+			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-+					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-+			assigned-clock-rates = <19200000>, <200000000>;
-+
-+			resets = <&gcc GCC_USB30_PRIM_BCR>;
-+
-+			interconnects = <&aggre1_noc MASTER_USB3_0 QCOM_ICC_TAG_ALWAYS
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-+					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &config_noc SLAVE_USB3_0 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			interconnect-names = "usb-ddr",
-+					     "apps-usb";
-+
-+			power-domains = <&gcc USB30_PRIM_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			status = "disabled";
-+
-+			usb_1_dwc3: usb@a600000 {
-+				compatible = "snps,dwc3";
-+				reg = <0 0x0a600000 0 0xcd00>;
-+
-+				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH 0>;
-+
-+				iommus = <&apps_smmu 0x40 0>;
-+
-+				phys = <&usb_1_hsphy>,
-+				       <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
-+				phy-names = "usb2-phy",
-+					    "usb3-phy";
-+
-+				snps,hird-threshold = /bits/ 8 <0x0>;
-+				snps,usb2-gadget-lpm-disable;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
-+				snps,is-utmi-l1-suspend;
-+				snps,usb3_lpm_capable;
-+				snps,usb2-lpm-disable;
-+				snps,has-lpm-erratum;
-+				tx-fifo-resize;
-+
-+				dma-coherent;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						usb_1_dwc3_hs: endpoint {
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						usb_1_dwc3_ss: endpoint {
-+							remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+
- 		iris: video-codec@aa00000 {
- 			compatible = "qcom,sm8650-iris";
- 			reg = <0 0x0aa00000 0 0xf0000>;
-@@ -5580,176 +5750,6 @@ dispcc: clock-controller@af00000 {
- 			#power-domain-cells = <1>;
- 		};
- 
--		usb_1_hsphy: phy@88e3000 {
--			compatible = "qcom,sm8650-snps-eusb2-phy",
--				     "qcom,sm8550-snps-eusb2-phy";
--			reg = <0 0x088e3000 0 0x154>;
--
--			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
--			clock-names = "ref";
--
--			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_dp_qmpphy: phy@88e8000 {
--			compatible = "qcom,sm8650-qmp-usb3-dp-phy";
--			reg = <0 0x088e8000 0 0x3000>;
--
--			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
--				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
--				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
--			clock-names = "aux",
--				      "ref",
--				      "com_aux",
--				      "usb3_pipe";
--
--			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
--				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
--			reset-names = "phy",
--				      "common";
--
--			power-domains = <&gcc USB3_PHY_GDSC>;
--
--			#clock-cells = <1>;
--			#phy-cells = <1>;
--
--			orientation-switch;
--
--			status = "disabled";
--
--			ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
--
--					usb_dp_qmpphy_out: endpoint {
--					};
--				};
--
--				port@1 {
--					reg = <1>;
--
--					usb_dp_qmpphy_usb_ss_in: endpoint {
--						remote-endpoint = <&usb_1_dwc3_ss>;
--					};
--				};
--
--				port@2 {
--					reg = <2>;
--
--					usb_dp_qmpphy_dp_in: endpoint {
--						remote-endpoint = <&mdss_dp0_out>;
--					};
--				};
--			};
--		};
--
--		usb_1: usb@a6f8800 {
--			compatible = "qcom,sm8650-dwc3", "qcom,dwc3";
--			reg = <0 0x0a6f8800 0 0x400>;
--
--			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH 0>,
--					      <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH 0>,
--					      <&pdc 14 IRQ_TYPE_EDGE_RISING>,
--					      <&pdc 15 IRQ_TYPE_EDGE_RISING>,
--					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "pwr_event",
--					  "hs_phy_irq",
--					  "dp_hs_phy_irq",
--					  "dm_hs_phy_irq",
--					  "ss_phy_irq";
--
--			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
--				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
--				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
--				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
--				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
--				 <&tcsr TCSR_USB3_CLKREF_EN>;
--			clock-names = "cfg_noc",
--				      "core",
--				      "iface",
--				      "sleep",
--				      "mock_utmi",
--				      "xo";
--
--			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
--					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
--			assigned-clock-rates = <19200000>, <200000000>;
--
--			resets = <&gcc GCC_USB30_PRIM_BCR>;
--
--			interconnects = <&aggre1_noc MASTER_USB3_0 QCOM_ICC_TAG_ALWAYS
--					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
--					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
--					 &config_noc SLAVE_USB3_0 QCOM_ICC_TAG_ACTIVE_ONLY>;
--			interconnect-names = "usb-ddr",
--					     "apps-usb";
--
--			power-domains = <&gcc USB30_PRIM_GDSC>;
--			required-opps = <&rpmhpd_opp_nom>;
--
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
--
--			status = "disabled";
--
--			usb_1_dwc3: usb@a600000 {
--				compatible = "snps,dwc3";
--				reg = <0 0x0a600000 0 0xcd00>;
--
--				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH 0>;
--
--				iommus = <&apps_smmu 0x40 0>;
--
--				phys = <&usb_1_hsphy>,
--				       <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
--				phy-names = "usb2-phy",
--					    "usb3-phy";
--
--				snps,hird-threshold = /bits/ 8 <0x0>;
--				snps,usb2-gadget-lpm-disable;
--				snps,dis_u2_susphy_quirk;
--				snps,dis_enblslpm_quirk;
--				snps,dis-u1-entry-quirk;
--				snps,dis-u2-entry-quirk;
--				snps,is-utmi-l1-suspend;
--				snps,usb3_lpm_capable;
--				snps,usb2-lpm-disable;
--				snps,has-lpm-erratum;
--				tx-fifo-resize;
--
--				dma-coherent;
--
--				ports {
--					#address-cells = <1>;
--					#size-cells = <0>;
--
--					port@0 {
--						reg = <0>;
--
--						usb_1_dwc3_hs: endpoint {
--						};
--					};
--
--					port@1 {
--						reg = <1>;
--
--						usb_1_dwc3_ss: endpoint {
--							remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
--						};
--					};
--				};
--			};
--		};
--
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sm8650-pdc", "qcom,pdc";
- 			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
--- 
-2.48.1
+On 7/15/2025 8:41 AM, Jie Gan wrote:
+> 
+> 
+> On 6/24/2025 5:59 PM, Jie Gan wrote:
+>> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in 
+>> binding to utilize
+>> the compitable of the SA8775p platform becuase the CTCU for QCS8300 
+>> shares same
+>> configurations as SA8775p platform.
+> 
+> Gentle ping.
+
+Gentle ping.
+
+Thanks,
+Jie
+
+> 
+> Hi Suzuki, Mike, James, Rob
+> 
+> Can you plz help to review the patch from Coresight view?
+> 
+> Thanks,
+> Jie
+> 
+>>
+>> Changes in V2:
+>> 1. Add Krzysztof's R-B tag for dt-binding patch.
+>> 2. Add Konrad's Acked-by tag for dt patch.
+>> 3. Rebased on tag next-20250623.
+>> 4. Missed email addresses for coresight's maintainers in V1, loop them.
+>> Link to V1 - https://lore.kernel.org/all/20250327024943.3502313-1- 
+>> jie.gan@oss.qualcomm.com/
+>>
+>> Jie Gan (2):
+>>    dt-bindings: arm: add CTCU device for QCS8300
+>>    arm64: dts: qcom: qcs8300: Add CTCU and ETR nodes
+>>
+>>   .../bindings/arm/qcom,coresight-ctcu.yaml     |   9 +-
+>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 153 ++++++++++++++++++
+>>   2 files changed, 160 insertions(+), 2 deletions(-)
+>>
+> 
+> 
 
 
