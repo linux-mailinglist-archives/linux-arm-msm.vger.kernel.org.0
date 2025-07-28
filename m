@@ -1,234 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-66884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEC8FB13E51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:29:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0702DB13EE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:40:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 890207A520E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:27:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60DA17AE11E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:38:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2981273D9A;
-	Mon, 28 Jul 2025 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C353273D68;
+	Mon, 28 Jul 2025 15:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tPmRA33q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pb4XQpKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB502273811
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 15:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A25C26D4CD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 15:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753716527; cv=none; b=AWLKmT09qhlMi41NMCxWsa/grb1vvBjlBZBSBsl2pFmn3H+1ec0p8Rf+XyeKZU20qpEy89tyj6JbmuO6wQqY9K/tG7WuU8NtSiEWFR5g4lF3yWT00D0M7Ti4aZmBueqjnYDn1o/bMi8rbY56BtPTmJuATedtrzqnVhndBNGjNnE=
+	t=1753717041; cv=none; b=jkMi0RHdQXiZG8w3b/b7hz5kxGlS0Bnm3Z2xIdbqWT0LG22dKl+zPxzRLkaE/p8grfFU7/McsOyOVtQREhHfLf7FJKDEbxWbv7hpye6Hdu91RgtNXNtFJkqmJAMdF9jm4q9JgbpcxJoUocTmyoBQrLRewL4MxCxYsmkQmZB4ZM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753716527; c=relaxed/simple;
-	bh=msmFyZu9Jsscab5hbY3+ICHeJzThMjfhq7769qRrgUU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LUntAYGkpCr7BFZBVPUKjdyf3sBW06Gweiqi7DMkL+ypvah5Bb0c7KJbtlacjRq0stF9BWJC9X5gtp1fbIV6ekLyjx0kafVLYWR4u7tNwhb0w3qCPGeRTATKvqCwDYICmMH6ok5hO16n6uoZDF167a/UmxnyKVmIQglXvtpu1Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tPmRA33q; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4560d176f97so48900235e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 08:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753716524; x=1754321324; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0KYH5uOnsVIwXthd6jLacA3vCzPCBFlvs/tLtNeIbio=;
-        b=tPmRA33q3CapE9h7+Ham7OJQYqBwtLBoHWTeZcNU9Sgtli37+2u4XRzgGgP3Ppawt6
-         vdrFKIpGn8gUPyHCdQmWKASyPTIIHi3Jwmc0MopkU1TNt3Hw8zTi+E1zxXzgedxojcPZ
-         gcN7qWDU+fC0F0Eox43YR+QT0z48qvMupBTyx5ddFJqwd0/PhvLLh4OzDujjjduM2U2U
-         jhuujXwga7ZApJ93mLCjAM/arxzHfjkr7vaEMGAw94FoeCvQcFS7ppyG/mh3XJcX3y6/
-         JDYIidbUmGUnbFw7dx9gmiD2gpc8equ9JYyJV80NtG+IzE4YfTYf1ZShPecon4rdbIvt
-         210w==
+	s=arc-20240116; t=1753717041; c=relaxed/simple;
+	bh=jre8QM0W1aod+snE4SIPjcwGuvGXMCnAU3WPP0zFovo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dfp3KI2Da3+TlZR3f8rdnJwTExkGRnAU6zASmBROXx/Ry8mJNkEI0y5Xd9hyq19U5yPwaCv5/YYnZtQVJCBi16F3fQ6TKqNNGb3uFCFCxiqavhPBrbIo9CwMZ5kwl9wXydv43MfYc0seILaD08YsR+YXrD7PBNcByS5coo3zr84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pb4XQpKe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SAlVEF014818
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 15:37:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=SAVDu2CUO0GFbPnrkds994cc
+	7fuJHUyL9s9URha4+gw=; b=Pb4XQpKeNIn4JwZo9QYgwyN8jt5WS7p27L9R+3Lv
+	sBtDiOW2Yj3IWvwog0YlaLitsHCvtEERjgFKUEmhcM2VYrShSsoXJxVs9Lyp/qNn
+	IQxNwn/xAdqBPLO8GpxMqliRmo/jkULpDDIACh9KEQSiD7oazMMV6NifxQTvnojz
+	/PKWqbcLiZlWdNJKuyZQQv48DZQ/PpVLP4c9cE3NGZcSSU/F1JL59EoW0p26G0ap
+	YCblv3wCsjP5zLhMFG1F0wPZfL/xiGBIXNxICmXZ0zayCQwUFW25an/BgEpyae56
+	CTXQILbgTgVRaiCSFpyVsGFpnU+2t26xuAejBlnG8B20CA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484q3xn1vh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 15:37:18 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-7073b4fb53eso24844886d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 08:37:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753716524; x=1754321324;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0KYH5uOnsVIwXthd6jLacA3vCzPCBFlvs/tLtNeIbio=;
-        b=bm2PjiuYXLfwbdwdjZjy4RjsYFjWE5zL6OxO8XdLPZxtQVSsVhTd93S4d0rs1g1DuH
-         fCACUe2u+sNC7hyBylbYGO/iYGLVMB5/VdyAbpVOBbPOpK8FlgNH6AfZZ1JCoL8Wb9z7
-         RcPto4+PGZNcZBemXPRzgeVnEFQiLWktX6PrXc2gcPprXOXpCZpEulSoPY0+1biUHozD
-         9w9MGj33MSxCWlZtdsIaCAGESJUv2x5+yQ6QTe7Yb8O/Cf5gkSyWNBDN+iIyzjIV6SxI
-         ny1PnVV+L6uEPt0Bxrkol5nVYtqerw0pVDZS/xZXLy84g6mdsSFGUsJyAXVYgzECXrqs
-         sFdg==
-X-Forwarded-Encrypted: i=1; AJvYcCXs/7zi8D5X3VHnhnTPoibHLDde6+ecMmrKHk4aOMq8yUyN7DExi1W6H/dAp7I0zjveaFqZCGBvRGaIJH8O@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOyNKKW3myeIdw6dlRvfVGfxsrTgpdm/Fzzsec0TNp8/nFJiFM
-	bXMz8stgvfWOmundz8awQMyna4JafAvMgCnG4YCq0UzrYgyeXiFgwpiJHWQxpkwhlsU=
-X-Gm-Gg: ASbGncspiXUxOsG1XYsm8RIMhfoBW4D8EiH1pHzTNzQxuRusA0znRFn+R52nt2GvW0/
-	7vgGQ+WXLjoNWimcmHVWUy2tGdBCWcgprFhWTx6FusxOD6zbjGvIoYeqyAQIYxMAR/iYw+vUqbg
-	HSKfjq5Unn7zCivHTZ2EhPbQUuFblzu1Ga6xW57sDfTVQv7iDhKfjf9kXG2pO2fua6zebqLvOkz
-	VyYQVEVa0JMSysSr2HLUG5W+7oZILOO1KzulLa8jb6dXCqVsXfLQACUJQGTnM+Au5aovfT7n0Gq
-	SpcPWWTT7tCIxyvpuP7o0NVG5tw8BDHa3biehbLbj53MuQtaaiZnh09H5KAIGyT2Q9TQpvLZfHf
-	PXpANbOtRqfiz8EzeWR02jXcwAt8iVwqZ+LbgVZ1/KOZbfED1jYch2gWJMhT9+v0=
-X-Google-Smtp-Source: AGHT+IHCDJPO3DmwE+R871rYbqW/w7f3xvgvCsRTeXZDv1pGjX0zdXjJHcF/PKQqWaeVJiDXV9MS7w==
-X-Received: by 2002:a05:600c:1992:b0:453:6ca:16b1 with SMTP id 5b1f17b1804b1-4587655b2f6mr92024565e9.26.1753716523805;
-        Mon, 28 Jul 2025 08:28:43 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45870555065sm163572625e9.15.2025.07.28.08.28.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 08:28:43 -0700 (PDT)
-Message-ID: <a49b6b55-0482-4287-8001-e6e87381227f@linaro.org>
-Date: Mon, 28 Jul 2025 16:28:42 +0100
+        d=1e100.net; s=20230601; t=1753717038; x=1754321838;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SAVDu2CUO0GFbPnrkds994cc7fuJHUyL9s9URha4+gw=;
+        b=fBSrZ3NfKLEjaE/8P5ErxjHqCRdAZqxtStfHeVXjSx1Tx4wblexVcFZctnHgdskxVS
+         smJwvbQVzoQzxyplhuRM0MkGcKjxNx8BcD1W+NSxdhS7DBHJfYPrD7Wq8EfFlI+itdUr
+         SAo2KyikNP08pCFX9/fDswM1/yCItaJ3m+Q/wn/i4ehOOfEPQ3ss5ZveZBqUA/YJAUBw
+         5dETW86D9ed/F35HKqXrbMWVXrYYhDdGtsRjHgQ7eGxW95wkZK0Fz59spvEjhoCa1m/B
+         Y3JYR7zOhTauiM9YTDmGV9SpRvXxm3KpRofZUkDFZuPEcFU1KkKochmi/dvTUWZhXEWK
+         YsrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV9/tDa/hoL+s6U3xbkWBhREIIa9Xzul8otHYPK79y9AaO5J/K6XRKf94PmrxKcpletayxBz9fSyc3ZpQbU@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhRJHuyvWggDS8dWc3qEv8jBB8SVkhAiQFU25Y8r9ESM5gtjSg
+	nvYC/w1p9E8G4l39NwRVzzOjYNgjtg85mYebdJs63k+CDbXWMILjbuNF/9MasrkW837N1QvDfZQ
+	lb6V1x9FQTT6RaqeqbTR3yilzI3RFbnD3HIROuq72jUV5wzGpTa9igzHdvdkt2k3LDnlh
+X-Gm-Gg: ASbGnctOApGosFdTSH04SDkbR7QgVR+/orkuY037qf/euYEB9g/L4AhQRnJss9SuACL
+	/UtS+iSH7nnZREn6r1/TUVORh6vf8XSZBS1/nEVkQnPlPKQLeo+AIbcBPLgrsG9pZ8D9T4dZNJJ
+	F0PEXyKcgkoMXr+Uch1MF6ZUtVa60cX8K4bVyr4BAs3Pp0Y065e/RmjiYEY4U3ZbozBHiOakvOB
+	8UhpvZBQMTItuN1CV38B0DrbOOtU0r9nSI4Ybl0r9nUX2YVRZTzfLwTWONbGJn7a6mMpxdl+MeY
+	RwGVwQ6aq9Q0uFvfn/HP2lw9tLwSKLILoTzXUddoG24SEIJKFkfgKXD9iIqJ6OuYPRVxM9b+GPB
+	gbNPWQcEcigsFQvnOHuMYGps6DNgSXS1C8q3xJotDAaaOZpWFBm3F
+X-Received: by 2002:a05:6214:768:b0:707:4aa0:30b with SMTP id 6a1803df08f44-7074aa00690mr43615666d6.42.1753717038012;
+        Mon, 28 Jul 2025 08:37:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+BWhOHv+VJeM/lHL4P6XKb8rnJZC+uPnNDX7+Ov1b4lYzmfrK08Z/Q+Kn87HxQgfASQl2vQ==
+X-Received: by 2002:a05:6214:768:b0:707:4aa0:30b with SMTP id 6a1803df08f44-7074aa00690mr43615016d6.42.1753717037278;
+        Mon, 28 Jul 2025 08:37:17 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b73f140fasm21169e87.113.2025.07.28.08.37.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jul 2025 08:37:15 -0700 (PDT)
+Date: Mon, 28 Jul 2025 18:37:13 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+        Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v13 07/10] firmware: psci: Implement vendor-specific
+ resets as reboot-mode
+Message-ID: <mfxfi3blmebuua4rwdppbaiyiyqh7apkh4xxlwqm6t2ishjqfa@i26nvsduy5wm>
+References: <20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
+ <20250727-arm-psci-system_reset2-vendor-reboots-v13-7-6b8d23315898@oss.qualcomm.com>
+ <b81aa592-a66b-457b-9f42-df4505b28508@kernel.org>
+ <3gtlf5txxtioa5bvo6o467jupyoam4hjhm2mdiw5izv5vbl3tz@drndgp3tcrgo>
+ <bcef34c3-98b4-454c-8138-c73729e17081@kernel.org>
+ <5e2caeb7-360a-4590-a36f-ff1ec4c20d31@oss.qualcomm.com>
+ <2a39c0ab-edd4-402c-95a0-a6286f03102a@kernel.org>
+ <20250728-exotic-armadillo-of-upgrade-fbebc1@sudeepholla>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: qcom: camss: tpg: Add tpg support for qcs8300
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250717-qcs8300_tpg-v2-1-0946c69c2c8b@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250717-qcs8300_tpg-v2-1-0946c69c2c8b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250728-exotic-armadillo-of-upgrade-fbebc1@sudeepholla>
+X-Authority-Analysis: v=2.4 cv=JovxrN4C c=1 sm=1 tr=0 ts=6887992e cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=-6XmDZydnhzWYMP6MwkA:9 a=CjuIK1q_8ugA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-ORIG-GUID: 5l1eE7lhERL2_uaHUpVKb-2zQjXmZsjL
+X-Proofpoint-GUID: 5l1eE7lhERL2_uaHUpVKb-2zQjXmZsjL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDExNCBTYWx0ZWRfX6WbybqD1c06F
+ +ec5sS5gRSTwpLzRgenhHac0tcoWFwMu+1Vcadixya6JvEfCZ3w6puueuEXYT10SvDWT/MFTBFJ
+ ZVZfBaQZbYHOcQ4IFtQnZZgnMp7WxVZ4W+LKEtcxfGPHA7y3oUcn8vIWxR843pExJbFoMjjmXaf
+ dTA/LtNM7/Ef+UWmD/UrVnM5y/TraiB+HDRBYLoRXWnlT4xpscOmoDN7ooUNj15kSMtg5VUrofT
+ mTFKa/FzUdhqFxqEN8LHQBECyK3YBW2S8jeJS7b2jlSm0RuIMxLQNnsv3Ov4rBobqPSKQT1kNe6
+ Y7oGdL0McK+9y5j2dwwQD7Xj0Qv4DK8AwHg391gyj8l9+Mm13g/ungad+sNua5pt9gMsmBfuGFm
+ o4u4hqik1WBJMa/VOMuUcX6e5JC2ImbjlmcN1n6mwWlhzF/Mz0w8mAyLcOGjiTwo9UZFiO/3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 spamscore=0 mlxlogscore=677
+ mlxscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507280114
 
-On 17/07/2025 05:18, Wenmeng Liu wrote:
-> Add support for TPG found on QCS8300.
+On Mon, Jul 28, 2025 at 02:23:17PM +0100, Sudeep Holla wrote:
+> On Mon, Jul 28, 2025 at 02:23:14PM +0200, Krzysztof Kozlowski wrote:
+> > On 28/07/2025 14:03, Dmitry Baryshkov wrote:
+> > >>
+> > >>> and the reboot-mode is defined in the
+> > >>> previous patch. So, I'd assume, the path is defined.
+> > >>
+> > >> As I said, path is not. only psci/reboot-mode is.
+> > > 
+> > > Do we have an _actual_ use case where PSCI node is not at at root node? 
+> > 
+> > Yes, many cases, because it belongs as well to firmware node.
+> > 
 > 
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
-> QCS8300 is a Qualcomm SoC. This series adds driver changes to
-> bring up TPG in QCS8300.
-> 
-> Tested with following commands:
-> - media-ctl --reset
-> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=0
-> - media-ctl -V '"msm_tpg0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -l '"msm_tpg0":1->"msm_csid0":0[1]'
-> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> - v4l2-ctl -d /dev/v4l-subdev3 -c test_pattern=9
-> - yavta -B capture-mplane -n 5 -f SRGGB10P -s 4608x2592 /dev/video0
->    --capture=7
-> 
-> Dependencies:
-> https://lore.kernel.org/all/20250717-lemans_tpg-v2-0-a2538659349c@quicinc.com/
-> 
-> Changes in v2:
-> - rebase tpg changes based on new versions of sa8775p and qcs8300 camss patches
-> - Link to v1: https://lore.kernel.org/all/20250217-qcs8300_tpg-v1-1-6e0f4dd3ad1f@quicinc.com/
-> ---
->   drivers/media/platform/qcom/camss/camss.c | 52 ++++++++++++++++++++++++++++++-
->   1 file changed, 51 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index ced31e3655a52a7b2e55b109085cf24a9e230f1d..68411e4a5c55b394145ba907f18cb03e235dcc23 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -2548,6 +2548,53 @@ static const struct camss_subdev_resources csiphy_res_8300[] = {
->   	},
->   };
->   
-> +static const struct camss_subdev_resources tpg_res_8300[] = {
-> +	/* TPG0 */
-> +	{
-> +		.regulators = {  },
+> +1, I was about to make similar comment. /psci predates the formal push
+> to put all firmware related nodes under /firmware, so /firmware/psci is
+> equally possible path and should be recommended one so that all such
+> firmware related nodes are contained under /firmware.
 
-you can drop the explicit empty set.
+Ack, thanks for the explanation.
 
-> +		.clock = { "csiphy_rx" },
-> +		.clock_rate = { { 400000000 } },
-> +		.reg = { "tpg0" },
-> +		.interrupt = { "tpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "csiphy_rx" },
-> +		.clock_rate = { { 400000000 } },
-> +		.reg = { "tpg1" },
-> +		.interrupt = { "tpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "csiphy_rx" },
-> +		.clock_rate = { { 400000000 } },
-> +		.reg = { "tpg2" },
-> +		.interrupt = { "tpg2" },
-
-Does the TPG interrupt do something ? AFIAK it does not.
-
-Drop dead array entries and unused ISRs.
-
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +};
-
-> +
->   static const struct camss_subdev_resources csid_res_8300[] = {
->   	/* CSID0 */
->   	{
-> @@ -4492,7 +4539,8 @@ static int camss_probe(struct platform_device *pdev)
->   	if (!camss->csiphy)
->   		return -ENOMEM;
->   
-> -	if (camss->res->version == CAMSS_8775P) {
-> +	if (camss->res->version == CAMSS_8775P ||
-> +	    camss->res->version == CAMSS_8300) {
->   		camss->tpg = devm_kcalloc(dev, camss->res->tpg_num,
-
-You already know the number of tpgs so there's no sense in pivoting on 
-version number.
-
-if (res->tpg_num) {
-	devm_kzalloc()
-}
-
->   					  sizeof(*camss->tpg), GFP_KERNEL);
->   		if (!camss->tpg)
-> @@ -4677,11 +4725,13 @@ static const struct camss_resources qcs8300_resources = {
->   	.version = CAMSS_8300,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_8300,
-> +	.tpg_res = tpg_res_8300,
->   	.csid_res = csid_res_8300,
->   	.csid_wrapper_res = &csid_wrapper_res_qcs8300,
->   	.vfe_res = vfe_res_8300,
->   	.icc_res = icc_res_qcs8300,
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_8300),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_8300),
->   	.csid_num = ARRAY_SIZE(csid_res_8300),
->   	.vfe_num = ARRAY_SIZE(vfe_res_8300),
->   	.icc_path_num = ARRAY_SIZE(icc_res_qcs8300),
-> 
-> ---
-> base-commit: dc3d6ecbfebec02791feea0b08062540badcb5a2
-> change-id: 20250717-qcs8300_tpg-f7735e998310
-> 
-> Best regards,
----
-bod
+-- 
+With best wishes
+Dmitry
 
