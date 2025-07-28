@@ -1,63 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-66882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AD1FB13E19
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:19:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A66B13E1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:20:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6349B189FC97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:20:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 794763BAF32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 15:19:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2A76272E75;
-	Mon, 28 Jul 2025 15:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A125313D51E;
+	Mon, 28 Jul 2025 15:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="FXlezz4/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VaCNnd8B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C7B72621;
-	Mon, 28 Jul 2025 15:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3411E2823
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 15:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753715976; cv=none; b=OwShnHzHXiUR1h6PH/bcpftRBN4yQCYT58JR7Hlkpt8wLnvgI72rsqyGNJeal8293w72gQDFpQm0+OtqVBIsjIWa7x26wASzDuVz+cDRAgb0vs8CQ5tXmVJMOwFg4Hbn43NPG81ZMtugqjHc4j8pyA8OIs5cO0w/7wwxg2Ghpzs=
+	t=1753716006; cv=none; b=d9nvv6U/5FWQJTco5klLctrmijFbOChYfigrqtUwdZ2DaiT14h0qi4UllKkXbbIn4BkFmsW/rhUAGlQvtCwKYadW1rEXFlQizmlRDFDX9jQTjp1gLo8bA/q/cAX9LpB6ULXqS3CIW5oYu2+3FRP0cD27Zm1SwsgpHeYLr0eEERY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753715976; c=relaxed/simple;
-	bh=wIxcjcNEkyPDjmdkRrJ3cR3fiA648H006TZTC+uVUHc=;
+	s=arc-20240116; t=1753716006; c=relaxed/simple;
+	bh=LNQzmDVPXFAc/zMEWuShx2jfF/wSMyxK4QbpQtkKNT0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=trqR3C/Lht5RHb0Ww4KCFNP8WByahgVYuSvzRDDu3Nx5fBlHpqB49i457LIiBsPh92ppDHzdg+YOJISRa24PZqiL10dNMWVF0XVUftq2ooDfOoG1HIHRwUNZFhFYC5eEJLSYamvwOa+nqSddSbmxAmBLSsE8DnbEuYGIYJNYtNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=FXlezz4/; arc=none smtp.client-ip=199.89.3.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 004.mia.mailroute.net (Postfix) with ESMTP id 4brMb44BjHzm0yVN;
-	Mon, 28 Jul 2025 15:19:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1753715965; x=1756307966; bh=wyvxwcIBKz4/1qVBx/Glm6HG
-	EcWTzuLIGUB0WKeP3wA=; b=FXlezz4/MQUqElceeHYKDWHaX6UdUZFANqL4A8rM
-	d6nTLdhAci116llAi7+noO5nZp2pNaIuRS4uXjQ0bVcAJqJ8yigmkixAmcjTmd2T
-	2MqZRJYkoIBmvM4BlvB2VXpq/tCixZBnIK2jIIJQjLFgA5w2K9JybDHLkl7ZsZT4
-	xMqxWIrh04vLwcBiW3wW99UhAEozoAyQhZI8Nksa3UHdK+6NlHS7t2A9bY0fYWDW
-	xADjqEJ4pDFay50VBT5F4+BU412a3A19QwSMtl2BUURtFmopxBeg300i14kIql8a
-	RYPUaZujSxdpHZIVfriBS3LOOHRU4AcUtWp7hYv2hRX7Lg==
-X-Virus-Scanned: by MailRoute
-Received: from 004.mia.mailroute.net ([127.0.0.1])
- by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id zCbeK2nZy5RL; Mon, 28 Jul 2025 15:19:25 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4brMZp20Ktzm0ySj;
-	Mon, 28 Jul 2025 15:19:12 +0000 (UTC)
-Message-ID: <c385f1c4-f27b-4dc7-b4a2-d35a9fc77a91@acm.org>
-Date: Mon, 28 Jul 2025 08:19:11 -0700
+	 In-Reply-To:Content-Type; b=kKIaO64iZSQRddq925cPMaPRnPyUq+qTZyUIR1a/cKeWSwJMI/co6BAivbiEOG2gJSi6ws113v5wfzCStU/ZVmwdDgF5BZHScjs5p+S+Jj8cOeyX3ZzIeeFBJO/wr5kal3+uSzQTssfyvQEZWiarkxY4QX3/WdOCYi1dAL67//Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VaCNnd8B; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b78d729bb8so150217f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 08:20:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753716002; x=1754320802; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t3M6HADrcbiuvKh0/Kz/xLBlEH+H9X+k3yVRG8+8/+Q=;
+        b=VaCNnd8B13QkdvW4H1B7XUKe7Y+5foeI89AyRUEBoGCNA1XvZrQX5hUN+CQ1S+oipw
+         MAUVC6a8fwMRTk//OUP2+o0K1ZmgiWCERe+kkQA7HzhVXpy2Vgxt1NJW1l46Zkw9+vGz
+         n7rtycULtrZuD8m8DjIvrEHuX3Y1wjZzmTDS8//AxanVbiAzB6YyhuDVWxYQtS6acU58
+         6LIoE131Y5rsnbXohQyRRNGghQfUxjECyvEQ6sFENwUnzqY//ZA/s0TxN2/1I9KsCfiy
+         sOTm5YHtkijGf3M/KCV3MCXGyea7fab3fNvpA7+zQ6ZKZJTWvUxZ+BCsQXqDOKhd4FRD
+         ttAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753716002; x=1754320802;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t3M6HADrcbiuvKh0/Kz/xLBlEH+H9X+k3yVRG8+8/+Q=;
+        b=NHHNRUjuRWekhSlt0AUd6vjaDbo5dAmCO/u09Qwjh9e6XBIYhC5/qCAWITYaew3XfK
+         /jmj6GpkwEw7IsAcGRyNV/6v9/kzisZW/9j+mra1kw3PRdKArUo4mUuNhSPQDXyXsm9U
+         lCQQu3pirsggWt3+3jtC/Mr2MC89qIvxifWGgjtsCSdymb5iKGphcskVYPih/16nvKiv
+         5ySTlvEdbLWKz0Sr+5pVgag/rTuxrBqsk19qJXowKfJFGdUmt0wd/3zi8U+vWaWcvg+T
+         NVZi28r3uQevY3RgQxlqjOF6fxj6r+mz510JpbF1a7cVbjgpojMW7PCUVuqwQ/FNJMTv
+         h8IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcFMGzX/xjx8y2jpnCaJ91oX37i8fyNmY4Ly4UQQB2E2SU8tMrkWL/iDxVaMakAZmNBJz4KGrMojNdd6d/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqxeTi2WZncEbOvjW40nXRFYJwDjHN5Yt3UKX6tOvFapqwsH4r
+	KfEMEwTmETgjRQxdlQ/UoMD6BzvNv2xBVURCtMJp60BFOZ5+VGGh1eqOkdkpMk17u/3CQvtm2St
+	u/XUXris=
+X-Gm-Gg: ASbGncuj7O9SJlRQBn02a6ly3+kSiTXtRWNqRez15bD7UlrOrqs8VZgYIQkjuPsRVU0
+	cMxW+5ytOxbVtgudkWkiG+JtRsucKfBooDxOJTDOs1M7MZW0U3wuOBnnnvJAW6xGRS6pDWYWPij
+	tVmJTlDQKcymBUC2DdaWpV2dWz5kcmGNlqqozEdfZoVtwB/oZVo3xUFpeMbuZATNJtCHD5rAxQ0
+	3jxnKmxw02vXzeafbTGaO5qYKLumCmZeeWMmYyeO54xrxWJyc/Lte6B8xl1bcEbpOJs1vTjLD8J
+	+i47u8TE2m2zbSKmTMzpXRl35aeYY5GFM0rMe4udkDBxZlHAq2Et/mLoi8HVp1DLsZY6VYrO0gL
+	KenodCFYPtU4a41bqazfWglrfYDGco8qjNmrUra4uYgCUAK2xS5uNuN/LzbE6V+8=
+X-Google-Smtp-Source: AGHT+IHuFxUfNvgAlegftl8WivsnpjLThvsD/neUVLJFPFSoDoKmpaGfm37Dy5WdZFowr4b1ZggyxQ==
+X-Received: by 2002:a05:6000:4211:b0:3b7:73b5:e96d with SMTP id ffacd0b85a97d-3b776725608mr8244540f8f.15.1753716001775;
+        Mon, 28 Jul 2025 08:20:01 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778ec36bcsm8929728f8f.37.2025.07.28.08.20.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 08:20:01 -0700 (PDT)
+Message-ID: <6dc33f02-6691-4ad8-b04f-423e4e5caea8@linaro.org>
+Date: Mon, 28 Jul 2025 16:20:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,172 +83,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] scsi: ufs: core: move some irq handling back to
- hardirq (with time limit)
-To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Peter Griffin <peter.griffin@linaro.org>,
- Tudor Ambarus <tudor.ambarus@linaro.org>,
- Will McVicker <willmcvicker@google.com>,
- Manivannan Sadhasivam <mani@kernel.org>, kernel-team@android.com,
- linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20250725-ufshcd-hardirq-v2-0-884c11e0b0df@linaro.org>
- <20250725-ufshcd-hardirq-v2-2-884c11e0b0df@linaro.org>
- <a008c613-58d6-4368-ae2f-55db4ac82a02@linaro.org>
- <76af97e49cb7f36c8dc6edc62c84e72d6bb4669c.camel@linaro.org>
+Subject: Re: [PATCH v2] media: venus: pm_helpers: add fallback for the
+ opp-table
+To: Renjiang Han <quic_renjiang@quicinc.com>, quic_qiweil@quicinc.com,
+ quic_wangaow@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250724-fallback_of_opp_table-v2-1-2fc61f2407dc@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <76af97e49cb7f36c8dc6edc62c84e72d6bb4669c.camel@linaro.org>
+In-Reply-To: <20250724-fallback_of_opp_table-v2-1-2fc61f2407dc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 
-On 7/28/25 7:49 AM, Andr=C3=A9 Draszik wrote:
-> Btw, my complete command was (should probably have added that
-> to the commit message in the first place):
->=20
-> for rw in read write ; do
->      echo "rw: ${rw}"
->      for jobs in 1 8 ; do
->          echo "jobs: ${jobs}"
->          for it in $(seq 1 5) ; do
->              fio --name=3Drand${rw} --rw=3Drand${rw} \
->                  --ioengine=3Dlibaio --direct=3D1 \
->                  --bs=3D4k --numjobs=3D${jobs} --size=3D32m \
->                  --runtime=3D30 --time_based --end_fsync=3D1 \
->                  --group_reporting --filename=3D/foo \
->              | grep -E '(iops|sys=3D|READ:|WRITE:)'
->              sleep 5
->          done
->      done
-> done
+On 24/07/2025 08:53, Renjiang Han wrote:
+> Since the device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX
+> do not include an opp-table and have not configured opp-pmdomain, they
+> still need to use the frequencies defined in the driver's freq_tbl.
+> 
+> Both core_power_v1 and core_power_v4 functions require core_clks_enable
+> function during POWER_ON. Therefore, in the core_clks_enable function,
+> if calling dev_pm_opp_find_freq_ceil to obtain the frequency fails,
+> it needs to fall back to the freq_tbl to retrieve the frequency.
+> 
+> Fixes: b179234b5e59 ("media: venus: pm_helpers: use opp-table for the frequency")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> ---
+> Since device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX do not
+> contain an opp-table and have not configured opp-pmdomain, they still
+> need to use the frequencies defined in the driver's freq_tbl.
+> 
+> Therefore, if calling dev_pm_opp_find_freq_ceil to obtain the frequency
+> fails in the core_clks_enable, it needs to fall back to the freq_tbl to
+> retrieve the frequency.
+> 
+> Validated this series on QCS615 and msm8916.
+> ---
+> Changes in v2:
+> - 1. Update the returned error value as per the feedback.
+> - Link to v1: https://lore.kernel.org/r/20250723-fallback_of_opp_table-v1-1-20a6277fdded@quicinc.com
+> ---
+>   drivers/media/platform/qcom/venus/pm_helpers.c | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index 8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390..77c12273dbb9505244e260fc8fa635e4fe045236 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -40,6 +40,8 @@ static int core_clks_get(struct venus_core *core)
+>   
+>   static int core_clks_enable(struct venus_core *core)
+>   {
+> +	const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+> +	unsigned int freq_tbl_size = core->res->freq_tbl_size;
+>   	const struct venus_resources *res = core->res;
+>   	struct device *dev = core->dev;
+>   	unsigned long freq = 0;
+> @@ -48,7 +50,14 @@ static int core_clks_enable(struct venus_core *core)
+>   	int ret;
+>   
+>   	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+> -	dev_pm_opp_put(opp);
+> +	if (IS_ERR(opp)) {
+> +		if (!freq_tbl)
+> +			return -ENODEV;
+> +		freq = freq_tbl[freq_tbl_size - 1].freq;
+> +	} else {
+> +		dev_pm_opp_put(opp);
+> +	}
+> +
+>   
+>   	for (i = 0; i < res->clks_num; i++) {
+>   		if (IS_V6(core)) {
+> 
+> ---
+> base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
+> change-id: 20250721-fallback_of_opp_table-4ea39376f617
+> 
+> Best regards,
 
-Please run performance tests in recovery mode against a block
-device (/dev/block/sd...) instead of running performance tests on
-top of a filesystem. One possible approach for retrieving the block
-device name is as follows:
+Note to self add a
 
-adb shell readlink /dev/block/by-name/userdata
+Closes: CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com
 
-There may be other approaches for retrieving the name of the block
-device associated with /data. Additionally, tuning for maximum
-performance is useful because it eliminates impact from the process
-scheduler on block device performance measurement. An extract from a
-scrip that I use myself to measure block device performance on Pixel
-devices is available below.
-
-Best regards,
-
-Bart.
-
-
-optimize() {
-     local clkgate_enable c d devfreq disable_cpuidle governor nomerges=20
-iostats
-     local target_freq ufs_irq_path
-
-     if [ "$1" =3D performance ]; then
-	clkgate_enable=3D0
-	devfreq=3Dmax
-	disable_cpuidle=3D1
-	governor=3Dperformance
-	# Enable I/O statistics because the performance impact is low and
-	# because fio reports the I/O statistics.
-	iostats=3D1
-	# Disable merging to make tests follow the fio arguments.
-	nomerges=3D2
-	target_freq=3Dcpuinfo_max_freq
-	persist_logs=3Dfalse
-     else
-	clkgate_enable=3D1
-	devfreq=3Dmin
-	disable_cpuidle=3D0
-	governor=3Dsched_pixel
-	iostats=3D1
-	nomerges=3D0
-	target_freq=3Dcpuinfo_min_freq
-	persist_logs=3Dtrue
-     fi
-
-     for c in $(adb shell "echo /sys/devices/system/cpu/cpu[0-9]*"); do
-	for d in $(adb shell "echo $c/cpuidle/state[1-9]*"); do
-	    adb shell "if [ -e $d ]; then echo $disable_cpuidle > $d/disable; fi=
-"
-	done
-	adb shell "cat $c/cpufreq/cpuinfo_max_freq > $c/cpufreq/scaling_max_freq=
-;
-                    cat $c/cpufreq/${target_freq} >=20
-$c/cpufreq/scaling_min_freq;
-                    echo ${governor} > $c/cpufreq/scaling_governor; true"=
- \
-             2>/dev/null
-     done
-
-     if [ "$(adb shell grep -c ufshcd /proc/interrupts)" =3D 1 ]; then
-	# No MCQ or MCQ disabled. Make the fastest CPU core process UFS
-	# interrupts.
-	# shellcheck disable=3DSC2016
-	ufs_irq_path=3D$(adb shell 'a=3D$(echo /proc/irq/*/ufshcd); echo ${a%/uf=
-shcd}')
-	adb shell "echo ${fastest_cpucore} > ${ufs_irq_path}/smp_affinity_list;=20
-true"
-     else
-	# MCQ is enabled. Distribute the completion interrupts over the
-	# available CPU cores.
-	local i=3D0
-	local irqs
-	irqs=3D$(adb shell "sed -n 's/:.*GIC.*ufshcd.*//p' /proc/interrupts")
-	for irq in $irqs; do
-	    adb shell "echo $i > /proc/irq/$irq/smp_affinity_list; true"
-	    i=3D$((i+1))
-	done
-     fi
-
-     for d in $(adb shell echo /sys/class/devfreq/*); do
-	case "$d" in
-	    *gpu0)
-		continue
-		;;
-	esac
-	local min_freq
-	min_freq=3D$(adb shell "cat $d/available_frequencies |
-		tr ' ' '\n' |
-		sort -n |
-		case $devfreq in
-			min) head -n1;;
-			max) tail -n1;;
-		esac")
-	adb shell "echo $min_freq > $d/min_freq"
-	# shellcheck disable=3DSC2086
-	if [ "$devfreq" =3D "max" ]; then
-	    echo "$(basename $d)/min_freq: $(adb shell cat $d/min_freq) <>=20
-$min_freq"
-	fi
-     done
-
-     for d in $(adb shell echo /sys/devices/platform/*.ufs); do
-	adb shell "echo $clkgate_enable > $d/clkgate_enable"
-     done
-
-     adb shell setprop logd.logpersistd.enable ${persist_logs}
-
-     adb shell "for b in /sys/class/block/{sd[a-z],dm*}; do
-		    if [ -e \$b ]; then
-			[ -e \$b/queue/iostats     ] && echo ${iostats}   >\$b/queue/iostats;
-			[ -e \$b/queue/nomerges    ] && echo ${nomerges}  >\$b/queue/nomerges;
-			[ -e \$b/queue/rq_affinity ] && echo 2            >\$b/queue/rq_affini=
-ty;
-			[ -e \$b/queue/scheduler   ] && echo ${iosched}   >\$b/queue/scheduler=
-;
-		    fi
-		done; true"
-
-     adb shell "grep -q '^[^[:blank:]]* /sys/kernel/debug' /proc/mounts=20
-|| mount -t debugfs none /sys/kernel/debug"
-}
-
+---
+bod
 
