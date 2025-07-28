@@ -1,125 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-66912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A53C3B14032
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 18:24:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C61B14094
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 18:46:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B6AA3BFD75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:23:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 848E33A84C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:45:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDF427978D;
-	Mon, 28 Jul 2025 16:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9930C2750EC;
+	Mon, 28 Jul 2025 16:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s24qwQ/h"
+	dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b="TTZteMtE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.ionic.de (ionic.de [145.239.234.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC89274B44;
-	Mon, 28 Jul 2025 16:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0452AE97;
+	Mon, 28 Jul 2025 16:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.239.234.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753719578; cv=none; b=BiQ1w3wGyZyVEgeIaq6rBcPVsXQ2A/XpKBNmxYYIEH+xK2oj3bC2GAtWuY59muGChxk0m5OWrautbjkHpiHqTug2wSxpGbYq1xgJEiQiALMlJiDhA2SA+oHHr0imY8PMxISjtMfTy0D5GkrAe1Qs/97mjuWB4q8RypZYFevcKbw=
+	t=1753721148; cv=none; b=mx8wUvCLyvPq0263kFfDE2UrtiYp/pp4Wrv6MJ8cXAj+WR3a2hhEz3MBX85t+X9xTWjGj+SssYDoVaiQP+wV8z98kS++MJNB/nOhYb7PsWOBUcdDjjC82ccbRVpKogbdObGVfmRgCbU7Vemd8I4iPNISQSYucB+WRmgIFq8ek8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753719578; c=relaxed/simple;
-	bh=jQi+mXuUzQah1hpB0ZmxZMKEYCV600U42oolJxyRpS4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qMIHracvJzhngu4wQDXi//hh/WYRwyDQAge8b8VdF6sYjU/3+ZxirnJrZ7UoceT9jAUtQjriZGuNkO03avzk2OOEGm0khm9wG6MTiuiQZMTPhTdgyfk6LJsvqzlGPxxqkFV/yNQJ9amB0KGeLwE2CiIVnGueV1hufkRGaNTBV7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s24qwQ/h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F56C4CEEF;
-	Mon, 28 Jul 2025 16:19:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753719577;
-	bh=jQi+mXuUzQah1hpB0ZmxZMKEYCV600U42oolJxyRpS4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=s24qwQ/htiwfp0NOFgFLv3vM7Xckzrq1Dv7PVgT9P10wFh88GdeyNf1R0onrt0wF/
-	 7RFELWG5Gkj3TiH4im0fYgZ8iRGOlQHp27GtRRIBdYnq/X6nADgG3Z9ktA8YSH1Dad
-	 lyJ9siDMB09VJi5oOLlWcavYhtyIb+3XWtDy3YC5GfQm+y9Rfsc1e9ZlrR0+Ssx3uF
-	 MnRazqAkPDhYiPmEk/DF9lq7i0FLyVe+Sps5D7dnB1L7f7uCeKl7+3SmlJms4LYbc+
-	 xLsJlwnsdfCuDYiCcnc9CVqQDJT60sdeIZDJQ7eBfcUQa/0Kp/Jps2kQmyiGOdkuxa
-	 beCA2D5RljB1Q==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 28 Jul 2025 18:16:24 +0200
-Subject: [PATCH RFC 24/24] arm64: dts: qcom: x1e80100: Describe GPU_CC
- power plumbing requirements
+	s=arc-20240116; t=1753721148; c=relaxed/simple;
+	bh=FyHwd+MV76b8WmKZ0YSS5V0JlgFRToL1PV/16FUsh8g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dz1Av4eQieduG1/xDnW664GzppRSmE2OLXK9VM+z/4UwRTSZ242gf0Y//owiejxeiuwcIAlU4mgH98ngBMFra1RHoccInbGkbiYGrjuvg+YJ0+ZTvwzRW15ZvI5+qN5ITOywIUwtXtdCWKVUV8sD/Y629OHZdJo1UVBhV7T1nSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de; spf=pass smtp.mailfrom=ionic.de; dkim=pass (1024-bit key) header.d=ionic.de header.i=@ionic.de header.b=TTZteMtE; arc=none smtp.client-ip=145.239.234.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ionic.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionic.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ionic.de; s=default;
+	t=1753721137; bh=FyHwd+MV76b8WmKZ0YSS5V0JlgFRToL1PV/16FUsh8g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=TTZteMtEYL3sy0IJj3YEmGQwuaQyUtKUiTtoIxgxdLxoI8aBgLbfjBbCJ2rJnRM7z
+	 QRxt7a99VKrxAgLgPWr5UpHdY5M3OH8pvywYkB0B0uxRugETC2TCgef+QRN8Y4XCaF
+	 dW8RSFneJNkbeqjKFOJygDCzNOMRK9foRAbKJYQs=
+Received: from grml.local.home.ionic.de (unknown [IPv6:2a00:11:fb41:7a00:21b:21ff:fe5e:dddc])
+	by mail.ionic.de (Postfix) with ESMTPSA id 190C71480967;
+	Mon, 28 Jul 2025 18:45:37 +0200 (CEST)
+From: Mihai Moldovan <ionic@ionic.de>
+To: linux-arm-msm@vger.kernel.org,
+	Manivannan Sadhasivam <mani@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH v4 00/11] QRTR Multi-endpoint support
+Date: Mon, 28 Jul 2025 18:45:17 +0200
+Message-ID: <cover.1753720934.git.ionic@ionic.de>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250728-topic-gpucc_power_plumbing-v1-24-09c2480fe3e6@oss.qualcomm.com>
-References: <20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com>
-In-Reply-To: <20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Taniya Das <taniya.das@oss.qualcomm.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
- Imran Shaik <quic_imrashai@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
- Douglas Anderson <dianders@chromium.org>, Vinod Koul <vkoul@kernel.org>, 
- Richard Acayan <mailingradian@gmail.com>, 
- Andy Gross <andy.gross@linaro.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
- Luca Weiss <luca.weiss@fairphone.com>, Jonathan Marek <jonathan@marek.ca>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jagadeesh Kona <quic_jkona@quicinc.com>, 
- Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753719371; l=1029;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=sXUTyRKeh4DSCEHRkfxr2jS5yhoSyHaN3wcwxWm//xQ=;
- b=uHNiZMtCHnfwiDJByl5EwurECRMfeNH3gWVfdKWL2D954TtfqM4Ve58ycDVCM5o20THjZCPmb
- 4NC4Qwq2o3tCPfVgM+BjaLiZOCUIzwUTswiIr/GfAShZ2dRUSAHnphI
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I am incredibly thankful for Denis's work on this. To get this back on
+track and to eventually get it merged, with his permission, I'm
+resubmitting his patch set with issues in the previous review rounds
+resolved. This feature is a prerequisite for my work on ath1{1,2}k to
+allow using multiple devices in one computer.
 
-A number of power rails must be powered on in order for GPU_CC to
-function. Ensure that's conveyed to the OS.
+The original description follows:
 
-Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+The current implementation of QRTR assumes that each entity on the QRTR
+IPC bus is uniquely identifiable by its node/port combination, with
+node/port combinations being used to route messages between entities.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 5e9a8fa3cf96468b12775f91192cbd779d5ce946..6620517fbb0f3ed715c4901ec53dcbc6235be88f 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3928,6 +3928,12 @@ gpucc: clock-controller@3d90000 {
- 			clocks = <&bi_tcxo_div2>,
- 				 <&gcc GCC_GPU_GPLL0_CPH_CLK_SRC>,
- 				 <&gcc GCC_GPU_GPLL0_DIV_CPH_CLK_SRC>;
-+
-+			power-domains = <&rpmhpd RPMHPD_CX>,
-+					<&rpmhpd RPMHPD_MX>,
-+					<&rpmhpd RPMHPD_GFX>,
-+					<&rpmhpd RPMHPD_GMXC>;
-+
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
+However, this assumption of uniqueness is problematic in scenarios
+where multiple devices with the same node/port combinations are
+connected to the system.  A practical example is a typical consumer PC
+with multiple PCIe-based devices, such as WiFi cards or 5G modems, where
+each device could potentially have the same node identifier set.  In
+such cases, the current QRTR protocol implementation does not provide a
+mechanism to differentiate between these devices, making it impossible
+to support communication with multiple identical devices.
+
+This patch series addresses this limitation by introducing support for
+a concept of an 'endpoint.' Multiple devices with conflicting node/port
+combinations can be supported by assigning a unique endpoint identifier
+to each one.  Such endpoint identifiers can then be used to distinguish
+between devices while sending and receiving messages over QRTR sockets.
+
+The patch series maintains backward compatibility with existing clients:
+the endpoint concept is added using auxiliary data that can be added to
+recvmsg and sendmsg system calls.  The QRTR socket interface is extended
+as follows:
+
+- Adds QRTR_ENDPOINT auxiliary data element that reports which endpoint
+  generated a particular message.  This auxiliary data is only reported
+  if the socket was explicitly opted in using setsockopt, enabling the
+  QRTR_REPORT_ENDPOINT socket option.  SOL_QRTR socket level was added
+  to facilitate this.  This requires QRTR clients to be updated to use
+  recvmsg instead of the more typical recvfrom() or recv() use.
+
+- Similarly, QRTR_ENDPOINT auxiliary data element can be included in
+  sendmsg() requests.  This will allow clients to route QRTR messages
+  to the desired endpoint, even in cases of node/port conflict between
+  multiple endpoints.
+
+- Finally, QRTR_BIND_ENDPOINT socket option is introduced.  This allows
+  clients to bind to a particular endpoint (such as a 5G PCIe modem) if
+  they're only interested in receiving or sending messages to this
+  device.
+
+v4:
+  - fixed issues found in previous review round:
+    o lock without unlock
+    o wrong return value
+  - Link to v3: https://msgid.link/cover.1753312999.git.ionic@ionic.de
+
+v3:
+  - rebased against current master
+  - fix checkpatch.pl warnings
+  - fix overflow issues with unsigned long radix tree keys by using the
+    upper half of the storage space for one element and the lower half
+    of storage for the other element, making sure that the elements fit
+    into their respective storage space
+  - Link to v2: https://msgid.link/cover.1752947108.git.ionic@ionic.de
+
+v2:
+  - rebased against current master
+  - fixed most issues found in first review round (see individual
+    commits), minus the 32-bit long
+    unsafe use
+  - Link to v1: https://msgid.link/20241018181842.1368394-1-denkenz@gmail.com
+
+Denis Kenzior (10):
+  net: qrtr: ns: validate msglen before ctrl_pkt use
+  net: qrtr: allocate and track endpoint ids
+  net: qrtr: support identical node ids
+  net: qrtr: Report sender endpoint in aux data
+  net: qrtr: Report endpoint for locally generated messages
+  net: qrtr: Allow sendmsg to target an endpoint
+  net: qrtr: allow socket endpoint binding
+  net: qrtr: Drop remote {NEW|DEL}_LOOKUP messages
+  net: qrtr: ns: support multiple endpoints
+  net: qrtr: mhi: Report endpoint id in sysfs
+
+Mihai Moldovan (1):
+  net: qrtr: fit node ID + port number combination into unsigned long
+
+ include/linux/socket.h    |   1 +
+ include/uapi/linux/qrtr.h |   7 +
+ net/qrtr/af_qrtr.c        | 405 ++++++++++++++++++++++++++++++++------
+ net/qrtr/mhi.c            |  14 ++
+ net/qrtr/ns.c             | 299 +++++++++++++++++-----------
+ net/qrtr/qrtr.h           |   4 +
+ 6 files changed, 548 insertions(+), 182 deletions(-)
 
 -- 
-2.50.1
+2.50.0
 
 
