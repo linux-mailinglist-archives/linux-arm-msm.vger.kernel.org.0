@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 146D1B133DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 07:01:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04796B133F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 07:06:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 49226175B5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 05:01:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F466173BC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 05:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ACCB20F062;
-	Mon, 28 Jul 2025 05:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D720217F27;
+	Mon, 28 Jul 2025 05:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXNaKFBR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O8fE8Z2N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B8D29405;
-	Mon, 28 Jul 2025 05:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1C81A0703;
+	Mon, 28 Jul 2025 05:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753678899; cv=none; b=XH0SzjCN18DiGLVq0iz49VpXeQT6NoRYNJuhVI5HB4O7jmg6uBzhNWLLeWq1+oj4gMcwSxtQsw4A1WP9+fdNQYul9LByZniyC16xKo0nlqU/1ftABjteISYKgPgOxH5eFhHLeg1TtR/QOx/yHFMUXM8tUx9Lr4yS/8L8BYUDXDU=
+	t=1753679161; cv=none; b=aK6/+XCIQHZWAHUfqJin0ZIGGg0bml7fvOMAXga9BjHPGWXjhiDj5U8xB5Ck7uXMaZY9un0jgT3GRz/hqw42fYf2vEK82DTIMoVwKoWi2Evwm0JFWLELHBriWzWe5Q3xIoVyqvEetN1Do9Qrqpyicuz5pDrgzC6biYJHaR0EBVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753678899; c=relaxed/simple;
-	bh=h2t9VTTQvPqtnd9UzMdzQzgUqidHexMKRE2szkipEdA=;
+	s=arc-20240116; t=1753679161; c=relaxed/simple;
+	bh=FIN7SJx91tulDmceMKsXenCVFwcjQ5atAmrBlpeza1o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZSQvK+mVmzq3ZomhnFGudu86eHYOQIWiMGccYX3Gm3zeq9lnbUnPM0S4YafPFCUJ5gjO8/vgYCXytAlRcfDi6xlg1ji//ZLbp+1/FhE4om7xYgYgTgYdGtwc5RpgM7weUsbxAds8VkqCsubP6OCylrAO/gu1M49huZTIWmPJk84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXNaKFBR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5D3C4CEE7;
-	Mon, 28 Jul 2025 05:01:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PvRDIqf0J2/uhCuVMZ9ZNgCE/21N1HkoXbN1hPRM5UAIu2lRlyDDQKLZoeJli8+h7eWHxJVL67oZOdCkJhfD7hTkyPbDRE56wcdgTo99Yotpy1eUdIj0BlKaDFJ126uxT7VHH+pK3U94LO1f56onjiBJ+jNspk585exUM0M/aaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O8fE8Z2N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F020C4CEE7;
+	Mon, 28 Jul 2025 05:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753678896;
-	bh=h2t9VTTQvPqtnd9UzMdzQzgUqidHexMKRE2szkipEdA=;
+	s=k20201202; t=1753679160;
+	bh=FIN7SJx91tulDmceMKsXenCVFwcjQ5atAmrBlpeza1o=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EXNaKFBRdbopl6nr3kNPc+/DouSIxexmqT5HFrpckAEnXXMGix6yizKJoWFAoxdkJ
-	 b+bVnnmmdkE9iFP8603Szq479ZfWotj+5h6TcepiUsrO/EJSU18AUqeAPMd/FfmSjd
-	 DNVgEzSIBtSv5Hnq8nyIJYf8XCyjdbk5lyXb0T4WbcqBbOSaDYc/E54Xj7oIfI9njV
-	 3mD9FKjD6iadgDe3tkoNi5yCc1XvLEReI+/a6/zvn03wCp1WFUnYPZVTR6vt6saGkr
-	 Y216jJKItQto4xX1digPCX6XOAPmj5C5H1TcUVGQxyRtr78ME8DuEJ6C8iZuuxkR4W
-	 3+FzZ0o0lraOw==
-Message-ID: <5b8d42d5-d034-4495-9d28-27478a606d62@kernel.org>
-Date: Mon, 28 Jul 2025 07:01:31 +0200
+	b=O8fE8Z2N7XPtt7akD2OfpXxE8SVR87t0AAWT9YsohWBlzz8fF54YTXpytlSm96b0J
+	 a4ajP4tEttpT1PQKR7dziz4BXmf8R1KuO28nZkaukFpDHfONxnyo4l+9Trz+SkRipv
+	 AmoW6RGbGwYNhGY42P214HmvGSElheHyUs+jU4y4kmkNZHcf3SKLXa2NwMW4UA0SDT
+	 VJpi7G4qO5R1lOEOYpYPBy2vyBUGNjiPF3fHgCwDwatIAiinDokBMhmsQCa1+uC9Hd
+	 Bjnoo8qFm4wobQ/sU/feIDesQ5DRS+s16KxLDXQghP905NIDDS1qI6OTd5ZsYA8vxx
+	 oBcY6LQqk6Wrg==
+Message-ID: <a16c19e2-a4be-4c62-87f3-5d0354893bcf@kernel.org>
+Date: Mon, 28 Jul 2025 07:05:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,7 +63,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 References: <20250723-topic-8750_gpucc-v2-0-56c93b84c390@oss.qualcomm.com>
  <20250723-topic-8750_gpucc-v2-1-56c93b84c390@oss.qualcomm.com>
  <20250724-blazing-therapeutic-python-1e96ca@kuoka>
- <54b617c1-bd1b-4244-b75d-57eaaa2c083d@oss.qualcomm.com>
+ <7d444f4c-fa1f-4436-b93a-f2d2b6d49de2@oss.qualcomm.com>
+ <a3846433-f1f8-4b83-a965-baec24ee5159@kernel.org>
+ <adffdc2f-7dbc-41ea-ac9a-015af251b43b@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,47 +111,44 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <54b617c1-bd1b-4244-b75d-57eaaa2c083d@oss.qualcomm.com>
+In-Reply-To: <adffdc2f-7dbc-41ea-ac9a-015af251b43b@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/07/2025 11:30, Konrad Dybcio wrote:
->>>  
->>> @@ -40,6 +42,9 @@ properties:
->>>        - description: GPLL0 main branch source
->>>        - description: GPLL0 div branch source
->>>  
->>> +  power-domains:
->>> +    maxItems: 1
->>
->> This should be a different binding or you need to restrict other
->> variants here.
+On 25/07/2025 11:23, Konrad Dybcio wrote:
+> On 7/24/25 4:42 PM, Krzysztof Kozlowski wrote:
+>> On 24/07/2025 12:53, Konrad Dybcio wrote:
+>>> On 7/24/25 10:18 AM, Krzysztof Kozlowski wrote:
+>>>> On Wed, Jul 23, 2025 at 10:38:48PM +0200, Konrad Dybcio wrote:
+>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>
+>>>>> The SM8750 features a "traditional" GPU_CC block, much of which is
+>>>>> controlled through the GMU microcontroller. Additionally, there's
+>>>>> an separate GX_CC block, where the GX GDSC is moved.
+>>>>>
+>>>>> Add bindings to accommodate for that.
+>>>>>
+>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>> ---
 > 
-> Actually looks like this is the same case as the recent videocc changes
-> (15 year old technical debt catching up to us..)
+> [...]
 > 
-> I'll send a mass-fixup for this.
+>> Yes, qcom,gcc. If that was missing intentionally, it is fine assuming
+>> you implement the rest of comments.
 > 
-> Some platforms require 2 and some require 3 entries here. Do I have to
-> restrict them very specifically, or can I do:
-> 
-> power-domains:
->   description:
->     Power domains required for the clock controller to operate
->   minItems: 2
->   items:
->     - description: CX power domain
->     - description: MX power domain
->     - description: MXC power domain
-> 
-> ?
+> With the description addition that you suggested above, should I keep
+> this file in clocks/ after all?
 
-This is correct and should be in top level, but you still need to
-restrict them per each variant (minItems: 3 or maxItems: 2).
+Good point, I don't know, this is unusual case. The question is whether
+there could be user of this binding/DTS, which would need/use
+clock-cells? If none of possible users could use it as a clock
+controller, I think it is not a clock controller from how SW sees it.
+IOW, it does not matter what it is fully (in bigger picture) if it
+cannot be used in that way.
 
-> 
-> Konrad
-
+If all users of the binding can use it only as power domain provided, I
+would move it to power with rest of power domains. Also rename the node
+name to power-controller or power-domain.
 
 Best regards,
 Krzysztof
