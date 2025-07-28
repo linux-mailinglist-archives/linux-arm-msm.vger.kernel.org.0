@@ -1,131 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-66873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A41DCB13CF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:23:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47E22B13D54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:37:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 17D631632C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 14:17:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0BD63AA883
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 14:36:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3845926A091;
-	Mon, 28 Jul 2025 14:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A95226FA4E;
+	Mon, 28 Jul 2025 14:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EOE6eT/f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GbldzTMY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7129326B748
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 14:17:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C20237163;
+	Mon, 28 Jul 2025 14:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753712223; cv=none; b=IKs/xnMIktHYWyxgk89pbwTdiJds58gVF5v7VibasBpcaO5nqf0/YrEgQj1XScEkjbicf0vTKXRgrUHKt6kdr7zTB13GBBowNDXLND/0CG9jcHxzOL/C6Gf9k7KRdqlsCKXXSgV46CQ+bykuXZO4x3/NCns6nTqQZOnhRJIy8wY=
+	t=1753713393; cv=none; b=QaJxh0ojk0YAHSpkWgAYtuhWfh0o7KJ00sl2FsM9OYxR4wpPNLyXdlStm3kFWCm2FyZLI7WSCEa4OdMiwh8pMhTH6REeGwdUXyuQqkjeMNCjUSt3M4WfRwEBHcthgWyqOaqSt+W+Ka8+yVwcLDS9IDt14sHk/0/DIhu7q0CgwTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753712223; c=relaxed/simple;
-	bh=oWZus/PApRRgGlXeH2+7LZZRDLYzvND/nR+5+yr2zkU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PrrW2MjAbzC8FPNggZ4PbEHledrJXIWFYunqbu2leeEwwCZNqvfi5f5x0pu/NPbxeDCPeYwKvZuo8aEgNvtBwHrYpoWiBWWIAsCHP8051qqUgH9u8ZPIwA4MSkVxB7T/jHzbgz5KD/0S2M0Uu9gb9O/xqFj2mydJser9/rjdDxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EOE6eT/f; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6088d856c6eso8680275a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 07:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753712220; x=1754317020; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9zOZIuYmUiChxW6T4ALeyJXTvfsAOgbBQ0gteD/iBsA=;
-        b=EOE6eT/fyBqwOjx5z7DVmZVUBvv7siE/bCiNQDFzjO9STyTrQTfkUe6rqpxl8h+d/G
-         SfZgr/XmO1p9x5Im03OMqQIJ477Uubj9o8WQ1M9UROfB5JMYhIKVxUvZz3PZuvvdWukl
-         m+gGJHJbAA4czebjpye+djobkhhmTNcaKWjfALMN/JI+jHLOC8HuwYNmGnd76ogwT1jE
-         zDH3XqH75QlA/AzJY2SNGrxYIL1ecfVtTWn1L8CAnBD/nRq3VQPeCFEM2vuvmcB2ZDdQ
-         4r0RkoPupE08VhFpzqMilAyt/nfpLynwgbXCDvPuvV0zmoFakGYjztTnAwZlNkcELCDn
-         1O3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753712220; x=1754317020;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9zOZIuYmUiChxW6T4ALeyJXTvfsAOgbBQ0gteD/iBsA=;
-        b=Pi8qR3Lp10YqYMNuO5R2XNAURuhBLJWk372kyh8NWIsNDSNy9g8B207+QqN7ODy3ms
-         83c+3G2f78ikrUGLtMNdnnwXx6ChKFKz5Fsbu1BMIgLHSJidsMzzSdlyIkpnQSqo16iU
-         zdIetllSptlkiy7NHBtZqHfS3NhyNe65UZRK8oFO2ZOUV0NKloCNnaxaYll2h1JckvSb
-         2SaXdyU+r8sCGWTdW4S6wJKlBlgjY0CmfLTpDbHFfRE01zaRgEs2FWcl6mPIfrkGsHrA
-         oUxMdqP9v1g47eAHgCLD1oFtM08s+jaqQOIGSTgcVoue5fCY1/14p3VeICv3q2GUoRd1
-         W/XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSUVyJqnApkH3eejPMQ35+FO1b2c850FKFEgFG1UHvAIElBy/N95yCaKPRZ0nO7kqM/CJol3HbF9FSoBC3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3B8IaMYsLtqG8nzydh/jrH4eX5uW1FyukScbmieGT0RuuSwEv
-	qCdMkvFn8uoTpVdzzXeUnYzyGckrGEZ1kzdAUh5+ZCK/eOoeSJ1QrQ75iNoz7DVy5g4=
-X-Gm-Gg: ASbGncvODDzw3iyGOmzpQb6gOHg/188ibA26Xva6ZFoxbxmzzsPk9rACaEhyjuiakuF
-	ZzfF6dWzdQIpMXzZMIvmasHAeObjgmhNSCfX39KH/FMnurFUTn8mwlc5l/BOr3XnM05Ep6n9tUk
-	6S0xqrwGgS87Lqan9SrRzK9HtWeEJcK+VY7/Ifl3JBAd/YF54uHBP/MSjs8WIzdnhK8VXyQjo9X
-	o6maHpQbmNO4YHwfIJwsGTof2P2c6pHGDYwzXmFzl1XBx2wsPaFlY8yplI7RCr2rIdRe91bsDQT
-	ebURgm62kpMbtn4RxQiopdPB7+0ISRIpWPC80izZWUnsBgE/l0oGuq5pYdN95PL/zWpUIV3YyKb
-	JmFYrftIYVE7QZpCqRQZZjKjApiEk3nps5toFPm3zSVyEZoIP39m1GGoX+7A40ws=
-X-Google-Smtp-Source: AGHT+IFF2jy8/UAzO9xj1temCnYhXpEOaVAh+jtnHHRa4ju0zBuFE/o752WTnfDGbuMr36P63jZ5aw==
-X-Received: by 2002:a05:6402:42c8:b0:615:4227:3b2e with SMTP id 4fb4d7f45d1cf-61542273ce2mr3339176a12.23.1753712219586;
-        Mon, 28 Jul 2025 07:16:59 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6153055f5a8sm1894547a12.48.2025.07.28.07.16.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 07:16:59 -0700 (PDT)
-Message-ID: <4cb6fd0d-ae76-4a94-bbd1-ace79633c05e@linaro.org>
-Date: Mon, 28 Jul 2025 15:16:57 +0100
+	s=arc-20240116; t=1753713393; c=relaxed/simple;
+	bh=5SOa2sytuiNA5zEjq9txDoBaaYLCQrTDGAlN11fjudM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ESMhNs9TZIJ8Lz2fP9monpQnlSLr2Vsy7qxfcqjld+rBePdd8+eR3ZQXRqGwiRdzEYTufOpH1Dbqhn8EQCQ5LnioGYqYGcDSi7R4aJA3BuvgcQB9rhowEuAxFsjTCaVY41W9IuJlyIBy6GcE263XkkGXNhxffZsJE2dnyC/9FaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GbldzTMY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A65BC4CEF7;
+	Mon, 28 Jul 2025 14:36:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753713392;
+	bh=5SOa2sytuiNA5zEjq9txDoBaaYLCQrTDGAlN11fjudM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GbldzTMYi/o1EH193dDZkQkHHCC6GfxHx2wCSo9dtLqHVKNk3LbfaDlclpFeEbdBd
+	 xMlRThWm/Xohzuc8zSgTyc8PDoaJrnlFzcASmNCBeZ3FjsUUijfpBnxBIKe+Qg1ihB
+	 hZqeSvJECQAhOBAx2MwAVlWb0dAn9hfO+d+oVal/2Fi+vaCxwHM5z6PCnA/pj66iu0
+	 0MxxzdaP3VTpl7O64U09jmt4oBekbASViVHwQsWM2gmjGVfE6NAOl9fsrqrJIqoKwz
+	 o87yI4sNgfCrpPPeMOaNsmsPf6QUxvtoCe1rdrXY536NXNLRWI9g4lptWqrPUJI7Dd
+	 VVg8GNPNlL6Cw==
+Date: Mon, 28 Jul 2025 20:06:21 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: =?utf-8?B?QW5kcsOp?= Draszik <andre.draszik@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+	Bart Van Assche <bvanassche@acm.org>, "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>, 
+	Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: core: move some irq handling back to hardirq
+ (with time limit)
+Message-ID: <4enen7mopxtx4ijl5qyrd2gnxvv3kygtlnhxpr64egckpvkja4@hjli25ndhxwc>
+References: <20250724-ufshcd-hardirq-v1-1-6398a52f8f02@linaro.org>
+ <f2b85e49152b80a63b20aa5ad67dfbee1190e356.camel@linaro.org>
+ <53bfd619-4066-4dcb-b3f0-d04177e05355@linaro.org>
+ <766fa03c4a9a2667c8c279be932945affb798af0.camel@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] media: qcom: camss: Enumerate resources for
- QCS8300
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
- cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250711131134.215382-1-quic_vikramsa@quicinc.com>
- <20250711131134.215382-8-quic_vikramsa@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250711131134.215382-8-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <766fa03c4a9a2667c8c279be932945affb798af0.camel@linaro.org>
 
-On 11/07/2025 14:11, Vikram Sharma wrote:
-> Enumerate csiphy, csid and vfe resources for qcs8300.
++ Nitin
+
+On Thu, Jul 24, 2025 at 02:38:30PM GMT, André Draszik wrote:
+> On Thu, 2025-07-24 at 13:54 +0200, Neil Armstrong wrote:
+> > On 24/07/2025 13:44, André Draszik wrote:
+> > > On Thu, 2025-07-24 at 10:54 +0100, André Draszik wrote:
+> > > > fio results on Pixel 6:
+> > > >    read / 1 job     original    after    this commit
+> > > >      min IOPS        4,653.60   2,704.40    3,902.80
+> > > >      max IOPS        6,151.80   4,847.60    6,103.40
+> > > >      avg IOPS        5,488.82   4,226.61    5,314.89
+> > > >      cpu % usr           1.85       1.72        1.97
+> > > >      cpu % sys          32.46      28.88       33.29
+> > > >      bw MB/s            21.46      16.50       20.76
+> > > > 
+> > > >    read / 8 jobs    original    after    this commit
+> > > >      min IOPS       18,207.80  11,323.00   17,911.80
+> > > >      max IOPS       25,535.80  14,477.40   24,373.60
+> > > >      avg IOPS       22,529.93  13,325.59   21,868.85
+> > > >      cpu % usr           1.70       1.41        1.67
+> > > >      cpu % sys          27.89      21.85       27.23
+> > > >      bw MB/s            88.10      52.10       84.48
+> > > > 
+> > > >    write / 1 job    original    after    this commit
+> > > >      min IOPS        6,524.20   3,136.00    5,988.40
+> > > >      max IOPS        7,303.60   5,144.40    7,232.40
+> > > >      avg IOPS        7,169.80   4,608.29    7,014.66
+> > > >      cpu % usr           2.29       2.34        2.23
+> > > >      cpu % sys          41.91      39.34       42.48
+> > > >      bw MB/s            28.02      18.00       27.42
+> > > > 
+> > > >    write / 8 jobs   original    after    this commit
+> > > >      min IOPS       12,685.40  13,783.00   12,622.40
+> > > >      max IOPS       30,814.20  22,122.00   29,636.00
+> > > >      avg IOPS       21,539.04  18,552.63   21,134.65
+> > > >      cpu % usr           2.08       1.61        2.07
+> > > >      cpu % sys          30.86      23.88       30.64
+> > > >      bw MB/s            84.18      72.54       82.62
+> > > 
+> > > Given the severe performance drop introduced by the culprit
+> > > commit, it might make sense to instead just revert it for
+> > > 6.16 now, while this patch here can mature and be properly
+> > > reviewed. At least then 6.16 will not have any performance
+> > > regression of such a scale.
+> > 
+> > The original change was designed to stop the interrupt handler
+> > to starve the system and create display artifact and cause
+> > timeouts on system controller submission. While imperfect,
+> > it would require some fine tuning for smaller controllers
+> > like on the Pixel 6 that when less queues.
 > 
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> ---
->   drivers/media/platform/qcom/camss/camss.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+> Well, the patch has solved one problem by creating another problem.
+> I don't think that's how things are normally done. A 40% bandwidth
+> and IOPS drop is not negligible.
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 124bb56167cd..6cd6a5116f5e 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -4569,7 +4569,14 @@ static const struct camss_resources msm8996_resources = {
->   static const struct camss_resources qcs8300_resources = {
->   	.version = CAMSS_8300,
->   	.pd_name = "top",
-> +	.csiphy_res = csiphy_res_8300,
-> +	.csid_res = csid_res_8300,
-> +	.csid_wrapper_res = &csid_wrapper_res_qcs8300,
-> +	.vfe_res = vfe_res_8300,
->   	.icc_res = icc_res_qcs8300,
-> +	.csiphy_num = ARRAY_SIZE(csiphy_res_8300),
-> +	.csid_num = ARRAY_SIZE(csid_res_8300),
-> +	.vfe_num = ARRAY_SIZE(vfe_res_8300),
->   	.icc_path_num = ARRAY_SIZE(icc_res_qcs8300),
->   	.link_entities = camss_link_entities
->   };
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> And while I am referencing Pixel 6 above as it's the only device
+> I have available to test, I suspect all < v4 controllers / devices
+> are affected in a similar way, given the nature of the change.
+> 
+
+IMO we should just revert the offending commit for 6.16 and see how to properly
+implement it in the next release. Even with this series, we are not on par with
+the original IOPS, which is bad for everyone.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
