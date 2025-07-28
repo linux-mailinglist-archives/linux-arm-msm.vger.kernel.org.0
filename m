@@ -1,188 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-66828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43EF8B1385F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 11:55:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BD14B13868
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 11:56:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E3EEB1882BB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 09:53:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C761B188A3B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 09:56:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EA20221557;
-	Mon, 28 Jul 2025 09:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2682221FA1;
+	Mon, 28 Jul 2025 09:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OCcEcddA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AB01ZgpX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AE318871F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 09:52:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5771F1505
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 09:56:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753696377; cv=none; b=hVK2TJM+OmlEFZ6RQw7sYPnMypPxsAZoVc08kLISj9oIbgDLoutaRR/g+TTxsjF+mPzLDj9OIp5KnCExWR9pZj3RxqXDrX0MkuayYCR1qhjeupe8eFrUdV7CQ3D9q6cQd7DSmV4icxc0M8tTwfE7LkqXVHXnPhnUUIE/1hTB+UA=
+	t=1753696563; cv=none; b=KVx/aFGY8ldS3uxxAaK9n/ZxOuUw8L3cGNSg18nM3RLXQFG2CVizx6Vw7xWUeIMdnc7IsKuc15Cxw35+DCWJ9G8ZtSsgKq648dTikVw04yOxFp91XfxCy9Wk8iFHneG6Dz83nJmeKu7cAIXqu9S7IKA1HSV/1ii+5GYRMOWo7t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753696377; c=relaxed/simple;
-	bh=/6BNgY7WTTuIY8aoiuMGPX23pPGzhuUKzVHnWFSowHY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l7uOf0zwF8NlcQlvOWvQV13sv68jWYNN2gUa9MMyBCFMDW3osK4rEwIgUFt7N6JKfmew7AhbjlpqWubfpniM7pT0t+X1wuI0QhOo7W6pKOxGEuA1YhmVsTBZUXTyhqpWlX/wFTGqeWAnpPQMTtI2mpNEmCkT0y6wcVED+xkhea0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OCcEcddA; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-748d982e92cso2626440b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 02:52:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753696375; x=1754301175; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FXctHXJiprQ+nYxGUG/ZEb1ybwSH4GdemqONLKI8ZTU=;
-        b=OCcEcddAVoEeGlBOsvwMtOb/yvfX4WdKBWfrgk3VYf4GAqs5elmdkttQeS5x2Veg6n
-         c4nWtwyBUcvjTuv+kSpcBIpU6u/oxeM5V67M5SdL7jaiq4qKeKMV6oVV9T2SI/EkJ36q
-         PJvgyYiGFyTHcMi66j03R32fFZ5ChRbqAHFxrTMBuYM4QqTrmCkeUZPBjTHDyuQnVi5Z
-         ODiWhjTSWQmHeo3Fefd9EzSu1kevyR5ZlDnzEEpawYUxTtBS2gRTWPoNibyngaq0CdqQ
-         fIVKpTlfusKAAw3dd6kHHk+5SLfpYGnH/FO7wdhD4LlaaZuBkrOtiLFaYN1sW1uKl37h
-         5iCA==
+	s=arc-20240116; t=1753696563; c=relaxed/simple;
+	bh=v101+JVVdRGnyO1F+hI3mGw6HG5ajOkVZ4PmcXP/YGc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o5sdlJ6QXkorTE7AqCFWAKvSGOhcg2+fpJhm6OOS/cwNcTZ9OqLDXwOOfCgrqbk3wkmx7a7aBsEw71YJEEL+87NlqTjkEtSup5gMWqLCJQOVrkLXBz8FESD1gyFnxholVLCE52KJr5EcPRowMqeZufoVH91oTMz6+HLB48365WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AB01ZgpX; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56S4rYsM016846
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 09:56:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	97qWNmr/hvr298Xbx3iKU+H/sSf9Iuo2XWsMv/z0KYA=; b=AB01ZgpXwV9CE58v
+	oMRLvClbMm583FF/GHa1lJCL0VkbsWZ0CcsxGZt4WScLucw6To6cTNnifEGQ4H7+
+	YB8zm5KkXQEZ3GNLML8X/4a2SAdzz0nK+9pTxKW6DuOdAu6Q/6i+omNfQ01T2Qqp
+	FwYLMATgpwyNYmxBaAotT4cNcaokx8RAat6HjuAaT7WtFEhSZvuWccqwkYWIiVEw
+	/gag44mFDREH4/vYAS39IvpaL7CHTy9uQlC3lfOkLGVgJFnU/ykM2kbMuuxVglOq
+	lw9Cdk3F25Sdrkxnb82uH/Ci8QjbykzP5RM0D4N8EOpM7yJk3+dKzPTpCWU+/qwg
+	xS1l6g==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pbkv3p3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 09:56:01 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ab716c33cdso19941351cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 02:56:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753696375; x=1754301175;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FXctHXJiprQ+nYxGUG/ZEb1ybwSH4GdemqONLKI8ZTU=;
-        b=XrsKm4o7c6FkIGkX+iHdghXHIU9LqKgVlp+WL2tlDToJIvBrYqSJKR4IP+s3HCHz4R
-         b3subc8Vk5eQBThfKPgVWDHrnyEaIsSOoppyJeUAMPHCFzqaHfRHUGkBN+uOO7oB/JmB
-         lYw5Kaz8kHgcuBPpF+FRia/g8lG3AIlGvmV1U67StW+QhY3hpohixLvBUFaX1zPs7ch7
-         zl/G9fDte2sbIpd3cLKUrxs+m0f3pe1TKQvO/HQe2TxmmDh66eqyxpPAGWj6xUJ1l1Yo
-         UZ8Prbcf/I7nMObgRbUn/39x1Ehf3o6c5Pq5IhZguSz4fGc6fFn6EGhzyHPd2fKE0+Hj
-         UEDg==
-X-Forwarded-Encrypted: i=1; AJvYcCXGOJzlAvJBAQ+MR9TxgV9nWP1IZAqgNYb4AsbXWg+jWbZNSKlaqtxn363c7ouTRqB7Sb7TYbOaiA3Z7LDE@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPY1WFEf4u4xaA3tHwZDSnd1g5+qmyHUMVTUoKbaxVx4apQdQw
-	Y3uHGEfihYtmqHvKZJyDlkd11/WE8/nZZP4IsrCy0ovMVtt0D6r40jbUpgH1dA45kq4Hn2IsDQF
-	uSs9/LERJLVTvirvHihfKbzpWO2P2Dehun1oCT7BDGw==
-X-Gm-Gg: ASbGncsquEMCRAvqEEOG3TV72nA9YPRbipK0d9Eygb7fB54Jf8etERGpYRpMy7AH+1V
-	2Tjgc7+rsodGaa/ac5qZRAnedck6YJvrjI/jOANXqM2GnRxT3rdF2fpg2bcqrcBcj24jf7fcuw8
-	Sy73yFz1OAlRr02m82JVcR1FKOkf0Fz6YQEhs8EJzMourLZCKvGoOuKePcnAC+xMltZBmTTDM7E
-	shwegzE
-X-Google-Smtp-Source: AGHT+IEgzkAE3PwKwwLXoiUp2BYY6zf+o5Yb3xVeHDX/6yVmfx6aoJxFSQ+FxTGFP4MlReYfbAv61lzV2Ktp2KRQnEY=
-X-Received: by 2002:a05:6a00:22d6:b0:759:5208:59e with SMTP id
- d2e1a72fcca58-7633693f70cmr14865264b3a.7.1753696374766; Mon, 28 Jul 2025
- 02:52:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753696560; x=1754301360;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=97qWNmr/hvr298Xbx3iKU+H/sSf9Iuo2XWsMv/z0KYA=;
+        b=MmUGe2HsTZBmFGgbwjbg2Gxc/yiBdowKa7xR8JERCyvnhOmNP1ypjoXJ9C/QeDylS6
+         Xa2mFulUbwgY+adD6tvRN0AWohvMuwvCDRMKsEaezSQNRrdgKQAMLgzEt48UKRtngv/j
+         JoJBdzB0Jo/iKn3HW1EcBU59GCNlP8CUbwiOp42NjLdl2iSgABFIyHiaj0YmZK4ztGnX
+         HCo8ElyFfozVvO22fE4mUsELhAzYXD54oEthkoRQyuLSlf9WIuhr/s8vCB4V2X7wx9qB
+         mGcEGyW28bg2ed/U18DgvxRWeC/7NymvwMA82KjJOAV/w++AmliUomzMzSd/z0lvjhs0
+         dDdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXZlC3G8O9h0/UgCrEqdPQDh1+Vmf4Ek+GE8E0MD2kmi2R4185bWFyuRqoxjuycwNT4JdYij2v/FDTLBCW2@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywevb6yk0Xu7I6BNRVIfYqZzlTBQNqnJFxztrvAGkyp5EnvQBKP
+	Da/Rcb06axAVqV6t+DDZZJcC+T60zF69URQfFxB3ihnkY8hC87c59PD+kCbiDfmlNtFdmnmjTMs
+	rgwPwY5kMTRuHr3/GOVODYM5Xl9sD6YpEqb7HVB2fwuUQWyVHFugx6prUPEC/fs+uNW6Z
+X-Gm-Gg: ASbGncuAF8XyfqjIUqDmddEOj3skUfLxMv8GHR/TaP/CMdCw7/1H2V+u/ungq3YUiJX
+	ZQU+EZPu+reGeup0Ld2MD3bnK7rc86pams9rWVC+LskeXiM1Wg9lQM7PyZMuGEn/T8fN0FeLxit
+	tRdPCCVGRCdjDorTKr0EVyYDPgoYwknvJZ2ktCB9DpH4xNqqbBggtH9EPh1FnsOpWeBOvQyvVQY
+	hv8Nn16LPdI44stXQd8XM1IYmM3zBUwpT0a1CUXNEfb51eQmsFE6Qidz2nnJWCNPV2xmmAZGtKB
+	jwplT5rhdzGuiaRuGWBMBDajKNfdOcZVG5NNRPCdRrMS6pSbiMkJeWwkMCUDcbbaDZNZc1gd46p
+	aTVHQAzZXdhg+KkQiyg==
+X-Received: by 2002:ac8:7f16:0:b0:47a:e6e1:c071 with SMTP id d75a77b69052e-4ae8ef5920cmr68336261cf.7.1753696559923;
+        Mon, 28 Jul 2025 02:55:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0HAJx5dftHoSRKBGKbv7hde358hLOMoAdMt9sqZhRSin7VI9+c5bS2wf7Z0CKCrsCj+V1+w==
+X-Received: by 2002:ac8:7f16:0:b0:47a:e6e1:c071 with SMTP id d75a77b69052e-4ae8ef5920cmr68336141cf.7.1753696559325;
+        Mon, 28 Jul 2025 02:55:59 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635acc99esm390087966b.115.2025.07.28.02.55.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 02:55:58 -0700 (PDT)
+Message-ID: <8c59ab39-8cc3-4b00-a694-3ed970b9f7dd@oss.qualcomm.com>
+Date: Mon, 28 Jul 2025 11:55:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250722081405.2947294-1-quic_jinlmao@quicinc.com>
- <20250722081405.2947294-2-quic_jinlmao@quicinc.com> <727fa9f4-fe25-495e-9d8d-48e504fbe6b0@arm.com>
- <20250722091425.GH3137075@e132581.arm.com> <CAJ9a7VhLLgAak_4FB=iW0izXprM4W+RsKfHUeo=XUHh9LwtUsA@mail.gmail.com>
- <20250722140659.GI3137075@e132581.arm.com> <CAJ9a7ViUoSMV_HHKKRMhcQX=isU+feJvwCaVhu-6EBK4QXJbVg@mail.gmail.com>
- <de702854-aca1-4c78-9555-f2139d5376af@quicinc.com>
-In-Reply-To: <de702854-aca1-4c78-9555-f2139d5376af@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Mon, 28 Jul 2025 10:52:44 +0100
-X-Gm-Features: Ac12FXyvdjPfrN4L2Hgk5dVubMk4o7GnaQ5Xk_Mfd_dD-y0plpjHVgB4QmAHYGo
-Message-ID: <CAJ9a7VjTYvFVz1fp2_hNkLrKBbBYkiHHyshgsVT98V8oB_bn8g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: Add Qualcomm extended CTI
-To: Jinlong Mao <quic_jinlmao@quicinc.com>
-Cc: Leo Yan <leo.yan@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Yingchao Deng <quic_yingdeng@quicinc.com>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Flatten usb controller nodes
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250728035812.2762957-1-krishna.kurapati@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250728035812.2762957-1-krishna.kurapati@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=LsaSymdc c=1 sm=1 tr=0 ts=68874931 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=GZkaEewYkbA08GeAVZkA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDA3MiBTYWx0ZWRfX9aT7hVwj53Ji
+ f16njXTkf3ly19KH7Svdj8hw5NEowUlpCx+jlWC0kZ5GtIn1HsOKpvQM9K7P5k+3HCs2dK6NC/Z
+ JezHMwmx6gp8EwjHDQ8/I5dgQ73vr0Qt7mAZHjZTF+koNMOXgGfZukL/Fdhqg0TLf+XhgidIwEv
+ 4bxwrsrdVK38Up+JHuQCyqxOIrWlnV3O6ddZGzeI7xsNOKxSGX09JZTKF6DZAb/rT68Zh1zcMDi
+ pl/BqQDH7oUUMF8jyfz/y8Eq5QbiDQximpJqpjbJC5x/JiJQzLGEjGGY6f47W9nZ1PY4Fcrk/z5
+ Cw8urQrIAkvfqfI4ljNao4z/Gad6oh8AaupdSUBO94EaTejzDeGpJzA+HdVxIaA0o0kE66AHBCb
+ /wTMUx4mZ70zwqfvJHKRF6ALuIejFLpE4Dibm5DDfMuT0UAlj1MZBK47pt3tVpEs2b4O5SWZ
+X-Proofpoint-ORIG-GUID: hxChs3UQqEdHzD567RIBnqY6Plh3bfmj
+X-Proofpoint-GUID: hxChs3UQqEdHzD567RIBnqY6Plh3bfmj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_03,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=598 spamscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 mlxscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507280072
 
-Hi,
+On 7/28/25 5:58 AM, Krishna Kurapati wrote:
+> Flatten usb controller nodes and update to using latest bindings
+> and flattened driver approach.
+> 
+> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> ---
 
-On Wed, 23 Jul 2025 at 03:58, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
->
->
->
-> On 7/22/2025 10:56 PM, Mike Leach wrote:
-> > On Tue, 22 Jul 2025 at 15:07, Leo Yan <leo.yan@arm.com> wrote:
-> >>
-> >> On Tue, Jul 22, 2025 at 01:00:18PM +0100, Mike Leach wrote:
-> >>
-> >> [...]
-> >>
-> >>> For a change of this magnitude to a CS component, that the ID
-> >>> registers will also have to change. This is a requirement of the
-> >>> Visible Component Architecture in the CoreSight specification.
-> >>> External tools cannot see the device tree.
-> >>>
-> >>> This is effectively no longer an ARM designed component, so the
-> >>> CoreSight specification requires that the DEVARCH register change to
-> >>> show qualcomm as the designer, and the architecture value change to
-> >>> represent this component.
-> >>> DEVID should be used to allow the driver to pick up parameters such as
-> >>> number of triggers as per the existing CTI component.
-> >>>
-> >>> If this component is Coresight compliant then the driver can use the
-> >>> ID registers to configure to the extended trigger architecture.
-> >>>
-> >>> With complete remapping of most of the registers, and the dropping of
-> >>> claim tag compatibility - which appears to be a breach of the
-> >>> CoreSight specification - it may be better to have a completely
-> >>> separate driver for this component.
-> >>
-> >> Good point. I'd like to confirm with the Qualcomm team: apart from the
-> >> differences in register offsets and claim bits, does this CTI module
-> >> have exactly the same bit layout and usage as CTI standard
-> >> implementation?
-> >>
-> >> If yes, then from a maintenance perspective, we probably don't want to
-> >> have two CTI drivers with identical register settings. It seems plausible
-> >> to encapsulate register access and claim logic into several functions.
-> >>
-> >>    void cti_reg_writel(u32 val, struct cti_drvdata *drvdata, bool relax);
-> >>    u32 cti_reg_readl(struct cti_drvdata *drvdata, bool relax);
-> >>    int cti_claim_device(struct cti_drvdata *drvdata);
-> >>    int cti_disclaim_device(struct cti_drvdata *drvdata, bool unlocked);
-> >>
-> >> Thanks,
-> >> Leo
-> >
-> > The CTI supports 128 triggers  - which means many more registers to
-> > enable / connect etc.
-> > I need to study the changes to determine if there are functional
-> > differences too.
-> >
-> > It might be feasible to divide the code into a common file and a pair
-> > of variants so some is reused.
-> >
-> > Mike
-> Thanks Mike & Leo & Suzuki.
->
-> There is no register to show the version ID to distinguish between ARM
-> CTI and QCOM extended CTI.I will double confirm with internal HW team.
->
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # FP5
 
-Can you clarify here please.
-The CID0-3, PID0-7, DEVARCH and DEVTYPE registers are part of the
-CoreSight specification for component identification.
-Can you confirm they are present on your component and the values they have.
-
-If they are present then the CoreSight specification requires that
-they be different than the standard ARM CTI.
-
-Regards
-
-Mike
-
-> For extended CTI, only trigger number changes and claim logic. Other
-> functions are the same as ARM CTI(bit layout of the register and usage)
->
-> Thanks
-> Jinlong Mao>
->
->
-
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Konrad
 
