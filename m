@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-66936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ABA4B1435A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 22:35:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F28FB1435D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 22:35:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34CE916774F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 20:35:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 762DC167D6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 20:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B56D27BF85;
-	Mon, 28 Jul 2025 20:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DBE027E061;
+	Mon, 28 Jul 2025 20:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FA1Q0dNl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zn/Jihe6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CC727A445
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCEF27AC5A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753734867; cv=none; b=m0FhrNyXY3Jva8vmYaT9PDDImFqeSyyyyNGneaR2D+acJ5mq6UL6z0CKMjVepfVw7n/pcAhc397jMV660DXeijJCo+gGeaPlfYdLHHthPgsqNSXqgfvCYwyo59mHQyY5m4/SdbiqXrRRKB2IMyacZl73PZVgze+Vxm4JB6fozr8=
+	t=1753734868; cv=none; b=DsPwJv/+ac91/6ziyiT/icGRE9pK9j7axypw6k/Fhsf40ydh3erZf7tCnu9lIOYbXG74rjJXZTe3Ivz3oT29vzsUtnO3nJ60cXYvuhkCmeEH+cSPKAEJs3cD7OD2RlUJXuMoS1tWnetqMh7uocfkSPn/Kv0pvx0yH5XSe9cQj0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753734867; c=relaxed/simple;
-	bh=YAIH+E/3LvpO5GlPE0CQ+tsFKSmMasbpXzwo031Mlqk=;
+	s=arc-20240116; t=1753734868; c=relaxed/simple;
+	bh=8V6l3AP57/Q2ToIGiQ4XYsiXilViuzjLKRtk6DrANT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWRKur2eG3tCBb2gLxi8NZoRQp2KaP1tHosqKfNMXxtbv8m7G+g91QcU52Q36mRIKX9x8SDJPjFrkZ4rr4GhTiLb1TGOK4FBNNN3ry+nS4XcchrEuq45QNtnVCaVjyny48jvpWzbOdzE6q3bksB1x9hMPekqriHOWxjNbCPyfg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FA1Q0dNl; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=oQNkbxJO+EOozgfKtGGc/IR9oshA1Tolm4n9rcfOc1VeMjr/8yEMqdw5iYLLMqcgKw7Y+eyrgALOzBmzoGdDv2XteeCl+8F2KzliqTC14Rj3Jj4gl2tba5PCw6sXeM6E91cTAvmUgeAhi0wK3v/y5GUtuFZHA5HsOQmR628/TYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zn/Jihe6; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SAlOMu018954
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:25 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SAlPAB031269
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=FblfID0Tg34
-	q4efy9/6mUQC/8o/8akfX96cV9gNqkhk=; b=FA1Q0dNl4ZOlo74+lWU/K+j9SLn
-	jsjEAa/cqprycRJPxnNmUbP5+DGx9b1x6qkxk6DFI0ULhCn6nc/j4F221+n3TXwm
-	8QpimZafMakw53DB4k06w5XRnYvA+yCWwIChEjfaSLqdEOlL/qeng7N07gGd2WdS
-	MNN1lA1AyXOLDh7wpF8jV9i738Ne0KRcHfkpKw9UHamcwW4VKl6i4UyErcs7cf/i
-	5+KGZ7Al25qVvuMxB1CdIwDfzvlpvnD6zqHCCTenOlzApGHcNe281LYxi/AxQRDn
-	4X2GPBzX5eKKCfxUfbuEApBfol8bbrDDf0K7klO0+qc+RSyBYWfdHJUsmYw==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484q85wu2s-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=I8t+2xKA9TH
+	HZTmJzGvWTh6YVgWzaeQG0zONpcACs58=; b=Zn/Jihe6d+bzp6z/IcaME1UWJC5
+	GillVYY1LDFxQ1lU6yCMRy6zJ9eDOUpeeLk2BDSfXrjIDPQdU1oqHMxhDHUsX0nI
+	fZCvXDNCn/8+y3k9RddhKe94kfDoKawqT6p4oGEaMFFBNWFsM6EimnAHT4AsWrMB
+	dXERVW8mi4U+Fe3AXQ6Vtouqcps7GtB68ykAow32KhqSJkp//9DAi0pnIbWeMyXV
+	LuVpFO5gOaYg2vAnHqZpHBPj5eh1ubi0qfopGR/VIPND7xH/AgUkfWI/FyW7tP5j
+	g3LLkwIe9X4zDktg0zi+FtTf7taMjldos6ut6xJp+zya5amVH5tQ33zOzkw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 485v1xb5ks-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:24 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-75494e5417bso298344b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 13:34:24 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 20:34:26 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3138e64b3f1so7691679a91.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 13:34:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753734864; x=1754339664;
+        d=1e100.net; s=20230601; t=1753734865; x=1754339665;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FblfID0Tg34q4efy9/6mUQC/8o/8akfX96cV9gNqkhk=;
-        b=kOv5UZwpVoenlV45OI8QFRIhW+/01N/ZM6IhLD6oL81/eeNMwmnVLrBlVe9Wt3Cr6v
-         UCtj6Jr9bUIunta6m/x9Zv6H0zomS+d5HcY1wTYaLUktrcgmj/1YjZRkegx34WxA+Ady
-         4HRepCgSqbsajTNr6tfa0Aym3BRo7mj69NP0A3hjlrd/Xo++a8gA4ITAhBKFF7ut1AR/
-         oCp5iDGb/a1KUXPcfz9l6iXfDGSI9vKXxHHjmbsh4IrRbZrfVLVYmLYyqZ1NIjT8+loi
-         IWq/p5DOLBe5bB2Hqm3fBzcW1xQKTq1g4e1u7EGr6wcDcro6254JMhTWPASunchIfY41
-         5nPA==
-X-Gm-Message-State: AOJu0YxbSVVYOSMzSNTQCFZwgDhsqEv3VUadJYtxT9kDuKQW46qiQ1Yz
-	gmQ389WUYWdMZrAoBExpA1RzB1dDIvE64kHNlsvmDn7+iJRbdMcBBXiX/YGNf8Hfx0ShXR9jeKA
-	VCPwULY6MCCI9BM+uU9OtkfI6d5INrLWyOxtVO0ZT7HTG+2CrdaH0ms20Vx09uV1V2KXz
-X-Gm-Gg: ASbGnct7OHybJwMJU8FlDg4PybxXpk1vBY19nzKWw359zn060wnBN/0pYeisPMiz11z
-	PKEOrmO9ILN+OI1ltWnBQMJE2Gt4wUQ+xa9EZR9XRDPMfJL858G8Qgm2c2pc8gOf+rq80CGJSvq
-	uLWYTMME18/mXPKHRgC3PBvY1gJ11K7az7853eoRDDA9OTRm6oas8bFm1dzHXn7omNIVoFc4M23
-	MpWBVnu7QhU4pEmD/oanwvOjJPRQ7QSM6aWk6CliTW0GR/FsY4nY6q79B+URYKoquuLXUvbuNn0
-	8yMY/6RriuurIXuzUr1akP5fK6/oATx99XQ2ChDYjCfhY6Gh0Lo=
-X-Received: by 2002:a05:6a00:3a09:b0:742:b31e:e9c1 with SMTP id d2e1a72fcca58-76967c8f960mr1024040b3a.11.1753734863986;
-        Mon, 28 Jul 2025 13:34:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6V857zu2K5JXW/da9VThTUPhbu/3BvEVZayXh4F3IPipEL9YGCsaSIVW60VyqWLz3F3Hnsw==
-X-Received: by 2002:a05:6a00:3a09:b0:742:b31e:e9c1 with SMTP id d2e1a72fcca58-76967c8f960mr1024004b3a.11.1753734863448;
-        Mon, 28 Jul 2025 13:34:23 -0700 (PDT)
+        bh=I8t+2xKA9THHZTmJzGvWTh6YVgWzaeQG0zONpcACs58=;
+        b=ZYvOKTtQbeQCxWINDOQfLaSho2U9szYgKSwG0Hkts68DknyH/QseiQrIzs2LcZnX5b
+         PtiUH1skr4UwcdqHcMr+Uys18v9X65Klw1VN/yQPFiznZZldkfnrDlvwuvZ66SNDslpM
+         LUe0qBn9vBTjZAmv1sk4gSIRveDRlW7GzZFLnbbyEyuh8ypgx4WTdVz7D1XSIw+8/Zs8
+         ctzNhsy8LicFObPxzXFsD6KQmSXcDecvrJGBOEhF4ttM3tMElOCG5PGC8yzVkekHrkaG
+         MYAn+vy+2L4+4Um+Zn4I6hEPiEurUW00FjK/VERZHU9nulodtYk9kci/VR4AZBPKl6yE
+         LwvA==
+X-Gm-Message-State: AOJu0YxJk13JDjrh1TkHCNqJYhkPlvD9V9LhPtFC8Y6eguzcgK86bNxD
+	hTJPLSwa/1408TlsVV+RMCr67x5pZAys9LwVBHiM+VN2JGM25JaemE80PyM+ZjjSjPKP/177qEL
+	gJSzmkuhhV4Sr6JC3/HtjXg6d2/bFnC5Fqn1r5BZP28tI/OcC6cOlVbkOuPLtwel5lh0l
+X-Gm-Gg: ASbGnctebAVxs9ZgXUbZY4BoZk+dMvtl2oUAhVfk00D9XLNJRTQE9WbhVzb1MZ2FLn0
+	Qvw0HXNvyc0kmgsZtj48y/XgqPB7o08mWNd8MJJkR+brkgda3rTcqvs4Gz8ymyRcEC5eD8EViWb
+	J+5UjJ8QpHlH5s9K6XStxjXQaiZ5T12nlj7x99F1wFDG4SYY4zklYPgBqrkDGe0FiDeWmxI+osE
+	7xKvp8SONtDMMsmkBJxQv1Tr8q19K6e2Ew0DxYhwq0m4B5C4gJiIK8UfP1H5ozwkXtxtG2RkF5I
+	f0okf08OM0gHUA046RRiVRl/rZzSI0/Knn5H21G7mqc83u66xPA=
+X-Received: by 2002:a17:90b:2409:b0:31e:d2a5:c08d with SMTP id 98e67ed59e1d1-31ed2a5c5a1mr6681374a91.33.1753734865324;
+        Mon, 28 Jul 2025 13:34:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdlbZQJgZiV/klf4QMEE5MCR2s1YEQimkMRUs0qJyT+RaCeltmukYVdgn4Uepp3jzkO6MZlA==
+X-Received: by 2002:a17:90b:2409:b0:31e:d2a5:c08d with SMTP id 98e67ed59e1d1-31ed2a5c5a1mr6681351a91.33.1753734864911;
+        Mon, 28 Jul 2025 13:34:24 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-767bc848735sm2919670b3a.28.2025.07.28.13.34.22
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31f00e778f4sm2480959a91.23.2025.07.28.13.34.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 13:34:23 -0700 (PDT)
+        Mon, 28 Jul 2025 13:34:24 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -90,9 +90,9 @@ Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 4/7] drm/msm: Constify snapshot tables
-Date: Mon, 28 Jul 2025 13:34:04 -0700
-Message-ID: <20250728203412.22573-5-robin.clark@oss.qualcomm.com>
+Subject: [PATCH 5/7] drm/msm: Fix a7xx debugbus read
+Date: Mon, 28 Jul 2025 13:34:05 -0700
+Message-ID: <20250728203412.22573-6-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250728203412.22573-1-robin.clark@oss.qualcomm.com>
 References: <20250728203412.22573-1-robin.clark@oss.qualcomm.com>
@@ -103,181 +103,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDE0OSBTYWx0ZWRfXx0D3j0y435cr
- wy+gs9N497oUUAcbQsuOAvWqGOy+lb75nU5rPL28hboTTuBRrJcCVIV8yGsFygDkuefjmviLlNa
- 2oLwj8K7Ya/KM74LvH/jBtEBRZJ33VVxxiJK1i2JrjSgJlG2P2NUMPDcUzLOQOl2jnzvhBLPGhO
- cjE6c6uMbcJZIwHXKhXYsDvvP6pSxlPoL7JXob8lLqaUf10v5KUWkBDwjxEdQrAnlZ1wbXagGip
- XAlCETtGJziE3mXIL2GW5PgUA8dgiObx/S3jMPXAACH62mqcUhUMvVg7Z2aHAslTiVtSQzeD3F/
- G4fmV/wR4DzcJyplxhzvJNzjiMDIDmF7q0zjKVJSHB48vbT6KCgN6vxfUmnG1UyUbNGvA8ORllh
- iowIwS/brdsex9NFqGUzSglrvyicW+CXXoK58F2WCvCIjZXGDH8+FwUSYioaxTOVnEtza+vO
-X-Authority-Analysis: v=2.4 cv=TqLmhCXh c=1 sm=1 tr=0 ts=6887ded0 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10
- a=EUspDBNiAAAA:8 a=3YnKlkqyfxy5QV46dWoA:9 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-ORIG-GUID: 1G-jFJ06lM1OMBmnfn4_ITfM1N3p9Nto
-X-Proofpoint-GUID: 1G-jFJ06lM1OMBmnfn4_ITfM1N3p9Nto
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDE1MSBTYWx0ZWRfX5PTuDcQtYk/6
+ qe3/m6XFyWv/GHm90K51JJBxxJei8gp3o79RJl/gc1+KB2RRSVhzIXt3LCgb15kgxro0QoChx3S
+ P1SVax9O0gf4UB4/a10cHwV4NWADcV0yfWfJIwLJxOH8JSoQU6rNLJuxb3POSLUzMYKkMFVFdbT
+ RK1X/GJAQYQu1TWNi2kiGjMbCPyMNe9uoDgupQMor4AfdU1EkvIDNI5l4qhNMh32/xRXFG6ev+C
+ yD4TPW0sp9ir2W8ju7xXm5FgrQfp2ZFDvQur9fUg9Sl2XH9WZ57F7AC1iSZvp19+pBmr5tKdu26
+ niZKFS59byZOLpSxIz5Fk+F7gLbQQOxIwMafPfce+UT2jn2ho2H73nkaCVyJBQAZD9XTkuxR50R
+ gkq+sSABw/w4DE4jDphEApN2TkRd+za3CBzodwmUUYs14LDrPlR7YXkDSBxXw1H1E71heD9j
+X-Authority-Analysis: v=2.4 cv=JKw7s9Kb c=1 sm=1 tr=0 ts=6887ded2 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=E4Rgrv4FocJ6r0LxV30A:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: tFmxPdrOoo1RiRLurx7WnuJc2JHf85HR
+X-Proofpoint-GUID: tFmxPdrOoo1RiRLurx7WnuJc2JHf85HR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
- malwarescore=0 adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507280149
+ impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507280151
 
-A bit of divergence from the downstream driver from which these headers
-were imported.  But no need for these tables not to be const.
+The bitfield positions changed in a7xx.
 
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c           |  2 +-
- drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h |  8 ++++----
- drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h |  8 ++++----
- drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h | 10 +++++-----
- 4 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index b253ef38eebf..7ba7113f33cd 100644
+index 7ba7113f33cd..33df12898902 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -11,7 +11,7 @@
- static const unsigned int *gen7_0_0_external_core_regs[] __always_unused;
- static const unsigned int *gen7_2_0_external_core_regs[] __always_unused;
- static const unsigned int *gen7_9_0_external_core_regs[] __always_unused;
--static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] __always_unused;
-+static const struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] __always_unused;
- static const u32 gen7_9_0_cx_debugbus_blocks[] __always_unused;
+@@ -174,8 +174,15 @@ static int a6xx_crashdumper_run(struct msm_gpu *gpu,
+ static int debugbus_read(struct msm_gpu *gpu, u32 block, u32 offset,
+ 		u32 *data)
+ {
+-	u32 reg = A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_INDEX(offset) |
+-		A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_BLK_SEL(block);
++	u32 reg;
++
++	if (to_adreno_gpu(gpu)->info->family >= ADRENO_7XX_GEN1) {
++		reg = FIELD_PREP(GENMASK(7, 0), offset) |
++			FIELD_PREP(GENMASK(24, 16), block);
++	} else {
++		reg = A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_INDEX(offset) |
++			A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_BLK_SEL(block);
++	}
  
- #include "adreno_gen7_0_0_snapshot.h"
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h b/drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h
-index cb66ece6606b..afcc7498983f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h
-@@ -81,7 +81,7 @@ static const u32 gen7_0_0_debugbus_blocks[] = {
- 	A7XX_DBGBUS_USPTP_7,
- };
- 
--static struct gen7_shader_block gen7_0_0_shader_blocks[] = {
-+static const struct gen7_shader_block gen7_0_0_shader_blocks[] = {
- 	{A7XX_TP0_TMO_DATA,                 0x200, 4, 2, A7XX_PIPE_BR, A7XX_USPTP},
- 	{A7XX_TP0_SMO_DATA,                  0x80, 4, 2, A7XX_PIPE_BR, A7XX_USPTP},
- 	{A7XX_TP0_MIPMAP_BASE_DATA,         0x3c0, 4, 2, A7XX_PIPE_BR, A7XX_USPTP},
-@@ -695,7 +695,7 @@ static const struct gen7_sel_reg gen7_0_0_rb_rbp_sel = {
- 	.val = 0x9,
- };
- 
--static struct gen7_cluster_registers gen7_0_0_clusters[] = {
-+static const struct gen7_cluster_registers gen7_0_0_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BR, STATE_NON_CONTEXT,
- 		gen7_0_0_noncontext_pipe_br_registers, },
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BV, STATE_NON_CONTEXT,
-@@ -764,7 +764,7 @@ static struct gen7_cluster_registers gen7_0_0_clusters[] = {
- 		gen7_0_0_vpc_cluster_vpc_ps_pipe_bv_registers, },
- };
- 
--static struct gen7_sptp_cluster_registers gen7_0_0_sptp_clusters[] = {
-+static const struct gen7_sptp_cluster_registers gen7_0_0_sptp_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_HLSQ_STATE,
- 		gen7_0_0_sp_noncontext_pipe_br_hlsq_state_registers, 0xae00 },
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_SP_TOP,
-@@ -914,7 +914,7 @@ static const u32 gen7_0_0_dpm_registers[] = {
- };
- static_assert(IS_ALIGNED(sizeof(gen7_0_0_dpm_registers), 8));
- 
--static struct gen7_reg_list gen7_0_0_reg_list[] = {
-+static const struct gen7_reg_list gen7_0_0_reg_list[] = {
- 	{ gen7_0_0_gpu_registers, NULL },
- 	{ gen7_0_0_cx_misc_registers, NULL },
- 	{ gen7_0_0_dpm_registers, NULL },
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h b/drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h
-index 6f8ad50f32ce..6569f12bf12f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h
-@@ -95,7 +95,7 @@ static const u32 gen7_2_0_debugbus_blocks[] = {
- 	A7XX_DBGBUS_CCHE_2,
- };
- 
--static struct gen7_shader_block gen7_2_0_shader_blocks[] = {
-+static const struct gen7_shader_block gen7_2_0_shader_blocks[] = {
- 	{A7XX_TP0_TMO_DATA,                 0x200, 6, 2, A7XX_PIPE_BR, A7XX_USPTP},
- 	{A7XX_TP0_SMO_DATA,                  0x80, 6, 2, A7XX_PIPE_BR, A7XX_USPTP},
- 	{A7XX_TP0_MIPMAP_BASE_DATA,         0x3c0, 6, 2, A7XX_PIPE_BR, A7XX_USPTP},
-@@ -489,7 +489,7 @@ static const struct gen7_sel_reg gen7_2_0_rb_rbp_sel = {
- 	.val = 0x9,
- };
- 
--static struct gen7_cluster_registers gen7_2_0_clusters[] = {
-+static const struct gen7_cluster_registers gen7_2_0_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BR, STATE_NON_CONTEXT,
- 		gen7_2_0_noncontext_pipe_br_registers, },
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BV, STATE_NON_CONTEXT,
-@@ -558,7 +558,7 @@ static struct gen7_cluster_registers gen7_2_0_clusters[] = {
- 		gen7_0_0_vpc_cluster_vpc_ps_pipe_bv_registers, },
- };
- 
--static struct gen7_sptp_cluster_registers gen7_2_0_sptp_clusters[] = {
-+static const struct gen7_sptp_cluster_registers gen7_2_0_sptp_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_HLSQ_STATE,
- 		gen7_0_0_sp_noncontext_pipe_br_hlsq_state_registers, 0xae00 },
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_SP_TOP,
-@@ -737,7 +737,7 @@ static const u32 gen7_2_0_dpm_registers[] = {
- };
- static_assert(IS_ALIGNED(sizeof(gen7_2_0_dpm_registers), 8));
- 
--static struct gen7_reg_list gen7_2_0_reg_list[] = {
-+static const struct gen7_reg_list gen7_2_0_reg_list[] = {
- 	{ gen7_2_0_gpu_registers, NULL },
- 	{ gen7_2_0_cx_misc_registers, NULL },
- 	{ gen7_2_0_dpm_registers, NULL },
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h b/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-index fc62820c0a9d..3785b644382e 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-@@ -117,7 +117,7 @@ static const u32 gen7_9_0_cx_debugbus_blocks[] = {
- 	A7XX_DBGBUS_GBIF_CX,
- };
- 
--static struct gen7_shader_block gen7_9_0_shader_blocks[] = {
-+static const struct gen7_shader_block gen7_9_0_shader_blocks[] = {
- 	{ A7XX_TP0_TMO_DATA, 0x0200, 6, 2, A7XX_PIPE_BR, A7XX_USPTP },
- 	{ A7XX_TP0_SMO_DATA, 0x0080, 6, 2, A7XX_PIPE_BR, A7XX_USPTP },
- 	{ A7XX_TP0_MIPMAP_BASE_DATA, 0x03C0, 6, 2, A7XX_PIPE_BR, A7XX_USPTP },
-@@ -1116,7 +1116,7 @@ static const struct gen7_sel_reg gen7_9_0_rb_rbp_sel = {
- 	.val = 0x9,
- };
- 
--static struct gen7_cluster_registers gen7_9_0_clusters[] = {
-+static const struct gen7_cluster_registers gen7_9_0_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BR, STATE_NON_CONTEXT,
- 		gen7_9_0_non_context_pipe_br_registers,  },
- 	{ A7XX_CLUSTER_NONE, A7XX_PIPE_BV, STATE_NON_CONTEXT,
-@@ -1185,7 +1185,7 @@ static struct gen7_cluster_registers gen7_9_0_clusters[] = {
- 		gen7_9_0_vpc_pipe_bv_cluster_vpc_ps_registers,  },
- };
- 
--static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
-+static const struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_HLSQ_STATE,
- 		gen7_9_0_non_context_sp_pipe_br_hlsq_state_registers, 0xae00},
- 	{ A7XX_CLUSTER_NONE, A7XX_SP_NCTX_REG, A7XX_PIPE_BR, 0, A7XX_SP_TOP,
-@@ -1294,7 +1294,7 @@ static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
- 		gen7_9_0_tpl1_pipe_br_cluster_sp_ps_usptp_registers, 0xb000},
- };
- 
--static struct a6xx_indexed_registers gen7_9_0_cp_indexed_reg_list[] = {
-+static const struct a6xx_indexed_registers gen7_9_0_cp_indexed_reg_list[] = {
- 	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
- 		REG_A6XX_CP_SQE_STAT_DATA, 0x00040},
- 	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
-@@ -1337,7 +1337,7 @@ static struct a6xx_indexed_registers gen7_9_0_cp_indexed_reg_list[] = {
- 		REG_A7XX_CP_AQE_STAT_DATA_1, 0x00040},
- };
- 
--static struct gen7_reg_list gen7_9_0_reg_list[] = {
-+static const struct gen7_reg_list gen7_9_0_reg_list[] = {
- 	{ gen7_9_0_gpu_registers, NULL},
- 	{ gen7_9_0_cx_misc_registers, NULL},
- 	{ gen7_9_0_cx_dbgc_registers, NULL},
+ 	gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_A, reg);
+ 	gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_B, reg);
 -- 
 2.50.1
 
