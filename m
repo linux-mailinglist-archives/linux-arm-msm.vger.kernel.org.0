@@ -1,196 +1,390 @@
-Return-Path: <linux-arm-msm+bounces-66866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD1D3B13C79
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:09:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71016B13C62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 16:06:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0173540A8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 14:02:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3C03D7A7AE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 14:04:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A79BB283FE5;
-	Mon, 28 Jul 2025 13:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2549926F478;
+	Mon, 28 Jul 2025 14:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KiNI+HKV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k/YQACin"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1866283FC9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 13:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB7C273D69
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 14:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753710965; cv=none; b=l2HWxlz7KJCP6ztFDrDDASL/3RDfNduIjyvRw0iVtgCaUgEZ+KqMGJzBvjiKaOCPpdCPIu7o/Ta6rUCFY3AZp0wd5wt6V8DzCsgc5+dzAd+Qp2DXr1c3nBDoP5iP80qs137cAL7fNuzp5R38ihTS/6VW4EMQPb2RRIFHsTrwjf4=
+	t=1753711338; cv=none; b=TqKVKiss4TlGjIsenOUqXFaQQ+mCn/eHWof5pLh2VowLBEShE/EB0hjs9sGCIRS1RFwrBDZ7XvYN3Y2RpsUfluaxxoAE9Ofa5wUF6204pnOv7JrfI7+ZAXJPXehANlQ1SE1gKu80rpMBnsuR17HsyCqAq66hiS6WmRIg1CCJ4uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753710965; c=relaxed/simple;
-	bh=ypSzciL2jkJ+Mog3EIhQdI7vmqYVGIRiOmTYgtOu+Fk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=SX1hPY+bq1X6YdC79HYQnbhjidNjxyQOqkPDWh3/hM/BsGM3HJ5B4AKPWHBE5XefkApBOqKLMg13JW0xhn2SHlKQZIidxG/TcBy6IfzLDrGZNGOnkRhTpRZLJd7i5fyDZGb6GAoIn6dcYULw/CJV6xzoiCZw73LL/Uvhrm+IE9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KiNI+HKV; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1753711338; c=relaxed/simple;
+	bh=KO8i/mUp/L1BpdU8Do+Wpmb2CPG3Q3jG+Kb87u47rKc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s/LLPB2iwcH57MVKLYgCa2BWZ79e3skQuXs2fXMGnpLFxmw8yUT+vrb0gF99ENjrdB6A6Ifaqg/BOekWgjXJ23/62IOzmBQ5cnhXnZUZucCGDG1PTE4reu+DA4pr8vvtGVms2h1oSgoHFE0UuEounT+n2Ds4PEoyWzTPQv1Mzd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k/YQACin; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45629702e52so18735545e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 06:56:03 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4561ed868b5so29160395e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 07:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753710962; x=1754315762; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EV0p8ZNhxkQtgdsERR4qTiYCDN9W/4GIw/qe1A8PF14=;
-        b=KiNI+HKVEPezd0gTl+RaSybfvWwFpJ/GZrmflnNS4MeQ2FZIm4BNz4JoseAe0EwrmA
-         nibGuBGlrl8Tlsm8kxkCElU6+km7FSlRaTvgf0DG4AY2KlPOtqFrHo7nEYwWGSxtgGYl
-         LkuIjBWp3qIQmBFAYYL2irytbZfzYDxMyPtupGsEkZmyMQM4PJO9pN5bN7jl8WGlZ6yq
-         G34CnoFX1XnYYPR1d4f6hQkdguqlRrwslcrGB4g/uO2iMZtb8/vE6YxKNQcUrF88lyBS
-         QUcn1HZvPC5ixo9fLG5nuK63OgKQVGeAHDvK2evq0SeXda1OCe289PWMurSd/pYv1Z3v
-         Fi1Q==
+        d=linaro.org; s=google; t=1753711334; x=1754316134; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MDgnlrhOp316LKm8qgqTwB9fvvKHrbdRGlvBul5Nxhw=;
+        b=k/YQACiniq1vVuKcRKW0uqjqwoB5EdvCDprEWN2EFVptvsQZd7X/qstseBpaTjhBtk
+         32jcRoFzCM1zxkjRaacKawr/ZewVgWWveHPocX5DHBzTVbzgUOfIQE9D5pdBUo8fVwZg
+         fmvbpSGjbcjh0Dert4lCzCAIWgZlet9uvBCStDUHrEE1/PjbV0pDzsUVkaGYbwlfb7mT
+         CNjvo45T3qnA3QB/4s01WwUE4WpqMoTopuxs0wY+HuKAaxF5daB+ChyQR9Ypq1I58FOB
+         DwuACK/D89v+75CqRCkV86ZHQZZKPXg+mEIfBfqDOk4gbLW0CuM8Qqcr+wJlcj776zV6
+         LE1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753710962; x=1754315762;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EV0p8ZNhxkQtgdsERR4qTiYCDN9W/4GIw/qe1A8PF14=;
-        b=VZ2AR6GhtfTk9/JM/qjl3drYt6HiZvdn8az4xSfwKEkNemQ7m0aTrhc71sNiWrsVpe
-         w8Pg6KaTY2fkOi8TxYjEFHr2bYV2t5MZZOVobbRn+ctaptDbynelMV5DjjaRQiTNCpE3
-         7hVuzMWyINF7i3kcOIB94F602fEov61lNbuHO70oNGwT/fJvd+lU63oM+fsgzs4e5NE/
-         r7C8eMIiIvOBoC7B0oeEs79FCGD4+0urIaxhvnPXvvl3rMWyBQevkIFiVOssLh9qJeNi
-         Bn0/w4Sa7Ho0pTrjiKydq4c5bmfy1FLzBEwzCydqgai5F2Kth2EKU+fWYzd3RWZFL5vc
-         wYPw==
-X-Gm-Message-State: AOJu0YzCkEoYyMbBQDxKu7GdzBH5Vc620vWATEpxsXfRWe09aUDbuXkx
-	MQD8NbSxPC4Wzn/SRLozjei0XsG50JfrOjRZd1NmKmvqvgrQxfJOp36DkEFWLP1EUjd3iu/1yy1
-	dhXtV
-X-Gm-Gg: ASbGncsX0CSpGpmKCHs6apFNTYhQQAyJ1CtDk1QbPLkO6pce62LmtHbp8gvAMygKRuw
-	gr95uHOOjBTUA2pFEVCBqdm8Nyk/FgaeLRpTt99dkwKI9cM/Jr4tqLB3ttcRBzQ1227V3Gw0OMl
-	hCXbVRkbS0hfhC8pkQAM91iQJgP1Eu4aCDrYbHEIbmphunRlsDIjhjRsGPsneAs9H1Z+CJ9djna
-	nvVS7iw3x8OqAmwXpHNRugHaRbaWBRmms6wWHjrPk9P02zhVn6znoKCJyb4uET+I4BwYKs30YKn
-	ghp0zqG9bxpkLspGCZOCgH08ZLqq+jREzDSSmq8B/BI0ndGGIK37+bZdc22Kv2Tr+JZnnTAyt3J
-	w+JwKG+malGWot8OyijnQXV3WYaI=
-X-Google-Smtp-Source: AGHT+IHSRNjCsvA+a17XVvG0X0bD2L2S+7tCdoJMe7B6ypVA2l90htjyJerFVwbt0qj0fz/EWvewhA==
-X-Received: by 2002:a05:600c:35c6:b0:456:1d06:f38b with SMTP id 5b1f17b1804b1-4587d335362mr66236365e9.8.1753710961839;
-        Mon, 28 Jul 2025 06:56:01 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:ef61:42d3:92bc:95e1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458705bcbe8sm162665305e9.17.2025.07.28.06.56.01
+        d=1e100.net; s=20230601; t=1753711334; x=1754316134;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MDgnlrhOp316LKm8qgqTwB9fvvKHrbdRGlvBul5Nxhw=;
+        b=gA9uO/pUnV3W79YYyW8kTH2noRPPRBWgdSZosm+yZDycVpx2ALDV/4KDoMifSXs2by
+         rc+roR3DDvMS8Qf4w85QZRl7/OZuX1EQRIdhr2u8Il6MJH6slYGZJCSoAfX1YH72fTDk
+         5oWKVmCmnF1RysaU5RhpicyY2vG9vZBSHESOAzEb3A70RM3R1/UACG2TS38/dmaICchm
+         FQ5ONM6kAVF5xpOBDZngU8FDBZofxJQ6r7MWorYVLpWrBLKPz6fxN9yhJqZpkxiV3IL5
+         6ujHiifuC+nIRVEmpLzS/YrPmz+KGFxLDFPrQrf1NbvaUeD5Cicf4CC19Edl8Ki08RGM
+         WsjA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfFyeGvPcIXevk71rjiRDLJahcFCYp694UimuN9o7Va5G946kemfwrYrR4mc4tcWjddFIS+gUEY85pEMn9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxr3qj2yHpRFZAu34d3qlDIfZjtW4xWsg2po5kZkUnjcyXZaFtU
+	Pq/T8j/ow8Sm/PP1Pt71DhY2Ed6lx/TIdivXQ6i7NbX1pS816vKlntk/PZN4UD4+XJ4=
+X-Gm-Gg: ASbGncuh2J16KVNKXbwIxcbd2zU/DqvUROPWwEQs3UtjR4mYF0dFogv6WT9zLbatMrr
+	cghO3znaiKHQTe2S/fWItVhrR8a8BOSMYQBEOhuHLTO1Us3zVq3MRIuroWZ3DVUSljCxNbQg0iE
+	9tWPY2AXnjB75vu7/T99VftNcAwOuN5mIdhcgiQcD5Sb9iW+kaHqogu8PT6BCMAUnKufpU74Lf8
+	eIbYAaYtgRQeWraYw5at9GnRMKY1fNTT6TzptMY8vzKFkcBdJjFXvX2wek7lgqiSdl22kPy1LbN
+	CuYDyomsZKzn9eNycEIljrCHOnK8A8q+JWUcGD+Cj11r5G5P7HO5C8eMz1hLfa6TpZhCM1t/zKv
+	UutRrciGNdfffTiA0fH/rDQafS0WafRJRSHzg55ay7anCVcKz4IEoHbLs2Nb3T7xhCDKNNXH4+A
+	==
+X-Google-Smtp-Source: AGHT+IEVjNzjQfUAHGkG5K1xgvtcGDceKpvleFX8cpLDujOgXcnJhaEFr7U+ftGk/7ClOLjACshFTA==
+X-Received: by 2002:a05:600c:45d1:b0:455:f187:6203 with SMTP id 5b1f17b1804b1-4587654f0camr89203815e9.27.1753711333913;
+        Mon, 28 Jul 2025 07:02:13 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778ebaca7sm9122241f8f.30.2025.07.28.07.02.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 06:56:01 -0700 (PDT)
+        Mon, 28 Jul 2025 07:02:13 -0700 (PDT)
+Message-ID: <07501287-647f-4bb8-9d6d-42bb37ea04cc@linaro.org>
+Date: Mon, 28 Jul 2025 15:02:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 28 Jul 2025 14:56:00 +0100
-Message-Id: <DBNQNHBU5D4Y.1YB8M6DTKR6E9@linaro.org>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add initial audio support for
- Hamoa-IOT-EVK
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: <leqi@qti.qualcomm.com>, "Konrad Dybcio" <konradybcio@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
-In-Reply-To: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/9] media: qcom: camss: Add support for CSID for
+ sa8775p
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250703171938.3606998-1-quic_vikramsa@quicinc.com>
+ <20250703171938.3606998-8-quic_vikramsa@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250703171938.3606998-8-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon Jul 28, 2025 at 8:16 AM BST, leqi via B4 Relay wrote:
-> From: leqi <leqi@qti.qualcomm.com>
->
-> This patch adds initial audio codec support for the Hamoa-IOT-EVK board,
-> including WCD9385 configuration, micbias voltage settings, GPIO reset,
-> and power supply bindings. It enables basic audio functionality for
-> further development. Basic test is good in Hamoa-IOT-EVK board.
->
-> Signed-off-by: leqi <leqi@qti.qualcomm.com>
+On 03/07/2025 18:19, Vikram Sharma wrote:
+> The CSID in sa8775p is version 690, This csid is different from
+> csid 780 w.r.t few bit-fields.
+> 
+> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 > ---
-> Changes in v2:
-> - Updated author email address to leqi@qti.qualcomm.com.
-> - Clarified that audio is validated with this change.
-> - Link to v1: https://lore.kernel.org/all/20250723-initial_audio_support_=
-for_qualcomm_hamoa_iot_evk_board-v1-1-816991701952@quicinc.com/
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 232 +++++++++++++++++++++++=
-++++++
->  1 file changed, 232 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot=
-/dts/qcom/hamoa-iot-evk.dts
-> index 843f39c9d59286a9303a545411b2518d7649a059..91618e22e86c46c698b3639f6=
-0bc19314705b391 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> @@ -124,6 +124,94 @@ pmic_glink_ss2_con_sbu_in: endpoint {
->  		};
->  	};
-> =20
-> +	sound {
-> +		compatible =3D "qcom,x1e80100-sndcard";
-> +		model =3D "X1E80100-EVK";
-> +		audio-routing =3D "WooferLeft IN", "WSA WSA_SPK1 OUT",
-> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
-> +				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
-> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+>   .../platform/qcom/camss/camss-csid-gen3.c     |  31 +++-
+>   drivers/media/platform/qcom/camss/camss.c     | 151 ++++++++++++++++++
+>   2 files changed, 175 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+> index 0941152ec301..f62084fb8287 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+> @@ -47,8 +47,12 @@
+>   #define CSID_CSI2_RX_IRQ_CLEAR		0xA4
+>   #define CSID_CSI2_RX_IRQ_SET		0xA8
+>   
+> +#define IS_CSID_690(csid)	(csid->camss->res->version ==\
+> +					CAMSS_8775P ? true : false)
 
-Could you please check/confirm that above routing path
-"WooferRight IN" -> "WSA2 WSA_SPK2 OUT" is correct?
+You don't need to make this into a bool.
 
-Left path get input from both WSA_SPK{1,2} while the right one only uses
-WSA_SPK2.
+version == CAMSS_8775P will do exactly the same logical thing.
 
+>   #define CSID_BUF_DONE_IRQ_STATUS	0x8C
+> -#define		BUF_DONE_IRQ_STATUS_RDI_OFFSET	(csid_is_lite(csid) ? 1 : 14)
+> +#define BUF_DONE_IRQ_STATUS_RDI_OFFSET  (csid_is_lite(csid) ?\
+> +						1 : (IS_CSID_690(csid) ?\
+> +						13 : 14))
+>   #define CSID_BUF_DONE_IRQ_MASK		0x90
+>   #define CSID_BUF_DONE_IRQ_CLEAR		0x94
+>   #define CSID_BUF_DONE_IRQ_SET		0x98
+> @@ -61,6 +65,7 @@
+>   
+>   #define CSID_CSI2_RX_CFG0		0x200
+>   #define		CSI2_RX_CFG0_NUM_ACTIVE_LANES	0
+> +#define		CSI2_RX_CFG0_VC_MODE		3
+>   #define		CSI2_RX_CFG0_DL0_INPUT_SEL	4
+>   #define		CSI2_RX_CFG0_PHY_NUM_SEL	20
+>   
+> @@ -68,7 +73,9 @@
+>   #define		CSI2_RX_CFG1_ECC_CORRECTION_EN	BIT(0)
+>   #define		CSI2_RX_CFG1_VC_MODE		BIT(2)
+>   
+> -#define CSID_RDI_CFG0(rdi)		(0x500 + 0x100 * (rdi))
+> +#define CSID_RDI_CFG0(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+> +					(0x300 + 0x100 * (rdi)) :\
+> +					(0x500 + 0x100 * (rdi)))
+>   #define		RDI_CFG0_TIMESTAMP_EN		BIT(6)
+>   #define		RDI_CFG0_TIMESTAMP_STB_SEL	BIT(8)
+>   #define		RDI_CFG0_DECODE_FORMAT		12
+> @@ -77,10 +84,14 @@
+>   #define		RDI_CFG0_DT_ID			27
+>   #define		RDI_CFG0_EN			BIT(31)
+>   
+> -#define CSID_RDI_CTRL(rdi)		(0x504 + 0x100 * (rdi))
+> +#define CSID_RDI_CTRL(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+> +					(0x304 + 0x100 * (rdi)) :\
+> +					(0x504 + 0x100 * (rdi)))
+>   #define		RDI_CTRL_START_CMD		BIT(0)
+>   
+> -#define CSID_RDI_CFG1(rdi)		(0x510 + 0x100 * (rdi))
+> +#define CSID_RDI_CFG1(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+> +					(0x310 + 0x100 * (rdi)) :\
+> +					(0x510 + 0x100 * (rdi)))
+>   #define		RDI_CFG1_DROP_H_EN		BIT(5)
+>   #define		RDI_CFG1_DROP_V_EN		BIT(6)
+>   #define		RDI_CFG1_CROP_H_EN		BIT(7)
+> @@ -88,9 +99,12 @@
+>   #define		RDI_CFG1_PIX_STORE		BIT(10)
+>   #define		RDI_CFG1_PACKING_FORMAT_MIPI	BIT(15)
+>   
+> -#define CSID_RDI_IRQ_SUBSAMPLE_PATTERN(rdi)	(0x548 + 0x100 * (rdi))
+> -#define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)	(0x54C + 0x100 * (rdi))
+> -
+> +#define CSID_RDI_IRQ_SUBSAMPLE_PATTERN(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+> +							(0x348 + 0x100 * (rdi)) :\
+> +							(0x548 + 0x100 * (rdi)))
+> +#define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+> +							(0x34C + 0x100 * (rdi)) :\
+> +							(0x54C + 0x100 * (rdi)))
+>   #define CSI2_RX_CFG0_PHY_SEL_BASE_IDX	1
+>   
+>   static void __csid_configure_rx(struct csid_device *csid,
+> @@ -102,6 +116,9 @@ static void __csid_configure_rx(struct csid_device *csid,
+>   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
+>   	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
+>   
+> +	if (IS_CSID_690(csid) && (vc > 3))
+> +		val |= 1 << CSI2_RX_CFG0_VC_MODE;
+> +
 
-> +				"IN1_HPHL", "HPHL_OUT",
-> +				"IN2_HPHR", "HPHR_OUT",
-> +				"AMIC2", "MIC BIAS2",
-> +				"VA DMIC0", "MIC BIAS3",
-> +				"VA DMIC1", "MIC BIAS3",
-> +				"VA DMIC2", "MIC BIAS1",
-> +				"VA DMIC3", "MIC BIAS1",
-> +				"VA DMIC0", "VA MIC BIAS3",
-> +				"VA DMIC1", "VA MIC BIAS3",
-> +				"VA DMIC2", "VA MIC BIAS1",
-> +				"VA DMIC3", "VA MIC BIAS1",
-> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
-> +
-> +		wcd-playback-dai-link {
-> +			link-name =3D "WCD Playback";
-> +
-> +			cpu {
-> +				sound-dai =3D <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai =3D <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai =3D <&q6apm>;
-> +			};
-> +		};
+I remeber that the > 3 has a purpose but, I don't remember of off the 
+top of my head what that is.
 
-Please sort subnodes alphabetically here and below.
+Please add a comment to state why "> 3" matters.
 
-> +		wcd-capture-dai-link {
-> +			link-name =3D "WCD Capture";
-> +
-> +			cpu {
-> +				sound-dai =3D <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai =3D <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai =3D <&q6apm>;
-> +			};
-> +		};
-> +
+BTW should this be "> 3" or ">= 3" please double check.
 
-[...]
+>   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
+>   
+>   	val = CSI2_RX_CFG1_ECC_CORRECTION_EN;
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index ebc3b296bb50..b2398196b9ff 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -2269,6 +2269,10 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+>   	}
+>   };
+>   
+> +static const struct resources_wrapper csid_wrapper_res_sa8775p = {
+> +	.reg = "csid_wrapper",
+> +};
+> +
+>   static const struct resources_wrapper csid_wrapper_res_sm8550 = {
+>   	.reg = "csid_wrapper",
+>   };
 
-Best regards,
-Alexey
+Redefining the same string in separate structures over and over again 
+seems wasteful.
+
+Please take the opporunity of this new addition to rationalise down the 
+string declarations and .. if possible the number of struct 
+resources_wrappers we are doing here.
+
+> @@ -2558,6 +2562,153 @@ static const struct camss_subdev_resources csiphy_res_8775p[] = {
+>   	},
+>   };
+>   
+> +static const struct camss_subdev_resources csid_res_8775p[] = {
+> +	/* CSID0 */
+> +	{
+> +		.regulators = {},
+> +
+Zap the newlines.
+> +		.clock = { "csid", "csiphy_rx"},
+> +		.clock_rate = {
+> +			{ 400000000, 400000000},
+> +			{ 400000000, 400000000}
+> +		},
+> +
+> +		.reg = { "csid0" },
+> +		.interrupt = { "csid0" },
+> +		.csid = {
+> +			.is_lite = false,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID1 */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "csid", "csiphy_rx"},
+> +		.clock_rate = {
+> +			{ 400000000, 400000000},
+> +			{ 400000000, 400000000}
+> +		},
+> +
+> +		.reg = { "csid1" },
+> +		.interrupt = { "csid1" },
+> +		.csid = {
+> +			.is_lite = false,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +
+> +	/* CSID2 (lite) */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+> +			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+> +			   "vfe_lite"},
+> +		.clock_rate = {
+> +			{ 0, 0, 400000000, 400000000, 0},
+> +			{ 0, 0, 400000000, 480000000, 0}
+> +		},
+> +
+> +		.reg = { "csid_lite0" },
+> +		.interrupt = { "csid_lite0" },
+> +		.csid = {
+> +			.is_lite = true,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID3 (lite) */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+> +			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+> +			   "vfe_lite"},
+> +		.clock_rate = {
+> +			{ 0, 0, 400000000, 400000000, 0},
+> +			{ 0, 0, 400000000, 480000000, 0}
+> +		},
+> +
+> +		.reg = { "csid_lite1" },
+> +		.interrupt = { "csid_lite1" },
+> +		.csid = {
+> +			.is_lite = true,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID4 (lite) */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+> +			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+> +			   "vfe_lite"},
+> +		.clock_rate = {
+> +			{ 0, 0, 400000000, 400000000, 0},
+> +			{ 0, 0, 400000000, 480000000, 0}
+> +		},
+> +
+> +		.reg = { "csid_lite2" },
+> +		.interrupt = { "csid_lite2" },
+> +		.csid = {
+> +			.is_lite = true,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID5 (lite) */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+> +			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+> +			   "vfe_lite"},
+> +		.clock_rate = {
+> +			{ 0, 0, 400000000, 400000000, 0},
+> +			{ 0, 0, 400000000, 480000000, 0}
+> +		},
+> +
+> +		.reg = { "csid_lite3" },
+> +		.interrupt = { "csid_lite3" },
+> +		.csid = {
+> +			.is_lite = true,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID6 (lite) */
+> +	{
+> +		.regulators = {},
+> +
+> +		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+> +			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+> +			   "vfe_lite"},
+> +		.clock_rate = {
+> +			{ 0, 0, 400000000, 400000000, 0},
+> +			{ 0, 0, 400000000, 480000000, 0}
+> +		},
+> +
+> +		.reg = { "csid_lite4" },
+> +		.interrupt = { "csid_lite4" },
+> +		.csid = {
+> +			.is_lite = true,
+> +			.hw_ops = &csid_ops_gen3,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +};
+> +
+>   static const struct resources_icc icc_res_sa8775p[] = {
+>   	{
+>   		.name = "ahb",
+
+---
+bod
 
