@@ -1,177 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-66926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A28BB140FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 19:11:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 260E6B14134
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 19:29:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB78A189CDB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:11:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B8E518C13A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jul 2025 17:30:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D871D275861;
-	Mon, 28 Jul 2025 17:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E74E527603C;
+	Mon, 28 Jul 2025 17:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WxAHBuzj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ndKoGrrT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55628EED8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 17:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7720527602F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 17:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753722667; cv=none; b=bvxqsYT+EZT0kCuSLEvMtSS+NeYsEouQxgHGy65u3hZDBhlW5XB4eGCFtNVbBY91EQbxRWeKIxRCPY8zcu9T9gSHumx4GNkR5a1WgGsCwPFAeI5O/pKR/XqXLfdiTQ33rMx64oGwxdO5LAVOSoLFY3kxTTqeBJQk2uHLlIG2xHE=
+	t=1753723779; cv=none; b=MyfLiNTZJFmwVmFvUJ03acnzjg48CQ06xGzlpXOiw/+zEf2vbZ6h2unfZbMfFihs74WlxZcpnNRo5DXxrnX1TsadF+UM4N8yr2WoRv0UsJqKlfHAtBFucWymLyujN1aPwhpp2Bd/5bDxIQXqUuoTiNNYIeeuW22v9nO/NIk/dmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753722667; c=relaxed/simple;
-	bh=bKx7T1DLQcbdvNXKkdxjhh9o20FMdCO0YBI0USo5qRY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mO9Qsk1kJCaXXxR7ToKtecfHFxt0PRV6Z+rI8EayxWmIKpHPF7xQdF+FQ/hTTei85zi5tHSi30SooVQ6tTBRA4A/o7RI2l24gE10NqMbLmZydYTEVPNGUxn0P7UjTGbp+UTSEQAtCV+61y+oyCJl3FCZ650Arr6qduNROH/v330=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WxAHBuzj; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ae3703c2a8bso974561866b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 10:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753722664; x=1754327464; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QR1arBx0XvaSp1oUXc3PyontAThuSk/8jS2zweGYDNE=;
-        b=WxAHBuzj/5k9vPu0wCo7mPeSQvYKrJIm7erozXLuNjSfF4PmjuO+72WfufvbcrFhiI
-         JfUCB+W8t0wtkf9OogyKUFcHiAMjTQlMAgG7sjW0DriH87kFpSC1Giv+5D+nB48ql+9+
-         LdIc308cu3Sp7e28RA/kHTbHNOOXRRa/p6FIwlcFsTAqRg+4YHrfI2k6jMa7Yx/yZsPZ
-         wmq351hrSbbf5sx7Ew3qor4YTG22RbC+GMvcKNkh1AOIj7xlED5HOJRQee9lNswW2Lhq
-         fU3NaIbo3ZTejCgXB5oEn0Y8FTu4ImiZYjd7PnGzZ8bxvIF5URNuYTu5HrIIGStV9bQ7
-         ywmQ==
+	s=arc-20240116; t=1753723779; c=relaxed/simple;
+	bh=28otr1PWkOxwqfxwLLylhjzkns3AMN2v2kaXHqkXC2s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TVQ5y6hfZWZbLoiL+FP8qpRo96MCj9IMGw9/gbw2BohJkGmr/rQc//4hrw3iSxJTjIGAQmNtWRtCx3ryoypPdJL5llWrCZ8VLgFjaaxIGBsWOEwtzIvOrd01nBMdX4YchItkzSkKt6fvtDCCXb+nZ6OlfhBX8+cQW/E1KMwQiNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ndKoGrrT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SAlQxH031280
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 17:29:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	psaO0fhsKdZfRWyiSo8tAjmdJAZtx/Aq71yeJdW+1SU=; b=ndKoGrrTK4M7C3OK
+	pJsr0X1o6iGXLpLdHSJMYA3nNmPMVy8YnfWcKsI0V24n8mRJ30912LCJ68cySYTA
+	hfPm65aTNTTuYz4nCCQxJOMPy0k4FFTnNO6HsayVQT0wM8jz3cNItEyY5QZXP9Aq
+	m6RXERo6e5UHBvGsmQcXeDtYn9NPlo+9anT9DJ5jzbKHnkoKJEQ8f2NPA/8BQR2f
+	xAQDzWymlbnEoh7tvRyoLvSiUxLZx502nms9tzSHpOCnNN01lPqwdcpUFp0HtBmv
+	n0dYC7pn2qe+tMIEQFxq1nMPi8UWO7Gv61+tIiWsbqKTGaKtDGdPjeLbUWZlKkZl
+	5krA8g==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 485v1xarey-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 17:29:32 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3141f9ce4e2so7403279a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 10:29:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753722664; x=1754327464;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QR1arBx0XvaSp1oUXc3PyontAThuSk/8jS2zweGYDNE=;
-        b=Mz6R0C4Zp7/Mz0kML+q+sIClkjLd9Vwh+32ho0+dq5FUzcw7+4cx0kCWgjOEcL2Aba
-         7c5FWZ2bIPAYykVil/jXhaPr2/HLg1+jP1+2TKvn39WhaVqfDkllAM3zapcv5ydmHyG4
-         8PIv7DwCvejrQ9mgqPgI2KR/m/oUm8cD8qOVfjYTnBEuZpfW/F2VQEnoNTH9Mc9S767Z
-         sVHLejZnPUJ0ritKCLD2EajYB11Hyb2baAxBCbJuo7UXw4II3j50K+3g5bdBrwRfZpaS
-         6oR/nDPQdSKM8dRUj0M1qVEWq19YsMuCjreNeVIjGPHbSu2shj1MNRvF3R2dXKtIA/55
-         V+rg==
-X-Forwarded-Encrypted: i=1; AJvYcCVQz6TqT7hkSIQbkuT6R4B4DvXY0pxANTA7K17Lv4xUCSYTxh2L5Lq4iv8gYzEfa/bj7F0bVQG+makK544b@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmY+SDdcdovD85mN4tTJxYljnFacy/AOwEdFphkIGY4XE5LgOg
-	9g0JStd0kqEcJJOXU0YdEumNMzrlv2WzQg1570LRkFaMsT0TiI3MTuVrvjPtQgHSIsc=
-X-Gm-Gg: ASbGncsGhgI8rQ7Ul/2sMm4IcuRl/UX+iO4E5kKjl1sM9tm/e5azz5Gsrb6V6VCQJ3R
-	b+gU/3VVEydkMMMRPd6qQKMvQ05Laqahmbgryjg5Sp3pz8HnaLCIm9vM1xrpAaQNFwab2LeYCMC
-	USVJKkL5ceLGl+tLJ55IZ0TcBbG96SH0irQqkk7I/h31zCt7iNIcedBTOREwCKD+Bdrfq4g8CFu
-	IXqRro9wzDkj2IvQA6FMV2jXaGmbJ6/EoYoLlPnnkDcaoUwLVu+9vIIzsgG67/imimtQSMHnRrN
-	a49hYNl8qkBjbPFA0odrR/Lfb/g+zcstC+TSrMO+hwpNuJ2b2/f6n7XEGY6HAKwFiszh/hzzi7n
-	oILbDhDgU6VdRQTQkhzi4Ey2dVxXz/rkJ+A==
-X-Google-Smtp-Source: AGHT+IFd/ukbJWEyAyiMoVr3cixjoIXsXy8y7hQtFjRtY748SHCa7Gi1Pqlg3oMU0d8uaJRO6rYQqw==
-X-Received: by 2002:a17:907:1ca3:b0:ad4:d00f:b4ca with SMTP id a640c23a62f3a-af619a0795cmr1251448066b.50.1753722663537;
-        Mon, 28 Jul 2025 10:11:03 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:e460:c4f3:f28e:97ef])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af63585ff5asm452983566b.11.2025.07.28.10.11.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 10:11:03 -0700 (PDT)
-Date: Mon, 28 Jul 2025 19:10:58 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Andy Gross <andy.gross@linaro.org>,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH RFC 24/24] arm64: dts: qcom: x1e80100: Describe GPU_CC
- power plumbing requirements
-Message-ID: <aIevIuMDA5R8igmi@linaro.org>
-References: <20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com>
- <20250728-topic-gpucc_power_plumbing-v1-24-09c2480fe3e6@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1753723771; x=1754328571;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=psaO0fhsKdZfRWyiSo8tAjmdJAZtx/Aq71yeJdW+1SU=;
+        b=w/P/WUpEXZX1LUN42Bcfz4e2PkHuBIx9E0eW46rGSBBx8IOCp+XPokR7FAM6d0/A4S
+         Wpq3Jq/THP+R18MsDyAlHjQV6qaujYmG3XJD5drgl8QYjoBp5GuTAJJac+ATosJrHIpO
+         H7NSiQ9DEFtJEVqPqEABwaRD8ofNwvcIHkPC5mnnA67TnRGZz9oNMZdTl8pA74w0Xinq
+         GvVquYWdckhGnNHXF9/vGDqIvQA9DLBE+IWDAl3amjdVZEvmmxrcPzcBpPA8/JnQrqjF
+         1Nh+2RoX8JVEIL4eG9hoC8czuCim0sHKV/jIed9NAt96EdD7JZrs2b3IppFigiTEwIVW
+         GxxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoJIOQ5x/kHar9DKdqZSwlzIzsio4vzCU3fXJzwGI6TBoM2WSDluS9wNPsp7pk4qowGtIY2LEf7urg54/h@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHUDoMRXzVAGDJd4N01rZO3FPINVQxTA/s+QjknlrljfrKuORb
+	sKWqgI5mni3MG+BTNTixUV2PQibXoSWWlPu/Xl1/HYIKDSVsv/B25E/wBPwrNf79VQwV72Rhc/Y
+	svbtboYU/BF+ay5y88cHr9LDsFSCjOJUJWIbuPOPnDpQ0eIc3ncKLSQFt/XosRBPar2WZ
+X-Gm-Gg: ASbGncsT9BzncNPn0Yme+Eki05UIstn/0p48vqKTY4OQNZU9dHSjKkKX6vR3JKfN/R2
+	CZUB711xTTMAHfKH4U3wJNYtN4uSx+n+TYTuZ0o3W7yDoDaEzOFn+R7a63D+L0Q7q5094yPtxpl
+	8kwD1Ay1OpL0B5lmcLSBRm2srLOUywz4kn4TwbWcprI22tQJx2F9fc7+/zOtogGQRkc5uXKzP+f
+	Y3+HaA+BpK0WJpR4sH2FLV1mrguYh73eV6c1mvJmbPndEidbfuRoAqivnhNOfmjXCi9ZaCTEf2V
+	MiQmRTM/1Yg1MwyrVehr3RqY1ezT4TntEA82lH9eiPCkkViYVAfSU1ZepdnBwjP1l9k=
+X-Received: by 2002:a17:90b:5830:b0:312:e731:5a66 with SMTP id 98e67ed59e1d1-31e77a09df5mr14812095a91.3.1753723771404;
+        Mon, 28 Jul 2025 10:29:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2TlcuOoZ/w9fSJKReXr19wg4i7BNBJ46J1r389MBi3VQRREXKv6EbL1QihQHnNxN6OtEqmw==
+X-Received: by 2002:a17:90b:5830:b0:312:e731:5a66 with SMTP id 98e67ed59e1d1-31e77a09df5mr14812056a91.3.1753723770840;
+        Mon, 28 Jul 2025 10:29:30 -0700 (PDT)
+Received: from [192.168.0.195] ([49.204.31.18])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e663a71fbsm10033869a91.35.2025.07.28.10.29.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 10:29:30 -0700 (PDT)
+Message-ID: <713d1c82-6c48-484a-9995-2d7311cbf2fb@oss.qualcomm.com>
+Date: Mon, 28 Jul 2025 22:59:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250728-topic-gpucc_power_plumbing-v1-24-09c2480fe3e6@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] dt-bindings: clock: qcom: Document the Glymur TCSR
+ Clock Controller
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250724-glymur_clock_controllers-v2-0-ab95c07002b4@oss.qualcomm.com>
+ <20250724-glymur_clock_controllers-v2-2-ab95c07002b4@oss.qualcomm.com>
+ <20250725-chubby-spiked-tanuki-eefcd9@kuoka>
+Content-Language: en-US
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+In-Reply-To: <20250725-chubby-spiked-tanuki-eefcd9@kuoka>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDEyNyBTYWx0ZWRfX4F8uGNaUyudc
+ tKiL9i155dHdFgM1/ZgKRU95t9r/RklY8+xZ9bwJbWEIyODzLC9kACsldaKBON97k5nQHlUN0RU
+ dd7q17xHpb2mYWCxNk8bVD8pGkgx1+ObqaF1HCFHV9SNZmIrqpv/TD2N8Il1EQ6pEe2OtAg8sbj
+ rGcrb++QjBU2/UhAvWWRyR1NI2jw6rB528mcEZZajMA+RwYj2Dnl6eqqis+m+q4BIpY/1iFrv0N
+ mRXw3aNRKJi5wJdyD6E8jQuqKTuZEAZk2PiT7K7zzAqN5my6VjPX2D8KQ0pg1N6yYM7ADq2rsZZ
+ bsKucYzbjpFhUO3w+dHVbP6Yo3rPPh7LRW4yL6fHRN3FZAXvb1dTWwJuT9+2iqTm6YKGwh8NALG
+ AA+7P9DWXf8+PzuvOuQ3NSf+GDwvsig0jMacjFXPWe+jWljtZUmNKiooYPk5GYM+jc6KCVJf
+X-Authority-Analysis: v=2.4 cv=JKw7s9Kb c=1 sm=1 tr=0 ts=6887b37c cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=6kochd2Oe038OFj2Hkel3A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=_CRzW6w8_PcMKYmKewAA:9
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: JdWgfbYh378l-RWxjoq8GhtYO_jJTOrm
+X-Proofpoint-GUID: JdWgfbYh378l-RWxjoq8GhtYO_jJTOrm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ mlxlogscore=978 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507280127
 
-On Mon, Jul 28, 2025 at 06:16:24PM +0200, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+
+On 7/25/2025 1:19 PM, Krzysztof Kozlowski wrote:
+> On Thu, Jul 24, 2025 at 02:59:10PM +0530, Taniya Das wrote:
+>> Add documentation to support the Glymur Clock Controller, which is
 > 
-> A number of power rails must be powered on in order for GPU_CC to
-> function. Ensure that's conveyed to the OS.
+> What is "Glymur Clock Controller"? GCC? But this is TCSR? Please write
+> accurate commit messages.
 > 
-> Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
+>> necessary to provide a complete description of the clock control module.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 5e9a8fa3cf96468b12775f91192cbd779d5ce946..6620517fbb0f3ed715c4901ec53dcbc6235be88f 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3928,6 +3928,12 @@ gpucc: clock-controller@3d90000 {
->  			clocks = <&bi_tcxo_div2>,
->  				 <&gcc GCC_GPU_GPLL0_CPH_CLK_SRC>,
->  				 <&gcc GCC_GPU_GPLL0_DIV_CPH_CLK_SRC>;
-> +
-> +			power-domains = <&rpmhpd RPMHPD_CX>,
-> +					<&rpmhpd RPMHPD_MX>,
-> +					<&rpmhpd RPMHPD_GFX>,
-> +					<&rpmhpd RPMHPD_GMXC>;
-> +
->  			#clock-cells = <1>;
->  			#reset-cells = <1>;
->  			#power-domain-cells = <1>;
+> That's redundant, just describe the hardware.
 > 
+Sure, will fix in the next patch.
 
-To repeat your own message from a couple of months back [1]:
-
-> You shouldn't be messing with VDD_GFX on platforms with a GMU.
->
-> Parts of the clock controller are backed by one of the MX rails,
-> with some logic depending on CX/GFX, but handling of the latter is
-> fully deferred to the GMU firmware.
->
-> Konrad
-
-Please describe somewhere in the cover letter or the individual patches
-how this relates to the responsibilities of the GMU. I searched for
-"GMU" in the patch series and couldn't find any note about this.
-
-Also: How much is a plain "power on" votes (without a corresponding
-"required-opps") really worth nowadays? An arbitrary low voltage level
-on those rails won't be sufficient to make the GPU_CC actually
-"function". Do you need "required-opps" here? In the videocc/camcc case
-we have those.
-
+-- 
 Thanks,
-Stephan
+Taniya Das
 
-[1]: https://lore.kernel.org/linux-arm-msm/2dae7d88-4b3e-452f-9555-05f10b42dabc@oss.qualcomm.com/
 
