@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-67032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4049CB150B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 18:01:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47E4EB150BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 18:02:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4015218A1D29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 16:01:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A38518A231D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 16:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06CFC221F01;
-	Tue, 29 Jul 2025 16:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 725C62989A5;
+	Tue, 29 Jul 2025 16:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejVbFu8e"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpefm7uy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79D71E3DCD;
-	Tue, 29 Jul 2025 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4174B2980B8;
+	Tue, 29 Jul 2025 16:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753804825; cv=none; b=GpAUy1Jhwk01Na6STkwRqgb8WEm7Yxv60csx3mQAWg7VaIXpznyAI226gNdafJNj8YEoyUakFeXkMk+0mS8CNgyz+SNOqV4rKPoB7+DbwHjdkwT7vxTf0sY9v4YnClso4zPFV1lCw1GfZEsSx8qffVAZ07AFsTJB66YFGROn8K4=
+	t=1753804838; cv=none; b=SDjaN6HWFblqItxP9TNJU8mPwvVZTRPYZht+xeP4yvFE2ybcexxiNxGJOta91/6rUqVubLzQM77uL8V8rpkhgh8+M4KIk3Fc9EvQWwsJz8ox6+V+/BVXHQoI/ZaZOalD85BEQsDwNHU57Q7hFavA/hFJqNOJLS+5Z7SfKzRSQmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753804825; c=relaxed/simple;
-	bh=c4DUheHEAjhNDteVmo8TIru1qOwEcPiV6lNpXwF2j0k=;
+	s=arc-20240116; t=1753804838; c=relaxed/simple;
+	bh=iYjQ08ZF98Az5gb3IAXe3bu00COVrd7SkiMkd5cwLFU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i3ZDwKMtV0g2LT4N++kcbqlSNaT8n1YdHUNmzDA2+XCHUyBjfLMNaiSMXXC+39sNRYpIOLimX8IMY5y7vFYK8DArjf+PQk5xsAPEyW2GKS2WjCJC+d03kToMulRLdmIAhXqyPdI9T+AykRhOMQ7oERwa6QuclQVmUI0Ztwd3ghw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejVbFu8e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43953C4CEF5;
-	Tue, 29 Jul 2025 16:00:25 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=N+eZJRntOLkDKKVIA/XenVSwDuIS0wq0wahR8wfFNhcDMgnbC8kOFHKS1lKd9cw+sks3J1VBhEqkn9nQtNzxDAmN1V99Vr9T3lUP3LJoSoyRU4r5yHygmWwjkOSxbfnBFQcZSNNg6z+ZQ8nEQds11/AbR+6RxCf8MLEfDsYd+8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpefm7uy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F51AC4CEF5;
+	Tue, 29 Jul 2025 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753804825;
-	bh=c4DUheHEAjhNDteVmo8TIru1qOwEcPiV6lNpXwF2j0k=;
+	s=k20201202; t=1753804836;
+	bh=iYjQ08ZF98Az5gb3IAXe3bu00COVrd7SkiMkd5cwLFU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ejVbFu8e9lTsguHbUg9V+2RetoTimiKNdJQ+xiaG8RDenDPwZ9gQW6bv+SCO2MX4O
-	 u818tVFVxMjg1fCjQM7t4KKGLTN23TcVOeDmKTvlXiSqE4xMNUq+YA5GstAiVUoxH6
-	 BDI6yzyPyI+SqZ5p3N5qaVDAotOoYp8ZIIigMFhmySClfLZa1mkLn4mRnJ+e+pw8Ya
-	 JoEQd3ZrwWELMt0Fx5CWjY16zMdzw4raG05WBBvATV31909uOZCOqFA2hzSSa00akt
-	 viNJ8HEoXZ0mNrumcgyf5IqDN3zvp31u2aouS/h90X9J6uO/T3ud4oF1RxMRfcIapt
-	 JPrLsW39mUA8Q==
-Date: Tue, 29 Jul 2025 11:00:24 -0500
+	b=dpefm7uykbqc9y7TVargxu/e++HZJInb6BzhsoQWK/FU3f1BthWHfcSVxL/9skwWC
+	 aupAJUO/kiOpu8qezqBzZ6Lk3M1ZGYRo+Z2r0JoemTRCkplzQftrlvY7P4Oryp2c74
+	 Kzqtc2HmMcsx8G+W8a02JhlB5asA8d4ZnFg/2+mWF054wprvRQOTlBv5zrjOZRrxCz
+	 xm7SocZJvqiuBGio4byhbxw+SHJRotBg+26DbRB4Cn5icNESe+wso8HDEkJEiHuUko
+	 rb8DLeEXxWvOyBhOz2e4GGfoMunXcDCIbaiTbhH0DQVnAG0xBIueO/ETo+frkdabjC
+	 aDV9o2PoF5zfQ==
+Date: Tue, 29 Jul 2025 11:00:35 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH 1/8] dt-bindings: power: qcom-rpmpd: split RPMh domains
- definitions
-Message-ID: <175380482393.476968.18277499104379115216.robh@kernel.org>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/8] dt-bindings: power: qcom-rpmpd: sort out entries
+Message-ID: <175380483538.477299.11633010175758794104.robh@kernel.org>
 References: <20250718-rework-rpmhpd-rpmpd-v1-0-eedca108e540@oss.qualcomm.com>
- <20250718-rework-rpmhpd-rpmpd-v1-1-eedca108e540@oss.qualcomm.com>
+ <20250718-rework-rpmhpd-rpmpd-v1-2-eedca108e540@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,20 +63,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-1-eedca108e540@oss.qualcomm.com>
+In-Reply-To: <20250718-rework-rpmhpd-rpmpd-v1-2-eedca108e540@oss.qualcomm.com>
 
 
-On Fri, 18 Jul 2025 19:13:39 +0300, Dmitry Baryshkov wrote:
-> Historically both RPM and RPMh domain definitions were a part of the
-> same, qcom-rpmpd.h header. Now as we have a separate header for RPMh
-> definitions, qcom,rpmhpd.h, move all RPMh power domain definitions to
-> that header.
+On Fri, 18 Jul 2025 19:13:40 +0300, Dmitry Baryshkov wrote:
+> After removing RPMh PD indices, it becomes obvious that several entries
+> don't follow the alphabetic sorting order. Move them in order to keep
+> the file sorted.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  include/dt-bindings/power/qcom,rpmhpd.h | 233 ++++++++++++++++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h  | 228 +------------------------------
->  2 files changed, 234 insertions(+), 227 deletions(-)
+>  include/dt-bindings/power/qcom-rpmpd.h | 42 +++++++++++++++++-----------------
+>  1 file changed, 21 insertions(+), 21 deletions(-)
 > 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
