@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-67039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53644B154D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 23:50:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65173B15516
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 00:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 069425440AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 21:50:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C144A7A19B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 22:07:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBD3127BF85;
-	Tue, 29 Jul 2025 21:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00A2E27F183;
+	Tue, 29 Jul 2025 22:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gpeZtkJH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U3WYrD6V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F799279358
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 21:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59071274670
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753825805; cv=none; b=M2QCM6QJuc6DnVWWM/x2seb4OeFN6Kvq3bCdheLMdxlDQAzuD0CfPXyhDk0K24RGn5v/hVxrOdrzM9kFvmO6lRosvJLp2KKYqbzyzWzmzaa9XWZIW0tPCuXVQUeZXZXRNV8IlElHpWr7Bur745YLiLvhkuUwYjgy7/PhO46StsU=
+	t=1753826934; cv=none; b=UR7E5+9XK5476NCejqKvHUtojLYmeJiR44C3vXQE1SOj/zz+spViaSpTo8ofSYUJsNKexIZFTWeMj2OYQpiyBFE+Axuz12WN6cpysrdmApbGtbx+kyG0hNZVA8hcj2vtRvjVA7eMf08x2hj/JAbH82fZ+GUJmxtl68hSPRLabOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753825805; c=relaxed/simple;
-	bh=QtTQukJVU2sdDRVmh2jcbWrgLFKbkH8kW0Qz/3Q70gM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BjTQ5sZPjYTYvw5TNvo14k0/CQrw42rSiC64sw/P0I385rT34a/Ohr/FIf73ypyrb6MICod08ZIjbEZ+2njUlqMfqLl6aGJiF0fF9sWhEus0fSv82Mw7dLIstxtbCRCyBn3BXVktmx4qziXfnzcs+fK01hExus31TQ+TtwyCpZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gpeZtkJH; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1753826934; c=relaxed/simple;
+	bh=/116a9/ohobL2Uok3T+K0EljoWhiGCaTOs4mb6iaYqY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mW5K6HPzRZ+yqnGBirAsBUOsH1atxfVduTGChUrKkkt71tW+DgvZpjT4Pgk3KWESWZhozBKoyXLyA9ztKiZKV+SumMnBeJZEpCAViWx1M9n8GGPUAEVvxGTKuiWkHT2CPSALKaOe0JFJeFMe9JP5PQKBLeUzSV7CHYkuEQogJVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U3WYrD6V; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56TJ2UcH017653
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 21:50:03 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56THFgAF031288
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JspbK+7iQlUzvPH2LdAMAjZlVUU4SzJyy/Ozc29zRpc=; b=gpeZtkJHfR4ZWH/F
-	KqdBuCv5LwjDgycYqm8La+lrLipEaNpFxuSuBlEmBb6ZlF/bDiz0aAcyWZz+OLy7
-	zlyYlLe8cwppdEYOjaooAfbWwYZSLTBepEQ5j/bNnwBVT7GV+J5t173bvduyokb+
-	T42fBT2SfXvKQJMV3hyWER35l0wZZP3gp8YVg+tGsxcEH13/V2o0YTigdbbHYYxM
-	sRGO06J2Gd5SuYzWkB5BEiwYlgtaKHYGVTnfJIA8MORKcsJjz3A+g0KnBwRqMU5T
-	ck8G+uPmSxLxsCUxFU9FosLxUbdMKpov/+Bw3nskC9ysQyNTewc9HCSXRqZeTIS3
-	z6ANuQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pm2hhmc-1
+	0cE2pbs8FJjLTVtcD0Npu8kn7V5B1NRwJqNGNDeObNU=; b=U3WYrD6Vpc9KtYZx
+	RpNBajo0fv4PIQynCH8pC+mKt4kLYIaCPcCBMoUy+BJGSGMVjONqFqgx4Bd7aDWd
+	//xhYdaYSBZDZU0yH1Pqw01tUFcX8rTFcaltofq0YBziLQWNunjTBYySnvEzsxJZ
+	XLuwgBUBgac+ro5cOc257ALZ0H/BgL1s/WUFD7vNz2hSgG6B/WcP4vhko3GkLL0G
+	Xkw13bsiSvy6iejGthqNvpPtf+vfeX4KN27wmECkC3guB7CUlkULi22cthpQFwvD
+	1QfFvqffBHLfa48KB3zXkX8WNg2N9dP0dRR/1xW+NtpWvdd8emFIrvHuebbILbXp
+	rNYa/A==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 485v1xf22x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 21:50:02 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3139c0001b5so5679896a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 14:50:01 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:52 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-237f8d64263so3277485ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 15:08:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753825801; x=1754430601;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1753826931; x=1754431731;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JspbK+7iQlUzvPH2LdAMAjZlVUU4SzJyy/Ozc29zRpc=;
-        b=T7rMMNOnLLAwXKPFBhNKG5tLmWKdipkB+zRgDykiySkj137lEdrBOj5u7723O68T/+
-         NoR7/9pBIj5IzQlqW2xXZbHcQIg+slqGT9NzuQxQY2pIgx+TrSvftnEVMw2GzAmKJvFt
-         DJGpHpQet/I26Ug2UCkkhYdfevA0X+ywB7YvigZ3VNt6CAVMAyGyUuI2uKqt9kFLxNeO
-         xgMIEuqyp0sLtgThS2PsjU8TpYoDSh4DxgC7iI299XohtjDb+SRM9EEaL5pTA7m1mnY2
-         U3ClrKZ+NgXMUDYbdnUYxOdH+09aeTLcE1TbpE8LEqeTSeeNyLsDQyAHlXWa/x1zXCoR
-         R7/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW2y/8hS0733RCaWLLGmlJa7Cc5ytoCCMupzsTLYwH818c1wAONBQkIpJzFLxzzUQAn/QSNprgfZyw19dgC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+TU744gwMgbi9oJQ8r3Nem4VWmA81F5oN3JqMzAdeo8eHgcmS
-	GvjU9Co3DnryCmRH6vzOLju4MAq2UiS8uRSPG60Z138MF/pgMcrRZZF1lSMZSp6XJVETRIVfDbG
-	Sj8G/pQIAxnZmCMm7NjFQB4KTXDHOXN2vz940lk2XnDUhvOBaXJCie+XlWRAkM//V3xBg
-X-Gm-Gg: ASbGncsWQzGqWyHtu9SaTtQP+AzGTFqsbjnvs0zaB4Qk4VsNLLEgaP3kIjaBIr/0Nip
-	rOsnebqXqeuqnnDD5NrTtGwlKdvX07TgHeA0OnVX7ERhMsoZwOL30L2geg5epLsSYxpUVLRXL2c
-	QCbS9fanbp0C6anN2M37SpR8H+ADNCLFg/ex3kBmS4jW2Xb7QxBrIMPS/XsoYgLitIa7vmotIiI
-	ZX8o2TI0Xv4jFpjZGRDsGNDvR2yT+lq7Mday+LP4/OY8ANhdSkKKFAInwz5PYSO800I3LXAAjH+
-	ZCyNaS2ULLqMuklplaTqeFcAbUpcJKDHrDgIl3+gOQxXXQCQo05DCMEhPCzAdAEp
-X-Received: by 2002:a17:90b:3f4f:b0:31a:bc78:7fe1 with SMTP id 98e67ed59e1d1-31f5e3809efmr1403411a91.18.1753825800279;
-        Tue, 29 Jul 2025 14:50:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWzTCdtd/O3kQ9la6eaI+9qnWjBUz18tIpGuf+RzXz+1SzG38sYAe/Va1BAoLtjsbO/VMJSg==
-X-Received: by 2002:a17:90b:3f4f:b0:31a:bc78:7fe1 with SMTP id 98e67ed59e1d1-31f5e3809efmr1403372a91.18.1753825799808;
-        Tue, 29 Jul 2025 14:49:59 -0700 (PDT)
+        bh=0cE2pbs8FJjLTVtcD0Npu8kn7V5B1NRwJqNGNDeObNU=;
+        b=ieGbJ7GuILJuNm+wVo0dUi6SvkiYLE9NUpzh2TSNPVuc530B1MyELPMi3meZtoLV+J
+         H02w7DOiM6Fs7lmHeUofVF0mG9Yfx5FUyIvMcovCXGvL+z3DODDC83I8XkARcDCZVhQn
+         2i/9HosY01MydeL/GMnl0u86r/RH04yJD/InFgKZyl7dijSnnUltFCf54EDgV+s7PLJd
+         Qdw677kRTfLuAOSAKkQz1tZft2r/R7i/2aOXfD3x9otch02SsD0oXcLgmgD7seQ2K0+v
+         o9c5W1NCwBt/0WZnOF1sMqNm1Uyoqb3eqY1IeyfZHjxw0U7Sp2aDtRrDeOzM5AKajEuJ
+         ERCw==
+X-Forwarded-Encrypted: i=1; AJvYcCVEWVfl4Myk/Lx7G9+T52cuCEhN49uQ2TualbdcpMIgun9qntjPCKpfYEfYjTZWE11GIBgnmwypSA/dMgga@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeCuVOcv82pYEW0TPqp6A7P7TUczLYIDX8auyzdjIAoQEJQaVT
+	yHhUAZ0M1wCsU4wbC/wrs9wInXesdCT2FDe8cvLJrlO9WvuR13qErXZrEd1M6R0Lc4JJyyPPCqy
+	yGs8PGWmIXeu3fWUbkpQB/XjbUn623+Z/eAJsYKHU2TITord6PF/UcpuuyvRqgZUczHQk
+X-Gm-Gg: ASbGnctOntjPToJddrfuU2Emc1KsbyFrJJwAMxz3yPtrr5WrzSiS1j/NCTWQOyR5b8c
+	zDMhma+EpntNDzcOoxFE+MOBvh038C3yRyNAXbhHhbUNNP666lsN5CdGt5ZPmcFyEuBKWZ/bMdh
+	j7xKXZxOokNBlle2I95ir3k8xu4rDIh5wI4GAnvHuhGPlfWg3cSg7a28C1+39C1FslIzWG6Sk3b
+	tlha78hWYaQt1gOuIhp0YYlCED/cA/wuYD4boLQFotC6BapfmYbeUpfIpU3TDvvxWq+Wvzbgfam
+	oHBiMHV7nt2HR3VT4QSyvtMXOdcTom3RQaInmyYdM1W61bnpKh774qlMlcRHaGqg
+X-Received: by 2002:a17:902:eccc:b0:240:968f:4d64 with SMTP id d9443c01a7336-24096a47522mr13256555ad.11.1753826930861;
+        Tue, 29 Jul 2025 15:08:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvETWK9P4/D0CelAU3J3wu30rrD9X2asRN8OMQAvwraBYzRraej0TCmImrwEUqpGOhQed93w==
+X-Received: by 2002:a17:902:eccc:b0:240:968f:4d64 with SMTP id d9443c01a7336-24096a47522mr13255985ad.11.1753826930270;
+        Tue, 29 Jul 2025 15:08:50 -0700 (PDT)
 Received: from [192.168.1.6] ([106.222.231.177])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31f63dc5383sm111612a91.15.2025.07.29.14.49.55
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2403e020de1sm46439195ad.15.2025.07.29.15.08.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jul 2025 14:49:59 -0700 (PDT)
-Message-ID: <4226ced8-411e-4cc1-be2c-4d1452c09b14@oss.qualcomm.com>
-Date: Wed, 30 Jul 2025 03:19:54 +0530
+        Tue, 29 Jul 2025 15:08:49 -0700 (PDT)
+Message-ID: <6c0689e8-38b4-4d3b-b475-0ceb16046875@oss.qualcomm.com>
+Date: Wed, 30 Jul 2025 03:38:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,172 +89,203 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/17] drm/msm/adreno: Add fenced regwrite support
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
+Subject: Re: [PATCH RFC 24/24] arm64: dts: qcom: x1e80100: Describe GPU_CC
+ power plumbing requirements
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Johan Hovold
+ <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
         Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        cros-qcom-dts-watchers@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Luca Weiss
+ <luca.weiss@fairphone.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-7-9347aa5bcbd6@oss.qualcomm.com>
- <tyjkwrdmsj7k7tkqqxdd65l5v5jxugr5me3ivg5onn3hbffkwp@7uhsbzolqiyd>
- <30442713-2990-490a-b076-93c3cfc3901d@oss.qualcomm.com>
- <d696e7df-7f11-4491-89ff-ba71274ae101@oss.qualcomm.com>
- <1d320aac-e928-4fd0-812c-268a3a943575@oss.qualcomm.com>
- <3f58451a-9b5f-4697-9679-d549104e8312@oss.qualcomm.com>
- <9e48ea8e-b59b-4620-9781-211cc1f7cc07@oss.qualcomm.com>
- <bd6076a5-f888-4044-8a5d-ea6e6fea28e8@oss.qualcomm.com>
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com>
+ <20250728-topic-gpucc_power_plumbing-v1-24-09c2480fe3e6@oss.qualcomm.com>
+ <aIevIuMDA5R8igmi@linaro.org>
+ <50868cd8-68a9-4bad-99f3-8cf542886fb6@oss.qualcomm.com>
+ <aIhrav7GKpsbVpto@linaro.org>
+ <6b903628-9abf-4b9e-971e-e9338308d693@oss.qualcomm.com>
+ <0a1337d7-ee3e-47de-a401-b25586e813e4@oss.qualcomm.com>
+ <aIjsTgA7O7UqS-Oz@linaro.org>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <bd6076a5-f888-4044-8a5d-ea6e6fea28e8@oss.qualcomm.com>
+In-Reply-To: <aIjsTgA7O7UqS-Oz@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: ycUBmmUh2jJhX5f6eXfM0F5ISphkCZ0-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDE2OCBTYWx0ZWRfX7+CAR+Mq1hd9
- cQqlcJNDuI920E1HMJrQzjC8BlLBbWv/AX50OM/NmgDCQXrPdKiCXuNEWi4bZZiF0KVqbOiR82R
- HriJRkzxNUfhrb5+yrQBNWxS+7Lokn9/3FUGRAVUuTUKLbnF/dIv3jQV63bQ8t5UK7QfjaPHZpU
- wEYt4sayaHGZKqlhdorkUG+ayk8udiyhnTsk5eZjM1p8gnUS6YqHIwGd7wXeCruPHDlb4+1rDx5
- LcdV0SCheU1yTNGgDe8Unmn5aHjz422EqkxM7JBHUfABZwqoxeQULcZthRfLlEnyuIwhD/AhKaM
- BXgE+7RU5ANzoAwv391cHve1xXadu9v7r35pFYwpl18lt38yrQG73R9JKHaiYMtXhS7lJibIHTN
- r2mXN5ZH5nTTH5rd/LeOUPog4PsgeE+kDkfkY0y2WwQPHi8m2wgcxVJbM4rm9cEmpZtQkW5k
-X-Authority-Analysis: v=2.4 cv=HfYUTjE8 c=1 sm=1 tr=0 ts=6889420a cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9XpMM9ZEX5jLuhR58p3+Fw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=5A9ZKBTbSWANmlZxSW4A:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: ycUBmmUh2jJhX5f6eXfM0F5ISphkCZ0-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDE2OSBTYWx0ZWRfX1JGLTldhjQFn
+ ejnmAUZEzhvkHRokwP9i2LC6pgWYhjnlaMtWAt9Cn20GFCRuVjb3St3Mys7DT9CYP9Nuu1awP7d
+ 1A/xiNe0XP2MyPz7pcF5zUqw1tdABELOJTqzls0qc99oSl7oOpf3aENHQ6SX2k3ThcTbVgkwiXT
+ WAxquwG/KtN8qRgwTm7mSbehsVsxHYbpi1lp+8OYppiHN80lD/e68wo1Cpwst8vgBRe5rKhFG6W
+ xGDiFE8iSufIp23+zGsFgPZ6/eATSibU1EbrpRhVrNhReR+oo/GiV8I3pnoMY7DU5EbhAp8Q+gi
+ nC8YJ/V6N9o44BD3RxOP4GuTHs8RKez5FHAXJXb6X0js6ayES16SfwJApNxCWMYDBh2treULiu9
+ dbfOyoTS1dEgKCZ7YV1FBlWgSmzzM4nqDHgKKn+TFOYHaHoR43v6sbXE8H+WZpKOO7d11lav
+X-Authority-Analysis: v=2.4 cv=JKw7s9Kb c=1 sm=1 tr=0 ts=68894674 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=9XpMM9ZEX5jLuhR58p3+Fw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=dnjAduxQqvqvlADX3NIA:9
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: wtOTOQnwQ7Qqph20UC-JkgTGhwNFVF64
+X-Proofpoint-GUID: wtOTOQnwQ7Qqph20UC-JkgTGhwNFVF64
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-29_04,2025-07-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0
- spamscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 phishscore=0
- priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507290168
+ impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507290169
 
-On 7/30/2025 3:10 AM, Akhil P Oommen wrote:
-> On 7/29/2025 6:31 PM, Konrad Dybcio wrote:
->> On 7/24/25 6:54 PM, Akhil P Oommen wrote:
->>> On 7/24/2025 5:16 PM, Konrad Dybcio wrote:
->>>> On 7/23/25 11:06 PM, Akhil P Oommen wrote:
->>>>> On 7/22/2025 8:22 PM, Konrad Dybcio wrote:
->>>>>> On 7/22/25 3:39 PM, Dmitry Baryshkov wrote:
->>>>>>> On Sun, Jul 20, 2025 at 05:46:08PM +0530, Akhil P Oommen wrote:
->>>>>>>> There are some special registers which are accessible even when GX power
->>>>>>>> domain is collapsed during an IFPC sleep. Accessing these registers
->>>>>>>> wakes up GPU from power collapse and allow programming these registers
->>>>>>>> without additional handshake with GMU. This patch adds support for this
->>>>>>>> special register write sequence.
->>>>>>>>
->>>>>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>>>>>> ---
->>>>>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 63 ++++++++++++++++++++++++++++++-
->>>>>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->>>>>>>>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 +++++-----
->>>>>>>>  3 files changed, 73 insertions(+), 11 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> index 491fde0083a202bec7c6b3bca88d0e5a717a6560..8c004fc3abd2896d467a9728b34e99e4ed944dc4 100644
->>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> @@ -16,6 +16,67 @@
->>>>>>>>  
->>>>>>>>  #define GPU_PAS_ID 13
->>>>>>>>  
->>>>>>>> +static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
->>>>>>>> +{
->>>>>>>> +	/* Success if !writedropped0/1 */
->>>>>>>> +	if (!(status & mask))
->>>>>>>> +		return true;
->>>>>>>> +
->>>>>>>> +	udelay(10);
+On 7/29/2025 9:14 PM, Stephan Gerhold wrote:
+> On Tue, Jul 29, 2025 at 03:28:55PM +0200, Konrad Dybcio wrote:
+>> On 7/29/25 10:23 AM, Konrad Dybcio wrote:
+>>> On 7/29/25 8:34 AM, Stephan Gerhold wrote:
+>>>> On Mon, Jul 28, 2025 at 11:31:10PM +0200, Konrad Dybcio wrote:
+>>>>> On 7/28/25 7:10 PM, Stephan Gerhold wrote:
+>>>>>> On Mon, Jul 28, 2025 at 06:16:24PM +0200, Konrad Dybcio wrote:
+>>>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 >>>>>>>
->>>>>>> Why do we need udelay() here? Why can't we use interval setting inside
->>>>>>> gmu_poll_timeout()?
+>>>>>>> A number of power rails must be powered on in order for GPU_CC to
+>>>>>>> function. Ensure that's conveyed to the OS.
+>>>>>>>
+>>>>>>> Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
+>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>>> ---
+>>>>>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
+>>>>>>>  1 file changed, 6 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>>>> index 5e9a8fa3cf96468b12775f91192cbd779d5ce946..6620517fbb0f3ed715c4901ec53dcbc6235be88f 100644
+>>>>>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>>>> @@ -3928,6 +3928,12 @@ gpucc: clock-controller@3d90000 {
+>>>>>>>  			clocks = <&bi_tcxo_div2>,
+>>>>>>>  				 <&gcc GCC_GPU_GPLL0_CPH_CLK_SRC>,
+>>>>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CPH_CLK_SRC>;
+>>>>>>> +
+>>>>>>> +			power-domains = <&rpmhpd RPMHPD_CX>,
+>>>>>>> +					<&rpmhpd RPMHPD_MX>,
+>>>>>>> +					<&rpmhpd RPMHPD_GFX>,
+>>>>>>> +					<&rpmhpd RPMHPD_GMXC>;
+>>>>>>> +
+>>>>>>>  			#clock-cells = <1>;
+>>>>>>>  			#reset-cells = <1>;
+>>>>>>>  			#power-domain-cells = <1>;
+>>>>>>>
 >>>>>>
->>>>>> Similarly here:
+>>>>>> To repeat your own message from a couple of months back [1]:
 >>>>>>
->>>>>> [...]
+>>>>>>> You shouldn't be messing with VDD_GFX on platforms with a GMU.
+>>>>>>>
+>>>>>>> Parts of the clock controller are backed by one of the MX rails,
+>>>>>>> with some logic depending on CX/GFX, but handling of the latter is
+>>>>>>> fully deferred to the GMU firmware.
+>>>>>>>
+>>>>>>> Konrad
 >>>>>>
->>>>>>>> +	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
->>>>>>>> +			fence_status_check(gpu, offset, value, status, mask), 0, 1000))
->>>>>>>> +		return 0;
->>>>>>>> +
->>>>>>>> +	dev_err_ratelimited(gmu->dev, "delay in fenced register write (0x%x)\n",
->>>>>>>> +			offset);
-> 
-> This print should be after the 2nd polling. Otherwise the delay due to
-> this may allow GPU to go back to IFPC.
-> 
->>>>>>>> +
->>>>>>>> +	/* Try again for another 1ms before failing */
->>>>>>>> +	gpu_write(gpu, offset, value);
->>>>>>>> +	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
->>>>>>>> +			fence_status_check(gpu, offset, value, status, mask), 0, 1000))
->>>>>>>> +		return 0;
->>>>>>>> +
->>>>>>>> +	dev_err_ratelimited(gmu->dev, "fenced register write (0x%x) fail\n",
->>>>>>>> +			offset);
+>>>>>> Please describe somewhere in the cover letter or the individual patches
+>>>>>> how this relates to the responsibilities of the GMU. I searched for
+>>>>>> "GMU" in the patch series and couldn't find any note about this.
 >>>>>>
->>>>>> We may want to combine the two, so as not to worry the user too much..
->>>>>>
->>>>>> If it's going to fail, I would assume it's going to fail both checks
->>>>>> (unless e.g. the bus is so congested a single write can't go through
->>>>>> to a sleepy GPU across 2 miliseconds, but that's another issue)
+>>>>>> Also: How much is a plain "power on" votes (without a corresponding
+>>>>>> "required-opps") really worth nowadays? An arbitrary low voltage level
+>>>>>> on those rails won't be sufficient to make the GPU_CC actually
+>>>>>> "function". Do you need "required-opps" here? In the videocc/camcc case
+>>>>>> we have those.
 >>>>>
->>>>> In case of success, we cannot be sure if the first write went through.
->>>>> So we should poll separately.
+>>>>> Right, I failed to capture this.
+>>>>>
+>>>>> The GFX rail should be powered on before unclamping the GX_GDSC (as
+>>>>> per the programming guide). The clock controller HPG however doesn't
+>>>>> seem to have a concept of RPMh, so it says something that amounts to
+>>>>> "tell the PMIC to supply power on this rail". In Linux, since Commit
+>>>>> e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the
+>>>>> domain") we don't really need a defined level for this (perhaps it's
+>>>>> more ""portable"" across potential fuse-bins if we don't hardcode the
+>>>>> lowest level anyway?).
 >>>>
->>>> You're writing to it 2 (outside fence_status_check) + 2*1000/10 (inside)
->>>> == 202 times, it really better go through..
+>>>> Thanks, I forgot that we have this commit.
+>>>>
+>>>>>
+>>>>> However after that happens, the level scaling is done by the GMU
+>>>>> firmware. This holds for allOf CX/MX/GFX. I'm not super sure if
+>>>>> both MX and (G)MXC need to both be captured together - downstream
+>>>>> seems to describe MXC as a child of MX (in socname-regulators.dtsi),
+>>>>> but I'm not really sure this is true in hardware.
+>>>>>
+>>>>> The GPU driver currently first enables the GX_GDSC and only then
+>>>>> does it kickstart the GMU firmware. Downstream seems to do that as
+>>>>> well. So on a second thought, since we've not seen any errors so
+>>>>> far, it calls into question what role the GFX rail plays in the
+>>>>> GX_GDSC's powering up..
+>>>>>
+>>>>
+>>>> It might play a role, but we wouldn't know since AFAICT we don't support
+>>>> enabling the GX_GDSC. Look at the beautiful gdsc_gx_do_nothing_enable()
+>>>> function, it basically just defers the entire task to the GMU. The GDSC
+>>>> just exists in Linux so we can turn it *off* during GMU crashes. :D
 >>>
->>> For the following sequence:
->>> 1. write reg1 <- suppose this is dropped
->>> 2. write reg2 <- and this went through
->>> 3. Check fence status <- This will show success
+>>> OHHHHH snap! I, on the other hand, forgot we have *that* commit..
+>>>
+>>>> I think we should identify precisely which votes we are missing, instead
+>>>> of making blanket votes for all the power rails somehow related to the
+>>>> GPU. In this case this means: Which rails do we need to vote for to make
+>>>> the GMU turn on? If there are no votes necessary after the GMU is on,
+>>>> it's better to have none IMO.
+>>>
+>>> The GMU pokes at RPMh directly (see a6xx_hfi.c), so we indeed just
+>>> need to make sure that it can turn on.. Which in short means the
+>>> *C*X_GDSC must be able to power up, which doesn't have any special
+>>> requirements. The only question that's left is basically whether
+>>> MX_C must be on. I'll try testing that in practice.
 >>
->> What I'm saying is that fence_status_check() does the same write you
->> execute inbetween the polling calls
+>> So this is apparently difficult, at least on SC8280XP, where something
+>> seems to be voting on MXC and it only seems to shut down when entering
+>> CXPC. I would imagine/hope this is not the case on newer platforms, but
+>> I don't have a way to fully confirm this at the moment..
+>>
 > 
-> On a second thought I think it is simpler to just use a single polling
-> of 2ms and measure the time taken using ktime to print a warning if it
-> took more that 1ms.
+> If in doubt, I would suggest to leave everything as-is for now until
+> someone actually runs into an issue caused by this (if this is even
+> possible). There are plenty other actual gaps to address. ;)
 
-But then we can't know if the higher latency measured is because this
-thread got scheduled out just before we measure with ktime 2nd time. So
-we should rely on gmu_poll_timeout() for accuracy.
+Konrad,
 
-We need a warn after 1ms because there is a 1ms timeout in VRM. We
-should know if it occurs frequently enough to cause a performance issue.
-
-I will move the the prints towards fn exit.
+GMU is allowed to collapse some of the rails in some cases (GX/MXC/GXMXC
+etc). So there should not be any other vote for these resources on
+behalf of GPU/GMU from the KMD side. You may have to vote some resources
+for GPUCC block itself (I know it is in AO domain, but still). I don't
+know the specifics. Can you reach out to QC clk team (Taniya/Jagadeesh
+etc) for necessary details? We should be careful here. Just boot up
+testing is not sufficient when it comes to clk/power.
 
 -Akhil.
 
 > 
-> -Akhil.
-> 
->>
->> Konrad
->>>
->>>>
->>>> If it's just about the write reaching the GPU, you can write it once and
->>>> read back the register you've written to, this way you're sure that the
->>>> GPU can observe the write
->>>
->>> This is a very unique hw behavior. We can't do posted write.
->>>
->>> -Akhil
->>>
->>>>
->>>> Konrad
->>>
-> 
+> Stephan
 
 
