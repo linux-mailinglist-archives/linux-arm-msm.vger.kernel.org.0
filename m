@@ -1,103 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-66993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D678B14D14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 13:38:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6ABA8B14D1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 13:42:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 688173BE4AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:37:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE7BE18A2151
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:42:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 068CA28DF0C;
-	Tue, 29 Jul 2025 11:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3F6C28E607;
+	Tue, 29 Jul 2025 11:41:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mifritscher.de (mifritscher.de [188.40.170.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F01E254841;
-	Tue, 29 Jul 2025 11:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709F421ADAE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 11:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.170.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753789075; cv=none; b=qynJ1JNbQXVrB4XXl0MN1La9uiyQIvSz5doN/mup0QEoE2C3g3YqFInBreVilNFCIVMvJp5Pj3asmKdi1HxtwqtfnKEhcAwjQ6JTSKJ0nw3d/EKiBp85juOQOv9YT7nsETtwFmp7Q+OJOQjEXEErjUqJnHNA9+fzogcgXnu6BPM=
+	t=1753789317; cv=none; b=jAyKX1IQ5BzsGiml8ZwZJNSc/9mckilfiZZW5PRt3n7b8UCLVeYiN6g+Afq6LApKpJ1kKZsIlJit9+/FzM1Mvu39lBSQDhfExCCu9BebWhTrMz8DT9TeYxRfdeOimn3NVq1FEIsBLgjMD5o8E6nHfX/WYv9KUVk7Ra5Ce5GQRlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753789075; c=relaxed/simple;
-	bh=2DUyleINyY08kAK5LexsCuMRMN4kuOxIaaYE2HdWLiE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=iurtwFA31KH2PrybmBe4ZOfMEjFXx2eUYdGMlkeE6YthxVG7g7ljUfkgAjsUyGo/liwEr9Nyji8+OQqM2qQVfcWCGmYtZyTaDTmQZCwp7bwDAG0gUmdkp6ZLBINLR+Q5OJZjq7Amj7ERB+BrH4LLTNtr2MWyk3vOvzKAYIM85nw=
+	s=arc-20240116; t=1753789317; c=relaxed/simple;
+	bh=/SdHLnWf+qIw4+1pvu8zU+c31os7E2nQW39rqXrALsY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=BmcN9DRB+PNNND4jEKuEzVeelTbtdZ1BkIEw/xxQnb1afNuSZs4F5O1r47+nLZQUfJE8av1jLQ+MCnk50Om3votcRhpyyE+57ZtEgcRffsK8IDv0wBectbpjF+lFFRFw2WSzSwWd3Cyh2CO6a66K4XB/dNX++Yn0bO7Uiz8XzjE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fritscher.net; spf=pass smtp.mailfrom=fritscher.net; arc=none smtp.client-ip=188.40.170.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fritscher.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fritscher.net
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.mifritscher.de (Postfix) with ESMTP id 4BAD23B1E61;
-	Tue, 29 Jul 2025 13:37:52 +0200 (CEST)
+	by mail.mifritscher.de (Postfix) with ESMTP id C70E63B1E60;
+	Tue, 29 Jul 2025 13:41:53 +0200 (CEST)
 X-Virus-Scanned: Debian amavis at mifritscher.vserverkompetenz.de
 Received: from mail.mifritscher.de ([127.0.0.1])
  by localhost (mail.mifritscher.vserverkompetenz.de [127.0.0.1]) (amavis, port 10024)
- with ESMTP id F3-12V5rI6IY; Tue, 29 Jul 2025 13:37:51 +0200 (CEST)
-Received: from sonst.vserverkompetenz.de (sonst.mifritscher.de [188.40.170.101])
-	by mail.mifritscher.de (Postfix) with ESMTPSA id D005C3AED53;
-	Tue, 29 Jul 2025 13:37:51 +0200 (CEST)
-From: Michael Fritscher <michael@fritscher.net>
-Date: Tue, 29 Jul 2025 13:37:51 +0200
-Subject: [PATCH] bus: mhi: host: pci_generic: Add Quectel RM520N-GLAP to
- pci id table
+ with ESMTP id RdY1xZyT56MO; Tue, 29 Jul 2025 13:41:52 +0200 (CEST)
+Received: from mifritscher.de (localhost.localdomain [127.0.0.1])
+	by mail.mifritscher.de (Postfix) with ESMTPA id 679883B00E0;
+	Tue, 29 Jul 2025 13:41:52 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Date: Tue, 29 Jul 2025 13:41:52 +0200
+From: michael@fritscher.net
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: mani@kernel.org, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: [newbie] [patch?] for mhi to get Quectel RM520N-GLAP (WWAN Modem)
+ running
+In-Reply-To: <ea81638c-c9eb-4a3b-9a74-a590729e1f8a@oss.qualcomm.com>
+References: <8040b225-5735-4bc5-aed4-f6432bb045ee@fritscher.net>
+ <ea81638c-c9eb-4a3b-9a74-a590729e1f8a@oss.qualcomm.com>
+Message-ID: <4e86ee1ab2b310a19fc4d26390c3725c@fritscher.net>
+X-Sender: michael@fritscher.net
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250729-add-rm520n-glap-support-v1-1-736ee6bbb385@fritscher.net>
-X-B4-Tracking: v=1; b=H4sIAI6yiGgC/x2OywqDMBBFf0Wy7mASatX+Sukimmky0DyYpEUQ/
- 72xy8O5B+4uCjJhEfduF4xfKpRiA3XpxOpNdAhkGwst9SBHPYOxFjgMWkZwb5OhfHJOXGFqYla
- 36zRqJVq9mIKwsImrP3vGkCqWPjE5in3wBBG3ei4z44u2/4fH8zh+kBxZkpMAAAA=
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Michael Fritscher <michael@fritscher.net>
-X-Mailer: b4 0.12.0
 
-Quectel RM520N-GLAP is a variant of Quectel RM520N-GLAA with fused out USB.
-Add its PCI vendor and product id to the list to use the right dev info.
+Am 2025-07-29 12:05, schrieb Konrad Dybcio:
+> On 7/29/25 11:27 AM, Michael Fritscher wrote:
+>> Good day,
+>> 
+>> my first email here, so a tiny introduction of myself: I'm a computer 
+>> scientist and work e.g. with OpenWRT and microcontrollers. I know some 
+>> basic workflows with git as well.
+>> 
+>> So, while getting the Quectel RM520N-GLAP (the GLAA is running ootb) I 
+>> stumbled over problems. Luckily, there exists a tiny patch ( 
+>> https://forum.gl-inet.com/t/how-to-installing-vanilla-openwrt-on-gl-x3000/45404/15 
+>> ), which only adds a PCI Vendor/Product ID variant for this card to 
+>> the mhi driver. It applies cleanly against 
+>> git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git . I've 
+>> tested it with current OpenWRT and can confirm that it works.
+>> 
+>> The big question is: How to get this patch into mainline? ;-) Should I 
+>> simply send it to this list, following 
+>> https://kernelnewbies.org/FirstKernelPatch ? It is also ok for me if 
+>> somebody else steps in.
+> 
+> Hi, you'll likely want to use the b4 tool [1] which simplifies a lot
+> of the boilerplate in the process.
+> 
+> The general idea is to:
+> 
+> - check out Mani's -next branch (since you're targeting it 
+> specifically)
+> - create a new branch based on it
+> - add your commit (title and describe your changes similarly to other
+>   commits in that directory)
+> - make sure you sign-off on the commit
+> - compile- and boot-test it, confirming everything's in order
+> - send it off for review
+> - respond to review comments should you get any (which is usually the
+>   case) - there's a big doc describing the process in quite some detail
+> 
+> [1] https://b4.docs.kernel.org/en/latest/
+> [2] 
+> https://www.kernel.org/doc/html/latest/process/submitting-patches.html
+> 
+> Konrad
 
-Signed-off-by: Michael Fritscher <michael@fritscher.net>
----
-This series add support for the Quectel RM520N-GLAP, which uses a
-Qualcomm PCI Vendor ID. Origin is linked at the end. After this it is
-found as
+Hello Konrad,
 
-MHI PCI device found: quectel-rm5xx
+thank you very much! I tried it - and hope that everything is right - at 
+least the mail seems to be sent ;-)
 
-and works.
-
-Link: https://forum.gl-inet.com/t/how-to-installing-vanilla-openwrt-on-gl-x3000/45404/15
----
- drivers/bus/mhi/host/pci_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 589cb6722316..3f3212dda5bb 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -857,6 +857,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-+	/* RM520N-GL variant with Qualcomm vendor and subvendor ID */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_QCOM, 0x5201),
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	/* Telit FN990 */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-
----
-base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-change-id: 20250729-add-rm520n-glap-support-8add91648721
-
-Best regards,
--- 
-Michael Fritscher <michael@fritscher.net>
-
+Best regards
+Michael
 
