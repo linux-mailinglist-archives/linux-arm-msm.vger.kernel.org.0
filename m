@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAE28B14DB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:34:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 274B0B14DBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:34:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF346189D110
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:34:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B8B83AA9B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB84B28A1C5;
-	Tue, 29 Jul 2025 12:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559C128FA84;
+	Tue, 29 Jul 2025 12:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKFXasll"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CDkaHXtP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF8222425E;
-	Tue, 29 Jul 2025 12:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263D127F74C;
+	Tue, 29 Jul 2025 12:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753792438; cv=none; b=Lx2TpufeKW7ERTnRHrD1RdqARKR8JHlaRo9XeaYlGSwfYAlYzGyJTwX3kWHruAPiXxy1U1A8V4fb3pf+m804y5itpSh6ERDxbf61eQdPXNDvxSKtabGvflG02+FcYZUc4msEmzdRzVrogRXohQiNAzGRpAgFrcZvddjcrGfrERE=
+	t=1753792464; cv=none; b=HrXeQ7AYPZZ/15oAGvHwlsuZxSgSc/GjZE0qrdEX4agMNQz62ZKFKMzZ/MjMlGymFVcrm+6nl3TsGS1jvp2bQBjCjr89sdfKIEFiEv4QNNWS0EyQqaAf/vsjhotDQWa53byqeDJa5b7PRX01vjJNgfSo6YyYvaIPKE7JWNH40fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753792438; c=relaxed/simple;
-	bh=fio1fm37u4gqPExATSgrTskCq6p+QcCx5ftXVPkmW/c=;
+	s=arc-20240116; t=1753792464; c=relaxed/simple;
+	bh=hIab/aXAPj/UgAdCgY+svHhYlK1P7P9DBXLFYRJI/84=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TnA9UQMFPnbdCVk4BqPHQBeFW1yXG4mkUACvxoBECkuzsdd3Dtt/Ir3annfIUXq7MHyuAfdc1XQ+JZp/asDKkgR0+idF8NA5LtKpOQ9ZsxvU9kv8u98t5zmXER6h7JD75A1y08ODXDbhicpQdKsZJNXgrBydJZtZ9aIFwnGFhCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKFXasll; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98761C4CEEF;
-	Tue, 29 Jul 2025 12:33:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UUgQlVLNa54OWonsAL4MJ994O0M1zbFLT0ru6WadxHmRFjgPX3jZkT+j9EgVav04eCJQkT/UhtU5naoH3uFmv0HPxXM4pZ/2zqjUSG4uXuAF0nMb6oc/x6S53beNSXArj2Yte9HvFiMOT+4OxVlGenE8WTqfQByFJNFTWbXO1zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CDkaHXtP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B71C4CEEF;
+	Tue, 29 Jul 2025 12:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753792438;
-	bh=fio1fm37u4gqPExATSgrTskCq6p+QcCx5ftXVPkmW/c=;
+	s=k20201202; t=1753792463;
+	bh=hIab/aXAPj/UgAdCgY+svHhYlK1P7P9DBXLFYRJI/84=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BKFXaslloHCh8xyxK6Z9oFhRqA7JPxSSOARVeN77yTUeHwvUVFhXjjfFIe2ZomfXt
-	 jdlBkAofMwHVNENBAKKF9QrimoE8D9J7g7Fs7XRaPUzgUSxMdSoonPnGVLzluAP0z1
-	 U3Lb5mH0biw0kg7D8mfbn0/WS6hL80q8hH8rM6YxvE7GZxlvHTNiDGzPK4QJpdmj+j
-	 G/X2mlNb1ruPDHDc+/M3mAMKvRPq0Cc5zt1s9aeI92sGlXDFG98Hbc04AdGmnpVyFJ
-	 4FSDkJUBNO1iq+ukJgcaHFXBvI95l9haLRqK5St+ijjIRssFOWcGiBctSACa0BTqI7
-	 U6hhbhRikuYAA==
-Message-ID: <1da99d0e-3ccc-473b-8f1f-0d00d206e746@kernel.org>
-Date: Tue, 29 Jul 2025 14:33:54 +0200
+	b=CDkaHXtPA6+sBk+q4FKv945ulgi0uj4WNibR/Rtjr2jqb0Ci3hFyaJf/wpsUApTod
+	 bQcoCCj3mdWlD2ApEyNVRhzLU4FlWee+u0KivqqtPwIObc+2YKOsOGrt/V7rojHogi
+	 L63qJyBvxSi1uqvJTFi+D3Pj7YXDiGCkrd4GQeZz/TeVqmPtK/mKawPw+vJBYJl3UM
+	 6XRxq/Wk5HOhWRchzyTxh65xrGEzpuC0KlylvOFexIi/pG1FTXD6L+wf1OMdvF4Uy9
+	 /nVrVdxKnWk0ZnIZFhw4DWghqo5Dd7qROKGVpS49j1iAh49KZFf5P+u/bUrwd94qvA
+	 dj7KKyX/0zFyg==
+Message-ID: <7e162dbe-dc7e-42ef-98bd-27884164c6bb@kernel.org>
+Date: Tue, 29 Jul 2025 14:34:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] dt-bindings: arm: qcom: document r0q board binding
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: add initial support for Samsung
+ Galaxy S22
 To: Violet <violet@atl.tools>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250729120331.287245-1-violet@atl.tools>
- <20250729120331.287245-2-violet@atl.tools>
+ <20250729120331.287245-3-violet@atl.tools>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,22 +104,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250729120331.287245-2-violet@atl.tools>
+In-Reply-To: <20250729120331.287245-3-violet@atl.tools>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 29/07/2025 14:03, Violet wrote:
-> Add binding for the Samsung Galaxy S22 (SM-S901E) board, codenamed R0Q,
-> which is based on the Qualcomm Snapdragon 8 Gen 1 SoC.
+> Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
+> 
+> What works:
+> - SimpleFB
+> - USB
 > 
 > Signed-off-by: Violet <violet@atl.tools>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Actually I need to retract my Ack. You have to use real name.
-
-I also don't get why this is v7. Where are v1-v5?
-
-https://lore.kernel.org/all/?q=f%3Aviolet%40atl.tools
+Unreviewed. I wonder why I did not spot it earlier - you need to use
+proper full name.
 
 Best regards,
 Krzysztof
