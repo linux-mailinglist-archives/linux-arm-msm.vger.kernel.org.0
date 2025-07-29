@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 274B0B14DBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:34:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46608B14DC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:36:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B8B83AA9B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:34:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F23A189DF47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:36:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559C128FA84;
-	Tue, 29 Jul 2025 12:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBEAA28CF6A;
+	Tue, 29 Jul 2025 12:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CDkaHXtP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SNamvkee"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263D127F74C;
-	Tue, 29 Jul 2025 12:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1622877CA;
+	Tue, 29 Jul 2025 12:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753792464; cv=none; b=HrXeQ7AYPZZ/15oAGvHwlsuZxSgSc/GjZE0qrdEX4agMNQz62ZKFKMzZ/MjMlGymFVcrm+6nl3TsGS1jvp2bQBjCjr89sdfKIEFiEv4QNNWS0EyQqaAf/vsjhotDQWa53byqeDJa5b7PRX01vjJNgfSo6YyYvaIPKE7JWNH40fo=
+	t=1753792588; cv=none; b=UmgWehzUWnhHhqKE71kvAu4NzFrIi+GIrMPie1aBfUM8Emi2NtF9FC4bFBKqgXi2294Q0yQsUdR7aSvi/LjTGiP0PC60ELRnDHPFBQJEEbgcw+uAwBtAObko2dAt/p9rFLshCxYGHuNMpr4XpqK0q3Pb4ieTCxcJBBWrdJIVTkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753792464; c=relaxed/simple;
-	bh=hIab/aXAPj/UgAdCgY+svHhYlK1P7P9DBXLFYRJI/84=;
+	s=arc-20240116; t=1753792588; c=relaxed/simple;
+	bh=KUioZkFmFCXixlFHWSwnprwz8zjsEoKrfuLEveaWquE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UUgQlVLNa54OWonsAL4MJ994O0M1zbFLT0ru6WadxHmRFjgPX3jZkT+j9EgVav04eCJQkT/UhtU5naoH3uFmv0HPxXM4pZ/2zqjUSG4uXuAF0nMb6oc/x6S53beNSXArj2Yte9HvFiMOT+4OxVlGenE8WTqfQByFJNFTWbXO1zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CDkaHXtP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B71C4CEEF;
-	Tue, 29 Jul 2025 12:34:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ds7EdQgo/ada+zENBSwAZjHuz7cfaR1k0wi90+Vvink6X8RchGv4E1SMcih2iv9FA92QYcqBwVbeJwxughujcJWHgCF6/oZNo1uS/gjLKRJf91dpaDdvJ4KAGo1wkTn2ggVRe2k2CqaOpyO9fZw1V825FB2cAaFWY7uzhon9LWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SNamvkee; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465C4C4CEEF;
+	Tue, 29 Jul 2025 12:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753792463;
-	bh=hIab/aXAPj/UgAdCgY+svHhYlK1P7P9DBXLFYRJI/84=;
+	s=k20201202; t=1753792588;
+	bh=KUioZkFmFCXixlFHWSwnprwz8zjsEoKrfuLEveaWquE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CDkaHXtPA6+sBk+q4FKv945ulgi0uj4WNibR/Rtjr2jqb0Ci3hFyaJf/wpsUApTod
-	 bQcoCCj3mdWlD2ApEyNVRhzLU4FlWee+u0KivqqtPwIObc+2YKOsOGrt/V7rojHogi
-	 L63qJyBvxSi1uqvJTFi+D3Pj7YXDiGCkrd4GQeZz/TeVqmPtK/mKawPw+vJBYJl3UM
-	 6XRxq/Wk5HOhWRchzyTxh65xrGEzpuC0KlylvOFexIi/pG1FTXD6L+wf1OMdvF4Uy9
-	 /nVrVdxKnWk0ZnIZFhw4DWghqo5Dd7qROKGVpS49j1iAh49KZFf5P+u/bUrwd94qvA
-	 dj7KKyX/0zFyg==
-Message-ID: <7e162dbe-dc7e-42ef-98bd-27884164c6bb@kernel.org>
-Date: Tue, 29 Jul 2025 14:34:19 +0200
+	b=SNamvkeeo/dk+O/t5AGnym8piqOYFV/K6IMVBN6TuAZEuXDWjz42/tLal9oTbFsLQ
+	 i5qUK+QayStEN1nvLbZ0y81hJMGXoSBTR0xS+96tU8sIt7gQIZAZDl4CoQaWLVaxpk
+	 aaPgdqqZdkiUwrMMGNB3PtN5Zb9vrLirtVwIlKcWl1GGlSGh25lU9WTTzbB1hntELC
+	 oRKmeL0dt1/nr3hz0slcaDkrM4SMLlEfdxQLhl83TAjXjzyBb+C0Ga4NezZwi5Qks3
+	 friJts2hbQKdu3zjxEULxddKszvDEZwxdIb+riHy4/UFKyfupk1gCbzneP4UPt5tQW
+	 Y4d2HWm64l6EA==
+Message-ID: <e2dbef3b-89b4-41cb-b94f-9b432de36802@kernel.org>
+Date: Tue, 29 Jul 2025 14:36:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: add initial support for Samsung
- Galaxy S22
-To: Violet <violet@atl.tools>, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v5 1/2] arm64: dts: qcom: Add display support for QCS615
+To: Fange Zhang <fange.zhang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250729120331.287245-1-violet@atl.tools>
- <20250729120331.287245-3-violet@atl.tools>
+ linux-kernel@vger.kernel.org, Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
+ Li Liu <quic_lliu6@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>
+References: <20250718-add-display-support-for-qcs615-platform-v5-0-8579788ea195@oss.qualcomm.com>
+ <20250718-add-display-support-for-qcs615-platform-v5-1-8579788ea195@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,22 +105,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250729120331.287245-3-violet@atl.tools>
+In-Reply-To: <20250718-add-display-support-for-qcs615-platform-v5-1-8579788ea195@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/07/2025 14:03, Violet wrote:
-> Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
+On 18/07/2025 14:56, Fange Zhang wrote:
+> From: Li Liu <quic_lliu6@quicinc.com>
 > 
-> What works:
-> - SimpleFB
-> - USB
+> Add display MDSS and DSI configuration for QCS615 platform.
+> QCS615 has a DP port, and DP support will be added in a later patch.
 > 
-> Signed-off-by: Violet <violet@atl.tools>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+> Signed-off-by: Fange Zhang <fange.zhang@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 181 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 180 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index 142338069a74cc6c263e17d84efa22ccd0c26813..24299430b195026e896c365d80a0036713f00d35 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/clock/qcom,qcs615-videocc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/dma/qcom-gpi.h>
+> +#include <dt-bindings/gpio/gpio.h>
 
-Unreviewed. I wonder why I did not spot it earlier - you need to use
-proper full name.
+Don't add completely redundant/unused headers.
+
+Drop
+
 
 Best regards,
 Krzysztof
