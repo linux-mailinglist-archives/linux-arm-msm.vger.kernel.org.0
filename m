@@ -1,182 +1,399 @@
-Return-Path: <linux-arm-msm+bounces-66966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F406DB148A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 08:50:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8116B1490A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 09:25:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11AFC179A68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 06:50:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 00CBE3BF4FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 07:25:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8492265CC0;
-	Tue, 29 Jul 2025 06:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9723C2620F1;
+	Tue, 29 Jul 2025 07:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="26X3Idx1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h0Nde5QY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262DB264618
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 06:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F83825A34F;
+	Tue, 29 Jul 2025 07:25:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753771796; cv=none; b=TEruObqwHKooHIriwLZPXPLKZGg4MxrWDgH2U+4ztmPmv37GckGeUtk8LNyMn252u9MyjaEoGYwUrtMhx7VNOs1acCjfT7XEpHvRF8PnpLOuI0wxA9NZZU8uHjRlH64xYrNjy6I94diLcVWP04BdP2w9VF7UHapdL40IaX4DVOg=
+	t=1753773925; cv=none; b=bRECHQVHRMohYXfVwykdNjFS8+XBN+od7Y/OU4mVVVjD5xh5gQ6vpHt5CLcy00e6rlzzYR864ny4/USqcTfO/nJY5ySqRW6IqQk93fjrs074KHMtMbMTYJ2Z7CNI9F0N8Zai+ElJOyYWud/OLsP93Q1ODhSoxSFzhWSRmEJOIY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753771796; c=relaxed/simple;
-	bh=EOhJI4XE7EmddrlB9TelXwBH+e7RrRI3HJn7pIRR/rk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Y7jcdELu8t0jwJ2j/LzhOhaMCiURoittpXoFWQt0TxuXkyfuJAcGCIzn8XsEwgnYy7xitUtNSzv3HZq4S8npk2pC/fxiEasoyhOFSIzi5b7kG2lW/xPlZbPX1SkaaLc1H1UrwPMjKT1Pxzfv7OOENuBc47SkAKiT1Z2A/SP4gcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=26X3Idx1; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ae0d7b32322so865579366b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jul 2025 23:49:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1753771792; x=1754376592; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0tvO0qmfUNC2jqa8M7kzzmnccGVoia4ygdONyDNCxVc=;
-        b=26X3Idx1BYDQEUjbe/WE12+rsByQkqNFRz9t0mlCCQMZcoOMcqWZUQPITGUIMcjFCT
-         kl5I5w2g7pXjhwftBtc7hLyZa8CRpe+QUDlYBvdklu30eZJu2CJTYVHQJIrYSo412gjH
-         5HJW8KmTF5XlVXAraB7W3dm/STPlocv5C0W4f/fuDkwq9fdi4B/EN3HwvmUODcqpSVUt
-         ScJcdmrKeVrOljbrRC6Y64732dH12RV/cuw3wZ3adkVhU5YuDCmE9CBGuvLP1hIffyzv
-         x++sHYcjLcoYCEGOCfwWjjNJjKQQgciew/AsTgBxb1s8gm0ClBaAIAUlth25CWEI+bfe
-         TR9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753771792; x=1754376592;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0tvO0qmfUNC2jqa8M7kzzmnccGVoia4ygdONyDNCxVc=;
-        b=MviG5YCOmgmpJr2gKrijswOgcXb7box5gUEnbHU1XRKZs+zGofKDShiGZHVevh+C8q
-         A5HWdbqFpYUj92X3q63eNOtroLd2WiRmMpIkHYWcFVEqYLV9Y/zmcVFQVzwQGJDGilfX
-         XtFVTGjmAALxokXi3xfK5Us8YF7HuBDNMbBgE9tuvFKV4CFm+yWHgRz0LaWqnaDKnecp
-         zJv0MegW2ww91zWEKX64dgRCBy9UFTA07YQsTzRePjbctM87Bm2sCiWYZTH0V+XYjsXV
-         NaE69T+0HhtYS/0Xh6GuRDHNVyIg/RxLJLa1LMJd8Qb+eF3L+cUQ22DCfwXqpKT8mNeA
-         8SRg==
-X-Forwarded-Encrypted: i=1; AJvYcCWMCPaulbTpbkt2Ws67XA4Qfr0zWkPvPd2V00k1SyGfvzMiO9SsoSut8hUwo0jeE7LhdCUU6/ZiDvb+WB4O@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5IS6ElgMIdRmygQdCOf3JmB88iWFotUKztKb/+3N73+qG7qtj
-	2TNrHaRLpRohRuwsBu1AkKT9QQt5hrNcHsQXxap/NiCkb1tMgkz897IQQHVNtp9m1yE=
-X-Gm-Gg: ASbGncsWOwww2u7vPxLHTTB7k988R0XkaKF4CgIjnV+iUN6NDQic4VykeEzo7EOrqMJ
-	uKZ1dGXXehfWmtu4rtUogJcQX2u2mslRfaG3sJLjtbLdltsKLuKnoVgY/9e6e4kXPoSaA3o7Y/g
-	/rcRVvZyBkhnlt99klXbeQEDyDBJ5Lj34H+MooxgIeT34qhwp9ELosfv5avO/2hC/MAVqL/JAMl
-	nKLcgb2kWkpFPcfyZ0c3oUaSWXwdMuBHqanjcDVXYVjJC6BuojNmY5/5L+1iBTr1453MaTLndSF
-	TSIRbs9m56P0i8LmHim896PZYqNjUYWZewamg3Cr4RcBYgBEcUrb4TMuuVxh26Nee8zlyKdymMv
-	T1fvwUq81VFhIraCLt0CWcgEkuPoVvhNe8PQtaI1PhwOtoKQxjrCgpxAiRtkOP+i4SQE=
-X-Google-Smtp-Source: AGHT+IFY1cXRHhDZKmmaOPFoMzRlis7auiB0SY6wze0NFezD/noiXwvsAjKX3xVSDeubNvW/ghlrqg==
-X-Received: by 2002:a17:907:868c:b0:ae0:da16:f550 with SMTP id a640c23a62f3a-af619d062b6mr1776275666b.49.1753771792232;
-        Mon, 28 Jul 2025 23:49:52 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af6358600b1sm546209366b.7.2025.07.28.23.49.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 23:49:51 -0700 (PDT)
+	s=arc-20240116; t=1753773925; c=relaxed/simple;
+	bh=3oLvzg2LALK7ZKr735lj9tvzgSU/gYhB8G7aMbfqdw8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=fzwnsEkFdOaHhjeympxr2p11t7kl3SIkVrYjwFhQaSbpSA9Bl4f7PD4DgEscir2eKFb9AhCkJS2BsD8dUC49f2hk2UbvVrq54AT0iuOTXaMrZDRk7zgQGZVl0p+8xrXFd3E2boEDJVlVF9WA/ILZmVYZ9yWpjbcqWE36F7I6xWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h0Nde5QY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SMDhgj012147;
+	Tue, 29 Jul 2025 07:25:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=NpzSBali8HFXORJ2UrAAOw
+	x5yEv06UDkaQJ+VO/CHRc=; b=h0Nde5QYxxkV+vgTgzkQWrD2oZnmzxXYvhJltn
+	ahC2jGdWhKZ1yLJCkE+Sd6g/ANCKqCnV51YMbpckd8zszcxN/lle1PjkcS43u31F
+	yLloxvqnnBTOV2Eg7rVAyOz2t2Y+WBO6Kqnmj+TaIyDHZn81kDawRmf9V8+D/zVP
+	XDbOi0gG+SMpsdff5NGCzvOqk6g1gzNWuusKrC+PTENgJXrpP/ppftaVbvYdc9rD
+	OcOY5JKw7Z3whx52haoyOkYqJliF7Dk0iAWKMPMuV8bORPzad8hkFdcKpBv6WxGc
+	7QjTGH5XX5GFwOndC6em4ydj1vjkbZoHOFW2K4O11mk8i6TQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484qsk75sj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Jul 2025 07:25:16 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56T7PFq5000958
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Jul 2025 07:25:15 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Tue, 29 Jul 2025 00:25:12 -0700
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Date: Tue, 29 Jul 2025 15:24:55 +0800
+Subject: [PATCH v2] media: qcom: camss: Add support for regulator
+ init_load_uA in CSIPHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 29 Jul 2025 08:49:50 +0200
-Message-Id: <DBOC7QBND54K.1SI5V9C2Z76BY@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
- <linux-mmc@vger.kernel.org>
-Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Luca Weiss" <luca.weiss@fairphone.com>, "Konrad Dybcio"
- <konrad.dybcio@oss.qualcomm.com>, "Will Deacon" <will@kernel.org>, "Robin
- Murphy" <robin.murphy@arm.com>, "Joerg Roedel" <joro@8bytes.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Manivannan
- Sadhasivam" <mani@kernel.org>, "Herbert Xu" <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, "Vinod Koul" <vkoul@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Robert Marko" <robimarko@gmail.com>, "Das
- Srinagesh" <quic_gurus@quicinc.com>, "Thomas Gleixner"
- <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>, "Amit
- Kucheria" <amitk@kernel.org>, "Thara Gopinath" <thara.gopinath@gmail.com>,
- "Daniel Lezcano" <daniel.lezcano@linaro.org>, "Zhang Rui"
- <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>, "Ulf Hansson"
- <ulf.hansson@linaro.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
- <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
- <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
- <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
- <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
-In-Reply-To: <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250729-camss_csiphy_current-v2-1-da3c72a2055c@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAEd3iGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDcyNL3eTE3OLi+OTizIKMyvjk0qKi1LwSXXNzS+Nko7TEJDOzNCWg1oK
+ i1LTMCrCx0bG1tQD88QlHZgAAAA==
+X-Change-ID: 20250729-camss_csiphy_current-7793c2fab66f
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Wenmeng Liu <quic_wenmliu@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753773912; l=11102;
+ i=quic_wenmliu@quicinc.com; s=20250211; h=from:subject:message-id;
+ bh=3oLvzg2LALK7ZKr735lj9tvzgSU/gYhB8G7aMbfqdw8=;
+ b=UMrrX1HfYc359AjNhccj+KU8gu3SpHcUDUS/T2KO2Jsu7tM0T28cVEgCUJmeSRZOddFkVuzLN
+ Aah7a7ptufzDvonwUWqoH+TegrTVQGxqb+Ii5TlGQp4cL3QnF4MjvOk
+X-Developer-Key: i=quic_wenmliu@quicinc.com; a=ed25519;
+ pk=PTegr3w0f1C9dOSL6CUdJR5+u+X/4vsW7VMfwIMeMXQ=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=KdDSsRYD c=1 sm=1 tr=0 ts=6888775c cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=-Pl-RTQkTo2ai6zIkRIA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: WyQE32ug4Y3qfVP5e2VIiczv7Q3EMZVw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDA1NCBTYWx0ZWRfX5pXWhZpda3L7
+ OiGlzjHSh8aepHj7P21xUoHL6IllaZ3DinWIq6YsUyPfSof7FVKlVb6FVys3Gc+0jnZVxOeCs7Q
+ wC/MTE1Jp4F1Wdi/J1PRMLJY8lP986pvMfr904TuamAOtC7zPsaYMCaAcSP5ohS4DBYjHlGj+7y
+ zjiCOjx/WgfjB2EzL+MnkO7Wd8hP9ybsanBGbbO0QbYau85VsnQUnjxOOPhMJH/eJwMOLnLL0ZU
+ 2Ol80+Hyw9yfoPFJsvsawPPY+yAhLkCOQ/HT2IoDGh7Y8cNIiWh2Vym+fmLHEDKtO35kso4yCwe
+ XCQnBkXR91nLO3MowNqUPDVOoR3iCh+s06nmTHeyAYe7yE2QiOiYAeYvIpcMX/g6kyOy3+dsuLW
+ 3cwGSNFW6MQbukw7G8Dy69e7gBd3k63C4U1E+3LvIGdX3iiCdDYKMLuJGavgPE/OU46n7pEj
+X-Proofpoint-ORIG-GUID: WyQE32ug4Y3qfVP5e2VIiczv7Q3EMZVw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-29_01,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 mlxscore=0 spamscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507290054
 
-Hi Konrad,
+Some Qualcomm regulators are configured with initial mode as
+HPM (High Power Mode), which may lead to higher power consumption.
+To reduce power usage, it's preferable to set the initial mode
+to LPM (Low Power Mode).
 
-On Thu Jul 17, 2025 at 11:46 AM CEST, Luca Weiss wrote:
-> Hi Konrad,
->
-> On Thu Jul 17, 2025 at 10:29 AM CEST, Luca Weiss wrote:
->> On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
->>> On 7/13/25 10:05 AM, Luca Weiss wrote:
->>>> Add a devicetree description for the Milos SoC, which is for example
->>>> Snapdragon 7s Gen 3 (SM7635).
->>>>=20
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> ---
->>>
->>> [...]
->>>> +
->>>> +		spmi_bus: spmi@c400000 {
->>>> +			compatible =3D "qcom,spmi-pmic-arb";
->>>
->>> There's two bus instances on this platform, check out the x1e binding
->>
->> Will do
->
-> One problem: If we make the labels spmi_bus0 and spmi_bus1 then we can't
-> reuse the existing PMIC dtsi files since they all reference &spmi_bus.
->
-> On FP6 everything's connected to PMIC_SPMI0_*, and PMIC_SPMI1_* is not
-> connected to anything so just adding the label spmi_bus on spmi_bus0
-> would be fine.
->
-> Can I add this to the device dts? Not going to be pretty though...
->
-> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm6=
-4/boot/dts/qcom/milos-fairphone-fp6.dts
-> index d12eaa585b31..69605c9ed344 100644
-> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-> @@ -11,6 +11,9 @@
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "milos.dtsi"
-> +
-> +spmi_bus: &spmi_bus0 {};
-> +
->  #include "pm7550.dtsi"
->  #include "pm8550vs.dtsi"
->  #include "pmiv0104.dtsi" /* PMIV0108 */
->
-> Or I can add a second label for the spmi_bus0 as 'spmi_bus'. Not sure
-> other designs than SM7635 recommend using spmi_bus1 for some stuff.
->
-> But I guess longer term we'd need to figure out a solution to this, how
-> to place a PMIC on a given SPMI bus, if reference designs start to
-> recommend putting different PMIC on the separate busses.
+To ensure the regulator can switch from LPM to HPM when needed,
+this patch adds current load configuration for CAMSS CSIPHY.
+This allows the regulator framework to scale the mode dynamically
+based on the load requirement.
 
-Any feedback on this regarding the spmi_bus label?
+The current default value for current is uninitialized or random.
+To address this, initial current values are added for the
+following platforms:
+SDM670, SM8250, SC7280, SM8550, and X1E80100.
 
-Regards
-Luca
+For SDM670, the value is set to -1, indicating that no default
+current value is configured, the other values are derived
+from the power grid.
 
->
-> Regards
-> Luca
+---
+Changes in v2:
+- Change the source of the current value from DTS to CAMSS resource
+- Link to v1: https://lore.kernel.org/all/20250620040736.3032667-1-quic_wenmliu@quicinc.com/
+---
+
+Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+---
+ drivers/media/platform/qcom/camss/camss-csiphy.c |  4 +++-
+ drivers/media/platform/qcom/camss/camss.c        | 26 ++++++++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss.h        |  1 +
+ 3 files changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 2de97f58f9ae4f91e8bba39dcadf92bea8cf6f73..7a2d80a03dbd0884b614451b55cd27dce94af637 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -707,8 +707,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
+ 			return -ENOMEM;
+ 	}
+ 
+-	for (i = 0; i < csiphy->num_supplies; i++)
++	for (i = 0; i < csiphy->num_supplies; i++) {
+ 		csiphy->supplies[i].supply = res->regulators[i];
++		csiphy->supplies[i].init_load_uA = res->regulators_current[i];
++	}
+ 
+ 	ret = devm_regulator_bulk_get(camss->dev, csiphy->num_supplies,
+ 				      csiphy->supplies);
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index e08e70b93824baa5714b3a736bc1d05405253aaa..daf21c944c2b4818b1656efc255e817551788658 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -750,6 +750,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
+ 	/* CSIPHY0 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { -1, -1 },
+ 		.clock = { "soc_ahb", "cpas_ahb",
+ 			   "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 0 },
+@@ -768,6 +769,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
+ 	/* CSIPHY1 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { -1, -1 },
+ 		.clock = { "soc_ahb", "cpas_ahb",
+ 			   "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 0 },
+@@ -786,6 +788,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
+ 	/* CSIPHY2 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { -1, -1 },
+ 		.clock = { "soc_ahb", "cpas_ahb",
+ 			   "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 0 },
+@@ -1188,6 +1191,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY0 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1202,6 +1206,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY1 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1216,6 +1221,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY2 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1230,6 +1236,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY3 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy3", "csiphy3_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1244,6 +1251,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY4 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1258,6 +1266,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+ 	/* CSIPHY5 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 17500, 10000 },
+ 		.clock = { "csiphy5", "csiphy5_timer" },
+ 		.clock_rate = { { 400000000 },
+ 				{ 300000000 } },
+@@ -1472,6 +1481,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
+ 	/* CSIPHY0 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 16100, 9000 },
+ 
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 300000000, 400000000 },
+@@ -1487,6 +1497,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
+ 	/* CSIPHY1 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 16100, 9000 },
+ 
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 300000000, 400000000 },
+@@ -1502,6 +1513,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
+ 	/* CSIPHY2 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 16100, 9000 },
+ 
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 300000000, 400000000 },
+@@ -1517,6 +1529,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
+ 	/* CSIPHY3 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 16100, 9000 },
+ 
+ 		.clock = { "csiphy3", "csiphy3_timer" },
+ 		.clock_rate = { { 300000000, 400000000 },
+@@ -1532,6 +1545,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
+ 	/* CSIPHY4 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 16100, 9000 },
+ 
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 300000000, 400000000 },
+@@ -2158,6 +2172,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY0 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2172,6 +2187,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY1 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2186,6 +2202,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY2 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2200,6 +2217,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY3 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy3", "csiphy3_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2214,6 +2232,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY4 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2228,6 +2247,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY5 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy5", "csiphy5_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2242,6 +2262,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY6 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy6", "csiphy6_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2256,6 +2277,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
+ 	/* CSIPHY7 */
+ 	{
+ 		.regulators = { "vdda-phy", "vdda-pll" },
++		.regulators_current = { 44000, 8900 },
+ 		.clock = { "csiphy7", "csiphy7_timer" },
+ 		.clock_rate = { { 400000000, 480000000 },
+ 				{ 400000000 } },
+@@ -2488,6 +2510,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	{
+ 		.regulators = { "vdd-csiphy-0p8",
+ 				"vdd-csiphy-1p2" },
++		.regulators_current = { 105000, 58900 },
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2503,6 +2526,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	{
+ 		.regulators = { "vdd-csiphy-0p8",
+ 				"vdd-csiphy-1p2" },
++		.regulators_current = { 105000, 58900 },
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2518,6 +2542,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	{
+ 		.regulators = { "vdd-csiphy-0p8",
+ 				"vdd-csiphy-1p2" },
++		.regulators_current = { 105000, 58900 },
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2533,6 +2558,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	{
+ 		.regulators = { "vdd-csiphy-0p8",
+ 				"vdd-csiphy-1p2" },
++		.regulators_current = { 105000, 58900 },
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index 63c0afee154a02194820016ccf554620d6521c8b..b46e92b10e096ca8e082ea2bb0b20032135e05b9 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -44,6 +44,7 @@
+ 
+ struct camss_subdev_resources {
+ 	char *regulators[CAMSS_RES_MAX];
++	int  regulators_current[CAMSS_RES_MAX];
+ 	char *clock[CAMSS_RES_MAX];
+ 	char *clock_for_reset[CAMSS_RES_MAX];
+ 	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
+
+---
+base-commit: 0b90c3b6d76ea512dc3dac8fb30215e175b0019a
+change-id: 20250729-camss_csiphy_current-7793c2fab66f
+
+Best regards,
+-- 
+Wenmeng Liu <quic_wenmliu@quicinc.com>
 
 
