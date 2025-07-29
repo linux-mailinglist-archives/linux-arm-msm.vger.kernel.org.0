@@ -1,82 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-67014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7215BB14F0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 16:06:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FBA6B14F24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 16:18:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E97B18928FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:07:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62944166EEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:18:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDDAA1C862B;
-	Tue, 29 Jul 2025 14:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5895B1D27B6;
+	Tue, 29 Jul 2025 14:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OYFyL98V"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FxX5+zQS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44AD1B424D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 14:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2881A3177
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 14:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753797999; cv=none; b=gkCKLiGjvdlx12uX31EawvKPBgjVbV4b7HZ65qtou35EIoq4s16U5g0baIztRGjH0f68sbTfFY2a3Zc8JuBUZeJPBOMkSnW7oz7OxanMW5gdSxScuCaaIMD+sUsemUr7+OC+b83849A0+YojVZCEKcRZkXbyZ/RdYVH5Nng0Yns=
+	t=1753798704; cv=none; b=r8w1dgVsD33vOxCH3N8C7W8t9cGtZpc02QKqzhbW36ZDuoOmad7MhsJy6e7l9MrT8cD+r9kjwZppysHzc3SlwAPW7G1MW+yHs2Pl/RmMtuC8xtWAZA9OnSrRZAsB7BN9kn8/BZeVPM/YjgbP6zHeks3IvYVRsz52Inb5rySv8vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753797999; c=relaxed/simple;
-	bh=Rj3k2uCkIW34APxKx+WCZyC5uQQbNJ5NxrHyVRTFA3s=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=M2Eh+3l4yCRN4paKJ/3XPEwPrKH5YVR7FcfyRN74w+9Klc8899nEFhMZer5bY3Z+kysaSPFxHKakQm6VdH4tYvERVcGIqKtxTKDf2H42ttRVK1cqBI22zDKX5KK7K7KHxmd1JIvX2KluZfqu19sPQ0vusZGReSNw229f5Inq9v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OYFyL98V; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-455b00339c8so35456665e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 07:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753797994; x=1754402794; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fn497pBIb31Sx7BbH71sH1wCChN0m96yZl9gFKIrt2U=;
-        b=OYFyL98V+IRTRY/92U0aEtqMPyA9aR77Cjymdl7chwdmxZDkD7biY/bw89wX2de887
-         0Mm2c0BZBS5xcjpJRD89lWTvWZSQxBbGy1yuyT30HtOZjLA39Vypp+Fycd/DGiuKMgB+
-         UufKdIjA4qgtb9vQ+fZ0VdivMmuvZikPAu2mJM6Oxi936IFXLXH3htV049Ktkz+LSj4B
-         DUJxgkAxT96qjf3OKEeHU5LvTEQy9qL4d77Z27FO/PDcO4yZFZd8EZP3hZejile3CZwx
-         NMzD51QOwYRGp8kqvp6/Ur4IbgWEC2DBenqohI0L/x0zFDe7ushW0Y1JR7/wchoBGZEl
-         BpSQ==
+	s=arc-20240116; t=1753798704; c=relaxed/simple;
+	bh=2q83QnAPZfpFgPafBP7XU6Up/noCHicxS0L2OSGBamM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hN68cnWvG9Icvg43rZJgmTELQt1CRzhfw6tmSbFUsZXcAXLUJx5fHwPxbgW+k5Zm3c2W7DGLZeqEE0Q1WoQ6C28RDQ+ofielY84yBjlau/24SmzdnDy2rxk0kbYYoJjm1DmSVwsgIflP6EEP1TIn2cHzUqJDJzzp1vnRVzOCnJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FxX5+zQS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56T866eF012855
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 14:18:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uPJzTv/LsbZH/DP7GxqrDBaJiP6VaHmRqwcYKmkvw5s=; b=FxX5+zQSKgQwSpee
+	DKs21uj/O5Lev5GgRujGmcE/cCI0YwWEKXcUavyVuNxsaYJKN+dx3KBr56Fu2x5p
+	SDhX7uxRHUcBlLMNmozeAa6hXE/KZ+23T+kexG/KW5558LVCF54WJsFoGIdf2u0t
+	en4z+rNyS80nEO69dimXS/O6rVik4Z3ggvlryiE8PvfjqpDyvJWlPM2yt3CeeATE
+	uSCW9UdRYD5p2g7GTM51YNe87BZbvX4DvC12GtK/5mnBrIkitYgfTVSFjFQtsoxv
+	7KVPMlBymws6Lhjryr8SmkDsK8JtwZuE1/5RQXYCImlohoiukd1TChEGCbDH/CC0
+	6ACgbQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484qda0aks-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 14:18:21 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e33e133f42so115890385a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 07:18:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753797994; x=1754402794;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Fn497pBIb31Sx7BbH71sH1wCChN0m96yZl9gFKIrt2U=;
-        b=IlBjGK7olqORzRTQ/PtP0pgklEf8+jAqnf3OKLKXffhf2mq1kBvbE62iayxD4LlC/t
-         uA90RVL53/PLRneGmEE7Fz33muA/HB0fAtQNBHvfImMFE6ypW8mv6H4Q5mKWB6Vzr66d
-         xqcO4uHMPvV3UrsbHhu/nVWErrI3Y0vCmwsvVOj7P02RZBaGN/cLlf14yk8pK3FlOJp4
-         +qQjW/T4MEpHOqA3nmJOa5RFoj98Vw1Zo3GlNL43RBSSYr5jtPdMZsCrX3gnQjL4JGvZ
-         0dadsx/RdtgllPJXCe+pxVdS2odQ8qwOAK66aEXUK4VE1KlErkjrEriGzCH38572fWD/
-         UB8A==
-X-Gm-Message-State: AOJu0YxAHLzNbKvI5lajbOJzyi/R3MXJUwT+3ef/l8i5TXAVcKFEfR/W
-	LlIdHBeCciVg6/7EIgOUIML8ru9r6D785fI5JUgUEvda8SZRn4vq0jg+ZssVALUTuABuWwP43LY
-	+Bw37
-X-Gm-Gg: ASbGnctriW2wQuysdUOhGA0rgc7MNeI99d9T2AqcjaxpQ2p2Pbc2/LqySW9GeBy/4rq
-	TrHIqUMT2lCxVBvktPqTKLoiq16CuFi2LzidXhLzuQkzBjhuzOiv2McMSCmcvOQOON67wW5QmXn
-	l7L3HukYkD5CoKrBPjByVhetRXFYOP3IbvNSReEx0IScbuOvXOdzwD/EWLtp3YN1PD0Yh5wAVg3
-	aNsMDe3uzFX1JBNKuJzlbyHklzSFXdWWPzdQhrAaLBlpYKQ3e+mHn/Y+4aE6qbpIhBpGL8N11HW
-	deH27W6ZrT4zLi+XCRqqawVOVePDsmgLTc/euvcIR6RlbnDN8HhLEt7sn6pAqMTlYidhQrEjR9u
-	Dca9PphZ52Rn6z2eK2F4zHKYL0OFr4SHF7tLySBRIDlB54CfUe0DF/gc5B0+j1nPYLvuv2nFG
-X-Google-Smtp-Source: AGHT+IF0jH8WRN0uj1ieZOTFoPYfy4emJn+MHYxU9ZEF0XGbevulltaVbFmdQE5WJDFjaDKAdfUMXQ==
-X-Received: by 2002:a05:600c:3e0c:b0:456:18f3:b951 with SMTP id 5b1f17b1804b1-45892814760mr1387415e9.15.1753797993672;
-        Tue, 29 Jul 2025 07:06:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:3ae8:20b:c783:9328? ([2a01:e0a:3d9:2080:3ae8:20b:c783:9328])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b78dd6cb0fsm3231780f8f.29.2025.07.29.07.06.32
+        d=1e100.net; s=20230601; t=1753798700; x=1754403500;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPJzTv/LsbZH/DP7GxqrDBaJiP6VaHmRqwcYKmkvw5s=;
+        b=YJywUCyZe99tCm7/plZ3sG5UHUHIwE1b4tg282gA98DRV5TXdR2QFgXGMI0wymuMmf
+         4LqsZ38sbhYg3W3drHUewShOrB8fHiYShMBOrbEBylHZt854ChQlcW8gspLC9mdVjWMz
+         MnVL5O3NJEmacIYWNhRyj5dyWkdf+xKZCHEzCzly9fTXxFVRPBVDBb0CuxVDMEpO6lrS
+         eqodEjux7g7GFJIU9NkRBvExRWSflImbFAeLml0ba9z/l7Dri2go4Tq47fxCGKcexAos
+         mc8tWtlX4Axo8W4toAy4BshMZiJSBZ6gwQa4ziPYLENk+tLvlQZSzgePg7MugNGgLh14
+         MQ4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUHMONr4eSop2HcKBTtnWk92hqdJRKEisu0eOGwEdjw5Dn9K1huWzOaPD5v4lV/rLbY1VwvGPnnDZw1iQ5u@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvjQF3a6AponTZhIbNN5Phxxy/UnKOsBLBJ+9ekL8jN0/GW1Wx
+	RubhNSkHkbAD7GFAbb8KxdAMMwgQLAy8DrpF2dPXfzRoVSMcgmINQap0aR8ocZNNqI12eBLOApT
+	LazV48aG6n9kLbgMukucduwlBdzZooiTUaETvy5XNXdVaUoA77Es3oWj+Wr+JUcMSKVkq3ko3u0
+	XN
+X-Gm-Gg: ASbGncvMn13REf8eAYtdef4br5bQhSg9iPf2dq76znR4hpYMtog+51VlFJElbS+T657
+	chp/kZnJYrf2sSKYxOswN1AYtTHROrPviQtK6kDW7NzHmNS0PFKD1pL2CLgtJWPev/+4PVTY+fC
+	QBJBhG5nHVsNf4cjsw3rXpjNEZ22oAn8N6qtcrEAKOeHpaQCm5/5Oa7zN8ohmk583xkJ9CUICe6
+	i7kMKqrsVcOT9q+0yV3EXaq12pR83iED27X423bdo+xm4qKYwhqWXT9kO8WC8Zqi14L/Zc4j4qN
+	RhgkbKnl7GmMAl6+DaAgBCsr9adHm//bd//DW6AjxMj2DfqP/wUf/ZH01oZol1+sjbVJONvEUI/
+	eBobkdfE4b3/G9rhr2w==
+X-Received: by 2002:a05:620a:2544:b0:7e6:67b5:f92d with SMTP id af79cd13be357-7e66d4ee20emr11556085a.6.1753798699837;
+        Tue, 29 Jul 2025 07:18:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNcpUDTrukrGA/Ku3+zfham3Jn5WZovcxGRPs2Xx7mhoe+YWNAI0qwzjx7TtdhTwzEwh7/Tw==
+X-Received: by 2002:a05:620a:2544:b0:7e6:67b5:f92d with SMTP id af79cd13be357-7e66d4ee20emr11552085a.6.1753798699019;
+        Tue, 29 Jul 2025 07:18:19 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635adb093sm595797166b.124.2025.07.29.07.18.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jul 2025 07:06:33 -0700 (PDT)
-Message-ID: <cfbad162-e629-45c9-8436-74bb6fc416f2@linaro.org>
-Date: Tue, 29 Jul 2025 16:06:32 +0200
+        Tue, 29 Jul 2025 07:18:17 -0700 (PDT)
+Message-ID: <341a7e85-9d4e-4ac8-8fa1-1000281eeed9@oss.qualcomm.com>
+Date: Tue, 29 Jul 2025 16:18:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,99 +91,139 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 16/17] drm/msm/a6xx: Enable IFPC on Adreno X1-85
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
- <20250720-ifpc-support-v1-16-9347aa5bcbd6@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250720-ifpc-support-v1-16-9347aa5bcbd6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 1/3] driver: bluetooth: hci_qca: fix ssr fail when BT_EN
+ is pulled up by hw
+To: Shuai Zhang <quic_shuaz@quicinc.com>, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc: quic_bt@quicinc.com
+References: <20250715051618.724475-1-quic_shuaz@quicinc.com>
+ <20250715051618.724475-2-quic_shuaz@quicinc.com>
+ <ee84aeb0-728a-4642-9686-3abb9588bb24@oss.qualcomm.com>
+ <e7e700e4-e87c-4e2c-8df1-634870ba91b2@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <e7e700e4-e87c-4e2c-8df1-634870ba91b2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: nba2_a_FJHx6jmSvzihIMeZa_gvcVU9H
+X-Authority-Analysis: v=2.4 cv=Pfv/hjhd c=1 sm=1 tr=0 ts=6888d82d cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=1VU-nOPUZsXZC3zCpdYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: nba2_a_FJHx6jmSvzihIMeZa_gvcVU9H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDEwOSBTYWx0ZWRfX8gpJQtaEAZDy
+ QkSgKQxhKLwDPZK/XNYw9w1ChxDFM40hqz57vDZYt/00uyauOnWV4MzM3gabEKtGz0doH4RVqKQ
+ Lq2JMWKCYk1WdOjnzb+sWYOeKmCKIIVJjrdh1kr/tjWABh/sMzmsBCVm46TecJPfNm1DIDaiFWS
+ 3Th57It7NJQCUXEiFmww43sLHNRd7dpEwXQm4ozUqOcf84jqu94QHLBaVCEvvB7nN//Fx/zcgpf
+ i5flVy1ZdIXwRV7Cu572Z+YvnI9odTBQ8qyFUZmhesrxlTdBFwylb7bR19LGzLDHMLTeYMjJ/Ez
+ CnP75XnRI9xxid1aEquPTrDErl1x5cVC3Yq76cI5lrkD3+1gcuu2Vho4jqIOok+5UHV+IqZdFZB
+ lJdYbilJECesF+gjNBtjnLybm43JNqPD3oFTx+cZpFhupAnnIpDKfPkrrXIVdGFCkRFoPgb2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-29_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 clxscore=1015 adultscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507290109
 
-On 20/07/2025 14:16, Akhil P Oommen wrote:
-> Add the IFPC restore register list and enable IFPC support on Adreno
-> X1-85 gpu.
+On 7/19/25 1:32 AM, Shuai Zhang wrote:
+> Hi Konrad 
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 67 ++++++++++++++++++++++++++++++-
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 15 +++++--
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->   3 files changed, 78 insertions(+), 5 deletions(-)
+> On 7/15/2025 5:11 PM, Konrad Dybcio wrote:
+>> On 7/15/25 7:16 AM, Shuai Zhang wrote:
+>>> the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
+>>> This leads to reset command timeout.
+>>
+>> This is a description of what goes wrong in terms of the code of
+>> this driver, and it doesn't explain why you gate the code addition
+>> with HCI_QUIRK_NON_PERSISTENT_SETUP, please share more details about
+>> what you're doing, and more importantly, why.
+>>
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> index 70f7ad806c34076352d84f32d62c2833422b6e5e..07fcabed472c3b9ca47faf1a8b3f7cf580801981 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> @@ -1343,6 +1343,69 @@ static const uint32_t a7xx_pwrup_reglist_regs[] = {
->   
+> The problem encountered is that when the host actively triggers ssr 
+> and collects the coredump data, the bt will send a reset command to 
+> the controller. However, due to the aforementioned flag not being set, 
+> the reset command times out.
+> 
+> I'm not clear whether you want to ask about the function of 
+> HCI_QUIRK_NON_PERSISTENT_SETUP or why the changes are placed 
+> under if(!HCI_QUIRK_NON_PERSISTENT_SETUP).
+> 
+> Regarding the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, 
+> you can refer to this commit. 740011cfe94859df8d05f5400d589a8693b095e7
+> 
+> As for why it's placed in if(!HCI_QUIRK_NON_PERSISTENT_SETUP), 
+> since HCI_QUIRK_NON_PERSISTENT_SETUP is related to BT_EN, it can be 
+> used to determine if BT_EN exists in the DTS.
 
-<snip>
+What I'm saying is that you should put this information in the
+commit message
 
-> +
->   static const struct adreno_info a7xx_gpus[] = {
->   	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
-> @@ -1432,12 +1495,13 @@ static const struct adreno_info a7xx_gpus[] = {
->   		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->   		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
->   			  ADRENO_QUIRK_HAS_HW_APRIV |
-> -			  ADRENO_QUIRK_PREEMPTION,
-> +			  ADRENO_QUIRK_PREEMPTION | ADRENO_QUIRK_IFPC,
->   		.init = a6xx_gpu_init,
->   		.a6xx = &(const struct a6xx_info) {
->   			.hwcg = a740_hwcg,
->   			.protect = &a730_protect,
->   			.pwrup_reglist = &a7xx_pwrup_reglist,
-> +			.ifpc_reglist = &a750_ifpc_reglist,
->   			.gmu_chipid = 0x7050001,
->   			.gmu_cgc_mode = 0x00020202,
->   		},
-> @@ -1459,6 +1523,7 @@ static const struct adreno_info a7xx_gpus[] = {
->   		.a6xx = &(const struct a6xx_info) {
->   			.protect = &a730_protect,
->   			.pwrup_reglist = &a7xx_pwrup_reglist,
-> +			.ifpc_reglist = &a750_ifpc_reglist,
+> 
+>>>
+>>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+>>> ---
+>>>  drivers/bluetooth/hci_qca.c | 12 ++++++++++++
+>>>  1 file changed, 12 insertions(+)
+>>>
+>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>>> index 4e56782b0..791f8d472 100644
+>>> --- a/drivers/bluetooth/hci_qca.c
+>>> +++ b/drivers/bluetooth/hci_qca.c
+>>> @@ -1653,6 +1653,18 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
+>>>  		skb_queue_purge(&qca->rx_memdump_q);
+>>>  	}
+>>>  
+>>> +	/* If the SoC always enables the bt_en pin via hardware and the driver
+>>> +	 * cannot control the bt_en pin of the SoC chip, then during SSR,
+>>
+>> What is the "SoC" here? Bluetooth chip? MSM?
+> 
+> yes, Bluetooth chip on qcs9075-evk platform
+> 
+>>
+>> What does "enabling the pin via hardware" refer to? Do we ever expect
+>> that a proper platform description skips the bt_en pin?
+>>
+>> Also:
+>>
+>> /*
+>>  * If the..
+>>
+> 
+> Sorry, I’m not quite sure I follow—could you clarify what you meant?
+> Here is my understanding.
 
-So far it's stable on a750 so I think can safely add ADRENO_QUIRK_IFPC here aswell.
+The comment style.
 
-Neil
+> 
+> Enabling pins through hardware refers to "the pin is  pulled up by hardware".
+> qcs9075-evk platform use the m.2 connective card, the bt_en always pull up.
 
-<snip>
+This is not conclusive either. Does the firmware of the bluetooth chip
+configure the pin, or is the reset pin connected to an always-on PCIe
+supply or similar?
 
+> 
+> 
+>>> +	 * the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
+
+At a glance, they're only cleared in qca_setup(), regardless of their state
+
+>>> +	 * This leads to a reset command timeout failure.
+>>> +	 * Also, add msleep delay to wait for controller to complete SSR.
+>>
+>> Googling "bluetooth SSR" yields nothing, so it's fair for me to ask
+>> you to explain that acronym.. it's used a number of times across the
+>> driver, so perhaps a comment somewhere at the top in a separate commit
+>> would be good as well. I'm guessing "subsystem reset"?
+> 
+> Just to clarify, SSR is short for Subsystem Restart
+
+Please write it down somewhere
+
+Konrad
 
