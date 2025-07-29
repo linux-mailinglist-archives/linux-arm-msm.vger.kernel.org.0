@@ -1,162 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-66972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17E00B14AC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:08:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59C31B14B1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:23:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E7C14E6AD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 09:07:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83C1117067B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 09:23:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0764A2874F1;
-	Tue, 29 Jul 2025 09:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66B482749E0;
+	Tue, 29 Jul 2025 09:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YoILE9fe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fMZZvrm6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59286286D64;
-	Tue, 29 Jul 2025 09:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F012222DA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 09:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753780085; cv=none; b=L0YGsO43oYd8wIo+1GExjn4zQvaZc7ONX5T87ggkPybwez1WUHXieQ9k2Z9zCKsxNkZmnVY3Wg30QDBI4SiDqLNYDSEi84/8c4RUutI5cF/vL4O95xsMna7rW8Pfkm90h7MFIMIpbRC/vOs36glDvxji1D0A7hbg0V2WcEdPaMQ=
+	t=1753780979; cv=none; b=c9pGNibzesQia99CH0bLQS7ezNTw3uSevhErm6jKbG3rXjk1BtlHXvfSKtXowJx8g76mZV3Q3uXVqdRl66imTBfxhA7h3Z8RWmIE3rTjlIX2+olcAwPc2p/Qr3L2vpw+tWYqX/Z7pppAH/7tYDnu1wCoFLCfPPXZvYXwBTHrQhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753780085; c=relaxed/simple;
-	bh=6xqd3ZGPvMT14nG70kPsq5tJ9sNdsKyLjJnQfae58F8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XCXEZ1nC1U/FpwtC/Wk+UX5yY/keyrJmmy6UymnIeMgTioe1WjSlo4U8M6ccblqsVFBj6GKnhMsnCtPkxb2muQ0cg5WptQTtXxkxkT3gzE2WgWdXUhbe2LrigNJJ7I+lsUmi8lWxnudcSNmtG2Vqa3+9QwPL4DjRzmJ/hnJ4ShU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YoILE9fe; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753780084; x=1785316084;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=6xqd3ZGPvMT14nG70kPsq5tJ9sNdsKyLjJnQfae58F8=;
-  b=YoILE9feTRKcaGS517ILBoZkzjjwOJjeTwSOACVSZ1GorwhzoThomxzQ
-   z2V4wi4YlM2HV3PVp4WJIBs59rQnu0cC6GJVHSyzSaoaaEGrVy2dx2/ui
-   +++RAfxiKyo6YbTlvwV+INNPnlQkKw3BCV8PVILSqwlEnMlpfgTkyTLsx
-   W0faFyxxIm8tZn8qv9e3mGsEeYD0AfUS/9OeXVIM9qnoR1TQ/hDr23ttD
-   I6SHjIh/AXT66RdSZFkst7TFQ9FyV+aS5PNoJ9NGhm/ZR7mBLd4PaI8Je
-   oO2juvv43aDSS31xYGhSnMe9KVWfN6lentUURjD0UxzBCf+0XXn4AxzT2
-   g==;
-X-CSE-ConnectionGUID: OTetJJfDRx2BIG6dy3scsA==
-X-CSE-MsgGUID: rtfw9CwvTdmSJzu5Vwh6EQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55980657"
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; 
-   d="scan'208";a="55980657"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 02:08:02 -0700
-X-CSE-ConnectionGUID: TyZw7sn9S422x4l1rFBgQA==
-X-CSE-MsgGUID: s8Ah/v+2SsKq8DjNu4eM7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; 
-   d="scan'208";a="162360901"
-Received: from lkp-server01.sh.intel.com (HELO 160750d4a34c) ([10.239.97.150])
-  by orviesa009.jf.intel.com with ESMTP; 29 Jul 2025 02:07:59 -0700
-Received: from kbuild by 160750d4a34c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uggJP-00018t-1o;
-	Tue, 29 Jul 2025 09:07:55 +0000
-Date: Tue, 29 Jul 2025 17:07:10 +0800
-From: kernel test robot <lkp@intel.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	dri-devel@lists.freedesktop.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] drm/msm: Fix a7xx debugbus read
-Message-ID: <202507291635.fl7cCAyl-lkp@intel.com>
-References: <20250728203412.22573-6-robin.clark@oss.qualcomm.com>
+	s=arc-20240116; t=1753780979; c=relaxed/simple;
+	bh=ehz0qUEuqwWutqTkbDkVk4X0c05JiJM9sCTKzsojpIk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AvAXP4O1D4x2XNR8zaCTa362E4PgX9j+jMKD3N7zGWfsKMTMdqOFpVY9tIQXLk5WIbQRjIVSW+VFJZmQsZfdv54T9NnDnYkmev+KYA2CRNpuIJ0m9OoPvjm+VfKkC5blVc4cwTHoNQU8q2de4K3GBSduSTSCN4+R/y/cOS855B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fMZZvrm6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56T93cYK017593
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 09:22:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+TkgBhS7qZBU5x8NwedbTLWIGpOQEhTDibEzWNdfhYk=; b=fMZZvrm6a7ZJXgoa
+	VTu8tdtZtmvhJBgXio7I3ndx0mTjkv1urlBKOe8dNYOtKho5Vqba2OSn6ryP2fdA
+	dJjxNCNLeujqGjE784jrmUtI7I8/1uFceKal9A4wNxwxKgDcMtiixqaew6hIbNgN
+	pdpEUfn+Nv/3bvUkA2u2PmjPt+gu5/VJkq9ufuFXMeYOjT9/Bo+OSAbV2RjxMo7N
+	KGpMNoC306LFlif8EX9xow4dCFGRi3ZNAJ6CGIJm9GgUgXl1jFlpqou2nxdkM/mZ
+	PCCOKUg+vG14GPslX3TCbSOX3iQEce1EM5fend7HOVK6s88Fo9akRRjSQasN9Ofq
+	blLqEw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484p1afhdn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 09:22:50 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-7073ec538e2so10485696d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 02:22:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753780970; x=1754385770;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+TkgBhS7qZBU5x8NwedbTLWIGpOQEhTDibEzWNdfhYk=;
+        b=BeAnNMD9nZa8WVyZTYNF0Y4Nzyt38Z8IttCyK/hAacX8Y1vx1z1meCJoM4GgXwVBpt
+         5ZdZ3E1xMv2whh5CwIhWnOi9yHb9snXaJyMNIiW4VAyeb4XHlS0Fm6ofOK0LBWqAmC54
+         6wW9J9CoUOJ15oL9Jxw1+fHuAQXST1Jl0LOmkj2rNSuW2stnmK72eVIV7gldGcwiTRQ+
+         +f7kKFpKnbXCxUvuh1InSSgFxLAbVK0QbT9vErkHFgfc8rApKRalVwX4h1Fs6gVT6Y5b
+         qRd967dEIhVw38mVfRXrl438a/e/Zh08k+DLW8muQSavgCB4P3DC2zuBtazlrrfuqbpk
+         HmPg==
+X-Forwarded-Encrypted: i=1; AJvYcCVW6cm4YT1sLZ+Wwc6McssPMrW6AhhAjkRo/myGFeXretQorbRm9BsDH7FKB7OjdPR0VN+KlHfiznwESuUP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhsKI0iwwnpGuAh3Z2/ziZXF6CAVq2DIDF1XILn/5ij7Qo/FdE
+	j3wH8jVnAC31GdQULxNpV+r18THaL9zjO6X9XoI4r/R0VGXHmo2Lb7bQVo6ZQaZeaRyyRgaVTIh
+	BdMa4hu53YDqo1dRA6Asle3Ee9zNvYMCj05LNRdnIHMAzHUc/nx1n3wn6AtazAGOiJojo5/cB2e
+	Ge
+X-Gm-Gg: ASbGncupqpjZGhX+5d1G7CAWocrcBmbK9o2p3/mUQGCQPKBjgdYLHsqbHW7zRrUZ9QR
+	+R/3nPPm6MQFeTkIafBripfGAyzWOTHeBR1Op6Biw+3lHKHuQ35AykYl8Jgqwj9qDNWYz63q6wm
+	41ZtEaR0azXakBwMgs3gfm3Rt1LjmmkVEjf4HrWbbf++FQiToLd8q9AB+hFIw8x/M7YySF/FerI
+	bxr/IusSuULxYzAM58RJFEVDIFqe2nuH5a6zjmPZXghRewOV9fWHqFW4/yJOQjwz7knJ4Turj3k
+	GPnT56XCMnsQfwFYsF0DBFfqnAbkI8H78eLTznRViQBeyYAP2jF6zAbLX7c+5DFKZ1B54JZmYpE
+	xxgrGEU/dE+JBZ25O0Q==
+X-Received: by 2002:a05:620a:284c:b0:7e3:297d:ec32 with SMTP id af79cd13be357-7e63bfc3749mr768268685a.10.1753780969987;
+        Tue, 29 Jul 2025 02:22:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2CQhO85PPfopUvJi5c2iXiK4Jj+bqO8Y1flXWAwou74i1zFQ1b8NfuQV5+s9e8bQi1QB8/g==
+X-Received: by 2002:a05:620a:284c:b0:7e3:297d:ec32 with SMTP id af79cd13be357-7e63bfc3749mr768267785a.10.1753780969582;
+        Tue, 29 Jul 2025 02:22:49 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635aa2b2csm560836866b.96.2025.07.29.02.22.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Jul 2025 02:22:48 -0700 (PDT)
+Message-ID: <2030fbb7-3e32-4901-b106-bb3c0a1d1726@oss.qualcomm.com>
+Date: Tue, 29 Jul 2025 11:22:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250728203412.22573-6-robin.clark@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcm2290: Enable HS eMMC timing modes
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
+        konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: Tf-7gz6vxrBLve0aolsevWecDuWGU0U3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDA3MiBTYWx0ZWRfX5FXiXJON0Au+
+ bc/mc7saiYtF00wANhhup5pKRh9rzOLXuZJJJDEvAsunNxjBsCsnGGeDYciRWby+BkPL8FSnZGS
+ qPMnGAZv74pLlbjldPcwNgykfjKX/LHInAIfkeCX9gvWjN1Adf2AFbC1OijT2RaiffPXXZS6Cgb
+ r+afMqgjp6ei8jAPxr2PUaia3v/PbC6LwzpkBfG2JFJelkzYA23L6whK5qZpAJhTdH1pTOzcy3+
+ YpNmIcp3T0ilj7Pnqk07NMN0ztXtCg7pQpyhgYTUsoADkNJGTgiX/1ItX+N1wHJ6o9jZ2y29LtF
+ Jn/mERs5D0vsmEpL4AU58S4VqC/q5dd/tn9ay8vRV3qMrsegj/livXtW/YlGObPQ9MRAYGeLV5S
+ +AK6LuPP224wTuKTl1kJRGPse9/2x6zFmF9pbGNcGNOiFzUx/AYWKMwYOEmj2wNbpF7t4PaP
+X-Proofpoint-GUID: Tf-7gz6vxrBLve0aolsevWecDuWGU0U3
+X-Authority-Analysis: v=2.4 cv=KtNN2XWN c=1 sm=1 tr=0 ts=688892ea cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=Ni7ra-vBti6l6aYm9ioA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-29_02,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=999 bulkscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507290072
 
-Hi Rob,
+On 7/28/25 11:34 AM, Loic Poulain wrote:
+> The host controller supports HS200/HS400 and HS400 enhanced strobe mode.
+> On RB1, this improves Linux eMMC read speed, from ~170MB/s to 300MB/s.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> index f49ac1c1f8a3..72503c1d0532 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> @@ -953,6 +953,11 @@ &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+>  			qcom,ddr-config = <0x80040868>;
+>  			bus-width = <8>;
+>  
+> +			mmc-ddr-1_8v;
+> +			mmc-hs200-1_8v;
+> +			mmc-hs400-1_8v;
+> +			mmc-hs400-enhanced-strobe;
 
-kernel test robot noticed the following build errors:
+These were always asked to be deferred to device DTs.. But it
+seems like these are indeed controller properties.. I suppose
+I'll submit a cleanup
 
-[auto build test ERROR on drm/drm-next]
-[also build test ERROR on next-20250729]
-[cannot apply to drm-exynos/exynos-drm-next linus/master drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-misc/drm-misc-next drm-tip/drm-tip v6.16]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Rob-Clark/drm-msm-Add-missing-location-s-to-devcoredump/20250729-043615
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-patch link:    https://lore.kernel.org/r/20250728203412.22573-6-robin.clark%40oss.qualcomm.com
-patch subject: [PATCH 5/7] drm/msm: Fix a7xx debugbus read
-config: powerpc-randconfig-002-20250729 (https://download.01.org/0day-ci/archive/20250729/202507291635.fl7cCAyl-lkp@intel.com/config)
-compiler: powerpc-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250729/202507291635.fl7cCAyl-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507291635.fl7cCAyl-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c: In function 'debugbus_read':
->> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:180:9: error: implicit declaration of function 'FIELD_PREP'; did you mean 'FIELD'? [-Werror=implicit-function-declaration]
-      reg = FIELD_PREP(GENMASK(7, 0), offset) |
-            ^~~~~~~~~~
-            FIELD
-   cc1: some warnings being treated as errors
-
-
-vim +180 drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-
-   172	
-   173	/* read a value from the GX debug bus */
-   174	static int debugbus_read(struct msm_gpu *gpu, u32 block, u32 offset,
-   175			u32 *data)
-   176	{
-   177		u32 reg;
-   178	
-   179		if (to_adreno_gpu(gpu)->info->family >= ADRENO_7XX_GEN1) {
- > 180			reg = FIELD_PREP(GENMASK(7, 0), offset) |
-   181				FIELD_PREP(GENMASK(24, 16), block);
-   182		} else {
-   183			reg = A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_INDEX(offset) |
-   184				A6XX_DBGC_CFG_DBGBUS_SEL_D_PING_BLK_SEL(block);
-   185		}
-   186	
-   187		gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_A, reg);
-   188		gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_B, reg);
-   189		gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_C, reg);
-   190		gpu_write(gpu, REG_A6XX_DBGC_CFG_DBGBUS_SEL_D, reg);
-   191	
-   192		/* Wait 1 us to make sure the data is flowing */
-   193		udelay(1);
-   194	
-   195		data[0] = gpu_read(gpu, REG_A6XX_DBGC_CFG_DBGBUS_TRACE_BUF2);
-   196		data[1] = gpu_read(gpu, REG_A6XX_DBGC_CFG_DBGBUS_TRACE_BUF1);
-   197	
-   198		return 2;
-   199	}
-   200	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
 
