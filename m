@@ -1,86 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-66999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8750AB14D79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:11:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAE28B14DB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:34:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD75018A2B9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:11:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF346189D110
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:34:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6083C28CF61;
-	Tue, 29 Jul 2025 12:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB84B28A1C5;
+	Tue, 29 Jul 2025 12:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AOR+HhHO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKFXasll"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFAD28E616
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 12:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF8222425E;
+	Tue, 29 Jul 2025 12:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753791097; cv=none; b=flXhLIAVDRFobzUYsTrkqgKp5UMHpeOVvrcGXnSNvVN/XeV14/JJTuAhWHiw/2Ku2M4K3O1ornaO4FOvYymtQSVhRPpqq7f3E48rgNOTdNuJtwqBBWPye9ekQiIkBq1FIYgrbkyKsN8gq3HRggSEpYJwjPt180j2zJHUSwLrh6I=
+	t=1753792438; cv=none; b=Lx2TpufeKW7ERTnRHrD1RdqARKR8JHlaRo9XeaYlGSwfYAlYzGyJTwX3kWHruAPiXxy1U1A8V4fb3pf+m804y5itpSh6ERDxbf61eQdPXNDvxSKtabGvflG02+FcYZUc4msEmzdRzVrogRXohQiNAzGRpAgFrcZvddjcrGfrERE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753791097; c=relaxed/simple;
-	bh=WtaahhtHI8wCSsflpowLiUT/PdVdKqZ4oKuS99Kip1g=;
+	s=arc-20240116; t=1753792438; c=relaxed/simple;
+	bh=fio1fm37u4gqPExATSgrTskCq6p+QcCx5ftXVPkmW/c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Bl0tbIrI4RuXqbHbwuN0vgu14o9eXPO7rU1w2DRsVd88nncjEq9sXAuroL42BztK3ibXGyQb2cXnOBv/Hfb7AIXKfvNYoFQ+MjdjeETmgCtkdd94a1vFHIGDB6qUxMUCbujliMwKZGVkxt7rUHaPRnUvlkP+qf5RXk7kLwP5cB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AOR+HhHO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56T8ORHk018159
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 12:11:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4QE9lOzTrqBaaFrVLkONL9bTvaiKUb2/mfEEdEROAZE=; b=AOR+HhHONlZuDO79
-	/zflcFlSc2qIq20MTQp0NwDDW1zBi9VnW+ePX2OsI8OPmmEiG99pXmngTl7iwxMc
-	soBxgKAHjqc3mNHqC1SosL56HyGtRkBgVLbJv/or5QuN872SroZFk/mpyCa6vU43
-	2Q2j4n0dNqE+jnz5kz3CH1iahtjW/YFKTO1v51h4LLA9bN5r/a2wQ3Qdvl10iocT
-	7/wUtfPBPa8rs4jAstx/PGhuPL/lHIv4jylWPGvdV4kHnFpvn2/k67oZro2hCKnv
-	QKCYVcQN4bYKvLNyUyQmwZuAzSm++XZ4OygYNtAaL7EWMyXDgaSALDWb6g2UhXDx
-	5nrdiw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pbkyxa1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 12:11:34 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-31ed2a7d475so2392203a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 05:11:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753791093; x=1754395893;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4QE9lOzTrqBaaFrVLkONL9bTvaiKUb2/mfEEdEROAZE=;
-        b=Oa6C1fmhR1wLphvxBRlW2+nWtKN/QUQAR6B8QwzCyqI7tv2OCkk3awIV86ahdq1oah
-         tNWN1iJioorpz0eIUXc1dHGZyAREAcSNFHR/6ZO2T5jH0PBNDaR4K5vhPbmLqVkr/K3O
-         Tma6efvJaEQx/BEkE195hh/oAXq2UIXrlaXC062tRRmtOaTx26YlpCocmZF3xutNXlJq
-         pPXQXiNsX7xmcYEDx/NOZzqlAJKQI2zSbVQEMcBhj7JOWsdLB9InU8vJUwC20TSY1e/Z
-         kEStCc8SPEeoSQb4n4kbHbu8PSB55mjJ4DvyeM5fnpwqSVHe33t39uUgRMlIuU1sHtqH
-         MBQA==
-X-Gm-Message-State: AOJu0Yx9sYa+rbFokwiY372cB6Te8wp80yB+qRYHOflYHx0oRs2q3nYk
-	KlhCOCJH0Cpurj8qgXuR5wZTHhBAI2aDOxi/MeYP+793/MWR8wjC0fxyHHMeLU1y7MK0kp9GAbN
-	gzlIh0VA+j3UYgCUYVofvqgiqtXxot2njHEz91R0mcrnqCcwUgA4j8pQi4PCjrLI1z4Rj
-X-Gm-Gg: ASbGncu4axXXgcvu/wVXgunZhGO8hui8TWYwLv742HYLja/G+kvZmF7h9gYSWKPvyyb
-	l0h0zWVfM2YuSOToLkyEn0sUUanwNYdE9/0pogwi2mFxfQQAqCZxd6PAnx3mQTZrrRfnE9o6dEr
-	MTi+Rhg65Vjw0PKS3izOELUgvhV+9fVGVDx6sve1NonW+STo+gbK210VL7oGw0KU2RGRHSeTQ3W
-	unY+yb+MaFYrhCG5QWpVr+CvpPFzTtOWaNuRTJ/eyGZfxAKexglG2iDd0TGd961utkQl56iipmk
-	LCJufQSoBbr24fOweBVgCEzwzksUVdteob4pxCgEjHj1EE62zOm5m6FB/DtFFp1e+5mzk66X
-X-Received: by 2002:a17:90b:1809:b0:31f:42e8:a899 with SMTP id 98e67ed59e1d1-31f42e8ab21mr1328755a91.13.1753791092865;
-        Tue, 29 Jul 2025 05:11:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsgLFy8b++ep6TqapChmczzcUReCy8+FTDkc9tnmCqFhUILVLHVWY3NjRVOTnzXnPonH4Baw==
-X-Received: by 2002:a17:90b:1809:b0:31f:42e8:a899 with SMTP id 98e67ed59e1d1-31f42e8ab21mr1328707a91.13.1753791092318;
-        Tue, 29 Jul 2025 05:11:32 -0700 (PDT)
-Received: from [192.168.1.4] ([122.183.154.151])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31f5262aa05sm69491a91.32.2025.07.29.05.11.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jul 2025 05:11:32 -0700 (PDT)
-Message-ID: <8b7bc371-576b-4a4a-88a4-a4ed47d97778@oss.qualcomm.com>
-Date: Tue, 29 Jul 2025 17:41:26 +0530
+	 In-Reply-To:Content-Type; b=TnA9UQMFPnbdCVk4BqPHQBeFW1yXG4mkUACvxoBECkuzsdd3Dtt/Ir3annfIUXq7MHyuAfdc1XQ+JZp/asDKkgR0+idF8NA5LtKpOQ9ZsxvU9kv8u98t5zmXER6h7JD75A1y08ODXDbhicpQdKsZJNXgrBydJZtZ9aIFwnGFhCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKFXasll; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98761C4CEEF;
+	Tue, 29 Jul 2025 12:33:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753792438;
+	bh=fio1fm37u4gqPExATSgrTskCq6p+QcCx5ftXVPkmW/c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BKFXaslloHCh8xyxK6Z9oFhRqA7JPxSSOARVeN77yTUeHwvUVFhXjjfFIe2ZomfXt
+	 jdlBkAofMwHVNENBAKKF9QrimoE8D9J7g7Fs7XRaPUzgUSxMdSoonPnGVLzluAP0z1
+	 U3Lb5mH0biw0kg7D8mfbn0/WS6hL80q8hH8rM6YxvE7GZxlvHTNiDGzPK4QJpdmj+j
+	 G/X2mlNb1ruPDHDc+/M3mAMKvRPq0Cc5zt1s9aeI92sGlXDFG98Hbc04AdGmnpVyFJ
+	 4FSDkJUBNO1iq+ukJgcaHFXBvI95l9haLRqK5St+ijjIRssFOWcGiBctSACa0BTqI7
+	 U6hhbhRikuYAA==
+Message-ID: <1da99d0e-3ccc-473b-8f1f-0d00d206e746@kernel.org>
+Date: Tue, 29 Jul 2025 14:33:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,101 +50,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: add initial support for Samsung
- Galaxy S22
-To: Violet <violet@atl.tools>, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v7 1/2] dt-bindings: arm: qcom: document r0q board binding
+To: Violet <violet@atl.tools>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
+ linux-kernel@vger.kernel.org
 References: <20250729120331.287245-1-violet@atl.tools>
- <20250729120331.287245-3-violet@atl.tools>
+ <20250729120331.287245-2-violet@atl.tools>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <20250729120331.287245-3-violet@atl.tools>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250729120331.287245-2-violet@atl.tools>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=LsaSymdc c=1 sm=1 tr=0 ts=6888ba76 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=A1H60L6fWQAu95VAuYzdKw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=ZSXNc6tYleypp-tdgiEA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDA5NCBTYWx0ZWRfX94DJiSYabfH5
- XATNuZcngK76qqviuZJgXCzrZzo619i10W0YIoV5+l4EKs0Funq++45mkqrM/P8lgKgrdfXUMIp
- P9l96kgdgyCNRM/hZk1jsGW/9tyAnpWEDAHTn+Tnx9HusBcTOl2zIXWt0AbV9uVw5WAXa0ihebu
- +H1FWNxs/vJ2rQTduUmwUrN3gXgTQECb/Zqolya7rHGEyzkeVkEFWbnHoiPrGh3s3bW6OVNuZh1
- s96XSnn7HezIywPZd3IWmSYrYLVssiuxGtrbHcU5l+qyS3+kPztqFxmMHIh7etoVj/1nL5rKSAn
- C1xJSSpjnlaSoKnGqz6RpY8/Zg+G/ouwIwSRV1S+rpXAbZTAB4GHWaQBb8l/PgZXIA3ndiJAUex
- 7wW6CEOoI12/5p+FsXvAb0p175TyJEOvMgJt5+Ypb1K8mi/aZlAh4c26MisYJu+mBs2+0Ms0
-X-Proofpoint-ORIG-GUID: nWqcrgpZiF5irb51t5Xnwt-YXl00d7d9
-X-Proofpoint-GUID: nWqcrgpZiF5irb51t5Xnwt-YXl00d7d9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-29_03,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0 suspectscore=0
- impostorscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- bulkscore=0 mlxscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507290094
 
-
-
-On 7/29/2025 5:33 PM, Violet wrote:
-> Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
-> 
-> What works:
-> - SimpleFB
-> - USB
+On 29/07/2025 14:03, Violet wrote:
+> Add binding for the Samsung Galaxy S22 (SM-S901E) board, codenamed R0Q,
+> which is based on the Qualcomm Snapdragon 8 Gen 1 SoC.
 > 
 > Signed-off-by: Violet <violet@atl.tools>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 147 ++++++++++++++++++
->   2 files changed, 148 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[...]
+Actually I need to retract my Ack. You have to use real name.
 
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <36 4>; /* SPI (not linked to anything) */
-> +};
-> +
-> +&usb_1 {
-> +	/* Keep USB 2.0 only for now */
-> +	qcom,select-utmi-as-pipe-clk;
-> +
-> +	status = "okay";
-> +}; > +
-> +&usb_1_dwc3 {
-> +	dr_mode = "peripheral";
-> +	maximum-speed = "high-speed";
-> +	/* Remove USB3 phy */
-> +	phys = <&usb_1_hsphy>;
-> +	phy-names = "usb2-phy";
-> +};
-> +
+I also don't get why this is v7. Where are v1-v5?
 
-Hi Violet,
+https://lore.kernel.org/all/?q=f%3Aviolet%40atl.tools
 
-  The usb node has been flattened recently. Its not merged yet, but it 
-was acked: [1]. Can you rebase your changes on top of this patch [1].
-
-[1]: 
-https://lore.kernel.org/all/20250715052739.3831549-3-krishna.kurapati@oss.qualcomm.com/
-
-Regards,
-Krishna,
-
-> +&usb_1_hsphy {
-> +	vdda-pll-supply = <&vreg_l5b_0p88>;
-> +	vdda18-supply = <&vreg_l1c_1p8>;
-> +	vdda33-supply = <&vreg_l2b_3p07>;
-> +
-> +	status = "okay";
-> +};
+Best regards,
+Krzysztof
 
