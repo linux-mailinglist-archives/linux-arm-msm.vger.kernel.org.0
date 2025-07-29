@@ -1,110 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-66995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A499EB14D3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 13:56:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF1A9B14D5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 14:04:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A580A7AD3C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:54:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17BD218A2C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 12:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8AA28F518;
-	Tue, 29 Jul 2025 11:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 997D72900AF;
+	Tue, 29 Jul 2025 12:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b="Iu6mW30P"
+	dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b="GwFIQdmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.atl.tools (mail.atl.tools [49.12.87.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30FF239E62;
-	Tue, 29 Jul 2025 11:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB528FFC8;
+	Tue, 29 Jul 2025 12:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.87.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753790172; cv=none; b=nkXHTBlU1gikAyMJWAG69ISNOBWz0kVparyFmS1fImi/1G8PJjYFptHYJAKuFGqrmpcsOw+V4o6ZzsnbkRG3dHtKpvdxAWPdu4ir4GMTTnSFFszCJdKcDkDVX8TWbZb6FYi9OkyZISzcBQAuIft/bgIiWOJnXCRzzwdYvFsQ3NA=
+	t=1753790628; cv=none; b=d/kYdnX/vQRGovdVvNG2r8HJmfODPn6jXzy1+EJP/h2lEI+aMGJgw0ZynnbSDv0Ike2brrZP5esrCRpgqk50Q4J6+Y0y1Gv1CmTGG8MsDbdOBRr6De/M/nZpklxPvHtEA5ksL2B/51A6yhFPHHoWsHnW3Q6OuI5LS3kymG3IkE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753790172; c=relaxed/simple;
-	bh=5I8dskIAWO6Qn9h2UFvt3u0In0c8qrDVN4C57QAqN+w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gaA9tPOeUhvVrmwrYR11hn+T28CDw8r34rkYx5WuyF57SjMphP+A2YG2HxfDdxNmVx0jbkpE7TsbD2VmGUcJNEkW1nCx4OuHsKfhalewn/GeSn3+lfnyHxFlSFVQNrBoH3Ai5fLkfMYeGx36DBA196woKaXjOysWsyTdUrb7dDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atl.tools; spf=pass smtp.mailfrom=atl.tools; dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b=Iu6mW30P; arc=none smtp.client-ip=49.12.87.235
+	s=arc-20240116; t=1753790628; c=relaxed/simple;
+	bh=fwaCjLD6EB6n8W82GgacUq5Hd72P7HmejoAcodIb8hQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dyNbLc2Zx8X5gtP1NzSUojFmpmIPlogc/0qsknulFf2rLUr0Fnbnkc4Rud6GpeTU1JLKnlLujU1HQyRAd2myS4uP4+4cF/qExkvHk00mty/Ea4SuCCiwXskFMWMEZUK9MIzpRZ2ikzZOEqaB2Luk6ciTIiwQ9LBHBMM0+KHp1/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atl.tools; spf=pass smtp.mailfrom=atl.tools; dkim=pass (2048-bit key) header.d=atl.tools header.i=@atl.tools header.b=GwFIQdmI; arc=none smtp.client-ip=49.12.87.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atl.tools
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atl.tools
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 128E5299B8;
-	Tue, 29 Jul 2025 11:46:07 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 623F52A8F9;
+	Tue, 29 Jul 2025 12:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atl.tools; s=dkim;
-	t=1753789571; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=m1S8mDT7uN0ZA9A1JPkt54nsJiQufYiFmXjtDUqFtLA=;
-	b=Iu6mW30P9u3mi6UEkXPS2LSQIVlgDDRzPCkLrYLrZHlhpkpBOAzPqMcJX4NDe64uqwA1nX
-	mwcx0+kriZItTykAYIy2V/B/vT4g27JUCIK78VR67BHL4NisLBAmh+5m/6LQCwEtekzICg
-	+ja89Opr7S7aalig8fGD3okyOjM1SoLczC416OkiaULqtAZhHqcOmCWo18YZTk7c6NcPWA
-	h40NcGssk6rIRTNTq8a+IZCANejSeB7XZ+V30UeQBD9Yby98ESBk8lV7D1F46Ihi9mmNl8
-	4F7lV08Pf9ujWndH2i/qFuvohbyNPwzMnCm6MO5yVvsCGdJkAhVZ2TI9IHyWYw==
-Message-ID: <9d13d012-8b10-4094-bea0-b85e799ff0c5@atl.tools>
-Date: Tue, 29 Jul 2025 11:46:00 +0000
+	t=1753790624; h=from:subject:date:message-id:to:cc:mime-version:
+	 content-transfer-encoding; bh=p0FOHDWyMZP0lChScy57LuBVhQcpOIP/X2zCiU5WuuI=;
+	b=GwFIQdmIPgqPCC+OFcZeIYQAxg0zsyJPpQbgFN10msg14G0Kh1UQtX+F4n7doS0VnDzQrP
+	i33LMOC6LSjqXXeJ4u4NkjkFHkLOBSQQR2WftTV7uKiBRp2f957ZTby3Dp52JKtdExpqRU
+	ZUV524cYtb2PW+GmtgHSvaOIxd1Gr+8Xfg7Of/FZM1ZvwRY1l66srNDLxlGrBsbnH1HbbX
+	qU47l7YMvGrcx69cDuCGxmqlnRAc6k4zq/wM7MbTTqtXMs9Txock+E65n+BM107d3tmNkB
+	7sJNLC0cIImxdC7bjSghyfE2smjNAPXQ6B+QylT4hXClgqoopDi+eQjWZ7Itaw==
+From: Violet <violet@atl.tools>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v7 0/2] arm64: dts: qcom: add initial support for Samsung Galaxy S22
+Date: Tue, 29 Jul 2025 12:03:29 +0000
+Message-ID: <20250729120331.287245-1-violet@atl.tools>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: add initial support for Samsung
- Galaxy S22
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250716231710.99983-1-violet@atl.tools>
- <20250716231710.99983-3-violet@atl.tools>
- <1ca25402-8f57-468c-b4d5-7b52f526ab28@oss.qualcomm.com>
-Content-Language: en-US
-From: Violet <violet@atl.tools>
-In-Reply-To: <1ca25402-8f57-468c-b4d5-7b52f526ab28@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-On 7/17/25 20:19, Konrad Dybcio wrote:
+Changes in v7:
+- Document the reserved GPIO pins, remove pin 50 as it does not
+ need to be reserved
+- Clarify the phone isn't limited to USB 2.0 but rather USB 3.0
+ isn't implemented yet
+- Add a newline before every 'status' node
 
-> On 7/17/25 1:17 AM, Violet wrote:
->> Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
->>
->> What works:
->> - SimpleFB
->> - USB
->>
->> Signed-off-by: Violet <violet@atl.tools>
->> ---
-> [...]
->
->> +&tlmm {
->> +	gpio-reserved-ranges = <36 4>, <50 1>;
-> Do you know what these are connected to?
->
-> We tend to document it, see e.g. x1-crd.dtsi
->
->> +};
->> +
->> +&usb_1 {
->> +	/* USB 2.0 only */
->> +	qcom,select-utmi-as-pipe-clk;
-> Is that a hardware limitation? I thought these phones had the necessary
-> pins connected (for DeX)..
->
->> +	status = "okay";
-> A newline before 'status' is good practice, file-wide
->
-> Konrad
+Changes in v6:
+- Remove debug features (bootargs, etc) that slipped in the v5 DTS
+- Format and organize nodes correctly based on existing DTS, 
+ move "status = "okay";" to the bottom always
+- Solve "ddr_device_type" and "qcom,rmtfs-mem" warnings, the rest are
+ from existing SoC .dtsi
+- Disable buttons, ufs and other features for later revision
 
-Thank you, I'll fix these issues on the next patchset. Indeed it is not a
+Changes in v5:
+- Properly format the thread
 
-hardware limitation, I just kept it USB 2.0 for now to avoid any
+Changes in v4:
+- Try to properly format the thread
 
-potential issues with 3.0.
+Changes in v3:
+- Removed unnecessary initrd start and end addresses
+- Make sure r0q is in right order on Makefile
+- Properly format memory addresses
+- Set r0q to the correct, alphabetical order in documents
+
+Changes in v2:
+- Attempt to format the patchset thread correctly
+
+Signed-off-by: Violet <violet@atl.tools>
+
+Violet (2):
+  dt-bindings: arm: qcom: document r0q board binding
+  arm64: dts: qcom: add initial support for Samsung Galaxy S22
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 147 ++++++++++++++++++
+ 3 files changed, 149 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+
+-- 
+2.50.1
 
 
