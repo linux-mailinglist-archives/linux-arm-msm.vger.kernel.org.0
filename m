@@ -1,45 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-66976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-66977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98DBCB14B4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:35:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3496DB14B77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 11:39:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0C3417C088
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 09:35:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17F37188A262
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 09:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F64D233721;
-	Tue, 29 Jul 2025 09:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F37E028850B;
+	Tue, 29 Jul 2025 09:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cale5vJu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mifritscher.de (mifritscher.de [188.40.170.105])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00FA25771
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 09:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.170.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA7B23373B;
+	Tue, 29 Jul 2025 09:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753781707; cv=none; b=J42ntoEDEOF/3dI+QFKjr7tkIwMucGc8uyFC0rZLEtkWSI/t5TDPlx+Fp3VKZwb9TbjT6i2SJTZz1i08/JmxB4aDL+6gOuHzwyLs6bY7j6h+CMxLey3epFMM08OxQh2bUQYTkPIbNbpq1O8PVVpz7flBDh+0gRVqxumMNFbqNe8=
+	t=1753781954; cv=none; b=KV2EK9772uxzZS91RaVAZvJSPdrctlZkzKcrSbI84goLEDiWIE8mt0zkRCo/8NWnSgQbU96Gfi/mtGIaGXLLKP7Cu1+TKUqCUqtCkMXJ5kv2idAOtYnpvPSptQGWl0tQTxC+i7dx30Mgqzg3slOFJp/4dGgSDNIo6c+N7iscHcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753781707; c=relaxed/simple;
-	bh=PSnoE70CyGtAUQzhhhXcNyb7TD041Ko3FgcnhjnoRBk=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=D64CaLQ8LYPTkz3JI9pexhmN2oXUH1bDMyzhbmbY3/6Zhn1t6526lfWrY3TA0Agl8/np5D8b4NK+LvZPNc3f//tHWzqyyLxTrJhYBMR2GXjhucIrgzo/a1ni9+YRAIB4rpsEc/xmUSFCkOpEucf1c401QpPblRb4nmUx2V632uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fritscher.net; spf=pass smtp.mailfrom=fritscher.net; arc=none smtp.client-ip=188.40.170.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fritscher.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fritscher.net
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.mifritscher.de (Postfix) with ESMTP id C88C43B1E47;
-	Tue, 29 Jul 2025 11:27:59 +0200 (CEST)
-X-Virus-Scanned: Debian amavis at mifritscher.vserverkompetenz.de
-Received: from mail.mifritscher.de ([127.0.0.1])
- by localhost (mail.mifritscher.vserverkompetenz.de [127.0.0.1]) (amavis, port 10024)
- with ESMTP id ciwsDxHz8izk; Tue, 29 Jul 2025 11:27:58 +0200 (CEST)
-Received: from [192.168.99.192] (unknown [195.52.26.99])
-	by mail.mifritscher.de (Postfix) with ESMTPSA id B980A3B1C86;
-	Tue, 29 Jul 2025 11:27:58 +0200 (CEST)
-Message-ID: <8040b225-5735-4bc5-aed4-f6432bb045ee@fritscher.net>
-Date: Tue, 29 Jul 2025 11:27:58 +0200
+	s=arc-20240116; t=1753781954; c=relaxed/simple;
+	bh=qiDpg8+oxVUyJhGaPjP2TdQxkpTkyr0Ra8aroFa9q8I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FiaiAkUz0Q/F59L0vtlwOaFobTcX4VmhNpetKV23D3APGwFPA8g4EH2ELhvGuyWEL4WdbgKt3X3a8jU35cO1VV9vMRqna5LHITO05qRObgKiV05W6RmWX71b3U7DMKck6S4m9LLaMVHTG/TbKgy7g51c65PpgX93U84REjoj1M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cale5vJu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56T03C40019418;
+	Tue, 29 Jul 2025 09:39:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Xs8F+swM+IvFUKegxHJ1I3AShbpB7Wl3shKKlibdxes=; b=Cale5vJumnO9+mzm
+	/Np2R5Q+gB0TTDnGjh0vs8wBJwyhCXynHfi0si80R86+SvSg/z43Hjy8HjrJKL+R
+	lBafGBxctvrRY3GF9b4C72L60PsEK8xtmghQ7yLAayLPtpDHYKa4kgXB2dxjNDF1
+	3fqg9SQXOw8kt+xQKzFplO40mZiqrDBrNiRTAR4hvFETThyBLThUzx7TPU6sNaXe
+	qe2KC8UxYWBba6mFUI77Dt/i5oDefrQJNUX+XYoSfUXM/8JbtfNArXJ0c/H9aJ2F
+	yZIxyNpmOZJvWaHeYtz1JFRnO2sz25vNNmcp/0iaIJW6S0tQz39aqF6UED5ApiNV
+	QEsM9g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pm2fh14-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Jul 2025 09:39:09 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56T9d8VR026385
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Jul 2025 09:39:08 GMT
+Received: from [10.231.195.155] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 29 Jul
+ 2025 02:39:05 -0700
+Message-ID: <c0b804e3-16ee-4e81-9aa8-4b6051b5af03@quicinc.com>
+Date: Tue, 29 Jul 2025 17:39:02 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -47,77 +65,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: mani@kernel.org, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Content-Language: de-DE, en-US
-From: Michael Fritscher <michael@fritscher.net>
-Subject: [newbie] [patch?] for mhi to get Quectel RM520N-GLAP (WWAN Modem)
- running
-Autocrypt: addr=michael@fritscher.net; keydata=
- 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
- Mx0vDjwh
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Yijie Yang
+	<yijie.yang@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Shuai Zhang <shuaz@qti.qualcomm.com>,
+        <quic_miaoqing@quicinc.com>, <quic_zhichen@quicinc.com>
+References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
+ <20250729-hamoa_initial-v3-4-806e092789dc@oss.qualcomm.com>
+ <a6456802-3d19-4da5-a995-c8f00553c7fa@oss.qualcomm.com>
+ <d14b2a0c-8304-497f-a662-5b93dbaaa1ed@oss.qualcomm.com>
+From: Yingying Tang <quic_yintang@quicinc.com>
+In-Reply-To: <d14b2a0c-8304-497f-a662-5b93dbaaa1ed@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 28bjND0JqCliO6bpHeGX9Tf2UaegbSXP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDA3NSBTYWx0ZWRfXwoqglyeIiM9W
+ fSIpnMIhB4UDMkjcL+TttddROmSQ75RyyxDuB21ulIkf81pVAqulxFTj3CtPXXy3VkFtqv0J3zC
+ 2fwTAS0/avzQmvIzCD1hRiWThSeUnI/4oYoK/vMWWFegl344RK+6DFpn1HnTBPZkj6I7KJdUZnw
+ efwdGKBaOOrjRtC+HH+FbaSrouthBpE433gM9Z+rSvAdwA6Dmtp4YRe1oawDf5X3nryD7MW1S/5
+ 2dN0hCfeCHcguJs0XvjB3xiUPe3WHEM3bA9Po/hHr5xOb5MPvT7sfA6elSMh3FkcoDdqs0/tie2
+ VfwriyhuyUGVzNvrF/fw+RlaYW7SF7lKXFBYzLbbqx2m1n9Q2ri1p/IXqwCn8cNfOimGQ7XQPwm
+ v3bIEKy1Tk17DuqtqJB6yErnPGc2hHRo/Dxl9nmgj2yt/RzL5pR2InS9Q18zqVoRufYqADkX
+X-Authority-Analysis: v=2.4 cv=HfYUTjE8 c=1 sm=1 tr=0 ts=688896bd cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8
+ a=1utyrP9q1XeMewFY-dYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 28bjND0JqCliO6bpHeGX9Tf2UaegbSXP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-29_02,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1011 bulkscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=993 phishscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507290075
 
-Good day,
 
-my first email here, so a tiny introduction of myself: I'm a computer 
-scientist and work e.g. with OpenWRT and microcontrollers. I know some 
-basic workflows with git as well.
 
-So, while getting the Quectel RM520N-GLAP (the GLAA is running ootb) I 
-stumbled over problems. Luckily, there exists a tiny patch ( 
-https://forum.gl-inet.com/t/how-to-installing-vanilla-openwrt-on-gl-x3000/45404/15 
-), which only adds a PCI Vendor/Product ID variant for this card to the 
-mhi driver. It applies cleanly against 
-git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git . I've tested 
-it with current OpenWRT and can confirm that it works.
+On 7/29/2025 4:37 PM, Konrad Dybcio wrote:
+> On 7/29/25 7:51 AM, Yijie Yang wrote:
+>>
+>>
+>> On 2025-07-29 09:32, Yijie Yang wrote:
+>>> The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
+>>> the Hamoa IoT SoM and a carrier board. Together, they form a complete
+>>> embedded system capable of booting to UART.
+>>>
+>>> This change enables and overlays the following peripherals on the carrier
+>>> board:
+>>> - UART
+>>> - On-board regulators
+>>> - USB Type-C mux
+>>> - Pinctrl
+>>> - Embedded USB (EUSB) repeaters
+>>> - NVMe
+>>> - pmic-glink
+>>> - USB DisplayPorts
+>>>
+>>> Written with contributions from Shuai Zhang (added Bluetooth) and Yongxing
+>>> Mou (added USB DisplayPorts).
+>>>
+>>> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>> ---
+> 
+> [...]>> +    vreg_wcn_3p3: regulator-wcn-3p3 {
+>>> +        compatible = "regulator-fixed";
+>>> +
+>>> +        regulator-name = "VREG_WCN_3P3";
+>>> +        regulator-min-microvolt = <3300000>;
+>>> +        regulator-max-microvolt = <3300000>;
+>>> +
+>>> +        gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
+>>> +        enable-active-high;
+>>> +
+>>> +        pinctrl-0 = <&wcn_sw_en>;
+>>> +        pinctrl-names = "default";
+>>> +
+>>> +        regulator-boot-on;
+>>
+>> It should be set to 'regulator-always-on'.
+> 
+> Are you sure? Turning off Wi-Fi sounds like a valid usecase..
 
-The big question is: How to get this patch into mainline? ;-) Should I 
-simply send it to this list, following 
-https://kernelnewbies.org/FirstKernelPatch ? It is also ok for me if 
-somebody else steps in.
+Hi Konard, It is m.2 interface on Hamoa. The PCIe power of m.2 should be always on.
 
-Best regards
-Michael Fritscher
+Even on QCOM's B2B interface, we are unable to dynamically control the power of PCIe devices on upstream kernel.
+The PCIe specification does not support dynamic power control between the PCIe device and the RC.
+PCIe power should be always on here.
+> 
+> Konrad
+
 
