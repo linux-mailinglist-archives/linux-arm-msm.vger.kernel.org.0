@@ -1,291 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-67040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65173B15516
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 00:09:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B464DB15559
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 00:42:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C144A7A19B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 22:07:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA71A3B6997
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jul 2025 22:42:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00A2E27F183;
-	Tue, 29 Jul 2025 22:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25246283C9D;
+	Tue, 29 Jul 2025 22:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U3WYrD6V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DcsUs7dM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59071274670
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6D5EEBD;
+	Tue, 29 Jul 2025 22:42:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753826934; cv=none; b=UR7E5+9XK5476NCejqKvHUtojLYmeJiR44C3vXQE1SOj/zz+spViaSpTo8ofSYUJsNKexIZFTWeMj2OYQpiyBFE+Axuz12WN6cpysrdmApbGtbx+kyG0hNZVA8hcj2vtRvjVA7eMf08x2hj/JAbH82fZ+GUJmxtl68hSPRLabOs=
+	t=1753828966; cv=none; b=LhteWGM+6qwC29A+y7oWbD5wciO3gd+Ho281/ZBJ0gSlQFQ+sem16CG07KHtLXTkbUVVvr2nfgIUp8hbb5IlueDqHzB1MShRLKnpp7br68N/NnNqYXrUuAS1krH4fUE34kVxmIOwbBBtPLnU7OKI9dur6p57zEXnG/AZtT42wTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753826934; c=relaxed/simple;
-	bh=/116a9/ohobL2Uok3T+K0EljoWhiGCaTOs4mb6iaYqY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mW5K6HPzRZ+yqnGBirAsBUOsH1atxfVduTGChUrKkkt71tW+DgvZpjT4Pgk3KWESWZhozBKoyXLyA9ztKiZKV+SumMnBeJZEpCAViWx1M9n8GGPUAEVvxGTKuiWkHT2CPSALKaOe0JFJeFMe9JP5PQKBLeUzSV7CHYkuEQogJVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U3WYrD6V; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56THFgAF031288
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0cE2pbs8FJjLTVtcD0Npu8kn7V5B1NRwJqNGNDeObNU=; b=U3WYrD6Vpc9KtYZx
-	RpNBajo0fv4PIQynCH8pC+mKt4kLYIaCPcCBMoUy+BJGSGMVjONqFqgx4Bd7aDWd
-	//xhYdaYSBZDZU0yH1Pqw01tUFcX8rTFcaltofq0YBziLQWNunjTBYySnvEzsxJZ
-	XLuwgBUBgac+ro5cOc257ALZ0H/BgL1s/WUFD7vNz2hSgG6B/WcP4vhko3GkLL0G
-	Xkw13bsiSvy6iejGthqNvpPtf+vfeX4KN27wmECkC3guB7CUlkULi22cthpQFwvD
-	1QfFvqffBHLfa48KB3zXkX8WNg2N9dP0dRR/1xW+NtpWvdd8emFIrvHuebbILbXp
-	rNYa/A==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 485v1xf22x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 22:08:52 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-237f8d64263so3277485ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jul 2025 15:08:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753826931; x=1754431731;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0cE2pbs8FJjLTVtcD0Npu8kn7V5B1NRwJqNGNDeObNU=;
-        b=ieGbJ7GuILJuNm+wVo0dUi6SvkiYLE9NUpzh2TSNPVuc530B1MyELPMi3meZtoLV+J
-         H02w7DOiM6Fs7lmHeUofVF0mG9Yfx5FUyIvMcovCXGvL+z3DODDC83I8XkARcDCZVhQn
-         2i/9HosY01MydeL/GMnl0u86r/RH04yJD/InFgKZyl7dijSnnUltFCf54EDgV+s7PLJd
-         Qdw677kRTfLuAOSAKkQz1tZft2r/R7i/2aOXfD3x9otch02SsD0oXcLgmgD7seQ2K0+v
-         o9c5W1NCwBt/0WZnOF1sMqNm1Uyoqb3eqY1IeyfZHjxw0U7Sp2aDtRrDeOzM5AKajEuJ
-         ERCw==
-X-Forwarded-Encrypted: i=1; AJvYcCVEWVfl4Myk/Lx7G9+T52cuCEhN49uQ2TualbdcpMIgun9qntjPCKpfYEfYjTZWE11GIBgnmwypSA/dMgga@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeCuVOcv82pYEW0TPqp6A7P7TUczLYIDX8auyzdjIAoQEJQaVT
-	yHhUAZ0M1wCsU4wbC/wrs9wInXesdCT2FDe8cvLJrlO9WvuR13qErXZrEd1M6R0Lc4JJyyPPCqy
-	yGs8PGWmIXeu3fWUbkpQB/XjbUn623+Z/eAJsYKHU2TITord6PF/UcpuuyvRqgZUczHQk
-X-Gm-Gg: ASbGnctOntjPToJddrfuU2Emc1KsbyFrJJwAMxz3yPtrr5WrzSiS1j/NCTWQOyR5b8c
-	zDMhma+EpntNDzcOoxFE+MOBvh038C3yRyNAXbhHhbUNNP666lsN5CdGt5ZPmcFyEuBKWZ/bMdh
-	j7xKXZxOokNBlle2I95ir3k8xu4rDIh5wI4GAnvHuhGPlfWg3cSg7a28C1+39C1FslIzWG6Sk3b
-	tlha78hWYaQt1gOuIhp0YYlCED/cA/wuYD4boLQFotC6BapfmYbeUpfIpU3TDvvxWq+Wvzbgfam
-	oHBiMHV7nt2HR3VT4QSyvtMXOdcTom3RQaInmyYdM1W61bnpKh774qlMlcRHaGqg
-X-Received: by 2002:a17:902:eccc:b0:240:968f:4d64 with SMTP id d9443c01a7336-24096a47522mr13256555ad.11.1753826930861;
-        Tue, 29 Jul 2025 15:08:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvETWK9P4/D0CelAU3J3wu30rrD9X2asRN8OMQAvwraBYzRraej0TCmImrwEUqpGOhQed93w==
-X-Received: by 2002:a17:902:eccc:b0:240:968f:4d64 with SMTP id d9443c01a7336-24096a47522mr13255985ad.11.1753826930270;
-        Tue, 29 Jul 2025 15:08:50 -0700 (PDT)
-Received: from [192.168.1.6] ([106.222.231.177])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2403e020de1sm46439195ad.15.2025.07.29.15.08.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jul 2025 15:08:49 -0700 (PDT)
-Message-ID: <6c0689e8-38b4-4d3b-b475-0ceb16046875@oss.qualcomm.com>
-Date: Wed, 30 Jul 2025 03:38:41 +0530
+	s=arc-20240116; t=1753828966; c=relaxed/simple;
+	bh=ROIgu5RITsVSZEfqqmAzwj38jYZFAlzsaSg3Gx+HRXs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PsI7pK9IPlRYzNL2zMobnkfQE+MFUE/9P0phCOv2UNlrqlb3pL6hgvHzdoZEnKeWVNvtKc2cFKjGCoKbRofQos21hsLLvBgGnYP+nKJa1AMNo95ioUqOPT53GDYzFU3e//yV154TzgSXi8KVvYNSszhprnVp1QDC6PC6GN1lPCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DcsUs7dM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DC9C4CEEF;
+	Tue, 29 Jul 2025 22:42:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753828965;
+	bh=ROIgu5RITsVSZEfqqmAzwj38jYZFAlzsaSg3Gx+HRXs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DcsUs7dM2n+g54qNN6KGPZgdQ2qx0qDS3xPFNSuIBItBULIF0hIAwEko289fcl9fE
+	 1kXbwvENvfnCh3lvAD2k7+MwJqqV9FJujJY6c2dnjNyCYhwlOzbuW6GRlitmXHOF3N
+	 /DRiasmXdyMQjKC/DCc3QYNm/o4PB7sB9jNWQtWX593Iig4sPiQS2+NpMO5kiz5swY
+	 clv1rZ6jRDtEtaiUDOAYfMU0sTqPcnK6UuylCB+pqOAVot+/w4znSfBHqsAZ10sQ5u
+	 kesInfFy8YnYyn9hku62DBNgMq6If4GhHSFGn8dgGyWZpvjEP4+xe1QbGQ4cKDqDON
+	 lIWPmyAErz6HQ==
+Date: Wed, 30 Jul 2025 00:42:40 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>, Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@kernel.org
+Subject: Re: [PATCH] i2c: qcom-geni: fix I2C frequency table to achieve
+ accurate bus rates
+Message-ID: <kt372ehgwt3kjaxkdk47rri4s525pr4a6fvtjxy5c7rsf2ad6s@ebeaygqihe5k>
+References: <20250513-i2c-bus-freq-v1-1-9a333ad5757f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 24/24] arm64: dts: qcom: x1e80100: Describe GPU_CC
- power plumbing requirements
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Johan Hovold
- <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Luca Weiss
- <luca.weiss@fairphone.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com>
- <20250728-topic-gpucc_power_plumbing-v1-24-09c2480fe3e6@oss.qualcomm.com>
- <aIevIuMDA5R8igmi@linaro.org>
- <50868cd8-68a9-4bad-99f3-8cf542886fb6@oss.qualcomm.com>
- <aIhrav7GKpsbVpto@linaro.org>
- <6b903628-9abf-4b9e-971e-e9338308d693@oss.qualcomm.com>
- <0a1337d7-ee3e-47de-a401-b25586e813e4@oss.qualcomm.com>
- <aIjsTgA7O7UqS-Oz@linaro.org>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <aIjsTgA7O7UqS-Oz@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDE2OSBTYWx0ZWRfX1JGLTldhjQFn
- ejnmAUZEzhvkHRokwP9i2LC6pgWYhjnlaMtWAt9Cn20GFCRuVjb3St3Mys7DT9CYP9Nuu1awP7d
- 1A/xiNe0XP2MyPz7pcF5zUqw1tdABELOJTqzls0qc99oSl7oOpf3aENHQ6SX2k3ThcTbVgkwiXT
- WAxquwG/KtN8qRgwTm7mSbehsVsxHYbpi1lp+8OYppiHN80lD/e68wo1Cpwst8vgBRe5rKhFG6W
- xGDiFE8iSufIp23+zGsFgPZ6/eATSibU1EbrpRhVrNhReR+oo/GiV8I3pnoMY7DU5EbhAp8Q+gi
- nC8YJ/V6N9o44BD3RxOP4GuTHs8RKez5FHAXJXb6X0js6ayES16SfwJApNxCWMYDBh2treULiu9
- dbfOyoTS1dEgKCZ7YV1FBlWgSmzzM4nqDHgKKn+TFOYHaHoR43v6sbXE8H+WZpKOO7d11lav
-X-Authority-Analysis: v=2.4 cv=JKw7s9Kb c=1 sm=1 tr=0 ts=68894674 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=9XpMM9ZEX5jLuhR58p3+Fw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=dnjAduxQqvqvlADX3NIA:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: wtOTOQnwQ7Qqph20UC-JkgTGhwNFVF64
-X-Proofpoint-GUID: wtOTOQnwQ7Qqph20UC-JkgTGhwNFVF64
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-29_04,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507290169
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250513-i2c-bus-freq-v1-1-9a333ad5757f@oss.qualcomm.com>
 
-On 7/29/2025 9:14 PM, Stephan Gerhold wrote:
-> On Tue, Jul 29, 2025 at 03:28:55PM +0200, Konrad Dybcio wrote:
->> On 7/29/25 10:23 AM, Konrad Dybcio wrote:
->>> On 7/29/25 8:34 AM, Stephan Gerhold wrote:
->>>> On Mon, Jul 28, 2025 at 11:31:10PM +0200, Konrad Dybcio wrote:
->>>>> On 7/28/25 7:10 PM, Stephan Gerhold wrote:
->>>>>> On Mon, Jul 28, 2025 at 06:16:24PM +0200, Konrad Dybcio wrote:
->>>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>>>>>
->>>>>>> A number of power rails must be powered on in order for GPU_CC to
->>>>>>> function. Ensure that's conveyed to the OS.
->>>>>>>
->>>>>>> Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
->>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>>>>> ---
->>>>>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
->>>>>>>  1 file changed, 6 insertions(+)
->>>>>>>
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>>>> index 5e9a8fa3cf96468b12775f91192cbd779d5ce946..6620517fbb0f3ed715c4901ec53dcbc6235be88f 100644
->>>>>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>>>> @@ -3928,6 +3928,12 @@ gpucc: clock-controller@3d90000 {
->>>>>>>  			clocks = <&bi_tcxo_div2>,
->>>>>>>  				 <&gcc GCC_GPU_GPLL0_CPH_CLK_SRC>,
->>>>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CPH_CLK_SRC>;
->>>>>>> +
->>>>>>> +			power-domains = <&rpmhpd RPMHPD_CX>,
->>>>>>> +					<&rpmhpd RPMHPD_MX>,
->>>>>>> +					<&rpmhpd RPMHPD_GFX>,
->>>>>>> +					<&rpmhpd RPMHPD_GMXC>;
->>>>>>> +
->>>>>>>  			#clock-cells = <1>;
->>>>>>>  			#reset-cells = <1>;
->>>>>>>  			#power-domain-cells = <1>;
->>>>>>>
->>>>>>
->>>>>> To repeat your own message from a couple of months back [1]:
->>>>>>
->>>>>>> You shouldn't be messing with VDD_GFX on platforms with a GMU.
->>>>>>>
->>>>>>> Parts of the clock controller are backed by one of the MX rails,
->>>>>>> with some logic depending on CX/GFX, but handling of the latter is
->>>>>>> fully deferred to the GMU firmware.
->>>>>>>
->>>>>>> Konrad
->>>>>>
->>>>>> Please describe somewhere in the cover letter or the individual patches
->>>>>> how this relates to the responsibilities of the GMU. I searched for
->>>>>> "GMU" in the patch series and couldn't find any note about this.
->>>>>>
->>>>>> Also: How much is a plain "power on" votes (without a corresponding
->>>>>> "required-opps") really worth nowadays? An arbitrary low voltage level
->>>>>> on those rails won't be sufficient to make the GPU_CC actually
->>>>>> "function". Do you need "required-opps" here? In the videocc/camcc case
->>>>>> we have those.
->>>>>
->>>>> Right, I failed to capture this.
->>>>>
->>>>> The GFX rail should be powered on before unclamping the GX_GDSC (as
->>>>> per the programming guide). The clock controller HPG however doesn't
->>>>> seem to have a concept of RPMh, so it says something that amounts to
->>>>> "tell the PMIC to supply power on this rail". In Linux, since Commit
->>>>> e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the
->>>>> domain") we don't really need a defined level for this (perhaps it's
->>>>> more ""portable"" across potential fuse-bins if we don't hardcode the
->>>>> lowest level anyway?).
->>>>
->>>> Thanks, I forgot that we have this commit.
->>>>
->>>>>
->>>>> However after that happens, the level scaling is done by the GMU
->>>>> firmware. This holds for allOf CX/MX/GFX. I'm not super sure if
->>>>> both MX and (G)MXC need to both be captured together - downstream
->>>>> seems to describe MXC as a child of MX (in socname-regulators.dtsi),
->>>>> but I'm not really sure this is true in hardware.
->>>>>
->>>>> The GPU driver currently first enables the GX_GDSC and only then
->>>>> does it kickstart the GMU firmware. Downstream seems to do that as
->>>>> well. So on a second thought, since we've not seen any errors so
->>>>> far, it calls into question what role the GFX rail plays in the
->>>>> GX_GDSC's powering up..
->>>>>
->>>>
->>>> It might play a role, but we wouldn't know since AFAICT we don't support
->>>> enabling the GX_GDSC. Look at the beautiful gdsc_gx_do_nothing_enable()
->>>> function, it basically just defers the entire task to the GMU. The GDSC
->>>> just exists in Linux so we can turn it *off* during GMU crashes. :D
->>>
->>> OHHHHH snap! I, on the other hand, forgot we have *that* commit..
->>>
->>>> I think we should identify precisely which votes we are missing, instead
->>>> of making blanket votes for all the power rails somehow related to the
->>>> GPU. In this case this means: Which rails do we need to vote for to make
->>>> the GMU turn on? If there are no votes necessary after the GMU is on,
->>>> it's better to have none IMO.
->>>
->>> The GMU pokes at RPMh directly (see a6xx_hfi.c), so we indeed just
->>> need to make sure that it can turn on.. Which in short means the
->>> *C*X_GDSC must be able to power up, which doesn't have any special
->>> requirements. The only question that's left is basically whether
->>> MX_C must be on. I'll try testing that in practice.
->>
->> So this is apparently difficult, at least on SC8280XP, where something
->> seems to be voting on MXC and it only seems to shut down when entering
->> CXPC. I would imagine/hope this is not the case on newer platforms, but
->> I don't have a way to fully confirm this at the moment..
->>
+Hi Kathiravan,
+
+On Tue, May 13, 2025 at 04:38:33PM +0530, Kathiravan Thirumoorthy wrote:
+> Update the I2C frequency table to match the recommended values
+> specified in the I2C hardware programming guide. In the current IPQ5424
+> configuration where 32MHz is the source clock, the I2C bus frequencies do
+> not meet expectations—for instance, 363KHz is achieved instead of the
+> expected 400KHz.
 > 
-> If in doubt, I would suggest to leave everything as-is for now until
-> someone actually runs into an issue caused by this (if this is even
-> possible). There are plenty other actual gaps to address. ;)
+> Cc: stable@kernel.org
+> Fixes: 506bb2ab0075 ("i2c: qcom-geni: Support systems with 32MHz serial engine clock")
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-Konrad,
+I was sure I did apply this patch, but for some reason it has
+completely slipped from my sight.
 
-GMU is allowed to collapse some of the rails in some cases (GX/MXC/GXMXC
-etc). So there should not be any other vote for these resources on
-behalf of GPU/GMU from the KMD side. You may have to vote some resources
-for GPUCC block itself (I know it is in AO domain, but still). I don't
-know the specifics. Can you reach out to QC clk team (Taniya/Jagadeesh
-etc) for necessary details? We should be careful here. Just boot up
-testing is not sufficient when it comes to clk/power.
+Now it's applied in i2c/i2c-host.
 
--Akhil.
-
-> 
-> Stephan
-
+Thanks,
+Andi
 
