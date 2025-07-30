@@ -1,150 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-67149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17E0FB160BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:54:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BAB3B160C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:55:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1788E3BA3B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:53:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F7DB1AA1041
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 546D429826A;
-	Wed, 30 Jul 2025 12:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50BDE2980A6;
+	Wed, 30 Jul 2025 12:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="N/kuqWZ+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n88pAn9A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A2D2980A4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE2729617F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753880033; cv=none; b=CUvzt63r8D79vD8ZG/LZCGWd8vjaE+7jeaZ5VljSQMv87xBqCOKzcpw1syZ0S8ndXIGA53QuD0MeJ9TTxQOTAW/gEAmayXhgVqcHSlVTKlDtS0EAaV22X6yXooM6U/ORsPvl15d3tdnt6afYN77LMAqRfOZsRpJ0UIydTmBC6rA=
+	t=1753880118; cv=none; b=QkKxlkNpPYIa/IHFjF4TBLb+D9wpSwXvIt/3fbVH/yk2WRw/oaR4XTNLFYuCzkqVuMEPKvV7/U6BPRGfcYsLvWo0KtbNq5ASHNR7et4d4UU18mNVSKnY0tzP/7QDbzG4mC/QNK1/WobhYH92CDG0YwbcnUaJR6ODMHtSG4yvMiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753880033; c=relaxed/simple;
-	bh=RNeM7UB4fAERU2LPOJtuWeYJSG/9TTk9Yot9abhDF6k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QeWWh7lYNl/0gUctfN5l4O+yQW7pHWrw6NDi45ovfAHb3hg4goN0xtZ2l5zfUTPt9zBaPfa/qJHEfVNTdGLbV8bLCHLxP/leJAcFCVWenkL6gudcGgXNhsdoVCX6QIdQIK2icXRcOh85qfiDg6ULgRYCXjOqDDpkG4Ty6KWm2sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=N/kuqWZ+; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3321296a8cfso9999391fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 05:53:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1753880029; x=1754484829; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qUTEvgPr5pDo52lKZf6mOXPWs0RWvEkRiwEoyLLTu3o=;
-        b=N/kuqWZ+n2E10szoUZ24/6F4JuCqCRJgIiSJ+13vx4RL08ntqRjKnWOUv3CReInxOU
-         RHq+XhAf2t/ltRbFuhsbgN6TO4nPzRBRVuYk9xYDQMSzjwBn4vRQklSpSF0n4x13/Akp
-         HltCRODxOSbnP3MX3m0jV2K0dfXv6tdEODM+V8GbBhMQAjLnJ4mC448itgqV7a32K2zG
-         6huj2nFU0UyK5TCqYfapyzNciidjWGBZEhjUPUxsGrUibrXSt1YcgTE/WVtg8c93RDxU
-         cNIJuMLyavB5KXHA8bfnDrlGWvHGd/mWQHprk+vfnlwGskSesPW+AbY6GuMT3nAC2BlH
-         1dyA==
+	s=arc-20240116; t=1753880118; c=relaxed/simple;
+	bh=IcwJxjGaUBs19PI+lV/YEtHO4tM8mpf5SsPGKdXjFsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VG8ej9wJThB5qDmKmOs+bipu6BupqJ99Vp24mCzofc4XVTZtkPfWsLofweeqXL2UKW43IkvJkTrxFvpXSqhqjC+RbAHE73v73y4nytvK9jb97CXS86RxiLKfYXmN3m+f3K0Meeep94FcTehy28mnFEt8H4aGk+ABhQ3as60BcJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n88pAn9A; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCbYFY024996
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:55:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iisB83FXZI4F5QXhoqp7ipsU6/LoD+KKvHx3mOfRmCA=; b=n88pAn9AFVyF+/AO
+	CAxtSYZSKMdeJcLofbK5pr6fSTiWeaqdc124dFcpO+QnUzyTrMYd52Y6nO6uMLWs
+	gZ2PUzW7iywdrJhJMBDj0z91kJO1UJY6L5HJd9Wl/4KF1DxLJahGA+d7dwWyRJ27
+	gjQKYncf9dGYv+bwW0MH/jGQxcXy+x+uZJzQobpcusZIKYzAavoFam56tOLI9AKQ
+	7acLZJPOCtwx9QX7Qy1S1867bc8bUf6sAN7u5zrhi+KushZ1+G/UtkhIiiLnUp5P
+	v6KfFwRdrjmBunj3SBQRR7yWjROIVQKlUdDElkwsEag0W5Iq2yzZhvYdY7UNP8Hn
+	zyiq7A==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484r6qusrs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:55:16 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6fafb22f5daso6309326d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 05:55:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753880029; x=1754484829;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qUTEvgPr5pDo52lKZf6mOXPWs0RWvEkRiwEoyLLTu3o=;
-        b=i1gUpmTrM7vfWASZXgzNRFL9D/79BYvZq4v/UMcNS2mOeY8RC7/ifUng+TtUhG6Jl4
-         xLs+UTRz0MXlZFkSmWMKFTVONeD4YP4edMh+KVaOuZnGn4+tHpqXFkK/hqzPnRGMzU/H
-         rasarD9uukrkiQW+b+iuxTJJNeHAzILHe0gSODIuLbU2UKdmedgO/tPtiFZVeviVU5M8
-         j+sM3sX6E5EcV4qIXn4WmHz5Svq3HQD6GIV7ACmP5R17+cyTOq/ZLhGRiVmHtBEPeF4J
-         gIw2xzi2ywd/AnKFR+Z3Eqtw0APiiDjMtejGfYyW5U756ymWYaMXQNz9SHvBbT5GRiCo
-         H2gA==
-X-Forwarded-Encrypted: i=1; AJvYcCVFzb9oDcbmvY5AbMeSo782NlPDHwDyXBd4P362/pkwlxAUIVgOX6jx9LaZK7Fn7MFsW2GiIwmpfW8aT240@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYA+s8A8Qdw5hJ/pIqjHkhgvtUs63xgGp9Obc3xnTR0BURuSTn
-	LYMupmEpxCpfU9Wod+Uvv9rBKgCANLiqvsg2rW7GrBwhqW4JRjzIRj/9pK9ri1blLQnTs/8gbeg
-	6YS0dRkm2wtEgzSfpMld9VfSbaTPpVj7DDkCiShYduA==
-X-Gm-Gg: ASbGncuOpuq4OuN6+EZ7jezmZErDhyRGkIMgk3AsrJeBbm8uC1N5CAN7WGYEwO0yqXO
-	uo7HC7y3Ulen6WZPP9RQQ4QJILH+Vmkel+lyTaPNq29tsfLGdrGVE93ciTVMLcZuFH36JyTg+Rq
-	2fpG8fzvnV6AHNEKpMmcVWePIEyJuExYMqf05zNZGrIWe7tWs+qUExWpGwLb8iA7sCwt83CMCB0
-	wWevpUMDIKr4ThfnwRg0q5LDj4l5XFAoeBsSAs=
-X-Google-Smtp-Source: AGHT+IGSuyPnAInz8gQT37fKK4pgrT4+RIAYI9IrKjK2MWPd45oP6K0zUhD/GSonCiRI3dzBbJ8n7cWJZ+qNt54xgoU=
-X-Received: by 2002:a05:6512:ba1:b0:55b:83cf:b260 with SMTP id
- 2adb3069b0e04-55b83cfb693mr305928e87.11.1753880028944; Wed, 30 Jul 2025
- 05:53:48 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753880115; x=1754484915;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iisB83FXZI4F5QXhoqp7ipsU6/LoD+KKvHx3mOfRmCA=;
+        b=R2oCHTt/rqtU2NwmU5mGfO28s0RbOmSxqT9ffZB5PFRgbatgT2QED/KzBLOSUIjQVb
+         seLshHP6hk+AvNOBprK9hWuqgyVTUMHNNricCc/+eJ3kCIftC+39rkCZfTXwtv+Art89
+         bMiorT5SFYm/h8juP9yzR5kGvlySW3HNWrKigfJX0Iuy5vDPW1nUp/MxqMSRgt01D+F1
+         YrW6yJTD2yi2X/PYBzZ8THiB2MWFLHfZ2T4Z7OpT6N85vxBVEIoW+VVeYLNHsLd6m3XS
+         l0Qsoe257mb/QKMK/Q+0d2b+zSiamkiqCSL4vyJJwJApe8qukTgkLovHVbiVbX9e5IQe
+         WGpA==
+X-Gm-Message-State: AOJu0YwcIBfSehVZGIn3V0yqk8AxLs6iI1bDJpjjUxLyTBZo2m5ubwAi
+	OHs32RgXUReQCO9QU6Xf/3JsVOXWQORxRJ+N8qGoPQTu9QYgSL5o1FgEhaTt0AmTxJPpFUZxcBK
+	lWJaKLXH+Du+VlPL/OjLBFYwVoZC3ptXIvGgjJ9hOlYyyhGZ+ztFmi4y/5/NyqIRYzzDG
+X-Gm-Gg: ASbGncuScMwT1EX0VD4LrTGdvDPQ/oEsQywE0Kok/BYG743JJcBISIhuNaBjB8YUYhf
+	rlX2VAgTEDE3fTWM870k/Jo0wRoWDd4ei+lwuqdTpwoMohcKXkRJ1Y8zAnddcUW0PxowvieeeKp
+	2sekfPnsXIkh/dzsWlNPKTe9piUCMGAfoffnQ2j24MFrttbNaNzx1mPUPa0Ct4tKUrmx262gM4J
+	9xsUdWgItn0Q14xcpZap4MMlUOkiHSNig5fonYKTLvGkzbDQ3EV1UKug6os9hsNtt82MGxmrsnd
+	GD/GNKvF9S1u5UOPxmjQpO0kddEjv5vYQGLd+hoxJS3weE/sH6SJZBnKi1udeGnJxdCJlPl1WlT
+	RdNE743fTiHuFmUT5rg==
+X-Received: by 2002:a05:620a:7017:b0:7df:d668:22ff with SMTP id af79cd13be357-7e66ef8c17bmr195813085a.4.1753880114709;
+        Wed, 30 Jul 2025 05:55:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoyY3D0wsO5SLEh90EjUNCQ22vc89hWUifUn//akyEBL9q7sBkSC+N4U7QQomA6VAv1Ej6iw==
+X-Received: by 2002:a05:620a:7017:b0:7df:d668:22ff with SMTP id af79cd13be357-7e66ef8c17bmr195811685a.4.1753880114339;
+        Wed, 30 Jul 2025 05:55:14 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af6358a183csm744196666b.50.2025.07.30.05.55.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 05:55:13 -0700 (PDT)
+Message-ID: <2ca6af52-af35-4968-888f-390eee8b3bc3@oss.qualcomm.com>
+Date: Wed, 30 Jul 2025 14:55:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250724-pinctrl-gpio-pinfuncs-v3-0-af4db9302de4@linaro.org>
- <20250724-pinctrl-gpio-pinfuncs-v3-12-af4db9302de4@linaro.org>
- <CAHp75Vc4vsJh_-GbP+YO50veoGoGtfAPL4tjcF+73uophfmnGw@mail.gmail.com>
- <CAMRc=Mc1ophkofB6MmtD4adBAi69C3JyovM-S9YD_y7UA3V1qA@mail.gmail.com> <CAHp75VcV=K-DfOGs0z64==nO+wQNoEB2Ngd2vc+dLYr3WLChjg@mail.gmail.com>
-In-Reply-To: <CAHp75VcV=K-DfOGs0z64==nO+wQNoEB2Ngd2vc+dLYr3WLChjg@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 30 Jul 2025 14:53:37 +0200
-X-Gm-Features: Ac12FXya2mYA_HSI46S7KktzTvTwdWuT-o4vBrrr3z0vtr46fp0gRnU_ZqynDBk
-Message-ID: <CAMRc=MeVOEFkdqf+SwQ-a=7ZPvpoerb4G_kn-aZgNLR3aTTUog@mail.gmail.com>
-Subject: Re: [PATCH v3 12/15] pinctrl: allow to mark pin functions as
- requestable GPIOs
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
-	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300-ride: Enable Display
+ Port
+To: Yongxing Mou <quic_yongmou@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250730-dts_qcs8300-v4-0-5e2dd12ddf6d@quicinc.com>
+ <20250730-dts_qcs8300-v4-2-5e2dd12ddf6d@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250730-dts_qcs8300-v4-2-5e2dd12ddf6d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA5MiBTYWx0ZWRfXxDj0urISnGnT
+ z67B6DxbKhEXnwZR/GB2ni0CCi4mTy0Faw16G9ePttz49VV/mz2zr4uJElG0VBtCc5k1qgZ4JnM
+ OM6Sot+aF8MN9aHY7OfHhK2OkHdyWMY9C7uqHmPJNZhEw/czOHBYW11o2oZaqUUOiMAZ4+QA09I
+ ysVSXw+1aU2UBgvQ9qP0Dz4yfZnECe3G0Tjxo2eezaKFsacbUzH4+OOvibZUlB5mge8Na65H2N/
+ 59HIr2jVZWmHT8+1flXp3nBwr4iJamjDIUFOslj82d5rvsGNE3Al6rhb2gqHhU/sedYsRLmGPPa
+ QzBVsa2NEAoE3hJcUBUINvYtA3t+2d7cBERgIO9RjUzKWdfYWL2IuPWKxiru5S2xuJyUCZJqetz
+ tlIc7L4gIjY+JX1BfgCzTv7+sSe/epkReZK6DIZ7/OFTZl5Mjy3zyBonqpS87HUGU5tcM4HV
+X-Proofpoint-ORIG-GUID: SgTd79ic7fprmJ1sgc2j4izvx7ZyXwBP
+X-Authority-Analysis: v=2.4 cv=ea89f6EH c=1 sm=1 tr=0 ts=688a1634 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=QYiTujBYGv1OOWMMav4A:9 a=QEXdDO2ut3YA:10 a=5XHQ0vS7sDUA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: SgTd79ic7fprmJ1sgc2j4izvx7ZyXwBP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-30_04,2025-07-30_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507300092
 
-On Wed, Jul 30, 2025 at 2:50=E2=80=AFPM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Wed, Jul 30, 2025 at 11:54=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
-pl> wrote:
-> >
-> > On Thu, Jul 24, 2025 at 2:22=E2=80=AFPM Andy Shevchenko
-> > <andy.shevchenko@gmail.com> wrote:
-> > >
-> > > >  struct pinfunction {
-> > > >         const char *name;
-> > > >         const char * const *groups;
-> > > >         size_t ngroups;
-> > > > +       unsigned long flags;
-> > >
-> > > Not sure we need this. If the function is GPIO, pin control already
-> > > knows about this. The pin muxing has gpio request / release callbacks
-> > > that change the state. Why do we need an additional flag(s)?
-> > >
-> >
-> > I'm not following, how does the pin controller know that the function
-> > is GPIO exactly, other than by the bit set in this field?
->
-> AFAICS the gpio_owner !=3D NULL means that. No need to have a duplicate
-> of this information.
->
+On 7/30/25 11:49 AM, Yongxing Mou wrote:
+> Enable DPTX0 along with their corresponding PHYs for
+> qcs8300-ride platform.
+> 
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
 
-No, that's not at all what this series does... gpio_owner is the
-consumer label of a pin used by the GPIOLIB framework. The flag I'm
-introducing it telling the pinctrl core - before GPIOLIB is ever
-involved - that *this pin can be requested as a GPIO by GPIOLIB*. It's
-the other way around - without knowing this, for strict pinmuxers,
-GPIOLIB would never be able to request this pin if it was muxed to a
-function (even if the function is called "GPIO").
+[...]
 
-Bart
+>  &tlmm {
+> +	dp_hot_plug_det: dp-hot-plug-det-state {
+> +		pins = "gpio94";
+
+Please sort TLMM entries by the pin index
+
+https://docs.kernel.org/devicetree/bindings/dts-coding-style.html
+
+lgtm otherwise
+
+Konrad
 
