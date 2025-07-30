@@ -1,186 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-67076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51957B15B37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:06:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E70AB15B3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:11:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FC2218A6632
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:07:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60A4D3A5ADC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:10:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D685B86347;
-	Wed, 30 Jul 2025 09:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C338126A1A8;
+	Wed, 30 Jul 2025 09:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ehAtk7ZL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tEnphvMK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB82E17A31D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 09:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED197E1;
+	Wed, 30 Jul 2025 09:11:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753866402; cv=none; b=ggzIoY2teyoJ7DhIzGYvhaDG+RFTkOntC6upQfNd1wgow/1cBGO4Tnf4uwWZ2GkDdJkQBZkY9iumi8R0WOKJjBCygvSojNeW2+1wDbMCMPg3wD9kC60Iyk9VnjhainlT+t5XOIDO7a11y8C1GFra6IyAp2kB8KmRHudLj70qgDA=
+	t=1753866666; cv=none; b=rW4IetvMDc/xQefkXogOSkNWIcX6gTB3QXE258KPDRjNXtiQJlbBwma8PUEaxEsMGQG/1t9smDsHgNoWApEo5S39IUXgB2nN7dVc1fmnYxwIV6uWEkctcOvGS/KpYnfNh/ETwWWJmQqvQskxyN5UJHQoo+paeCt9WJXIAFRHEVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753866402; c=relaxed/simple;
-	bh=Q5x39miEvnyELWRml8u2bUeF3gEXQOyITf6/yX7xoCw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=PTQaE+L3xmTwCEukTCf5pTG9bTuy20BCuSfNMtYxSjwvPcRFz8PfhSFwLmL7kVfHo/b578j00eVG/jdS8cXfegnxbSNM5pZ43yqLuHxrgICaaWGbuSHdhR6OeCD+zoNfmTAAbhglJoUTVURGBfxrrmB3PT4dCyLsnTpoeFWLXjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ehAtk7ZL; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4561ca74829so66614725e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 02:06:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753866399; x=1754471199; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=amCpS6Biku5UkvGCeY8Q3zKrvNs8l+NdNFt807Gj1q8=;
-        b=ehAtk7ZLD4jF6mj+YB+znklz88s3nHDIS0ISkj0du9ONL1zw0Win+48TeYLdYJolLR
-         x4AOO1Rk5oWPJckkEqltXIZSuvixZMWGZPCi37ixk8+/vycCU4ZRx4E+WfSLMQ39jcTk
-         heP0t1sLrWy7v6Lg3+8ybRk8IMBHpHTM86ICWUgMtd8d56LTgAvuNAl7hZORZ/kN3RMe
-         jcnvSCWtwM18PsV8gSB9tOVz/H5paOVfXxcXfQkoB/KZv6sAp2S7Ub3FfYbE2frD/zix
-         dOKkSYbyrzsfY6riZt0N+7p2inKLOPr22zWCb01IGTxO0XcWOIo1qVL0T6N0U3ecgWwS
-         ghRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753866399; x=1754471199;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=amCpS6Biku5UkvGCeY8Q3zKrvNs8l+NdNFt807Gj1q8=;
-        b=GHPkXFRNorM/ULLk+jjyFQGv5WJPvrlhn0D4mZt2pW60J8dkuZkt2gl9lhmF0UMlXc
-         1cmB1TM34KpSZ/BqqPeR/xM0Gn+IGssWu6BelMaYYmBAVImQK4ywz+L7qRUEljB0oWPS
-         mmEzYqV7xbF+1CgBGSL1W22qjDaLHePm5wMnhZBVeOW6SN/SAhdQXoJRmZ97ckzhqsrx
-         6vwbXubxKxRrHPcs3Z9CXPTKCp4SOTpbYb/OOAiMKCXldhh7uprE3KkNaR3zFwt/7QyC
-         9T+41JHeW+AdBJdm51tI823XLzl9BsvUqFTpPT8gLaljlCPPQXyCsgPmDQv1bKKZIU3n
-         +6cg==
-X-Forwarded-Encrypted: i=1; AJvYcCVXA1AXZI/wg/mUYxcduIKzNvh5zp3082IXJMhkIw5CgLaG/qZmQtkMmQQq6r5smeGRsAurAq0BoLbDVoxV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx82tjzEOra9SIhr8DWxMyV5BlHWzB8Zu95VEL8Bbvzh2v3e3c+
-	/DgCe4Z9do3arAAksuEDMWvsfLVE/Do4DZHdjtBGFFjXKUhrCors6xWk0JRfmt9muOU=
-X-Gm-Gg: ASbGnct4FvHjUKDaq9dHTmpCKfiZICUMDUISB2ycyT6g066ehbRVl3gE3nkupoEUwBi
-	nN0vLMV37uzlS6Hs3JT6w0H6Lm4ZCxF9CH9S4stq0PGURypfjN61ukbZagpwoNHE95SzJZUc+6x
-	Vt+IwVrhVEVB+I699Hl/RHlba3VsgkaGMXhNEFQBnC9O4fxiDh6qq0CKq19SppS4YgthclYkWAW
-	uFBnM4+2CVL0GuB04t8whCcCmLcFCTL4En8vjJgSFH7CVyAQu9iWRta4MkBPHXvUxzvucjr/YHS
-	OkiWzYPX4n44bOrgCMW9ue7VEPtMn7twoceYn9KpDKK48YOWt0Z7BPyhbuhxRuD4/HSrt85b9tK
-	+8F5KerKwZ5yznu3KmpC5fNI5Jg==
-X-Google-Smtp-Source: AGHT+IGu9BTjzxVnqGeLDV3BoeEs9yZzpZzfEcV+C4Pb53LxtnI2Wds8ED4FoqgjBE3qk36pQJS9SA==
-X-Received: by 2002:a05:600c:6995:b0:456:2cd9:fc41 with SMTP id 5b1f17b1804b1-45892bc44a5mr21276705e9.20.1753866399264;
-        Wed, 30 Jul 2025 02:06:39 -0700 (PDT)
-Received: from [10.1.1.59] ([80.111.64.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b7973a9422sm814667f8f.21.2025.07.30.02.06.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 02:06:38 -0700 (PDT)
-Message-ID: <b1b34e31904f711e7cf82394843a9966238f2896.camel@linaro.org>
-Subject: Re: [PATCH v13 04/10] Documentation: ABI: Add
- sysfs-class-reboot-mode-reboot_modes
-From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, Bartosz
- Golaszewski	 <bartosz.golaszewski@linaro.org>, Bjorn Andersson
- <andersson@kernel.org>,  Sebastian Reichel	 <sre@kernel.org>, Rob Herring
- <robh@kernel.org>, Sudeep Holla	 <sudeep.holla@arm.com>, Souvik Chakravarty
- <Souvik.Chakravarty@arm.com>,  Krzysztof Kozlowski	 <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Andy Yan	 <andy.yan@rock-chips.com>,
- Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio
- <konradybcio@kernel.org>, 	cros-qcom-dts-watchers@chromium.org, Vinod Koul
- <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon
- <will@kernel.org>, Florian Fainelli	 <florian.fainelli@broadcom.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha
-	 <mukesh.ojha@oss.qualcomm.com>, Stephen Boyd <swboyd@chromium.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
- Srinivas Kandagatla
-	 <srini@kernel.org>
-Date: Wed, 30 Jul 2025 10:06:37 +0100
-In-Reply-To: <20250727-arm-psci-system_reset2-vendor-reboots-v13-4-6b8d23315898@oss.qualcomm.com>
-References: 
-	<20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
-	 <20250727-arm-psci-system_reset2-vendor-reboots-v13-4-6b8d23315898@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1-1+build2 
+	s=arc-20240116; t=1753866666; c=relaxed/simple;
+	bh=1yDm9VlTvBNd0JzIQuthHYnbrnr2hToDOTq+eAbX2Ek=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=motjuVMCHVHnn6vUUFxPT5JBCQd4vZ0bcpqXBJ9PYxZTnVUHebw8eAQTgnDGNVk9rkKAMhgX7zrJv/n1miLwj3kqF+Lu1ZM92KmLqUohnNxKTOq4BxQ/nXyy4Mv3HE4tZ7n/WpzfLsGfcNFih4KAMIMdiSdFDeAGslWNsB6WEFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tEnphvMK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22C8C4CEF5;
+	Wed, 30 Jul 2025 09:11:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753866666;
+	bh=1yDm9VlTvBNd0JzIQuthHYnbrnr2hToDOTq+eAbX2Ek=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tEnphvMKOA0x8Ds1iEMI9LgESZV84E8W3KjaZLrijfj7LqFz4MlQWwnWs9Zg1Sa1+
+	 8wjTGK1RT+odr/KxwDQEcv23NrhWO6fSkPqLmXvi1Fm8cDIdGTJKeFm3n5BlkAFtsJ
+	 xgHIuV1lZ0gc6KruQdG6C+dWXvnOwnbI8MfSt6QaRCsNxytVv7iz5gnLgen0kg886V
+	 QdsDVcapUf2HqWi/TzAmyAa2JXtWoBEULZImXGIwIA4riQS9IiXXAEMTdN9xCUI71s
+	 S0dBji41L7mnfM+Zcf5XJW3tL/gEkcXiSFEmg33x4re9Puy8l3x8wAgt6Sn657sV6f
+	 Jh0hUHOmCmqKw==
+Message-ID: <466a42c4-54f5-45b2-b7f0-2d51695eac8e@kernel.org>
+Date: Wed, 30 Jul 2025 11:11:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/3] dt-bindings: ufs: qcom: Add reg and reg-names
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
+ <20250730082229.23475-2-quic_rdwivedi@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250730082229.23475-2-quic_rdwivedi@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, 2025-07-27 at 21:54 +0530, Shivendra Pratap wrote:
-> Add ABI documentation for /sys/class/reboot-mode/*/reboot_modes,
-> a read-only sysfs attribute exposing the list of supported
-> reboot-mode arguments. This file is created by reboot-mode
-> framework and provides a user-readable interface to query
-> available reboot-mode arguments.
->=20
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
+> Update the Qualcomm UFS device tree bindings to support Multi-Circular
+> Queue (MCQ) operation. This includes increasing the maximum number of
+> register entries from 2 to 3 and extending the accepted values for
+> reg-names to include "mcq_sqd" and "mcq_vs".
+> 
+> These changes are required to enable MCQ support via Device Tree for
+> platforms such as SM8650 and SM8750.
+> 
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 > ---
-> =C2=A0.../testing/sysfs-class-reboot-mode-reboot_modes=C2=A0=C2=A0 | 39 +=
-+++++++++++++++++++++
-> =C2=A01 file changed, 39 insertions(+)
->=20
-> diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_mod=
-es b/Documentation/ABI/testing/sysfs-class-reboot-mode-
-> reboot_modes
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..7147a781e5d4d11977c3a156b=
-f4308aa13310e39
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
-> @@ -0,0 +1,39 @@
-> +What:		/sys/class/reboot-mode/<driver>/reboot_modes
-> +Date:		July 2025
-> +KernelVersion:	6.16
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 21 ++++++++++++-------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index 6c6043d9809e..de263118b552 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -86,12 +86,17 @@ properties:
+>  
+>    reg:
+>      minItems: 1
+> -    maxItems: 2
+> +    maxItems: 3
+>  
+>    reg-names:
+> -    items:
+> -      - const: std
+> -      - const: ice
+> +    oneOf:
+> +      - items:
+> +          - const: std
+> +          - const: ice
+> +      - items:
+> +          - const: ufs_mem
+> +          - const: mcq_sqd
+> +          - const: mcq_vs
 
-The version should probably be updated.
+This is incompatible change and commit msg is inaccurate here. It says
+"extending" but you are not extending at all.
 
-> +Contact:	linux-pm@vger.kernel.org
-> +		Description:
-> +		This interface exposes the reboot-mode arguments
-> +		registered with the reboot-mode framework. It is
-> +		a read-only interface and provides a comma
-> +		separated list of reboot-mode arguments supported
-> +		on the current platform.
-> +		Example:
-> +		 recovery,fastboot,bootloader
+Recent qcom patches love to break ABI and impact users. No.
 
-I'd personally find space separated like e.g. in files below /sys/power
-and many other similar files below /sys easier to read.
-
-Cheers,
-Andre'
-
-
-> +
-> +		The exact sysfs path may vary depending on the
-> +		name of the driver that registers the arguments.
-> +		Example:
-> +		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
-> +		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
-> +		 /sys/class/reboot-mode/qcom-pon/reboot_modes
-> +
-> +		The supported arguments can be used by userspace
-> +		to invoke device reset using the reboot() system
-> +		call, with the "argument" as string to "*arg"
-> +		parameter along with LINUX_REBOOT_CMD_RESTART2.
-> +		Example:
-> +		 reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
-> +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 LINUX_REBOOT_CMD_RESTART2, =
-"bootloader");
-> +
-> +		A driver can expose the supported arguments by
-> +		registering them with the reboot-mode framework
-> +		using the property names that follow the
-> +		mode-<argument> format.
-> +		Example:
-> +		 mode-bootloader, mode-recovery.
-> +
-> +		This attribute is useful for scripts or initramfs
-> +		logic that need to programmatically determine
-> +		which reboot-mode arguments are valid before
-> +		triggering a reboot.
+Best regards,
+Krzysztof
 
