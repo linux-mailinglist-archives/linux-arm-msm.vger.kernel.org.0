@@ -1,140 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-67081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CA72B15B72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:24:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5577B15BBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:34:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80F823B78F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:24:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD17D3A6878
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:34:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00B7B2750E9;
-	Wed, 30 Jul 2025 09:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E47C273817;
+	Wed, 30 Jul 2025 09:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cTPbrNKu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mn3mWr7a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AABF26FDA9;
-	Wed, 30 Jul 2025 09:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B9F26D4F9;
+	Wed, 30 Jul 2025 09:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753867372; cv=none; b=WE83kWI3gsWljc0ycNULDnIqnKaoNRp8XKv9FAPoBWcwTREsilHwcM6LtyLUDAW7D/x3f/taSVLPg5t+IoMbCG02fTzoa5LZJ5EivdQ7hJYVZE0FAXHf+OZKNdWqc+S/sK4B1vlVm5QeIOu4rJhBlKksnnWe2VW4Aa7nA5b7p6o=
+	t=1753868068; cv=none; b=g2PJORVj1fHCcNah+9TOz1kAPRqVKoYqHBYBsEW+TcPz0c1JMZnc3G8hpG0o1E1F9lEhExKCR+lJhvBSzLMCAQ+GzPT/mkmfGSWSOfhL7xhUR3Qa012PeeU7kmoGETwzyKzPYOb4JNaLoJ1fvDR6ZHU7jAAGwvqifixFRBjvfWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753867372; c=relaxed/simple;
-	bh=mzwHw+265Ro4LQQ1Rr7vd9ninEBSp7M3yuLpyZqTcN4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=oOcew9xSEZ0JCjFwgN+nIZiqumPJrmykb+fhRKeh8k1VnL/eMZS0rzs0kdbeVZtQGdpNiBhWu5lE4b38grvUTc8CuCDvq1Hds5NWi1mrzj7AMMaVEn71iHZEK14DOORhpnF0cPxevhGfvT3AZA0zH/J4pm7cO6/Z28vDWPjlRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cTPbrNKu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56U7iLCr016213;
-	Wed, 30 Jul 2025 09:22:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	laY4sjzaZLR8SgMhPEYTnLhfZi9R4r0rn2mnqOqjZLM=; b=cTPbrNKu0M13t2oS
-	QCREkDNHZ4N2AYTFH8ZG+j0khvtS4NVf3iEhEcXry4ERJ69FLL9N5ICiffYWqHcl
-	2H+mZxd97AGNhuzfw3op3jmWOIkyEPzPV2FKWDrO7ju9qgaVq8sVdCKPwatfRh8I
-	QBBiGIs1XVLGQ4JT25TfvK5MazH/2jzwSPqXNxEsinv3CzHjd7SUtWc1vvX5UGBI
-	7wOs6wQgfUtL958TKJCUzLP4PutjsQCvHM4Cs3zWkapYj5/NY3wZT+S3vMmmhRkS
-	wzJ1NsChTa4ITaxkanOneNtd8clzO4k4+o6YHPdm7gtGm7mQK9PPfSEdK+wHQpIn
-	/uOdEg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 486v6y3jrj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 09:22:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56U9Mkmh005189
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 09:22:46 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 30 Jul
- 2025 02:22:41 -0700
-Message-ID: <2c165ddd-f6b6-45b6-a319-8944fab324f2@quicinc.com>
-Date: Wed, 30 Jul 2025 14:52:38 +0530
+	s=arc-20240116; t=1753868068; c=relaxed/simple;
+	bh=CIVuQYfavwb/2ra5GsD9SGItvqbBHNthKR9qvQvzOGI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=F3TEofKNqz0g3c03dE9qltvrtdv0Pp5TYf3dvh5xX+vDu5wmpH1RGXACxl7hOGoS9xqxnYZLPx99Ady9hU0iTfc6npreCUfqEq7lTdZFP9gbWE+qsYuRS9gM/gG8V4AKyxTpQ/oghO82xhAlU9WTNO5DNwwwVZfPa3E3cYP1M0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mn3mWr7a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05A0C4CEE7;
+	Wed, 30 Jul 2025 09:34:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753868067;
+	bh=CIVuQYfavwb/2ra5GsD9SGItvqbBHNthKR9qvQvzOGI=;
+	h=From:Subject:Date:To:Cc:From;
+	b=mn3mWr7aA9V5VQdmoPI1MDwUFqmYcbYou3spQN0mTpS2xY/Q2IAmer8ElcJzAHti+
+	 KDI3Je9i5rYwxmc1Uu6frvKz5aCvEdeIaJV5v0eUbJgOtZmLFLXve2bcmizzIvgMEn
+	 zQqsAseUiBNcc0woER4J692Ev/4bp7WTpJQJ+R/ErEE5f9CVblx7OIN1CZA/zM/LZx
+	 ZgtSmBLu8mJcqqTFok+wdPrjTWQ4KU23lsYRxK+U5FL/RLAIYBgwxmTvJMoFOzaETL
+	 y6mDyNH5gHTpUEo+vdF56kw6vXYSq/gBDMHez4n+nx7iA96Ye8h3ttmX3XshWhq+mw
+	 OFIlGH+1lL8JQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [RFC PATCH 0/6] Allow DMA consumers to pass a cookie to providers'
+ of_xlate
+Date: Wed, 30 Jul 2025 11:33:27 +0200
+Message-Id: <20250730-topic-dma_genise_cookie-v1-0-b505c1238f9f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
- apss clock controller
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Varadarajan Narayanan
-	<quic_varada@quicinc.com>,
-        <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>, <djakov@kernel.org>,
-        <quic_mdalam@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
-References: <20250730081316.547796-1-quic_varada@quicinc.com>
- <20250730081316.547796-2-quic_varada@quicinc.com>
- <1705cfd6-95fe-4668-ae3b-f8fc7321d32a@kernel.org>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <1705cfd6-95fe-4668-ae3b-f8fc7321d32a@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA2NSBTYWx0ZWRfX0ugXjftaA4Yl
- oroN+K7j4TzT6tRyfDJT+TJLmOjFu9NC7YP1E7pKGzQEF43eR+B7EFf9+FctEYewdeCJQTZci81
- OXoFePgSrrOqq/A1yeW/cNRyGNXiXH1toyMDPu2xmSBUgd+b7zT65O5IR529/D+3rJA9PeayYDn
- F493PR2DGT4G3VW5+j8f1bTdefsIZMtv6Dfttq7L0/Q7bfVsOfXLuKpneOXDtpRVFfCQ9qB+Ko6
- /WYjZiMt1DKunF0NVxh3agfVGgYlREbU7qoSCjEKUpe/fub8Nj/zrQ8nAs8TnkHHAHPuyaWI51k
- nhItJga/ka47Wg5n6P8+Z+F+xvZ4rpf5Wigqe5amq5NhxowgvqWywo2B80zsmTqjbmBnsi8PK9K
- zTHOt7ENMKe6U0ndwWVyj+A6wALscBXgobRU7jwt8UIuvmlLyqPFZaVWshXTroToZJin3IC4
-X-Proofpoint-GUID: mKGqk8IfXU6HMPAi6WSQj-zZubvVai_w
-X-Proofpoint-ORIG-GUID: mKGqk8IfXU6HMPAi6WSQj-zZubvVai_w
-X-Authority-Analysis: v=2.4 cv=QYlmvtbv c=1 sm=1 tr=0 ts=6889e467 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8
- a=COk6AnOGAAAA:8 a=WXmMl29sQjXzjk-Zzf0A:9 a=QEXdDO2ut3YA:10
- a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-30_03,2025-07-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1011 suspectscore=0 mlxlogscore=805
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507300065
+X-B4-Tracking: v=1; b=H4sIAOfmiWgC/x3MTQqAIBBA4avErBO0P6mrRETpaEOkoRFBePek5
+ bd474WIgTDCULwQ8KZI3mWIsgC1Lc4iI50NFa9aLkXDLn+SYvpYZouOIs7K+52QdZ1WK5emNrq
+ HXJ8BDT3/eZxS+gB+aeXZaQAAAA==
+X-Change-ID: 20250714-topic-dma_genise_cookie-66dcb07f3fd9
+To: Vinod Koul <vkoul@kernel.org>, Sven Peter <sven@kernel.org>, 
+ Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+ Neal Gompa <neal@gompa.dev>, 
+ Ludovic Desroches <ludovic.desroches@microchip.com>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ Paul Cercueil <paul@crapouillou.net>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Viresh Kumar <vireshk@kernel.org>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Frank Li <Frank.Li@nxp.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, 
+ Taichi Sugaya <sugaya.taichi@socionext.com>, 
+ Takao Orito <orito.takao@socionext.com>, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>, 
+ Patrice Chotard <patrice.chotard@foss.st.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ =?utf-8?q?Am=C3=A9lie_Delaunay?= <amelie.delaunay@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Laxman Dewangan <ldewangan@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, Michal Simek <michal.simek@amd.com>, 
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+ =?utf-8?q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
+ Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+ Viken Dadhaniya <quic_vdadhani@quicinc.com>, 
+ Andi Shyti <andi.shyti@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+ imx@lists.linux.dev, linux-actions@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+ linux-tegra@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-i2c@vger.kernel.org, 
+ linux-spi@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753868049; l=5799;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=CIVuQYfavwb/2ra5GsD9SGItvqbBHNthKR9qvQvzOGI=;
+ b=va5fmQm0vcHgbpGnfydpzko+HQU0+0iHNYCXm7WHYjVRwugQO/jlg6FABqOs3xChvtQiLtHfX
+ nwgfqitX8ihAL4cqD4UZZ9Xblo1yiqYPkj39iyy4q4XnXfktK7X59k3
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+The DMA subsystem attempts to make it theoretically possible to pair
+any DMA block with any user. While that's convenient from a
+codebase sanity perspective, some blocks are more intertwined.
 
+One such case is the Qualcomm GENI, where each wrapper contains a
+number of Serial Engine instances, each one of which can be programmed
+to support a different protocol (such as I2C, I3C, SPI, UART, etc.).
 
-On 7/30/2025 2:32 PM, Krzysztof Kozlowski wrote:
-> On 30/07/2025 10:13, Varadarajan Narayanan wrote:
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,ipq5424-apss-clk.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm APSS IPQ5424 Clock Controller
->> +
->> +maintainers:
->> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> +  - Md Sadre Alam <quic_mdalam@quicinc.com>
-> 
-> My v2 comments seems still valid. Your explanation suggests they moved
-> on, so it is confusing to see them here.
-> 
-> Sricharan and Md Sadre, can you provide Acks for this?
-> 
-Ack. Please feel free to remove my name.
+The GPI DMA it's designed together with, needs to receive the ID of the
+protocol that's in use, to adjust its behavior accordingly. Currently,
+that's done through passing that ID through device tree, with each
+Serial Engine expressed NUM_PROTOCOL times, resulting in terrible
+dt-bindings that are full of useless copypasta.
 
-Regards,
-  Sricharan
+Currently, the DT looks like:
+
+i2c@foobar {
+	compatible = "qcom,geni-i2c";
+	dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
+	       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
+	// actual hw description
+};
+
+spi@foobar {
+        compatible = "qcom,geni-spi";
+        dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
+               <&gpi_dma1 1 1 QCOM_GPI_SPI>;
+	// actual, identical hw description
+};
+
+Which is manageable when there's two of them. Unfortunately, we're
+in the double digits range nowadays.
+
+This series attempts to cut down on that through making the last cell
+unnecessary, moving the purely-SW data that the current protocol ID is
+into the driver.
+
+The mass of_xlate signature change is a little unfortunate, let me know
+if it can be avoided somehow..
+
+Attaching the relevant dt-bindings change and converting one platform
+over as an example.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (6):
+      dt-bindings: dma: qcom,gpi: Retire passing the protocol ID
+      dmaengine: Make of_dma_request_slave_channel pass a cookie to of_xlate
+      dmaengine: qcom: gpi: Accept protocol ID hints
+      i2c: qcom-geni: Hint GENI protocol ID to GPI DMA
+      spi: geni-qcom: Hint GENI protocol ID to GPI DMA
+      arm64: dts: qcom: x1e80100: Remove GENI protocol ID from DMA cells
+
+ .../devicetree/bindings/dma/qcom,gpi.yaml          |   5 +-
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 198 ++++++++++-----------
+ drivers/dma/amba-pl08x.c                           |   3 +-
+ drivers/dma/apple-admac.c                          |   3 +-
+ drivers/dma/at_hdmac.c                             |   6 +-
+ drivers/dma/at_xdmac.c                             |   3 +-
+ drivers/dma/bcm2835-dma.c                          |   3 +-
+ drivers/dma/dma-jz4780.c                           |   3 +-
+ drivers/dma/dmaengine.c                            |  20 ++-
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c     |   3 +-
+ drivers/dma/dw/of.c                                |   3 +-
+ drivers/dma/ep93xx_dma.c                           |   6 +-
+ drivers/dma/fsl-edma-main.c                        |   6 +-
+ drivers/dma/img-mdc-dma.c                          |   3 +-
+ drivers/dma/imx-dma.c                              |   3 +-
+ drivers/dma/imx-sdma.c                             |   3 +-
+ drivers/dma/lgm/lgm-dma.c                          |   3 +-
+ drivers/dma/milbeaut-hdmac.c                       |   4 +-
+ drivers/dma/mmp_pdma.c                             |   3 +-
+ drivers/dma/mmp_tdma.c                             |   3 +-
+ drivers/dma/moxart-dma.c                           |   3 +-
+ drivers/dma/mxs-dma.c                              |   3 +-
+ drivers/dma/nbpfaxi.c                              |   3 +-
+ drivers/dma/of-dma.c                               |  18 +-
+ drivers/dma/owl-dma.c                              |   3 +-
+ drivers/dma/pl330.c                                |   3 +-
+ drivers/dma/pxa_dma.c                              |   3 +-
+ drivers/dma/qcom/bam_dma.c                         |   3 +-
+ drivers/dma/qcom/gpi.c                             |  16 +-
+ drivers/dma/qcom/qcom_adm.c                        |   3 +-
+ drivers/dma/sh/rcar-dmac.c                         |   3 +-
+ drivers/dma/sh/rz-dmac.c                           |   3 +-
+ drivers/dma/sh/usb-dmac.c                          |   3 +-
+ drivers/dma/st_fdma.c                              |   3 +-
+ drivers/dma/ste_dma40.c                            |   3 +-
+ drivers/dma/stm32/stm32-dma.c                      |   3 +-
+ drivers/dma/stm32/stm32-dma3.c                     |   4 +-
+ drivers/dma/stm32/stm32-mdma.c                     |   3 +-
+ drivers/dma/sun4i-dma.c                            |   3 +-
+ drivers/dma/sun6i-dma.c                            |   3 +-
+ drivers/dma/tegra186-gpc-dma.c                     |   3 +-
+ drivers/dma/tegra20-apb-dma.c                      |   3 +-
+ drivers/dma/tegra210-adma.c                        |   3 +-
+ drivers/dma/ti/cppi41.c                            |   3 +-
+ drivers/dma/ti/edma.c                              |   3 +-
+ drivers/dma/ti/k3-udma.c                           |   3 +-
+ drivers/dma/uniphier-xdmac.c                       |   3 +-
+ drivers/dma/xilinx/xilinx_dma.c                    |   3 +-
+ drivers/dma/xilinx/xilinx_dpdma.c                  |   3 +-
+ drivers/dma/xilinx/zynqmp_dma.c                    |   3 +-
+ drivers/i2c/busses/i2c-qcom-geni.c                 |   4 +-
+ drivers/spi/spi-geni-qcom.c                        |   4 +-
+ include/linux/dmaengine.h                          |   7 +
+ include/linux/of_dma.h                             |  16 +-
+ sound/soc/apple/mca.c                              |   2 +-
+ sound/soc/renesas/rcar/dma.c                       |   2 +-
+ 56 files changed, 261 insertions(+), 177 deletions(-)
+---
+base-commit: 79fb37f39b77bbf9a56304e9af843cd93a7a1916
+change-id: 20250714-topic-dma_genise_cookie-66dcb07f3fd9
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
