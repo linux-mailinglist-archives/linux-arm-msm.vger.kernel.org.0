@@ -1,195 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-67154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47F9AB1610D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 15:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2028FB1610F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 15:09:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CF2D17182E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 13:08:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDF1A545FD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 13:09:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCA8B29A300;
-	Wed, 30 Jul 2025 13:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40967292B57;
+	Wed, 30 Jul 2025 13:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FCRsIt/u"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hZFLgRwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D61298CC4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8826A296148
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753880894; cv=none; b=MX45XIKGu/i2USMlMIXxAjmpD3Qm6WK0GHK867hFKhAIRvV5gWbzt05yXw6ywiZF/LSNmkdwM16TkHx/JFAshg7US1Xx1HK4Cs8yX/nt5FJgax2tOCI/o3bJVQDPQhrqkI2u3fV/f7Y8s6mwDZbxki+5l4RONa66GmPP1YFtQj8=
+	t=1753880948; cv=none; b=N9APd/XpEWsz9qhD6+fRCErsHp1dsszaInUa636rnkUZQfXAO1f1R1AqILVlw6lR+08Jyf5Bm7o+JsB0rfIpdYXP0fvQjgho7fTDri18ZALkhTT/XO8EZbYOYkcV+rEyUYvBdiwWJZKDwkqkLQSsLB3DfDfIerPqmErtvinhs1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753880894; c=relaxed/simple;
-	bh=utYzFVLTObmPxGSlUuHvJFOCt7DjeX6wik+KDLimSyA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sL6C412ac3Y5GLLdVJw2RLQMdOhuHX9xm5s3KiFyNJ8vBKG1e0VIQLfSo5gB6ToCdwebq5HcL4XkKmp8qaZfq6vRRI5ikmnsaq9mlTk+RVEr851mcsZHu4gZY4GCWGeJhIxfab7MJpEOtJTUpLihhaor+Xrm+s42WjlvnUId6mM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FCRsIt/u; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1753880948; c=relaxed/simple;
+	bh=iuuKGIizxFYPlT/bt0zoSMj0nd3jCkg/TFY2jENqJBE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qYI8XnqqKITVGUH+epSWQe8Nc8Rken5i98FaQejMuQP1bmSt+kaLswikCDUiKzyMqqM/mMlq14vMhsaJpxp/NRa1yVA+m+urc/EWqqtd1dDUNcIXqG//aBaB5kotlM2wOFb38JOwwimrwRCTuO+DjgqqeA5OnlsxNvgHcPNA51Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hZFLgRwk; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCbBKs024555
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:08:12 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCb90g017604
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:09:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=rCoCba3PaUuakN2dddfrr36z
-	ZpUe2mMvVXboTEOCYoE=; b=FCRsIt/uDiAJa5REs5cKwMn7O0aF9XVlsTRTnpWG
-	BpY6aAHc1kYOI9RLjM5cUn1Jk0cUj0rBH+tkINWMZfcSbRcCjuWRG/O1cUTK+86a
-	1gMqfJo9mJWrfwS2UoBjsvAX6XvLGTW9wHXClWeb5d6Pmu3mMuWuIuB3436cAEeh
-	QpGb2A2kH0Mu24U3jVuNJm7YwlN4ijxfWHJrnLTfOR2iFMoCYAtvyWHFnEQamMcb
-	7WjXnK3fzagFO7XMgCK1397GX31vpWJYDv4TRpBf/8SyQAQX3oRYbyzVIN0R/R33
-	fUgfCC3pxGczAfZ0r/YDyiaUwgUPNvHVdd7M/b/rXBkWvQ==
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484p1akrhg-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wNDjzyGP/l854i6KT01aZoOncfqe5cUyUJTb5qnC1kY=; b=hZFLgRwkVOm0twVG
+	7m3CXCrAyBdRSRzunSCBpu6djgXBoZcpeLkDHNYd2NpE5xF6cyxTZA2siSVH7HIa
+	Tv/nAKLx4Q4QsS6Cc3XKH8hWf4UrPm2OVZZgwaXFt7Sbucn4Kj0bBVs6BIZ32v4P
+	cLGuDWHyOqn969q4Tn8BC18yfsUAZCFSsSn1CfaLgmy9caCLf93LjRZwUcpCxUrY
+	35EgB+ICiKCym9XzOZ+Q/l2l34T8Ufn2hfLyhLL1NGZ1874NdY24SBQPPouQU8To
+	6f8oQGEQhft2GVVqTYgUNV7QNnnUEImy3SXRfmTlU+7Gfkry2a+7Xbd1tMQfxMcA
+	5JbZGw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484qda3rmt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:08:11 +0000 (GMT)
-Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-615b153aa54so1040265eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 06:08:11 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:09:05 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-748d96b974cso979419b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 06:09:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753880891; x=1754485691;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rCoCba3PaUuakN2dddfrr36zZpUe2mMvVXboTEOCYoE=;
-        b=IsnCm9qYL4o6ITxzHWcnrDMMyhAI4SaV8IX2yPV0PWbxJMUehIm5ndsTxxW7/pN9p9
-         4tBBOGIxIjS9xLTU4Z4w2NeS9vG7W2fWpwGbjrfGKhEa6fDhyGsvGbPAD827MRBCnNbA
-         pbT4rfS9pFLaqPECSMP3oelTwjBAgSj6LbxG8V1uEyBF3lQNAqGelRPgO/x38coERFHn
-         rAohCQ63TXFnlsSZtUrkcB3vlNp9cgXF1y/aSrvyRS097sAoeFlBNK8QpReEdGtFJWqI
-         DbTyEzPFHLgMcjFEhfr5nZBmOyFRq3BNINnDZbENMZs8Px4yWvQbgVzKwE8V47xsNQIm
-         nXCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXj1AXW6wHZAGAa4Xi9eRTAAxjl65hW7IgWXsm4nakiPXMEeuIVBq2hHgSkQ0h5HzbX3GXJq8cBZL0ghuXp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yym41zySXNYa2n1qOjVK4FShX9axE3Rh62ZwFveH+lubZx9b6/1
-	XzIsAlR5vBXRt962ZDjs/3E76wjy/sgIs908kBKnG2/ZJ7cz7VCb3ypzuYNzwBEumBSXgJuKbzn
-	bhEbkpMRo+AtwwA6YWTzdAlKBmb0v+0P3PwUpZD0TsksCBoY3YvjIo+VscuGpJNHexsK6
-X-Gm-Gg: ASbGncuPYcUO2d5g3n1cHCQnBVR1TYJ4CrUGQoWEwJDWORtu3CxIw2HC0fd7VZb8CJx
-	wRPeclsG8krT3GqsYJ3wds6PTvuK536hAr0lXSUv9lK5CdQo0o1gHQDxyJXdGjjm/UF1okg0ULv
-	1ObliQ5hy9KpDNX2JMJ+FV/9ALlcfWP5uhbPIciTfYNGOJ0kN2tAQaEDbFmr2HKjiRlvFs4VTbR
-	YCGbSQWQYx3Aoby375YDztO4hTK6ZTb9F0DgpfDJWv3ctwoOjhL5Iht/jFdWVNcnrjL/2ffwxgr
-	bxI6s8t+XaGU2Lk4hgevUeXfPv+wvUvDxyrD2NQBYjfYLDVhjGcZkoYEPZQfXCFFC15Nx/NeeHE
-	fFBBXFCcVNahyeej4b+TNVfVH/rn1HriZMl0dai9boz4AC75lUsWN
-X-Received: by 2002:a05:6808:509e:b0:40d:75bd:69d1 with SMTP id 5614622812f47-431994bf2b8mr2318504b6e.7.1753880890775;
-        Wed, 30 Jul 2025 06:08:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEreN+EZPMsIb55Cu4XOPM4kHBtS5bQnw9CIRJxKiJf+cZor2FwqzapYkfyd+2FT5moObUVmA==
-X-Received: by 2002:a05:6808:509e:b0:40d:75bd:69d1 with SMTP id 5614622812f47-431994bf2b8mr2318193b6e.7.1753880887445;
-        Wed, 30 Jul 2025 06:08:07 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b79c32a10sm497780e87.106.2025.07.30.06.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 06:08:05 -0700 (PDT)
-Date: Wed, 30 Jul 2025 16:08:03 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com, lumag@kernel.org,
-        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
-        simona@ffwll.ch, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com
-Subject: Re: [PATCH] drm/msm: update the high bitfield of certain DSI
- registers
-Message-ID: <nxayk52mhisyipdsbf5rykuynpg45mk5y5ykqxh76vzyxb6exy@h3qwqdgviumb>
-References: <20250730123938.1038640-1-quic_amakhija@quicinc.com>
- <74e3836e-af29-4b5f-b644-23bdff084c78@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1753880944; x=1754485744;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNDjzyGP/l854i6KT01aZoOncfqe5cUyUJTb5qnC1kY=;
+        b=Bi3Ytn6bBPNDgmSt/KG64x55uDravOUwl+Hq6jhm67/dQ/mxxlE+fzzgA0d95y9KI0
+         mA507XAyOOjBtCXGBbK+oKVlZuthlZ+j81QHKDKtCoMAW0TjIewtrw6V2BaVG8Q0UVCr
+         FDyVDYcJrw60D+63t9rvVWENiXyIc/nF++D6HX3nYyrPMFRVAFpvH1noatfzDv2lu4p9
+         MwGI5zvkIKYYuiuZQfg+MWoygXZ2QV6ucyI7VuFj0q8WZmYZlFd0xBmaY7r1RhGeNrFU
+         u3yb+N9vQerG9mvIdLIwCuM0eaN4GqYqu0B5trQle45jugRQnM3RBf8SUwa4xhmKcFCj
+         KOyg==
+X-Forwarded-Encrypted: i=1; AJvYcCW+6BAr2/mYdK5Dpj6zu7g7TJOJE42YcO391O9nufplWDiVenBfYCuqKAzXo0siGh7UbGxzDLeok9SsezfB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLwa/A8WIOifZ8EevQOJyPtexH3oc8ccDNW/6WxrKAxUmq40/a
+	4qMcyXdOlk15StBxAJ2es5o48GzYagJ/WuQxdKY/n0UL3gq5oGRlB8x38lthkrA7RgpLEr2x2Aa
+	tI7GDAYX3nCtejJPCO5wcI7frF8R6InU8wbdryRhcJjG+30630Zw09+fWnEp2k0uykQsU
+X-Gm-Gg: ASbGncvSK5OO4HYhyQU/QRw1H6EHj1nVm2RK1tORkH0WsLiJKzqh5m9AjD9mBqO1kRD
+	xGYMvoFXP8ZjnXhNDK+qbL885AIVNyNTl7r60UprAyrCo07d2MVt3nP/QUCL3sE11uHrGgy04Mv
+	E6eo/IM9OPF26AcQK9gXvt+R2CeGTlf5wSE6Pd4PIrKOdSN0Svn2AYnAnrRu54LhPuBrCaEOdPE
+	FNUUM+IOnng5r8RGK3k9dO9gLa1+Woc/jMsr8Nv/Jim1BC/C/ajTrm329XOJTQUx9OPVCkCfxkK
+	sAjv4BwaTHLCB2EsnYCBqZUYnO2p3S8YT1PmArKZ977Sd17wv/vOiWxHPjvcOMm0YydgL6kIaw=
+	=
+X-Received: by 2002:a05:6a20:548d:b0:239:c7c:8de8 with SMTP id adf61e73a8af0-23dc0d3e328mr4807705637.12.1753880943797;
+        Wed, 30 Jul 2025 06:09:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGs6wjsf0Q2uV+QjNX2+BJebA7gZlSlrORRFmXImrXs/DTnl6FWhcQ6Ay1Cko/oB0Ikr9ynZQ==
+X-Received: by 2002:a05:6a20:548d:b0:239:c7c:8de8 with SMTP id adf61e73a8af0-23dc0d3e328mr4807652637.12.1753880943335;
+        Wed, 30 Jul 2025 06:09:03 -0700 (PDT)
+Received: from [10.219.57.35] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f67c8fcsm7588223a12.37.2025.07.30.06.08.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 06:09:02 -0700 (PDT)
+Message-ID: <2b8a2ea6-f13c-ea09-c089-f2296b887859@oss.qualcomm.com>
+Date: Wed, 30 Jul 2025 18:38:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <74e3836e-af29-4b5f-b644-23bdff084c78@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: -IwlTz5oqK14kPHOElnTUUXdeoRwB16r
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA5NCBTYWx0ZWRfXz4BeV/PY0vSd
- p5+EW2rDMLAxy/Pr0s8+Lf1acqgdCDtTDgmDITzXjD5Gun0GXHNdZxx2CRfR5mhxXZ2xq0ItAVs
- uvM1eP9FJNntYhRb50eC1J9d13bWtWBpyVcAJErmCnEyMFo5KpWO+gkVDYeOqvc0278IUEhLrpk
- 7db11QC7ZKfa47se+iAbJExjJaiiGYn3ITlPymg3wf3Laxgt7pVd1+EnuPenOAdkx/XjXKhDETc
- CBk4gvb7FUK5nNZ2Uo/SFAtXiFD/mIcSmSmnfc6YKCH10vNZ11MSSjvS5TulCgBWJV28NtrXNQP
- ab+RYMIMPrLxeg8TTQAcxS5R5z4k45C+IgLnOq0tqKc1ctiY59y8oDRCghGwAQIWHYerVSNxU7P
- ngAaHl9LbvYwc5bVwM1Q/65jGPAtSbAmoDzniZ6Tj7UxNaxhpxmY4JKZZo7TOKIWldLjxlpD
-X-Proofpoint-GUID: -IwlTz5oqK14kPHOElnTUUXdeoRwB16r
-X-Authority-Analysis: v=2.4 cv=KtNN2XWN c=1 sm=1 tr=0 ts=688a193b cx=c_pps
- a=lkkFf9KBb43tY3aOjL++dA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=e5mUnYsNAAAA:8 a=COk6AnOGAAAA:8 a=-gjihLczPamKDhiB-eEA:9
- a=CjuIK1q_8ugA:10 a=k4UEASGLJojhI9HsvVT1:22 a=Vxmtnl_E_bksehYqCbjh:22
- a=TjNXssC_j7lpFel5tvFf:22
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v13 04/10] Documentation: ABI: Add
+ sysfs-class-reboot-mode-reboot_modes
+Content-Language: en-US
+To: =?UTF-8?Q?Andr=c3=a9_Draszik?= <andre.draszik@linaro.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+References: <20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
+ <20250727-arm-psci-system_reset2-vendor-reboots-v13-4-6b8d23315898@oss.qualcomm.com>
+ <b1b34e31904f711e7cf82394843a9966238f2896.camel@linaro.org>
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <b1b34e31904f711e7cf82394843a9966238f2896.camel@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: KBfzAIJFwd_D_rQgK9LLXCgyQ0Hv_hif
+X-Authority-Analysis: v=2.4 cv=Pfv/hjhd c=1 sm=1 tr=0 ts=688a1971 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=OQUscKAIWfOqcitIQgEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: KBfzAIJFwd_D_rQgK9LLXCgyQ0Hv_hif
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA5NCBTYWx0ZWRfX05MOHfEJBpy1
+ fjTiLtB/BT3r0HrQNTTGeG9uxGFMjARIO7cfE8fw74RVrj6v7vwW9Jd47toDBZFPvykhRYOkpSh
+ hx2z+1Npuw1l/XRp1Ywxr+AOc1U3iXL89RNUAbhRb66AnBPA8yw2wQzbYwRQ4qNVTvZMFS9Y/qB
+ O3ayRmQ744AkmaY/1yJjD+RQHoqJZ7mWHcFg2hHP/6zi0FBuL5wS8OPrURVXI3ZQv8GNlf99lVn
+ pMui0lt5VQEgqpZqGDmk+PcCepKpnyjhxk70gImCS+IwpAVL87IjvKnqhxlogWATpv0Mb5XR7ak
+ T0RJo35+ZDfrEAhoELxtE3zEKTl6Y0QN9107C3IAHHXVFqd2JdDJi5WW8HpRlS6HtlkENJcRnsD
+ BF7zFQSlHSiWuLAvM5uNpQOaZNNA55016QyVTSdi1HM9g1unfgB1aiZDjQY1Le1hDzZKfbal
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-30_04,2025-07-30_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- adultscore=0 mlxlogscore=912 bulkscore=0 spamscore=0 impostorscore=0
- mlxscore=0 malwarescore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507300094
+ mlxlogscore=999 clxscore=1015 adultscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507300094
 
-On Wed, Jul 30, 2025 at 02:45:13PM +0200, Konrad Dybcio wrote:
-> On 7/30/25 2:39 PM, Ayushi Makhija wrote:
-> > Currently, the high bitfield of certain DSI registers
-> > do not align with the configuration of the SWI registers
-> > description. This can lead to wrong programming these DSI
-> > registers, for example for 4k resloution where H_TOTAL is
-> > taking 13 bits but software is programming only 12 bits
-> > because of the incorrect bitmask for H_TOTAL bitfeild,
-> > this is causing DSI FIFO errors. To resolve this issue,
-> > increase the high bitfield of the DSI registers from 12 bits
-> > to 16 bits in dsi.xml to match the SWI register configuration.
-> > 
-> > Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/registers/display/dsi.xml | 28 +++++++++----------
-> >  1 file changed, 14 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/registers/display/dsi.xml b/drivers/gpu/drm/msm/registers/display/dsi.xml
-> > index 501ffc585a9f..c7a7b633d747 100644
-> > --- a/drivers/gpu/drm/msm/registers/display/dsi.xml
-> > +++ b/drivers/gpu/drm/msm/registers/display/dsi.xml
-> > @@ -159,28 +159,28 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
-> >  		<bitfield name="RGB_SWAP" low="12" high="14" type="dsi_rgb_swap"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x00020" name="ACTIVE_H">
-> > -		<bitfield name="START" low="0" high="11" type="uint"/>
-> > -		<bitfield name="END" low="16" high="27" type="uint"/>
-> > +		<bitfield name="START" low="0" high="15" type="uint"/>
-> > +		<bitfield name="END" low="16" high="31" type="uint"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x00024" name="ACTIVE_V">
-> > -		<bitfield name="START" low="0" high="11" type="uint"/>
-> > -		<bitfield name="END" low="16" high="27" type="uint"/>
-> > +		<bitfield name="START" low="0" high="15" type="uint"/>
-> > +		<bitfield name="END" low="16" high="31" type="uint"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x00028" name="TOTAL">
-> > -		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
-> > -		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
-> > +		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
-> > +		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x0002c" name="ACTIVE_HSYNC">
-> > -		<bitfield name="START" low="0" high="11" type="uint"/>
-> > -		<bitfield name="END" low="16" high="27" type="uint"/>
-> > +		<bitfield name="START" low="0" high="15" type="uint"/>
-> > +		<bitfield name="END" low="16" high="31" type="uint"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x00030" name="ACTIVE_VSYNC_HPOS">
-> > -		<bitfield name="START" low="0" high="11" type="uint"/>
-> > -		<bitfield name="END" low="16" high="27" type="uint"/>
-> > +		<bitfield name="START" low="0" high="15" type="uint"/>
-> > +		<bitfield name="END" low="16" high="31" type="uint"/>
-> >  	</reg32>
-> >  	<reg32 offset="0x00034" name="ACTIVE_VSYNC_VPOS">
+
+
+On 7/30/2025 2:36 PM, André Draszik wrote:
+> On Sun, 2025-07-27 at 21:54 +0530, Shivendra Pratap wrote:
+>> Add ABI documentation for /sys/class/reboot-mode/*/reboot_modes,
+>> a read-only sysfs attribute exposing the list of supported
+>> reboot-mode arguments. This file is created by reboot-mode
+>> framework and provides a user-readable interface to query
+>> available reboot-mode arguments.
+>>
+>> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+>> ---
+>>  .../testing/sysfs-class-reboot-mode-reboot_modes   | 39 ++++++++++++++++++++++
+>>  1 file changed, 39 insertions(+)
+>>
+>> diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes b/Documentation/ABI/testing/sysfs-class-reboot-mode-
+>> reboot_modes
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..7147a781e5d4d11977c3a156bf4308aa13310e39
+>> --- /dev/null
+>> +++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
+>> @@ -0,0 +1,39 @@
+>> +What:		/sys/class/reboot-mode/<driver>/reboot_modes
+>> +Date:		July 2025
+>> +KernelVersion:	6.16
 > 
-> FWIW looks like at least on 8280, ACTIVE_VSYNC_HPOS offset = 0x38
-> and HPOS doesn't exist
+> The version should probably be updated.
 
-All registers here are shifted by 0x4 for historical and practical
-reasons.
+sure. will update this.
 
--- 
-With best wishes
-Dmitry
+> 
+>> +Contact:	linux-pm@vger.kernel.org
+>> +		Description:
+>> +		This interface exposes the reboot-mode arguments
+>> +		registered with the reboot-mode framework. It is
+>> +		a read-only interface and provides a comma
+>> +		separated list of reboot-mode arguments supported
+>> +		on the current platform.
+>> +		Example:
+>> +		 recovery,fastboot,bootloader
+> 
+> I'd personally find space separated like e.g. in files below /sys/power
+> and many other similar files below /sys easier to read.
+
+sure. Will make it space.
+
+thanks.
+
+> 
+> Cheers,
+> Andre'
+> 
+> 
+>> +
+>> +		The exact sysfs path may vary depending on the
+>> +		name of the driver that registers the arguments.
+>> +		Example:
+>> +		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
+>> +		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
+>> +		 /sys/class/reboot-mode/qcom-pon/reboot_modes
+>> +
+>> +		The supported arguments can be used by userspace
+>> +		to invoke device reset using the reboot() system
+>> +		call, with the "argument" as string to "*arg"
+>> +		parameter along with LINUX_REBOOT_CMD_RESTART2.
+>> +		Example:
+>> +		 reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
+>> +		        LINUX_REBOOT_CMD_RESTART2, "bootloader");
+>> +
+>> +		A driver can expose the supported arguments by
+>> +		registering them with the reboot-mode framework
+>> +		using the property names that follow the
+>> +		mode-<argument> format.
+>> +		Example:
+>> +		 mode-bootloader, mode-recovery.
+>> +
+>> +		This attribute is useful for scripts or initramfs
+>> +		logic that need to programmatically determine
+>> +		which reboot-mode arguments are valid before
+>> +		triggering a reboot.
 
