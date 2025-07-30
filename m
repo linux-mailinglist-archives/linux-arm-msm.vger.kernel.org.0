@@ -1,48 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-67142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBFF5B16081
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:44:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E5D3B1608A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:45:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18853565A9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:44:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B1753AC79E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A9AA28750C;
-	Wed, 30 Jul 2025 12:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B49732C85;
+	Wed, 30 Jul 2025 12:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UQpr8lWe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PGoJrr4z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561E5217736;
-	Wed, 30 Jul 2025 12:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BA94207A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753879476; cv=none; b=LoivbqubktvMAZ37+JizjXf3+Af8b9jx50BdlCGGbyYAbE2xgS1YcdKA2cjeu5RBApqwUx9Qihqh1bXTUeZhpGLm3pYkHMkdn3dt8wr7asAgtuTKguzGkUID2bs6YLnvU2wsjKMEoxP6SfS46LNwHL8Qbj186ZN0onM4/HzCPjg=
+	t=1753879524; cv=none; b=TBWnYjFweT+eXeGyLmG44JKVfjJFKem3f0Fes4sXIR99l/Yb3nGIh+qw+nP+aaRiWW3px40b+8DwcS6TE+4rinaLPS8lb+OQJZTnxuOFaQ6P4EeodndA0nSW7RwtHpap6ayFGPI/M3sZ7Qs24HAiGF5dnVoh1qq55QWWo5ftiCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753879476; c=relaxed/simple;
-	bh=jCoiiWdENTEfMwdXA/0mmzNCCV7rvV0enSCM+Dcen5g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ucO2ypipVsz+QjoIvOtPOtDFHvq/J9k5Y11KYwitxpYCkFkO229nbPRyb5394gjxM1xFed6pjAnUSrZJ2oAnvWkFUxBtmq24JeXAGAnf6xu7UQ0z3zq880dfxEVzoeGFh4RoalqonHNWWIeNkP13gQ5PHqTAJZqkwwWuA1+eap0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UQpr8lWe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253DCC4CEE7;
-	Wed, 30 Jul 2025 12:44:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753879476;
-	bh=jCoiiWdENTEfMwdXA/0mmzNCCV7rvV0enSCM+Dcen5g=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=UQpr8lWen9uGW+/WsqGxilWkKjeYM3vz8AsUSBFO/23blC2MIz/HiCD3F4uVdsF2K
-	 N2US1i6G4qGQTMcPsGXVIZ+ygkbq98Z30K0ZLJyQOLdaoc4QagZbdk5MeOyCos/D5X
-	 zk+XBKr6CVoH/1rkYKUV84KXGjCFzNqDawJjML3KXMHsRqdC8KaEwqBmZqxvE6W7iF
-	 xj7Yt+LFe+BMSXWKF+PRSXbaXBlG3UwB28U4KU16eWWhH3cfTqL9DI9Leeof8VR06C
-	 N4xOo8uFbRD+JJtt9PCXyecadxuFAezIWcYKDg1l5kSq0+knY5FhzK5SShwkcGN0wy
-	 iHNnE58tixLSQ==
-Message-ID: <01f2c5d5-6321-49af-b73c-6924f46d6646@kernel.org>
-Date: Wed, 30 Jul 2025 14:44:30 +0200
+	s=arc-20240116; t=1753879524; c=relaxed/simple;
+	bh=eR/zuSmJZH0jf1czY0eWikoB4WjQbyO+so5KHHNY4fc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GhdWeQE7T+/wFK8FXfB0sRdr4JeOZMMsH0F+E3c2UFdOI0TgojvHv1WAEJbEJfkjGVDOmcEO98UwqsSzi+K2NWOos6blGIF+fQfxTUQm+sfpIbb9+jhRd8xNQtaw+nvVutlQfEilcH7w/DDwblXqwNyMfMaYe0jLdE01mpyPJe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PGoJrr4z; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCbbTS013037
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:45:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tGD7An+ORZOjh//giVMxSzmnuZTa775G5JSoHE0guvU=; b=PGoJrr4zHtCSTMPk
+	m4+MGP3v7i8nvYY6l/IeF+O/VzXc/JOJkvDKxkB/WnwfCUMbbY+mQ/vtfeylc9+q
+	GvDQMiv4Sl2WCjxQZSuOvTQQGE5nVD5AwxOTPBhakMxacyKtC+rGtNIqsEV8bLD4
+	/6NEs+qZEnPJ9NbcgY6C5HtPpq1RzWlGRp/jCRVxDez8RGDUWKvmqHtiB03I2kQq
+	Ac9owKDs8M8roGeVDkoI4YndtHPlFrFkLLqb14inLTFeN9RjNueWdOukdmpLof6V
+	rc13k8IJO+/z4KUVlA+HGHma5Sus/CxAA/QH4HKno8Xkpj6zA5LTHNg+ASv7VzkV
+	moBH/g==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pbm3nh8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 12:45:22 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70737a93008so2861606d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 05:45:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753879521; x=1754484321;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tGD7An+ORZOjh//giVMxSzmnuZTa775G5JSoHE0guvU=;
+        b=bFQAkG3l8B4VjPsq3o99jUEFds9+B9nub/A9S0fRtJ8tlWsWTH3iJth8oGimUWMsd6
+         gGtW7nv18hkOBuGQaO6RylC1k7KnwtU8xaHgVkGRjn1buBMi9iyLMCBgUGJrGxvjLM/d
+         YZfWMtBIW0w/cYqDBJx2OpfW5oTgsv587i4n6PRQ+YBZDILGpUHVn3tJrex9iBxfQd8J
+         imWcvUCjVOXDQ1tWnNKX9m6QiBAn0xrNOXgK0/TAaPPXr8OlQRriFssuhg2VYeBPLEor
+         W1e2tMRGmarPnEcG6mNtfTbIsBCXmKGYWqDWUS9KVN6SB1u/pXrTk2bRHL+xWC2pugcE
+         Z0hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUDS4MoUm57UJXbHlYi6Z3S7IZQRDFNWJQrV9xmrfLlc8DX9I5bljWt/RDggCnolT4SDH8ueXUBqaGP1iRd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxhoy69pHjXeKNuQxdQjpymZk90ByZ3ZEfDzK1awyTySzPBck7s
+	CRzSH9cqei3tG5LIpTZHsOAJVFZWs0jeRLMgBxGGA515BeHfleW1Po4bVDhx7ur9ULi53BJMG4Z
+	jmUQtm9pRlWDTJP7/he88GPzus2XiFJ6WN6s0qwmTzFqc6JgEVAZSG+pwVsyMSfEsS6dq
+X-Gm-Gg: ASbGncsTVPRv0xbRzQLAc3nrGKAV3n0XkpVastu2BUYV0Inbu7hOGSAWY3qptwwAZvz
+	HdMSDSGHBnlnpGSurtW73BNmPM4NSK+CuusPsFly/vOmOUbFHKuq54TRhAxwsH/hFmojGwHxHd9
+	+3leAU7G8zGJsbS86A6AIZiUR123/FDZ/3swJTdZlwp+WzScLIPprTkFy5QtXpcqxkSz634Jkdl
+	ohJ/Ja4ZQ3Mh5LqYXfMzDatjXK0AZ7c2ZNdAn9yO+aGO8WQI/HS9MDCYOhZaaA6ZcADb1Dd4yFa
+	pTQaAHOFDpAmq/5HeHD3Io0Cqo2Qk+34Zt6uqWBt67mrHUZkI5meECDEVUoYXHIk8+h58uAS0zz
+	g1zXWO47LZ9MwiGIXYw==
+X-Received: by 2002:a05:620a:c55:b0:7e3:3c02:4c10 with SMTP id af79cd13be357-7e66f340dbemr204406385a.10.1753879521320;
+        Wed, 30 Jul 2025 05:45:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdISRDnj4LdKwJnA5RwUTBCM101PtZrNYA6In3rDGQz1QjGYTyHcrpf0LJ3CYc1iz1Xdis+g==
+X-Received: by 2002:a05:620a:c55:b0:7e3:3c02:4c10 with SMTP id af79cd13be357-7e66f340dbemr204403685a.10.1753879520804;
+        Wed, 30 Jul 2025 05:45:20 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635a669c8sm733134866b.72.2025.07.30.05.45.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 05:45:20 -0700 (PDT)
+Message-ID: <74e3836e-af29-4b5f-b644-23bdff084c78@oss.qualcomm.com>
+Date: Wed, 30 Jul 2025 14:45:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,92 +90,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/3] dt-bindings: ufs: qcom: Add reg and reg-names
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
- alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
- <20250730082229.23475-2-quic_rdwivedi@quicinc.com>
- <466a42c4-54f5-45b2-b7f0-2d51695eac8e@kernel.org>
- <78998e50-a20c-41de-a2b8-a467475210cf@quicinc.com>
- <bc07c850-c3ba-48bf-8ca2-a6ffda8440e8@kernel.org>
+Subject: Re: [PATCH] drm/msm: update the high bitfield of certain DSI
+ registers
+To: Ayushi Makhija <quic_amakhija@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Cc: robdclark@gmail.com, lumag@kernel.org, sean@poorly.run,
+        marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_jesszhan@quicinc.com
+References: <20250730123938.1038640-1-quic_amakhija@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <bc07c850-c3ba-48bf-8ca2-a6ffda8440e8@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250730123938.1038640-1-quic_amakhija@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=LsaSymdc c=1 sm=1 tr=0 ts=688a13e2 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=e5mUnYsNAAAA:8 a=COk6AnOGAAAA:8
+ a=GqOxEGSAyoRmTf9NYtcA:9 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+ a=Vxmtnl_E_bksehYqCbjh:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA5MSBTYWx0ZWRfX71zVkM5gyOUp
+ we/uLmJdUyCrqzYNcE2UKN5y++vwxajZzbr8aBG5WVehsSJMy+On7upb6WKbNDwuAI5kDJ/HDQy
+ I6iIlJUulSPPrcUiL03PO3INOjhJ2W9PRVc99prnpsnF2aEf1TstMQdYO7KHyX66EFYfCSU+YwB
+ UgKuso8RyAfywJhjPRL/yrvPkcEBfisxT4qL+MzmWd+n6QgAG0NS5PKqN2pmOCPdZdb0/SddmHs
+ gbdspmL94JjZaODywqAOe1+naOs6lIjfqTgLKpf7tRy0cdM9+ZQkYrcY5vGFS4+G8p+9CgZdVle
+ PpNazsmsrXc1FSYReBy86OKweNHpg7aPsDyvaMyF708S1mvEriuWYmAG6VTBxGpsLm3yqE8cqHK
+ zXDHOAmRRN6BtUXyCJQ9f4jxOtLb3glyrEKBlxFjBc238P71OUOB6Z88X+XajMgBrigafz+U
+X-Proofpoint-ORIG-GUID: xvYNl9JghWNIT-OJja70bucZDpCYrVSd
+X-Proofpoint-GUID: xvYNl9JghWNIT-OJja70bucZDpCYrVSd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-30_04,2025-07-30_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=919 spamscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 mlxscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507300091
 
-On 30/07/2025 13:33, Krzysztof Kozlowski wrote:
->>> "extending" but you are not extending at all.
->>>
->>> Recent qcom patches love to break ABI and impact users. No.
->>>
->>> Best regards,
->>> Krzysztof
->>
->>
->> Hi Krzysztof,
->>
->> Thanks for your feedback.
->>
->> Regarding your concern about this being an incompatible change — could you please clarify what specific aspect you believe breaks compatibility? 
->> From my side, I’ve carefully tested the patch and verified that it does not break any existing DTs. I ran the following command to validate against the schema:
+On 7/30/25 2:39 PM, Ayushi Makhija wrote:
+> Currently, the high bitfield of certain DSI registers
+> do not align with the configuration of the SWI registers
+> description. This can lead to wrong programming these DSI
+> registers, for example for 4k resloution where H_TOTAL is
+> taking 13 bits but software is programming only 12 bits
+> because of the incorrect bitmask for H_TOTAL bitfeild,
+> this is causing DSI FIFO errors. To resolve this issue,
+> increase the high bitfield of the DSI registers from 12 bits
+> to 16 bits in dsi.xml to match the SWI register configuration.
 > 
+> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/registers/display/dsi.xml | 28 +++++++++----------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
 > 
-> I missed that earlier list is not actually used for SM8550 and SM8650.
-> The syntax is a bit confusing after looking only at diff, which probably
-> means this binding is getting messy.
-> 
-> I think binding should be just split the constraints are easier to follow.
+> diff --git a/drivers/gpu/drm/msm/registers/display/dsi.xml b/drivers/gpu/drm/msm/registers/display/dsi.xml
+> index 501ffc585a9f..c7a7b633d747 100644
+> --- a/drivers/gpu/drm/msm/registers/display/dsi.xml
+> +++ b/drivers/gpu/drm/msm/registers/display/dsi.xml
+> @@ -159,28 +159,28 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+>  		<bitfield name="RGB_SWAP" low="12" high="14" type="dsi_rgb_swap"/>
+>  	</reg32>
+>  	<reg32 offset="0x00020" name="ACTIVE_H">
+> -		<bitfield name="START" low="0" high="11" type="uint"/>
+> -		<bitfield name="END" low="16" high="27" type="uint"/>
+> +		<bitfield name="START" low="0" high="15" type="uint"/>
+> +		<bitfield name="END" low="16" high="31" type="uint"/>
+>  	</reg32>
+>  	<reg32 offset="0x00024" name="ACTIVE_V">
+> -		<bitfield name="START" low="0" high="11" type="uint"/>
+> -		<bitfield name="END" low="16" high="27" type="uint"/>
+> +		<bitfield name="START" low="0" high="15" type="uint"/>
+> +		<bitfield name="END" low="16" high="31" type="uint"/>
+>  	</reg32>
+>  	<reg32 offset="0x00028" name="TOTAL">
+> -		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
+> -		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
+> +		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
+> +		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
+>  	</reg32>
+>  	<reg32 offset="0x0002c" name="ACTIVE_HSYNC">
+> -		<bitfield name="START" low="0" high="11" type="uint"/>
+> -		<bitfield name="END" low="16" high="27" type="uint"/>
+> +		<bitfield name="START" low="0" high="15" type="uint"/>
+> +		<bitfield name="END" low="16" high="31" type="uint"/>
+>  	</reg32>
+>  	<reg32 offset="0x00030" name="ACTIVE_VSYNC_HPOS">
+> -		<bitfield name="START" low="0" high="11" type="uint"/>
+> -		<bitfield name="END" low="16" high="27" type="uint"/>
+> +		<bitfield name="START" low="0" high="15" type="uint"/>
+> +		<bitfield name="END" low="16" high="31" type="uint"/>
+>  	</reg32>
+>  	<reg32 offset="0x00034" name="ACTIVE_VSYNC_VPOS">
 
-I sent a patch for splitting the bindings.
+FWIW looks like at least on 8280, ACTIVE_VSYNC_HPOS offset = 0x38
+and HPOS doesn't exist
 
-Best regards,
-Krzysztof
+Konrad
 
