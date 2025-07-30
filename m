@@ -1,324 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-67188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5EE4B16601
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 20:08:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EF23B16606
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 20:08:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CEDF17A7BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 18:04:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14756565800
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 18:05:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A54372DC32A;
-	Wed, 30 Jul 2025 18:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 858BB2E11DD;
+	Wed, 30 Jul 2025 18:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="S0KP4Rwv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p9IMoYYt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD41D1DF98F;
-	Wed, 30 Jul 2025 18:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC392E092F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 18:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753898679; cv=none; b=SCe7Dg/Lx18Sg3I1OFgkjr1mdJARG694rgHbtzsjUs7lmpH2cF1Yvr5Gz8OjYqCDyE54JzG16lpyCU1JmuPjYj0mbStL6HGCMiIE1aX1wrVzx6veOWIeb8oTFSgOYJ+ck2a1fUFaa0WrmQ1zwdITBZr6fRcYWlAhI+KifApwxoA=
+	t=1753898693; cv=none; b=SzE63lGyXeP6QiYGj26veMaRGFQ5hseZ179Sn6DZouKXvMSdz6rPHKPqejqn7DdMKZ4YwM4FGg1UiczTTYBQGYMiQwbJbY4UmZwGLYSmb4GAHNrTvqqMc056YfN4Co1OoNCOUQv1npscAhbdiXwaPVkqJ+CyF+6CC6YW+ac52hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753898679; c=relaxed/simple;
-	bh=cbMS9OmeSERInvl7UM9IzHA/1kYbIyujkvyTsarEoyM=;
+	s=arc-20240116; t=1753898693; c=relaxed/simple;
+	bh=n3D8qHnnfuAiAoc6PZ9oryWver6UAcBaxmcMguTYLIU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KX376fW1YTOI2YNpbWPUQa/Xr8INTFiGemLVRkZCk55Z3mTuEI/gCXYtKerJeM/dSuAgZXeJZsv2YBIuo2PSxf9b1+yXkgfhkZ7OJZ7Yqgzafe0cPYbTdY5I+A5bQalZH0vS4dOhuI62ywop2ekQFheHC49IiJVNXO6qMZr4qLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=S0KP4Rwv; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id B2602C7A;
-	Wed, 30 Jul 2025 20:03:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1753898623;
-	bh=cbMS9OmeSERInvl7UM9IzHA/1kYbIyujkvyTsarEoyM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S0KP4RwvjhhMCHmYAsXZhPvBAliHVBXvGmTOFn0QRy/xgBYQ37WjvUeDdDfOF8VqJ
-	 4w+3CldYfOmcc+CTzsXf9EPW11/nspDIDvbpl3dvSt3rXoNsvxPu72ajfhRG3E6BLo
-	 X1Fx2sy170lQ7HQmW8yy5kK+kVNDpQpNmz8aiJ2o=
-Date: Wed, 30 Jul 2025 21:04:17 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Frank Li <Frank.li@nxp.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?utf-8?Q?Am=C3=A9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Michal Simek <michal.simek@amd.com>, Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-actions@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH RFC 2/6] dmaengine: Make of_dma_request_slave_channel
- pass a cookie to of_xlate
-Message-ID: <20250730180417.GC21430@pendragon.ideasonboard.com>
-References: <20250730-topic-dma_genise_cookie-v1-0-b505c1238f9f@oss.qualcomm.com>
- <20250730-topic-dma_genise_cookie-v1-2-b505c1238f9f@oss.qualcomm.com>
- <aIpKz495WI1SJTeB@lizhi-Precision-Tower-5810>
+	 Content-Type:Content-Disposition:In-Reply-To; b=SARbpnAmadFzX4lQqn7yM6eItIt8zT9gAu7cyq7/hwZJKIsnSovJDRx8Z31HTltlr0GMWI3RjBeyoJC2Plxu2lOhuv4ncuYnMpaoTxl+mVqcWeVr9p9J4uOx042ZkHu2fMdat2sXsvfF/B+OzVzL3UehMtB/vPbhtMXt5ah2Gog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p9IMoYYt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCb9XI017604
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 18:04:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=I/8jBayyhvVLDAZPoDLRfHEl
+	UvAYchL2u6ScDXnQkcQ=; b=p9IMoYYtbltFngmzBsxUuR//FzXgU6tAT0ENf7n9
+	RMdxhSr+BHgJ6wfkZjLrkqZ41ENbDxo6AFcwcAXHb/18bDTKHsm2Mz5po1ry2zRN
+	yItzjGckbaVR20805iPqgwoaFQDa+SbQn8Ms+ja3u1GxrIBRERUr9gMcQnh/I2te
+	LIWAaYDGhBPZx+ee1U965UNkOrwbpxskiwVzi2E3ViDdM6vCLeB4WywwwB/OrgK2
+	YjdgId6OzlrxwhosEdxmy/bxHzHr1jeyBOou7kkMCSi2OOJnOZx32uEhyj2TKoHh
+	ehcnv7bnTpITx83ryUudM5Zw10g96LKDGS/OZUClemzYSw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484qda4r3r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 18:04:49 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e2e237fb4eso19892785a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 11:04:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753898689; x=1754503489;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I/8jBayyhvVLDAZPoDLRfHElUvAYchL2u6ScDXnQkcQ=;
+        b=r7uZnAzkpqcPPb2Urmx29JxWeOlcldwrOmQN9dNxLIxmB7Dl53hXSyfn1XZVc6zUzu
+         uOkQHUHKtC3FkbqZ41DA6pLYl1pSYQbtImwUE5NxRJQ1hLiifmssKX9uwnmH3omifR5G
+         FGEfZiYJ71oWsLPn2IFplbx1dK3MPHeGzq8317ZXMOFSDiKSz24fmgTqks1HPZcseUG0
+         NeDyS3cZPp/rmp3FFMuEGa3KoRCE8Lq2aCyGfFDwh3z2gT4KzbkbCwbWZdsQ2GIiS+dF
+         NATZsr+vo+LSYmYrMxroluoTsxyFGjrVBvpMzYzD/cVX1HkPSLSzJem4FTMAXk1x5J/9
+         nX/A==
+X-Forwarded-Encrypted: i=1; AJvYcCVnFD3DLHStr4UISDBhr9kagMclZbFnSndfLzLgngYhQvLYi2UvgWVFYCY0yEeZAz+6Dm3ZTq8yw4wA9I3C@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvdK/bq2FUDmszuCeQkQ/NNid+hG4hqpWZ8s9de1CIJ8jYpu/P
+	/sSog/c8ztNEc6tA5bCqU3rVqgEQvweAi+26mZreYQrpYF9vun49fEP550vrjEtJ4SkXBM6Mgt/
+	zGwCB8ttTqGSUHxSYfpK6VSN9tm7axhbprVsbRNI9SxEZX0pt2PUeOgj3p2CuFcks/9r5
+X-Gm-Gg: ASbGnctvs7pRgZcgMVKTBIy6RV63fdQOMEK57RwwsGNRTqVa7/TSywWVlfgYfgMt8HF
+	nNnjdeCWGYzLqA0Cdaa/Mi3QVBmEsSO0Iwne4m7mUr2lOI69Hw5O/qF6MitZm5x5w7Dz+1BncqY
+	aOgyTX7TSBX8mKq322GlUzKwtQyYg4is8A/qeVfD8jp7qpz2C06aBiBc/pEozylJdgMGvpbBdGn
+	ZCb6QhowfeM63fJYsnRTfM2YUbjkSUBoAgW56D4jCshFd0q2woepN/InO53PIpAUoq5PYlXPhRD
+	Rse9LySvYopUxeyLB71ChHTgne+taB7OfGH+KSwJFJUvB267b9DeBs6vvVadSsVfnLUbo1gtPn9
+	yOczK7Q0P88C9xzFnAOkuSLbtZrKdmMihWL3s7ws4VtHEPfRkpz9t
+X-Received: by 2002:a05:620a:3954:b0:7e3:3288:8ec3 with SMTP id af79cd13be357-7e66f356727mr495184185a.32.1753898688702;
+        Wed, 30 Jul 2025 11:04:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkOwzT89t02FAAwhQoy8CKlO1y04DetSnNnh59BpmdEzw5MvIIAzdTos7aUbXT9mMSFhlv6A==
+X-Received: by 2002:a05:620a:3954:b0:7e3:3288:8ec3 with SMTP id af79cd13be357-7e66f356727mr495176085a.32.1753898688034;
+        Wed, 30 Jul 2025 11:04:48 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b6316d9bbsm2237982e87.9.2025.07.30.11.04.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 11:04:47 -0700 (PDT)
+Date: Wed, 30 Jul 2025 21:04:45 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/5] dt-bindings: display/msm: dp-controller: document
+ QCS8300 compatible
+Message-ID: <yhgdibfxtv3w7t7strxd2ywy7gustrff5tbjtlpeh34m2bkhkm@xosfinmgbkui>
+References: <20250730-mdssdt_qcs8300-v5-0-bc8ea35bbed6@quicinc.com>
+ <20250730-mdssdt_qcs8300-v5-2-bc8ea35bbed6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aIpKz495WI1SJTeB@lizhi-Precision-Tower-5810>
+In-Reply-To: <20250730-mdssdt_qcs8300-v5-2-bc8ea35bbed6@quicinc.com>
+X-Proofpoint-ORIG-GUID: 5DBRBF8aVRSThC8-erLmZz3DxbX64m5Y
+X-Authority-Analysis: v=2.4 cv=Pfv/hjhd c=1 sm=1 tr=0 ts=688a5ec1 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=WvbujaHHVq_kfgFs6tQA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 5DBRBF8aVRSThC8-erLmZz3DxbX64m5Y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDEzMSBTYWx0ZWRfXyqQdq/yMMwKq
+ b4/TM84Tovug0410MqQsLj8NLTwXPvohvzfONdQegzQsFXBfvfet2ImpD4bsGeuFgkJEuAJKWbF
+ 5xhIrz4Iw0eDPdegIPGSmDWqrkZqs2U+w4Csilz1tbiFKnMiHzvWGNvwYQjbwZ2c/I1g5NaDrSd
+ 3O7ULvQ3/BbYjRjD6B79c7RuuuUrkEtE7rpSkqLvKCnH3ZVhwiHfCyWGfBHI2bqJaYEjfIzRCi3
+ BXG5/Re+51xFnTZb5HjYWNY/E3oueDvst8o0v1W9kdVcBOOUzIMXz8ug7pF21uG+uxdtDow0Ns5
+ gWLN6GvdozA3nw4BwFZRUxndJwaeglNPDpqqiemL9SymMy0Kp3xoyIw6RmGAgs6f8TBumeiOs81
+ vQw3XfasrjnAS9pupzXIUV03bDyPJwicLro9eY+8/983lWOC4mQ0AF2Chu0clfxbeY6Dczmo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-30_05,2025-07-30_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 clxscore=1015 adultscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507300131
 
-On Wed, Jul 30, 2025 at 12:39:43PM -0400, Frank Li wrote:
-> On Wed, Jul 30, 2025 at 11:33:29AM +0200, Konrad Dybcio wrote:
-> > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >
-> > The DMA subsystem attempts to make it theoretically possible to pair
-> > any DMA block with any user. While that's convenient from a
-> > codebase sanity perspective, some blocks are more intertwined.
-> >
-> > One such case is the Qualcomm GENI, where each wrapper contains a
-> > number of Serial Engine instances, each one of which can be programmed
-> > to support a different protocol (such as I2C, I3C, SPI, UART, etc.).
-> >
-> > The GPI DMA it's designed together with, needs to receive the ID of the
-> > protocol that's in use, to adjust its behavior accordingly. Currently,
-> > that's done through passing that ID through device tree, with each
-> > Serial Engine expressed NUM_PROTOCOL times, resulting in terrible
-> > dt-bindings that are full of useless copypasta.
-> >
-> > In a step to cut down on that, let the DMA user give the engine driver
-> > a hint at request time.
-> >
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > ---
-> >  drivers/dma/amba-pl08x.c                       |  3 ++-
-> >  drivers/dma/apple-admac.c                      |  3 ++-
-> >  drivers/dma/at_hdmac.c                         |  6 ++++--
-> >  drivers/dma/at_xdmac.c                         |  3 ++-
-> >  drivers/dma/bcm2835-dma.c                      |  3 ++-
-> >  drivers/dma/dma-jz4780.c                       |  3 ++-
-> >  drivers/dma/dmaengine.c                        | 20 +++++++++++++++++---
-> >  drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  3 ++-
-> >  drivers/dma/dw/of.c                            |  3 ++-
-> >  drivers/dma/ep93xx_dma.c                       |  6 ++++--
-> >  drivers/dma/fsl-edma-main.c                    |  6 ++++--
-> >  drivers/dma/img-mdc-dma.c                      |  3 ++-
-> >  drivers/dma/imx-dma.c                          |  3 ++-
-> >  drivers/dma/imx-sdma.c                         |  3 ++-
-> >  drivers/dma/lgm/lgm-dma.c                      |  3 ++-
-> >  drivers/dma/milbeaut-hdmac.c                   |  4 +++-
-> >  drivers/dma/mmp_pdma.c                         |  3 ++-
-> >  drivers/dma/mmp_tdma.c                         |  3 ++-
-> >  drivers/dma/moxart-dma.c                       |  3 ++-
-> >  drivers/dma/mxs-dma.c                          |  3 ++-
-> >  drivers/dma/nbpfaxi.c                          |  3 ++-
-> >  drivers/dma/of-dma.c                           | 18 +++++++++++-------
-> >  drivers/dma/owl-dma.c                          |  3 ++-
-> >  drivers/dma/pl330.c                            |  3 ++-
-> >  drivers/dma/pxa_dma.c                          |  3 ++-
-> >  drivers/dma/qcom/bam_dma.c                     |  3 ++-
-> >  drivers/dma/qcom/gpi.c                         |  3 ++-
-> >  drivers/dma/qcom/qcom_adm.c                    |  3 ++-
-> >  drivers/dma/sh/rcar-dmac.c                     |  3 ++-
-> >  drivers/dma/sh/rz-dmac.c                       |  3 ++-
-> >  drivers/dma/sh/usb-dmac.c                      |  3 ++-
-> >  drivers/dma/st_fdma.c                          |  3 ++-
-> >  drivers/dma/ste_dma40.c                        |  3 ++-
-> >  drivers/dma/stm32/stm32-dma.c                  |  3 ++-
-> >  drivers/dma/stm32/stm32-dma3.c                 |  4 +++-
-> >  drivers/dma/stm32/stm32-mdma.c                 |  3 ++-
-> >  drivers/dma/sun4i-dma.c                        |  3 ++-
-> >  drivers/dma/sun6i-dma.c                        |  3 ++-
-> >  drivers/dma/tegra186-gpc-dma.c                 |  3 ++-
-> >  drivers/dma/tegra20-apb-dma.c                  |  3 ++-
-> >  drivers/dma/tegra210-adma.c                    |  3 ++-
-> >  drivers/dma/ti/cppi41.c                        |  3 ++-
-> >  drivers/dma/ti/edma.c                          |  3 ++-
-> >  drivers/dma/ti/k3-udma.c                       |  3 ++-
-> >  drivers/dma/uniphier-xdmac.c                   |  3 ++-
-> >  drivers/dma/xilinx/xilinx_dma.c                |  3 ++-
-> >  drivers/dma/xilinx/xilinx_dpdma.c              |  3 ++-
-> >  drivers/dma/xilinx/zynqmp_dma.c                |  3 ++-
-> >  include/linux/dmaengine.h                      |  7 +++++++
-> >  include/linux/of_dma.h                         | 16 +++++++++-------
-> >  sound/soc/apple/mca.c                          |  2 +-
-> >  sound/soc/renesas/rcar/dma.c                   |  2 +-
-> >  52 files changed, 146 insertions(+), 68 deletions(-)
-> >
-> > diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
-> 
-> ...
-> 
-> >  						const char *name)
-> >  {
-> > diff --git a/include/linux/of_dma.h b/include/linux/of_dma.h
-> > index fd706cdf255c61c82ce30ef9a2c44930bef34bc8..9f9bc4207b85d48d73c25aad4b362e7c84c01756 100644
-> > --- a/include/linux/of_dma.h
-> > +++ b/include/linux/of_dma.h
-> > @@ -19,7 +19,7 @@ struct of_dma {
-> >  	struct list_head	of_dma_controllers;
-> >  	struct device_node	*of_node;
-> >  	struct dma_chan		*(*of_dma_xlate)
-> > -				(struct of_phandle_args *, struct of_dma *);
-> > +				(struct of_phandle_args *, struct of_dma *, void *);
-> 
-> I suggest pass down more informaiton, like client's dev point. So we can
-> auto create device link between client's dev and dma chan's device.
+On Wed, Jul 30, 2025 at 05:42:27PM +0800, Yongxing Mou wrote:
+> Add compatible string for the DisplayPort controller found on the
+> Qualcomm QCS8300 SoC, which uses the same DPU as the SA8775P. While
+> DP0 supports 4 MST streams, DP1 has been removed at the silicon level,
+> so SA8775P/SM8650 cannot be used as fallback compatibles.
 
-Is .of_dma_xlate() really the right place to do that ? If you want to
-create a device link for PM reasons, isn't it better created when the
-channel is requested ? It should also be removed when the channel is
-freed.
+"It uses the same DPU as SA8775P, but we can not use SA8775P's DP
+compatible". There is some logic issue there. Please rewrite to speak
+only about DP.
+
+Moreover, removing of DP1 should not affect DP0 being compatible or
+incompatible with other platforms.
 
 > 
-> DMA Engineer device
->    DMA chan device
->        consumer clients' device.
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> If consumer device runtime pm suspend can auto trigger DMA chan's device's
-> runtime pm function.
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 2893f097df826a5f941fbb754fb4a96a1e410a70..f5930f29c91ec95e9182c7b8ee83c0549c6657cc 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -18,6 +18,7 @@ properties:
+>    compatible:
+>      oneOf:
+>        - enum:
+> +          - qcom,qcs8300-dp
+>            - qcom,sa8775p-dp
+>            - qcom,sc7180-dp
+>            - qcom,sc7280-dp
+> @@ -186,6 +187,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,qcs8300-dp
+>                - qcom,sa8775p-dp
+>                - qcom,sc7280-dp
+>                - qcom,sc8180x-dp
 > 
-> It will simplifly DMA engine's run time pm manage. Currently many DMA run
-> time pm implement as, runtime_pm_get() when alloc and runtime_pm_put() at
-> free channel.  But many devices request dma channel at probe, which make
-> dma engine work at always 'on' state.
+> -- 
+> 2.34.1
 > 
-> But ideally, dma chan should be resume only when it is used to transfer.
-
-This is exactly what I was going to mention after reading the last
-paragraph. Is there anything that prevents a DMA engine driver to
-perform a rutime PM get() when a transfer is submitted and a put() when
-it completes ? (Logically speaking, the actual implementation would
-likely be a bit different in drivers, but the result would be similar.)
-
-> >  	void			*(*of_dma_route_allocate)
-> >  				(struct of_phandle_args *, struct of_dma *);
-> >  	struct dma_router	*dma_router;
-> > @@ -34,7 +34,7 @@ struct of_dma_filter_info {
-> >  #ifdef CONFIG_DMA_OF
-> >  extern int of_dma_controller_register(struct device_node *np,
-> >  		struct dma_chan *(*of_dma_xlate)
-> > -		(struct of_phandle_args *, struct of_dma *),
-> > +		(struct of_phandle_args *, struct of_dma *, void *),
-> >  		void *data);
-> >  extern void of_dma_controller_free(struct device_node *np);
-> >
-> > @@ -45,16 +45,17 @@ extern int of_dma_router_register(struct device_node *np,
-> >  #define of_dma_router_free of_dma_controller_free
-> >
-> >  extern struct dma_chan *of_dma_request_slave_channel(struct device_node *np,
-> > -						     const char *name);
-> > +						     const char *name,
-> > +						     void *data);
-> >  extern struct dma_chan *of_dma_simple_xlate(struct of_phandle_args *dma_spec,
-> > -		struct of_dma *ofdma);
-> > +		struct of_dma *ofdma, void *data);
-> >  extern struct dma_chan *of_dma_xlate_by_chan_id(struct of_phandle_args *dma_spec,
-> > -		struct of_dma *ofdma);
-> > +		struct of_dma *ofdma, void *data);
-> >
-> >  #else
-> >  static inline int of_dma_controller_register(struct device_node *np,
-> >  		struct dma_chan *(*of_dma_xlate)
-> > -		(struct of_phandle_args *, struct of_dma *),
-> > +		(struct of_phandle_args *, struct of_dma *, void *),
-> >  		void *data)
-> >  {
-> >  	return -ENODEV;
-> > @@ -75,7 +76,8 @@ static inline int of_dma_router_register(struct device_node *np,
-> >  #define of_dma_router_free of_dma_controller_free
-> >
-> >  static inline struct dma_chan *of_dma_request_slave_channel(struct device_node *np,
-> > -						     const char *name)
-> > +							    const char *name,
-> > +							    void *data)
-> >  {
-> >  	return ERR_PTR(-ENODEV);
-> >  }
-> > diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-> > index 5dd24ab90d0f052bb48f451cf009dc2e9128014d..43d48e4ac8161ee9955120fe64f7b911bfdfe1ca 100644
-> > --- a/sound/soc/apple/mca.c
-> > +++ b/sound/soc/apple/mca.c
-> > @@ -926,7 +926,7 @@ static struct dma_chan *mca_request_dma_channel(struct mca_cluster *cl, unsigned
-> >  	char *name = devm_kasprintf(cl->host->dev, GFP_KERNEL,
-> >  				    is_tx ? "tx%da" : "rx%db", cl->no);
-> >  #endif
-> > -	return of_dma_request_slave_channel(cl->host->dev->of_node, name);
-> > +	return of_dma_request_slave_channel(cl->host->dev->of_node, name, NULL);
-> >
-> >  }
-> >
-> > diff --git a/sound/soc/renesas/rcar/dma.c b/sound/soc/renesas/rcar/dma.c
-> > index 2035ce06fe4c4aeaa8620d817910a5319732fa58..dcbff2fc61a0472adea226371016a128563b3cd0 100644
-> > --- a/sound/soc/renesas/rcar/dma.c
-> > +++ b/sound/soc/renesas/rcar/dma.c
-> > @@ -204,7 +204,7 @@ struct dma_chan *rsnd_dma_request_channel(struct device_node *of_node, char *nam
-> >  		}
-> >
-> >  		if (i == rsnd_mod_id_raw(mod) && (!chan))
-> > -			chan = of_dma_request_slave_channel(np, x);
-> > +			chan = of_dma_request_slave_channel(np, x, NULL);
-> >  		i++;
-> >  	}
-> >
 
 -- 
-Regards,
-
-Laurent Pinchart
+With best wishes
+Dmitry
 
