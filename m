@@ -1,174 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-67144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5591CB1609A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:47:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 239DBB160AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:50:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93DF4566840
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:47:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 371DF3AB7C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:50:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F29E29993B;
-	Wed, 30 Jul 2025 12:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D82C828750C;
+	Wed, 30 Jul 2025 12:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uyRoU97i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj939fjQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F19299924;
-	Wed, 30 Jul 2025 12:46:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE7256C70;
+	Wed, 30 Jul 2025 12:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753879586; cv=none; b=CIxOgBPvi/2NZiUUVOOHDspiqW2rQxZsimGI1aPIuikEwUJqyzfJxzHugGMCpnSLHDR393IsSrLAoihNlhZOE04gGCibANKxKl6iig/6lHDzGDqzMlMJ87rJHPy55Hx9pDiYtR/IFlv/EwaEFdtkWvRr8I7TsCURXGdXPrwaalA=
+	t=1753879831; cv=none; b=pDreQlFNh5BoQNg+RfH2N7rZSLvMF31alUKksk0XcyWxHbujt/rHnyEFMWuhEMBnx6kS3rRcfTjuyPqkWLHDaUAaUEKXQUwHZqOvXL2XguHp+rImRT8QOEQ4c5ejgnp/fMeOXzom9a68c8h9iuaitx0azmarzgqxT11QK46o12Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753879586; c=relaxed/simple;
-	bh=50UIteFtNHRUtkmAOTrMYqlbtcxNvyAqWTl8Cdv76Bs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tbPzr4tdUzugz9imGa0rSXeQtpN6ksF8SbufTLqnuF+8syi74xsq2En0lzLiyT/UYkZ+AV9gxEwLgazMPp41NcIDhxF4WHf9UhfQ3J4F6A1dLH+Dr5S+9fbgwByQlLfjfb7JJA83PZo6tjCTpgksxCJEMboA6zZX6sBpMy4cgDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uyRoU97i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E15C4CEF5;
-	Wed, 30 Jul 2025 12:46:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753879585;
-	bh=50UIteFtNHRUtkmAOTrMYqlbtcxNvyAqWTl8Cdv76Bs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uyRoU97iNW4Q7pfzLuqM2O1mSa8sPr+48oa9cjJ7UPTOrgZMKRsfb8WkWBVqvA01f
-	 MzlmP0wGN6no215r5gQBqmxFkaTrZ2Kyr8qW3YtpFNBGs082lG89/YLR7fkZKtTqDF
-	 MLiLPc1e4nVS+NianvJSsnxq5CKgCRR1OLdYPaBO8dimJ7Jc72R/gq4SXh73kSf4SW
-	 W3S2SqXDZ8JreMPNmRytk0kLOqPMt4pPTM2KwFDLiSdpGYOAhDV7YSFOK+0V2JZWO0
-	 7nF7NDum1ISgff7QbXcGCU3r5HlBsYsM2gVOhodAYG1eR2qlpi+dnrC6ta67PGlcDw
-	 rCWtXseuc1D6g==
-Message-ID: <c8211e69-75d9-439e-a4de-1add711d2a05@kernel.org>
-Date: Wed, 30 Jul 2025 14:46:20 +0200
+	s=arc-20240116; t=1753879831; c=relaxed/simple;
+	bh=mAirr7gyYUrBa/ClKW/JlnzUq/0q+Y/udQ6/llJgM1M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kcEHO/6eW5/qwaMH0kZwgAZEqafx+J54nz1/2nvhu5WEtoi6cIdQTkA0Y3G1H1CN4ytm83NS6rXsRK1w9zlK/NQI17Q2OvAoLPL5T7LBtH37LvaCg5nwrtQThzVO5A+IeLLbua0NnMBa7WqkX8pm3yJycRY7lafFnOuXBkfQzdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jj939fjQ; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-61592ff5ebbso1004268a12.3;
+        Wed, 30 Jul 2025 05:50:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753879828; x=1754484628; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tvvn2gu3QwfMvEps+Es99aXQTd4n5DxwynGQISYrqRE=;
+        b=jj939fjQZ4wDTAgEPxBIpvsSlWtocNqjIVgGDoi1gza4p8ghhPsYOJFa3Bz3JoS9iY
+         rZtm3/86EDh2XIm09B4FI3bhOovSAkrNrO+LPglseWwCdBMfcoWDlHqABuBMBg9tPnnc
+         kXtPxFoMw5NtUr4vZBZRwFi03jBNYIeDoa2/CYuoCjYuDOPsqUbtgxcmBcf39lRARrc6
+         CVxcIx/RJfS0dGgjKzEQG7oJ6b/DJl4dMCpxr+0sJmZU3+sSm7hP/IsksGyF3snefxKy
+         vhvgjwknb337ddOAL7ZQlfAxRqpnfLGdaRwFAVtsUgiUUlTbxXfLRRAyA5wYqIvSdBai
+         HGEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753879828; x=1754484628;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tvvn2gu3QwfMvEps+Es99aXQTd4n5DxwynGQISYrqRE=;
+        b=VtWdnfXKyclte052wUlqjCm8FVwycOWY2c1tmRl4s+5ZK26bOuMfgiDiSaM5Rgp02O
+         vOJDcyKAeL0L/F06ARVofFa6xQc1TsHtq5oJko0XY5XX9PD/YAZ7BgIrdsSJvNKCsdnD
+         kik9laLFl16gHTr9TYV/dFLyW16ySdfeVVeuAJtUV+is6GR3HNjdJtQuPVqAFt67m8qC
+         7LdgN5Cn/jwbzdpPAyiRl/7E8A1IDJYYPTm1q7kRJbsGWglJEEW4bY5j8MfC9BdWbfgB
+         YRqpIYCw8y1AKbCit8o7ZCSb3hUyeJ8RuHmpY5Qb+mGYrW44WjXeyqrBejbYCJ7kqyLG
+         49Mw==
+X-Forwarded-Encrypted: i=1; AJvYcCUeQm8HA3HggJ5qPLFO4IXmQmOpwiNe4OZcKmd+mA2rO74FiYzMQeaXq8ktdvuBGLePGDfUPhl9jSQ/qLZYXQKq1to=@vger.kernel.org, AJvYcCV66tp77Q/YXhNzLpZogLetriY5/4DK31ql96bqJ9sBPxrFpk0uSf1Fm2giuONzXjD6pZf/nd4wmVTZdbDc@vger.kernel.org, AJvYcCVIsEywJpqHD85BmhqIiVHMhKmw8EzIP3Zq+WBb6cKEd3QMgu9zbMV7p6hd3S0Uh/qW1Bdqqg4ZsFvCPQ==@vger.kernel.org, AJvYcCWAPFVqIrXJ+13GZNQXBDX+olT47MOyLExxONuIJ8msyIDoVSHPcgcRItrvtWIRGgZWeuZPi7y77el3Fg==@vger.kernel.org, AJvYcCWQrlT6CELgxlQblrYpdzrAjCTo7IhgGnTiKXY5/RyLgkRX+Ohw2DfM34H9zGUq37YqWCwbp4OdhkuJr/2k@vger.kernel.org, AJvYcCWouxhrj2dQ7/KqShB/fJCV9mSg4F3JKFtgQWO0G+umeS2Whf5aOgKjr9M9a7lUPIubhi7g8LG1mhpsOHxwwDph@vger.kernel.org, AJvYcCWuKr7BYN6q7K/Kv+413333QkxYBSiYy5uZG17OzzSBkz2v6k8WWZhFIlzL9OVNScgFC/ohzdg7WNPU6Q==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWb1b1cnAVghNJ6hMDWw99Y/yUQVI6bK7AwCQWtzriPkb2QDIb
+	ncUvgdqlbjhaDrpJbj9nQHzyj3lk8WEaYhlslUZIl9hU9kKQFqP4DUN3H8XdaAfYeyYhLmJoAej
+	MjVzSI3DOoZCgVQ6QEqR7OCWp2p65Ot0=
+X-Gm-Gg: ASbGncsJUWaNg4xwi/CZrT4sTCEnXvYvBjNG1/kLIL3SLXfeJqAq1sRUCIiKlwRzuOy
+	KrTTOHzMzCXcpWQbvD7rj5dezCYq9WVwK+sSh+wQbbm8ZXyJIqDhdgQ0TCI8v104vSg72td/N7j
+	k6b6ITJKmRLpu93OIIk7X8cLu5Wkbubbmp83uMo9E8Z+Jmm2J8a/cuJiLjW8Iki71O/bNSCgNto
+	G+g9JoSWA==
+X-Google-Smtp-Source: AGHT+IEJQOY2N21rRHh/x9SsZgR/AC6673gfg/Aq7DulgeR+61NEupHsjseGW2o2I6RkO01k98hTvI6/W9mnPdZHDTE=
+X-Received: by 2002:a17:906:6a12:b0:ae0:b33d:2a4a with SMTP id
+ a640c23a62f3a-af8fd97569fmr398869466b.35.1753879828299; Wed, 30 Jul 2025
+ 05:50:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: Add lemans evaluation kit (EVK)
- initial board support
-To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- kernel@oss.qualcomm.com, Rakesh Kota <quic_kotarake@quicinc.com>,
- Sayali Lokhande <quic_sayalil@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250722144926.995064-1-wasim.nazir@oss.qualcomm.com>
- <20250722144926.995064-8-wasim.nazir@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250722144926.995064-8-wasim.nazir@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250724-pinctrl-gpio-pinfuncs-v3-0-af4db9302de4@linaro.org>
+ <20250724-pinctrl-gpio-pinfuncs-v3-12-af4db9302de4@linaro.org>
+ <CAHp75Vc4vsJh_-GbP+YO50veoGoGtfAPL4tjcF+73uophfmnGw@mail.gmail.com> <CAMRc=Mc1ophkofB6MmtD4adBAi69C3JyovM-S9YD_y7UA3V1qA@mail.gmail.com>
+In-Reply-To: <CAMRc=Mc1ophkofB6MmtD4adBAi69C3JyovM-S9YD_y7UA3V1qA@mail.gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 30 Jul 2025 14:49:51 +0200
+X-Gm-Features: Ac12FXxgFDuQutFN_-MaFgaos1SbYd6nY92Ty-kjNsHnooD1EOK3KyGkMl4TA4s
+Message-ID: <CAHp75VcV=K-DfOGs0z64==nO+wQNoEB2Ngd2vc+dLYr3WLChjg@mail.gmail.com>
+Subject: Re: [PATCH v3 12/15] pinctrl: allow to mark pin functions as
+ requestable GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 22/07/2025 16:49, Wasim Nazir wrote:
-> Lemans EVK is an IoT board without safety monitoring feature of
-> Safety Island(SAIL) subsystem.
-> 
-> Lemans EVK is single board supporting these peripherals:
->   - Storage: 2 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
->     eMMC on mezzanine card
->   - Audio/Video, Camera & Display ports
->   - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
->   - Sensors: IMU
->   - PCIe ports
->   - USB & UART ports
-> 
-> On top of lemans EVK board additional mezzanine boards can be stacked
-> in future.
-> 
-> Implement basic features like uart/ufs to enable 'boot to shell'.
-> 
-> Co-developed-by: Rakesh Kota <quic_kotarake@quicinc.com>
-> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
-> Co-developed-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/lemans-evk.dts | 291 ++++++++++++++++++++++++
->  2 files changed, 292 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/lemans-evk.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2a1941c29537..cbc89c54f92b 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -31,6 +31,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-auto-ride.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-auto-ride-r3.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-ride-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> new file mode 100644
-> index 000000000000..dd357d514587
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> @@ -0,0 +1,291 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+On Wed, Jul 30, 2025 at 11:54=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> On Thu, Jul 24, 2025 at 2:22=E2=80=AFPM Andy Shevchenko
+> <andy.shevchenko@gmail.com> wrote:
+> >
+> > >  struct pinfunction {
+> > >         const char *name;
+> > >         const char * const *groups;
+> > >         size_t ngroups;
+> > > +       unsigned long flags;
+> >
+> > Not sure we need this. If the function is GPIO, pin control already
+> > knows about this. The pin muxing has gpio request / release callbacks
+> > that change the state. Why do we need an additional flag(s)?
+> >
+>
+> I'm not following, how does the pin controller know that the function
+> is GPIO exactly, other than by the bit set in this field?
 
-Missing date, as discussed in other thread your internal guidelines are
-not relevant here and to my knowledge upstream guidelines (provided in
-other linked discussion) ask for year of first publication.
+AFAICS the gpio_owner !=3D NULL means that. No need to have a duplicate
+of this information.
 
-Best regards,
-Krzysztof
+--=20
+With Best Regards,
+Andy Shevchenko
 
