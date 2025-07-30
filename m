@@ -1,200 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-67169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1485DB162CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:29:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8414B162CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:29:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CE4E3B171F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:28:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE359167C82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:29:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C0FF2D9ED5;
-	Wed, 30 Jul 2025 14:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 289F122A817;
+	Wed, 30 Jul 2025 14:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G38OmcXE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUPWoHH4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD891C5D57
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 14:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A6714F70;
+	Wed, 30 Jul 2025 14:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753885724; cv=none; b=CU6WnGLOYIZi+vAvamca1vw6/5BXK/wpFUJedhtWaMJS/KzMxFQLRCH4X+Q272BUQMZizDHPVKMlp25FpNRzueWTGJJqgA4ty2AWvU/usdDepK9e6XjeCvvbv1E78Lt0fxH9B0EuhoWaNQPKxvarGrfJblZocJ4KGdT04bZKueU=
+	t=1753885784; cv=none; b=AkcVHPE6WTTSNUYN6zokGT10FtjEiwc0KHrC3ldBaJpFuEp9S3WlgWpXeaG0OntcFvcWaJEW9o95X4UAlauOYG3rZS61IwFeMntiLYobvZACqh9tDI6/LZY8vK5latv27l3Bi8iQKaCyX6jwi2Ul00/zk8oYYv3VGzA3+r0UTXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753885724; c=relaxed/simple;
-	bh=STW90s3KQt7qz/SZuFNEPaZC4WtWeH2+//zEppDSySQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kXQE9nZwAc+jHJ//4ZqUhdgKxJvGqyMU4hPhpq65HnNINalyB+aOvLPoPIG7tZXE/EINnfPHEpSghbuuog4qGGPark43+fRa7Z+xkBI3tIP8pjV2PiFteTIY9IdQaqr8LFQ2OLfC74XTR7LGthgpxRzkTvg10V26VIUuieliB+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G38OmcXE; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b7825e2775so4292979f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 07:28:41 -0700 (PDT)
+	s=arc-20240116; t=1753885784; c=relaxed/simple;
+	bh=8ADkRjqjuN5vohfHGdPq/PNNlSy0iV6Gdob2XuiQer4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Qe2WE5tDriiMMkY9yqkEDRL+wYraFJgEUhJr8wTE/w0j/MxyWbxeydcjRukrJn4AmIyHRJQp8LSaf2lQ3xrmXcf85KboV5LQCMqTZOiKLnX6s+5MU173fjTKt1Tvoa5y/NN3GyyDi3ylzlVao9E5V9hPjHUZmwaisGz0Xsjsrfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUPWoHH4; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45896cf24ebso6012095e9.1;
+        Wed, 30 Jul 2025 07:29:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753885720; x=1754490520; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VYfKKkomyIJnTe7xVnvfHYaX8X0anbFk9RY4Fhlx8c8=;
-        b=G38OmcXE8kN1awNd7uUHzT7pzMkYCd442ONg1KcWs8nGX8kG4GZev42dwoZEBUZ9+E
-         Djt0cCT4rfpfJgFLPSdF570rFQlJRmSTMImxEUzys5i5NP3heD/zfXjj/sOwg2CzaPsl
-         qdYuSyL484cHYl8hz3hHs3n52A9E7N1iIPLZaeq2AAZMEbIV6D4L4IdLd6N1bMCTOqwh
-         Rkc99kssrngqfmIQnuExS4t5XpE6yKdVeYQxFBXSGHBZlI5GSECpYWipfhGRlZ5Y0ayp
-         mGxgzCGAOJUrWkkrT0o4snzYHedARDsxdIGT5vjJHRnUAqML33YKY7R1JApgv8GBJbk+
-         12mA==
+        d=gmail.com; s=20230601; t=1753885781; x=1754490581; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7AlJVmOGzAKicB8PmUMEgldR0Po2jcqiFiRrgkUSQyY=;
+        b=cUPWoHH4V15X4eM7j8XBIaYy0A4ACfAWSxIur9PXVqvEJzMeev/vXwvSbGZHWXuYtM
+         RC+MV2znPIgkPfZOvajolG/MVcOyO1rdE96j8vKN+CqsRBzykYooXLcIHGeiQ0Oa98bq
+         hDIFP0bEY8BtB9HCvxBMh6ucaQjJ5HDPHj3PKjGkNhQJY9kdtf4Efxl/Tu93qVbpbF0a
+         6FlqCEZ2nAD0ULcJA1vOhrVru4KO3drTksk6MFbneNgb0THhXbkm5ekdDbv8bQizIhel
+         kKs/IT5Lr7Tz6fBk+10ZwHmHylKL2Az8GS2eJhT2UVjvybHQS8HtgZbvvGWyGfGl3t/f
+         8atQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753885720; x=1754490520;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VYfKKkomyIJnTe7xVnvfHYaX8X0anbFk9RY4Fhlx8c8=;
-        b=rwkUhGI5Cx3fXN1/qWSuQ+UlyFwC1gvVjLwGeBi0Lca1BrcLsJVMce7oaeM7TDVmuH
-         tDfVPGBOIh4Az9ip9vYxB8r2Uk6ZDYcqP0UHO1TZcbRwbozCysrqoMyklaQvzgcDnUXe
-         KVKmvo/XvCrjhMSDv8Tbuo7mMif15IChzXJLm/fduYrje21kktaITz1o8wKdsbQxMmZg
-         Z7gjG23KhuhgvC+mYHs9RI9CrOeFMuoG2lA7E6SXMfmtObaqb8Wy3iNpGc2H0cwZfuYs
-         irscI4Q+Csr8/N7pUELD76n3MC7kjLLmUSb548IyBPX2CSWJlyLUXHpOVNQCbO2my1UB
-         GPdg==
-X-Gm-Message-State: AOJu0YzTla+67A3/MflewxJ4DGaV8asZzEb7+Q1jnNLvs6TuxQ9It/9H
-	6oe9D7BHNKzjGjI6p4ChY5dTvwBCR5f/RGlFIzI5IuxV6lu1ZYq5rHN4C1O/tZw2bgY=
-X-Gm-Gg: ASbGncs3ICUzSFTi/IYK7CLdpEo1/zejmeeYRBAlzctvdk7jESOXbYzcFUxWm6qa3Pj
-	QntLNIM3uxxjfrlbxRkrkpP1POGLuzrP0yS3RAwI4pRDR93O3u72XOI05fegarrehZM3mpRjz5a
-	RJYCEhERc5RxSDbsO4dSC8+mhH8WmuQu55ijYBHOEuGMdB8Ly3DTxLdEfJ2cVtqFzauXhDwI01C
-	TIbdoDW5jDGuE98gpvAC6olUpto9oKYjEWAlxAdAv1yl/LMUTk4OjNFcEjySGQjiFlhCTsOvaFm
-	sn7LNrMmjxlov3tr+RabqFFXGFukgnXz8ZEpHiaqwIP0VLsLTmnQZxS9NX6imS5WbnpUWwmRQKX
-	xxdgnRU5E5KR90KAZSqLH/SLU75pHnevN6KL1otT/WdtLtJzbsk3jKAmqxiz4Na07C0hwPV/Gzd
-	PUECaD7mRUdQ==
-X-Google-Smtp-Source: AGHT+IFkiongaw+716eYscwAn2hud6KDZWIRmXrEPYkuiIscgZfHi99ALGqutk4bxdBQdOBbpGHfUQ==
-X-Received: by 2002:a5d:584c:0:b0:3b7:6828:5f78 with SMTP id ffacd0b85a97d-3b794fe4f79mr2697229f8f.4.1753885720284;
-        Wed, 30 Jul 2025 07:28:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:5cc9:639a:a021:88ef? ([2a01:e0a:3d9:2080:5cc9:639a:a021:88ef])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458953755d1sm28427255e9.11.2025.07.30.07.28.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Jul 2025 07:28:39 -0700 (PDT)
-Message-ID: <a88b22b6-4be5-4176-95b0-0a03530bfd76@linaro.org>
-Date: Wed, 30 Jul 2025 16:28:39 +0200
+        d=1e100.net; s=20230601; t=1753885781; x=1754490581;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7AlJVmOGzAKicB8PmUMEgldR0Po2jcqiFiRrgkUSQyY=;
+        b=EQsHGyVWyaDw0uBjfgLsgNWggFjNq3smP1Y8wM+GkD06GzSm+RKNbf7/YLyFEb44sE
+         HcCFNzfaY/Etdin8PTzoBLM8ai4H5v62cSfvvYD44IkZ0Es7Pdzp6lDG92x/GfF5wvcj
+         NOJOqYxPvweCcHVuVQ0SMy0/Mbt9GsdpNzcQAQJQFNJHjypkfXJiLk+MDFg63IHhEVvr
+         kWbNZMdHJ/hfctThQ/sGbMUkb4K+SuYgE0dfl4WQh0/ELD5WjtdiiT0XmyIt9/Z4RlCE
+         jeWlCnMZ8lRj6z8c6ic71ckaOA2vRifqAltUCUCMxjdBqnRYSimsiWjSkBIbooBp6jpH
+         bIlA==
+X-Forwarded-Encrypted: i=1; AJvYcCVLZ/OiRmu0rZp2Oxo7vJiY62XYWGdjRc0MRxswDOPUblbrZVqvHAh5lMyyuezynOT3jRuBOsQO2GVxO7Mb@vger.kernel.org, AJvYcCVteddVi7upzRDvfMFxricET5uU5EQ/VDZykgjsIL5pZsA7UDPnAuPWJnZ1KpgOlGsVQGfJidLiCm0fGgPC@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywj7Wo6h8ur+aIZIc8a6kKHdrqqj8dEud47ayGUH5EVpiLF1CAD
+	QRjhs3aHNIUedOiCnkSFjwA7M6eRrY1shzJwvGVSJ8enG2PoVX/u0dt3
+X-Gm-Gg: ASbGnctf0+y0J8utXcw5Kk2wVeoYbmBKJpy7LIhAkYM6QX9gbvs74nAq3nQdBg7woOA
+	ssem8CZUdP142VAwrcZBP9wW6y7YZqehg3iUXUcgYwo0SK+xDlLIidYXzlxdFy4oQ8pHK+OjE73
+	eXPJge8sCA9RvqNap2RVXC9J0kVbLuiI99vKWgs0pvD8cqfSpWm/Aqu/y+3tAI1qYcdWhdeTlX7
+	pRving/bNcN45/89Db3jCMzTrFS9uQiFJq1F/98jzUEX+dUSNBeBLeBDUS6JI+w+1UjaSKK05rq
+	Z6TKd/ydk3zaDLKrPi3mCyrbJAh/7j1/M3RMvvjrVBuCXA/pds2hYAxAP5YWXlCluOqU5zZsF4Z
+	IBfDcILvBcQ5P3KRNfAZq
+X-Google-Smtp-Source: AGHT+IF5QJ37jWg7fCnJbb/VaKNBhipzgn5fvN5Soc3F0FylcMx9EfIgS05bdT263onDGTvzEzsZGA==
+X-Received: by 2002:a05:600c:5391:b0:456:58:1114 with SMTP id 5b1f17b1804b1-45892b9d05cmr33734855e9.9.1753885780632;
+        Wed, 30 Jul 2025 07:29:40 -0700 (PDT)
+Received: from localhost ([87.254.0.133])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4588dda59cfsm38833425e9.3.2025.07.30.07.29.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 07:29:40 -0700 (PDT)
+From: Colin Ian King <colin.i.king@gmail.com>
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Cc: kernel-janitors@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH][next] drm/msm: Fix dereference of pointer minor before null check
+Date: Wed, 30 Jul 2025 15:29:05 +0100
+Message-ID: <20250730142905.2080035-1-colin.i.king@gmail.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Add ACD levels for GPU
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250729-topic-sm8650-upstream-gpu-acd-level-v1-1-258090038a41@linaro.org>
- <63da4872-2365-40eb-9b2e-d3393ddd9b68@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <63da4872-2365-40eb-9b2e-d3393ddd9b68@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 30/07/2025 12:00, Konrad Dybcio wrote:
-> On 7/29/25 4:40 PM, Neil Armstrong wrote:
->> Update GPU node to include acd level values.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 14 +++++++++++++-
->>   1 file changed, 13 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index 495ea9bfd008500dd2c9f46ceca94cf5f972beca..4cd933219ce008bd1c603c87778e210b6332e29c 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -4127,72 +4127,84 @@ zap-shader {
->>   
->>   			/* Speedbin needs more work on A740+, keep only lower freqs */
->>   			gpu_opp_table: opp-table {
->> -				compatible = "operating-points-v2";
->> +				compatible = "operating-points-v2-adreno",
->> +					     "operating-points-v2";
->>   
->>   				opp-231000000 {
->>   					opp-hz = /bits/ 64 <231000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
->>   					opp-peak-kBps = <2136718>;
->> +					qcom,opp-acd-level = <0xc82f5ffd>;
->>   				};
->>   
->>   				opp-310000000 {
->>   					opp-hz = /bits/ 64 <310000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
->>   					opp-peak-kBps = <2136718>;
->> +					qcom,opp-acd-level = <0xc82c5ffd>;
->>   				};
-> 
-> https://git.codelinaro.org/clo/la/platform/vendor/qcom/opensource/graphics-devicetree/-/blob/gfx-devicetree-oss.lnx.1.0.r1-rel/gpu/pineapple-v2-gpu-pwrlevels.dtsi?ref_type=heads
-> 
-> doesn't set ACD for D1/D2
-> 
->>   
->>   				opp-366000000 {
->>   					opp-hz = /bits/ 64 <366000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
->>   					opp-peak-kBps = <6074218>;
->> +					qcom,opp-acd-level = <0xc02e5ffd>;
-> 
-> And other values differ too
-> 
-> What release did you grab these from?
+Currently the pointer minor is being dereferenced before it is null
+checked, leading to a potential null pointer dereference issue. Fix this
+by dereferencing the pointer only after it has been null checked. Also
+Replace minor->dev with dev.
 
-A much more recent non-public release with different gpu-pwrlevels for different SKU codes,
-all sets ACDs for D1/D2, and the ACD values are:
+Fixes: 4f89cf40d01e ("drm/msm: bail out late_init_minor() if it is not a GPU device")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_debugfs.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-#define ACD_LEVEL_TURBO_L1    0x882a5ffd
-#define ACD_LEVEL_TURBO       0x882a5ffd
-#define ACD_LEVEL_NOM_L1      0x882a5ffd
-#define ACD_LEVEL_NOM         0x882a5ffd
-#define ACD_LEVEL_SVS_L2      0x882a5ffd
-#define ACD_LEVEL_SVS_L1      0x882a5ffd
-#define ACD_LEVEL_SVS_L0      0x882a5ffd
-#define ACD_LEVEL_SVS         0x882c5ffd
-#define ACD_LEVEL_LOW_SVS_L1  0xc02a5ffd
-#define ACD_LEVEL_LOW_SVS     0xc02d5ffd
-#define ACD_LEVEL_LOW_SVS_D0  0xc02e5ffd
-#define ACD_LEVEL_LOW_SVS_D1  0xc82c5ffd
-#define ACD_LEVEL_LOW_SVS_D2  0xc82f5ffd
-
-Neil
-
-> 
-> Konrad
+diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+index bbda865addae..97dc70876442 100644
+--- a/drivers/gpu/drm/msm/msm_debugfs.c
++++ b/drivers/gpu/drm/msm/msm_debugfs.c
+@@ -325,25 +325,28 @@ static struct drm_info_list msm_debugfs_list[] = {
+ 
+ static int late_init_minor(struct drm_minor *minor)
+ {
+-	struct drm_device *dev = minor->dev;
+-	struct msm_drm_private *priv = dev->dev_private;
++	struct drm_device *dev;
++	struct msm_drm_private *priv;
+ 	int ret;
+ 
+ 	if (!minor)
+ 		return 0;
+ 
++	dev = minor->dev;
++	priv = dev->dev_private;
++
+ 	if (!priv->gpu_pdev)
+ 		return 0;
+ 
+ 	ret = msm_rd_debugfs_init(minor);
+ 	if (ret) {
+-		DRM_DEV_ERROR(minor->dev->dev, "could not install rd debugfs\n");
++		DRM_DEV_ERROR(dev->dev, "could not install rd debugfs\n");
+ 		return ret;
+ 	}
+ 
+ 	ret = msm_perf_debugfs_init(minor);
+ 	if (ret) {
+-		DRM_DEV_ERROR(minor->dev->dev, "could not install perf debugfs\n");
++		DRM_DEV_ERROR(dev->dev, "could not install perf debugfs\n");
+ 		return ret;
+ 	}
+ 
+-- 
+2.50.0
 
 
