@@ -1,151 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-67115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4610CB15E3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 12:32:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE9CAB15F4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 13:25:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75D68176C68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 10:32:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5219175EDB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:25:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35982276057;
-	Wed, 30 Jul 2025 10:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D4D2294A1B;
+	Wed, 30 Jul 2025 11:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bflpJaa4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ROHC3poY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50827E0E4;
-	Wed, 30 Jul 2025 10:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFF52110E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 11:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753871573; cv=none; b=YHOoygoC1ih370lWo7W25HVzWCAFUVBmFfrX9Ajvo+S1GuXQlhp9Fgx7Kh7dozcXUdNIhAJjmPcLEnoQOG0bdyCY0wDnFC4Bp07pSzctwD+dOVEctUhfK6HTeMLcoW3TxMU2JVt2wOY7Ipjl94ULOJ0F1aGxxeUVXFUod5Fxfpc=
+	t=1753874716; cv=none; b=E1NtO4OD55Hdg2hygFY3lQ5pCtyrskZjdFaSOOD39Haec6tCiPiqpRW80qHNKDBa3ydQpctOZcwk73ayKN/iE6JLmJK46J009pZguyzypYMeNVZptYICapCJVZRjJSoRFnuoJbSJiLCZfJzij+Uh6q+VuKsjfKzO8cmd3E/QCvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753871573; c=relaxed/simple;
-	bh=WsXnp8r/2zMoLIEftKtTfeHwLISoTLNiYbjkcq7R4ds=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eht4PND1ZtlVV7T1CHlbw5sWpzQgxyiRpbaya8UhXfdPhIIybBj0VR/fXFXFPcDss/qGknHkEXKPbzIRpM/vHaZBzsidl9sL23oWHa97j/aX7vPovAlZcWEfzGn+qXApfko9soNYe+Wz8pJ7VWnA9ynBGd+AHXN2HXB3oo9oNzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bflpJaa4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56U5x8CL018829;
-	Wed, 30 Jul 2025 10:32:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	J8kzced2LqilmJR7AKpy5OJ5Hlxs74wJYSZaFOJSBX8=; b=bflpJaa4fBS4mN2V
-	EKs5isPY+YEwRdv8w4SG3On2OCAfR9Q1ST4CWPQoo3cScEBF2n2odONnnbPeCBv9
-	Flfp8xU6mcM9C1Q9YhrvdXTw3FW6oH0Cb1qaVlxsr90zhhQnN2PxqcZ/vm1czJv4
-	HmFhnyfpN95yQes2qOE86k4EDBN7YTfSCaN4zza9xSX8pOVWg5JX8wxQFpq+qjLu
-	JKy6n8MpCWB7QZoI09c44ePb3n0nwjBC7OHTiUNt6u5K1mGL2RUm8SDRGIZSN3G6
-	s67tysKZxNknIjdekg2GEurnxIwAeyCGAZgGQudTUqjhRDfprYSELRJFyIgWftym
-	ltB2oQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484q863ja2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 10:32:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56UAWlT7028460
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 10:32:47 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 30 Jul
- 2025 03:32:41 -0700
-Message-ID: <051a4ad2-bc25-4e69-9b26-5888c469eda8@quicinc.com>
-Date: Wed, 30 Jul 2025 16:02:38 +0530
+	s=arc-20240116; t=1753874716; c=relaxed/simple;
+	bh=AaXLhjZNOuZ+t/gYKYez9Mw6H6FQBgt8vwLmFSdxjLE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kpwnVMe83zU2c7aI4bAErH04SCup7M3Xh8ldcmcuT8aG1Glmhe7i0jWT/P29gEdKbQCwhGeDXGmt/lvit/0r7gd56rUcx77DEAsf0zFj1HmOuERNpCiMbrHuVERRaLAObHcUQ/0lHDA6/tIlx7sMctiKI764ecQkFI2759r8XOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ROHC3poY; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b7910123a0so1729074f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 04:25:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753874712; x=1754479512; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+qWnAgYumacwqqXMAwkn/jSAKd2nQaF00yjwz3QS2yE=;
+        b=ROHC3poYJfjmj44dpKbRbnCQUqpYIxEOrPlr+qzOFIG4otBK5vEdp91b/r4SnhgMIm
+         kgC7/vCPrQuUvqgPLs92gqlHhsrgh7y72DpeIE3RDLQ0KvdZpUDo1jQ8Ql4pQImqhnxO
+         k4UBNKitvcWMK0sR5Evtrze66F/K4DP7dhUZptsCkL0QYgRo4Y6f88aKOZv4oCayp2HM
+         pWfOy+vu6m0yh3u751Q8MTbaOHRsXYGkiXIkXcHAdRrsPkPU6BzcjKM3QCix8WgS6EuZ
+         VzSIHzk8cxLU3QWBFVVP0FuGHWYWNiStk+nOptyj1KMG7n5DTZCA6lJgVoKaUgeaYE0s
+         MBdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753874712; x=1754479512;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+qWnAgYumacwqqXMAwkn/jSAKd2nQaF00yjwz3QS2yE=;
+        b=MMbqqRwz3YTNPTTorkY+GW6Bmcv7pnjYVUJFmUu34mkQmJP71cC3Qi2+h1hX1868Uw
+         ueD7Ju+lqzLl6jfeo/ildgtIF+GSJ+9ONoUcCWntupxaBRgfQquIe97t8jmzEy2RdY0e
+         Mcbk2ZI1K+L3EcdTUwcgH0bIvpMFEa6Pii8VChbPMnDjlXQ75eRVNFoLYKADyN7jsXSq
+         6Dohvgis5Kcxfq82yEsCNPAwEEK0gO+vTJ5uD5KYWPaPWdGalnEKH0klOgKEJfITTf4t
+         s0sO6C+BCVrmxTzL1pWyFqSpq+XoGmOTRIdH7Y33GqGzj7mcLj1qUreK0N+lUB3EUPmR
+         KFXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWipuyOETaknYMokjsz3bSqWM81GzTZQHsLBQSc2HjhAmjC5kYN6sy5S34ZuEyoLhILRbYpghjtJE5zcEu8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoTdiReq+vYAle+RZzzA+lknWLdGE0LUluJSY3il2Dd15B7Ip9
+	q5FkncyAXUWK5GEo8WrjOniN09J2SdvtVsG2ERwRB0u+2wdfG36hmrpfP4fhVPdrTao=
+X-Gm-Gg: ASbGncvkkMktlh+PFyRGOXVs9RghoUimLpJBWbsIiGcNrh7vwmbqpq0mxXBSIo1QAXe
+	sm8ZkyYWAfD2rymj5X9lP5nFbBDHHKEE2/loJp5Ky0D2xSTWhoKiC7jWFxkcDtyYPPv3SDDLmWb
+	YiaJAk69ILFWFGPdYuvm4nFdA5JOj14H91CaRG61/voK4t9ZyASBp/FkbVKeCYijn/taWrJxNtY
+	fWNHDLbNhELDJkUZBY9L1WqKxDmsiSVSLa6aruJ6Pjt0NMASxBhKYXx5tK8UlH44jfb+XGTzI5a
+	fvybTWVN497db0aWVKG/LiS0p64JPuxGl+GyG2vF82qMY9owYL/W3pVyUBOTAs3CWfVCnB4xuoT
+	VYJRJImkAtmtu730/OgTZNAPchgCPnQ==
+X-Google-Smtp-Source: AGHT+IGQQWsegZemm4F84iyOeDGl9Tnw8iV4E/j71ZP2nFqvNfy276zfwZeEv0tcaCBJzz3K3Y6agg==
+X-Received: by 2002:a05:6000:22c1:b0:3b7:8ddc:8773 with SMTP id ffacd0b85a97d-3b79503cb44mr2603491f8f.52.1753874712030;
+        Wed, 30 Jul 2025 04:25:12 -0700 (PDT)
+Received: from linaro.org ([82.79.186.23])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b78acd884dsm8352303f8f.33.2025.07.30.04.25.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 04:25:11 -0700 (PDT)
+Date: Wed, 30 Jul 2025 14:25:09 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: kernel@oss.qualcomm.com, Pankaj Patil <quic_pankpati@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/7] clk: qcom: Add TCSR clock driver for Glymur
+Message-ID: <aIoBFeo00PPZncCs@linaro.org>
+References: <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-0-227cfe5c8ef4@oss.qualcomm.com>
+ <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-3-227cfe5c8ef4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
- apss clock controller
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Varadarajan Narayanan
-	<quic_varada@quicinc.com>,
-        <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>, <djakov@kernel.org>,
-        <quic_mdalam@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
-References: <20250730081316.547796-1-quic_varada@quicinc.com>
- <20250730081316.547796-2-quic_varada@quicinc.com>
- <1705cfd6-95fe-4668-ae3b-f8fc7321d32a@kernel.org>
- <2c165ddd-f6b6-45b6-a319-8944fab324f2@quicinc.com>
- <02084269-f591-420f-8f60-7ac0aca9097a@kernel.org>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <02084269-f591-420f-8f60-7ac0aca9097a@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA3MiBTYWx0ZWRfX7ypCNs8cuebz
- cvXNNV5FhgPlEjcW8tPKA+Gxu7QAha0BqEhSajsJ9T35uZguQutLDqjH3CjXaZImrn6B6hXloZM
- vHK1MXB2dLc9y1O4h+SFOx+Lg6TZOyvjK6bZdaGSDiJ/5MmjRkHJRZDlS099wnjZMCMh4KLyX3X
- wcQdPs3lb41jztXoEAJDH+X+8JPY+K+1nC4ojzRGwnfoib7NOoqXF8zVnVKc0y1GFYVXFKx6tLK
- vmTvKo8Fzm9csWbtipTIS6aoKdgWPQrKMbPywscT0g2jLbG+MbR1K3WL/QtAbfKXbV5Jn1qkdkq
- g7TtlvqxgfnSUlmCxl4h7e4/F5RydZCR6wWo4QBrzscorbGdekeXjiAPGUsoJ/rdnxpuvMPXK8g
- fb/dkwnv3OY2mAWvwRiPjioMEqaJ6gv/I55EpDaT/7H/xdrilFC69EgncS/mEk+taKvdirAv
-X-Authority-Analysis: v=2.4 cv=TqLmhCXh c=1 sm=1 tr=0 ts=6889f4cf cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8
- a=COk6AnOGAAAA:8 a=iDVmcDSDRtdF4r9CFTYA:9 a=QEXdDO2ut3YA:10
- a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Ps5V9MMwIT2tmYjGimBXfbkcOrP8c8gQ
-X-Proofpoint-GUID: Ps5V9MMwIT2tmYjGimBXfbkcOrP8c8gQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-30_04,2025-07-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
- malwarescore=0 adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 mlxlogscore=847 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507300072
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-3-227cfe5c8ef4@oss.qualcomm.com>
 
-
-
-On 7/30/2025 3:06 PM, Krzysztof Kozlowski wrote:
-> On 30/07/2025 11:22, Sricharan Ramabadhran wrote:
->>
->>
->> On 7/30/2025 2:32 PM, Krzysztof Kozlowski wrote:
->>> On 30/07/2025 10:13, Varadarajan Narayanan wrote:
->>>> +---
->>>> +$id: http://devicetree.org/schemas/clock/qcom,ipq5424-apss-clk.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm APSS IPQ5424 Clock Controller
->>>> +
->>>> +maintainers:
->>>> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> +  - Md Sadre Alam <quic_mdalam@quicinc.com>
->>>
->>> My v2 comments seems still valid. Your explanation suggests they moved
->>> on, so it is confusing to see them here.
->>>
->>> Sricharan and Md Sadre, can you provide Acks for this?
->>>
->> Ack. Please feel free to remove my name.
+On 25-07-29 11:12:37, Taniya Das wrote:
+> Add a clock driver for the TCSR clock controller found on Glymur, which
+> provides refclks for PCIE, USB, and UFS.
 > 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+>  drivers/clk/qcom/Kconfig         |   8 ++
+>  drivers/clk/qcom/Makefile        |   1 +
+>  drivers/clk/qcom/tcsrcc-glymur.c | 257 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 266 insertions(+)
 > 
-> I meant Ack that you still maintain this hardware and bindingd.
 
-I still work on his hardware, but wont be involved in maintaining this
-binding.
+[...]
 
-Regards,
-  Sricharan
+> +
+> +static struct clk_branch tcsr_edp_clkref_en = {
+> +	.halt_reg = 0x1c,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x1c,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "tcsr_edp_clkref_en",
+> +			.ops = &clk_branch2_ops,
+
+As discussed off-list, these clocks need to have the bi_tcxo as parent.
+
+Otherwise, as far as the CCF is concerned these clocks will have rate 0,
+which is obviously not the case.
+
+Bringing this here since there is a disconnect between X Elite and
+Glymur w.r.t this now.
 
