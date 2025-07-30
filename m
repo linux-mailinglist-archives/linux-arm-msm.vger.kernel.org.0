@@ -1,142 +1,446 @@
-Return-Path: <linux-arm-msm+bounces-67071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F5F8B15ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 10:46:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49F52B15AE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 10:50:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6669317BE66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 08:46:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6218C4E3789
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 08:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5016A1DF244;
-	Wed, 30 Jul 2025 08:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5FC528DEE0;
+	Wed, 30 Jul 2025 08:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bzFWRwQJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C/ERrKBa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C479228CB0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 08:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7FE290BCC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 08:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753865160; cv=none; b=VLWPDGnHEc0gx3tvalf2xlpryq41tZMUIrj5NkaERwDiwpYjF7k9K8Jsa/zki+A0aViQsbCZJEQAICtrMjnBb0DSDlGxHAGFo0HA3m8cpwB3eroJH6mUghBgOHw1x7+FJWUkYHCoHUuJpCQKBDQ/q4ZRwmdvvuSXBGWFS/4kIik=
+	t=1753865419; cv=none; b=exYPIfhXX98JoSIP07bOnrKfsvZdQI7LZFyyGawHA5adkaq1EvDkqw4VJ+ZRjJ3182cRH9hlyXpodpw46b/biw//Syx0Jsoy+qhXhBm+8PcV/rT4fDbaHuO53eqhgDhG3aWkigkdcCUzeDd8MCftYe87owMILg+jTPRwVI4l7vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753865160; c=relaxed/simple;
-	bh=wXb9mb3IJA/sRlDOiaVm4qMN6vs2/7p445YfZx+J7zE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=JkqRzFlDkuFFC/pgIH4uTfmlGxxsYFHHiC2o+eNU6ikKlta+VkQtertz0WrxtguKn9Wtz7LkH5XMq9O5bvbYuHqSuxCikF8nQulSPCX5NbXLolfd1Y5MLGqQRW4Fndl9Q1AP0Mib0gVshyRABP7xRZ3S3liTg5ZUfzKbPULyrFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bzFWRwQJ; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1753865419; c=relaxed/simple;
+	bh=ljTXndF1vbp9IbkKsk1YK6cLijz/AzgIMTH2K+NqXEc=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ORZAeB7rPl5Xz8xVBTKQoY4+w53140sAh2QxvpIq7C4fQ27/4Qql2i1bQJ+zJgl6Uy5Z2VuWw/3z9KJ9Xh+7TrHJpUMLnTHw8snR/ce0Vp3tSZEruSaDVMr02FS6c+CN03OxKgvImlJ8XnSeNSyl/dYqganraj0VqvrzAzu2mDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C/ERrKBa; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b78310b296so329811f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 01:45:57 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4563cfac2d2so65400455e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 01:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753865156; x=1754469956; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vouVbFy9H2IeEfXvCQei0Ugeqqqv+KVoaiQc9t39ZLw=;
-        b=bzFWRwQJyztthkRC7vu9NDgBYokwB4cXpagl+uXMeu7iu42iijXgFFtufbZYjx9YzQ
-         L3TytIjLHNvbDDBEKXN273AOyMNFk8u85VgJR/dswrRj/oRbAgChwZwZTZmyD5GAJ9Aq
-         1MDEW6S4hQ7WRqyx2eZEzuAUCxq2oVNMFzd1AHshC4dUZymIGnHIUtsWiiMnrT62bUNY
-         4aL+efQaDq5n8IlsEDT2KzcekNJUzrxfoMpNBTP2IpYTJ8vBfD8+5v4Z2IaETOv3Io6H
-         FJAxlE1GG6945PFFmuols9dZMCU15T9egQUqH5oe3JwSd/bng1yTCw2U7qfGTkf2eeC5
-         5pYg==
+        d=linaro.org; s=google; t=1753865414; x=1754470214; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=J7BSR2H09GSO3RFnS7EoSmvDfZjaApJ8e7UO2X4YOog=;
+        b=C/ERrKBa2t/zwxDAcI/Y+D+WLJmtX7l+Qt1+BuY1Hd9MY879XPG8GpWSwqkZ+79I5L
+         k/+CN8DhRSsetZ3M65qY7D34TjdSZK8FOH/Hg1UlNhoaQDKznsxtzYsIBdT/ZBWL2BAh
+         f/syZRbHTvdvQmCduaysn/IcoFnQqZu7kyiDBvmyFWn7+bb0cz8C3Y2TPhmzVPI5iyKC
+         +JDlFIEcHMMwgczRJr0nTTf34IysH4PQpU7zcy7dw15EpFVI/cnmDqDhjNkoP+Eq40D+
+         fw2f32S3GULOBFV93xJwJg1yVcUAX+HiG7BCeZDgIjSzIzort66LJe3NSTMAAONC0Kpy
+         9THg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753865156; x=1754469956;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vouVbFy9H2IeEfXvCQei0Ugeqqqv+KVoaiQc9t39ZLw=;
-        b=dZDByMXNp2kORCsIJBdlc5IGFecXQeqT90EugNOoX2mfn4z1ahGvNymFc+fa0PJw0V
-         qfVRdB1jC69GlXf0ijfCifd59wJaRsM20gXL4a3RlVSXxOCVB8bKOuaRuPUEneNMHok/
-         6QVjL/Feat3vFxkm4iDZJSjp6mWTl6ag7VqdwgMbqQxaLXaRS8uaneTjcNDuufFjLEKb
-         MpPWX7OmcAq0MBe0UneaSV7Q9XAgy09tC4TNiOdL3lODLUnCGYzjbXw/iGZAIR4CHgEp
-         o65mNq21dEeUyLN2JRVoEQ5WtY1TZz+Dtw55vipCcIcsPGSTYN3NflBf97rkVcL+y5Da
-         SyqA==
-X-Forwarded-Encrypted: i=1; AJvYcCXaUE7uFWGKXZQ3bliOMlQ3Nt1Wb+oF4YafhRVN8GGiOvhrSBaPJ9NOBARSCZ3t7schJh+dIT1gCGlAjoT/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQFt1J2sDX2iB/Z5Xc7GZOLpu/JFCvBUXol/OjGpqjdBdEx/Rs
-	ko0sfya3BZgohI+tm1XK5Ckomdp0JmhymRWYDyUIUuf5LVXYV2XGFMv1mnnD6HJhdlo=
-X-Gm-Gg: ASbGncv4aNbN/P/1KFZZEANfcBIDsWMuXMCsPKTY0KHKKbWS3LT8rpa1gEL8p70CmO8
-	dvp0417zAFfIRj+MgdkU7FJQq8VTZJwu4uylVVWGs3K70n/RVhhwrWrI25cpbzcrgjQMFX+YcmS
-	bVBNe5T8KW9/lLLosHqkhlFjvugAB2i34lLIcSLlyrCFicbbK8W0oEMulROA7XA/+39kzQ+41hV
-	RySJp3ZOD5J0bxKFa9Wcu4chYeaCPR/bNKR56g45770sHN4xrKb4G7L6Ins4PVj65Snn8OvqiAu
-	6CImyGBoLbsQhtm0v/khxFlOr0IuXFU2zwOdLyJ0EIf/OJHZUwyC+8Fn9CAjTITMv6Av6GI/HIX
-	b0z0rB75AaQH9+SlLoCLZIkj2CZcwDiv7X2CV6g==
-X-Google-Smtp-Source: AGHT+IEsUJXHb9Fu+wIAFpOOr9CxkUbkz4FbUxP1vAkQqZyqMp+yCtAvMXAxm0CSLECgSmHegl1DYQ==
-X-Received: by 2002:a5d:69d0:0:b0:3b7:899c:e88b with SMTP id ffacd0b85a97d-3b794fe4da0mr1639575f8f.11.1753865155466;
-        Wed, 30 Jul 2025 01:45:55 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:2e51:f80e:a7b5:16f7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589aefaa44sm9422155e9.20.2025.07.30.01.45.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Jul 2025 01:45:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753865414; x=1754470214;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=J7BSR2H09GSO3RFnS7EoSmvDfZjaApJ8e7UO2X4YOog=;
+        b=C2WMFeTYWRQ9lEC5ZeBPUuyupepv+x3MOwoHE0Sg4zQBpc5th8N+jGCSyoZpmImtQ8
+         X3/pcXMTqAWD6dnIpzgGQCHJW1WcOhiSn7LxWzp5giYYFYd27GfnZZI5gEf1i9B8NoFB
+         O9cZ74vVAjMgPN/Lenyrl0XX8AiCUzuDsMjCnd+GBqcqnopk0MCqG2lsoXRUQ0ukvRSg
+         WPwgLzXrHekuQHRKCGZ65UX2bc9WzRdIcw1cnWlLyMtDyOywW9/RfHNH0vbEGOHw7Iq/
+         y5SwFBbRScysDqjd+dtk1/adZkwmo4zDTm5ooECo4DRH1TUF01AZW3LSizaNqHvqubEP
+         4khw==
+X-Forwarded-Encrypted: i=1; AJvYcCXmxH0Z7f7G3hfCbxVPqKhvGFkFceqSxesX9UmMX9rK6joafF6/28rKZ+C+ajKSTkFQugcc7UVXjY2JBH+m@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZsz3C5jrYvNmXQEF/4TYdAoHfo+Q8F/Xs3pog9iwhygwtVcme
+	vYqtlrMbaERkoKqqem+aljsJ/cAZJrOmLsxQ9NZPH8sfMaaSYu5eOZcmuvSQ1xRM4aY=
+X-Gm-Gg: ASbGncu7XkDSEF3RvqmkeedxjKsTR/M0ewZ1SB6i9wnRlBBF7F4PEFjJ1RShWNpJfyC
+	y2Pk3NrpfHZ8WdagtmtWVeivMT4l884/uDQmixwHwQ7oB+XSe5TmCnaAX4WTweP2cKBWmjXPWEx
+	LSG6gJY+f1UjvkYWegxEWHzN2SZGSlPX9NEuXo5koMWAjGiBVtt+JfB8VlavEVK2ap06ZDEQg1a
+	E4Q2J3VZLHJky/WzGW2eQ3uZF+gROJ7IwhsGsD9KwJhPG2zGSQIbxdCVu+kEwTTmbvoS2p86p06
+	H1XM6Yv115GpKeEkpIsFSNBSwksp7VmcS447Td2iJjgM+mHTTRuXZgbn4n6Rg5XGHNXg6Kg/p5M
+	w40v51zL/oBQq4PTvNOvaTULnWA==
+X-Google-Smtp-Source: AGHT+IEg1BQklZ5Qkv0BR0xWFD6Q0Ud2HpsszYAgNSY4ON6m/7RU/WLZYwZcm23/t+H+TEY1JJPw9Q==
+X-Received: by 2002:a05:6000:1a86:b0:3b4:9721:2b2d with SMTP id ffacd0b85a97d-3b794fc185dmr1673402f8f.9.1753865414385;
+        Wed, 30 Jul 2025 01:50:14 -0700 (PDT)
+Received: from [10.1.1.59] ([80.111.64.44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b78a9d3d03sm8391452f8f.2.2025.07.30.01.50.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 01:50:13 -0700 (PDT)
+Message-ID: <a4d937482f2a94fbb822150fbc6c06c914940e1a.camel@linaro.org>
+Subject: Re: [PATCH v13 00/10] Implement vendor resets for PSCI SYSTEM_RESET2
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, Bartosz
+ Golaszewski	 <bartosz.golaszewski@linaro.org>, Bjorn Andersson
+ <andersson@kernel.org>,  Sebastian Reichel	 <sre@kernel.org>, Rob Herring
+ <robh@kernel.org>, Sudeep Holla	 <sudeep.holla@arm.com>, Souvik Chakravarty
+ <Souvik.Chakravarty@arm.com>,  Krzysztof Kozlowski	 <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Yan	 <andy.yan@rock-chips.com>,
+ Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi
+ <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio
+ <konradybcio@kernel.org>, 	cros-qcom-dts-watchers@chromium.org, Vinod Koul
+ <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon
+ <will@kernel.org>, Florian Fainelli	 <florian.fainelli@broadcom.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha
+	 <mukesh.ojha@oss.qualcomm.com>, Stephen Boyd <swboyd@chromium.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+ Srinivas Kandagatla
+	 <srini@kernel.org>, Elliot Berman <elliot.berman@oss.qualcomm.com>, Konrad
+ Dybcio <konrad.dybcio@oss.qualcomm.com>
+Date: Wed, 30 Jul 2025 09:50:11 +0100
+In-Reply-To: <20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
+References: 
+	<20250727-arm-psci-system_reset2-vendor-reboots-v13-0-6b8d23315898@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1+build2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 30 Jul 2025 09:45:54 +0100
-Message-Id: <DBP9B4ZMXOMK.1QLITVTW393YI@linaro.org>
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Loic Poulain" <loic.poulain@oss.qualcomm.com>
-Cc: <jjohnson@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
- <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
- <jeff.johnson@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [question, bug] regularly disconnecting wifi on RB1 and RB2
- boards, ath10
-X-Mailer: aerc 0.20.0
-References: <Zgp0ym-MGzX2eSZdlkVYbgvjkJ0CzKItjaC5pafzQnj1AOZnVAqvCIZfYoK7nwDhUgOA0U8eNolNtaWXbExOAQ==@protonmail.internalid> <DAWJQ2NIKY28.1XOG35E4A682G@linaro.org> <5df11ee4-d645-4be2-841f-715343f1b7a4@linaro.org> <CAFEp6-0zwy2JdFOvRQ5ghMwD-J6b7F5YcVKNf-5R=8XdEpGDSw@mail.gmail.com> <CAFEp6-1wO9xwisOAtv6D__nb3Uo=8_f9rHifi-JAQ0oPD+JSVg@mail.gmail.com> <DBKDAXJ0V9U0.10YYX5H5HAJBT@linaro.org>
-In-Reply-To: <DBKDAXJ0V9U0.10YYX5H5HAJBT@linaro.org>
+MIME-Version: 1.0
 
-On Thu Jul 24, 2025 at 3:50 PM BST, Alexey Klimov wrote:
-> Hi Loic,
->
-> On Wed Jul 23, 2025 at 11:42 AM BST, Loic Poulain wrote:
->> Hi Alexey,
->>
+On Sun, 2025-07-27 at 21:54 +0530, Shivendra Pratap wrote:
+> The PSCI SYSTEM_RESET2 call allows vendor firmware to define
+> additional reset types which could be mapped to the reboot
+> argument.
+>=20
+> User-space should be able to reboot a device into different
+> operational boot-states supported by underlying bootloader and
+> firmware. Generally, some HW registers need to be written, based
+> on which the bootloader and firmware decide the next boot state
+> of device, after the reset. For example, a requirement on
+> Qualcomm platforms may state that reboot with "bootloader"
+> command, should reboot the device into bootloader flashing mode
+> and reboot with =E2=80=9Cedl=E2=80=9D command, should reboot the device i=
+nto an
+> Emergency flashing mode.=C2=A0 Setting up such reboots on Qualcomm
+> devices can be inconsistent across SoC platforms and may require
+> setting different HW registers, where some of these registers may
+> not be accessible to HLOS. These knobs evolve over product
+> generations and require more drivers.=C2=A0 PSCI defines a
+> vendor-specific reset in SYSTEM_RESET2 spec, which enables the
+> firmware to take care of underlying setting for any such
+> supported vendor-specific reboot. Qualcomm firmwares are
+> beginning to support and expose PSCI SYSTEM_RESET2
+> vendor-specific reset types to simplify driver requirements from
+> Linux. With such support added in the firmware, we now need a
+> Linux interface which can make use of the firmware calls for PSCI
+> vendor-specific resets. This will align such reboot requirement
+> across platforms and vendors.
+>=20
+> The current psci driver supports two types of resets =E2=80=93
+> SYSTEM_RESET2 Arch warm-reset and SYSTEM_RESET cold-reset. The
+> patchset introduces the PSCI SYSTEM_RESET2 vendor-specific reset
+> into the reset path of the psci driver and aligns it to work with
+> reboot system call - LINUX_REBOOT_CMD_RESTART2, when used along
+> with a supported string-based command in =E2=80=9C*arg=E2=80=9D.
+>=20
+> The patchset uses reboot-mode based commands, to define the
+> supported vendor reset-types commands in psci device tree node
+> and registers these commands with the reboot-mode framework.
+>=20
+> The PSCI vendor-specific reset takes two arguments, being,
+> reset_type and cookie as defined by the spec. To accommodate this
+> requirement, enhance the reboot-mode framework to support two
+> 32-bit arguments by switching to 64-bit magic values.
+>=20
+> Along this line, the patchset also extends the reboot-mode
+> framework to add a non-device-based registration function, which
+> will allow drivers to register using device tree node, while
+> keeping backward compatibility for existing users of reboot-mode.
+> This will enable psci driver to register for reboot-mode and
+> implement a write function, which will save the magic and then
+> use it in psci reset path to make a vendor-specific reset call
+> into the firmware. In addition, the patchset will expose a sysfs
+> entry interface within reboot-mode which can be used by userspace
+> to view the supported reboot-mode commands.
+>=20
+> The list of vendor-specific reset commands remains open due to
+> divergent requirements across vendors, but this can be
+> streamlined and standardized through dedicated device tree
+> bindings.
+>=20
+> Currently three drivers register with reboot-mode framework -
+> syscon-reboot-mode, nvmem-reboot-mode and qcom-pon. Consolidated
+> list of commands currently added across various vendor DTs:
+> =C2=A0mode-loader
+> =C2=A0mode-normal
+> =C2=A0mode-bootloader
+> =C2=A0mode-charge
+> =C2=A0mode-fastboot
+> =C2=A0mode-reboot-ab-update
+> =C2=A0mode-recovery
+> =C2=A0mode-rescue
+> =C2=A0mode-shutdown-thermal
+> =C2=A0mode-shutdown-thermal-battery
+>=20
+> Detailed list of commands being used by syscon-reboot-mode:
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/exynos/exynosautov9.dtsi:
+> 	mode-bootloader =3D <EXYNOSAUTOV9_BOOT_BOOTLOADER>;
+> 	mode-fastboot =3D <EXYNOSAUTOV9_BOOT_FASTBOOT>;
+> 	mode-recovery =3D <EXYNOSAUTOV9_BOOT_RECOVERY>;
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/exynos/google/gs101.dtsi:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-bootloader =3D <0xfc>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-charge =3D <0x0a>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-fastboot =3D <0xfa>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-reboot-ab-update =3D <0x52>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-recovery =3D <0xff>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-rescue =3D <0xf9>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-shutdown-thermal =3D <0x51>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-shutdown-thermal-battery =3D <0x51>;
 
-[..]
+Just for completeness, on gs101 we also pass kernel-generated
+modes from kernel_restart() or panic(), specifically DM verity's
+'dm-verity device corrupted':
 
->> Could you check if this change helps:
->>
->> diff --git a/drivers/net/wireless/ath/ath10k/mac.c
->> b/drivers/net/wireless/ath/ath10k/mac.c
->> index c61b95a928da..4fa7dd62aeac 100644
->> --- a/drivers/net/wireless/ath/ath10k/mac.c
->> +++ b/drivers/net/wireless/ath/ath10k/mac.c
->> @@ -288,8 +288,10 @@ static int ath10k_send_key(struct ath10k_vif *arvif=
-,
->>                 key->flags |=3D IEEE80211_KEY_FLAG_GENERATE_IV;
->>
->>         if (cmd =3D=3D DISABLE_KEY) {
->> -               arg.key_cipher =3D ar->wmi_key_cipher[WMI_CIPHER_NONE];
->> -               arg.key_data =3D NULL;
->> +               /*  Not all hardware supports key deletion operations. s=
-o we
->> +                *  replace the key with a junk value to invalidate it.
->> +                */
->> +               memset(arg.key_data, 0, arg.key_len);
->>         }
+        mode-dm-verity-device-corrupted =3D <0x50>;
 
-So far looks good.
 
-I didn't see any kind of GROUP_KEY_HANDSHAKE_TIMEOUT messages and long wifi
-outages leaving the RB1, for instance, overnight.
+Cheers,
+Andre'
 
-I do observe some packet loss while pinging the board for a while --
-around 0.1..0.6% packet loss but that might be because of my wifi network
-and absence of external antenna and it is still much much better than
-default behaviour.
-
-Could you please add me to C/c when you're going to send it over?
-
-Thank you for looking into this,
-Alexey
-
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/hisilicon/hi3660-hikey960.dts:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-normal =3D <0x77665501>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-bootloader =3D <0x77665500>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-recovery =3D <0x77665502>;
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/hisilicon/hi6220-hikey.dts:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-normal =3D <0x77665501>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-bootloader =3D <0x77665500>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-recovery =3D <0x77665502>;
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/rockchip/px30.dtsi:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-bootloader =3D <BOOT_BL_DOWNLOAD>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-fastboot =3D <BOOT_FASTBOOT>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-loader =3D <BOOT_BL_DOWNLOAD>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-normal =3D <BOOT_NORMAL>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-recovery =3D <BOOT_RECOVERY>;
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/rockchip/rk3308.dtsi:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-bootloader =3D <BOOT_BL_DOWNLOAD>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-loader =3D <BOOT_BL_DOWNLOAD>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-normal =3D <BOOT_NORMAL>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-recovery =3D <BOOT_RECOVERY>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-fastboot =3D <BOOT_FASTBOOT>;
+>=20
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts:
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-normal =3D <BOOT_NORMAL>;
+> =C2=A0=C2=A0=C2=A0=C2=A0	mode-loader =3D <BOOT_BL_DOWNLOAD>;
+> 			mode-recovery =3D <BOOT_RECOVERY>;
+> 			mode-bootloader =3D <BOOT_FASTBOOT>;
+>=20
+> Detailed list of commands being used by nvmem-reboot-mode:
+> =C2=A0=C2=A0=C2=A0 arm64/boot/dts/qcom/pmXXXX.dtsi:(multiple qcom DTs)
+> 			mode-recovery =3D <0x01>;
+> 			mode-bootloader =3D <0x02>;
+>=20
+> Previous discussions around SYSTEM_RESET2:
+> - https://lore.kernel.org/lkml/20230724223057.1208122-2-quic_eberman@quic=
+inc.com/T/
+> - https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicin=
+c.com/
+>=20
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+>=20
+> Changes in v13:
+> - Split patch1 into two (Synchronize list traversal and DT node-based
+> =C2=A0 registration) - by Dmitry.
+> - Move mutex lock inside get_reboot_mode_magic - by Dmitry.
+> - Reorder the patches =E2=80=93 pull patch8 for exposing reboot-mode sysf=
+s before
+> =C2=A0 psci patch - to align the change in reboot-mode sysfs patch.=20
+> - Update patch- reboot-mode: Expose sysfs for registered reboot_modes
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Introduce a driver_name in reboot_mode_registe=
+r. This will be used
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 in sysfs creation=C2=A0 -=C2=A0 by A=
+rnd.
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Update documentation and commit text for above=
+.
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Fix release function to properly call delete a=
+ttr file.
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Fix sparse warning for devres_find.
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Add error handling for devres_find.
+> - Split ABI documentation as a separate patch and update ABI documentatio=
+n
+> =C2=A0 for usage of driver-name in sysfs - by Arnd
+> - Update patch - psci: Implement vendor-specific resets as reboot-mode
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Fix Kconfig for CONFIG related warning.
+> =C2=A0=C2=A0=C2=A0=C2=A0 - Add driver_name as "psci" in register call to =
+reboot-mode - by Arnd
+> - Link to v12: https://lore.kernel.org/r/20250721-arm-psci-system_reset2-=
+vendor-reboots-v12-0-87bac3ec422e@oss.qualcomm.com
+>=20
+> Changes in v12:
+> - Added lock for list traversals in reboot-mode - by Dmitry.
+> - Added proper handling for BE and LE cases in reboot-mode - by Dmitry.
+> - Removed type casting for u64 to u32 conversions. Added limit checks
+> =C2=A0 and used bitwise operations for same - by Andrew.
+> - Link to v11: https://lore.kernel.org/r/20250717-arm-psci-system_reset2-=
+vendor-reboots-v11-0-df3e2b2183c3@oss.qualcomm.com
+>=20
+> Changes in v11:
+> - Remove reference of cookie in reboot-mode =E2=80=93 Arnd/Rob
+> - Introduce 64-bit magic in reboot-mode to accommodate two 32-bit
+> =C2=A0 arguments =E2=80=93 Arnd
+> - Change reset-type to reboot-mode in psci device tree binding =E2=80=93 =
+Arnd
+> 	- binding no more mandates two arguments as in v10.
+> 	- dt changes done to support this binding.
+> - Remove obvious comments in psci reset path =E2=80=93 Konrad
+> - Merge sysfs and ABI doc into single patch.
+> - Fix compilation issue on X86 configs.
+> - Fix warnings for pr_fmt.
+> - Link to v10: https://lore.kernel.org/all/569f154d-c714-1714-b898-83a42a=
+38771c@oss.qualcomm.com/
+>=20
+> Changes in V10:
+> - Change in reset-type binding to make cookie as a mandatory
+> =C2=A0 argument.
+> - Change reboot-mode binding to support additional argument
+> =C2=A0 "cookie".
+> =C2=A0From Lorenzo:
+> - Use reboot-mode framework for implementing vendor-resets.
+> - Modify reboot-mode framework to support two arguments
+> =C2=A0 (magic and cookie).
+> - Expose sysfs for supported reboot-modes commands.
+> - List out all existing reboot-mode commands and their users.
+> =C2=A0=C2=A0 - Added this to cover letter.
+> =C2=A0From Dmitry:
+> - Modify reboot-mode to support non-device based registration.
+> - Modify reboot-mode to create a class and device to expose
+> =C2=A0 sysfs interface.
+> - Link to v9: https://lore.kernel.org/all/20250303-arm-psci-system_reset2=
+-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com/
+>=20
+> Changes in v9:
+> - Don't fallback to architecturally defined resets from Lorenzo.
+> - Link to v8: https://lore.kernel.org/r/20241107-arm-psci-system_reset2-v=
+endor-reboots-v8-0-e8715fa65cb5@quicinc.com
+>=20
+> Changes in v8:
+> - Code style nits from Stephen
+> - Add rb3gen2
+> - Link to v7: https://lore.kernel.org/r/20241028-arm-psci-system_reset2-v=
+endor-reboots-v7-0-a4c40b0ebc54@quicinc.com
+>=20
+> Changes in v7:
+> - Code style nits from Stephen
+> - Dropped unnecessary hunk from the sa8775p-ride patch
+> - Link to v6: https://lore.kernel.org/r/20241018-arm-psci-system_reset2-v=
+endor-reboots-v6-0-50cbe88b0a24@quicinc.com
+>=20
+> Changes in v6:
+> - Rebase to v6.11 and fix trivial conflicts in qcm6490-idp
+> - Add sa8775p-ride support (same as qcm6490-idp)
+> - Link to v5: https://lore.kernel.org/r/20240617-arm-psci-system_reset2-v=
+endor-reboots-v5-0-086950f650c8@quicinc.com
+>=20
+> Changes in v5:
+> - Drop the nested "items" in prep for future dtschema tools
+> - Link to v4: https://lore.kernel.org/r/20240611-arm-psci-system_reset2-v=
+endor-reboots-v4-0-98f55aa74ae8@quicinc.com
+>=20
+> Changes in v4:
+> - Change mode- properties from uint32-matrix to uint32-array
+> - Restructure the reset-types node so only the restriction is in the
+> =C2=A0 if/then schemas and not the entire definition
+> - Link to v3: https://lore.kernel.org/r/20240515-arm-psci-system_reset2-v=
+endor-reboots-v3-0-16dd4f9c0ab4@quicinc.com
+>=20
+> Changes in v3:
+> - Limit outer number of items to 1 for mode-* properties
+> - Move the reboot-mode for psci under a subnode "reset-types"
+> - Fix the DT node in qcm6490-idp so it doesn't overwrite the one from
+> =C2=A0 sc7820.dtsi
+> - Link to v2: https://lore.kernel.org/r/20240414-arm-psci-system_reset2-v=
+endor-reboots-v2-0-da9a055a648f@quicinc.com
+>=20
+> Changes in v2:
+> - Fixes to schema as suggested by Rob and Krzysztof
+> - Add qcm6490 idp as first Qualcomm device to support
+> - Link to v1: https://lore.kernel.org/r/20231117-arm-psci-system_reset2-v=
+endor-reboots-v1-0-03c4612153e2@quicinc.com
+>=20
+> Changes in v1:
+> - Reference reboot-mode bindings as suggeted by Rob.
+> - Link to RFC: https://lore.kernel.org/r/20231030-arm-psci-system_reset2-=
+vendor-reboots-v1-0-dcdd63352ad1@quicinc.com
+>=20
+> ---
+> Elliot Berman (4):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dt-bindings: arm: Document reboot mode mag=
+ic
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 arm64: dts: qcom: qcm6490-idp: Add PSCI SY=
+STEM_RESET2 types
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 arm64: dts: qcom: qcs6490-rb3gen2: Add PSC=
+I SYSTEM_RESET2 types
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 arm64: dts: qcom: sa8775p-ride: Add PSCI S=
+YSTEM_RESET2 types
+>=20
+> Shivendra Pratap (6):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power: reset: reboot-mode: Synchronize lis=
+t traversal
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power: reset: reboot-mode: Add device tree=
+ node-based registration
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power: reset: reboot-mode: Add support for=
+ 64 bit magic
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Documentation: ABI: Add sysfs-class-reboot=
+-mode-reboot_modes
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power: reset: reboot-mode: Expose sysfs fo=
+r registered reboot_modes
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 firmware: psci: Implement vendor-specific =
+resets as reboot-mode
+>=20
+> =C2=A0.../testing/sysfs-class-reboot-mode-reboot_modes=C2=A0=C2=A0 |=C2=
+=A0 39 +++++
+> =C2=A0Documentation/devicetree/bindings/arm/psci.yaml=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 43 +++++
+> =C2=A0arch/arm64/boot/dts/qcom/qcm6490-idp.dts=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 7 +
+> =C2=A0arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 7 +
+> =C2=A0arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 7 +
+> =C2=A0arch/arm64/boot/dts/qcom/sa8775p.dtsi=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0arch/arm64/boot/dts/qcom/sc7280.dtsi=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0drivers/firmware/psci/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +
+> =C2=A0drivers/firmware/psci/psci.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0 57 ++++++-
+> =C2=A0drivers/power/reset/nvmem-reboot-mode.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 13 +-
+> =C2=A0drivers/power/reset/qcom-pon.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0 11 +-
+> =C2=A0drivers/power/reset/reboot-mode.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 174=
+ +++++++++++++++++----
+> =C2=A0drivers/power/reset/syscon-reboot-mode.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 11 +-
+> =C2=A0include/linux/reboot-mode.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 11 +-
+> =C2=A014 files changed, 342 insertions(+), 44 deletions(-)
+> ---
+> base-commit: d7af19298454ed155f5cf67201a70f5cf836c842
+> change-id: 20250709-arm-psci-system_reset2-vendor-reboots-46c80044afcf
+>=20
+> Best regards,
 
