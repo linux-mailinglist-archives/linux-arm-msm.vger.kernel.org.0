@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-67162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B29EB161E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 15:53:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B5E3B161FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 15:55:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 909B618C8615
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 13:54:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D0343B6226
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 13:55:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E8582D8DD1;
-	Wed, 30 Jul 2025 13:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BAEB2D8DC3;
+	Wed, 30 Jul 2025 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mwyGYuTj"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="U4D8eQXA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47A22D8DDB;
-	Wed, 30 Jul 2025 13:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D392D8DA6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 13:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753883607; cv=none; b=K0sHtEsyrkb0sjsGl9YesRAuP/8mnisoW7BTwdHCmmER+xJfL+9EUXJjLCDewJBJHvpZhGfYBqA0Jc9Tv2FL+iiHasyv4utWMPgfaLKabZ3aYZWX/neBPjXIjaMf76JRZc3ECzVh0fTdura/w2bfvtXy+4nYM9HsZ5fCt29BLkQ=
+	t=1753883730; cv=none; b=KzI5Ecv01A9VpzmiQK9pV+Ec0MeBQQKYsQpL/iIa8OzMbPC3suKhFxyAUNGBbm9WGWbTJ0YmSw1mY0KJ5NN1mwqtfHQYpP4urupJ4NGgL0bki6SoiuCqw/bmFriU4+rFWuG3j2HgC6gxkTXDcmPyMJjsCOoM3AoqG7ZZvb/TTo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753883607; c=relaxed/simple;
-	bh=stuy2rI58Vsc0PiqRzUo/vprvXkWOhvLV54M9TdCCp0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JBTSYaKM0ozSDr+ZlyYk5PJ0Qz/lyYUnpfjChzp0BMiR5HSmG4Rer9D2PrtSY4Rx4MazgI1IWbWiYUu/DgCcs3WAlgdMcop252FzBLbL6FsdLwCt9lECaehFGdqDAsafhYkqJ4Vp3omAszdrHBdxQa/VhuZXBoSKk9eK6f0qoJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mwyGYuTj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56UCbAWo006561;
-	Wed, 30 Jul 2025 13:53:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	krEHYvALcIr5L6u5+iHLkKXMi4mmcRlQVfkjxj3pvNc=; b=mwyGYuTj4PGqy940
-	pI/w8l+YapTE88rnvZzY17Je1eChVB/Zdd8J3vcpyc1DGPyfwolQec+jbsoA/Hvc
-	OaTlz9Z/tgSLU20JoW5mHuffzefRQDomdP4YxPntTzWDliR9w2a6InbAMFNgxEuW
-	4CFN8SZGdA/dEtCo7asPg9hqCcB1Q/0voiaToNwhxU4I77ythcG8Of/DcnmQGvH3
-	zEy90BvFtbdGtQTWK1kioSOgheI87J/vLhGaRJ9HOGnyG/aeLysCVw5oZLlEjDhB
-	THvTHoQo49jMIwBKvViDGOFQV4BlCnoimfM9z2iyBWU3eVcc4J/iVbjOaxIZLlHH
-	J421qA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 485v1xhc2r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 13:53:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56UDrFb7023656
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Jul 2025 13:53:15 GMT
-Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 30 Jul
- 2025 06:53:10 -0700
-Message-ID: <df8b3c85-d572-4cee-863b-35fe6a5ed9ff@quicinc.com>
-Date: Wed, 30 Jul 2025 19:23:07 +0530
+	s=arc-20240116; t=1753883730; c=relaxed/simple;
+	bh=03dvLXzJnjJL/BzSORv5mrGgeHu9RiQtwL9YnjAKfQw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tesI5+agdNcH4FEqCrwXtYSYdI73jUi5hGJss5r8MNtJa+36YqiaoLBcThd3n5iXV7Obc6O/u9PqxTE3RBYbT3q/norE3KZaOaKCrwfRmlM4QOINm18sigFtmg6K9qpmfxQhskv6aBTbVfosLb0wNNryPR3BkOCQTOC2UN46Skw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=U4D8eQXA; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1753883727;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=3VcFQqoev4ndFVh1DgWdnNI6LwW73kLIz7RUlLHtApU=;
+	b=U4D8eQXA+5wuPHvqhTS/DElTxJb5SXU6AfRUn+4VEWgSUlULNE0DNEbTLXvDGBlLex0u2A
+	vLlZ4YGleS7WkEKJD6ERsdKOUIXqM2ALqE+DL0lWroyURD9blrIRlXIG52lYYh+AZWrJKd
+	agq4jY8v8Ve2jUrRzByL9YpwHrEPYAI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-380--1RPmEd4Mk2rRGl2e6tYRw-1; Wed, 30 Jul 2025 09:55:26 -0400
+X-MC-Unique: -1RPmEd4Mk2rRGl2e6tYRw-1
+X-Mimecast-MFC-AGG-ID: -1RPmEd4Mk2rRGl2e6tYRw_1753883725
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-ae6d6b8eacbso523674366b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 06:55:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753883725; x=1754488525;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3VcFQqoev4ndFVh1DgWdnNI6LwW73kLIz7RUlLHtApU=;
+        b=HosauR/ZesM9qHbLZaniFb0N8ZZZrZzafdrb1zRGKDOomDConAiZ3JGztGRnEq7X4S
+         KyL4afVM8XaNaKE0Ai4bIFvM36o1vLB0KUX4WA2PEK/CRYt+6n0JEKxrTz92EA0RE1Gz
+         8TdcAeTfdGbBMIM9EtTVgU5IKYsE3tuWyw/kV46hjUbFtF/AJoTJmuE820UiuZsKg5JP
+         rMD3ViiFSKLtq2F2J4rtQYAsaMXYV035jGnX6f4e/Yg5JbJ/WEL8Wc0sm7oF9ZmtkhoT
+         qexT8qs0ipq6rVXvrkJ+nYUArm3RmbhTcvPeidLv8W0NyINLJQ2MuGNXhzT6Y2wwj+Y/
+         x3+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVx4pJOosMcWS90OXNHuk9qIAk/+mjOirtOMKcQW/ZLM0qXM5P1KuQ7ye8uDFJPmz2AeyW1QahU1UHO9TyQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywz3VRWWx/qndKObpr6dr/DatYkKZFrntc/vQQjVDNvwUi1R45+
+	kDwV52FEryR51xqSJY9eupyqqT0D7jh5jj/xthq9bAVfDAg8F0zb3EQaxiJ9hTyT4l8E82vAQlh
+	RjkVDpbRlndTDa1RTKOJvE6sdMCEzNpvDp8V1M0ULwekZpqYIIayxd6tHz0UBkVNdFrw=
+X-Gm-Gg: ASbGnct8p/coRvG1w2dlYOMnghE2tVF9bZzzngfg+dkC99Ph9VPMdeNTeqM1FwYNi1F
+	9wKTSn7bOgLq76xPBhnpSLHBSL3Pvfmvk4uKHSiUwHSim4CPBs5+Sv750Z1UYIinZNtZmMJIjcA
+	dev9VLSc/3AcyHbfhVjUC5gyMY/pTZmpVACrw3+WTykR9EXYoX0yz7YKOyj/zzuj/SnHQ6SNdES
+	nh0a05G2r6kO0UnkMdFt0ZTWLMd7vGqn7jdfcPIDRkgz1Z/aZBbKWEFlCB4tzjRknB3aufszpA8
+	nmGzVRoKy7QkunqcnqibQiJ1to0AZxevON7j/aFO5aOUSO9BOYy4Rh9HXZwKug==
+X-Received: by 2002:a17:907:3f16:b0:ada:4b3c:ea81 with SMTP id a640c23a62f3a-af8fd957532mr381802066b.39.1753883724934;
+        Wed, 30 Jul 2025 06:55:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnFvdC4+f6/eJenyOa18wsoa3h5I67gwGBhJ32KqQ2TAENVXY/DrKoXNbTnHSurkHrTJi8SA==
+X-Received: by 2002:a17:907:3f16:b0:ada:4b3c:ea81 with SMTP id a640c23a62f3a-af8fd957532mr381798266b.39.1753883724471;
+        Wed, 30 Jul 2025 06:55:24 -0700 (PDT)
+Received: from [10.32.64.156] (nat-pool-muc-t.redhat.com. [149.14.88.26])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af63585fff3sm750425466b.21.2025.07.30.06.55.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 06:55:23 -0700 (PDT)
+Message-ID: <7ecaae9e-a088-4c1b-9caf-6a006a756544@redhat.com>
+Date: Wed, 30 Jul 2025 15:55:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,120 +89,106 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] dt-bindings: ufs: qcom: Split SC7280 and similar into
- separate file
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar
-	<alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche
-	<bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Manivannan
- Sadhasivam" <mani@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Andy
- Gross" <agross@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Ram Kumar
- Dwivedi" <quic_rdwivedi@quicinc.com>
-References: <20250730-dt-bindings-ufs-qcom-v1-0-4cec9ff202dc@linaro.org>
+Subject: Re: [RFC][PATCH v2 16/29] mm/show_mem: Annotate static information
+ into Kmemdump
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-arch@vger.kernel.org,
+ linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+ pmladek@suse.com
+Cc: linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
+ jonechou@google.com, tudor.ambarus@linaro.org
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <20250724135512.518487-17-eugen.hristev@linaro.org>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <20250730-dt-bindings-ufs-qcom-v1-0-4cec9ff202dc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ g3eXuA==
+Organization: Red Hat
+In-Reply-To: <20250724135512.518487-17-eugen.hristev@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMwMDA5OSBTYWx0ZWRfXydAnmnJ2pSbP
- +ehsQxfAiJLBtgMi0jfpm0+MVaIl8SshR3yPXcHxTA+jGQGa7f1kVxBt+TiupW1S+vHg9ulZ/oI
- pVZOb8nFjPBTnaDubMhvgdQAI3XVbvl+0FfozuzIcdNTeX8TX6fNrQFdkkVLJfAXJep8ZoJBQ1r
- MtV3GRRy8ftdkZmnZrf6C5ZMTCzhB1PegxVB4HSv+iafD503bYfwB4ktw+Nffi3SZK3cId4C4v9
- Pn8sJSmHgKrKoWKtCbpOUiMi5ga8TpHmQepSZuK9PddCARnYDhGbgEW70Yai2OI07A5p4naEHLb
- VH72/hsRBRduPg4oDxM/g56Q6vlUjqYwih858o0CIVLGU0qeZyvFkCNgRxz1FIJyY4GBL7zn1VB
- DubPnm1yC6czb9CeZMg8HEMxv+kSJlXzY9dtj4VQfB9w8qZzOedamIdzodDlHAF7QXmS/q8s
-X-Authority-Analysis: v=2.4 cv=JKw7s9Kb c=1 sm=1 tr=0 ts=688a23cb cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=HodSQJYkpgkrawyL3x8A:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: ikEp6fss3AxCKMVGJYn3mxCMUe8sAJCY
-X-Proofpoint-GUID: ikEp6fss3AxCKMVGJYn3mxCMUe8sAJCY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-30_04,2025-07-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1011
- mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507300099
 
-
-
-On 7/30/2025 6:05 PM, Krzysztof Kozlowski wrote:
-> The binding for Qualcomm SoC UFS controllers grew and it will grow
-> further.  It already includes several conditionals, partially for
-> difference in handling encryption block (ICE, either as phandle or as IO
-> address space) but it will further grow for MCQ.
+On 24.07.25 15:54, Eugen Hristev wrote:
+> Annotate vital static information into kmemdump:
+>   - _totalram_pages
 > 
-> See also: lore.kernel.org/r/20250730082229.23475-1-quic_rdwivedi@quicinc.com
+> Information on these variables is stored into dedicated kmemdump section.
 > 
-> The question is whether SM8650 and SM8750 should have their own schemas,
-> but based on bindings above I think all devices here have MCQ?
-> 
-> Best regards,
-> Krzysztof
-> 
-
-
-Hi Krzysztof,
-
-If I understand correctly, you're splitting the YAML files based on MCQ 
-(Multi-Circular Queue) support:
-
--qcom,sc7280-ufshc.yaml includes targets that support MCQ
--qcom,ufs-common.yaml includes common properties
--qcom,ufs.yaml includes targets that do not support MCQ
-
-
-In future, if a new property applies to both some MCQ and some
-non-MCQ targets, we would need to update both YAML files. In the current 
-implementation, we handle such cases using if-else conditions to include 
-the new property.
-
-For reference, only SM8650 and SM8750 currently support MCQ, though more 
-targets may be added later.
-
-Regarding the patch 
-lore.kernel.org/r/20250730082229.23475-1-quic_rdwivedi@quicinc.com, 
-instead of using two separate YAML files, we could use if-else 
-conditions to differentiate the reg and reg-name properties between MCQ 
-targets (SM8650 and SM8750) and non-MCQ targets (all others).
-
-Regards,
-Nitin
-
-
-
+> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
 > ---
-> Krzysztof Kozlowski (2):
->        dt-bindings: ufs: qcom: Split common part to qcom,ufs-common.yaml
->        dt-bindings: ufs: qcom: Split SC7280 and similar
+>   mm/show_mem.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
->   .../devicetree/bindings/ufs/qcom,sc7280-ufshc.yaml | 149 +++++++++++++++++++
->   .../devicetree/bindings/ufs/qcom,ufs-common.yaml   |  67 +++++++++
->   .../devicetree/bindings/ufs/qcom,ufs.yaml          | 160 +++++----------------
->   3 files changed, 251 insertions(+), 125 deletions(-)
-> ---
-> base-commit: d7af19298454ed155f5cf67201a70f5cf836c842
-> change-id: 20250730-dt-bindings-ufs-qcom-980795ebd0aa
-> 
-> Best regards,
+> diff --git a/mm/show_mem.c b/mm/show_mem.c
+> index 41999e94a56d..93a5dc041ae1 100644
+> --- a/mm/show_mem.c
+> +++ b/mm/show_mem.c
+> @@ -14,12 +14,14 @@
+>   #include <linux/mmzone.h>
+>   #include <linux/swap.h>
+>   #include <linux/vmstat.h>
+> +#include <linux/kmemdump.h>
+>   
+>   #include "internal.h"
+>   #include "swap.h"
+>   
+>   atomic_long_t _totalram_pages __read_mostly;
+>   EXPORT_SYMBOL(_totalram_pages);
+> +KMEMDUMP_VAR_CORE(_totalram_pages, sizeof(_totalram_pages));
+
+Tagging these variables that way is really rather ... controversial.
+
+As these are exported globals, isn't there a way to have a list of what 
+to include and what not somewhere else?
+
+Not sure if any of that would win a beauty price, though.
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
