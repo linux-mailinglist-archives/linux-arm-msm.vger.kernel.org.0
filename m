@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E70AB15B3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:11:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D17FB15B44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 11:12:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60A4D3A5ADC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:10:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A590B3B0428
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 09:12:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C338126A1A8;
-	Wed, 30 Jul 2025 09:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3527426A1A8;
+	Wed, 30 Jul 2025 09:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tEnphvMK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JP3U3UQt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED197E1;
-	Wed, 30 Jul 2025 09:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0404B7E1;
+	Wed, 30 Jul 2025 09:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753866666; cv=none; b=rW4IetvMDc/xQefkXogOSkNWIcX6gTB3QXE258KPDRjNXtiQJlbBwma8PUEaxEsMGQG/1t9smDsHgNoWApEo5S39IUXgB2nN7dVc1fmnYxwIV6uWEkctcOvGS/KpYnfNh/ETwWWJmQqvQskxyN5UJHQoo+paeCt9WJXIAFRHEVk=
+	t=1753866755; cv=none; b=E7Z5T4i7oVy0fI9z4EEW/F2pDa8ASvujqP/nTfqotCE9sTTkE/nT0sk5qVrEvg53dcjMkwWTydXW9PuU0iZtsbGyKL6DmaYKFhhpkX++p0ZfIMB2V3TOaa/ToQ+qMDbRkk2bTb9FvAO90+jPUOj8d8PWZNLgqFWocPUNcQ5TDBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753866666; c=relaxed/simple;
-	bh=1yDm9VlTvBNd0JzIQuthHYnbrnr2hToDOTq+eAbX2Ek=;
+	s=arc-20240116; t=1753866755; c=relaxed/simple;
+	bh=B4giUY+7osWbUrmdft1dB8Ew1zTQZayWNr1jvrNJMg4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=motjuVMCHVHnn6vUUFxPT5JBCQd4vZ0bcpqXBJ9PYxZTnVUHebw8eAQTgnDGNVk9rkKAMhgX7zrJv/n1miLwj3kqF+Lu1ZM92KmLqUohnNxKTOq4BxQ/nXyy4Mv3HE4tZ7n/WpzfLsGfcNFih4KAMIMdiSdFDeAGslWNsB6WEFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tEnphvMK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22C8C4CEF5;
-	Wed, 30 Jul 2025 09:11:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KA3LhOvhQPXJqeykI6P67pbkNf4JpIAzRtv1K9sgn1LCAuuQibqiX+tjRw/cL11VnjnTrTnY3fl5cY100nhorZ7WOTLg9I8xKBZhfIAu+vujUgWxVd2CkZ1rpAnMCAS7BWdTxJuEdQSEBBw4YWTpiBoGYNQLpzsVYoJWgWT9xfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JP3U3UQt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54017C4CEF5;
+	Wed, 30 Jul 2025 09:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753866666;
-	bh=1yDm9VlTvBNd0JzIQuthHYnbrnr2hToDOTq+eAbX2Ek=;
+	s=k20201202; t=1753866754;
+	bh=B4giUY+7osWbUrmdft1dB8Ew1zTQZayWNr1jvrNJMg4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tEnphvMKOA0x8Ds1iEMI9LgESZV84E8W3KjaZLrijfj7LqFz4MlQWwnWs9Zg1Sa1+
-	 8wjTGK1RT+odr/KxwDQEcv23NrhWO6fSkPqLmXvi1Fm8cDIdGTJKeFm3n5BlkAFtsJ
-	 xgHIuV1lZ0gc6KruQdG6C+dWXvnOwnbI8MfSt6QaRCsNxytVv7iz5gnLgen0kg886V
-	 QdsDVcapUf2HqWi/TzAmyAa2JXtWoBEULZImXGIwIA4riQS9IiXXAEMTdN9xCUI71s
-	 S0dBji41L7mnfM+Zcf5XJW3tL/gEkcXiSFEmg33x4re9Puy8l3x8wAgt6Sn657sV6f
-	 Jh0hUHOmCmqKw==
-Message-ID: <466a42c4-54f5-45b2-b7f0-2d51695eac8e@kernel.org>
-Date: Wed, 30 Jul 2025 11:11:00 +0200
+	b=JP3U3UQtGtS5/Mg+DyJS7Dg5ZahyXjisK67EdbexsXbFQhgU3WLyegjHHdGZPehk4
+	 wC1uwFXlMqX3+Uin+NusopKXMhEjn04rQQTUxF82k/3G84tuq9H8RdSpiGr6/XpoTr
+	 8bRsSV6rLtptPJi/ep/5fS14630S7RiooK9w6VP0mG5U6EoNivN6nHY9L7aQO+o27L
+	 vqdUi2GLLvEyFb3Z6SuPF3jr84nsin8sbEVUjg1Mwq9zOq3extXCboRBrjgDgyoU0q
+	 qu1Q4s58qB8MKHuZvCsJMoEzLrOsF458lEeUDIJjbDSLSrj4KHc9aLV4RC6eyD9j4e
+	 3pzHywTpFjF7g==
+Message-ID: <4f52b237-7380-46f3-9a26-bf3c11274523@kernel.org>
+Date: Wed, 30 Jul 2025 11:12:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/3] dt-bindings: ufs: qcom: Add reg and reg-names
+Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Enable MCQ support for
+ UFS controller
 To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
  alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
@@ -58,7 +59,7 @@ To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
- <20250730082229.23475-2-quic_rdwivedi@quicinc.com>
+ <20250730082229.23475-3-quic_rdwivedi@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,52 +105,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250730082229.23475-2-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250730082229.23475-3-quic_rdwivedi@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
-> Update the Qualcomm UFS device tree bindings to support Multi-Circular
-> Queue (MCQ) operation. This includes increasing the maximum number of
-> register entries from 2 to 3 and extending the accepted values for
-> reg-names to include "mcq_sqd" and "mcq_vs".
+> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+> on the Qualcomm SM8650 platform by updating the device tree node. This
+> includes adding new register regions and specifying the MSI parent
+> required for MCQ operation.
 > 
-> These changes are required to enable MCQ support via Device Tree for
-> platforms such as SM8650 and SM8750.
+> MCQ is a modern queuing model for UFS that improves performance and
+> scalability by allowing multiple hardware queues. 
 > 
-> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> ---
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 21 ++++++++++++-------
->  1 file changed, 13 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index 6c6043d9809e..de263118b552 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -86,12 +86,17 @@ properties:
->  
->    reg:
->      minItems: 1
-> -    maxItems: 2
-> +    maxItems: 3
->  
->    reg-names:
-> -    items:
-> -      - const: std
-> -      - const: ice
-> +    oneOf:
-> +      - items:
-> +          - const: std
-> +          - const: ice
-> +      - items:
-> +          - const: ufs_mem
-> +          - const: mcq_sqd
-> +          - const: mcq_vs
+> Changes:
+> - Add reg entries for mcq_sqd and mcq_vs regions.
+> - Define reg-names for the new regions.
+> - Specify msi-parent for interrupt routing.
 
-This is incompatible change and commit msg is inaccurate here. It says
-"extending" but you are not extending at all.
 
-Recent qcom patches love to break ABI and impact users. No.
+We see that from the diff. Drop redundant description, your first
+paragraph already said this.
 
 Best regards,
 Krzysztof
