@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-67166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A036CB1623A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:05:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 391D5B16254
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:10:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B282A3AEB03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:04:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A4855A5410
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 14:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A85342D613;
-	Wed, 30 Jul 2025 14:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D86862D978D;
+	Wed, 30 Jul 2025 14:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UfZDQvUg"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b5nMs5zt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C642DAFA2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 14:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BE82D979D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 14:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753884278; cv=none; b=Pcd1gXxG+fMexmTPrjdd9u41Vb1sFmoe4DjVdkorZ5/CHfI81vCAOa9gP6v3UmFxNTkWxRKAdsQijXiE7Ol60TiT7CXUXT0rzfSY8GU5UyNUf3M3SeqLmve10Zf4Ut3UDn0+pRf9LpYNrwd/U6QkJ4rOa+VG9nQsWlhX7EXzUoU=
+	t=1753884617; cv=none; b=sHv7bOg5w+WiB6arVA/40Rs3xS8njC8tGkSpotBppuPTJ+5F2vrNTF9lYXhUj/c7um3PvOERZrEAOjI9gRbcwfVQeDoAWyfNAcaWT3kd8fQB0rzA/t+HJQ/zAwodHzNnQ0JxUY/6NhTBvWw2QV8JbxH7cPSyVnHjIah7fifpi2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753884278; c=relaxed/simple;
-	bh=tTPeRU5tBHd+tJmNQJ2DNQjOe9FritvNX2M+rx3N19k=;
+	s=arc-20240116; t=1753884617; c=relaxed/simple;
+	bh=42kUdey4mT9C9FWiNo6iXn+UnwxJJeEsgThw4Lai60o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UXdNdS3Qd/IdXged1v9xaf8JL9W8dwkX83KDRHzJP4hNwnKLgeDRBjnYlqnwJWUQFly+OXV37AaZDEz+KbzbL0akvR22XZgLpRGnU7QyC3JJQXEgYtXOYhOiKI+8TXxGmpgOOnOcwdjgde4IEsM8rmUx+vVWKkkPG87QZg32WrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UfZDQvUg; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=TaPAyPFteffBnrqPBi6kk/+xgRgd0VaekPerVMUI1suBHR2/z9vrZg3iBmGHljGVCyAX0t6RWWtSi8lIlw5PtRB7QJ00ARCb9bovgvWCnvz+1g7NnTK3jTDYL5YBx9D6OG3zxnZdeGLutXCPC+zD2DSoW4aeFyxmP7FJZpEyDek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b5nMs5zt; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1753884275;
+	s=mimecast20190719; t=1753884614;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=3O2oNAXD8KVY8vBDD4aG+8v/vac45H/32JLje5KhFMI=;
-	b=UfZDQvUg7f9QXs/xnStmjnt61mRk8axk+gVKSryqCPhJbGq7YlKzkcSV0XziYMNZP9fGcw
-	XfO7Rp16/qlNa/UGROBHJgvKqqiONCgvjpxFX0gET0rkH4QHNlr7eh7bFlCbtTvKNtOCSB
-	gFQXRZ5coMUUDiMxy8dob7GI688nHT0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=gnZ654VJktjY7DlJyw7K20uF9HlUxbvhJdrYHHl0LaA=;
+	b=b5nMs5zt27oxg80sO/x1jJ7II4kJm/IdtwYJfhN1pPyblh6AVCbJeTYsA7xjMKYyYsq7BG
+	DHuDFxoFB23QyvBVMNi57HTgNxdqUG9V3F1LZWBXKK81UbfTvttNQL13je5Hj5NSocWjma
+	Dxkhvf4phruPI9gZY/Cz7GgwLmwg8zY=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-XfE6YXbiO0ifs0aDsy9Wag-1; Wed, 30 Jul 2025 10:04:34 -0400
-X-MC-Unique: XfE6YXbiO0ifs0aDsy9Wag-1
-X-Mimecast-MFC-AGG-ID: XfE6YXbiO0ifs0aDsy9Wag_1753884273
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-ae0d798398bso519626766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 07:04:34 -0700 (PDT)
+ us-mta-98-XCf-HwtKN5aMqxw2rXLfIw-1; Wed, 30 Jul 2025 10:10:12 -0400
+X-MC-Unique: XCf-HwtKN5aMqxw2rXLfIw-1
+X-Mimecast-MFC-AGG-ID: XCf-HwtKN5aMqxw2rXLfIw_1753884612
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ab969af6e3so84236241cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 07:10:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753884273; x=1754489073;
+        d=1e100.net; s=20230601; t=1753884612; x=1754489412;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=3O2oNAXD8KVY8vBDD4aG+8v/vac45H/32JLje5KhFMI=;
-        b=HT7NnYDP1xIidBj1+REg1rrjDikOedeq+i0VsQwJgXpn8CZ3Q8ehKsdzhpRoVHLps4
-         VAgDqc/x2nHiX59SjY9Y4QqEExNnTcUCf/my+BSDQgsxDtfG4ekLcNx6dRLe6/ZyB1ko
-         LFfs0JBVBDrm08CUcKyVueNPR3lCUDw82LFmUGj7EH1RSbCJMaFfUSutGeLNNekPNeAi
-         a4h6ZMxBX4IymoEIILheZkrXneRAfLySdfajKmP/oyM5/zxLLHA126ze6rFg6/yRmrXF
-         X1vpaJ7TnrR6s4Ci+1QuZgdmY5l+wCisqubuaVlc8T5z9r4owAS/HAv5IhF8J2DuBg7H
-         rtOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU13pRaAHdAeWPy2jmqTq8OQrQKnYrAQIxZ71JJwzZo3Ms7QYnWqqSoUDPyrOOz3rRLrC1B3WOhl6H8tqff@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+OhES0juhTt5GgTyLKpKZHbRdrOViUv/pqhhqdDH2S0mysNhe
-	aBNi5DQhyl8z0oVp9SiNP/yVSOE4+o7HKlgGylTXsYDNfXTFA+DqvSrXjraYZq/2FcPivcKAgZN
-	9dzVfV2MryxahO9G6L6In3JgE5ePBFsHVHunC9ptxyErO3lantTWDLzqzs1GPfpWzB/M=
-X-Gm-Gg: ASbGncuFXSWhJu63dpbLWULCEyWP9wAFFv/To3KL+oqhqGv7WIsKSVUPi4agW+XTER3
-	9GYiaxyaZ/9dt1dOuQC9+54ifzGAuojpJmmmQUX4zdIKnJSGeFcObUH2yuQw7GNlZ636I9lGAar
-	rEeRmVwZFrDcHMxRmDJ+P+jfs8+TA+vQmA1o826UuxGgIHugOAPmWQ9TGKGQFAqllwStczs9aPY
-	7uGlOPTiMOQ+gaBjaRc7QCL3kxGcGpZQL3sVe3eqWvoF9USRzjFgyKbYIUBT8VutlIk/G6eG0jA
-	MryV4Z5kPv1TNgrOPLRxagBr3eX5M5nuK5oWsXiP+kKEEa7xEQW+3OKEH23RBw==
-X-Received: by 2002:a17:907:3f88:b0:af8:f9e8:6fae with SMTP id a640c23a62f3a-af8fd9f663amr404270966b.46.1753884272864;
-        Wed, 30 Jul 2025 07:04:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4NPzv48+fUrubCDntYT5pIsBc9DKyFBE7vheDZ6rVTSQBnixNsW4Ss/KjIbgNUx7Mki1uOA==
-X-Received: by 2002:a17:907:3f88:b0:af8:f9e8:6fae with SMTP id a640c23a62f3a-af8fd9f663amr404265066b.46.1753884272305;
-        Wed, 30 Jul 2025 07:04:32 -0700 (PDT)
+        bh=gnZ654VJktjY7DlJyw7K20uF9HlUxbvhJdrYHHl0LaA=;
+        b=gRXcD3/rnbqzVz/ow5G/Xya5oLVH5UBlx5LkWJ4mZoVfR8QDy2EPPz1A/jZ3dp/CFb
+         7zd9FVDt3USD4ywsAxDQXj/jAc4Tp6VIIsD+iJuGbn8U7jr4i6zcLgoiT9DYPgEYvZfd
+         pb45gGBVMUpz8xr6XjGm3UF8UqhGDmNrQJ/UkBh750ppjPRH3EL38thMGPoI9HxonbG0
+         pXhkszs60SylcRYCJQNjhELKjhp5GaUJUsxdBNNgP0+wLKOial2UPivDQiOC9IXsOEU3
+         eFu+EHTB///9vSiW7wjg5szicHYnJHMEYnTsw3eFX+0M8LmKhlXxzKUkCTyQr5e1HfH3
+         lKqg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4YJY665dydZzcuPIpKUBmR2Eh5qxivFiRqbhzg8w+wSrHMjYjQ54ppsCW+zMaecBMyezWDfK0KWhI2ct5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEaRaY+Am6lrbR2SP/PSoN8gtDg5zF60PyOfzlmsmLVeOsXlrH
+	utwxUt7Vk2SU8FEgrEr7rEQMK41sjiRb+LAGZwnlFHgKQWtUc1pcziXUKeQoXNKzfFMjxB85dti
+	i2Q0ETHr27Bvm3BbrZEl8JAwU/EUy2fEC+CtwPRZ35AjZQr7u8dl60XnMnm43ekKj6os=
+X-Gm-Gg: ASbGncvWJTszGqX2TuSVlGwr5QZ6ylpxd2jrEm+HtV5Y8B01Z1B0FRPpVNixL0E/Iix
+	Xm81y0UpoRm7SNPor70kH6RDfi8Xi/4CRUx4Kw0IvvaTsP3Gh/IKWEnH7qq3OpqwvTuvWYmTx30
+	85XhfDfp3y5xym/qnYZPbwWE9Rh/c9+7fuOuTAUi2rua5J6kbbO6GvVLgugrRpKzMt6LZg5I99Y
+	ZLW3WQ0eVcPfhmaKffd1gtCVZwi6YtzImiMXnxdjTSIkp1lRdIA58SSyBKVnjoqCISUpUjMtUiH
+	ovYU2XG4ls9n+tmfEWH7zmjRsyZNURZn9NGCucdoawG3Vg7bBFSBUBBscgXXiQ==
+X-Received: by 2002:ac8:5856:0:b0:4ab:801d:90b8 with SMTP id d75a77b69052e-4aedbc3c248mr59348471cf.32.1753884611808;
+        Wed, 30 Jul 2025 07:10:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRI0a4WBkLYn70H72HNhtziWoHC5rtdHpSwJbmWuGXwrUwXU1BeUaWjWUTF/B/xcEp5ALnHA==
+X-Received: by 2002:ac8:5856:0:b0:4ab:801d:90b8 with SMTP id d75a77b69052e-4aedbc3c248mr59347531cf.32.1753884611189;
+        Wed, 30 Jul 2025 07:10:11 -0700 (PDT)
 Received: from [10.32.64.156] (nat-pool-muc-t.redhat.com. [149.14.88.26])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af6358600a4sm754596166b.25.2025.07.30.07.04.29
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ae99573cbesm67000691cf.30.2025.07.30.07.10.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Jul 2025 07:04:31 -0700 (PDT)
-Message-ID: <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
-Date: Wed, 30 Jul 2025 16:04:28 +0200
+        Wed, 30 Jul 2025 07:10:10 -0700 (PDT)
+Message-ID: <72485de0-d05e-4421-9b47-3449778d278b@redhat.com>
+Date: Wed, 30 Jul 2025 16:10:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,7 +89,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
+Subject: Re: [RFC][PATCH v2 16/29] mm/show_mem: Annotate static information
+ into Kmemdump
 To: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-arch@vger.kernel.org,
  linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
@@ -98,9 +99,9 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
  corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
  jonechou@google.com, tudor.ambarus@linaro.org
 References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+ <20250724135512.518487-17-eugen.hristev@linaro.org>
+ <7ecaae9e-a088-4c1b-9caf-6a006a756544@redhat.com>
+ <9843578b-2adb-4f6f-b3c1-99dac003e2bf@linaro.org>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -148,87 +149,59 @@ Autocrypt: addr=david@redhat.com; keydata=
  WBe5lqcozu9LpNDH/brVSzHCSb7vjNGvvSVESDuoiHK8gNlf0v+epy5WYd7CGAgODPvDShGN
  g3eXuA==
 Organization: Red Hat
-In-Reply-To: <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+In-Reply-To: <9843578b-2adb-4f6f-b3c1-99dac003e2bf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 30.07.25 15:57, Eugen Hristev wrote:
-> Hello,
+On 30.07.25 16:04, Eugen Hristev wrote:
 > 
-> On 7/30/25 16:52, David Hildenbrand wrote:
->> On 24.07.25 15:55, Eugen Hristev wrote:
+> 
+> On 7/30/25 16:55, David Hildenbrand wrote:
+>> On 24.07.25 15:54, Eugen Hristev wrote:
 >>> Annotate vital static information into kmemdump:
->>>    - node_data
+>>>    - _totalram_pages
 >>>
 >>> Information on these variables is stored into dedicated kmemdump section.
 >>>
->>> Register dynamic information into kmemdump:
->>>    - dynamic node data for each node
->>>
->>> This information is being allocated for each node, as physical address,
->>> so call kmemdump_phys_alloc_size that will allocate an unique kmemdump
->>> uid, and register the virtual address.
->>>
 >>> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
 >>> ---
->>>    mm/numa.c | 5 ++++-
->>>    1 file changed, 4 insertions(+), 1 deletion(-)
+>>>    mm/show_mem.c | 2 ++
+>>>    1 file changed, 2 insertions(+)
 >>>
->>> diff --git a/mm/numa.c b/mm/numa.c
->>> index 7d5e06fe5bd4..88cada571171 100644
->>> --- a/mm/numa.c
->>> +++ b/mm/numa.c
->>> @@ -4,9 +4,11 @@
->>>    #include <linux/printk.h>
->>>    #include <linux/numa.h>
->>>    #include <linux/numa_memblks.h>
+>>> diff --git a/mm/show_mem.c b/mm/show_mem.c
+>>> index 41999e94a56d..93a5dc041ae1 100644
+>>> --- a/mm/show_mem.c
+>>> +++ b/mm/show_mem.c
+>>> @@ -14,12 +14,14 @@
+>>>    #include <linux/mmzone.h>
+>>>    #include <linux/swap.h>
+>>>    #include <linux/vmstat.h>
 >>> +#include <linux/kmemdump.h>
 >>>    
->>>    struct pglist_data *node_data[MAX_NUMNODES];
->>>    EXPORT_SYMBOL(node_data);
->>> +KMEMDUMP_VAR_CORE(node_data, MAX_NUMNODES * sizeof(struct pglist_data));
+>>>    #include "internal.h"
+>>>    #include "swap.h"
 >>>    
->>>    /* Allocate NODE_DATA for a node on the local memory */
->>>    void __init alloc_node_data(int nid)
->>> @@ -16,7 +18,8 @@ void __init alloc_node_data(int nid)
->>>    	int tnid;
->>>    
->>>    	/* Allocate node data.  Try node-local memory and then any node. */
->>> -	nd_pa = memblock_phys_alloc_try_nid(nd_size, SMP_CACHE_BYTES, nid);
->>> +	nd_pa = kmemdump_phys_alloc_size(nd_size, memblock_phys_alloc_try_nid,
->>> +					 nd_size, SMP_CACHE_BYTES, nid);
+>>>    atomic_long_t _totalram_pages __read_mostly;
+>>>    EXPORT_SYMBOL(_totalram_pages);
+>>> +KMEMDUMP_VAR_CORE(_totalram_pages, sizeof(_totalram_pages));
 >>
->> Do we really want to wrap memblock allocations in such a way? :/
+>> Tagging these variables that way is really rather ... controversial.
 >>
->> Gah, no, no no.
+>> As these are exported globals, isn't there a way to have a list of what
+>> to include and what not somewhere else?
 >>
->> Can't we pass that as some magical flag, or just ... register *after*
->> allocating?
+>> Not sure if any of that would win a beauty price, though.
 >>
 > 
-> Thanks for looking into my patch.
+> Annotating the variable was suggested here :
 > 
-> Yes, registering after is also an option. Initially this is how I
-> designed the kmemdump API, I also had in mind to add a flag, but, after
-> discussing with Thomas Gleixner, he came up with the macro wrapper idea
-> here:
-> https://lore.kernel.org/lkml/87ikkzpcup.ffs@tglx/
-> Do you think we can continue that discussion , or maybe start it here ?
+> https://lore.kernel.org/lkml/87h61wn2qq.ffs@tglx/
+> 
+> It does not win a beauty prize but it's simple and efficient at least.
+> Do you think it would be better to gather all the annotations for the
+> globals in a single place ?
 
-Yeah, I don't like that, but I can see how we ended up here.
-
-I also don't quite like the idea that we must encode here what to 
-include in a dump and what not ...
-
-For the vmcore we construct it at runtime in 
-crash_save_vmcoreinfo_init(), where we e.g., have
-
-VMCOREINFO_STRUCT_SIZE(pglist_data);
-
-Could we similar have some place where we construct what to dump 
-similarly, just not using the current values, but the memory ranges?
-
-Did you consider that?
+See my other mail regarding VMCOREINFO.
 
 -- 
 Cheers,
