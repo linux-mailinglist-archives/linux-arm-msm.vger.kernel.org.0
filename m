@@ -1,153 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-67183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71823B1646F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 18:18:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B6C0B164B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 18:30:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1928D17D9EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:14:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E36D27AD922
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jul 2025 16:29:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E4372DCF63;
-	Wed, 30 Jul 2025 16:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECD161A0BF3;
+	Wed, 30 Jul 2025 16:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kM/rN6Yg"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="quhF3/Ao"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E7D2DE6F7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 16:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227771D2F42;
+	Wed, 30 Jul 2025 16:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753891897; cv=none; b=cB1MI5qFMYRbDYouzBGj5cqOpC4XwdowgvmNdAUocjGXpEnDAVaHpnaZjANYn1+t/jrD3n4BbsAXYZ8K+vDe6eFmzUxu/NcUWlXEwk3UVDgHaUQq1PbqhJ0//f9eaUoIxC30NluhIHlLWoM1CV6NYNSm12wKS2ONPf7/QBqhh2w=
+	t=1753893024; cv=none; b=EK0Isf20oFPP9KNB+CTVVe3ApW6CEYaJR6EiMsj80/5Y/+jj1laGTgmZFeSkUta86iXKWbN+dEPUb39baxUoFak2jHii1eCSqTQMTC3JHSOeKLXG8Wd6fFiShCX54NJEN5oPUH5kRONaqw9w2H2C6Lmd9AAc1SNoO/M/lzOVFEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753891897; c=relaxed/simple;
-	bh=Fd6r5ej70Gx78OKCjT5dW6+hePHwHbsPkXWk9c0URgA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UAewaguNclghORx/+qKjVX/Oao1a9vPPHefvkhx4y5fwuzvHUXQKSvI29cDonI9A8Z75xrHiL6rEznKi2vburVdjLhl+MMPQCQz3dUmO86N2m7HphBG052diBH4QRWDrux0/aUXzjO7WqmWjlUOHryBE4ubmGzdta3nO0vqofNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kM/rN6Yg; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b78bca0890so1993139f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jul 2025 09:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753891893; x=1754496693; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UqOwZkurxN6DP6mkxJOVh++qBYZQgQgS3fnY4YseNNE=;
-        b=kM/rN6Ygq+MbGLfNlLSfID9cDiMBbXUl7HwR821U5p2PPPqDzdx5yM59aZ2Wbk7GMx
-         JB+BlZXR2w9fJJuT4y06UbbaPpRkJY36DapfqAb5Eujh+8sTgxgDN/VCLu5CHaohyaDS
-         aruFlH7L94VUUD1YNg0RD6A501uPDqWaSXavh+3gQ+XVpOkSm7J3Y6zk9D1XFx4ZPTOR
-         f3X0iGU/WZZJW3OcbMl+dIAkLtaB/8lFGP24X/yBMpfKlk32Nt725UBYrptuQT6OWeoJ
-         dSgqKnTui95Ro4rL0B8myL264+jxYPKGLfkz+nkbLpM0g6vbZZ8NJAs/sHThGzbLeeGW
-         fy6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753891893; x=1754496693;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UqOwZkurxN6DP6mkxJOVh++qBYZQgQgS3fnY4YseNNE=;
-        b=SxRbJYZOp+XZZ4ze1hZOUVrIBImLb3qv5oB12BtUSr8ZQmPWRyM9tZUsxKlb1PdX20
-         tTgHnJ2slwDjlo9w6FccQ4hb7MEJVfmud4qPa61tdXl3Zn9NnI5MxzlM30KASXwv/rmk
-         JEQ4ZJBJFGRyvEBkZEBadkhvU396OEGTCscR3qW3VMDB/VCcW/cPIJpm8+OvjrriUs1L
-         KU/Gu+odBxVH3ADmv3Bo6Z4d+QCTyuPtvzSv2aVyV2u34GuD0J2cvWb5mFMyK7cf6UHi
-         OK7hIEy4+pK3/cN/StPNmwI8UmuXrByaxj/tJqeF7KbDvzd/4t0d9617B98Edj3qz645
-         xGlw==
-X-Forwarded-Encrypted: i=1; AJvYcCXEYe+xL4Pz1ICEOgMiQlZVsRimxEdDiTk+JV1EehmilimYD9N0Eu5w/aPCjwV5OxgRCHiafBPjDjNO5xkB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwipTBKFLep0jBRSzF0PytGM2n/A+KQxTbluj5LHBM9wXaGNCyL
-	LbMi1ENeSnaUIEYfLj3JcIq8GnjVQzlHk2Ldowc+HM40PJwfZgKZ8OO5n7CWZZIZw1FF6DWvX7J
-	o2EntLKA=
-X-Gm-Gg: ASbGnct+NCfiXBLEJ3If5CcWFxgmSRfcQbt4hQ373dAFx0dkg4nRapPxCOxyIRnSjz7
-	L8wZAzQTpc5d2Oc98EeDSPmHKfFLtmZq+eBcqZK+gvVom77d+sO13yKSrdiufSrmN5oL+tmyVVX
-	9fzz4qhoWwYl5LaouXedDOlyIGZ49gJqZPtJ/uuzB2cSqLh0qv6fStqD0DWUdRQa4K8tbLFUyhb
-	8XZt4PRMGWiwdwZMXyE763k+G7BN+8TFQTHP2PMwdi1R7kjnnHxBSlAZdpbgfR+yh0VwWyQVBUp
-	4H0Q6Ri4ncfLSxKQyFFwBx5eGUW72iyNfgnCDbLYUdR83wDGYPOblIUhCx9Jr1xtYlPxGjUnods
-	eOI8G/kzTEenLbY4DYKJm
-X-Google-Smtp-Source: AGHT+IE35Ywlzmt6bKCd2ef14MK+xws1qwAv8vwYO/BNrAHqXdxEW1CdRvYO8omT7ooIKsh8esKQuA==
-X-Received: by 2002:a05:6000:1a8d:b0:3b7:8d0b:3282 with SMTP id ffacd0b85a97d-3b794fe90damr2754479f8f.31.1753891893243;
-        Wed, 30 Jul 2025 09:11:33 -0700 (PDT)
-Received: from [127.0.1.1] ([82.79.186.23])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b78acd884dsm9164564f8f.33.2025.07.30.09.11.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 09:11:32 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 30 Jul 2025 19:11:12 +0300
-Subject: [PATCH] clk: qcom: tcsrcc-x1e80100: Set the bi_tcxo as parent to
- eDP refclk
+	s=arc-20240116; t=1753893024; c=relaxed/simple;
+	bh=lOMtUaYx3i8bMy9bYIr/qCsiAGICtIDD+fh3Mzcc04Y=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=AhaWKCufH5t0lWYpPRlavAndP3wsdDWxxv8pIx4hQj2kb4Oozdhg1p+y7qkhohO/WRzY4UH6dxG0mnZsk/rnA84YVPwKOx0bztr5C+8QYUakM31+q/I90QVsRC9aJ0rp3NN3KvqsfVQk1D8w1NvrRaBhGvcHp8qBFxQERDcei+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=quhF3/Ao; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1753893013; x=1754497813; i=markus.elfring@web.de;
+	bh=lOMtUaYx3i8bMy9bYIr/qCsiAGICtIDD+fh3Mzcc04Y=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=quhF3/AoOkmBX/br0M11hZ5eg8gMFX/mcygzvlNwqMTL9xQ7yv5HlzIQnVx4WVkc
+	 WNeSSJAvgGNtbJV41pTEPUXw0yil3N1IyLQg5tQfOIAjZckFTt3aPvzyV88rgQh1I
+	 Ymh7p4CYQU4kArH9hI/cchLC4xkQ1dp5ZV9X0SKd/hGc5cTa3Q74KtCpgmTlAlgh8
+	 L6Nz7WRdn3DTKYwrRM9AuaSiYb7j31VB3TwpkXTWrrpB478V+jp3J4LPWJQzL0UOz
+	 /poKoHapug2iGyw0Ht19UjDWGDmmW+4dPwcy2tXEbGbLTKsiUQXHAXwdxN08nWihn
+	 nR5QV8+YNpUK0ArXog==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.92.238]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXXRF-1vAYoc0anH-00QKeu; Wed, 30
+ Jul 2025 18:30:13 +0200
+Message-ID: <20574d0a-0a8e-4b54-afe3-8a0744df9d09@web.de>
+Date: Wed, 30 Jul 2025 18:30:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250730-clk-qcom-tcsrcc-x1e80100-parent-edp-refclk-v1-1-7a36ef06e045@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAB9EimgC/x2N0QqDMAxFf0XyvECqdMp+ZeyhxqhhW+1SEUH89
- 3V7PJfDPQdkMZUMt+oAk02zLrGAu1TAc4iToA6FoabaU9sQ8uuJH17euHI2ZtyddOSIMAWTuKI
- MCU3Gn9b1rg3+OpKnAOUwlV33f+z+OM8v1KcEPXwAAAA=
-X-Change-ID: 20250730-clk-qcom-tcsrcc-x1e80100-parent-edp-refclk-8b17a56f050a
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1272; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Fd6r5ej70Gx78OKCjT5dW6+hePHwHbsPkXWk9c0URgA=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBoikQn1mpNTbomnI6wjUQllPAQi1cNsItik0+LO
- NhyFErPoFqJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaIpEJwAKCRAbX0TJAJUV
- VqdED/9TUcuk43y0Rv60rmuHzWZ8ypABjV0pMT0RaclplWU0Wdlf1KPt4twokPE4hWzS4QO1oB0
- Q3XhvFPTgYWujJfcQnJxWKwCnJbFfmpJCDga5f5ODbrv1BDvxEJCGB6vPiYO30xLlRx113JqZhW
- GhKSbCuo7ofu6otLGjpkPYGGe68rbK/Pb1ePYqUOqp4/mgJSo8Rgqg6+h67oUV5207B8fn9K+c0
- ln1th174V9uipBKGSRYpSkrx5cfNIaIujPc/LQT4s8ynjy66RpbIe6Xkgilnons33PbCIawGeGE
- BVZY5YYLinXYl1D5H/VHm0xGVHz1eE27Ch4Vx6fy+fx719fXDCRHlFI5U9D/xyp+E0OmykfPZ2d
- q57P28jFeJntrmDz28Lp1mB3TWMN8QpbUMIUOUz+3ip2mKYkytplWY7sG2UNS8MZY2jhptZfF02
- F2ABNDdc9kY2+VHanWGWwtYh0puF/NDYyfeUAAJhw0fRbbet+ab7wT1GdYnEbsufh5hjXnVirIk
- CFur6uOQ439azeVH1zxRTkFAeXguQg/3rpxJU8KAhHpatXZHz+INKc/Cg1QxOMXACW+kbZcwHOS
- JbN3W49T3M8ziNDM5Z+1uStqzEc1dHNFgKmZIkjvyfznBuKEqg2dkTr4eyFHnghbZYR+hLmD7L0
- XjCZTSzqC+I01zQ==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+User-Agent: Mozilla Thunderbird
+To: Colin Ian King <colin.i.king@gmail.com>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Simona Vetter <simona@ffwll.ch>
+Cc: LKML <linux-kernel@vger.kernel.org>
+References: <20250730142905.2080035-1-colin.i.king@gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix dereference of pointer minor before null
+ check
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250730142905.2080035-1-colin.i.king@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MYt42syjUbB2ixPRz8ILRnIR9ELZrqzsuVLn6eHJLa6anlgJgmV
+ nZbNwhXhaQsUDIHP3T+Q/3uRHlmvUntQku1SAxvO6m+4aytLlsPOuQBuxnH9Lenmoucrq55
+ zlNXLbrwq0Su/xLDO+yvbsNA27DLfJAUSI/q4hxk9ZfjDx2Fd6NbBxZ5SOLnjx4FE1MhDni
+ 1vSQZ7qVjSDwgrNU3oquQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:oCDTdeEbe28=;2hv7EIh5M27uoZTJcjCnaOb1Mpo
+ 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
 
-All the other ref clocks provided by this driver have the bi_tcxo
-as parent. The eDP refclk is the only one without a parent, leading
-to reporting its rate as 0. So set its parent to bi_tcxo, just like
-the rest of the refclks.
+=E2=80=A6
+> by dereferencing the pointer only after it has been null checked. Also
+> Replace minor->dev with dev.
 
-Cc: stable@vger.kernel.org # v6.9
-Fixes: 06aff116199c ("clk: qcom: Add TCSR clock driver for x1e80100")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/qcom/tcsrcc-x1e80100.c | 4 ++++
- 1 file changed, 4 insertions(+)
+I suggest to separate desirable changes into another patch series.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.16#n81
 
-diff --git a/drivers/clk/qcom/tcsrcc-x1e80100.c b/drivers/clk/qcom/tcsrcc-x1e80100.c
-index ff61769a08077e916157a03c789ab3d5b0c090f6..a367e1f55622d990929984facb62185b551d6c50 100644
---- a/drivers/clk/qcom/tcsrcc-x1e80100.c
-+++ b/drivers/clk/qcom/tcsrcc-x1e80100.c
-@@ -29,6 +29,10 @@ static struct clk_branch tcsr_edp_clkref_en = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "tcsr_edp_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-
----
-base-commit: 79fb37f39b77bbf9a56304e9af843cd93a7a1916
-change-id: 20250730-clk-qcom-tcsrcc-x1e80100-parent-edp-refclk-8b17a56f050a
-
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
-
+Regards,
+Markus
 
