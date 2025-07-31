@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-67261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62148B17549
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 18:53:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 696C9B17572
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 19:09:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9556C58441D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 16:53:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8F9D416C18D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:09:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1277223E329;
-	Thu, 31 Jul 2025 16:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C3BD20D51A;
+	Thu, 31 Jul 2025 17:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="QATD2swK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VEnTLPRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5331FAC48;
-	Thu, 31 Jul 2025 16:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146011C07C3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 17:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753980782; cv=none; b=Ov8j837JtW8oteW9ix44HH6+WoqFKaS14aDt6ARODjvDVzfelbFUbtMtbGAs4NNl3xiV5wvdAGTg+ltg0+34GyPcsi+0oXUjvHdXIWlcR0J/WP+p0dNKqcH0WM/lrvd7JDpn8DnHmnx7O0jxZX/FHRXz7B46jSZH7/nrc5KOATc=
+	t=1753981742; cv=none; b=b6H1Jcc1COYIZ9Lj8SphAS3Iq0HJ9rdWEmBJSHi+Jjgzn9UIsmERSvc4yarSheuv4XB/1/c0VP7RGdULuMmGOcjN+JMGDTITp1MQk7ecZj9Hue+RlFiEmzkw/uXSGZ59Lmbx9BCFgbh4xWXppvSIfqUFFZ8kKVf3ObP2N2m3aUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753980782; c=relaxed/simple;
-	bh=oM9rSevoQ7JkUN01oUeMRghVmEpm4moYN3as8s68inc=;
+	s=arc-20240116; t=1753981742; c=relaxed/simple;
+	bh=dFfbn0B8WWGW0kwMh6UEp39jr3bt49qailm1uuR0hbc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Egfp5HL7wZBC0xk7ISfVPoafQMDPV4qdwA3s9X7xkw+uN2mF+N57oCm9VLdwXd5YJc7HAqMMRYJ6oBerARwXV2V9ivgJiuAFeJZpColOEjVYc3O2H2V+TvSd2EF07TI1EeMiDz5zFxBUuczQrsbSdvomP3El8fVH1W6Lf2mfMsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=QATD2swK; arc=none smtp.client-ip=199.89.3.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 004.mia.mailroute.net (Postfix) with ESMTP id 4btFWb0G0Gzm0pKP;
-	Thu, 31 Jul 2025 16:52:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1753980776; x=1756572777; bh=q+N8OqzcjFRQTlP1J8tBBS2b
-	KX+Af+zJ2IQ7vZkBgiA=; b=QATD2swKrjfG8BEzdtfQA37NHcgBsIBlw0vIMSCu
-	DUKyfra0dNbroIY4I6OgVhyylFQ8NLJUTPLUuoAHFrn/BcjY6h5LHrhtxS4kDXlz
-	GOyi2X6i16XSwItBCbjYq738FO3nwkfx2PaF6HmCOv5x3W3eEBXpwKJ//of2FrWn
-	BlVrznNgurkAwpzuYgY1bTsbLgI7Nixnj4N2bXWHfMZ5CtGbRX2m2MOeu9P1Tqj6
-	bnopXq4Jh1rrL0Hy/7miTLMxLP3o9/VJSjqdCxplzse5TX5dtFWPO//LpZ2KDB2p
-	61UNkVtltjCTN+Q7SUpiZqb7bCM8c3EIuVKakaupNkmlBg==
-X-Virus-Scanned: by MailRoute
-Received: from 004.mia.mailroute.net ([127.0.0.1])
- by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id u58zs7n3NP8I; Thu, 31 Jul 2025 16:52:56 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4btFWM1yGczm0yVJ;
-	Thu, 31 Jul 2025 16:52:45 +0000 (UTC)
-Message-ID: <c516ed73-5947-4b18-a1d9-18a9901e30e3@acm.org>
-Date: Thu, 31 Jul 2025 09:52:44 -0700
+	 In-Reply-To:Content-Type; b=qpYDIgRon5+arQTls40Il9udkvaAbk0akp1wyBrmUZ7YVb9h8fUQzr741HSPfyt52d4OxlNaQZNMPm1KIQcN9YBq2vEWG97n7wjRdfPIMgWW1MbqfA0P5wolst3DOzmrToaTNveU/HTofONpD2DgldE9+eYLAdQKee5tAukRUG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VEnTLPRf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56VDf6ha018859
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 17:08:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GtfRg6ZF4ZVfESZEfQJ18GzI3Pea+wsXgaYV5Vzg3Uw=; b=VEnTLPRfRIMHNcqu
+	66Q7Zs226RstoCrhLSvCvOv8ga0NULtVA1FDUwRDM9AsNF6kXAWiuGak6iM1r0Yu
+	vOfonC3ugN12iEhMs8GRBEUCqD4xVr68K+Wv4b9BiXTsWUwhIwbXPh/uvCzfJThN
+	/7DWKfx3B6JYbapbGlkr1Xd2Nfqn7HyPIH83vwzESnz0gsHg64IHJFUQBNNWyQfS
+	0/B9QDU6/ldy58qIkukyW+CPU5fNkqEMeK97IhnVY+wWrm69bJ0gGUbDaF1m9MAS
+	ElfdZdpaUlVigm19fM2RSAmng+2gYWQ1Pj3LOej8iEot6qc3S+TSOoWE06mOrdc/
+	aN/BPg==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484qda8j4u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 17:08:58 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-41ea6bb72dfso212764b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 10:08:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753981738; x=1754586538;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GtfRg6ZF4ZVfESZEfQJ18GzI3Pea+wsXgaYV5Vzg3Uw=;
+        b=R7pvNzwMWkC7m5XD6tXvJ5hyAQorakJOkO6n5U/VV3KvEz44EwMnb2WJu/FdSXuiB9
+         0C8GQKEEsHWh6Ta6dr6pojfX/1a8tYcRSyJc4S16oVc+yP0wUqv2OSFKn6ozqYL7wR8G
+         opAZFeYHjVK2lUw+MH3MCl9Ipb6en2CQcSj8l1kXAY/8k8/QEWC7rtp0v6jApOGFou5o
+         m9s2Ebkr2veEsO7kNY3bIJWam5LNqxbXNM6ztCZRRIh2IE0r+lvLT0OU82KBJcbij5w8
+         rrh6zcvMl3n6jMRCAWJerb0QKhd2KdaQncHkPr1+h1XXZ3NWF9u+tS764+JW92bbM901
+         Z+8A==
+X-Forwarded-Encrypted: i=1; AJvYcCWYHcPMceZXvRz6Mi8CUbbqJ49EC4/jc4TNz7qP31pNhLITBhAZymqCJDHTp0RyNKPFIdcHakTfVeHripT3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrPo9SzNuyLKpTqpYmbxhyFBeZx3jVZJFGjgjkyitzvqeyFHHV
+	LBXVr627tR9XXoUto7eg/MRuQKbrD2ek0oNg2rAxR4H8LCnpT43AHS8qTrcaJPkbKvyG+4V10e6
+	DbxitLsTnk7fgRAKBc3UkLUpv62i8CVQqVK1gpWplCttL1acQhfg/r7eMYldpPp4O78KW
+X-Gm-Gg: ASbGncvzCruhxhgm7JtBIiO95nkGxxz+R+U0EhZML1zxuJhEWrCPVBOG8hRNruFsll/
+	mPwBHr9SHrr05hfY0c147EA65txV68n38xCOHQYzPWj0NPHNRWiHa9tow/YoLRRqCfHivHsmsJv
+	bNJ7psQUcK5Slr1Ql+3qUclsNPqeWRoisaSAc3gfQCzQgBaALu5RlEEkYkGVKCDQTWWu5JCukaf
+	36ub2/WBbB3TAo30f6kWEvaMdJVJRRb8dTQaEJD2z+rXZsGTaSMn2DrcdiemnyKPKgLdGmo+Iym
+	opUoaN/ETU7xz0zjOmE+eMUfINpf/Iij7fRrmTmlHsp1Z1VsoGpNai4ynF8uJAb4N7woGT+Et8w
+	PlYaK/Y+6eB+VvA==
+X-Received: by 2002:a05:6808:1409:b0:41c:95a3:8180 with SMTP id 5614622812f47-4319b43b6dbmr5283429b6e.20.1753981737454;
+        Thu, 31 Jul 2025 10:08:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+OypuAGGtVpznevK8exqeiiyeTVEUujNPDG8SbmILGSpx5BCp+glpBxBspqy2bxr4PhAjWw==
+X-Received: by 2002:a05:6808:1409:b0:41c:95a3:8180 with SMTP id 5614622812f47-4319b43b6dbmr5283376b6e.20.1753981736549;
+        Thu, 31 Jul 2025 10:08:56 -0700 (PDT)
+Received: from [10.148.43.238] (87-95-32-33.bb.dnainternet.fi. [87.95.32.33])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8899f897sm298252e87.49.2025.07.31.10.08.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Jul 2025 10:08:54 -0700 (PDT)
+Message-ID: <c7346b52-c5a0-4aa2-a8d4-92761e33b011@oss.qualcomm.com>
+Date: Thu, 31 Jul 2025 20:08:53 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,56 +90,400 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1] ufs: core: Fix interrupt handling for MCQ Mode in
- ufshcd_intr
-To: Nitin Rawat <quic_nitirawa@quicinc.com>, alim.akhtar@samsung.com,
- avri.altman@wdc.com, James.Bottomley@HansenPartnership.com,
- huobean@gmail.com, mani@kernel.org, martin.petersen@oracle.com,
- beanhuo@micron.com, peter.wang@mediatek.com, andre.draszik@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, Palash Kambar <quic_pkambar@quicinc.com>
-References: <20250728225711.29273-1-quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH v13 10/12] drm/msm/dpu: support SSPP assignment for
+ quad-pipe case
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+ <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250728-v6-16-rc2-quad-pipe-upstream-v13-0-954e4917fe4f@linaro.org>
+ <20250728-v6-16-rc2-quad-pipe-upstream-v13-10-954e4917fe4f@linaro.org>
+ <4dpeif7wynynbsccbhc253wkshuylnsjslsosmrnyld3bmot5l@yqrmpln44qe2>
+ <CABymUCMa06E0zavQsKeDw_rjTW5F9o4ancxWuQynMO3wsHKFwA@mail.gmail.com>
+ <4c492060-cdde-43c6-8351-d969b0f9322b@oss.qualcomm.com>
+ <CABymUCO63-V7MoWpgCTEV_8R_4rVHM-1=eyRP34=OdKGpYSLDQ@mail.gmail.com>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250728225711.29273-1-quic_nitirawa@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <CABymUCO63-V7MoWpgCTEV_8R_4rVHM-1=eyRP34=OdKGpYSLDQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: Mf0mq_c4mFFgoU5ufAPoZ0rNroI98nv7
+X-Authority-Analysis: v=2.4 cv=Pfv/hjhd c=1 sm=1 tr=0 ts=688ba32a cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=H8T8cKqSsIHj2cBiWKmgXw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=sWKEhP36mHoA:10 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=uxWrRjmYTHnT6oAD6TgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: Mf0mq_c4mFFgoU5ufAPoZ0rNroI98nv7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDExOSBTYWx0ZWRfX0fyqqSurnVPs
+ pLJ/T5vK3Q7nVqySlPUz44P/2nVIffLJuspo4QJmUxppAxcLGO7l8a3OEX1cSpclhr/8zHs6pzk
+ bIDKGH0J8nbrw8Sa6pIMfHSBeeStdmHiDYmqqfebUV7T/TNTKlOhRRFJgPm7lMft0UTSFGi9O04
+ PHEjq0oV7jzdcosiF0vyDhBZa+1ZDuZznxEIIBPIVZTZvVSpj+UxQhp2C0LeF/gLOLYowEGX/+I
+ T5jjN2lNLz79qI2+gXDXEgGp+jVDZBetnAX3tSaZGVu8H/4eToljjSM1lLCqeGt3kNWjZ8w5buA
+ Rj/Tljd7C+irfXjaJQv+BgFOtwn0UA1fzw7sOSya7JQaQkeLrqtYzPL4EWZhTyvlMHSBP0s3WXz
+ qg17LdmBdkqIShlu8DeHHgfXvm/52r48ATWDIZQ0i+bnOliYKFUjtiZxB+0Sc93NvxTJxuBT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-31_03,2025-07-31_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 clxscore=1015 adultscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507310119
 
-On 7/28/25 3:57 PM, Nitin Rawat wrote:
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index fd8015ed36a4..5413464d63c8 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -7145,14 +7145,19 @@ static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
->   static irqreturn_t ufshcd_intr(int irq, void *__hba)
->   {
->   	struct ufs_hba *hba = __hba;
-> +	u32 intr_status, enabled_intr_status;
+On 31/07/2025 18:37, Jun Nie wrote:
+> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> 于2025年7月31日周四 22:22写道：
+>>
+>> On 31/07/2025 13:52, Jun Nie wrote:
+>>> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> 于2025年7月31日周四 02:52写道：
+>>>>
+>>>> On Mon, Jul 28, 2025 at 09:14:34PM +0800, Jun Nie wrote:
+>>>>> Currently, SSPPs are assigned to a maximum of two pipes. However,
+>>>>> quad-pipe usage scenarios require four pipes and involve configuring
+>>>>> two stages. In quad-pipe case, the first two pipes share a set of
+>>>>> mixer configurations and enable multi-rect mode when certain
+>>>>> conditions are met. The same applies to the subsequent two pipes.
+>>>>>
+>>>>> Assign SSPPs to the pipes in each stage using a unified method and
+>>>>> to loop the stages accordingly.
+>>>>>
+>>>>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>>>>> ---
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 160 ++++++++++++++++++------------
+>>>>>    1 file changed, 99 insertions(+), 61 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> index 55429f29a4b95594771d930efe42aaa4126f6f07..e1e16a8d5ac55ba52a0f460d62901dced65e3a9e 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> @@ -959,6 +959,30 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
+>>>>>    }
+>>>>>
+>>>>>
+>>>>> +static bool dpu_plane_get_single_pipe_in_stage(struct dpu_plane_state *pstate,
+>>>>> +                                            struct dpu_sw_pipe **single_pipe,
+>>>>> +                                            struct dpu_sw_pipe_cfg **single_pipe_cfg,
+>>>>> +                                            int stage_index)
+>>>>> +{
+>>>>> +     int pipe_idx, i, valid_pipe = 0;
+>>>>> +
+>>>>> +     for (i = 0; i < PIPES_PER_STAGE; i++) {
+>>>>
+>>>> Why do you need to loop here? Is there a case when pipe 0 is not
+>>>> assigned, but pipe 1 is?
+>>>
+>>> Loop the pipe in a stage to count the valid pipes. If there are 2 valid
+>>> pipes in stage of the current plane, this function will return false.
+>>> Or you prefer the below coding?
+>>>
+>>> 1029         pipe_idx = stage_index * PIPES_PER_STAGE;
+>>> 1030         if (drm_rect_width(&pstate->pipe_cfg[pipe_idx].src_rect) != 0 &&
+>>> 1031             drm_rect_width(&pstate->pipe_cfg[pipe_idx +
+>>> 1].src_rect) == 0) {
+>>
+>> Yes, this is better from my POV. But the bigger question is why do you
+>> need it at all? What is wrong with the existing check? Can it be that
+>> pipe0 is not used, but pipe1 is used?
 > 
->   	/* Move interrupt handling to thread when MCQ & ESI are not enabled */
->   	if (!hba->mcq_enabled || !hba->mcq_esi_enabled)
->   		return IRQ_WAKE_THREAD;
+> There is no case that pipe0 is not used, but pipe1 is used. Existing check
+> does not filter the plane which contains single pipe in a stage, which can
+> be a candidate for SSPP sharing. If the stage contains 2 valid pipes or
+> no valid pipes, it is skipped in dpu_plane_try_multirect_shared(), or it is
+> skipped to be stored in prev_adjacent_plane_state[].
+
+Oh, I see, you need to check both pipes because you might need to skip 
+it completely. I'd really prefer to have more explicit code:
+
+- check for pipe0, skip this part of the plane if there is none
+- check for pipe1, if there is none, it's a candidate for sharing.
+
+If that becomes too ugly, then yes, explicit check for pipe0 and pipe1 
+are better than a loop.
+
 > 
-> +	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
-> +	enabled_intr_status = intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
-> +
-> +	ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
-> +
->   	/* Directly handle interrupts since MCQ ESI handlers does the hard job */
-> -	return ufshcd_sl_intr(hba, ufshcd_readl(hba, REG_INTERRUPT_STATUS) &
-> -				   ufshcd_readl(hba, REG_INTERRUPT_ENABLE));
-> +	return ufshcd_sl_intr(hba, enabled_intr_status);
->   }
+>>
+>>> 1032                         if (single_pipe)
+>>
+>> You don't need these ifs. You always pass a valid pointer.
 > 
->   static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
+> OK, a valid pointer can be passed though the return value may not be needed.
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+You are always passing a valid pointer there. If at any point we add 
+other usage, then we'd need to add this if.
 
-Martin, this patch seems to be more popular than my "[PATCH v2] ufs:
-core: Fix interrupt handling". Please consider queuing this patch when
-this is convenient for you.
+>>
+>>> 1033                                 *single_pipe = &pstate->pipe[pipe_idx];
+>>> 1034                         if (single_pipe_cfg)
+>>> 1035                                 *single_pipe_cfg =
+>>> &pstate->pipe_cfg[pipe_idx];
+>>> 1036                 return true;
+>>> 1037         }
+>>> 1038
+>>> 1039         return false;
+>>>
+>>>>
+>>>>> +             pipe_idx = stage_index * PIPES_PER_STAGE + i;
+>>>>> +             if (drm_rect_width(&pstate->pipe_cfg[pipe_idx].src_rect) != 0) {
+>>>>> +                     valid_pipe++;
+>>>>> +                     if (valid_pipe > 1)
+>>>>> +                             return false;
+>>>>> +
+>>>>> +                     if (single_pipe)
+>>>>> +                             *single_pipe = &pstate->pipe[pipe_idx];
+>>>>> +                     if (single_pipe_cfg)
+>>>>> +                             *single_pipe_cfg = &pstate->pipe_cfg[pipe_idx];
+>>>>> +             }
+>>>>> +     }
+>>>>> +
+>>>>> +     return valid_pipe == 1;
+>>>>> +}
+>>>>> +
+>>>>>    static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+>>>>>                                        struct drm_atomic_state *state,
+>>>>>                                        const struct drm_crtc_state *crtc_state)
+>>>>> @@ -1023,17 +1047,20 @@ static bool dpu_plane_try_multirect_parallel(struct dpu_sw_pipe *pipe, struct dp
+>>>>>    static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
+>>>>>                                           struct dpu_plane_state *prev_adjacent_pstate,
+>>>>>                                           const struct msm_format *fmt,
+>>>>> -                                       uint32_t max_linewidth)
+>>>>> +                                       uint32_t max_linewidth, int stage_index)
+>>>>>    {
+>>>>> -     struct dpu_sw_pipe *pipe = &pstate->pipe[0];
+>>>>> -     struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
+>>>>> -     struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
+>>>>> -     struct dpu_sw_pipe *prev_pipe = &prev_adjacent_pstate->pipe[0];
+>>>>> -     struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_adjacent_pstate->pipe_cfg[0];
+>>>>> +     struct dpu_sw_pipe *pipe, *prev_pipe;
+>>>>> +     struct dpu_sw_pipe_cfg *pipe_cfg, *prev_pipe_cfg;
+>>>>>         const struct msm_format *prev_fmt = msm_framebuffer_format(prev_adjacent_pstate->base.fb);
+>>>>>         u16 max_tile_height = 1;
+>>>>>
+>>>>> -     if (prev_adjacent_pstate->pipe[1].sspp != NULL ||
+>>>>> +     if (!dpu_plane_get_single_pipe_in_stage(pstate, &pipe,
+>>>>> +                                             &pipe_cfg, stage_index))
+>>>>> +             return false;
+>>>>> +
+>>>>> +     if (!dpu_plane_get_single_pipe_in_stage(prev_adjacent_pstate,
+>>>>> +                                             &prev_pipe, &prev_pipe_cfg,
+>>>>> +                                             stage_index) ||
+>>>>>             prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
+>>>>>                 return false;
+>>>>>
+>>>>> @@ -1048,11 +1075,6 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
+>>>>>         if (MSM_FORMAT_IS_UBWC(prev_fmt))
+>>>>>                 max_tile_height = max(max_tile_height, prev_fmt->tile_height);
+>>>>>
+>>>>> -     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> -
+>>>>> -     r_pipe->sspp = NULL;
+>>>>> -
+>>>>>         if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
+>>>>>             dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
+>>>>>             (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
+>>>>> @@ -1181,36 +1203,69 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>>>>>         return 0;
+>>>>>    }
+>>>>>
+>>>>> +static int dpu_plane_assign_resource_in_stage(struct dpu_sw_pipe *pipe,
+>>>>> +                                           struct dpu_sw_pipe_cfg *pipe_cfg,
+>>>>> +                                           struct drm_plane_state *plane_state,
+>>>>> +                                           struct dpu_global_state *global_state,
+>>>>> +                                           struct drm_crtc *crtc,
+>>>>> +                                           struct dpu_rm_sspp_requirements *reqs)
+>>>>> +{
+>>>>> +     struct drm_plane *plane = plane_state->plane;
+>>>>> +     struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>>>>> +     struct dpu_sw_pipe *r_pipe = pipe + 1;
+>>>>> +     struct dpu_sw_pipe_cfg *r_pipe_cfg = pipe_cfg + 1;
+>>>>> +
+>>>>> +     if (drm_rect_width(&pipe_cfg->src_rect) != 0) {
+>>>>> +             pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
+>>>>> +             if (!pipe->sspp)
+>>>>> +                     return -ENODEV;
+>>>>> +             pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> +             pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> +     }
+>>>>> +
+>>>>> +     if (drm_rect_width(&r_pipe_cfg->src_rect) != 0 &&
+>>>>> +         dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
+>>>>> +                                           pipe->sspp,
+>>>>> +                                           msm_framebuffer_format(plane_state->fb),
+>>>>> +                                           dpu_kms->catalog->caps->max_linewidth))
+>>>>> +             goto stage_assinged;
+>>>>> +
+>>>>> +     if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+>>>>> +             r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
+>>>>> +             if (!r_pipe->sspp)
+>>>>> +                     return -ENODEV;
+>>>>> +             r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> +             r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> +     }
+>>>>> +
+>>>>> +stage_assinged:
+>>>>> +     return 0;
+>>>>> +}
+>>>>> +
+>>>>>    static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>>>>>                                               struct dpu_global_state *global_state,
+>>>>>                                               struct drm_atomic_state *state,
+>>>>>                                               struct drm_plane_state *plane_state,
+>>>>> -                                           struct drm_plane_state *prev_adjacent_plane_state)
+>>>>> +                                           struct drm_plane_state **prev_adjacent_plane_state)
+>>>>>    {
+>>>>>         const struct drm_crtc_state *crtc_state = NULL;
+>>>>>         struct drm_plane *plane = plane_state->plane;
+>>>>>         struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>>>>>         struct dpu_rm_sspp_requirements reqs;
+>>>>> -     struct dpu_plane_state *pstate, *prev_adjacent_pstate;
+>>>>> +     struct dpu_plane_state *pstate, *prev_adjacent_pstate[STAGES_PER_PLANE];
+>>>>>         struct dpu_sw_pipe *pipe;
+>>>>> -     struct dpu_sw_pipe *r_pipe;
+>>>>>         struct dpu_sw_pipe_cfg *pipe_cfg;
+>>>>> -     struct dpu_sw_pipe_cfg *r_pipe_cfg;
+>>>>>         const struct msm_format *fmt;
+>>>>> -     int i;
+>>>>> +     int i, ret;
+>>>>>
+>>>>>         if (plane_state->crtc)
+>>>>>                 crtc_state = drm_atomic_get_new_crtc_state(state,
+>>>>>                                                            plane_state->crtc);
+>>>>>
+>>>>>         pstate = to_dpu_plane_state(plane_state);
+>>>>> -     prev_adjacent_pstate = prev_adjacent_plane_state ?
+>>>>> -             to_dpu_plane_state(prev_adjacent_plane_state) : NULL;
+>>>>> -
+>>>>> -     pipe = &pstate->pipe[0];
+>>>>> -     r_pipe = &pstate->pipe[1];
+>>>>> -     pipe_cfg = &pstate->pipe_cfg[0];
+>>>>> -     r_pipe_cfg = &pstate->pipe_cfg[1];
+>>>>> +     for (i = 0; i < STAGES_PER_PLANE; i++)
+>>>>> +             prev_adjacent_pstate[i] = prev_adjacent_plane_state[i] ?
+>>>>> +                     to_dpu_plane_state(prev_adjacent_plane_state[i]) : NULL;
+>>>>>
+>>>>>         for (i = 0; i < PIPES_PER_PLANE; i++)
+>>>>>                 pstate->pipe[i].sspp = NULL;
+>>>>> @@ -1225,42 +1280,27 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>>>>>
+>>>>>         reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
+>>>>>
+>>>>> -     if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+>>>>> -             if (!prev_adjacent_pstate ||
+>>>>> -                 !dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
+>>>>> -                                                 dpu_kms->catalog->caps->max_linewidth)) {
+>>>>> -                     pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+>>>>> -                     if (!pipe->sspp)
+>>>>> -                             return -ENODEV;
+>>>>> -
+>>>>> -                     r_pipe->sspp = NULL;
+>>>>> +     for (i = 0; i < STAGES_PER_PLANE; i++) {
+>>>>> +             if (!prev_adjacent_pstate[i])
+>>>>> +                     goto assignment;
+>>>>>
+>>>>> -                     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -                     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> -
+>>>>> -                     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -                     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> -             }
+>>>>> -     } else {
+>>>>> -             pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+>>>>> -             if (!pipe->sspp)
+>>>>> -                     return -ENODEV;
+>>>>> -
+>>>>> -             if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
+>>>>> -                                                   pipe->sspp,
+>>>>> -                                                   msm_framebuffer_format(plane_state->fb),
+>>>>> -                                                   dpu_kms->catalog->caps->max_linewidth)) {
+>>>>> -                     /* multirect is not possible, use two SSPP blocks */
+>>>>> -                     r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+>>>>> -                     if (!r_pipe->sspp)
+>>>>> -                             return -ENODEV;
+>>>>> +             if (dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate[i], fmt,
+>>>>> +                                                dpu_kms->catalog->caps->max_linewidth,
+>>>>> +                                                i))
+>>>>> +                     continue;
+>>>>
+>>>>
+>>>> if (prev_adjacent_pstate[i] &&
+>>>>       dpu_plane_try_multirect_shared())
+>>>>           continue;
+>>>>
+>>>> No need for the goto.
+>>>
+>>> Right, it will be simpler.
+>>>>
+>>>>>
+>>>>> -                     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -                     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> +assignment:
+>>>>> +             if (dpu_plane_get_single_pipe_in_stage(pstate, NULL, NULL, i))
+>>>>> +                     prev_adjacent_plane_state[i] = plane_state;
+>>>>>
+>>>>> -                     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -                     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> -             }
+>>>>> +             pipe = &pstate->pipe[i * PIPES_PER_STAGE];
+>>>>> +             pipe_cfg = &pstate->pipe_cfg[i * PIPES_PER_STAGE];
+>>>>> +             ret = dpu_plane_assign_resource_in_stage(pipe, pipe_cfg,
+>>>>> +                                                      plane_state,
+>>>>> +                                                      global_state,
+>>>>> +                                                      crtc, &reqs);
+>>>>> +             if (ret)
+>>>>> +                     return ret;
+>>>>>         }
+>>>>>
+>>>>>         return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
+>>>>> @@ -1273,7 +1313,7 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>>>>>                                unsigned int num_planes)
+>>>>>    {
+>>>>>         unsigned int i;
+>>>>> -     struct drm_plane_state *prev_adjacent_plane_state = NULL;
+>>>>> +     struct drm_plane_state *prev_adjacent_plane_state[STAGES_PER_PLANE] = { NULL };
+>>>>>
+>>>>>         for (i = 0; i < num_planes; i++) {
+>>>>>                 struct drm_plane_state *plane_state = states[i];
+>>>>> @@ -1284,11 +1324,9 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>>>>>
+>>>>>                 int ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+>>>>>                                                              state, plane_state,
+>>>>> -                                                          prev_adjacent_plane_state);
+>>>>> +                                                          &prev_adjacent_plane_state[0]);
+>>>>
+>>>> It's exactly the prev_adjacent_plane_state.
+>>>
+>>> Yes, I will change it.
+>>>
+>>>>
+>>>>>                 if (ret)
+>>>>>                         break;
+>>>>> -
+>>>>> -             prev_adjacent_plane_state = plane_state;
+>>>>>         }
+>>>>>
+>>>>>         return 0;
+>>>>>
+>>>>> --
+>>>>> 2.34.1
+>>>>>
+>>>>
+>>>> --
+>>>> With best wishes
+>>>> Dmitry
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
 
-Thanks,
 
-Bart.
+-- 
+With best wishes
+Dmitry
 
