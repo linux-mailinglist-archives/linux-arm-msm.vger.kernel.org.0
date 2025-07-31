@@ -1,82 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5674AB1738F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 16:58:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4864DB173A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:02:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CB7B5619EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 14:58:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 657037B7E02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 15:01:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444FB1DFE12;
-	Thu, 31 Jul 2025 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E60218DB03;
+	Thu, 31 Jul 2025 15:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j0BrvQ6o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0ENDWyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5747F1DE4D2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 14:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B6981E;
+	Thu, 31 Jul 2025 15:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753973894; cv=none; b=ioBC8puVnNa+kQulzzshgpFx8+p62ZgsHdx2sGsceHKd9H0Gh1wVIKwIOhFGPaaRtQuYi+MH7I8yIVNyFHn9ptKHHz0oQZ6yyJZ03vQNHX+xAHX6iZMQb4xQm8t2W0PLTR0G6cHZLRRXUHnXQ/sfl5MiwAxLygOvljcGCkxqklM=
+	t=1753974169; cv=none; b=fM6YX49jRb6gbluM+q7tqMR7lA9q4bEUzb8cEJYBDUyHG3VSldUYH4ak0hG91u5Tp8hdmEdm7QRsvSUfgZM7uht+0Yxawea8CRpime23WSknVT5WtZ+KhAN46AYCjsvjvyMpY3tJ/jA7pIFvJ9bUl6wr3qw6uOOyZZFOiyPGIb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753973894; c=relaxed/simple;
-	bh=/Nl6OMRMQI+j/D/FeQ0+/Hu9aMwMGkFL0oIoYF1EXds=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=K6XN2i4x7bo43/a0YAngrnUYuaHrWfOsXCjpb9U6kDnfmtTO9eOqghhPcf1+al1qUhz18APC6ec09wBc1+MtR4rk7hEgrjh6AmpYwjOB9u0eJ1D5/PQuLClzI8esfkzrBxttYCKLakcyOaWCc4MosaqAAC8L5Kc05srzMKRMxD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j0BrvQ6o; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45619d70c72so16297675e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 07:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753973890; x=1754578690; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UYSC+snvuRl9xh5vK5+UophT/Pu3Y9kJHZ4TR6UIQ90=;
-        b=j0BrvQ6oNv6a94FTVMV30TTMab3rysF83DDgLYZDmZ5D/wmDfRasENZ6C14WwGrFrb
-         CbO9jZ9+ULBavR6WZtlgNj7urVRtJewOHCoqP1fTijAWczez2zhs99v4JCajFfEMzNO5
-         rde8yEY5Q1OGpZAg+GeDmhFYVifALyI9TTo9JjmfE6VJ19BJ6wvZKcsyUOyP8F1Fq5VE
-         tUAw32lVr+vuYN9mzgYrL5fn8eF8JSXHR71UHNsJEkjq5yZzKFh4s0KVY+R+QmPnEu24
-         DSlvqfXYAzde4KwN1XBsnjUYW97S3FwuPeQB30x6BKfBjy46IEpU3kG2OgC9oZaBjYmA
-         Z3kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753973890; x=1754578690;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UYSC+snvuRl9xh5vK5+UophT/Pu3Y9kJHZ4TR6UIQ90=;
-        b=nyYVRK6BFjUEvWAnkxtgnEOS5bVH3lcPOVaS/x2jN898fn7KKscQJGfF3qgTIRqf4R
-         vJKyIkkRrCg2bV9JXhv9zbj1nU0I0oBW5b0LA6R8ntHHGLpq8DZhgimNF+jKWTlRvnMA
-         AT1hZ+B04pZnOdcC6VYLya1xfL9Qm7+SPSggc3+hIqXWwf6P/UoM6ZGZA8oZxXd8OkzL
-         IhNzuKfz3RxeJwLPhC5cT6FNXffXgL5WCgzFL1OYj0Yef5K/p4OuBmo1FCUIl2XFdSnS
-         Q0a13eOMji7BetjIvJ5dW/k4TliPB4B7zDnyM2tL64jT/w0wlWjzFVCEB65PnmAQ5nwQ
-         OooA==
-X-Gm-Message-State: AOJu0YxozAJXNw/FUjtrBVYH4gNIzDA3fAwRo77jGeMsJLKKgIy4HKi8
-	4Qh7HLZJ7xH3P4vSo7p8K7YFVp3/HuqZ+SJmSDMScX6KfxPB+bR8QfuAzx19VyMzv7E=
-X-Gm-Gg: ASbGncuXWqNruLnPTZt/1TvUmIwbohYUK3UUpGeAm0W85zaS4q/S/hyUGlW5qi3S4ka
-	XSk7bQoxI8lEuG/GroEMTkb5H/UP0cWha9DybjtEysbEcBcGC7hJqRMFUAXI8kIL8LlAoHNqooh
-	JWn5Yk+sxgHLj7/QRHorgBnqnFvA2i+0GTgkAgRF5Cf6BG+lSRpQmbeDPqgXlpQGXt536CFBm0v
-	MfthSTOdMWgcjmEvL2oiVHsUoaCkZ8pNM1VgPDbCyG3jRCkorRPBxQX9Vus+anmyXQDtrfibedx
-	J7+hUfd7C9AN1hbA01yBUBZ9KA95jfRrnfLVWudX7UJYNzUbMkjnCl8oREBgZ6Fk0uNLBGtyZr5
-	QeCzjgJv0i8S554QvmkRzozpLnkXtCEoY8MKg//Jr9hkExMH/4K3HJ99rgTHpOFjg7FEOMku1PM
-	QQyw3LG9Q=
-X-Google-Smtp-Source: AGHT+IF/x1z+XOkIb5kPsEMrjlpAe76OpJMnjZ5nXXOYdZrgYcKT02O7pTqubGbXxoZkZwM+ViAY/Q==
-X-Received: by 2002:a05:600c:a08e:b0:456:189e:223a with SMTP id 5b1f17b1804b1-458a222a97fmr26720225e9.10.1753973890541;
-        Thu, 31 Jul 2025 07:58:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:5d4b:b132:363:7591? ([2a01:e0a:3d9:2080:5d4b:b132:363:7591])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3c4b75sm2602564f8f.31.2025.07.31.07.58.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Jul 2025 07:58:10 -0700 (PDT)
-Message-ID: <490f9017-629d-4c19-8c2a-7fd106b4568c@linaro.org>
-Date: Thu, 31 Jul 2025 16:58:09 +0200
+	s=arc-20240116; t=1753974169; c=relaxed/simple;
+	bh=EeB1JGW9qJD/+KH1z1oHcj4OUxjkMYNEtGLO+iHHIA8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p27y6AG9mYT/Y/wcPHvBb7qtE66PoNz1T2tYSt5I1v/CKKsbiJNE8X9tkAONSGas9pvBsLiUdOao2RyLPAWiMae83hJLPY7GCElCCv25nlC4KdkB44R9q5qMTfiFYbm+kXeCucDSk8tBSWbHHpdiRsQgid3mx++Nd4yD0yVkwPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0ENDWyo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44426C4CEF7;
+	Thu, 31 Jul 2025 15:02:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753974169;
+	bh=EeB1JGW9qJD/+KH1z1oHcj4OUxjkMYNEtGLO+iHHIA8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=q0ENDWyocH2yX1Fwqm/20jdZ1U82DWVXc+8pJ5ztJAgHpNSyySPJpwZ5iLTMfThB0
+	 yXHkoKXzm/VWOWgzGt2WIHi1h06wppRNKwjgj3xTANoyhrAHJ9Im/7eprMYbarTzHv
+	 9LmyVtJSomhGwZ7AyQ7yl7851HM7naKwnrQKP2p1Okb6GeCkfQpLFmBPaSN/ka6irq
+	 2J77pBivCxynEefv6Gb+7ufanbbgyWtpTU09uahfDR7iNZXysC9p4PLDFYS/3FIgjN
+	 1Xjkhw4Q5yL+zhIzsW+/cM3elozakyfVVls5tUhSVttPyKZwJuhfbQnv/lSq2o4m7g
+	 m4iLHeHzX2DiA==
+Message-ID: <b1b884fc-01b8-4488-a4d9-a12e549daa92@kernel.org>
+Date: Thu, 31 Jul 2025 17:02:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,102 +50,101 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Deal with zero e_shentsize
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Val Packett <val@packett.cool>
-References: <20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
+ <20250729-hamoa_initial-v3-3-806e092789dc@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250729-hamoa_initial-v3-3-806e092789dc@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 30/07/2025 22:51, Bjorn Andersson wrote:
-> Firmware that doesn't provide section headers leave both e_shentsize and
-> e_shnum 0, which obvious isn't compatible with the newly introduced
-> stricter checks.
+On 29/07/2025 03:31, Yijie Yang wrote:
+> The HAMOA-IOT-SOM is a compact computing module that integrates a System
+> on Chip (SoC) — specifically the x1e80100 — along with essential
+> components optimized for IoT applications. It is designed to be mounted on
+> carrier boards, enabling the development of complete embedded systems.
 > 
-> Make the section-related checks conditional on either of these values
-> being non-zero.
+> This change enables and overlays the following components:
+> - Regulators on the SOM
+> - Reserved memory regions
+> - PCIe6a and its PHY
+> - PCIe4 and its PHY
+> - USB0 through USB6 and their PHYs
+> - ADSP, CDSP
+> - WLAN, Bluetooth (M.2 interface)
 > 
-Missing:
-Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
-
-Or it won't apply on stable kernels
-
-> Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
-> Reported-by: Val Packett <val@packett.cool>
-> Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
-> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> Written with contributions from Yingying Tang (added PCIe4 and its PHY to
+> enable WLAN).
+> 
+> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
 > ---
->   drivers/soc/qcom/mdt_loader.c | 12 +++++++-----
->   1 file changed, 7 insertions(+), 5 deletions(-)
+>  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 609 ++++++++++++++++++++++++++++
+>  1 file changed, 609 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index 0ca268bdf1f8c579b36a04fd94417be172fc1099..5710ac0c07a8c8a56110e3fc5e30b8610e106449 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -39,12 +39,14 @@ static bool mdt_header_valid(const struct firmware *fw)
->   	if (phend > fw->size)
->   		return false;
->   
-> -	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-> -		return false;
-> +	if (ehdr->e_shentsize || ehdr->e_shnum) {
-> +		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-> +			return false;
->   
-> -	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-> -	if (shend > fw->size)
-> -		return false;
-> +		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-> +		if (shend > fw->size)
-> +			return false;
-> +	}
->   
->   	return true;
->   }
-> 
-> ---
-> base-commit: 79fb37f39b77bbf9a56304e9af843cd93a7a1916
-> change-id: 20250730-mdt-loader-shentsize-zero-8c99653b6343
-> 
-> Best regards,
+> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..5facc5544c3df05b89b25fbcb5cd331e93040f15
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+> @@ -0,0 +1,609 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+There is some discussion inside, so maybe you already resolved it. If
+not: please use copyright format as requested by GPL FAQ, so provide
+date of first publication of this patch on mailing lists.
 
-Thanks,
-Neil
+Best regards,
+Krzysztof
 
