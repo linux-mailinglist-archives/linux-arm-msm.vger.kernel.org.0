@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-67247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51B5AB17027
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 13:09:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0921CB17069
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 13:33:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 78B5C16C91B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 11:09:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A44B9A811C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 11:33:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE2E2BE03C;
-	Thu, 31 Jul 2025 11:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 227E42C159E;
+	Thu, 31 Jul 2025 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QQMkkWIv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KVl0ingj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787771A3155;
-	Thu, 31 Jul 2025 11:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F47A2BF000
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753960195; cv=none; b=RSEgxS6YYQLaG0+vy4OOMfTFPfTZyEpCcNk6GKF3G/N9y+rPNW9XL3wPh3AavGVY4j2DOp5IEWWAwDbXoDwQpJB2mQv22VdbGcKizSCxk/rNftQ0NPK2Zzlt1mxUZ0kugmZisqMK2+dl9N97ncjYjjiT3P1FqNGUFX+r2ppWANQ=
+	t=1753961605; cv=none; b=mc3h02c+PSJ80BX20TdwHbOhxIsGrknmgXT1Knk5THI+aK+q52YAWaI+21hQssMkty0I7s9uGEO05xYxNNH0rt9GEtEJbuA57Ri5D5jUgT2WwpTUp0tXAxsNi1ba65+83T1IhyBSKnsZMdYIpsBR4pW4nT7zcjI1bVNsK36gsUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753960195; c=relaxed/simple;
-	bh=ItVwJXgKGvVXJhCDRk3nmuNL0ZSzurtnjqAX6Z9zRgQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rL/Pu2qQbH4efNGA7cCMYkDDnhoZgi1AZaXCHn/SQe8vloN2ZceQ5q76dQkDxI6xk0McSIrQGwjiiXYRo+qestGCQWIF9th8j7ybjEZuFi2amldKh5hsiKvb0FNJmzWy6D3MS/IhhC/dBETUcQv4B3LzAiIFF6ShSvHeF8iGgI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QQMkkWIv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V9fPIR024226;
-	Thu, 31 Jul 2025 11:09:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1753961605; c=relaxed/simple;
+	bh=MVHoymTtrUj1FNtzHDj+G/R7m5ic/21SYiflzC29O+U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WNxbF/9ctlsM3F9hWNXmJFn55ryjCdduPa0xFch7b1/PtVAX9eSetC02/kqBrsEWkY8D6ZrZduk52dDl3T8UmHxf8SY86DySJj7fk0wQ6bpwiQuQc9eG1riqtF21lyhDvofXDDA8Iptpe1rzqcT8/875DhuoKxyd1KTvYh/WkpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KVl0ingj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V9fFuR004903
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qpacQAEuunvl9EP8TR9EjQRvykSiPqrIg87dN+nnP44=; b=QQMkkWIvg7nAxV/I
-	QNOuHcSFwk8DqlN2nQwlRm1dU6ESzEvngRpxytD/1xPUeuZ4cHG9/+AllZrK1Gsj
-	W5DHP+votsdEUOOMIbRQEYDra5FP0OA8aWkpaP8uVWgZ+NDu7pSti/n17qTycO14
-	3WBNYRRiz4VJPrG5naY82EyrFrr1l0d+ao9wOYnlZSVfRGvQRFsXdVF2MtxgRgAM
-	yjjuN/cqT1owwT6T35qPvQgZ36Ua+y4dX/jXO9Zp2Qt8eZzxXIZR6BmkvS2QEUsc
-	pDM4azS8ln2pwSuIFu9dYeIbTRRQ1Qihy314PozVLByANoOZhAYEW5+ystHziv7v
-	aWZAQw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484r6qyhn1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Jul 2025 11:09:49 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56VB9miG029221
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Jul 2025 11:09:48 GMT
-Received: from [10.217.216.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 31 Jul
- 2025 04:09:39 -0700
-Message-ID: <2fcb2378-8a1c-4d54-abca-709ada84b513@quicinc.com>
-Date: Thu, 31 Jul 2025 16:39:37 +0530
+	hiQCVI4PmZedCkpDHfOr5gWtV6DX2AHcDyhpGCv1hLE=; b=KVl0ingjacySND2Z
+	KL76fBWAL7VJFK/s9lqPRtADqB+ZRAn0MCAXW7yT8GNr4dBhD2TPxsgNYxlEPB34
+	YwSceVonh6V61GfPWxVUqcSv2tc283lXq3F3n9d6r+eZtKK+fokcCF0eHI9nn1AX
+	DFo7UQvLJKRd73+R2mKczq0/6aEJSMt+25Kay0BJMML67BPVwxbdNQsvatSrLxo0
+	noo3zY3LSflY3jjF65Krrt4bglKWM/8A0Xe/ymdAjvhRpAnfn0J1etskDsWhPXS+
+	bzos5i9sHiNZW8QtZcwCzHaaAIcRxXvN0lvZPamMZjpWtBQNS1FIYXI9PhIN/s9m
+	38TbUQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 487jwev05j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:22 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7dfd0470485so20026085a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 04:33:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753961601; x=1754566401;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hiQCVI4PmZedCkpDHfOr5gWtV6DX2AHcDyhpGCv1hLE=;
+        b=ZJit+QPH0RgrlyeImtSPCdCZ5hQMdtMfzADfjpbxH6Ur3Gsk/s8V5BSSkQiFR5CVkG
+         yCeXmZvXoqaSJURZa2VAzQUBrEpsHNy61datdsHLEBEl+nAr9gODGMhKQkhn9x/TIFz5
+         Cyc6Grbffmj/1o0isAY16gVFNKbwIxa6DIuiwtqqwWBR58FadPwoqAtxewIbsnT18ERK
+         sHVmFCVpPajcLUJRPKaReJHX49xOrNHYWMgUJ1QhQ1LCmSyXHJgS2l3j7Mf83Sit882u
+         jamK2IV5IH7BhIEW/mSyrkaO9VSGQgWvLpgikzMF9jAQK2p+emGxnUvYDFqzwGdT5I8b
+         ThXA==
+X-Gm-Message-State: AOJu0Yykk6t40qtbhZvV/IYHBZ/lHEPKRbjQr+z+++JVtnbsvDDvZB4b
+	Mjq8n6imRf9IwltDVl1JYOdAUaKu/ZcccnllNSIKNJOTZc6vV8lhXooRakkNN+Bin9aLuCsOtm7
+	KxGTzPswRLGkWAsHeDxyZqBCnZLlY+bBBLvCBZoo4oHyu9+aVQ97N/sQsq1hOLU/vYzZ6
+X-Gm-Gg: ASbGncsWtRucnEB2Uciit7SofqHMjg3jo8u5X/avvq6k7VKBBBeJleJ/ppWbrAj5ZY2
+	YUUwTJyeU2/F231p1dUWJawqPUArdon6Muim4zd+nQtUhtRNgxB316JWcwjFBHA0vbV71kf+KNe
+	nVNu/4WkgGFmCg1D12YSRQFWxHR9UusBFEqSxCw233xjXjtIcJaJXumjBNMjG1aK70Y3bpdA75B
+	Pe9iN7iiPMGE4hmOOTem69BkxD3tDmL7RaIR1H53kV+WqJFpmKi+4Ay4RWQr/d7Yz3qj3yrhCWc
+	u5r8aV8DVrkb0bcwixG1TC248PgHs0egkrtvBQNPCgBqUyh7DBkw6tyuMjdeU1JYLk2eLCg4QTn
+	Dp6uIInzFrEu1NEHUPg==
+X-Received: by 2002:a05:620a:c55:b0:7e3:30e6:1fd9 with SMTP id af79cd13be357-7e66f3579famr401346685a.11.1753961601226;
+        Thu, 31 Jul 2025 04:33:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9SW+3agSd3nX7M2jAwPZf0SuoF4AQlimzli/JD2ZQjueM2pww1iKLHn5i3E3E7+3YegsRmw==
+X-Received: by 2002:a05:620a:c55:b0:7e3:30e6:1fd9 with SMTP id af79cd13be357-7e66f3579famr401344585a.11.1753961600785;
+        Thu, 31 Jul 2025 04:33:20 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a9115562sm982681a12.59.2025.07.31.04.33.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Jul 2025 04:33:20 -0700 (PDT)
+Message-ID: <afcf449e-7370-491c-8682-552761a5a8c6@oss.qualcomm.com>
+Date: Thu, 31 Jul 2025 13:33:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,152 +89,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Enable MMC_CAP_AGGRESSIVE_PM for
- qualcomm controllers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson
-	<ulf.hansson@linaro.org>, <linux-mmc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <kernel@quicinc.com>
-References: <konkbi4hvd7qc4rhokwrymzqntroy7gijk3ndwv5rluswdrykp@xsafrtrjzmuq>
- <10c90fee-ce7f-4034-9028-4252f19cb67f@quicinc.com>
- <CAA8EJpoLLDXFQk-ViuaioKrECzMV0aUrcOj4v+Ufs4oHY53mrw@mail.gmail.com>
- <064d3eed-c2ea-4b41-85b2-d2a5a922f8c7@quicinc.com>
- <ehgjdszjr34xppmkrkicb4pnq326nor26tqu2ekop6ew2j3y3h@pm45aiipzuc5>
- <48c73675-a73f-46f1-81a9-f701a2cf00a5@quicinc.com>
- <c1ebdaf1-92bb-4f73-bca9-35246d7c10e1@oss.qualcomm.com>
- <ca83b841-aea0-4233-93fe-02a7b5985af4@quicinc.com>
- <1a0a5178-fcf0-49b6-8e4c-1393c0f4f229@oss.qualcomm.com>
- <22848e2e-bd7d-486c-b481-c624d230d327@quicinc.com>
- <tpervpypkne6lasl3fn3v52xutl3zfuytalo3cveoe4us63rrb@p2w4cvt2jf7a>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
+To: Yingying Tang <quic_yintang@quicinc.com>,
+        Yijie Yang <yijie.yang@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Shuai Zhang <shuaz@qti.qualcomm.com>,
+        quic_miaoqing@quicinc.com, quic_zhichen@quicinc.com
+References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
+ <20250729-hamoa_initial-v3-4-806e092789dc@oss.qualcomm.com>
+ <a6456802-3d19-4da5-a995-c8f00553c7fa@oss.qualcomm.com>
+ <d14b2a0c-8304-497f-a662-5b93dbaaa1ed@oss.qualcomm.com>
+ <c0b804e3-16ee-4e81-9aa8-4b6051b5af03@quicinc.com>
 Content-Language: en-US
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <tpervpypkne6lasl3fn3v52xutl3zfuytalo3cveoe4us63rrb@p2w4cvt2jf7a>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA3NiBTYWx0ZWRfX7/D23SaG8FNJ
- Ucde6TymgwWjO3WF6biqfY9gaBEJXkPBLZQLMLzHD0cId3W3TiLXy/CNMRksHqXa4LwKafGnAkD
- mLHpVf8OC1pPSQoHgbEDD/Jf6uQIB+bMboeT2x2SStTiKf5vd5neKDKrFrqOqxDLictOl3+/F0F
- bcGtRxuWOFIub4pNVeRanMVUnQLKx9JEmKRMKcKUGo4QZrNeO61LczxWao+6bKu6+hl9i565ENA
- vXbaYB/X2NOHY33fjeQwshr2/l2YNC51j/GL76pU4xKbFN+hfpQEOLKBzbCTmcOk2Blm1XSnbym
- UWGehA+CVBYjUrXS6u3r4CBFsf3QodeproCAqAqcpzwsP5953kgD8mY8Cz/vVyzc4Njk8TAWyS6
- XBQeA3OD47//d/PwUsrNxTIPjbnxNzcFEIUHijWo3KMFJehBdF4ZG1vO2NbAnbeuR0f3VaN1
-X-Proofpoint-ORIG-GUID: avRKz0rpNOZkenctd36ICMSZgSE2j9vV
-X-Authority-Analysis: v=2.4 cv=ea89f6EH c=1 sm=1 tr=0 ts=688b4efd cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=O83kX4fD3CcbUwYZHKcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: avRKz0rpNOZkenctd36ICMSZgSE2j9vV
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <c0b804e3-16ee-4e81-9aa8-4b6051b5af03@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: aF1s4JYSN22tteLXs0WKkhfKImTQsmCM
+X-Authority-Analysis: v=2.4 cv=Wv0rMcfv c=1 sm=1 tr=0 ts=688b5482 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=WymS4dw2S599D73gK6YA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: aF1s4JYSN22tteLXs0WKkhfKImTQsmCM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA3OSBTYWx0ZWRfX13L4vyel0SaA
+ ncsLms8n92kuareSOW3h0iTpQXGP1V0kajTLl9Hwv5TChvx5LEDGzdAuTd+gGgRak6saoi/WG58
+ /RHMqXs41CWSOPdQSvjtvO62ZMEVQ22YOA+OQsWo8vTc+Mxg8xFAxfsXqYnHdAHez29ujNMxTvP
+ Z5FEfze12S8bsUudN1BuTWUoNhP8wD+iaPyz0GZSmi+324w+dHIL4kl/XtlktMeg9GSP7FbQX8B
+ DaI3ZmA9F68ULPP2ngmNkU1smSXMnBJyBVHrRNTR5jt4b4AXxazqbdkz1hZVBQJusclyO6BBNV7
+ jG49iWjvxVbD5zPiLnqLMCSIk61W1qgRJNkiw0FkDKjSSrsEKmv5XdOteSkkXOS/UKz5U7CpUzf
+ OlmArL4CH4vF2v7DbL2cBXQIMhQRmYEmRRwIP7XZE8zNC/AeqsuplSY832L5EqaZ+x+K0/sH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-31_01,2025-07-31_01,2025-03-28_01
+ definitions=2025-07-31_02,2025-07-31_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015
- spamscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507310076
+ spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 adultscore=0 impostorscore=0
+ phishscore=0 mlxlogscore=999 suspectscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507310079
 
-
-
-On 7/24/2025 5:31 PM, Dmitry Baryshkov wrote:
-> On Thu, Jul 24, 2025 at 04:45:38PM +0530, Sarthak Garg wrote:
->>
->>
->> On 5/21/2025 9:11 PM, Dmitry Baryshkov wrote:
->>> On 21/05/2025 18:36, Sarthak Garg wrote:
->>>>
->>>>
->>>> On 5/21/2025 8:19 PM, Dmitry Baryshkov wrote:
->>>>> On 21/05/2025 17:35, Sarthak Garg wrote:
->>>>>>
->>>>>>
->>>>>> On 5/21/2025 6:25 PM, Dmitry Baryshkov wrote:
->>>>>>> On Wed, May 21, 2025 at 12:46:49PM +0530, Sarthak Garg wrote:
->>>>>>>>
->>>>>>>>
->>>>>>>> On 11/15/2024 6:53 PM, Dmitry Baryshkov wrote:
->>>>>>>>> On Fri, 15 Nov 2024 at 12:23, Sarthak Garg
->>>>>>>>> <quic_sartgarg@quicinc.com> wrote:
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> On 11/4/2024 4:19 PM, Dmitry Baryshkov wrote:
->>>>>>>>>>> On Mon, Nov 04, 2024 at 11:37:22AM +0530, Sarthak Garg wrote:
->>>>>>>>>>>> Enable MMC_CAP_AGGRESSIVE_PM for qualcomm controllers.
->>>>>>>>>>>> This enables runtime PM for eMMC/SD card.
->>>>>>>>>>>
->>>>>>>>>>> Could you please mention, which
->>>>>>>>>>> platforms were tested with this patch?
->>>>>>>>>>> Note, upstream kernel supports a lot of
->>>>>>>>>>> platforms, including MSM8974, I
->>>>>>>>>>> think the oldest one, which uses SDHCI.
->>>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> This was tested with qdu1000 platform.
->>>>>>>>>
->>>>>>>>> Are you sure that it won't break other platforms?
->>>>>>>>>
->>>>>>>>
->>>>>>>> Thanks for your valuable comment.
->>>>>>>> I am not sure about the older platforms so to avoid issues on older
->>>>>>>> platforms we can enable this for all SDCC version 5.0 targets ?
->>>>>>>
->>>>>>> No, there are still a lot of platforms. Either explain why this is
->>>>>>> required for all v5 platforms (and won't break those) or
->>>>>>> find some other
->>>>>>> way, e.g. limit the change to QDU1000, explaining why it is _not_
->>>>>>> applicable to other platforms.
->>>>>>>
->>>>>>
->>>>>> Thanks for your comment.
->>>>>
->>>>> No need to.
->>>>>   >> I agree with your concern but for me also its not possible
->>>>> to test on
->>>>>> all the platforms.
->>>>>
->>>>> Sure.
->>>>>>> Lets say if I want to enable this caps for QDU1000 for which it has
->>>>>> been tested and on any other upcoming target after testing,
->>>>>> then how can I proceed to enable?
->>>>>
->>>>> Let's start from the beginning: why do you want to enable it on QDU1000?
->>>>>
->>>>
->>>> QDU1000 is one latest available target where we have enabled this
->>>> and tested. This has been enabled to save power.
+On 7/29/25 11:39 AM, Yingying Tang wrote:
+> 
+> 
+> On 7/29/2025 4:37 PM, Konrad Dybcio wrote:
+>> On 7/29/25 7:51 AM, Yijie Yang wrote:
 >>>
->>> Isn't it a powered device? How much power is the save? Is it worth it?
 >>>
+>>> On 2025-07-29 09:32, Yijie Yang wrote:
+>>>> The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
+>>>> the Hamoa IoT SoM and a carrier board. Together, they form a complete
+>>>> embedded system capable of booting to UART.
+>>>>
+>>>> This change enables and overlays the following peripherals on the carrier
+>>>> board:
+>>>> - UART
+>>>> - On-board regulators
+>>>> - USB Type-C mux
+>>>> - Pinctrl
+>>>> - Embedded USB (EUSB) repeaters
+>>>> - NVMe
+>>>> - pmic-glink
+>>>> - USB DisplayPorts
+>>>>
+>>>> Written with contributions from Shuai Zhang (added Bluetooth) and Yongxing
+>>>> Mou (added USB DisplayPorts).
+>>>>
+>>>> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>> ---
 >>
->> Sorry I just did basic sanity on QDU1000 device to confirm its not breaking
->> any eMMC functionality and we have also tested SD card on SM8550 as well.
->> For power no's we have stared internal discussions and based on target
->> available for power profiling with eMMC device we will come back.
+>> [...]>> +    vreg_wcn_3p3: regulator-wcn-3p3 {
+>>>> +        compatible = "regulator-fixed";
+>>>> +
+>>>> +        regulator-name = "VREG_WCN_3P3";
+>>>> +        regulator-min-microvolt = <3300000>;
+>>>> +        regulator-max-microvolt = <3300000>;
+>>>> +
+>>>> +        gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
+>>>> +        enable-active-high;
+>>>> +
+>>>> +        pinctrl-0 = <&wcn_sw_en>;
+>>>> +        pinctrl-names = "default";
+>>>> +
+>>>> +        regulator-boot-on;
+>>>
+>>> It should be set to 'regulator-always-on'.
+>>
+>> Are you sure? Turning off Wi-Fi sounds like a valid usecase..
 > 
-> So, again, _why_ do we want to enable it? If you haven't measured the
-> actual power savings, then it's obviously not a primary reason.
+> Hi Konard, It is m.2 interface on Hamoa. The PCIe power of m.2 should be always on.
 > 
-> As for the v5 targets only, they start from SDM845. Have you tested it?
-> Does it bring any actual benefits?
-> 
+> Even on QCOM's B2B interface, we are unable to dynamically control the power of PCIe devices on upstream kernel.
+> The PCIe specification does not support dynamic power control between the PCIe device and the RC.
+> PCIe power should be always on here.
 
-Sure will capture the power savings on our target with runtime PM and 
-will come back.
-In our downstream code its enabled for all our targets and tested for 
-quite some time.
+I see, I was confused by the name 
 
-
-~Regards
-Sarthak
+Konrad
 
