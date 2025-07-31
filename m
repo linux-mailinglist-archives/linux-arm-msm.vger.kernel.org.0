@@ -1,143 +1,316 @@
-Return-Path: <linux-arm-msm+bounces-67270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B3C7B176A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 21:30:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C182B17716
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 22:22:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 596BA1699FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 19:30:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21F286201EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 20:22:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88EE21FF46;
-	Thu, 31 Jul 2025 19:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4EC224169F;
+	Thu, 31 Jul 2025 20:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="NNDlpqrs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KTPLz/4b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346C42A9D;
-	Thu, 31 Jul 2025 19:30:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2614A1DFFC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 20:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753990251; cv=none; b=e2sdbVv4IPtNB+sXnxHJYElRPlSrAwzStOekvcDG3b38M4Kxmu8GcXmIl73PS3V93e279kLZQUptzlNJRPXpBuTbJs5dRIkpt88IeZ6YZcoe7JYQx+nWIpFkV1lQdnXNI/zKzHp0zs1/cOdehjXczMpcdz0H7LsGsJCqo19Q5Jo=
+	t=1753993333; cv=none; b=AU9SRF+cZVSoXpXlsdXVHmD9XUS+TqIeSMHfPnkpcYyt4lm0KiM909gg4L5cnMWiRNGoxst2N2XVQCA0UA5zLWYBv58qnJCTSCIcmkDYiVEK1v70uhpXIGINK8a34RpiX3WRfyppIXDLvSWpmkcz4wGI3yaCT/Z6G9u4O6ECLHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753990251; c=relaxed/simple;
-	bh=nfroFgboZM/pcPXYf02CJ+mM4g8YsbdNYwnHb205h7o=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=qEQEFKU0GT1AYXFqe3s8iimQmQ3HdyJg315Kt3YpZb9rJWczpEmvb4Pn72qpj3IdlWU4+HFxr7pcmSGadFrendzxEohSZAtEQEZaXMVMutlT3Tim/8JGnwr3PjDBjZxkhLP1UIQmNnPPn9b1cMwfBKo8p4AK2wbFPS1vNTYqcNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=NNDlpqrs; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1753990235; x=1754595035; i=markus.elfring@web.de;
-	bh=nfroFgboZM/pcPXYf02CJ+mM4g8YsbdNYwnHb205h7o=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=NNDlpqrssO3SRxKCm4uaeo6MPWfrWmDTZ9VV/MYxVLJnn1llI/fLumX0VauWSUBG
-	 SrntvczCiIntHMUrIRA6i15vBu0heIWB3UGxwcC02orHoA6C6HokiRSBM6K00EyMz
-	 Zg6Tr4i3YElhFpEr+GBf+vdkEKH7f+kzOCqpBGzOgiU4Z6GCawHt3glXq1LCHNWA0
-	 p//NlajXTSd0OS/uP7NkfVF7Xa2saIVxziaAsmkP8LYR5MIyPmPPutAmJ/XMAmO1T
-	 Gs13wjKBejC++ac+q10zvPSkBcvYs8+cL+sNi4LORKgE7s/AeO8tm5uRqFxwUMN5e
-	 zj0G1L8y0NxUbUElUg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.69.235]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MKM5z-1uxAxQ0Pj5-00YAsB; Thu, 31
- Jul 2025 21:30:35 +0200
-Message-ID: <216545a1-f893-4a12-a033-3bb6c86a9113@web.de>
-Date: Thu, 31 Jul 2025 21:30:32 +0200
+	s=arc-20240116; t=1753993333; c=relaxed/simple;
+	bh=Y17KSSbTlSWOCLc5FYHmOh6u85Qe/0aBKldqGXCvf4Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QX+mxSsFASB4kZctEvtKBprET5ZBHml7w14PBd+Z3Pz5KFPE6BemBiWCRI0Zm3oQUi8F4HCK6WSiME8ePX666JPmOlkP8O4Eu6zhHHz8L8Xk2Zw1xorjZME68vUfgtxsoYX5jBUkL2pMWwSrvqGthvQbKbhsx4RDsgrzMPro0ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KTPLz/4b; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56VDfREE021187
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 20:22:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5EWVTocMD9OoRHwS/gWO9hXxJgm+bBkTLNWxK3GDsx0=; b=KTPLz/4bBReYywIv
+	3X0hhjfPW1TxqYVk0Acf3eoavFzTpL5p2AtGUT4pce5aKSii1MqX3CJu1EzvbslZ
+	isIJ17o5ewvMsywtwg9gOGbf11nShAKaz8auvmOiEoS5sH0P7ZZfwBSQhHu1iV/c
+	4NYDepR5x3NReOLGehyasacW8b8+qLOd2dYq+yzU70r5rKLR7m7itoJGP7ZqYU8F
+	oAZ+fqddyzSOndaR3OoZlNnfcikgeNYtW2A0MpdV+eZsQJMEI6Mxp8ZQukTkDXR+
+	Iza/yCgbANWCIx8UUucZXTLihvoU7N7RfBskgCU3xMQqhQMbd9k33injnrPBcmCG
+	JfA2rQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484p1as2ru-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 20:22:10 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ab7464e3bfso8519341cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 13:22:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753993330; x=1754598130;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5EWVTocMD9OoRHwS/gWO9hXxJgm+bBkTLNWxK3GDsx0=;
+        b=cB850QlsLx9FSW3vuDDLckAztTT6jbDEMB7zuab+xZ9TitsUcnRZXWleuz6r3bOU9b
+         BDGrRwyKZwJMMolQiDU1OMt4aNqwCDsfAKM734yL8FUb7aX/nGg8EoyRGh4Kv/Ig2rC0
+         vK560l660Hv6OI8RL6VpxELXBdA0jLrReAepMdNuWlU1+SQaWSMZ3kwkUOc2vFuhxIeT
+         0Gb1W+RnRflAreBLKIagbLjYrNShL+5pnSEtjfPPpR5SB3H5YWbhVcGtByFPC1kfcsD6
+         FTfotA0etu2oniNs1aFFAZs167MV3CkRFDkLeO78qGzxWRfBgSI7hAq9ZHisyYFR4K2Q
+         WBjA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYUnTRhIi5ckGgXOlhSHWmkxFw7dgreDclhkNKT3BOBkYb4hR/vqRRXr3QB96IkQKxVi5hpM3hj6grCjlb@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoLo66IDOzg6F9qDUjd5a6SeWgqgYfXZfWLhT+FLYQDW6eDaq9
+	wjbTW15NgDzk9M2aViw/OVuKJ4LCu/2ooNDSdeNYeoQbedq8fd4cfzeTSWw7yL5B75aI4HAAWXx
+	Jj87MJSfWhpXEuGDJ4Jn6uRVKtUmTKlyM+XVfUvNiqIZxsn5rUtzXHTTOtnAZnj/ScsN0
+X-Gm-Gg: ASbGnct4uM3Snl4tX+U2Nq/4qNs8BnuP/IWdPf+RSU7yW0ZaRqPuoDFacy/Jqm9jIjm
+	RWW0XLGamM62XGAavUVutIUwVSNqwMB7mQLrQ417WTjbZEpGsb5oGcucxTTLzqTI4QeJ5NLeC0H
+	zfIkz67BSXt8IuGHUX/yexAmji7IKcS5UII5pSWWiYnLkTOHb4n8Bs0/FHMLMS5zJniigjfDGXW
+	EZFI2Lm6jB2rD+j9DHELICsRykirieIdyUqyttzMW5afpCHmFLozp52TxcC5zP7Fn9UQRNCwwZR
+	Q4xCs4adcofwKHzSml80vPLhplybenLQxJXVOIm2Cl3pC5mda3yWY3/jV+sZNmuAyFslcfZKj4R
+	w8zGt2FM4nNa7VbtprevMXiCluMmWbfZuqUUrV+S/U8CNGy04Zhtp
+X-Received: by 2002:a05:622a:5509:b0:4ab:6fdc:70d4 with SMTP id d75a77b69052e-4af006ea7fcmr680031cf.20.1753993329857;
+        Thu, 31 Jul 2025 13:22:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2GUWwAvkjLqCB+rn2oPBReWxu9rbiih1y1wr1Tg7AoDB+5SqyumLK9QCXI/pVZVaoXdoGhA==
+X-Received: by 2002:a05:622a:5509:b0:4ab:6fdc:70d4 with SMTP id d75a77b69052e-4af006ea7fcmr679521cf.20.1753993329211;
+        Thu, 31 Jul 2025 13:22:09 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-33238272953sm3357201fa.18.2025.07.31.13.22.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 13:22:08 -0700 (PDT)
+Date: Thu, 31 Jul 2025 23:22:06 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
+Message-ID: <mlbutlxudl5i32zrqegxiefaa2sbkntriwdftn7hxo4khidtf2@oiljtmtktovu>
+References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
+ <20250729-hamoa_initial-v3-4-806e092789dc@oss.qualcomm.com>
+ <pbvyog477v32s4lu72z52dhsond5yud5w3nxmcouvr6ljlndlh@ws46dncy35c6>
+ <b4a3f568-f41f-4141-b421-8b158973f810@oss.qualcomm.com>
+ <cawg456ucsvssm2ngbcjvpprxke7s3sfqf4fzoj5dtfj2flnzw@2e3h5ojgn4s5>
+ <391b8214-37f2-460d-94d0-3bd0daa00066@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Colin Ian King <colin.i.king@gmail.com>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Abhinav Kumar <abhinav.kumar@linux.dev>,
- David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Simona Vetter <simona@ffwll.ch>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250731081854.2120404-1-colin.i.king@gmail.com>
-Subject: Re: [PATCH 0/2] drm/msm: Fix pointer dereference and use dev->dev
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250731081854.2120404-1-colin.i.king@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:EvHsmdef5LYiCnGLCBVYMi7w/eUPpSumaK4Z6TEtHWdaaam6Wjs
- kjWlAgbOCeLJvpIB8yLPsk/i0ePlASAk+EHyXGmOECT1fcu15AK5OIM4r8xZUsZyj0Szm+H
- dupL5ElAE690pJC6NcEsfMbsp9BdEV7nLS/jGhIMxhjyozv1wdKyVoBpnKMXFi6KG3x6Mly
- dgSMBOU0G9Keynpdyzn/w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JsambsqUMoU=;NN0sZrr95D1wTHr03kU3qwFyMbf
- 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
- N7iz27rADcovl1O6/BQT1nE=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <391b8214-37f2-460d-94d0-3bd0daa00066@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: l_WvyEXuh3yrBW2kIG8Uay2EOoT22luE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDE0NiBTYWx0ZWRfX5UVNtpitiEkP
+ Ejg+Vo4k9iB9kBarVKsc7nvNfBCf9agmcEuyKGC8RidhrZI4AYo+6v5ToaouE9/vj0haqjt85XX
+ +iet44B070u93bOBBooS65HcqSITJGL7ryYXlGEUqdMqL3Mn2tLJkawX4Fwfu377clV1a7qzgcB
+ F0iGc03fPkhUTBEoInOtIkoM50g0K3Z83HTRrbnbYRVw6Mfr3kNG4COtgWnuVrliYBz7uvxCW0a
+ ANTXtQARYL5thaUHogdjRNzKl6jq8OupMckxRUVXljG+qSyJiWlansqsBo4q9kmt+oy/uh6b2r3
+ FAnNr+xYha8y0LbvHBvQraSBBdo9kyObf8Ad9UhF5zp/Bec6wby6Pm67j4CinKXGfEAQPgvfGWQ
+ goTbJ/90g8LBpFCqmSOy2tqZWopTUu2cV+QAO8xQKgf0rATntXnCAa1SMgqHlHHdyMLDE7sM
+X-Proofpoint-GUID: l_WvyEXuh3yrBW2kIG8Uay2EOoT22luE
+X-Authority-Analysis: v=2.4 cv=KtNN2XWN c=1 sm=1 tr=0 ts=688bd072 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=lLxyknsEbSeMOoiS3msA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-31_04,2025-07-31_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=999 bulkscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507310146
 
-> Fix a potential null pointer dereference issue and replace
-> minor->dev->dev with dev->dev in error messages.
+On Thu, Jul 31, 2025 at 04:45:33PM +0800, Yijie Yang wrote:
+> 
+> 
+> On 2025-07-31 02:42, Dmitry Baryshkov wrote:
+> > On Wed, Jul 30, 2025 at 02:28:25PM +0800, Yijie Yang wrote:
+> > > 
+> > > 
+> > > On 2025-07-29 18:37, Dmitry Baryshkov wrote:
+> > > > On Tue, Jul 29, 2025 at 09:32:00AM +0800, Yijie Yang wrote:
+> > > > > The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
+> > > > > the Hamoa IoT SoM and a carrier board. Together, they form a complete
+> > > > > embedded system capable of booting to UART.
+> > > > > 
+> > > > > This change enables and overlays the following peripherals on the carrier
+> > > > > board:
+> > > > > - UART
+> > > > > - On-board regulators
+> > > > > - USB Type-C mux
+> > > > > - Pinctrl
+> > > > > - Embedded USB (EUSB) repeaters
+> > > > > - NVMe
+> > > > > - pmic-glink
+> > > > > - USB DisplayPorts
+> > > > > 
+> > 
+> > 
+> > > > > +	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
+> > > > 
+> > > > Hmm, so there are regulators for the retimer, but they are not used.
+> > > > Could you please point out, why?
+> > > 
+> > > According to the schematic, there is a regulator and a retimer (PS8830).
+> > > However, as mentioned above, the retimer is not connected to USB 0 and is
+> > > therefore not used in the EVK. As a result, the regulator is left unused in
+> > > this context.
+> > 
+> > What is connected to the retimer then?
+> 
+> All data lines are broken, except for some power lines.
 
-Did you accidentally overlook to mark this patch series
-as a subsequent version?
-https://lore.kernel.org/lkml/20574d0a-0a8e-4b54-afe3-8a0744df9d09@web.de/
+Ok. please add a comment. If the retimer is connected to I2C bus, please
+define it too.
 
-Regards,
-Markus
+> 
+> > 
+> > > 
+> > > > 
+> > > > > +		compatible = "regulator-fixed";
+> > > > > +
+> > 
+> > [...]
+> > 
+> > > > > +
+> > > > > +	usb_1_ss0_sbu_default: usb-1-ss0-sbu-state {
+> > > > > +		mode-pins {
+> > > > > +			pins = "gpio166";
+> > > > > +			function = "gpio";
+> > > > > +			bias-disable;
+> > > > > +			drive-strength = <2>;
+> > > > > +			output-high;
+> > > > 
+> > > > What does this pin do? It's not recommended to set GPIO values through
+> > > > pinctrl.
+> > > 
+> > > It is used to switch data lines between USB Type-C orientation detection and
+> > > DisplayPort AUX channels.
+> > 
+> > I don't think I follow it here. Which data lines? Type-C orientation
+> > detection uses CC1 / CC2, DP AUX use SBU lines.
+> 
+> I made a mistake here — this pin switches between two data sources: one is
+> DP AUX, and the other is a GPIO pair configured with the function
+> usb0_sbrx/usb0_sbtx. Both data sources originate from the SoC and are routed
+> to the USB0_SBU1 and USB0_SBU2 lines of the USB Type-C connector.
+
+So, it's some USB4 stuff. Ideally it should be described via the
+gpio-sbu-mux, but I don't think we can do that for now. I'd let Bjorn,
+Konrad or Abel comment on this.
+
+> 
+> > 
+> > > When this GPIO is high, USB0 operates in
+> > > orientation detection mode.
+> > 
+> > What does this mean?
+> 
+> This means the switch will select the GPIO pair configured as
+> usb0_sbrx/usb0_sbtx.
+> 
+> > 
+> > > 
+> > > > 
+> > > > > +		};
+> > > > > +
+> > > > > +		oe-n-pins {
+> > > > > +			pins = "gpio168";
+> > > > > +			function = "gpio";
+> > > > > +			bias-disable;
+> > > > > +			drive-strength = <2>;
+> > > > > +		};
+> > > > > +
+> > > > > +		sel-pins {
+> > > > > +			pins = "gpio167";
+> > > > > +			function = "gpio";
+> > > > > +			bias-disable;
+> > > > > +			drive-strength = <2>;
+> > > > > +		};
+> > > > > +	};
+> > > > > +
+> > > > > +	wcn_bt_en: wcn-bt-en-state {
+> > > > > +		pins = "gpio116";
+> > > > > +		function = "gpio";
+> > > > > +		drive-strength = <2>;
+> > > > > +		bias-disable;
+> > > > > +	};
+> > > > > +
+> > > > > +	wwan_sw_en: wwan-sw-en-state {
+> > > > > +		pins = "gpio221";
+> > > > > +		function = "gpio";
+> > > > > +		drive-strength = <4>;
+> > > > > +		bias-disable;
+> > > > > +	};
+> > > > > +
+> > > > > +	wcn_sw_en: wcn-sw-en-state {
+> > > > > +		pins = "gpio214";
+> > > > > +		function = "gpio";
+> > > > > +		drive-strength = <2>;
+> > > > > +		bias-disable;
+> > > > > +	};
+> > > > > +
+> > > > > +	wcn_usb_sw_n: wcn-usb-sw-n-state {
+> > > > 
+> > > > What does this pin do? Using pinctrl to set GPIO values is not
+> > > > recommended AFAIR.
+> > > 
+> > > This pin functions similarly to usb-1-ss0-sbu-state; it controls the data
+> > > switch between signals from the USB connector and WLAN data.
+> > 
+> > Could you please explain it? Does it toggle USB2 signals(you've added it
+> > to the USB2 PHY) being routed either to the USB connector or to the WiFi
+> > card? Or do you mean something else?
+> 
+> Yes, that's right. It routes signals between the USB connector and the M.2
+> Wi-Fi card.
+
+Ack. Please add a comment.
+
+> 
+> > 
+> > > > > +&usb_2_hsphy {
+> > > > > +	phys = <&eusb5_repeater>;
+> > > > > +
+> > > > > +	pinctrl-0 = <&wcn_usb_sw_n>;
+> > > > > +	pinctrl-names = "default";
+> > > > > +};
+> > > > > +
+> > > > > +&usb_mp_hsphy0 {
+> > > > > +	phys = <&eusb6_repeater>;
+> > > > > +};
+> > > > > +
+> > > > > +&usb_mp_hsphy1 {
+> > > > > +	phys = <&eusb3_repeater>;
+> > > > > +};
+> > > > > 
+> > > > > -- 
+> > > > > 2.34.1
+> > > > > 
+> > > > 
+> > > 
+> > > -- 
+> > > Best Regards,
+> > > Yijie
+> > > 
+> > 
+> 
+> -- 
+> Best Regards,
+> Yijie
+> 
+
+-- 
+With best wishes
+Dmitry
 
