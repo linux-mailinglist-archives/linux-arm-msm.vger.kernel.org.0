@@ -1,168 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-67278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29A9EB17770
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 22:53:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CF6AB1779C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 23:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 608365A06E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 20:52:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8142B7AD99A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 21:01:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CC6C2586C5;
-	Thu, 31 Jul 2025 20:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0448E26560C;
+	Thu, 31 Jul 2025 21:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KhL8/MxF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUXZMFZx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC622566DF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 20:52:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA260258CD9;
+	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753995123; cv=none; b=CiseOQlbqnuOFJX8la2j918achr3CgkkmjbkK+bzh0vTzO4SBFka5nssKQafwYsNLwnU2F4dEZNggH/R/jKqNCdtkpVxh5E+OiUgB0HxuQkBH43a+Vvo+A0r75cYmUs48SaGsPAkKlEikMMlGacC2h/b+WCeQPMnLwvcu3vXOL4=
+	t=1753995765; cv=none; b=I0Sz8Q+WXIpuPXRW93cOZ2DECOMCu0K8k4PEfsBRTSjdh1CpG3jl4OUYmIqn4Z17nqLKWSbK4xRwWOsTnTR1TxK3FyMZ0BjAWVpCYzVUvU1A9+p7IxI3NRKsAQ3IQg+oiB6v5lSqxE2pfhINvOLyoeH8rDzOmI66+VvPZLnRZhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753995123; c=relaxed/simple;
-	bh=G1+dDN5VbHS/uTTFU90pGQKqcs/KquRWkv7p+axvbkY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TVwmDy3KO1B3FdE7eY4h3aXFZiPfJbLlYIkRJTECajw/z/BJxtU3/sz22rXgWyneGZZMxkN6DwlicStIvThnBbsWeMubwX3AvLbghBa9xTiuKuEmsedXw8FZNqFuX3Y/p9KKiVJn0v9hHOY1HGjK6K2zubKJ1Y8eUh3VYZ4v63g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KhL8/MxF; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3b78d337dd9so92359f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 13:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753995120; x=1754599920; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RRHNd2ZCWezMU8sh7ndHGqZnx2BwmZPaqx0vp8vaTJ0=;
-        b=KhL8/MxFeLcQMPr1++g+Oj/W20tkXG4Wi6QYeqpZf8pIYkCtw8anLz7H/ydcv5oP0O
-         9UQaeXYBuoApjraxOagrg6WtqVCFA4VVk4zd3PuVXDgbLXB7B+Bo2P1wKgozhuXiV11E
-         EWwD+OutrpZew/p21xLDwFfli4dCoAC+8MG4/wV1ovjqWBt9vHfwKFLar6nyjlDQU8ZS
-         oygMXTU2I6WLejdM8AxZqQMy7ZXY+qDEf5znA5kLLarpYo/jExs6LJCxbgJpfvCE4mJu
-         bMcOnmWLVYV0/z2x8ybjaHEvTnR5Z6YLzhYwIr/oLOAie4K7XAn6/ZlLErdLA6ev6ZDc
-         dxkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753995120; x=1754599920;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RRHNd2ZCWezMU8sh7ndHGqZnx2BwmZPaqx0vp8vaTJ0=;
-        b=vdOld7C07SkriPETHahBl+WgcNrb8LtNQPcKmnGb77OQnQTBpE9PGK9DKDqE+yC8hv
-         yb2hvw59p43syQ4UQkw+pLGbSHM6mjRcf4DkgvgZ96psJS+5dW3gPqWlON+/POjaAWdf
-         WxXNw8iVdAfJrkwt+vUbFQFlXRTKL2NX9AlRpa9Yh6WC/+/L8Qn9ElY9rvyM6rbEZr7L
-         bVs3IXDsAQlah+kGi6wx9nw98ikPQEw+Aw3a89ZHkFWJPrCxZ55X4Kqw5wyD2AJC0I/V
-         A8zpzPGWiST7xoRdivpAf9/tBwRFI4+kP2Db5KDWkdl6Lix9yB0MExDRdOuJRaTO+FKi
-         MgaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPEkDDpcDCEBdx9NN1HKXQ65SlXwfcpgcZztv+qYEpb/5FNpltDsT9a7uLj1gDBAbGh5vKMrPCU1xVPAtp@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTr7Z8j/XwFha6sUWRcjWR6Ng7XediL4IKCpXXZcLlgSkLoIq2
-	wtoJXoCkogoQnUjWMeCZ5noI3APSeUSIfkdltHG5hxdkCOq2vxoJHQdhN96Qzi2G8w5eFAHbfZd
-	Ynmz4t2TC+oGsevNlwNHLTxnmmvNJ9HlJS1mnIA4OKw==
-X-Gm-Gg: ASbGncv/vhxPOKTRJ2wfYq4Py/iCTe+Jh0nb6+VaTv2wqbalLjYAkjwE5fL2lXDGmQL
-	hpIB3VmVALacDNPXI674xUXfgjrrmy6f/97drkMZTBd4BI0f/ABU2motWj5DYnDHOqChBBkCCed
-	XsRdB2eKMLbXkHm4Ot6mb69luRC6fv6yEQE9LPXEP9Jer3SpKz8OaPhJQrj69NjiV7OZ5/fbeS0
-	xE82LpF9ojClxDDEIBp
-X-Google-Smtp-Source: AGHT+IEwyDoX4uF/9YMToh0+WSQVrRidsSvYeXgHSGPP5jTwBijhyndShZR9merunu1Sixh2RwmDPnVM6baMrGA3w50=
-X-Received: by 2002:a05:6000:2085:b0:3b7:9b4d:710e with SMTP id
- ffacd0b85a97d-3b79b4d72c9mr3914484f8f.38.1753995119691; Thu, 31 Jul 2025
- 13:51:59 -0700 (PDT)
+	s=arc-20240116; t=1753995765; c=relaxed/simple;
+	bh=fbQDmYKLPvl6sslhUGqA6kC7+83TEDi0PeX9KJSShBo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=l5vHdvhQwWi8+O+vmgc5sRFFGGvJ3Big0E6gerYo9/+khXFv2YQGFV40hV81tjHttWwIP8tA+TJSpGw3F3jPpP25xjRZNetgcVniO+KIfBlTdPWTb0dxIvv0KCK60FvYTZvBcRwGjX3NiNEyMj1XjuVYdZLA9cgUn/qreghGFas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hUXZMFZx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 48FAFC4CEEF;
+	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753995765;
+	bh=fbQDmYKLPvl6sslhUGqA6kC7+83TEDi0PeX9KJSShBo=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=hUXZMFZxmUYQ0jXdtzTcGD7qXvaAiDSsj9jU17FfR47d4RTOlFjInEn0884D3JLLe
+	 8AiXZbjVJ4GC8YjTSU48GudCD8gaZCivJuQwpdZpSCMec0cl92G+b1LDw7EacGJahU
+	 KY1ou7g/k7xlUgUwAkG9inDxqYGCaR6wnPowDfgbzekAPcD71k5bC1+H9mNCkBoMyv
+	 Cn8YHAVTWyj4j3V4oYfKUfH+Nb/Xk6NsqK5Z5Pt7SMjKDg0W/G/qBN8Q5HCWSpTesX
+	 8JEBRICmp0XSuIuGzxs++mFjJY5nrOlIuWu6SPi9r2Z0UttHuIAGMSLx8BGWqrm0ob
+	 hen6gR0iLAlrQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35A5AC83F17;
+	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/2] sdm845: Use definitions and deduplicate
+Date: Thu, 31 Jul 2025 23:02:42 +0200
+Message-Id: <20250731-sdm845-msmid-v1-0-98489ece786e@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
- <aCw9pYehCdfXXeiR@hovoldconsulting.com> <aG-QyF12rGY55gcG@hovoldconsulting.com>
- <d431435b-4ac0-44aa-922d-0bde126ca563@linaro.org> <DBIMQO2CS0I3.17XLZPKPCVW2S@linaro.com>
- <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
-In-Reply-To: <e9c63414-8434-4e35-a159-66df1864f9f3@linaro.org>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Thu, 31 Jul 2025 21:51:49 +0100
-X-Gm-Features: Ac12FXzd0YutQBM4VsTZ7ybOvRaAxugnGXJ2Kg3XZRdEMOsxc-OgmLq-KhYmTLw
-Message-ID: <CACr-zFC+WcSYDZ8SEYO211sBVN_=oEXmSw_X6i6zdk6Y+prHFw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
- Lenovo T14s Gen6
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Rui Miguel Silva <rmfrfs@gmail.com>, Johan Hovold <johan@kernel.org>, 
-	Douglas Anderson <dianders@chromium.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPLZi2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDc2ND3eKUXAsTU93c4tzMFF2TJAMLC3NDcyOLlGQloJaCotS0zAqwcdG
+ xtbUACLOyUl4AAAA=
+X-Change-ID: 20250731-sdm845-msmid-4b08871728dc
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1000; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=fbQDmYKLPvl6sslhUGqA6kC7+83TEDi0PeX9KJSShBo=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBoi9nzXl11gx7oYPrvGzQcQ8kKVM8PnZr6gJMqA
+ VEl1iLFoHqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaIvZ8wAKCRBgAj/E00kg
+ cibED/9Ib1BhZ+rTZS8HWHGqGuYx1V/SGkJpv71VUqIg5vFMEtSZ9D0YxucCiDP6lm39V4JT7QL
+ LfqA0lcuMM2RnPKPue3w1waTDYY/oiAPLOxyJ5+djGKr5ncD8LUEaEmm2yJ/1iWNvD7Ut1eQaSA
+ X7s5ub+Qe9lQEjkXSNgcurS7skPNiNzvPUBOJwiwwm4dXrpQ5cOJO8stI11X7JvGbtRu3wmS6Em
+ V6gkDj1XO54Tfz4Mwjb2nJzMnfnrj+LZt/2SD9BwG2c4tmiNOBoKuKOnLJJmVKfeOyU6jVPCsfY
+ DTJxDl7rJegKRXuwrc39Uu9dnF0Rxs1tkZCVrWzw4prVRH6D4n+w3TlXkheBDkVoxzyuhg5azjt
+ vAOPjs0Mk/7xqW7Sv+58gdy8Z5hpD1ncH0R0MMdmACRvNNmXV7w/7c1sjLzFM1pz1K9b+BV0K0O
+ bFpsiRRfWuRdXRI70sYvIDjzaKH76mmvr9Bj3MIT29GcwM8AgS46PlA8a2eKw4hBtlMOHrp7kle
+ TeRguR+g8zxM05OUWcA/ypYI/fodCUkkiaRmDFmuHz/J/6HOn2gCmpekxFNdYZxpGpeCubMAh1x
+ +pMcXKxWi04pfzQo7e/J6wBplGCEjfF1XKRbbsycZe8jfM4+M8l4P17jSuA+T3fjXm2jxCzNG16
+ wdT/L9/bXtoR59A==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-Hi Neil, Johan,
+Small cleanup.
 
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (2):
+      arm64: dts: qcom: sdm845*: Use definition for msm-id
+      arm64: dts: qcom: sdm845-oneplus: Deduplicate shared entries
 
-On Wed, 23 Jul 2025 at 07:51, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> On 22/07/2025 15:48, Rui Miguel Silva wrote:
-> > Hey Neil,
-> >
-> > On Tue Jul 22, 2025 at 2:01 PM WEST, Neil Armstrong wrote:
-> >
-> >> On 10/07/2025 12:07, Johan Hovold wrote:
-> >>> Hi Chris (and Neil),
-> >>>
-> >>> On Tue, May 20, 2025 at 10:30:29AM +0200, Johan Hovold wrote:
-> >>>
-> >>>> On Wed, Apr 02, 2025 at 03:36:31PM +0100, Christopher Obbard wrote:
-> >>>>> The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
-> >>>>> panels. This patch series adds support for the OLED model which has a
-> >>>>> Samsung ATNA40YK20 panel.
-> >>>>>
-> >>>>> With this patch series the backlight of the OLED eDP panel does not
-> >>>>> illuminate since the brightness is incorrectly read from the eDP panel
-> >>>>> as (to be clear this is not a regression). This is fixed in [0].
-> >>>>>
-> >>>>> [0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
-> >>>>
-> >>>> It would be good to get OLED support for the T14s merged. Are you
-> >>>> planning on sending another revision of this series?
-> >>>
-> >>> No reply for over a month. Do you intend to respin these or should
-> >>> someone else take over?
-> >>>
-> >>> Neil, do you have the OLED version now?
-> >>
-> >> I'm not sure, how do I determine that ? Is there something specific in the type number ?
-> >
-> > Yes, yours is the OLED version, the exact models stated above.
->
-> Ack thx, I'll test and re-spin this patchset then.
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts                   | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 3 +++
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts        | 2 --
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts           | 2 --
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi        | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           | 2 +-
+ 8 files changed, 8 insertions(+), 9 deletions(-)
+---
+base-commit: 84b92a499e7eca54ba1df6f6c6e01766025943f1
+change-id: 20250731-sdm845-msmid-4b08871728dc
 
-Sorry for the delay. I've just sent a v5 of this patch. I will look at
-the eDP brightness patch next...
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
 
-> Neil
->
-> >
-> > Cheers,
-> >       Rui
-> >
-> >>
-> >> Neil
-> >>
-> >>>
-> >>>>> Christopher Obbard (3):
-> >>>>>         arm64: dts: qcom: x1e80100: add epd hpd pinctrl
-> >>>>>         arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
-> >>>>
-> >>>>>         arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
-> >>>>
-> >>>> Strictly speaking you could have posted this last patch on it's own as
-> >>>> it doesn't depend on adding the hpd pinctrl.
-> >>>
-> >>> Johan
-> >
-> >
-> >
->
 
