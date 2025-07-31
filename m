@@ -1,204 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-67226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8122CB16D67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 10:20:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19A7BB16D76
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 10:26:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DB723AFFA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 08:20:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57D3C581BC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 08:26:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CF9021A435;
-	Thu, 31 Jul 2025 08:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4DEC241670;
+	Thu, 31 Jul 2025 08:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GYRs2AzV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tz5o3jnf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A1D82C60;
-	Thu, 31 Jul 2025 08:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3A821B18B;
+	Thu, 31 Jul 2025 08:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753950054; cv=none; b=k6QCYae4fSOFIu3HNoQaYCJuJMxhPgXS3+12tXmNrpmX6PTfbHXhE3BPAqhPGVrZh7GcLBIl0lEoEfny3vHF/vmnDSsFbftuaRBsyP+TQPbcLGuFauGHo7Op1yzyuJky1VwyfuS6YJhhMhST7LhDJ0vTOUkNWmvdhb8TLdI3G5Q=
+	t=1753950405; cv=none; b=KY48s919YuOCmb/2zAOhPERBdKS3ran+NY8g0PC2UmrjVi9Ym5G1FN7HOE630JILQyEHS8n6PPMTAxMw5hLa7IA+hjwEPNdJxcp6y+Sy/UEqyq7mu+VBdvIlnwtIKszX5yJc/H6du15fYT5FalPCjhOFIuOLMyUHmVfVxWheWXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753950054; c=relaxed/simple;
-	bh=DVVdYUQhNXrT8nIZN7oHoaqViY3lQdp3bi8pSnyiBuE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c62IUlo0hb/qZtf7Dt67Rn7t83OgGPSqri3Dh3ANrj0jYfsrCiyT9Xxsn/hoBGul4cJGtxGTGrYJopgGlFinrCm5WgnJIa30cVHAHfHjfcfUCgAXs2zgDXi2xcvRVAXxuD9QkOGzrrJU7RnbwmJcmv5mPJcmeIt+ib7EkY/Op8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GYRs2AzV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V1fXsi003474;
-	Thu, 31 Jul 2025 08:20:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=mG/9O/5shgU2wVXynKChJyvr
-	rVAhnyuanNYOCUrEHoo=; b=GYRs2AzVALbBtvVraYTN9CTHugzhVTJjJdqreJoi
-	mAn2RGkIv0TWZFZZj+k6H25riuyYmft1U/uNh78nPihtTQU9hmOvvrdpfQlcnBri
-	2QrVxvFT7aRAr3O05hgmdhJo1bR0/QqpW6RoIpHIebHF6x3IHw5J5ovRHEX6RoIb
-	db8L35fUpRwPA95w3a/s2B8t31cLh1fiiTG9kJ84Aw8Z+9dxzNV/8jE2lAFph9kA
-	OjS48ZRbMSWYds3AH4/LW6x6vrtji6UB1qFXQvD62L/77bZNhd9Fp0cBRLqFaCgx
-	TI215cPxSlXK0G1Nu5evsll+jWUNhwzWlxBLnMfrLwvT3w==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 487jwgbcpe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Jul 2025 08:20:48 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56V8Klx0012337
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Jul 2025 08:20:47 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Thu, 31 Jul 2025 01:20:42 -0700
-Date: Thu, 31 Jul 2025 13:50:38 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>, <djakov@kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_mdalam@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: ipq5424: Enable cpufreq
-Message-ID: <aIsnVuWnwBisCm82@hu-varada-blr.qualcomm.com>
-References: <20250730081316.547796-1-quic_varada@quicinc.com>
- <20250730081316.547796-5-quic_varada@quicinc.com>
- <b51305cd-0e4f-49f9-adc1-fbe83b539e98@oss.qualcomm.com>
+	s=arc-20240116; t=1753950405; c=relaxed/simple;
+	bh=KxO2rMJS8QEJUDJyEirf6BYCXZiblAus6Uwt4nEjRhs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RzsdiPEzD+U2N2EF/GxAISGhFqvzNWu4VsgrGrJ1ZFEQTxMQeA1bEjarHSaL4bGIOJL0qNK+sWxitg1PaR/3WVS65/tZlPxO9KcgMlC959HE0DRF1Wsxqy82bTXldcjJNBemppIxPJnNdwkgj2wV3J2PISuW4qqo19bBBvbgrl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tz5o3jnf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3832BC4CEEF;
+	Thu, 31 Jul 2025 08:26:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753950405;
+	bh=KxO2rMJS8QEJUDJyEirf6BYCXZiblAus6Uwt4nEjRhs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Tz5o3jnf5sBqDEV09Yjnaz/suQ0YFra78vfY8Zl/ClkuCaRrWDCUDhEAaemFZdiir
+	 XKNJ2yyLy8QRLrOdNNt8McqHLDm0tdqwJxO1IWsDEyfaN8pblTLitFvrL0mE5jRilO
+	 gFxesAXjNaS9Hu4gZ7Wa2PH10pS6qCnTGNSYHEvmcg+o2g/ty9snzDdS7jfcImClDx
+	 5Tk4TqvcvlME7B0bMSLS7WS1dFmWCZFqJ17lX4UU2c/SoEuymdGBksUnPIdm5s4yNd
+	 q0dii8QuTrYzrDvIrIdbhERRP54WDcYZXH8zbE6PCmeKg+bw9tP1UPFRrNcoJBi8qS
+	 ve3x9dutEERqA==
+Message-ID: <547c9214-8b61-413b-98e6-f95dc0500d62@kernel.org>
+Date: Thu, 31 Jul 2025 10:26:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <b51305cd-0e4f-49f9-adc1-fbe83b539e98@oss.qualcomm.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=WvgrMcfv c=1 sm=1 tr=0 ts=688b2760 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=RPjSdeSmNi3ZrBCKw2EA:9 a=CjuIK1q_8ugA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Nq5ExcuO0SAtTQr9-7fWVEkMv8IrQ25o
-X-Proofpoint-GUID: Nq5ExcuO0SAtTQr9-7fWVEkMv8IrQ25o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA1NiBTYWx0ZWRfXwTStoN9aK3cq
- YX72oyK7bfMsLB2s7AZ/GTSK+Hat7xeTAV6ohC5eIzqPy8wXEfVeaA94nAP6Gjq+JnIOPWllZJy
- k5nb2hE/CuDafGiWP7V/QTTdiU+TFqopJt+ljoTX+WODzdh0avehoc0iWopb3ZvKRn7BFRQIysq
- eR+O1r6DaVzHxtOiH69v/ZbGb9kpx5uKm2Qa9kqcdmfqIYbPLAO0XtXsYe0VXDbvaF7VCQsYELi
- an/x2kAMZnKhuAbIiVG3jKV4f3ndh1COTtROWgEzo0Ai+8cBZV8BGwJvH522C0iy/T5WRAySrec
- 8OqWgx4Kc5ViXtEnVPFyEAf8WLNRttHTncuhWsmgJWNUNuKTuSMBvlv2k0P3ngSXnq1r9m3hAZW
- V1WE7EVqxCIJBhHfYaByY0b/0KWCot0L1AyGx4q564bTwCY+n7T/6PMl8BbORY9HWaREtdGy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-31_01,2025-07-31_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 impostorscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=585 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507310056
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom-edp: Add missing clock for X
+ Elite
+To: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20250730-phy-qcom-edp-add-missing-refclk-v1-0-6f78afeadbcf@linaro.org>
+ <20250730-phy-qcom-edp-add-missing-refclk-v1-1-6f78afeadbcf@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250730-phy-qcom-edp-add-missing-refclk-v1-1-6f78afeadbcf@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 30, 2025 at 02:49:58PM +0200, Konrad Dybcio wrote:
-> On 7/30/25 10:13 AM, Varadarajan Narayanan wrote:
-> > From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> >
-> > Add the qfprom, cpu clocks, A53 PLL and cpu-opp-table required for
-> > CPU clock scaling.
-> >
-> > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > [ Added interconnect related entries, fix dt-bindings errors ]
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
->
-> [...]
->
-> > +	cpu_opp_table: opp-table-cpu {
-> > +		compatible = "operating-points-v2-kryo-cpu";
-> > +		opp-shared;
-> > +		nvmem-cells = <&cpu_speed_bin>;
-> > +
-> > +		opp-1416000000 {
->
-> These rates seem quite high, are there no lower fstates for idling?
+On 30/07/2025 13:46, Abel Vesa wrote:
+> On X Elite platform, the eDP PHY uses one more clock called
+> refclk. Add it to the schema.
 
-Will check on this and update.
+And what happens if you do not provide that clock? You need to provide
+rationale for ABI break.
 
-> > +			opp-hz = /bits/ 64 <1416000000>;
-> > +			opp-microvolt = <1>;
-> > +			opp-supported-hw = <0x3>;
-> > +			clock-latency-ns = <200000>;
-> > +			opp-peak-kBps = <984000>;
-> > +		};
-> > +
-> > +		opp-1800000000 {
-> > +			opp-hz = /bits/ 64 <1800000000>;
-> > +			opp-microvolt = <2>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <200000>;
-> > +			opp-peak-kBps = <1272000>;
-> > +		};
-> > +	};
-> > +
-> >  	memory@80000000 {
-> >  		device_type = "memory";
-> >  		/* We expect the bootloader to fill in the size */
-> > @@ -388,6 +428,18 @@ system-cache-controller@800000 {
-> >  			interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
-> >  		};
-> >
-> > +		qfprom@a6000 {
-> > +			compatible = "qcom,ipq5424-qfprom", "qcom,qfprom";
-> > +			reg = <0x0 0x000a6000 0x0 0x1000>;
->
-> The block is a bit bigger
+> 
+> Cc: stable@vger.kernel.org # v6.10
+> Fixes: 5d5607861350 ("dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,edp-phy.yaml      | 23 +++++++++++++++++++++-
+>  1 file changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> index 293fb6a9b1c330438bceba15226c91e392c840fb..2e594b2ea81d385118684bf58da3440c88ca32b9 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> @@ -32,12 +32,14 @@ properties:
+>        - description: PLL register block
+>  
+>    clocks:
+> -    maxItems: 2
+> +    minItems: 2
+> +    maxItems: 3
+>  
+>    clock-names:
+>      items:
+>        - const: aux
+>        - const: cfg_ahb
+> +      - const: refclk
 
-Per the documentation, the block is 4KB. But the last register is at 0xa62bc.
+This does not match clocks. You miss minItems before the items.
 
-> On IPQ platforms, can the OS blow fuses directly without TZ
-> interference?
+>  
+>    "#clock-cells":
+>      const: 1
+> @@ -59,6 +61,25 @@ required:
+>    - "#clock-cells"
+>    - "#phy-cells"
+>  
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,x1e80100-dp-phy
+> +    then:
+> +      properties:
+> +        clocks:
 
-No.
+Missing minItems... or you wanted to make it flexible, but then drop
+entire if branch leading only second one for other variants (maxItems: 2).
 
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +
-> > +			cpu_speed_bin: cpu-speed-bin@234 {
-> > +				reg = <0x234 0x1>;
-> > +				bits = <0 8>;
-> > +			};
-> > +		};
-> > +
-> >  		tlmm: pinctrl@1000000 {
-> >  			compatible = "qcom,ipq5424-tlmm";
-> >  			reg = <0 0x01000000 0 0x300000>;
-> > @@ -730,6 +782,15 @@ frame@f42d000 {
-> >  			};
-> >  		};
-> >
-> > +		apss_clk: clock@fa80000 {
-> > +			compatible = "qcom,ipq5424-apss-clk";
-> > +			reg = <0x0 0x0fa80000 0x0 0x20000>;
->
-> Let's make it 0x30_000 to reserve the actual carved out reg space
+> +          maxItems: 3
+> +        clock-names:
 
-ok.
+Same here.
 
-> > +			clocks = <&xo_board>, <&gcc GPLL0>;
-> > +			clock-names = "xo", "clk_ref";
->
-> 1 per line would be perfect
+> +          maxItems: 3
+> +    else:
+> +      properties:
+> +        clocks:
+> +          maxItems: 2
+> +        clock-names:
+> +          maxItems: 2
+> +
+>  additionalProperties: false
+>  
+>  examples:
+> 
 
-Sure.
 
-Thanks
-Varada
+Best regards,
+Krzysztof
 
