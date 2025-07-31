@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD80EB173B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:05:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48518B173BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:07:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65052189E743
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 15:06:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7622C16EF15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 15:07:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8751A0BE0;
-	Thu, 31 Jul 2025 15:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D1BC1ACED9;
+	Thu, 31 Jul 2025 15:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmCliOJ0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mF27/aya"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026F981E;
-	Thu, 31 Jul 2025 15:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2C881E;
+	Thu, 31 Jul 2025 15:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753974352; cv=none; b=rWpFHMknCyc0AiJA/7v5yknToOLy6lroX45YOiombawCLjcSfFkOsOl3gVtTfCWepkFQqv68Fm6eP3zNmQTo1TrLumvabxgFFm15xjmEJEeB99vnVlqls2ZGzyCrNdHiX1rLz/OtLOgus217YrJEKSApF+SZEbNh99RliXe8fms=
+	t=1753974422; cv=none; b=MpmgNTmSVzkV2e4/Bmlo4GqLeQ9sf0g10HbJWjkg3HeVGv23VdZwR4htlYr78cAISSorMkliURZnZQ46B2VNgKvn8bG/8SLixem5yUm8ohzJdwUvLXeJXh2MPoQCtdsKip67V1QlvpLkPzES7rPwAzShknvcdGL+UQGFvNks+jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753974352; c=relaxed/simple;
-	bh=qbl1UGs+1MEoTLsAhempajquYW9hQIVx9shHxx0Rgg4=;
+	s=arc-20240116; t=1753974422; c=relaxed/simple;
+	bh=PZgx5DGdfrSIDVqX+7Z799e6AGD7r3XpcsMTCc2tclY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=piiBuDxuZGM5x4PgbjKxgffUrphSt2j7zUjbUtAeewTy7A0tNQzDw7HJ+oG5oPf/edMM9ScUvnJgkI/QwyKNrGR/8A1dTDDnX9Dj7oPML4UJjO/GOtVDgzFCGzygxIHs4Az1XmnEtyf6vDMxEm11esRG80O9NIUOFVcJyiaHLAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmCliOJ0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F869C4CEEF;
-	Thu, 31 Jul 2025 15:05:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=onz6+0/Rek+tLhjgtf5a88CUFcPXkCFNfxOcjHn9RyX7wuk7fCAE9EISPhBArl9jJRtygd3j1qBNBFF7Gsj7nezLNH0ClsDQF3Zps/X8bhay5xtL5G45YuOdwEKBKEEiM+VxY3RcZj2cSaRhjq0by9u1GQ8Gnrmqiaw+YM4D100=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mF27/aya; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8F7C4CEEF;
+	Thu, 31 Jul 2025 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753974351;
-	bh=qbl1UGs+1MEoTLsAhempajquYW9hQIVx9shHxx0Rgg4=;
+	s=k20201202; t=1753974421;
+	bh=PZgx5DGdfrSIDVqX+7Z799e6AGD7r3XpcsMTCc2tclY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EmCliOJ0py2TiKhVTIFVrDoedecnAMnpyjvkGdXF7MK9BgxmwP0QkaMQjPrq1MkQV
-	 v6u/4wUuOF9eSi4J04tDzz5Cm6nYUszeR9Y5kEIEzNyaTS4XefuHZ+J3nJ93xTfdoz
-	 r8yLKIwVLZ+ss11BxQwUzQUIv0UY2lHibUMvUedL5FLPvoUDEQ4CJw/hcWW76rh1lT
-	 8fPmiQE/evFJlAAWn1IN55FYul4lGnIPbBnPtdGF7ioSBeTPzGLsY/mPbDrcDKa0zE
-	 rJRI/YZ4yzpsQaJ/udwjzJY+U4FIQIm7R3fGRuZ5PQrenZNe8hVHzzR4m/F5lgYlr7
-	 H1WaPi3bFx/3A==
-Message-ID: <75ef6db6-d1a4-438a-a9fb-ab6c9552b4b8@kernel.org>
-Date: Thu, 31 Jul 2025 17:05:46 +0200
+	b=mF27/ayaHw4dp+wYIJnAcOpsVYpgbiInbnHCDa61yuOun36DU3W/e/G4RLyysZF9F
+	 vsNMyiRBuO53kJcrkpK9mH7xGZzxv+46gbScbSzCzKjkoQdVcVWOiOaA6FViAertKt
+	 AuiN2wrIN9WvdFx9emTL2eOJ9/Skp5V395AtdQmk0NavN2lhJCF+ds58J6zbb1qqZp
+	 7W+E+P3XmfclzhURAsJOBmyhWZAdnW0nxx9VzuMP19538+02HswVgxnoCtpdU2p4MK
+	 21xnURsTQBkjLEvKg2J56t7AOpzFLytj4EWUhAv+kg6Zq9PB8idyFuPYEyDIvgt677
+	 f/r1UJ++QrpHA==
+Message-ID: <e8ac306d-7bff-415c-a290-a579109f9e29@kernel.org>
+Date: Thu, 31 Jul 2025 17:06:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom: Add SM8750 GPU clocks
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250723-topic-8750_gpucc-v2-0-56c93b84c390@oss.qualcomm.com>
- <20250723-topic-8750_gpucc-v2-1-56c93b84c390@oss.qualcomm.com>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: document the RPMh
+ Network-On-Chip interconnect in Glymur SoC
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, djakov@kernel.org,
+ lumag@kernel.org, a39.skl@gmail.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, quic_rjendra@quicinc.com,
+ raviteja.laggyshetty@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250716151535.4054172-1-pankaj.patil@oss.qualcomm.com>
+ <20250716151535.4054172-2-pankaj.patil@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,27 +105,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250723-topic-8750_gpucc-v2-1-56c93b84c390@oss.qualcomm.com>
+In-Reply-To: <20250716151535.4054172-2-pankaj.patil@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/07/2025 22:38, Konrad Dybcio wrote:
-> +    };
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,sm8750-gpucc.h b/include/dt-bindings/clock/qcom,sm8750-gpucc.h
+On 16/07/2025 17:15, Pankaj Patil wrote:
+> diff --git a/include/dt-bindings/interconnect/qcom,glymur-rpmh.h b/include/dt-bindings/interconnect/qcom,glymur-rpmh.h
 > new file mode 100644
-> index 0000000000000000000000000000000000000000..98e2f5df78740bf298c6b1065972d7e58ee81713
+> index 000000000000..6993a686da55
 > --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,sm8750-gpucc.h
-> @@ -0,0 +1,53 @@
+> +++ b/include/dt-bindings/interconnect/qcom,glymur-rpmh.h
+> @@ -0,0 +1,205 @@
 > +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 > +/*
 > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 
-
-This needs fixes... it's some sudden move of removal of copyright dates
-everywhere across Qualcomm. Please don't use internal rules outside of
-Qualcomm projects.
+Please use copyright format as requested by GPL (see GPL FAQ how this
+can be written).
 
 Best regards,
 Krzysztof
