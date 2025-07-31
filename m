@@ -1,230 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-67233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3339B16DEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 10:50:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 009B4B16E0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 11:01:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8DE83AF7A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 08:50:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA3333AEA65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 09:01:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D6921FF4D;
-	Thu, 31 Jul 2025 08:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E09E275844;
+	Thu, 31 Jul 2025 09:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gazgJRj5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ovOyHnIw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA79C214A6E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 08:50:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC58225F976
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 09:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753951826; cv=none; b=YB5YmS5Lu1+hQLQpybOduknyj7v4mCriYljmmz9hvRRYwa+M8HVRR5m3SDwlgbeaFzAbC1ttBh4UgoX7x+/dTTfDFo5Op5AchJP9AxCuEGkZNvy2QvDex+aQfIO6aL07pyQB8FQo1BgnJP0AlD839w9YdQdCjkSSuOb+FM6HYVo=
+	t=1753952503; cv=none; b=SwFdAxx2GTrGUmjp1SqAxQfBo+GnGPWa+s1/zpT0tM0f8jZLnG0nDyft0zl2A+sd83EdLIcQgDfVEa5FP9W9V+nyEDou8mmgdVnexzgw/tW57nlkjWnH/8N0pRJLfm7MSrsQv1s+zuWNJmZX2Br/u5wQ0dGXu1BWRp1y/M4vaf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753951826; c=relaxed/simple;
-	bh=6Lg1eIwjFjvSRaGr6nblSxRpIYC4YoB4n9JiTRn29Ds=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=iSJ1fDXw95E3jPDPrVfccUwiaXWvh0Kwv96EbMBdF2/PzJ8OcAy09qLol4X+sNiZAByGay2y4iKARaCTs+GecuhdUCbk6f2auEm1u152Ra462apc4V1jFv39hfbH27j8ji0i/6zrTM0SSkLEPjQ56+xC7rHEEYmIHVhmRt1fBzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gazgJRj5; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45892deb25bso1341165e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 01:50:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753951823; x=1754556623; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YoqT3sYyeE3BcU8PpvXQ31mNiDpWd/PfJiufhJ/dUHg=;
-        b=gazgJRj5kwQtVoo4OHjHqci4WnIh2DNj+FHjxoDW0bETPj+AYc62yiVFZpworCZjOl
-         QbZf1GsZvfKLcAw9GittSieYGiOjXjhMdok83LTnvt8GUIiwn/GtC66XmHDh0v8vx9uT
-         wassDEoETsLkur5ER7H3qVnJXIVrnWtfP6nBLn35AA4Lm+jli5tB/kAta4/wxqblHMiD
-         qkFRkbjAcNJcYCXnkQ+THn/ZKQf7uivhs17TJLuruhc00wIIKtZFq9N13Ma4JjqRirKD
-         Ud3pOOJ02bT1U0gaQgIMpYn65z3Sz3EmuE22J6Zzdd3X5xvBPOisEyZgVG/1F8flh6gC
-         /YSw==
+	s=arc-20240116; t=1753952503; c=relaxed/simple;
+	bh=pc8QwqkvgbAiE6arXF8//zl+k7EP7uH5r4jn0sOA2As=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kurjTu0AWtbRrkqq70wDq7Wl3LRyXsDV3cXj4kZj1Qd7QN5S0c50Kn0fdADkpFSFQ6brWxe7DbKGc1Z8xeGGgThOgml9sZff3dW9UwK+XOSOo9WP9lpqS4+4a/PS+XkyTNvQlTWOqjkZrgu+hu3EvYJIA90o4AF7yt34Y/zZ3Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ovOyHnIw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V1fa2Z003808
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 09:01:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=P/OQxWaaWCrJySN7I3elm1
+	yuPAF9rLghBbGZ8dHfSw0=; b=ovOyHnIwk9W+Xo2cTvv2B5TmfqJ2vqHXD8HMYB
+	NpsWn+9x0LL1F6deGtd831oDOc7BqMs8hVKZSaloKoSXjkRCPFQscoEaJiH711MV
+	8IZE4iboIFKq6SA9DicH+Jz8Se6bTIvTS+ZgPlSDb56ULJuc6zjId+x0Bx96glvH
+	b/GmCOZOtOk5/CIMeWBvmwsG4YSDH6/J3PsBKwwMOBEfxPYKUFcIHj8aEFDMEGRw
+	FIAuSRAcVBG6O/YWHYagS/cJB51YwYdSdWYDODxbU/izCOUYB2BC5CC36xylTll6
+	aEfL5q5iBmKrj1z4sK9CYiH53mwGFwdZtWhfYRWxxSsNIyDg==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484pbm6wmv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 09:01:40 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-24011ceafc8so6932955ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 02:01:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753951823; x=1754556623;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YoqT3sYyeE3BcU8PpvXQ31mNiDpWd/PfJiufhJ/dUHg=;
-        b=FVXMnJMV3S9ftGlh0pMdoDCWIQUtlfyc4ZsYPaw0T0in93ZRMZMzNgPTjHP4e66XRL
-         WvF7W+EpdipEojwO5ooaIc9IaY0SeqwrB78lmoIVnZjSlyJozaMpcDwKyhEZ9QTEm0P5
-         ob3/OE+UiTzh3P3tJLL5OcJQ3fpHucNy+CjoQbmyLga4JULiTpBTxcbjz4Gyz7vjf/mY
-         cWovHT6yFeJDW8XEdwrhiEFbPsiN0PoBwsA7nEqHSnQeKfehxGQoaSDzgIVn6nWwrX9v
-         A3HzjcYz7amvyHuACgkCC8NG5zU2JTNkxuKo7Gy6KnGicCymZEpnbEd0ppivguZMFYk6
-         m6ag==
-X-Gm-Message-State: AOJu0YxkJm0P3f5XaAAEvVmfsl9BnzS0Fogc4t2ck+gsM2fCTJ/7/khk
-	vHCZMp83/wexM994Srsd8b6b4IOkvUJVAAp2Il4QkKRHDc37ctRdvhFI6r71LbwaoDA=
-X-Gm-Gg: ASbGncveLQ9f4u0qYBdTc+VVMNGpSrf+rtxWp5fxraXc8fCGmj/8of5VKOEaQF5fDTh
-	2hD6TU5l/qMuk+UdRNHk8hy2SjKgCaAAalvPYfYuLQKAMG2zWfGaLYhqmjq2680Vcb1N6+/zqdD
-	SHSEtMUxLNj9Q2vHcT4mNxJBFVtQPkKtFIb1dJ9mysh5DpCbXp9ojbZdWqQRH9lNFCFC+gLo9h4
-	DVACPWz64kNlMA/mali0mbYgJtVcJPC/KpNCNMADzg5YNZlQruk31gpLyzm9urWso/+ZrBbFscx
-	Hp4OjcYur8pceG1IZ/p16xHmV2iJDxiIoAL8jPP7FeVamwYcvcK+/7acenZKCAJdvIvem05ZQZg
-	AZGBMwYxddxLsNtgYx+VFq739Psg2OggZHPKQTwmuHjM2ifdZawVLAUTO5p6BFcAFPghlkHa+
-X-Google-Smtp-Source: AGHT+IEgSZer8hWY13x0qXXR6I/Sej/NR+Xl7nYUwCW+ECmWFbBpqghq5bAxRYQfADo4HpTVwczsaQ==
-X-Received: by 2002:a05:600c:6304:b0:456:191b:9e8d with SMTP id 5b1f17b1804b1-45892b9d0bdmr51113435e9.11.1753951823050;
-        Thu, 31 Jul 2025 01:50:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:5d4b:b132:363:7591? ([2a01:e0a:3d9:2080:5d4b:b132:363:7591])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589952a60fsm54626685e9.23.2025.07.31.01.50.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Jul 2025 01:50:22 -0700 (PDT)
-Message-ID: <aff38b98-23ff-4dcd-afab-2a0d8c8ad599@linaro.org>
-Date: Thu, 31 Jul 2025 10:50:21 +0200
+        d=1e100.net; s=20230601; t=1753952499; x=1754557299;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P/OQxWaaWCrJySN7I3elm1yuPAF9rLghBbGZ8dHfSw0=;
+        b=N0O+KxEk5AaeFX3L5hkQgQtSPyFcrTCKkULXB+FBpOPxkiQM+fJB1DmUDYIVybfHWa
+         27fzTDp0clZD6d6+jHIXTqeZ9twxvwKcTybQDQXNamo6NGirl8n8lcECEfKnaPFBlpAE
+         S5nIpaiJ9O1wegfwBTjNlLDUTVDtnkA5UtQABYqPVh0pDS3y8fqK7YzBw08i5H8bLYaM
+         fqPs5UlUTUvtS8CXmtCYuZESutWfhI/MEiXcXdi66Ct4zeuImhUZY6LWe4lAf3sttAvG
+         sc/R+86Ma8iNadJim4ITUA2NDsS+vCFF6/EXZ0cAmT3+QRuhMirjD/RcINpOs+Gd3/gN
+         J4mg==
+X-Forwarded-Encrypted: i=1; AJvYcCUawWSsfJect6KXFN2ymgnj3DRougz2n0LnFogv0fHqbHUs5Nnx4rJJPZxy3ktelmNR9SruJUy8b7X80GTp@vger.kernel.org
+X-Gm-Message-State: AOJu0YymXM9ZBkLwVb8+pOimNCdCdIZ5wm2th6DINnPvjQktXjueO/pk
+	7wtvtmsiZvKT3nz4108Tn3ZwwLn3mN+5g+AV5RzWhsPPSA0WuZJryuIQFwsdAEpGZ3ueSzFFqnM
+	RyPlrk/fVxGZII8FEWt27paCUbngD+R7uowjMuJtE8103/o/E6c0SRH8RLsCZ27gu4NGP
+X-Gm-Gg: ASbGncvmCWH9APPCo6G1LdkV/OzOU+IfdjfUydXHdPbyi3uiZYVbrdivuQCQjkgAgpr
+	9Si/vD7IBrWc3EKOrKHCrfCxJ93LGpC396vpsAewmUgEOGo+N5jWHUTo36Ixk7txqatn/KSKy2Q
+	HhGQGO4Vwt5xZ3AY6GvvYaup/nVb2fvyAzQRsv+Exp40F/DsAN4A4dx1HDKQ7Zbc1KXnwPtH0JD
+	qudr+S3N9Mfms+jNcKRlaOzcmJ7bVODrtFUHzjqv0QpUlSiig6LuiqUpksYAqCGSfGx11+iLkMR
+	PUpVwFXD9E7Z39IgPBie7r8s5AdARiNFwakiL7AdVtJHuPGAXJbLBJwNtAOOP7GOdnbb
+X-Received: by 2002:a17:902:e5cb:b0:240:3c51:1063 with SMTP id d9443c01a7336-24096a852d0mr87912875ad.23.1753952498935;
+        Thu, 31 Jul 2025 02:01:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+0/RbBaXs3r/GnxSHXVAIgbuKkX2L0ySwykkOAhnPys/ZtwCTf98DM2oa1PEkcjj2IN6/tg==
+X-Received: by 2002:a17:902:e5cb:b0:240:3c51:1063 with SMTP id d9443c01a7336-24096a852d0mr87912565ad.23.1753952498308;
+        Thu, 31 Jul 2025 02:01:38 -0700 (PDT)
+Received: from hu-kbajaj-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e899b783sm12153315ad.133.2025.07.31.02.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 02:01:37 -0700 (PDT)
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Date: Thu, 31 Jul 2025 14:31:32 +0530
+Subject: [PATCH v8] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
+ secure calls
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH V1 0/3] Enable UFS MCQ support for SM8650 and SM8750
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
- alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250731-eud_mode_manager_secure_access-v8-1-4a5dcbb79f41@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAOswi2gC/43OwW6DMBAE0F+JfK6RsVkbcup/RBXamCU4jXFjB
+ 9Qq4t9rckJqq/Qy0lzezJ0lio4S2+/uLNLskgtjLvXLjtkBxxNx1+XOpJAgTAmcpq71oaPW44g
+ nim0iO0Vq0VpKiWsCQ8qakqxkGfmI1LvPx8DhLfc+Bs9vQyTcsKIRGkCpQoKRFS/5e/B4KY54x
+ vNrSKm4Tnixwfsix6oOLt1C/Hq8nmG1/31whuyT0c2RlKi7Cn8OrD9nvVFl+VTVWe1JC6UkoBX
+ VH6rZqvKparJaCWqwAt3UDfyiLsvyDRVVpkDFAQAA
+X-Change-ID: 20250715-eud_mode_manager_secure_access-6e57e3c71ec2
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753952494; l=6146;
+ i=komal.bajaj@oss.qualcomm.com; s=20250710; h=from:subject:message-id;
+ bh=pc8QwqkvgbAiE6arXF8//zl+k7EP7uH5r4jn0sOA2As=;
+ b=C4I+80Pf1JGAdJgaabFPoABi3rfoayrmCG7VTHc8ric/AZt8SwLJBSaxkKbfjyrnj3+keC/w7
+ JN34gfvjicsB6Rypp4vbLN5B/sQJyQ+ML+ugpi41tNKIYB9Ai+B1t91
+X-Developer-Key: i=komal.bajaj@oss.qualcomm.com; a=ed25519;
+ pk=wKh8mgDh+ePUZ4IIvpBhQOqf16/KvuQHvSvHK20LXNU=
+X-Authority-Analysis: v=2.4 cv=LsaSymdc c=1 sm=1 tr=0 ts=688b30f4 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=lmNMGcLygp3pFLK-ZoUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA2MSBTYWx0ZWRfX+Be98TRLafjl
+ sGFJuu7mm1gyc1ndTg3uK4Px6zEjmK3VqDcgxa+inSivbb1mUWd6RI85lOLZ3O3WjXMwtW4Gg8h
+ XsJhlsD6HdrmXbIbDk5rcIcmVyA0Mi/JIcg8FRsTFiYZR0PKZKb5bEPdCuVicM0QE8hJHFZyK1X
+ 4EW7d2OX8474mazjRSFfQo1Wgt2JkS/oy+sQfdda7/4T+RmDB9iDMIFkgwsvzcLHODfVoH3Mcfa
+ ox6qs+JixPBG+tutGrsDAQ7saK6FvQqi1Np4oJLQuG4o2VPRzQKC8lKEEgCvpya2WQE/5Ffl46k
+ 6Dq0wlEF1QByToGPGAdjD5oHx8E3pF0DwVxkhnBjB1eIoL2fzK+XnuokCovXe0P1uoonSIc4u2V
+ NL6cr1mOL7BTC4IewAqvAEcF52lhe9BGcf1/vXEClubqPD+O5x8Y2stvHqm3c/u0+QQHLzvC
+X-Proofpoint-ORIG-GUID: m_wq9tPoIjrj9wlf4p5U1P50BCnw-xB9
+X-Proofpoint-GUID: m_wq9tPoIjrj9wlf4p5U1P50BCnw-xB9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-31_01,2025-07-31_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 mlxscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507310061
 
-Hi,
+EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+as read-only for operating system running at EL1, enforcing access
+restrictions that prohibit direct memory-mapped writes via writel().
 
-On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
-> This patch series enables Multi-Circular Queue (MCQ) support for the UFS
-> host controller on Qualcomm SM8650 and SM8750 platforms. MCQ is a modern
-> queuing model that improves performance and scalability by allowing
-> multiple hardware queues.
-> 
-> Although MCQ support has been present in the UFS driver for several years,
-> this is the first time it is being enabled via Device Tree for these
-> platforms.
-> 
-> Patch 1 updates the device tree bindings to allow the additional register
-> regions and reg-names required for MCQ operation.
-> 
-> Patches 2 and 3 update the device trees for SM8650 and SM8750 respectively
-> to enable MCQ by adding the necessary register mappings and MSI parent.
-> 
-> Tested on internal hardware for both platforms.
-> 
-> Palash Kambar (1):
->    arm64: dts: qcom: sm8750: Enable MCQ support for UFS controller
-> 
-> Ram Kumar Dwivedi (2):
->    dt-bindings: ufs: qcom: Add MCQ support to reg and reg-names
->    arm64: dts: qcom: sm8650: Enable MCQ support for UFS controller
-> 
->   .../devicetree/bindings/ufs/qcom,ufs.yaml     | 21 ++++++++++++-------
->   arch/arm64/boot/dts/qcom/sm8650.dtsi          |  9 +++++++-
->   arch/arm64/boot/dts/qcom/sm8750.dtsi          | 10 +++++++--
->   3 files changed, 29 insertions(+), 11 deletions(-)
-> 
+Attempts to write to this region from HLOS can result in silent failures
+or memory access violations, particularly when toggling EUD (Embedded
+USB Debugger) state. To ensure secure register access, modify the driver
+to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
+Secure Channel Monitor (SCM). SCM has the necessary permissions to access
+protected memory regions, enabling reliable control over EUD state.
 
-I ran some tests on the SM8650-QRD, and it works so please add my:
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+SC7280, the only user of EUD is also affected, indicating that this could
+never have worked on a properly fused device.
 
-I ran some fio tests, comparing the v6.15, v6.16 (with threaded irqs)
-and next + mcq support, and here's the analysis on the results:
+Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+---
+Changes in v8:
+- Switched from depends on QCOM_SCM to select QCOM_SCM in Kconfig, as suggested by Dmitry
+- Link to v7: https://lore.kernel.org/r/20250722-eud_mode_manager_secure_access-v7-1-40e9a4569895@oss.qualcomm.com
 
-Significant Performance Gains in Write Operations with Multiple Jobs:
-The "mcq" change shows a substantial improvement in both IOPS and bandwidth for write operations with 8 jobs.
-Moderate Improvement in Single Job Operations (Read and Write):
-For single job operations (read and write), the "mcq" change generally leads to positive, albeit less dramatic, improvements in IOPS and bandwidth.
-Slight Decrease in Read Operations with Multiple Jobs:
-Interestingly, for read operations with 8 jobs, there's a slight decrease in both IOPS and bandwidth with the "mcq" kernel.
+Changes in v7:
+- Updated the commit message as per Greg's comment
+- Link to v6: https://lore.kernel.org/r/20250721-eud_mode_manager_secure_access-v6-1-fe603325ac04@oss.qualcomm.com
 
-The raw results are:
-Board: sm8650-qrd
+Changes in v6:
+- Propagating the error code from disable_eud(), per Dmitry's suggestion
+- Link to v5: https://lore.kernel.org/r/20250715-eud_mode_manager_secure_access-v5-1-e769be308d4a@oss.qualcomm.com
 
-read / 1 job
-                v6.15     v6.16  next+mcq
-iops (min)  3,996.00  5,921.60  4,661.20
-iops (max)  4,772.80  6,491.20  5,027.60
-iops (avg)  4,526.25  6,295.31  4,979.81
-cpu % usr       4.62      2.96      5.68
-cpu % sys      21.45     17.88     25.58
-bw (MB/s)      18.54     25.78     20.40
+Changes in v5:
+* Changed select QCOM_SCM to depends on QCOM_SCM in Kconfig per Greg's review
+* Link to v4: https://lore.kernel.org/all/20250709065533.25724-1-komal.bajaj@oss.qualcomm.com/
 
-read / 8 job
-                 v6.15      v6.16   next+mcq
-iops (min)  51,867.60  51,575.40  56,818.40
-iops (max)  67,513.60  64,456.40  65,379.60
-iops (avg)  64,314.80  62,136.76  63,016.07
-cpu % usr        3.98       3.72       3.85
-cpu % sys       16.70      17.16      14.87
-bw (MB/s)      263.60     254.40     258.20
+Changes in v4:
+* Added error logging in disable_eud() for SCM write failures, per Konrad’s suggestion
+* Link to v3: https://lore.kernel.org/all/20250708085208.19089-1-komal.bajaj@oss.qualcomm.com/
 
-write / 1 job
-                v6.15     v6.16  next+mcq
-iops (min)  5,654.80  8,060.00  7,117.20
-iops (max)  6,720.40  8,852.00  7,706.80
-iops (avg)  6,576.91  8,579.81  7,459.97
-cpu % usr       7.48      3.79      6.73
-cpu % sys      41.09     23.27     30.66
-bw (MB/s)      26.96     35.16     30.56
+Changes in v3:
+* Moved secure write before normal writes
+* Added error checking in disable_eud()
+* Use ENOMEM error code if platform_get_resource() fails
+* Select QCOM_SCM driver if USB_QCOM_EUD is enabled
+* Link to v2: https://lore.kernel.org/all/20250627125131.27606-1-komal.bajaj@oss.qualcomm.com/
 
-write / 8 job
-                  v6.15       v6.16    next+mcq
-iops (min)   84,687.80   95,043.40  114,054.00
-iops (max)  107,620.80  113,572.00  164,526.00
-iops (avg)   97,910.86  105,927.38  149,071.43
-cpu % usr         5.43        4.38        2.88
-cpu % sys        21.73       20.29       16.09
-bw (MB/s)       400.80      433.80      610.40
+Changes in v2:
+* Drop separate compatible to be added for secure eud
+* Use secure call to access EUD mode manager register
+* Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
+---
+ drivers/usb/misc/Kconfig    |  1 +
+ drivers/usb/misc/qcom_eud.c | 33 ++++++++++++++++++++++++---------
+ 2 files changed, 25 insertions(+), 9 deletions(-)
 
-The test suite is:
-for rw in read write ; do
-     echo "rw: ${rw}"
-     for jobs in 1 8 ; do
-         echo "jobs: ${jobs}"
-         for it in $(seq 1 5) ; do
-             fio --name=rand${rw} --rw=rand${rw} \
-                 --ioengine=libaio --direct=1 \
-                 --bs=4k --numjobs=${jobs} --size=32m \
-                 --runtime=30 --time_based --end_fsync=1 \
-                 --group_reporting --filename=/dev/disk/by-partlabel/super \
-             | grep -E '(iops|sys=|READ:|WRITE:)'
-             sleep 5
-         done
-     done
-done
+diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+index 6497c4e81e951a14201ad965dadc29f9888f8254..9bf8fc6247bacaa2499c6aa04e5acb25c02d0e34 100644
+--- a/drivers/usb/misc/Kconfig
++++ b/drivers/usb/misc/Kconfig
+@@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
+ config USB_QCOM_EUD
+ 	tristate "QCOM Embedded USB Debugger(EUD) Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	select QCOM_SCM
+ 	select USB_ROLE_SWITCH
+ 	help
+ 	  This module enables support for Qualcomm Technologies, Inc.
+diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+index 83079c414b4f281b2136d0d1eb39418c7f94ff8c..05c8bdc943a88dab6159a05c2d770484c084f7b7 100644
+--- a/drivers/usb/misc/qcom_eud.c
++++ b/drivers/usb/misc/qcom_eud.c
+@@ -15,6 +15,7 @@
+ #include <linux/slab.h>
+ #include <linux/sysfs.h>
+ #include <linux/usb/role.h>
++#include <linux/firmware/qcom/qcom_scm.h>
+ 
+ #define EUD_REG_INT1_EN_MASK	0x0024
+ #define EUD_REG_INT_STATUS_1	0x0044
+@@ -34,7 +35,7 @@ struct eud_chip {
+ 	struct device			*dev;
+ 	struct usb_role_switch		*role_sw;
+ 	void __iomem			*base;
+-	void __iomem			*mode_mgr;
++	phys_addr_t			mode_mgr;
+ 	unsigned int			int_status;
+ 	int				irq;
+ 	bool				enabled;
+@@ -43,18 +44,29 @@ struct eud_chip {
+ 
+ static int enable_eud(struct eud_chip *priv)
+ {
++	int ret;
++
++	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 1);
++	if (ret)
++		return ret;
++
+ 	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+ 	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+ 			priv->base + EUD_REG_INT1_EN_MASK);
+-	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+ 
+ 	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+ }
+ 
+-static void disable_eud(struct eud_chip *priv)
++static int disable_eud(struct eud_chip *priv)
+ {
++	int ret;
++
++	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 0);
++	if (ret)
++		return ret;
++
+ 	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+-	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
++	return 0;
+ }
+ 
+ static ssize_t enable_show(struct device *dev,
+@@ -82,11 +94,12 @@ static ssize_t enable_store(struct device *dev,
+ 			chip->enabled = enable;
+ 		else
+ 			disable_eud(chip);
++
+ 	} else {
+-		disable_eud(chip);
++		ret = disable_eud(chip);
+ 	}
+ 
+-	return count;
++	return ret < 0 ? ret : count;
+ }
+ 
+ static DEVICE_ATTR_RW(enable);
+@@ -178,6 +191,7 @@ static void eud_role_switch_release(void *data)
+ static int eud_probe(struct platform_device *pdev)
+ {
+ 	struct eud_chip *chip;
++	struct resource *res;
+ 	int ret;
+ 
+ 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+@@ -200,9 +214,10 @@ static int eud_probe(struct platform_device *pdev)
+ 	if (IS_ERR(chip->base))
+ 		return PTR_ERR(chip->base);
+ 
+-	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+-	if (IS_ERR(chip->mode_mgr))
+-		return PTR_ERR(chip->mode_mgr);
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++	if (!res)
++		return -ENODEV;
++	chip->mode_mgr = res->start;
+ 
+ 	chip->irq = platform_get_irq(pdev, 0);
+ 	if (chip->irq < 0)
 
-Thanks,
-Neil
+---
+base-commit: 347e9f5043c89695b01e66b3ed111755afcf1911
+change-id: 20250715-eud_mode_manager_secure_access-6e57e3c71ec2
+
+Best regards,
+-- 
+Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+
 
