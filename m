@@ -1,192 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-67248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0921CB17069
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 13:33:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09CB8B17089
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 13:46:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A44B9A811C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 11:33:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3EAF87B2F2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 11:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 227E42C159E;
-	Thu, 31 Jul 2025 11:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA83421CC5B;
+	Thu, 31 Jul 2025 11:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KVl0ingj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XnEjbU/5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F47A2BF000
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BFB2AF07;
+	Thu, 31 Jul 2025 11:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753961605; cv=none; b=mc3h02c+PSJ80BX20TdwHbOhxIsGrknmgXT1Knk5THI+aK+q52YAWaI+21hQssMkty0I7s9uGEO05xYxNNH0rt9GEtEJbuA57Ri5D5jUgT2WwpTUp0tXAxsNi1ba65+83T1IhyBSKnsZMdYIpsBR4pW4nT7zcjI1bVNsK36gsUE=
+	t=1753962392; cv=none; b=jwQYHohTzBXNNIFf22O+eyfXiFKEoBZftHewjQT0LDcY3ZANPxxykAv5zkK1KEggZYfYzR7SwvzJPLt28+/Cj9q28zRYLxqUAcfWbpYg51Sjl4eL4mxFiYfuXG8pvyZNt4GTOc1ByZmHOwfMawYrNGl4EBI6/AkKXaWlIVAORdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753961605; c=relaxed/simple;
-	bh=MVHoymTtrUj1FNtzHDj+G/R7m5ic/21SYiflzC29O+U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WNxbF/9ctlsM3F9hWNXmJFn55ryjCdduPa0xFch7b1/PtVAX9eSetC02/kqBrsEWkY8D6ZrZduk52dDl3T8UmHxf8SY86DySJj7fk0wQ6bpwiQuQc9eG1riqtF21lyhDvofXDDA8Iptpe1rzqcT8/875DhuoKxyd1KTvYh/WkpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KVl0ingj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V9fFuR004903
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1753962392; c=relaxed/simple;
+	bh=FubkhzOHdRDM2M/ew7F86NSOZu7fC/b657TnB2zqcFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HCx87+UO+OS3a0zPg3tWEEUPsp7r84sKz+2Hc3YAvjgj30HXRzIDImLL0jLZWF9YJf1n6SikJrKz9PIlatOl5nUhPAiAWrCigN49mfV3y7COdujg2r9GK1GfmOx5ed5BhJNAZY9ZkTs6jlVkFbZb9X3Jv18XZVNEgo+BI5PTGwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XnEjbU/5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56V9fPMn024217;
+	Thu, 31 Jul 2025 11:46:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hiQCVI4PmZedCkpDHfOr5gWtV6DX2AHcDyhpGCv1hLE=; b=KVl0ingjacySND2Z
-	KL76fBWAL7VJFK/s9lqPRtADqB+ZRAn0MCAXW7yT8GNr4dBhD2TPxsgNYxlEPB34
-	YwSceVonh6V61GfPWxVUqcSv2tc283lXq3F3n9d6r+eZtKK+fokcCF0eHI9nn1AX
-	DFo7UQvLJKRd73+R2mKczq0/6aEJSMt+25Kay0BJMML67BPVwxbdNQsvatSrLxo0
-	noo3zY3LSflY3jjF65Krrt4bglKWM/8A0Xe/ymdAjvhRpAnfn0J1etskDsWhPXS+
-	bzos5i9sHiNZW8QtZcwCzHaaAIcRxXvN0lvZPamMZjpWtBQNS1FIYXI9PhIN/s9m
-	38TbUQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 487jwev05j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 11:33:22 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7dfd0470485so20026085a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Jul 2025 04:33:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753961601; x=1754566401;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hiQCVI4PmZedCkpDHfOr5gWtV6DX2AHcDyhpGCv1hLE=;
-        b=ZJit+QPH0RgrlyeImtSPCdCZ5hQMdtMfzADfjpbxH6Ur3Gsk/s8V5BSSkQiFR5CVkG
-         yCeXmZvXoqaSJURZa2VAzQUBrEpsHNy61datdsHLEBEl+nAr9gODGMhKQkhn9x/TIFz5
-         Cyc6Grbffmj/1o0isAY16gVFNKbwIxa6DIuiwtqqwWBR58FadPwoqAtxewIbsnT18ERK
-         sHVmFCVpPajcLUJRPKaReJHX49xOrNHYWMgUJ1QhQ1LCmSyXHJgS2l3j7Mf83Sit882u
-         jamK2IV5IH7BhIEW/mSyrkaO9VSGQgWvLpgikzMF9jAQK2p+emGxnUvYDFqzwGdT5I8b
-         ThXA==
-X-Gm-Message-State: AOJu0Yykk6t40qtbhZvV/IYHBZ/lHEPKRbjQr+z+++JVtnbsvDDvZB4b
-	Mjq8n6imRf9IwltDVl1JYOdAUaKu/ZcccnllNSIKNJOTZc6vV8lhXooRakkNN+Bin9aLuCsOtm7
-	KxGTzPswRLGkWAsHeDxyZqBCnZLlY+bBBLvCBZoo4oHyu9+aVQ97N/sQsq1hOLU/vYzZ6
-X-Gm-Gg: ASbGncsWtRucnEB2Uciit7SofqHMjg3jo8u5X/avvq6k7VKBBBeJleJ/ppWbrAj5ZY2
-	YUUwTJyeU2/F231p1dUWJawqPUArdon6Muim4zd+nQtUhtRNgxB316JWcwjFBHA0vbV71kf+KNe
-	nVNu/4WkgGFmCg1D12YSRQFWxHR9UusBFEqSxCw233xjXjtIcJaJXumjBNMjG1aK70Y3bpdA75B
-	Pe9iN7iiPMGE4hmOOTem69BkxD3tDmL7RaIR1H53kV+WqJFpmKi+4Ay4RWQr/d7Yz3qj3yrhCWc
-	u5r8aV8DVrkb0bcwixG1TC248PgHs0egkrtvBQNPCgBqUyh7DBkw6tyuMjdeU1JYLk2eLCg4QTn
-	Dp6uIInzFrEu1NEHUPg==
-X-Received: by 2002:a05:620a:c55:b0:7e3:30e6:1fd9 with SMTP id af79cd13be357-7e66f3579famr401346685a.11.1753961601226;
-        Thu, 31 Jul 2025 04:33:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9SW+3agSd3nX7M2jAwPZf0SuoF4AQlimzli/JD2ZQjueM2pww1iKLHn5i3E3E7+3YegsRmw==
-X-Received: by 2002:a05:620a:c55:b0:7e3:30e6:1fd9 with SMTP id af79cd13be357-7e66f3579famr401344585a.11.1753961600785;
-        Thu, 31 Jul 2025 04:33:20 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a9115562sm982681a12.59.2025.07.31.04.33.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Jul 2025 04:33:20 -0700 (PDT)
-Message-ID: <afcf449e-7370-491c-8682-552761a5a8c6@oss.qualcomm.com>
-Date: Thu, 31 Jul 2025 13:33:17 +0200
+	yS/XbXU5Wi2qavF9aaU076l00mh2nrP84Uf3OHJAxCI=; b=XnEjbU/5ofvijgD6
+	HFlHlR8DqcD9U6RLEuSEq+Wb4qH+zMdQSes1ir6x4pq7Au65EPP8vHqeaORkVlmd
+	WoJikJSNrHW3VaymMWDjlXdU9nb8APDInPCtk/CLKJuv+hoSDXKEvKepaITxecu3
+	lkqqA2CP67jz+Amiklrw4A/8nMAZeEh6M5F5YhIM30l+mOQxwWcLvHFKxK5LbNJO
+	GED4IM4eHYK3cOG2MtXKSOqY4LSE7ULwVG6zeor/onemWHF2BhyvR2sYW6Dt2yqF
+	/R4Cn8Qq+Lir5kfg1REtF6P4xQHeSZ77GpcsxUOBBg7b0WcUURTql3yzfcBYXLPk
+	Yrg0Zg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484r6qyny6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Jul 2025 11:46:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56VBkQ74002095
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Jul 2025 11:46:26 GMT
+Received: from [10.217.216.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 31 Jul
+ 2025 04:46:22 -0700
+Message-ID: <82d11cf6-bfed-9b73-c697-c692d1c7e02d@quicinc.com>
+Date: Thu, 31 Jul 2025 17:16:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
-To: Yingying Tang <quic_yintang@quicinc.com>,
-        Yijie Yang <yijie.yang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Shuai Zhang <shuaz@qti.qualcomm.com>,
-        quic_miaoqing@quicinc.com, quic_zhichen@quicinc.com
-References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
- <20250729-hamoa_initial-v3-4-806e092789dc@oss.qualcomm.com>
- <a6456802-3d19-4da5-a995-c8f00553c7fa@oss.qualcomm.com>
- <d14b2a0c-8304-497f-a662-5b93dbaaa1ed@oss.qualcomm.com>
- <c0b804e3-16ee-4e81-9aa8-4b6051b5af03@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH V2 2/2] mmc: sdhci-msm: Rectify DLL programming sequence
+ for SDCC
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <c0b804e3-16ee-4e81-9aa8-4b6051b5af03@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sachin Gupta
+	<quic_sachgupt@quicinc.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "Ulf
+ Hansson" <ulf.hansson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_mapa@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_sartgarg@quicinc.com>
+References: <20241218091057.15625-1-quic_sachgupt@quicinc.com>
+ <20241218091057.15625-3-quic_sachgupt@quicinc.com>
+ <a2mnkliubpdryxdwsd33kccvnlb4fnyzik5ywxw4xhnimwdwsm@oxe34zogzfot>
+ <bb60a145-1e8f-4004-b266-9f26a11440b9@quicinc.com>
+ <otfof56qvqxyjaq6onor2f3egrt57h2xazncias72qnn4xjgz5@2aj2pyj5xmyl>
+ <a885b32c-c59f-4fb6-b2cb-7955d2d3ae69@quicinc.com>
+ <mpuyg4ndd7xvfpwd6oubn7zmzkuienyrig5pmkrd4badlpebvf@h6weyimpcfv2>
+ <769268c2-9a7f-4b6e-aabd-a6cf5a744d5b@quicinc.com>
+ <d5ykzwuk3wrwycol3wpeontfp5t7h7vfrfcxnmxei3qs74xsp7@ihtzne5wbytf>
+ <81323b02-a7be-847a-b973-ca0cdb906558@quicinc.com>
+ <p7o2ykmpghx5jqagpkhd2rfqgizcdagn366rltyn4gmbmnmpje@vcygaqcaowkn>
+From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+In-Reply-To: <p7o2ykmpghx5jqagpkhd2rfqgizcdagn366rltyn4gmbmnmpje@vcygaqcaowkn>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: aF1s4JYSN22tteLXs0WKkhfKImTQsmCM
-X-Authority-Analysis: v=2.4 cv=Wv0rMcfv c=1 sm=1 tr=0 ts=688b5482 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=WymS4dw2S599D73gK6YA:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: aF1s4JYSN22tteLXs0WKkhfKImTQsmCM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA3OSBTYWx0ZWRfX13L4vyel0SaA
- ncsLms8n92kuareSOW3h0iTpQXGP1V0kajTLl9Hwv5TChvx5LEDGzdAuTd+gGgRak6saoi/WG58
- /RHMqXs41CWSOPdQSvjtvO62ZMEVQ22YOA+OQsWo8vTc+Mxg8xFAxfsXqYnHdAHez29ujNMxTvP
- Z5FEfze12S8bsUudN1BuTWUoNhP8wD+iaPyz0GZSmi+324w+dHIL4kl/XtlktMeg9GSP7FbQX8B
- DaI3ZmA9F68ULPP2ngmNkU1smSXMnBJyBVHrRNTR5jt4b4AXxazqbdkz1hZVBQJusclyO6BBNV7
- jG49iWjvxVbD5zPiLnqLMCSIk61W1qgRJNkiw0FkDKjSSrsEKmv5XdOteSkkXOS/UKz5U7CpUzf
- OlmArL4CH4vF2v7DbL2cBXQIMhQRmYEmRRwIP7XZE8zNC/AeqsuplSY832L5EqaZ+x+K0/sH
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDA4MCBTYWx0ZWRfX5ofeLYwUDCYX
+ 3JFazf6nmoyWRvk5EAZNk5zJszRhUZdGlpu+7p7GERqqS5go30V3rm3O0omO5Nw7T0YPAxig6AQ
+ JVK0oZUcdnSO2C6hT8cO8wgomOzWG0KxMsPQ98iqsFHVNd24PdGtpybQmWEuXIdz6EtiHRt0+Zs
+ yS09jbR16BQc2AgaC9lrauOH0k5mClLh9l8eCKg0PkR6TdS3CBxV9RBNl74pb08snf8Yc3XKkAe
+ uHUziaFr0ROZrn4Di02ah8EYKgDJOCmCFI++3jkoYCOZqmR5r/F/QxHLsOT1nSBRK6GmJaLf11+
+ 6v/taSB0zc/CRz4SazwCA62mRy3j1nU/4HTVZ6pwhokmyq00x9j4PjYcdvwMQo3qDUkHDnnOFgt
+ 6Wz5t6u7r2JtPBWHeYX+xNPA2NyQcSwbfJdOQxRsWNNIBQNIyh7wLGB+8mDZAJyK4d6L48zF
+X-Proofpoint-ORIG-GUID: HjUAUaVs2D4cYmS1AOuIpNH-2Ynvq9_4
+X-Authority-Analysis: v=2.4 cv=ea89f6EH c=1 sm=1 tr=0 ts=688b5793 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=iQVU1UiBVeion8-tTIwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: HjUAUaVs2D4cYmS1AOuIpNH-2Ynvq9_4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-31_02,2025-07-31_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 mlxscore=0 adultscore=0 impostorscore=0
- phishscore=0 mlxlogscore=999 suspectscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507310079
+ mlxscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507310080
 
-On 7/29/25 11:39 AM, Yingying Tang wrote:
-> 
-> 
-> On 7/29/2025 4:37 PM, Konrad Dybcio wrote:
->> On 7/29/25 7:51 AM, Yijie Yang wrote:
+
+On 7/30/2025 11:26 PM, Dmitry Baryshkov wrote:
+> On Wed, Jul 23, 2025 at 03:43:37PM +0530, Ram Prakash Gupta wrote:
+>> On 1/22/2025 3:20 PM, Dmitry Baryshkov wrote:
+>>> On Wed, Jan 22, 2025 at 02:57:59PM +0530, Sachin Gupta wrote:
+>>>> On 1/7/2025 8:38 PM, Dmitry Baryshkov wrote:
+>>>>> On Tue, Jan 07, 2025 at 11:13:32AM +0530, Sachin Gupta wrote:
+>>>>>> On 12/27/2024 12:23 AM, Dmitry Baryshkov wrote:
+>>>>>>> On Thu, Dec 26, 2024 at 11:22:40AM +0530, Sachin Gupta wrote:
+>>>>>>>> On 12/19/2024 11:24 AM, Dmitry Baryshkov wrote:
+>>>>>>>>> On Wed, Dec 18, 2024 at 02:40:57PM +0530, Sachin Gupta wrote:
+>>>>>>>>>> +
+>>>>>>>>>> +static unsigned int sdhci_msm_get_clk_rate(struct sdhci_host *host, u32 req_clk)
+>>>>>>>>>> +{
+>>>>>>>>>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>>>>>>>>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>>>>>>>>> +	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+>>>>>>>>>> +	unsigned int sup_clk;
+>>>>>>>>>> +
+>>>>>>>>>> +	if (req_clk < sdhci_msm_get_min_clock(host))
+>>>>>>>>>> +		return sdhci_msm_get_min_clock(host);
+>>>>>>>>>> +
+>>>>>>>>>> +	sup_clk = clk_round_rate(core_clk, clk_get_rate(core_clk));
+>>>>>>>>>> +
+>>>>>>>>>> +	if (host->clock != msm_host->clk_rate)
+>>>>>>>>>> +		sup_clk = sup_clk / 2;
+>>>>>>>>>> +
+>>>>>>>>>> +	return sup_clk;
+>>>>>>>>> Why?
+>>>>>>>> Sorry, I did not understand your question. Can you please explain in detail.
+>>>>>>> Please explain the maths. You get the rate from the clock, then you
+>>>>>>> round it, but it is the rate that has just been returned, so there
+>>>>>>> should be no need to round it. And after that there a division by two
+>>>>>>> for some reason. So I've asked for an explanation for that code.
+>>>>>>>
+>>>>>> clk_round_rate is used in case of over clocking issue we can round it to the
+>>>>>> usable frequency.
+>>>>> If it is a frequency _returned_ by the clock driver, why do you need to
+>>>>> round it? It sounds like that freq should be usable anyway.
+>>>>>
+>>>> I agree, rounding will be taken care by clock driver. Will remove in my next
+>>>> patch.
+>>>>
+>>>>>> Divide by 2 is used as for HS400 the tuning happens in
+>>>>>> HS200 mode only so to update the frequency to 192 Mhz.
+>>>>> Again, is it really 192 MHz? Or 19.2 MHz?
+>>>>> Also if it is for HS400, then shouldn't /2 be limited to that mode?
+>>>>>
+>>>> Yes, It is 192 MHz.
+>>> Good, thanks for the confirmation.
 >>>
->>>
->>> On 2025-07-29 09:32, Yijie Yang wrote:
->>>> The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
->>>> the Hamoa IoT SoM and a carrier board. Together, they form a complete
->>>> embedded system capable of booting to UART.
->>>>
->>>> This change enables and overlays the following peripherals on the carrier
->>>> board:
->>>> - UART
->>>> - On-board regulators
->>>> - USB Type-C mux
->>>> - Pinctrl
->>>> - Embedded USB (EUSB) repeaters
->>>> - NVMe
->>>> - pmic-glink
->>>> - USB DisplayPorts
->>>>
->>>> Written with contributions from Shuai Zhang (added Bluetooth) and Yongxing
->>>> Mou (added USB DisplayPorts).
->>>>
->>>> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
->>>> ---
+>>>> As part of eMMC Init, driver will try to init with the best mode supported
+>>>> by controller and device. In this case it is HS400 mode, But as part of
+>>>> HS400 mode, we perform Tuning in HS200 mode only where we need to configure
+>>>> half of the clock.
+>>> This isn't an answer to the question. Let me rephrase it for you: if the
+>>> /2 is only used for HS400, why should it be attempted in all other
+>>> modes? Please limit the /2 just to HS400.
+>> Hi Dmitry,
 >>
->> [...]>> +    vreg_wcn_3p3: regulator-wcn-3p3 {
->>>> +        compatible = "regulator-fixed";
->>>> +
->>>> +        regulator-name = "VREG_WCN_3P3";
->>>> +        regulator-min-microvolt = <3300000>;
->>>> +        regulator-max-microvolt = <3300000>;
->>>> +
->>>> +        gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
->>>> +        enable-active-high;
->>>> +
->>>> +        pinctrl-0 = <&wcn_sw_en>;
->>>> +        pinctrl-names = "default";
->>>> +
->>>> +        regulator-boot-on;
->>>
->>> It should be set to 'regulator-always-on'.
+>> like updated earlier by Sachin, HS400 tuning happens in HS200 mode, so if
+>> we try to use "ios->timing == MMC_TIMING_MMC_HS400" that wont help, as at
+>> this stage timing can be MMC_TIMING_MMC_HS200/MMC_TIMING_MMC_HS400 for
+>> hs200 tuning and hs400 selection. In this case we must divide clk by 2
+>> to get 192MHz and we find this as host->clock wont be equal to 
+>> msm_host->clk_rate.
+> What are host->clock and msm_host->clk_rate at this point?
+> What is the host->flags value? See sdhci_msm_hc_select_mode().
+
+There are 2 paths which are traced to this function when card initializes
+in HS400 mode, please consider below call stack in 2 paths
+
+sdhci_msm_configure_dll
+sdhci_msm_dll_config
+sdhci_msm_execute_tuning
+mmc_execute_tuning
+mmc_init_card
+_mmc_resume
+mmc_runtime_resume
+
+with values of host->clock as 200000000 & msm_host-clk_rate as 400000000
+and host->flags as 0x90c6.
+
+and
+
+sdhci_msm_configure_dll
+sdhci_msm_dll_config
+sdhci_msm_set_uhs_signaling
+sdhci_set_ios
+mmc_set_clock
+mmc_set_bus_speed
+mmc_select_hs400
+mmc_init_card
+_mmc_resume
+mmc_runtime_resume
+
+with values of host->clock as 200000000 & msm_host-clk_rate as 400000000
+and host->flags as 0x90c6 which are same as 1st.
+
+Now if card is initialized in HS200 mode only below is the call stack
+
+sdhci_msm_configure_dll
+sdhci_msm_dll_config
+sdhci_msm_execute_tuning
+mmc_execute_tuning
+mmc_init_card
+_mmc_resume
+mmc_runtime_resume
+
+with values of host->clock as 200000000 & msm_host-clk_rate as 200000000
+and host->flags as 0x90c6.
+
+now if you see the host->flags value, its same across the modes, and if
+I am getting it right from the pointed out function
+sdhci_msm_hc_select_mode(), your suggestion seems to be using the check
+host->flags & SDHCI_HS400_TUNING which is bit[13], but in above dumped
+host->flags SDHCI_HS400_TUNING bit is not set where we are using the /2.
+
+and the reason is, this bit is getting cleared in sdhci_msm_execute_tuning()
+before sdhci_msm_dll_config() call.
+
+so this /2, is eventually called only for HS400 mode.
+
+Thanks,
+Ram
+
+>
+>> Now if we go for only HS200 mode supported card, there
+>> the supported clock value would be 192Mhz itself and we need to pass
+>> clk freq as 192MHz itself, hence division by 2 wont be needed, that is
+>> achieved there as host->clock would be equal to msm_host->clk_rate. Hence
+>> no other check is needed here.
+> Please think about the cause, not about the symptom. Clocks being
+> unequal is a result of some other checks being performed by the driver.
+> Please use those checks too.
+>
+>> sorry for it took time to update as I was gathering all this data.
+> 6 months? Well, that's a nice time to "gather all this data".
+
+Took it up from sachin last month but still its a long gap.
+Thanks for helping revive.
+
+>
+>> since Sachin have already pushed patchset #3, and if this explanation
+>> helps, let me know if we can continue on patchset #3.
 >>
->> Are you sure? Turning off Wi-Fi sounds like a valid usecase..
-> 
-> Hi Konard, It is m.2 interface on Hamoa. The PCIe power of m.2 should be always on.
-> 
-> Even on QCOM's B2B interface, we are unable to dynamically control the power of PCIe devices on upstream kernel.
-> The PCIe specification does not support dynamic power control between the PCIe device and the RC.
-> PCIe power should be always on here.
-
-I see, I was confused by the name 
-
-Konrad
+>> Thanks,
+>> Ram
+>>
 
