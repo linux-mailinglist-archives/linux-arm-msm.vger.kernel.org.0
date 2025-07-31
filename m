@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4864DB173A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:02:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD80EB173B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 17:05:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 657037B7E02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 15:01:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65052189E743
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 15:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E60218DB03;
-	Thu, 31 Jul 2025 15:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8751A0BE0;
+	Thu, 31 Jul 2025 15:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0ENDWyo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmCliOJ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B6981E;
-	Thu, 31 Jul 2025 15:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026F981E;
+	Thu, 31 Jul 2025 15:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753974169; cv=none; b=fM6YX49jRb6gbluM+q7tqMR7lA9q4bEUzb8cEJYBDUyHG3VSldUYH4ak0hG91u5Tp8hdmEdm7QRsvSUfgZM7uht+0Yxawea8CRpime23WSknVT5WtZ+KhAN46AYCjsvjvyMpY3tJ/jA7pIFvJ9bUl6wr3qw6uOOyZZFOiyPGIb0=
+	t=1753974352; cv=none; b=rWpFHMknCyc0AiJA/7v5yknToOLy6lroX45YOiombawCLjcSfFkOsOl3gVtTfCWepkFQqv68Fm6eP3zNmQTo1TrLumvabxgFFm15xjmEJEeB99vnVlqls2ZGzyCrNdHiX1rLz/OtLOgus217YrJEKSApF+SZEbNh99RliXe8fms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753974169; c=relaxed/simple;
-	bh=EeB1JGW9qJD/+KH1z1oHcj4OUxjkMYNEtGLO+iHHIA8=;
+	s=arc-20240116; t=1753974352; c=relaxed/simple;
+	bh=qbl1UGs+1MEoTLsAhempajquYW9hQIVx9shHxx0Rgg4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p27y6AG9mYT/Y/wcPHvBb7qtE66PoNz1T2tYSt5I1v/CKKsbiJNE8X9tkAONSGas9pvBsLiUdOao2RyLPAWiMae83hJLPY7GCElCCv25nlC4KdkB44R9q5qMTfiFYbm+kXeCucDSk8tBSWbHHpdiRsQgid3mx++Nd4yD0yVkwPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0ENDWyo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44426C4CEF7;
-	Thu, 31 Jul 2025 15:02:47 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=piiBuDxuZGM5x4PgbjKxgffUrphSt2j7zUjbUtAeewTy7A0tNQzDw7HJ+oG5oPf/edMM9ScUvnJgkI/QwyKNrGR/8A1dTDDnX9Dj7oPML4UJjO/GOtVDgzFCGzygxIHs4Az1XmnEtyf6vDMxEm11esRG80O9NIUOFVcJyiaHLAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmCliOJ0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F869C4CEEF;
+	Thu, 31 Jul 2025 15:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753974169;
-	bh=EeB1JGW9qJD/+KH1z1oHcj4OUxjkMYNEtGLO+iHHIA8=;
+	s=k20201202; t=1753974351;
+	bh=qbl1UGs+1MEoTLsAhempajquYW9hQIVx9shHxx0Rgg4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=q0ENDWyocH2yX1Fwqm/20jdZ1U82DWVXc+8pJ5ztJAgHpNSyySPJpwZ5iLTMfThB0
-	 yXHkoKXzm/VWOWgzGt2WIHi1h06wppRNKwjgj3xTANoyhrAHJ9Im/7eprMYbarTzHv
-	 9LmyVtJSomhGwZ7AyQ7yl7851HM7naKwnrQKP2p1Okb6GeCkfQpLFmBPaSN/ka6irq
-	 2J77pBivCxynEefv6Gb+7ufanbbgyWtpTU09uahfDR7iNZXysC9p4PLDFYS/3FIgjN
-	 1Xjkhw4Q5yL+zhIzsW+/cM3elozakyfVVls5tUhSVttPyKZwJuhfbQnv/lSq2o4m7g
-	 m4iLHeHzX2DiA==
-Message-ID: <b1b884fc-01b8-4488-a4d9-a12e549daa92@kernel.org>
-Date: Thu, 31 Jul 2025 17:02:45 +0200
+	b=EmCliOJ0py2TiKhVTIFVrDoedecnAMnpyjvkGdXF7MK9BgxmwP0QkaMQjPrq1MkQV
+	 v6u/4wUuOF9eSi4J04tDzz5Cm6nYUszeR9Y5kEIEzNyaTS4XefuHZ+J3nJ93xTfdoz
+	 r8yLKIwVLZ+ss11BxQwUzQUIv0UY2lHibUMvUedL5FLPvoUDEQ4CJw/hcWW76rh1lT
+	 8fPmiQE/evFJlAAWn1IN55FYul4lGnIPbBnPtdGF7ioSBeTPzGLsY/mPbDrcDKa0zE
+	 rJRI/YZ4yzpsQaJ/udwjzJY+U4FIQIm7R3fGRuZ5PQrenZNe8hVHzzR4m/F5lgYlr7
+	 H1WaPi3bFx/3A==
+Message-ID: <75ef6db6-d1a4-438a-a9fb-ab6c9552b4b8@kernel.org>
+Date: Thu, 31 Jul 2025 17:05:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
-To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom: Add SM8750 GPU clocks
+To: Konrad Dybcio <konradybcio@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250729-hamoa_initial-v3-0-806e092789dc@oss.qualcomm.com>
- <20250729-hamoa_initial-v3-3-806e092789dc@oss.qualcomm.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250723-topic-8750_gpucc-v2-0-56c93b84c390@oss.qualcomm.com>
+ <20250723-topic-8750_gpucc-v2-1-56c93b84c390@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,46 +107,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250729-hamoa_initial-v3-3-806e092789dc@oss.qualcomm.com>
+In-Reply-To: <20250723-topic-8750_gpucc-v2-1-56c93b84c390@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 29/07/2025 03:31, Yijie Yang wrote:
-> The HAMOA-IOT-SOM is a compact computing module that integrates a System
-> on Chip (SoC) — specifically the x1e80100 — along with essential
-> components optimized for IoT applications. It is designed to be mounted on
-> carrier boards, enabling the development of complete embedded systems.
-> 
-> This change enables and overlays the following components:
-> - Regulators on the SOM
-> - Reserved memory regions
-> - PCIe6a and its PHY
-> - PCIe4 and its PHY
-> - USB0 through USB6 and their PHYs
-> - ADSP, CDSP
-> - WLAN, Bluetooth (M.2 interface)
-> 
-> Written with contributions from Yingying Tang (added PCIe4 and its PHY to
-> enable WLAN).
-> 
-> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 609 ++++++++++++++++++++++++++++
->  1 file changed, 609 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+On 23/07/2025 22:38, Konrad Dybcio wrote:
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,sm8750-gpucc.h b/include/dt-bindings/clock/qcom,sm8750-gpucc.h
 > new file mode 100644
-> index 0000000000000000000000000000000000000000..5facc5544c3df05b89b25fbcb5cd331e93040f15
+> index 0000000000000000000000000000000000000000..98e2f5df78740bf298c6b1065972d7e58ee81713
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> @@ -0,0 +1,609 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+> +++ b/include/dt-bindings/clock/qcom,sm8750-gpucc.h
+> @@ -0,0 +1,53 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 > +/*
 > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 
-There is some discussion inside, so maybe you already resolved it. If
-not: please use copyright format as requested by GPL FAQ, so provide
-date of first publication of this patch on mailing lists.
+
+This needs fixes... it's some sudden move of removal of copyright dates
+everywhere across Qualcomm. Please don't use internal rules outside of
+Qualcomm projects.
 
 Best regards,
 Krzysztof
