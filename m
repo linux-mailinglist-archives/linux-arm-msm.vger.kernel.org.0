@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-67281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43DDBB177A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 23:03:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E35B177E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 23:17:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A2434E49E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 21:03:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCC893B1E15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Jul 2025 21:17:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20692265CA0;
-	Thu, 31 Jul 2025 21:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF75C2550CF;
+	Thu, 31 Jul 2025 21:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCPhpJSj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsSjK7Nw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF43C25A2BF;
-	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BFE17DFE7;
+	Thu, 31 Jul 2025 21:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753995766; cv=none; b=q/Y6TfeWLAH+oCJhoyL7VElWv0KkP1UMn4iZ3P65wsSEe94OsasVqxr65NESgNmvnX5waxd5qosJlpX+7iOUMM1x9ShIKJaX3xDewE4Iwm/rnVfsp0ZN3PEbm5MM1NK1uMyBh/j91SeUVeGQuooaTZ81UHWI51jqEk2QF3pSjKI=
+	t=1753996623; cv=none; b=UtDCvDtMKDrnVilvjPq+nlZwXpg3h2lO4oeo9oJNAp06coGXJYeKm6knGstrFAv/IjCVXaA6b9glGXGLZx52cK1/AW0QJaG0+/j6/5s3oJY5tZ7Ovm17RDyOGJCo5sgIHEwINlddZQn0dwjAzhSPzyjyHJIM/azeceN3MhuVtMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753995766; c=relaxed/simple;
-	bh=hj9hWNAP1TrLYfyYzpKkJ6R8bTlE27E/f3rPu9CInWU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NwKmpzyQx35H1AuVr0ImpltmO+KEq32BxPmd/tEOgDUh9ouAWFJbAFxRuHUT43wDmxqdijJEQo1PFDYhOUP2Z70K9uM1dYz9RbXfw2aNVwCxsaxZbFCjdUKeNRN1w4krzNZmE6FTdSpaent12kNIM53NLbko5VGDQZdCBXqjt/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCPhpJSj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 70174C4CEFA;
-	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+	s=arc-20240116; t=1753996623; c=relaxed/simple;
+	bh=8SuWb864/uWU83a12ckbpPsM3Uhs8t6j416NiF5XSpI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Fyz0A5JuY2b7thHbfr8n653/eKYK4UqzTO8HI3KsNgn5P48rYWXdawCFXq9bXNfN+cyvPWZoTHaCHPjOL5XSK29vZ0YoY7uC9FI8wP2qD6kVuROL+DZZuFex1WAE1lkjdqLG8txYyZ1qpA4xTwAT+RhKVpPMpgRNNgZYCWfbX1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsSjK7Nw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 32A51C4CEEF;
+	Thu, 31 Jul 2025 21:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753995765;
-	bh=hj9hWNAP1TrLYfyYzpKkJ6R8bTlE27E/f3rPu9CInWU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=LCPhpJSjpB7qzegQ51ZkBneMDqTQ/bAlDF0ib6xAVlLWyY5mbj4TLQcUwtySNy33W
-	 duC81rGScGSFzmNA99bWn0/etnuyHdZRKHqOXOLGDTuBLB4uA5cp9q1kHyZxja//A+
-	 ZxFDLndZajKqyKbMdgIrPZjCyOGisdyvKR6OSP3nkRJJ/yPEoaboxEykwnM4Z0010z
-	 SBE25/NIPzR9gupU9Uas3UEc8/jH4VoVZRjmIfFQJ5TSzQiwVnarx93fUkJzz/CLVz
-	 yLuWbaKDYNEAvcBfdrP4imXsOmPmEijdYhf325V7oG13pZyZfq64rt3auBjR648YHF
-	 vm6P16mbsHNpQ==
+	s=k20201202; t=1753996623;
+	bh=8SuWb864/uWU83a12ckbpPsM3Uhs8t6j416NiF5XSpI=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=DsSjK7NwHn9LsRaEI8WqkipR7+E24+UbP4gqrizQCdiBu1ZD2OxeiAlYmNTjOkomC
+	 5x7Ga7lJQ4+QQCYuF/UY4UD8fwVzNBNAotRmLfyHrWHefP08u2pmfaJ2qUITPcQKND
+	 6ulVnko9Ik35vW8Bx/I6y5yOTVd0lzfi/0rhAOE3+1o4Kil+taMAjvqGoBw3IWiSi6
+	 37tr6Co2BOuEwiGG6aMydlxl4noVDAxuQck6iM88tO6YH54beQIVYUIim7wwRKdMVj
+	 TR/hf7Lriu775qVAvFNHdHhDcWyzmtlipnmrajdRTJyBnv44bpP4WLvSZxwAO/HRLQ
+	 4MWWquzEdEgrw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61418C87FD3;
-	Thu, 31 Jul 2025 21:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 262AFC87FCA;
+	Thu, 31 Jul 2025 21:17:03 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 31 Jul 2025 23:02:44 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sdm845-oneplus: Deduplicate shared
- entries
+Subject: [PATCH v6 0/2] Add support for sound profile switching and
+ leverage for OnePlus 6 slider
+Date: Thu, 31 Jul 2025 23:17:00 +0200
+Message-Id: <20250731-op6-tri-state-v6-0-569c25cbc8c2@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,91 +56,86 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250731-sdm845-msmid-v1-2-98489ece786e@ixit.cz>
-References: <20250731-sdm845-msmid-v1-0-98489ece786e@ixit.cz>
-In-Reply-To: <20250731-sdm845-msmid-v1-0-98489ece786e@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
+X-B4-Tracking: v=1; b=H4sIAEzdi2gC/3WOQQ6CMBBFr2JmbUmntBRdcQ/DguAIkxhq2tqAh
+ Ltb2Llw+Sbvv8wKgTxTgOtpBU+JA7spQ3U+QT9200CC75lBSWWkxotwr0pEzyLELpKgO3bSdIi
+ oDOTNy9OD56N3azOPHKLzy5FPer9C7xL5AitrpVIadTFwLIJbyDfsn8X4hn2Yyl+5qo2s8fJHN
+ of858dkhBRal6istLVB2/CcK/0H2m3bvl/SvYkCAQAA
+X-Change-ID: 20250419-op6-tri-state-ed1a05a11125
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>, 
+ Benjamin Tissoires <bentiss@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+Cc: linux-input@vger.kernel.org, linux-doc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, Gergo Koteles <soyer@irl.hu>, 
+ David Heidelberg <david@ixit.cz>, Casey Connolly <casey@connolly.tech>, 
+ Konrad Dybcio <konradybcio@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2034; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1495; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=NRxsP8lcA3q9aPxidLKbwvCT8KoWYD5PD4bDKiX1k74=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBoi9nzluXWVab2ZF96AXlNNtZs5b0Jhd2wXvKAd
- 9MWu505peqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaIvZ8wAKCRBgAj/E00kg
- coPdD/sEWR/Cbr7jiVyx9KDyE1/WOlKTyNv5c9dPixgDitOIbcmdjJuoxREsBRIfqqihzFvg2lW
- jXoZx3x86ZTM+PMrJiHJ+xA0u1WPiQ4urat2JBnUS9QpRHpnF6b48Ir63S3ux+aF/iFQiVjMCA7
- +lgVux3KjxJdH1JvgUEU/J2zQNYj6UjUf66axJ5hLsVuJznxseZYHgOWRLYldhAD1TGFvWUCaSV
- A/cQ/ehiliUmHpzQYM9wNCnl2IYe9T1FByKD6vdFhksDhagtkarlh6c3N2s9iolhWfPsEf8wa5G
- Ej9umspUjNQu4unWec1Hq0EwY4g0qPDcjsV/9qdAR9F6asDF7GP3KxNXFA9Lgdc2fcLE95d4cUj
- hhDWGjyQ9ztVJZAAL0Q6+JxIizJcBPNhQHuZfEM1SdPOibMW4i58SgrXPBa8vTP4LGorEksG04n
- vZGcgNmryeMO+Kgt6T7Rzo3K0L6pPjMHB4oXtW1CScnGy7GIcJiUFPJvqHgIPMtCQPtlNhgB4JQ
- dfutXZthry8mzHc8HO5fpwcwhCq8XpBeUnaKTCrdllbz62uG9Z7BAf67Teq+mbQKvsNUz52wvgv
- Ww4MpXZGQjP/KvovXJNtKFnzek0mUm2oRZkFvR0F69K4h36fz2iif9n0UBiQE04CfoKWoyx6cTl
- TPL3QTK1Y/QdDrg==
+ bh=8SuWb864/uWU83a12ckbpPsM3Uhs8t6j416NiF5XSpI=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBoi91NepPoeRso0VfQsB9G3tgPSIydZzZaZ3VgN
+ BDzr3Shw0GJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaIvdTQAKCRBgAj/E00kg
+ cgimEADPsbp2OaDvw/jFddmwrciOXrdq50N8DxtkY7kMlIpJjqVltG3L2ezKBx3wKNlk5bInzcZ
+ 0iGqryZk7wJfvduW/PqEeqRaYeAcxOsBiNdbNknmgr09uNhlmHmFaYS9fWo8RbQHHzoQEcM9qrz
+ dWmaR3XJTc7Gdf9lVuDo8CfS0YAI4GWcwlTvXakvlTI52XvL9uMNC4frPhrLwU68oRwvHcd7N9c
+ dyabiTU0dikGbktk0vmh2cL1JC/eAxUFs2cdXAhZUwafvj3bJB9ESkmwRhKbBYUBpnnCHXWS0DG
+ /+S3fcXomsocjBfNvPh0tea3yLFWzi1RVCAM6+W5d2Sa9pTz3aWCSmLPe6otOm1EVdENMo1hoNZ
+ yBlGiS7Q3xQbiQ4MzA1yYl6yuUn1BGkkkF+7jScd32BF1vQucnigwJSRKAEdrRr5hspB4/UVpQt
+ /YIRuE0eX7Gxe6VIahN2XwyaYvaEf7oB6aMxsjMnGR0RGiFBkYvQY9VrhXgoOWcmNPaAB/EnFM8
+ 1d67YDsKTTiuUrb5cYsJZP+HOq0OGw1N3PQgltr/hfn3kS2AMNFvBR/+TyqqJPmuGTPZe5g2EIq
+ zvC3UQux5wEozKpegUn1WUHAtmSBqq44q8YiAJVHU73gmN+BGk/j9zaphOpBkcBXuUAtK3kIsQS
+ c/dGVilpwT3w7yg==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
 X-Original-From: David Heidelberg <david@ixit.cz>
 Reply-To: david@ixit.cz
 
-From: David Heidelberg <david@ixit.cz>
+This code was tested for two years within the downstream Snapdragon 845 tree.
+It is now perfectly integrated with feedbackd in the Phosh environment.
 
-Both phones share same values, put them into common dtsi.
+Changes in v6:
+- Rebased again next-20250731, otherwise just a resent.
+- Link to v5: https://lore.kernel.org/r/20250419-op6-tri-state-v5-0-443127078517@ixit.cz
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Changes in v5:
+- Dropped merged
+  "Input: gpio-keys - add support for linux,input-value DTS property"
+- Link to v4: https://lore.kernel.org/all/cover.1677022414.git.soyer@irl.hu/
+
+Changes in v4:
+- DTS: use default debounce-interval, order alphabetically
+- Link to v3: https://lore.kernel.org/lkml/cover.1676850819.git.soyer@irl.hu/
+
+Changes in v3:
+- rename tri-state-key to alert-slider, fix DTS warnings,
+
+Changes in v2:
+- rebase to qcom/for-next
+add SND_PROFILE_* identifiers to input-event-codes.h
+
+base-commit: 02ac8d2a011b630481d959298a1cc76ca0717f3e
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi   | 3 +++
- arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts | 2 --
- arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts    | 2 --
- 3 files changed, 3 insertions(+), 4 deletions(-)
+Gergo Koteles (2):
+      Input: add ABS_SND_PROFILE
+      arm64: dts: qcom: sdm845-oneplus: Add alert-slider
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index b118d666e535a433f44b66c71b36e55df2ce5c80..da0052ab99e1d7ffb8ef0173b1c97d11b459b212 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -21,6 +21,9 @@
- /delete-node/ &rmtfs_mem;
- 
- / {
-+	chassis-type = "handset";
-+	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
-+
- 	aliases {
- 		serial0 = &uart9;
- 		serial1 = &uart6;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts b/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
-index 474759ab61043005fcabadb5c061bbd2eccb2447..cd5546b69d13d8d7f29373aebab1cfda79666900 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
-@@ -10,8 +10,6 @@
- / {
- 	model = "OnePlus 6";
- 	compatible = "oneplus,enchilada", "qcom,sdm845";
--	chassis-type = "handset";
--	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
- 	qcom,board-id = <8 0 17819 22>;
- 
- 	battery: battery {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts b/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-index a0affaa246fea5514a00b6c37edb30c6dceb2c59..b4212626b42954e10974ec087db2b42b07979f72 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-@@ -10,8 +10,6 @@
- / {
- 	model = "OnePlus 6T";
- 	compatible = "oneplus,fajita", "qcom,sdm845";
--	chassis-type = "handset";
--	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
- 	qcom,board-id = <8 0 18801 41>;
- 
- 	battery: battery {
+ Documentation/input/event-codes.rst                |  6 ++++
+ .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 39 ++++++++++++++++++++--
+ drivers/hid/hid-debug.c                            |  1 +
+ include/uapi/linux/input-event-codes.h             |  9 +++++
+ 4 files changed, 53 insertions(+), 2 deletions(-)
+---
+base-commit: 84b92a499e7eca54ba1df6f6c6e01766025943f1
+change-id: 20250419-op6-tri-state-ed1a05a11125
 
+Best regards,
 -- 
-2.50.1
+David Heidelberg <david@ixit.cz>
 
 
 
