@@ -1,195 +1,370 @@
-Return-Path: <linux-arm-msm+bounces-67345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4214DB18158
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 13:56:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68DADB18166
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:00:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F028B627C8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:56:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC87C1C25891
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:00:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B65856F2F2;
-	Fri,  1 Aug 2025 11:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84A042248A5;
+	Fri,  1 Aug 2025 12:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p9IN4Dd3"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="csSEQphS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D0D1DF98F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 11:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA75E1A7AE3;
+	Fri,  1 Aug 2025 12:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754049387; cv=none; b=c9tLl3mh0QYWHjNEwso8qzzqRal4xUKwzwwCJV77c2PWDjGSm1Vc+QIDs31sH+GwtEJpRJ1wj4hEQhAHM84kufsq1083AvLWt2Tx9SpBtkgvF1eB0GIKisEtWMI+NneYhnQi85TmxvbXXqHKG+btq+r0a9j1/bgbkin+MP+4kW4=
+	t=1754049625; cv=none; b=t24kMPQ/pFBKE7C5t6VisVCalG6Wj9ZFeHYh73OcJ3D/GHLWSyEhz2CGJOG+pqIuaDNOXouemmyBDylmdWl3d1eOqV9UE24Kq1z3pzFt0Uye0LSIosun6QfVKePvMpr2sUhW6hgaoH3v2RuWB4NlgRV74nq3iquVD9Me/zyAhcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754049387; c=relaxed/simple;
-	bh=6guj5SGYecgvd+Diof6vhKa1p/zkTKq5X83WawiuHg8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qIOcKAfhXmum3yy4+zZcwHQs7QObMQCWG73CwvoJiyUL3tjbDV3k/L0o/WFXQ9ce9ruiV0s3MF8u/mSUkRxSzHXNifHujt2cxpyJb7XlBzJ3UH35Vk/ipoIMqeEKN86dmpEhFiMv46SCSXkyOB2ILuf5nTXPjjkvXqyr3f/3Vs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p9IN4Dd3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57190l1B010154
-	for <linux-arm-msm@vger.kernel.org>; Fri, 1 Aug 2025 11:56:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zndqvOkOtBLPZgcibFTCnMvRTtpty67nrf8mHn7tQxk=; b=p9IN4Dd3lbFcTTye
-	K+bXpdj2dG96CxiXbECJgun+DGtRDE8rlOyp6Ql1CJxvYR1fbvriulvHrDviZLon
-	S3q0IPjExlZdre1IfSHMVcwInjl4mTnfRUJS+Rb1RGKYf7tYaBU/GK94jJWy5DRd
-	8EE2uDN4p+bhK7ErBOtFh4UZEb08AH100Gynv5P7iIX5vbblqMFa8RQz8JpYYagD
-	hpbgxwLP66N18MFQG2aDS5TcGMWZS5NrZ60UKobFIupPisnWSlY+u5i62k+HPDDO
-	rQcE9M7THk+S3BukBuosfQ/0CXy85ViHMY8fgjCdMszRkt0iltJKciXh243RAuOC
-	/q0Fag==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4860ep96wq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 11:56:25 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-707641946ecso1992186d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 04:56:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754049384; x=1754654184;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zndqvOkOtBLPZgcibFTCnMvRTtpty67nrf8mHn7tQxk=;
-        b=tTrLEc1elFe3y5b0SGYoMoRo9bK5aEMvTYOclSgCjVxLEnjstFalJ8o5D/Wm1KODem
-         v6+fGZsGN1LHHGhF/co2cJU7GV3cu6Zskpot9iqT2kOyMrITAqsHMlfH2F8yxMy0HLqK
-         rItkglwc/hEJsjn6WiEgc/IDncW2UwMGJ19FaWxxqnu5w6pL9xAJ7LhxC4CgmJVCPuA4
-         +m1/kg1448vct5sODmSTsNKsWHY9fPZ4fYhBBzTSqGqjUUKkRtAQH7BClowZz4/XF4ql
-         ipXLInLdZgyEedFBkvIOZCRwxJZZpdrj7Ys3OjI4VJCievYM5RZMVnhRL9no4q80kW9K
-         VgnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUHB3IAhB7CVXVp5KIvI/T6YB4sTYK7FoE+8jMmAxqYVqqxizzjni58u9VaYxQJCrZ/F8jvJ46hdTa0U2TV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4saXq5T7r/bIy56Ml4jUChTJkZrPBMKXBsLFEVUjkaL1rN1Zy
-	xLlvDSNaeNDn4jG34EcdD+Tey+eQ922Y3PUnH1nqtcuHSXh8zaQOLHxQTk1drjiw2Z5X4bSwX4m
-	zzvj3tZ7I2JPhInDtJGgXD96aoDYecj5BotbzODw9VjkwnEge0eKtBJJHQkbXtj0DOMw8
-X-Gm-Gg: ASbGncua9/wqC0UcFkr9w3RuAkFofBhNsi3zt1YPGlTivlKZPwEIExFLjaUY+UP17cY
-	dllu049GHzaugZSx0ZJh4b+CmxlQFNYGXd9dbHGKElQ3IMKAHJl/PMr2zk7Be6MLOud8N4caZjG
-	ksvlSurpTbsLuvEtgzP7TJQHF3d5KfwTgKfeWuQ8vKOyZ9/rXG2arHyvkeMdXrGog9JGDJFX02r
-	2OT0km6ZmfboY9PqOE7xD455jo8qSgjrHmZWUF6TDWiwIhwCjfzvYRH40vE8j8oCYANoZCeGtMM
-	2o1NhK6CmzzDXIEwfWWJqnsyY8kSheCeygjOBidtfqW23c+ZwhM4jcI+zYgv98WCgeuo7KIYVOA
-	AI5ZOn/5M7cg5Ee0Rcg==
-X-Received: by 2002:a05:622a:311:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4aedb9a1268mr83455801cf.2.1754049383861;
-        Fri, 01 Aug 2025 04:56:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJrDwZ4CqsLIhFn16pVJy0wpKGA9BP8YTsdrizbhvNE1Pr9Ax5WAkfuilF6IXeAquepVZw3g==
-X-Received: by 2002:a05:622a:311:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4aedb9a1268mr83455581cf.2.1754049383412;
-        Fri, 01 Aug 2025 04:56:23 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0a313esm277885066b.32.2025.08.01.04.56.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Aug 2025 04:56:22 -0700 (PDT)
-Message-ID: <72d5f805-1637-4c82-af25-e78b978c5799@oss.qualcomm.com>
-Date: Fri, 1 Aug 2025 13:56:21 +0200
+	s=arc-20240116; t=1754049625; c=relaxed/simple;
+	bh=EZzubd/xjF898M9Natt5msPracSUglnvBpuGxbey28Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MmI02IabFy375bpD663UP9aSP3Ly1XAa5fHX+aCK3wUu3m2beKqlPCLE7fETRz6SZ1evDYhm8crCvBqsaaZPcHtV7Gauh1jqGn2jt/zOMvzgiLp70VXiKgI6nC6LJ+4+i21SpqoadrUovZjw6zvWKUj4Lyh6X3CsuUixmNLJcHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=csSEQphS; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 3245AB5;
+	Fri,  1 Aug 2025 13:59:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1754049572;
+	bh=EZzubd/xjF898M9Natt5msPracSUglnvBpuGxbey28Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=csSEQphShVW12KdVnTQnQgd8x4xM5grcNqKzGR+ppmLQ+JFyJUCU+zHhmagy7Z3hm
+	 NpCO8zEN1Kn5Zp/oSyG4PzbGQc9rVQYUc8NxohQ878NFh/I5Zywoz5Hp+ONwmSSZpf
+	 yJq8N7gHMTda3o4TRvZBBaBio2AAjXuKtD0aWOu0=
+Date: Fri, 1 Aug 2025 15:00:07 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Frank Li <Frank.li@nxp.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Viresh Kumar <vireshk@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?utf-8?Q?Am=C3=A9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Michal Simek <michal.simek@amd.com>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-actions@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 2/6] dmaengine: Make of_dma_request_slave_channel
+ pass a cookie to of_xlate
+Message-ID: <20250801120007.GB4906@pendragon.ideasonboard.com>
+References: <20250730-topic-dma_genise_cookie-v1-0-b505c1238f9f@oss.qualcomm.com>
+ <20250730-topic-dma_genise_cookie-v1-2-b505c1238f9f@oss.qualcomm.com>
+ <aIpKz495WI1SJTeB@lizhi-Precision-Tower-5810>
+ <20250730180417.GC21430@pendragon.ideasonboard.com>
+ <aIpmgpXME1BmThxU@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spi: spi-qpic-snand: fix calculating of ECC OOB regions'
- properties
-To: Gabor Juhos <j4g8y7@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250731-qpic-snand-oob-ecc-fix-v1-1-29ba1c6f94e5@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250731-qpic-snand-oob-ecc-fix-v1-1-29ba1c6f94e5@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: I_BAVvQ80Qp-O758UvoWGv3FsZ_0BDla
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDA4OCBTYWx0ZWRfX+CIZaYM1qDni
- JLfYjKYe6NFTb5crjACPnVajnjq4s8OtDW258UaA5sOehpaKhdC1X82qsnFKBXl9EDEQ8jOUeLT
- q9GkvKhs1bx74LgXwLK/dJJPdqiRaWuN87ZCKR4OkuZswO6WYy5XvafizjfnB5+c9W5q6jZhD0Q
- W9SEubWDH60NiSKB2wWJKAt8sLNPUhBJpKVoz1wd5+KAKz7BYHOyRcVL/wLqBbHkr6OfotyaYV6
- 3Oyt+6uthLljSgnepYgyh+pPYtJO11ZkLiZ58cvQ1avFqnjfd3Lqdqj5NVRpx+/8OjXEWPhKWd2
- uzLpWVbDRTC3ZM7XWncr5L5or2mW/gHcnXsloAyUvlLELtRUcv0j0PbfZdmhMeZQNJxWn1Ccc9x
- NgjaDgPhgV/JtSnz0o/XAp1e3DK483TF7Af4CEHgKPrTnUavzPaaxrmPZ6G/u9UTNn0TWB6w
-X-Authority-Analysis: v=2.4 cv=DIWP4zNb c=1 sm=1 tr=0 ts=688cab69 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=pGLkceISAAAA:8 a=KpljTfsc1uQhhnHPe74A:9
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-ORIG-GUID: I_BAVvQ80Qp-O758UvoWGv3FsZ_0BDla
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-01_03,2025-07-31_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 mlxscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508010088
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aIpmgpXME1BmThxU@lizhi-Precision-Tower-5810>
 
-On 7/31/25 8:11 PM, Gabor Juhos wrote:
-> The OOB layout used by the driver has two distinct regions which contains
-> hardware specific ECC data, yet the qcom_spi_ooblayout_ecc() function sets
-> the same offset and length values for both regions which is clearly wrong.
+Hi Frank,
+
+On Wed, Jul 30, 2025 at 02:37:54PM -0400, Frank Li wrote:
+> On Wed, Jul 30, 2025 at 09:04:17PM +0300, Laurent Pinchart wrote:
+> > On Wed, Jul 30, 2025 at 12:39:43PM -0400, Frank Li wrote:
+> > > On Wed, Jul 30, 2025 at 11:33:29AM +0200, Konrad Dybcio wrote:
+> > > > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > >
+> > > > The DMA subsystem attempts to make it theoretically possible to pair
+> > > > any DMA block with any user. While that's convenient from a
+> > > > codebase sanity perspective, some blocks are more intertwined.
+> > > >
+> > > > One such case is the Qualcomm GENI, where each wrapper contains a
+> > > > number of Serial Engine instances, each one of which can be programmed
+> > > > to support a different protocol (such as I2C, I3C, SPI, UART, etc.).
+> > > >
+> > > > The GPI DMA it's designed together with, needs to receive the ID of the
+> > > > protocol that's in use, to adjust its behavior accordingly. Currently,
+> > > > that's done through passing that ID through device tree, with each
+> > > > Serial Engine expressed NUM_PROTOCOL times, resulting in terrible
+> > > > dt-bindings that are full of useless copypasta.
+> > > >
+> > > > In a step to cut down on that, let the DMA user give the engine driver
+> > > > a hint at request time.
+> > > >
+> > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > ---
+> > > >  drivers/dma/amba-pl08x.c                       |  3 ++-
+> > > >  drivers/dma/apple-admac.c                      |  3 ++-
+> > > >  drivers/dma/at_hdmac.c                         |  6 ++++--
+> > > >  drivers/dma/at_xdmac.c                         |  3 ++-
+> > > >  drivers/dma/bcm2835-dma.c                      |  3 ++-
+> > > >  drivers/dma/dma-jz4780.c                       |  3 ++-
+> > > >  drivers/dma/dmaengine.c                        | 20 +++++++++++++++++---
+> > > >  drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  3 ++-
+> > > >  drivers/dma/dw/of.c                            |  3 ++-
+> > > >  drivers/dma/ep93xx_dma.c                       |  6 ++++--
+> > > >  drivers/dma/fsl-edma-main.c                    |  6 ++++--
+> > > >  drivers/dma/img-mdc-dma.c                      |  3 ++-
+> > > >  drivers/dma/imx-dma.c                          |  3 ++-
+> > > >  drivers/dma/imx-sdma.c                         |  3 ++-
+> > > >  drivers/dma/lgm/lgm-dma.c                      |  3 ++-
+> > > >  drivers/dma/milbeaut-hdmac.c                   |  4 +++-
+> > > >  drivers/dma/mmp_pdma.c                         |  3 ++-
+> > > >  drivers/dma/mmp_tdma.c                         |  3 ++-
+> > > >  drivers/dma/moxart-dma.c                       |  3 ++-
+> > > >  drivers/dma/mxs-dma.c                          |  3 ++-
+> > > >  drivers/dma/nbpfaxi.c                          |  3 ++-
+> > > >  drivers/dma/of-dma.c                           | 18 +++++++++++-------
+> > > >  drivers/dma/owl-dma.c                          |  3 ++-
+> > > >  drivers/dma/pl330.c                            |  3 ++-
+> > > >  drivers/dma/pxa_dma.c                          |  3 ++-
+> > > >  drivers/dma/qcom/bam_dma.c                     |  3 ++-
+> > > >  drivers/dma/qcom/gpi.c                         |  3 ++-
+> > > >  drivers/dma/qcom/qcom_adm.c                    |  3 ++-
+> > > >  drivers/dma/sh/rcar-dmac.c                     |  3 ++-
+> > > >  drivers/dma/sh/rz-dmac.c                       |  3 ++-
+> > > >  drivers/dma/sh/usb-dmac.c                      |  3 ++-
+> > > >  drivers/dma/st_fdma.c                          |  3 ++-
+> > > >  drivers/dma/ste_dma40.c                        |  3 ++-
+> > > >  drivers/dma/stm32/stm32-dma.c                  |  3 ++-
+> > > >  drivers/dma/stm32/stm32-dma3.c                 |  4 +++-
+> > > >  drivers/dma/stm32/stm32-mdma.c                 |  3 ++-
+> > > >  drivers/dma/sun4i-dma.c                        |  3 ++-
+> > > >  drivers/dma/sun6i-dma.c                        |  3 ++-
+> > > >  drivers/dma/tegra186-gpc-dma.c                 |  3 ++-
+> > > >  drivers/dma/tegra20-apb-dma.c                  |  3 ++-
+> > > >  drivers/dma/tegra210-adma.c                    |  3 ++-
+> > > >  drivers/dma/ti/cppi41.c                        |  3 ++-
+> > > >  drivers/dma/ti/edma.c                          |  3 ++-
+> > > >  drivers/dma/ti/k3-udma.c                       |  3 ++-
+> > > >  drivers/dma/uniphier-xdmac.c                   |  3 ++-
+> > > >  drivers/dma/xilinx/xilinx_dma.c                |  3 ++-
+> > > >  drivers/dma/xilinx/xilinx_dpdma.c              |  3 ++-
+> > > >  drivers/dma/xilinx/zynqmp_dma.c                |  3 ++-
+> > > >  include/linux/dmaengine.h                      |  7 +++++++
+> > > >  include/linux/of_dma.h                         | 16 +++++++++-------
+> > > >  sound/soc/apple/mca.c                          |  2 +-
+> > > >  sound/soc/renesas/rcar/dma.c                   |  2 +-
+> > > >  52 files changed, 146 insertions(+), 68 deletions(-)
+> > > >
+> > > > diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+> > >
+> > > ...
+> > >
+> > > >  						const char *name)
+> > > >  {
+> > > > diff --git a/include/linux/of_dma.h b/include/linux/of_dma.h
+> > > > index fd706cdf255c61c82ce30ef9a2c44930bef34bc8..9f9bc4207b85d48d73c25aad4b362e7c84c01756 100644
+> > > > --- a/include/linux/of_dma.h
+> > > > +++ b/include/linux/of_dma.h
+> > > > @@ -19,7 +19,7 @@ struct of_dma {
+> > > >  	struct list_head	of_dma_controllers;
+> > > >  	struct device_node	*of_node;
+> > > >  	struct dma_chan		*(*of_dma_xlate)
+> > > > -				(struct of_phandle_args *, struct of_dma *);
+> > > > +				(struct of_phandle_args *, struct of_dma *, void *);
+> > >
+> > > I suggest pass down more informaiton, like client's dev point. So we can
+> > > auto create device link between client's dev and dma chan's device.
+> >
+> > Is .of_dma_xlate() really the right place to do that ? If you want to
+> > create a device link for PM reasons, isn't it better created when the
+> > channel is requested ? It should also be removed when the channel is
+> > freed.
 > 
-> Change the code to calculate the correct values for both regions.
+> I remember just need record client device pointer here.
 > 
-> For reference, the following table shows the computed offset and length
-> values for various OOB size/ECC strength configurations:
+> > >
+> > > DMA Engineer device
+> > >    DMA chan device
+> > >        consumer clients' device.
+> > >
+> > > If consumer device runtime pm suspend can auto trigger DMA chan's device's
+> > > runtime pm function.
+> > >
+> > > It will simplifly DMA engine's run time pm manage. Currently many DMA run
+> > > time pm implement as, runtime_pm_get() when alloc and runtime_pm_put() at
+> > > free channel.  But many devices request dma channel at probe, which make
+> > > dma engine work at always 'on' state.
+> > >
+> > > But ideally, dma chan should be resume only when it is used to transfer.
+> >
+> > This is exactly what I was going to mention after reading the last
+> > paragraph. Is there anything that prevents a DMA engine driver to
+> > perform a rutime PM get() when a transfer is submitted
 > 
->                               +-----------------+-----------------+
->                               |before the change| after the change|
->   +-------+----------+--------+--------+--------+--------+--------+
->   |  OOB  |   ECC    | region | region | region | region | region |
->   |  size | strength | index  | offset | length | offset | length |
->   +-------+----------+--------+--------+--------+--------+--------+
->   |  128  |     8    |    0   |   113  |   15   |    0   |   49   |
->   |       |          |    1   |   113  |   15   |   65   |   63   |
->   +-------+----------+--------+--------+--------+--------+--------+
->   |  128  |     4    |    0   |   117  |   11   |    0   |   37   |
->   |       |          |    1   |   117  |   11   |   53   |   75   |
->   +-------+----------+--------+--------+--------+--------+--------+
->   |   64  |     4    |    0   |    53  |   11   |    0   |   37   |
->   |       |          |    1   |    53  |   11   |   53   |   11   |
->   +-------+----------+--------+--------+--------+--------+--------+
+> DMA description is a queue, It is hard to track each descriptor submit and
+> finished. espcially cycle buffer case.
 > 
-> Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
->  drivers/spi/spi-qpic-snand.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+> And according to dma engine API defination, submit a descriptor not
+> neccessary to turn on clock, maybe just pure software operation, such as
+> enqueue it to a software list.
 > 
-> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-> index 0cfa0d960fd3c245c2bbf4f5e02d0fc0b13e7696..37ddc48d2c17264499f821d235835c4ff5982873 100644
-> --- a/drivers/spi/spi-qpic-snand.c
-> +++ b/drivers/spi/spi-qpic-snand.c
-> @@ -213,8 +213,16 @@ static int qcom_spi_ooblayout_ecc(struct mtd_info *mtd, int section,
->  	if (section > 1)
->  		return -ERANGE;
->  
-> -	oobregion->length = qecc->ecc_bytes_hw + qecc->spare_bytes;
-> -	oobregion->offset = mtd->oobsize - oobregion->length;
-> +	if (!section) {
-> +		oobregion->offset = 0;
-> +		oobregion->length = qecc->bytes * (qecc->steps - 1) +
-> +				    qecc->bbm_size;
-> +	} else {
-> +		oobregion->offset = qecc->bytes * (qecc->steps - 1) +
-> +				    qecc->bbm_size +
-> +				    qecc->steps * 4;
-> +		oobregion->length = mtd->oobsize - oobregion->offset;
-> +	}
+> Many driver call dmaengine_submit() in irq context,  submit new descriptor
+> when previous descriptor finished. runtime_pm_get() can NOT be called in
+> atomic context.
+> 
+> And some driver submit many descripor advance. Only issue_transfer() is
+> actually trigger hardware to start transfer.
+> 
+> Some client use cycle descripor, such audio devices.  Some audio devices
+> have not free descriptor at their run time suspend function, just disable
+> audio devices's clocks.  Audio devices run time suspend, which means no
+> one use this dma channel, dma channel can auto suspend if built device link
+> between audio device and dma chan devices.
+> 
+> Some DMA client have not devices, such as memory to memory. for this kind
+> case, it need keep chan always on.
+> 
+> issue_transfer() can be call in atomic context. but trigger hardware transfer
+> need clock and runtime_pm_get() can't be called in atomic context.
+> 
+> Most case issue_transfer() is call in irq handle, which means device should
+> already be in runtime resume statue.  DMA engine can safely access their
+> register if using device link.
 
-How about
+You have good points there, in particular the fact the issue_transfer()
+can be called in interrupt context.
 
-if (section == 0) {
-} else if (section == 1) {
-} else { return -ERANGE }
+For me this calls for new DMA engine operations to "start/stop" the DMA
+engine (better names are likely needed) from a client perspective.
 
-?
+> > and a put() when
+> > it completes ? (Logically speaking, the actual implementation would
+> > likely be a bit different in drivers, but the result would be similar.)
+> >
+> > > >  	void			*(*of_dma_route_allocate)
+> > > >  				(struct of_phandle_args *, struct of_dma *);
+> > > >  	struct dma_router	*dma_router;
+> > > > @@ -34,7 +34,7 @@ struct of_dma_filter_info {
+> > > >  #ifdef CONFIG_DMA_OF
+> > > >  extern int of_dma_controller_register(struct device_node *np,
+> > > >  		struct dma_chan *(*of_dma_xlate)
+> > > > -		(struct of_phandle_args *, struct of_dma *),
+> > > > +		(struct of_phandle_args *, struct of_dma *, void *),
+> > > >  		void *data);
+> > > >  extern void of_dma_controller_free(struct device_node *np);
+> > > >
+> > > > @@ -45,16 +45,17 @@ extern int of_dma_router_register(struct device_node *np,
+> > > >  #define of_dma_router_free of_dma_controller_free
+> > > >
+> > > >  extern struct dma_chan *of_dma_request_slave_channel(struct device_node *np,
+> > > > -						     const char *name);
+> > > > +						     const char *name,
+> > > > +						     void *data);
+> > > >  extern struct dma_chan *of_dma_simple_xlate(struct of_phandle_args *dma_spec,
+> > > > -		struct of_dma *ofdma);
+> > > > +		struct of_dma *ofdma, void *data);
+> > > >  extern struct dma_chan *of_dma_xlate_by_chan_id(struct of_phandle_args *dma_spec,
+> > > > -		struct of_dma *ofdma);
+> > > > +		struct of_dma *ofdma, void *data);
+> > > >
+> > > >  #else
+> > > >  static inline int of_dma_controller_register(struct device_node *np,
+> > > >  		struct dma_chan *(*of_dma_xlate)
+> > > > -		(struct of_phandle_args *, struct of_dma *),
+> > > > +		(struct of_phandle_args *, struct of_dma *, void *),
+> > > >  		void *data)
+> > > >  {
+> > > >  	return -ENODEV;
+> > > > @@ -75,7 +76,8 @@ static inline int of_dma_router_register(struct device_node *np,
+> > > >  #define of_dma_router_free of_dma_controller_free
+> > > >
+> > > >  static inline struct dma_chan *of_dma_request_slave_channel(struct device_node *np,
+> > > > -						     const char *name)
+> > > > +							    const char *name,
+> > > > +							    void *data)
+> > > >  {
+> > > >  	return ERR_PTR(-ENODEV);
+> > > >  }
+> > > > diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
+> > > > index 5dd24ab90d0f052bb48f451cf009dc2e9128014d..43d48e4ac8161ee9955120fe64f7b911bfdfe1ca 100644
+> > > > --- a/sound/soc/apple/mca.c
+> > > > +++ b/sound/soc/apple/mca.c
+> > > > @@ -926,7 +926,7 @@ static struct dma_chan *mca_request_dma_channel(struct mca_cluster *cl, unsigned
+> > > >  	char *name = devm_kasprintf(cl->host->dev, GFP_KERNEL,
+> > > >  				    is_tx ? "tx%da" : "rx%db", cl->no);
+> > > >  #endif
+> > > > -	return of_dma_request_slave_channel(cl->host->dev->of_node, name);
+> > > > +	return of_dma_request_slave_channel(cl->host->dev->of_node, name, NULL);
+> > > >
+> > > >  }
+> > > >
+> > > > diff --git a/sound/soc/renesas/rcar/dma.c b/sound/soc/renesas/rcar/dma.c
+> > > > index 2035ce06fe4c4aeaa8620d817910a5319732fa58..dcbff2fc61a0472adea226371016a128563b3cd0 100644
+> > > > --- a/sound/soc/renesas/rcar/dma.c
+> > > > +++ b/sound/soc/renesas/rcar/dma.c
+> > > > @@ -204,7 +204,7 @@ struct dma_chan *rsnd_dma_request_channel(struct device_node *of_node, char *nam
+> > > >  		}
+> > > >
+> > > >  		if (i == rsnd_mod_id_raw(mod) && (!chan))
+> > > > -			chan = of_dma_request_slave_channel(np, x);
+> > > > +			chan = of_dma_request_slave_channel(np, x, NULL);
+> > > >  		i++;
+> > > >  	}
+> > > >
 
-FWIW the values match qcom_spi_ooblayout_free(), so the commit seems
-sane
+-- 
+Regards,
 
-Konrad
+Laurent Pinchart
 
