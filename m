@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDA27B17EC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:04:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CD53B17ED3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:08:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 930423B1E0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:04:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FDD21C2729B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:08:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6926E21772A;
-	Fri,  1 Aug 2025 09:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2C41218584;
+	Fri,  1 Aug 2025 09:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u1wykJzA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJNg+Rjc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3989114F70;
-	Fri,  1 Aug 2025 09:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D2414F70;
+	Fri,  1 Aug 2025 09:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754039086; cv=none; b=InFSU3Vkz49Ud0eH5BXcLvDqNx0SBPzJtTimw0Jt3UpgLSWFoZMd8xI/rtslPXxTzH65DtURptwNPFi3iXYFWRxkU/TkSAhaAgz+Tcvd30shk3IOa2h8PbuMqTL6X4DQ+ZiAg8EpncjDy9Sd90XlultoYecsovCkJQCzacMdY0g=
+	t=1754039289; cv=none; b=HsR8p8RBr5saVxO5wdidxX9HneeR50RLlmMfCcwZVsVWEYtBwD3tYlZDWac8Qkh9s5vCPBW6Xfc2+9Tt9XnzdoY2OwFomYNNr4ol/hVTiPCar0IoYoBDM03NXNs25L73ERB1JKOZUe3JipCAFDsIP2m4iNG1dryq4Rm1cQm/JdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754039086; c=relaxed/simple;
-	bh=H4b97q1bMBc3UzOOfkFdWKS6pGWA8yqazaBrzbHMocU=;
+	s=arc-20240116; t=1754039289; c=relaxed/simple;
+	bh=Mhtf3SofpDsdAhp5/pn8dihUW68ww6HCaLN7D8crfSE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PEJQnHNQVJr6CiaJTYKX3IFbxbY9nDOwnPzQSlqQRWHFMa8CP/+jUlTwyICxceWxIx7+J2ws+NExXQXQOCXXhLyCeQqYdwBxWk6jDcu6GT5RHVcytzFFjJ/78T0HZHeXJFXvD5zM05shAmsd4jjBZDL+j5WhMHmX2f7MmNlW7Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u1wykJzA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A771C4CEE7;
-	Fri,  1 Aug 2025 09:04:41 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=P+z4V0ZVTmrv/27xitVQL5vv0Q3stATie7+2naOYs+QufKYd9JXHiSC2LJT/to3lKKzuNR8avURVl2abJf0i8zG1KOUEahDtaeCIGsnqr5N0rpy2yrN0K2ib2En4dY9tH4aPnNwkd73qyRqsUWjXt8vn7foXzZwxtleqML5j9UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJNg+Rjc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98EAC4CEE7;
+	Fri,  1 Aug 2025 09:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754039085;
-	bh=H4b97q1bMBc3UzOOfkFdWKS6pGWA8yqazaBrzbHMocU=;
+	s=k20201202; t=1754039289;
+	bh=Mhtf3SofpDsdAhp5/pn8dihUW68ww6HCaLN7D8crfSE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=u1wykJzA35hOYRzZiwx092uD6L6u7dj0/fOgxoreAUFOJ0V7Wu/iujREguncmw3Rm
-	 32GooxhrkOtT2r9KIUTOl6buej1ehzR0CSGH4kZtwhwl9IdzvfLDKlsJDP1xWzg/sI
-	 vtTual7+6kjBvB0eCUhV1BOvsqG6FPVisUl4xJeRitT+cxKD2v1iTdiCnxNbmu2C+U
-	 azm95l647Oo0P4fnXEQjynnH9WddcNAk4dMaWH8oJ/1jEWMTtSnlwVq70Ut1P181uZ
-	 wXM8gRPFquI4QQjvPiVG5vmkslBSg9DhhGg52AohhidB+CRYjDaO7iBfHifDSynrCz
-	 a4PVU301mu92g==
-Message-ID: <03efb3dc-108e-453e-91e4-160a0500cff1@kernel.org>
-Date: Fri, 1 Aug 2025 11:04:40 +0200
+	b=IJNg+RjcoW09dkjZ4Yb+rsV0z4GxopJaHF0o837YKfI9QDF1Tox7/v3UoCsoagWdV
+	 v8/vFRfz1/OioD4iWrg9c7Te3ccK453uujKxctUHoP8Idr1nXrQ+e7VX2HVbA0O80l
+	 uNISEjBkwxNnmJGE+mSQ5ZpY1jLnKgExLnaARJYLl8CijmHkMhMCj9VJ03FC/bxmzt
+	 zljxNadp+gic/X0tEv5FtR+Ab8Rr89RkWh3733kMcoZJTNND0OMzly57YEjLtR8X9Y
+	 ZT6JkBgXqfEXJBZ9unW8OAH1ZE83XJGHej74OYxbSoWgs0O60Lt9gytLagvazOlfN/
+	 5gAtGNiVVKGXw==
+Message-ID: <a51a9efb-67b1-4607-bcf3-8be70a9d1c24@kernel.org>
+Date: Fri, 1 Aug 2025 11:08:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
- properties to UFS
-To: Manivannan Sadhasivam <mani@kernel.org>,
- Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org,
- James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
- agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-oneplus: Deduplicate
+ shared entries
+To: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
- <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
- <2a3c8867-7745-4f0a-8618-0f0f1bea1d14@kernel.org>
- <jpawj3pob2qqa47qgxcuyabiva3ync7zxnybrazqnfx3vbbevs@sgbegaucevzx>
+References: <20250801-sdm845-msmid-v2-0-9f44d125ee44@ixit.cz>
+ <20250801-sdm845-msmid-v2-2-9f44d125ee44@ixit.cz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,28 +104,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <jpawj3pob2qqa47qgxcuyabiva3ync7zxnybrazqnfx3vbbevs@sgbegaucevzx>
+In-Reply-To: <20250801-sdm845-msmid-v2-2-9f44d125ee44@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/08/2025 10:28, Manivannan Sadhasivam wrote:
-> On Thu, Jul 24, 2025 at 09:48:53AM GMT, Krzysztof Kozlowski wrote:
->> On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
->>> Add optional limit-hs-gear and limit-rate properties to the UFS node to
->>> support automotive use cases that require limiting the maximum Tx/Rx HS
->>> gear and rate due to hardware constraints.
->>
->> What hardware constraints? This needs to be clearly documented.
->>
+On 01/08/2025 10:21, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
 > 
-> Ram, both Krzysztof and I asked this question, but you never bothered to reply,
-> but keep on responding to other comments. This won't help you to get this series
-> merged in any form.
+> Use the definition for qcom,msm-id and put them into the common dtsi.
 > 
-> Please address *all* review comments before posting next iteration.
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-There was enough of time to respond to this, so I assume this patchset
-is abandoned and there will be no new version.
+Interesting that they use same ID...
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
