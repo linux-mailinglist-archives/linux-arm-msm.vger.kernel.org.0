@@ -1,185 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-67353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C417DB181F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:44:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CCCDB182A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 15:41:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15AAF3A6C99
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:44:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B25A85877C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 13:41:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 258E22472BC;
-	Fri,  1 Aug 2025 12:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D60625A2C7;
+	Fri,  1 Aug 2025 13:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4xz+r+3"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="c1QhIUfE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83491F16B;
-	Fri,  1 Aug 2025 12:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C38223ED76
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 13:41:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754052243; cv=none; b=oqXujBushCaRUYdVBH8BlQ8g3OazA7Nlmmra3o7/9V1Ak5ggFmr3DZrAIqH02WrfJVhr41okiRgwi8NnQKE28RJU5voPbxkTSxkSRntVikyrklHhdEm+oA6oy211kQCdEHSg4wvT9UX2rtbdcD1ndeX8lHk6y/jVxZV9TBWkiao=
+	t=1754055671; cv=none; b=LFB9x6dQ6OUvLIKr3BCyEmNnX5hyWie8RSnAGDXBzT1zLEx7Nbcn+eOWuHq/Ho2ozpP1ROU1k6hD22YF7WgWf0bJNjCntJxeENkiBnqs+ruIR2NN8xYLCtw/LWtvI62lLe4ZJBORMMt0mIbUXZSkcwh3vfLOD3xxZLL2WCQV7vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754052243; c=relaxed/simple;
-	bh=FiT0425S7X3WbHUWOMIF4UULdXiBKCkvWg3ZnMqeZM0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aZ2nb/wdKerkWPI0n7Qpk7ntw1uw4QzO85t6vmzwoBr08Kuh3LQUHWaDej1ACs2nQJ9vkrlZ6cdeeXMlXOWnAZHnEqHXccopdU0RaEwqBTnfwqIA2prTTLsM2eVs1cNY/pnD+R2AnP4lZ7kw4BsWvzAkaxNMKTlCDHcEZN0f0jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4xz+r+3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E529C4CEE7;
-	Fri,  1 Aug 2025 12:43:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754052242;
-	bh=FiT0425S7X3WbHUWOMIF4UULdXiBKCkvWg3ZnMqeZM0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E4xz+r+32ZjXVU+0L086jLIp1hvyCbtHgcWwNT6uf6pw9E3Nup1mfRV+FBNlkUCbJ
-	 DunzKp65I/bVG5wz5ZAldHNQzx+0TNCGZDB8B9GxmV22IGd4k2Sncj0GnrDFVIkfH5
-	 zyXHELvWnEh5taOHjSjau+NDYsQG6ELyNzaOl7BnRsPUpmQ60581KLfjkXjFwgZLu/
-	 QNKdJcz4emONeLI0/u+dxcM+ncndrzTz8XDE4I4lPJLQ6e0uKf9PpnHpsnIZBAR1KS
-	 ysojmaTd0rAVZLGMRQzLG2nRPQGXQ9A0miAMOO5TqasPSBX5zQosSQ4NRiFjRaM0LJ
-	 CW+BxBMS1TkXA==
-Date: Fri, 1 Aug 2025 18:13:52 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com, 
-	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1 0/3] Enable UFS MCQ support for SM8650 and SM8750
-Message-ID: <u27jbp3wkgw2cyyans3rmxspqqwufymkztvyfjacrke252nbud@yfutnxhwcspr>
-References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
- <aff38b98-23ff-4dcd-afab-2a0d8c8ad599@linaro.org>
+	s=arc-20240116; t=1754055671; c=relaxed/simple;
+	bh=r1c9l1OijXU/QDDLBcy3ZcjwcgLrgltP3dZGJovejCY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=V94M9MSRVBgSuEpFpkxFRnxXdRkoOH0Tsk3fBrPGzXvXuneMu1wYDEfQmIbaIFXrtOutjdUso4cIRNDCyasCV9s9isurwCkRCIJ7AGicO1HoYb0Y5bboRsiK3bnw00HsrUxKwZ/9+wZYGR2igntKu2mwmIl2L0vO+J4X36Byba8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=c1QhIUfE; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6157c81ff9eso2416548a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 06:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1754055668; x=1754660468; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fco+a29BOB9mtDgoYWIpNOSq5S/ZGt3leEcvdoqeQzk=;
+        b=c1QhIUfEhKHVK78f5nQ65L9bdCehwMZ8HpANGaiIOHFhfH+FnzYXydJOQ582aW4808
+         fwk37JMyBD0J5wHdT0QrVNjnHwVTbfXyn0SGDMp5tCQSo96SkmsebKC36DfYVIn4KQPO
+         FIo2k3ebwEu9RFU23L1qePLbbCemm0FiLS2an5eCqZgQn8A0Z9nb9t3lVOSv2BQcwH0j
+         JmKULiwRKDbjPHYb0XtFtW7st4mRzPAt+QCf/2oeONytaWYv3xwd/E9BXvMxKARVPdR5
+         U87ftPBiuUTVajJrbys9sb7iwohFsPGbmqwXHOSjFBMEnGU9guR8nXMi1K64mHMViJc/
+         yNkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754055668; x=1754660468;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fco+a29BOB9mtDgoYWIpNOSq5S/ZGt3leEcvdoqeQzk=;
+        b=jK4sGuL6yrS7JfEEVQjrtb0LJuYrDZL30i4CmZI+L51v2BngPAEpBsWKboGwfIHAbC
+         SJqZX3LV8BFjYNdxJE1H/t97V+vDA8gIDV5xOBKw+9uqQO4Geb9fftA6NbEKLw3OOZ3x
+         XwWncxefL/fxFHpHjkaaAdgjMdwJy71oIN7pR6jXTEawslnkgHZVJ3btEPQIpGl308PK
+         2sjUxxIeOS1VgJoB/+6BRb6u2dnwzSzn6J2Pzo9nDX74ZVYvlmeK5I1nwx9DtilTzWwi
+         XcBUBmsOdq4rm5jY2eLUyp54AAMGXygPYYKj266JL4cYOyW3McDivJUeSP753ib13mA3
+         eHLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV+bDuJ6XESp073eRxIHjcdE1ndKvMgQed2yKn3z7DS1vvdv010AvRzMZ7ucgO0Ml9s46HJLDRmYgbJRzFE@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwwZ9c7haDHGHxdHKPT8EWzdkdGcLNnhz7VYJn7ZAYHchyV+OI
+	PKL89hknvqlsIR5D/IE/vU9Uu6iR3T9b4nm/Ti3yfYVRiXIAuMrNfk3HVHhHY1Hv0npjFQ+lKTG
+	DpejERvc=
+X-Gm-Gg: ASbGncupsiLna2TNzv4FVVjE9Rw4vONpeYL2J9ihO3cV+S734brbi1VUaXLwj4S6AjT
+	h6ku1VKKeBQLpI3/yXOQopgLmZ90ervbF4RhNdkd3rgSfh9RJHMo9d5GyGPGjf3+EeQMDAi5Fqw
+	WgtwSmDhdHX/9LYZltYxujlctP0ZKIBjO5KO7uK49T5CUJKOAGZOlo3i9Fhsb8I8PT9ZAget9rf
+	BhwQSfnoEwojja62pBfeKL7ICh1NXkEB0ZWney2lW/7WkkX/JMKRDAqzyotWDElHRscrSCqpuf/
+	aw60zIR3kWOYVe+mGEkQ8H696KrOgCE9U+mWgz7uNjVz14FRYKhFgQcxg2h00V/pn/rORucXcGx
+	1+CIFNoY/mIwFbpO90IJeZ26GORCkQzEvPR1l93U6lJR8lo2acAlWLJ9qmcDo1AS0ypPBclk0sE
+	9gyHM=
+X-Google-Smtp-Source: AGHT+IFj00+KEhfyTUdUoeMsQOAVFICxssAUXXiQsbArF6rrRmD2nbeXGkEAgVBJGf4w+/U9QBdSNw==
+X-Received: by 2002:a17:907:3e1a:b0:af9:3d0a:f393 with SMTP id a640c23a62f3a-af93d0b0315mr71429966b.25.1754055668022;
+        Fri, 01 Aug 2025 06:41:08 -0700 (PDT)
+Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0df10asm288082566b.59.2025.08.01.06.41.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Aug 2025 06:41:07 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 01 Aug 2025 15:40:59 +0200
+Subject: [PATCH] arm64: dts: qcom: sm6350: Add rpmh-stats node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aff38b98-23ff-4dcd-afab-2a0d8c8ad599@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250801-sm6350-rpmh-stats-v1-1-f1fb649d1095@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAOrDjGgC/x3MTQqAIBBA4avErBtQy9CuEi0kp5pFPzgSQXT3p
+ OW3eO8BocQk0FcPJLpY+NgLdF3BtIZ9IeRYDEYZq5zSKFvXWIXp3FaUHLKgddF7FyYXYwulOxP
+ NfP/PYXzfD+cRroFjAAAA
+X-Change-ID: 20250801-sm6350-rpmh-stats-58d998ac8dd4
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1754055667; l=1009;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=r1c9l1OijXU/QDDLBcy3ZcjwcgLrgltP3dZGJovejCY=;
+ b=tAHAiNynxK3Ng3bMtjfpSPW5u2gDSl91hy5GdfnCwmCR4BXuMzsfpHCbjiNS09KU/gl/wt4/n
+ d28cvt0FPR4C+Fyc/3S93nOYzig+JU97Q7B7lehVkdaDfAvXkp1NaoZ
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On Thu, Jul 31, 2025 at 10:50:21AM GMT, neil.armstrong@linaro.org wrote:
-> Hi,
-> 
-> On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
-> > This patch series enables Multi-Circular Queue (MCQ) support for the UFS
-> > host controller on Qualcomm SM8650 and SM8750 platforms. MCQ is a modern
-> > queuing model that improves performance and scalability by allowing
-> > multiple hardware queues.
-> > 
-> > Although MCQ support has been present in the UFS driver for several years,
-> > this is the first time it is being enabled via Device Tree for these
-> > platforms.
-> > 
-> > Patch 1 updates the device tree bindings to allow the additional register
-> > regions and reg-names required for MCQ operation.
-> > 
-> > Patches 2 and 3 update the device trees for SM8650 and SM8750 respectively
-> > to enable MCQ by adding the necessary register mappings and MSI parent.
-> > 
-> > Tested on internal hardware for both platforms.
-> > 
-> > Palash Kambar (1):
-> >    arm64: dts: qcom: sm8750: Enable MCQ support for UFS controller
-> > 
-> > Ram Kumar Dwivedi (2):
-> >    dt-bindings: ufs: qcom: Add MCQ support to reg and reg-names
-> >    arm64: dts: qcom: sm8650: Enable MCQ support for UFS controller
-> > 
-> >   .../devicetree/bindings/ufs/qcom,ufs.yaml     | 21 ++++++++++++-------
-> >   arch/arm64/boot/dts/qcom/sm8650.dtsi          |  9 +++++++-
-> >   arch/arm64/boot/dts/qcom/sm8750.dtsi          | 10 +++++++--
-> >   3 files changed, 29 insertions(+), 11 deletions(-)
-> > 
-> 
-> I ran some tests on the SM8650-QRD, and it works so please add my:
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> 
+The qcom_stats driver allows querying sleep stats from various
+remoteprocs. Add a node to enable it.
 
-Thanks Neil for testing it out!
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> I ran some fio tests, comparing the v6.15, v6.16 (with threaded irqs)
-> and next + mcq support, and here's the analysis on the results:
-> 
-> Significant Performance Gains in Write Operations with Multiple Jobs:
-> The "mcq" change shows a substantial improvement in both IOPS and bandwidth for write operations with 8 jobs.
-> Moderate Improvement in Single Job Operations (Read and Write):
-> For single job operations (read and write), the "mcq" change generally leads to positive, albeit less dramatic, improvements in IOPS and bandwidth.
-> Slight Decrease in Read Operations with Multiple Jobs:
-> Interestingly, for read operations with 8 jobs, there's a slight decrease in both IOPS and bandwidth with the "mcq" kernel.
-> 
-> The raw results are:
-> Board: sm8650-qrd
-> 
-> read / 1 job
->                v6.15     v6.16  next+mcq
-> iops (min)  3,996.00  5,921.60  4,661.20
-> iops (max)  4,772.80  6,491.20  5,027.60
-> iops (avg)  4,526.25  6,295.31  4,979.81
-> cpu % usr       4.62      2.96      5.68
-> cpu % sys      21.45     17.88     25.58
-> bw (MB/s)      18.54     25.78     20.40
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 2d891a5640dead6b60386006bcbbb9aad40a660b..2493b9611dcb675f4c33794ecc0ee9e8823e24d4 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -2487,6 +2487,11 @@ aoss_qmp: power-management@c300000 {
+ 			#clock-cells = <0>;
+ 		};
+ 
++		sram@c3f0000 {
++			compatible = "qcom,rpmh-stats";
++			reg = <0x0 0x0c3f0000 0x0 0x400>;
++		};
++
+ 		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0x0 0x0c440000 0x0 0x1100>,
 
-It is interesting to note the % of CPU time spent with MCQ in the 1 job case.
-Looks like it is spending more time here. I'm wondering if it is the ESI
-limitation/overhead.
+---
+base-commit: 0b90c3b6d76ea512dc3dac8fb30215e175b0019a
+change-id: 20250801-sm6350-rpmh-stats-58d998ac8dd4
 
-- Mani
-
-> read / 8 job
->                 v6.15      v6.16   next+mcq
-> iops (min)  51,867.60  51,575.40  56,818.40
-> iops (max)  67,513.60  64,456.40  65,379.60
-> iops (avg)  64,314.80  62,136.76  63,016.07
-> cpu % usr        3.98       3.72       3.85
-> cpu % sys       16.70      17.16      14.87
-> bw (MB/s)      263.60     254.40     258.20
-> 
-> write / 1 job
->                v6.15     v6.16  next+mcq
-> iops (min)  5,654.80  8,060.00  7,117.20
-> iops (max)  6,720.40  8,852.00  7,706.80
-> iops (avg)  6,576.91  8,579.81  7,459.97
-> cpu % usr       7.48      3.79      6.73
-> cpu % sys      41.09     23.27     30.66
-> bw (MB/s)      26.96     35.16     30.56
-> 
-> write / 8 job
->                  v6.15       v6.16    next+mcq
-> iops (min)   84,687.80   95,043.40  114,054.00
-> iops (max)  107,620.80  113,572.00  164,526.00
-> iops (avg)   97,910.86  105,927.38  149,071.43
-> cpu % usr         5.43        4.38        2.88
-> cpu % sys        21.73       20.29       16.09
-> bw (MB/s)       400.80      433.80      610.40
-> 
-> The test suite is:
-> for rw in read write ; do
->     echo "rw: ${rw}"
->     for jobs in 1 8 ; do
->         echo "jobs: ${jobs}"
->         for it in $(seq 1 5) ; do
->             fio --name=rand${rw} --rw=rand${rw} \
->                 --ioengine=libaio --direct=1 \
->                 --bs=4k --numjobs=${jobs} --size=32m \
->                 --runtime=30 --time_based --end_fsync=1 \
->                 --group_reporting --filename=/dev/disk/by-partlabel/super \
->             | grep -E '(iops|sys=|READ:|WRITE:)'
->             sleep 5
->         done
->     done
-> done
-> 
-> Thanks,
-> Neil
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca.weiss@fairphone.com>
+
 
