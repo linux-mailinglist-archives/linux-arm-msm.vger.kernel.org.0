@@ -1,175 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-67298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0053B17D84
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:30:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2F3DB17D8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:30:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9F561AA1882
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 07:30:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6261E622C4C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 07:30:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E0592206AA;
-	Fri,  1 Aug 2025 07:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D36E2192EE;
+	Fri,  1 Aug 2025 07:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dB87r9ua"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O1uFdYDQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC97221ADA2
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 07:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928D520D50C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 07:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754033331; cv=none; b=kFbeT+Ogz8PlurzOdKY66hqFRL1Glv1JTsd/D5+dkiU3LB83EbY7v9J6hGG0Su6TkErvdEhlLwXP+I4nvwAgjpc5jJ3EdtEJpztVLSMcawAJLD3WRn17K4fTW5LoMuokKQIax/1UrrAyOFKOfwHygIEVAaM/jhTBzmwlqlnTozs=
+	t=1754033334; cv=none; b=lhIeLqzZrjVoNwCVYXsKiXdiuBUHDN6maz0Fy/AXCxXwccHuHanRo//qgK9DGLfPpzzIz1MITOsWLR162hQ5XaNAySRDG/+6iW6mzeKKLkFutUzdEh+Lxvd7U0F4vKNL1ofoaHLu7IPX3apP8JXcd69ug1RKYfkeQksVfa1njgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754033331; c=relaxed/simple;
-	bh=CqrQYPbngH4gLmvaALqLQbhUf1mxtvza2ZZJS/+cKZ8=;
+	s=arc-20240116; t=1754033334; c=relaxed/simple;
+	bh=uje34Clhxc9ed3OvxabKenVPdmt0CPXcdy8D3hIZoOs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xqe8jPxj9VWr4jO4GOxxL2C4jyrOdcKJAdPruTURBywydYlh+Ubt3RkgXIZ6mB9KzeAxu1S0prSCdVghXmmkAwSvj6xDOTAFiJ2EVqaWtv+KA2WRwVTbB87mkBuKWs5wzNLFAston6eqZoWbJHYAU/228ktjysyOcNJWqKtoxMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dB87r9ua; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7698e914cd2so1444168b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 00:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754033329; x=1754638129; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KpEuo4BDT0PzWNynKyWHN573No1LAQVNOfN+WCfJMR4=;
-        b=dB87r9uahyGEtgCMSwZ7ZU3bKSyCc6wwySGN3iUT4GI/UDle2iRBu923NEjgF1+Vle
-         B2xlF7RR3Blzf0vHCSlAGlEmfAVFpVjsm23TwpmKCJ5j9RagnTAB1F0oZc5MQ8L+y8ng
-         Lqxtvy4NkPnb+WSxyrSUeSORHWKD60YRF+3P75Apm5rlsUSwb7zpWMQCDDG2gcNmqJjY
-         WNXF8F81kubzyLYxZf9mZUFgeQzNPaL3X3IZuYlL0NwyHYtQ38+4TuzIOK8yVc9veaQU
-         CoSQOC8Kkj6JWn7Rgjkj4V9enXtAIkD8kR5WnfTnG09OlsUHRwwjoRwIZvBu8QoeOs4d
-         6UFQ==
+	 Content-Type:Content-Disposition:In-Reply-To; b=VGkBHNlpqg3kHBRO0uZbI/toWOvE/P+bAG1XTNnFIt2Urk2oT0RZYeRyvDWjL+IbUsA6iIW3VS7+SziFLQ5ovSTrKRVBjPU+L6MX5yubQhaLE3aG8OyI3kwOnQABb7g58XJOGj23I8HsJ5NhkPjW5uqyUpjZgFSlEYQ55JKKfj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O1uFdYDQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5710RFEK005243
+	for <linux-arm-msm@vger.kernel.org>; Fri, 1 Aug 2025 07:28:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=SEaURvMuhrpISmuLvcJOsmjb
+	sYKo7gxuFeBHJJuHpIs=; b=O1uFdYDQUFjkt3tWSJopVDpW4gHMl3YUg3/ZmnCp
+	vyXVwxKHRaaXtxLH6QGyC5SsEg8RstRJXYyDchnCnX2smDhEwBg3RPBb5kjbmODF
+	OiCvdSTp261A82wqCsLMdQ3VjSxPY2F405rtwCCnIjInzuTxKKzc5HLFery3SBRf
+	01NNE2JjX+ItOyjW8BA3LKPbAC4t1TdLDI9oe2zc9t4Mdnaw0WGFMKWGELFQNmto
+	J+xw8Vd6aenmrluBIVwcDNNssypSTSLQdsPnq+5AQLb3CNp0Xez98GyP5sK/VJYg
+	7MKH8I4z58tHQEmW5FjSHVbrXWyypimjJQlop4wseOFR3Q==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484q86b5v7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 07:28:51 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-7073834cda0so24907646d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 00:28:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754033329; x=1754638129;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KpEuo4BDT0PzWNynKyWHN573No1LAQVNOfN+WCfJMR4=;
-        b=vl+a2tgYmDibp5TSp+e4eOOYn8se3JocjvW5STDq1mzmZtZOBn/GcGE2UDK+zyrp5X
-         jTc3zTnDax3Jq91l0m4+YhwBraNDIaEA1rugavaEO5dwrTRniNeQqD+XPrCR/3sv01aI
-         6zbWYISwdkC64yA1c7G4jdwO4E5tYrQYvHcno/CPGv+JnrwJu1NrThjXEjezQgYp05EO
-         XHxG+FYHwkgTILmOvU3FcF9oA/Chf2/sSaQM+NWzdkqfQuj/5OmIotcxZ46ai/nZQE7K
-         4ztn6ft3XKxWY8OoS+v29tZO03XE7Vo/gmM8KqKO4WdxkQI1WstDzWoBtWDAkLkb4kk8
-         QTYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUmUzPdmBbdbCN/KNSQntAJ1GWvi7v6VxUYsnvRsuVIeQDtSZwcxttf6fbxhCkRwP6NFSvK2CExUyu+VPUT@vger.kernel.org
-X-Gm-Message-State: AOJu0Yza4o81vxgt6t/zzuuUNFZoqdUR6bI/72vIQndqPg5Lzi4leFXr
-	a9E1zocVXH0fM5T3UC3GY6LFHgqfMvyudnKGghq1yeQRkWWhJrmlNU4aiDVMIWP/3OzW5bAnNKC
-	d9nCH
-X-Gm-Gg: ASbGnctPSBMenGTJWDvedvuY79C2CJIY00I6h7FgVeFF89RCiZsuSM+DO/R4a/zPczm
-	bwXmBIYmpmx7KpyvEYZlsNQisUhxKXv3SXQzYLTMKWz/SQWPIl8z+jmgI8X+Rp7hmOeXTxdWLZa
-	1JGei84HEkfaLd6M87JpKrAnj26aJgs635MfgLBBFqn3fHBQLBLDzufEzll2G2cYxYkLM3aAdc2
-	UMz0t0c496UbR0fJ2suovCiW3XIw8gbGKQwzG78cE/ATvAVq9HSDgHFn5iwaYZhdmNWXEvucrFa
-	V0ftU2kAdjXweCBtMOZlb5RxH6h6D0O33zRlzxdDuw86/9gg7VCpFwZoZ0Ki/PwsZIUjTEM9/4N
-	slC3AIKW8V3MXOVr5sY+hYE3ublyfZ3cbiw==
-X-Google-Smtp-Source: AGHT+IGSdX0UyQUNm5XJ/ZBNM/4/pg1b54fM7m9r5KZvvoYq4sBygbeHXrF0rtDWYuflNPBaXiwwJw==
-X-Received: by 2002:a05:6a00:4648:b0:746:24c9:c92e with SMTP id d2e1a72fcca58-76bdce7e38fmr3006512b3a.8.1754033328877;
-        Fri, 01 Aug 2025 00:28:48 -0700 (PDT)
-Received: from localhost ([122.172.83.75])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcceab592sm3362367b3a.58.2025.08.01.00.28.47
+        d=1e100.net; s=20230601; t=1754033330; x=1754638130;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SEaURvMuhrpISmuLvcJOsmjbsYKo7gxuFeBHJJuHpIs=;
+        b=AaalDD5Z97GBf19bh/MuZsHI0ABUJAmifJurmNO+hK8ANS6Y2VSAtzMTiK/W8TKuGq
+         gABYRvnixI8D3rvaqlF0s5+FZLqRKdyXjCNd/S4C1x1D4unc9cUfQMKSupgd5ggE5LX6
+         SpLDh79EX04mKKW99Jm39OmShVodj7NlHVl9fwBJ6+o9dpxIzcAKrVVEEALoDM/xS4A4
+         CSDcWU3i2OB7gIX70IXTLV10Uw2rETVUYjY0aLLQcVdnOLsBmHtico9ZkblsDKX4rlXP
+         HR9Uy+JQKu85vPRQQix5pXjFrS2fXQDqIcx/E9+H1UANoE1YQfd0GteHkYt9AkuGrC0u
+         ftQw==
+X-Forwarded-Encrypted: i=1; AJvYcCUfz76wNQGvrzXVlPNO1G21TbFXS1HhyouJhxJWTyXbNUSKG4PfkRA1T8hIBQm+sdSdcn9Fh4EFLS18oMuh@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXTpKQhN6ui0H4YQzwqb8Cy8uOKL/5wzdzjOuEWv8an78x46MU
+	goTvbqDj2Hcg2wUKg3c9S4w4Li6DTesp/2VaPUAB3YELdmszoFLcH00S8ZE/gZVvGiOPipadWA1
+	owhl33MScSyH98geTs2plRWvNkUlVZVXRROuey2GWCMkWd5V5adM/d4SRTJK1KGtERkFJ
+X-Gm-Gg: ASbGncup4hecoKITmGs2a6YTtWjiUFcNy1jzJcrq5KFe/0N1tYd8McTPysIOvlhlsAt
+	AOrwmv+C4S0sTdMjL95WzaM5z7rT/MTgI/jM1eN0E+GK2yNc4lbly0C6qrMfiZMMRBo7OYsIkyM
+	+OYDL3E1ctqlUcmlpYuCl9tfqydSY+XZT0foYIja3qR7hdfZ/zbfFfwUnhu97bGetVSl2IWuIgh
+	6QS1QN1Ro1BeadO+N+vhYPJ5St0EklO8sZ08kUsFjpvm9AsNczlloQgwGC2qiiRwfEdmHAUKvqW
+	1TxJFhFKLve0UnUq6zHHeHYplhhUWGgdtVnhJyG0L0O+kwN34LkMSVBqPMtf9HGrdsb5Ffr1MzI
+	SmA77UeMuBlwTpNCnoKGwbOiBGOR/pbPnWM5okabn8fqfePlFDWLo
+X-Received: by 2002:a05:6214:5014:b0:707:5ff2:ae87 with SMTP id 6a1803df08f44-70766fd9ee7mr145991146d6.18.1754033330126;
+        Fri, 01 Aug 2025 00:28:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrm4INQ8xRvxOiPxAKfgqSB4rKDWYbtrN2Ds4wiRVfGNrMLXg9m6Lrslh3Tkn/TEPfHOs1iQ==
+X-Received: by 2002:a05:6214:5014:b0:707:5ff2:ae87 with SMTP id 6a1803df08f44-70766fd9ee7mr145990906d6.18.1754033329694;
+        Fri, 01 Aug 2025 00:28:49 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898becdsm489500e87.37.2025.08.01.00.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 01 Aug 2025 00:28:48 -0700 (PDT)
-Date: Fri, 1 Aug 2025 12:58:45 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/3] opp: Add bw_factor support to adjust bandwidth
- dynamically
-Message-ID: <20250801072845.ppxka4ry4dtn6j3m@vireshk-i7>
-References: <20250717-opp_pcie-v1-0-dde6f452571b@oss.qualcomm.com>
- <0dfe9025-de00-4ec2-b6ca-5ef8d9414301@oss.qualcomm.com>
+Date: Fri, 1 Aug 2025 10:28:47 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, kernel@oss.qualcomm.com,
+        Pankaj Patil <quic_pankpati@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/7] dt-bindings: clock: qcom: Document the Glymur
+ TCSR Clock Controller
+Message-ID: <xkjmukefiaiect3x7b56dsn4zrddl2fvlgqtfa6yelanak4tih@owimyvx5qlf3>
+References: <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-0-227cfe5c8ef4@oss.qualcomm.com>
+ <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-2-227cfe5c8ef4@oss.qualcomm.com>
+ <20250730-mottled-myrtle-bull-3ae03c@kuoka>
+ <9cb06263-2a61-4acd-a9cc-157abb832d62@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0dfe9025-de00-4ec2-b6ca-5ef8d9414301@oss.qualcomm.com>
+In-Reply-To: <9cb06263-2a61-4acd-a9cc-157abb832d62@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDA1MCBTYWx0ZWRfX5JzUgbPxj45j
+ kp8V5e2g70wMPTsJNinNhzClJOcoKt5p3HttFFBVqT0vKYBSW+vluKRx9hjpkwRjOI+JzwN2WhO
+ szK8RyyPghY6BZ8YMno42E5/YxxubVI3VIKHSyjffX95onEs3RqytMVMH4rKaXSHCxNNMeZG0lz
+ LvviQd8YcLz3bd+UlsEGGm7fBazf4c+plx5TiVU9H2da7ewTt1FFfqTCYBtK6D4QUqYvjjc4iuE
+ dqe3CxmF1/OUIXkje7N2U2Cw+YFyHU1vDYdUMclbEkFsOEpVEFf2oHdg2lE99KxwjPyTLatNaAt
+ o2t+7S6tTuDgV+6K7Cr0wyVDxHJDdFb81aOcfCsAGLSixi4RFZs8zVsd71CD9cNK+ghHCR+8qpb
+ DyyDGFDEvqD9sgOAahGsYEn74NZ7MiX5tFPSca6g9ZC1PN7+CDjcWkUIIOd0odzSTxRpxZHF
+X-Authority-Analysis: v=2.4 cv=TqLmhCXh c=1 sm=1 tr=0 ts=688c6cb3 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=6kVuSvOnKxEqxX6I_6UA:9 a=CjuIK1q_8ugA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-ORIG-GUID: Jz_RJG6v-tRhE0JI2ZL6ivZ9P5SkTwy2
+X-Proofpoint-GUID: Jz_RJG6v-tRhE0JI2ZL6ivZ9P5SkTwy2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-01_02,2025-07-31_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508010050
 
-On 01-08-25, 12:05, Krishna Chaitanya Chundru wrote:
-> Can you please review this once.
+On Fri, Aug 01, 2025 at 09:44:47AM +0530, Taniya Das wrote:
+> 
+> 
+> On 7/30/2025 12:47 PM, Krzysztof Kozlowski wrote:
+> > On Tue, Jul 29, 2025 at 11:12:36AM +0530, Taniya Das wrote:
+> >> Add bindings documentation for the Glymur TCSR Clock Controller.
+> > 
+> > Same question as for v1, what is Glymur?
+> 
+> Glymur is the Qualcomm's next gen compute SoC.
 
-Sorry about the delay.
+This question means that the 'Glymur' name should be explained in the
+commit message / cover letter.
 
-> > The existing OPP table in the device tree for PCIe is shared across
-> > different link configurations such as data rates 8GT/s x2 and 16GT/s x1.
-> > These configurations often operate at the same frequency, allowing them
-> > to reuse the same OPP entries. However, 8GT/s and 16 GT/s may have
-> > different characteristics beyond frequency—such as RPMh votes in QCOM
-> > case, which cannot be represented accurately when sharing a single OPP.
+> 
+> > 
+> > Where is any DTS using this (or explanation of lack of DTS)?
+> > 
+> 
+> Krzysztof, the DTS will be posted separately once the driver and
+> bindings are reviewed.
 
-From the looks of it, something like this should also work:
+Same here.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 54c6d0fdb2af..0a76bc4c4dc9 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2216,18 +2216,12 @@ opp-2500000 {
-                                        opp-peak-kBps = <250000 1>;
-                                };
-
--                               /* GEN 1 x2 and GEN 2 x1 */
-+                               /* GEN 2 x1 */
-                                opp-5000000 {
-                                        opp-hz = /bits/ 64 <5000000>;
-                                        required-opps = <&rpmhpd_opp_low_svs>;
--                                       opp-peak-kBps = <500000 1>;
--                               };
--
--                               /* GEN 2 x2 */
--                               opp-10000000 {
--                                       opp-hz = /bits/ 64 <10000000>;
--                                       required-opps = <&rpmhpd_opp_low_svs>;
--                                       opp-peak-kBps = <1000000 1>;
-+                                       opp-peak-kBps-x1 = <500000 1>;
-+                                       opp-peak-kBps-x2 = <1000000 1>;
-                                };
-
-                                /* GEN 3 x1 */
-@@ -2237,18 +2231,12 @@ opp-8000000 {
-                                        opp-peak-kBps = <984500 1>;
-                                };
-
--                               /* GEN 3 x2 and GEN 4 x1 */
-+                               /* GEN 4 x1 */
-                                opp-16000000 {
-                                        opp-hz = /bits/ 64 <16000000>;
-                                        required-opps = <&rpmhpd_opp_nom>;
--                                       opp-peak-kBps = <1969000 1>;
--                               };
--
--                               /* GEN 4 x2 */
--                               opp-32000000 {
--                                       opp-hz = /bits/ 64 <32000000>;
--                                       required-opps = <&rpmhpd_opp_nom>;
--                                       opp-peak-kBps = <3938000 1>;
-+                                       opp-peak-kBps-x1 = <1969000 1>;
-+                                       opp-peak-kBps-x2 = <3938000 1>;
-                                };
-                        };
-
-The OPP core supports named properties, which will make this work.
+> 
+> 
+> > Best regards,
+> > Krzysztof
+> > 
+> 
+> -- 
+> Thanks,
+> Taniya Das
+> 
 
 -- 
-viresh
+With best wishes
+Dmitry
 
