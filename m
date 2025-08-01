@@ -1,203 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-67352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C683B181CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:29:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C417DB181F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:44:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE07B189B1AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:29:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15AAF3A6C99
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279EC246765;
-	Fri,  1 Aug 2025 12:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 258E22472BC;
+	Fri,  1 Aug 2025 12:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DG4aGNX4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4xz+r+3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB1C1C7013
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 12:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83491F16B;
+	Fri,  1 Aug 2025 12:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754051370; cv=none; b=tkLbgjfdup/g3pverb2obaejEDjcMXyjxU4Y9u9hhbwHvlR9nK9juO359bkYo9699xwLTlz5YRU5OFKY+Isn4MdV5NI45U51oRFGLbXBRtRmQhjNd8F+zB7utdlzMvKpakRiLESSFMy6md/1PVK1QPlKk6m+kgkd0QCDr+H0AI4=
+	t=1754052243; cv=none; b=oqXujBushCaRUYdVBH8BlQ8g3OazA7Nlmmra3o7/9V1Ak5ggFmr3DZrAIqH02WrfJVhr41okiRgwi8NnQKE28RJU5voPbxkTSxkSRntVikyrklHhdEm+oA6oy211kQCdEHSg4wvT9UX2rtbdcD1ndeX8lHk6y/jVxZV9TBWkiao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754051370; c=relaxed/simple;
-	bh=pbgmwZNtT9CA0LQIliQlAyv2/lGfNw6LSRHwP4f+Qk8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mGkGL4KGfiGVVfidtWu8sY0xb3uA0dUTtxDpmNVIGKehiSvU58tjgasbihCNHX9SoKWRXyBzSd8n3Ms0h+KbOjSInhtDansAEW2eN5dL3YJdgHrgthS27PnUlAs3tBXevUVX7l+x5Y9oH6bMgN7+dcTFLNNGXj9ikk8KmSWf19A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DG4aGNX4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5718h3B0018769
-	for <linux-arm-msm@vger.kernel.org>; Fri, 1 Aug 2025 12:29:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pbgmwZNtT9CA0LQIliQlAyv2/lGfNw6LSRHwP4f+Qk8=; b=DG4aGNX4Hj0+cJfv
-	3JiaQaXNzbMw+9bwSd/f60HYG/b6B7+MdZOE2Jmw4o4XEh7bVtiJXKmhqdVZlRvA
-	3I8+lEokl5CB1gjPu15zjfrzQfAk2MBu3AFcH8npxSDPpYLbSzsHSxaDcYyQfaF9
-	JAxwPr+lLxxxuDdTzQeq8V7hv7sDmB3jJsIIFbP7edWpV8W3gSuOGHKJem5AxxXQ
-	MiA/MXyzN9SvMRI5D09mOgunp9g+nyx5zszCb9IHFtgIj0s311qvIzYxMf9bcBeL
-	RuWjhgbn+ZDnJ/yt2WFcTIiuaLx5A2TurJvmynT3blWIEHkgcFrITPxHxFsfjCdH
-	IVRqwg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 487jwggbh7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 12:29:27 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4af0100c0b5so998671cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 05:29:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754051366; x=1754656166;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pbgmwZNtT9CA0LQIliQlAyv2/lGfNw6LSRHwP4f+Qk8=;
-        b=Sv8uTYh4AfGP01txARh+cdGs/+Gq3Zb08zC9N8cIKZJC2BRE4+q9490vCeNAELmk74
-         zqyQj1Au3J5YpKZwvIA1Kt/VnoMnZ3yES140Q3eZFra8mcEjzo1Dt60db1nIAnFt1kdD
-         FTaDsPe+qIO0jvzTcbGQYKfHU/P8uFdVhLM/v1R/PNY1gNu4Qa9rN3ZQU8nlT6IB2VfN
-         yyvsJw9NSKA/Ccsr/dfryxtvOeMSMFrnZNPvF8ggPebhPitK2ZkxR5bWGqCX7YHXp/mN
-         OR4wo11753uf3VF8GKhZUGiUbxlDt6pVjqMaOUvcaG0GtMa/MQD6a8rVjZbB5+arxs7f
-         yM6g==
-X-Forwarded-Encrypted: i=1; AJvYcCW2p+oyYdmjyqaIS9W7XmM/rFwKubBRAJ0Cbe+bo1l0xcRmFSIhiwFNFr3a0MZyqMNbQun7+sH2phjkp++6@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvewDPabrkd5t3wUQZajMTG9AVbecX9Dy6lc2wjdTgvE4pGNVt
-	wSHitzmX6xc9muXWcIYrVWvdYNDFU8C17R/sWNs77eaLc3akfk8xdtclb6STOItVlUVaUjYGKiq
-	6SSXNdgqFwTkCXzuoZgsLq9n8MY2O6PVjH1q7j2rWfD7tnPZ7ddJuGYGkL0qb6g2+wJLm
-X-Gm-Gg: ASbGncvd/Ooag4Q1cEDbwf0xjVefnkGLTPCouZPM/Pg3hzpFiK3nU/fQ1uNXzdDJRoS
-	3UEfgDwYyI4m7WXSqm0euw74prQXa2GwjQz/JWqv0Cv5ngwLKLykN76j6INTZ469rpPp4zqzL4S
-	bgg3pH2Eg5/zzoBDBSRasYwVrpGCtO8A9IrgI8iXit7fX0J2yWRFS+VO00+Hvz1YCV1HmJ1QsXb
-	WJUOoXVrarW4ZcJt93+kuqDbLku+80Fo1oTXOxeRU+QASUji/xbHSXWvWc09KzSd+gyt0s2zeA/
-	UV4wH23sOUbrgw32KdnS/nb4fyH8ry/l9Hr03b/gL+2Nt0/olRY/MLs5BLTtk2qWofOHp1s+gU7
-	d5KSkV0rsTVtmBnRHEQ==
-X-Received: by 2002:ac8:5705:0:b0:4ab:5d26:db88 with SMTP id d75a77b69052e-4aedb94316emr87971161cf.3.1754051366301;
-        Fri, 01 Aug 2025 05:29:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8q92C2Wo6neQzzml5bgsNfb0UtuzxKP8kk0JsYE01X/PsK4FmcyVYqJWR7viitVa/ixIFrA==
-X-Received: by 2002:ac8:5705:0:b0:4ab:5d26:db88 with SMTP id d75a77b69052e-4aedb94316emr87970691cf.3.1754051365732;
-        Fri, 01 Aug 2025 05:29:25 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a21c06bsm280116566b.119.2025.08.01.05.29.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Aug 2025 05:29:25 -0700 (PDT)
-Message-ID: <0cf8f99c-a64b-43c4-a747-d5dd6fe28996@oss.qualcomm.com>
-Date: Fri, 1 Aug 2025 14:29:22 +0200
+	s=arc-20240116; t=1754052243; c=relaxed/simple;
+	bh=FiT0425S7X3WbHUWOMIF4UULdXiBKCkvWg3ZnMqeZM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aZ2nb/wdKerkWPI0n7Qpk7ntw1uw4QzO85t6vmzwoBr08Kuh3LQUHWaDej1ACs2nQJ9vkrlZ6cdeeXMlXOWnAZHnEqHXccopdU0RaEwqBTnfwqIA2prTTLsM2eVs1cNY/pnD+R2AnP4lZ7kw4BsWvzAkaxNMKTlCDHcEZN0f0jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4xz+r+3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E529C4CEE7;
+	Fri,  1 Aug 2025 12:43:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754052242;
+	bh=FiT0425S7X3WbHUWOMIF4UULdXiBKCkvWg3ZnMqeZM0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=E4xz+r+32ZjXVU+0L086jLIp1hvyCbtHgcWwNT6uf6pw9E3Nup1mfRV+FBNlkUCbJ
+	 DunzKp65I/bVG5wz5ZAldHNQzx+0TNCGZDB8B9GxmV22IGd4k2Sncj0GnrDFVIkfH5
+	 zyXHELvWnEh5taOHjSjau+NDYsQG6ELyNzaOl7BnRsPUpmQ60581KLfjkXjFwgZLu/
+	 QNKdJcz4emONeLI0/u+dxcM+ncndrzTz8XDE4I4lPJLQ6e0uKf9PpnHpsnIZBAR1KS
+	 ysojmaTd0rAVZLGMRQzLG2nRPQGXQ9A0miAMOO5TqasPSBX5zQosSQ4NRiFjRaM0LJ
+	 CW+BxBMS1TkXA==
+Date: Fri, 1 Aug 2025 18:13:52 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com, 
+	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 0/3] Enable UFS MCQ support for SM8650 and SM8750
+Message-ID: <u27jbp3wkgw2cyyans3rmxspqqwufymkztvyfjacrke252nbud@yfutnxhwcspr>
+References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
+ <aff38b98-23ff-4dcd-afab-2a0d8c8ad599@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: Add initial support for
- Ntmer TW220
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: aliceryhl@google.com, andersson@kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, ebiggers@google.com,
-        ilpo.jarvinen@linux.intel.com, joel.granados@kernel.org,
-        konradybcio@kernel.org, krzk+dt@kernel.org, len.brown@intel.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lossin@kernel.org, mingo@kernel.org, ojeda@kernel.org, robh@kernel.org,
-        sfr@canb.auug.org.au, vanyang@smail.nju.edu.cn,
-        viro@zeniv.linux.org.uk
-References: <de111b27-9126-4c03-a7bb-8cce9ea2780e@oss.qualcomm.com>
- <20250706034303.5404-1-mitltlatltl@gmail.com>
- <f2f0f25b-40b0-452c-ad9e-01b84b32e163@oss.qualcomm.com>
- <CAH2e8h6XWAz-pqmuvzK8JqOb=ggiDGb2U3TvAR2+43D_zdsZpQ@mail.gmail.com>
- <9efafa16-e6db-4227-9b47-5803f5933a7d@oss.qualcomm.com>
- <CAH2e8h5Eov+827X3W_EZSHRoaUHgP119fXJA+WEUdmdJ6f3gkg@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CAH2e8h5Eov+827X3W_EZSHRoaUHgP119fXJA+WEUdmdJ6f3gkg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=WvgrMcfv c=1 sm=1 tr=0 ts=688cb327 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=78uhRy8ZE0Nw9m-UYXkA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: Fx6VdeQLWdB4vu4c2vwMINIcFYjplUH3
-X-Proofpoint-GUID: Fx6VdeQLWdB4vu4c2vwMINIcFYjplUH3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDA5NCBTYWx0ZWRfX5TSy9dGaHq69
- mXPQT+xfhpqMQ4GTG4fAWUWM5m38uzXjK5QvUq2LtjgFC+ozD4yniZ3y/W+mn/dufZjKjr+oL4u
- iXpCLYe4GcFUCtHmUFUfR/eV29qhG3BotJYyL9V/qZjRO38mHGura6gmSmjN4X1bNhUNPVOnjLQ
- Wp5QrPf9gGTQfywkvBEaJTuaEDuCtZGloF5/4FtaTa3QFSPqfxI5hzlJNLOwEmcrSoms1WfqUIT
- 1LEv+87Y+SLgTnr6CUvRfZx1ZUssnFYswqQSarnrO+I6nAuG1hIAxpSK9Olavsg/0BeERmrjRLb
- XXTJQ7H+KDmfTgmkavrJvBigKtNM9Xfl8YJX1QB/Tfl/tbRZ7+79laWLxH4qOkKxUPrWyVx09KN
- JMOafera3sLVfr1BLA8x8oR6hwi1PhhixZQRnGS1eyn+/9ZahNyRsJAa1LYcKpom2uPIRfPN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-01_04,2025-07-31_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 impostorscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2508010094
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aff38b98-23ff-4dcd-afab-2a0d8c8ad599@linaro.org>
 
-On 7/31/25 5:05 AM, Pengyu Luo wrote:
-> Linux:
->> ae94000 20050001 000001f3 0000000b dddd1011
->> ae94010 00009130 31211101 3e2e1e0e 00001900
->> ae94020 00000000 05190019 064c000c 065f0528
->> ae94030 00060000 00000000 00040000 14000000
->> ae94040 06100006 00003c2c 00001000 00000008
-> Windows:
->> ae94000 20050001 000001f7 00000008 00001010
->> ae94010 00009130 31211101 3e2e1e0e 00001900
->> ae94020 00000000 05320032 064c000c 065f0551
->> ae94030 000c0000 00000000 00040000 14000000
->> ae94040 00100008 00013c2c 9bb9b000 00000004
+On Thu, Jul 31, 2025 at 10:50:21AM GMT, neil.armstrong@linaro.org wrote:
+> Hi,
+> 
+> On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
+> > This patch series enables Multi-Circular Queue (MCQ) support for the UFS
+> > host controller on Qualcomm SM8650 and SM8750 platforms. MCQ is a modern
+> > queuing model that improves performance and scalability by allowing
+> > multiple hardware queues.
+> > 
+> > Although MCQ support has been present in the UFS driver for several years,
+> > this is the first time it is being enabled via Device Tree for these
+> > platforms.
+> > 
+> > Patch 1 updates the device tree bindings to allow the additional register
+> > regions and reg-names required for MCQ operation.
+> > 
+> > Patches 2 and 3 update the device trees for SM8650 and SM8750 respectively
+> > to enable MCQ by adding the necessary register mappings and MSI parent.
+> > 
+> > Tested on internal hardware for both platforms.
+> > 
+> > Palash Kambar (1):
+> >    arm64: dts: qcom: sm8750: Enable MCQ support for UFS controller
+> > 
+> > Ram Kumar Dwivedi (2):
+> >    dt-bindings: ufs: qcom: Add MCQ support to reg and reg-names
+> >    arm64: dts: qcom: sm8650: Enable MCQ support for UFS controller
+> > 
+> >   .../devicetree/bindings/ufs/qcom,ufs.yaml     | 21 ++++++++++++-------
+> >   arch/arm64/boot/dts/qcom/sm8650.dtsi          |  9 +++++++-
+> >   arch/arm64/boot/dts/qcom/sm8750.dtsi          | 10 +++++++--
+> >   3 files changed, 29 insertions(+), 11 deletions(-)
+> > 
+> 
+> I ran some tests on the SM8650-QRD, and it works so please add my:
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+> 
 
-0xae94008 differs, bits 0 and 1 say that the cmd mode engine
-is busy doing something (did you set MIPI_DSI_MODE_VIDEO?)
+Thanks Neil for testing it out!
 
-0xae94024 says:
-Linux:
-ACTIVE_H_END=1305
-ACTIVE_H_START=25
-Windows:
-ACTIVE_H_END=1330
-ACTIVE_H_START=50
+> I ran some fio tests, comparing the v6.15, v6.16 (with threaded irqs)
+> and next + mcq support, and here's the analysis on the results:
+> 
+> Significant Performance Gains in Write Operations with Multiple Jobs:
+> The "mcq" change shows a substantial improvement in both IOPS and bandwidth for write operations with 8 jobs.
+> Moderate Improvement in Single Job Operations (Read and Write):
+> For single job operations (read and write), the "mcq" change generally leads to positive, albeit less dramatic, improvements in IOPS and bandwidth.
+> Slight Decrease in Read Operations with Multiple Jobs:
+> Interestingly, for read operations with 8 jobs, there's a slight decrease in both IOPS and bandwidth with the "mcq" kernel.
+> 
+> The raw results are:
+> Board: sm8650-qrd
+> 
+> read / 1 job
+>                v6.15     v6.16  next+mcq
+> iops (min)  3,996.00  5,921.60  4,661.20
+> iops (max)  4,772.80  6,491.20  5,027.60
+> iops (avg)  4,526.25  6,295.31  4,979.81
+> cpu % usr       4.62      2.96      5.68
+> cpu % sys      21.45     17.88     25.58
+> bw (MB/s)      18.54     25.78     20.40
+> 
 
-0xae9402c:
-Linux:
-VTOTAL=1631
-HTOTAL=1320
-Windows:
-VTOTAL=1631
-HTOTAL=1361
+It is interesting to note the % of CPU time spent with MCQ in the 1 job case.
+Looks like it is spending more time here. I'm wondering if it is the ESI
+limitation/overhead.
 
-0xae94030:
-Linux:
-HS_END=6
-Windows:
-HS_END=12
+- Mani
 
-0xae94040:
-Linux:
-RGB565 (16 bpp)
-bits 25/26 are "set RGB888 for DSI1 stream"
-Windows:
-RGB888 (24 bpp)
+> read / 8 job
+>                 v6.15      v6.16   next+mcq
+> iops (min)  51,867.60  51,575.40  56,818.40
+> iops (max)  67,513.60  64,456.40  65,379.60
+> iops (avg)  64,314.80  62,136.76  63,016.07
+> cpu % usr        3.98       3.72       3.85
+> cpu % sys       16.70      17.16      14.87
+> bw (MB/s)      263.60     254.40     258.20
+> 
+> write / 1 job
+>                v6.15     v6.16  next+mcq
+> iops (min)  5,654.80  8,060.00  7,117.20
+> iops (max)  6,720.40  8,852.00  7,706.80
+> iops (avg)  6,576.91  8,579.81  7,459.97
+> cpu % usr       7.48      3.79      6.73
+> cpu % sys      41.09     23.27     30.66
+> bw (MB/s)      26.96     35.16     30.56
+> 
+> write / 8 job
+>                  v6.15       v6.16    next+mcq
+> iops (min)   84,687.80   95,043.40  114,054.00
+> iops (max)  107,620.80  113,572.00  164,526.00
+> iops (avg)   97,910.86  105,927.38  149,071.43
+> cpu % usr         5.43        4.38        2.88
+> cpu % sys        21.73       20.29       16.09
+> bw (MB/s)       400.80      433.80      610.40
+> 
+> The test suite is:
+> for rw in read write ; do
+>     echo "rw: ${rw}"
+>     for jobs in 1 8 ; do
+>         echo "jobs: ${jobs}"
+>         for it in $(seq 1 5) ; do
+>             fio --name=rand${rw} --rw=rand${rw} \
+>                 --ioengine=libaio --direct=1 \
+>                 --bs=4k --numjobs=${jobs} --size=32m \
+>                 --runtime=30 --time_based --end_fsync=1 \
+>                 --group_reporting --filename=/dev/disk/by-partlabel/super \
+>             | grep -E '(iops|sys=|READ:|WRITE:)'
+>             sleep 5
+>         done
+>     done
+> done
+> 
+> Thanks,
+> Neil
 
-(suggesting your panel driver is wrong)
-
-0xae94044:
-you may want to move the
-
-/* Always insert DCS command */
-data |= DSI_CMD_CFG1_INSERT_DCS_COMMAND;
-dsi_write(msm_host, REG_DSI_CMD_CFG1, data);
-
-in dsi_host.c out of the if (!video), not sure if it's correct
-but that's what Windows seems to be setting
-
-The other differences are due to the current DCS command(s) being
-processed
-
-
-Hope this helps
-
-Konrad
+-- 
+மணிவண்ணன் சதாசிவம்
 
