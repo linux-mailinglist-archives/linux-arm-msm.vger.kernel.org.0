@@ -1,158 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-67403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D058BB18506
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 17:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44E17B1850A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 17:34:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08E7C16F301
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 15:33:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80020179FDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 15:34:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A4B92749F2;
-	Fri,  1 Aug 2025 15:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 769FA26CE36;
+	Fri,  1 Aug 2025 15:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e6GskBDL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNADI7XD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD0C2741D5
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 15:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441E914B96E;
+	Fri,  1 Aug 2025 15:33:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754062393; cv=none; b=RvG9BH6Lb49bh/QcSYsftxhlT6Ba8y2L0iOWzEnY1eHpEl0pX2XHbBO/6gl7E6+8G3p+m36JJaUjT3bMIsF0GFkrus+VFSXeBV6QRqT54q2nS4APyk3suyEq3SRq/+gJ1c7xUjX27FmDA0dfFRFIDrPQYg4RgjHI63IP+xwdgZw=
+	t=1754062437; cv=none; b=n5kUlQ57wVQB/HF1hyzXgmr+0G4ktUpszk1MIjARxzKqyw+sTAjiQJC4nvamXr+2fJQSo83tNoSKG4sHT5MH0qsQXAFWdSv1O0slgW/2UT9CobFPOA2gb3trkpHSOeY8G/Deq6+DuJRA+x3lgWL5vKwgm/fFVDvx2NO6/RzPaxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754062393; c=relaxed/simple;
-	bh=G8XzIPRtm4xk5lge123mz0p0xgKBk3goA4ZlLuaJzb0=;
+	s=arc-20240116; t=1754062437; c=relaxed/simple;
+	bh=pPVXXjSd3b/wxdsyWsr19KEUVs/RT5iHUF61lgzHuxI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxG2UTAE4msohqeT0jSYpD88nmH+IVUbscxsGEdIcib0HYKx9eHvzqnJCQpfEI48ykFKiQHAUoemV/jt8eOX2JxXWVGA3+PGqRyFkbr/9m3jgA8FcKwTOqPnoujdfb+OJ1rJF5tu43TH3BCZxtuejAKuhgBCeYeg/IcgH7b6x/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e6GskBDL; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b783ea502eso1663259f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 08:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754062389; x=1754667189; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KMuhTiNgWdKprDSY7tl08r3yTLD5z9VbtaB9UQkibdQ=;
-        b=e6GskBDLWvI5xgp6IaOORg6iAFkwfJENMf8NQF6p3+G21pz+LDmuf0nIgUmD+9x4PY
-         sdRkmzzCnjyaLdsy98YzIdDN3gC39yXwdVyZlussTug7JGg/ugP1lwyX5ZAKSnJ6km0X
-         3KNgRMVPoOozd3ORBWQVYV+5qYCnKmUH0KRuii3wH+mNmguUe8KPfzk8PpvrpUn+V8vE
-         MoeCYQmr7NTeY9lazQ0WauhwgwmPi3mNvMTELfow+3+5QM7cOEjHnvTmNz5aBni/no0m
-         gLAUMBJxqr6XAHmYsH9MH/LIbaek8F0HijKEcGcBkOQPfVbvDH24U4odqozY2nJGFkMb
-         dZOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754062389; x=1754667189;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KMuhTiNgWdKprDSY7tl08r3yTLD5z9VbtaB9UQkibdQ=;
-        b=tV0ZvmzWrrSoXJ5AHhhDJyXtQvgOoHilpLKRhTwV7ocwJWxgHskleWPT/Kvtipia56
-         mshtNau1HcZuRVFK3vpkUKQLtK9Xet/szpXebb+KTa8IigROAYsxTw4tQOPbPBfGmYtb
-         rne5fPK1yMF/zKBh+SrzePiqgnnf8Up2UsgxJJRz/haHRn+Q20wZYUs7qUE0UdgSIQxK
-         up9Xrj1FkpTSL7KjTGVbQiSbEsQTWtHOouoSQ1KQxMoYZ+Ekl67NZL8swSgIHO9EPqje
-         CGE9MkAPez7sQ6RU4rWobfMXkwrA9JIAmyh1ZRyBIJJVXBktPULm3kqXgdk1ohuw3x5d
-         uYRw==
-X-Forwarded-Encrypted: i=1; AJvYcCWA5wmnu1lO+ejepoyCiPA4A1TzmWI9oyQCQrKhOspd/cPbWjx6sRs96Os1T4d2YK/++PNZySHabDcz2iHo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKWefM741w12I+XKITgvYZCNAlaRtk8s/cpPgcGDOQTN5Thfxj
-	oIxnj/7Bl+2PFG5PssyHWmi1L6yNCX77+5Ov3zDeDa/pO3o68oHg10aGTvHxs/Jz82Q=
-X-Gm-Gg: ASbGnctxsqlLiR+wRyZZgcORdiv8v1ffLxbjKFCI7HLKoqBUacVebglauI/8Hae0H5s
-	medzXq6xAO6Xa08lkAeScgr00Lki+IxZZA02zpn7j4w1+MQhG2J0TKOBAGWREnPIkJ10CQY17Xl
-	lMhsTsEwcnk931TUgAvVGJIxapYLM8p4ggLX+1YiLFnaAR2l1G0LEClN5q/pzVTFrsXz2i+eh44
-	avfqZKpBafxU6Qp7ppJDLP/NxH/B5jhBRtmfpJVoa71K0RznJI9Mt630OxAx7RU5CcYoO0GWLc5
-	Nsln2QAtn6a7lE4sxppT/rQoXuDxdxPpfCqBsnK9CjQ4Jxax+4NavAZqqUcmDyepXLaR+FHADBN
-	T+fqZ5SBCXEXRBnEl2FKwJJuAGY0=
-X-Google-Smtp-Source: AGHT+IF9pkrPJ7jZbeEE0PxlWTyARsA424FL3piKfJ4GOT1hGtsLhG5zjtxmcgLX2NPTV/vFIv7f9w==
-X-Received: by 2002:a05:6000:2c0b:b0:3b7:9703:d98b with SMTP id ffacd0b85a97d-3b8d95aaff0mr48794f8f.28.1754062388815;
-        Fri, 01 Aug 2025 08:33:08 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c4696c8sm6121767f8f.55.2025.08.01.08.33.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Aug 2025 08:33:08 -0700 (PDT)
-Date: Fri, 1 Aug 2025 18:33:05 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>, kernel-janitors@vger.kernel.org,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Julia Lawall <julia.lawall@lip6.fr>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH] scsi: ufs: qcom: Drop dead compile guard
-Message-ID: <d7093377-a34e-4488-97c6-3d2ffcd13620@suswa.mountain>
-References: <20250724-topic-ufs_compile_check-v1-1-5ba9e99dbd52@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=R0UGae2sjFK5/llHQpHxWP9iFSAO6CKjQ4U5U+pb9wSukO5XvGwCetvcAHt8AsyhwxCqR4gLgs/rGVgYwSR70JiJXMcLHkW357QOL6AGhycWkvny9jvUf8BT3RI1wWsKZ7V+HjgbDb8dpP26pepqrhGOIfwtCwj/tVxhHmNZ9O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNADI7XD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1BDC4CEE7;
+	Fri,  1 Aug 2025 15:33:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754062436;
+	bh=pPVXXjSd3b/wxdsyWsr19KEUVs/RT5iHUF61lgzHuxI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KNADI7XDsILoja5+zLjnYQ0htKdoCrK3UYGEINpUndvm0I7056v5xqRcgiD7Z5dHT
+	 7Tn/pxCYlMqbwOSx1YheGVpfRKYUyEFhCmv6aWGQtd4stWjdFenIBFBmEErGkRNedz
+	 YrrlRkEG8uIjfm2YGF+JluLuGG7m1q+nvwLFj+tYhktYJXf0rrYNI60JgbyxUApTca
+	 4YBA02ytf/BdO8M6aQ3i7mvWgZyhbLbqWO3ZCU7uXsGYb64k5ugEl6KWOyUFFFn2c5
+	 5qeTFmET+82nuk0K+SZKcIRLxNT6N63rhsJdhMJb7oO040cmAs8td3knxk0BiCrzjc
+	 jR1vQu+qsgCrQ==
+Date: Fri, 1 Aug 2025 21:03:46 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com, 
+	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Enable MCQ support for
+ UFS controller
+Message-ID: <54gttzkpxg55vrh5wsvyvteovki377w3yjfejjddpzzrvldwkg@p7sc4knnvla3>
+References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
+ <20250730082229.23475-3-quic_rdwivedi@quicinc.com>
+ <eab85cb3-7185-4474-9428-8699fbe4a8e5@kernel.org>
+ <40ace3bc-7e5d-417a-b51a-148c5f498992@quicinc.com>
+ <2a7bf809-73d9-4cb6-bcc9-3625ef1eb1fa@kernel.org>
+ <kayobeddgln5oi3g235ruh7f7adbqr7srim7tmt3iwa3zn33m4@cenneffnuhnv>
+ <5a32e933-03b9-4cc3-914c-46bdb2cedce6@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250724-topic-ufs_compile_check-v1-1-5ba9e99dbd52@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5a32e933-03b9-4cc3-914c-46bdb2cedce6@kernel.org>
 
-This patch removes some dead ifdeffed code because the KConfig has a
-select which ensures that CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND is set.
-Konrad was wondering if there are any tools to detect this sort of
-thing.  I don't think so.  I think the only thing we detect are
-non-existant configs.  But let me add a few more people to the CC who
-might know.
+On Fri, Aug 01, 2025 at 04:20:37PM GMT, Krzysztof Kozlowski wrote:
+> On 01/08/2025 14:24, Manivannan Sadhasivam wrote:
+> > On Thu, Jul 31, 2025 at 10:38:56AM GMT, Krzysztof Kozlowski wrote:
+> >> On 31/07/2025 10:34, Ram Kumar Dwivedi wrote:
+> >>>
+> >>>
+> >>> On 31-Jul-25 12:15 PM, Krzysztof Kozlowski wrote:
+> >>>> On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
+> >>>>> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+> >>>>> on the Qualcomm SM8650 platform by updating the device tree node. This
+> >>>>> includes adding new register regions and specifying the MSI parent
+> >>>>> required for MCQ operation.
+> >>>>>
+> >>>>> MCQ is a modern queuing model for UFS that improves performance and
+> >>>>> scalability by allowing multiple hardware queues. 
+> >>>>>
+> >>>>> Changes:
+> >>>>> - Add reg entries for mcq_sqd and mcq_vs regions.
+> >>>>> - Define reg-names for the new regions.
+> >>>>> - Specify msi-parent for interrupt routing.
+> >>>>>
+> >>>>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> >>>>> ---
+> >>>>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
+> >>>>>  1 file changed, 8 insertions(+), 1 deletion(-)
+> >>>>>
+> >>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> >>>>> index e14d3d778b71..5d164fe511ba 100644
+> >>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> >>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> >>>>> @@ -3982,7 +3982,12 @@ ufs_mem_phy: phy@1d80000 {
+> >>>>>  
+> >>>>>  		ufs_mem_hc: ufshc@1d84000 {
+> >>>>>  			compatible = "qcom,sm8650-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+> >>>>> -			reg = <0 0x01d84000 0 0x3000>;
+> >>>>> +			reg = <0 0x01d84000 0 0x3000>,
+> >>>>> +			      <0 0x01da5000 0 0x2000>,
+> >>>>> +			      <0 0x01da4000 0 0x0010>;
+> >>>>
+> >>>>
+> >>>> These are wrong address spaces. Open your datasheet and look there.
+> >>>>
+> >>> Hi Krzysztof,
+> >>>
+> >>> I’ve reviewed it again, and it is correct and functioning as expected both on our upstream and downstream codebase.
+> >>> I think it is probably overlooked by you. Can you please double check from your end?
+> >>>
+> >>
+> >> No, it is not overlooked. There is no address space of length 0x10 at
+> >> 0x01da4000 in qcom doc/datasheet system. Just open the doc and look
+> >> there by yourself. The size is 0x15000.
+> >>
+> > 
+> > The whole UFS MCQ region is indeed of size 0x15000, but the SQD and VS registers
+> > are at random offsets, not fixed across the SoC revisions. And there are some
+> > big holes within the whole region for things like ICE and all.
+> > 
+> > So it makes sense to map only the part of these regions and leave the unused
+> > ones.
+> Each item in the reg represents some continuous, dedicated address
+> space, not individual registers or artificially decided subsection. The
+> holes in such address space is not a problem, we do it all the time for
+> all other devices as well.
+> 
+> You need to use the definition of that address space.
+> 
 
-regards,
-dan carpenter
+What if some of the registers in that whole address space is shared with other
+peripherals such as ICE?
 
-On Thu, Jul 24, 2025 at 02:23:52PM +0200, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> SCSI_UFSHCD already selects DEVFREQ_GOV_SIMPLE_ONDEMAND, drop the
-> check.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
-> Is this something that could be discovered by our existing static
-> checkers?
-> ---
->  drivers/ufs/host/ufs-qcom.c | 8 --------
->  1 file changed, 8 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 4bbe4de1679b908c85e6a3d4035fc9dcafcc0d1a..76fc70503a62eb2e747b2d4cd18cc05b6f5526c7 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1898,7 +1898,6 @@ static int ufs_qcom_device_reset(struct ufs_hba *hba)
->  	return 0;
->  }
->  
-> -#if IS_ENABLED(CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND)
->  static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
->  					struct devfreq_dev_profile *p,
->  					struct devfreq_simple_ondemand_data *d)
-> @@ -1910,13 +1909,6 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
->  
->  	hba->clk_scaling.suspend_on_no_request = true;
->  }
-> -#else
-> -static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
-> -		struct devfreq_dev_profile *p,
-> -		struct devfreq_simple_ondemand_data *data)
-> -{
-> -}
-> -#endif
->  
->  /* Resources */
->  static const struct ufshcd_res_info ufs_res_info[RES_MAX] = {
-> 
-> ---
-> base-commit: a933d3dc1968fcfb0ab72879ec304b1971ed1b9a
-> change-id: 20250724-topic-ufs_compile_check-3378996f4221
-> 
-> Best regards,
-> -- 
-> Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I agree with the fact that artifically creating separate register spaces leads
+to issues, but here I'm worried about hardcoding the offsets in the driver which
+can change between SoCs and also the shared address space with ICE.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
