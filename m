@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60F40B17EDD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:10:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55CF3B17EE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:12:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E900C586768
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:10:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 617F57B265D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5398A21FF58;
-	Fri,  1 Aug 2025 09:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C319221721;
+	Fri,  1 Aug 2025 09:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WY1RSewN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+l59xB7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E6020D50C;
-	Fri,  1 Aug 2025 09:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE8814F70;
+	Fri,  1 Aug 2025 09:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754039442; cv=none; b=GeEr7RzT94iBT3bOW/MW8vnsaNguWDV9dyl7NQq8fdugJ16TjURU7EQfN/hVMzWI56kY6mE5332BAtVnzHrOLnJsFLKnO/2QWFhywq4j7EJLOLp5PM329pwS+Y6gT18ePKeSCchtRxXNX883i0j0PCworN8mqYBx7tw43XYIe5A=
+	t=1754039568; cv=none; b=L/y5tvuj4dENgltIUX1oF1FFYs6NLKdUU28/gcECx8tpWoND8Ossmm1VTPcz9u9cGsrzzDBfZwN8I7m1C67vPtx5dUuvq6IeHteJguNlgT9aFEE+iz7zWn6tJhPmt9oYxrFbuHsq2tJ6rfS+PlHGVwMa3HEInolPfyvzrLot1jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754039442; c=relaxed/simple;
-	bh=3nbg1I5E3GeZKawoY/D6ZcFXmMbptFSwP7oM5e9/i3g=;
+	s=arc-20240116; t=1754039568; c=relaxed/simple;
+	bh=/0aIoMWpMvoKgmbhWwt6QEfVxNIXHXS3+4r5hcmLZpo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J0RHMTRW5SCWsgOOal8susOF7IZjb118YBGV1mfzRWg1EzCD9EPaAMVGzdZ8C6Qif7Wvx8fgi7kNiacC3fWCVtjHQgTaCOHmJQIU2mkwudfPdGIq0SjTor6O7nBMpGuEmcJaPMxBsuReVc+UsiBjkcw1UYDFtmYnfWRzxh6yR2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WY1RSewN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E86C4CEE7;
-	Fri,  1 Aug 2025 09:10:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YOBBf0pb7BeDaOMUMVNIbCOQyX1xVW4YI/AgAyR+ylDtDirb7XFhfn3MqKhORKhcdvDQcETuyWeb7LYCBTFfuW9+moVp7MV/iKknGmYJARh4KIfrFXCRJQEJ4Y7Q2QENjme0L/UX/uq1RtQYZ0pMrZxmy1O3ra2NvOjYec0HkaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+l59xB7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0678FC4CEE7;
+	Fri,  1 Aug 2025 09:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754039441;
-	bh=3nbg1I5E3GeZKawoY/D6ZcFXmMbptFSwP7oM5e9/i3g=;
+	s=k20201202; t=1754039567;
+	bh=/0aIoMWpMvoKgmbhWwt6QEfVxNIXHXS3+4r5hcmLZpo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WY1RSewN1F7+zuCssMWZRRRs2QDJC5aeEuTky/x1hRFbzfuAeGQ0gIZuuKqjqZZ/N
-	 mZXRLvoaDHGUN+7JmtKExmnW2A5KbuWWk8HM2yvChEiVCDmNHmgwETdpMVurWcThYV
-	 YHV62EpgbrNW/LEmk3gaSICwM1MOKur2T77cmVn9yzfL/1eYDuxudXdWU+c59AuzcE
-	 2vXNBPklEvW8luFF8ppoZA3OdQ8kyM0tzv8RCYm1FMJc0EvcocQQ7a9JjySEGwSh3i
-	 QiNthNPsLWP8h59fqxI5HqoMnulP0f00IfIBMJE3l+PGvJHEe5QNhhYcC047boJUrG
-	 CeS0n+UX+7qUA==
-Message-ID: <48610dd9-16c0-48ec-9997-2de9e0f7b3b6@kernel.org>
-Date: Fri, 1 Aug 2025 11:10:36 +0200
+	b=a+l59xB7qoAyviFi3i7LZLuyTEAXVbrhAkRc7BF7nst+vregdi/ujA/4dmeORT9Di
+	 QW495UpQlbytopSioQ5wvuzfL9S3mwiqBP0pOHGLqYSmSfv8b9erDck1OnkLRr/Bj2
+	 g2roHwrOZ9kO/Krgbu53rqjuE4AM+MxRvVNfA3DQ+0VPvtTQqR3UYY5New8ZskPaCm
+	 fYvuIc8sR3SxpuC36CYrrLdcIixWM4fyuhDKdlTt03TXsscXSescdxzMGjwZ3bDPc9
+	 PUV3fA+xQb8AP02mae2d2at7Y7JH6QcH3f8F6WGi8Zu/u8nAVPy+r5zilrhi49JUM1
+	 Iqv5Qs4rywmeg==
+Message-ID: <1701ec08-21bc-45b8-90bc-1cd64401abd8@kernel.org>
+Date: Fri, 1 Aug 2025 11:12:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] dt-bindings: clock: qcom: Document the Glymur TCSR
- Clock Controller
-To: Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: kernel@oss.qualcomm.com, Pankaj Patil <quic_pankpati@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-0-227cfe5c8ef4@oss.qualcomm.com>
- <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-2-227cfe5c8ef4@oss.qualcomm.com>
- <20250730-mottled-myrtle-bull-3ae03c@kuoka>
- <9cb06263-2a61-4acd-a9cc-157abb832d62@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
+ Manivannan Sadhasivam <mani@kernel.org>
+Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org,
+ James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
+ agross@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
+ <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
+ <2a3c8867-7745-4f0a-8618-0f0f1bea1d14@kernel.org>
+ <jpawj3pob2qqa47qgxcuyabiva3ync7zxnybrazqnfx3vbbevs@sgbegaucevzx>
+ <fa1847e3-7dab-45d0-8c1c-0aca1e365a2a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,35 +111,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <9cb06263-2a61-4acd-a9cc-157abb832d62@oss.qualcomm.com>
+In-Reply-To: <fa1847e3-7dab-45d0-8c1c-0aca1e365a2a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 01/08/2025 06:14, Taniya Das wrote:
+On 01/08/2025 11:10, Ram Kumar Dwivedi wrote:
 > 
 > 
-> On 7/30/2025 12:47 PM, Krzysztof Kozlowski wrote:
->> On Tue, Jul 29, 2025 at 11:12:36AM +0530, Taniya Das wrote:
->>> Add bindings documentation for the Glymur TCSR Clock Controller.
+> On 01-Aug-25 1:58 PM, Manivannan Sadhasivam wrote:
+>> On Thu, Jul 24, 2025 at 09:48:53AM GMT, Krzysztof Kozlowski wrote:
+>>> On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
+>>>> Add optional limit-hs-gear and limit-rate properties to the UFS node to
+>>>> support automotive use cases that require limiting the maximum Tx/Rx HS
+>>>> gear and rate due to hardware constraints.
+>>>
+>>> What hardware constraints? This needs to be clearly documented.
+>>>
 >>
->> Same question as for v1, what is Glymur?
-> 
-> Glymur is the Qualcomm's next gen compute SoC.
-
-Explain it in at least one commit msg, not in reply to me.
-
-> 
+>> Ram, both Krzysztof and I asked this question, but you never bothered to reply,
+>> but keep on responding to other comments. This won't help you to get this series
+>> merged in any form.
 >>
->> Where is any DTS using this (or explanation of lack of DTS)?
->>
+>> Please address *all* review comments before posting next iteration.
 > 
-> Krzysztof, the DTS will be posted separately once the driver and
-> bindings are reviewed.
+> Hi Mani,
+> 
+> Apologies for the delay in responding. 
+> I had planned to explain the hardware constraints in the next patchset’s commit message, which is why I didn’t reply earlier. 
+> 
+> To clarify: the limitations are due to customer board designs, not our SoC. Some boards can't support higher gear operation, hence the need for optional limit-hs-gear and limit-rate properties.
+> 
 
-Hm? That's not what I was told thus I ask. I am sure that above is not
-true, but if you insist and put it that way it is incorrect. You cannot
-send DTS because you wait with drivers to be reviewed. We want to see
-entire picture.
+That's vague and does not justify the property. You need to document
+instead hardware capabilities or characteristic. Or explain why they
+cannot. With such form I will object to your next patch.
 
 Best regards,
 Krzysztof
