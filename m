@@ -1,136 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-67349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6430EB181B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:24:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81E26B181BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:26:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23C1C3B6A79
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:24:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FD451742D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D90124676C;
-	Fri,  1 Aug 2025 12:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB3824676C;
+	Fri,  1 Aug 2025 12:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nYx3IzMD"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="U4GACaKs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194DE23C51B;
-	Fri,  1 Aug 2025 12:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26ED72441B8;
+	Fri,  1 Aug 2025 12:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754051084; cv=none; b=seFDfQd3QVwpu7bLfe9SyzR4DVlY/hRbXo6TT3IBgZXzNLcIOins6mST0fLtQ69V49b39B81ZK+pK0xZPg85gNk0Y/rTxnIfz9hDCJD04e6TwJq6abaUEr6Kl2basiobw6e4Z4oRVYLdmhdbOM5GuEQOxXYDZ7Rj3yRwt77nJko=
+	t=1754051159; cv=none; b=A30hVFOWl3oJ8Y1ViTI8YbSB035M226lbe07Wp7vzuudWxfPxydReOp2QAm6x1en4Gkcr89DlUUBNEty90eVM20vIiVXdDiurwBFV3FfEFQyRg7vQsOZ3EXY6EpvrRr7hJO42pA6I8za6eCqZ1rXf4Q/VTN5nugJ5lUL0bleWU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754051084; c=relaxed/simple;
-	bh=zSsoy4h+MU+HAAWZKfOLQpjUGtZyXSjAdvjgDERSVAs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hNH3nNnSXGb3gZVsmZJgxEKspkqCwgnXsFlM7zdGZEzNjCzpsac4CAL1SNbufR2k9apSAzLLEc6eXNlfEFDE2bSMiE2rvVCHwJDRwJ19TgT1Cl2MsAFCOOyujkzJkXKu/HUTJz04c34XAHbc0JhOWvFkUd6oOTzceSy/sr6JgD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nYx3IzMD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97140C4CEE7;
-	Fri,  1 Aug 2025 12:24:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754051083;
-	bh=zSsoy4h+MU+HAAWZKfOLQpjUGtZyXSjAdvjgDERSVAs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nYx3IzMD7Mxf+LiwAs0M2LbOI4+cfWP/4Mu+nEItPRZNEbcsnkaHmnnDOyX9Fj35b
-	 ductaaa4MiSAlMOZErKDfag1i5RbxheY5KeS6TNu0KgJ1g/StxG6Cagz3qIxSYwiqi
-	 dlUeaMpOwtnGG/hEGLSvbgFHCl8At96iEG1pcMhOBEVUKUb2jqagwh+Yt2ewoStNdn
-	 TMmrf/Bau5uyx7pApi6G5Xk8Jt7JzeD4B/4wCcK1iSCsfmfFRHJ6SfVMSrAmE7hgBF
-	 0qrrtqOmLVwARWksKDPVAHEOH+fJGShmnKtPQIbJ9GNimR6lpHuDpVcrLlnzNxWrqY
-	 /lAZC9dnWi78Q==
-Date: Fri, 1 Aug 2025 17:54:33 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com, 
-	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Enable MCQ support for
- UFS controller
-Message-ID: <kayobeddgln5oi3g235ruh7f7adbqr7srim7tmt3iwa3zn33m4@cenneffnuhnv>
-References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
- <20250730082229.23475-3-quic_rdwivedi@quicinc.com>
- <eab85cb3-7185-4474-9428-8699fbe4a8e5@kernel.org>
- <40ace3bc-7e5d-417a-b51a-148c5f498992@quicinc.com>
- <2a7bf809-73d9-4cb6-bcc9-3625ef1eb1fa@kernel.org>
+	s=arc-20240116; t=1754051159; c=relaxed/simple;
+	bh=+Ltd4Hy3tdsuA5Vc2mPQHqD/Wg7sA0TicSGOKBy5Rpk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=OaT4GPgkM7BlVw7P9LdH/mhdHmphVua0tpVn63kRi0fmzxUJQafB0wEi/mSa/sAD8WEztHlKHfvPHv13b/kilWsap839H84KZb06zmD+D5NmEkKOU0u58DHuC6BsZbGgzZN+DbsUt9ubqY5ImPSqA7EOHmpvSs47HJq6lbHM9Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=U4GACaKs; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=+Ltd4Hy3tdsuA5Vc2mPQHqD/Wg7sA0TicSGOKBy5Rpk=; b=U4GACaKsgynZ6ANU/dUYe0WO9B
+	HqZjffV8Z+YKe7oAyOvYfE4OXc+Tp3guH5IQ3bOT/NTHN6EX3gzv88hkJEvWA1triNTC+jCVKsmuO
+	ceIbz4xWOhlCiNxRX7/HxEv4zTy6SC+JvMl8MCNHsL4MxvJOkdcwtOXwxDkucj5X4vjWhLpUDVRel
+	rUMuAxgeUQIxSuYIF6XTym15EPB10OefYNbY4r5DDq0nd1suq51reXMZr2j9Jqa5s7L2L3yA0pMHR
+	TF3yFX26DG54wZP9CI3+zV28zxdaw3orGuQ+tAvHeOD8mhFGMvbWTlPVP4Qjs7K5A7JttrigDkEa1
+	RvdLI+PQ==;
+Received: from 54-240-197-232.amazon.com ([54.240.197.232] helo=edge-m2-r3-179.e-iad50.amazon.com)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uhopV-0000000E6LM-42Z2;
+	Fri, 01 Aug 2025 12:25:47 +0000
+Message-ID: <2700e50c6ca07b58c4a4a0c219815cf3e1319f35.camel@infradead.org>
+Subject: Re: [RFC PATCH 06/34] KVM: gunyah: Add initial Gunyah backend
+ support
+From: David Woodhouse <dwmw2@infradead.org>
+To: Karim Manaouil <karim.manaouil@linaro.org>,
+ linux-kernel@vger.kernel.org,  kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.linux.dev, Steven Price <steven.price@arm.com>, Gavin Shan
+ <gshan@redhat.com>, Suzuki Poulose's avatarSuzuki K Poulose
+ <suzuki.poulose@arm.com>, "Usug, Ugur" <ugurus@amazon.co.uk>
+Cc: Alexander Graf <graf@amazon.com>, Alex Elder <elder@kernel.org>, Catalin
+ Marinas <catalin.marinas@arm.com>, Fuad Tabba <tabba@google.com>, Joey
+ Gouly <joey.gouly@arm.com>,  Jonathan Corbet <corbet@lwn.net>, Marc Zyngier
+ <maz@kernel.org>, Mark Brown <broonie@kernel.org>,  Mark Rutland
+ <mark.rutland@arm.com>, Oliver Upton <oliver.upton@linux.dev>, Paolo
+ Bonzini <pbonzini@redhat.com>, Prakruthi Deepak Heragu
+ <quic_pheragu@quicinc.com>,  Quentin Perret <qperret@google.com>, Rob
+ Herring <robh@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, 
+ Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, Will Deacon
+ <will@kernel.org>, Haripranesh S <haripran@qti.qualcomm.com>,  Carl van
+ Schaik <cvanscha@qti.qualcomm.com>, Murali Nalajala <mnalajal@quicinc.com>,
+ Sreenivasulu Chalamcharla <sreeniva@qti.qualcomm.com>, Trilok Soni
+ <tsoni@quicinc.com>, Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Fri, 01 Aug 2025 13:25:43 +0100
+In-Reply-To: <20250424141341.841734-7-karim.manaouil@linaro.org>
+References: <20250424141341.841734-1-karim.manaouil@linaro.org>
+	 <20250424141341.841734-7-karim.manaouil@linaro.org>
+Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
+	boundary="=-kuiyOGxGFoDOQHVFJxGm"
+User-Agent: Evolution 3.52.3-0ubuntu1 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2a7bf809-73d9-4cb6-bcc9-3625ef1eb1fa@kernel.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
-On Thu, Jul 31, 2025 at 10:38:56AM GMT, Krzysztof Kozlowski wrote:
-> On 31/07/2025 10:34, Ram Kumar Dwivedi wrote:
-> > 
-> > 
-> > On 31-Jul-25 12:15 PM, Krzysztof Kozlowski wrote:
-> >> On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
-> >>> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
-> >>> on the Qualcomm SM8650 platform by updating the device tree node. This
-> >>> includes adding new register regions and specifying the MSI parent
-> >>> required for MCQ operation.
-> >>>
-> >>> MCQ is a modern queuing model for UFS that improves performance and
-> >>> scalability by allowing multiple hardware queues. 
-> >>>
-> >>> Changes:
-> >>> - Add reg entries for mcq_sqd and mcq_vs regions.
-> >>> - Define reg-names for the new regions.
-> >>> - Specify msi-parent for interrupt routing.
-> >>>
-> >>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> >>> ---
-> >>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
-> >>>  1 file changed, 8 insertions(+), 1 deletion(-)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>> index e14d3d778b71..5d164fe511ba 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>> @@ -3982,7 +3982,12 @@ ufs_mem_phy: phy@1d80000 {
-> >>>  
-> >>>  		ufs_mem_hc: ufshc@1d84000 {
-> >>>  			compatible = "qcom,sm8650-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
-> >>> -			reg = <0 0x01d84000 0 0x3000>;
-> >>> +			reg = <0 0x01d84000 0 0x3000>,
-> >>> +			      <0 0x01da5000 0 0x2000>,
-> >>> +			      <0 0x01da4000 0 0x0010>;
-> >>
-> >>
-> >> These are wrong address spaces. Open your datasheet and look there.
-> >>
-> > Hi Krzysztof,
-> > 
-> > I’ve reviewed it again, and it is correct and functioning as expected both on our upstream and downstream codebase.
-> > I think it is probably overlooked by you. Can you please double check from your end?
-> > 
-> 
-> No, it is not overlooked. There is no address space of length 0x10 at
-> 0x01da4000 in qcom doc/datasheet system. Just open the doc and look
-> there by yourself. The size is 0x15000.
-> 
 
-The whole UFS MCQ region is indeed of size 0x15000, but the SQD and VS registers
-are at random offsets, not fixed across the SoC revisions. And there are some
-big holes within the whole region for things like ICE and all.
+--=-kuiyOGxGFoDOQHVFJxGm
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-So it makes sense to map only the part of these regions and leave the unused
-ones.
+On Thu, 2025-04-24 at 15:13 +0100, Karim Manaouil wrote:
+>=20
+> - Introduces a new Kconfig split: `CONFIG_KVM_ARM` for native support,
+> =C2=A0 and a variant for Gunyah-backed virtualization.
+> - Adds `gunyah.c`, a new arch backend file that implements the minimal
+> =C2=A0 KVM architecture callbacks and stub interfaces required by the KVM
+> =C2=A0 core to build and boot.
+> - Refactors Makefile and build rules to support mutually exclusive
+> =C2=A0 builds of `CONFIG_KVM_ARM` and `CONFIG_GUNYAH`.
+> - Introduces a dummy implementation of required KVM stubs such as:
+> =C2=A0 `kvm_arch_init_vm()`, `kvm_arch_vcpu_create()`, `kvm_age_gfn()`, e=
+tc.
 
-But again, this should've been clearly explained in the patch description. I
-hope it will be taken care in the next version.
+I quite like this, conceptually. I do think it's important for the
+kernel to provide a generic virtualization API regardless of the
+underlying hardware/firmware =E2=80=94 that is, after all, what an OS kerne=
+l is
+*for*. So the answer "not in KVM" is just fundamentally not realistic.
 
-- Mani
+I'd like to see fewer #ifdefs though. The model we have on x86 with
+static_calls for the AMD vs. Intel back ends seems to work out OK.
 
--- 
-மணிவண்ணன் சதாசிவம்
+We ought to be able to come up with a model inspired by x86 where we
+allow certain methods to be provided by one of many sets of 'lowvisor'
+ops or whatever we want to call them:
+
+ =E2=80=A2 Native KVM (at EL2)
+ =E2=80=A2 pKVM
+ =E2=80=A2 Gunyah
+ =E2=80=A2 CCA
+ =E2=80=A2 ... and potentially one or two others.
+
+Currently we have completely separate work on some of those; can we
+combine at least the basic hooks/operations and come up with something
+which is minimally intrusive where each one just plugs in its own
+implementation but the KVM userspace API is as unified as possible?
+
+--=-kuiyOGxGFoDOQHVFJxGm
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDgwMTEyMjU0
+M1owLwYJKoZIhvcNAQkEMSIEIOCh638+fg6HH0s6fKaXunZT8sKstrN7UYcBZ1ogkLEEMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIASdHLiVQmlr6W
+jlNNL+KtVJ+ZydQztNDdK3u1lkYjE9evUTAnQtuA9hOtD+VfuBi/e1lZinYZqLUJKDoFf96ery5i
+ACKJPCmpW4tfgkDHPPGscM6J7kKP+OIhDv5rKd/i61jXZsQQ6f1sGAcGWUluNzdrAfuB1ycvAtjr
+IEqvfmRtAN3MxORUMabjkzHuYJG5FvTSGtyYhpcMbjpBhD4/petj3DdoQvyVkH0QFnH+Fy8D5VDo
+mgbDKWmlK//4sIceKkc0dBBoLm9i2B8UsQ76oREiWM/zRcQGGuJ1tiiBx2iTucIXh91QCR/RHB0M
+SqUuSCIhPjOkt4xpv6CRr4rgNRVN1RnZto+nBaHsp6NNVht9Mxep61y3nlh5hAJ9LcGQcZOUFhir
+fSUZ1qkN3RfbsJSjrDJUpMeFi+gHECitcp1jMiFr+g+WbIfsDzFzfoOVOL4zhEpd45A3IN5+6RI8
+9FABy/Otw1m92tDtJJgvnqw0OdkqrdEZRWTBsrJg6JLdzZnNRLWDoedzEkE/LL++7PuhaSy+6BXt
+mqid7HxGosGrFHZGxxf3k1WfMxQQdiICaTOkV+O72ZEdvJ62rsnuiFZOIsw/xxAxhqGrvaMNzhWx
+syhYmPopOYx0BLpEMj2kFDO9jqHDjRt8sReAu6sl1/o5LKAWlWXxU6jmpLvSx5MAAAAAAAA=
+
+
+--=-kuiyOGxGFoDOQHVFJxGm--
 
