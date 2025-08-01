@@ -1,52 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3D76B18360
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 16:10:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CECC9B1838E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 16:20:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3EC4542855
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:09:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EABB1C82FFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:21:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BB7726C3A5;
-	Fri,  1 Aug 2025 14:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45E8D24DCE9;
+	Fri,  1 Aug 2025 14:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="cZHcldpM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWJaUE9m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224826C39E;
-	Fri,  1 Aug 2025 14:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153334A1D;
+	Fri,  1 Aug 2025 14:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754057349; cv=none; b=Q7pkga15FKZteER30UoDfkZE9lFLPccBgSH8K4IylWVKYL6Kmd7fUvlod0+eZOq8//OaJswfYPGqkp5FnDCSgyalUEumD9ywZZUC0VRO4+WhyzUIwK5U+wCBb0TpcgYw0jp4OQ2xM5KvWuscZWnhDHV+oheRuLh/ba16hfU66QU=
+	t=1754058043; cv=none; b=tChxq9n3lD2CHk7N4sWg/AqmAlvAesizE+I8+ZbUsBumW1TuIZ+VwTd4/miBxTZM2jRsWJ8Dc0T2MnbyUtUPOKoAOQhK6Z0km/+RNTj8PywVHuGrakyV1SDDbxHChvtJ2po/8LGpSCoX7MFJ/BOfiB5xFOe1AcJRXdr8H0ieTZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754057349; c=relaxed/simple;
-	bh=lRc9m8B3YFNeJUhLRAInJmLHf4ALq4sDFeTOHRTMwG0=;
+	s=arc-20240116; t=1754058043; c=relaxed/simple;
+	bh=kp2HvDOPYGZsbeuACG6uAZz1QsQSc0OmTn9XnBe49O0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OeL95R7bYsfNgz7UeSp9hTtODYANdFQWKyI2uBcORMD4pt9eBMeKbph39ikUHpnCxO1ngeleRZCwbq9F4+Ii6SlL2G5Vq7DTpD+YnwuSYP914wR5/9w956HQ6dJXyvjghQGMBh0cQ2AVOC4l/43hk4pLTAmN0XkG4aJOdJwpCWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=cZHcldpM; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 23704442F4;
-	Fri,  1 Aug 2025 14:09:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1754057345;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=1eO26JKteHxuoy1a4A2nQ0PM4JCEHGZpVMXmkOKugo8=;
-	b=cZHcldpMfzXVrQHo+B8lfp/Nuq2Ys5uQaJPLBUzlBEmzmlnkwj3uvOUYnb9NiK4CgX5dwi
-	veszdP4Mwy+cHfar+TijKIBuor+xQf4qTF8PfdJ+Tx82dkL4+kfKO8/VctFzO3M5ixAUZg
-	LhNfUTSJ+tUXsJZrcUdCCgzC98pKRK+wsL1ESkP6IBhdP58U+hcmb+ZVzS8t0HiZH0EKyk
-	/chKpMSlhF3n639ltSSEfcRrzA7Bj4UvwuwYSSXLCnUKJx1ur0hbPJPCgHAVNlGk+uAk2s
-	kzv8BWJ7nqnp5iWF2VVGi4NfDcljptURLzrTb7H7FMV5HwDf4AKr6bhWO6FtAA==
-Message-ID: <b9e2dae7-6cd6-4fd2-b7e0-8869647bd72f@bootlin.com>
-Date: Fri, 1 Aug 2025 16:09:02 +0200
+	 In-Reply-To:Content-Type; b=KbFBF8YHS5ZdyacqZPCHJ6PtP4vBdaXzh22109MS4qSM10LUejW0DhpOpEWduXINAXmrtsgZvKXl4M/cGsBTPDOLufgSzwXSRBQsk9zCBzvS/XoFeCud+jFya7U/Caugg5CbxhdrjCPm4ChQLRDAMxaPUK4qDK4LziaHZN0eR1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWJaUE9m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50816C4CEE7;
+	Fri,  1 Aug 2025 14:20:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754058042;
+	bh=kp2HvDOPYGZsbeuACG6uAZz1QsQSc0OmTn9XnBe49O0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fWJaUE9m8BVT4qf23fVxU/fFdrYVDVPLA3Kp1ns+u+22FARJE2OHSHVL7rwMLiat8
+	 ibSInINHmg3gP6s2UcPxEcF2BmZdlFmTGJ0nlfPS+qaBwF+wrKMBLau83TR+iJre8Z
+	 6dnI6AegiANboqBlnobBCNtku6UbgDx2mFIEcykYwbmGFN5yVlVFvu7CqEOWMdNfdQ
+	 BxOxZs1a/P7WQgghO5mzC8cESWj3SJNmZho85TvYV1G+DaufY5PiwkXme04hjPSUyk
+	 0C6NfAD8Rw4AcUIIu5URe5aG9rN/ePmkquxKftqb95HcXbeeI5eqXhr43IIX1PjNOy
+	 QjLzYSmZXl8nQ==
+Message-ID: <5a32e933-03b9-4cc3-914c-46bdb2cedce6@kernel.org>
+Date: Fri, 1 Aug 2025 16:20:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,196 +50,135 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] drm/komeda: use drmm_writeback_connector_init()
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- "Kandpal, Suraj" <suraj.kandpal@intel.com>,
- Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
- Rodrigo Siqueira <siqueira@igalia.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Liviu Dudau <liviu.dudau@arm.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
- Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
- Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>,
- =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
-References: <20250801-wb-drop-encoder-v1-0-824646042f7d@oss.qualcomm.com>
- <20250801-wb-drop-encoder-v1-2-824646042f7d@oss.qualcomm.com>
+Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Enable MCQ support for
+ UFS controller
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com,
+ avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250730082229.23475-1-quic_rdwivedi@quicinc.com>
+ <20250730082229.23475-3-quic_rdwivedi@quicinc.com>
+ <eab85cb3-7185-4474-9428-8699fbe4a8e5@kernel.org>
+ <40ace3bc-7e5d-417a-b51a-148c5f498992@quicinc.com>
+ <2a7bf809-73d9-4cb6-bcc9-3625ef1eb1fa@kernel.org>
+ <kayobeddgln5oi3g235ruh7f7adbqr7srim7tmt3iwa3zn33m4@cenneffnuhnv>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Louis Chauvet <louis.chauvet@bootlin.com>
-Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
- 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
-In-Reply-To: <20250801-wb-drop-encoder-v1-2-824646042f7d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <kayobeddgln5oi3g235ruh7f7adbqr7srim7tmt3iwa3zn33m4@cenneffnuhnv>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdefkeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepnfhouhhishcuvehhrghuvhgvthcuoehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeekieevtdefgedtkeehteehtddttdefhffhgeejleejjeeluddvhfdugedvkeehveenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrddtrddvtdgnpdhmrghilhhfrhhomheplhhouhhishdrtghhrghuvhgvthessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeegpdhrtghpthhtohepughmihhtrhihrdgsrghrhihshhhkohhvsehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphhtthhopehjrghnihdrnhhikhhulhgrsehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepshhurhgrjhdrkhgrnhguphgrlhesihhnthgvlhdrtghomhdprhgtphhtthhopehhrghrrhihrdifvghnt
- hhlrghnugesrghmugdrtghomhdprhgtphhtthhopehsuhhnphgvnhhgrdhlihesrghmugdrtghomhdprhgtphhtthhopehsihhquhgvihhrrgesihhgrghlihgrrdgtohhmpdhrtghpthhtoheprghlvgigrghnuggvrhdruggvuhgthhgvrhesrghmugdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdhkohgvnhhighesrghmugdrtghomh
-X-GND-Sasl: louis.chauvet@bootlin.com
 
-
-
-Le 01/08/2025 à 15:51, Dmitry Baryshkov a écrit :
-> Use drmm_plain_encoder_alloc() to allocate simple encoder and
-> drmm_writeback_connector_init() in order to initialize writeback
-> connector instance.
+On 01/08/2025 14:24, Manivannan Sadhasivam wrote:
+> On Thu, Jul 31, 2025 at 10:38:56AM GMT, Krzysztof Kozlowski wrote:
+>> On 31/07/2025 10:34, Ram Kumar Dwivedi wrote:
+>>>
+>>>
+>>> On 31-Jul-25 12:15 PM, Krzysztof Kozlowski wrote:
+>>>> On 30/07/2025 10:22, Ram Kumar Dwivedi wrote:
+>>>>> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+>>>>> on the Qualcomm SM8650 platform by updating the device tree node. This
+>>>>> includes adding new register regions and specifying the MSI parent
+>>>>> required for MCQ operation.
+>>>>>
+>>>>> MCQ is a modern queuing model for UFS that improves performance and
+>>>>> scalability by allowing multiple hardware queues. 
+>>>>>
+>>>>> Changes:
+>>>>> - Add reg entries for mcq_sqd and mcq_vs regions.
+>>>>> - Define reg-names for the new regions.
+>>>>> - Specify msi-parent for interrupt routing.
+>>>>>
+>>>>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>>>>> ---
+>>>>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
+>>>>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>>> index e14d3d778b71..5d164fe511ba 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>>> @@ -3982,7 +3982,12 @@ ufs_mem_phy: phy@1d80000 {
+>>>>>  
+>>>>>  		ufs_mem_hc: ufshc@1d84000 {
+>>>>>  			compatible = "qcom,sm8650-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+>>>>> -			reg = <0 0x01d84000 0 0x3000>;
+>>>>> +			reg = <0 0x01d84000 0 0x3000>,
+>>>>> +			      <0 0x01da5000 0 0x2000>,
+>>>>> +			      <0 0x01da4000 0 0x0010>;
+>>>>
+>>>>
+>>>> These are wrong address spaces. Open your datasheet and look there.
+>>>>
+>>> Hi Krzysztof,
+>>>
+>>> I’ve reviewed it again, and it is correct and functioning as expected both on our upstream and downstream codebase.
+>>> I think it is probably overlooked by you. Can you please double check from your end?
+>>>
+>>
+>> No, it is not overlooked. There is no address space of length 0x10 at
+>> 0x01da4000 in qcom doc/datasheet system. Just open the doc and look
+>> there by yourself. The size is 0x15000.
+>>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->   .../drm/arm/display/komeda/komeda_wb_connector.c   | 30 ++++++++++++----------
->   1 file changed, 17 insertions(+), 13 deletions(-)
+> The whole UFS MCQ region is indeed of size 0x15000, but the SQD and VS registers
+> are at random offsets, not fixed across the SoC revisions. And there are some
+> big holes within the whole region for things like ICE and all.
 > 
-> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c b/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
-> index 875cdbff18c9dc97e736049feaa8a1fe1bcc82ff..210841b4453abfe60cecc1cfc79a84298be3e684 100644
-> --- a/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
-> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
-> @@ -5,6 +5,7 @@
->    *
->    */
->   #include <drm/drm_framebuffer.h>
-> +#include <drm/drm_managed.h>
->   #include "komeda_dev.h"
->   #include "komeda_kms.h"
->   
-> @@ -121,17 +122,10 @@ komeda_wb_connector_fill_modes(struct drm_connector *connector,
->   	return 0;
->   }
->   
-> -static void komeda_wb_connector_destroy(struct drm_connector *connector)
-> -{
-> -	drm_connector_cleanup(connector);
-> -	kfree(to_kconn(to_wb_conn(connector)));
-> -}
-> -
->   static const struct drm_connector_funcs komeda_wb_connector_funcs = {
->   	.reset			= drm_atomic_helper_connector_reset,
->   	.detect			= komeda_wb_connector_detect,
->   	.fill_modes		= komeda_wb_connector_fill_modes,
-> -	.destroy		= komeda_wb_connector_destroy,
->   	.atomic_duplicate_state	= drm_atomic_helper_connector_duplicate_state,
->   	.atomic_destroy_state	= drm_atomic_helper_connector_destroy_state,
->   };
-> @@ -143,13 +137,15 @@ static int komeda_wb_connector_add(struct komeda_kms_dev *kms,
->   	struct komeda_wb_connector *kwb_conn;
->   	struct drm_writeback_connector *wb_conn;
->   	struct drm_display_info *info;
-> +	struct drm_encoder *encoder;
-> +
->   	u32 *formats, n_formats = 0;
->   	int err;
->   
->   	if (!kcrtc->master->wb_layer)
->   		return 0;
->   
-> -	kwb_conn = kzalloc(sizeof(*kwb_conn), GFP_KERNEL);
-> +	kwb_conn = drmm_kzalloc(&kms->base, sizeof(*kwb_conn), GFP_KERNEL);
->   	if (!kwb_conn)
->   		return -ENOMEM;
->   
-> @@ -165,11 +161,19 @@ static int komeda_wb_connector_add(struct komeda_kms_dev *kms,
->   		return -ENOMEM;
->   	}
->   
-> -	err = drm_writeback_connector_init(&kms->base, wb_conn,
-> -					   &komeda_wb_connector_funcs,
-> -					   &komeda_wb_encoder_helper_funcs,
-> -					   formats, n_formats,
-> -					   BIT(drm_crtc_index(&kcrtc->base)));
-> +	encoder = drmm_plain_encoder_alloc(&kms->base, NULL,
-> +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
-> +	if (IS_ERR(encoder))
-> +		return PTR_ERR(encoder);
-> +
-> +	drm_encoder_helper_add(encoder, &komeda_wb_encoder_helper_funcs);
-> +
-> +	encoder->possible_crtcs = BIT(drm_crtc_index(&kcrtc->base));
+> So it makes sense to map only the part of these regions and leave the unused
+> ones.
+Each item in the reg represents some continuous, dedicated address
+space, not individual registers or artificially decided subsection. The
+holes in such address space is not a problem, we do it all the time for
+all other devices as well.
 
-Maybe use drm_crtc_mask?
+You need to use the definition of that address space.
 
-With this:
-
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-
-> +
-> +	err = drmm_writeback_connector_init(&kms->base, wb_conn,
-> +					    &komeda_wb_connector_funcs,
-> +					    encoder,
-> +					    formats, n_formats);
->   	komeda_put_fourcc_list(formats);
->   	if (err) {
->   		kfree(kwb_conn);
-> 
-
--- 
-Louis Chauvet, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+Best regards,
+Krzysztof
 
