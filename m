@@ -1,112 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-67347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4753AB18178
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:05:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B96EB1818B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 14:19:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67D587AC54E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:04:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A1163A54F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 12:19:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 688F82343B6;
-	Fri,  1 Aug 2025 12:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F8C223956E;
+	Fri,  1 Aug 2025 12:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LX2QbAFz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K+J4gnRp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C27F2EB10;
-	Fri,  1 Aug 2025 12:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6CD2F5E;
+	Fri,  1 Aug 2025 12:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754049939; cv=none; b=rNqBA9yU/2dw4lnofHVGIcatKD2418MD2881GEiIdtmpJ/gW/A6rm1cminUOjsFwacF8AZC6n3gAWD2ICZYm26QWFrT07pKHqoK+lvARzSdFMS0MPtDZ+2eKknvRTen+ALcJoSJzgNAetUSL6M2s0bY9as7lTq6p0B0KWNBliIw=
+	t=1754050764; cv=none; b=cuXMft1Vqpz6ps24jaWWR4D1nujv/Pb96n3w8ohZCRxw4PBV4rNKwOKuM6HBqKrOa6UoIwCz2kO6qStFMR0SyIAVRxlgEiv5IJvcJbnqtgZ8MA/6u4qP99CjpFgXxEP5sfbvGlKJhZNgCaSKV29XhDxE2s5/Y0bBsdp6azB/d5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754049939; c=relaxed/simple;
-	bh=GM7VspiuNJbWJfvQBErQDCx2bV8UH8sNG4aEdut/aes=;
+	s=arc-20240116; t=1754050764; c=relaxed/simple;
+	bh=v3X4Y6GFa5Z6Re9e426LQ1bVzs4uMWOQgLnDgpHK6mo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nANwHoGm7axzMAYn5T6v2OZdAQzeByV2uz5Bm10/b6/qH66/qb6CpIn2dbxGMzhuMW6ZFuTNt0PyBlW1VjCC1LiBz5VE6BHiNh6Rq2QIfnsGfHbqV5cI7HZ1EnhAC4ZpwX7achRCa2VOpesm1Q89z0ovfYcCvjXfIGLA6brI5eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LX2QbAFz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF6DC4CEE7;
-	Fri,  1 Aug 2025 12:05:30 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GtdazEDBsePdcWI/i4Ki5nnJ4nrHv8Do39ERkTnZWREjrc1J+V5aHWORjvavXOVLYs7RBeMCR8XRYHlwQuEZIYV/NfYoo7LGS6jTnZrwmavqvBV/PekqvkCg7DzjEiyuG9xCWOYR4qT69BKxgwAXoAEz7C8KzxqVc3N9tYt7N2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K+J4gnRp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35826C4CEE7;
+	Fri,  1 Aug 2025 12:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754049935;
-	bh=GM7VspiuNJbWJfvQBErQDCx2bV8UH8sNG4aEdut/aes=;
+	s=k20201202; t=1754050763;
+	bh=v3X4Y6GFa5Z6Re9e426LQ1bVzs4uMWOQgLnDgpHK6mo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LX2QbAFzWP4riFP/JJv51l2FyaX9fyPK28wMVGHcCfFKEtSFKVpZ0FgtSPOucSLlo
-	 6F9mQvqm5SbUGEKvWIVf7NTkzhFFSQF2fpERwB3xIoq9+aJoX6tV0y0j2re+htZDca
-	 4TQ/su42Nre4xrONdEbvGAZiJlHIUeul9jjsER/2v6tU+kfhy9CnqhrYZlssjmWglo
-	 MCc+SQaTDvuVBDckvzUSTZz6AVRbpgDqBqAYpi/Vb85APyR5ixD4tqWKZ9AfeD/m7l
-	 I7xHyotIH7HMM4PjyI7zDUo1D42nSzZfZ9OX1u3wkM/BCIfYQv1wRpF60Ua25tRbcc
-	 Dg3O4I4BmkLTQ==
-Date: Fri, 1 Aug 2025 13:05:28 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Joris Verhaegen <verhaegen@google.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>, kernel-team@android.com,
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org,
-	sound-open-firmware@alsa-project.org,
-	linux-arm-kernel@lists.infradead.org,
-	Miller Liang <millerliang@google.com>
-Subject: Re: [PATCH v4 1/3] ALSA: compress_offload: Add 64-bit safe timestamp
- infrastructure
-Message-ID: <13ad9530-8e9a-4955-8844-aaf49146e988@sirena.org.uk>
-References: <20250801092720.1845282-1-verhaegen@google.com>
- <20250801092720.1845282-2-verhaegen@google.com>
+	b=K+J4gnRpp9oYj7HZYNozhKJ7ABhCoK6m8WItz9b26HtXsCc0RL80a7xFE3dxn973r
+	 PB9Hlm2wMoKbVmQJijvloMNmgcTWerCGFif0Dd/wDy/uxx4b+5NsX4CpyjoR3LGACv
+	 iIyOuWAauSdBamIuob+yZZqeZABwrFcpCnlImBHWirE+RhLcxYtj7g2l+KsdgvxP0g
+	 cW+/wlWK1hMNzqCMlvAoHDe94n+TQiaoz6vlO65olioWXThf1sc5ZPXZau0s/6/ZiF
+	 J3Er1gVgK2RB+ZGATJxvEhHaDQ1VOTE+lsIX1nlkmF2pwHzNslC7lemN9BygxE8FaL
+	 6S1jUKeIS+e/A==
+Date: Fri, 1 Aug 2025 17:49:13 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com, 
+	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, agross@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+Message-ID: <2nm7xurqgzrnffustrsmswy2rbug6geadaho42qlb7tr2jirlr@uw5gaery445y>
+References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
+ <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
+ <2a3c8867-7745-4f0a-8618-0f0f1bea1d14@kernel.org>
+ <jpawj3pob2qqa47qgxcuyabiva3ync7zxnybrazqnfx3vbbevs@sgbegaucevzx>
+ <fa1847e3-7dab-45d0-8c1c-0aca1e365a2a@quicinc.com>
+ <1701ec08-21bc-45b8-90bc-1cd64401abd8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3hce4ALIJPGSBrPW"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250801092720.1845282-2-verhaegen@google.com>
-X-Cookie: Who messed with my anti-paranoia shot?
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1701ec08-21bc-45b8-90bc-1cd64401abd8@kernel.org>
 
+On Fri, Aug 01, 2025 at 11:12:42AM GMT, Krzysztof Kozlowski wrote:
+> On 01/08/2025 11:10, Ram Kumar Dwivedi wrote:
+> > 
+> > 
+> > On 01-Aug-25 1:58 PM, Manivannan Sadhasivam wrote:
+> >> On Thu, Jul 24, 2025 at 09:48:53AM GMT, Krzysztof Kozlowski wrote:
+> >>> On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
+> >>>> Add optional limit-hs-gear and limit-rate properties to the UFS node to
+> >>>> support automotive use cases that require limiting the maximum Tx/Rx HS
+> >>>> gear and rate due to hardware constraints.
+> >>>
+> >>> What hardware constraints? This needs to be clearly documented.
+> >>>
+> >>
+> >> Ram, both Krzysztof and I asked this question, but you never bothered to reply,
+> >> but keep on responding to other comments. This won't help you to get this series
+> >> merged in any form.
+> >>
+> >> Please address *all* review comments before posting next iteration.
+> > 
+> > Hi Mani,
+> > 
+> > Apologies for the delay in responding. 
+> > I had planned to explain the hardware constraints in the next patchset’s commit message, which is why I didn’t reply earlier. 
+> > 
+> > To clarify: the limitations are due to customer board designs, not our SoC. Some boards can't support higher gear operation, hence the need for optional limit-hs-gear and limit-rate properties.
+> > 
+> 
+> That's vague and does not justify the property. You need to document
+> instead hardware capabilities or characteristic. Or explain why they
+> cannot. With such form I will object to your next patch.
+> 
 
---3hce4ALIJPGSBrPW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I had an offline chat with Ram and got clarified on what these properties are.
+The problem here is not with the SoC, but with the board design. On some Qcom
+customer designs, both the UFS controller in the SoC and the UFS device are
+capable of operating at higher gears (say G5). But due to board constraints like
+poor thermal dissipation, routing loss, the board cannot efficiently operate at
+the higher speeds.
 
-On Fri, Aug 01, 2025 at 10:27:14AM +0100, Joris Verhaegen wrote:
-> The copied_total field in struct snd_compr_tstamp is a 32-bit
-> value that can overflow on long-running high-bitrate streams,
-> leading to incorrect calculations for buffer availablility.
+So the customers wanted a way to limit the gear speed (say G3) and rate
+(say Mode-A) on the specific board DTS.
 
-Acked-by: Mark Brown <broonie@kernel.org>
+But this series ended up adding these properties in the SoC dtsi, which was
+wrong in the first place. And the patch description also lacked the above
+reasoning.
 
---3hce4ALIJPGSBrPW
-Content-Type: application/pgp-signature; name="signature.asc"
+I hope Ram will fix these two things in the next version.
 
------BEGIN PGP SIGNATURE-----
+FWIW: The customer is using a DT overlay to add these properties to the base
+DTS. So there would be no DTS change posted in the next version.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiMrYcACgkQJNaLcl1U
-h9AdmAf+IBbNJ4JZ0K2alkJmSZ4ClSpvLsc0OJHhkr8kbAMrBOyFn67A/Hw95kxf
-x3856yC73oTlON1VWQ1DCxThT1ubwy4iK9vnC8dmfKo7ZgkUVdY8dfcoVG7QPeab
-ZySf3lBoPZ/S2gVGj6xJATKtWPD4llhjHtICjjKT9zhVCSZgHaY9W048zBrnEw00
-vLxTiYQrYcDgygYjmfRkOBZw6z4n6C4jaesRnMUJfx5uUrb1kwDnPTsS+aIEA1MZ
-uKirsvNKBuPvnxBbadHLFnuJfWHLBcKjGH5WkO8F5DFYMzW1UgzUpZJEhK0IZyMc
-lP89DWksuDpwBsl8JcYJ4mW+VgxX0Q==
-=8Yki
------END PGP SIGNATURE-----
+- Mani
 
---3hce4ALIJPGSBrPW--
+-- 
+மணிவண்ணன் சதாசிவம்
 
