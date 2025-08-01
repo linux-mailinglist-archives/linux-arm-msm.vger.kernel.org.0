@@ -1,155 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-67323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C25F4B17F1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:20:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1E54B17F3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:28:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A58691AA0FF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:20:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1A527AA77B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:26:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F933220F25;
-	Fri,  1 Aug 2025 09:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 774C12253F9;
+	Fri,  1 Aug 2025 09:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m02Narbv"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AC6xRFRc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32FF14F70;
-	Fri,  1 Aug 2025 09:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF3F2236FB
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Aug 2025 09:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754039988; cv=none; b=s1/Jp9PaitrL7i5FxQ4B5hHpkLpjvticqLarL2B/BCPcZAzWyWD9bs94hqSQ4q2kvjGT0TpGoBia08oUfuj1Bda+/J/YD+2DNETvzX17JBrKhFi9yIHtpigpGWgj5Iqx2BUsl4K6Q28qsdcTsQGJ8/jHhYZ73WPs6db5aulIk4s=
+	t=1754040479; cv=none; b=utYnlQ3PasdZjtJOraSk5stJdnwL+u3IyETvNxgrrUbCN/kMN9pYj8jBfZifb5W3QfJALMYIeYMviXeWc4ygPmo4cnALptHC91WY/GfpPoc/ymoXpaGUTB0BEFShra2Pa1LtcvEb7rzcFeFKVmP+pmUm9QaiUn91Bqzn86xxuDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754039988; c=relaxed/simple;
-	bh=KUslAaHshNiP9XtKMRFYG5/AAWdTBX8QI/ME/Hmi5s4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TSyFOSsDF4EyY70QGx0N+UftMbnsMdTBFHEv+qWVXvDH1461Mhh+DT67oMJBx6Em1EIjO4yOeVjZwWf4RTcg64hlYIzVHA73OjJ6NSbrcyspbVcC7dtI0dON0mlK7so3QuH6MKmT53KZDpgjby7KWuA2t5KGurEW/jLnN2pwcTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=m02Narbv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5718mdn2001318;
-	Fri, 1 Aug 2025 09:19:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wkDHzH8PytjlT3iOlVClw/v1tB31SfTOT8w7bQO5blg=; b=m02Narbvil9W4U44
-	Ar0h6sKWF22qWO1Cmjomemd6b83r1PyUBQ24rCS+/O7EiBau2l9Qr90Xv2QrYE7l
-	3qhLWJCkrrOFI1LLhgtal+KEwspl7mn/F7PaaMHeqbzfOErB2DKEA1OoN+YD+ROh
-	Odlz77RzyO8Sr+OBE0kWVn5TEDhvMw+q6JLSwdcj5eX+s4SWjT6KWoCyJPsvWgqX
-	s5aoen9qB+7F2cEOhNSK9byWflGVd+MiQO8n4HYavu3x2jGhGgFxl/uLmJdLc6Vq
-	Y8Q4aFNJZZ/0U6nv6CEEuGYZunApc1O4YfucTszxEYBxJ8fIi+wiDq3Jv9uc2/0N
-	+iN+Zw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 484nyubq01-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Aug 2025 09:19:26 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5719JPlT012529
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Aug 2025 09:19:25 GMT
-Received: from [10.216.46.165] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 1 Aug
- 2025 02:19:19 -0700
-Message-ID: <e8cc99e1-d117-42cb-8dec-47809f637934@quicinc.com>
-Date: Fri, 1 Aug 2025 14:49:16 +0530
+	s=arc-20240116; t=1754040479; c=relaxed/simple;
+	bh=WsYd6864mwvd5jFI3i5nTHTgCW82zOMJotHg73Gn9v8=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=guR9Mrg8BoD4r9VR3IOD0VJvOLgsA4wNTiPJEyDGNRyqVUq7kSLIYzuFwyCj1aG25GXfID7ZxhRb4CA3+Z6xQSHBnT2ufnLFg38wJrA4O5AMFURahQmfTLdw0bR4LywjAtpUYLW81tlo4wZEtaphmX0Hl1C0lX0Hd+Ip3V3M4QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AC6xRFRc; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-4538f375e86so16681045e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Aug 2025 02:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1754040476; x=1754645276; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=E+cl2IDaMY20eY/Exe5SGnYzjiyN45MuL0dq0Zp03p0=;
+        b=AC6xRFRcv2rZnILHJw+GtWNIO/2nVgHKhSXyq+MD7z+Z1uHpZM9bp49YDo5YqvdSjh
+         x2Gx0F0Ywfi5jMNIsAKCy0TBXogDrzK1O1UNKZXgefLpHe57ImbdhEsNFj+cWtwHY3UI
+         2IMUetJB2r4V3KkeRX0nvAFoYuTFl0z143fp6Djib9mc7MC6mXCgb6o/Sci4B22dL6cx
+         uoe52BZUK2rE2XppUGXdS+3QJHs9vq5W0A0Bkh0mJExFoc7IocxI3hDahLEhVmxLQq51
+         cW+hVjvaoklhPPLH0qxTAqTUd+KKOqwwS64d3idrGW1eWN0MwYk0O8AqvzeOZkY8zNmv
+         oPaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754040476; x=1754645276;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E+cl2IDaMY20eY/Exe5SGnYzjiyN45MuL0dq0Zp03p0=;
+        b=n5pavL7Jl/ED4Kdv+BdR5xcdurLYwO9toasXKHg6TNmxoRXpb768Bgeu8X2Dx54uJY
+         tksNexO+Q1iYVOtVNHfLWl3XtJ5fv4Xg9ULbiwUZW1H4cjiD/9S+/g9AoA2ePIXJw4Wt
+         mkxmdbCkGeLtsam73+5Y2HhJkHVXrBTL1EyuoZ4sw/ewO3dnFKXRIpoNaDLWB3dEPAC6
+         WJTTAOOeMlvukZpnl3FfFv+1sGAw4VYUf1Jcr+D1CgG5NxvLUbbPUwkChvEzrvJ6+Q4N
+         udYaNGJX/eJO3QX+5JTUecfFOK2utLRufM68ciOsqv4R2nhenBxA30C/g9WXDA6rLoz3
+         phNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWDcLhHKmLdVhC9UX70DkEFazILMUI591Ww5OwyUBst2XqFFK5Af1FCu98v8Tb9O2NDytASjOdhFdoOrPy7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjtI9CT5yW8/OoQ3EK/EzI4RhKn4gLRFBuXBAhCU2VEEkEggzO
+	gExKSL7Mm1kacdH/IGGb6uiycked8+x2AYwQCql7V9HceFYfE58QwPqbaBzqt5J5albLYwtVy1S
+	tYGrBqTqJsiEntA8XsQ==
+X-Google-Smtp-Source: AGHT+IF1iql6p9ZiBFX2YHY0VuHnMfPg0tt54Mz6D7ndvI/Hg7HtnMzULqTKeUWs76Q9xfAXEqpzcIP6cwznc6Q=
+X-Received: from wmbei11.prod.google.com ([2002:a05:600c:3f0b:b0:456:217f:2625])
+ (user=verhaegen job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:8812:b0:456:2397:817 with SMTP id 5b1f17b1804b1-458930ecbccmr68523175e9.13.1754040476070;
+ Fri, 01 Aug 2025 02:27:56 -0700 (PDT)
+Date: Fri,  1 Aug 2025 10:27:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
- properties to UFS
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
-        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250722161103.3938-1-quic_rdwivedi@quicinc.com>
- <20250722161103.3938-3-quic_rdwivedi@quicinc.com>
- <2a3c8867-7745-4f0a-8618-0f0f1bea1d14@kernel.org>
- <jpawj3pob2qqa47qgxcuyabiva3ync7zxnybrazqnfx3vbbevs@sgbegaucevzx>
- <03efb3dc-108e-453e-91e4-160a0500cff1@kernel.org>
-Content-Language: en-US
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-In-Reply-To: <03efb3dc-108e-453e-91e4-160a0500cff1@kernel.org>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.1.565.gc32cd1483b-goog
+Message-ID: <20250801092720.1845282-1-verhaegen@google.com>
+Subject: [PATCH v4 0/3] ALSA: compress_offload: Add 64-bit safe timestamp API
+From: Joris Verhaegen <verhaegen@google.com>
+To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Cezary Rojewski <cezary.rojewski@intel.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	Bard Liao <yung-chuan.liao@linux.intel.com>, 
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Srinivas Kandagatla <srini@kernel.org>, 
+	Daniel Baluta <daniel.baluta@nxp.com>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Joris Verhaegen <verhaegen@google.com>, kernel-team@android.com, 
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org, 
+	sound-open-firmware@alsa-project.org, linux-arm-kernel@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: W9BHbRSc9VHVUMzzL9dDJakFIxci7FAv
-X-Proofpoint-ORIG-GUID: W9BHbRSc9VHVUMzzL9dDJakFIxci7FAv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDA2OCBTYWx0ZWRfX58DP2tsPUlNw
- TePdhd4wuy2/J0UYNDRJN5DJb31zhVAULG+lzdd/p79/SrFNuD0gRO2g+H9IPq8dE0VDSfhErlR
- khLbohR57n8y4TpvpDgUYGjCmTzuMqg0TjPQWSXJBVNWDg1Gzg5NorUzvOK9qq0Awtlmgo0+dYf
- tJYc5rAGI7/C/BSW5D16kfW1XXs+vyMFUPCGVH4OBIQLFNLZPqLrxokWJy1bHIlOe0S+NXh49Dv
- qUBSiQ2Md/OD/S/Ec/CQxW7eC7wOfvd5CIKghVnlHtKZT4WVfcoC+c0LIuDc9KsyPPFWvAHgVC1
- u83dVQEa/kQQR0aOCs//GmTRws03WKPjLQ0j0ySk339WPUT+U0KVx9lGZhTFHafOdYS+MyRaVz8
- PFGi4uc23bNV1AkHbyBAiPufKvvz03dWq2XqaU7AzrniNS+44IEvuPoi8kUL8XE8alaLUzNL
-X-Authority-Analysis: v=2.4 cv=CLoqXQrD c=1 sm=1 tr=0 ts=688c869e cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=l2YULQpEWTdrfJCYAS8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-01_02,2025-07-31_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508010068
 
+The current compress offload timestamping API relies on struct
+snd_compr_tstamp, whose cumulative counters like copied_total are
+defined as __u32. On long-running high-resolution audio streams, these
+32-bit counters can overflow, causing incorrect availability
+calculations.
 
+This patch series transitions to a 64-bit safe API to solve the problem
+while maintaining perfect backward compatibility with the existing UAPI.
+The pointer operation is reworked to use a new timestamp struct with
+64-bit fields for the cumulative counters, named snd_compr_tstamp64.
+ASoC drivers are updated to use the 64-bit structures. Corresponding
+ioctls are added to expose them to user-space.
 
-On 01-Aug-25 2:34 PM, Krzysztof Kozlowski wrote:
-> On 01/08/2025 10:28, Manivannan Sadhasivam wrote:
->> On Thu, Jul 24, 2025 at 09:48:53AM GMT, Krzysztof Kozlowski wrote:
->>> On 22/07/2025 18:11, Ram Kumar Dwivedi wrote:
->>>> Add optional limit-hs-gear and limit-rate properties to the UFS node to
->>>> support automotive use cases that require limiting the maximum Tx/Rx HS
->>>> gear and rate due to hardware constraints.
->>>
->>> What hardware constraints? This needs to be clearly documented.
->>>
->>
->> Ram, both Krzysztof and I asked this question, but you never bothered to reply,
->> but keep on responding to other comments. This won't help you to get this series
->> merged in any form.
->>
->> Please address *all* review comments before posting next iteration.
-> 
-> There was enough of time to respond to this, so I assume this patchset
-> is abandoned and there will be no new version.
+The series is structured as follows:
 
+Patch 1: Updates the pointer op, refactors the core logic and ASoC
+drivers to use it, and defines the new UAPI structs.
 
+Patch 2: Exposes the SNDRV_COMPRESS_TSTAMP64 ioctl.
 
-Hi Krzysztof,
+Patch 3: Exposes the corresponding SNDRV_COMPRESS_AVAIL64 ioctl.
 
-I was waiting for your DT binding bifurcation patch to be merged before posting the next version, which is why I didn’t respond earlier. 
-I had planned to include the hardware constraints explanation in the next commit message.
-
-I’ll make sure to address all pending comments in the upcoming revision.
+This series has been tested on a Pixel 9 device. All compress offload
+use cases, including long-running playback, were verified to work
+correctly with the new 64-bit API.
 
 Thanks,
-Ram.
+Joris (George) Verhaegen
 
-> 
-> Best regards,
-> Krzysztof
+Signed-off-by: Joris Verhaegen <verhaegen@google.com>
+
+---
+Changes in v2:
+  - Corrected author and Signed-off-by to be consistent (Mark Brown).
+Changes in v3:
+  - Rework pointer op to return 64-bit timestamp, rather than adding a
+    parallel pointer64 op (Charles Keepax, Takashi Iwai, Vinod Koul)
+  - Bump the protocol version for ABI change (Takashi Iwai)
+  -Fix linker error on Intel Atom (lkp@intel.com)
+  -Rebase on latest for-next sound tree (Takashi Iwai)
+  -Avoid changing return error code for ioctl (internal)
+  -ASoC: Replace u64 % u32 by do_div(u64, u32) (internal)
+  -ASoC: sprd: change current_data_offset to u64 (internal)
+Changes in v4:
+  -Fix compiler error on Intel AVS (lkp@intel.com)
+
+Joris Verhaegen (3):
+  ALSA: compress_offload: Add 64-bit safe timestamp infrastructure
+  ALSA: compress_offload: Add SNDRV_COMPRESS_TSTAMP64 ioctl
+  ALSA: compress_offload: Add SNDRV_COMPRESS_AVAIL64 ioctl
+
+ include/sound/compress_driver.h               |   2 +-
+ include/sound/soc-component.h                 |   4 +-
+ include/sound/soc-dai.h                       |   7 +-
+ include/uapi/sound/compress_offload.h         |  35 +++++-
+ sound/core/compress_offload.c                 | 100 ++++++++++++------
+ sound/soc/codecs/wm_adsp.c                    |   4 +-
+ sound/soc/codecs/wm_adsp.h                    |   2 +-
+ .../intel/atom/sst-mfld-platform-compress.c   |  12 ++-
+ sound/soc/intel/atom/sst-mfld-platform.h      |   2 +-
+ sound/soc/intel/atom/sst/sst_drv_interface.c  |   9 +-
+ sound/soc/intel/avs/probes.c                  |   2 +-
+ sound/soc/qcom/qdsp6/q6apm-dai.c              |  26 +++--
+ sound/soc/qcom/qdsp6/q6asm-dai.c              |  26 +++--
+ sound/soc/soc-component.c                     |   2 +-
+ sound/soc/soc-compress.c                      |   2 +-
+ sound/soc/soc-dai.c                           |   2 +-
+ sound/soc/sof/amd/acp-probes.c                |   2 +-
+ sound/soc/sof/compress.c                      |   2 +-
+ sound/soc/sof/intel/hda-probes.c              |   2 +-
+ sound/soc/sof/sof-client-probes.c             |   2 +-
+ sound/soc/sof/sof-client-probes.h             |   4 +-
+ sound/soc/sprd/sprd-pcm-compress.c            |   6 +-
+ sound/soc/sprd/sprd-pcm-dma.h                 |   4 +-
+ sound/soc/uniphier/aio-compress.c             |   2 +-
+ 24 files changed, 173 insertions(+), 88 deletions(-)
+
+-- 
+2.50.1.565.gc32cd1483b-goog
 
 
