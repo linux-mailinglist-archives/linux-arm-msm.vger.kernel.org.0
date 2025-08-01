@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CD53B17ED3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C738B17ED5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 11:08:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FDD21C2729B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:08:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B91F21C2786C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Aug 2025 09:09:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2C41218584;
-	Fri,  1 Aug 2025 09:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FB4B21772A;
+	Fri,  1 Aug 2025 09:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJNg+Rjc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MiqaSkMj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D2414F70;
-	Fri,  1 Aug 2025 09:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AA014F70;
+	Fri,  1 Aug 2025 09:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754039289; cv=none; b=HsR8p8RBr5saVxO5wdidxX9HneeR50RLlmMfCcwZVsVWEYtBwD3tYlZDWac8Qkh9s5vCPBW6Xfc2+9Tt9XnzdoY2OwFomYNNr4ol/hVTiPCar0IoYoBDM03NXNs25L73ERB1JKOZUe3JipCAFDsIP2m4iNG1dryq4Rm1cQm/JdE=
+	t=1754039332; cv=none; b=tpQRpu9SF7z7fHoGG7+Jy7qFiZ06NKlN7uQptFluaHRmAyqt6450EyCxhA1FD/davarwF+mjUDAEI7KVNw02pcQwqXFrawTvlKGhw5ZQbgA2gBT2jzo1PY1fVRrRZh154dhEvmeciaSRCPLParU9MHMPZ8gJ9kEo3c2Jglg8c5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754039289; c=relaxed/simple;
-	bh=Mhtf3SofpDsdAhp5/pn8dihUW68ww6HCaLN7D8crfSE=;
+	s=arc-20240116; t=1754039332; c=relaxed/simple;
+	bh=CluqF3AELsGEiWoK0S+/q3vPShGSRL7UVGOv8nW3PLg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P+z4V0ZVTmrv/27xitVQL5vv0Q3stATie7+2naOYs+QufKYd9JXHiSC2LJT/to3lKKzuNR8avURVl2abJf0i8zG1KOUEahDtaeCIGsnqr5N0rpy2yrN0K2ib2En4dY9tH4aPnNwkd73qyRqsUWjXt8vn7foXzZwxtleqML5j9UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJNg+Rjc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98EAC4CEE7;
-	Fri,  1 Aug 2025 09:08:06 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=SvZUMQPPnC4DZOnThVdxydlc215hBy1LkKd3Xl4qVDADtDoQjjEQYoz/BjZFfbO3JsT/7Y5wr9Z3JkQKxl4Vx6Yrhzt3hHu4ySgaNZmccCgd+ctSYyJgEXVoE2PH0inwnQDf8OWyITKQmx0w5CaGJ+nFYXQ8ktrEl2prNpAOnd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MiqaSkMj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71276C4CEF4;
+	Fri,  1 Aug 2025 09:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754039289;
-	bh=Mhtf3SofpDsdAhp5/pn8dihUW68ww6HCaLN7D8crfSE=;
+	s=k20201202; t=1754039331;
+	bh=CluqF3AELsGEiWoK0S+/q3vPShGSRL7UVGOv8nW3PLg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IJNg+RjcoW09dkjZ4Yb+rsV0z4GxopJaHF0o837YKfI9QDF1Tox7/v3UoCsoagWdV
-	 v8/vFRfz1/OioD4iWrg9c7Te3ccK453uujKxctUHoP8Idr1nXrQ+e7VX2HVbA0O80l
-	 uNISEjBkwxNnmJGE+mSQ5ZpY1jLnKgExLnaARJYLl8CijmHkMhMCj9VJ03FC/bxmzt
-	 zljxNadp+gic/X0tEv5FtR+Ab8Rr89RkWh3733kMcoZJTNND0OMzly57YEjLtR8X9Y
-	 ZT6JkBgXqfEXJBZ9unW8OAH1ZE83XJGHej74OYxbSoWgs0O60Lt9gytLagvazOlfN/
-	 5gAtGNiVVKGXw==
-Message-ID: <a51a9efb-67b1-4607-bcf3-8be70a9d1c24@kernel.org>
-Date: Fri, 1 Aug 2025 11:08:04 +0200
+	b=MiqaSkMjAxqa+CRHjWbLaKDYwGBRbc4yTk+JKPpG7KPKZa42RWgkwkuOW5INBOOp5
+	 jGjqsXSiVK9XVe04EgNx/SsCZRZJLm7Z9cmU9vqInPmRg/DvSH5S4yXkNIdVuCRk93
+	 FtjTlvEjDVLIrXsXLa3YfHZQONS+Ea5jrRBE/6WCkZIkSXMqkTNMSwWeBNSV5sPGts
+	 yT7TbRRKanzix1rTFjbGWX7tx/2HpnDsjy8khd7PD7p+ao2nQu7VUlSVtXrNVX+2Th
+	 cxfe/iklTIHxxl8zotEIM88CVihUxi0fsc8XF7M2BJYu1x1z2Mukk1Btx1WJvNmyJT
+	 MUYSYdG6HESzQ==
+Message-ID: <38803d8a-e12b-423a-9f25-745d9ec1612d@kernel.org>
+Date: Fri, 1 Aug 2025 11:08:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-oneplus: Deduplicate
- shared entries
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845*: Use definition for
+ msm-id
 To: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250801-sdm845-msmid-v2-0-9f44d125ee44@ixit.cz>
- <20250801-sdm845-msmid-v2-2-9f44d125ee44@ixit.cz>
+ <20250801-sdm845-msmid-v2-1-9f44d125ee44@ixit.cz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,18 +104,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250801-sdm845-msmid-v2-2-9f44d125ee44@ixit.cz>
+In-Reply-To: <20250801-sdm845-msmid-v2-1-9f44d125ee44@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 01/08/2025 10:21, David Heidelberg via B4 Relay wrote:
 > From: David Heidelberg <david@ixit.cz>
 > 
-> Use the definition for qcom,msm-id and put them into the common dtsi.
+> For all boards it's QCOM_ID_SDM845 except Dragonboard, where it's
+> QCOM_ID_SDA845.
+> 
+> Except for OnePlus 6 / 6T, which is handled in following commit.
 > 
 > Signed-off-by: David Heidelberg <david@ixit.cz>
-
-Interesting that they use same ID...
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts                   | 3 ++-
+>  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 3 ++-
+>  arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi        | 3 ++-
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 ++-
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           | 3 ++-
+>  5 files changed, 10 insertions(+), 5 deletions(-)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
