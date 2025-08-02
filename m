@@ -1,195 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-67432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E267B18B28
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 09:49:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DA2EB18B2A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 09:49:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2233B7A2B32
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 07:47:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9D471AA2989
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 07:49:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F04211D7E5C;
-	Sat,  2 Aug 2025 07:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80251E9B19;
+	Sat,  2 Aug 2025 07:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nWcLDD3C"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="haxEe9CO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F102DB672
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Aug 2025 07:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9924B672;
+	Sat,  2 Aug 2025 07:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754120952; cv=none; b=Drv2DCTGdFhKOyGxc7M8z0coGEAxf8ASE44TYG6ltgqP31OAsPhTXthJL5ZHix+NJK3L/f86+J1zBOLdlQIknAjaBnP9zOVTCLdFcf6UuDnpShBJ8tmn9b575vLB2Bh2qidXc66gSVR08vnMb9sKG4zv9OK2LF0aMMc8VTy9fVE=
+	t=1754120957; cv=none; b=KZgfen9IMo2c0l9ImVzjvcLTMs++Gd9WSo1V0tvD44R+yTAViGPTrF2sBdnLIkZtkNBqDP2ID2AQzv02qJ2Bzyh5R09YcvA3U3SpPXZ4SoogRWdlMktuHh30iO2x/qWzTZ6hk/kWfOBwwcvE12peokP9X0XTxB/cMb8WQ9au5no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754120952; c=relaxed/simple;
-	bh=FKoaYGmRsPRckL1AeXo4OmW7KRxANmO5Jwe8b6B0G0Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=eO6AwPe+tTecv0GV2WXUMJJ5zw7NE3ITmcJLSvobutnY3CA1J+KguMGIlMKiauDwL1vzf3wMpolrARXdEv9ATlco2miolSo6dXGe7SEBoB+ogNrM+9+MwDYClt0+fLo88BZAN4CSCq0H+eT6urdwHFGeeVTsmxIh4Xq9aXCSNc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nWcLDD3C; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3b8de193b60so35755f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Aug 2025 00:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754120949; x=1754725749; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jc41eAaTwlF+ilpjGXVXKV/B+JMC260AXywvrCae45I=;
-        b=nWcLDD3C0sGcuFAqvz9pKNNqFQePsEtAxi9rOO1eZ0EyXWlauPm+/YjDFrcg01Efg9
-         9oaOwOYge6jjjKYSc5/FXq1eqpIRsf0/KM9TFbKPY3D40ZlD1ytu5CRWPH7guy10OAjw
-         lqLTrGawOmutI9TUDww9QSoB8pKpHeR8eKWlQ2c6eBDq9vPxIht9/YRUiDzcmtgJaXL8
-         P6VOgeqVZaPTW0m+XSe6ZmLLaz1iDF52REcuw0CyRtKcS/TxKpUqSBNR9aOGO1p6SsjC
-         0XTdwaquHRgv/NkivDgpUxjtUBCAG+xGFJheKboy4o/u/bAH+xydOv6j2m/zxtnoYqDV
-         KlsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754120949; x=1754725749;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jc41eAaTwlF+ilpjGXVXKV/B+JMC260AXywvrCae45I=;
-        b=JCNAKWrp2lurEKv+gFQPMUlcjfkxlDz24M9pk9Jh6/TdtpMPNr4krelhJ5FDM5nZG7
-         Tvmgrbyc0iPMqAO+ZULrGukJ4OeTneGAN4pqtKyI246gvms9FJz77ALz79OF7Nyaphgg
-         BTG1eYDwViwVNow9HjCmGixWGmDaccI9qjUQeHyfQhOnA9uPALRaxI65Os9O5cjRanRE
-         UmVBkX2WAYitgIyDEr/5KKzRBpBp/KLsz0IvBlIybowMrfG7VuqRoHllB62GakoJHe8U
-         at6n73MX5CxPfnr258qUdjIs2lxRd1Qa5b6v/JqA7ijo2jlGsXmvcBekB1D07iBX3BKM
-         ALCA==
-X-Forwarded-Encrypted: i=1; AJvYcCWH0n2oVRomruKWmNeEgyFxZsG+HoyczTbz3u72f6h5uQYbOvTGQVwYKHnwyd6fPrALhvLxOirSFHm2Gg0v@vger.kernel.org
-X-Gm-Message-State: AOJu0YwciUSGZIQ5XAgT0vYo+LRRS5mMFWO+049vAtNnWTO3Eu4Relvs
-	8sBG+JP6oLUHmKXoEqbuX7J4wdjSmLCGSuGiA7CJcXEKV23IcuDBoj7MLEfeYFDMgAg=
-X-Gm-Gg: ASbGncuFkqhxxeEzN56mPrN4jGkTnr2VykZmVlVK3XGa1jMx4N/oELSctUJEU9O1kCY
-	ObB1vT0YF5WIvYsb/+GH65hmJpRwKWJmjG2aWykJ33GKqVlgTyl3y7hOF3Cw4J72nuSAmFvHfyD
-	mSeWlVxrDgqq5NikEGfeyq9KFDTUxDO/GdFzrv9q7OKjmO9/oVBQQm5NVCa+J5tv02C9Rg0n6vP
-	XJsdSTpOWPcjiHkteg8+vwmILWPQzMWaJpNrPwnZj9H7rWPnJyfbFAPILDKWWjk3/EENhX2+iJF
-	8TzkM1JD3542JvO+/KQibFtmoyMRcqgMHRZNB2cqkHUyThD4vpqV8pLJhzVb50l1LiUd/03bYRo
-	tH6yaoaRsf7MiVKS9aWmgmIXGhz4=
-X-Google-Smtp-Source: AGHT+IGJDg+6ps6Mjc9ekjWCPSzQ0GJRPDNUWN8QdOsqxwaMblKCLjyVVDDVhNK92I/A+0L9596+VQ==
-X-Received: by 2002:a05:6000:258a:b0:3b7:8984:5134 with SMTP id ffacd0b85a97d-3b8d94708c7mr1655077f8f.16.1754120949205;
-        Sat, 02 Aug 2025 00:49:09 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-458bc39e694sm9541765e9.19.2025.08.02.00.49.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Aug 2025 00:49:08 -0700 (PDT)
-Date: Sat, 2 Aug 2025 10:49:05 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [bug report] drm/msm: Add VM_BIND ioctl
-Message-ID: <aI3C8c4iR3PmIMGE@stanley.mountain>
+	s=arc-20240116; t=1754120957; c=relaxed/simple;
+	bh=j/x0lvRC01nhS+mjeoGyX9G8P1Xp8IfgG3dxRtTDwx4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cywlgpN0DVdOO0tQbkxwD+Yqiflq8502UwHnAg84Kc5qsYEAIDrkoql1Gmt6hCg7EOA+wlOa0/zQ2TzsSRyyz26EamUT6OD+EBp1u6JXkpMHR+D9hGzP+mh4bg391JKkfDHx8rBvGL6704LUImRRvTW6RrFruzjk+VoYmWi9naI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=haxEe9CO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD1FC4CEF6;
+	Sat,  2 Aug 2025 07:49:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754120957;
+	bh=j/x0lvRC01nhS+mjeoGyX9G8P1Xp8IfgG3dxRtTDwx4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=haxEe9COlIf+vjf0BXm4zJksjCjc58hu/geo+wadRXs+X+zDd7ZWRchB9KxTE2HKz
+	 a2tXWdUdQ0UbcC/lVaUc6kZ0Etvhcy8zx29vdRpkrNrmi3xXcvRuzkFDGArnDLMq6N
+	 kFcpc5bhBIndls27RCCAL27eoa7MDsMnjRzLoLD0PKgXFu+LlzLD/1RL1g7PQhKQ2+
+	 /OtObR9PqM82ooBLmKL0PvF8hoi0FLGQ/6JWrHyiffJ3YNxWN1qakJzkCloeEZRw4R
+	 XuApfzBQqHkE38N3Ors/No0NF/eoSRU6tI1g5a0JtP9ADgglUeEebxZum24XAXK6lE
+	 0n/0phuf2FWKA==
+Message-ID: <551e85b1-e0aa-4d0b-a532-ec670bd055a2@kernel.org>
+Date: Sat, 2 Aug 2025 09:49:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 0/2] Introduce initial support for Monaco Evaluation
+ Kit
+To: Umang Chheda <umang.chheda@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250801163607.1464037-1-umang.chheda@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250801163607.1464037-1-umang.chheda@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello Rob Clark,
+On 01/08/2025 18:36, Umang Chheda wrote:
+> This series:
+> 
+> Add support for Qualcomm's Monaco Evaluation Kit (EVK) without
+> safety monitoring feature of Safety Island(SAIL) subsystem.
+> This board is based on Qualcomm's QCS8300 SoC.
+> 
+> Monaco EVK board is a single board computer (SBC) that supports various
+> industrial applications, including factory automation, industrial
+> robots, drones, edge AI boxes, machine vision, autonomous mobile
+> robots (AMRs), and industrial gateways.
+> 
+> Below are detailed informations on monaco-evk HW:
+> ------------------------------------------------------
+> monaco-evk is single board supporting these peripherals:
+>   - Storage: 1 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
+>     eMMC on mezzanine card
+>   - Audio/Video, Camera & Display ports
+>   - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
+>   - PCIe ports
+>   - USB & UART ports
 
-Commit 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl") from Jun 29, 2025
-(linux-next), leads to the following Smatch static checker warning:
+This belongs to one of the commit messages, not cover letter.
 
-	drivers/gpu/drm/msm/msm_gem_vma.c:596 msm_gem_vm_sm_step_remap()
-	error: we previously assumed 'vm_bo' could be null (see line 564)
-
-drivers/gpu/drm/msm/msm_gem_vma.c
-    521 static int
-    522 msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
-    523 {
-    524         struct msm_vm_bind_job *job = ((struct op_arg *)arg)->job;
-    525         struct drm_gpuvm *vm = job->vm;
-    526         struct drm_gpuva *orig_vma = op->remap.unmap->va;
-    527         struct drm_gpuva *prev_vma = NULL, *next_vma = NULL;
-    528         struct drm_gpuvm_bo *vm_bo = orig_vma->vm_bo;
-    529         bool mapped = to_msm_vma(orig_vma)->mapped;
-    530         unsigned flags;
-    531 
-    532         vm_dbg("orig_vma: %p:%p:%p: %016llx %016llx", vm, orig_vma,
-    533                orig_vma->gem.obj, orig_vma->va.addr, orig_vma->va.range);
-    534 
-    535         if (mapped) {
-    536                 uint64_t unmap_start, unmap_range;
-    537 
-    538                 drm_gpuva_op_remap_to_unmap_range(&op->remap, &unmap_start, &unmap_range);
-    539 
-    540                 vm_op_enqueue(arg, (struct msm_vm_op){
-    541                         .op = MSM_VM_OP_UNMAP,
-    542                         .unmap = {
-    543                                 .iova = unmap_start,
-    544                                 .range = unmap_range,
-    545                                 .queue_id = job->queue->id,
-    546                         },
-    547                         .obj = orig_vma->gem.obj,
-    548                 });
-    549 
-    550                 /*
-    551                  * Part of this GEM obj is still mapped, but we're going to kill the
-    552                  * existing VMA and replace it with one or two new ones (ie. two if
-    553                  * the unmapped range is in the middle of the existing (unmap) VMA).
-    554                  * So just set the state to unmapped:
-    555                  */
-    556                 to_msm_vma(orig_vma)->mapped = false;
-    557         }
-    558 
-    559         /*
-    560          * Hold a ref to the vm_bo between the msm_gem_vma_close() and the
-    561          * creation of the new prev/next vma's, in case the vm_bo is tracked
-    562          * in the VM's evict list:
-    563          */
-    564         if (vm_bo)
-                ^^^^^^^^^^
-NULL check
-
-    565                 drm_gpuvm_bo_get(vm_bo);
-    566 
-    567         /*
-    568          * The prev_vma and/or next_vma are replacing the unmapped vma, and
-    569          * therefore should preserve it's flags:
-    570          */
-    571         flags = orig_vma->flags;
-    572 
-    573         msm_gem_vma_close(orig_vma);
-    574 
-    575         if (op->remap.prev) {
-    576                 prev_vma = vma_from_op(arg, op->remap.prev);
-    577                 if (WARN_ON(IS_ERR(prev_vma)))
-    578                         return PTR_ERR(prev_vma);
-    579 
-    580                 vm_dbg("prev_vma: %p:%p: %016llx %016llx", vm, prev_vma, prev_vma->va.addr, prev_vma->va.range);
-    581                 to_msm_vma(prev_vma)->mapped = mapped;
-    582                 prev_vma->flags = flags;
-    583         }
-    584 
-    585         if (op->remap.next) {
-    586                 next_vma = vma_from_op(arg, op->remap.next);
-    587                 if (WARN_ON(IS_ERR(next_vma)))
-    588                         return PTR_ERR(next_vma);
-    589 
-    590                 vm_dbg("next_vma: %p:%p: %016llx %016llx", vm, next_vma, next_vma->va.addr, next_vma->va.range);
-    591                 to_msm_vma(next_vma)->mapped = mapped;
-    592                 next_vma->flags = flags;
-    593         }
-    594 
-    595         if (!mapped)
---> 596                 drm_gpuvm_bo_evict(vm_bo, true);
-                                           ^^^^^
-Unchecked dereference.  Possibly if we're not mapped then it's non-NULL?
-If so then just ignore this warning.
-
-    597 
-    598         /* Drop the previous ref: */
-    599         drm_gpuvm_bo_put(vm_bo);
-    600 
-    601         return 0;
-    602 }
-
-regards,
-dan carpenter
+Best regards,
+Krzysztof
 
