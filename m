@@ -1,208 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-67501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 425C8B18DD8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 11:56:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35DA7B18DDB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 11:56:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3C0C3B2E11
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 09:56:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E65153B7AE0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Aug 2025 09:56:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E3E1E9B35;
-	Sat,  2 Aug 2025 09:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBC81FCFEF;
+	Sat,  2 Aug 2025 09:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="FSGxzUVi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eOMTQSLa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC2C22083
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Aug 2025 09:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754128590; cv=pass; b=VV5qVlljT39Fe0EKcqdU29bLkTM6TjVvHtghfNZvpizkDowIl2Yv82V5lZsX0w3B2Asj4BDnl3AlDwBgxafT4VKl9711fXYHQMpwRCsfNCWhHKW3UsDcHd+q3rSsD6QoYInU2Oa88HdbtGi095/eo8ciSsw05NrBrcOQ6UYm3Ac=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754128590; c=relaxed/simple;
-	bh=c5R4BbjivtEw5x25pH8SE23ivPhM3q2JgCUr6ib1lbQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VZR19vC79c1DQCr0ayp9ccd/tKwaczruAePqA/VWbbw1hl2onYf91fB1niCbU0eVG0XMsC8AVNRyjtrwfSLIdj/Q+5OZMT0o5E20WFo0aC9SYykmwblMAmp5C34SpnIFvfGRl+AL6DyeHGUHJbr+oAcUNxu26XfyTwqs1zccdl8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=FSGxzUVi; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from localhost (dsl-hkibng22-50ddbb-117.dhcp.inet.fi [80.221.187.117])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: msmakela)
-	by meesny.iki.fi (Postfix) with UTF8SMTPSA id 4bvJ9t0Rv1zyR6;
-	Sat,  2 Aug 2025 12:56:18 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1754128578;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=5rSIM7n1VMOcZ5+k0Bnvx+n4JwSQCQm94ctQZA31EWw=;
-	b=FSGxzUVizL4g0uCRVwHg/qe9BupJFoslpe99QsVT/aOyz9Aom3Ux1sa5L/p2G21EEOikPZ
-	WW23TSUBISOfJsc009vp4uFs/ZIRmp/DRORFVAVPkkcJB0nQoItmlH00WM6804CvUH7oyJ
-	7hmuCxT8RlygfY4+JqVcPCRJJDFBXmA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1754128578;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=5rSIM7n1VMOcZ5+k0Bnvx+n4JwSQCQm94ctQZA31EWw=;
-	b=Fhi+YrarylOT4YvFBxjesThdNSW6wgLII/h7GALZ33DPaItDoG/Ff9lSUJVrbP6/1pfPAD
-	vdYaKEVusspm7Fy5R1vgLmNKWK+aTJwW5/TEJvL9QrLhJLlER/+bsaguTLZuRuPn3kD37N
-	FnHQg/sTG8pIhfXQyZv0PNedWQjIc9I=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=msmakela smtp.mailfrom=marko.makela@iki.fi
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1754128578; a=rsa-sha256; cv=none;
-	b=vNuM0XcF0Rzt293LSSEl/vy6GJtG79XkgEYwKbohhlVGebnq7+rnbPYE0iujEdli4wqJMZ
-	7neorQ7yy0j3Jz80Z3gD6/mB4v9BICG5ED9RSv3CaL5RlUbrXmw8gDUS6JhpTf19N69nOk
-	X8I7KdTwUSs64Z3Slsf4J9IZu3KPUKA=
-From: =?UTF-8?q?Marko=20M=C3=A4kel=C3=A4?= <marko.makela@iki.fi>
-To: Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>,
-	Robert Marko <robimarko@gmail.com>,
-	=?UTF-8?q?Marko=20M=C3=A4kel=C3=A4?= <marko.makela@iki.fi>
-Subject: [PATCH] clk: qcom: gcc-ipq6018: rework nss_port5 clock to multiple conf
-Date: Sat,  2 Aug 2025 12:55:46 +0300
-Message-ID: <20250802095546.295448-1-marko.makela@iki.fi>
-X-Mailer: git-send-email 2.50.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AD81E5B69
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Aug 2025 09:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754128592; cv=none; b=kaOsmIWXPA3zK9m+ezRk+Hv89cHXUrCl2RSfgzaqmSniE7x+LYtlSorqlbEJqMz7Am6hfKTr8xVTdufx+3AMb2Qbq/QkpJf5UZkhgcUcTO2/DwItfXHm37F+9eFvgx00KEuGaa8J92JzNaqOU0ZHxQrppcFJ9GZz2uPdpKLCVG4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754128592; c=relaxed/simple;
+	bh=dbfKLcbC8BEtdi4oWfWEgX+I8SPqVMEqxYDY0MC41HY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nCVsi4j6NOQMJ8ZdekunkjrBcjgB84qYuJRavg8MgJ52eOY+zULcmPUMS5kpvlPwC+0gb4dSNpROiFuu7hdt9KZtf2xORWBdSBq3V4A2OvFxQLjlbYCcjW2o4IvG8/auUHUbenMpCJJKDgyt+DQNdKXHJIsbIVEGhCT363Agrtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eOMTQSLa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5728sPPH031709
+	for <linux-arm-msm@vger.kernel.org>; Sat, 2 Aug 2025 09:56:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=tgapHTEIyirK94bcuh79Jkb2
+	NHYVIyca+jtZheFWZ+c=; b=eOMTQSLaaM+CPoqDc2v/btTMTF1q7UxFxQ959aCg
+	IqSx3thWCL0zZ6fNRr9MUFDd1ykMheaBZd0IkF+rgaMjUPeWsYb0OxQtqPX33UBY
+	tshAm3VwA8ldYiXAkkfB0ydBgxnpciOwqiLGSsN/wdDWkSHcEcKY39zjUE1BxJTf
+	MBuftNk2bjbjyw9LKC6R3YbxUF/mVOP6K5tqY8SfReM24BTNx7cesNrFDjjYBDQd
+	qD8EPrhwCpV29BZO6Qp394fdKPI/6EmG6oU009mRqptUAoEvyKlnFnrxLsle+kvo
+	/H9HzMdErvwxNxudQi7/D95NKVPml/8r4OfZJUHfOQ0LCw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489buqgfnk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 02 Aug 2025 09:56:29 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70707168c59so14657566d6.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Aug 2025 02:56:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754128588; x=1754733388;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tgapHTEIyirK94bcuh79Jkb2NHYVIyca+jtZheFWZ+c=;
+        b=xSBY7arJusZ1kxRHaCz0nsv1MHWgzqo7OK9TgODVdzZ8SlpbV7FMnbPwsOJ1tbPbMY
+         N+4OIWV8rNFPkT0ob1bwC2GBY453xvfXsCnrvZyfjr+pWsOJva/6keOhm8TaHI60K5Iy
+         w+ohwFfAEB4k6CJhR1KdK8p0eU4EMJDubAsLhXLZNSOQjMk/2J/lRLlFmHMI5nFO2yBn
+         gJ2aC+e3iHOqpCcHkJPsWjVOe0W99tvQ+J8CJ2c/KrKvlrOcBx/9uevmr3mkY0hSk0WG
+         RMBeKbNDFz366sleHEt18oTCiKAc3ZNBBadj+qfK0RtzAgbR6d635IDfj7hAGyddd6uU
+         A4Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCX/cmDy2q98aCc4o5+GFnDUwfk2E1uYsJcO8H62sLoaO/1oMDtd5m4um1bj8Kp4ZFWzWXmgnnHX1DiQiV1m@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywfzh0Koqm1hp8MoRcJYLtmQBysq/RqRg744xiTx94szQth95lj
+	b3Iydq/68aACBzDYMPguOULzQRrmEyHE12SiWIY/SHJvHKCoy13mfTF0DoFB46peEepndOMm3NT
+	RyaFODPRsRLAjmyYxciuZ6t0E3jx1FI+oRYfYzQJlZLIyQiVMfBKDI5DGgNlfkwazoPx2
+X-Gm-Gg: ASbGncuH2P7mntZYQjJtiO+0StZiiswp/PI4gmkhSIA4j8rIBm4iceOGvupFiAJby97
+	RL2FI/6TX1K6+3SOdLoQNhYh90SN6Y/FFodUKVRKjY/h52cKjO+naFPAFYjE5QIUX0r/RjX+6zy
+	7r7M+p1pEiX70H1zUFqlcTf6/gsuj0L1brixgTrL5XlZNH63TTWBExdQ6n9UE70tqHoLKX6tmaR
+	IEQQVY0/VytnGlHiPBZfs7pO5I5t1BLgJghKg9NcexG87mg/oK45rHnw5wa7gbJe1mzS39Sf1Qj
+	KH0h0Z6Vn+4cWv9Gdx6j65vq9JAHG0v2tXx1qgGgMd2LM9Ep1Z0xRkvscLhGqoE7IYAEJ1Ewzus
+	p5l+SAqAIvCCSa4oCpPjGaEIqRE1xdYlH+4Qbsjb96jogIkkFreQ2
+X-Received: by 2002:a05:6214:124c:b0:707:452e:1e9b with SMTP id 6a1803df08f44-709363276c0mr30228566d6.44.1754128588147;
+        Sat, 02 Aug 2025 02:56:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWmPmGi7bSzZLL/ufth6B1UYrxlQ6n2myVT51dGj1PWD8ll7fyJ3i928JLrowb7W4FELQxbw==
+X-Received: by 2002:a05:6214:124c:b0:707:452e:1e9b with SMTP id 6a1803df08f44-709363276c0mr30228296d6.44.1754128587672;
+        Sat, 02 Aug 2025 02:56:27 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-332388fb356sm9193871fa.61.2025.08.02.02.56.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Aug 2025 02:56:25 -0700 (PDT)
+Date: Sat, 2 Aug 2025 12:56:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 3/5] dt-bindings: display/msm: Document MDSS on QCS8300
+Message-ID: <deefg7w3ot6cd3woexfwagetmkg4nvu37f66h4ulbdqegdgi3u@plj6puxcsil4>
+References: <20250730-mdssdt_qcs8300-v5-0-bc8ea35bbed6@quicinc.com>
+ <20250730-mdssdt_qcs8300-v5-3-bc8ea35bbed6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250730-mdssdt_qcs8300-v5-3-bc8ea35bbed6@quicinc.com>
+X-Proofpoint-GUID: MgirTksKiRBgtvIHcR1q4vbYkM6e17UB
+X-Authority-Analysis: v=2.4 cv=VZT3PEp9 c=1 sm=1 tr=0 ts=688de0cd cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=BQMJ-ZqQIgEHPhERFsAA:9
+ a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=sptkURWiP4Gy88Gu7hUp:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAyMDA4MiBTYWx0ZWRfX0qdtbvwzYjdr
+ spOoQ+eiGR1i4b08SIM5uygoOdD3ugX2J1dWpbNqagoab3lO1Gz5diMwXnqjFiSS99u7/xPfBFq
+ bFFY9JiXorA03+V5p8jQ1694IgCTuBentOHHV6cZFQsEZL25gYv3iQKd2OfmnBOkA/7bBgjWO07
+ kupDVSRwoCQ5qUxh5MEPFNFdIvAL7XfZUQLf/URs5lHhMjM1GFEWXggJHC1o3NSxLnoIVSCm2Fh
+ nHvgTHiUHo5EnH4A2jZf3t6MnlGBSTavzW6GOHETYPd9z8CgE9qpByVO+CU0yCIIVmvpyOCm5E2
+ xM43Drc2iG7inmt6EIcf7C6HjnArGF9Fd2mBD1up2ayAaW99mHBZjU0hw5WLiYFJ61qqxGzKf5P
+ gUObm0hW/qHfnkXqcavelazjisLWat9h4m141dw75r/oUzhW/0xSa0EKM0peWmXHy8HVd8r5
+X-Proofpoint-ORIG-GUID: MgirTksKiRBgtvIHcR1q4vbYkM6e17UB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-01_08,2025-08-01_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 phishscore=0
+ spamscore=0 mlxscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508020082
 
-Rework nss_port5 to use the new multiple configuration implementation
-and correctly fix the clocks for this port under some corner case.
+On Wed, Jul 30, 2025 at 05:42:28PM +0800, Yongxing Mou wrote:
+> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
+> 
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
+>  .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 284 +++++++++++++++++++++
+>  1 file changed, 284 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcs8300-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcs8300-mdss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..ae4bc16395326bffd6c9eff92778d9f207209526
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,qcs8300-mdss.yaml
+> @@ -0,0 +1,284 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,qcs8300-mdss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. QCS8300 Display MDSS
+> +
+> +maintainers:
+> +  - Yongxing Mou <quic_yongmou@quicinc.com>
+> +
+> +description:
+> +  QCS8300 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
+> +  DPU display controller, DP interfaces and EDP etc.
+> +
+> +$ref: /schemas/display/msm/mdss-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,qcs8300-mdss
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB
+> +      - description: Display hf AXI
+> +      - description: Display core
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 3
+> +
+> +  interconnect-names:
+> +    maxItems: 3
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,qcs8300-dpu
+> +          - const: qcom,sa8775p-dpu
 
-In OpenWrt, this patch avoids intermittent dmesg errors of the form
-nss_port5_rx_clk_src: rcg didn't update its configuration.
+Use contains: instead of listing both of them
 
-This is a mechanical, straightforward port of
-commit e88f03230dc07aa3293b6aeb078bd27370bb2594
-("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
-to gcc-ipq6018, with two conflicts resolved: different frequency of the
-P_XO clock source, and only 5 Ethernet ports.
+> +
+> +  "^displayport-controller@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,qcs8300-dp
+> +
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,qcs8300-edp-phy
+> +          - const: qcom,sa8775p-edp-phy
 
-This was originally developed by JiaY-shi <shi05275@163.com>.
+Use contains: instead of listing both of them
 
-Link: https://lore.kernel.org/all/20231220221724.3822-4-ansuelsmth@gmail.com/
-Signed-off-by: Marko Mäkelä <marko.makela@iki.fi>
-Tested-by: Marko Mäkelä <marko.makela@iki.fi>
----
- drivers/clk/qcom/gcc-ipq6018.c | 60 +++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 22 deletions(-)
+> +
+> +required:
+> +  - compatible
+> +
+> +unevaluatedProperties: false
+> +
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index d861191b0c85c..d4fc491a18b22 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -511,15 +511,23 @@ static struct clk_rcg2 apss_ahb_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
--	F(24000000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_RX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_RX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_RX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_RX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_RX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_RX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_25[] = {
-+	C(P_UNIPHY1_RX, 12.5, 0, 0),
-+	C(P_UNIPHY0_RX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_125[] = {
-+	C(P_UNIPHY1_RX, 2.5, 0, 0),
-+	C(P_UNIPHY0_RX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_rx_clk_src[] = {
-+	FMS(24000000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_rx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_rx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -547,26 +555,34 @@ gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_rx_clk_src = {
- 	.cmd_rcgr = 0x68060,
--	.freq_tbl = ftbl_nss_port5_rx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_rx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_rx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias,
- 		.num_parents = 7,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
--	F(24000000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_TX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_TX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_TX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_TX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_TX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_TX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_25[] = {
-+	C(P_UNIPHY1_TX, 12.5, 0, 0),
-+	C(P_UNIPHY0_TX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_125[] = {
-+	C(P_UNIPHY1_TX, 2.5, 0, 0),
-+	C(P_UNIPHY0_TX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_tx_clk_src[] = {
-+	FMS(24000000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_tx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_TX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_tx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_TX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_TX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -594,14 +610,14 @@ gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_tx_clk_src = {
- 	.cmd_rcgr = 0x68068,
--	.freq_tbl = ftbl_nss_port5_tx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_tx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_tx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias,
- 		.num_parents = 7,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
 -- 
-2.50.1
-
+With best wishes
+Dmitry
 
