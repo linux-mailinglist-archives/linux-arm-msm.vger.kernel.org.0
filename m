@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-67553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41A0EB19278
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 06:06:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80A21B1927B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 06:06:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0D703B72B6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 04:05:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4866E17A6C3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 04:06:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36BCA288C3D;
-	Sun,  3 Aug 2025 03:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8B8E289352;
+	Sun,  3 Aug 2025 03:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cCLxm1QY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbIBDuPT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2406288C05;
-	Sun,  3 Aug 2025 03:59:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C44288CAF;
+	Sun,  3 Aug 2025 03:59:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754193571; cv=none; b=TQ39v5L1+0lWUt1PP45Ve+jrkN1GnjZCx1L+nn1BynztgRx3mAC0Dt+4VgKWl2zRWW1Uk+lNatAXKvHy4jTaOtElRywXYzda13RRSrCk1Hc7isTauL48CrAA+nwQ4WaImpCishY8H0EjZSTxIlW70lyx5hEsU1pFeNglVENFjNo=
+	t=1754193573; cv=none; b=IBqkYI86u9QDDP5aDL41ycy3CziBGUQ/MDbJJkEcEO3dRweTOV74XpajcMXPpCW18ymAZTgbzvMTWgFuDZfDq2YCW99TRGR9G0/lSEYewAqke6dj+D01y9tmjslKPvYyyyKzzTKuQZXYulVRngf32ZbI/6vtbwr7veMzDyS1p4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754193571; c=relaxed/simple;
-	bh=NEuXYWs1Nu3RUtMYz4WulmDGQSS835PHhChst+S3OwA=;
+	s=arc-20240116; t=1754193573; c=relaxed/simple;
+	bh=zT461b2FzFFJCZzizTkbtgkGyEOGBSWSF2g13psQ6ZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFbeyDMYf5Adfq+1beeX2owFew0m9LW6FBebXU31LsZiZSS3ABonk5yxXISSFg2sApheX5z31vErRXi2g2x0NqWy/6Hy5DA/ByEI0rsKs6Vv/axUcWoD4v/B8VPFiwezgfFm0zzRt31hUeRq+Ub2f4P7UsESFGnx3mUqBhEHNhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cCLxm1QY; arc=none smtp.client-ip=209.85.166.169
+	 MIME-Version; b=WTfD7O0wXcCkJn/1l0hA8Vav2DSLTCzwn8j14xd5emXxEjhewbwfHvznq/rnTOnplSjlskI8Pck542DoynXJZC7JzJYmTeXK6+X9qSszTavDTDFQ5jeMYu/sfHHla7eKlrjCC4OFwADBPAM/sb1hvedtRCbSXI2mHTihAOvJtNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbIBDuPT; arc=none smtp.client-ip=209.85.166.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3e3f449fa6fso30582495ab.3;
-        Sat, 02 Aug 2025 20:59:29 -0700 (PDT)
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3e3d31a9ac7so12935055ab.0;
+        Sat, 02 Aug 2025 20:59:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754193569; x=1754798369; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754193570; x=1754798370; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EDxCUuQjUGu8gAgTcWoe0tjlRu1oBXDA/+Q2bzPJkMc=;
-        b=cCLxm1QY0nitueS3nlppF6yZPPtbfZsUaygvQdtGx+IWTyJxCAi5Ad5n9b9NqeY53C
-         IHorqv9NiPcg0AkjZPOmbrHrha9W++6CItK8CLU4hI1F12CPKCYtji0kaOShpkukh1Tq
-         M0w7H6nwcYJtCMAiDqwF4tr+ucR4oeRaHCKLTU7p0AxQoIkWA61fbJJT/CXjR5X4HoSl
-         2/KAKgpW+us4CREXUD7TwYzW9Pj3xtcYFiDDowmHqYYKCt9mfh8jyL0wAG/rMaTpjBWQ
-         P9hw5lcJF/Xo4mFtDLrEhEmrgQz+3zkAA41Vo31kh+Foxbl1g2OrhWhDw8Ctwhyo6M6P
-         Cziw==
+        bh=IqxoGMNKs0zT3PFEOQHIVmiXhAzu6aMNCZrDaU5Xy48=;
+        b=EbIBDuPT4IKz9B0Uwna8R1mxuYXV45GdByO4Ko/RP3tnCpA5IG0ekDgLMSW1GI4i5U
+         MoxL35BwEhyrwuDo79OZZGRxPxUYKHG3Ue3jBh3CTEXfnfQDZ8aYxirLwJiELl8olJpF
+         7bF4UovhHBe7ypFRgZ6gpf6vOKKLsOGAEWYu91/VSBhsAo48SRNQfPeviAxv3cBiX+z9
+         MQp34jwrnKiLwp0c5mz0k3im1JlibFs3ZRJxtc5/q2H6dKtUrutWo3Oyj1js3Timuxn7
+         GsB+8c35K5ZJXm7+NzyFIoP3mB4ePg3+ULQoSNWx1sbDhHJzIaSTrvbVOeCJlJfzCoAq
+         o7iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754193569; x=1754798369;
+        d=1e100.net; s=20230601; t=1754193570; x=1754798370;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EDxCUuQjUGu8gAgTcWoe0tjlRu1oBXDA/+Q2bzPJkMc=;
-        b=ChGNGbt5z5QhSSByzTf1HWRa6GCLy6k+UW2eVoj5//8vHa2MgdzvUUQS+YMk+TJUVx
-         1AbIxt5MpBmY51YNP0Ad3ScrnlyXxfpY9SqxJrwX8YFA45ftNTeBF+1lHCKmgoKFvp/T
-         uBFoBmqi//f6sqaNvsFxLggB6NeXrXYGhqEP3HA/ko/YZYl05HGG6TnwN+Yim5MUMHvF
-         zNLMMDESI7n463urdpeG0qbIaxetLiiuHBCs3kgnJKY7DNyYCPpErDDlf/pkZGTG+N8a
-         55gDgiJnll8JfcCeei9WCNdFrqmyeo6qsqP+rSuD3Hgl6BzGk0wgdi/HaZAJqtCCvRzh
-         Gfqg==
-X-Forwarded-Encrypted: i=1; AJvYcCUDm45Kwo0tGkxYwDWmx7NuFg2fq9+GaYgk1za6m5JkB/5VNLxnAnen/2NSZSlXWyuO699vRufGkhSqdnjl@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB0MNBs8DsAbKqsiD06P8ZqIT52gU3934FXx/DJFw4G7GqEhrd
-	mZRU/r3KQ82I9Hjw0/niX4bhhhiy2VCHAWJrece5521l9Rxf3we57uUFH3+idUp59vs=
-X-Gm-Gg: ASbGncu4nDwF85H5C7IoBv3wB7QYrFfibvYpC9eP/t7l8PneCwYwfUSW+qmBLIAmZfl
-	TqcVCOHjZn1loiVVtCi1Spws2/0aLIf0jt+CkMjHYfDykGEkCQJVWoBLml49MlKe0QNeky0kEQO
-	4RjteEA1rs4EqWO18JULHO/juF0HJp2DZnIYexixCwr7ZxmvC9rxgLmNeGZ76ou7pr0kD+JuqNP
-	g2q8u8MEmG6trXzFlA4C0cX+C/NkAs7CTIw9Gagxmgq/tB1R0Qa28nGhvfrDSiymHor6lJbVkwa
-	bok5wvYMq721xBTYZKn6w0gqW18HY0Dc4qoveFIhhOsIzTL92bLPLROXZcYB74DkcB6BA5OzzVZ
-	7nCjVSBHLhQEP4KGzO+1IMa7s57Kfyxh6FFH3E7jr+cGLpyNr+5WNMafT1N/OFjT2Wk5RLE1T5x
-	iCkQ==
-X-Google-Smtp-Source: AGHT+IGth3u4prFPioIoRO0ZqX+noSjESd93MJR6zagV7L9uNGSa8yCZng+SW2QdyW/djCNVq3SQ3g==
-X-Received: by 2002:a05:6e02:8e:b0:3dd:89b0:8e1b with SMTP id e9e14a558f8ab-3e4161b3e64mr95013645ab.15.1754193568672;
-        Sat, 02 Aug 2025 20:59:28 -0700 (PDT)
+        bh=IqxoGMNKs0zT3PFEOQHIVmiXhAzu6aMNCZrDaU5Xy48=;
+        b=Y/dS4r2bUPRRRkz0lnVdIEUUTuj0WweS5MF1vVL1yL3UQYgApSpsXKkjvBJ1bO72XZ
+         ZYNMtn2IzObXyLOz+5duUWTONi5sDytRFPHoTo/lzi9ke0qLwqTsi4C8K/r+OK+sW+Tl
+         YCGTbW/Xsce3xORvbtFsPXCt6ELXkrBseY0IF5Ypzjuuy3m/lN10tET0DYkfX33uNCUM
+         aZSE7XFeuqmRrpe9LYImpvMKH/rLh8OJ54tkK/N5FS5oDOhoSB04aEZgNAJut4GtEBJL
+         UgxcWD5dkmsk6QKVxFx3udUU9fQlfpzoydnPSbiYu4B4W/KHEbsHGVobI7wjW3eKC5Xv
+         sVvA==
+X-Forwarded-Encrypted: i=1; AJvYcCXWNCp8R2DWZb508jiKwpHX7WqHixlKQze3eU7VmW7SQBmvcR+AeRaPGHqIy9ey632i1kYKtOhmX098RlIg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz90tEszoyVmzZfF/nXXdrNXn4v42IgTjeb0xA4sxlo6RX1h2Av
+	BCoy2cq52C0Ks79kHrtLOX0IiaRLZlit8Q583V0YiltLPWOnjUd+u+np7Er2w3vMk/Y=
+X-Gm-Gg: ASbGncse8jt/+RhVFa9yzHXEwNohqduMvx0n+89qjqX+5pSLL3whd2fY/LTNHSZ8tiE
+	DNl1YGi0opSqcvou3XmxzzxdgX919LwinwSM7XisCRogQCRyZya0XqBiAnhZlsdmmo8pY2Jv5cr
+	qsHR33Q7skJ9lI5Nzx50IwjeNfTfZGi7P0LHTOFql5bpoq7SI6XloATQ8tdjr9B2jW5sGMMmHAa
+	yQmh2U/Hr2H1QGlKkmxZkoEdWWpwJyz0Q+BkD16fN2Yv7HjnLL63E2Xe1rbHQ3YIDnAnHsnXoGy
+	FK/zFuHvKSWzv3qzB4TBZ4hx9Teot/GYgLY14onf3oD7fHStMNcE3XzaUzAqDlWEQK66wpEzwjx
+	6ipWfZ+S7SqAebm9yUmzKTKOphRYx4QVJ/aNW6/TzLo3AGGXz7//TsMckaarsr1TAN8IGIRe+r8
+	6LLA==
+X-Google-Smtp-Source: AGHT+IHsfQJoD6SRNz26VMT+qJigHz89jvyvI66oHmBULdJ7IaJZxTqFyxCoP7GQo4VUZTT9hDwD9w==
+X-Received: by 2002:a05:6e02:370d:b0:3e2:8e44:8240 with SMTP id e9e14a558f8ab-3e416345ab5mr91990955ab.11.1754193570153;
+        Sat, 02 Aug 2025 20:59:30 -0700 (PDT)
 Received: from frodo.raven-morpho.ts.net (c-67-165-245-5.hsd1.co.comcast.net. [67.165.245.5])
-        by smtp.googlemail.com with ESMTPSA id 8926c6da1cb9f-50a55df0940sm2268319173.106.2025.08.02.20.59.27
+        by smtp.googlemail.com with ESMTPSA id 8926c6da1cb9f-50a55df0940sm2268319173.106.2025.08.02.20.59.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Aug 2025 20:59:28 -0700 (PDT)
+        Sat, 02 Aug 2025 20:59:29 -0700 (PDT)
 From: Jim Cromie <jim.cromie@gmail.com>
 To: linux-kernel@vger.kernel.org,
 	jbaron@akamai.com,
@@ -103,9 +103,9 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org,
 	mingo@redhat.com,
 	jim.cromie@gmail.com
-Subject: [PATCH v4 37/58] drm-dyndbg: DRM_CLASSMAP_USE in amdgpu driver
-Date: Sat,  2 Aug 2025 21:57:55 -0600
-Message-ID: <20250803035816.603405-38-jim.cromie@gmail.com>
+Subject: [PATCH v4 38/58] drm-dyndbg: DRM_CLASSMAP_USE in i915 driver
+Date: Sat,  2 Aug 2025 21:57:56 -0600
+Message-ID: <20250803035816.603405-39-jim.cromie@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250803035816.603405-1-jim.cromie@gmail.com>
 References: <20250803035816.603405-1-jim.cromie@gmail.com>
@@ -129,16 +129,16 @@ Fixes: f158936b60a7 ("drm: POC drm on dyndbg - use in core, 2 helpers, 3 drivers
 Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
 Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 12 +-----------
+ drivers/gpu/drm/i915/i915_params.c | 12 +-----------
  1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 4db92e0a60da7..b235e1e8c6180 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -245,17 +245,7 @@ int amdgpu_umsch_mm_fwlog;
- int amdgpu_rebar = -1; /* auto */
- int amdgpu_user_queue = -1;
+diff --git a/drivers/gpu/drm/i915/i915_params.c b/drivers/gpu/drm/i915/i915_params.c
+index 37746dd619fd8..2dc0e2c06e09f 100644
+--- a/drivers/gpu/drm/i915/i915_params.c
++++ b/drivers/gpu/drm/i915/i915_params.c
+@@ -29,17 +29,7 @@
+ #include "i915_params.h"
+ #include "i915_drv.h"
  
 -DECLARE_DYNDBG_CLASSMAP(drm_debug_classes, DD_CLASS_TYPE_DISJOINT_BITS, 0,
 -			"DRM_UT_CORE",
@@ -153,8 +153,8 @@ index 4db92e0a60da7..b235e1e8c6180 100644
 -			"DRM_UT_DRMRES");
 +DRM_CLASSMAP_USE(drm_debug_classes);
  
- struct amdgpu_mgpu_info mgpu_info = {
- 	.mutex = __MUTEX_INITIALIZER(mgpu_info.mutex),
+ #define i915_param_named(name, T, perm, desc) \
+ 	module_param_named(name, i915_modparams.name, T, perm); \
 -- 
 2.50.1
 
