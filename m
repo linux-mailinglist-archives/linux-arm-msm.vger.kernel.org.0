@@ -1,189 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-67574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBF98B192A1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 06:10:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2B20B1932B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 11:21:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97AD61884E1D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 04:10:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A221116BD6B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Aug 2025 09:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3B528C85A;
-	Sun,  3 Aug 2025 03:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F8AD286894;
+	Sun,  3 Aug 2025 09:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Eu7Q6Rr7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aw/j3Oeq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539B028C5BA;
-	Sun,  3 Aug 2025 03:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C85E2AD3D;
+	Sun,  3 Aug 2025 09:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754193599; cv=none; b=OkhOkZ+mWx0RAkX25PTZO4nKhf+PTcxMBUmeW5VzOK2Y4OXOkKv2+y94Usu4FQs7BV2wSKsw4OAdIiqmrjrL/ZOXGoOPh8CsjI8Z02BLwTYlNywnWWNjK9U5NTHaQPRha517+9x/S01B8TMDy7IN0Zakj5QxQbeW2WP3rdFgZMw=
+	t=1754212865; cv=none; b=b2UybWkUNW/LXMFYQua08spj9gnSSkOyRhLPE66PSkkWRz7Yii1pUPuEF0WnkDCUKhTP5pouhHoIUF0X5t3rEGD4ESja6V/fQPIUafpIDG/vTQnjXXmvOPKPkQBqxcTo+bv1a8ggjBuBCi/1HrLsY2deZUd7aUn1OgJWZ6UhqvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754193599; c=relaxed/simple;
-	bh=X8cJQOCd2dU0zx+9xJvSUWkDqmIMbghrLU91KjmtJP4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euM0b2KbrVfmWEsKoyZGHTTE5jEAu1KMEF/jsU+S+ReQwMbtn6N2FpmuOkU5BIFc8PFLRZ76PQyJlss2ty5JtibMtyaw66bVV6LTqjIzkMBTaAHucXLZ0O3aRUvvZCDdWJzWpuDFxfzT5TMF847yXqmFcX+3p6ExkfVT0rPMzPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Eu7Q6Rr7; arc=none smtp.client-ip=209.85.166.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3e3f0f29d09so9438365ab.2;
-        Sat, 02 Aug 2025 20:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754193597; x=1754798397; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p6zBJEgANuVffuY9NQJyHG8/+Xeax9coZJWuW6ZJ2WM=;
-        b=Eu7Q6Rr7877GuIUPAh84THAHkMhvHGmN7Ng2tLRUxiOUwk+tbHFxvQ3nc6vrDm3GEc
-         8WyJm/P4W8CpV5WsvOpG/IRg4zv6ALBn1p7/8Hjw7cHo024gcx8BDXMWbp81d6rwjUZr
-         9VK5D6zdS1JLDwVF9NI6qzhjWK/JF505UJeTu0a/ZUivwVNnWXcG3gSr591KNq7aIwTc
-         ChVma8x6v0dsNlsqr+I7IW630eDbkhtEi7F87LG9OB2fIym7UbGm8uhvedz+qV8teWwq
-         39hUl6Sz3fFYR6m2wuFtwgfNI91WlHsXVKOdePEORy4erce0cKW9h1MDeZmapRPz3OYR
-         i3Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754193597; x=1754798397;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p6zBJEgANuVffuY9NQJyHG8/+Xeax9coZJWuW6ZJ2WM=;
-        b=KGoiXYDhZytjKj4hlOmJvZBCGZEXyKgf+XwVAD+U/rUIXPCIDixYlaofHM4Zi0ITVQ
-         JE0Xo+XCzGOcWnCop5A8xuqj0OAeDSI6VjNprOhunEYyAYZlFXPTr2ZyWnrMdrf/Hp1X
-         VEFTsrmvrw91NKnNN2i/YmsBZDNQdHvjzILywOEgruNKcX256dMCfLdkOVjQQXzSOSbf
-         rYZFke/lOV2fC8JdN4xkLVy7sR34QAFoqto9TiW4hjVDOiM7Vz+4OImO1P94hjXyXQ3C
-         ABfdk8nWBI33+zuNmCJzYiZLrZLvZGlnk0eMbQNGKu3R/CVIKnpHzD1RDKZHuOcwAK94
-         Ao3w==
-X-Forwarded-Encrypted: i=1; AJvYcCUhQ550pJeLN8L3p0HCDs9/85RRZ+I4N0L/YJtZ+YBbfDoqkQuLMq8e0FrF6445j187mKwggocbiFS87ikE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkpSRKZoq3f/XB0ib0qDeWAkKAf1N4pOeu0VJ8LgBK27ck4H4w
-	hy5C/z+qe2097xGmazpfHj2XDgWUZRpDXN9zoKTVm19GIU21EgDa82r/laU/vfMgZoA=
-X-Gm-Gg: ASbGncvgPs91LvsgyV1b3yHm6GHc6SewBvLzjqVJ1ftWMe9NoBF7lm7NW3v6teuAwxU
-	Ak2IHYFfGnBn/A8CB7RJlFweTK0IRNSRrjBZGvLFPThr6ryoWPPwdmaJUf1c4xxbQ2/d9eQuj6g
-	jPW3P1th3taAkf7jktjbC0BtxBmumWZW8uyb8kzcwYCmlNtTlxYVxBf7DjZc3SYSgKZ61I0w3q8
-	7OqIvBmUlRa7P4814arTfiewVXL0v8EmPvvicssRKef2NWXnJfyX4+W4/eS6a1TUDWG2KxmbZBP
-	SFEw1x/4lIRjWswJryq8HIwKqOJSMSOOFyZ+gGK3/fBVZ1EdXQv3EQHYpb/TyVSt2pZCtZBIaxI
-	W0b/Lq40r0DdDF6NgZJMDzEK3y+PsVGfOjGb5wNZ6P8GT+HgKob0wC8KYK8UQN76PJ6c7UoSNqS
-	d7kf4qhap+qjja
-X-Google-Smtp-Source: AGHT+IGUOgHvStYGi2AGuiva7QKSCj6X9DfG9+bxlaldERvaqq+8SW2QK11YiYCBPzmbmAT64CKkJw==
-X-Received: by 2002:a05:6602:6c01:b0:881:4a70:4651 with SMTP id ca18e2360f4ac-88168309e74mr805665539f.3.1754193597187;
-        Sat, 02 Aug 2025 20:59:57 -0700 (PDT)
-Received: from frodo.raven-morpho.ts.net (c-67-165-245-5.hsd1.co.comcast.net. [67.165.245.5])
-        by smtp.googlemail.com with ESMTPSA id 8926c6da1cb9f-50a55df0940sm2268319173.106.2025.08.02.20.59.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Aug 2025 20:59:56 -0700 (PDT)
-From: Jim Cromie <jim.cromie@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	jbaron@akamai.com,
-	gregkh@linuxfoundation.org,
-	ukaszb@chromium.org,
-	louis.chauvet@bootlin.com
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	intel-gvt-dev@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	daniel.vetter@ffwll.ch,
-	tvrtko.ursulin@linux.intel.com,
-	jani.nikula@intel.com,
-	ville.syrjala@linux.intel.com,
-	seanpaul@chromium.org,
-	robdclark@gmail.com,
-	groeck@google.com,
-	yanivt@google.com,
-	bleung@google.com,
-	quic_saipraka@quicinc.com,
-	will@kernel.org,
-	catalin.marinas@arm.com,
-	quic_psodagud@quicinc.com,
-	maz@kernel.org,
-	arnd@arndb.de,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	mingo@redhat.com,
-	jim.cromie@gmail.com
-Subject: [PATCH v4 58/58] accel: add -DDYNAMIC_DEBUG_MODULE to subdir-cflags - RFC
-Date: Sat,  2 Aug 2025 21:58:16 -0600
-Message-ID: <20250803035816.603405-59-jim.cromie@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250803035816.603405-1-jim.cromie@gmail.com>
-References: <20250803035816.603405-1-jim.cromie@gmail.com>
+	s=arc-20240116; t=1754212865; c=relaxed/simple;
+	bh=6SiqmzgUPZiU3wRacVGyFYA2GVYo9ShBH5POmw4XLeQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IDixJWpfR2O4hsV3/PC2VeXjiLatlu4cHPXuHyghAcrrT/e1SSMge6oarIz/Ij5xx5vAt4Y+ZXa1qUtPhFd2SOUOckxRMc9EnnNAdr6yO9SUjH5cr5bm4u8sgcpUnolWNoTxZsYpvOGkibE8BAFQ0fDyZ59CBzfiWBOZ0xF9Wfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aw/j3Oeq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF17C4CEF8;
+	Sun,  3 Aug 2025 09:21:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754212864;
+	bh=6SiqmzgUPZiU3wRacVGyFYA2GVYo9ShBH5POmw4XLeQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aw/j3OeqjQ/iFCgHi/RWGqYq7syYaTdWk/XyaeXaSWa/9B/gULAeCtn3X6d553UIT
+	 zis3vGT82aTx9/lCXCvzYcBu6UkuBARnGc3HWPN89gcd5+5AKhF/uOjCtMv7xIGNf+
+	 6nr3x9rSCH6NIZ4Zu9h/+pq+ejCwjM6eVVraXwfbPEkoX4ERw9PLA5qrzxuXeZId1k
+	 jizU6mOr5TVMPndjKUw94sL3dLiBKouEb3aDrUpApjcD3ItpNOso2S1yhNL+lSnWJr
+	 /QYUSABbIQBwuVFEwEhHlWDn0e8liZTWYDl0K1HOfCZA1XFM6u1z8TXQGIN2fS1Uec
+	 EZfHP5PhhuURA==
+Message-ID: <00f6d696-a8d2-41a5-819a-dc1ed87d35bb@kernel.org>
+Date: Sun, 3 Aug 2025 11:20:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v2 1/3] dt-bindings: sram: qcom,imem: Allow
+ modem-tables
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Alex Elder <elder@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ Alex Elder <elder@riscstar.com>
+References: <20250527-topic-ipa_imem-v2-0-6d1aad91b841@oss.qualcomm.com>
+ <20250527-topic-ipa_imem-v2-1-6d1aad91b841@oss.qualcomm.com>
+ <97724a4d-fad5-4e98-b415-985e5f19f911@kernel.org>
+ <e7ee4653-194c-417a-9eda-2666e9f5244d@oss.qualcomm.com>
+ <68622599-02d0-45ca-82f5-cf321c153cde@kernel.org>
+ <bf78d681-723b-4372-86e0-c0643ecc2399@oss.qualcomm.com>
+ <62b0f514-a8a9-4147-a5c0-da9dbe13ce39@kernel.org>
+ <747e5221-0fb1-4081-9e98-94b330ebf8c7@oss.qualcomm.com>
+ <e4c5ecc3-fd97-4b13-a057-bb1a3b7f9207@kernel.org>
+ <f6b16d1d-3730-46d1-81aa-bfaf09c20754@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <f6b16d1d-3730-46d1-81aa-bfaf09c20754@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Currently amdxdna uses drm_dbg, so it needs this cflag in order to
-compile; it currently gets the cflag from its own Makefile.
+On 31/07/2025 11:47, Konrad Dybcio wrote:
+> On 7/30/25 3:14 PM, Krzysztof Kozlowski wrote:
+>> On 30/07/2025 14:07, Konrad Dybcio wrote:
+>>>>>>>>
+>>>>>>>> Missing additionalProperties: false, which would point you that this is
+>>>>>>>> incomplete (or useless because empty).
+>>>>>>>
+>>>>>>> How do I describe a 'stupid' node that is just a reg?
+>>>>>> With "reg" - similarly to many syscon bindings.
+>>>>>
+>>>>> Is this sort of inline style acceptable, or should I introduce
+>>>>> a separate file?
+>>>>
+>>>> It's fine, assuming that it is desired in general. We do not describe
+>>>> individual memory regions of syscon nodes and this is a syscon.
+>>>>
+>>>> If this is NVMEM (which it looks like), then could use NVMEM bindings to
+>>>> describe its cells - individual regions. But otherwise we just don't.
+>>>
+>>> It's volatile on-chip memory
+>>>
+>>>> There are many exceptions in other platforms, mostly old or even
+>>>> unreviewed by DT maintainers, so they are not a recommended example.
+>>>>
+>>>> This would need serious justification WHY you need to describe the
+>>>> child. Why phandle to the main node is not enough for consumers.
+>>>
+>>> It's simply a region of the SRAM, which needs to be IOMMU-mapped in a
+>>> specific manner (should IMEM move away from syscon+simple-mfd to
+>>> mmio-sram?). Describing slices is the DT way to pass them (like under
+>>> NVMEM providers).
+>>
+>>
+>> Then this might be not a syscon, IMO. I don't think mixing syscon and
+>> SRAM is appropriate, even though Linux could treat it very similar.
+>>
+>> syscon is for registers. mmio-sram is for SRAM or other parts of
+>> non-volatile RAM.
+>>
+>> Indeed you might need to move towards mmio-sram.
+>>
+>>>
+>>>>
+>>>> If the reason is - to instantiate child device driver - then as well no.
+>>>> This has been NAKed on the lists many times - you need resources if the
+>>>> child should be a separate node. Address space is one resource but not
+>>>> enough, because it can easily be obtained from the parent/main node.
+>>>
+>>> There is no additional driver for this
+>>
+>> Then it is not a simple-mfd...
+> 
+> Indeed it's really not
+> 
+> I found out however that the computer history museum (i.e.
+> qcom-apq8064-asus-nexus7-flo.dts and qcom-msm8974.dtsi) seems to
+> have used simple-mfd, so that the subnode (syscon-reboot-mode) is
+> matched against a driver
+> 
+> The same can be achieved if we stick an of_platform_populate() at
+> the end of mmio-sram probe - thoughts?
+You cannot (or should not) remove simple-mfd from existing binding. But
+the point is that the list should not grow.
 
-If other accel modules want to use DRM.debug, they will need this flag
-too, so add it in accel/Makefile.
+Maybe the binding should receive a comment next to compatible:
+" # Do not grow this, if you add here new compatible, you agree to buy
+round of drinks on next LPC to all upstream maintainers" ?
 
-NOTE: ivpu has its own CLASS-ish dbg system:
-
-./drivers/accel/ivpu$ grep IVPU_DBG_ *
-ivpu_drv.c:MODULE_PARM_DESC(dbg_mask, "Driver debug mask. See IVPU_DBG_* macros.");
-ivpu_drv.h:#define IVPU_DBG_REG	 BIT(0)
-ivpu_drv.h:#define IVPU_DBG_IRQ	 BIT(1)
-ivpu_drv.h:#define IVPU_DBG_MMU	 BIT(2)
-ivpu_drv.h:#define IVPU_DBG_FILE	 BIT(3)
-ivpu_drv.h:#define IVPU_DBG_MISC	 BIT(4)
-ivpu_drv.h:#define IVPU_DBG_FW_BOOT BIT(5)
-ivpu_drv.h:#define IVPU_DBG_PM	 BIT(6)
-ivpu_drv.h:#define IVPU_DBG_IPC	 BIT(7)
-ivpu_drv.h:#define IVPU_DBG_BO	 BIT(8)
-ivpu_drv.h:#define IVPU_DBG_JOB	 BIT(9)
-ivpu_drv.h:#define IVPU_DBG_JSM	 BIT(10)
-ivpu_drv.h:#define IVPU_DBG_KREF	 BIT(11)
-ivpu_drv.h:#define IVPU_DBG_RPM	 BIT(12)
-ivpu_drv.h:#define IVPU_DBG_MMU_MAP BIT(13)
-ivpu_drv.h:	if (unlikely(IVPU_DBG_##type & ivpu_dbg_mask))                         \
-
-./drivers/accel/ivpu$ grep ivpu_dbg * | cut -f1,2 -d, | cut -d: -f2- | perl -pe 's/\s+/ /' | sort -u
-extern int ivpu_dbg_mask;
- if (unlikely(IVPU_DBG_##type & ivpu_dbg_mask))                         \
-int ivpu_dbg_mask;
- ivpu_dbg_bo(vdev, bo
- ivpu_dbg(vdev, BO
- ivpu_dbg(vdev, FILE
- ivpu_dbg(vdev, FW_BOOT
- ivpu_dbg(vdev, IPC
- ivpu_dbg(vdev, IRQ
- ivpu_dbg(vdev, JOB
- ivpu_dbg(vdev, JSM
- ivpu_dbg(vdev, KREF
- ivpu_dbg(vdev, MISC
- ivpu_dbg(vdev, MMU
- ivpu_dbg(vdev, MMU_MAP
- ivpu_dbg(vdev, PM
- ivpu_dbg(vdev, REG
-module_param_named(dbg_mask, ivpu_dbg_mask
-static inline void ivpu_dbg_bo(struct ivpu_device *vdev, struct ivpu_bo *bo
-
-This looks readily convertible to a dyndbg classmap and controlling kparam.
-
-Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
----
- drivers/accel/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/accel/Makefile b/drivers/accel/Makefile
-index a301fb6089d4c..e437549cba8ac 100644
---- a/drivers/accel/Makefile
-+++ b/drivers/accel/Makefile
-@@ -1,5 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- 
-+subdir-cflags-$(CONFIG_DYNAMIC_DEBUG_CORE) == -DDYNAMIC_DEBUG_MODULE
-+
- obj-$(CONFIG_DRM_ACCEL_AMDXDNA)		+= amdxdna/
- obj-$(CONFIG_DRM_ACCEL_HABANALABS)	+= habanalabs/
- obj-$(CONFIG_DRM_ACCEL_IVPU)		+= ivpu/
--- 
-2.50.1
-
+Best regards,
+Krzysztof
 
