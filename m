@@ -1,137 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-67704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59CD7B1A3EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:56:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 129FAB1A455
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 16:17:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E576A7ACDF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:55:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BD1C3B1C1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 14:17:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5FEB26C38E;
-	Mon,  4 Aug 2025 13:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77DA8270575;
+	Mon,  4 Aug 2025 14:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="if8Cno+p"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="t8K/W7VX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay16.mail.gandi.net (relay16.mail.gandi.net [217.70.178.236])
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAFE25D53C;
-	Mon,  4 Aug 2025 13:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.236
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754315808; cv=none; b=mJ1H2CE3pC9Xcm1SDfdV4cxPRJs+pal1aMSinEKOGB2UAKDTi/HzGQltg3WfQWip5Dh77szBp8nihEPpp+5wV/9fqzwrkB515j21xi+8R79PzqEd9NxlDC4jfpjjRk9GLQcQPUmVi+UHwc1/QUpa+BScXJlZaa8MEzZGRsW7jCI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754315808; c=relaxed/simple;
-	bh=7/a6J9L72Vn5jHGTjVBt9K0+XZXfSB5eubI9G5HM7sU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRFn6pXSSaBGwNPRdOpelZ2pXkDib/sdazC7uPBCj6KsNjS5jKSbK4kT1glX3G7T17cwEzXhK1hrZPRHHc5DLJEameRclH3FrO9r771/THZUxOGk3vAblSJJlZdBPzzcrrRkTOgIRBRfTU7qkR+APD/zJwHoWilMunGjidVzmM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=if8Cno+p; arc=none smtp.client-ip=217.70.178.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A67CC44987;
-	Mon,  4 Aug 2025 13:56:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1754315804;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C915271451
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 14:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754317011; cv=pass; b=SqDsurnh5UjQLaGTWBCx8zYD5YnWz+jvun7GeP7X6wnEVXFYvNX50+zXK8+shnMrtov/r8f5UvfRpxhkd+CO7WNicMj5eIfRzB0qQ3oiCOwJQ1m+EJYzHPfTfyBGxJRm3TiPDlCaSGZ6d6xnK4+05BCLWI6C/9LHXjSHGJglQ0I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754317011; c=relaxed/simple;
+	bh=3TCIc9/lmivf1rqMgGSS47C5JXtgRdq/XbmpWhjrN9Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=doXSXMNgb5fQ9lN/2oKik1+WxYAEO//yNkiONvBxjpQjjaRfli1xTjuXLMctqnnTyEQ5h1PeKRscf3soEPhfCWX+yF0PtHWba4k5gMeE9vKVvTB1z2EPtFW1spl2UWYpdrLitPSjl+FxNr2RC/YqNFktJJC+qKxilgQwzCLCLkk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=t8K/W7VX; arc=pass smtp.client-ip=185.185.170.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from jyty (dsl-hkibng22-50ddbb-117.dhcp.inet.fi [80.221.187.117])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: msmakela)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bwdhc13Yzz49Q76;
+	Mon,  4 Aug 2025 17:09:04 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1754316544;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=3GWaCWfMGOeVLl+TC602dyEUg8hYPmCqnXlyFHBYtbE=;
-	b=if8Cno+pLmFsNTLP9iO4kurwuCoJS+SM7SNnUVQRcbIXkBglBAdWaO3TqC/NeSnvZRiz7U
-	70SgMt2IDllHWTN9fVAtnCknmWDz4bSfyyHW4fuG+rd2W59h5QTAsBTxNP9QkEPoHYsvTw
-	dLwvquxfVQ71NstbxTN+136qyBeoOkzKr7QGRktAlQ2SP2GJ8i+bgSsZs2VkwEoOk6878m
-	2cJFd9uJsod2ohNYPYwsq9FqKWCMawJfypBtQ330aSBCgIlnCbtonIBaeVOsloYQxsZ7Vt
-	1sZUXqZ8/hBK330il1NmzhQCw75BQpCtRg6zlzqZkYr8W6gMLDXEL+9+KRF/XQ==
-Date: Mon, 4 Aug 2025 15:56:41 +0200
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>, Eric
- Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Russell
- King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>, Herve Codina
- <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>, Heiner
- Kallweit <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v10 11/15] net: phy: at803x: Support SFP
- through phy_port interface
-Message-ID: <20250804155641.176a64f7@fedora.home>
-In-Reply-To: <67dd0a3e-12ac-49ab-aec1-f238db7030e6@lunn.ch>
-References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
-	<20250722121623.609732-12-maxime.chevallier@bootlin.com>
-	<67dd0a3e-12ac-49ab-aec1-f238db7030e6@lunn.ch>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	bh=rLo+/tUddj4Qd3+YwzfJ10/R2wY6d0jdJ/yGBw8qDx8=;
+	b=t8K/W7VXXMaor65m/qiUU/DMu3DHxKXXhwz9W8bX1XC9izRNLpT/qeptNdKXZvYDAmeqUq
+	5N5n42ppvzaetT6tMvWjWmRb95js0aiuaLQsDGFdrS8hSvOyD0n6s2kQue7neaojQv+slp
+	Jfpn804LV87F7g14bYBox3vOmyJT8gXrspBVNrPNQB7naaBYfAk6w+x5g8RU8rnhfN2vuz
+	jzL2bSN+dXOLxO8ziTBKJ9LginDWTwp/+MN4q9Bpn4QgZV711WQmAJ0GOul2v7yQKw+MIz
+	LRVuGQS6GFZsAUUOWOxU3o2XEyRE77dr/iWcKyL4rgo3CIVGpNheGZv9LPyzgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=lahtoruutu; t=1754316544;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rLo+/tUddj4Qd3+YwzfJ10/R2wY6d0jdJ/yGBw8qDx8=;
+	b=vpco5JZhG32gODsDJYPeYxcoPUmkmSwiK/3fNIZaBy2ApV9EMHcEkgahVe1VJvT9GKPB0m
+	+PmW7bzw5WDGQjQLkOjg5+pU+NT0Hcr18xpCZFriGJdyhUnmF0QAd7NITHFqQtZc2usnd7
+	V3+Lv2zEzszg7+tQaTtsqNGJx5d+8L5utiiTfhN0SbHEFjDUsbY85BJyg5AHRcv+w9ZG7/
+	2vEu+4greGNtO1TQvAw0ypeLn9059jFCiAO3Qz8Op63RXuAH+GEIhenASGDtDUlcGkUCvS
+	MlTX6mQHl6671tuKsnmpHIwL7WcLlYm2Xzz+SCrkJ5E6dnKjYwPLeKL5Rb8wUQ==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=msmakela smtp.mailfrom=marko.makela@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1754316544; a=rsa-sha256;
+	cv=none;
+	b=k4sWO63MCsyUtsuBSX+DYj44cQ275i5qYNy8mqqug9ZMoFEgyM65X07HMlacF2L2e3L3rF
+	fm3CY4AAdknT/Y32QqA29PW+1MU6SQRwvgB/QoPARpqDaJi+XgY0KUnoCAwTi/95KhwWfh
+	G8vTODEqTcaTPGtUNF0YH0nT+rS+ejhPGU1YG8kg5T8XR4Wpl2yTnNreL25Th00GVJ9huk
+	dbtu72v+fF+Iu6wj0Lz4KfeKXy6/mzy2dKqKia339uOCx5eUPqVLpFXZm4pyd03TdmNOZF
+	pu75owVkblFKgF0l0NsJ3mrP89DGj65R7KdCiVf9YOBRQgGzjdOttpc+MzLFWw==
+Date: Mon, 4 Aug 2025 17:09:02 +0300
+From: Marko =?iso-8859-1?B?TeRrZWzk?= <marko.makela@iki.fi>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Robert Marko <robimarko@gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: rework nss_port5 clock to
+ multiple conf
+Message-ID: <aJC-_jzdwP-1NnlD@jyty>
+References: <20250802095546.295448-1-marko.makela@iki.fi>
+ <61b1ac3d-8481-4731-b24d-2864e24625b4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevledtvdevueehhfevhfelhfekveeftdfgiedufeffieeltddtgfefuefhueeknecukfhppedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjedphhgvlhhopehfvgguohhrrgdrhhhomhgvpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedtpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtp
- hhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegvughumhgriigvthesghhoohhglhgvrdgtohhm
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <61b1ac3d-8481-4731-b24d-2864e24625b4@oss.qualcomm.com>
 
-On Sat, 26 Jul 2025 23:24:36 +0200
-Andrew Lunn <andrew@lunn.ch> wrote:
+Sat, Aug 02, 2025 at 01:51:31PM +0200, Konrad Dybcio wrote:
+>On 8/2/25 11:55 AM, Marko Mäkelä wrote:
+>> Rework nss_port5 to use the new multiple configuration implementation
+>> and correctly fix the clocks for this port under some corner case.
+>>
+>> In OpenWrt, this patch avoids intermittent dmesg errors of the form
+>> nss_port5_rx_clk_src: rcg didn't update its configuration.
+>>
+>> This is a mechanical, straightforward port of
+>> commit e88f03230dc07aa3293b6aeb078bd27370bb2594
+>> ("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
+>> to gcc-ipq6018, with two conflicts resolved: different frequency of the
+>> P_XO clock source, and only 5 Ethernet ports.
+>>
+>> This was originally developed by JiaY-shi <shi05275@163.com>.
+>
+>Hmm.. I'm not sure what to think about this, given that person seems
+>not to be using their full name (or maybe it is the full name, I don't
+>know) and hasn't provided a sign-off, but on the other hand this isn't
+>a very inventive change, so I don't *really* mind - up to you, Bjorn
 
-> On Tue, Jul 22, 2025 at 02:16:16PM +0200, Maxime Chevallier wrote:
-> > Convert the at803x driver to use the generic phylib SFP handling, via a
-> > dedicated .attach_port() callback, populating the supported interfaces.
-> > 
-> > As these devices are limited to 1000BaseX, a workaround is used to also
-> > support, in a very limited way, copper modules. This is done by
-> > supporting SGMII but limiting it to 1G full duplex (in which case it's
-> > somwhat compatible with 1000BaseX).  
-> 
-> Missing e
-> 
-> > +static int at8031_attach_port(struct phy_device *phydev, struct phy_port *port)
-> >  {  
-> 
-> ...
-> 
-> > +	if (!port->is_mii)
-> > +		return 0;  
-> 
-> That seems common to all these drivers? Can it be pulled into the
-> core?
+This basically is the result of executing the following and resolving 
+the rather trivial conflicts:
 
-If we pull that into the core, we'll need to add specialised
-.attach_port() callbacks in phy_driver, such as
+git show e88f03230dc07aa3293b6aeb078bd27370bb2594|
+patch drivers/clk/qcom/gcc-ipq6018.c
 
-	.attach_mii_port() or .attach_serdes_port()
-	.attach_mdi_port()
+I actually did that and compared the result to the original patch.
 
-I'm perfectly OK with that though :)
+I believe that my Signed-off-by is valid and sufficient due to 
+Developer's Certificate of Origin 1.1 (b), "The contribution is based 
+upon previous work."  That "previous work" would be the gcc-ipq8074 fix 
+that this is a subset of.  This is what I tried to convey in my commit 
+message.  In the name of openness, I wanted to credit the person who 
+provided the patch to the OpenWrt community; see 
+<https://github.com/openwrt/openwrt/pull/14950> and 
+<https://forum.openwrt.org/t//232618/4>.
 
-> 
-> > -	if (iface == PHY_INTERFACE_MODE_SGMII)
-> > -		dev_warn(&phydev->mdio.dev, "module may not function if 1000Base-X not supported\n");  
-> 
-> I think we need to keep this warning. I don't remember the details,
-> but i think this is the kernel saying the hardware is broken, this
-> might not work, we will give it a go, but don't blame me if it does
-> not work. We need to keep this disclaimer.
+I did play with the thought of modifying the patch a little so that I 
+could without hesitation submit it as my own work.  Namely, I could have 
+replaced two ".num_parents = 7" with equivalent ARRAY_SIZE expressions, 
+similar to gcc-ipq8074.c.  However, that would have violated the 
+"Separate your changes" guideline.
 
-Sure thing, looking at it now I'm not sure why I removed that...
+>FWIW for the patch contents:
+>
+>Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-I'll add it back,
+Thank you!
 
-Maxime
+	Marko
 
