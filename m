@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-67682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A683AB1A20F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 14:50:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CFCFAB1A22C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 14:52:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E6F43A843A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 12:50:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4C023A4F72
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 12:52:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D414525DD07;
-	Mon,  4 Aug 2025 12:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD17263F5F;
+	Mon,  4 Aug 2025 12:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CRfKr2w/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l4a5TFGg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A1325CC75
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 12:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3808325B687
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 12:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754311714; cv=none; b=LOuaeIvwDvP8Ci4cnoe813HBCB/4AY3JviYahTpb0FLj6bM2tK4czFlOiSs2cP3LXDwA8P0Va9RH704juKZXfhcEkNfvzzivv6Z7Hh1Jvjbt/j2eKPGvw0YOHWY8wXCqSzjfl6KZkUBfts1hvNj1XQEgW9MSLlj8YrCcjvK9vR8=
+	t=1754311782; cv=none; b=JRLz+BjF5PpPYQ+LWdYQ1mXztrOk3jqbIcjcLGbc2JRgI9Ywq3przwrFPAFdGB4Jygf4zNhEc+dBll+PJ069Cro+AyksbvbGKLoQShTXNKe1dHvSzoc720XXJmxMkeMLwJGbKfG+WzWO//hcYMXdjjWioO+QXsuakP7eAPjO+QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754311714; c=relaxed/simple;
-	bh=LYFZ8NhY+QtK8ZVQ32oeWX8L1gtCW4Dk6OsP1dI4e4A=;
+	s=arc-20240116; t=1754311782; c=relaxed/simple;
+	bh=gs2nTfQ71K1FL0/3F/7V99owAG7ux5t21uHkSyspMbA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VSBI0vxNB2i20Jm0RcxP3+aVG+4m6QYYHTLAxxCq+Qx/1qOqDTwIb3de5Pd8FAtgzai0Tcli+nGKr7jZKJf34RlFoTVwrakoM1PsVqO3RFYdqegc4LfIN+veKWmfhaYHuiDOZuclJYovHePUoPvMa2pFG6AK/BEhbI6smE1IbYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CRfKr2w/; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=nJWVHwEUg4OIHGbr3A0+LquTc45VHae5xLqXrT8zLJr8upEL+Q4afBF+cLvL64Scq2eoaEV3XmpWjMOYXM3+cAaC1XNPaUX+X+GpMdzbtPU0dufgnsyOu4SWkL1jie6ZROKoF+B/Ct/h4AVp0pnYwJ7H+qrxrsVRdytWnLmerT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l4a5TFGg; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5748RKX3022505
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 12:48:32 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5748RKXC022505
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 12:49:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zFheNoJFftwlUhByal86hdBunVF358wbMQHu85MmEGA=; b=CRfKr2w/dSWVNReV
-	amxfnKEU1UP5V+Hf36gAfER4V9LSdxV4liDYzGPw7ILeWzdxITAbYpjc/2ZaNk1B
-	xm9+RqPtLq+B8an2pBUQBudXv7oibymFTHKGXY4mZweGGZfsGZoTpNC/MNl0GsP0
-	SZmWEfjAYO2lrH4KqdITm0pJaeZq+JchfGRrYVpJ5xS1JVFU1lEJvFfU3d2S2X4J
-	oTasuFfHY/pHXD11pVmOLgj+dLyK3TNNKFF6b7zo2l7Pp176xrCYCn67g5WtdKB3
-	Jsx74JCtymSjy44MAmZR/spl84aKvsNsypcpt5+62oKkTitSQR4WALytmUORaoWz
-	QzdQuw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48a2ke33r2-1
+	HuG+AREz8e9iXy+P66bDzIEPjOCAA2V0u2W3LH+qvX8=; b=l4a5TFGg+aw10qzv
+	wNto9gUanW2Wh0M0mArmgfngm8ImtSmbM0h+a1rDPOkS4/qNy7RE66Q+6ljwH72s
+	YsQqwj+ByOWV2EZAnOknRG2NLU1iL0z2p4f45SjYoxVAl6YpnMy0rCNP6qhOLE+i
+	Fqh6JPBD6XuSdjtVPWRNRID+pIf2aJnIZxi3RipGQ395vVFETD57a0DtZmD6Og1y
+	gQsTGC74Q60P7crsBOASFjKy5yC9r2cx90JG5DdmFdK+23Ea97Phxk9o44a8NRlh
+	TbLyRxmoxXgiavBa19EiwqzrOTlJff7h/m398tjEMB21KavuwFc7R6JByh3Q3ptE
+	ux4PXg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48a2ke33v7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 12:48:32 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e80143e64dso1214285a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 05:48:31 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 12:49:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e33e133f42so94393285a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 05:49:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754311710; x=1754916510;
+        d=1e100.net; s=20230601; t=1754311779; x=1754916579;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zFheNoJFftwlUhByal86hdBunVF358wbMQHu85MmEGA=;
-        b=utV07PdEFIBpdV6c3ZG0o79roDVPlBk+0Cl/1o2uu8yN1r5Qct5AoIpr4dACt2F+6W
-         4d1l9TEreF5fQMp/F6dQ/LWk9My0R0ENqwvaKgcT/HcUacA/MKZ2B+SsmeMV7jO1kRRv
-         G1XsBrWi0dB+o6NMDM+R1baJ3Rp7CGd0BSLHuh8hDPHKoaAL0gpJ0pqmUjDdnWMgXyn4
-         pdOpeIPmpHxGa2Jq6CBl9PgL5rZkltzZ+cB1T9H/jhHtaSYoPsf1O6qHjhzEftkS8Lc3
-         h0gdaVIcTnbzH79iHC0CVT5ljf9eUzEI9NONjRCrEVwaqistSs98LbTBdDlpgJ526+48
-         AIjw==
-X-Forwarded-Encrypted: i=1; AJvYcCUT8XzdwJp3AuAeymkG8ziFcLkYPQG+ll+gVuv/oLFYoAVgBDPIV2RU0oR75YtcXQsyZftvYzDt8EGK+FcQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlRPjtPUju2OqwF5of7xRlAmHsWraNBciOVkLaPYaewq5pp2mX
-	OKuKEcpB2rBMZa2KPR8wOo0nX8PtFjRKfvYzLa5VB0o0olws2kEIKPDsFq/gVBqbmYbP4EwWzd/
-	bTXmzP2MDJ03W6jAfy93v9LfjSz0K2ze1wZqguRO05Td1Djvg+frnDY041xZtPciyq49V
-X-Gm-Gg: ASbGncuCsjIcyTEI7ik1q8jXbmS3SclUugLJUYF/J1SJTmezUNWjHsGSZIh3KQ4jx7H
-	8HBXh9wJEIN1AYAlaMnwG0tzqIWyIQH8lIkKi9F5jHH6D6g8P0Bl9x13HZoqKQSBdahOTPgtqE6
-	0WYFd5IAaBCbjHUMDwsx/vAkaOrpfYVjY8Sj9wsVRdZQjKBaSbUpvXZDE+HuTgempd1rztR3IgJ
-	rSsiuw9QJS6wT8n2fL6JM03AEmklDU7FQgJvKSjleOQVTFSEBVrYY9NjqLbohzgxQN5HJXaJUXF
-	uNjbMuhz+Kxm1cbSUTcmut8WHQXv9cxjO2bc0MCF95ozdcqMZpBUcM8AYV+njARpvZ+a5uXplhG
-	2e4IKBxW1XzPuSmoqmw==
-X-Received: by 2002:a05:620a:1a96:b0:7e6:2435:b6a4 with SMTP id af79cd13be357-7e696391ba3mr588751985a.12.1754311710419;
-        Mon, 04 Aug 2025 05:48:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfOK2zG/I1wPrVXqw3Ou3u51Ey0rE1CW66ekjlSXKZ6Q9KGh6EBm21/8VsABSjJCoV5JqjTg==
-X-Received: by 2002:a05:620a:1a96:b0:7e6:2435:b6a4 with SMTP id af79cd13be357-7e696391ba3mr588749785a.12.1754311710004;
-        Mon, 04 Aug 2025 05:48:30 -0700 (PDT)
+        bh=HuG+AREz8e9iXy+P66bDzIEPjOCAA2V0u2W3LH+qvX8=;
+        b=svKcHOp2lTS4keF9Y1CDgex8nxlu2RpB0Fxf9lH+LoARBjKevDGCW1PzxqoYbtuu+d
+         QWwPp9IviF2MYpn4PlWP7dv8llpiLWrYp6RjlMNOpJKpRg+2AimlyEghepb+acO/ICx0
+         6q9hMqVNhaFqWCnLJEvww7RdYDzF2OhneymAAgSBgap6XQgfNgvMLfHjPmuiqhmJrYnK
+         J+RsSiPbzsTuHuXRU0uD0Qpjh1szDY4YGmXRD45xubpCZLDWvfRUPc4fakbAuR4XVN0i
+         OY/+CuUEyk+3Eu+/08rIyl9ItD/UL9SvqmUZj47MpPqfe0XCsdPUpCyIgnVC1Exj/1yG
+         qfdw==
+X-Gm-Message-State: AOJu0Yx8ooYCNJi6Y+F9d5V1bNxf0vb5IgEab7PQuSk63Csxo0O9HVY8
+	h74DKbw63BB7Vlhvh1cEA1nMDVYNsVawpwIfj17uxeurkISFbk8Kt2MrzeeEY7qQ8U1f0Lao7Ky
+	ZMwaYsN178naXmVsr39UERz7mOM+A/TYQcH4l32BxQcrL61lXtsMJkekShVxRQvP1KgGN
+X-Gm-Gg: ASbGnctAMz96ypCtUC6v9XBIP8MhL9wXcC9J3McpF219xlsdMCf6Yr/GP6V0Plo8z52
+	Y3rgSyE/Nf5xJR/k2FmmDApb+MZMd5pMdx7tZkbmK2MAK/WxFjSxnffzYRU2CBE6yT/hN6Ev/8b
+	apezW1zKYeI1ALsEQfvV/ANKpv1zA4VDsY8z1z+oRZug2FQJzk8cMKQESb9+HAnRiBZpQcbeF0z
+	ZKRpFjG7JEQIvKI8HrjPMQuTB3N5PHynNkYbIAFgleBxp+9atJit1s12nBoNijIze0cfVB2LKQI
+	l1Qsv+w6cWxznV1kfRsoFXYPGfh6VvAqS4P5wWqvtEpYldGtViNo3KcC8yldAVAZRCcWdVgHRBv
+	FcX+PuhHnLdC88bRXcQ==
+X-Received: by 2002:a05:620a:4083:b0:7e3:3029:44c with SMTP id af79cd13be357-7e6962dc3eemr595492985a.7.1754311778785;
+        Mon, 04 Aug 2025 05:49:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXy5F5bapQn0nO71JHnWJEf1UQ9qqolIof6CqE8t9CRANM4N77tCxcRTH3d0X9coKAQaNVnw==
+X-Received: by 2002:a05:620a:4083:b0:7e3:3029:44c with SMTP id af79cd13be357-7e6962dc3eemr595490285a.7.1754311778224;
+        Mon, 04 Aug 2025 05:49:38 -0700 (PDT)
 Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a21c022sm713556266b.101.2025.08.04.05.48.28
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a2436c2sm717085566b.141.2025.08.04.05.49.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Aug 2025 05:48:29 -0700 (PDT)
-Message-ID: <ee95cbc8-c1e6-4b23-9e1d-4a74ef441adc@oss.qualcomm.com>
-Date: Mon, 4 Aug 2025 14:48:27 +0200
+        Mon, 04 Aug 2025 05:49:37 -0700 (PDT)
+Message-ID: <c96df6e9-ddba-43f7-acea-191f19d5484a@oss.qualcomm.com>
+Date: Mon, 4 Aug 2025 14:49:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,115 +89,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spi: spi-qpic-snand: use correct CW_PER_PAGE value for
- OOB write
-To: Gabor Juhos <j4g8y7@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Md Sadre Alam <quic_mdalam@quicinc.com>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250801-qpic-snand-oob-cwpp-fix-v1-1-f5a41b86af2e@gmail.com>
- <b2e4d6b1-25bc-4b2e-ae54-6588f1573131@oss.qualcomm.com>
- <1ba00a38-7293-4f72-9aee-f87f41a3dcc6@gmail.com>
+Subject: Re: [PATCH v2 5/8] arm64: dts: qcom: lemans: Rename
+ sa8775p-pmics.dtsi to lemans-pmics.dtsi
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        kernel@oss.qualcomm.com
+References: <20250803110113.401927-1-wasim.nazir@oss.qualcomm.com>
+ <20250803110113.401927-6-wasim.nazir@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <1ba00a38-7293-4f72-9aee-f87f41a3dcc6@gmail.com>
+In-Reply-To: <20250803110113.401927-6-wasim.nazir@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 9z1E4KRVb257dlZZZnUO7IXWs5cGc8_N
-X-Authority-Analysis: v=2.4 cv=TMNFS0la c=1 sm=1 tr=0 ts=6890ac20 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=6dxo4luPYu9H4ytEELAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA2OSBTYWx0ZWRfX5LHyFr7hlmLd
- nbcJz7e31AvmaEX3McrGhYoWeou0j36pxzLn6GVgpzbHYStAXDZFPa5RLmytqApD05FdL9vwsPj
- DCfTyGVPwQZMV7qb+mFkXWcXKmgl2hswogZyAKy+5VO9jizQp7rgQdmV4Nmdyy38di/dMtXOAgM
- XRCsgpv2q+KP8JVhlI6nWqEJF/ECcEC6QWT9bv3yti23BOuJAOQ07JYfYPgv2V3ikif7QJzxyWQ
- s9YcPEgHm5B97d9WhpYNhtZpvf8FTQvk1rr1OY1tfq2Jk587Plyv4vws3AJ6At05svexkYgZOCe
- LSVcXRzsFvg/mT1zGiYvzb8h8yzdncPifPbCAjVWTYlTBQ4xJnDt2FStp8Zh93o5i8k1pphigDe
- otdZIp1SSRdAYtA37FQwDyCg/uP2a+wIvtWFf7vtMK3RpkquBWeSi6wjWoZ2Df+8LkDqxDBv
-X-Proofpoint-GUID: 9z1E4KRVb257dlZZZnUO7IXWs5cGc8_N
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: KcGfEx6peoRSeHWw1_nY87HwoStCUXzV
+X-Authority-Analysis: v=2.4 cv=TMNFS0la c=1 sm=1 tr=0 ts=6890ac64 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=SmZcuDTjAAsXslZR8aIA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA2OSBTYWx0ZWRfX9ud+wOeOwiDW
+ qiMGRbyv3YAnjriAvvSL7i9RZ2U7XD2ebNEpKrSlfziCdp8FqNzy0O7aQm2oglYLXZ3KPamgrOm
+ WAYToBRPBKmM5kKJhz5KOPDXe83tUIuu12AN/J4mp14B9wk46iuFUujRHG+1Q6ISNlsO9+bq1lz
+ TqWBGh02UqMY3bqAaZ6KWgRv2IcXjHSHPi2ui4rjqWY2f6E7zDLyNKOz0aVNiy7Jrwu48387WA2
+ Eu5gjpJjE9EJ+SlzTcOrX/9CeVTjJLZs/E/8TDaYz+6tZ4bmofKkzWT5pQS6Kx9hYe23pd/Kb1U
+ CSnr+Pzt4yA4GySbn9btb1jq0LdH49FhOOhwxdGQNGoHYRzLynSFFsb7TzQsLTpeWQ9ldYSKw7V
+ s1APcBXDu4R9lekiFKKfONE9bQ4+Xy++PkjeI3ydFXLgZDUK5T4iCMbfxFgPQiHkU2J7VOMM
+X-Proofpoint-GUID: KcGfEx6peoRSeHWw1_nY87HwoStCUXzV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-04_05,2025-08-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  suspectscore=0 spamscore=0 phishscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=737 bulkscore=0
  priorityscore=1501 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2508040069
 
-On 8/4/25 9:40 AM, Gabor Juhos wrote:
-> Hi Konrad,
+On 8/3/25 1:01 PM, Wasim Nazir wrote:
+> The existing PMIC DTSI file is named sa8775p-pmics.dtsi, which does not
+> align with the updated naming convention for Lemans platform components.
+> This inconsistency can lead to confusion and misalignment with other
+> platform-specific files.
 > 
-> 2025. 08. 01. 13:08 keltezéssel, Konrad Dybcio írta:
+> Rename the file to lemans-pmics.dtsi to reflect the platform naming
+> convention and improve clarity.
 > 
-> ...
-> 
->>> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
->>> index 0cfa0d960fd3c245c2bbf4f5e02d0fc0b13e7696..5216d60e01aab26f927baaea24296571a77527cb 100644
->>> --- a/drivers/spi/spi-qpic-snand.c
->>> +++ b/drivers/spi/spi-qpic-snand.c
->>> @@ -1196,7 +1196,7 @@ static int qcom_spi_program_oob(struct qcom_nand_controller *snandc,
->>>  	u32 cfg0, cfg1, ecc_bch_cfg, ecc_buf_cfg;
->>>  
->>>  	cfg0 = (ecc_cfg->cfg0 & ~CW_PER_PAGE_MASK) |
->>> -	       FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
->>> +	       FIELD_PREP(CW_PER_PAGE_MASK, 0);
->>
->> FWIW I'm just a fly-by reviewer for this driver, but the docs say:
->>
->> The value is the number of codewords per page minus one
-> 
-> Well, the driver uses that differently even without the patch. See below.
-> 
->> "NOTE: This field must be cleared for block erase operation"
-> 
->     $ git grep -hp 'FIELD_PREP(CW_PER_PAGE_MASK,.*;' drivers/spi/spi-qpic-snand.c
->     static int qcom_spi_block_erase(struct qcom_nand_controller *snandc)
->                                              FIELD_PREP(CW_PER_PAGE_MASK, 0));
->   
-> This function implements the block erase operation and it corresponds to the
-> documentation. So far so good.
-> 
->     static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, 0);
->     static int qcom_spi_read_cw_raw(struct qcom_nand_controller *snandc, u8 *data_buf,
->                    FIELD_PREP(CW_PER_PAGE_MASK, 0);
->   
-> 
-> These two functions are using a single codeword (with zero CW_PER_PAGE value).
-> So, it seems that in reality the CW_PER_PAGE value means the number of codewords
-> (minus one) used within a single operation executed. Of course it is possible
-> that the existing code is wrong here.
-> 
->     static int qcom_spi_read_page_ecc(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
->     static int qcom_spi_read_page_oob(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
->     static int qcom_spi_program_raw(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
->     static int qcom_spi_program_ecc(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
-> 
-> 
-> The previous functions are operating on whole pages, so those are using all codewords
-> within a page thus 'num_cw - 1' is getting set in the register field. This also matches
-> with the documentation.
-> 
->     static int qcom_spi_program_oob(struct qcom_nand_controller *snandc,
->                    FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
-> 
-> This is the function fixed by the patch. As it is indicated in the commit description
-> this also uses a single codeword similarly to the qcom_spi_read_(last_cw,cw_raw) functions
-> described above so the CW_PER_PAGE value should be set to zero.
+> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> ---
 
-I didn't mean to dispute what you said :)
-Simply included some context for other reviewers
-
-But thanks for the insight, this seems to indeed make sense
-the way you presented it
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 Konrad
 
