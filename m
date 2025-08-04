@@ -1,151 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-67660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C779B1A033
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:06:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 817A7B1A049
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:08:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBE733A8F7D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 11:06:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEC153BDB60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 11:08:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FA6424E00F;
-	Mon,  4 Aug 2025 11:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E09253B7E;
+	Mon,  4 Aug 2025 11:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oLyE1HJB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="earNJcF8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7003823183B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 11:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647CD24DCEC
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 11:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754305577; cv=none; b=lAVA/j54lcszsDBV+J2xOEYcqO9KcSLYeS3qt6dRhSCsLfMRYK9oJ8TwMLgJ14RLQFiDYr6WTyhWzNIP7xf6dpzAmcJDNXHUFwpgAPuuRxiX/YUi/EQsPdWZfJbODUroLIbFHMbe2WpX5WagLrVC1YR+zuQgog/tbbXReKpSauc=
+	t=1754305688; cv=none; b=tdBVZ5FO4VsjaUBK8K22kALVsS1R51DfCLdWuqIhML6z9jAeYbdqyOyHBTF4YtwziOvIBEm7aMWmQXr6QqUjnkeYGJhKIyJ5mQFM912g5MMuFjUGHC1g1eG46U21RijYNP895FNgYZwoJ6e8mkkgic6ReeQDjy5GRta/Q6m2kPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754305577; c=relaxed/simple;
-	bh=w5XtDIivcbCdAqyNR6P6njAnhtzT50eI72GOitq7UVw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AQdl8TIBHjxViLyOtLqDBwoCtbdZc0sjn/wZnC/MwYUatPHN0FGktjgVlFJV3b5kwenW05pevDGnxMhSehNDSTONspB3faSnE7CVifo6sRKk8BzNr1HpXHsH0A0z3JwzUQRHfhA01jVEoRFx9GfKO+NgdhuLe27THYhaT38sf5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oLyE1HJB; arc=none smtp.client-ip=209.85.218.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-af925cbd73aso684029866b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 04:06:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754305574; x=1754910374; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AbCL33p6FgXvGTA+R2ME1gzKoUWjtIJjxxkRY3HfTrM=;
-        b=oLyE1HJB8aSCeCp6zX78iyLdsQH8Fgmt1tFEQLcvr/mKVzsjQAzFPP6QUBHt93gpAj
-         7azeCvO3/Xe5aWsU+BlloT9Vr5CXwLfBYyd5bsLpeeAi2pAXwiArHLum+kSAbbXAT3xq
-         gouVb6LVWBPhDik8RmUFvpy9Kj1aDN3CZzwUUo+m6px6HZmpLuRVy8CAZn+GQGM5w1Mp
-         LytyhVtT6DjJy2Ofrvl8dcfuL5CEXXmfnaDloGlA/rKxoL2zBIuTZc0JJhOYJou6+wEC
-         bnQT5rHlyduHDchPCV2rjMQqfo8WQiyJxsp85ErX2klfVoKdJI+IR5xspMhHsAm1y84g
-         cEdA==
+	s=arc-20240116; t=1754305688; c=relaxed/simple;
+	bh=7qhyH/PU8NTXMb07r6bgr29blza+kLWRP/cKMCl7M4w=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ln/SCzD012rtPfWwmZtMrniqXKPab1FpdPjmHILNdcCryFsR5HMpXu8VRbL7b7rANR+UA71eHmHPvHrf3fOBahXKK0KSRDVXNrHp+XLah3A3niDForgHI+JL+w2q+3Q1vbTLk1CtlCT7oE3imio87WbBLGwJoFJBSRzb8RVvSjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=earNJcF8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5749BTij010359
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 11:08:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/quFVpXGaSR9+jFTg65KdPNzkiQfbcpVWaZyCBq0GDY=; b=earNJcF87v6maYZ+
+	3Edr7gGXrDDQC/tXRPm7w/MLWf/UlPLNThSm/WS8FImrvWFo8hVgvlJKxermNpvk
+	IUjnA/fbiFT4xPl1t3UeRHhgNHnAI5BoXjxWcstXu/0KULfA4eztREzvqL7F8FoR
+	p5d2v6IcRk63oouvsICt0UhHjuRw2/da2tlCP3bAgvmcwyOMcqCBEwXw/1m4Olp/
+	mXWdDBCr/+K1k81yBqcaI6L+2IqA4JR+aS2vQBsy3Qdju2S++Ql51gh4PwUY12Bb
+	7XoUQsNdxA8y0GJyqOSZoiHPQeCeONirBNcR5JCvhOCTYKnz0Ei19T8GKTS3s2AO
+	gxV4Tg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489bek4mn9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 11:08:05 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4af156a27b1so67495851cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 04:08:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754305574; x=1754910374;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1754305684; x=1754910484;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:date:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AbCL33p6FgXvGTA+R2ME1gzKoUWjtIJjxxkRY3HfTrM=;
-        b=AYkeEWPJZl4qFLeKzsaq5YYcguwYKXfT+2YId5eGzEkZXmudAn7WcfCNzcbdkJMXFL
-         dVvrniu+nABl7zHhP3AysJwk0I/7ERkLZkpU47Feh/1F1kUiifUdRruS0MNr4FdPTRCp
-         WRXFnrPjltKB8kjecbRlEZl6p0hAAK93MjjH9ZfhHF+HnOVCUZ6ELR0GoxlfKeE1lcu9
-         0dxrFvD/x39J0d6Og4l2Fy8HKkBcyqsU+XDiAwnJWiFvBE3A9YbGE3qJsdnGPUDpEp+A
-         3ed/CGiD4/OTTJbuAz82VyCuUeuQ48Fr+ipEwcCmkWStiq9+FVqgdxzFbmlBIzUnN5g+
-         Pwyg==
-X-Forwarded-Encrypted: i=1; AJvYcCVUp7ozYuaYxdvpHxEGIHuIuMYlmDlc7XHxQjqrzCI2Qb3vxubWnxH1s/ns9vHitAp9qFHDvjkNIF6qnmde@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLOthykG6oB24a9yUpphD0rgty54x1BBwNBaNL2Zt7N0ZpPIqF
-	50RUcbS94/PiVMnEHsc6NgM7ZacBBbPXzjfl9qsoYDPgKLajF8ot/Y8C1AipbpmzYbr9fgP9PUW
-	Yy69KPx4Ebfwn
-X-Gm-Gg: ASbGncugf5eJDv51B5TK692ZTZvSAwkSh00AWVrq5DZWPbsE5NRa/1KLfxbMAO4kWNX
-	t8xLj3aVz9+89u2Rm9Szfzmi9QHtTDNpprlbOUX5mmpLjTipM9a/M5nEA/OegDJSj6FL+elqhsA
-	rZaOYqB5Zigy1ghAG5F5O8Py10ALQadtqUYR9edmwwRMIcZWE9zz4YVfFW464HFj4MWqk8w9+vC
-	QQSoSPn97DTgBjrpFwi/sZAb99G6Ouio2M0TVB3ClDko9Vn9Q5+Vnp2hJUgIcHazF/NS17cnJKX
-	Fi0C3A8WZsD6KmnG6jivGbYHsSeMVf74fDyTuibeAQa+AS0fiAfEitE+il7OgjNRI9rBKVaU84g
-	rENpF72DrlAOJRlVTp5LlQvkmWn5WdA==
-X-Google-Smtp-Source: AGHT+IE4XPeXZCbPPTnUeGFh37dBHmQZ35wpgsW3hiGwLGtsXzKowOSWjqCke7T73Fj9hT1fEebjmg==
-X-Received: by 2002:a17:907:3f2a:b0:ae3:8c9b:bd61 with SMTP id a640c23a62f3a-af93ffa2d63mr907152566b.12.1754305573593;
-        Mon, 04 Aug 2025 04:06:13 -0700 (PDT)
-Received: from [192.168.0.33] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a076409sm721053666b.12.2025.08.04.04.06.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Aug 2025 04:06:13 -0700 (PDT)
-Message-ID: <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
-Date: Mon, 4 Aug 2025 14:06:11 +0300
+        bh=/quFVpXGaSR9+jFTg65KdPNzkiQfbcpVWaZyCBq0GDY=;
+        b=k1PpfSfmbreGaEV79xoJqKAql74SxwzM8pZr7pEp/SLTEI38+rDF2Ae0/diyRt49FV
+         IAFwOt8FYNkTFAzVenpJr9FGq8yZkW/LRzmODjuKIRnnv3USDpSxxtOWMqOqrEwH9Pcb
+         90Hu7UR45dXl5vuYYIsi00G9FIY126C2a0vzlsse9Leyqu5B7cXJZ1fGpX38f23rkFWU
+         7cHE8DBpkVrkDFwrFqGVfa39X+A7ZQ37FyxOVxdpGwUFOfW0zckfqtPFBMvJK8u5pzZd
+         DkI6Z5R74lepBh5B8LrMiTEEJe+HdeiD+xW14JuV7Wvhxu2RvDz2plWwDk/dtvzTHZXQ
+         EHCg==
+X-Forwarded-Encrypted: i=1; AJvYcCXoIa44bycfl6uf/EYertTOIdCZWh9LDmV7cnDi4WFDmeQq6ItcpgxpLCiMb8BDGKplSCFjLGYtDTEcONGH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxuf05Mqd3ozy3wBf5GAYF27aKP+0eRz9yXpRJfiHYTQaa52k9S
+	dB4ZhWF042iWefOmkAuIJYsVMBi0m+rzMoDAq4LkRmry4g8K/DZ5/Viwjuun/7YpHM5z4jFm50v
+	GxO29suOv/GTXBRp/PTsJSj989J0EUdI2vMLtLXtyKltxfqf4gegVHV4q7inBvnyCa3Yw
+X-Gm-Gg: ASbGnctwi+cW52aE0LHvM6cWmWBGrCLg/PTTB8joiEVrQpPHeANDYhT0R2vmbs3x6HP
+	bOiOwhpSV1423Pz6jayVkeLQQjz15zIyJA7FmwoNxfR5uxqDHEmI4FXQUGnmY1tJpBkkyIe/kaX
+	0IcOE33wguBjuZKCCTZXR8GZZkzL2BTXEKVpWehqwixepdFj7hB+qt99RYdZV9XfD6vMuyr9dao
+	iBWwj6TQy/wrSYy7Z4LicyYQS75JQRxVmP9lAIBK0FIXcZeCZsMjPItGvutKT12LyI9eUpYwUq1
+	2PdI9o4LE1NB4JETR7yU0fRzw2LwRvxcPdiwuSd1ek+4OxtdwxsEaXdnsf9j7aR8BhJkow==
+X-Received: by 2002:ac8:7dc6:0:b0:4ab:1a4a:1cfc with SMTP id d75a77b69052e-4af109e1692mr120452131cf.22.1754305684134;
+        Mon, 04 Aug 2025 04:08:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGbFNrQOAHiSqeoYZPfVBZx5TLgseXs8R9ww0pxzX0zAUXdnmmDqsXaerx5Ls2XGk0BTwzwQ==
+X-Received: by 2002:ac8:7dc6:0:b0:4ab:1a4a:1cfc with SMTP id d75a77b69052e-4af109e1692mr120451671cf.22.1754305683506;
+        Mon, 04 Aug 2025 04:08:03 -0700 (PDT)
+Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459ded356b9sm11743785e9.12.2025.08.04.04.08.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 04:08:02 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Mon, 4 Aug 2025 13:08:01 +0200
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>,
+        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
+        andersson@kernel.org, conor+dt@kernel.org,
+        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 1/7] media: dt-bindings: venus: Add qcm2290 dt schema
+Message-ID: <aJCUke55NXN7nN53@trex>
+References: <20250715204749.2189875-2-jorge.ramirez@oss.qualcomm.com>
+ <8a63f517-a443-48e4-9b9c-0c4b362f59f8@linaro.org>
+ <aHiZpnFhhR5O0h97@trex>
+ <0bb2867a-393b-46f9-ad6f-1aeee5a3a9d4@kernel.org>
+ <aHjbjw8Z79Xcd/ZJ@trex>
+ <aHksJum91s4ZmI56@trex>
+ <5afbaf46-bbb1-47d8-84aa-29b18987564f@kernel.org>
+ <18d013e5-352e-457b-ba96-3dd19f1cbaed@oss.qualcomm.com>
+ <56d4e911-5bec-458e-acd1-3594a6d8b91d@kernel.org>
+ <1402a52f-639c-4872-a153-b549603c13a7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: Michal Hocko <mhocko@suse.com>, David Hildenbrand <david@redhat.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <aJCRgXYIjbJ01RsK@tiehlicka>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1402a52f-639c-4872-a153-b549603c13a7@linaro.org>
+X-Authority-Analysis: v=2.4 cv=M7tNKzws c=1 sm=1 tr=0 ts=68909495 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=CUqL58EqNT68S6E0SegA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA2MCBTYWx0ZWRfX88WzpCVryhLy
+ WI0cRSsJbkmkjbHT+iTTWGmVj/1zVuhApAU3+NKdkSCoFYESYopBRCgf9CUULK+3vXQa//MIjTC
+ T7wjcpAvpF6d1hyTzY2Hdu1kgYYWKZ+aK5lWxRwXZDO9kLktTlAoMRwcOgOQv3Z2UuxaXvdTIYq
+ XyyqzEXgge3mF9zNmB0GAJFrqo5HOS5+G6lD7Vwo0PfZYXL41+jmhHK/6t9T7ZSFXAiSvepTmXj
+ c06lOXKfTTbyXxrQ5/O3BQBruYVV1nl7BxEachie507kbnT4pVycs4a9dZ/npf5pdM8vIE4LYd8
+ eNv4xr+x6P8WYCPNPbKEQdY+JUHJRrxIWLx7EOtk1ixHvSGp01QKiLhFq4qcvA30JwgTEC/Jea/
+ VNOSFx1d56blosBvpT1mgNo9Hne1tEJ12IBvRHTOy6HZUlyCw8dbg2Kudvm/0AUq/uVi2SrP
+X-Proofpoint-ORIG-GUID: 76jzUe_s-E5-ogZaPfcKw0Z4PXuw7Uti
+X-Proofpoint-GUID: 76jzUe_s-E5-ogZaPfcKw0Z4PXuw7Uti
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-04_04,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 mlxlogscore=796 mlxscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508040060
 
-
-
-On 8/4/25 13:54, Michal Hocko wrote:
-> On Wed 30-07-25 16:04:28, David Hildenbrand wrote:
->> On 30.07.25 15:57, Eugen Hristev wrote:
-> [...]
->>> Yes, registering after is also an option. Initially this is how I
->>> designed the kmemdump API, I also had in mind to add a flag, but, after
->>> discussing with Thomas Gleixner, he came up with the macro wrapper idea
->>> here:
->>> https://lore.kernel.org/lkml/87ikkzpcup.ffs@tglx/
->>> Do you think we can continue that discussion , or maybe start it here ?
->>
->> Yeah, I don't like that, but I can see how we ended up here.
->>
->> I also don't quite like the idea that we must encode here what to include in
->> a dump and what not ...
->>
->> For the vmcore we construct it at runtime in crash_save_vmcoreinfo_init(),
->> where we e.g., have
->>
->> VMCOREINFO_STRUCT_SIZE(pglist_data);
->>
->> Could we similar have some place where we construct what to dump similarly,
->> just not using the current values, but the memory ranges?
+On 18/07/25 11:21:07, Bryan O'Donoghue wrote:
+> On 18/07/2025 11:04, Krzysztof Kozlowski wrote:
+> > On 18/07/2025 12:02, Konrad Dybcio wrote:
+> > > On 7/18/25 8:27 AM, Krzysztof Kozlowski wrote:
+> > > > On 17/07/2025 19:00, Jorge Ramirez wrote:
+> > > > > On 17/07/25 13:16:31, Jorge Ramirez wrote:
 > 
-> All those symbols are part of kallsyms, right? Can we just use kallsyms
-> infrastructure and a list of symbols to get what we need from there?
+> > > > > Not sure if I’ve shared this before, but following an internal
+> > > > > discussion, I think it’s worth highlighting a functional dependency in
+> > > > > the current kernel:
+> > > > > 
+> > > > >   - the driver only works if the first two IOMMUs in the list — the
+> > > > > non-secure ones — are placed at the beginning. Reordering them breaks
+> > > > > functionality, which introduces unexpected fragility.
+> > > > > 
+> > > > > Regardless, this seems like a valid concern to me — a driver shouldn't
+> > > > > rely on the order of phandles — and I just wanted to make sure you're
+> > > > > aware of it before I post a v8 (likely sometime next week or the
+> > > > > following, as I’ll be taking a short break soon).
+> > > > 
+> > > > 
+> > > > Hm? Order of lists is strictly defined. That's actually an overlook that
+> > > > we never do it for iommus, but the core rule stays.
+> > > 
+> > > (FWIW "items:" is an ordered list, "enum:" is unordered)
+> > 
+> > enum is not a list, but enumeration, meaning one item of multiple values.
+> > 
+> > Best regards,
+> > Krzysztof
 > 
-> In other words the list of symbols to be completely external to the code
-> that is defining them?
+> As Krzysztof says the ordering is strict.
+> 
+> I think the right-thing-to-do is to document in the commit log the
+> dependency.
+> 
+> The final three entries are secure entries and the ordering is important.
 
-Some static symbols are indeed part of kallsyms. But some symbols are
-not exported, for example patch 20/29, where printk related symbols are
-not to be exported. Another example is with static variables, like in
-patch 17/29 , not exported as symbols, but required for the dump.
-Dynamic memory regions are not have to also be considered, have a look
-for example at patch 23/29 , where dynamically allocated memory needs to
-be registered.
+sure, will do that
 
-Do you think that I should move all kallsyms related symbols annotation
-into a separate place and keep it for the static/dynamic regions in place ?
-
-Thanks for looking into my patch,
-Eugen
+> 
+> ---
+> bod
 
