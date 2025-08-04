@@ -1,54 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-67701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 421BFB1A3D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:51:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10A2FB1A3BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:45:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD3453A4A9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:51:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3FBAD17C781
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:45:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B0172652AF;
-	Mon,  4 Aug 2025 13:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B895E1BEF7E;
+	Mon,  4 Aug 2025 13:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="cn1iVYZF"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="YayQDNsf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
+Received: from relay16.mail.gandi.net (relay16.mail.gandi.net [217.70.178.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B349719D092;
-	Mon,  4 Aug 2025 13:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ED91A08A4;
+	Mon,  4 Aug 2025 13:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754315494; cv=none; b=S9EGmfaJSvMkjw1h1pmtprITL/cpgY2Fe7xh3XYR2A0ai+uDpdfFPvVoTTzYs1Zp/p6I0aY+IYoJMRdp/LfVqec3daPbYXdqmyfbtNu7SP0yJ41ePh1GLL2oDobWQVl9ixPW0WCDtjQbkrt372KWLH0jx3XOfBRZ0h1vSI+pPvM=
+	t=1754315147; cv=none; b=h7ZZkJdZfvD6BKM6EJQu9Lhq7zjlsT1Hn6DNghsKBXbh6Ifm6hncCVE5fGFoBxoVzNfXfrolBZw5gYDuzuLQalUxonQrcW63++Xb86bVU7yHdHJ41FHtpomcchqRnzOa0LjOvE9MGmQRElbOHWvVLXs0ZXKD0HZ+MNljj2lnhx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754315494; c=relaxed/simple;
-	bh=jIdmE7ufYQKltTHYqWAtzcP3HrpJ35HLEKyjmyXFQpI=;
+	s=arc-20240116; t=1754315147; c=relaxed/simple;
+	bh=ytk6xhI0xnHgPpbK77+gcZLjA3QG/gnSYhb11XfUt0I=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R149gKYsLsLNGRdPIlO0aD3tW/vF0xcieoFlCOE/plz/+vU2kOuRl6+/J3oHxkdaFE6gz2595G8RSLerQbAFd4RPKtyu+AcasfgXmvajYAcpcnq/5CAr24cSdDpWka+Llsbrh9d6iUWM2KOMknLs5VVXrnSmxjoLF79DF/lORQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=cn1iVYZF; arc=none smtp.client-ip=217.70.178.249
+	 MIME-Version:Content-Type; b=gIN3LACRSsDnU3x0AMI8/RwevnZ/GTlM68+OM4juRqz+0z1ItndAfb7Unjl0JA1VR2VnhzNt/crVY1TWhBBWfcxpV+hd2HKtpAjaSriIKpuGa53Lc14EiWsjFTK0c/WKT0UQZ2+/vPFD5uCr2bU4rpEn14MrCQCVta4apkY9aTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=YayQDNsf; arc=none smtp.client-ip=217.70.178.236
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::223])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id B394658235D;
-	Mon,  4 Aug 2025 13:44:42 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E20CC205A4;
-	Mon,  4 Aug 2025 13:44:31 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id E754D44985;
+	Mon,  4 Aug 2025 13:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1754315075;
+	t=1754315143;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kgwV+fOXVrQs+Zt5dFjBh21EJNlqb8OXXzjZNjPngpM=;
-	b=cn1iVYZFX0jUTmSyC5w/5e6EI47N+q6Fu9FjRlF81cT9C1t3/qclIKDqXQuit6thzC2Dwm
-	/7Xjmv0Njv76DbeYwvS/4nUaWU2Hy7rai1AuKmW8DULAVF4f3XxHoKjgSTlYvT9DN7yDox
-	b8EVmhe2KkkAhZ43Sp1d2P5UndZa8g9iHRHIWspq8oi7Th+2FUmpRDvfMnq8G/ei4Z1VdU
-	jPAExvJF0VxlEE3ddGK4GfAZw6mkS6y0YRPkP27B96Y+00GWCOLFAiXvLILrFIGwFAc1cr
-	c5mTYnbNf7YL2B4aFohic47T3qfrgcWHmPm2BrPuRZxbvch9hDjSnAR9m9H8XA==
-Date: Mon, 4 Aug 2025 15:44:30 +0200
+	bh=12DMny1QBSTEQ1vqx03YcEIPk/KRVLzYIg1yrlMx8EY=;
+	b=YayQDNsfF9weNe2PYKK4xQ4w3alIpA3eLXfqbob375aTIxLpbC332TslkBmZ3U2++l/lQA
+	3lGqiArnQS+LyIAwJ7Lep6mq9Vudjg6gejpoijBOrzz24giWLvhaHj87w0gi45LFEsbMb3
+	2/a8GkZZ7E7nX/nkhK9qiax3an8Qx+zLyhVRIOmj5ZkMKPAXSwWTFPCN6YGNXHLOQcYKIk
+	t9NFzUsCfn4KlnO3+0XrvrriKyHvS5GvfMFLsRIrm5uRCYTw+P77NTrItvplaZPJL7dLIB
+	O/dSeaPSiPHthA/HOOpt1UPiOxj0sSlprBIF3stA7ktqFc4xiGdbcd+1gMts2w==
+Date: Mon, 4 Aug 2025 15:45:38 +0200
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: Andrew Lunn <andrew@lunn.ch>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
@@ -68,13 +65,13 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
  Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
  Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
  Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v10 05/15] net: phy: dp83822: Add support for
- phy_port representation
-Message-ID: <20250804154430.3896b385@fedora.home>
-In-Reply-To: <6721b691-bae8-4a91-b14b-276b14b89244@lunn.ch>
+Subject: Re: [PATCH net-next v10 06/15] net: phy: Create a phy_port for
+ PHY-driven SFPs
+Message-ID: <20250804154538.5f187356@fedora.home>
+In-Reply-To: <db805662-f7be-4fa0-a1ee-8061fbd07323@lunn.ch>
 References: <20250722121623.609732-1-maxime.chevallier@bootlin.com>
-	<20250722121623.609732-6-maxime.chevallier@bootlin.com>
-	<6721b691-bae8-4a91-b14b-276b14b89244@lunn.ch>
+	<20250722121623.609732-7-maxime.chevallier@bootlin.com>
+	<db805662-f7be-4fa0-a1ee-8061fbd07323@lunn.ch>
 Organization: Bootlin
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
@@ -87,46 +84,21 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevledtvdevueehhfevhfelhfekveeftdfgiedufeffieeltddtgfefuefhueeknecukfhppedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjedphhgvlhhopehfvgguohhrrgdrhhhomhgvpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedtpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtp
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevledtvdevueehhfevhfelhfekveeftdfgiedufeffieeltddtgfefuefhueeknecukfhppedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjedphhgvlhhopehfvgguohhrrgdrhhhomhgvpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedtpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtp
  hhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegvughumhgriigvthesghhoohhglhgvrdgtohhm
-X-GND-Sasl: maxime.chevallier@bootlin.com
 
-On Sat, 26 Jul 2025 22:50:08 +0200
+On Sat, 26 Jul 2025 22:52:53 +0200
 Andrew Lunn <andrew@lunn.ch> wrote:
 
-> > +#if IS_ENABLED(CONFIG_OF_MDIO)
-> > +		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
-> > +			dp83822->fx_signal_det_low =
-> > +				device_property_present(&phydev->mdio.dev,
-> > +							"ti,link-loss-low");
-> > +
-> > +		/* ti,fiber-mode is still used for backwards compatibility, but
-> > +		 * has been replaced with the mdi node definition, see
-> > +		 * ethernet-port.yaml
-> > +		 */
-> > +		if (!dp83822->fx_enabled)
-> > +			dp83822->fx_enabled =
-> > +				device_property_present(&phydev->mdio.dev,
-> > +							"ti,fiber-mode");  
+> > +	/* Serdes ports supported may through SFP may not have any medium set,  
 > 
-> Could be my grep fu is broken but:
-> 
-> ~/linux$ grep -r fiber-mode arch/*
-> ~/linux$ 
-> 
-> So it does not even appear to be used. If it is not used, do we have
-> to consider backwards compatibility?
-> 
-> Maybe consider marking the property deprecated and point to the new
-> binding?
+> That does not parse.
 
-I'd love that :)
+Ouch too many "may"s...
 
-Let's mark it as deprecated then, I'll do that for the next iteration.
+The orginal sentence is supposed to read :
+
+  Serdes ports supported through SFP may not have any medium set
 
 Maxime
-
-> 
-> 	Andrew
-
 
