@@ -1,159 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-67709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1AB5B1A529
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 16:43:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A8E2B1A6AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 17:54:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E8A03A4DEB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 14:43:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2EFD317ED26
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:54:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3017272E6F;
-	Mon,  4 Aug 2025 14:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0150C26E6E4;
+	Mon,  4 Aug 2025 15:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGeLwnV0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D1812472B6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 14:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE99221C9E7;
+	Mon,  4 Aug 2025 15:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754318629; cv=none; b=uqEvlbnZgp1RsRWomSRHBhwdDqglV5oR1WNQR5k71xtZjrt9asfoaY79RscLhm0/ZvSQrKkwr20nWSN0Ml08MDYwlsgkuCRTSyP9W+/pEjdEwZvjo/EgusaSTfs+Qz/RwKuP+SxWAJYvou4TXf1q0I/8WsvZrVHE57aFq3wzlvI=
+	t=1754322625; cv=none; b=AuRht6vQRFToPQuF0STPdj0aiVLRlSPvziLeEuPl+BZwfpBTkXWAD+OOdpFPCpcr+oHpvxqRdzDmtgA2CsHHW4g8gCaElbSSmGpz/52ucWQ1zwrzGQV58yuJdnqzLcmN+fI1b1qll1pjzaHSLcM4YJPSqHmSiET1pSMEWGLoe6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754318629; c=relaxed/simple;
-	bh=d4n8FnV/L5ASC/KQP5eckHOAbv6VPJt6X8nRBabrSEQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EYNZBivtq6ajtrl3gMleqULqaF8eirmsrWUmD9+eiXKaBXt3njlDHZik2f7EaL14riQldPkaUKf7Z4I5lk06EgdeWSQYdP5W+IL07oqExcgzxEn/xvRpu+qzCFW0d9ILTpaX50aVUwasMWCXLUog1dp22WcXwMjx2QdxKs/ecqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CB14022C8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 07:43:39 -0700 (PDT)
-Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 9D7593F738
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 07:43:47 -0700 (PDT)
-Date: Mon, 4 Aug 2025 15:43:12 +0100
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-	"Kandpal, Suraj" <suraj.kandpal@intel.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH 0/8] drm: writeback: clean up writeback connector
- initialization
-Message-ID: <aJDHAF69VOEHwcKO@e110455-lin.cambridge.arm.com>
-References: <20250801-wb-drop-encoder-v1-0-824646042f7d@oss.qualcomm.com>
+	s=arc-20240116; t=1754322625; c=relaxed/simple;
+	bh=V58lDgP5AWQy83/5MeJGYisxvWdLT++8TBgZ54D2ns4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=U2CODAYHdfbzzqs+DpUzULLnfhFgUoygxXSfKa6scJqYit5WQN84Co0aaMTg5MJj9hOWj71NkYJkz9XNTBNpCXBo81TDItHY9KAItbjD4cTIWcryVNX3UBRqxPwhzOabmBrzKs4UDaTweVy1kvS+oVTDRCJ2Rbj5Dw/Si1Nz8sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGeLwnV0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215F0C4CEE7;
+	Mon,  4 Aug 2025 15:50:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754322625;
+	bh=V58lDgP5AWQy83/5MeJGYisxvWdLT++8TBgZ54D2ns4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=EGeLwnV0pxsNDLv+Cf1tZJ9MWDQuOgD3lHsI5WU8icltefawfV+ZdQJxs44GeFn2z
+	 MF1kyoUD/FteQy5z6pN43VVp8Ps/MindS7wyWvuRMejJW0/+8ftKtpMtSB7TfSpxSB
+	 9MkZfcRl08319WCYMqKdsSC5hKbJFZZi5JZmVCJHtGhdpy3md3ZfM2i+xOyRgXGK10
+	 kByfmTJ5b741wONAtCUp5New16QBiEh7c8Bpl5ndyUWo8O3mcMwDnStBtPD0wpHWJX
+	 ptkyo6sJSkb+fxXJTENuTTADPf+HjYFTWQRXJVN1i+NGumAWRXmlUkynnyrY4x5KRY
+	 83MMK8a/L04kw==
+Date: Mon, 4 Aug 2025 10:50:23 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Pavel Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Danilo Krummrich <dakr@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, sherry.sun@nxp.com,
+	linux-pm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 0/3] PCI: Add support for PCIe WAKE# interrupt
+Message-ID: <20250804155023.GA3627102@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250801-wb-drop-encoder-v1-0-824646042f7d@oss.qualcomm.com>
+In-Reply-To: <b6b4tzs73n63d565k52pqbep4bqhctibjv5gzm2wenbf2ji45b@npgoqscnbbpn>
 
-Hi,
-
-On Fri, Aug 01, 2025 at 04:51:08PM +0300, Dmitry Baryshkov wrote:
-> Drivers using drm_writeback_connector_init() / _with_encoder() don't
-> perform cleanup in a manner similar to drmm_writeback_connector_init()
-> (see drm_writeback_connector_cleanup()). Migrate all existing drivers
-> to use drmm_writeback_connector_init(), drop
-> drm_writeback_connector_init() and drm_writeback_connector::encoder
-> (it's unused afterwards).
+On Mon, Aug 04, 2025 at 03:45:05PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Aug 01, 2025 at 04:29:41PM GMT, Krishna Chaitanya Chundru wrote:
+> > PCIe WAKE# interrupt is needed for bringing back PCIe device state
+> > from D3cold to D0.
+> > 
+> > This is pending from long time, there was two attempts done
+> > previously to add WAKE# support[1], [2]. Those series tried to add
+> > support for legacy interrupts along with WAKE#. Legacy interrupts
+> > are already available in the latest kernel and we can ignore them.
+> > For the wake IRQ the series is trying to use interrupts property
+> > define in the device tree.
+> > 
+> > This series is using gpio property instead of interrupts, from
+> > gpio desc driver will allocate the dedicate IRQ.
+> > 
+> > According to the PCIe specification 6, sec 5.3.3.2, there are two
+> > defined wakeup mechanisms: Beacon and WAKE# for the Link wakeup
+> > mechanisms to provide a means of signaling the platform to
+> > re-establish power and reference clocks to the components within
+> > its domain. Adding WAKE# support in PCI framework.
+> > 
+> > According to the PCIe specification, multiple WAKE# signals can
+> > exist in a system. In configurations involving a PCIe switch, each
+> > downstream port (DSP) of the switch may be connected to a separate
+> > WAKE# line, allowing each endpoint to signal WAKE# independently.
+> > To support this, the WAKE# should be described in the device tree
+> > node of the upstream bridge to which the endpoint is connected.
+> > For example, in a switch-based topology, the WAKE# GPIO can be
+> > defined in the DSP of the switch. In a direct connection scenario,
+> > the WAKE# can be defined in the root port. If all endpoints share
+> > a single WAKE# line, the GPIO should be defined in the root port.
 > 
-> This series leaves former drm_writeback_connector_init_with_encoder()
-> (renamed to drm_writeback_connector_init as a non-managed counterpart
-> for drmm_writeback_connector_init()). It is supposed to be used by
-> drivers which can not use drmm functions (like Intel). However I think
-> it would be better to drop it completely.
+> I think you should stop saying 'endpoint' here and switch to 'slot'
+> as that's the terminology the PCIe spec uses while defining WAKE#.
 
-The intent of _init_with_encoder() was to be a special case for drivers
-that use their own specific encoder and the rest use the generic function
-that creates the virtual encoder inside the call. The API for
-_init_with_encoder() was actually introduced 4 years after the original
-patch, so that should give a hint.
+I think the main question is where WAKE# is terminated.  It's asserted
+by an "add-in card" (PCIe CEM r6.0, sec 2.3) or a "component" or
+"Function" (PCIe Base r7.0, sec 5.3.3.2).  A slot can provide a WAKE#
+wire, and we need to know what the other end is connected to.
 
-drmm_writeback_connector_init() is more like _init_with_encoder() and
-I don't remember reviewing it, so I'm not sure why that was considered
-to be the better behaviour for the managed version. Now you're moving
-all the drivers to the managed version and you have to duplicate code
-in each driver to create the ENCODER_VIRTUAL encoder.
+AFAICS, WAKE# routing is unrelated to the PCIe topology *except* that
+in "applications where Beacon is used on some Ports of the Switch and
+WAKE# is used for other Ports," WAKE# must be connected to the Switch
+so it can translate it to Beacon (PCIe r7.0, sec 5.3.3.2).
 
-I'm not against the changes being made in the series, I just want to
-see a better justification on why _init_with_encoder() behaviour is
-better than the previous default that you're removing.
+So we can't assume WAKE# is connected to the Port leading to the
+component that asserts WAKE#.
 
-Best regards,
-Liviu
-
-
+> > During endpoint probe, the driver searches for the WAKE# in its
+> > immediate upstream bridge. If not found, it continues walking up
+> > the hierarchy until it either finds a WAKE# or reaches the root
+> > port. Once found, the driver registers the wake IRQ in shared
+> > mode, as the WAKE# may be shared among multiple endpoints.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Dmitry Baryshkov (8):
->       drm/amd/display: use drmm_writeback_connector_init()
->       drm/komeda: use drmm_writeback_connector_init()
->       drm/mali: use drmm_writeback_connector_init()
->       drm/msm/dpu: use drmm_writeback_connector_init()
->       drm/msm/dpu: use drmm_writeback_connector_init()
->       drm/vc4: use drmm_writeback_connector_init()
->       drm: writeback: drop excess connector initialization functions
->       drm: writeback: rename drm_writeback_connector_init_with_encoder()
-> 
->  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  2 +-
->  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c   | 18 ++++--
->  .../drm/arm/display/komeda/komeda_wb_connector.c   | 30 ++++++----
->  drivers/gpu/drm/arm/malidp_mw.c                    | 25 ++++----
->  drivers/gpu/drm/drm_writeback.c                    | 69 +++-------------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c      | 10 +---
->  .../gpu/drm/renesas/rcar-du/rcar_du_writeback.c    | 23 +++++---
->  drivers/gpu/drm/vc4/vc4_txp.c                      |  9 ++-
->  include/drm/drm_writeback.h                        | 22 +------
->  9 files changed, 77 insertions(+), 131 deletions(-)
-> ---
-> base-commit: 94f208ff622b09309358abaf26d7acca0c318fae
-> change-id: 20250801-wb-drop-encoder-97a0c75bd5d7
-> 
-> Best regards,
-> -- 
-> With best wishes
-> Dmitry
-> 
+> I don't think we should walk the hierarchy all the way up to RP. If
+> the slot supports WAKE#, it should be defined in the immediate
+> bridge node of the endpoint (as DT uses bridge node to described the
+> slot). Otherwise, if the slot doesn't use WAKE#, walking up till RP
+> may falsely assign wake IRQ to the endpoint.
 
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+I don't think we can walk the PCIe hierarchy because in general WAKE#
+routing is not related to that hierarchy.
+
+Bjorn
 
