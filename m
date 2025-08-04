@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-67606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9279B1984F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 02:34:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4ABA2B19889
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 02:36:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 16B131896CED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 00:35:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CA873BA0D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 00:35:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA201DE3C8;
-	Mon,  4 Aug 2025 00:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3056538DF9;
+	Mon,  4 Aug 2025 00:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJ2B1hEj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="StybLaKI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0D71D8E10;
-	Mon,  4 Aug 2025 00:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079A81A9B24;
+	Mon,  4 Aug 2025 00:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267650; cv=none; b=pxXjHit3KRu1bdg3XPBCdPyaBY9t0AYx1ePVdq42SQBkmusHFXqv6Dm+9cSiv7XCj4Mi1gTCHsH7RM/89LZeNME0ZpegZfSt2ZJ5hWAifm8GeeQF05iNTucU+xE1/RHWrkBCMqRrIktOkMeghwrJvrx+/Sx8Z9M5uI88F+YzT04=
+	t=1754267679; cv=none; b=tBA3Oh8VWc1SSenmfqOhxLyJ6/266sq/vwoorQNeavAs97C2u1+/nAvhz5NJoP0xzx9csihmTRbUOcNO1O92gS9e70qhtU7EaEINxUajcn8MeBcFbFDh3RRA1fcvYoucuaAhnHvTrhOc2UPwclTlVeROxOrFPLTD0I6J9Z4YvnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267650; c=relaxed/simple;
-	bh=FxG7hNoFklmlK7LBhLdLwvDKjRom4R0FEk3Df9GgVW8=;
+	s=arc-20240116; t=1754267679; c=relaxed/simple;
+	bh=gQRiOasqt4jxi0FZ0QniXxEQL7+2N9LFpcQShaLxtos=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cNDEZcK6SLkBXmz0r2M4SEqEE8UPiNvEQ7dHq990ACbv9IdcOSAqgo/DEFf8nnoCcUr+Izq5ZfmHpu/OBo8z2AB+ALi+HIqoKCfueuiJQkYWz0HzglLFR+jsbOIf93qFBpLXe76NrgWW66d7U+P4z92Ga+m7aKhJZDqYUntH84k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJ2B1hEj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C580C4CEF8;
-	Mon,  4 Aug 2025 00:34:08 +0000 (UTC)
+	 MIME-Version; b=gk7cz50b0B99giKe81KrrBhgreFMTAzIYyPD2vYlfA+GNPo6n1LWSX/XENTgrwbGNaJtHukixDlwz0Y07LuoIUbff9fz+jYg3a9vC9L9F3W8C2yaMzq2VbUWct1SxCaIyO9gyBXiOBRZSvpwmjVDt/c+vtXC77bjHhh0XDiW31c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=StybLaKI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFECC4CEFA;
+	Mon,  4 Aug 2025 00:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267650;
-	bh=FxG7hNoFklmlK7LBhLdLwvDKjRom4R0FEk3Df9GgVW8=;
+	s=k20201202; t=1754267678;
+	bh=gQRiOasqt4jxi0FZ0QniXxEQL7+2N9LFpcQShaLxtos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJ2B1hEjaa8HYl5lc8XQIZDFNxn2tIquUwFTvGRVfgWxezwAWYZZV0SC8FzDmyX0D
-	 1fJPP5yDU92TmN/xtp7/bu83YgXETegjARUNOGp6pSSAf8E6Ymnod7jvJH4pWUWBW3
-	 L5CtWy91hTFkTO5zpR/c0CcZCWD8pFci2nGTTsEvnSASx06nJu+IWOMscYYVIH5aja
-	 QQslGGtXvMusJGrj/SAZL5QGF+PV4vCSebv71N3HB03nxxJMKT4RNGnKQ/LZ6/kUUW
-	 R0bbcFrv2krklGL01Ulk0i78KZwz22VBmmkkUi2U0x60Q8TXEunegb8S1k9lLdVhJV
-	 uPJgFfAagVLrg==
+	b=StybLaKIgwO6sI01M2BBdtDJt4kQEf0+8K9dh5M17LxjmVxFDjkKiintBVGBD3BeB
+	 0kF0pHRitvFozFQ4erHeVBpZOTcnp/FsMD7vesRu8X8cvU965E+AUryd2f1ZttxR9c
+	 2Eu3IPSxBEOF7J1Z3n2ZYe7zy/xfuIEQR1YIDHbmNPJdQURuRoWglf64EevMAVLGhz
+	 UuYa0ypQX5PzSeujtpbjTfKWVThw00TDHapLwYG4uZwMfX2PmNcaYktgLq7DZy7gil
+	 2e8ZZnfjyd6X4HxcXB1IP+/oOkppBvb3ISVRRJ9rIOUSedlkXx/KNRGZAHfA2NDSbC
+	 GmgVAXCaJCqBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-sound@vger.kernel.org,
+	konradybcio@kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 69/69] ASoC: qcom: use drvdata instead of component to keep id
-Date: Sun,  3 Aug 2025 20:31:19 -0400
-Message-Id: <20250804003119.3620476-69-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 10/59] soc: qcom: rpmh-rsc: Add RSC version 4 support
+Date: Sun,  3 Aug 2025 20:33:24 -0400
+Message-Id: <20250804003413.3622950-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
-References: <20250804003119.3620476-1-sashal@kernel.org>
+In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
+References: <20250804003413.3622950-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,190 +65,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.41
+X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srini@kernel.org>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
+[ Upstream commit 84684c57c9cd47b86c883a7170dd68222d97ef13 ]
 
-Qcom lpass is using component->id to keep DAI ID (A).
+Register offsets for v3 and v4 versions are backward compatible. Assign v3
+offsets for v4 and all higher versions to avoid end up using v2 offsets.
 
-(S)	static int lpass_platform_pcmops_open(
-				sruct snd_soc_component *component,
-				struct snd_pcm_substream *substream)
-	{			                          ^^^^^^^^^(B0)
-		...
-(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-		...
-(B3)		unsigned int dai_id = cpu_dai->driver->id;
-
-(A)		component->id = dai_id;
-		...
-	}
-
-This driver can get dai_id from substream (B0 - B3).
-In this driver, below functions get dai_id from component->id (A).
-
-(X)	lpass_platform_pcmops_suspend()
-(Y)	lpass_platform_pcmops_resume()
-(Z)	lpass_platform_copy()
-
-Here, (Z) can get it from substream (B0 - B3), don't need to use
-component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
-from component->id (A), because there is no substream (B0) in function
-parameter.
-
-But, component->id (A) itself should not be used for such purpose.
-It is intilialized at snd_soc_component_initialize(), and parsed its ID
-(= component->id) from device name (a).
-
-	int snd_soc_component_initialize(...)
-	{
-		...
-		if (!component->name) {
-(a)			component->name = fmt_single_name(dev, &component->id);
-			...                                     ^^^^^^^^^^^^^
-		}
-		...
-	}
-
-Unfortunately, current code is broken to start with.
-
-There are many regmaps that the driver cares about, however its only
-managing one (either dp or i2s) in component suspend/resume path.
-
-I2S regmap is mandatory however other regmaps are setup based on flags
-like "hdmi_port_enable" and "codec_dma_enable".
-
-Correct thing for suspend/resume path to handle is by checking these
-flags, instead of using component->id.
-
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250623-rsc_v4-v1-1-275b27bc5e3c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of the commit, here is my assessment:
+
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-**1. Fixes a Real Bug with User Impact:**
-- The driver was misusing `component->id` to store DAI ID information,
-  overwriting the ASoC framework's intended use of this field
-- This caused incomplete suspend/resume handling - only one regmap
-  (either HDMI or I2S) was being handled instead of both when needed
-- Users would experience audio failures after suspend/resume cycles,
-  especially on systems with both HDMI and I2S audio interfaces
+1. **Bug Fix Nature**: The commit fixes a real bug where RSC version 4
+   devices would incorrectly use version 2.7 register offsets instead of
+   version 3.0 offsets. The code change shows that before this fix, only
+   `drv->ver.major == 3` would select v3 offsets, meaning version 4 (and
+   any higher versions) would fall through to use v2.7 offsets, which
+   are incompatible.
 
-**2. Clear Architectural Violation Being Fixed:**
-The commit message and code analysis show that `component->id` is
-initialized by the ASoC framework during
-`snd_soc_component_initialize()` based on device name parsing. The
-driver was incorrectly overwriting this value with DAI ID, breaking the
-abstraction layer between driver and framework.
+2. **Clear Register Offset Incompatibility**: Looking at the register
+   offset arrays in drivers/soc/qcom/rpmh-rsc.c:
+   - v2.7 offsets: RSC_DRV_CMD_OFFSET = 20, RSC_DRV_CMD_WAIT_FOR_CMPL =
+     0x10
+   - v3.0 offsets: RSC_DRV_CMD_OFFSET = 24, RSC_DRV_CMD_WAIT_FOR_CMPL =
+     0x20
 
-**3. Limited Scope and Low Risk:**
-- Changes are confined to 3 functions in a single file (`lpass-
-  platform.c`)
-- The fix replaces the problematic `component->id` usage with proper
-  flag checking (`drvdata->hdmi_port_enable`)
-- No API changes or new features added
-- The author (Srinivas Kandagatla) is an experienced ASoC maintainer
+   These are significantly different offsets that would cause incorrect
+hardware register access on v4 devices.
 
-**4. Improves Suspend/Resume Reliability:**
-The fix ensures both HDMI and I2S regmaps are properly handled during
-suspend/resume based on actual driver capabilities rather than an
-incorrectly stored ID. This makes power management more robust and
-predictable.
+3. **Small and Contained Fix**: The change is minimal - just changing
+   `if (drv->ver.major == 3)` to `if (drv->ver.major >= 3)`. This is a
+   one-line logic fix that ensures v4 and higher versions use the
+   correct v3.0-compatible register offsets.
 
-**5. Long-Standing Issue:**
-The problematic code has existed since late 2020 (commits b1824968221c
-and 8d1bfc04c974), affecting multiple kernel versions and potentially
-many Qualcomm-based devices in the field.
+4. **Hardware Enablement for Existing Devices**: This is not adding new
+   features but fixing broken support for hardware that already exists.
+   Without this fix, any Qualcomm SoC with RSC v4 would malfunction when
+   trying to use RPMH (Resource Power Manager Hardened) functionality.
 
-**Backport Recommendation:**
-Should be backported to all stable kernels from 5.10 onwards that
-contain the original problematic commits. This is a medium-high priority
-fix that improves audio subsystem reliability without introducing new
-risks.
+5. **Low Risk**: The change only affects devices with RSC version 4 or
+   higher. It doesn't modify behavior for existing v2 or v3 devices. The
+   commit message explicitly states that "Register offsets for v3 and v4
+   versions are backward compatible."
 
- sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+6. **Critical Subsystem**: RPMH-RSC is a critical component for power
+   management on Qualcomm SoCs. Incorrect register access could lead to
+   system instability, power management failures, or complete inability
+   to boot on affected devices.
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index addd2c4bdd3e..b6a33b1f4f7e 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
- 	struct regmap *map;
- 	unsigned int dai_id = cpu_dai->driver->id;
+The commit follows stable kernel rules by being a targeted bug fix that
+enables proper hardware support without architectural changes or new
+features.
+
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index dfc2d4e38fa9..163a58eb02e0 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1075,7 +1075,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
--	component->id = dai_id;
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
-@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, true);
-+		regcache_mark_dirty(map);
-+	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, true);
- 	regcache_mark_dirty(map);
- 
-@@ -1207,14 +1207,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
-+	int ret;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, false);
-+		ret = regcache_sync(map);
-+		if (ret)
-+			return ret;
-+	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, false);
-+
- 	return regcache_sync(map);
- }
- 
-@@ -1224,7 +1229,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
- 			       unsigned long bytes)
- {
- 	struct snd_pcm_runtime *rt = substream->runtime;
--	unsigned int dai_id = component->id;
-+	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-+	unsigned int dai_id = cpu_dai->driver->id;
- 	int ret = 0;
- 
- 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
+-	if (drv->ver.major == 3)
++	if (drv->ver.major >= 3)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.39.5
 
