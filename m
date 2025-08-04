@@ -1,149 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-67642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6347B19BB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 08:49:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66895B19C03
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 09:13:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01106165B25
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 06:49:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86D03164AE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 07:13:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 629B21EDA02;
-	Mon,  4 Aug 2025 06:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14660235341;
+	Mon,  4 Aug 2025 07:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ty17tV5u"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dI3JTdWd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51FC1519B4;
-	Mon,  4 Aug 2025 06:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA68E231A41
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 07:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754290156; cv=none; b=SweVSzA73djfJf5EoHLCU+GVhdsddf5Tih1M3DqAGU6gYDQEpX3VGNxsQMcHCyigHYtg10Tg3LAiQtcPkCvd2yvrlLhJPTgFh0lyesxbFj9YsulCO8o32ipWTlMXiF9qQkHjfvMQPCK/ZyaRTCNbBjl4ruZtaD6euji4chebVfM=
+	t=1754291580; cv=none; b=l77LGImtsYmPNYPChzyLHlk6CqH4xbU3yaHABa6I8gYmM9OiB76HqvsYkl0W7QJetbYTEQU7ixz8LkMLMoT1vNt6nVEGsdeFvryFVsMcPorOV0SWYMmTz8gAJbSDBeP1N5ARCjtWvsL+HOl1hTJJr4qu/gCVTHN1IvKrA+e/BKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754290156; c=relaxed/simple;
-	bh=bH/OKB0iXBBeMw98g6AmQ/DBCMkRJab3HR345SxoPd0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=peMOGnPfbqC/AerxXiRwcEzg1mwEGM51qBJEh2AVrd6Eq11ql2XPJ8MAOuuDukUSqynVlaD5PkxXuN7bpyniDEsqZfar+alzxsN6NUGaMiSumyIyCg1PKd6HhK1QZ6s204IUQfVUdDTDX0rl/xD3DF39Dr6WuX8KVlvA4egHxfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ty17tV5u; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 573JrNpn019944;
-	Mon, 4 Aug 2025 06:49:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gs1pMseRuEEN8I2f9dD26+jagK1zs4LRt8x8ariZTcM=; b=Ty17tV5uCri5TvIC
-	ZK8W8r0nCcPjvK72nUAeIrl9Gu/iR9I+VAzxZytqLrzWIWqbQhuljrMxETLFiUJ0
-	qg7cwRjF9IRhQLBrGgRNUYVqdjGV7EgP0ckP4iEx6acm7t7bAFBbP5DW9VAFQLcQ
-	+NbQOIdaWAvxUT11JPdCUhGRqXg+WFPtd16Np4iqHJuv1IPjqR2aq73Xg3clE1bz
-	8U0E7ar9SbZXocDuR+svAEJRXh5wnDcCBl5/m4bwNGVwKrsHTWOCX861OFATc8fb
-	46OYn91r2B1WAOSlnqcyUmQqciiHmR6RBtTBJyUexpHOvHeUq0jQzpd4Y+MqVbHO
-	16hD9w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489buqkq2w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Aug 2025 06:49:08 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5746n8Tf021941
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Aug 2025 06:49:08 GMT
-Received: from [10.218.33.29] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Sun, 3 Aug
- 2025 23:49:05 -0700
-Message-ID: <c69e8347-e005-47a5-9e20-6806c92f7b0c@quicinc.com>
-Date: Mon, 4 Aug 2025 12:18:57 +0530
+	s=arc-20240116; t=1754291580; c=relaxed/simple;
+	bh=xdYC72JJ3u7htZOUKbGLZ63oYKk+KQB1VjUcZKlqCvQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aI7Y5RC54MocxVQzj35xT10OokRcDU1c35JsSW7GobooN9h8IwNLF5PaP7z2f91IsiJxHw+mH1AO9wm/qnJdQvH80au+tyKW55r2kJ/bVJSeZltZ5erItNV6wa/ZXXs79flSEd8guJI68FGxjOvIArooSn1tA9tqm+GpRezBLVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dI3JTdWd; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-458baf449cbso16229455e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 00:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754291576; x=1754896376; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pins6pCk0Fa4rQAmFrWg25RZups1O5EoRcd2l2gX4sE=;
+        b=dI3JTdWdcQXT5UkUPZo5H9gekxJUmWBn5GkO0LPQIoz10j8u3fI6O7o5xFhn12oFK+
+         KAJwYK8GLOKOe5BaZVN4qk1wdGhOuac41/Yrxon48nOqhFrIC00B+y1ewagDuBb1Rgor
+         vs7/iYuzbZEcBK5OR9GatC+9SS3IpbR1CARLo+Ap7orxdleQ6eJLYMzLP8WVleM+z2Vf
+         ChFKhe+I80Oi47DvQiVDLC6QeCvF1Mhr1mZ1NRVU0pljD6N+Amm702YbyxzUIBOMXCo+
+         ifduf6J7hczywcLl7hvlC2DtihUTqmoH6Y/T8QDe5rjyON5duIBfkJjvi+bCkviS9Mrr
+         gITg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754291576; x=1754896376;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pins6pCk0Fa4rQAmFrWg25RZups1O5EoRcd2l2gX4sE=;
+        b=CaS/Ozf+lzSxrx9aZ0TbrIRyo1C3ZuwMxF4GaMiI5mQYR5GcyPfzyR6GD52ul/Lw5g
+         MOCnXltHZVz5bwhoP5LaeZD9ZBR9FtqW4nW7E1ZEXiWEWz/cMU56dGtDvQQPpmas5Nin
+         L38FbBrwY0IAK7suSyeXEM6Vn83dNrnnPriP6D3onqpc7OQwLJHCh+k6jF5V425ERvLh
+         TaBg5oNLs3R5Ifk4OHTH8H9tYJ0HjjbHuaC/vwCVfJmeqIKXAkeXZha/2+LbRApkcDNZ
+         Ang7u2ZxLMpgGStQYMz84mqUtbDQm3cj5TzqjGN4509q3SMjZexNYTKAhd+AEGKHpEQN
+         WHog==
+X-Forwarded-Encrypted: i=1; AJvYcCUOEy4YOkH44MWqTF5g3Y6rsSS5kn281nZ0w5pNKHt23ORbHqYDEBtyQP5N2w2Vme0w3EnJ4WQ9RzuaJhzZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzw86EiSGMAQcVzc4g8clbsBYh2LS0tB99oHk+kNrHMyo17CD6m
+	kpthjMzii26DkxgkK7MmK/9Zt6D1H7ASHKtum4t1Nj2PzniqFiOGV/cfgYUAiOc0jA4=
+X-Gm-Gg: ASbGncsjva8pKvUNMIuGJXoxMymdExaicgazvpqjCiORUHnzflzsjTSzr6Krl1lo1g+
+	nKhSH/L/sxAXgPcPhAw8fA9SZYYN6pKdutEQcp7654YSyMngiizDMtD8cPM2eW1y4yO0DWo9WFa
+	XWXwleNoixIRxG1KnyyeQlcIsN0Vaazsj0OQJafWa0waCZBgW3yL8c26xZ3UGO9eLdug52MvrYm
+	Wamgpl8SMaNDvqoBI+hyKapXC7N/bJYK+pL8BIrYWhR9u16koHjps9dl+GDAU35jagzW9iWvPvT
+	N75781uNJdMnkfdGEr84rJKya2oHY87SkHRBfrutz6DmD8hEZeWODi7puG5ma5WCPJeSlz8mdn6
+	Nz3RhCxMX1YhsakLHMnamW556khU=
+X-Google-Smtp-Source: AGHT+IFRLwySDJxGy6saRiUmoXuk2+5KeKGSB+JTT7r9m1nznyH/1R8mONHfgSxX/9MUe5BEsJDY3w==
+X-Received: by 2002:a05:600c:4450:b0:453:9b7:c214 with SMTP id 5b1f17b1804b1-458b6b43c1cmr59832095e9.29.1754291576213;
+        Mon, 04 Aug 2025 00:12:56 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458953cfcc1sm203814495e9.17.2025.08.04.00.12.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 00:12:55 -0700 (PDT)
+Date: Mon, 4 Aug 2025 10:12:53 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [bug report] drm/msm: Add VM_BIND ioctl
+Message-ID: <6117eece-fe02-40e5-80f0-66003b85997d@suswa.mountain>
+References: <aI3C8c4iR3PmIMGE@stanley.mountain>
+ <CACSVV00Bv+P2rzi0Wpnxba8VCTiVT_kK3voRZEZJGKrupSbigA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: Remove double-space after assignment operator
-To: Konrad Dybcio <konradybcio@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-References: <20250802-topic-clk_qc_doublespace-v1-1-2cae59ba7d59@oss.qualcomm.com>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <20250802-topic-clk_qc_doublespace-v1-1-2cae59ba7d59@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1AYlROAuJ8N3xaHjGaUhPWoVuELhgmuB
-X-Authority-Analysis: v=2.4 cv=VZT3PEp9 c=1 sm=1 tr=0 ts=689057e4 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=wXdJWVuGbmjov8BqX20A:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDAzNCBTYWx0ZWRfX8pdXrJ+xTOYJ
- COTaPznWu9u6xQmAFqH7+iVrMaiNBGybEXpFT9f5wU3QFpDT7A/vfvABQO+I64EweX0aNXBsSkc
- hujPawnMKZ1FD6ZLOKPfOAkNzDUE32lUWg2W//TRcOg1Lu/dj3IRXUmySlUQlH0cDIj7Y8mYZtq
- s6bQBrvOlhh05LQ5nkGn6yhuShF+BVg+yilkmD1wovmMkua8IVrZQQs40UO0zFBxGS+Jr2hmCg9
- qE+UJ3/yB+GZ+3QgG4HC9PLqhm089AFwWG+iJk1BSYieFULyqJjbLCukkjMpZ5CiReqa7LsNIM5
- YSNBb7s+gNLvqUh2znlifUBp25HazJxv2Z9HXtUeQngEGUVi4jf2BZLhvSZ6bgO0c9P76D8kgXv
- BI6UUBK3ABM0U8DN40yf9OxO/FmLWJzdB00FSB5KrYjm/YMqcMNyTCqr5tg068fR6wWfbKnU
-X-Proofpoint-ORIG-GUID: 1AYlROAuJ8N3xaHjGaUhPWoVuELhgmuB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-04_03,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=864 malwarescore=0 bulkscore=0 phishscore=0
- spamscore=0 mlxscore=0 clxscore=1011 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2508040034
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSVV00Bv+P2rzi0Wpnxba8VCTiVT_kK3voRZEZJGKrupSbigA@mail.gmail.com>
 
-
-
-On 8/2/2025 5:14 PM, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Sat, Aug 02, 2025 at 06:12:56AM -0700, Rob Clark wrote:
+> On Sat, Aug 2, 2025 at 12:49 AM Dan Carpenter <dan.carpenter@linaro.org> wrote:
+> >
+> > Hello Rob Clark,
+> >
+> > Commit 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl") from Jun 29, 2025
+> > (linux-next), leads to the following Smatch static checker warning:
+> >
+> >         drivers/gpu/drm/msm/msm_gem_vma.c:596 msm_gem_vm_sm_step_remap()
+> >         error: we previously assumed 'vm_bo' could be null (see line 564)
+> >
+> > drivers/gpu/drm/msm/msm_gem_vma.c
+> >     521 static int
+> >     522 msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
+> >     523 {
+> >     524         struct msm_vm_bind_job *job = ((struct op_arg *)arg)->job;
+> >     525         struct drm_gpuvm *vm = job->vm;
+> >     526         struct drm_gpuva *orig_vma = op->remap.unmap->va;
+> >     527         struct drm_gpuva *prev_vma = NULL, *next_vma = NULL;
+> >     528         struct drm_gpuvm_bo *vm_bo = orig_vma->vm_bo;
+> >     529         bool mapped = to_msm_vma(orig_vma)->mapped;
+> >     530         unsigned flags;
+> >     531
+> >     532         vm_dbg("orig_vma: %p:%p:%p: %016llx %016llx", vm, orig_vma,
+> >     533                orig_vma->gem.obj, orig_vma->va.addr, orig_vma->va.range);
+> >     534
+> >     535         if (mapped) {
+> >     536                 uint64_t unmap_start, unmap_range;
+> >     537
+> >     538                 drm_gpuva_op_remap_to_unmap_range(&op->remap, &unmap_start, &unmap_range);
+> >     539
+> >     540                 vm_op_enqueue(arg, (struct msm_vm_op){
+> >     541                         .op = MSM_VM_OP_UNMAP,
+> >     542                         .unmap = {
+> >     543                                 .iova = unmap_start,
+> >     544                                 .range = unmap_range,
+> >     545                                 .queue_id = job->queue->id,
+> >     546                         },
+> >     547                         .obj = orig_vma->gem.obj,
+> >     548                 });
+> >     549
+> >     550                 /*
+> >     551                  * Part of this GEM obj is still mapped, but we're going to kill the
+> >     552                  * existing VMA and replace it with one or two new ones (ie. two if
+> >     553                  * the unmapped range is in the middle of the existing (unmap) VMA).
+> >     554                  * So just set the state to unmapped:
+> >     555                  */
+> >     556                 to_msm_vma(orig_vma)->mapped = false;
+> >     557         }
+> >     558
+> >     559         /*
+> >     560          * Hold a ref to the vm_bo between the msm_gem_vma_close() and the
+> >     561          * creation of the new prev/next vma's, in case the vm_bo is tracked
+> >     562          * in the VM's evict list:
+> >     563          */
+> >     564         if (vm_bo)
+> >                 ^^^^^^^^^^
+> > NULL check
+> >
+> >     565                 drm_gpuvm_bo_get(vm_bo);
+> >     566
+> >     567         /*
+> >     568          * The prev_vma and/or next_vma are replacing the unmapped vma, and
+> >     569          * therefore should preserve it's flags:
+> >     570          */
+> >     571         flags = orig_vma->flags;
+> >     572
+> >     573         msm_gem_vma_close(orig_vma);
+> >     574
+> >     575         if (op->remap.prev) {
+> >     576                 prev_vma = vma_from_op(arg, op->remap.prev);
+> >     577                 if (WARN_ON(IS_ERR(prev_vma)))
+> >     578                         return PTR_ERR(prev_vma);
+> >     579
+> >     580                 vm_dbg("prev_vma: %p:%p: %016llx %016llx", vm, prev_vma, prev_vma->va.addr, prev_vma->va.range);
+> >     581                 to_msm_vma(prev_vma)->mapped = mapped;
+> >     582                 prev_vma->flags = flags;
+> >     583         }
+> >     584
+> >     585         if (op->remap.next) {
+> >     586                 next_vma = vma_from_op(arg, op->remap.next);
+> >     587                 if (WARN_ON(IS_ERR(next_vma)))
+> >     588                         return PTR_ERR(next_vma);
+> >     589
+> >     590                 vm_dbg("next_vma: %p:%p: %016llx %016llx", vm, next_vma, next_vma->va.addr, next_vma->va.range);
+> >     591                 to_msm_vma(next_vma)->mapped = mapped;
+> >     592                 next_vma->flags = flags;
+> >     593         }
+> >     594
+> >     595         if (!mapped)
+> > --> 596                 drm_gpuvm_bo_evict(vm_bo, true);
+> >                                            ^^^^^
+> > Unchecked dereference.  Possibly if we're not mapped then it's non-NULL?
+> > If so then just ignore this warning.
 > 
-> This is an oddly common hiccup across clk/qcom.. Remove it in hopes to
-> reduce spread through copy-paste.
+> Correct, the !mapped case will only happen when the shrinker evicts
+> BOs.  The case where the BO (and therefore vm_bo) is NULL, is MAP_NULL
+> mappings which are backed by the PRR page, not a BO that can be
+> evicted.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/a7-pll.c              |  2 +-
->  drivers/clk/qcom/clk-alpha-pll.c       | 26 +++++++++++++-------------
->  drivers/clk/qcom/clk-rcg.c             |  2 +-
->  drivers/clk/qcom/clk-rcg2.c            |  8 ++++----
->  drivers/clk/qcom/clk-rpmh.c            |  6 +++---
->  drivers/clk/qcom/clk-smd-rpm.c         |  8 ++++----
->  drivers/clk/qcom/gcc-qcs404.c          |  2 +-
->  drivers/clk/qcom/gpucc-sa8775p.c       |  6 +++---
->  drivers/clk/qcom/gpucc-sc7180.c        |  2 +-
->  drivers/clk/qcom/gpucc-sm6350.c        |  4 ++--
->  drivers/clk/qcom/gpucc-sm8150.c        |  2 +-
->  drivers/clk/qcom/gpucc-sm8250.c        |  2 +-
->  drivers/clk/qcom/lpassaudiocc-sc7280.c |  4 ++--
->  drivers/clk/qcom/lpasscc-sc8280xp.c    |  4 ++--
->  drivers/clk/qcom/lpasscc-sm6115.c      |  2 +-
->  drivers/clk/qcom/lpasscorecc-sc7180.c  |  2 +-
->  drivers/clk/qcom/mmcc-sdm660.c         |  2 +-
->  drivers/clk/qcom/nsscc-ipq9574.c       |  2 +-
->  18 files changed, 43 insertions(+), 43 deletions(-)
-> 
+> Would adding a WARN_ON(!vm_bo) convey to smatch that this case should
+> not happen unless something somewhere else was rather screwed up?
 
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
+No.  WARN_ON() doesn't mean something can't happen.  Just ignore it.
+Old warnings are always false positives and if people have questions
+they can find this thread on lore.
 
-Thanks,
-Imran
+regards,
+dan carpenter
+
 
