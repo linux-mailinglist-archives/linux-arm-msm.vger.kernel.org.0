@@ -1,101 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-67658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9795FB19FCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 12:41:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDAEAB1A00F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 12:55:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42E193B9539
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 10:41:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0C63188EAB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 10:55:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25D8922D7B6;
-	Mon,  4 Aug 2025 10:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F412522B4;
+	Mon,  4 Aug 2025 10:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QWYMhq0K"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="KjHAF4QH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD062472AB
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 10:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1482424DFF4
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 10:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754304069; cv=none; b=cq1BOUeeSalSPxNbU/aGXK+Z3IdxN1dXPDsKYqOuVCo9JVapIYafdinhGn9oys1FaMLb8rlSWaDUJvvPuxUVPy2s1lJbMOhcdg/R//xRoNyrqbupsTWwwWuxt8nih76q58gaNk6OcNMGx1iAZnhIJJaZPwtyi2DJbiyPnDFRYSY=
+	t=1754304901; cv=none; b=Pc3zS2cOuFgSbcRlAVGjr91mR3v/xiedan/SDwEALm/IxNaNz+Xu5yHsJtNpRI99DCgZQJUuMRquL9ihxN+BYj7jm18f4D0Gf02C2k/maRzt8RNe030h37uuIwp8Xl1nnMUW5dad49q7bQ/vHuwq+4qZtgKbFUg96Obczt+SnBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754304069; c=relaxed/simple;
-	bh=2j5tLafg2QbR002kwGNKMmT8IatBulUi1DCOw8WM/lA=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ikijXOz320fXO45VqdGyfY/tMcZZWm6vJYI2rSSpf7gupyBqQcnCX6GhgUF3BtlmisI7b3/k/xxlb8yL1lEn+A8abJ1gBAUYIzC2lu+eg9M0ciFCO8KhWS6F9MLJyL/13c8F12p6vOOaLt3P/1PyHyoe523YRiOzCK1CLRiHkXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QWYMhq0K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5748ToRV014194
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 10:41:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=X8pHbHkY2ls5g4w8xkQLebzm
-	rIQ6FLopjaH1Mu7ibFA=; b=QWYMhq0KPAL2e0kYDZm7Fu1/DeBEQ2P8FF+dje1/
-	rmrLuLnZ5u9tKTkYy55x//JPrdUHhxgVUF76Pubyuuzcid/L50G9zMwENFZMn4eZ
-	77qdlv+36c/iwk9mUaj+xmhbCs4anw5iqYO24gbmOvl7YOLDOEK85P/RI7NnF9xp
-	TZdffRyWf7nIl6QYI2P+/0rXdZ+jfa4gIpIy8PYCiR//4ES5PyCwdZf4x3lTsXxl
-	zOXnxNDfy0Uegj3MQpEV11TZy2zYTUy0r2lsxWVoqTlHxtFEkZly9IKK2hYmrhuh
-	StFQjPEDxaF2/5xj9+zLjI87V1cp6a3SEHwJtX6Qh0egag==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489buqmggn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 10:41:05 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b076528c4aso4600481cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 03:41:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754304064; x=1754908864;
+	s=arc-20240116; t=1754304901; c=relaxed/simple;
+	bh=G+iM+Wpdl0pGgQeVVC7j3IxrRVcCkNicU048+veoUgY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KmPV4N4RZBH0Rd4mELJIBn+Qq1u/2R7PpY4naMcIxV3rNYTh1Pxubk6pa9+yS036XcqkYRy8YOzAhj3ioYw3iZpAGjddZgiIJTP7DjX5mmLtVQMKyO25b++WUr4GB3ZSEIo1yM9OYY0Z3ZtaS9QHidMEjLhH5n7ZeA/fCKfkfXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=KjHAF4QH; arc=none smtp.client-ip=209.85.128.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-45994a72356so10241565e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 03:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1754304898; x=1754909698; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jTfwzKdFO4Billpr1agzWiIuczhIZbl+uk2TO52W1Ms=;
+        b=KjHAF4QH0Xq3WzB1V6Lk1wY1jWkCezSxD8TSrXxdraxLoF1Gd6k9cHY5qG9HVc8s2c
+         IcwIzxQVcKUEzprmR8GwS1sPZEZBgQ9HrZgl1qoH1Uu2GCcQ6hUq+XwZxs6Ij5J9GWmw
+         04sJF3TjdLl51ljDDm7qHuj/FRhO23HelnhTogfZ7ll6ruTpQA0RUctj8gW8Wd5dj0yu
+         FMp4TV23n9ZHGp3MG6KZQvixhepVLCr9HtjCTvvHTSjvEy8rPX9l5BashWrS8vA0mNYg
+         0qHaZZrduEpS/BUx9ESYSNqTLleGW14jG3yyiTKKYp8cwuDIOg6C64kjN8CyLWQWmJtH
+         soLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754304898; x=1754909698;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X8pHbHkY2ls5g4w8xkQLebzmrIQ6FLopjaH1Mu7ibFA=;
-        b=KTzwJJYXwWFtgCnEaKhi/GjSo/uhWg4fwow/h6a0BXJTpvLmb+g0fQsUhIleFN/jLf
-         iv4tP/hLCCXcKIdnBFU3vk0zOBZ3qWzipiLTeRD9s1VXfizFR/nN7qtiLmFHupdEXTnW
-         qgMfG9hMlPK7E0h0r5bGMOeA+JtD5M/uLXWM5tv24fzfx6qUbaWxi51VQgRqcnppVGrO
-         xTIHLykUTOYnwbcFfWvt6/3dq1r7OR1F6qEYDbb45+YyaSxoIPNBEcQV40dqk4hjUdjg
-         5wZwDitomog+T9jKMKapA4FO/Qe8Z0w5Zk/vM1i7fQBmJdDAFiMDAXGON+QRC+Fi1UAl
-         OuCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVVAKJH87Aja1YMxxykbhbfiuT0C7XR/qhcMnt20xRlKCOXUhxhcPddsjguNx6xmqpP9jIOMbvahMi3Qu3+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxP4SiaJUZ+t4F7n1q1sO8RU0Cc9Z2OXRZun1oC5WU9SUpcIvsc
-	2KfWj0y77CzPri7WvQCs6yqV6k/gIv2yqBgcqOkiFGZuwAou0CbzhYoaAJnH4BrQ/aZ2glepzGT
-	4C/YY9nulKJBHH3x/oBIWP7oUFjYb/vBT5l280wuIbVfW2lnuzuU/ekQmP2ScxFboY/qW
-X-Gm-Gg: ASbGnculsbCYz21Ca967aszB4LOMrFJE8T60xVj063ybyCcct968Fuw859WiiBlLib0
-	qHmhZl+ohveoG8V9fZtH80WsQXwjaIzoQOqEJNgUOqQ2U+hT38HJw7RFlRIJ0NUxQqMDlHbBu40
-	s6eBC2qUSvE/D255D7978PGMelnJrDETQ+OwClMaDRJC9kwvksL0P+kge5r4u/W57MMigNGD+6L
-	0hdZNGhi8+IgVW99ZIF1xsvQQB3KUZkhz49gi0wrdJ/+acVUq97R9978uS8R/j0DDRK69108tYu
-	oE9xaIQM2jhJqoLOEnV1roKz9XY68HvW0NXm5rzb8L5s58JQJdUJbpdbsvEnNFi6xgq+oA==
-X-Received: by 2002:a05:622a:4a09:b0:4b0:6ffc:e0d2 with SMTP id d75a77b69052e-4b06ffce63dmr45492051cf.44.1754304063901;
-        Mon, 04 Aug 2025 03:41:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2cZERcCCL+4lpQ9cGyZYcOSJ35Aak7AnpnOMookbNCNV87jwQBTdhgbf8Z16ratbfmE4g6w==
-X-Received: by 2002:a05:622a:4a09:b0:4b0:6ffc:e0d2 with SMTP id d75a77b69052e-4b06ffce63dmr45491711cf.44.1754304063414;
-        Mon, 04 Aug 2025 03:41:03 -0700 (PDT)
-Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c47ca5fsm14877080f8f.63.2025.08.04.03.41.02
+        bh=jTfwzKdFO4Billpr1agzWiIuczhIZbl+uk2TO52W1Ms=;
+        b=E1PbEdpTZv/Lm+W530VL6ooW2UQqkDqtDiY3HTURDzQ73wL2HJ+sQUjYAKz3nBGj0z
+         ku8A+BNZmYJnLgEEVTX+4JeVH5+fxfBg8S3DLmAN2SU/98rphhRqAulv9PfBL2zdZfel
+         1zNuiIKdI/1Nk4ZSsSAae+JaRU8cqUi3XSrLdw6iG5rKnXCRrOZnNi8ykf16GxFARAje
+         2JGbx/0gfU3LlXAKprWKB1egI3syOqHVKCnBeUArtQ3EDlMUEAcRApp2ZaN+tQ/H9gbV
+         jd/kTf8VN5EEmsNpzO4ovkuUaNfcjjKgFYO2gziRocns8R+bO7F7gL6I0EJOl656bG+l
+         MSdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXnu7r4ct5lAJer+9z2cSTN13Ydd7EW1XpdeX8BPn3qT4PR/UaForwdDNLP6+APut53Z0uW1Bdc4tV5jfsP@vger.kernel.org
+X-Gm-Message-State: AOJu0YzP650oymFYKxor/xWX7704nGKK/cdASHGgJpApeoMpw/MtCxy5
+	g3xyXrDbYdvn1NaqPbYpQ++YZoVqQCAyaosC/uc5ybCHRHAWPPIvD5Xuy6SefdcALgI=
+X-Gm-Gg: ASbGnct1dz7LELKwJXXhs7/Nn/XIQkDOWGmojtP6da/ULoAqUynFXWsY7BbmtaEpiRC
+	5pk70NOhIsJ7Ckr3pc6sG+2NJvtf8RIT2z4VGckburfho2dCu9b7DTl3vj44ECOMqUSgvcHaERe
+	1Yft2QqgS+5QaSmI6uOiPyrmjCyNfnhlDcWNKGDUncLu882awgcPwgS1UDTEgStdmmzYngpgdfD
+	M8UFL3T4ulwIRMfU5vMalCwM1/UJr+7moZImoJ7KPWcDVb8kg9sNQi3TQGV5zxbpz/SSZCFuSHi
+	fg7HOQppo1u3otV80ijv9lrrlzhwfcENDtgfNZOZmK6DYLuQNaIVXOxNy0VW6lmExPGliXeejEW
+	194nHQpCGjKMtDzjwqydFsSX+4z+hOA70cNjxmDpU0Kr3yJmjsYXuQdEgXmBZEsntXvMqr9Z1T+
+	4Nm4wnQPkG1g==
+X-Google-Smtp-Source: AGHT+IHolr1jpSS8jZ3V5wzzwBRxkUohemu1Nv4CGTNmDUpUc5jSaT3JjX0JSbIFj/1+2LYoFZrMMw==
+X-Received: by 2002:a05:600c:5246:b0:456:1281:f8dd with SMTP id 5b1f17b1804b1-458b5f190f6mr71240945e9.12.1754304898475;
+        Mon, 04 Aug 2025 03:54:58 -0700 (PDT)
+Received: from localhost (dynamic-2a00-1028-8394-58e6-9e1a-64e5-71bf-cbcb.ipv6.o2.cz. [2a00:1028:8394:58e6:9e1a:64e5:71bf:cbcb])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3b79c453d6esm15241180f8f.37.2025.08.04.03.54.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 03:41:02 -0700 (PDT)
-From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Mon, 4 Aug 2025 12:40:58 +0200
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
-        krzk+dt@kernel.org, konradybcio@kernel.org, mchehab@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        amit.kucheria@oss.qualcomm.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 4/7] media: venus: hfi_plat_v4: Add capabilities for
- the 4XX lite core
-Message-ID: <aJCOOtd3WC/70Sa6@trex>
-References: <20250715204749.2189875-1-jorge.ramirez@oss.qualcomm.com>
- <20250715204749.2189875-5-jorge.ramirez@oss.qualcomm.com>
- <b8b80bfd-0927-4c4f-96fd-6ad1e94d3666@linaro.org>
+        Mon, 04 Aug 2025 03:54:58 -0700 (PDT)
+Date: Mon, 4 Aug 2025 12:54:57 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arch@vger.kernel.org,
+	linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+	pmladek@suse.com, linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org, corbet@lwn.net,
+	mojha@qti.qualcomm.com, rostedt@goodmis.org, jonechou@google.com,
+	tudor.ambarus@linaro.org
+Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
+Message-ID: <aJCRgXYIjbJ01RsK@tiehlicka>
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <20250724135512.518487-23-eugen.hristev@linaro.org>
+ <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
+ <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+ <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,283 +98,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b8b80bfd-0927-4c4f-96fd-6ad1e94d3666@linaro.org>
-X-Proofpoint-GUID: y0dxyAJ2fm2L0-1u41BHwmuoIgvHQiSS
-X-Authority-Analysis: v=2.4 cv=VZT3PEp9 c=1 sm=1 tr=0 ts=68908e41 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
- a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=eVORZBbbi8ZzfUZ-CyEA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA1OCBTYWx0ZWRfXwvgopr7ZP7IP
- dZ5BsGY2MWhMGRyFcnLK1zYnGSqaVYi4sMJ7X8esOuf6w+rDQbhcWlF8m8+nSeB4q4BrUpP72WI
- 1bPtQN/DIATQG35d9g7v28xTJjTNHoVhmLa4yBS1qaga1YT9MExGLhUccfvf23fM7wpqkN7D1Vp
- 05SKazEYjJBkhnrruHSP/kjenUEj2+NorE5Jr0WxQ6SZzOXqu6WVvDQ4MYcPlS4j5X/qXoH4GAy
- CZe6fWOhmn6PoHqHXRMDMdpdqiMZsBUjC1wSQMFCBZ7YVuDd2Mf1d+mS0eCUojtv3fqjUSujhYW
- qt//GHrIGt7nFWcX5/0VJLJDlstMZcZeK6sos47t5NhhmF+vd+McePEE0mJ1RizBrUw0MCEOsgu
- 7GzFkjGxHb7R5ZekYn0DqvCZG4ZH5wfd/itzm9faqhN7UM952Ktv0Og9shAxl/DHU4N41G3Q
-X-Proofpoint-ORIG-GUID: y0dxyAJ2fm2L0-1u41BHwmuoIgvHQiSS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-04_04,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 phishscore=0
- spamscore=0 mlxscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2508040058
+In-Reply-To: <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
 
-On 17/07/25 10:43:48, Bryan O'Donoghue wrote:
-> On 15/07/2025 21:47, Jorge Ramirez-Ortiz wrote:
-> > Populate the HFI v4 lite capability set used by the AR50_LITE video
-> > core.
-> > 
-> > These capabilities define the supported codec formats and operational
-> > limits specific to this streamlined VPU variant.
-> > 
-> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> > ---
-> >   .../platform/qcom/venus/hfi_platform_v4.c     | 164 +++++++++++++++---
-> >   1 file changed, 143 insertions(+), 21 deletions(-)
-> > 
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> > index 4ae7ed476c48..23ed5e689f5a 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> > +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> > @@ -245,25 +245,145 @@ static const struct hfi_plat_caps caps[] = {
-> >   	.num_fmts = 4,
-> >   } };
-> > +static const struct hfi_plat_caps caps_lite[] = {
-> > +{
-> > +	.codec = HFI_VIDEO_CODEC_H264,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = { HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> > +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> > +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> > +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> > +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> > +	.num_pl = 5,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_HEVC,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> > +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> > +	.num_pl = 2,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_VP9,
-> > +	.domain = VIDC_SESSION_TYPE_DEC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.num_caps = 7,
-> > +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-> > +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-> > +	.num_pl = 2,
-> > +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> > +	.num_fmts = 4,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_H264,
-> > +	.domain = VIDC_SESSION_TYPE_ENC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> > +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> > +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> > +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> > +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> > +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> > +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> > +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> > +	.num_caps = 15,
-> > +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> > +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> > +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> > +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> > +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> > +	.num_pl = 5,
-> > +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.num_fmts = 2,
-> > +}, {
-> > +	.codec = HFI_VIDEO_CODEC_HEVC,
-> > +	.domain = VIDC_SESSION_TYPE_ENC,
-> > +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> > +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> > +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> > +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> > +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> > +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> > +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> > +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> > +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> > +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> > +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> > +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> > +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> > +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> > +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> > +	.num_caps = 15,
-> > +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> > +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> > +	.num_pl = 2,
-> > +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> > +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> > +	.num_fmts = 2,
-> > +} };
-> > +
-> >   static const struct hfi_plat_caps *get_capabilities(unsigned int *entries,
-> >   						    bool lite)
-> >   {
-> > -	WARN_ON(lite);
-> > +	*entries = lite ? ARRAY_SIZE(caps_lite) : ARRAY_SIZE(caps);
-> > -	*entries = ARRAY_SIZE(caps);
-> > -	return caps;
-> > +	return lite ? caps_lite : caps;
-> >   }
-> >   static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count, bool lite)
-> >   {
-> > -	WARN_ON(lite);
-> > -
-> > -	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > -		      HFI_VIDEO_CODEC_VP8;
-> > -	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > -		      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-> > -		      HFI_VIDEO_CODEC_MPEG2;
-> > -	*count = 8;
-> > +	if (lite) {
+On Wed 30-07-25 16:04:28, David Hildenbrand wrote:
+> On 30.07.25 15:57, Eugen Hristev wrote:
+[...]
+> > Yes, registering after is also an option. Initially this is how I
+> > designed the kmemdump API, I also had in mind to add a flag, but, after
+> > discussing with Thomas Gleixner, he came up with the macro wrapper idea
+> > here:
+> > https://lore.kernel.org/lkml/87ikkzpcup.ffs@tglx/
+> > Do you think we can continue that discussion , or maybe start it here ?
 > 
-> Ok, now the WARN_ON() makes more sense, its a progressive.
+> Yeah, I don't like that, but I can see how we ended up here.
 > 
-> > +		*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC;
-> > +		*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > +			      HFI_VIDEO_CODEC_VP9;
-> > +		*count = 5;
-> > +	} else {
-> > +		*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > +			      HFI_VIDEO_CODEC_VP8;
-> > +		*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> > +			      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-> > +			      HFI_VIDEO_CODEC_MPEG2;
-> > +		*count = 8;
-> > +	}
+> I also don't quite like the idea that we must encode here what to include in
+> a dump and what not ...
 > 
-> I don't much like setting hard-coded values in functions.
+> For the vmcore we construct it at runtime in crash_save_vmcoreinfo_init(),
+> where we e.g., have
 > 
-> It must be possible to pass these as parameters. We have all of these
-> enumeration structures - it seems a shame to move some specific enumerations
-> to hard-coding.
+> VMCOREINFO_STRUCT_SIZE(pglist_data);
 > 
-> Please consider if there is a way to bury this into one of the enumeration
-> params.
+> Could we similar have some place where we construct what to dump similarly,
+> just not using the current values, but the memory ranges?
 
-yep, you are right lets do that. fixed in v8
+All those symbols are part of kallsyms, right? Can we just use kallsyms
+infrastructure and a list of symbols to get what we need from there?
 
-> 
-> >   }
-> >   static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
-> > @@ -277,15 +397,23 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
-> >   	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
-> >   };
-> > +static const struct hfi_platform_codec_freq_data codec_freq_data_lite[] = {
-> > +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> > +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> > +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> > +};
-> > +
-> >   static const struct hfi_platform_codec_freq_data *
-> >   get_codec_freq_data(u32 session_type, u32 pixfmt, bool lite)
-> >   {
-> > -	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-> > -	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
-> > +	const struct hfi_platform_codec_freq_data *data = lite ?
-> > +					codec_freq_data_lite : codec_freq_data;
-> > +	unsigned int i, data_size = lite ? ARRAY_SIZE(codec_freq_data_lite) :
-> > +				    ARRAY_SIZE(codec_freq_data);
-> 
-> I'm not a big fan anymore of ternary nor of declaring multiple things on one
-> line.
-> 
-> And I'll preempt Konrad, reverse Christmas tree in the declaration where
-> possible for preference.
-> 
-> >   	const struct hfi_platform_codec_freq_data *found = NULL;
-> > -	WARN_ON(lite);
-> > -
-> >   	for (i = 0; i < data_size; i++) {
-> >   		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
-> >   			found = &data[i];
-> > @@ -300,8 +428,6 @@ static unsigned long codec_vpp_freq(u32 session_type, u32 codec, bool lite)
-> >   {
-> >   	const struct hfi_platform_codec_freq_data *data;
-> > -	WARN_ON(lite);
-> > -
-> >   	data = get_codec_freq_data(session_type, codec, lite);
-> >   	if (data)
-> >   		return data->vpp_freq;
-> > @@ -313,8 +439,6 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec, bool lite)
-> >   {
-> >   	const struct hfi_platform_codec_freq_data *data;
-> > -	WARN_ON(lite);
-> > -
-> >   	data = get_codec_freq_data(session_type, codec, lite);
-> >   	if (data)
-> >   		return data->vsp_freq;
-> > @@ -326,8 +450,6 @@ static unsigned long codec_lp_freq(u32 session_type, u32 codec, bool lite)
-> >   {
-> >   	const struct hfi_platform_codec_freq_data *data;
-> > -	WARN_ON(lite);
-> > -
-> >   	data = get_codec_freq_data(session_type, codec, lite);
-> >   	if (data)
-> >   		return data->low_power_freq;
-> 
-> I suppose the hard-coded *val = 5 || *val = 8; isn't important but it would
-> be _nice_ to not hard-code, up to you how much you want to implement for the
-> next version.
-> 
-> This code all looks reasonably correct/consistent with antecedents.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> ---
-> bod
+In other words the list of symbols to be completely external to the code
+that is defining them?
+-- 
+Michal Hocko
+SUSE Labs
 
