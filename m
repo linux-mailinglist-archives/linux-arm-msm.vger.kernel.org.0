@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-67615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02D75B19970
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 02:42:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AF99B199A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 02:44:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D6FB3BC006
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 00:40:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AC1F3A68B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 00:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E7751F3FDC;
-	Mon,  4 Aug 2025 00:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54DE51FBE8B;
+	Mon,  4 Aug 2025 00:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGT8NtKU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKZ31nuy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3EC1FDD;
-	Mon,  4 Aug 2025 00:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D4A1DE4E5;
+	Mon,  4 Aug 2025 00:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267986; cv=none; b=V6uNcbT0ztpgfgxozKvny1Atl7gffUXz7na46TwZ+D7lWCPyPpkvNuCmw559Fm8TlaHMiOSu3p96UUtYKGNU+H8bgCZcSg/RGHawOP7GvWLw75kNyMF7KekNDXCnVyxvpWJA5w6rA36Xxix4Al3DuxfKh9Bc04lzjRDMPKkbJfo=
+	t=1754268093; cv=none; b=To6hyijp0sE0Eu7hrEnyXws5riYrHZ/Qk980r0EM4w+RuvhccJWcHP6YKh6do3C7tcqGQnQ62fBR71XN6o++kUZd8xEcA4sCtPhhwjbXCSj6Y7MPNPk3Zbf8fKwKAsYg3zegt7lxwifbvPDc1yCSO1NQF2TX54uqrnYzCdMveaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267986; c=relaxed/simple;
-	bh=XswF4KiZnHIP/qKJwVXchPkjCYY5DrFgTGwHm+gid6M=;
+	s=arc-20240116; t=1754268093; c=relaxed/simple;
+	bh=vC7vSeY36xv5PztBy+MW+tCjXSZNLdfKjupopw86AlE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PA9rkEbWvxX1u7Qi3fTm34u1jWXrn6KeIulCCydyoAN23ift2tVEa4EuuNDpd9sC9EjfKfDCkpmaaOLKDBXdm0+9QVHCz16zXEgzRJKvHSfhRuhD/+0exbUsRpkdJECyMqpPQn0vPsQzNDtmphwFHe6sa7QAvDIA0XEop5FK6k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGT8NtKU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B017EC4CEF8;
-	Mon,  4 Aug 2025 00:39:44 +0000 (UTC)
+	 MIME-Version; b=uHKWAb7d+KdXd+svA4w/dZ8e+wgw15E3q0eOc2H8vI+wtkR+18Nc71SKA2g4QoTe3+1Iv1U1h26a4lcdWlNovfvF2QkuWhJmCJpMfmTH2JMDO/ebNWIj50RzOs+aS/duzljI0ipB4diiYPJMJndMLfZiw94A7FJtmRsNbVaem3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKZ31nuy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A59C4CEF0;
+	Mon,  4 Aug 2025 00:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267986;
-	bh=XswF4KiZnHIP/qKJwVXchPkjCYY5DrFgTGwHm+gid6M=;
+	s=k20201202; t=1754268093;
+	bh=vC7vSeY36xv5PztBy+MW+tCjXSZNLdfKjupopw86AlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGT8NtKUOyCXFFPkJyiqUxGcJpKi12oVr2s5Hu9oOBCKPN1rpo4d9n3rwuNRSW7NU
-	 Khminiq8m3KzEzQWGlVFocs6DSS5LV/JUvKmSIRtJGs04Pj0IIb+YybGrll+7KbLkj
-	 7y9NIWXGsDTGTqdbhPw0QV6epTw8EDdC2wCLKVwdGv8XESEP17vKQxuLdReNt6h1rG
-	 VgNWHbHIs2cxzUWlzN5+/Lbd8HVkG0rHLMhm7ewOjmpg6aGua/GqvFalKaOkA5yyJj
-	 wC2wCoi8SdFOV53lFLQVzZy46U5T/CuGYkJIZ2NeXlItrPTdamVThxoPpQw63giMTB
-	 /w2EYCc35QdJg==
+	b=TKZ31nuyRAGUwz/JP7hooRDl53GCGrEmWVKlxePeUZYUXZJkm+mKXOBSMyP3gLnc5
+	 a7cuRXHcKW4JeHKQhfgtJbvGnMvM8Gjn89ymNZHw1zRy3K+/0fTmL6Gbg0EeGq70/t
+	 WUDSs4LniCiDAlNbjw+fhIIP4J5JPYy8sARPh4aTRsureBSBplWSgJQbghxCkjCkSL
+	 unRDQwSmNzmvVJHlmpM9peT1dOimxk1jBJ6XaxtplHhr2HhsQPPhvRqpiiHNgss8Gz
+	 3UsqW3Zdd/EZXCKxUmpEfKgYpRJ24vn4oFfgzgi1dqqUbWJHeH0zbhZpkLf1m5YNmD
+	 8jAAdNqknCzNw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -50,12 +50,12 @@ Cc: Sarthak Garg <quic_sartgarg@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-mmc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 25/44] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
-Date: Sun,  3 Aug 2025 20:38:30 -0400
-Message-Id: <20250804003849.3627024-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 21/39] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
+Date: Sun,  3 Aug 2025 20:40:23 -0400
+Message-Id: <20250804004041.3628812-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
-References: <20250804003849.3627024-1-sashal@kernel.org>
+In-Reply-To: <20250804004041.3628812-1-sashal@kernel.org>
+References: <20250804004041.3628812-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.189
+X-stable-base: Linux 5.10.240
 Content-Transfer-Encoding: 8bit
 
 From: Sarthak Garg <quic_sartgarg@quicinc.com>
@@ -148,10 +148,10 @@ include.
  1 file changed, 14 insertions(+)
 
 diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 4b727754d8e3..8fb2ba20e221 100644
+index c9298a986ef0..183617d56b44 100644
 --- a/drivers/mmc/host/sdhci-msm.c
 +++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1560,6 +1560,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+@@ -1544,6 +1544,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
  {
  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
@@ -159,7 +159,7 @@ index 4b727754d8e3..8fb2ba20e221 100644
  	bool done = false;
  	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
  	const struct sdhci_msm_offset *msm_offset =
-@@ -1617,6 +1618,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+@@ -1601,6 +1602,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
  				 "%s: pwr_irq for req: (%d) timed out\n",
  				 mmc_hostname(host->mmc), req_type);
  	}
@@ -172,7 +172,7 @@ index 4b727754d8e3..8fb2ba20e221 100644
  	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
  			__func__, req_type);
  }
-@@ -1675,6 +1682,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+@@ -1659,6 +1666,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
  		udelay(10);
  	}
  
