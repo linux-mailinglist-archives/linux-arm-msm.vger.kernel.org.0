@@ -1,153 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-67632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FF38B19B0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 07:27:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8AB9B19B5A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 08:11:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 659703A198A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 05:27:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78BD33B461D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 06:11:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1BA122759B;
-	Mon,  4 Aug 2025 05:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA4222A4FC;
+	Mon,  4 Aug 2025 06:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DFZ/CBCY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GQKD5j3Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1972E3700
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 05:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D0454F81;
+	Mon,  4 Aug 2025 06:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754285263; cv=none; b=sSJkEzXSZID5Z1ZHBRBeyfNU1MmT8Fo5TGo23N9khWCGQ/PPIiu6Hq4oLHNxvroTmYE0s7fuD/6nUbsPslNA0z91gEXjbO6s9qkAMFfYKA37Tb12oe4+gJwYqlfvHozklfrIDKj0I6CmEh2cl/FLOnNdMlDnnqPkZfqwx45x/7s=
+	t=1754287891; cv=none; b=hlFCzAWRqnNN87OD3tqoTSYgyrqbWnFoJPjdRz0aJQIktJlJFAG8/LjJNQnwYlxoTEAnxY3gvVe36si5v6+elJViTW7/HFWz9XL3cS+C06+Z+//YeqdXkII3qNP/r5r3Mo7K5+NsFgwObwLcswLnhF7lwWh3KR/x1WDG/BZouq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754285263; c=relaxed/simple;
-	bh=ZYomnzTI/gqMaAWNJDB56qa6PtOYj1KGLdXceeY1XL8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PcFiS0te66AoSHGqWemLZXY+DWInwcwNLw8ef/I1nX1/fKOSBe3xKwv19+4dTrnZkrNoELuWS3RUvHeiDdFaulGCycrwyAj/WuxNTl7q5RKKq4SLPFu+LClgsKsunVT71RufJxFeXkzukzcrfOmBJxP1WQyidKu9KFb+xEyLX4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DFZ/CBCY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 573Nmx7J032157
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 05:27:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=+PcTXtqzA8go/oZD84ti/MPc
-	iAxuBsczUeBgnZ1pTWA=; b=DFZ/CBCYzlikPei4IMoDe1V5c0bih3np3LkDKmt9
-	gKPZirVsMp9wvIf6hIA3tkHmbXlC5InTlqX3vOwGyZoTHq6qb1t44HKbAAzQU1Ay
-	cWZYA1l0q5R4BS1e5pyqDppXp42ahRxihq/rH8IBMbl7P8K0YSPwErpI4KhtPSku
-	ny6Z5gDR1uRLn2E3LVoq2HvB1KXK+d8Re/z5Nt5T4LkuwNLPF6yEnfWQGkWHRcl1
-	Z2Kz8GW6T8oCjLHPam727MELMhn03H/WlNBj7rTz5c6OngqvmzQElpZEDY6Cv0iu
-	/GfgcTXu8XSBSleL+RGI4xOpgvbi9k7IPQ4NzRtDgRRBLA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489arwkjtv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 05:27:41 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7e7f74baf26so180307385a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Aug 2025 22:27:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754285260; x=1754890060;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+PcTXtqzA8go/oZD84ti/MPciAxuBsczUeBgnZ1pTWA=;
-        b=lqWgGnPXKnmenwdDOcmp+tSAV6Zpvlol+/+Gd8mVzhBKgDbPaNU7RDiXxNPAcvPTIx
-         YKvSlG+84PNS+FJQjMrkWShOZ2qkTQyMHvaaILk9K0Q0lQ9SD6mz+581Y4Hf9j2CY7zf
-         6TypGe/0rYuXCJ2Q26PkGbST1NwXD21vAQsPX20/3rAAXtKH7/fR9tp0oVVnRdSJXcQT
-         lMU2b9RKac/OWbCeiVb9HgK38uhzB01q1RSTcjonVIEeaB1NkZoYipCxUnEp7QGUYEbk
-         uwtx03iS0aOlMQrTlzqO2gjD42+fI6o3/mWNZJOxDzaBHKXS74H43MHyFyQDXSIayY0Q
-         HGPA==
-X-Forwarded-Encrypted: i=1; AJvYcCVACxb8dCDZfruOrDa5Ok6WbKbM6pgH0zNKonccbTaGLv3dhhrgP3/YGeJPyYuTszSyoW9RQNIqYHtJIlg9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsCRHy6eVBcILKLj9fYKi8FDGNO3dqF2uWHgNlpauIKjhPpkOr
-	h2PqmnluA5O6+7lH9Ht4B7iP6ZhHetEd4aHtRK4tV8LThvyV1RKsuSEjtUbf1zFxUA1MgnO1dlL
-	SRNxbF9PkryRtp3N/8W2ze25xAqAxRhJhybkgaxMfvbETiOtnCvA2bKSMRJv0dEApWD1t
-X-Gm-Gg: ASbGncso81GXUsMpt1CHLP4FfgZAlujByEnmz1ICdAh98Gj4DleszTgdxM7zxLkzZUq
-	lhIJ1fkby9BrNamZ6J601iWHD0Co6IRpkb6CbQRrijthgFKN0lRV/HDgrY/ZxLInIO8ENopcED8
-	BjpZbTNxf9EV06vBs6UiyeKLbGJ6TZQkq5ThTZ/VIpMSj/xpJN9ddSvj8aPyqfccPy9QOd54/qa
-	V9zVu20AhHsVjj40q9JdqZbs0/unY4EqrMHYG++XkQgKEv4PA5mRpVh1YtWRf96IK8X0rlIjDYP
-	q+Beml2TyCPB4rMD3qddoO1JxJUBM/qgfcQAtOjh2hUB8uR+RmC8IfG279hY5p8wFtDL8B44+sp
-	JYK5m4IcEWsgYwAabnx+R084bscVo7T0xVRHtp3js+FihEB7BvgTi
-X-Received: by 2002:a05:620a:5ed7:b0:7e3:30f4:fcdb with SMTP id af79cd13be357-7e6962dfbb3mr978589985a.18.1754285260401;
-        Sun, 03 Aug 2025 22:27:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMxoOfzknCZ8uMmy3YY6kqSkPaQ9xTlPrcxG3f/lbgV0kvxmrcKW8Du96Of7dM/xfXukyUdA==
-X-Received: by 2002:a05:620a:5ed7:b0:7e3:30f4:fcdb with SMTP id af79cd13be357-7e6962dfbb3mr978588085a.18.1754285259948;
-        Sun, 03 Aug 2025 22:27:39 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b88ca3214sm1541878e87.126.2025.08.03.22.27.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Aug 2025 22:27:39 -0700 (PDT)
-Date: Mon, 4 Aug 2025 08:27:37 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Mike Tipton <mike.tipton@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: Add OSM l3 interconnect
- provider node and CPU OPP tables to scale DDR/L3
-Message-ID: <45oycvzjogctsoi4jiumxtastsrjzqrls3wc2vap2eryq5kcgq@leirtq2vfvxi>
-References: <20250804050542.100806-1-raviteja.laggyshetty@oss.qualcomm.com>
- <20250804050542.100806-3-raviteja.laggyshetty@oss.qualcomm.com>
+	s=arc-20240116; t=1754287891; c=relaxed/simple;
+	bh=uQY/mq4UMeRv9N60i383cw+G/wb0vCB+53PXjDLBfTY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gBKRiCOM5Q0m9eJ1+lAD/4TD9lZil6FZVvHwcsNJmcN8YNmm8CSI4iR/lAsxDfxZHqvyIfROlnKJ8Am7dQMl6uQXy72yXYD8hRGkdgcmMerGsDS7ZHOQKSJQxlqYfGWPi4kRN0WtKVA7vFu2Awsq4p4hdxhf6pQLJcKCSP7nJ/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GQKD5j3Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 573NmQcu023642;
+	Mon, 4 Aug 2025 06:11:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TLVvWx7auwW1Ppo2fq0JsGCh3Ktn/Y3PWgh+pjCBlt4=; b=GQKD5j3Ywim0MOLP
+	oDRk0EvyE5Hlbz9uN4yTMppUrnsxF42FeyxVWSQvZFxUnzNVLwJ2h8HeTedIzX6M
+	mzx9TYqgfXyY4A58J568xtYLOND+tYeXadfDLLkMZ15SxsUoSIRHU5JsD9Y3ZdnE
+	9GbhhsTdHGJc05XrPF0uhifq+YMgl2rdTbhd5YzJSAGEcNeipdEChUl4tdB7m3Kz
+	iwOHskMVOZFyKOW2fyAA/ywZcidlxW/+XS1epgPlYXyV4UdaE5wu4QFpjLA/fDV5
+	s4ENACyK7yoffIwl3CQiSl4eYIj4lRmH1qEjnUerMizzRJX704IZuayBPJjGm0HN
+	REQlnQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489a0m3pff-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Aug 2025 06:11:06 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5746B4Om021188
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Aug 2025 06:11:04 GMT
+Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Sun, 3 Aug
+ 2025 23:10:58 -0700
+Message-ID: <a3ee95ab-79ba-443d-9b40-35531da48cc6@quicinc.com>
+Date: Mon, 4 Aug 2025 14:10:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250804050542.100806-3-raviteja.laggyshetty@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDAyNiBTYWx0ZWRfX26YKMSlWqWpk
- wy3DRG0QKZU/MKAZDN8w2e0VNtNkbs3y0e5V8q9s2l9GxhB4Z56OtVLBGUpQ+Ixw1Gmdey9WC9w
- g8tB/BJsU/dlFYaPnQzw4eqfQIEeZrqKby4zjyROKWjqDhp+D1LTuthgsyXUtHEsLGIj6QGivVD
- yVZthSJbwE3E8VHGkL76bwVQ94vUXqSx1fdojqQ2STjQZvBL2KJva2+EsPVPKyRZtNwEOdJpnNv
- HJJ4NCq28o6w9WcgEKOHm2RH2onx9cw8kPreM4VKbUdF92BaCCeHleBKkH/Y+i4IBPuTH+QYsBK
- uPRcBE42W0IFJP/P7z0LNvoDXLZRY8o004fMyRShMRqD+NppM3dvXJsRBwYNHUjewN7mG4/RQBC
- /dx9vti5Dnl1y5ak8xvKtQSc+UGTJmNyBNAgap89tXGZnolUwtYXNQ39nKEbSd9sDu6jkuCp
-X-Authority-Analysis: v=2.4 cv=We8Ma1hX c=1 sm=1 tr=0 ts=689044cd cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=qnWTwb_pmrVv18jEe2AA:9
- a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: NrWczglsQasit7idPGFfGKh2ra7VNP3m
-X-Proofpoint-ORIG-GUID: NrWczglsQasit7idPGFfGKh2ra7VNP3m
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] dt-bindings: display/msm: Document MDSS on QCS8300
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: "Rob Herring (Arm)" <robh@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Rob Clark
+	<robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        "Thomas
+ Zimmermann" <tzimmermann@suse.de>,
+        Jessica Zhang
+	<jessica.zhang@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, Simona Vetter
+	<simona@ffwll.ch>,
+        Maxime Ripard <mripard@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        David Airlie <airlied@gmail.com>
+References: <20250730-mdssdt_qcs8300-v5-0-bc8ea35bbed6@quicinc.com>
+ <20250730-mdssdt_qcs8300-v5-3-bc8ea35bbed6@quicinc.com>
+ <175390746243.1660386.11206814214268936734.robh@kernel.org>
+ <cdbe1013-4f15-4638-870b-151292920ce7@quicinc.com>
+ <aiaonlbxwzbpuvnzijzp7btf2oxvtseq7zoylopllooeqshmux@unhoejkdyl6v>
+Content-Language: en-US
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <aiaonlbxwzbpuvnzijzp7btf2oxvtseq7zoylopllooeqshmux@unhoejkdyl6v>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=JOM7s9Kb c=1 sm=1 tr=0 ts=68904efa cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8
+ a=voM4FWlXAAAA:8 a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=zHEVz4YWXsmZ1JJS7FsA:9
+ a=QEXdDO2ut3YA:10 a=sptkURWiP4Gy88Gu7hUp:22 a=IC2XNlieTeVoXbcui8wp:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: _ofudS0BzEGoMe8LuQozfjuUYp788ZHx
+X-Proofpoint-ORIG-GUID: _ofudS0BzEGoMe8LuQozfjuUYp788ZHx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDAzMCBTYWx0ZWRfX2w/lF8tt8WzP
+ FWApmrkUiilEHE6bBjP5vVVcs2OcRGohFDiBfQ7xvTPoTjR4LhW+Ngk5zd6Ow22uLV4KlFNZdJD
+ RHRgU7jcjms3kJqMorw4OcTLl/17NA1WLEDxT1AgmUqfJs206P7hjbEupIVOLPmIV6VorqlX5ib
+ yPg99wungEwBYIqG7aMENMV9KBRODRyEmKCGON28uPAUAfjhw62ZEE2CAC4wCyTP2z4N9HofVrn
+ dePbl8o8VQePfuSxf43Jb2WU1Nj+a5m1iuL7e1c1PqDeUHA6/BOJSTGNIcUcjIkKCgFbkwqsDM9
+ GlkhhBEEnmIVGOl1Yvb32EoScHK+qYFTnTx38YT9WRmU1AdypWj4FADfyK66MiO2stWE9ONE1SI
+ q0d4KQyKN3C/B7t8oe56QsWywQzJXhGAxd16AS6K1cg01s3ZrI9G8ejqBbCsbbxk+jzIAE7C
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-04_02,2025-08-01_01,2025-03-28_01
+ definitions=2025-08-04_02,2025-08-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=814 malwarescore=0 lowpriorityscore=0 impostorscore=0
- adultscore=0 clxscore=1015 bulkscore=0 phishscore=0 mlxscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508040026
+ definitions=main-2508040030
 
-On Mon, Aug 04, 2025 at 05:05:42AM +0000, Raviteja Laggyshetty wrote:
-> Add Operation State Manager (OSM) L3 interconnect provide node and OPP
-> tables required to scale DDR and L3 per freq-domain on QCS615 SoC.
-> As QCS615 and SM8150 SoCs have same OSM hardware, added SM8150
-> compatible as fallback for QCS615 OSM device node.
+
+
+On 2025/8/4 12:49, Dmitry Baryshkov wrote:
+> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
 > 
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-
-This SoB sequence doesn't make sense with you sending a patch.
-
-> ---
->  arch/arm64/boot/dts/qcom/sm6150.dtsi | 148 +++++++++++++++++++++++++++
->  1 file changed, 148 insertions(+)
+> On Mon, Aug 04, 2025 at 12:00:39PM +0800, Yongxing Mou wrote:
+>>
+>>
+>> On 2025/7/31 4:31, Rob Herring (Arm) wrote:
+>>> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
+>>>
+>>> On Wed, 30 Jul 2025 17:42:28 +0800, Yongxing Mou wrote:
+>>>> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
+>>>>
+>>>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>>>> ---
+>>>>    .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 284 +++++++++++++++++++++
+>>>>    1 file changed, 284 insertions(+)
+>>>>
+>>>
+>>> My bot found errors running 'make dt_binding_check' on your patch:
+>>>
+>>> yamllint warnings/errors:
+>>>
+>>> dtschema/dtc warnings/errors:
+>>> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcs8300-mdss.example.dtb: phy@aec2a00 (qcom,qcs8300-edp-phy): compatible:0: 'qcom,qcs8300-edp-phy' is not one of ['qcom,sa8775p-edp-phy', 'qcom,sc7280-edp-phy', 'qcom,sc8180x-edp-phy', 'qcom,sc8280xp-dp-phy', 'qcom,sc8280xp-edp-phy', 'qcom,x1e80100-dp-phy']
+>>>           from schema $id: http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#
+>>> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcs8300-mdss.example.dtb: phy@aec2a00 (qcom,qcs8300-edp-phy): compatible: ['qcom,qcs8300-edp-phy', 'qcom,sa8775p-edp-phy'] is too long
+>>>           from schema $id: http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#
+>>>
+>>> doc reference errors (make refcheckdocs):
+>>>
+>>> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250730-mdssdt_qcs8300-v5-3-bc8ea35bbed6@quicinc.com
+>>>
+>>> The base for the series is generally the latest rc1. A different dependency
+>>> should be noted in *this* patch.
+>>>
+>>> If you already ran 'make dt_binding_check' and didn't see the above
+>>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+>>> date:
+>>>
+>>> pip3 install dtschema --upgrade
+>>>
+>>> Please check and re-submit after running the above command yourself. Note
+>>> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+>>> your schema. However, it must be unset to test all examples with your schema.
+>>>
+>> This warning need to apply this patch..
+>> https://lore.kernel.org/all/20250730072725.1433360-1-quic_yongmou@quicinc.com/
+>> thanks, link in the cover-letter seem wrong. and there is an unnecessary ~
 > 
-
--- 
-With best wishes
-Dmitry
+> It's not listed in b4 dependencies.
+> 
+> --
+> With best wishes
+> Dmitry
+Ohh, sorry.. will update it in next version...
 
