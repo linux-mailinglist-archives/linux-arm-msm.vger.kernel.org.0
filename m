@@ -1,80 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-67685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54AE1B1A2CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:08:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DF45B1A2E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 15:11:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C58A3A265B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:06:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC5713A9FEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Aug 2025 13:10:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70D0F26C3B0;
-	Mon,  4 Aug 2025 13:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7E125E80B;
+	Mon,  4 Aug 2025 13:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RnDB6aCW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jFwRxWZd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F845EEB2
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 13:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEE825B66A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Aug 2025 13:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754312598; cv=none; b=aMvtpJczhJVG9CPcs5vfZKI0LnXCBZ4LzyhBtOBvMttTtsenk9lBBccaenxRyDoB9KirZCVnoQe4+6OU2AQCHYcxkCC8f2tV3OjXBCSiFshYqewlbpxmx7esJXA1vhHlbXm7FmvTeJfxvcj2vZWDLwQyDNOGtXlFdC9cPAwVDyA=
+	t=1754313031; cv=none; b=PotxuJlgOQUdaJFbV4fPqrHiAQZZfMBP+LwhCTaz8gD59rAJ93vNXVC/Mxy4rJrDIIfs/ZrTtcUdU2x8HraI0AX0pjyhpXSv5ypI+9YR54oU/vHzjkh+qucGm5vA+IEva40XDl7KcopDUM7TsxNJTPX/FjOuCmWTh1nZkmOXO3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754312598; c=relaxed/simple;
-	bh=AsROPsVEl1oTjmpB6nCLhCvRE0hr89auEqbCmM9WAyM=;
+	s=arc-20240116; t=1754313031; c=relaxed/simple;
+	bh=g4saUMZ8p0UcOOQ4YnmTFnzzsYZPhiQkelMsnLx7VXs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sy5lhvf0TWV+1UPG0KYjTYI3ytTODVrYeMsTXLwFxebsvZ5mp/rSPP0gffC/UBlg/nIiafGrMruELOwXH2fAYlSATaGYTd1yJrjtOyqpPCVt1c2nXgKfkZUZ4yZ0Grkw7VDgrUJJKhVpBJju4KaPbxNKS50qKiSujbfRtU2lBjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RnDB6aCW; arc=none smtp.client-ip=209.85.208.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-61576e33ce9so7995680a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 06:03:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754312594; x=1754917394; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q47hRQ8aof0UlFDXgmcMzO/kJRO5vpkzZCiWS2hBN/U=;
-        b=RnDB6aCW1UjoSRMWGFE7N9JFBPSIznZeCv+jxcKhGjHmS/GP/+gbpqhnlwWwv0J3sd
-         5t+sGNahuwexVNIhVhcbqQgZBh00DLOvSUf8HqOsafXZOdVQS0+2yaooe94FVdcyZk9g
-         v+E6gAVC15CMK44ik9/vtjEwOfJxN1ZIqt4K87WNI+TfgZPbUi33fBVuSKE9yonTzSs+
-         ATbggjLfxmoP1eQUFUIXJf0b6G1eifgvwmhYImKuoHmKTticmgli8XSwtKbCb+p2TjZx
-         nrq4EnbcSe8tn/fhv+JwGc3ptxzjPtuwEfTvK2L+URggJBTFilY87ZYEc4GFtapsnEgR
-         4m9w==
+	 In-Reply-To:Content-Type; b=rADvaX3159LgKDnXFPJaQ3PM+lHSwNt/pxZVIsCHxWxuTGjN9kXJ0uEba2na6QLgVz9QRY5brYAZ3M8Cmm+CIazUIbaF4zHvYnBIJt7w9WlkfcyNa/6U6NU39QXnt4Ilg5OmGb6ybjBxPf7uzoGTeU4yNsynb1nJ1ADnffO8+w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jFwRxWZd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5749A5jA006884
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Aug 2025 13:10:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GfKUc+kuP7eqftOjhghizxUFjZFF9bECTjX+GkLBpnY=; b=jFwRxWZdgN4UZjcZ
+	PJZ9G8Sm79X60V+8bqk8SEWhcVoN53Nqsgflpxzu0EiBTv2kKkJUCaphtBqhC08W
+	6Yr8si1jJbF2wXFRDz+MhBO2zsC0WaJDnxcIH8NddRLphtDosInuAg10zDsH1T24
+	BwAI4JkWfsJtZINQEpPvNcxl0lfi7U8urKEbVYy3wPYA4ps6LtGNV++H9OmxAhFp
+	P9EP3fWBtM8BarYMUrP/P8ix1sdhkAMBPPNb9pOMXUWRuQzA44jbvZhUQCGVTHA+
+	DSXa4EM5GNEGJ8ttcEPsHnIhsO4SZ5lzU+f6X41q77LZz4Xx1cymGxMVLxMSmvWF
+	H8hsMw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489bek50xf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 13:10:29 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e69157a1d8so3166485a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 06:10:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754312594; x=1754917394;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20230601; t=1754313027; x=1754917827;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q47hRQ8aof0UlFDXgmcMzO/kJRO5vpkzZCiWS2hBN/U=;
-        b=C7DbKttCFX1VPFogEKnRPrF3+E+P+JjpGyAcgDPLe9HdcPrmIrpnSxrw0JvoAye+Jb
-         vE+jda0xMv4XWrcEtXQcec+sLNHs4qBylL+WujJ+hNXfYmLOXf4njej76d8pgsDX89pd
-         9NOSsFNngF7lrX7UBeV3dAryMxPYUpLGARAPn2i0gVDC5zl0UFcUNY9/AGRltmU5JcWH
-         nnna9ng/TcsDEMpaOg5NU14vr2W5VG4vWTcpsPv3MizTak5AIvmP4ZIiYam2W5M+xyIB
-         UINK+C+dnXrAGPiGB2Yu9+NSzrfFdDQL7d/FW2V8ym1ErJ5ClU8GAQVKq74OR2mi+aqE
-         drSg==
-X-Forwarded-Encrypted: i=1; AJvYcCVpGWopamEkYLKLj35FyyNdjTHANHZeAwYcAmUHZJOutMcmTcg+k8nC+U1Yy7Feu99Zk71pCHxsAhYvV+Kp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxc+6lMqywh17DI0Yor8V3NHQYftFtoyPJCNGmsFS4tsn71+dGv
-	4Gxlv+3uGuXmoB/9iFb/i112y/E/vTxoZbPGVlMA/uVfAcQIfTiBTg05B4eFVYW/914=
-X-Gm-Gg: ASbGncvk/0v/2Y7K6M1PlWPxpzQxSGng3voLCPNREAeO3uNOc+Eg9Dxn1uGFz/CsvXP
-	hDof6wCOWWmWWvYvnV/jjxRISMH/YzQk+J6iU0D9ItsNl8lwJEJ0ufr6ZcG1kf2gZzqplHPdSGz
-	AMZ3f4R6M57j4Lfx0mwAa1GmxtbyW/ARqh6TFGf947cdpFr7PAL6V9dhbc60y+pxUbCN5DOJ+kq
-	/S9dY6JHiikDupDpXF81IjhA3DJ43SELN7WOOf/S9ydxvcIHw0CGc9NXRlpHCkvttC6DTllEeit
-	FScQiFjWd4M2iNci5jUkhmf/rt8RMdbCYjT977IxT296UeME9Xa6VDUUVIeTrFCR/k/yTlnC3Ye
-	1aVKBMaRKb/Kbbvia+sRy3fpk7qWj7g==
-X-Google-Smtp-Source: AGHT+IGvSWWoom5PCcQotC2cJOEy0b1eBZ0+mNZIcNqIApwylioSaULTySuV/h+PeeW7g5S3kYnbAQ==
-X-Received: by 2002:a05:6402:27cc:b0:607:35d:9fb4 with SMTP id 4fb4d7f45d1cf-615e5e52361mr8637535a12.15.1754312593561;
-        Mon, 04 Aug 2025 06:03:13 -0700 (PDT)
-Received: from [192.168.0.33] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8effda1sm6755395a12.1.2025.08.04.06.03.12
+        bh=GfKUc+kuP7eqftOjhghizxUFjZFF9bECTjX+GkLBpnY=;
+        b=DoqyzwGqbowZ/oyVCXxZKeK46vBL8xSfulH70PJIX44XETcN2mb4cH6gCbLqpsryaN
+         tZ5I4NsQDiAfsYwIaxT0JiLvCRtpEuoHrCkMD840u5WmdM5Ne9X7++y4ikhIlGM4r4LI
+         84MCIHM32a2P9SaBjtprGFObaLqC+dlEBA45AKt9NGnUOZ2IBxh+8J6J/evqPGHVGhfM
+         agJu4CNtb1GxGe4ViJw76E4MttouBxeIHcwr8ntWX/DSVgt94QtF2fH/roVZZ97k91wW
+         JzHdirfcMwO/YMXHaHkii72wKmx/9K/+T3n7aPyu07HMLeMi2f8ItSwrvAzbWM6Exwdx
+         pX4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVIUmzYgPwbSbtwFIgbMViAgyNAW8CccJfb5qgYFkOth58j1/aXstwkKNRF4RkPpCTY7MxzdN2zm0F41TRu@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSXHX5cjwE8BGMjrivZfP286udX5sqg7FHQ2T6QobYzpshNovy
+	dv5zOwSqd23KA1oHfZk08fB6FrQjiDS4qI6r29lCKnzC12ZpAWPALwqvsDaTVdeNbfaAXeiJ+k7
+	yRH9rPkm5rgri1R8NiP+YUD4TdOZP81BWj6pYwm0/jPLgBvGoRaf0gDpJLZXhseZEoUjg
+X-Gm-Gg: ASbGncveMrWlwZl16Z0NFvTjW4/JHrd0k7PvxXdOKfl25iUvTcY2f132b25hI8xDSkT
+	nFl3bsnzaqkOtKA1dcV1IxWB+vahuEq1SABvWqgK4b4wDs4jjaQIRt/DPXj9pVtP/enTB4ViCkI
+	VsUqD2JSQQiw7At3WozLzXrO63zPzkek2NOz1gilEbyx8d68RGfV5zv5YA9W8Q714ZvMXByZ11h
+	LM8EgNFJ41MSQB83l1WVFUxnsiYlrOJLW4LyEHQPI/WCpVb121qryg+jLSgSZaJGzfnoKUWetOd
+	SkBhJPqnnKh+TmaA+jhsUyQtDIGLNo55Po2CZ+r1fIsfua5C4HIUqh9GqI3xTK1z2/TrNn8H8Zw
+	vsdGDndkxPlHiuJfxrg==
+X-Received: by 2002:a05:620a:6087:b0:7e6:9e1a:19 with SMTP id af79cd13be357-7e69e1a0785mr475268285a.13.1754313026937;
+        Mon, 04 Aug 2025 06:10:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEH0ytOVSdlAoLjeaH62iZuMwjpguPye2kaId2yZqDicHLd8WaJRKDyo9XqLATfNFU70nUW4A==
+X-Received: by 2002:a05:620a:6087:b0:7e6:9e1a:19 with SMTP id af79cd13be357-7e69e1a0785mr475264985a.13.1754313026415;
+        Mon, 04 Aug 2025 06:10:26 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0763e4sm734216366b.1.2025.08.04.06.10.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Aug 2025 06:03:13 -0700 (PDT)
-Message-ID: <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
-Date: Mon, 4 Aug 2025 16:03:10 +0300
+        Mon, 04 Aug 2025 06:10:25 -0700 (PDT)
+Message-ID: <3fc425fd-39fa-4efc-bc98-da86a88bfb1a@oss.qualcomm.com>
+Date: Mon, 4 Aug 2025 15:10:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,128 +90,123 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org,
- Christoph Hellwig <hch@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
- <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
- <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
- <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
- <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
-From: Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [PATCH v3 3/7] clk: qcom: Add TCSR clock driver for Glymur
+To: Taniya Das <taniya.das@oss.qualcomm.com>, Abel Vesa <abel.vesa@linaro.org>
+Cc: kernel@oss.qualcomm.com, Pankaj Patil <quic_pankpati@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-0-227cfe5c8ef4@oss.qualcomm.com>
+ <20250729-glymur-gcc-tcsrcc-rpmhcc-v3-3-227cfe5c8ef4@oss.qualcomm.com>
+ <aIoBFeo00PPZncCs@linaro.org>
+ <784545d0-2173-4a8b-9d5d-bee11226351e@oss.qualcomm.com>
+ <aIxRKHKdBHDefDs2@linaro.org>
+ <d2c17575-f188-4154-bb63-e0b1b89d8100@oss.qualcomm.com>
+ <b2f219d6-d441-45d0-a168-b2cdbc01b852@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <b2f219d6-d441-45d0-a168-b2cdbc01b852@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=M7tNKzws c=1 sm=1 tr=0 ts=6890b145 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=yCfBC-ZsDARYeWh2US8A:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA3MiBTYWx0ZWRfX7vTGgsorwWpt
+ FqE94hVHOZApMg2xUODy7IyrZ2M4j6N4RJ0a2PQjBiT3npvSnn6Ktt6/dF4u9sIwaTVoiolL5RZ
+ iC4j9/oevhYs1xjzJiC+xRnxGLNzx+ipd9SUjoUbmsOXCzfBiHnxCOXrB20OPILevnQkZapvTOD
+ AemTIKDpGNzbtPiY7NGk7hPYaKtEuBeEtu4iiDuOiLwadFSdR6JLDFEBs+bV+hUimJ2dTLyksm2
+ Ed9DHwSgBv9XTA/E9WX2Ux/F2Uf4ELeg9Qy4AVwUKwHnkJEQcSOo1K1VdaIkB/u09Gx1p9hJahx
+ nK5hX9aoVB29bq5V/yCXgMh3mnR8luAV7QbX2Ayims8g3+bj4dZQHhOwgweHfA0DtHZO9sXX7zn
+ sAnl2bdqd3kR2yrS4hOHUZIWcspcUyhdKaFOWOTShRmFjVQScxVstMfBKSpL2mBWFtG/19cw
+X-Proofpoint-ORIG-GUID: WJKlAWD_jDezpav5iFFt2_gz_0X_kMxb
+X-Proofpoint-GUID: WJKlAWD_jDezpav5iFFt2_gz_0X_kMxb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-04_05,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508040072
 
-
-
-On 8/4/25 15:49, David Hildenbrand wrote:
-> On 04.08.25 14:29, Eugen Hristev wrote:
->>
->>
->> On 8/4/25 15:18, David Hildenbrand wrote:
->>> On 04.08.25 13:06, Eugen Hristev wrote:
+On 8/4/25 11:00 AM, Taniya Das wrote:
+> 
+> 
+> On 8/1/2025 5:24 PM, Konrad Dybcio wrote:
+>> On 8/1/25 7:31 AM, Abel Vesa wrote:
+>>> On 25-08-01 10:02:15, Taniya Das wrote:
 >>>>
 >>>>
->>>> On 8/4/25 13:54, Michal Hocko wrote:
->>>>> On Wed 30-07-25 16:04:28, David Hildenbrand wrote:
->>>>>> On 30.07.25 15:57, Eugen Hristev wrote:
+>>>> On 7/30/2025 4:55 PM, Abel Vesa wrote:
+>>>>> On 25-07-29 11:12:37, Taniya Das wrote:
+>>>>>> Add a clock driver for the TCSR clock controller found on Glymur, which
+>>>>>> provides refclks for PCIE, USB, and UFS.
+>>>>>>
+>>>>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>  drivers/clk/qcom/Kconfig         |   8 ++
+>>>>>>  drivers/clk/qcom/Makefile        |   1 +
+>>>>>>  drivers/clk/qcom/tcsrcc-glymur.c | 257 +++++++++++++++++++++++++++++++++++++++
+>>>>>>  3 files changed, 266 insertions(+)
+>>>>>>
+>>>>>
 >>>>> [...]
->>>>>>> Yes, registering after is also an option. Initially this is how I
->>>>>>> designed the kmemdump API, I also had in mind to add a flag, but, after
->>>>>>> discussing with Thomas Gleixner, he came up with the macro wrapper idea
->>>>>>> here:
->>>>>>> https://lore.kernel.org/lkml/87ikkzpcup.ffs@tglx/
->>>>>>> Do you think we can continue that discussion , or maybe start it here ?
->>>>>>
->>>>>> Yeah, I don't like that, but I can see how we ended up here.
->>>>>>
->>>>>> I also don't quite like the idea that we must encode here what to include in
->>>>>> a dump and what not ...
->>>>>>
->>>>>> For the vmcore we construct it at runtime in crash_save_vmcoreinfo_init(),
->>>>>> where we e.g., have
->>>>>>
->>>>>> VMCOREINFO_STRUCT_SIZE(pglist_data);
->>>>>>
->>>>>> Could we similar have some place where we construct what to dump similarly,
->>>>>> just not using the current values, but the memory ranges?
 >>>>>
->>>>> All those symbols are part of kallsyms, right? Can we just use kallsyms
->>>>> infrastructure and a list of symbols to get what we need from there?
+>>>>>> +
+>>>>>> +static struct clk_branch tcsr_edp_clkref_en = {
+>>>>>> +	.halt_reg = 0x1c,
+>>>>>> +	.halt_check = BRANCH_HALT_DELAY,
+>>>>>> +	.clkr = {
+>>>>>> +		.enable_reg = 0x1c,
+>>>>>> +		.enable_mask = BIT(0),
+>>>>>> +		.hw.init = &(const struct clk_init_data) {
+>>>>>> +			.name = "tcsr_edp_clkref_en",
+>>>>>> +			.ops = &clk_branch2_ops,
 >>>>>
->>>>> In other words the list of symbols to be completely external to the code
->>>>> that is defining them?
+>>>>> As discussed off-list, these clocks need to have the bi_tcxo as parent.
+>>>>>
+>>>>> Otherwise, as far as the CCF is concerned these clocks will have rate 0,
+>>>>> which is obviously not the case.
+>>>>>
+>>>>> Bringing this here since there is a disconnect between X Elite and
+>>>>> Glymur w.r.t this now.
 >>>>
->>>> Some static symbols are indeed part of kallsyms. But some symbols are
->>>> not exported, for example patch 20/29, where printk related symbols are
->>>> not to be exported. Another example is with static variables, like in
->>>> patch 17/29 , not exported as symbols, but required for the dump.
->>>> Dynamic memory regions are not have to also be considered, have a look
->>>> for example at patch 23/29 , where dynamically allocated memory needs to
->>>> be registered.
 >>>>
->>>> Do you think that I should move all kallsyms related symbols annotation
->>>> into a separate place and keep it for the static/dynamic regions in place ?
+>>>> The ref clocks are not required to be have a parent of bi_tcxo as these
+>>>> ideally can be left enabled(as a subsystem requirement) even if HLOS
+>>>> (APSS) goes to suspend. With the bi_tcxo parent the ARC vote from
+>>>> HLOS/APSS will not allow APSS to collapse.
 >>>
->>> If you want to use a symbol from kmemdump, then make that symbol
->>> available to kmemdump.
+>>> Is there a scenario where the APSS is collapsed and still the ref clock
+>>> needs to stay enabled ? Sorry, this doesn't make sense to me.
 >>
->> That's what I am doing, registering symbols with kmemdump.
->> Maybe I do not understand what you mean, do you have any suggestion for
->> the static variables case (symbols not exported) ?
+>> MDSS is capable of displaying things from a buffer when the CPU is off,
+>> AFAICU
+>>
+>> We can do CXO_AO instead to have it auto-collapse if it's just Linux
+>> requesting it to stay on, I think.
+>>
 > 
-> Let's use patch #20 as example:
-> 
-> What I am thinking is that you would not include "linux/kmemdump.h" and 
-> not leak all of that KMEMDUMP_ stuff in all these files/subsystems that 
-> couldn't less about kmemdump.
-> 
-> Instead of doing
-> 
-> static struct printk_ringbuffer printk_rb_dynamic;
-> 
-> You'd do
-> 
-> struct printk_ringbuffer printk_rb_dynamic;
-> 
-> and have it in some header file, from where kmemdump could lookup the 
-> address.
-> 
-> So you move the logic of what goes into a dump from the subsystems to
-> the kmemdump core.
-> 
+> Thanks Konrad for adding the display use case.
+> Abel, we earlier also had some PCIe, USB use cases where we had to leave
+> the ref clocks ON and APSS could collapse.
 
-That works if the people maintaining these systems agree with it.
-Attempts to export symbols from printk e.g. have been nacked :
+XO votes will prevent CX collapse, not APSS collapse. CX also powers
+USB and PCIe so that only makes sense.
 
- https://lore.kernel.org/all/20250218-175733-neomutt-senozhatsky@chromium.org/
+I think it's fair to just stick XO as the parent of every refclock
+today and think about the what-ifs (such as the mdss case I mentioned
+above) later - especially since we have no infra to take full advantage
+of it today (non-APSS RSCs etc.)
 
-So I am unsure whether just removing the static and adding them into
-header files would be more acceptable.
-
-Added in CC Cristoph Hellwig and Sergey Senozhatsky maybe they could
-tell us directly whether they like or dislike this approach, as kmemdump
-would be builtin and would not require exports.
-
-One other thing to mention is the fact that the printk code dynamically
-allocates memory that would need to be registered. There is no mechanism
-for kmemdump to know when this process has been completed (or even if it
-was at all, because it happens on demand in certain conditions).
-
-Thanks !
-
+Konrad
 
