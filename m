@@ -1,242 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-67767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A9AAB1B19A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:59:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08A42B1B1A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:02:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7D077A1A62
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:58:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 868491893482
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:03:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2981826A1CF;
-	Tue,  5 Aug 2025 09:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2991259C87;
+	Tue,  5 Aug 2025 10:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="aPIOyP3C"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aws6MzIz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FE91AA782;
-	Tue,  5 Aug 2025 09:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392DA251799
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754387967; cv=none; b=CVygMerksiiVdSBEET3ZMaMwL91zJUgH3cjeaNyihLFEp0GySe+onTBTDwolxR339oo6JklHi7GCacn5Q+tONuzKSHV1IWK5YgtAXv+D/7TP6G2vdSfMIKfoJ6zz+zAWuQK/2XP4u5uyOOk9C898mRGg/DUKGt+zGOHpew87Dd8=
+	t=1754388155; cv=none; b=Br1hTjXorLKz+ckoStRtrCrARJB8P+9gyMFaPD7Lf256U3fcweTJ8xArBxocP1okkkLvmehUPw31Ie/9zr2EVcSHAyz+cuJKp6SbmROIV7F3kvmit1USz85kxRS5HW/NyYBiuDGI9fBOk68fTlMmi/zu9+IU1oW3bBvhDG4yC0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754387967; c=relaxed/simple;
-	bh=RV+XSnddoBH4JRWHZZy+4T5rBIZcZFEquw455N0WQVA=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=jQRoKnVO0QBKMVxUGPiuOhhHj1DfF33Pbxh6LXGsqjMrtvGDzMTkbi8zplQ/TFllOhRHBTu0HO/FWLxJrISwWGPJ2DmxD9hw3MX/WwY1jaidJYUIjRfrcERag0jPtWniAw+rbIch6ssuLGHRm87yme15TEkiLKin3upanYUFORQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=aPIOyP3C; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id D96F2AD0;
-	Tue,  5 Aug 2025 11:58:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1754387915;
-	bh=RV+XSnddoBH4JRWHZZy+4T5rBIZcZFEquw455N0WQVA=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=aPIOyP3CCN60ghQ95OYLB9emUWH/n0b6O3gtc9ZoA+uMAITK5524gPFOoFe3iPgrR
-	 PeGZgkGvvmEIfAIjVWqinSJN2vlhZuO+XIf+jbLxH1tzVI09y3TIRrSaAcZCkteW9d
-	 f9FcX+PdukMOKmU3dXioC96DYHeFg17Pwv6UxHrs=
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1754388155; c=relaxed/simple;
+	bh=UQfs52X08rztvnVgM1FhOc9rwkKBAgP7cDsq7fD2YqE=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gzIIrlw+++uiDG4Z9nC2L8Pywvmav6RWYWpTeMoJ589k0aiBoIeuMVEPVP0TBt1k8GLHUZj+8Jzjsqn4b77H4fxr0Zir3wZVNv5G+VkNFnyoVcbQdwA+1OOGycNFKgac0P1Py9EmzhwiKvQvP2MVlu3NbZTy3qQFAkHLkfCwKNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aws6MzIz; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5751SD45012758
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 10:02:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=r/pN5KRlZzw8ea1w7A8SZKyE
+	RmRggaLryPkCmJYXwUw=; b=aws6MzIzuClxtzyT+DV1mLZr8MtAqM43ffErt9jO
+	P5+Iq1ORKuAVfbvL6oEr2wCTRHr94eHd6ZetIutgGZfXz6NuVKuuGOzF1lv+xLr5
+	DmV6Tso/7PobpC2PVv2uTDaNXVc8iNhckyrNje/pwS7gUr2+daXTePw5skS1Com5
+	xily5cnuaJE9zVaAGN+PIg2Vmz+mmaMkluKCwyVq0LfR/6erQlMYwp5JVyH4qx8x
+	T65XuLQ4OUpu5EdOBfaJzIDgIIdVALeyf/Aa/0a2no5Wl1pYLOQ/dwLrljlfMxKy
+	owXj0TicAY8rQJzehffzgKb/15IYxibEAehUWyWG5sHblg==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48b8ag192j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 10:02:32 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-4fc078a4ae1so6726699137.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:02:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754388152; x=1754992952;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r/pN5KRlZzw8ea1w7A8SZKyERmRggaLryPkCmJYXwUw=;
+        b=CsDOrC+tdx0WIoH4id3j3zhWeqbEO/HMNqf4gtA+6G5QtP4q0FUdc1w9AWziCUbcle
+         k7HiVF6Qak4FXCGK8J1Je5l96RF4olseKv+yHmcs2cPkZwzInLe9jQic/KgSatj+Q43P
+         /0VnSHxDO/qPI6HsNfprKyLzAZA/0M2r/3/FPYD71j7ujA5l8uxoTF0zhBXv3wemleko
+         N7iFsKLWeK9psRhohcyl+cRfamxYpCk3Cmu9HnMnWrZfPpSc0FzWs0+s12h8Akc4d46M
+         TmPuXBuartlTOy0EflyDVEBDziYSexC9qP423SWcGUT0I+IkuvAusffUmxOHxhImbw/g
+         TxDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUIdA0b87lFd5W2OxhvlhjU094w6XmzwMNqIJjHymXqFnl7Q+Z62T3YNw0V+lCDtVwY6jtp2UIG3+qxYhlH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzkhg1HGsKJ2DUwcFge8nF5oY6JylFFNdIerJKyN6ueipIpTYC1
+	JAJfyzQBMZjo7fDMYoozORScgqxOhLVi0q1XEsDi/7w17F3m7e/MQ2ytd6fgKERpXkQZMsL4GX4
+	NvwVOrJyCD/ZamdSkFXBqb9gDo3UrJABNaGAi3zqV/7VJYPJI8cEbXVuwVI5XwvH7UYf3
+X-Gm-Gg: ASbGncslI+IhHriipI1Io2KIhSJNYjrmh6D4vS2PMB1n08cjqmO/FgOVv2UyJm8V/B+
+	oMpKZ6vOlu0TkMlhBdo/bXDMEzrjSetzYRFM36uB7azZddlmYmulnX5aX8adhTEsKLPyY7vHyHH
+	uw7dVM4Oa8EvL885qzM2oyuDrz9+5zwbX+T0P0Ujh4J4x8BWDs+WX6VgAL0/ZgqIKOL9pqum7xj
+	nyw6NfEc881TdkIOTWLXwoZT5oWGM8nMwqe6cnuev4qKhu7hLIMe1prdsOZrjOSYb9YG3NhCw8P
+	yNcOBkyPw6DDKXfKm6vnZlltb10nc9jNMCVGux5BQ5BJiMtgY0gIUGwVPfKnaIk0LCX5xA==
+X-Received: by 2002:a05:6102:a53:b0:4e4:5ed0:19b2 with SMTP id ada2fe7eead31-4fdc2243659mr5411380137.9.1754388152100;
+        Tue, 05 Aug 2025 03:02:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLQKUVXH95EUZeQRDU0eF0Ohtf/ON/jVpxNZP2FzfGcVyv6l60sKTLIkYICkYA8jVIdaoEjA==
+X-Received: by 2002:a05:6102:a53:b0:4e4:5ed0:19b2 with SMTP id ada2fe7eead31-4fdc2243659mr5411335137.9.1754388151721;
+        Tue, 05 Aug 2025 03:02:31 -0700 (PDT)
+Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c470102sm18416825f8f.53.2025.08.05.03.02.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 03:02:31 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Tue, 5 Aug 2025 12:02:29 +0200
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+        quic_dikshita@quicinc.com, quic_vgarodia@quicinc.com,
+        konradybcio@kernel.org, krzk+dt@kernel.org, mchehab@kernel.org,
+        conor+dt@kernel.org, andersson@kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 2/7] media: venus: Define minimum valid firmware
+ version
+Message-ID: <aJHWtaLung8Ubdh8@trex>
+References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
+ <20250805064430.782201-3-jorge.ramirez@oss.qualcomm.com>
+ <a5c292ec-e59b-49f0-9681-a990128cbdfe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20250802-media-private-data-v1-42-eb140ddd6a9d@ideasonboard.com>
-References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com> <20250802-media-private-data-v1-42-eb140ddd6a9d@ideasonboard.com>
-Subject: Re: [PATCH 42/65] media: renesas: Access v4l2_fh from file
-From: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, linux-staging@lists.linux.dev, linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org, imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, linux-usb@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com, mjpeg-users@lists.sourceforge.net
-To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Date: Tue, 05 Aug 2025 10:59:19 +0100
-Message-ID: <175438795943.1641235.15440393062572657340@ping.linuxembedded.co.uk>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a5c292ec-e59b-49f0-9681-a990128cbdfe@linaro.org>
+X-Proofpoint-ORIG-GUID: Q-kahhPSALfMjnWEjzJ4Ph1Aoo23bMRH
+X-Proofpoint-GUID: Q-kahhPSALfMjnWEjzJ4Ph1Aoo23bMRH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA3MiBTYWx0ZWRfX/yWrHZj+4lwj
+ JsV9feASXl4nNS9Ba7zKWVX/FGcXVoSIMB7mFQU9dowBbvu2e04mQkqDbVSIqBG8sZQWhyibsvM
+ Y06FhJw6QEjvQBUHvHbueCCMfLMdfds2gSDSCDCeXec2aPZ73Ti3vmKU+L/3OTwJBDU2Yk8X70R
+ c1dOMnPOJ6ucBK6XPvU7zanRd7H9QoQ/hXj4mMwFYaVa5lnvc7qW4MvJHvRKROA68ZNzKipSX3D
+ Gso2/jizuqLpPro0ZwgliRE4hAn+YWATBqmazdKsXMbS/aoUEVH9Sdyz4gRKDfLqOWl7YQoNxhk
+ 2QAk5hP69ZO0soDl6jn9vFL5wjgHKk/wSTvGMXXMXjCP+WnYf1WT8vqheongC7mzCWkOY4TNfsg
+ CfOQ3+8DsiztKKuHApDZ0ogqETJeaaWL7z6Ve54KHyrdurLcR99W4gWhs+1sAMRqfVTfLlrp
+X-Authority-Analysis: v=2.4 cv=aJvwqa9m c=1 sm=1 tr=0 ts=6891d6b8 cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=GmUu7VV6tgk2skhn_1sA:9
+ a=CjuIK1q_8ugA:10 a=crWF4MFLhNY0qMRaF8an:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_02,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=953 spamscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050072
 
-Quoting Jacopo Mondi (2025-08-02 10:23:04)
-> The v4l2_fh associated with an open file handle is now guaranteed
-> to be available in file->private_data, initialised by v4l2_fh_add().
->=20
-> Access the v4l2_fh, and from there the driver-specific structure,
-> from the file * in all ioctl handlers.
->=20
-> While at it, remove the now unused fh_to_ctx() macro.
->=20
-> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+On 05/08/25 09:29:55, Bryan O'Donoghue wrote:
+> On 05/08/2025 07:44, Jorge Ramirez-Ortiz wrote:
+> > +	if (!is_fw_rev_or_newer(core, ver->major, ver->minor, ver->rev))
+> > +		return -EINVAL;
+> > +
+> 
+> This is the sort of error case that deserves a kernel log.
+> 
+> dev_err(dev, "Firmware version %d.%d < minimum version %d.%d\n, etc);
+> 
+> If I were to try booting venus with an old/unsupported I wouldn't know why
+> the probe was failing.
 
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+ok
 
+> 
 > ---
->  drivers/media/platform/renesas/rcar_fdp1.c | 11 +++--------
->  drivers/media/platform/renesas/rcar_jpu.c  | 21 ++++++++-------------
->  2 files changed, 11 insertions(+), 21 deletions(-)
->=20
-> diff --git a/drivers/media/platform/renesas/rcar_fdp1.c b/drivers/media/p=
-latform/renesas/rcar_fdp1.c
-> index e78d8fb104e9544d27c8ace38888995ca170483f..84c3901a2e5dc3e7ccfb3b440=
-62e839f8f19ee02 100644
-> --- a/drivers/media/platform/renesas/rcar_fdp1.c
-> +++ b/drivers/media/platform/renesas/rcar_fdp1.c
-> @@ -630,11 +630,6 @@ struct fdp1_ctx {
->         struct fdp1_field_buffer        *previous;
->  };
-> =20
-> -static inline struct fdp1_ctx *fh_to_ctx(struct v4l2_fh *fh)
-> -{
-> -       return container_of(fh, struct fdp1_ctx, fh);
-> -}
-> -
->  static inline struct fdp1_ctx *file_to_ctx(struct file *filp)
->  {
->         return container_of(file_to_v4l2_fh(filp), struct fdp1_ctx, fh);
-> @@ -1411,8 +1406,8 @@ static int fdp1_enum_fmt_vid_out(struct file *file,=
- void *priv,
-> =20
->  static int fdp1_g_fmt(struct file *file, void *priv, struct v4l2_format =
-*f)
->  {
-> +       struct fdp1_ctx *ctx =3D file_to_ctx(file);
->         struct fdp1_q_data *q_data;
-> -       struct fdp1_ctx *ctx =3D fh_to_ctx(priv);
-> =20
->         if (!v4l2_m2m_get_vq(ctx->fh.m2m_ctx, f->type))
->                 return -EINVAL;
-> @@ -1589,7 +1584,7 @@ static void fdp1_try_fmt_capture(struct fdp1_ctx *c=
-tx,
-> =20
->  static int fdp1_try_fmt(struct file *file, void *priv, struct v4l2_forma=
-t *f)
->  {
-> -       struct fdp1_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct fdp1_ctx *ctx =3D file_to_ctx(file);
-> =20
->         if (f->type =3D=3D V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->                 fdp1_try_fmt_output(ctx, NULL, &f->fmt.pix_mp);
-> @@ -1660,7 +1655,7 @@ static void fdp1_set_format(struct fdp1_ctx *ctx,
-> =20
->  static int fdp1_s_fmt(struct file *file, void *priv, struct v4l2_format =
-*f)
->  {
-> -       struct fdp1_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct fdp1_ctx *ctx =3D file_to_ctx(file);
->         struct v4l2_m2m_ctx *m2m_ctx =3D ctx->fh.m2m_ctx;
->         struct vb2_queue *vq =3D v4l2_m2m_get_vq(m2m_ctx, f->type);
-> =20
-> diff --git a/drivers/media/platform/renesas/rcar_jpu.c b/drivers/media/pl=
-atform/renesas/rcar_jpu.c
-> index 058fcfb967bd98440f33272db42f0d973299d572..9c70a74a2969fce6446b0f26e=
-0637a68eade3942 100644
-> --- a/drivers/media/platform/renesas/rcar_jpu.c
-> +++ b/drivers/media/platform/renesas/rcar_jpu.c
-> @@ -480,11 +480,6 @@ static struct jpu_ctx *ctrl_to_ctx(struct v4l2_ctrl =
-*c)
->         return container_of(c->handler, struct jpu_ctx, ctrl_handler);
->  }
-> =20
-> -static struct jpu_ctx *fh_to_ctx(struct v4l2_fh *fh)
-> -{
-> -       return container_of(fh, struct jpu_ctx, fh);
-> -}
-> -
->  static struct jpu_ctx *file_to_ctx(struct file *filp)
->  {
->         return container_of(file_to_v4l2_fh(filp), struct jpu_ctx, fh);
-> @@ -661,7 +656,7 @@ static u8 jpu_parse_hdr(void *buffer, unsigned long s=
-ize, unsigned int *width,
->  static int jpu_querycap(struct file *file, void *priv,
->                         struct v4l2_capability *cap)
->  {
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
-> =20
->         if (ctx->encoder)
->                 strscpy(cap->card, DRV_NAME " encoder", sizeof(cap->card)=
-);
-> @@ -719,7 +714,7 @@ static int jpu_enum_fmt(struct v4l2_fmtdesc *f, u32 t=
-ype)
->  static int jpu_enum_fmt_cap(struct file *file, void *priv,
->                             struct v4l2_fmtdesc *f)
->  {
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
-> =20
->         return jpu_enum_fmt(f, ctx->encoder ? JPU_ENC_CAPTURE :
->                             JPU_DEC_CAPTURE);
-> @@ -728,7 +723,7 @@ static int jpu_enum_fmt_cap(struct file *file, void *=
-priv,
->  static int jpu_enum_fmt_out(struct file *file, void *priv,
->                             struct v4l2_fmtdesc *f)
->  {
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
-> =20
->         return jpu_enum_fmt(f, ctx->encoder ? JPU_ENC_OUTPUT : JPU_DEC_OU=
-TPUT);
->  }
-> @@ -828,7 +823,7 @@ static int __jpu_try_fmt(struct jpu_ctx *ctx, struct =
-jpu_fmt **fmtinfo,
-> =20
->  static int jpu_try_fmt(struct file *file, void *priv, struct v4l2_format=
- *f)
->  {
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
-> =20
->         if (!v4l2_m2m_get_vq(ctx->fh.m2m_ctx, f->type))
->                 return -EINVAL;
-> @@ -839,7 +834,7 @@ static int jpu_try_fmt(struct file *file, void *priv,=
- struct v4l2_format *f)
->  static int jpu_s_fmt(struct file *file, void *priv, struct v4l2_format *=
-f)
->  {
->         struct vb2_queue *vq;
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
->         struct v4l2_m2m_ctx *m2m_ctx =3D ctx->fh.m2m_ctx;
->         struct jpu_fmt *fmtinfo;
->         struct jpu_q_data *q_data;
-> @@ -868,8 +863,8 @@ static int jpu_s_fmt(struct file *file, void *priv, s=
-truct v4l2_format *f)
-> =20
->  static int jpu_g_fmt(struct file *file, void *priv, struct v4l2_format *=
-f)
->  {
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
->         struct jpu_q_data *q_data;
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
-> =20
->         if (!v4l2_m2m_get_vq(ctx->fh.m2m_ctx, f->type))
->                 return -EINVAL;
-> @@ -902,8 +897,8 @@ static const struct v4l2_ctrl_ops jpu_ctrl_ops =3D {
-> =20
->  static int jpu_streamon(struct file *file, void *priv, enum v4l2_buf_typ=
-e type)
->  {
-> -       struct jpu_ctx *ctx =3D fh_to_ctx(priv);
->         struct jpu_q_data *src_q_data, *dst_q_data, *orig, adj, *ref;
-> +       struct jpu_ctx *ctx =3D file_to_ctx(file);
->         enum v4l2_buf_type adj_type;
-> =20
->         src_q_data =3D jpu_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPL=
-ANE);
-> @@ -1284,8 +1279,8 @@ static int jpu_open(struct file *file)
-> =20
->  static int jpu_release(struct file *file)
->  {
-> -       struct jpu *jpu =3D video_drvdata(file);
->         struct jpu_ctx *ctx =3D file_to_ctx(file);
-> +       struct jpu *jpu =3D video_drvdata(file);
-> =20
->         v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
->         v4l2_ctrl_handler_free(&ctx->ctrl_handler);
->=20
-> --=20
-> 2.49.0
->
+> bod
 
