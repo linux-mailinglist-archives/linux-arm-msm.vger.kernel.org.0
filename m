@@ -1,214 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-67811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF00B1BBC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 23:32:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BFA7B1BC63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 00:08:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 421A518516A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 21:32:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A579818A0D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 22:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C490243951;
-	Tue,  5 Aug 2025 21:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A7E24E4C3;
+	Tue,  5 Aug 2025 22:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYt1ESF9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b2NjuO8i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8D01C8633;
-	Tue,  5 Aug 2025 21:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80BD200127;
+	Tue,  5 Aug 2025 22:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754429537; cv=none; b=f9X6qu+LjQEQeJYwOfBOl9gLWyLpQvyNnqMSrwdEtsGr65m4Puaq8Gz33ySUXgdAG4umbz+WkzC3tMzkpOZSQJN2maECL/cdo3cWcDkXpsqCGr8Gz6uH8g2WrUyg7CFxg1jR/HqlB8dITnPGRyKbJCcXuUyXGm+U0+uywKk0Do0=
+	t=1754431715; cv=none; b=EpC2It5y7dcM7aqZwagOxgTyeM04F/Kw79mpFwoN06fUi1eMzE1GnP8zy0hI3IWaxTAJmaYpyp2/wo1005vm/tQNUXsv9A+S9NL009YjlDSyywHidyQ03IjpEegHa95/mvfkyfw+Igne6wXNbqeIGtsRQYYlax4fennFav8Zt7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754429537; c=relaxed/simple;
-	bh=+yRR+J5d7PwJm/LH7dB2AD9oTbYVRLhpMGuK7/VNCHc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G5m+Tn7mW1816G6N9bwyazKv1+dhq1vzJn3tEAHvs9ij49al/InNtzV8rB6MA/bW9m1jF6Mxk2EPHAlq/ON/1FYjRviPA2I75g4kqJFR4RYGEAQo6hIBikbyvHOFXQEOdZNSJ3+Ac+x0AAL21Auwhl0WmcQtBga6ihDY7seSX7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYt1ESF9; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-32130f6cfbbso376665a91.0;
-        Tue, 05 Aug 2025 14:32:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754429535; x=1755034335; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S8XfqBcuUbvXZzlLXlPsAW+gig/cCq9lWEta9lhp7ac=;
-        b=HYt1ESF9/g3ANcTA6fJbejV+UGDxcesfL1oicJ9aHw1H0gjNUXwTqs4jHni6WASNjJ
-         7fI20ogWEEpiT+VEZNdX2RsUO1AbLkIppka7oskXtreMuITobCVTph3/FaDph8LahioQ
-         +qS672sI3GHIiwrxsNXC2vyD0xsIS5kX12QD1rV85nxW0vEEkguGBS6l1d/iwdrM/ZXN
-         SQluuC+Dcq7ZRCrurKI719pg0+mXsqFxevubgC68S0S9Nwgf8Oh4IPqOpNA/uPdRAJc2
-         6FW529oDValu4tZeC8lQWPpZv5EWq6GNqB8izSSafhM7HFgh9mvgnlr7J/CA8Lg2lEOd
-         8JSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754429535; x=1755034335;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S8XfqBcuUbvXZzlLXlPsAW+gig/cCq9lWEta9lhp7ac=;
-        b=a/RfW0dw6lYZdwniw9m5ZjoYhiHvdqHZTPPcpX0nf+aWViru7FRq5McDDwLcaTL0r7
-         AruYozMRiXc+/fc7SxfiuGhNLxnLkm5h6PRDG3VDVLEAnVPDmVeZkNOcdGqmJK1R7KHc
-         Ub217URVCn7c2zd6EitWowX/L3YCJJICuGPczC+Ri0wEv7WxLZIFLUnGfRXyHwevK15t
-         /1hEns64zhUxuHhgUIIKYuCKrLVS6zC8hDdzB0+yYsYlBdPvNtkdHogrTDtf+7w6UHnz
-         wsNtUZ88Z1Xm027Smr8uJKWWCjaB0RYvpI4LLSUtPM9un194F5vf6YZbA80mtSTub0GO
-         BrXg==
-X-Forwarded-Encrypted: i=1; AJvYcCWJphmu6d5J54hGb+1rPKYfYOjjj1KaY6+ykqqydoI0kC/OMiqHdYk/2wCJpCoqv3N655OiykU3cwxHKIf3@vger.kernel.org, AJvYcCXs3dv5uZc1DbKWWxpygEdvpS8F9eBvI/sTIyc0UPN5GjzgYYZmjMHe9VuA3BgV6RiYlgI7y/rCxt5aKfmk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEujxWvhaMY7SLN7uRrMwF8kl0HxT5lrAjmgJQ7A03NuAypVWE
-	uebz8rYcZwcA1/ZmN3d3+KUMtYEDJe2c7A9yExCKl4wiOHWYoy4yoM0IU7CEWGHyaGsllJVaqb5
-	tMw8r4/ujpmtAkyWzBW7/7+1XPJx4hFA=
-X-Gm-Gg: ASbGncuBANBUrfz2k7Hj0EwM+tpUvFJguME7NqunL++NzPWB+XfEkCE6B3dj2NrH0bs
-	dZkpZRrgC5Pjitvrp+nfPOydw4o3FbMdoCNB+5cC8n7y2a5Q+EQ8YWLSt0LTvHqWS4nzeZBDuRU
-	Ka+ouEhg0PkVepBz+lNvqkNQmF8yzyw/73XdMq8u6QRL9adb7M322MZhnyYuqVhAQvxxkGFRNqB
-	VrWblk=
-X-Google-Smtp-Source: AGHT+IE6VuwB2rMj+eNLHkOFe2PPtB5Evc/htVg7PAq1VwLveklPNKiOwKomITt+xjUHLS9CMHCCKFVpIRDlVZvK68Y=
-X-Received: by 2002:a17:90b:1d0f:b0:31f:ea:ca84 with SMTP id
- 98e67ed59e1d1-32166c0fc1bmr197960a91.2.1754429534833; Tue, 05 Aug 2025
- 14:32:14 -0700 (PDT)
+	s=arc-20240116; t=1754431715; c=relaxed/simple;
+	bh=/aoxjBnanB6z5ZymLaTy2qG1GykI0n2CxoPSGTJMDc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DyDB85tvR610tvDSoFcMTV/SyXAlh/vpyOO2ExdNNMC5lj6mmPUZIcntAoQe/O6/aT7/yEprwTK2tHGPknLuQ3Jvl3l0gRoYKsR+PKFEL3E5vMsTyBFSWqyX7Wl8ShIvC30a+kDBX9tZHroa9DvQaE0WkBDS4f4oKGwUQOwGiFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b2NjuO8i; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1754431714; x=1785967714;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/aoxjBnanB6z5ZymLaTy2qG1GykI0n2CxoPSGTJMDc4=;
+  b=b2NjuO8iTJIz0Qa11KYK5cBntET/zISaNwW9gGnM4qCOKwKQaFWzjRUZ
+   hlqv+3DlBUvapOVF8iKTD6fONZcj984qRGr6P43l6oWhW0ULbrfWMLayv
+   MRrBaU3zi7UTtOpdD2yYVGNP0DW9Jo0+MMixRGHLK781k/+C16X+goEY0
+   cHdLG2twL40QWhyV0/sMNTI6FllBwtQxUo0KWN2cUMGpcuFaWmzt5JcLI
+   lzPf7ZwXqxZzfp9kBBK7SKgEXqPb+fXDYArw/1K4Iw1MYgwAJJQMNxC6G
+   Jpy4vufPM89a9/u21rben3iuTNjdIMbgUcP5yH+hlnK0AnrsRrQIBotkN
+   Q==;
+X-CSE-ConnectionGUID: 7JyA5hHQQF+77Qe2lZlMPA==
+X-CSE-MsgGUID: IeyhPkPyQQSJhwRlOc8Tqg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11513"; a="44334918"
+X-IronPort-AV: E=Sophos;i="6.17,268,1747724400"; 
+   d="scan'208";a="44334918"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2025 15:08:31 -0700
+X-CSE-ConnectionGUID: cvABU6gySmCN+nSbWkFxIg==
+X-CSE-MsgGUID: QOXnb3dlQReNBMfKeCvA3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,268,1747724400"; 
+   d="scan'208";a="164139100"
+Received: from smile.fi.intel.com ([10.237.72.52])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2025 15:08:13 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1ujPpG-00000003rhU-3uHR;
+	Wed, 06 Aug 2025 01:08:06 +0300
+Date: Wed, 6 Aug 2025 01:08:06 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Viresh Kumar <vireshk@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-actions@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH RFC 3/6] dmaengine: qcom: gpi: Accept protocol ID hints
+Message-ID: <aJKAxkXO7csIi5Oi@smile.fi.intel.com>
+References: <20250730-topic-dma_genise_cookie-v1-0-b505c1238f9f@oss.qualcomm.com>
+ <20250730-topic-dma_genise_cookie-v1-3-b505c1238f9f@oss.qualcomm.com>
+ <CAMuHMdV0JO=qtregrrHsBZ-6tpNdPUj3G1_LWRfRsj0vBb+qyw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250805164431.24350-1-robin.clark@oss.qualcomm.com>
-In-Reply-To: <20250805164431.24350-1-robin.clark@oss.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 5 Aug 2025 17:32:02 -0400
-X-Gm-Features: Ac12FXwnTTjTLlR6ZiyVs-H5Xibje4MD5VPolzpqvzwQ7PFaf_1DWFcW5Qh9ga4
-Message-ID: <CACu1E7FoQ1djuoqmjxJFHMLx1xuqsK4+a63gw34F-K8kca3-MQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm: Handle in-place remaps
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Danilo Krummrich <dakr@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMuHMdV0JO=qtregrrHsBZ-6tpNdPUj3G1_LWRfRsj0vBb+qyw@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Tue, Aug 5, 2025 at 12:44=E2=80=AFPM Rob Clark <robin.clark@oss.qualcomm=
-.com> wrote:
->
-> Detect and handle the special case of a MAP op simply updating the vma
-> flags of an existing vma, and skip the pgtable updates.  This allows
-> turnip to set the MSM_VMA_DUMP flag on an existing mapping without
-> requiring additional synchronization against commands running on the
-> GPU.
->
-> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+On Wed, Jul 30, 2025 at 01:32:58PM +0200, Geert Uytterhoeven wrote:
+> On Wed, 30 Jul 2025 at 11:35, Konrad Dybcio <konradybcio@kernel.org> wrote:
 
-Tested that this fixes the occasional page faults with the zink a618
-jobs on Mesa CI with my Mesa MR.
+...
 
-Tested-by: Connor Abbott <cwabbott0@gmail.com>
+> > +       /* The protocol ID is in the teens range, simply ignore the higher bits */
+> > +       gchan->protocol = (u32)((u64)proto);
+> 
+> A single cast "(uintptr_t)" should be sufficient.
 
-> ---
->  drivers/gpu/drm/msm/msm_gem_vma.c | 41 ++++++++++++++++++++++++++++---
->  1 file changed, 37 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_=
-gem_vma.c
-> index d1f5bb2e0a16..00d0f3b7ba32 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -451,6 +451,8 @@ msm_gem_vm_bo_validate(struct drm_gpuvm_bo *vm_bo, st=
-ruct drm_exec *exec)
->  struct op_arg {
->         unsigned flags;
->         struct msm_vm_bind_job *job;
-> +       const struct msm_vm_bind_op *op;
-> +       bool kept;
->  };
->
->  static void
-> @@ -472,14 +474,18 @@ vma_from_op(struct op_arg *arg, struct drm_gpuva_op=
-_map *op)
->  }
->
->  static int
-> -msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *arg)
-> +msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
->  {
-> -       struct msm_vm_bind_job *job =3D ((struct op_arg *)arg)->job;
-> +       struct op_arg *arg =3D _arg;
-> +       struct msm_vm_bind_job *job =3D arg->job;
->         struct drm_gem_object *obj =3D op->map.gem.obj;
->         struct drm_gpuva *vma;
->         struct sg_table *sgt;
->         unsigned prot;
->
-> +       if (arg->kept)
-> +               return 0;
-> +
->         vma =3D vma_from_op(arg, &op->map);
->         if (WARN_ON(IS_ERR(vma)))
->                 return PTR_ERR(vma);
-> @@ -599,15 +605,41 @@ msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, v=
-oid *arg)
->  }
->
->  static int
-> -msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *arg)
-> +msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg)
->  {
-> -       struct msm_vm_bind_job *job =3D ((struct op_arg *)arg)->job;
-> +       struct op_arg *arg =3D _arg;
-> +       struct msm_vm_bind_job *job =3D arg->job;
->         struct drm_gpuva *vma =3D op->unmap.va;
->         struct msm_gem_vma *msm_vma =3D to_msm_vma(vma);
->
->         vm_dbg("%p:%p:%p: %016llx %016llx", vma->vm, vma, vma->gem.obj,
->                vma->va.addr, vma->va.range);
->
-> +       /*
-> +        * Detect in-place remap.  Turnip does this to change the vma fla=
-gs,
-> +        * in particular MSM_VMA_DUMP.  In this case we want to avoid act=
-ually
-> +        * touching the page tables, as that would require synchronizatio=
-n
-> +        * against SUBMIT jobs running on the GPU.
-> +        */
-> +       if (op->unmap.keep &&
-> +           (arg->op->op =3D=3D MSM_VM_BIND_OP_MAP) &&
-> +           (vma->gem.obj =3D=3D arg->op->obj) &&
-> +           (vma->gem.offset =3D=3D arg->op->obj_offset) &&
-> +           (vma->va.addr =3D=3D arg->op->iova) &&
-> +           (vma->va.range =3D=3D arg->op->range)) {
-> +               /* We are only expecting a single in-place unmap+map cb p=
-air: */
-> +               WARN_ON(arg->kept);
-> +
-> +               /* Leave the existing VMA in place, but signal that to th=
-e map cb: */
-> +               arg->kept =3D true;
-> +
-> +               /* Only flags are changing, so update that in-place: */
-> +               unsigned orig_flags =3D vma->flags & (DRM_GPUVA_USERBITS =
-- 1);
-> +               vma->flags =3D orig_flags | arg->flags;
-> +
-> +               return 0;
-> +       }
-> +
->         if (!msm_vma->mapped)
->                 goto out_close;
->
-> @@ -1268,6 +1300,7 @@ vm_bind_job_prepare(struct msm_vm_bind_job *job)
->                 const struct msm_vm_bind_op *op =3D &job->ops[i];
->                 struct op_arg arg =3D {
->                         .job =3D job,
-> +                       .op =3D op,
->                 };
->
->                 switch (op->op) {
-> --
-> 2.50.1
->
+FWIW, this means (unsigned long) as Torvalds is quite against uintptr_t in the kernel.
+
+> Casing the pointer to u64 on 32-bit may trigger:
+> 
+>     warning: cast from pointer to integer of different size
+> [-Wpointer-to-int-cast]
+> 
+> >         return dma_get_slave_channel(&gchan->vc.chan);
+> >  }
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
