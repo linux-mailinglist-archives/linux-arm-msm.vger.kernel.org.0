@@ -1,179 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-67797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF17DB1B7ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:06:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C43D5B1B853
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:20:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7256B6241F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:06:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BEE54181B88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:20:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A12291C09;
-	Tue,  5 Aug 2025 16:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67A528BABE;
+	Tue,  5 Aug 2025 16:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJ4BhrGW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nhnhzxwJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74192918F0;
-	Tue,  5 Aug 2025 16:05:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D87E291C3E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 16:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754409960; cv=none; b=lZzhgCtwXkEMoFz9JpMecAG60H0XRs9+XjvDGKAXoSVuIQW9lp8BJ4L/UzoCogaxXJ6jJV7mtlRPMkFEVjaVp7308f5XTFfHBoix+JFeGmdVYqhjfFTuD8+2LEShFA84tJcFHK9Ju8mSXsh1luOJF9MN7BnNPnIPg4WLEpVZIHs=
+	t=1754410846; cv=none; b=cNs3u+7yZ9KeJ3MBE1zhoUfTQMmlK/M9dAVfl+m45K1HnZRh61UagQQAjhtuVCZZRnzZvWWL8Tyb4hQa7Ao7smnd7pnTHase1oyzzZwkF+oWaHAJxbxWoKaUdWtE3HHcxGXA/hyJRVUFRjpVEMMcu8gAF2KpFu2TmLQnYY5K3NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754409960; c=relaxed/simple;
-	bh=p0DSV3SFONWnFSvTaUKPaPfXnVZcLpHcwrYCG3YT0Bk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lvQ7Y0hHzd3mLASPluT5zZ/3u8hkGuKVM2w3AvOKsuyqdQ+vDdYoFWBik5xDPwMhK1cYdsn6dwLhzinnXT/djj36moDtsMpLeP09TKkwfsGslpdiKRvIAaGG5mfHf1KnlgsqyX9wvVoPNRz+ubHvSpTBAVOO1uDQXJK9e53plfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJ4BhrGW; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3b783d851e6so4884635f8f.0;
-        Tue, 05 Aug 2025 09:05:58 -0700 (PDT)
+	s=arc-20240116; t=1754410846; c=relaxed/simple;
+	bh=cBJjmBz2nru2N22Iu/zn8pPdmY8QA0TjfVIDw6+iow0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s5fh9GVUto/kq9MdUb/c7lrF87qGe+XPLr8IflsFXeAFK7gbhmPefnHFpAUyag/TxzdKHCsYsMNV4feB4JI+4K0Juqc0ob/iSBX9eMt5Y3RI+P1JP+KnysRvLsDwNVuYv5IBPz9/v84wcEsSZAYswsa6u7d8cVq9kIk2KKSZz+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nhnhzxwJ; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-458bc3ce3beso20909495e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:20:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754409957; x=1755014757; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bTznWYpI8gKk1kphD2wAHrnft5gKOpMBilNRiI/5gM8=;
-        b=QJ4BhrGWr7VezCOwGR8K/pUIqQjulCap8xaPCSkfYyYzZBG0/40a8YHDYC4wc9v/vY
-         1sv9uAeFLsDyQjtSjuogSIHOMExU+AiFnpFoWXx9hEsSWA1LH2mprvgiiprpDcGpF+SP
-         H3Fq0vJ80R1ErqEY8CtEYQxt+GO/ucgL5l8JvgU+hwhqCX77gVwiCM9L5F8USCkiEr70
-         HecHd2UhZjnhknk2hEXqcUD1HO9+XIK+eg9H1rAppxUg5iD3x/7849xEDiNXC9sTu+HX
-         6WYF4wc0/aC9kNXKqTeqBk5g4W21a27de5xTfxWpyXXGjnvlngJnk4XSmNQj9rkavNup
-         mAOw==
+        d=linaro.org; s=google; t=1754410843; x=1755015643; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IGkrmIeLV1rU3rT2THq/+9gyQc/8zpyvBaKc45egPzU=;
+        b=nhnhzxwJHFgMBkBXZIkucJrvmCyySqfb5MXw2PDMk1KDW11xeuLtoedB0WH/VrumJx
+         EdNqXAs2UTUc8eHvJoWeGpqVCnEDK0TeMUUb6po85mKZJxq/TyAdFtptf579wWmfuuAj
+         Is1pcNBHa3dwdSRVbVqpe1fIBps6NT8wrtjqmnHv67z92Ll8pFLzuPjUyjv8QajS3CLw
+         nRjIgyWv2l0mResUsaTU/HPKKSCGnkmiZB2OWOYLywdlb6KNzE8YX6P/DIN6ys4Gzlp5
+         KAJoivDCCdkcXtamxE3GxFsYngTLm3/8Qk58Zn9/ebSMhc9bldWdL9pDjpc44PZgLshe
+         HcCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754409957; x=1755014757;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1754410843; x=1755015643;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bTznWYpI8gKk1kphD2wAHrnft5gKOpMBilNRiI/5gM8=;
-        b=uuGLmNHCSHf01GurBWls9QQR5mf1pakXFBfV3kQeHcRE1zSvGVik/D9vD2Ynd52cGx
-         eUt3eXDL/cZHGN4S8hTRr7SrY9DmQUl7yHhoWHQponNDv4kqqGYk4Fa34eOFXEKrIhv1
-         0vx82OVqhxqNj8Fnz7uv1iJTUR/TRKDh2q+M3IymNR/ZyK+QYv+OWs8GhW5rH0YeiBuy
-         +4N3TYRlhH819/rWNtPoO5y8Tn+kS/mPZjwW2c5J4QG5RnYeTFc7p//My8PdEE5AhkZ2
-         xZ3gm5PeaOlwBiDwOUxgLIGrr0c9GY3kpY50VybUq59BTsI7w2904BSOqOdo47YF7TJF
-         jTsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW6Bg1qxUl/12aEq81fIP0vriFSQ3HAMaHbdXb4g0fMeECNRh5enVx1MYHZCge1o1yc/Xf0u05VThVx2Gl/@vger.kernel.org, AJvYcCWEdSLeyl07thWv7OkRnpOULdIpMfJ28koD1GLtV458Cvhb49cVpeilYJrsayMCV/cXB2+hSb4d9gr/ozoj@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6Hup5ETbIxu4CwNz10s/I7vbb6GK+OfDac8ErjTQPh09k8To8
-	DQ1a3fjTWwVyzZN7AQ4/S6YI4TOL8BGH8Um5b20Lv9PEAYwlujYFKOud
-X-Gm-Gg: ASbGncsok/iy+3YqbIfnGk6zHbcccClHaW2xj5hCipmH1C2+zw9+vMerFvagOlIAWi5
-	menzYDvOceU5ZIKNR/8YA+Y8+89C6Ofr+HGxXJ6K+nP2UP66PYsldBnqJSjAkc7PhOzfo3uoUVk
-	4FABligtkwHejxumU13O4zIzVmTLyKIVGYWPHp8Fz1GpNeQKDOwOnLRrUpsYsYeB5DpP+ai1u7P
-	WJM+1gMWquWFqhQ6isK+HNKi88TJV4Rurbra/l4G6PlU7TxV3AZzBEmD3+nxuVjPz/g3k61nInG
-	//j03mKC4J7sRqTKdlhPPxzgiQl3Ct1mNk8rCM6Vwo8pTV21h+Pi1K89+DTx989XL2wdNOpFCfR
-	ZR2rzW+TU2gNcieQlgYG2Nw4dq8/vBlw0qupxxnhCEqEfzZAc/DA=
-X-Google-Smtp-Source: AGHT+IEuAmY2hBCqfJhKsYJ4UaGLmKzibXtdG11M9cj+JUXZxQVLIU+zZH6KGP+B1ZvtubgSN9I7wg==
-X-Received: by 2002:a05:6000:2f82:b0:3b7:8dd7:55ad with SMTP id ffacd0b85a97d-3b8d94c477dmr11899577f8f.39.1754409956882;
-        Tue, 05 Aug 2025 09:05:56 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3b79c48105csm19813177f8f.64.2025.08.05.09.05.55
+        bh=IGkrmIeLV1rU3rT2THq/+9gyQc/8zpyvBaKc45egPzU=;
+        b=kzdWcXb6Rr1YYDaGsO4RQNxUteiiodb/QXOXD9H6s9Qy5m5v0bhCm5WkL2U+/hL+mn
+         VUohVli0yUV6act4XBHXgiyve+y49BVUK/+co3o6EyoV9yK+AA2+pZjUPdEPsI0KPWlK
+         xg57fy4XiPo77sBU81Hcu8j4kVCeu3TUb9mmWe2SKW9TNVxaVspyYLym29AhCNZEtEt1
+         Hb7OKf2mx2hdBkU2/ybu+cwflB1VE5CKHRC+LZCJS/LzSh7OOjPHH7lV12938ZcW1rDJ
+         23HE0RVjlzCdJuKNTNWF46U0wPgGh2tCgonFN+zzANz/Itc8HlQtj885o1WAXrsxul5R
+         43Pw==
+X-Forwarded-Encrypted: i=1; AJvYcCUhR+1kjMqskixZDHfpeze+eDnzbDvLfegVJfkhFgMwupDKzBw4osvI0sK4XnD1t0H8lujjBRSzzxFYjVTS@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfUxBym9tkwolwUijDiwXwXHgyT0V9170crkegz3sLPg26l40e
+	gOUjSpB4K1A/E8TlkIS/usP4WVGHlCcS9bZBE667vaQpXfFOS6o5sKkVBw/rok2ImZw=
+X-Gm-Gg: ASbGncsLnbxrHdrS5LELETc7g8s/yTQv4XTtQecL1mmY1YQH8Q1nzqkh2u2nRTMEthu
+	/tqp2tMO7xQormSSbiMh0HeEdhMiE/tYgKeEAjTIzZ72R7T5Upi2ZU7JQPy+veCFuNxrtJYHU4/
+	Y5G/wgCpBvFQc9kDEpnEhcuwavHPOnlAjbHa/dDJqPbJto40IpzZ5+yCc2shWCP6GiOz5QN/DAC
+	OToXTt0BUtpdYYhu49b9mxIZJRAca/7EYZZsEZk3xVVnbV02I/hsEt0mVoquajB7HSZyr3PeZ97
+	RU37Uoct8Cc+qKUzkqmJqPX2l3ORpFmpqUcHkPOrpXLWGaVcnF2ZR29iTFy21h8D1nzNUOB1Oaj
+	h+52iYTmtaqUIneDjvGs2F7OTFOQroMY2SUIA9Zg=
+X-Google-Smtp-Source: AGHT+IFJTDQFGPN/BiqSqSYEoyKB3J5CeXH8Mn6Txe7Lz7r1rfPY2c8tUvGJMup7h8OCrkxOi1r/Iw==
+X-Received: by 2002:a05:600c:4752:b0:456:25aa:e9c0 with SMTP id 5b1f17b1804b1-458b69e3710mr130392835e9.14.1754410842876;
+        Tue, 05 Aug 2025 09:20:42 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:3fc8:64de:ce84:87a0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5873c43sm12023575e9.22.2025.08.05.09.20.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 09:05:56 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Tue, 05 Aug 2025 18:05:42 +0200
-Subject: [PATCH v2] spi: spi-qpic-snand: fix calculating of ECC OOB
- regions' properties
+        Tue, 05 Aug 2025 09:20:42 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: andersson@kernel.org,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	srini@kernel.org,
+	quic_ekangupt@quicinc.com,
+	krzysztof.kozlowski@linaro.org,
+	dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v2] arm64: dts: qcom: sm8750: Add adsp fastrpc nodes/support
+Date: Tue,  5 Aug 2025 17:20:41 +0100
+Message-ID: <20250805162041.47412-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250805-qpic-snand-oob-ecc-fix-v2-1-e6f811c70d6f@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANYrkmgC/4WNQQ6CMBBFr0Jm7Zi2CBZW3sOwKNMCk0iLrSEaw
- t2tXMDle8l/f4PkIrsEbbFBdCsnDj6DOhVAk/GjQ7aZQQlViWsp8bkwYfLGWwyhR0eEA79R29J
- qQaRrLSCPl+iyPsL3LvPE6RXi5/hZ5c/+Ta4SJaqmN5Lqobm46jbOhh9nCjN0+75/AYPiDUy8A
- AAA
-X-Change-ID: 20250731-qpic-snand-oob-ecc-fix-8d3d80cc8680
-To: Mark Brown <broonie@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
 
-The OOB layout used by the driver has two distinct regions which contains
-hardware specific ECC data, yet the qcom_spi_ooblayout_ecc() function sets
-the same offset and length values for both regions which is clearly wrong.
+While at this, also add required memory region for adsp fastrpc.
 
-Change the code to calculate the correct values for both regions.
+Tested on sm8750-mtp device with adsprpdcd.
 
-For reference, the following table shows the computed offset and length
-values for various OOB size/ECC strength configurations:
-
-                              +-----------------+-----------------+
-                              |before the change| after the change|
-  +-------+----------+--------+--------+--------+--------+--------+
-  |  OOB  |   ECC    | region | region | region | region | region |
-  |  size | strength | index  | offset | length | offset | length |
-  +-------+----------+--------+--------+--------+--------+--------+
-  |  128  |     8    |    0   |   113  |   15   |    0   |   49   |
-  |       |          |    1   |   113  |   15   |   65   |   63   |
-  +-------+----------+--------+--------+--------+--------+--------+
-  |  128  |     4    |    0   |   117  |   11   |    0   |   37   |
-  |       |          |    1   |   117  |   11   |   53   |   75   |
-  +-------+----------+--------+--------+--------+--------+--------+
-  |   64  |     4    |    0   |    53  |   11   |    0   |   37   |
-  |       |          |    1   |    53  |   11   |   53   |   11   |
-  +-------+----------+--------+--------+--------+--------+--------+
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
-Changes in v2:
-  - use switch statement to handle section numbers
-  - reject negative section numbers as out-of-range
-  - Link to v1: https://lore.kernel.org/r/20250731-qpic-snand-oob-ecc-fix-v1-1-29ba1c6f94e5@gmail.com
----
- drivers/spi/spi-qpic-snand.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 0cfa0d960fd3c245c2bbf4f5e02d0fc0b13e7696..53205d5037dc4fd58a69063532b20ab10c652694 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -210,13 +210,21 @@ static int qcom_spi_ooblayout_ecc(struct mtd_info *mtd, int section,
- 	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
- 	struct qpic_ecc *qecc = snandc->qspi->ecc;
- 
--	if (section > 1)
--		return -ERANGE;
--
--	oobregion->length = qecc->ecc_bytes_hw + qecc->spare_bytes;
--	oobregion->offset = mtd->oobsize - oobregion->length;
-+	switch (section) {
-+	case 0:
-+		oobregion->offset = 0;
-+		oobregion->length = qecc->bytes * (qecc->steps - 1) +
-+				    qecc->bbm_size;
-+		return 0;
-+	case 1:
-+		oobregion->offset = qecc->bytes * (qecc->steps - 1) +
-+				    qecc->bbm_size +
-+				    qecc->steps * 4;
-+		oobregion->length = mtd->oobsize - oobregion->offset;
-+		return 0;
-+	}
- 
--	return 0;
-+	return -ERANGE;
- }
- 
- static int qcom_spi_ooblayout_free(struct mtd_info *mtd, int section,
+v2:
+- removed qcom,non-secure-domain flag as requested by Srini.
 
----
-base-commit: 926406a85ad895fbe6ee4577cdbc4f55245a0742
-change-id: 20250731-qpic-snand-oob-ecc-fix-8d3d80cc8680
+Prev version: https://lore.kernel.org/linux-arm-msm/20250502011539.739937-1-alexey.klimov@linaro.org/
 
-Best regards,
+ arch/arm64/boot/dts/qcom/sm8750.dtsi | 69 ++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+index 4643705021c6..cc74fb2e27de 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+@@ -7,6 +7,7 @@
+ #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+ #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
++#include <dt-bindings/firmware/qcom,scm.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+@@ -523,6 +524,14 @@ llcc_lpi_mem: llcc-lpi@ff800000 {
+ 			reg = <0x0 0xff800000 0x0 0x800000>;
+ 			no-map;
+ 		};
++
++		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
++			compatible = "shared-dma-pool";
++			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
++			alignment = <0x0 0x400000>;
++			size = <0x0 0xc00000>;
++			reusable;
++		};
+ 	};
+ 
+ 	smp2p-adsp {
+@@ -2234,6 +2243,66 @@ q6prmcc: clock-controller {
+ 						};
+ 					};
+ 				};
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					memory-region = <&adsp_rpc_remote_heap_mem>;
++					qcom,vmids = <QCOM_SCM_VMID_LPASS
++						      QCOM_SCM_VMID_ADSP_HEAP>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x1003 0x80>,
++							 <&apps_smmu 0x1043 0x20>;
++						dma-coherent;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x1004 0x80>,
++							 <&apps_smmu 0x1044 0x20>;
++						dma-coherent;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x1005 0x80>,
++							 <&apps_smmu 0x1045 0x20>;
++						dma-coherent;
++					};
++
++					compute-cb@6 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <6>;
++						iommus = <&apps_smmu 0x1006 0x80>,
++							 <&apps_smmu 0x1046 0x20>;
++						dma-coherent;
++					};
++
++					compute-cb@7 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <7>;
++						iommus = <&apps_smmu 0x1007 0x40>,
++							 <&apps_smmu 0x1067 0x0>,
++							 <&apps_smmu 0x1087 0x0>;
++						dma-coherent;
++					};
++
++					compute-cb@8 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <8>;
++						iommus = <&apps_smmu 0x1008 0x80>,
++							 <&apps_smmu 0x1048 0x20>;
++						dma-coherent;
++					};
++				};
+ 			};
+ 		};
+ 
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+2.47.2
 
 
