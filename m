@@ -1,177 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-67761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCC07B1B137
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:36:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C104B1B180
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:53:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 311A618903F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:36:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3D533ABAAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:53:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 096732750F2;
-	Tue,  5 Aug 2025 09:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29F4B264A97;
+	Tue,  5 Aug 2025 09:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b="UTozRZjo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kLixXKiv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013005.outbound.protection.outlook.com [52.101.83.5])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394B72701AE;
-	Tue,  5 Aug 2025 09:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.5
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754386435; cv=fail; b=K4Sa0ed0qtjPG8QScAOofTtk6WJywJ/SFgzAfr8eJazMQmHQn3U8XhqR/oWxvUPR3Bx2huYJe28tLcSJV52Z6F3e50Gxc7rUZgN+CLKLBXB2f2iYK7lHLU2pqB0/8T/5HRH64xpZ7pUnjq/nKZYpM3gVkMI6Bk7xf7SBdxkAXOo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754386435; c=relaxed/simple;
-	bh=pXaSvlpIz96n9iNZcTH2shbPWD3C/Oh70aESvF8QrII=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kpwVJ16iskFdRkwwADRY8gmp9g1p069+ieLufFBzG/B+WFBmBDlUjz+ex6YRG1b88/YyghOJEKvTp+204XJ5fc3F+xroZbtc5qF8XvtszGDO9kZtU0afgRIhddtZaeMEOB9ZYTQkWB3/2XQ8ipDi8W7huJbCHmoWkdIitBY4czE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com; spf=pass smtp.mailfrom=axis.com; dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b=UTozRZjo; arc=fail smtp.client-ip=52.101.83.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axis.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vfZVmBqh5NQv5GkV1Jn4hGun/qFgUOaoLNzfPh9tlLG/dk3ZmvHc0SHFan8bN+Y73MW1KwADJodWTxARr4FYC5vzmWI7U1r+U9Dgi7k2CF7ww+rdSzrvNhk+WGhRtzrdD/8ZNdONRVUQWx9PKpV8l3THT9wls65mGy5tBTjsYnJf4OkUcHOPiEp6s3ieceCP8EcS9qKLfz8U+t8outhgp6v0BlaWNrZ0ApwoKlMlGTrVjZAJrXoQmHsQK/+OkGuS7fUZ/tp+Kd6B8mqsQarsQMXYR6Mwj+Tg9AWiySXwh/HcRkwDhNdhPuW+7YamiJs4+HdU+xiJaaLzfkgSeptcxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UGMbirp89aazaot/xWsU4XJB9+6UAMCWC7XBBvH68qo=;
- b=uAKKnUEzGpQRZvGz23TSSo4lKvitQKnCcHr0fW/5V2OmBnFSAYuKNG6a2PpQWXcieBPRVRmjeagEm+lLrhcaMf5+FGDFDJ/YfTfjJGX2y5qgvNWJAERSj2IlTKiMPSeU17lxtJMsrpmeMA19m2aH1wR/pFAXzCWb8mTLDVwl2dFiLXH0qGEEYCswm9tHMyLT4RyTbzWbRGPQw12Uy5jxXOXmI3eRLQeTqoAbXMwxOjw2Dyo9ef08ZGcNoZIgRIal/9igQYj/NSpnUab9VrrKS6JSQHtG0k2dMbHbbJZK3SHhbv468dTpgIyoDX7CCZsIkaDKA62PJtF8ndf5BsvpxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 195.60.68.100) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=axis.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=axis.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axis.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UGMbirp89aazaot/xWsU4XJB9+6UAMCWC7XBBvH68qo=;
- b=UTozRZjopD0QjL9LlLrkbLmapJQZixpQl7OqGmz9Hhemi41hZRAQ27wfclL/xWpza/MNMIv1u4NrOOMxZ4BxJJ+Na1EtN5UUFB84ojMy4LeN8CPjBdUx2qlHzLpSydYQGIvWwNClyImlOtLVlwFmkMtojMMkd61CtPypeqL5KFQ=
-Received: from AS4PR09CA0013.eurprd09.prod.outlook.com (2603:10a6:20b:5e0::19)
- by AM7PR02MB6306.eurprd02.prod.outlook.com (2603:10a6:20b:1c1::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.21; Tue, 5 Aug
- 2025 09:33:50 +0000
-Received: from AM3PEPF0000A791.eurprd04.prod.outlook.com
- (2603:10a6:20b:5e0:cafe::3f) by AS4PR09CA0013.outlook.office365.com
- (2603:10a6:20b:5e0::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8989.21 via Frontend Transport; Tue,
- 5 Aug 2025 09:33:50 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 195.60.68.100)
- smtp.mailfrom=axis.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=axis.com;
-Received-SPF: Pass (protection.outlook.com: domain of axis.com designates
- 195.60.68.100 as permitted sender) receiver=protection.outlook.com;
- client-ip=195.60.68.100; helo=mail.axis.com; pr=C
-Received: from mail.axis.com (195.60.68.100) by
- AM3PEPF0000A791.mail.protection.outlook.com (10.167.16.120) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9009.8 via Frontend Transport; Tue, 5 Aug 2025 09:33:50 +0000
-Received: from pc52311-2249 (10.4.0.13) by se-mail01w.axis.com (10.20.40.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Tue, 5 Aug
- 2025 11:33:37 +0200
-From: Waqar Hameed <waqar.hameed@axis.com>
-To: Souradeep Chowdhury <quic_schowdhu@quicinc.com>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
-CC: <kernel@axis.com>, <linux-arm-msm@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] usb: misc: eud: Remove error print for
- devm_add_action_or_reset()
-User-Agent: a.out
-Date: Tue, 5 Aug 2025 11:33:37 +0200
-Message-ID: <pndo6sukt8u.a.out@axis.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9318F1AA782
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 09:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754387620; cv=none; b=YPO0inoCAXQzGayqO8f4eRznZjOo8SzzvZ1phqWZ/VhmDtaoEuWA08Rdkbg6rGCSYDHb1ROyyFowz7mBufKs09AIi5asfMTJWaP0XR+o8fCUet2Wr86AJ+Nh8yqnWAgF46Y21N9QJB/UcBp9/IGAKChgdUzqiiUQeezp5OElLX4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754387620; c=relaxed/simple;
+	bh=xHMmS79EOwNX1obgsyb4BRfFjPuIg0OMEA7/lejHYS4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SXTVDxNYlGJopCEbry6m/FMRXLTgH71UJxZ3HzoYebLsUHSmgtimVvD65qyuAKo2wJmfZZi9ObVXbnTYVnYMvTwPnmyvQWjpJ/JiNmxophzfp5uJzQivdpWwSOSvJMr6xxeOj6vnvTtf8wjcZQKo+wvnY7U0nlvQjc6WB2zdxaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kLixXKiv; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575748Xb005163
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 09:53:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=6YWPtWFX3lxz3vDOMkYD5yx/
+	64V35Kn7WOYr3KL9B5U=; b=kLixXKivEbIXqovRV+tfp5F6v5v1VfLTts5HGL3h
+	E7gERMpO7CDcvPP9CzI/X0D4Ubdtd/qrbXtCuihA1Heh8VD+NfyJPTV1r5rHYBwa
+	XcmpRIVo+tA9AfTbbrKMMCSkIxj04ktu67vqkCAokbEBntApFqhGPRYEeKEDeOoV
+	BpxVSadjzqqXhnojVqnydYcNO17Uk4/E6HTpWHVD9ldRQk7+E4JFu1esk0yYZD/9
+	0RkyS4wofxX4AeA29ysDYOBV0WzuKdDaWm5ChqaDB5w8xrRGwWMkSAhE3YYttloz
+	UeXFJjIkRjEDhtgSUQ5Db49usgrFNdCLRzZ9f99eBX68pQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48b3j3sxaf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:53:37 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-7072ed70a37so123485396d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 02:53:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754387616; x=1754992416;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6YWPtWFX3lxz3vDOMkYD5yx/64V35Kn7WOYr3KL9B5U=;
+        b=MQfrI2DsXmGFlklRnsxBPZjqdMXgl7z13Ew2SccZIxDZeFPsknNmkBUWvJr30RTY3y
+         e/MpMHtd3eznLyQqYwgNKP08xh+TmxudwfVPlaZT+91iF+1L2Jw6MiW1Vjh/9jyhOP7l
+         teQy4GH2Hc1b95y2ENwaccA7pnuUKLEiLHuqDmP/KJtmseMK6zGSwoTs7pb6ofjWLpaB
+         0WjYa4uo+IQe9uYG2jxnVniMdJt+u+wZbOrIjZ7gRqxoCsqEkVL+putjvbr/+MYedAxb
+         xOvIljlDECbJ0IbLRryr3S+sWz0XHHTblM82CTyy+GKYvH43XgXe+Y2Iwu0icKAcEwOO
+         N6kA==
+X-Forwarded-Encrypted: i=1; AJvYcCV8qTRpgZOWcBFdBCO4l7jUfOXjilIdPe/TJHxLtzhmBXAtaNIiJioSxcbjjJOBzAsfsABx4ojSqLTfvMSs@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz52mlgO1OXjtUS7QHNNpu7g2uACRcIeCUQw8/s8Pqyb+JBdrhd
+	E8Wb4xQdEKfa3OvCXOsgWkU23gaIm0vGT0WS8hrjWBN5nWcRSKjPenO4R/ZB4docbXglbhUFNrE
+	o1ihCp/aVxyneIGOWU34CkU9BTgy94rJg2nuQk9z5pqvg7DPiWMCaUvYwL1LETsnwIIGN
+X-Gm-Gg: ASbGnctByrpicXxoTgEBpmJrnY6roJBqBPhbZrGDKKpESe/NpWnI90ae8Lzn+LH3tGi
+	62JR6gEqETwHk8pgVnzqUHJ4CXgLi7offjyuVl7uyhpGBJDpQatT734ufAlk3iiLyUOu9+jlBYk
+	QnY5/ZkjEUuKBrOlhvHUXfG+U60Xp3gjIx/8G0/P9MV4fNIXzj1DLW5CvUvIZP+VI4vLy1RJvg9
+	n0gT9xgxLZid9KOo9Sp9qYacV8os4PC8VtrTF9N2cmaU5MwLK524UDqLEAxL+l8QhrOyZRe+TtL
+	MyBk7sc2trhxuotqHwBarU+RUbp1hXVklzJTGS0eKFqtYZo/3IyWizTxxByAd8t2WBbzkGmLXZz
+	HA6dAkgF+CZh6sOPs5WhiVZzQFetA3QHEc1MpE4n5snJsNVw5lk10
+X-Received: by 2002:a05:6214:ac4:b0:707:68f2:3275 with SMTP id 6a1803df08f44-7093670cbadmr173938916d6.24.1754387616067;
+        Tue, 05 Aug 2025 02:53:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9JEfjsVXaezVAyd43S9MWYHyWsnb91oC1bbzdUBcv5zD2HV26tmbdacPK/T/W+n9iEvwA0Q==
+X-Received: by 2002:a05:6214:ac4:b0:707:68f2:3275 with SMTP id 6a1803df08f44-7093670cbadmr173938696d6.24.1754387615571;
+        Tue, 05 Aug 2025 02:53:35 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-33238272963sm18810621fa.14.2025.08.05.02.53.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 02:53:34 -0700 (PDT)
+Date: Tue, 5 Aug 2025 12:53:32 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Val Packett <val@packett.cool>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Allow empty section headers in
+ mdt_header_valid()
+Message-ID: <5hss454btv4w7n6yj2z5fsxufn35xgtjcc4dnaopjwul57bdag@w6qxobezqowq>
+References: <cover.1754385120.git.dan.carpenter@linaro.org>
+ <5d392867c81da4b667f61430d3aa7065f61b7096.1754385120.git.dan.carpenter@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: se-mail02w.axis.com (10.20.40.8) To se-mail01w.axis.com
- (10.20.40.7)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM3PEPF0000A791:EE_|AM7PR02MB6306:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8ca95757-a604-47cf-ad2e-08ddd4032f5e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|82310400026|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?pdK9dDUg3moZ6kapeF848Rp9Z5U9D0Oormupmh3m3zwqqsTDwuPwF6WIj2Ka?=
- =?us-ascii?Q?mfOfWePwpu2Fgo5Wgqkf24crmMdlVdzUncSc2uQQj3rUqRlEnMicCdj6HW0u?=
- =?us-ascii?Q?FWAQXmiY4o3CfFWyt0QFFw2xQ5N0BqmRVlPsL95LSovJE8KLbCRDg/t+Hi5e?=
- =?us-ascii?Q?4c06OO/lsxyQyu8hyodTG5K0l4/a/nvr9DO9Df4bBeW66ixsD/32ZuRl9KiY?=
- =?us-ascii?Q?ECSGl9FZT0xwA/aFRp81saJyHJr8BvkYTE1jIL/jewLju1veM69UnBUj5DK1?=
- =?us-ascii?Q?gAaOMkD/SUR4s1XfhYIZTLF8IVEti9PD/WAWjM/P7N/lv805oeDzVl5a+iGg?=
- =?us-ascii?Q?sTcOP9XPGNZB4WNsEDlY0VvmSBG4W9jNdHYdQ85Fl77Jm3PSnxmGHBmy1yBc?=
- =?us-ascii?Q?FuEnKdSWS9atQXfu1N+6bSYAsywqH8F6HncpMoF9DiXAnHw0onVfXU7t/3T4?=
- =?us-ascii?Q?4uFZeFXiKOGWBxdtI7TSRzsVJ84BERiHVqx6N2mIlBTifJjGKTMTO/bQbl8b?=
- =?us-ascii?Q?/e3Ix+DLDtaT0VNZZVCjp6QPuB0yoW58KOAKcnJmpr50VjiY1nYPlvIOu20T?=
- =?us-ascii?Q?0tnqoQEuIuxH/h5i/ePwQB8xwiokBVPe6QJ6R5XgsEgn4/3n1HnsdKtwEf7m?=
- =?us-ascii?Q?GCuTXLDUFaorDynDnqUv8MYs9eeFuwp0+j8+zyS2+iMWAGDimmepZ4/W4RCX?=
- =?us-ascii?Q?dJ1trfjVVB5FF2hRT4TTE2IrBvajUBXHvtZTVatJbwJM1spIYzIGwJNxoKrn?=
- =?us-ascii?Q?kRyKuZYuDG0iOD0A71kObEmMPxHHVI3nzNikCj+CGoemQ/sBkSSje89xKBf8?=
- =?us-ascii?Q?Le7Zb2k66krAWqXbab4d9AV0KsgCTEh+JInu8lYHTfpFFst6a2D7ztZI2Poy?=
- =?us-ascii?Q?ufNqbkdL0shVST1hQ5dAU5JIQSq6ZrFWIVN5EbYrvywX+57ZUJmvouf4B59F?=
- =?us-ascii?Q?AkcSDodxBKz/xPd8R0OJc3uX2SEPi4pYbI9/d4+P0ExKc0d6uRMDMaXB3RM/?=
- =?us-ascii?Q?wk4dsWQ0BmZWKcLEmExfnxTruLAwy6fx5BgN6b20xD5e29MV6MICPLkL2T/x?=
- =?us-ascii?Q?hxYZS+DWr5qpqcssheNJECtgyF6PW8ZKoqNQ7JR8QMkawh41D5bpNB37GxYg?=
- =?us-ascii?Q?yLRBfFd5euMzP2IM/8BMuYrlB9/Duck6qwQ8c1Qy1GBq6JMMruFTrHH+Ra9R?=
- =?us-ascii?Q?hAvMjBQhxwi/XUckDnAI0lOUp/yTlUc5d9qbB1ODN/ZPgUwkQ2J/mppUjSwF?=
- =?us-ascii?Q?Fjteo217K5K6Txp+FgiC5g9Effl4bOF8TWMR3REMkLUEMBfcOm5Z4brNfYYz?=
- =?us-ascii?Q?fAyNwHeLkEjJcXxYrwOjQfQJqohx0JfmqgL/Ih72qM645vvf52PAWjiyYdQp?=
- =?us-ascii?Q?ymc8jHw6s8T0o8RpDyI3/ph4IrMSn+wozqrDvxRLht/9s2cyxsTfnIR9fmL9?=
- =?us-ascii?Q?rWDPggTPypGn2P7kohwvLmmult/qMa6MY3mbF+ItnFE+efhHt+pt+1aKMp13?=
- =?us-ascii?Q?R1jtq+VNoN3oT00RITtCINfDA+5BZwdDCXsl1ifOebKXNyNSRd22NIHDVg?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:195.60.68.100;CTRY:SE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.axis.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: axis.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2025 09:33:50.0780
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ca95757-a604-47cf-ad2e-08ddd4032f5e
-X-MS-Exchange-CrossTenant-Id: 78703d3c-b907-432f-b066-88f7af9ca3af
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=78703d3c-b907-432f-b066-88f7af9ca3af;Ip=[195.60.68.100];Helo=[mail.axis.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AM3PEPF0000A791.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR02MB6306
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d392867c81da4b667f61430d3aa7065f61b7096.1754385120.git.dan.carpenter@linaro.org>
+X-Proofpoint-GUID: Q_OYJCO4PZ_OE5cQnA1AcNigreec1LdH
+X-Authority-Analysis: v=2.4 cv=TZ+WtQQh c=1 sm=1 tr=0 ts=6891d4a1 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=s473dRPoAqI_VoMXqr8A:9 a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA3MCBTYWx0ZWRfX0hutZjZoTs1X
+ CrDdEnl8aIBiXhA6VE7GpdOXsjH8+APJPGHLIYTdorFmVa1vRpr6ION96NY21WVUJPW1M88dE+2
+ +Q51LAJ65iaKWEH1NRnYyE6mxDVdTC8bE6XcsXshxY3ghAIYoyP9HaPscmwgEfI1tQmMbTTE2ET
+ TQJVY13mgwwxsoJ9RXiAGauotkfLInKbSWVBKY4tqfT/6416HMkUCNbniNKce28ZBLzjbW2Im/p
+ yRGJPRN24mh0UzY0+2xuXTrL5qv92m45aYB6hGFX04qGd1c19n1tx9sioXGNJRs5NmknVK2zonS
+ eqK62rbluzJLjuJd5F8xGUCqOIhpgJevBkHVTvfWUEyk7FBFtl3vnZi4dReOKOFkv9uIhbZ5htj
+ EhmioRx5foeXj+PbT7kK0RIq//jaxXPPbCVSV0kPVJBwiDRQ9cr7kFOtU40dsoI/sdp6+eUH
+X-Proofpoint-ORIG-GUID: Q_OYJCO4PZ_OE5cQnA1AcNigreec1LdH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_02,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=936
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050070
 
-When `devm_add_action_or_reset()` fails, it is due to a failed memory
-allocation and will thus return `-ENOMEM`. `dev_err_probe()` doesn't do
-anything when error is `-ENOMEM`. Therefore, remove the useless call to
-`dev_err_probe()` when `devm_add_action_or_reset()` fails, and just
-return the value instead.
+On Tue, Aug 05, 2025 at 12:29:00PM +0300, Dan Carpenter wrote:
+> The mdt_header_valid() function checks all the members for the elf
+> header to ensure that reading the firmware doesn't lead to a buffer
+> overflow or an integer overflow.  However it has a bug, in that it
+> doesn't allow for firmware with no section headers and this prevents
+> the firmware from loading.
+> 
+> I know from bug reports that there are firmwares which have zero
+> section headers, but the same logic applies to program headers.  An
+> empty program header won't lead to a buffer overflow so it's safe to
+> allow it.
+> 
+> Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
+> Cc: stable@vger.kernel.org
+> Reported-by: Val Packett <val@packett.cool>
+> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
+>  drivers/soc/qcom/mdt_loader.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
----
-Changes in v2:
+There was a patch posted by Mukesh: [1]
 
-* Split the patch to one seperate patch for each sub-system.
+[1] https://lore.kernel.org/linux-arm-msm/20250804-mdtloader-changes-v1-3-5e74629a2241@oss.qualcomm.com/
 
-Link to v1: https://lore.kernel.org/all/pnd7c0s6ji2.fsf@axis.com/
 
- drivers/usb/misc/qcom_eud.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-index 83079c414b4f..67832790acad 100644
---- a/drivers/usb/misc/qcom_eud.c
-+++ b/drivers/usb/misc/qcom_eud.c
-@@ -193,8 +193,7 @@ static int eud_probe(struct platform_device *pdev)
- 
- 	ret = devm_add_action_or_reset(chip->dev, eud_role_switch_release, chip);
- 	if (ret)
--		return dev_err_probe(chip->dev, ret,
--				"failed to add role switch release action\n");
-+		return ret;
- 
- 	chip->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(chip->base))
-
-base-commit: 260f6f4fda93c8485c8037865c941b42b9cba5d2
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
