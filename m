@@ -1,275 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-67775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 189B5B1B256
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:56:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 474E7B1B285
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 13:18:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6337B7A7166
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:54:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 599ED7A20CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:17:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90DCC202963;
-	Tue,  5 Aug 2025 10:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76332475C3;
+	Tue,  5 Aug 2025 11:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ikehwb5b"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SYFe/pgg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1743AC22
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233F01E9B2A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 11:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754391366; cv=none; b=epZvsdd7Z1NnMp0fmMD10a073V8DRXw73MTqdi2XfYDDWqtQLx3bCPmN+yooS8EHDMf5XlpImVQySuN3cOz2EoX2LFYOnzlxyA7zXFwCMJ4p/cXe37PwdqgCgkkdLKwb4A07s3sMHPmZ4834Z1+WLBKyu5Nf4Fj5p+ezzq+aC68=
+	t=1754392720; cv=none; b=aY1yzfC3UVkTF1SOUiitxsk/4Srpqa3Yawa9I2Vdbn0PfMaKdV31OutaGgJrw4BkKq1takzkKCVnNGKYWg/1+Fh5IXO6CVK38WDux4y5hrz6yBFLtio03FeN5BEwvU2ed4CmcTvoMeSOOQTJ8+P4pxvLzR3GPe7p96spRSp7NVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754391366; c=relaxed/simple;
-	bh=K7JVWH9FEAdiV5ONo6KkoRRny+1Zsd4FN9fmvpF6eRM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kyMWUl2YvkKQQCOEdnljrNncANp2h9VEcdWbfjSDhhd8Ir9++g8dSu3imtfGUvVQfyzIXzReqAIr1Vg9Gck1azSdxyc0h0wS20tEPlYEXm9ujPIvnrRBM5aORdcMuKsPoiyGOo8/WZ8zKLnrcdgow0va9o47dIQnYc4EzC/FU2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ikehwb5b; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-31ecd1f0e71so4616748a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754391364; x=1754996164; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=d/VeXe/l5rldBgts5OXynawp98C/Mo434FuRGJxE2aI=;
-        b=Ikehwb5byiGd6fjKJ+QnXyYHL5Jpc2t1Pbf88oUiS+9KYmeCuGOYRE3ldc+KrwyfyO
-         mS/IHjOyu6RNsApzQGcjYYTx/lNO/BDQPIUbhOiz4iPar5VxNM2HFQyt2FO5tgD85R8q
-         YYlAihBOpDwKimLIe78r3I5XUPRdR0uYgWEJih7su0TO/sPX9XgoSlTpMjFyX0+z76sd
-         NenGf1i/V8sjF0AhY+UUfOTx4VD4vMTMtDBdAPwgdyWV7feMZWAjMbwwM3YDuGr1mz0f
-         OdhCZTJhSqWaLKaSCoN/JzqneGAO3MU/vQR6TjmSj/9U7v90eJh+p44bg/CevT1a+EA2
-         r/LA==
+	s=arc-20240116; t=1754392720; c=relaxed/simple;
+	bh=hvEjaT5dcBfMjmESc+QEsUBDQcPRKYOGdN6kzoDe17w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lCiZJZFoVzN4KDLYa/BtZtijiGHM8WkTSk3JBIN7nrepoYoEIS/SxPXxGnk753TNP6RgCHVkQTLYeZhGm8aPRSIcmdTA0e1sjLgQkY0wFoXQQ5n3FVGVtOz9MUevTa85aiRXOILwT3li6VLna8LNhIagrQgYCbelunAwSyB91Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SYFe/pgg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5756JNTZ000777
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 11:18:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+UtkDtN+fyKayeHp5S67YUnWVczmNgfytTivDi9O4Bs=; b=SYFe/pggxZXEqNog
+	ztaw4eWkD3a/xeVkjA2bBgokWN1h6kbj02YMaX1gYhBKrRRlAkFE49vvjGL6a2iS
+	0GlLzFmSwoRdmvYzKmzvBW9z+VPueVXpjkgoa3C86w62njYm4mp/SL70hqF6eAhA
+	X0tBbiemqcn9aYcXr2Vl5MJSlRFB8ZGfc9J/FoA/efp7ovcWrz/+e/D9Bxs3TUmR
+	pfVm0x/yMeTgWEvI9IxzPw7A17WxcX6M9tt0wdsMxsXVdvNw1HBYtjQ7flK6ytDA
+	R8Djk4QX5vyYU4v6Jc+ulxEhdb5ixc8EiDQUQzlsTAD+o1gGs4F+Ua/o2IuoeKhg
+	ctPF8g==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4898cjrhhh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 11:18:36 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-74b29ee4f8bso4013786b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 04:18:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754391364; x=1754996164;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d/VeXe/l5rldBgts5OXynawp98C/Mo434FuRGJxE2aI=;
-        b=ii321SEcKNsVd9hkllUENYGqso1H7ZzNs/yvqJlnuiE9dRr029Qev4pGEJevlAefA/
-         XqXW0b43pn44175LWUifBifqPpV95flYLWcm7f5YNnzuEbIW1kiXKDlbsTs/EQilGm5P
-         ijoUL32AGn1kpBuVmAf805OInuIq7BzvwLty7fArxEBg4R3QNx10f8Gel6PdbB11SUDD
-         rlmKba5Xs/I2U4/NOz8x3BlA61++qo2W1cPGM0eE7LOpJqfApP1zFxrfu7f84IjPTdR5
-         aV3ObfWEgpTpSYitZcSGx8jchW+pjeWfQcahxZtT78inmLVKdIs1syWMWuihO0zkThNz
-         Aj1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVt+WWx7j4lgiOFqhyLw7PiZ6jWSQQcl45TqhnbNw2ASsEmQwMiHSNIJdrSoFE7onGHqU3kkGgbgvQ9y5ry@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTWNYChYDzYoWWIQKlCHxo7SXxeBwnEIeG+68uJgakPIG6Lsf/
-	csSv55TdYJiAVYNNnpuCM9JrbfqWdXmTbfU/RCELnfJgfnbVHzTYTi/BVKQNkUQC1sKp/E+S4ff
-	eeW19ToswxbJwGPwoBBbMFxa0uTiOh16H5pKwzpjNOQ==
-X-Gm-Gg: ASbGncs6t1ZHgYpJhyaXk2g7KkNH8/26CCUMurm7Jn6V1RQgzLArkKO4GrOjde807f8
-	M5VsKGMYDTXLBrL4arf2mPxMdqtOoXQtpVrU6Mc2CT8Bv7nHn4X2CJGBxmRp65TCzXd8MelbYsR
-	KBEQzcK1Ml9a8WHUXtX/6kg4WdcSq6fLgslOeFHmzGYnHl3totXD8UNSXazGTtoeeEwTRTptS6r
-	NCLGw==
-X-Google-Smtp-Source: AGHT+IEarYHV4A5AvxOCETGjSWGuUOG+XoZBKhChS1CnqUYMruWNrncS7P2ua9m9JrHio5YV96s8YEul/OYU+9TpaN0=
-X-Received: by 2002:a17:90b:37cd:b0:313:1769:eb49 with SMTP id
- 98e67ed59e1d1-321162037c2mr18706130a91.8.1754391364067; Tue, 05 Aug 2025
- 03:56:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754392715; x=1754997515;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+UtkDtN+fyKayeHp5S67YUnWVczmNgfytTivDi9O4Bs=;
+        b=wIbf0bYTkOMTl+3nJWoKwdeopQFe9UQV757YRQD2+aOppNQWg200eq7lX30v0KdL3K
+         H5FLtmFB8lBaU3rxc44pWerOaY04YOQUqUMhotqSEZw8T8vgmwSIhn2fcOAcfu4XsW8o
+         P8fdZZfKWDcTaetw4vulw/DLmglcp51P2nnJNX7LadYT/SdBv+ZEHXra4JCQGiPSrY1R
+         K/owJrvESyzytSvclJueLdw2gv+OIL9BTaLjmLymlKEl+JIpxTx3y9QtAAD0GEJHUWV4
+         XocvSHX52XvwLUm+ZdXzYYwPsxG84LYbq+jAJlMnLlwJRcB8unXbNRH+EBU5mYIj5zAR
+         T/pg==
+X-Forwarded-Encrypted: i=1; AJvYcCXeeGUsA/waYsDcxtQRS6YAG47nvCAu+srQhAqfXbhVLqe5fybbNiIqIgpDAikZcZmVfgBB9ftjeVzNXz5K@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5BAl+2CFUUrbS3zVcaIXOtiY6BGudeGoUkGjD0W23vu1DpLdv
+	VSG6V7eKnAfSnkD3OMZaM/bd+1LkYsqdvAxTthwNtfpZjxvb2t8amchYcK11HgWLxl9eI8aTHdB
+	nio+6NbZwAOiMNtC0F6hnwxIaKegeYyk0OLl+ni7PTp4thoT8awsNQKGIGlRhMOBzQDDR
+X-Gm-Gg: ASbGncvVgNah3GuDm1+lVJJZUrIH2mNmDC94CpmeGf3Fo9OjCo6XcivpSEdVKLRovkr
+	IhLoSKOVnUhQHzPelI77c15t2trmH539TElOzy5f342rdQJGlk9i+c1T5mV7IOR4FlNxlLkkDRe
+	n4TmB0L1OPOXSxBLoNk8gsn9X0B3RgnLY8cXn4WCFc7oRrnyPTLCVRi9ujGnCpIsYTARjujLmrN
+	4wcQxpZvkXnpY905L0udg0PxbiSxtBT4r3B2uAPY9RvERiBoi5IWWSWmb1qKl1VPbdm0hkQfbyN
+	uUVOUll/z9ZaC3S1ZM48zbg7KlDLa5rilLEcAc51FRecyfRhlOk6tnrslgAVW/05v4/KUls=
+X-Received: by 2002:a05:6a00:3910:b0:736:5f75:4a3b with SMTP id d2e1a72fcca58-76bec30c7ccmr17132058b3a.7.1754392715064;
+        Tue, 05 Aug 2025 04:18:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFGhrp3TbB/m3fibwOh2GnRn00juuzRFHGqHiZWS4PO3XswlF6ml/+1CbWee3207HS6IZGtw==
+X-Received: by 2002:a05:6a00:3910:b0:736:5f75:4a3b with SMTP id d2e1a72fcca58-76bec30c7ccmr17132019b3a.7.1754392714532;
+        Tue, 05 Aug 2025 04:18:34 -0700 (PDT)
+Received: from [10.92.173.209] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce6f6eesm12759553b3a.22.2025.08.05.04.18.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Aug 2025 04:18:34 -0700 (PDT)
+Message-ID: <d28a61ff-e40a-438d-afd7-5a4bc5cb3625@oss.qualcomm.com>
+Date: Tue, 5 Aug 2025 16:48:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250725100806.1157-1-jie.gan@oss.qualcomm.com> <20250725100806.1157-6-jie.gan@oss.qualcomm.com>
-In-Reply-To: <20250725100806.1157-6-jie.gan@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Tue, 5 Aug 2025 11:55:53 +0100
-X-Gm-Features: Ac12FXzy9skcWLeiWYzpEUCVA6zwaFefbT-SOpZQ5EoCrDUgJmWE8FSLWcnmKIg
-Message-ID: <CAJ9a7VgYTUsBn8=qtfwmkoS6Lib-8LgESLBDxXrRVqLnScLKZA@mail.gmail.com>
-Subject: Re: [PATCH v4 05/10] coresight: tmc: Introduce tmc_read_ops to wrap
- read operations
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, Jinlong Mao <jinlong.mao@oss.qualcomm.com>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, Jie Gan <quic_jiegan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] usb: dwc3: qcom: Implement glue callbacks to
+ facilitate runtime suspend
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com>
+ <20250610091357.2983085-3-krishna.kurapati@oss.qualcomm.com>
+ <20250623233211.aeehndz2nxqovepd@synopsys.com>
+ <a46b9870-207b-45a1-b3e6-5c13e1857640@oss.qualcomm.com>
+ <20250711232929.5oukafed5lnvsu2v@synopsys.com>
+ <27ff2c46-9402-47e6-b5ea-8a1f783220b1@oss.qualcomm.com>
+ <20250730012307.7rwh3lzz4ohd4mob@synopsys.com>
+ <ac7212fe-5c22-46cf-ac3b-ac6b93cb1384@oss.qualcomm.com>
+ <20250801010119.tvhb6tjlf4fq7zhg@synopsys.com>
+Content-Language: en-US
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250801010119.tvhb6tjlf4fq7zhg@synopsys.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=MNBgmNZl c=1 sm=1 tr=0 ts=6891e88c cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=SGoEfCKqnJIlJZnP-VQA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: F3B5yI511jpFx6m5x-IJLEOd_Z9nr-Rr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA4MCBTYWx0ZWRfXzbYb9uEWmE4O
+ H1p4CrIYuPpLh5PJ8SKQuMnuZZOqvTZNrwi4zPXuATQGxq9nVFTFkW3k/DvbCCv8OWUus3qoWrl
+ MsqSKPi2cXnwLFqHUjO7VEsgManHA5L8SPpZGVmU0e01IMUdIiLV1/cFhgXCRERhRzWmnwZhYST
+ rTdD5xMCrfS9uWsy0DMVtBAruBeo0qA4eGWctK1NtrHHex4PpqR8mU+WeMqx5WILaRz0ACICGhM
+ DgmuqI68acWULUUSrWVGRunnfJZYs8brZJ25N+VCGXksNkw+R9d7ulGbOgG4WVzVcQrX1xEmoHv
+ lfy9oiZdbgWHPVUaMzOQ/ZLOQ+2bp8lMZ6phBDEpvD2cnu3KrReLdN9cAKDhh9On5Rf7EJLLX9i
+ Blxrdyg4HPR5VXgyvC33aja1/B3qF15yajonNsQonz8RGwqaTwkG/78yZCnVolqb2asRAVwS
+X-Proofpoint-GUID: F3B5yI511jpFx6m5x-IJLEOd_Z9nr-Rr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_03,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=910 suspectscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050080
 
-Hi
 
-On Fri, 25 Jul 2025 at 11:08, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
->
-> Introduce tmc_read_ops as a wrapper, wrap read operations, for reading
-> trace data from the TMC buffer.
->
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> ---
->  .../hwtracing/coresight/coresight-tmc-core.c  | 50 +++++++++----------
->  drivers/hwtracing/coresight/coresight-tmc.h   | 17 +++++++
->  2 files changed, 40 insertions(+), 27 deletions(-)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-core.c b/drivers/hwtracing/coresight/coresight-tmc-core.c
-> index 4d249af93097..f668047c5df4 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-core.c
-> @@ -232,17 +232,10 @@ static int tmc_read_prepare(struct tmc_drvdata *drvdata)
->  {
->         int ret = 0;
->
-> -       switch (drvdata->config_type) {
-> -       case TMC_CONFIG_TYPE_ETB:
-> -       case TMC_CONFIG_TYPE_ETF:
-> -               ret = tmc_read_prepare_etb(drvdata);
-> -               break;
-> -       case TMC_CONFIG_TYPE_ETR:
-> -               ret = tmc_read_prepare_etr(drvdata);
-> -               break;
-> -       default:
-> +       if (drvdata->read_ops)
-> +               ret = drvdata->read_ops->read_prepare(drvdata);
-> +       else
->                 ret = -EINVAL;
-> -       }
->
->         if (!ret)
->                 dev_dbg(&drvdata->csdev->dev, "TMC read start\n");
-> @@ -254,17 +247,10 @@ static int tmc_read_unprepare(struct tmc_drvdata *drvdata)
->  {
->         int ret = 0;
->
-> -       switch (drvdata->config_type) {
-> -       case TMC_CONFIG_TYPE_ETB:
-> -       case TMC_CONFIG_TYPE_ETF:
-> -               ret = tmc_read_unprepare_etb(drvdata);
-> -               break;
-> -       case TMC_CONFIG_TYPE_ETR:
-> -               ret = tmc_read_unprepare_etr(drvdata);
-> -               break;
-> -       default:
-> +       if (drvdata->read_ops)
-> +               ret = drvdata->read_ops->read_unprepare(drvdata);
-> +       else
->                 ret = -EINVAL;
-> -       }
->
->         if (!ret)
->                 dev_dbg(&drvdata->csdev->dev, "TMC read end\n");
-> @@ -291,13 +277,8 @@ static int tmc_open(struct inode *inode, struct file *file)
->  static ssize_t tmc_get_sysfs_trace(struct tmc_drvdata *drvdata, loff_t pos, size_t len,
->                                    char **bufpp)
->  {
-> -       switch (drvdata->config_type) {
-> -       case TMC_CONFIG_TYPE_ETB:
-> -       case TMC_CONFIG_TYPE_ETF:
-> -               return tmc_etb_get_sysfs_trace(drvdata, pos, len, bufpp);
-> -       case TMC_CONFIG_TYPE_ETR:
-> -               return tmc_etr_get_sysfs_trace(drvdata, pos, len, bufpp);
-> -       }
-> +       if (drvdata->read_ops)
-> +               return drvdata->read_ops->get_trace_data(drvdata, pos, len, bufpp);
->
->         return -EINVAL;
->  }
-> @@ -769,6 +750,18 @@ static void register_crash_dev_interface(struct tmc_drvdata *drvdata,
->                         "Valid crash tracedata found\n");
->  }
->
-> +static const struct tmc_read_ops tmc_etb_read_ops = {
-> +       .read_prepare   = tmc_read_prepare_etb,
-> +       .read_unprepare = tmc_read_unprepare_etb,
-> +       .get_trace_data = tmc_etb_get_sysfs_trace,
-> +};
-> +
-> +static const struct tmc_read_ops tmc_etr_read_ops = {
-> +       .read_prepare   = tmc_read_prepare_etr,
-> +       .read_unprepare = tmc_read_unprepare_etr,
-> +       .get_trace_data = tmc_etr_get_sysfs_trace,
-> +};
-> +
->  static int __tmc_probe(struct device *dev, struct resource *res)
->  {
->         int ret = 0;
-> @@ -818,6 +811,7 @@ static int __tmc_probe(struct device *dev, struct resource *res)
->                 desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_BUFFER;
->                 desc.ops = &tmc_etb_cs_ops;
->                 dev_list = &etb_devs;
-> +               drvdata->read_ops = &tmc_etb_read_ops;
->                 break;
->         case TMC_CONFIG_TYPE_ETR:
->                 desc.groups = coresight_etr_groups;
-> @@ -831,6 +825,7 @@ static int __tmc_probe(struct device *dev, struct resource *res)
->                 mutex_init(&drvdata->idr_mutex);
->                 dev_list = &etr_devs;
->                 INIT_LIST_HEAD(&drvdata->etr_buf_list);
-> +               drvdata->read_ops = &tmc_etr_read_ops;
->                 break;
->         case TMC_CONFIG_TYPE_ETF:
->                 desc.groups = coresight_etf_groups;
-> @@ -839,6 +834,7 @@ static int __tmc_probe(struct device *dev, struct resource *res)
->                 desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_FIFO;
->                 desc.ops = &tmc_etf_cs_ops;
->                 dev_list = &etf_devs;
-> +               drvdata->read_ops = &tmc_etb_read_ops;
->                 break;
->         default:
->                 pr_err("%s: Unsupported TMC config\n", desc.name);
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-> index 3cb8ba9f88f5..2ad8e288c94b 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc.h
-> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
-> @@ -223,6 +223,8 @@ struct etr_buf_node {
->         struct list_head        node;
->  };
->
-> +struct tmc_read_ops;
-> +
 
-declare the entire structure here rather than later.
+On 8/1/2025 6:31 AM, Thinh Nguyen wrote:
+> On Wed, Jul 30, 2025, Krishna Kurapati wrote:
+>>
+>>
+>> On 7/30/2025 6:53 AM, Thinh Nguyen wrote:
+>>> On Sun, Jul 13, 2025, Krishna Kurapati wrote:
+>>>>
+>>>>
+>>>> On 7/12/2025 4:59 AM, Thinh Nguyen wrote:
+>>>>> On Tue, Jun 24, 2025, Krishna Kurapati wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 6/24/2025 5:02 AM, Thinh Nguyen wrote:
+>>>>>>> On Tue, Jun 10, 2025, Krishna Kurapati wrote:
+>>>>>>>> On Qualcomm DWC3 dual-role controllers, the conndone/disconnect events in
+>>>>>>>> device mode are generated by controller when software writes to QSCRATCH
+>>>>>>>> registers in Qualcomm Glue layer rather than the vbus line being routed to
+>>>>>>>> dwc3 core IP for it to recognize and generate these events.
+>>>>>>>>
+>>>>>>>> UTMI_OTG_VBUS_VALID  bit of QSCRATCH_HS_PHY_CTRL register needs to be set
+>>>>>>>> to generate a connection done event and to be cleared for the controller to
+>>>>>>>> generate a disconnect event during cable removal. When the disconnect is
+>>>>>>>> not generated upon cable removal, the "connected" flag of dwc3 is left
+>>>>>>>> marked as "true" and it blocks suspend routines and for that to happen upon
+>>>>>>>> cable removal, the cable disconnect notification coming in via set_role
+>>>>>>>> call need to be provided to the Qualcomm glue layer as well.
+>>>>>>>>
+>>>>>>>> Currently, the way DWC3 core and Qualcomm legacy glue driver are designed,
+>>>>>>>> there is no mechanism through which the DWC3 core can notify the Qualcomm
+>>>>>>>> glue layer of any role changes which it receives via role switch. To
+>>>>>>>> register these glue callbacks at probe time, for enabling core to notify
+>>>>>>>> glue layer, the legacy Qualcomm driver has no way to find out when the
+>>>>>>>> child driver probe was successful since it does not check for the same
+>>>>>>>> during of_platform_populate.
+>>>>>>>>
+>>>>>>>> Hence implement the following glue callbacks for flattened Qualcomm glue
+>>>>>>>> driver:
+>>>>>>>>
+>>>>>>>> 1. set_role: To pass role switching information from drd layer to glue.
+>>>>>>>> This information is needed to identify NONE/DEVICE mode switch and modify
+>>>>>>>> QSCRATCH to generate connect-done event on device mode entry and disconnect
+>>>>>>>> event on cable removal in device mode.
+>>>>>>>>
+>>>>>>>> 2. run_stop: When booting up in device mode, if autouspend is enabled and
+>>>>>>>> userspace doesn't write UDC on boot, controller enters autosuspend. After
+>>>>>>>> this, if the userspace writes to UDC in the future, run_stop notifier is
+>>>>>>>> required to enable UTMI_OTG_VBUS_VALID of QSCRATCH so that connect done
+>>>>>>>> event is generated after run_stop(1) is done to finish enumeration.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+>>>>>>>> ---
+>>>>>>>>      drivers/usb/dwc3/dwc3-qcom.c | 82 ++++++++++++++++++++++++++++++++----
+>>>>>>>>      1 file changed, 73 insertions(+), 9 deletions(-)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+>>>>>>>> index ca7e1c02773a..d40b52e2ba01 100644
+>>>>>>>> --- a/drivers/usb/dwc3/dwc3-qcom.c
+>>>>>>>> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+>>>>>>>> @@ -89,6 +89,12 @@ struct dwc3_qcom {
+>>>>>>>>      	bool			pm_suspended;
+>>>>>>>>      	struct icc_path		*icc_path_ddr;
+>>>>>>>>      	struct icc_path		*icc_path_apps;
+>>>>>>>> +
+>>>>>>>> +	/*
+>>>>>>>> +	 * Current role changes via usb_role_switch_set_role callback protected
+>>>>>>>> +	 * internally by mutex lock.
+>>>>>>>> +	 */
+>>>>>>>> +	enum usb_role		current_role;
+>>>>>>>
+>>>>>>> Can we just track the current role through dwc3 core instead of an
+>>>>>>> addition field in the glue?
+>>>>>>>
+>>>>>>
+>>>>>> Core caches only mode. We need ROLE NONE to identify cable connect. So
+>>>>>> adding that in glue to keep track.
+>>>>>>
+>>>>>
+>>>>> The controller is always either host or device, not somewhere in
+>>>>> between. You're using ROLE_NONE to indicate connection, which is a
+>>>>> separate state.
+>>>>>
+>>>>
+>>>> Yes, but there is no flag that indicates that in dwc structure today. Also
+>>>> since only dwc3-qcom needs it at the moment, I added that role info in glue
+>>>> layer.
+>>>
+>>> How are you using ROLE NONE? Do you send a role-switch call to "none" to
+>>> indicate disconnect? Let's not do that. Currently the dwc3 driver would
+>>> switch back to the default mode if "none" is selected, but this is not
+>>> well defined and implementation specific. It can be no-op and would not
+>>> violate the interface.
+>>>
+>>> The role-switch interface should only be used for role-switching and not
+>>> connection/disconnection.
+>>>
+>>>>
+>>>>> I feel this should be tracked separately for clarity. The dwc3 also
+>>>>> tracks the connection state, can we use that?
+>>>>>
+>>>>
+>>>> Are you referring to the "connected" flag in DWC structure ? I see that it
+>>>> indicates connection status only in gadget mode.
+>>>>
+>>>
+>>> Yes, that flag is only for gadget.
+>>>
+>>> Can you provide more info of the setup? Is there a type-c controller or
+>>> phy that can detect attach/deattach? Or it only propagates to the usb
+>>> controller?
+>>
+>> My response didn't show up on lore since the mail client I used before sent
+>> the message in HTML format. So resending my response again.
+>>
+>> Hi Thinh,
+>>
+>>   Yes this is for cases where role switching is present (either with a Type-C
+>> controller, USB-conn-gpio, or a glink based role-switch).
+>>
+>>   Actually the requirement is as follows:
+>>   1. When in device mode, if we receive a cable disconnect, we need to clear
+>> OTG_VBUS_VALID bit of QSCRATCH register in glue address space.
+>>   2. When cable is connected in device mode, we need to set the
+>> OTG_VBUS_VALID bit of QSCRATCH register in glue address space.
+>>   3. When the runstop is set back after a suspend rotuine, then we need to
+>> set  OTG_VBUS_VALID bit of QSCRATCH register in glueaddress space.
+>>
+>>   To take care of all the 3 scenarios above, the set_role and run_stop
+>> notifiers have been added.
+>>
+>>   The role info propagates only from core to glue. It is not sent to the phy.
+>>
+> 
+> When does ROLE NONE occur? Did you have the type-c driver set the role
+> switch to "none" indicate disconnect?
+> 
+> The vbus-valid is only for gadget, and you only care about the
+> OTG_VBUS_VALID right? Can we just use the dwc3->connected flag? Just
+> make sure that it's cleared on role-switch, which should be the case
+> because we always perform soft-disconnect on gadget unbind, and make
+> sure to set vbus-valid on pullup or gadget binding. Is there some
+> scenarios that dwc->connected does not cover?
+> 
 
->  /**
->   * struct tmc_drvdata - specifics associated to an TMC component
->   * @pclk:      APB clock if present, otherwise NULL
-> @@ -259,6 +261,7 @@ struct etr_buf_node {
->   *              Used by ETR/ETF.
->   * @etr_buf_list: List that is used to manage allocated etr_buf.
->   * @reading_node: Available buffer for byte-cntr reading.
-> + * @tmc_read_ops: Read operations for TMC device.
->   */
->  struct tmc_drvdata {
->         struct clk              *pclk;
-> @@ -290,6 +293,20 @@ struct tmc_drvdata {
->         struct tmc_resrv_buf    crash_mdata;
->         struct list_head        etr_buf_list;
->         struct etr_buf_node     *reading_node;
-> +       const struct tmc_read_ops       *read_ops;
+Hi Thinh,
 
-probably should be named sysfs_read_ops to be consistent with the
-perf/sysfs differentiation within the rest of the structure
+  In case of just a cable disconnect in device mode (and default dr mode 
+is peripheral only), there would be no role switch. In that scenario, 
+connected flag would stay "true" even after removing cable. In that 
+case, we can generate disconnect interrupt only by clearing this 
+VBUS_VALID bit and inturn the suspend will succeed. So wanted to use 
+notification from set_role which would cover all cases:
+1. cable disconnect/cable connect
+2. Role switch from host->device and device->host
 
-> +};
-> +
-> +/**
-> + * struct tmc_read_ops - read operations for TMC and its helper devices
-> + * @read_prepare:      prepare operation.
-> + * @read_unprepare:    unprepare operation.
-> + * @get_trace_data:    read operation.
-> + */
-> +struct tmc_read_ops {
-> +       int (*read_prepare)(struct tmc_drvdata *drvdata);
-> +       int (*read_unprepare)(struct tmc_drvdata *drvdata);
-> +       ssize_t (*get_trace_data)(struct tmc_drvdata *drvdata, loff_t pos,
-> +                                 size_t len, char **bufpp);
->  };
->
->  struct etr_buf_operations {
-> --
-> 2.34.1
->
-
-with the above changes:-
-
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Regards,
+Krishna,
 
