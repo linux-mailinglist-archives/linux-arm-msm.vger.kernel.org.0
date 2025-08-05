@@ -1,162 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-67757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4106B1B0F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:25:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFA71B1B107
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 883F31619CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:25:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22E40189E7CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:29:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59DC25A2CC;
-	Tue,  5 Aug 2025 09:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E242A25F780;
+	Tue,  5 Aug 2025 09:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1IWKx7s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hPJBcL5A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E42183CC3;
-	Tue,  5 Aug 2025 09:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8DA25A2D2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 09:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754385947; cv=none; b=g1gnUU2B2YQ22iQsv04Xq7xP7x6EyR+qfOmqFwClfLBASxwuTzB2DZbZrE9Eg8zzXFcXvjOB9o3KNUsY0cE28HzEHNg1Hnby+8I/sAfIA6u+n15l2sBtmKlbf4stWMIc5HWHIsrVaGaFzKepGrbjL1xjvhux3eakLH+uX4loRgk=
+	t=1754386149; cv=none; b=g/OhUvviAKeEKpJFMqwhrJPRtu24wGOn4tbbQP9gKc2qqiFmKdT3Re/IgdB7qeHzlwI1MEGmf7z/Rst0JYOeD4qhXsLIkaf4RO8QZkRhL4LbhyosxYBt/1FjlC/HE2KDYHEeTna9NE3UCaK6TDLfrNvXrUmcbbgZNJRS4hL/X6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754385947; c=relaxed/simple;
-	bh=+m+N+iT9UFauBP/qvow0voelhh0Op+NGM9/wRMfrGD8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gD4+YD8K+aKJOjGK/L6BWB+hwHoKTZait8afoelaqSJalsUAP68sEe9KK6T/C2SSY9QzVuVmiGeDggVRN3hy8HgSvWGEyBwtphIh0DG9yQQokH+j8SiuydhqCYqsv0GL4+lV+iDOakXn493lB9QHk5d3oe8G9ulXXnLiHfrp3v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1IWKx7s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8FDC4CEF0;
-	Tue,  5 Aug 2025 09:25:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754385947;
-	bh=+m+N+iT9UFauBP/qvow0voelhh0Op+NGM9/wRMfrGD8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=p1IWKx7soj5/7c3n2Dep7d67OTvNgyQxpu3Kvp/V4+/uJg0S7H+7QAlafArPD6PPl
-	 k02dODygGWvoNuZO3xgweCCXQhlOovvD2rh0IIgD+iZrZdqoXyOr/EYEoumlNc9ZO4
-	 s6sJnDqihPRHxaE3yPd2axZZcL5L81JXVI3K9qXB2KtytkAjAom1aFJ4falvMwNM3c
-	 ycl5tXalyQTDHOKNR4DWnIRF/4F+xHJ0g1/r8d9AqgHQbSnXy5uB2GsZvq3cxVksvr
-	 qeQ4UE+IloUdX5CRnQmMLfCoUvHRQVH0mMmUpYtGkyQUTiLuWve9w17vZH13yodBwT
-	 aCdDTjXknz6bw==
-Message-ID: <8b023e56-435b-43df-8b15-c562a494e06f@kernel.org>
-Date: Tue, 5 Aug 2025 11:25:40 +0200
+	s=arc-20240116; t=1754386149; c=relaxed/simple;
+	bh=Nu/yo03bxwSukuvoXb5drj/qxdTuJgGHnF93xhQ2c5o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=getE212FFywPkW84yhwJY34qmfvtrgg6ZioUb43S2vUIO1fCJF+phNdtqBZlclYk2NzhhCd8NWuZPzH6nhmPx8lT9wgmC0drUH5LbmHq/1qhxUKbNuGnEMqQqvrpQkBNXIeJp805w+potkas/pF6JHDepMPeJKrzU5+yI4N9Y74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hPJBcL5A; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b792b0b829so4156733f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 02:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754386146; x=1754990946; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UF5Zt9voQATioY9RRbmU98WhyD6EdNV9XLQAXiUOGfY=;
+        b=hPJBcL5AcZ+KxOtM6+HrkeUPZcSRD5dWCApPCvP5moScUD8SP4XuMoJcWs3GCLsAAs
+         xxMZPNQuVDQbW+xOiOWElJJsD6gt8S+aNybf09SxI9CYMyI3+J/4X7N/Ji/h+2d0th5V
+         d9ktQbFf5LQNzr+EaXhMSgfTbb2rfNI5LvSAKC5J4e3gNfKo0k9MIZ0/W5KypABb2s33
+         YbjG6bByWzlV4oUsklP8GI1qN9sGLi8x3sjKcpJv1bIMRL1OSB8oYOi59yVCs2JJAwLu
+         /zvdySkSPDGgacdllL2J5Gpry/44y1lXxh8otx/5TgUN1wYy5phQIDdjcJ2+/jjbquAf
+         ilXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754386146; x=1754990946;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UF5Zt9voQATioY9RRbmU98WhyD6EdNV9XLQAXiUOGfY=;
+        b=BThyaIrhbeQ/aESR5Ll/z5Tj7Ns7r1inb5MECLT76HOPtNSsHX9fLtRRKVsGcKww/i
+         QvyM8/cIkm0NBBc8kcrSxfVlCam2aQuj5PvfAj5FQS/H8r6y1yt5cLnk1zKUszH+r84I
+         VCufHl4keiZdM1S2sbcSG5N11q3Iy5U4hneoHEslGUTZwK8D2X4OZU0SIgypGqOzdaNG
+         nlsYm8ojlz2rhRiUtenwWd4xa13mdmXBLH4qz0IjXIzvltsAWXlb4MEUYONhia+NpAYg
+         ZzBhHmHtWu43bmbIqZ9sz8sEvRIufMimhj0jtMomIQKA27O7jCXppySG5auU1ChX9Nyf
+         rMjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXVD+nLOIrmjsKPDv+UpmGmbY1/QZjBudHKkVp4tZns/mCzW08LC/822OqOWNN2OPW6uLwIFGtv30JWWOK5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUicEL3MNJjz0dQNyMv340rc1BqMJVjLAo+LBT71ivtF77yV45
+	T7YCFdL6fDxthmF7TkmW+yvZDJ6Lv/UuUziBnTHlgPMfSiASsMLyiPUS6O9rBeKaTXo=
+X-Gm-Gg: ASbGncvrTg9AADMbxvzbfzg8jIxgS4HkljwfcgQg/grSakCWP2Y4+1CIj91JCdDHqHt
+	eFjzpvwnlNslMm77FVjHIaM5Xd5wx9yIBqHxHT/BhOg5v3xlLLS3LZu+IBd+PpuIXWCw/ENSg9g
+	9hw0DeZ63cI/eHh08w+HGY6mtR4Jh1lidBkWa3VC5rXFbBfOeyBfwdhSIH02dOYxYk2HgsxtP0u
+	uW6Pq+7PRUvHi/HKYJ+BoJE8/mG8He3TFq5XAdWGN1bhp+bOcNbqJpsPkZg6OnDjcOoD3iNNgfg
+	GyVeWuu2liTmk2q8OiE4K7fVi6a2FN1GkaTJYrlQU5b9UNBrrXXxmD0MRYcTC8A/oZ+7SyErccz
+	7R5fcyEjFIKDhq9RIWK7fn/VcCtg=
+X-Google-Smtp-Source: AGHT+IG+S8EHXkDixCfKjiD9TLmPOVJSu9nB/gnFswyFBWmlaqpq9SDKhuT/ueldL0WcRP6mU/8Ixw==
+X-Received: by 2002:a5d:5d0e:0:b0:3b7:9350:44d4 with SMTP id ffacd0b85a97d-3b8d946b3d7mr10399692f8f.11.1754386146140;
+        Tue, 05 Aug 2025 02:29:06 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3b79c47ae8esm18309695f8f.61.2025.08.05.02.29.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 02:29:05 -0700 (PDT)
+Date: Tue, 5 Aug 2025 12:29:00 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Val Packett <val@packett.cool>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: mdt_loader: Allow empty section headers in
+ mdt_header_valid()
+Message-ID: <5d392867c81da4b667f61430d3aa7065f61b7096.1754385120.git.dan.carpenter@linaro.org>
+References: <cover.1754385120.git.dan.carpenter@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Remove SDR104/SDR50
- broken capabilities
-To: Sarthak Garg <quic_sartgarg@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Adrian Hunter <adrian.hunter@intel.com>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
- quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
- quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
-References: <20250801084518.2259767-1-quic_sartgarg@quicinc.com>
- <20250801084518.2259767-5-quic_sartgarg@quicinc.com>
- <69f2807c-9a28-4b31-97cc-2756f0ab9fd4@kernel.org>
- <c7e36755-9255-4209-9d53-20077bd1d3ba@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <c7e36755-9255-4209-9d53-20077bd1d3ba@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1754385120.git.dan.carpenter@linaro.org>
 
-On 05/08/2025 11:19, Sarthak Garg wrote:
-> 
-> 
-> On 8/1/2025 2:32 PM, Krzysztof Kozlowski wrote:
->> On 01/08/2025 10:45, Sarthak Garg wrote:
->>> The kernel now handles level shifter limitations affecting SD card
->>> modes, making it unnecessary to explicitly disable SDR104 and SDR50
->>> capabilities in the device tree.
->>>
->>> However, due to board-specific hardware constraints particularly related
->>> to level shifter in this case the maximum frequency for SD High-Speed
->>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
->>> card in HS mode. This is achieved using the max-sd-hs-frequency property
->>> in the board DTS.
->>>
->>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 1 +
->>>   arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 1 +
->>>   arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 1 +
->>>   arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 3 ---
->>>   4 files changed, 3 insertions(+), 3 deletions(-)
->>>
->>
->> This will break MMC for all of the users and nothing in commit msg or
->> cover letter explains that or mentions merging strategy.
->>
->> Exactly this case is covered by your internal guideline, no? Please read it.
->>
->> Best regards,
->> Krzysztof
-> 
-> Just to make sure I’m addressing the right concern — are you primarily 
-> worried about the introduction of the max-sd-hs-frequency property in 
-> the board DTS files, or about the removal of the sdhci-caps-mask
-> from the common sm8550.dtsi?
+The mdt_header_valid() function checks all the members for the elf
+header to ensure that reading the firmware doesn't lead to a buffer
+overflow or an integer overflow.  However it has a bug, in that it
+doesn't allow for firmware with no section headers and this prevents
+the firmware from loading.
 
+I know from bug reports that there are firmwares which have zero
+section headers, but the same logic applies to program headers.  An
+empty program header won't lead to a buffer overflow so it's safe to
+allow it.
 
-Apply this patch and test MMC. Does it work? No. Was it working? Yes.
+Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
+Cc: stable@vger.kernel.org
+Reported-by: Val Packett <val@packett.cool>
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+---
+ drivers/soc/qcom/mdt_loader.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 0ca268bdf1f8..d91c5cb325e3 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -32,14 +32,14 @@ static bool mdt_header_valid(const struct firmware *fw)
+ 	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
+ 		return false;
+ 
+-	if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
++	if (ehdr->e_phentsize && ehdr->e_phentsize != sizeof(struct elf32_phdr))
+ 		return false;
+ 
+ 	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
+ 	if (phend > fw->size)
+ 		return false;
+ 
+-	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
++	if (ehdr->e_shentsize && ehdr->e_shentsize != sizeof(struct elf32_shdr))
+ 		return false;
+ 
+ 	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+-- 
+2.47.2
 
-Best regards,
-Krzysztof
 
