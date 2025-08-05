@@ -1,221 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-67772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2DDFB1B1E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:26:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE963B1B1FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:28:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1577F17BB89
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:26:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AC1F164B5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:28:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF4A726A1AF;
-	Tue,  5 Aug 2025 10:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5E3156237;
+	Tue,  5 Aug 2025 10:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HH5EKlCu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1/VhBDW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C6A21D5BC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58922580F1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754389566; cv=none; b=Z6ILZR8y352QsEjKcvnNd6YLhD3mapY8oE1I9hSuab5xsH1+M0jaNbQZvVpVwKfKLOHfUuejNsbO6F8QhHaUA88tEBAWJ3r5wIwADxYoSZdmsApKVXNprWbrEFtt9bwlZsprX01/f8U8JKbiJFX82rWeXtKnvXf/mM3Wrzir/4o=
+	t=1754389682; cv=none; b=arXFnNkCqSVo35OroRAHEBHbyoSUMdeA+KsXWTOvcF3vuv+sk+rkf2xjwWRGMS5JWDE5NjwaEIjvDKcBSv3v4zj6svEHLu7B21+nM13bllznzpTUEAfQbnpLKF5A8MZjkZ5EK4muSCDQAD6+0xpk/rGgXZm/R9G6xf2JIeLOrjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754389566; c=relaxed/simple;
-	bh=hqtLDqqETlGoO03aKynYn/0eKNUxW23Fq0iyoxd0QkQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AyXR6oUUNO5AnSe3v5odF2nCbcpBquGBgRVaFw2kCmrJh9UocdK8kWyDMfIrW4RstUkqIdpARNY4jJubSvoJAJtyEvk264PSlyhvgTvDkL99ntZPDNJXwn1r4nb+dnJkWSpy3qtsRBMaZDCbtA0ZKJxmER+fCKewHZnQI9bKr90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HH5EKlCu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5756iiOw012382
-	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 10:26:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+iReZqZKlVGY8y7fQQol3sCZdRqJvzzuk3L/8zG3n1M=; b=HH5EKlCuPgatJRIU
-	5Zibas1QYow0eYSJ0f7wOnVI2bp9iHdaVM3aSCbzqDFhbFsbupdo+0ow3yPvMCEL
-	tIu4FqxhSMbgP3A1KbUMJIXf2R4zHpN9YAif0QsM2sxMKYUDIETPSyiiazoVRrMG
-	o7ZzbL6o6Z6B7PZg7l7TklKCZza8iCjlCYDtO5bhnPSBQsXMUzYsHzS7DpnzUfM6
-	iNEx2MQ2SspfYn3lcph5Aw7T6Qko90TfocMgo+geoLRThyHm8Y5vrmCKG6tR1W7q
-	ymeMHVRAeF1xTEgcP9OBNl/lSdeJHAKYbBDv+16YmuqYmtwcsZUFIjevYN5qMra+
-	/E0pHw==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4898cjrd9f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 10:26:04 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-76be7fe3d65so6624679b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:26:04 -0700 (PDT)
+	s=arc-20240116; t=1754389682; c=relaxed/simple;
+	bh=qdYBwGiQPyTlzeMzpPG4YNqV6VehzXxiooDuDvvIuGI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HGtBnwJg/eRRFqkVCwj6fn93G7X/QZv6m5/Wwo5cESGHXfYY+fhZRSwcb5TjXkYKenMm1I+Devr0BfK/wjfOKjlRR5lI8EHwSt+eTIp0XfOOSEioP/ALCJmTKKbprlHdanG4oAJ/QE3UBnJX5T5BPf7enlEOFGmWhV41VhBeNLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1/VhBDW; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-615622ed70fso8242183a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:28:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754389679; x=1754994479; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CuKxFEasqrRga1svukmOdXqoUcSU7DlhJE2c0KdevIw=;
+        b=V1/VhBDWXVcvvpdEhU6zNhqwN8UWZP/vH6g4dzuMNVT1rZQhNZFFcMdo7ciHPuCrgd
+         1WAU3sesj1TQv7ioByjyeNmvMqeWW5MJqFdshXjNIWlEHFn1yWHPFyxH/CH27dGTVVhl
+         UZl8J4t3BEnjZgnTA7diCoarbj1Lj03UFnrQ4DtNV4vP5qMT1BvPQL3TMqhMqH5XkAvA
+         Wz0G5NP2yPQ7v7BgJbRLS8qgq9NAv0TsteUiXAchvpa0Or3RdFnIrFTY2B5u9Y3RWDR/
+         kzuLTEeXuwzq6UZQCNCiVxvmx7tXu9u6Xcm70PM2VhLPVqTscGWA28tOzo/WkKXXDOEY
+         py8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754389563; x=1754994363;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+iReZqZKlVGY8y7fQQol3sCZdRqJvzzuk3L/8zG3n1M=;
-        b=F+ssVfwNOpgAUjoyygk3VILhAXbakgqxPkaO4DARJg3wb6O3Dqdwwt2zT5gP0FeYz2
-         btYH2qzM/IWkANYoHXfsacXrlykvULtSMfh7iNp/bBLRAmfvRRQFTTB7KX2md+RdZDEw
-         6dmJRtdJbgKq/nCeSS/4n7hOsu1uTv18jmbmT8FD51brpr8VqfijXdYe9NQ8wjdao4cG
-         cS0fqBhJ5KLRi0OhK6DpqkDcNUAGc2DQKDDGVEKp8XCD3DC/xNvTlVhMbpff/I+g50kF
-         c2FwwSYo42ZFRLtLPweuy+beNepIKBE6fqLNeb0JFTlZSoXOHvHLC/mkV4/M4lzzCi5D
-         NgLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUiMUj+9QnUKwkl42GRxvOU2f3Chqn0XNv+YVrCOw4PxG9GOzgQ/LQeS5Y7QLgbVe7sA0yWZ0xbXNbWxCUb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9UQ+oJ/tcq/tp03fL4FqJSlRx/t9ecqqXyxyqr92Xo9g/salg
-	T3Tac1Yn6Umt6SB4iz/GBFlDp13iAS+diVM0kLl9KT4cP78WDv4jhy6WeNnVX9wsataf6eJopH9
-	ACgNU1ok8dYSb7dDs7qvNLhovdhZ3R2vrkGryx3bhyGE4JVBWdy32fC3AfwjabDvmeRsp
-X-Gm-Gg: ASbGnctPZhCcEIHloBe6NvtpdSFUwcnsRSK5isnUHYh94PyNKb+ghAIVlB9pbnqBSCP
-	aLuTcP7Hd379Mvx0nhnDtshdfciQymF6CYJUMgCckHHibVE0VQHwVnfgWBSLpwVqBYkSeZ99brn
-	D+jVJYYEP2ZKhItn7BUSJ1VT4WB4CKePLEAXf+MRRf+BrAdC96M1FBJj/WuGhkE9CQzwNLbGYa2
-	DaQIvGCdZVQZdkdv5lfH4qDBnOCosu11Ijc/GErEsS+Axp8uoutRxouvPABTxbETMraFFCUe4zr
-	FFb0d2TY7ssY9dxGg3DCaXR988uy8Wcek7vLXGKws028RU3+W5ScaDlqkm26S0GBIg3S8Ixkmd+
-	I6z11uzemDVJ0Rm8KMN5YjWdt
-X-Received: by 2002:a05:6a00:2388:b0:749:bb6:3a8e with SMTP id d2e1a72fcca58-76bec303a23mr13892094b3a.1.1754389563415;
-        Tue, 05 Aug 2025 03:26:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESg1QFvv8hqMydjVjeIPEnGudPbS1WSJiVGghbXmiPTDC16eHCWIdklQfsaZxXv+e/uQi36Q==
-X-Received: by 2002:a05:6a00:2388:b0:749:bb6:3a8e with SMTP id d2e1a72fcca58-76bec303a23mr13892069b3a.1.1754389562974;
-        Tue, 05 Aug 2025 03:26:02 -0700 (PDT)
-Received: from [10.133.33.195] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbcfa0sm12547422b3a.75.2025.08.05.03.25.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Aug 2025 03:26:02 -0700 (PDT)
-Message-ID: <bbbec517-cc2b-444b-b76b-a4930902d667@oss.qualcomm.com>
-Date: Tue, 5 Aug 2025 18:25:57 +0800
+        d=1e100.net; s=20230601; t=1754389679; x=1754994479;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CuKxFEasqrRga1svukmOdXqoUcSU7DlhJE2c0KdevIw=;
+        b=dkXZgoUwAvU1FZZOL8D2FaiWAll004ZHV6EfkNN4cZTWEOIYUv3CYrVSQTjKnz9X+D
+         H8Dc3NnmsgRbu63QP8J1JePH4JWym+R+mU9Y5moZ4zJGqpLbRQdZ4nwf9Lm6ffCfUKfm
+         b/5FPDaJYyYzReFPLaiL6cH2ofvhDgCk839ZS4uJ1huoDZOZg6upP2alu60OWTLe6NsB
+         waI/l5puWN+5Bl1Ixjli0icvrKUqz+V+HQLUh2kEc9jUuQvsJPhVPISn+4mQNvLsvfmM
+         dyJRMovAVwEzoKFk7a44OAs2tgqeY8GfL0Mv9XCfwV5/LBS0vQV4ZW+1MCyHglD1TCDr
+         QSEg==
+X-Forwarded-Encrypted: i=1; AJvYcCW4daqKSYlT9Fqt0DHrfdFsKcrNGwhe2JVVN2y8VLDC4xvoda9jHRNew8XNFcp3qkbu0kW6HgMswn9WTSGZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgU4Oddl7jesRSTk6Y+Npx4Zrrs7B9VGp5foTZFCIHGKlFF/kb
+	gxZzbScy0PlrigGj5njcSl3g/hsQu5KIETejzWpMTzWSCyaVjUjS3y4W6hCjPBepXkE/WIh9JPc
+	vHTATszQOnSBKWDrLO3TqoTPfQWmTkbIfkIx+Xt7JWUrW3ZLxAEsu2ZU=
+X-Gm-Gg: ASbGncun03BUWAzB/vD9DYxyq529eDJD+tCMy2ReMioL9AaUiqynV5OwmvykJRKUeBV
+	JXhxCwah8tyzH1zMzlPMdkh9o0UMIHph0JvIfV7QDi/iWYaK21tlLkQ8COaYJziNna2hclcycCr
+	6DWzmCS5thRXI1dVyrWJi+GvsrXUeGo6FTr/oVk/5rQcy9tLfb42prC9c9C8zWiF6jDOUsj0KYu
+	tyMGIT/k+pJ0oZ8
+X-Google-Smtp-Source: AGHT+IFU5LPvkb/N/Tw+uEtqevCLgU2MttiUFFLbm7KabFbJpklF9fl5AWplCqLxTcMRubhBHLG45fl0R75pQjr5Qc8=
+X-Received: by 2002:a17:907:9689:b0:ae3:163a:f69a with SMTP id
+ a640c23a62f3a-af9401b0360mr1300344066b.33.1754389679184; Tue, 05 Aug 2025
+ 03:27:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Enable CTCU device for QCS8300
-To: Mike Leach <mike.leach@linaro.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250624095905.7609-1-jie.gan@oss.qualcomm.com>
- <c7cca483-f1d3-45b4-abef-ec5019ad57dd@oss.qualcomm.com>
- <c6f74d55-6ea8-498f-a05a-000599f93ac6@oss.qualcomm.com>
- <b5f8fce0-afe8-409b-b43d-fa9f413cd442@oss.qualcomm.com>
- <CAJ9a7VgZ61oL4LLxKSon3LXsYDtaHaPcGNxW=cwzhSOs3ea1PQ@mail.gmail.com>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <CAJ9a7VgZ61oL4LLxKSon3LXsYDtaHaPcGNxW=cwzhSOs3ea1PQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=MNBgmNZl c=1 sm=1 tr=0 ts=6891dc3c cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=f8PP91cPUXlTVnoGj10A:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-ORIG-GUID: plwK3nlW-Ejvzm-5Qw9cr25986nvkpTg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA3NSBTYWx0ZWRfXwIHYCTkHwYqU
- qnihQY57Syz7K+2UbtlGneWKkFPzPLMrhHi9rbMNTHVNxAQ1YDkrRuJ4FqDpKjPAW45AhCDM/en
- j4bSq0lCPD8r7zdAN3EMUpL7LEH45dE0ENJV8dOm3zoa/gNraB0GeySxCzXwU3xmMAvjWc+kXDb
- MlnSiUwDKxvLkiQQ0DADcCmPtCUyo5M7VXMLQG1LDiDbR69Z0UzXxDmnNr2i8mGm1/Z5m8G4lum
- mL4D923OV9fsgLOVSZ1RWt595tBQ1e08pqSgjR1uMeP1HDNyYQVbKXYEQESyp27uO25bTSDCg/m
- XgENZgqhG/8akbOpsFt06CVX82QvOymSJUzk880RQvdJzEJawMaqYvvx6xWCdQS0g2uazQpplQF
- U4lz6D6xTaAcwV+WkLpG8RGFJ8o7B0Jjb7qFdfbjE2orDUg4FaIZMy0uHOL2Xfav9gwx2jY1
-X-Proofpoint-GUID: plwK3nlW-Ejvzm-5Qw9cr25986nvkpTg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_03,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 mlxscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050075
+References: <20250725100806.1157-1-jie.gan@oss.qualcomm.com> <20250725100806.1157-5-jie.gan@oss.qualcomm.com>
+In-Reply-To: <20250725100806.1157-5-jie.gan@oss.qualcomm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Tue, 5 Aug 2025 11:27:46 +0100
+X-Gm-Features: Ac12FXyGWj4GgjsQixe5QNRaeCqpVKLMP7WtlbnmlyKxm20j9zCO0LZQIksxx1s
+Message-ID: <CAJ9a7VgOTfDHG+nrEUQ5+fxrcCd+ZaWWnxt_F8kavbHP38QCVw@mail.gmail.com>
+Subject: Re: [PATCH v4 04/10] coresight: tmc: add create/delete functions for etr_buf_node
+To: Jie Gan <jie.gan@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, Jinlong Mao <jinlong.mao@oss.qualcomm.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, Jie Gan <quic_jiegan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi,
 
+On Fri, 25 Jul 2025 at 11:08, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
+>
+> Create and insert or remove the etr_buf_node to/from the etr_buf_list.
+>
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> ---
+>  .../hwtracing/coresight/coresight-tmc-etr.c   | 65 +++++++++++++++++++
+>  drivers/hwtracing/coresight/coresight-tmc.h   |  2 +
+>  2 files changed, 67 insertions(+)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> index b07fcdb3fe1a..e8ecb3e087ab 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> @@ -1909,6 +1909,71 @@ const struct coresight_ops tmc_etr_cs_ops = {
+>         .panic_ops      = &tmc_etr_sync_ops,
+>  };
+>
+> +/**
+> + * tmc_clean_etr_buf_list - clean the etr_buf_list.
+> + * @drvdata:   driver data of the TMC device.
+> + *
+> + * Remove the allocated node from the list and free the extra buffer.
+> + */
+> +void tmc_clean_etr_buf_list(struct tmc_drvdata *drvdata)
+> +{
+> +       struct etr_buf_node *nd, *next;
+> +
+> +       list_for_each_entry_safe(nd, next, &drvdata->etr_buf_list, node) {
+> +               if (nd->sysfs_buf == drvdata->sysfs_buf) {
+> +                       list_del(&nd->node);
+> +                       kfree(nd);
+> +               } else {
+> +                       /* Free allocated buffers which are not utilized by ETR */
+> +                       list_del(&nd->node);
+> +                       tmc_free_etr_buf(nd->sysfs_buf);
+> +                       nd->sysfs_buf = NULL;
+> +                       kfree(nd);
+> +               }
+> +       }
+> +}
+> +EXPORT_SYMBOL_GPL(tmc_clean_etr_buf_list);
+> +
+> +/**
+> + * tmc_create_etr_buf_node - create a node to store the alloc_buf and
+> + * insert the node to the etr_buf_list. Create a new buffer if the
+> + * alloc_buf is NULL.
+> + * @drvdata:   driver data of the TMC device.
+> + * @alloc_buf: the buffer that is inserted to the list.
+> + *
+> + * Return 0 upon success and return the error number if fail.
+> + */
+> +int tmc_create_etr_buf_node(struct tmc_drvdata *drvdata, struct etr_buf *alloc_buf)
 
-On 8/5/2025 5:53 PM, Mike Leach wrote:
-> Hi Jie,
-> 
-> On Tue, 5 Aug 2025 at 05:11, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
->>
->>
->>
->> On 7/28/2025 9:08 AM, Jie Gan wrote:
->>>
->>>
->>> On 7/15/2025 8:41 AM, Jie Gan wrote:
->>>>
->>>>
->>>> On 6/24/2025 5:59 PM, Jie Gan wrote:
->>>>> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in
->>>>> binding to utilize
->>>>> the compitable of the SA8775p platform becuase the CTCU for QCS8300
->>>>> shares same
->>>>> configurations as SA8775p platform.
->>>>
->>>> Gentle ping.
->>>
->>> Gentle ping.
->>
->> Gentle ping.
->> Hi Coresight maintainers,
->>
->> Can you please help to review the patch?
->>
->> Thanks,
->> Jie
->>
->>>
->>> Thanks,
->>> Jie
->>>
->>>>
->>>> Hi Suzuki, Mike, James, Rob
->>>>
->>>> Can you plz help to review the patch from Coresight view?
->>>>
->>>> Thanks,
->>>> Jie
->>>>
->>>>>
->>>>> Changes in V2:
->>>>> 1. Add Krzysztof's R-B tag for dt-binding patch.
->>>>> 2. Add Konrad's Acked-by tag for dt patch.
->>>>> 3. Rebased on tag next-20250623.
->>>>> 4. Missed email addresses for coresight's maintainers in V1, loop them.
->>>>> Link to V1 - https://lore.kernel.org/all/20250327024943.3502313-1-
->>>>> jie.gan@oss.qualcomm.com/
->>>>>
->>>>> Jie Gan (2):
->>>>>     dt-bindings: arm: add CTCU device for QCS8300
->>>>>     arm64: dts: qcom: qcs8300: Add CTCU and ETR nodes
->>>>>
->>>>>    .../bindings/arm/qcom,coresight-ctcu.yaml     |   9 +-
->>>>>    arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 153 ++++++++++++++++++
->>>>>    2 files changed, 160 insertions(+), 2 deletions(-)
->>>>>
->>>>
->>>>
->>>
->>
-> 
-> You need to send a new patch addressing the comments made by Krzysztof..
+This list handle function pair look a little asymmetric. Is it not
+possible to change this to tmc_create_etr_buf_list(struct tmc_drvdata
+*drvdata, int num_nodes)
+so that one function creates all the nodes, and another destroys them.
 
-Hi Mike,
+In the logic that decides between using multi buffer or single buffer
+you can then use  a construct such as:
 
-I just proposed an idea to add a common compatible for CTCU device, its 
-not about the patch series itself. We dropped the idea and prefer to add 
-the board specific compatible for each platform.
+if (single_buffer)
+      drvdata->sysfs_buf = <alloc sysfs buffer>
+else {
+     tmc_create_etr_buf_list(drvdata, 2);
+     <switch in avail buffer to drvdata->sysfs_buf
+}
 
-Thanks,
-Jie
+> +{
+> +       struct etr_buf_node *sysfs_buf_node;
+> +       struct etr_buf *sysfs_buf;
+> +
+> +       if (!alloc_buf) {
+> +               sysfs_buf = tmc_alloc_etr_buf(drvdata, drvdata->size, 0, cpu_to_node(0), NULL);
+> +               if (IS_ERR(sysfs_buf))
+> +                       return PTR_ERR(sysfs_buf);
+> +       } else
+> +               sysfs_buf = alloc_buf;
+> +
+> +       sysfs_buf_node = kzalloc(sizeof(struct etr_buf_node), GFP_KERNEL);
+> +       if (IS_ERR(sysfs_buf_node)) {
+> +               if (!alloc_buf)
+> +                       tmc_free_etr_buf(sysfs_buf);
+> +               return PTR_ERR(sysfs_buf_node);
+> +       }
+> +
+> +       sysfs_buf_node->sysfs_buf = sysfs_buf;
+> +       sysfs_buf_node->reading = false;
+> +       if (!alloc_buf)
+> +               sysfs_buf_node->is_free = true;
+> +       else
+> +               sysfs_buf_node->is_free = false;
+> +       list_add(&sysfs_buf_node->node, &drvdata->etr_buf_list);
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(tmc_create_etr_buf_node);
+> +
+>  int tmc_read_prepare_etr(struct tmc_drvdata *drvdata)
+>  {
+>         int ret = 0;
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+> index 52ee5f8efe8c..3cb8ba9f88f5 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc.h
+> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
+> @@ -461,5 +461,7 @@ void tmc_etr_remove_catu_ops(void);
+>  struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
+>                                    enum cs_mode mode, void *data);
+>  extern const struct attribute_group coresight_etr_group;
+> +void tmc_clean_etr_buf_list(struct tmc_drvdata *drvdata);
+> +int tmc_create_etr_buf_node(struct tmc_drvdata *drvdata, struct etr_buf *alloc_buf);
+>
+>  #endif
+> --
+> 2.34.1
+>
 
-> 
-> Regards
-> 
-> Mike
+Regards
 
+Mike
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
