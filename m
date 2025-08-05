@@ -1,226 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-67800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07920B1B8B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:44:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4779BB1B8CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:51:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 273B3180476
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:44:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7CBE3A28CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:51:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67410292B38;
-	Tue,  5 Aug 2025 16:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79ACC277011;
+	Tue,  5 Aug 2025 16:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SRIvf3C3"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pCAT0AcO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B676A291C3E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 16:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8EF1552FD
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 16:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754412280; cv=none; b=FekVXa9BWdDmpuo1crnzsKMB9VJpb9fhH1L3IKThGBj2IOrlfo/cmsi7bfNIjYoXEFSfr1adC+lGFIBEtk7gLjbpvNjje5PxukkeJQCZL4Ev4e6DMqNOkmbLozEzvqyLl0PznO9qvm+ca3xs3pWOU8ESc6mQvMUZPJdusvZkPVc=
+	t=1754412713; cv=none; b=rvRI0btPx2KXmO+we4niSR2IL/Ot0+l1be3BHy9gV1zHTSVkZGOXHJyXDhpKZ2gp3GfluApiNsvoe7V/LReDjWhn80kUea3Lk8h6074/CggX9RFPv76a6Kzy99uDLxdLlUkfDT4Uf2YeuFGEHd2rzJ0DRCBK2v+dVR/SO0ZZcFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754412280; c=relaxed/simple;
-	bh=UZnh+dF199ZuP9pVw6ybGbzBNt4HIW922tlSPmWTD/M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eCHn7MxlsaWQ0HnzKb/0OthWPyz9cZ9qVhNIlGOt4na2/F2Jp5tvwRAPhnWqoeozdqlAzpaNh8Jzhd5Pt3wo7czTJ0kBuzg7WE0N7oL+sBGbRtC31FJx5pDfcghpqLYJPUNx306LLleONmmN+CWyc+pNL+Uoj6pjXz3XxUMCzVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SRIvf3C3; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1754412713; c=relaxed/simple;
+	bh=9HuhvcVgcVWA8vrm4ARyM9LsZ5rPP/+FsBZiP8MsXi0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nKxpnDLLNjdKy0goMTv9L0EbED1hXavblEJWwEkPLjVbUOGqPseSiInpU6rYbP8xl0PagRl5DEdmdIM2Hvp9dFuhFRXGd3xutSwKjDpQzDyx1zS0nYrZa3hO3fvB51J/B2jP3kIE3WkMW6HaeA+Ddo9rbRzE7RiPHcST+GSjXDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pCAT0AcO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575A3ltN007598
-	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 16:44:36 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5758SMHH028782
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 16:51:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=xFZ6cFO6wa52HtJqwYOKHtqGz7UHtTevLTj
-	q7d3NNvg=; b=SRIvf3C3XrZjewO4zKbPO7X3F9IOLoIBzYRNbchpfa32QM2YoPm
-	QDimi+wg7WVw8qrS879CcnYVAcm8jHG6N6dWEdwt99xiHvzAVB+iORPxpDVOfFFo
-	kD09DUHvoJliAYG9UpyP2DO88sE8JyiEz+Y9IfrwFmp1ZBfFeP05ouGz2E3wjVl+
-	AftroD2NAc1/SFIw1tMTYLVqQxWVkzO+EBjXRW49LtsY2CYwZeuKHerhJ4dTojZr
-	tprPQiWbeWQ2mjabwiq/RIb0h2V8LSuokn/zaY9ogqq8WrNW/KqdQMbx20Bg8waT
-	7cxFz2i7j3hJUfHIiLwcsE73JGBfMRUgUaQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489b2a91v8-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OrW1DzUyVVmeukVpqBYLRBGHiHi6hAxmrlXRAz69Tg4=; b=pCAT0AcO0mia2Krn
+	I5LdhZKGCdJhYIpHxXpH//mQqwhzDd1SuRsAm8+r3L0kU2A5sPIwaREWyg7O5+vE
+	V6VO/yX6j8x0dL36xOKSon9f4dMuXYroUovwSc+te9rqlDfDn37q/JRjU4TIrTEo
+	KVvLFYopbObI5IjIab/JM2vz+V9gI93DFVKhbgENPjfcRgEXuhcbvrfZl47NrenQ
+	zvLa5DZ5PHEpG/ICyvleB85odDupRjAQXwNRnRlfsjHGz8rE8myWwj0tNa63fmiU
+	EJwU0iCYpHOb7XgaQZiUD8Bfp5VDSAJPU8GMm4JZyLV4t++AjTOvZC1qzJcUPbDb
+	/EXP+Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4899pah6k2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 16:44:36 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b2c37558eccso4592240a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:44:36 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 16:51:50 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e806e4ef1fso28052985a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:51:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754412275; x=1755017075;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xFZ6cFO6wa52HtJqwYOKHtqGz7UHtTevLTjq7d3NNvg=;
-        b=ol1Fz1hprbY1m9MFtZD0fiUDB2fdDGIlL21uS1gvMj2pRDHnLPvg3/IiFLx5DaIrZ/
-         2m8TlMrwdN00c9tveJjHHgOJEFCNB7J5055du+cFrRZlbMa/Ua0Ddrb4OwQDVhMdl1rM
-         wyGPOeeJqOINW6H3wgMIH1iTaNMP0MGet0YMAXvHGGfMryifs20g3aqeOR+rr+cLcqEV
-         dWVmJReSHkVm+4w6D4h5Sj4rFXXsdDe8bbMKXJWA5K8Zp0mOukWkx4tZ7gtvsQSn+PQn
-         9u0ehn6t3G/W+xzu66IlJ4mM800idgzdiSucMyXRU0z4vM8nw3hMFTq9WOlPpTV5IuKf
-         /Fdg==
-X-Gm-Message-State: AOJu0YxL/Lc+1J8PEHo4m4ormLj5NmKaGZgX5E9AGhvW9hawfkFVFVer
-	Ek1hxItbfPsg5zzFucDhYtLBpdVytoc1LXta1qnFCzIRVnu7rNtecYZvt9/JA26bAo31G/iLF5F
-	l3EfHPYsr9+q5nEgxIbzCIkWY1PT+yjd2QkFM5RyFVETD0IuWemryTwWvkmbMzbon6jMi
-X-Gm-Gg: ASbGnctiBC4zOq3buHs8GXZcGRIZ5JhV3sHLFX5U6xjUCh1CoKNR70Lc6oxzoH//cuX
-	4IKlkovQ2/Ac0tUJKmAiL3O4sBMMLMOOyBbiyOZLp5zXHcEWEX58waBsbvZZQYdIl6VioppUXHT
-	/GefZmKazidNtepYZdz46F8Ce6nQWxRUR53qYUEFiUwxvK8MKb2fueMAQzNLlS3E4qqPI2njXfs
-	weuZIGOuuwM0wnWGEu4Om77JP0NR1RN4voBB5ONjTIzk4fr21Zoap8mFOQRi2qLh1Y5da3girR3
-	YTkRQMhoJAQNVpBhSw753iNUWqmdKUDVe7KqJMDEBSwsvy1BRWQ=
-X-Received: by 2002:a05:6a20:914b:b0:240:21e1:cbbd with SMTP id adf61e73a8af0-24021e1cda9mr4886605637.26.1754412275141;
-        Tue, 05 Aug 2025 09:44:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGm/6uN6G/KVi2o9cN+/U0oUl1Y1E1Sdo+Y+NbmDyrpK8rXomnmGpne1qkC2tg1XzKix+vaGQ==
-X-Received: by 2002:a05:6a20:914b:b0:240:21e1:cbbd with SMTP id adf61e73a8af0-24021e1cda9mr4886558637.26.1754412274703;
-        Tue, 05 Aug 2025 09:44:34 -0700 (PDT)
-Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b7841besm11489904a12.3.2025.08.05.09.44.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 09:44:34 -0700 (PDT)
-From: Rob Clark <robin.clark@oss.qualcomm.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Danilo Krummrich <dakr@kernel.org>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] drm/msm: Handle in-place remaps
-Date: Tue,  5 Aug 2025 09:44:31 -0700
-Message-ID: <20250805164431.24350-1-robin.clark@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.1
+        d=1e100.net; s=20230601; t=1754412709; x=1755017509;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OrW1DzUyVVmeukVpqBYLRBGHiHi6hAxmrlXRAz69Tg4=;
+        b=PvVLflF050q5be0MTTTrpCxA2HQiihv8n9BigQ2mkLDHbV4mDDzgG1nBQDpqe0rQ4p
+         RLTkbp3vAHQmeFH/7Yan51N493eUFOaVtkbBCxSq7tpoa7a+6Rc6guKn3wiviuDmH/2H
+         VZInofygOelmqQHgnk+cr2V1Y6nIzNmfVukVX5HWI+CsBpx9NQxvzLxXK8NHNXo8e1IF
+         RJPvDTTLynRywSN7WZxUJvA7jg9scA3aXrWOrZHB+x2Cn54eeYC9kfyCIqWcBoC5caVi
+         vf784lCnBzifXkR/RFXaPITNFLeHIMM4jXTGFJhO30FLPaK+lPvU457wxqnOsWyd30Hz
+         EaSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXlpe71/RosUuUTmW7BnYxBL0GgyuME40n7c8ytw9g17ClRnpQ6Ci/tdcvItmS1/GZbDhEQnvLsu7Rl7bvG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYVDW5aGVLoJWne8OdGHt3lG4KPc1JOhQRToDR+AtKbGg8j35u
+	S96LHecDT3K+806RBxlMali30/vtlvQmOx5NpECmieAteCQhQ6Ds9s/7FtJThZ/V250LD/EEulD
+	6RYv8Y7n6P4Ij2DN4ljGOB1SqiVs7or+JWyFB6yMZFxHiUSN0vFr2b1FDyTwtp9GAkjcV
+X-Gm-Gg: ASbGncvqby0Xg7xtmym5WLYk701WlAEym3vHSpGuhcPWr+lDYeWhdP/1IV9WuT+TBEY
+	WLDf/m1Q1E3vQKY6ljushdW0sb34+oDDRrRL+Fz1ESjnD0p7p5GLjfffGkMO/YuufvvsvPkzQeE
+	+2zzQ7H/jgcRpy/YpJz6mGDhAcD1zUCi4BaU9IsEZj3djUsLs6bmaeBQMlDQZnU24jRL9ukM4hE
+	bOiBUFFdJmYHQecIO+agzCq1uIXGWRgoKJNWpv5t4EHTdzIXgI+gIkUCS40KQg7XVOEPWW7Hfws
+	BjT0HUCIjkJXiucD2+SGEwVCUTAqYnSziYNbCxnumYmY3tQ3u99Rjzd6ofSU1qenDexb8l2/42a
+	zCFMVyuNIhrWZpo5PVA==
+X-Received: by 2002:a05:620a:198b:b0:7e8:c4f:614b with SMTP id af79cd13be357-7e80c4f6500mr234284785a.7.1754412709487;
+        Tue, 05 Aug 2025 09:51:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsRfnZFgHHEyQmRgmvW0pHpImAXIwU7QUOWWa17SPxgdAKAosD77jO4lD+OvVYYq1NIsK+5A==
+X-Received: by 2002:a05:620a:198b:b0:7e8:c4f:614b with SMTP id af79cd13be357-7e80c4f6500mr234281985a.7.1754412709002;
+        Tue, 05 Aug 2025 09:51:49 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a076aecsm933342866b.9.2025.08.05.09.51.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Aug 2025 09:51:48 -0700 (PDT)
+Message-ID: <5590fdab-0fa3-4ac0-bcbf-d2cb41be16dc@oss.qualcomm.com>
+Date: Tue, 5 Aug 2025 18:51:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=OKwn3TaB c=1 sm=1 tr=0 ts=689234f4 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10
- a=EUspDBNiAAAA:8 a=54pnWYnEFG7XCx_V-2kA:9 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: WBHAFqTlwI5O9PSMYB6v8RRKsQKK7B1M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExNiBTYWx0ZWRfXw+NtNFqnwUNR
- Vwx/JQHtl4QiFZZvFv0/RDNgMEhCwwD4WP53c4kVK5svaWD6mwWSFi/h9j1fFMXeIXyjohAkmPm
- zlM+emWHVPwzzXiwh1wRPEgGyM51wMoHE0bIYyabQbe4bcnkiDnTnTZg8niGsJa/yeAMvYnLXJ5
- CSkot0fdGphn3E5cjRC/AdCooiUCT5JN0vEHBIupd7LbY7i9PphEvv0UsBeg8TE60c67VpiCJfc
- DKPVbAdI500VlxUB+gkaeEkni81cvGTzN08+aCls+gbXMpAMw6t5Kb8R262aJuXpOo1HaKw4tc8
- DpQXHiXolUG4Ry7t8J5hcMzMI3Y8FVxX/4s+QM8gF6ZEXBQA5EnB9rGbcJsBoOhtvOFbWTunzUo
- 7zviA762vXSqU35QymylKLEd+9GZ2CfuuyWToj1bNeN9eqIL4e9rGZFQYpmLWk7YP8OGivhb
-X-Proofpoint-GUID: WBHAFqTlwI5O9PSMYB6v8RRKsQKK7B1M
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8750: Add adsp fastrpc
+ nodes/support
+To: Alexey Klimov <alexey.klimov@linaro.org>, andersson@kernel.org,
+        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        srini@kernel.org, quic_ekangupt@quicinc.com,
+        krzysztof.kozlowski@linaro.org, dmitry.baryshkov@oss.qualcomm.com
+References: <20250805162041.47412-1-alexey.klimov@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250805162041.47412-1-alexey.klimov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExNiBTYWx0ZWRfX7L2KBwjAFwc+
+ X9XewGfiP/lUAer8hnG2b9Qnydm8NSKhuLmmlo0qWwmNC3g+RSzbzvG/BwVvPY8Fn8dtHokGd33
+ jEZnQhdU42vVX/AVxvF1b1gYj3EyX0IsXouIBFsaFeR4Zz7n/LfiB4Sz6zJ3EBKmjbGBxE+6RA/
+ 5IesjiPgDFgiXLN6QTrMGXDYayFv0nqeoGwGXOPcqLWZcMC8Kq403ug/n04865F2y3K82m2WwCh
+ A0/c61Vnh5T7RP2dhUMW480/FGog9Hg9FP7LCIV4hPjdt2ba9cyZ2XgGkOc0JSpVe1yTjkt93MJ
+ E3Sb/5B4UNtqDevPMxB3wistVTayPv4sSQAsNLjdTWXAFrB7cD7OrhPb7FE6HrWtIYNxG7dzwJp
+ 4t5GdyReHJKZtX2NN8AawxMgxk6WKa0cejHSkBCoab/1muFKvHsys9aPmHsqtsL7m4Q/Af4J
+X-Proofpoint-GUID: T2uTpQ-uKYZnztXNXsTsy3pgBE8GCdqw
+X-Authority-Analysis: v=2.4 cv=N88pF39B c=1 sm=1 tr=0 ts=689236a6 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=i5LmXQDNGShexaeZTkYA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: T2uTpQ-uKYZnztXNXsTsy3pgBE8GCdqw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- phishscore=0 impostorscore=0 priorityscore=1501 adultscore=0 mlxscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ clxscore=1015 malwarescore=0 mlxlogscore=999 spamscore=0 phishscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2508050116
 
-Detect and handle the special case of a MAP op simply updating the vma
-flags of an existing vma, and skip the pgtable updates.  This allows
-turnip to set the MSM_VMA_DUMP flag on an existing mapping without
-requiring additional synchronization against commands running on the
-GPU.
+On 8/5/25 6:20 PM, Alexey Klimov wrote:
+> While at this, also add required memory region for adsp fastrpc.
+> 
+> Tested on sm8750-mtp device with adsprpdcd.
+> 
+> Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> Cc: Srinivas Kandagatla <srini@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> ---
+> 
+> v2:
+> - removed qcom,non-secure-domain flag as requested by Srini.
+> 
+> Prev version: https://lore.kernel.org/linux-arm-msm/20250502011539.739937-1-alexey.klimov@linaro.org/
+> 
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 69 ++++++++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index 4643705021c6..cc74fb2e27de 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -7,6 +7,7 @@
+>  #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+>  #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
+>  #include <dt-bindings/dma/qcom-gpi.h>
+> +#include <dt-bindings/firmware/qcom,scm.h>
+>  #include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+> @@ -523,6 +524,14 @@ llcc_lpi_mem: llcc-lpi@ff800000 {
+>  			reg = <0x0 0xff800000 0x0 0x800000>;
+>  			no-map;
+>  		};
+> +
+> +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
+> +			compatible = "shared-dma-pool";
+> +			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/msm_gem_vma.c | 41 ++++++++++++++++++++++++++++---
- 1 file changed, 37 insertions(+), 4 deletions(-)
+perhaps size=<0x1 0x0> (1<<32) is what we really want, unless the hw/sw
+is allergic to accessing the very last byte in the 32-bit space
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index d1f5bb2e0a16..00d0f3b7ba32 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -451,6 +451,8 @@ msm_gem_vm_bo_validate(struct drm_gpuvm_bo *vm_bo, struct drm_exec *exec)
- struct op_arg {
- 	unsigned flags;
- 	struct msm_vm_bind_job *job;
-+	const struct msm_vm_bind_op *op;
-+	bool kept;
- };
- 
- static void
-@@ -472,14 +474,18 @@ vma_from_op(struct op_arg *arg, struct drm_gpuva_op_map *op)
- }
- 
- static int
--msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *arg)
-+msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
- {
--	struct msm_vm_bind_job *job = ((struct op_arg *)arg)->job;
-+	struct op_arg *arg = _arg;
-+	struct msm_vm_bind_job *job = arg->job;
- 	struct drm_gem_object *obj = op->map.gem.obj;
- 	struct drm_gpuva *vma;
- 	struct sg_table *sgt;
- 	unsigned prot;
- 
-+	if (arg->kept)
-+		return 0;
-+
- 	vma = vma_from_op(arg, &op->map);
- 	if (WARN_ON(IS_ERR(vma)))
- 		return PTR_ERR(vma);
-@@ -599,15 +605,41 @@ msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
- }
- 
- static int
--msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *arg)
-+msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg)
- {
--	struct msm_vm_bind_job *job = ((struct op_arg *)arg)->job;
-+	struct op_arg *arg = _arg;
-+	struct msm_vm_bind_job *job = arg->job;
- 	struct drm_gpuva *vma = op->unmap.va;
- 	struct msm_gem_vma *msm_vma = to_msm_vma(vma);
- 
- 	vm_dbg("%p:%p:%p: %016llx %016llx", vma->vm, vma, vma->gem.obj,
- 	       vma->va.addr, vma->va.range);
- 
-+	/*
-+	 * Detect in-place remap.  Turnip does this to change the vma flags,
-+	 * in particular MSM_VMA_DUMP.  In this case we want to avoid actually
-+	 * touching the page tables, as that would require synchronization
-+	 * against SUBMIT jobs running on the GPU.
-+	 */
-+	if (op->unmap.keep &&
-+	    (arg->op->op == MSM_VM_BIND_OP_MAP) &&
-+	    (vma->gem.obj == arg->op->obj) &&
-+	    (vma->gem.offset == arg->op->obj_offset) &&
-+	    (vma->va.addr == arg->op->iova) &&
-+	    (vma->va.range == arg->op->range)) {
-+		/* We are only expecting a single in-place unmap+map cb pair: */
-+		WARN_ON(arg->kept);
-+
-+		/* Leave the existing VMA in place, but signal that to the map cb: */
-+		arg->kept = true;
-+
-+		/* Only flags are changing, so update that in-place: */
-+		unsigned orig_flags = vma->flags & (DRM_GPUVA_USERBITS - 1);
-+		vma->flags = orig_flags | arg->flags;
-+
-+		return 0;
-+	}
-+
- 	if (!msm_vma->mapped)
- 		goto out_close;
- 
-@@ -1268,6 +1300,7 @@ vm_bind_job_prepare(struct msm_vm_bind_job *job)
- 		const struct msm_vm_bind_op *op = &job->ops[i];
- 		struct op_arg arg = {
- 			.job = job,
-+			.op = op,
- 		};
- 
- 		switch (op->op) {
--- 
-2.50.1
-
+Konrad
 
