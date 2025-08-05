@@ -1,174 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-67812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BFA7B1BC63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 00:08:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BC13B1BCDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 00:56:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A579818A0D2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 22:09:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7900916AABC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 22:56:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A7E24E4C3;
-	Tue,  5 Aug 2025 22:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F8C729B22F;
+	Tue,  5 Aug 2025 22:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b2NjuO8i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d+NfAI0C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80BD200127;
-	Tue,  5 Aug 2025 22:08:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D0229B205;
+	Tue,  5 Aug 2025 22:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754431715; cv=none; b=EpC2It5y7dcM7aqZwagOxgTyeM04F/Kw79mpFwoN06fUi1eMzE1GnP8zy0hI3IWaxTAJmaYpyp2/wo1005vm/tQNUXsv9A+S9NL009YjlDSyywHidyQ03IjpEegHa95/mvfkyfw+Igne6wXNbqeIGtsRQYYlax4fennFav8Zt7Q=
+	t=1754434563; cv=none; b=az5yUhq+a5+HMy4L7UR3aWw0gltmOT3PtJy2d3h0QVPhxPxvQkxQKXW4yWkT4pQ8BrwvmQa8qoJQhjSNUB+llgJPX9bDfYG10sPSsTKQqYX3CCm5ln1G8KKf8lGryVwo28izEknvTACka9aPGCtBBfsPQm02IwMzprhxuTAVWMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754431715; c=relaxed/simple;
-	bh=/aoxjBnanB6z5ZymLaTy2qG1GykI0n2CxoPSGTJMDc4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DyDB85tvR610tvDSoFcMTV/SyXAlh/vpyOO2ExdNNMC5lj6mmPUZIcntAoQe/O6/aT7/yEprwTK2tHGPknLuQ3Jvl3l0gRoYKsR+PKFEL3E5vMsTyBFSWqyX7Wl8ShIvC30a+kDBX9tZHroa9DvQaE0WkBDS4f4oKGwUQOwGiFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b2NjuO8i; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754431714; x=1785967714;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/aoxjBnanB6z5ZymLaTy2qG1GykI0n2CxoPSGTJMDc4=;
-  b=b2NjuO8iTJIz0Qa11KYK5cBntET/zISaNwW9gGnM4qCOKwKQaFWzjRUZ
-   hlqv+3DlBUvapOVF8iKTD6fONZcj984qRGr6P43l6oWhW0ULbrfWMLayv
-   MRrBaU3zi7UTtOpdD2yYVGNP0DW9Jo0+MMixRGHLK781k/+C16X+goEY0
-   cHdLG2twL40QWhyV0/sMNTI6FllBwtQxUo0KWN2cUMGpcuFaWmzt5JcLI
-   lzPf7ZwXqxZzfp9kBBK7SKgEXqPb+fXDYArw/1K4Iw1MYgwAJJQMNxC6G
-   Jpy4vufPM89a9/u21rben3iuTNjdIMbgUcP5yH+hlnK0AnrsRrQIBotkN
-   Q==;
-X-CSE-ConnectionGUID: 7JyA5hHQQF+77Qe2lZlMPA==
-X-CSE-MsgGUID: IeyhPkPyQQSJhwRlOc8Tqg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11513"; a="44334918"
-X-IronPort-AV: E=Sophos;i="6.17,268,1747724400"; 
-   d="scan'208";a="44334918"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2025 15:08:31 -0700
-X-CSE-ConnectionGUID: cvABU6gySmCN+nSbWkFxIg==
-X-CSE-MsgGUID: QOXnb3dlQReNBMfKeCvA3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,268,1747724400"; 
-   d="scan'208";a="164139100"
-Received: from smile.fi.intel.com ([10.237.72.52])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2025 15:08:13 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1ujPpG-00000003rhU-3uHR;
-	Wed, 06 Aug 2025 01:08:06 +0300
-Date: Wed, 6 Aug 2025 01:08:06 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Viresh Kumar <vireshk@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-actions@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH RFC 3/6] dmaengine: qcom: gpi: Accept protocol ID hints
-Message-ID: <aJKAxkXO7csIi5Oi@smile.fi.intel.com>
-References: <20250730-topic-dma_genise_cookie-v1-0-b505c1238f9f@oss.qualcomm.com>
- <20250730-topic-dma_genise_cookie-v1-3-b505c1238f9f@oss.qualcomm.com>
- <CAMuHMdV0JO=qtregrrHsBZ-6tpNdPUj3G1_LWRfRsj0vBb+qyw@mail.gmail.com>
+	s=arc-20240116; t=1754434563; c=relaxed/simple;
+	bh=+al342bVs+POurrkFCVBYQ90F4lkUhb3/Od3XV/5kIk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NdkH0bSzG8uoQdcWx2yKJIXYy8CtHiUl+uBz5OBZKh0x6ua5t7oKqfMGaCZ/Dx/ZSqhK88Is2GmQJOeGU6R3/rjWTwMeny7fUcY/du6hxLgkrW0YhtNlUK/y8/kmP39gRxDl8vLa8MLlPC5nCoRNbT1ySnzTDKRdBKkmIl5FIoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d+NfAI0C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED4C4CEF0;
+	Tue,  5 Aug 2025 22:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754434562;
+	bh=+al342bVs+POurrkFCVBYQ90F4lkUhb3/Od3XV/5kIk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=d+NfAI0C7M3SIMcRYMsBp571UxwDaQUyX6t4JIy6Q6Mmc7Ar1CWpPVraFpkOuKcdH
+	 l2Lpw6slA1d9W/GYWNiRgqEr09524WJjUoNhm/7bBeAA9tXvO90R6RcwTVdwwttE+H
+	 OVJzV0wk2thXCwMK7eVO8JPcgRqtr7BxjBs2+MtHatnZktnmGiVJUwCVJT/ol+1vt8
+	 j+obV2Iupe9FF/QHFre/vV7K46J4mXd3bdtAVphXPlaUUNQEdpZPYACRAukm0kodCs
+	 n+KGf8mr4bhifvFc1lepkylJrTMhjhtj+C2sogfznQohzOZpfdftWLO/hTOqY9ck3T
+	 wq42afdDnnl3A==
+From: Sasha Levin <sashal@kernel.org>
+To: robin.clark@oss.qualcomm.com,
+	lumag@kernel.org
+Cc: abhinav.kumar@linux.dev,
+	jessica.zhang@oss.qualcomm.com,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	antomani103@gmail.com,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH] drm/msm: Fix objtool warning in submit_lock_objects()
+Date: Tue,  5 Aug 2025 18:55:57 -0400
+Message-Id: <20250805225557.593192-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMuHMdV0JO=qtregrrHsBZ-6tpNdPUj3G1_LWRfRsj0vBb+qyw@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 30, 2025 at 01:32:58PM +0200, Geert Uytterhoeven wrote:
-> On Wed, 30 Jul 2025 at 11:35, Konrad Dybcio <konradybcio@kernel.org> wrote:
+Restructure submit_lock_objects() to use a single loop with break
+statements to fix objtool warning:
 
-...
+  drivers/gpu/drm/msm/msm.o: warning: objtool: submit_lock_objects+0x451:
+  sibling call from callable instruction with modified stack frame
 
-> > +       /* The protocol ID is in the teens range, simply ignore the higher bits */
-> > +       gchan->protocol = (u32)((u64)proto);
-> 
-> A single cast "(uintptr_t)" should be sufficient.
+The drm_exec_until_all_locked() macro uses computed gotos internally
+for its retry loop. Having return statements inside this macro, or
+immediately after it in certain code paths, confuses objtool's static
+analysis of stack frames, causing it to incorrectly flag tail call
+optimizations.
 
-FWIW, this means (unsigned long) as Torvalds is quite against uintptr_t in the kernel.
+Fixes: 92395af63a99 ("drm/msm: Add VM_BIND submitqueue")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 43 ++++++++++++----------------
+ 1 file changed, 19 insertions(+), 24 deletions(-)
 
-> Casing the pointer to u64 on 32-bit may trigger:
-> 
->     warning: cast from pointer to integer of different size
-> [-Wpointer-to-int-cast]
-> 
-> >         return dma_get_slave_channel(&gchan->vc.chan);
-> >  }
-
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 5f8e939a5906..253347b6e328 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -276,46 +276,41 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+ {
+ 	unsigned flags = DRM_EXEC_INTERRUPTIBLE_WAIT;
+ 	struct drm_exec *exec = &submit->exec;
+-	int ret;
++	int ret = 0;
+ 
+-	if (msm_context_is_vmbind(submit->queue->ctx)) {
++	if (msm_context_is_vmbind(submit->queue->ctx))
+ 		flags |= DRM_EXEC_IGNORE_DUPLICATES;
+ 
+-		drm_exec_init(&submit->exec, flags, submit->nr_bos);
++	drm_exec_init(&submit->exec, flags, submit->nr_bos);
+ 
+-		drm_exec_until_all_locked (&submit->exec) {
++	drm_exec_until_all_locked (&submit->exec) {
++		if (msm_context_is_vmbind(submit->queue->ctx)) {
+ 			ret = drm_gpuvm_prepare_vm(submit->vm, exec, 1);
+ 			drm_exec_retry_on_contention(exec);
+ 			if (ret)
+-				return ret;
++				break;
+ 
+ 			ret = drm_gpuvm_prepare_objects(submit->vm, exec, 1);
+ 			drm_exec_retry_on_contention(exec);
+ 			if (ret)
+-				return ret;
+-		}
+-
+-		return 0;
+-	}
+-
+-	drm_exec_init(&submit->exec, flags, submit->nr_bos);
+-
+-	drm_exec_until_all_locked (&submit->exec) {
+-		ret = drm_exec_lock_obj(&submit->exec,
+-					drm_gpuvm_resv_obj(submit->vm));
+-		drm_exec_retry_on_contention(&submit->exec);
+-		if (ret)
+-			return ret;
+-		for (unsigned i = 0; i < submit->nr_bos; i++) {
+-			struct drm_gem_object *obj = submit->bos[i].obj;
+-			ret = drm_exec_prepare_obj(&submit->exec, obj, 1);
++				break;
++		} else {
++			ret = drm_exec_lock_obj(&submit->exec,
++						drm_gpuvm_resv_obj(submit->vm));
+ 			drm_exec_retry_on_contention(&submit->exec);
+ 			if (ret)
+-				return ret;
++				break;
++			for (unsigned i = 0; i < submit->nr_bos; i++) {
++				struct drm_gem_object *obj = submit->bos[i].obj;
++				ret = drm_exec_prepare_obj(&submit->exec, obj, 1);
++				drm_exec_retry_on_contention(&submit->exec);
++				if (ret)
++					break;
++			}
+ 		}
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int submit_fence_sync(struct msm_gem_submit *submit)
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.39.5
 
 
