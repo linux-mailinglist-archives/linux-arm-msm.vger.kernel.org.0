@@ -1,93 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-67798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C43D5B1B853
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:20:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 497B0B1B8AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 18:43:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BEE54181B88
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:20:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C937B1702E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 16:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67A528BABE;
-	Tue,  5 Aug 2025 16:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ED5B2918F1;
+	Tue,  5 Aug 2025 16:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nhnhzxwJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fDHe3jex"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D87E291C3E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 16:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED22571D4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 16:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754410846; cv=none; b=cNs3u+7yZ9KeJ3MBE1zhoUfTQMmlK/M9dAVfl+m45K1HnZRh61UagQQAjhtuVCZZRnzZvWWL8Tyb4hQa7Ao7smnd7pnTHase1oyzzZwkF+oWaHAJxbxWoKaUdWtE3HHcxGXA/hyJRVUFRjpVEMMcu8gAF2KpFu2TmLQnYY5K3NY=
+	t=1754412195; cv=none; b=BifbKm4ijJk8OABVeDRLfal+Xq9LfJrKNnlZkIsuBTJxuUE9iJitSwlKr55xsKoEZhA3xGCeWHXoXuDTjDfQI5hR3yzD/jygRUA6ho8VgnTZRyqkpLWZxlyW+A/YpCRCSDapS28HZ8sHh4UeaWEkBscoKRdJ541HyudLSvc6aiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754410846; c=relaxed/simple;
-	bh=cBJjmBz2nru2N22Iu/zn8pPdmY8QA0TjfVIDw6+iow0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s5fh9GVUto/kq9MdUb/c7lrF87qGe+XPLr8IflsFXeAFK7gbhmPefnHFpAUyag/TxzdKHCsYsMNV4feB4JI+4K0Juqc0ob/iSBX9eMt5Y3RI+P1JP+KnysRvLsDwNVuYv5IBPz9/v84wcEsSZAYswsa6u7d8cVq9kIk2KKSZz+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nhnhzxwJ; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-458bc3ce3beso20909495e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:20:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754410843; x=1755015643; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IGkrmIeLV1rU3rT2THq/+9gyQc/8zpyvBaKc45egPzU=;
-        b=nhnhzxwJHFgMBkBXZIkucJrvmCyySqfb5MXw2PDMk1KDW11xeuLtoedB0WH/VrumJx
-         EdNqXAs2UTUc8eHvJoWeGpqVCnEDK0TeMUUb6po85mKZJxq/TyAdFtptf579wWmfuuAj
-         Is1pcNBHa3dwdSRVbVqpe1fIBps6NT8wrtjqmnHv67z92Ll8pFLzuPjUyjv8QajS3CLw
-         nRjIgyWv2l0mResUsaTU/HPKKSCGnkmiZB2OWOYLywdlb6KNzE8YX6P/DIN6ys4Gzlp5
-         KAJoivDCCdkcXtamxE3GxFsYngTLm3/8Qk58Zn9/ebSMhc9bldWdL9pDjpc44PZgLshe
-         HcCg==
+	s=arc-20240116; t=1754412195; c=relaxed/simple;
+	bh=nBWEXQsygmIvIk8jgPIUAX212MjBTxOnfQSQBQYqzPM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=liTcvisUQx9zdd2d8YhuvoaUtedaaiy2uurUQ2E6WTGGoo1UwOgoWaGPf8SmYzfshDXWCdcD4lmsVf92ufOT9LJGpmlSKM6qkaZWs+NfytZrL9OItMczI2rDfDepLF4gUeWVLaUiG3OGJZC8YHKtrTID/2+5xjeyl2z+oUM+VrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fDHe3jex; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575E3xwK029616
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 16:43:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=hv30jdihqjoTZ5O1+BHgicFjeP5thjFR90f
+	+0mrcaKc=; b=fDHe3jexkYZwPPGKJy7F2swAdK4gcYfVaZ2ysGacXOy+4tdFXPX
+	UWGqAluR34H6so0S3k1StKae49FO0PgTZ0lBdtJ5ST5pvar71nQ1plGOGjZ7zrm1
+	Dj1SyALsRk3iiHPlzHthrzAOqlnHDD8LAOsZsZAW2ZNYkrYUdLpPV87JBp4ewleY
+	GpnL6AFbZ1pPtaWjf9TKAor+IJLaneI0uhjT62LXdzSSYkKrNo49+GZBIyTuCqG4
+	0ytLr5TYRg3cJ0oXO8LL64VDY40AhqU55OmfJ1oG9Iig85nvYASXoBJmIjRKg+9Q
+	K+ql863nrxDU1Z7ECEzlC70WtINCktNPlaA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489byc97kh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 16:43:13 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b421b03d498so3260273a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 09:43:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754410843; x=1755015643;
+        d=1e100.net; s=20230601; t=1754412193; x=1755016993;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IGkrmIeLV1rU3rT2THq/+9gyQc/8zpyvBaKc45egPzU=;
-        b=kzdWcXb6Rr1YYDaGsO4RQNxUteiiodb/QXOXD9H6s9Qy5m5v0bhCm5WkL2U+/hL+mn
-         VUohVli0yUV6act4XBHXgiyve+y49BVUK/+co3o6EyoV9yK+AA2+pZjUPdEPsI0KPWlK
-         xg57fy4XiPo77sBU81Hcu8j4kVCeu3TUb9mmWe2SKW9TNVxaVspyYLym29AhCNZEtEt1
-         Hb7OKf2mx2hdBkU2/ybu+cwflB1VE5CKHRC+LZCJS/LzSh7OOjPHH7lV12938ZcW1rDJ
-         23HE0RVjlzCdJuKNTNWF46U0wPgGh2tCgonFN+zzANz/Itc8HlQtj885o1WAXrsxul5R
-         43Pw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhR+1kjMqskixZDHfpeze+eDnzbDvLfegVJfkhFgMwupDKzBw4osvI0sK4XnD1t0H8lujjBRSzzxFYjVTS@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfUxBym9tkwolwUijDiwXwXHgyT0V9170crkegz3sLPg26l40e
-	gOUjSpB4K1A/E8TlkIS/usP4WVGHlCcS9bZBE667vaQpXfFOS6o5sKkVBw/rok2ImZw=
-X-Gm-Gg: ASbGncsLnbxrHdrS5LELETc7g8s/yTQv4XTtQecL1mmY1YQH8Q1nzqkh2u2nRTMEthu
-	/tqp2tMO7xQormSSbiMh0HeEdhMiE/tYgKeEAjTIzZ72R7T5Upi2ZU7JQPy+veCFuNxrtJYHU4/
-	Y5G/wgCpBvFQc9kDEpnEhcuwavHPOnlAjbHa/dDJqPbJto40IpzZ5+yCc2shWCP6GiOz5QN/DAC
-	OToXTt0BUtpdYYhu49b9mxIZJRAca/7EYZZsEZk3xVVnbV02I/hsEt0mVoquajB7HSZyr3PeZ97
-	RU37Uoct8Cc+qKUzkqmJqPX2l3ORpFmpqUcHkPOrpXLWGaVcnF2ZR29iTFy21h8D1nzNUOB1Oaj
-	h+52iYTmtaqUIneDjvGs2F7OTFOQroMY2SUIA9Zg=
-X-Google-Smtp-Source: AGHT+IFJTDQFGPN/BiqSqSYEoyKB3J5CeXH8Mn6Txe7Lz7r1rfPY2c8tUvGJMup7h8OCrkxOi1r/Iw==
-X-Received: by 2002:a05:600c:4752:b0:456:25aa:e9c0 with SMTP id 5b1f17b1804b1-458b69e3710mr130392835e9.14.1754410842876;
-        Tue, 05 Aug 2025 09:20:42 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:3fc8:64de:ce84:87a0])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5873c43sm12023575e9.22.2025.08.05.09.20.42
+        bh=hv30jdihqjoTZ5O1+BHgicFjeP5thjFR90f+0mrcaKc=;
+        b=SnBEh/woS73N5DQcHGrTjxecZIiRGeKKGeDaKDTq0iJ7XEAAvvbbCp/ByXrrgZbza1
+         LtIJvYbrVUJWinfXRdxuspY3FEl9ob19iqas6O9dB7NIZvFcx46P52ggS9sk7AShAB27
+         dWG8eXx2HaCzrRL55tLL/oynff6GnIeOplS2XGCfsDF2NQWm6p8MXe5Zojp7Y1Y9m4Lk
+         7U+pAczL8W6KOKGyhwP0EuiL3PuUEgvwi8PGIGIm2Xs9uQQYE9JR+SaegL04MzbUIT3A
+         E/tqlaUKG+TBCuPvS4w1++p4lf+RX3NPmdj4ZNB7hldzN3v7OTXakFY3SFWJ4OV0JrBl
+         bX1Q==
+X-Gm-Message-State: AOJu0YzdH6uSx5QOf8XMMV1AA1sfluGu1sR9k3jr8pGk18OvKKHhXtWq
+	1belwEdS8uY3lOMcr3iDuP0nsb/QTKKR65B7EbeAkQM+8NaxS4vebFeiRbfhKD+oAlftAdlVW+3
+	YaFuA06RVsR4vgI9ZjM1z12zm8eWcupNSA/4SqJzjRu6PjaESsjQ0EBRITfOjvSSJ1rn8
+X-Gm-Gg: ASbGncsFSvwvU/24GP4MmPe/ge7xIQKlZ+FaEC4QhItZbzMDvoceSYJGkBxnMCx6koZ
+	7aTZdH5wRrFFFLz48gqaSYfhV3SbSpG67S9YE6YqxVtPAGv4pgL0IPJwzW/6OjsU5zlGOZ/Hz0S
+	cNpbYxek0hFmzrTaQQa8qDUULDpxRQ5/u2wUQo/xMgmGa6MNSOoiF5qxx4UPZSylCYCvKZrNGlr
+	vsp52tkjXGufF7ul/O38rBtLbLsCYD1yIHx10uzH8IlSn2HeXxXnzXNnxmgmQLK6y+JqGOTtmg+
+	mIvwVxpdVdmVQ/jUXQLtX9yUhrY4d3G3xfs3F+eRu6Hgfy56MyY=
+X-Received: by 2002:a17:902:e889:b0:23d:fa76:5c3b with SMTP id d9443c01a7336-24246f721fbmr218343705ad.22.1754412192645;
+        Tue, 05 Aug 2025 09:43:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG19NECaSamtKmV1ToEgyAxx1m7KHOpQTVdLiTHMDu1lnYZHtJCITz8j/23vDlW8kqUI1HB9w==
+X-Received: by 2002:a17:902:e889:b0:23d:fa76:5c3b with SMTP id d9443c01a7336-24246f721fbmr218343185ad.22.1754412192122;
+        Tue, 05 Aug 2025 09:43:12 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1f0e81dsm137414025ad.46.2025.08.05.09.43.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 09:20:42 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-To: andersson@kernel.org,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	srini@kernel.org,
-	quic_ekangupt@quicinc.com,
-	krzysztof.kozlowski@linaro.org,
-	dmitry.baryshkov@oss.qualcomm.com
-Subject: [PATCH v2] arm64: dts: qcom: sm8750: Add adsp fastrpc nodes/support
-Date: Tue,  5 Aug 2025 17:20:41 +0100
-Message-ID: <20250805162041.47412-1-alexey.klimov@linaro.org>
-X-Mailer: git-send-email 2.47.2
+        Tue, 05 Aug 2025 09:43:11 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Fix a few comments
+Date: Tue,  5 Aug 2025 09:43:08 -0700
+Message-ID: <20250805164308.23894-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,120 +99,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: mMvJgdm6eT1Sf4z4leCADG2hlD6_0Uay
+X-Authority-Analysis: v=2.4 cv=Y6D4sgeN c=1 sm=1 tr=0 ts=689234a1 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10
+ a=EUspDBNiAAAA:8 a=q6EcQpUjypoMYbJrLQEA:9 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: mMvJgdm6eT1Sf4z4leCADG2hlD6_0Uay
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExNiBTYWx0ZWRfX/IQ5dMYEbmgo
+ o2j5y8itury7Br8XwY3QfkRKiyICytGslqHY2YX/RvypdD0sOcAkAWR55D0XlFpQujdQwMI05Nf
+ HV3GT4zqjiVv9NuINb6xqvgc3gqcWg7sB5wjEJrQ5LNZzLWhXZxcMNA/YE9wYH+spJVA7hu320M
+ OMNlVrtkdSOAPryQ6OaImeQQll9J0qa7TafATd5VyuLGu+zDKAxm7YYKwOkVOBwwvtyfwcbGRBR
+ HYhfjhkQT45TA5Q4hyL73QKLyUf1eWEc27gQ4y+wmtamfL+cBUvLp5S/T+k7IjJi36pbbDuWiO/
+ 4v0wUT9epP53oKAIoGSORjsU9yRljMqmfw/DqcgTeCpvdPzEVBK28nO50sq6Uz9bcgvVEi+Ze5h
+ DOf7AIsP5qijoO+INfoBn2yip8AilE9kQKor/eyirTFY/+QYn0VoefGinAbuLiwdT0ndztUl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 malwarescore=0 adultscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050116
 
-While at this, also add required memory region for adsp fastrpc.
+Fix a couple comments which had become (partially) obsolete or incorrect
+with the gpuvm conversion.
 
-Tested on sm8750-mtp device with adsprpdcd.
-
-Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
+ drivers/gpu/drm/msm/msm_gem.h     | 2 +-
+ drivers/gpu/drm/msm/msm_gem_vma.c | 5 +----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-v2:
-- removed qcom,non-secure-domain flag as requested by Srini.
-
-Prev version: https://lore.kernel.org/linux-arm-msm/20250502011539.739937-1-alexey.klimov@linaro.org/
-
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 69 ++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index 4643705021c6..cc74fb2e27de 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,sm8750-gcc.h>
- #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
-@@ -523,6 +524,14 @@ llcc_lpi_mem: llcc-lpi@ff800000 {
- 			reg = <0x0 0xff800000 0x0 0x800000>;
- 			no-map;
- 		};
-+
-+		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0xc00000>;
-+			reusable;
-+		};
- 	};
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 88239da1cd72..751c3b4965bc 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -100,7 +100,7 @@ struct msm_gem_vm {
+ 	 *
+ 	 * Only used for kernel managed VMs, unused for user managed VMs.
+ 	 *
+-	 * Protected by @mm_lock.
++	 * Protected by vm lock.  See msm_gem_lock_vm_and_obj(), for ex.
+ 	 */
+ 	struct drm_mm mm;
  
- 	smp2p-adsp {
-@@ -2234,6 +2243,66 @@ q6prmcc: clock-controller {
- 						};
- 					};
- 				};
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					memory-region = <&adsp_rpc_remote_heap_mem>;
-+					qcom,vmids = <QCOM_SCM_VMID_LPASS
-+						      QCOM_SCM_VMID_ADSP_HEAP>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1003 0x80>,
-+							 <&apps_smmu 0x1043 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1004 0x80>,
-+							 <&apps_smmu 0x1044 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1005 0x80>,
-+							 <&apps_smmu 0x1045 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+						iommus = <&apps_smmu 0x1006 0x80>,
-+							 <&apps_smmu 0x1046 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+						iommus = <&apps_smmu 0x1007 0x40>,
-+							 <&apps_smmu 0x1067 0x0>,
-+							 <&apps_smmu 0x1087 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+						iommus = <&apps_smmu 0x1008 0x80>,
-+							 <&apps_smmu 0x1048 0x20>;
-+						dma-coherent;
-+					};
-+				};
- 			};
- 		};
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index dc54c693b28d..d1f5bb2e0a16 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -319,13 +319,10 @@ msm_gem_vma_map(struct drm_gpuva *vma, int prot, struct sg_table *sgt)
+ 		mutex_lock(&vm->mmu_lock);
  
+ 	/*
+-	 * NOTE: iommu/io-pgtable can allocate pages, so we cannot hold
++	 * NOTE: if not using pgtable preallocation, we cannot hold
+ 	 * a lock across map/unmap which is also used in the job_run()
+ 	 * path, as this can cause deadlock in job_run() vs shrinker/
+ 	 * reclaim.
+-	 *
+-	 * Revisit this if we can come up with a scheme to pre-alloc pages
+-	 * for the pgtable in map/unmap ops.
+ 	 */
+ 	ret = vm_map_op(vm, &(struct msm_vm_map_op){
+ 		.iova = vma->va.addr,
 -- 
-2.47.2
+2.50.1
 
 
