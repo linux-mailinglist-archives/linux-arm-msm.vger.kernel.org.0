@@ -1,153 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-67759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B94DB1B113
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:32:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9578B1B117
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 11:33:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E6AB188A2AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:33:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 783FE3A31D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 09:33:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69CE82522B4;
-	Tue,  5 Aug 2025 09:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 563741F5858;
+	Tue,  5 Aug 2025 09:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzrkp9C+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qOeHHveG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F86A19E98C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 09:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE99946C;
+	Tue,  5 Aug 2025 09:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754386361; cv=none; b=s0qt/T+Iny4cUpBYTGQtYEzFY1DsLfjimWWuzfFPLfCMjUOh5qmO+Gbd+Dx2Ar9hPvZ0OI5FIseqKmH4NoNpVuESBI4Gg4yFEPWMw24NY/jUoWCZpu5Nl6W03CKZ9QVC42W825w6LB9DgP2+pSaZplFmswIelTgphSWMTodTUEs=
+	t=1754386407; cv=none; b=u0OmcGKI3LXP3VRyym3+3giGUOV+Ep5ApbkULJ/UyWinEcLHkE8nSGtnTGIOcZY6UATQ/gqKZXmlqMeKBk2351AynluN39OsKQAygKJavYTIwa9027SFWbFYgsEk2LUBVZiw73sXHc9QIpBvTcg7LXSbOV9mLN68hmoER8fwGqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754386361; c=relaxed/simple;
-	bh=dmAqZKWXa9hepTM6uf0mvM6C0/XuJFbVnwcjNJRk3UA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A/UUFUpfor29jLl3Nd/t1HaF4PoAGk6555DbPNLhLrw4zoUW8yZrOO9oZK3/ixh+U+yLgD/IcJWS7UeFXlofHgNSg//0RkCrS7TusNUpuydaTIWUV60EOnBXpJVYPAlGMok77IqCSgv4nfa0XqJmdGJdmS+Is0NAqPffrji5aeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tzrkp9C+; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-459d4d7c745so21931325e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 02:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754386358; x=1754991158; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LRrw4vQc3pkEJCBEVdJPyweESFjqhx8L585Qv1xiSuk=;
-        b=tzrkp9C+zlCV8WtOYbuwRSgazOrP1uQpu0eLX/EBixE6lWBNQUP+lPxgESU52Yyqf9
-         Ku1/t2ofp1Un729MSI6TUY2qhMPgiYfGZsikrlWtzFMfH0fbmqngtTzBEAK8gv6Tl9W8
-         Fzf+On/AWjFiYGPK/d29m6+74XU38roxjYP96oTMYypQJHAvBIniAebevCXqQMI8zbvL
-         XFpd89N4eK7xh6C1qRFyHM/7aBc5la7yIXQWqZniA0dEm63oGhRxAWy91RgpHIh6TWRU
-         pKWkn0UqlmeADektdD8UMQtaZFuOKgkCSdJfxMZKcIZNzvA7tdh59vWLH5d3z6UCSIzh
-         FNSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754386358; x=1754991158;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LRrw4vQc3pkEJCBEVdJPyweESFjqhx8L585Qv1xiSuk=;
-        b=Z4U5q40dVBriE47hqkDF60+g3lyJy7H+cR3m4D/dVh+g/Q4Oc6Zvh2fLaD6WtqPhhm
-         bPOtK9UDtKn/pK9pvzZA00n3MKcPcf0A3Jyyl/lxuf+LPurWqxRahLxmG9Z5jYUR/eiN
-         epJpYI8P19aoQJvizKSq7czBhl3kAGWaEnwzf4WZH0m9ziVXJJNbbhQM8/p905I+VCI9
-         7JbBxTpauw0lwv0C9yKT4b7vxIAKPP4y91Lp06HTxEIn+Gd8bvTj9sWoOyyPTq15p8+V
-         DNAMuvYELauNVSsrtMWgt8GpcToEn2oDmfQYCR5v34vCGEG3I+SCB9ZWUHI5yE7AmPco
-         QrpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWzzPf1LjyaI267n2YfxkIVerv+517XpXqHvQr+g3gMuKLw5BMKup2Ex5LR1MJ7jY+aZ/cCi/PCs78cRkYS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6J2DgmG7SSXvYB9ktH5YMde/KhshYv4UPVCK7Uv02Oi9myIbv
-	ZZAkLbFtGS84AIt1LP1KqDE5TryAM9E+PGF7LIYfD+wKsGQz3YjAWjhLVnCBEWbcqbs=
-X-Gm-Gg: ASbGncsNsToJJGJivZmeqZJpmBMBvVYSy/ASHPQ7g9H4jjoJhGY09uU1oHNlfb0/nC2
-	2KbwHDMqnz9iQQgDSWpGPNV6pYgKEoruayCVy0xH4PS55z37iOC+P/feAkOg8QsdcDfFwYcRabP
-	36XumgUaR+oYWKxnbgMeh7IJI/zAztFihmWA6uZm/lzU49fYbmoo5zISyqlFYFPwawhFFjfh9lL
-	8ZwM6SMWNlgXPSYU5jz+EB5oDJsEI4qkhMgrovPxtxDb9FcFMcQoYPVIEl+m1C3AeCFyDK0Pw7m
-	9DmgdV4Fbt3CxoWQKVSqdst2aZcYAv9P1uIMg5zzaqvxlyYYBBE/yxmhmziz2moa/UhWEry+HiW
-	bGMq2q1zXIDU/RDAxcai/PetYDHYFdCxDValB5ihSM3c=
-X-Google-Smtp-Source: AGHT+IEniVrm80SsjDo0ryDbz5HLZsIvXe7rO1POHjMJRmY7kr3VgBY3FFchceUynbFM5EdgsuEyUQ==
-X-Received: by 2002:a05:600c:4f89:b0:459:d9a2:e952 with SMTP id 5b1f17b1804b1-459d9a2ecf1mr54861285e9.1.1754386357820;
-        Tue, 05 Aug 2025 02:32:37 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c453328sm19366833f8f.46.2025.08.05.02.32.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 02:32:37 -0700 (PDT)
-Date: Tue, 5 Aug 2025 12:32:34 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Val Packett <val@packett.cool>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Fix error return values in
- mdt_header_valid()
-Message-ID: <c00ae61c-83b9-4816-bd40-582be9e14137@suswa.mountain>
-References: <db57c01c-bdcc-4a0f-95db-b0f2784ea91f@sabinyo.mountain>
- <ece307c3-7d65-440f-babd-88cf9705b908@packett.cool>
+	s=arc-20240116; t=1754386407; c=relaxed/simple;
+	bh=skyxs9Z4sBhwoUDir0xa89YmAZ3DZFZzARtZtVKT9nY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=PEf8rftsmbcgmD3H5vCvquIdBD0DB9+yDRbB2VfDZUndCqkwpMWlBYqXzK5ZGMC2iUB3hRgsyov36y/5ab3AZ2joz/6mcZ9q+/6TkuI2Obg/dxyd3TWKy4LM5chRikzLzF/LRbt+rui8eylAm6UMfWdovLC8kRnwrtOnKIPiOPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qOeHHveG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C675C4CEF4;
+	Tue,  5 Aug 2025 09:33:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754386406;
+	bh=skyxs9Z4sBhwoUDir0xa89YmAZ3DZFZzARtZtVKT9nY=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=qOeHHveGFku077OzUZ+BrjD3TfvDv5KQFpbJDXspG+4tSuPKU3/NqKVDdbvGwfAwf
+	 hOTlh7D0pbRVNRYo8w4GxLmMjJR0RETinJK5+IKvyC/YGX55v256iWAPUKm38kUjrQ
+	 1v2UtcGjZi9nRKq7p6uJk4JdFvmKol9FXfj2jBermx0QKgdzYFFoWHyHzK5HV6kK0f
+	 wXsAyoyjKhgotdLpdhSiZ2xHr5VuAlMcsx4R9Gvpkha1MyDujrZXOaJ+FnsUi8SzgI
+	 lYCS36IkxHWiixj3joz/M2dhJ5yomLnTtkHrGsEvvfKTw/z5FKiDYrpPREuA1FX356
+	 Z1u4Qq8C3v+oA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ece307c3-7d65-440f-babd-88cf9705b908@packett.cool>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 05 Aug 2025 11:33:22 +0200
+Message-Id: <DBUE2QU2CH9N.3C32KHT9LHMMB@kernel.org>
+Subject: Re: [PATCH RESEND 1/2] drm/gpuvm: Send in-place re-maps to the
+ driver as remap
+Cc: <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+ <linux-arm-msm@vger.kernel.org>, "Danilo Krummrich" <dakr@redhat.com>,
+ "Connor Abbott" <cwabbott0@gmail.com>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Lyude Paul"
+ <lyude@redhat.com>, "open list" <linux-kernel@vger.kernel.org>, "open
+ list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS"
+ <nouveau@lists.freedesktop.org>
+To: "Rob Clark" <robin.clark@oss.qualcomm.com>
+From: "Danilo Krummrich" <dakr@kernel.org>
+References: <20250804214317.658704-1-robin.clark@oss.qualcomm.com>
+ <20250804214317.658704-2-robin.clark@oss.qualcomm.com>
+In-Reply-To: <20250804214317.658704-2-robin.clark@oss.qualcomm.com>
 
-On Mon, Jul 21, 2025 at 08:35:22PM -0300, Val Packett wrote:
-> Hi,
-> 
-> On 6/25/25 12:22 PM, Dan Carpenter wrote:
-> > This function is supposed to return true for valid headers and false for
-> > invalid.  In a couple places it returns -EINVAL instead which means the
-> > invalid headers are counted as true.  Change it to return false.
-> [..]
-> >   	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-> > -		return -EINVAL;
-> > +		return false;
-> >   	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-> >   	if (shend > fw->size)
-> 
-> this has broken all firmware loading on my x1e laptop (Dell Latitude 7455).
-> 
-> Apparently e_shentsize is always 0 in Qualcomm firmware files.
-> 
-> Confirmed externally with readelf:
-> 
-> % readelf --all
-> /lib/firmware/qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn
-> [..]
->   Start of program headers:          52 (bytes into file)
->   Start of section headers:          0 (bytes into file)
->   Flags:                             0x73
->   Size of this header:               52 (bytes)
->   Size of program headers:           32 (bytes)
->   Number of program headers:         58
->   Size of section headers:           0 (bytes)
->   Number of section headers:         0
->   Section header string table index: 0
-> 
-> There are no sections in this file.
-> 
-> There are no section groups in this file.
-> 
-> 
-> (Not just with my files, also readelf'd the Lenovo ones committed to
-> linux-firmware, same deal.)
+(Cc: Thomas, Boris, Matt, Alice)
 
-Thanks Val,
+On Mon Aug 4, 2025 at 11:43 PM CEST, Rob Clark wrote:
+> The 'keep' hint on the unmap is only half useful, without being able to
+> link it to a map cb.  Instead combine the two ops into a remap op to
+> give the driver a chance to figure things out.
+>
+> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/drm_gpuvm.c            | 21 +++++++++++++++++++++
+>  drivers/gpu/drm/nouveau/nouveau_uvmm.c |  3 ++-
+>  2 files changed, 23 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+> index bbc7fecb6f4a..e21782a97fbe 100644
+> --- a/drivers/gpu/drm/drm_gpuvm.c
+> +++ b/drivers/gpu/drm/drm_gpuvm.c
+> @@ -2125,6 +2125,27 @@ __drm_gpuvm_sm_map(struct drm_gpuvm *gpuvm,
+>  				 offset =3D=3D req_offset;
+> =20
+>  			if (end =3D=3D req_end) {
+> +				if (merge) {
+> +					/*
+> +					 * This is an exact remap of the existing
+> +					 * VA (potentially flags change)?  Pass
+> +					 * this to the driver as a remap so it can
+> +					 * do an in-place update:
+> +					 */
+> +					struct drm_gpuva_op_map n =3D {
+> +						.va.addr =3D va->va.addr,
+> +						.va.range =3D va->va.range,
+> +						.gem.obj =3D va->gem.obj,
+> +						.gem.offset =3D va->gem.offset,
+> +					};
+> +					struct drm_gpuva_op_unmap u =3D {
+> +						.va =3D va,
+> +						.keep =3D true,
+> +					};
+> +
+> +					return op_remap_cb(ops, priv, NULL, &n, &u);
+> +				}
 
-What a great bug report!  Could you please try the patch I just sent.
+I don't see why this is necessary, a struct drm_gpuva_op_unmap carries the
+struct drm_gpuva to unmap. You can easily compare this to the original requ=
+est
+you gave to GPUVM, i.e. req_addr, req_range, req_obj, req_offset, etc.
 
-Neil, I forgot to CC you.  Sorry!
-https://lore.kernel.org/all/5d392867c81da4b667f61430d3aa7065f61b7096.1754385120.git.dan.carpenter@linaro.org/
+Which is what you have to do for any other unmap operation that has keep =
+=3D=3D true
+anyways, e.g. if D is the exact same as A, B and C.
 
-regards,
-dan carpenter
+	Cur
+	---
+	1                       N
+	|---A---|---B---|---C---|
+=09
+	Req
+	---
+	1                       N
+	|-----------D-----------|
 
+In this case you get three unmap ops with keep =3D=3D true, which you can c=
+ompare to
+your request to figure out that you can keep the corresponding PTEs.
+
+Besides that it changes the semantics that the documentation mentions and t=
+hat
+drivers are allowed to rely on, i.e. a struct drm_gpuva_op_remap represents
+an actual change and any call to __drm_gpuvm_sm_map() results in an arbitra=
+ry
+number of unmap ops, a maximum of two remap ops and exactly one map operati=
+on.
+
+>  				ret =3D op_unmap_cb(ops, priv, va, merge);
+>  				if (ret)
+>  					return ret;
 
