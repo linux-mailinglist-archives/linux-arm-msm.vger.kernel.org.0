@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-67725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6F2FB1AC95
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 04:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD65FB1AD0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 06:11:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F218E1805A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 02:55:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC223170265
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 04:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07A5F1DD877;
-	Tue,  5 Aug 2025 02:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24DDC20126A;
+	Tue,  5 Aug 2025 04:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W4tLOclK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eayeg82A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273DF19067C;
-	Tue,  5 Aug 2025 02:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856181E9B3A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 04:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754362532; cv=none; b=LJmhAJLflYiYdcY+xUo0kdQAG4oi/zTV1PwPbU3JZFzeUAXUxWRxPzYM5VtxEy51IDCM7LIffktw12c1HylT+EggPP6v/Mf502MarhHxKkEw3DDjgLOZUEA0R+yknRtE6gj4ckPePwjmQWmuD6OeFstKVBp+EEYkqMqTnEJRJHs=
+	t=1754367080; cv=none; b=TNUA8nvn5CUMMndTnLGyQu/XUus2UvO1vPzynqytksCEqxUbPt2TdLCl/6Nosn3fzPI/s0GRoQaeeNgqWMMHgXL9XIAtveBwbZYCenstkx47o9H+JZHprzLSzbDHCAaZr5mJ4DGpOGDnlXs1XUVZ87KXjwLQsM58yoIn/00zGJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754362532; c=relaxed/simple;
-	bh=+Oa1SYk7rH7RR7dwTN4cNqhgSPkcTFZqD/QlZ4EoxYY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mv3r6EsIXIL9qWWL09OG8RCHnn8hPflI1uhMkdzInaxyzYSMx/cHLNIHMQ20kL+ly3P5d5nh9YkiseXxqKCMKMKGYIgsK7I5Zb3oo2KN/onHmq50mohHzPjHV6CU+CVufXM2gH2AoTPbwBuys+DPvzszdafqGHu7w7Mw6ybgwqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W4tLOclK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 574E2AWT026093;
-	Tue, 5 Aug 2025 02:55:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1754367080; c=relaxed/simple;
+	bh=W9Q2+j5V3GLOUyMo5vpmA5W++Yp0vx100jLA0XAUDMs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BWrgTteikAPOJZNnxQT8gNZQrzjWuut0fVouvdH7HuQgg071fJZM+RvcxixrzWLB/EgtWb/3s3Rs5z27HOscCbih2w3xL+lS6jNtBVTBD1qmg5TkQ3WRraHZJKQm6RA2cKuatgBubwqFYXVv3q0tPAmAc2knTTo2CH816kANnv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eayeg82A; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 574Gq749013747
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 04:11:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	L2lMJIGQ2wZkzoNhGgGAp72JyXMQq+SgmtR2nOQ+WF8=; b=W4tLOclKhFzdJ7TY
-	p1hlSh7RUdotHoFcssmqkAuoB8qHv10Amc08xArT1J2Dt5oVwVng+qD3dkjtLyeq
-	4YYVI+JRUtn/Prz+pcrTnHzUI26B7I2sc5KDB9ngWupi9qLO2kdGlTAGFErOQ9bq
-	eScXdJ+fgd1oNuCzizmljkgxNvsU2ZVvMdHaVIKiicZqOoF/RA3GziLVOrsuYChi
-	8S4pOa1r0Vjt/PAebWZsNYZ18WHOGkZqvwIIqjr/RVKQgesa/Mj9wCkYQgRCHlkD
-	EQyKP03E2kMR2Nh7YDzhxXhWuPPaHe2kXHctUqmWzu0xxwn+/F7seh5PbGQQ+LZT
-	KNtm/w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48avvu9yeh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Aug 2025 02:55:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5752tFDl016636
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Aug 2025 02:55:15 GMT
-Received: from [10.133.33.160] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 4 Aug
- 2025 19:55:12 -0700
-Message-ID: <13cd5f5c-99a8-483b-a722-86dd636e092e@quicinc.com>
-Date: Tue, 5 Aug 2025 10:55:10 +0800
+	4kHQ2TM2MYW/R6mLsfnEzPj6Fkc3FKZAGp4pSK5pRZY=; b=eayeg82Aq37cLLGQ
+	BLdT1z6L+tJ7UuCQtn9YY4wLXwDJQ32uofVOhjslGd0/H7robygmo8SzBeO3IEif
+	t4wdgipGUV1OoHNeV+OIcohrvOxUF8Q4ODbKwYS66ri62WqbpL9ITB8J5mwgLC/R
+	vRiZv3UREZ3Jj4vh1rK2KsF6qQXJ1MsL30nNIHyfxoyxIYIbvLsO5C0VgZNix7p8
+	K+7+5/TDv+KgRZMUYBIHaEJ8LYK3RJUHhry8vwjT4SKkhQGHI6F4059vevvOCwFi
+	aIoCCansChltb5OzRo2Vv2f24eSMqsz0cyGR0/Q27nUMjps0CAec1ZwNUB6r8jiK
+	+jMI1Q==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489bek73cv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 04:11:17 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-76c115731eeso2306441b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 21:11:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754367077; x=1754971877;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4kHQ2TM2MYW/R6mLsfnEzPj6Fkc3FKZAGp4pSK5pRZY=;
+        b=J7Q1V/0y1CpEoIVgUOJhC797S3iYjvM8j3K5Bl04KUYpV0yRqvi9cv3WuiPHlfZXrZ
+         Y6WZCm2rYp2Ki5dHCQ9vXqUzCry2vJEfSd+yoQJJOqcB+ziQ0xwYKsUu5quC4B5Ne/oG
+         FWrFZuefFFIMV6DhRk+Bc19Eq3G2cmikV3O5PfxRVU3V7J8i/rz/2F9jih6+85cgT+oL
+         jdDItLFp7J/Bw4Q3wmxLsoG6kxWqAXOmMFhtNxizLybbqRPA5RZ5FphA+oLNKZ3tcjhA
+         qLBVzHlh55P6BGwGy7ogZvCg4/KpJoe+MXjW192Rf9r5WG9Lb22I81Q0DSNHtsueruGJ
+         89zw==
+X-Forwarded-Encrypted: i=1; AJvYcCXs0w/HbbwRJ6qUL+bURMm+eockftolsc7VN8FRCbwwtJns2yJF57gObFVythteKH4t5nq/dCtTlpuL+YpB@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxboKvnATpKyeMTQvEYmVlPSQVLz9HlmODTYCffxQuBchLLHQp
+	12vU48KCpPQRA6YbrFNBDexrqiTGR5Hn4IBbc1+Uf4cbzi3C/lK21cfNJwhIHnv5z1rron089c2
+	pTQMvuA/ADrSoPFo4gdGf6HULn0gTZ62NQ+yqHEglYi+RHt/fYkDauXKCY1+eprRJheO+
+X-Gm-Gg: ASbGncvGrO8Msdn/+kduPNhH2Vd+bDeoHYMIdY6HRdvMjq0G4/BiY+TG7/liQ11Sb9H
+	BUzBDBLFYjkvI5rs3FSTSCnG8kbv99OeXKeYMHzcedrv34x5lZh0m2fmAr9xG0mvNmOCaAOFOGW
+	/cDXUFOTpuv0roUSrHVoTEqBMPvBuxFrKKK6tuChPE8jLnKfgZ6AQKIyuqMmvxrMAB+8Y2tCdVI
+	fGoLaLIrD9FQFypj9m+ltFy1yKGxlSooxiOTDVG/i9J1MxUdXrp5zx5cJYrWXmTr4YNlrUDB5Gf
+	D6i2HIvjexzn2zE812IymnoaL9zVJmWLm/cLUnlyrOSW6MZEbeqdPi8CHF8BKGvefDRSFLjsD2B
+	8K+k6tz81rqTi1YQfZ3bMqtsaLtDi4w==
+X-Received: by 2002:a05:6a20:3d81:b0:238:351a:6437 with SMTP id adf61e73a8af0-23df9189244mr18263452637.43.1754367076699;
+        Mon, 04 Aug 2025 21:11:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbtTAk56CVTseMtlmWU2iTkuQTCHIahoYybtZSWtXQGXXH3Mha4XmAcqOGGI95Im8nvqjAow==
+X-Received: by 2002:a05:6a20:3d81:b0:238:351a:6437 with SMTP id adf61e73a8af0-23df9189244mr18263419637.43.1754367076319;
+        Mon, 04 Aug 2025 21:11:16 -0700 (PDT)
+Received: from [10.133.33.164] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bf067e310sm6747918b3a.25.2025.08.04.21.11.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Aug 2025 21:11:15 -0700 (PDT)
+Message-ID: <b5f8fce0-afe8-409b-b43d-fa9f413cd442@oss.qualcomm.com>
+Date: Tue, 5 Aug 2025 12:11:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,132 +90,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 0/2] coresight: Add label sysfs node support
+Subject: Re: [PATCH v2 0/2] Enable CTCU device for QCS8300
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20250717125343.3820505-1-quic_jinlmao@quicinc.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250624095905.7609-1-jie.gan@oss.qualcomm.com>
+ <c7cca483-f1d3-45b4-abef-ec5019ad57dd@oss.qualcomm.com>
+ <c6f74d55-6ea8-498f-a05a-000599f93ac6@oss.qualcomm.com>
 Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20250717125343.3820505-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDAxNiBTYWx0ZWRfX+Qr43J75r3TG
- HCF035D1DuIckO3bcKgRL+sDnns8Dpjuu3DCBLmaOMtzWU/CxxJHi6VPwPLwXz1aR6KhMe76gl4
- ByM6iejaJ9vWs9AglB/dkpH4YCNbpFnCuEMITsYrfOoOmn6qV+FWaq2WpHSZsrC96rKJgaABMu/
- IxD8aewS0Msai/tnFXqnbaYrlz9FslrD9KfHfiuOpqUi5G2EWW4vubaYlG9ktrYVzk33Ox0SATf
- LFrqUQFvOdU5hxAcPj50pq8A4ArIunOkjL9TZeV4O9IMkHsAuZwyagsN33BjuCq47qCXz26mTfi
- 37dGhALa6ABhTlYMaUGeZDKq+b72rf2E8xcR+cFiFrlmG9QSVNqnLMXsrK2v1M/OD2+ZzQaC8Wh
- a3cXszeEFSw32dYTVETuuNDJlMjc5OSAUt+8LwwNmoCJ5ntzt2/YbMl8Jjb2KKXWKjostcUA
-X-Proofpoint-GUID: l2AN4s8sIN7w-plOzh3hZP6lef8ODsAx
-X-Authority-Analysis: v=2.4 cv=OYKYDgTY c=1 sm=1 tr=0 ts=68917294 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=D19gQVrFAAAA:8
- a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=z2QAkc51omxNimOJtHIA:9 a=QEXdDO2ut3YA:10
- a=W4TVW4IDbPiebHqcZpNg:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: l2AN4s8sIN7w-plOzh3hZP6lef8ODsAx
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <c6f74d55-6ea8-498f-a05a-000599f93ac6@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=M7tNKzws c=1 sm=1 tr=0 ts=68918465 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=DOWyofZu-bKnVY_GfnMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDAyNyBTYWx0ZWRfX128abOukf6b/
+ KTc29gHPk6tF0UzXhHsIlC9xOgWP2UdFkp4WgGi96umDY44sZI5Okj/ShTVnG1m/UCnadlJBTnV
+ GIGlVQ2JVpVUtAlus2XPA87nZKXXWDFRNs/PHvtxt7QvBlOcKb5A9CJfabzE3PRrv1uzzARzrbu
+ OLeZjb8xA0se/e8b0LzeKGotC+wHJcnM3Pz9+ggP06QIxPeQKzZ4ynqikwqmTrRqoOtUinS87gB
+ rU0yLCY8Mq8l2IS+S+ycdlCOLnRpM8yVek7xVAauTAwpjcL43GPp3JI8K1Vf2Dg7JKbjj0R7iyM
+ WDTNsWKBy2mXipzOD3e7p7RI9l4IoP3YXstkEkYTmVIaYXyl231dPt/us2EWLLbQbRrM1XXdUW2
+ ucSUmJYl5+LWIqwU/iSGO+ozmMziTXhfYsCvZ9jc/ydS8HDpAzycf58VZUWFJWiEIP8Te5hv
+X-Proofpoint-ORIG-GUID: jf_ag4nUBXPvfB09ZMFf2SdEfoAGe_-5
+X-Proofpoint-GUID: jf_ag4nUBXPvfB09ZMFf2SdEfoAGe_-5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-04_10,2025-08-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- priorityscore=1501 mlxlogscore=999 malwarescore=0 adultscore=0 suspectscore=0
- clxscore=1015 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050016
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508050027
 
 
-On 7/17/2025 8:53 PM, Mao Jinlong wrote:
-> Change since V8:
-> 1. Add label in all documentations of coresight components.
-> 2. Add control of the visibility of the label sysfs attribute.
-> V8 link: https://lkml.org/lkml/2025/7/3/985
 
-Gentle reminder for the review of V9.
+On 7/28/2025 9:08 AM, Jie Gan wrote:
+> 
+> 
+> On 7/15/2025 8:41 AM, Jie Gan wrote:
+>>
+>>
+>> On 6/24/2025 5:59 PM, Jie Gan wrote:
+>>> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in 
+>>> binding to utilize
+>>> the compitable of the SA8775p platform becuase the CTCU for QCS8300 
+>>> shares same
+>>> configurations as SA8775p platform.
+>>
+>> Gentle ping.
+> 
+> Gentle ping.
+
+Gentle ping.
+Hi Coresight maintainers,
+
+Can you please help to review the patch?
+
+Thanks,
+Jie
 
 > 
-> Change since V7:
-> 1. Update the conflict when apply to coresight next.
-> 2. Update the Date and version in ABI file.
-> V7 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20250226121926.2687497-3-quic_jinlmao@quicinc.com/
+> Thanks,
+> Jie
 > 
-> Change since V6:
-> 1. Update the date and verison in ABI file.
-> 
-> Change since V5:
-> 1. Update the kernel version of ABI files.
-> 2. Add link of different patch versions.
-> V5 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20241210122253.31926-1-quic_jinlmao@quicinc.com/
-> 
-> Change since V4:
-> 1. Add label in DT and add label sysfs node for each coresight device.
-> V4 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240703122340.26864-1-quic_jinlmao@quicinc.com/
-> 
-> Change since V3:
-> 1. Change device-name to arm,cs-dev-name.
-> 2. Add arm,cs-dev-name to only CTI and sources' dt-binding.
-> V3 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240131082628.6288-1-quic_jinlmao@quicinc.com/
-> 
-> Change since V2:
-> 1. Fix the error in coresight core.
-> drivers/hwtracing/coresight/coresight-core.c:1775:7: error: assigning to 'char *' from 'const char *' discards qualifiers
-> 
-> 2. Fix the warning when run dtbinding check.
-> Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml: device-name: missing type definition
-> V2 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240115164252.26510-1-quic_jinlmao@quicinc.com/
-> 
-> Change since V1:
-> 1. Change coresight-name to device name.
-> 2. Add the device-name in coresight dt bindings.
-> V1 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20230208110716.18321-1-quic_jinlmao@quicinc.com/#25231737
-> 
-> Mao Jinlong (2):
->    dt-bindings: arm: Add label in the coresight components
->    coresight: Add label sysfs node support
-> 
->   .../testing/sysfs-bus-coresight-devices-cti   |  6 ++
->   .../sysfs-bus-coresight-devices-dummy-source  |  6 ++
->   .../testing/sysfs-bus-coresight-devices-etb10 |  6 ++
->   .../testing/sysfs-bus-coresight-devices-etm3x |  6 ++
->   .../testing/sysfs-bus-coresight-devices-etm4x |  6 ++
->   .../sysfs-bus-coresight-devices-funnel        |  6 ++
->   .../testing/sysfs-bus-coresight-devices-stm   |  6 ++
->   .../testing/sysfs-bus-coresight-devices-tmc   |  6 ++
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++
->   .../testing/sysfs-bus-coresight-devices-trbe  |  6 ++
->   .../bindings/arm/arm,coresight-cti.yaml       |  4 ++
->   .../arm/arm,coresight-dummy-sink.yaml         |  4 ++
->   .../arm/arm,coresight-dummy-source.yaml       |  4 ++
->   .../arm/arm,coresight-dynamic-funnel.yaml     |  4 ++
->   .../arm/arm,coresight-dynamic-replicator.yaml |  4 ++
->   .../bindings/arm/arm,coresight-etb10.yaml     |  4 ++
->   .../bindings/arm/arm,coresight-etm.yaml       |  4 ++
->   .../arm/arm,coresight-static-funnel.yaml      |  4 ++
->   .../arm/arm,coresight-static-replicator.yaml  |  4 ++
->   .../bindings/arm/arm,coresight-tmc.yaml       |  4 ++
->   .../bindings/arm/arm,coresight-tpiu.yaml      |  4 ++
->   .../bindings/arm/qcom,coresight-ctcu.yaml     |  4 ++
->   .../arm/qcom,coresight-remote-etm.yaml        |  4 ++
->   .../bindings/arm/qcom,coresight-tpda.yaml     |  4 ++
->   .../bindings/arm/qcom,coresight-tpdm.yaml     |  4 ++
->   drivers/hwtracing/coresight/coresight-sysfs.c | 71 ++++++++++++++++++-
->   26 files changed, 189 insertions(+), 2 deletions(-)
+>>
+>> Hi Suzuki, Mike, James, Rob
+>>
+>> Can you plz help to review the patch from Coresight view?
+>>
+>> Thanks,
+>> Jie
+>>
+>>>
+>>> Changes in V2:
+>>> 1. Add Krzysztof's R-B tag for dt-binding patch.
+>>> 2. Add Konrad's Acked-by tag for dt patch.
+>>> 3. Rebased on tag next-20250623.
+>>> 4. Missed email addresses for coresight's maintainers in V1, loop them.
+>>> Link to V1 - https://lore.kernel.org/all/20250327024943.3502313-1- 
+>>> jie.gan@oss.qualcomm.com/
+>>>
+>>> Jie Gan (2):
+>>>    dt-bindings: arm: add CTCU device for QCS8300
+>>>    arm64: dts: qcom: qcs8300: Add CTCU and ETR nodes
+>>>
+>>>   .../bindings/arm/qcom,coresight-ctcu.yaml     |   9 +-
+>>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 153 ++++++++++++++++++
+>>>   2 files changed, 160 insertions(+), 2 deletions(-)
+>>>
+>>
+>>
 > 
 
 
