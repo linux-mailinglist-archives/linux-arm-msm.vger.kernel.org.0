@@ -1,155 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-67737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA0D9B1AD93
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 07:22:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A62C3B1ADC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 08:00:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C2623B2C92
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 05:22:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E10CD620201
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 05:59:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2A820A5EA;
-	Tue,  5 Aug 2025 05:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0593E21A420;
+	Tue,  5 Aug 2025 05:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d6m1CGtr"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Tug+H6ce";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="H8q0KLd3";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Tug+H6ce";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="H8q0KLd3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168362904
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 05:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AE2218AB3
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 05:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754371331; cv=none; b=i//dQxBFiOwEEXA78NvYsKajYs25PfWlQssu6TGe5BwMRpcgeSFHi+DAH1+dhKt2dBRuhmqRpuiVjbb5vdkGs9lxoNNZwTlTmFvR7zB5iVgCFGD3EUPk+8Rkiju0xl3bONFDrA6kmg1ztfF9XKWGEHWq3kWXfmqvPL5i+ytgu1M=
+	t=1754373592; cv=none; b=CjQwJgauUN1AKPsJrP4WyVANF43phrPckchKhwTNaH/wsR1YaaINMuhCoGkiqvpukSNRzB5DBM5/BZd7BOn+HnU414NF76PEngVD+HruBOzR/85Jd55DjEvt12uQa8QeTa/tW6L5QoQ+4vMzQLivD5aV62s+VLKCIk5ApdwGAjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754371331; c=relaxed/simple;
-	bh=n0hJY4w1kDyeyT48tVdbgBIl+jSvO4TXWsC4olFT8nY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YGfU7oUxKfb/mSHaaxsxHc/Chn7Kwki0AAsvrrBt8JhNFMwRQZPVifetPzzKs6tJDUR9TD+tc/oRKLTlQd+LAS/8WP29YkOwU9KVmSB2F5HRfutnDA53nJ/ON2A7BU9OB4N2p+CA1ZipY8CV28z+/XBOivQKCTO2gXx8ZhmACCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d6m1CGtr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 574K3Lh5003472
-	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 05:22:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=U6r0duZ6z0j4LUAgrh0bZTc8
-	SiFlhfG4hKd7EE2kjRo=; b=d6m1CGtrMlUPqNuTjx/N7iJyEjn9bdFB44lpZj/K
-	0uMWGz8jyJ0HsVb5sWsQMtIpJN/COLnanaHgqOjjDyuekrAlFCqZu2qbeGVaMNeC
-	m5hNiYN7eOi3CYLG74LnLURYqfLNEYw/vPJJ8AB1w97fdxzwQEsn9pTOhAnudcNK
-	a2hI11jrp25AEzW78T6Z46w3HDLmAWyHsWYVkLxAq6SfzLKrXDDvIAp/zrpVgYDi
-	PPqYuC0J9ALzDjg8wUrL6oad4ZVeRi9ByZlP1E+bUFenf+wziI0vSX2b1wxdbjfd
-	WvG9rD9VjZuw5tbFLJYbtMWk4q+UPcJCzlRdxwwtovhwiA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48b3j3s4hr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 05:22:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b068c25f04so36676791cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 22:22:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754371327; x=1754976127;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U6r0duZ6z0j4LUAgrh0bZTc8SiFlhfG4hKd7EE2kjRo=;
-        b=SWDYyZaGdBD/6hDQFDaJH3GFdz69r11I2XvovwUPX+UtidNDyirpVRslsZeAd94iZQ
-         1sYkTF8oaZ1zIYGY7Qsuh0GKfhgcD9wqyBUouGtUElEs1IlpUJZ3yYw23jnk6/wSRL7u
-         oz7NAu+5TNOJ+ZwvqUZXidvKQW619Sc21RNOQ6SWVGcYb9KI4Xiexb0JazOFwAoJ4Q3y
-         erFQycxnDRULpadcgMKPPFR4DZtjh6ELHCcdCWhEB/uBjzK/LFcZxHfDfAuI1ISdu/54
-         wP2+hFksiQhoLqZUP5G+s5GfhVv2mFA5SiQDeXq1VEvrXq2l7gNZ402saA7z0uAA82r+
-         TCgA==
-X-Forwarded-Encrypted: i=1; AJvYcCVeM4607j3i4kpOijwhjq1XYk2uMiqkBsf5KbmPU+SisTnMIJB8ZLcYCAEMSKd4HEmubbE1sCGwglHif9Ox@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXp6cGPAfoDa0nlRTecfqeMp8vZddnOZ3nBMjhWnjHhNK1sSVS
-	YvQtToeL9iXSGbf2d3ScibU9Q70g+sCg64Rjmm1PXQZ2p/Bebw0ErbWUCkMfnGEm67QuO1JfZDw
-	dHwivqUkd1Mp90bOhZ5d3rux66wj4RFXznI3jVmDRBA3RtKr45eboZfz8Wnmnl5eZPPjb
-X-Gm-Gg: ASbGncuwMX5fOGoH9lUjwD993nwxPtpruRDGP1NetvdEBPSqz8CwT6lJAbJqsvdBAXg
-	BSVBUelo6mTjJGrv/fQnuQ3LYKodR7+LfAKsr0lPjZbWYFP8tp4Z69s1hfHqzF4AOqQ54toavW8
-	IKL07z+TgiIoNI/inurfWV/FBgheh2Lisow+NP5x9bhfHm4KB8werYrGoxP/YLxgDkY/joksC/h
-	vagzw5VsZMIEr2s1stjA3UxJemqC4Ux74Vq+uoHGOB9AzltUrWgMFNq3ztj0IeVZajz4clFZ6lv
-	2uaSVRoYBJp/zJ1x5CMlPO8jLGqsp5NwD3j8VNS5MNN9cBF+MT5NUojJainwtpdJT7SY0ZkjXUS
-	aNZQvRJGFz0zfGjMJUfOxadbEdSSowU4tE1wuBDxea6F1zhz92Ab8
-X-Received: by 2002:ac8:7d12:0:b0:4ae:cc49:e9ac with SMTP id d75a77b69052e-4b07fae5b1bmr39730291cf.29.1754371326736;
-        Mon, 04 Aug 2025 22:22:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5FJGvEMEVRGjBRQoDRmCsXP+IaAhppJskHK2nnNuEQyHdtWleUEx2knWsRZd8WEk2HmV6YA==
-X-Received: by 2002:ac8:7d12:0:b0:4ae:cc49:e9ac with SMTP id d75a77b69052e-4b07fae5b1bmr39730161cf.29.1754371326307;
-        Mon, 04 Aug 2025 22:22:06 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b889ac341sm1797075e87.60.2025.08.04.22.22.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 22:22:05 -0700 (PDT)
-Date: Tue, 5 Aug 2025 08:22:03 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc: Update the SDCC clock to use
- shared_floor_ops
-Message-ID: <bnlnz6nz3eotle2mlhhhk7pmnpw5mjxl4efyvcmgzfwl4vzgg3@4x4og6dlg43n>
-References: <20250804-sdcc_rcg2_shared_ops-v1-1-41f989e8cbb1@oss.qualcomm.com>
+	s=arc-20240116; t=1754373592; c=relaxed/simple;
+	bh=sojgiQeRm51eLDiy/q27riuhR53WS2lsRaHf4PkcqZY=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=K4zkDXa2E8QImfeQ7BwusFu+ylevH0zQ5iYBKA8vIHPKu5WLX31Lafqjf+ePibSRHZ5KdmXsxXlCSt3tkQDHKHiSLMIZfjZ9y09BZ3wxQNbcr7ol18sRESfbLOKmH4LTLkKA6I2zOuq+T+BxHAigKznkagGrVC00pfQ3EwLcb5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Tug+H6ce; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=H8q0KLd3; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Tug+H6ce; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=H8q0KLd3; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 13DE61F38C;
+	Tue,  5 Aug 2025 05:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1754373583; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=95adhiCyJGSP0NNJz+SWF3fmYOKDXZLRe3b8Jezgjx4=;
+	b=Tug+H6ceJR8vm3tU+efCFaCzr96j/s1nLL2/WggUlxTKgD31WMWhvXdLI2j7nWl1LR3ZgR
+	7Su5I6BdNuX3TOXtSELG2+ih/cYGHi5CoHvFNWsJgHxRDcbxIrW8FUF8CzS906QIKceo/T
+	t2YT9KcYNX3zS9VGzl7RXtM4h0/nU0k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1754373583;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=95adhiCyJGSP0NNJz+SWF3fmYOKDXZLRe3b8Jezgjx4=;
+	b=H8q0KLd3PporL8GiyYupV0VD3Y1AdExROpi6Ck5rPM6k9ltPqQkfywiDXp2u6R87uwiXQp
+	cHxZ3CpOM7KO6dCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1754373583; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=95adhiCyJGSP0NNJz+SWF3fmYOKDXZLRe3b8Jezgjx4=;
+	b=Tug+H6ceJR8vm3tU+efCFaCzr96j/s1nLL2/WggUlxTKgD31WMWhvXdLI2j7nWl1LR3ZgR
+	7Su5I6BdNuX3TOXtSELG2+ih/cYGHi5CoHvFNWsJgHxRDcbxIrW8FUF8CzS906QIKceo/T
+	t2YT9KcYNX3zS9VGzl7RXtM4h0/nU0k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1754373583;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=95adhiCyJGSP0NNJz+SWF3fmYOKDXZLRe3b8Jezgjx4=;
+	b=H8q0KLd3PporL8GiyYupV0VD3Y1AdExROpi6Ck5rPM6k9ltPqQkfywiDXp2u6R87uwiXQp
+	cHxZ3CpOM7KO6dCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 60DBC13A55;
+	Tue,  5 Aug 2025 05:59:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id yO5XFs6dkWiwBgAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Tue, 05 Aug 2025 05:59:42 +0000
+Date: Tue, 05 Aug 2025 07:59:42 +0200
+Message-ID: <87h5ym1f75.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Joris Verhaegen <verhaegen@google.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	kernel-team@android.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	linux-arm-msm@vger.kernel.org,
+	sound-open-firmware@alsa-project.org,
+	linux-arm-kernel@lists.infradead.org,
+	Miller Liang <millerliang@google.com>
+Subject: Re: [PATCH v4 2/3] ALSA: compress_offload: Add SNDRV_COMPRESS_TSTAMP64 ioctl
+In-Reply-To: <aJGM2zXS6hOLDFm1@vaman>
+References: <20250801092720.1845282-1-verhaegen@google.com>
+	<20250801092720.1845282-3-verhaegen@google.com>
+	<aJGM2zXS6hOLDFm1@vaman>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250804-sdcc_rcg2_shared_ops-v1-1-41f989e8cbb1@oss.qualcomm.com>
-X-Proofpoint-GUID: xCXtyqTmg-aK92Lp_fJZsmQ_6SvLQ_Uu
-X-Authority-Analysis: v=2.4 cv=TZ+WtQQh c=1 sm=1 tr=0 ts=68919500 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=TWSoFropmgQjW9t56BUA:9 a=CjuIK1q_8ugA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDAzNiBTYWx0ZWRfX4Qhwh2Tq2hYB
- gwq0eUYIDsF3uyXb/ABPz8eqJVyFPnHc6IUx/ONkroPbSiIGSziqoP3JJ2H+pnzYEM8qUa2ePNN
- HQhK+NuE0kwQ6EDy9vSotJybG5sHr52ooyf7lPwa7UJUvjk91XMaj5u06/dmXsPza8+1ynOd3nq
- 5U7XJnoY2vIxKgDwjvMfYTYzlaNsDUitvxwBbp3wZfgeVtudR7Lajpc2tLGcV7rutxtAwcjO8Op
- /o4KupFbjPQhdZrGdjQIj/r8WBWlO3lHn2lfKMburfmeMq5geGeyCyKBlhl6SCEjCWS4WcJEz+J
- U/psJVBgGTB50YCR9k6EqAZTjFDruUtY5OQCz4as6r4ynLDRN9lzlWKD3FUt6VbF5pRDSIqe0BW
- Ef2cLOTzf9ZlOYTQByltIURHVfyKhgKJt5F+oZ72fCYe3MnxBr8R20Iq9vB8tmescnAgsa0d
-X-Proofpoint-ORIG-GUID: xCXtyqTmg-aK92Lp_fJZsmQ_6SvLQ_Uu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_01,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=971
- phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050036
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[google.com,perex.cz,suse.com,gmail.com,kernel.org,intel.com,linux.intel.com,linux.dev,nxp.com,linux.alibaba.com,socionext.com,android.com,vger.kernel.org,opensource.cirrus.com,alsa-project.org,lists.infradead.org];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLtwg9tyn6faipwn1aqsxq4m86)];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+X-Spam-Flag: NO
+X-Spam-Score: -1.80
 
-On Mon, Aug 04, 2025 at 11:59:21PM +0530, Taniya Das wrote:
-> gcc_sdcc2_apps_clk_src: rcg didn't update its configuration" during
-> boot. This happens due to the floor_ops tries to update the rcg
-> configuration even if the clock is not enabled.
-
-This has been working for other platforms (I see Milos, SAR2130P,
-SM6375, SC8280XP, SM8550, SM8650 using shared ops, all other platforms
-seem to use non-shared ops). What's the difference? Should we switch all
-platforms? Is it related to the hypervisor?
-
-> The shared_floor_ops ensures that the new parent configuration is
-> cached in the parked_cfg in the case where the clock is off.
+On Tue, 05 Aug 2025 06:47:59 +0200,
+Vinod Koul wrote:
 > 
-> Ensure to use the ops for the other SDCC clock instances as well.
+> On 01-08-25, 10:27, Joris Verhaegen wrote:
+> > The previous patch introduced the internal infrastructure for handling
+> > 64-bit timestamps. This patch exposes this capability to user-space.
+> > 
+> > Define the new ioctl command SNDRV_COMPRESS_TSTAMP64, which allows
+> > applications to fetch the overflow-safe struct snd_compr_tstamp64.
+> > 
+> > The ioctl dispatch table is updated to handle the new command by
+> > calling a new snd_compr_tstamp64 handler, while the legacy path is
+> > renamed to snd_compr_tstamp32 for clarity.
+> > 
+> > This patch bumps the SNDRV_COMPRESS_VERSION to 0.4.0.
+> > 
+> > Reviewed-by: Miller Liang <millerliang@google.com>
+> > Tested-by: Joris Verhaegen <verhaegen@google.com>
+> > Signed-off-by: Joris Verhaegen <verhaegen@google.com>
+> > ---
+> >  include/uapi/sound/compress_offload.h |  5 +++--
+> >  sound/core/compress_offload.c         | 19 +++++++++++++------
+> >  2 files changed, 16 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/include/uapi/sound/compress_offload.h b/include/uapi/sound/compress_offload.h
+> > index abd0ea3f86ee..70b8921601f9 100644
+> > --- a/include/uapi/sound/compress_offload.h
+> > +++ b/include/uapi/sound/compress_offload.h
+> > @@ -13,8 +13,7 @@
+> >  #include <sound/asound.h>
+> >  #include <sound/compress_params.h>
+> >  
+> > -
+> > -#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 3, 0)
+> > +#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 4, 0)
+> >  /**
+> >   * struct snd_compressed_buffer - compressed buffer
+> >   * @fragment_size: size of buffer fragment in bytes
+> > @@ -208,6 +207,7 @@ struct snd_compr_task_status {
+> >   * Note: only codec params can be changed runtime and stream params cant be
+> >   * SNDRV_COMPRESS_GET_PARAMS: Query codec params
+> >   * SNDRV_COMPRESS_TSTAMP: get the current timestamp value
+> > + * SNDRV_COMPRESS_TSTAMP64: get the current timestamp value in 64 bit format
+> >   * SNDRV_COMPRESS_AVAIL: get the current buffer avail value.
+> >   * This also queries the tstamp properties
+> >   * SNDRV_COMPRESS_PAUSE: Pause the running stream
+> > @@ -230,6 +230,7 @@ struct snd_compr_task_status {
+> >  						 struct snd_compr_metadata)
+> >  #define SNDRV_COMPRESS_TSTAMP		_IOR('C', 0x20, struct snd_compr_tstamp)
+> >  #define SNDRV_COMPRESS_AVAIL		_IOR('C', 0x21, struct snd_compr_avail)
+> > +#define SNDRV_COMPRESS_TSTAMP64		_IOR('C', 0x22, struct snd_compr_tstamp64)
+> >  #define SNDRV_COMPRESS_PAUSE		_IO('C', 0x30)
+> >  #define SNDRV_COMPRESS_RESUME		_IO('C', 0x31)
+> >  #define SNDRV_COMPRESS_START		_IO('C', 0x32)
+> > diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+> > index d3164aa07158..445220fdb6a0 100644
+> > --- a/sound/core/compress_offload.c
+> > +++ b/sound/core/compress_offload.c
+> > @@ -736,18 +736,23 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
+> >  	return retval;
+> >  }
+> >  
+> > -static inline int
+> > -snd_compr_tstamp(struct snd_compr_stream *stream, unsigned long arg)
+> > +static inline int snd_compr_tstamp(struct snd_compr_stream *stream,
+> > +				   unsigned long arg, bool is_32bit)
+> >  {
+> >  	struct snd_compr_tstamp64 tstamp64 = { 0 };
+> >  	struct snd_compr_tstamp tstamp32 = { 0 };
+> > +	const void *copy_from = &tstamp64;
+> > +	size_t copy_size = sizeof(tstamp64);
+> >  	int ret;
+> >  
+> >  	ret = snd_compr_update_tstamp(stream, &tstamp64);
+> >  	if (ret == 0) {
+> > -		snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
+> > -		ret = copy_to_user((struct snd_compr_tstamp __user *)arg,
+> > -				   &tstamp32, sizeof(tstamp32)) ?
+> > +		if (is_32bit) {
+> > +			snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
+> > +			copy_from = &tstamp32;
+> > +			copy_size = sizeof(tstamp32);
+> > +		}
 > 
-> Fixes: 39d6dcf67fe9 ("clk: qcom: gcc: Add support for QCS615 GCC clocks")
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/gcc-qcs615.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
+> Most of the applications and people would be 32bit right now and we
+> expect this to progressively change, but then this imposes a penalty as
+> default path is 64 bit, since we expect this ioctl to be called very
+> frequently, should we do this optimization for 64bit here?
 
--- 
-With best wishes
-Dmitry
+Through a quick glance over the patch, I don't think you'll hit the
+significant performance loss.  It's merely a few bytes of extra copies
+before copy_to_user(), after all.  But, of course, it'd be more
+convincing if anyone can test and give the actual numbers.
+
+
+thanks,
+
+Takashi
 
