@@ -1,61 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-67788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0683B1B44C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 15:12:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05A88B1B4B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 15:18:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5499D18A42BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 13:12:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 75A8D7AA94D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 13:13:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5414D274FD5;
-	Tue,  5 Aug 2025 13:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67AFC274FD5;
+	Tue,  5 Aug 2025 13:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uqnu1dYd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BUOzlLul"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26877272E5E;
-	Tue,  5 Aug 2025 13:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6CE21146C;
+	Tue,  5 Aug 2025 13:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399457; cv=none; b=HPCYSHC7RoqVoLUCROCbZvrmKbR2Z3k9/iQhzdB7fA/MejvyPrTjdvNQWu2QCM2XzOoHkLMTwY9gA26ocHvj7WV4zbgj/M3fi/qEKkWxcoTJjJVppxZmDk62ex9Uru3H3LxeKVHSNow4W6Hcg1SiZCRrcqeNJrE4u7l1COHus2U=
+	t=1754399534; cv=none; b=Ijjxv9Bh7o/RcZxPLzEzBKapOCZe+96HKPUiHBvHTTBbF7oBjuA9JjdVno67qHzqOKn+fAm04NHwPpdMijxQPpKxrLWyuYoS7I3yb7RrD8GmIkLhv+PVlBmjer4t5Ttdiu1iTVsmep2sqL7HHwGT31s139zyT++17cyGuP04+ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399457; c=relaxed/simple;
-	bh=M5ollJwl+snM7Hh61RefnyShnCbCwSzQ1DNbZc2gfZM=;
+	s=arc-20240116; t=1754399534; c=relaxed/simple;
+	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VAT8Q5RFNpP/eVfMSZAVbjrQnoKQjVkkC2Sv8aLLcLIlyQdYsr9gQ6qEIQZB/fbLZ/yagJzpY6KUKUUnrVnUxFt2eYFo9U7Hj+gR8xv0oEa7RTvVi82E42HWbADpJQUPAdQrnW1+k8bzwxSctYlXDs6A72uJo7FjujXQBYgCeiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uqnu1dYd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54829C4CEF0;
-	Tue,  5 Aug 2025 13:10:55 +0000 (UTC)
+	 MIME-Version; b=fjZzLBvh9wuDNvdp7jFiTCTcH9J2eaQZXIuY+N+Ly0LnkiAIfQAccUYNtgVezTFnKitXn6eRmol02Rd0sLpDymROjxqV0ywMbFGcuCkhLESIaL+Y8IqQgtKJrlpwAGcjmO85R4gX3n9at6YGgAVVMkA4IWmzSztKooYnmy8jOg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BUOzlLul; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561D2C4AF09;
+	Tue,  5 Aug 2025 13:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399457;
-	bh=M5ollJwl+snM7Hh61RefnyShnCbCwSzQ1DNbZc2gfZM=;
+	s=k20201202; t=1754399533;
+	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqnu1dYdB8ngCdKj6B8mv6FOLOwXAGhlSqo3S8RL78qm0XtLdBW5It6i5FWfaGUDC
-	 KfgrvWywSXh1+c2TuGF6XKpaWtXho40Z/pexA8EN2HJIF4L3GfhSLSNKWFDM9dI8t1
-	 4fySi/LUSOk+LZZS5rzVBpmMB/vlNCU4m1kqS7JkmTdbyaHEOizLQX2Baf8AVpmryD
-	 jmm2epSB4YfAgZ6ge1ecb1+vtlJsd6BLtHoSkDiETCV8doggAh3+CTNNRNEatMN9sC
-	 uQUowIpe1CnZo75hhbSxD0fll+b53SjX/wlpDduZjOJFXtxmveCsKIwv2CG/i1edZz
-	 pVS5mYPKb5M0A==
+	b=BUOzlLul8o6q80qTzuywppaQLtOZ6eAKjpT5U2EvX5GTENJ1h3i+u7bV+3RsrptPP
+	 A+hv2hGPr3TO7bDYo/xg1bjggxusedXt/3IawF7k77izjNyaTZ51+OudcOjnSaoAw7
+	 b9Lg1/cN+d5XyEBaGOwNVjMfL/nctjP9H48wGPhoD7USYO9t2mDkBn4pL+ClutHA1B
+	 b7KnYQDdqPULD2a8sJ4vdgZ89Tie4pO88/rIRjKjHontp+uesekKT0kAu68MKDSTyB
+	 8npgE677mlvU8AQNeCwbk/hgoYys+1APouXzkpXsrBNcVPKB9XYuwGPYSLlSSzfRv8
+	 johdOHfu5Qj9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.15] media: iris: Add handling for corrupt and drop frames
-Date: Tue,  5 Aug 2025 09:09:07 -0400
-Message-Id: <20250805130945.471732-32-sashal@kernel.org>
+	sre@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.6] power: supply: qcom_battmgr: Add lithium-polymer entry
+Date: Tue,  5 Aug 2025 09:09:39 -0400
+Message-Id: <20250805130945.471732-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -70,166 +68,95 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit b791dcfcba3a0c46fb3e2decab31d2340c5dc313 ]
+[ Upstream commit 202ac22b8e2e015e6c196fd8113f3d2a62dd1afc ]
 
-Firmware attach DATACORRUPT/DROP buffer flags for the frames which
-needs to be dropped, handle it by setting VB2_BUF_STATE_ERROR for these
-buffers before calling buf_done.
+On some Dell XPS 13 (9345) variants, the battery used is lithium-polymer
+based. Currently, this is reported as unknown technology due to the entry
+missing.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[ 4083.135325] Unknown battery technology 'LIP'
+
+Add another check for lithium-polymer in the technology parsing callback
+and return that instead of unknown.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250523-psy-qcom-battmgr-add-lipo-entry-v1-1-938c20a43a25@linaro.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze what this patch actually does more carefully:
+Based on my analysis, here is my determination:
 
-**YES**
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix Analysis:
+1. **Fixes a real user-visible bug**: The commit addresses a specific
+   bug where lithium-polymer batteries are incorrectly reported as
+   "Unknown battery technology" with the error message `Unknown battery
+   technology 'LIP'`. This affects real hardware (Dell XPS 13 9345
+   variants) and causes incorrect battery technology reporting to
+   userspace.
 
-1. **Clear Bug Fix**: The commit fixes a handling issue where the
-   firmware signals corrupt or dropped frames via
-   `HFI_BUFFERFLAG_DATACORRUPT` and `HFI_BUFFERFLAG_DROP_FRAME` flags,
-   but the driver was not properly handling these error conditions.
+2. **Small and contained fix**: The change is minimal - it adds just 2
+   lines of code:
+  ```c
+  if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
+  return POWER_SUPPLY_TECHNOLOGY_LIPO;
+  ```
+  This is well within the 100-line limit for stable patches.
 
-2. **Data Corruption Prevention**: Without this fix, corrupt video
-   frames marked by the firmware would be passed to userspace as valid
-   data, potentially causing:
-   - Display of corrupted video frames
-   - Application crashes when processing invalid data
-   - Incorrect timestamp/sequence handling
+3. **Obviously correct**: The fix is straightforward and follows the
+   existing pattern in the code. It simply adds recognition for "LIP"
+   chemistry strings, similar to how "LIO" is already handled for
+   lithium-ion batteries. The `POWER_SUPPLY_TECHNOLOGY_LIPO` constant
+   already exists in the kernel's power supply framework.
 
-3. **Minimal and Contained Changes**: The fix is very small and
-   targeted:
-   - Adds two flag definitions (`HFI_BUFFERFLAG_DATACORRUPT`,
-     `HFI_BUFFERFLAG_DROP_FRAME`)
-   - Modifies error handling path to properly set `VB2_BUF_STATE_ERROR`
-   - Clears payload and timestamp for error frames
-   - Returns early to avoid incorrect state updates
+4. **No architectural changes or new features**: This is purely a bug
+   fix that enables proper recognition of an existing battery technology
+   type. It doesn't introduce new functionality or change any APIs.
 
-4. **No Architectural Changes**: The patch only fixes error handling
-   logic without changing any APIs, data structures, or architectural
-   design.
+5. **Low regression risk**: The change only affects systems that report
+   "LIP" battery chemistry. Systems with other battery chemistries
+   remain unaffected. The fix follows the exact same pattern as the
+   existing lithium-ion handling.
 
-5. **Low Risk of Regression**: The changes are defensive - they only
-   affect frames already marked as corrupt/dropped by firmware, not the
-   normal video processing path.
+6. **Affects supported hardware**: The qcom_battmgr driver has been in
+   the kernel since v6.3, and this fix is needed for proper battery
+   reporting on Dell XPS 13 9345 devices using Qualcomm platforms with
+   lithium-polymer batteries.
 
-6. **Important User Impact**: Video playback/recording with corrupt
-   frames is a visible user-facing issue that affects quality of
-   service.
+7. **Meets stable kernel rules**: According to
+   Documentation/process/stable-kernel-rules.rst, this qualifies as it
+   "fixes a real bug that bothers people" - specifically incorrect
+   battery technology reporting that could affect power management
+   decisions and user-facing battery information.
 
-## Specific Code Analysis:
+The commit is an ideal candidate for stable backporting as it fixes a
+clear bug with minimal code changes and virtually no risk of regression.
 
-The key fix in `iris_buffer.c`:
-```c
-if (buf->flags & V4L2_BUF_FLAG_ERROR) {
-    state = VB2_BUF_STATE_ERROR;
-    vb2_set_plane_payload(vb2, 0, 0);  // Clear payload
-    vb2->timestamp = 0;                 // Clear timestamp
-    v4l2_m2m_buf_done(vbuf, state);
-    return 0;                           // Early return
-}
-```
+ drivers/power/supply/qcom_battmgr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-And in `iris_hfi_gen1_response.c`:
-```c
-if (hfi_flags & HFI_BUFFERFLAG_DATACORRUPT)
-    flags |= V4L2_BUF_FLAG_ERROR;
-
-if (hfi_flags & HFI_BUFFERFLAG_DROP_FRAME)
-    flags |= V4L2_BUF_FLAG_ERROR;
-```
-
-This ensures corrupt frames are properly marked as errors and handled
-appropriately rather than being passed as valid data.
-
-## Note on Driver Maturity:
-While the iris driver is very new (introduced in February 2025), this
-makes the fix even more important for stable backporting as it addresses
-a fundamental error handling issue in a newly deployed driver that users
-may encounter immediately upon adoption.
-
- drivers/media/platform/qcom/iris/iris_buffer.c        | 11 ++++++++---
- .../media/platform/qcom/iris/iris_hfi_gen1_defines.h  |  2 ++
- .../media/platform/qcom/iris/iris_hfi_gen1_response.c |  6 ++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index e5c5a564fcb8..7dd5730a867a 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -593,10 +593,13 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index fe27676fbc7c..2d50830610e9 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -981,6 +981,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
+ {
+ 	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
+ 		return POWER_SUPPLY_TECHNOLOGY_LION;
++	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
++		return POWER_SUPPLY_TECHNOLOGY_LIPO;
  
- 	vb2 = &vbuf->vb2_buf;
- 
--	if (buf->flags & V4L2_BUF_FLAG_ERROR)
-+	if (buf->flags & V4L2_BUF_FLAG_ERROR) {
- 		state = VB2_BUF_STATE_ERROR;
--	else
--		state = VB2_BUF_STATE_DONE;
-+		vb2_set_plane_payload(vb2, 0, 0);
-+		vb2->timestamp = 0;
-+		v4l2_m2m_buf_done(vbuf, state);
-+		return 0;
-+	}
- 
- 	vbuf->flags |= buf->flags;
- 
-@@ -616,6 +619,8 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
- 			v4l2_m2m_mark_stopped(m2m_ctx);
- 		}
- 	}
-+
-+	state = VB2_BUF_STATE_DONE;
- 	vb2->timestamp = buf->timestamp;
- 	v4l2_m2m_buf_done(vbuf, state);
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-index 9f246816a286..93b5f838c290 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-@@ -117,6 +117,8 @@
- #define HFI_FRAME_NOTCODED				0x7f002000
- #define HFI_FRAME_YUV					0x7f004000
- #define HFI_UNUSED_PICT					0x10000000
-+#define HFI_BUFFERFLAG_DATACORRUPT			0x00000008
-+#define HFI_BUFFERFLAG_DROP_FRAME			0x20000000
- 
- struct hfi_pkt_hdr {
- 	u32 size;
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-index b72d503dd740..91d95eed68aa 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-@@ -481,6 +481,12 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
- 	buf->attr |= BUF_ATTR_DEQUEUED;
- 	buf->attr |= BUF_ATTR_BUFFER_DONE;
- 
-+	if (hfi_flags & HFI_BUFFERFLAG_DATACORRUPT)
-+		flags |= V4L2_BUF_FLAG_ERROR;
-+
-+	if (hfi_flags & HFI_BUFFERFLAG_DROP_FRAME)
-+		flags |= V4L2_BUF_FLAG_ERROR;
-+
- 	buf->flags |= flags;
- 
- 	iris_vb2_buffer_done(inst, buf);
+ 	pr_err("Unknown battery technology '%s'\n", chemistry);
+ 	return POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
 -- 
 2.39.5
 
