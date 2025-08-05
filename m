@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-67744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 943D1B1AE92
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 08:45:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C82BB1AE93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 08:45:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CE0717A798F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 06:43:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C9757A7C1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 06:44:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7C5821D00A;
-	Tue,  5 Aug 2025 06:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0531222E3F0;
+	Tue,  5 Aug 2025 06:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JQBNkk1A"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YOS2g76q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CF7222594
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 06:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A3F21C9F2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 06:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754376286; cv=none; b=byuMKqsOfjtut2QHvridKMqSWukMAYVXAOnuuaeWgfEnxmiJbaso3GxnrjNIkOlk19bRXkuic6LZ1FAXd6vJn8HT9VQpKaiznhViX2p/1Zw6DIJeqCwSW3cv0GBx10BoqQ9GbRPXCzlfv09HOxmQY8BNjUHsqH7TQRrKjpQNxKw=
+	t=1754376286; cv=none; b=RbYAhGIDnzKs0euPWMgNaQdeMU88lSFsE2GqY6CNIohMNUOQd5E9lec9o7NM7QNvgh/0+H3BlK8JkuGBhIRBxmoyEgnyp5fMUXIWcTkaEXzfFBqWflMkqg4u9qLfXOt8Sgk97WCS9yuMhLf4580ijoJ0WYTTnxLSI0XWbate5Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754376286; c=relaxed/simple;
-	bh=ezmsbCjqlnWcx48QRBjlXkmqIy+WPgZsixPM3YLOjn8=;
+	bh=oPFm67OSDc8jjMlCDG4yw+EfOlHvxqiW0jAN4Vp3d44=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=D/fMqHrSxswid1rBTCxlvkbE/5wGZQ/d0qnjSrVlhX1VWOpS4UsmOuXnwFJ369i9TtcoqEIDietntp/AFcHoZ1rJQLthiozjc8MFRT5+JDpKzpx4Z+dSi9CfqAyEjoWnQ3sppERHh+2bkyBW9m4HefXwfbIXG4CkmEtcl/eBo7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JQBNkk1A; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=T/GRw5NZiVwMUrNOGvoT2H4H+mGT0sGtWgvYY9jLVRRjTcH360KSyp/dOE+1qmFlVK9yFS5QcGU8KKoe1W4Ksj+n4nE3PIRceGqmb0nvj5Gmn9Ft8Q17UUagOJwY2UGpzmvyppexDgadky48jdTx34oeF8btxbGa9X/PZleOVHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YOS2g76q; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 574K3Mow003583
-	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 06:44:42 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5755PFIk019944
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 06:44:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=NhWaIo4GTcz
-	dbdTKmyiH3nRkkn38J6k++Rau27lPRqk=; b=JQBNkk1AzHxibPtGDE+lITglDSd
-	+QbQcUZ8l6tdTt20c2HIhqJAMcUGgjs4D+/CxS3PM3ieQaAJWMXdmzRdhEfxTk+Q
-	SKR9x/Dj/Oe58/UsnWCSNBRsFkJWCOXqGo5IKQfE9hzV8wZKv1UqrQkroZ/vNSgf
-	ZYphGRYDCSu8kb3lJsKmBp7qO4q3HUbaPBl1O0hkEz1eKewCEZfHwulCPHm8KTde
-	EwOOpDnoB0Q9t8R7G9TfOrsv6dJuUNcJShT5V1GUmJCXZ8LAkvfhh0tWULipVxOa
-	qK+YmP9aBJhqsYqeI93N8X++8MwMQLiX8FeKA6HKQymsi3biEZRPbSXSpQw==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=P/CfMYBm1kf
+	ACJYH4wl/9WcXrSHI+/6srUoWVU8Wlm8=; b=YOS2g76qF76CsMdenfY72hPJ2xi
+	oi6xDR1Epr14FXjQdraMI+lDmTE+BXVp9M8XXTUpQ78XNydh3n0Ll4O0AUosSXOB
+	Jtx3r3angVYMd4tAz6vrzyezlYYEWVhMeUyw22yKbAMpuG97qvdOqjRHB+8y5qas
+	01B3dDon6FLn9+fehQN0AGfagJMmlPW/qZC0ZHjQnxUrKIXI1hpsnTqIaN2/mC1A
+	mQfnsbPpebGmXglC2YPSan2PKOtf6pvv1lcunXqd4bYvQtLUPZtUtuDOHPssWxC1
+	aFeqp2pJns5vO8NmEMzRl9fpDHlSIEFUmVLqworgIQfr80m92tQG3aT/0oA==
 Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48b3j3sbfc-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 489buqqfaj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 06:44:42 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-7074f138855so81562176d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 23:44:42 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 06:44:43 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-7075d489ff0so85868536d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Aug 2025 23:44:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754376281; x=1754981081;
+        d=1e100.net; s=20230601; t=1754376282; x=1754981082;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NhWaIo4GTczdbdTKmyiH3nRkkn38J6k++Rau27lPRqk=;
-        b=sYkm8EU/FsPXF3yOqHq08OhoQB06W8TrlxTLSD6HfFVUizx7c5ka6M/Nw7mw8KEM1y
-         spirdEAvGsIE0JfFh2wJ0isEkXHetuuBOS0V/t3PsL4kTezb1+pe/Gp5FFPzSNdrwwSC
-         Noy79pw8e7CIdok8xqv+Fggv9L9XC5LbC/n6zO+nxR+L1Stbzp96W5hGc7/AWU3V0Car
-         IexrWuCIQzT82+NtqbZQowfyuVInGbCCsUEf3pbmdZBnd9Hn5kcludSPxt3eZmsiAy+c
-         hf3GC+Miz3cUHwIqP76LIhNEtTXa86LtMyqLZM5S0AK+hYHu2sJuQ22a0yRaK246Lj8X
-         6Ghg==
-X-Forwarded-Encrypted: i=1; AJvYcCVQtaHz/UdaC3tZ8/edOczbZQmcUBVUegQyYrn+MmDlrQw6oXxO+4BycyeNrikEpEc2mJyRxWw3Aa5RU3Jk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyODQAfCsiugCdWq7AY+/atW0DcFKLACHIj+tY8KxRYXT/gBSMq
-	2NWICRMaStBLlgy+BhP1m/p6bd1IpUKtZ2i4eThbL/j8aWcSxlyS6P/BaDEuo6f1Exs0vqpd+t6
-	NN3WydnxzP8XAY9n0sLc8H4Z1TrBC/4nMmrLe+N+mARKGPll4kWszQSfqqbi5x76umGUn
-X-Gm-Gg: ASbGncv7K45IqdrfIYeyghNaH9XKiemJqoOm0VBAR+RcJh/V4kayMDy/9qJT6xLdtgw
-	g8M8L8AYxEwh1UOVWZdz3hLUUkmvUslHCJ1N4nvBDm/8/YiOMfSag+hR5rl6r+7iWh6bZOUYtsx
-	LNiFYrp7aty97gsioV49n52eZBqpsiyovLl0vg4IG0wmXz/UQPusinDPgQylz5+jejKH9G0ZLfQ
-	bomUcphXYjoOuTSAcEDOJ1xann8MSC1KzubdE3kvcnn0o4xdYpXAYAjI/MOpF50LqrNCowppEE5
-	DaLXnXGo5Ku4tFiq7NXtO5fYDCWmIHt+RiBkcRHUzb8L9sBFe3B1noibzTsrMJV88FhyUsL8N+u
-	3v1sGRfLJxPT1
-X-Received: by 2002:a05:6214:c62:b0:709:243e:9327 with SMTP id 6a1803df08f44-7093629fa3dmr167750526d6.27.1754376280569;
-        Mon, 04 Aug 2025 23:44:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+oTrbsZ6ceR/bzckUtZmdT8QIjOQBuSwzzCnERChumlvA/IZXGAw+6fpzhcu4tIoXIJ/Rkw==
-X-Received: by 2002:a05:6214:c62:b0:709:243e:9327 with SMTP id 6a1803df08f44-7093629fa3dmr167750276d6.27.1754376280022;
-        Mon, 04 Aug 2025 23:44:40 -0700 (PDT)
+        bh=P/CfMYBm1kfACJYH4wl/9WcXrSHI+/6srUoWVU8Wlm8=;
+        b=sPs/ESQ75C4+uHahK4yxIfCVA4Q0OvqXjdMe79dKwrmdlLfd5S50WmgIETBgtEbyBZ
+         TYjlkjYZvL3oEipGvfxqh792n7XJ1fpCxFFJvlPCW/YzDje1FVlkVfl8NO83AN7NCA87
+         sMPSasuRvCzdaS+mLLIIZBogXWjKR5AOndTmoc5eKMj15t1p+PrZCUm3SZUSl0ZEZWR7
+         ejXxGQfZZb5ZnJVJyF+Pe+rkpbTfF+h9YyQO4Ka02CfV44+y4rAwE3tciMhGsPzZlDNl
+         gP+Peaxtn7EtekYBG09+RmFQrQL//1FgD3brsfYz7dMC9j8d3uK1mQ/5roVFrpFAbAB1
+         /Pwg==
+X-Forwarded-Encrypted: i=1; AJvYcCVPxkaSzF1f7wimMgy21mQoFuzKdGPx6E+I715k90Nxle4pPzjxDzHIoT/QIl4RluY3yK1Fo1iVHdLkoZBn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyajCAl85yv/QjhmA3oV37Zf4uET8DI+IcS+KfWuc+YM71SbhSF
+	ie0Lhs24mzSPqiJZDSS34YC/JLGPjt2e1s4rQ94oUEReYiSJGBZ+G84ypTQ9KE3NF6u5eqR9vdD
+	aR6dxKeyQLeDsTuM61xAiJd9U1Q9Lp3aqHg2rErF4BNwZxDAuoNIJbeaMC3rEXGXyxmzk
+X-Gm-Gg: ASbGncvM+PFByYygRsh6hSzE9nrYidyMlY5DBQckVPiov74Tl1FV0xjIGk6DzluJxKl
+	mIsxSIj2wLB/X+HreOhg19sa7zdImrgOK5vYH7mwkzgYyAHhXlNut+WuxYbU4inc+cVahXt269s
+	/u2TYyc+M0JpGN+ToAcC6/B/9M2OMJPHAcUj/HhJGkvl+SoITv5dEuqWyddsAG1loYIbYnB19G5
+	q4RLDjb1aIeRsQdTxF9fILdLqkndfg0vPMqzoeOCy4Yv6QioaJsTN1Z5cyenb6JdCfdZmHRzC6S
+	iJCDjC24YiE4HR2jeWBHXXddk7w1fV2B3HuOdoxbg8G1w1HSgzgD7Lo9a9/IMTa9qmxeKk24gan
+	ag/qjMO4pWHej
+X-Received: by 2002:a05:6214:c49:b0:709:2e0e:f76c with SMTP id 6a1803df08f44-709363669ffmr186196276d6.45.1754376282192;
+        Mon, 04 Aug 2025 23:44:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF60/INPpLMxU+7hdi8s80JrFbWInZdLBZORNG/MPtU1GmOMe3rJD0B5gV4FtIe73lQYVnxEQ==
+X-Received: by 2002:a05:6214:c49:b0:709:2e0e:f76c with SMTP id 6a1803df08f44-709363669ffmr186195946d6.45.1754376281678;
+        Mon, 04 Aug 2025 23:44:41 -0700 (PDT)
 Received: from trex.. (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589ee57922sm194015815e9.22.2025.08.04.23.44.38
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589ee57922sm194015815e9.22.2025.08.04.23.44.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 23:44:39 -0700 (PDT)
+        Mon, 04 Aug 2025 23:44:41 -0700 (PDT)
 From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 To: jorge.ramirez@oss.qualcomm.com, bryan.odonoghue@linaro.org,
         quic_dikshita@quicinc.com, quic_vgarodia@quicinc.com,
@@ -87,9 +87,9 @@ To: jorge.ramirez@oss.qualcomm.com, bryan.odonoghue@linaro.org,
 Cc: mchehab@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v8 3/7] media: venus: Add support for AR50_LITE video core
-Date: Tue,  5 Aug 2025 08:44:26 +0200
-Message-Id: <20250805064430.782201-4-jorge.ramirez@oss.qualcomm.com>
+Subject: [PATCH v8 4/7] media: venus: hfi_plat_v4: Add capabilities for the 4XX lite core
+Date: Tue,  5 Aug 2025 08:44:27 +0200
+Message-Id: <20250805064430.782201-5-jorge.ramirez@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
 References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
@@ -100,591 +100,264 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 7Qwy0pRoZ-XGQ-e3O81c-TzNm6_C2ZfF
-X-Authority-Analysis: v=2.4 cv=TZ+WtQQh c=1 sm=1 tr=0 ts=6891a85a cx=c_pps
+X-Proofpoint-GUID: sGEljNb5im1kVmDuVMa7nfUtpnuRQoNF
+X-Authority-Analysis: v=2.4 cv=VZT3PEp9 c=1 sm=1 tr=0 ts=6891a85b cx=c_pps
  a=oc9J++0uMp73DTRD5QyR2A==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=MEz7QyYSB-WHFCyNWtcA:9
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA0NiBTYWx0ZWRfX0Hyey9K+r3Ib
- ByoWWytW49S3ck32fROrIW3XpZpXWV575gqeg8+6T0+pLYPBx5KAql9ZREvU+aT7t15XFqDrjNz
- 9CttVQFNSez6cricLjafjf0Np6Ot2sqO1lp2ZZX/nh4SSIycqQQrJN4OhdXOTxB+hMx+8X1IfOC
- 5ux0Q0fI6GexjtobfLAt1u/45UvwxHeHrKVTVOG9/EYqDzVaK+OzCdYIzFIy/DEF2Apwki33/pO
- uKfgj5kwgw7EHYt5184x0bxYLb1CdyQMeAdFhhNDh2FdyYP5upIbvHmipSvRY25fLjrNomPtnpB
- XLuB+wIcwgBhr4GEtICYjIezOSLw9BfVipW24uXzy4iwVKcmzRGAdKlgXa9SJhEVuid9hT+W84c
- B66jV0KcykOW775LPr7XKcD5WNZiFzID5ARLqL5POrqf9G/KCxLEQp/H98cnJIZO2+N30Y/F
-X-Proofpoint-ORIG-GUID: 7Qwy0pRoZ-XGQ-e3O81c-TzNm6_C2ZfF
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=5l9M9ejOZEj2P9uvktAA:9
+ a=iYH6xdkBrDN1Jqds4HTS:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA0NiBTYWx0ZWRfX0iv5shL7DOnN
+ 2lmU5N2OHRLYDLYLZ2ALxM61p3bug2R5eXQ5hw87DF1qW0C4UN82Vk/LtYRwbq68fVA/+hrQUFb
+ 8geOOe8PCysA/vEB1s2kYp6fnPKimXzFFfFbqVJnHY5KuyByxUZfPQUhaTLDV1be/lZ5JTRj36W
+ WIfhWqdIj7T41LK6s+FEielBLOgCsNniIMTfSuC66yKQGQGGuRePGIVRcDMqzbHjS3BWzfjzmw7
+ d+L+0bg9MPgnB4MlRUDDxMs6gRcEt304++oZ25jTyiQW3o2bs+q+S4CTmzFHd7DWtt4jPrHnrci
+ oeNBv2wGstJk2U7qYsdQD64u5dFGag62NTGmeVd/QClJtRJkYFzCR4SHYdWyihsVrOiQNYzu+yA
+ jq7OzqcfKmtOpuKxbqKo3040WgkI93n6sA1eeijjVeS4Cmq2lt8lOTgGxSH0wFmpKin2+dCJ
+X-Proofpoint-ORIG-GUID: sGEljNb5im1kVmDuVMa7nfUtpnuRQoNF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-05_01,2025-08-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
- phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050046
+ adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 phishscore=0
+ spamscore=0 mlxscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2508050046
 
-The AR50_LITE is a simplified variant of the AR50 video core, designed for
-power and cost-efficient platforms.
+Populate the HFI v4 lite capability set used by the AR50_LITE video
+core.
 
-It supports hardware-accelerated decoding of H.264, HEVC, and VP9 formats,
-and provides encoding support for H.264 and HEVC.
+These capabilities define the supported codec formats and operational
+limits specific to this streamlined VPU variant.
 
 Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/venus/core.c      | 15 +++++++--
- drivers/media/platform/qcom/venus/core.h      |  5 +++
- drivers/media/platform/qcom/venus/firmware.c  | 10 ++++++
- drivers/media/platform/qcom/venus/firmware.h  |  1 +
- drivers/media/platform/qcom/venus/helpers.c   | 12 +++++--
- .../media/platform/qcom/venus/hfi_parser.c    |  5 +--
- .../media/platform/qcom/venus/hfi_platform.c  | 20 +++++++-----
- .../media/platform/qcom/venus/hfi_platform.h  | 25 ++++++++-------
- .../platform/qcom/venus/hfi_platform_v4.c     | 31 ++++++++++++------
- .../platform/qcom/venus/hfi_platform_v6.c     | 32 +++++++++++++------
- drivers/media/platform/qcom/venus/hfi_venus.c | 25 +++++++++++----
- .../media/platform/qcom/venus/hfi_venus_io.h  |  4 +++
- .../media/platform/qcom/venus/pm_helpers.c    |  2 +-
- 13 files changed, 133 insertions(+), 54 deletions(-)
+ .../platform/qcom/venus/hfi_platform_v4.c     | 170 ++++++++++++++++--
+ 1 file changed, 151 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index f45715c9b222..adc38fbc9d79 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -254,14 +254,19 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
- 
- static void venus_assign_register_offsets(struct venus_core *core)
- {
--	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
--		core->vbif_base = core->base + VBIF_BASE;
-+	if (IS_IRIS2(core) || IS_IRIS2_1(core) || IS_AR50_LITE(core)) {
- 		core->cpu_base = core->base + CPU_BASE_V6;
- 		core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
- 		core->cpu_ic_base = core->base + CPU_IC_BASE_V6;
- 		core->wrapper_base = core->base + WRAPPER_BASE_V6;
- 		core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
--		core->aon_base = core->base + AON_BASE_V6;
-+		if (IS_AR50_LITE(core)) {
-+			core->vbif_base = NULL;
-+			core->aon_base = NULL;
-+		} else {
-+			core->vbif_base = core->base + VBIF_BASE;
-+			core->aon_base = core->base + AON_BASE_V6;
-+		}
- 	} else {
- 		core->vbif_base = core->base + VBIF_BASE;
- 		core->cpu_base = core->base + CPU_BASE;
-@@ -456,6 +461,10 @@ static int venus_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_firmware_deinit;
- 
-+	ret = venus_firmware_cfg(core);
-+	if (ret)
-+		goto err_venus_shutdown;
-+
- 	ret = hfi_core_resume(core, true);
- 	if (ret)
- 		goto err_venus_shutdown;
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 2d3cf920198f..f8602735d6c2 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -537,6 +537,11 @@ struct venus_inst {
- #define IS_IRIS2(core)		((core)->res->vpu_version == VPU_VERSION_IRIS2)
- #define IS_IRIS2_1(core)	((core)->res->vpu_version == VPU_VERSION_IRIS2_1)
- 
-+static inline bool is_lite(struct venus_core *core)
-+{
-+	return IS_AR50_LITE(core);
-+}
-+
- #define ctrl_to_inst(ctrl)	\
- 	container_of((ctrl)->handler, struct venus_inst, ctrl_handler)
- 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 503dd270a14a..2e5d85e25d0f 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -207,6 +207,16 @@ static int venus_shutdown_no_tz(struct venus_core *core)
- 	return 0;
- }
- 
-+int venus_firmware_cfg(struct venus_core *core)
-+{
-+	void __iomem *cpu_cs_base = core->cpu_cs_base;
-+
-+	if (IS_AR50_LITE(core))
-+		writel(CPU_CS_VCICMD_ARP_OFF, cpu_cs_base + CPU_CS_VCICMD);
-+
-+	return 0;
-+}
-+
- int venus_boot(struct venus_core *core)
- {
- 	struct device *dev = core->dev;
-diff --git a/drivers/media/platform/qcom/venus/firmware.h b/drivers/media/platform/qcom/venus/firmware.h
-index ead39e3797f0..87e1d922b369 100644
---- a/drivers/media/platform/qcom/venus/firmware.h
-+++ b/drivers/media/platform/qcom/venus/firmware.h
-@@ -10,6 +10,7 @@ struct device;
- int venus_firmware_init(struct venus_core *core);
- void venus_firmware_deinit(struct venus_core *core);
- int venus_firmware_check(struct venus_core *core);
-+int venus_firmware_cfg(struct venus_core *core);
- int venus_boot(struct venus_core *core);
- int venus_shutdown(struct venus_core *core);
- int venus_set_hw_state(struct venus_core *core, bool suspend);
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 8295542e1a7c..3a761b5415c5 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1715,11 +1715,17 @@ int venus_helper_session_init(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	inst->clk_data.vpp_freq = hfi_platform_get_codec_vpp_freq(version, codec,
-+	inst->clk_data.vpp_freq = hfi_platform_get_codec_vpp_freq(version,
-+								  is_lite(inst->core),
-+								  codec,
- 								  session_type);
--	inst->clk_data.vsp_freq = hfi_platform_get_codec_vsp_freq(version, codec,
-+	inst->clk_data.vsp_freq = hfi_platform_get_codec_vsp_freq(version,
-+								  is_lite(inst->core),
-+								  codec,
- 								  session_type);
--	inst->clk_data.low_power_freq = hfi_platform_get_codec_lp_freq(version, codec,
-+	inst->clk_data.low_power_freq = hfi_platform_get_codec_lp_freq(version,
-+								       is_lite(inst->core),
-+								       codec,
- 								       session_type);
- 
- 	return 0;
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
-index 1b3db2caa99f..55cee1c786a0 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -277,12 +277,13 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
- 	if (inst)
- 		return 0;
- 
--	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count);
-+	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count,
-+				      is_lite(core));
- 	if (ret)
- 		return ret;
- 
- 	if (plat->capabilities)
--		caps = plat->capabilities(&entries);
-+		caps = plat->capabilities(&entries, is_lite(core));
- 
- 	if (!caps || !entries || !count)
- 		return -EINVAL;
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-index 643e5aa138f5..c6c248561793 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-@@ -21,7 +21,8 @@ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
- }
- 
- unsigned long
--hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec, u32 session_type)
-+hfi_platform_get_codec_vpp_freq(enum hfi_version version, bool lite, u32 codec,
-+				u32 session_type)
- {
- 	const struct hfi_platform *plat;
- 	unsigned long freq = 0;
-@@ -31,13 +32,14 @@ hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec, u32 session
- 		return 0;
- 
- 	if (plat->codec_vpp_freq)
--		freq = plat->codec_vpp_freq(session_type, codec);
-+		freq = plat->codec_vpp_freq(session_type, codec, lite);
- 
- 	return freq;
- }
- 
- unsigned long
--hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec, u32 session_type)
-+hfi_platform_get_codec_vsp_freq(enum hfi_version version, bool lite, u32 codec,
-+				u32 session_type)
- {
- 	const struct hfi_platform *plat;
- 	unsigned long freq = 0;
-@@ -47,13 +49,14 @@ hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec, u32 session
- 		return 0;
- 
- 	if (plat->codec_vpp_freq)
--		freq = plat->codec_vsp_freq(session_type, codec);
-+		freq = plat->codec_vsp_freq(session_type, codec, lite);
- 
- 	return freq;
- }
- 
- unsigned long
--hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_type)
-+hfi_platform_get_codec_lp_freq(enum hfi_version version, bool lite, u32 codec,
-+			       u32 session_type)
- {
- 	const struct hfi_platform *plat;
- 	unsigned long freq = 0;
-@@ -63,13 +66,14 @@ hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_
- 		return 0;
- 
- 	if (plat->codec_lp_freq)
--		freq = plat->codec_lp_freq(session_type, codec);
-+		freq = plat->codec_lp_freq(session_type, codec, lite);
- 
- 	return freq;
- }
- 
- int
--hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-+hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs, u32 *count,
-+			bool lite)
- {
- 	const struct hfi_platform *plat;
- 
-@@ -78,7 +82,7 @@ hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codec
- 		return -EINVAL;
- 
- 	if (plat->codecs)
--		plat->codecs(enc_codecs, dec_codecs, count);
-+		plat->codecs(enc_codecs, dec_codecs, count, lite);
- 
- 	if (IS_IRIS2_1(core)) {
- 		*enc_codecs &= ~HFI_VIDEO_CODEC_VP8;
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-index ec89a90a8129..a9f1ead18084 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.h
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-@@ -47,11 +47,12 @@ struct hfi_platform_codec_freq_data {
- };
- 
- struct hfi_platform {
--	unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec);
--	unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec);
--	unsigned long (*codec_lp_freq)(u32 session_type, u32 codec);
--	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
--	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
-+	unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec, bool lite);
-+	unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec, bool lite);
-+	unsigned long (*codec_lp_freq)(u32 session_type, u32 codec, bool lite);
-+	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count, bool lite);
-+	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries,
-+						    bool lite);
- 	int (*bufreq)(struct hfi_plat_buffers_params *params, u32 session_type,
- 		      u32 buftype, struct hfi_buffer_requirements *bufreq);
- };
-@@ -60,12 +61,12 @@ extern const struct hfi_platform hfi_plat_v4;
- extern const struct hfi_platform hfi_plat_v6;
- 
- const struct hfi_platform *hfi_platform_get(enum hfi_version version);
--unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec,
--					      u32 session_type);
--unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec,
--					      u32 session_type);
--unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
--					     u32 session_type);
-+unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, bool lite,
-+					      u32 codec, u32 session_type);
-+unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, bool lite,
-+					      u32 codec, u32 session_type);
-+unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, bool lite,
-+					     u32 codec, u32 session_type);
- int hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs,
--			    u32 *count);
-+			    u32 *count, bool lite);
- #endif
 diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-index e3f0a90a567b..4ae7ed476c48 100644
+index 4ae7ed476c48..2bb6cb6a70f3 100644
 --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
 +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-@@ -245,14 +245,19 @@ static const struct hfi_plat_caps caps[] = {
+@@ -245,25 +245,149 @@ static const struct hfi_plat_caps caps[] = {
  	.num_fmts = 4,
  } };
  
--static const struct hfi_plat_caps *get_capabilities(unsigned int *entries)
-+static const struct hfi_plat_caps *get_capabilities(unsigned int *entries,
-+						    bool lite)
- {
-+	WARN_ON(lite);
++static const struct hfi_plat_caps caps_lite[] = {
++{
++	.codec = HFI_VIDEO_CODEC_H264,
++	.domain = VIDC_SESSION_TYPE_DEC,
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
++	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
++	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
++	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
++	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
++	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
++	.num_caps = 7,
++	.pl[0] = { HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
++	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
++	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
++	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
++	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
++	.num_pl = 5,
++	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
++	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
++	.num_fmts = 4,
++}, {
++	.codec = HFI_VIDEO_CODEC_HEVC,
++	.domain = VIDC_SESSION_TYPE_DEC,
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
++	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
++	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
++	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
++	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
++	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
++	.num_caps = 7,
++	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
++	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
++	.num_pl = 2,
++	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
++	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
++	.num_fmts = 4,
++}, {
++	.codec = HFI_VIDEO_CODEC_VP9,
++	.domain = VIDC_SESSION_TYPE_DEC,
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
++	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
++	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
++	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
++	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
++	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
++	.num_caps = 7,
++	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
++	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
++	.num_pl = 2,
++	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
++	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
++	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
++	.num_fmts = 4,
++}, {
++	.codec = HFI_VIDEO_CODEC_H264,
++	.domain = VIDC_SESSION_TYPE_ENC,
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
++	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
++	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
++	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
++	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
++	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
++	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
++	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
++	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
++	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
++	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
++	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
++	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
++	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
++	.num_caps = 15,
++	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
++	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
++	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
++	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
++	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
++	.num_pl = 5,
++	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
++	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
++	.num_fmts = 2,
++}, {
++	.codec = HFI_VIDEO_CODEC_HEVC,
++	.domain = VIDC_SESSION_TYPE_ENC,
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
++	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
++	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
++	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
++	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
++	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
++	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
++	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
++	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
++	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
++	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
++	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
++	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
++	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
++	.num_caps = 15,
++	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
++	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
++	.num_pl = 2,
++	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
++	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
++	.num_fmts = 2,
++} };
 +
- 	*entries = ARRAY_SIZE(caps);
- 	return caps;
+ static const struct hfi_plat_caps *get_capabilities(unsigned int *entries,
+ 						    bool lite)
+ {
+-	WARN_ON(lite);
++	*entries = lite ? ARRAY_SIZE(caps_lite) : ARRAY_SIZE(caps);
+ 
+-	*entries = ARRAY_SIZE(caps);
+-	return caps;
++	return lite ? caps_lite : caps;
  }
  
--static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-+static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count, bool lite)
+ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count, bool lite)
  {
-+	WARN_ON(lite);
+-	WARN_ON(lite);
++	const struct hfi_plat_caps *caps;
++	unsigned int num;
++	size_t i;
 +
- 	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
- 		      HFI_VIDEO_CODEC_VP8;
- 	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-@@ -273,12 +278,14 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
++	*enc_codecs = 0;
++	*dec_codecs = 0;
++
++	caps = get_capabilities(&num, lite);
+ 
+-	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
+-		      HFI_VIDEO_CODEC_VP8;
+-	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
+-		      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
+-		      HFI_VIDEO_CODEC_MPEG2;
+-	*count = 8;
++	for (i = 0; i < num; caps++, i++) {
++		if (caps->domain == VIDC_SESSION_TYPE_ENC)
++			*enc_codecs |= caps->codec;
++		else
++			*dec_codecs |= caps->codec;
++	}
++
++	*count = num;
+ }
+ 
+ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
+@@ -277,14 +401,28 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
+ 	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
  };
  
++static const struct hfi_platform_codec_freq_data codec_freq_data_lite[] = {
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
++	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
++};
++
  static const struct hfi_platform_codec_freq_data *
--get_codec_freq_data(u32 session_type, u32 pixfmt)
-+get_codec_freq_data(u32 session_type, u32 pixfmt, bool lite)
+ get_codec_freq_data(u32 session_type, u32 pixfmt, bool lite)
  {
- 	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
- 	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
+-	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
+-	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
++	const struct hfi_platform_codec_freq_data *data;
++	unsigned int i, data_size;
  	const struct hfi_platform_codec_freq_data *found = NULL;
  
-+	WARN_ON(lite);
-+
+-	WARN_ON(lite);
++	if (lite) {
++		data = codec_freq_data_lite;
++		data_size = ARRAY_SIZE(codec_freq_data_lite);
++	} else {
++		data = codec_freq_data;
++		data_size = ARRAY_SIZE(codec_freq_data);
++	}
+ 
  	for (i = 0; i < data_size; i++) {
  		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
- 			found = &data[i];
-@@ -289,33 +296,39 @@ get_codec_freq_data(u32 session_type, u32 pixfmt)
- 	return found;
- }
- 
--static unsigned long codec_vpp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_vpp_freq(u32 session_type, u32 codec, bool lite)
+@@ -300,8 +438,6 @@ static unsigned long codec_vpp_freq(u32 session_type, u32 codec, bool lite)
  {
  	const struct hfi_platform_codec_freq_data *data;
  
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
+-	WARN_ON(lite);
+-
+ 	data = get_codec_freq_data(session_type, codec, lite);
  	if (data)
  		return data->vpp_freq;
- 
- 	return 0;
- }
- 
--static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_vsp_freq(u32 session_type, u32 codec, bool lite)
+@@ -313,8 +449,6 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec, bool lite)
  {
  	const struct hfi_platform_codec_freq_data *data;
  
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
+-	WARN_ON(lite);
+-
+ 	data = get_codec_freq_data(session_type, codec, lite);
  	if (data)
  		return data->vsp_freq;
- 
- 	return 0;
- }
- 
--static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_lp_freq(u32 session_type, u32 codec, bool lite)
+@@ -326,8 +460,6 @@ static unsigned long codec_lp_freq(u32 session_type, u32 codec, bool lite)
  {
  	const struct hfi_platform_codec_freq_data *data;
  
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
+-	WARN_ON(lite);
+-
+ 	data = get_codec_freq_data(session_type, codec, lite);
  	if (data)
  		return data->low_power_freq;
- 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-index 4e8af645f8b9..ad08d26cd7ba 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -245,14 +245,20 @@ static const struct hfi_plat_caps caps[] = {
- 	.num_fmts = 4,
- } };
- 
--static const struct hfi_plat_caps *get_capabilities(unsigned int *entries)
-+static const struct hfi_plat_caps *get_capabilities(unsigned int *entries,
-+						    bool lite)
- {
-+	WARN_ON(lite);
-+
- 	*entries = ARRAY_SIZE(caps);
- 	return caps;
- }
- 
--static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-+static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count,
-+		       bool lite)
- {
-+	WARN_ON(lite);
-+
- 	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
- 		      HFI_VIDEO_CODEC_VP8;
- 	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-@@ -273,12 +279,14 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
- };
- 
- static const struct hfi_platform_codec_freq_data *
--get_codec_freq_data(u32 session_type, u32 pixfmt)
-+get_codec_freq_data(u32 session_type, u32 pixfmt, bool lite)
- {
- 	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
- 	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
- 	const struct hfi_platform_codec_freq_data *found = NULL;
- 
-+	WARN_ON(lite);
-+
- 	for (i = 0; i < data_size; i++) {
- 		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
- 			found = &data[i];
-@@ -289,33 +297,39 @@ get_codec_freq_data(u32 session_type, u32 pixfmt)
- 	return found;
- }
- 
--static unsigned long codec_vpp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_vpp_freq(u32 session_type, u32 codec, bool lite)
- {
- 	const struct hfi_platform_codec_freq_data *data;
- 
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
- 	if (data)
- 		return data->vpp_freq;
- 
- 	return 0;
- }
- 
--static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_vsp_freq(u32 session_type, u32 codec, bool lite)
- {
- 	const struct hfi_platform_codec_freq_data *data;
- 
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
- 	if (data)
- 		return data->vsp_freq;
- 
- 	return 0;
- }
- 
--static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-+static unsigned long codec_lp_freq(u32 session_type, u32 codec, bool lite)
- {
- 	const struct hfi_platform_codec_freq_data *data;
- 
--	data = get_codec_freq_data(session_type, codec);
-+	WARN_ON(lite);
-+
-+	data = get_codec_freq_data(session_type, codec, lite);
- 	if (data)
- 		return data->low_power_freq;
- 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index cec7f5964d3d..d3da35f67fd5 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -380,7 +380,7 @@ static void venus_soft_int(struct venus_hfi_device *hdev)
- 	void __iomem *cpu_ic_base = hdev->core->cpu_ic_base;
- 	u32 clear_bit;
- 
--	if (IS_V6(hdev->core))
-+	if (IS_V6(hdev->core) || (IS_V4(hdev->core) && is_lite(hdev->core)))
- 		clear_bit = BIT(CPU_IC_SOFTINT_H2A_SHIFT_V6);
- 	else
- 		clear_bit = BIT(CPU_IC_SOFTINT_H2A_SHIFT);
-@@ -501,9 +501,11 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
- 	if (count >= max_tries)
- 		ret = -ETIMEDOUT;
- 
--	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
-+	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core) || IS_AR50_LITE(hdev->core)) {
- 		writel(0x1, cpu_cs_base + CPU_CS_H2XSOFTINTEN_V6);
--		writel(0x0, cpu_cs_base + CPU_CS_X2RPMH_V6);
-+
-+		if (!IS_AR50_LITE(hdev->core))
-+			writel(0x0, cpu_cs_base + CPU_CS_X2RPMH_V6);
- 	}
- 
- 	return ret;
-@@ -569,6 +571,9 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
- 	u32 mask_val;
- 	int ret;
- 
-+	if (IS_AR50_LITE(hdev->core))
-+		return 0;
-+
- 	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
- 		writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
- 
-@@ -1138,7 +1143,13 @@ static irqreturn_t venus_isr(struct venus_core *core)
- 	wrapper_base = hdev->core->wrapper_base;
- 
- 	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
--	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
-+
-+	if (IS_AR50_LITE(core)) {
-+		if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
-+		    status & WRAPPER_INTR_STATUS_A2HWD_MASK_V4_LITE ||
-+		    status & CPU_CS_SCIACMDARG0_INIT_IDLE_MSG_MASK)
-+			hdev->irq_status = status;
-+	} else if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
- 		if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
- 		    status & WRAPPER_INTR_STATUS_A2HWD_MASK_V6 ||
- 		    status & CPU_CS_SCIACMDARG0_INIT_IDLE_MSG_MASK)
-@@ -1150,7 +1161,7 @@ static irqreturn_t venus_isr(struct venus_core *core)
- 			hdev->irq_status = status;
- 	}
- 	writel(1, cpu_cs_base + CPU_CS_A2HSOFTINTCLR);
--	if (!(IS_IRIS2(core) || IS_IRIS2_1(core)))
-+	if (!(IS_IRIS2(core) || IS_IRIS2_1(core) || IS_AR50_LITE(core)))
- 		writel(status, wrapper_base + WRAPPER_INTR_CLEAR);
- 
- 	return IRQ_WAKE_THREAD;
-@@ -1535,7 +1546,7 @@ static bool venus_cpu_and_video_core_idle(struct venus_hfi_device *hdev)
- 	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
- 	u32 ctrl_status, cpu_status;
- 
--	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core))
-+	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core) || IS_AR50_LITE(hdev->core))
- 		cpu_status = readl(wrapper_tz_base + WRAPPER_TZ_CPU_STATUS_V6);
- 	else
- 		cpu_status = readl(wrapper_base + WRAPPER_CPU_STATUS);
-@@ -1555,7 +1566,7 @@ static bool venus_cpu_idle_and_pc_ready(struct venus_hfi_device *hdev)
- 	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
- 	u32 ctrl_status, cpu_status;
- 
--	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core))
-+	if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core) || IS_AR50_LITE(hdev->core))
- 		cpu_status = readl(wrapper_tz_base + WRAPPER_TZ_CPU_STATUS_V6);
- 	else
- 		cpu_status = readl(wrapper_base + WRAPPER_CPU_STATUS);
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus_io.h b/drivers/media/platform/qcom/venus/hfi_venus_io.h
-index 9735a246ce36..f2c3064c44ae 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus_io.h
-+++ b/drivers/media/platform/qcom/venus/hfi_venus_io.h
-@@ -51,6 +51,9 @@
- /* Venus cpu */
- #define CPU_CS_SCIACMDARG3			0x58
- 
-+#define CPU_CS_VCICMD				0x20
-+#define CPU_CS_VCICMD_ARP_OFF			BIT(0)
-+
- #define SFR_ADDR				0x5c
- #define MMAP_ADDR				0x60
- #define UC_REGION_ADDR				0x64
-@@ -100,6 +103,7 @@
- #define WRAPPER_INTR_MASK_A2HCPU_MASK		0x4
- #define WRAPPER_INTR_MASK_A2HCPU_SHIFT		0x2
- 
-+#define WRAPPER_INTR_STATUS_A2HWD_MASK_V4_LITE	0x10
- #define WRAPPER_INTR_STATUS_A2HWD_MASK_V6	0x8
- #define WRAPPER_INTR_MASK_A2HWD_BASK_V6		0x8
- 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 8dd5a9b0d060..e09b0d9ae610 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -51,7 +51,7 @@ static int core_clks_enable(struct venus_core *core)
- 	dev_pm_opp_put(opp);
- 
- 	for (i = 0; i < res->clks_num; i++) {
--		if (IS_V6(core)) {
-+		if (IS_V6(core) || (IS_V4(core) && is_lite(core))) {
- 			ret = clk_set_rate(core->clks[i], freq);
- 			if (ret)
- 				goto err;
 -- 
 2.34.1
 
