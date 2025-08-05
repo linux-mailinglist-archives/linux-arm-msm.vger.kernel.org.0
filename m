@@ -1,222 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-67773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE963B1B1FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:28:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0FF1B1B22C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 12:44:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AC1F164B5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:28:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFD537A328E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Aug 2025 10:43:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5E3156237;
-	Tue,  5 Aug 2025 10:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F1F923C50F;
+	Tue,  5 Aug 2025 10:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1/VhBDW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TZxJetnW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58922580F1
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9023BF8F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Aug 2025 10:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754389682; cv=none; b=arXFnNkCqSVo35OroRAHEBHbyoSUMdeA+KsXWTOvcF3vuv+sk+rkf2xjwWRGMS5JWDE5NjwaEIjvDKcBSv3v4zj6svEHLu7B21+nM13bllznzpTUEAfQbnpLKF5A8MZjkZ5EK4muSCDQAD6+0xpk/rGgXZm/R9G6xf2JIeLOrjQ=
+	t=1754390670; cv=none; b=eCUC5IK1ddqHy993EMNXeNaqziQWTKMASkXxF7NuD5nuHdQcYw3wm//f3eettVeaGiC2WX2gzKh6mUaY5HoSNJvVlbdc2GGvn7QnaJaz+o0D9cv45xV5kjzNt/WEX8zRCKboYZvE4XNXNopr5bk9622DlWOZ5T8i1rTRIzXbtXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754389682; c=relaxed/simple;
-	bh=qdYBwGiQPyTlzeMzpPG4YNqV6VehzXxiooDuDvvIuGI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HGtBnwJg/eRRFqkVCwj6fn93G7X/QZv6m5/Wwo5cESGHXfYY+fhZRSwcb5TjXkYKenMm1I+Devr0BfK/wjfOKjlRR5lI8EHwSt+eTIp0XfOOSEioP/ALCJmTKKbprlHdanG4oAJ/QE3UBnJX5T5BPf7enlEOFGmWhV41VhBeNLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1/VhBDW; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-615622ed70fso8242183a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:28:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754389679; x=1754994479; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CuKxFEasqrRga1svukmOdXqoUcSU7DlhJE2c0KdevIw=;
-        b=V1/VhBDWXVcvvpdEhU6zNhqwN8UWZP/vH6g4dzuMNVT1rZQhNZFFcMdo7ciHPuCrgd
-         1WAU3sesj1TQv7ioByjyeNmvMqeWW5MJqFdshXjNIWlEHFn1yWHPFyxH/CH27dGTVVhl
-         UZl8J4t3BEnjZgnTA7diCoarbj1Lj03UFnrQ4DtNV4vP5qMT1BvPQL3TMqhMqH5XkAvA
-         Wz0G5NP2yPQ7v7BgJbRLS8qgq9NAv0TsteUiXAchvpa0Or3RdFnIrFTY2B5u9Y3RWDR/
-         kzuLTEeXuwzq6UZQCNCiVxvmx7tXu9u6Xcm70PM2VhLPVqTscGWA28tOzo/WkKXXDOEY
-         py8g==
+	s=arc-20240116; t=1754390670; c=relaxed/simple;
+	bh=xMNNkjuSH+3HYtbiIl/ollmFmRenFvaiHSjwqXnvo7k=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NugdJyP7hFlSDvxMTgVDQwdP19Y3XvZtHsxKa96yDxDB/ggVTnXJhqUp8Ss6l6+PUkiXXYcp0/4/VNZQAJxARO3+qyalC0KrotLTqWtxXLxus6I6urRwbOxZOQ0Tlss4KNDtTr/oR80pU/2wlaZWxFNpPBtEbMENZsE+bQuqppU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TZxJetnW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5757KB1F013332
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 Aug 2025 10:44:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=rxC9YEhF7HAygPUX1sY/MO8v
+	Fp8TOmYu1uxrDnl8C1s=; b=TZxJetnW9Ot2Rc8/0i+mRkOdGAqLaeIOByVf09NP
+	Xg0QjaSfXfPnI/SHy2TUb3bjnW+G9TGKzi7vSxIbpLM7sNFjHGhLwWGXBmV8MnWU
+	VlrHfXLaU0wFsSu+nRbx0f3yxHpYvNlb9ycMKGcVoV4NTkvyOKD7eu4/0NnvNF2g
+	lxOml6dn/SWpRVxG5c1lhyyByHlsKtIHSVA0vmTMVSNTUsAMqZcAOgx/KzFag8BN
+	jlUeP6wk6zLu/pCB5r+yBcu4MRWEz6UGMJ9B80HPt7p9VT0G+CLjPIb7D3HlsyTv
+	fmMr8DXKwnBJ4yBngQhZk7dYD/YimVORxcII3Xtr0D5UNA==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48b3j3t2ys-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 10:44:27 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-7073a5f61a6so82137986d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 03:44:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754389679; x=1754994479;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CuKxFEasqrRga1svukmOdXqoUcSU7DlhJE2c0KdevIw=;
-        b=dkXZgoUwAvU1FZZOL8D2FaiWAll004ZHV6EfkNN4cZTWEOIYUv3CYrVSQTjKnz9X+D
-         H8Dc3NnmsgRbu63QP8J1JePH4JWym+R+mU9Y5moZ4zJGqpLbRQdZ4nwf9Lm6ffCfUKfm
-         b/5FPDaJYyYzReFPLaiL6cH2ofvhDgCk839ZS4uJ1huoDZOZg6upP2alu60OWTLe6NsB
-         waI/l5puWN+5Bl1Ixjli0icvrKUqz+V+HQLUh2kEc9jUuQvsJPhVPISn+4mQNvLsvfmM
-         dyJRMovAVwEzoKFk7a44OAs2tgqeY8GfL0Mv9XCfwV5/LBS0vQV4ZW+1MCyHglD1TCDr
-         QSEg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4daqKSYlT9Fqt0DHrfdFsKcrNGwhe2JVVN2y8VLDC4xvoda9jHRNew8XNFcp3qkbu0kW6HgMswn9WTSGZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgU4Oddl7jesRSTk6Y+Npx4Zrrs7B9VGp5foTZFCIHGKlFF/kb
-	gxZzbScy0PlrigGj5njcSl3g/hsQu5KIETejzWpMTzWSCyaVjUjS3y4W6hCjPBepXkE/WIh9JPc
-	vHTATszQOnSBKWDrLO3TqoTPfQWmTkbIfkIx+Xt7JWUrW3ZLxAEsu2ZU=
-X-Gm-Gg: ASbGncun03BUWAzB/vD9DYxyq529eDJD+tCMy2ReMioL9AaUiqynV5OwmvykJRKUeBV
-	JXhxCwah8tyzH1zMzlPMdkh9o0UMIHph0JvIfV7QDi/iWYaK21tlLkQ8COaYJziNna2hclcycCr
-	6DWzmCS5thRXI1dVyrWJi+GvsrXUeGo6FTr/oVk/5rQcy9tLfb42prC9c9C8zWiF6jDOUsj0KYu
-	tyMGIT/k+pJ0oZ8
-X-Google-Smtp-Source: AGHT+IFU5LPvkb/N/Tw+uEtqevCLgU2MttiUFFLbm7KabFbJpklF9fl5AWplCqLxTcMRubhBHLG45fl0R75pQjr5Qc8=
-X-Received: by 2002:a17:907:9689:b0:ae3:163a:f69a with SMTP id
- a640c23a62f3a-af9401b0360mr1300344066b.33.1754389679184; Tue, 05 Aug 2025
- 03:27:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754390666; x=1754995466;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rxC9YEhF7HAygPUX1sY/MO8vFp8TOmYu1uxrDnl8C1s=;
+        b=WeRDVLOhTcfLDKcWd68Yl9ZDplGUA21zWro3LK4aAHM7b9uwJRAUAB/+p7CEzmXpsv
+         YAXTTtLM7bbJ/fqCw0vHh+JzNLgPrZ/fhVumdcJep/sGvbVUpZkc/Ux7CxuXe+D+MMUx
+         NKV/1iukUBX6joaLZr4HoXM1o1MgBGACcGVbAqhbbXTpy8DF6tOK9Upi/ldr9nPd/SFY
+         PcauUE054coRNGs0hZ2KSFPLzvlqXs+5/9VT8aCJkA+cGiby2pfvV3l0zUNLzgjrnkPJ
+         WbpeD9pfxphPQ0wTi7afj1PW1Lj+6MGtnUk3C4gp5K7KIQgd2zOAtp/VaXuGcLuYabx0
+         8riA==
+X-Forwarded-Encrypted: i=1; AJvYcCV+TVx5XokR2IlXyq02TSYEAzyzsDoIG+y1jh1UIhfAPSWj2d9Xfs5TTXpyjf1tOQwiMlqbMVPIjJsCaKSn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzfy7ONonfwB9gLr+B8a3Io8BzLZgfQ40MsgUXU9LUzsizurg38
+	URGBZG5BwzwwD0Fe2t3UMwgPd4y9Xc7cwaV2Pgu3OYJnzmu5MCpV585tpWlb+cLrZ5u0KutWRnp
+	ALr1dKmXV7Gd21I/F1nADLippuPtWVXWJKHEjtFrkO82AEZMwfJGy/oCKeU5AELFd3D35
+X-Gm-Gg: ASbGncsiK+9gCK8NQGfPzW/3FxCOiCoIdBw8yQzOwTGAOlTo1BLayODtV6F/0MtVkHL
+	++7W5w7lVe1JCMrhcUDTiptZw7G66v6yn2gya6xcEwPiJNnjgpumSju02ey0RuGol/kBD5zYWlx
+	L1upnpVJIKCZb2ufcAsahWO0Bn+IJFD3C3FHAsU1MqOwZ38EAN4s1nur8r86pAC/HAHP+Brpms3
+	i9tyAt0sLzpNd/fxaq2sBq2MIzmFnlJCtG6Ygzmekh0dCpkwZN7pGGWZEmogu1ju1pz2+ZYUqRE
+	xaRBy5Wqj59twb1sresNDlGY3HohhqLj7OyaG1sw17+X1INXslfCtVU0iTcUacIEU2VS5Q==
+X-Received: by 2002:a05:6214:dab:b0:705:816:6179 with SMTP id 6a1803df08f44-709362d810cmr182505176d6.38.1754390666055;
+        Tue, 05 Aug 2025 03:44:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFP9CTM5JXUtM9Z6l08Gil36MWqvJFmbSlsYeDtXThdsrHNGHHg9GP8BD/fDSOt/tjYpA41+w==
+X-Received: by 2002:a05:6214:dab:b0:705:816:6179 with SMTP id 6a1803df08f44-709362d810cmr182504726d6.38.1754390665534;
+        Tue, 05 Aug 2025 03:44:25 -0700 (PDT)
+Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459d7d722dcsm83892505e9.24.2025.08.05.03.44.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 03:44:25 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Tue, 5 Aug 2025 12:44:23 +0200
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+        bryan.odonoghue@linaro.org, quic_dikshita@quicinc.com,
+        quic_vgarodia@quicinc.com, konradybcio@kernel.org, krzk+dt@kernel.org,
+        mchehab@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 5/7] media: venus: core: Add qcm2290 DT compatible and
+ resource data
+Message-ID: <aJHgh8mon9auOHzi@trex>
+References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
+ <20250805064430.782201-6-jorge.ramirez@oss.qualcomm.com>
+ <4chbcvub4scnv4jxjaagbswl74tz4ygovn3vhktfodakysbgy3@kukktkwd2zsr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250725100806.1157-1-jie.gan@oss.qualcomm.com> <20250725100806.1157-5-jie.gan@oss.qualcomm.com>
-In-Reply-To: <20250725100806.1157-5-jie.gan@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Tue, 5 Aug 2025 11:27:46 +0100
-X-Gm-Features: Ac12FXyGWj4GgjsQixe5QNRaeCqpVKLMP7WtlbnmlyKxm20j9zCO0LZQIksxx1s
-Message-ID: <CAJ9a7VgOTfDHG+nrEUQ5+fxrcCd+ZaWWnxt_F8kavbHP38QCVw@mail.gmail.com>
-Subject: Re: [PATCH v4 04/10] coresight: tmc: add create/delete functions for etr_buf_node
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, Jinlong Mao <jinlong.mao@oss.qualcomm.com>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, Jie Gan <quic_jiegan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4chbcvub4scnv4jxjaagbswl74tz4ygovn3vhktfodakysbgy3@kukktkwd2zsr>
+X-Proofpoint-GUID: auRbtCQtNh2nHZRRLIIDXjMYzM_loy1R
+X-Authority-Analysis: v=2.4 cv=TZ+WtQQh c=1 sm=1 tr=0 ts=6891e08b cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=KpVMlk9tmVbli1cETwMA:9 a=CjuIK1q_8ugA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA3NiBTYWx0ZWRfX47k1vXJM6G2y
+ Swqfoh5MoITQ5D3jVS40wk2Wu95XjIPg/t3rH82YNtwO4tqVFz/JwCD0L378EbiyYoUusTH0X73
+ waxj8wTE1lrtfzSfK9/Q5oGOdENV0NDEGGY8VOaew+c3BNqTcvrhYcR0q39feAJLzLVG46S5Q8n
+ xK76ZKy5H6Ti0CSG2uxZhVCYc5QVjlb9k2SX3KT/aPJZMHH7FVjUDEPQvbCnbG83RM4ZFqUDGwY
+ kwBA+fiDCFMMyJHzGIPXgc7GgwZ0+WiEKbpNtULaUYoTwOpRI2zU8pckx4r00LHzE8+GIgPjw13
+ m8GxYhVJkzTdubzil05tQ95ZeWF4Zv1Yu7S+X0TEal64fZ5aHYdDxdZ4Cipe6ByfrCDkGFhDPSo
+ sZUoYnrxhHUs7/2FVVrZ42+tEedtIPF9gMD6tIroAzJW3XrFdjUtJ8J3+ogVqZ/lupNphg+4
+X-Proofpoint-ORIG-GUID: auRbtCQtNh2nHZRRLIIDXjMYzM_loy1R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_03,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050076
 
-Hi,
+On 05/08/25 13:04:50, Dmitry Baryshkov wrote:
+> On Tue, Aug 05, 2025 at 08:44:28AM +0200, Jorge Ramirez-Ortiz wrote:
+> > Add a qcm2290 compatible binding to the Cenus core.
+> > 
+> > The maximum concurrency is video decode at 1920x1080 (FullHD) with video
+> > encode at 1280x720 (HD).
+> > 
+> > The driver is not available to firmware versions below 6.0.55 due to an
+> > internal requirement for secure buffers.
+> > 
+> > The bandwidth tables incorporate a conservative safety margin to ensure
+> > stability under peak DDR and interconnect load conditions.
+> > 
+> > Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > ---
+> >  drivers/media/platform/qcom/venus/core.c | 50 ++++++++++++++++++++++++
+> >  1 file changed, 50 insertions(+)
+> > 
+> > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> > index adc38fbc9d79..753a16f53622 100644
+> > --- a/drivers/media/platform/qcom/venus/core.c
+> > +++ b/drivers/media/platform/qcom/venus/core.c
+> > @@ -1070,6 +1070,55 @@ static const struct venus_resources sc7280_res = {
+> >  	.enc_nodename = "video-encoder",
+> >  };
+> >  
+> > +static const struct bw_tbl qcm2290_bw_table_dec[] = {
+> > +	{ 352800, 597000, 0, 746000, 0 }, /* 1080p@30 + 720p@30 */
+> > +	{ 244800, 413000, 0, 516000, 0 }, /* 1080p@30 */
+> > +	{ 216000, 364000, 0, 454000, 0 }, /* 720p@60  */
+> > +	{ 108000, 182000, 0, 227000, 0 }, /* 720p@30  */
+> > +};
+> > +
+> > +static const struct bw_tbl qcm2290_bw_table_enc[] = {
+> > +	{ 352800, 396000, 0, 0, 0 }, /* 1080p@30 + 720p@30 */
+> > +	{ 244800, 275000, 0, 0, 0 }, /* 1080p@30 */
+> > +	{ 216000, 242000, 0, 0, 0 }, /* 720p@60  */
+> > +	{ 108000, 121000, 0, 0, 0 }, /* 720p@30  */
+> > +};
+> > +
+> > +static const struct firmware_version min_fw = {
+> > +	.major = 6, .minor = 0, .rev = 55,
+> > +};
+> 
+> This will make venus driver error out with the firmware which is
+> available in Debian trixie (and possibly other distributions). If I
+> remember correctly, the driver can work with that firmware with the
+> limited functionality. Can we please support that instead of erroring
+> out completely?
 
-On Fri, 25 Jul 2025 at 11:08, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
+yes, in V7 I did implement this functionality plus a fix for EOS
+handling (broken in pre 6.0.55 firmwares).
+
+This added some complexity to the driver. And so in internal discussions
+it was agreed that it was not worth to carry it and that it should be dropped.
+
+I'll let Vikash and Bryan comment on the decision.
+
+> 
+> > @@ -1080,6 +1129,7 @@ static const struct of_device_id venus_dt_match[] = {
+> >  	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+> >  	{ .compatible = "qcom,sc7280-venus", .data = &sc7280_res, },
+> >  	{ .compatible = "qcom,sm8250-venus", .data = &sm8250_res, },
+> > +	{ .compatible = "qcom,qcm2290-venus", .data = &qcm2290_res, },
 >
-> Create and insert or remove the etr_buf_node to/from the etr_buf_list.
->
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> ---
->  .../hwtracing/coresight/coresight-tmc-etr.c   | 65 +++++++++++++++++++
->  drivers/hwtracing/coresight/coresight-tmc.h   |  2 +
->  2 files changed, 67 insertions(+)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> index b07fcdb3fe1a..e8ecb3e087ab 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> @@ -1909,6 +1909,71 @@ const struct coresight_ops tmc_etr_cs_ops = {
->         .panic_ops      = &tmc_etr_sync_ops,
->  };
->
-> +/**
-> + * tmc_clean_etr_buf_list - clean the etr_buf_list.
-> + * @drvdata:   driver data of the TMC device.
-> + *
-> + * Remove the allocated node from the list and free the extra buffer.
-> + */
-> +void tmc_clean_etr_buf_list(struct tmc_drvdata *drvdata)
-> +{
-> +       struct etr_buf_node *nd, *next;
-> +
-> +       list_for_each_entry_safe(nd, next, &drvdata->etr_buf_list, node) {
-> +               if (nd->sysfs_buf == drvdata->sysfs_buf) {
-> +                       list_del(&nd->node);
-> +                       kfree(nd);
-> +               } else {
-> +                       /* Free allocated buffers which are not utilized by ETR */
-> +                       list_del(&nd->node);
-> +                       tmc_free_etr_buf(nd->sysfs_buf);
-> +                       nd->sysfs_buf = NULL;
-> +                       kfree(nd);
-> +               }
-> +       }
-> +}
-> +EXPORT_SYMBOL_GPL(tmc_clean_etr_buf_list);
-> +
-> +/**
-> + * tmc_create_etr_buf_node - create a node to store the alloc_buf and
-> + * insert the node to the etr_buf_list. Create a new buffer if the
-> + * alloc_buf is NULL.
-> + * @drvdata:   driver data of the TMC device.
-> + * @alloc_buf: the buffer that is inserted to the list.
-> + *
-> + * Return 0 upon success and return the error number if fail.
-> + */
-> +int tmc_create_etr_buf_node(struct tmc_drvdata *drvdata, struct etr_buf *alloc_buf)
+> Please keep the table sorted.
 
-This list handle function pair look a little asymmetric. Is it not
-possible to change this to tmc_create_etr_buf_list(struct tmc_drvdata
-*drvdata, int num_nodes)
-so that one function creates all the nodes, and another destroys them.
+argh...sure
 
-In the logic that decides between using multi buffer or single buffer
-you can then use  a construct such as:
-
-if (single_buffer)
-      drvdata->sysfs_buf = <alloc sysfs buffer>
-else {
-     tmc_create_etr_buf_list(drvdata, 2);
-     <switch in avail buffer to drvdata->sysfs_buf
-}
-
-> +{
-> +       struct etr_buf_node *sysfs_buf_node;
-> +       struct etr_buf *sysfs_buf;
-> +
-> +       if (!alloc_buf) {
-> +               sysfs_buf = tmc_alloc_etr_buf(drvdata, drvdata->size, 0, cpu_to_node(0), NULL);
-> +               if (IS_ERR(sysfs_buf))
-> +                       return PTR_ERR(sysfs_buf);
-> +       } else
-> +               sysfs_buf = alloc_buf;
-> +
-> +       sysfs_buf_node = kzalloc(sizeof(struct etr_buf_node), GFP_KERNEL);
-> +       if (IS_ERR(sysfs_buf_node)) {
-> +               if (!alloc_buf)
-> +                       tmc_free_etr_buf(sysfs_buf);
-> +               return PTR_ERR(sysfs_buf_node);
-> +       }
-> +
-> +       sysfs_buf_node->sysfs_buf = sysfs_buf;
-> +       sysfs_buf_node->reading = false;
-> +       if (!alloc_buf)
-> +               sysfs_buf_node->is_free = true;
-> +       else
-> +               sysfs_buf_node->is_free = false;
-> +       list_add(&sysfs_buf_node->node, &drvdata->etr_buf_list);
-> +
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(tmc_create_etr_buf_node);
-> +
->  int tmc_read_prepare_etr(struct tmc_drvdata *drvdata)
->  {
->         int ret = 0;
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-> index 52ee5f8efe8c..3cb8ba9f88f5 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc.h
-> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
-> @@ -461,5 +461,7 @@ void tmc_etr_remove_catu_ops(void);
->  struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
->                                    enum cs_mode mode, void *data);
->  extern const struct attribute_group coresight_etr_group;
-> +void tmc_clean_etr_buf_list(struct tmc_drvdata *drvdata);
-> +int tmc_create_etr_buf_node(struct tmc_drvdata *drvdata, struct etr_buf *alloc_buf);
->
->  #endif
-> --
-> 2.34.1
->
-
-Regards
-
-Mike
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+> 
+> >  	{ }
+> >  };
+> >  MODULE_DEVICE_TABLE(of, venus_dt_match);
+> > -- 
+> > 2.34.1
+> > 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
