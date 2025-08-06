@@ -1,155 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-67953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83374B1CF58
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 01:20:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 991B1B1CF74
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 01:38:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1B0416C911
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 23:20:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6B93627D4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 23:38:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDC5C26B742;
-	Wed,  6 Aug 2025 23:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0839F277C8F;
+	Wed,  6 Aug 2025 23:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KjTF9vFf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B4NhXMfZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B8F26A1C1;
-	Wed,  6 Aug 2025 23:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B6D277C86
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 23:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754522408; cv=none; b=G+MBGud79ZWxKNOhoT7PU6DFwgVFV3xQDEyhRi+xaKcCHK1x+v4iDL+NetppLdsAPJRk5+JRFoRIXjitYySv8gD2yDwz81TqouhNC110t6VRrniAsscg2cBh/2+JD4yctSg/tqa5+4LbnDqNPx2jNeJTw+3xeVmR7OzEk2yb63I=
+	t=1754523514; cv=none; b=bHv6YJxPLkPaXQ+/XNoziTLuy5he6i+uNhqhCyBpSHmdpM0d7gnbePT4jmuxB9Bnn470oGTRSoi6KP/UWj7wgI2jjJ6UYl3NLkjrVx44CT+zV5CB0tXhaYMdyuY8MmbkYNJY64SKPm7BLTvCD6oGGz9oJOal7qB4jv0McyRTsHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754522408; c=relaxed/simple;
-	bh=JfQFotiwf+YIiGXEHoH00+B6mobuy7IsAEk1M1OZK8o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DwXd7jbb0kWI+FSc0CUJLe9glbgw5jujBIs5qbrq4rAXqGawAi9KU+9HIPLbUG4KFNhkDU/ArMcnqDfJ73XzqRDr2HWlztOvE3SJNgedqyp6W7KZ6Xfk8S0HoYYViayCJ+qEOFMonZVJURkjyZLw9g8094s7GrFVZO5o5Iuzg34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KjTF9vFf; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754522408; x=1786058408;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=JfQFotiwf+YIiGXEHoH00+B6mobuy7IsAEk1M1OZK8o=;
-  b=KjTF9vFfWqt7EYPWDSoiPJomRpdfTn9biINXKqEm0CRVw9pdux6OA5ZS
-   ShMxhK4Q55NkIZppNiZwsfAroMC/N4X7IGoWARUkXBbG0Yc9uIrow9aLA
-   bk1J3mDIXFKedGCvcV8GbL2fOk3yMb261Zs13KT6P1ExF/WYZK4WO6cAT
-   /ZDGFWfFkzLJ/5+OywuaVVULPWoDBX6W9Mink5ooVlZYGlxqSaOV0FnjQ
-   sc/RB+gX/klzum0ZVhsziDq58tfndW6LqsGCWJiYM5Axs71Uv9+udq4pZ
-   WIhq+9+FjP3D9GEbW/bQZ+sYEnnIi8OxTlzbGw+WQh6LjnA9YSDc6wrfA
-   g==;
-X-CSE-ConnectionGUID: aT4ebjBhSHCDK4855MhtYA==
-X-CSE-MsgGUID: 4cxDgSmjQe6Jubkca8fMkA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="67929243"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; 
-   d="scan'208";a="67929243"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2025 16:20:05 -0700
-X-CSE-ConnectionGUID: cxDPklwGSZKPfPAa877EuA==
-X-CSE-MsgGUID: b8MQ1i4CSjaj0V4yn9qNWQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; 
-   d="scan'208";a="202061048"
-Received: from lkp-server02.sh.intel.com (HELO 4ea60e6ab079) ([10.239.97.151])
-  by orviesa001.jf.intel.com with ESMTP; 06 Aug 2025 16:20:01 -0700
-Received: from kbuild by 4ea60e6ab079 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ujnQL-0002Ao-2E;
-	Wed, 06 Aug 2025 23:19:57 +0000
-Date: Thu, 7 Aug 2025 07:19:41 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ling Xu <quic_lxu5@quicinc.com>, srini@kernel.org,
-	amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org,
-	sumit.semwal@linaro.org, christian.koenig@amd.com,
-	thierry.escande@linaro.org, quic_vgattupa@quicinc.com
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	quic_kuiw@quicinc.com, ekansh.gupta@oss.qualcomm.com,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-	linux-kernel@vger.kernel.org, Ling Xu <quic_lxu5@quicinc.com>,
-	stable@kernel.org
-Subject: Re: [PATCH v2 4/4] misc: fastrpc: Skip reference for DMA handles
-Message-ID: <202508070731.S30957lV-lkp@intel.com>
-References: <20250806115114.688814-5-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1754523514; c=relaxed/simple;
+	bh=VJQWnJ0xkr9EEbnL3lXDukQbwjKMGh/hOEDMFd5Z0qg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ls9o0PlBkibh++FF0NAY/LuDdwvO9rc11PXHa4ZyXYT8joBurBlzFZjG1zgXVgVKDhz4zMkYsv8t0G0qw0jLgMlCPiAsfz3HcYW5IRvw5kave/JAsSoKDu9nM4u12eiHNVrrgnXpesImaoGkHdwZKEDSuQmtwnr3n3PcT5coMDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B4NhXMfZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576I95T9032385
+	for <linux-arm-msm@vger.kernel.org>; Wed, 6 Aug 2025 23:38:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=Ac6klSnA9Mr53PX86rTjqGkchVoRjSTOCtS4mQwGPtg=; b=B4
+	NhXMfZIY3KWm6jV5nbmTTOhsPk0QXzDg9ZDqfcFXdh6wYO/uesBS/3C2wsO83bFJ
+	rP68H2+u/of4suW5za0If4n+6E9fC7Uaz34XB5Nzc1ipssLt297je78LzE60wx2K
+	RwQ2yF9S1SQVMo+D9/J6HWQeu7grns/0tAe7jy082gJUhvMZVhAyhUQEFBxP5OGO
+	iZ/jvb8vHLNklSATXeRZSX3kxIe/db8E4vKpF1bPsU5gK0MSdNVpGNP8ttjSaUlw
+	UAW9C/yH6s/mbvPMflLUBFBeBOI78k4GtNJ/Ha0/IWIDPFioZATiGhx4zX3GiRJ9
+	CRuq4Np6lHjjALpAKTlg==
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpw2vc7f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 23:38:31 +0000 (GMT)
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-619b502dd19so795090eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 16:38:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754523511; x=1755128311;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ac6klSnA9Mr53PX86rTjqGkchVoRjSTOCtS4mQwGPtg=;
+        b=UYP/yHvVS+WFe+vaSo6Wv6//Ym9P5HOi5jof2abtMdXIrjQq+pigtrACZDamDIxccy
+         uiTBBpXNwSRpNqqTs3eN+XsDh1D0orU7gZp7BN8ua+WEo3wTLQIRpnonSuMa9BfcbFrQ
+         tPgRFmw/u9scdcDker00ry5O/nCmZzb3wuCp8PcrMQDFZwoWbjg0+xfSHdbFjVO75LfM
+         sJA0M0jAMwlhw9lCcAUGSA1hxu3E6FmxNYmKDLFB3+VxRkzfr8K65kff0TCjgEdDCUqJ
+         r+QJkxCfcorZJynBwf2LX3dlaq2BUVmPbqSqiaYooXg+wTg4VGggZZSCKUhBuItenmTJ
+         0Jkg==
+X-Forwarded-Encrypted: i=1; AJvYcCUJHo00HHgBMHWKkeBbcBHHHWn9eDZctwI64CWs9KsSVNMkJrsNlxypSOvkFXuqr7hmm8Z3h9rw3qOzsHMI@vger.kernel.org
+X-Gm-Message-State: AOJu0YylzinymYu42P1WMmxc3J8IptAsbWHlwejj3XpSuYukbU9K9CHX
+	lPxHKBrSGkvIS9Y9vKyvCY5ZL6WCiGI0w32xIbrCE6HDikzBPIRKGiWccq9v/ECEIY6f4QoAQaI
+	S43fMP5kMJXP3YuAuCKZTPwP12bOlN5PHlEKsJT7tyEuZsu0gzDRVmCrqkqjGuTrpncmr2nQNrG
+	iAkuqxJB9NOdUD0XtsGCv6PJBd62AqY89qeyeXoScpXSvzjYzzF+h35w==
+X-Gm-Gg: ASbGncuHzOaZbpm9bbdRDrw2ilYvT09Y0lp4KZGciDUD3e+UOkKrYxZNAO0P9rz7x4t
+	wVZHSetJ1IzD6lr/BedomotK6Nur5YwCidIVyblHzcPtVV0CaXwz0O0D8iIgFpXKfPoHwp9thC8
+	I3JuOfKJCaZpq3yPlUb69M8icMdxDir1ITWremWVozilIhovaQI9Xj
+X-Received: by 2002:a05:6808:188e:b0:407:a0ea:a233 with SMTP id 5614622812f47-43587d4aefbmr1086824b6e.10.1754523510878;
+        Wed, 06 Aug 2025 16:38:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEajvgQwj0cA40SDmJZi443/ZvRJrXgIh9b0IEiCevFL8xUX1afj5QQsW7XjUX+4Vja9Yolv8KBFejgkt9sl+0=
+X-Received: by 2002:a05:6808:188e:b0:407:a0ea:a233 with SMTP id
+ 5614622812f47-43587d4aefbmr1086811b6e.10.1754523510491; Wed, 06 Aug 2025
+ 16:38:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250806115114.688814-5-quic_lxu5@quicinc.com>
+References: <20250805225557.593192-1-sashal@kernel.org>
+In-Reply-To: <20250805225557.593192-1-sashal@kernel.org>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Wed, 6 Aug 2025 16:38:19 -0700
+X-Gm-Features: Ac12FXzyXnGkvSc4Rh5FVrwgztoGD-i80tBzbFVH33Tmk6r1gudt7__afChJygA
+Message-ID: <CACSVV02Z=4Saw=-MA6zz-Dsye8T=AcARWs1AhUbWnyA8sY7fdQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix objtool warning in submit_lock_objects()
+To: Sasha Levin <sashal@kernel.org>
+Cc: lumag@kernel.org, abhinav.kumar@linux.dev, jessica.zhang@oss.qualcomm.com,
+        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
+        simona@ffwll.ch, antomani103@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=Vbz3PEp9 c=1 sm=1 tr=0 ts=6893e778 cx=c_pps
+ a=lkkFf9KBb43tY3aOjL++dA==:117 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
+ a=VwQbUJbxAAAA:8 a=QLtsSAfmF_M2AFDG84kA:9 a=QEXdDO2ut3YA:10
+ a=k4UEASGLJojhI9HsvVT1:22
+X-Proofpoint-ORIG-GUID: ediJxFe-acBrTbEhf95fCRPKE8Wnj-GN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOCBTYWx0ZWRfX03s/LFe8m0Yo
+ OkdGqgJgZAcTYgWxsnSIhcC1CKZMegOKSCKPx3a+7fyXW/LHqRcNz+5JTdKTyOP5HjK7mH/1mfr
+ Xzmbldp78LMB68A2bFR38VMunwJxobxlGlyMSkjWA6jLmcTxTiE2y3pyQKREsmM9w9gtdj3QwB+
+ N3oCgh5TZUr4isQ0E4OPEFX3HHvCD60UzyjXgcnupzURFMcFFj+HJGo4Kse30RgC5dTMl8slpv+
+ bdhYofaLj8Cx29I+gItxkucehktpaRnK5y3E8/yLEgIukILqmpRqDNgKqojrOGw7pVrtYHCLwxw
+ rotSYCTvGC8V81Lqbr8a0rWZpl81LpWSAJ4B1qB3v50JA5Tfp7DoyKZs3FvwoFryOdtrPv6GFRk
+ tuymIoaF
+X-Proofpoint-GUID: ediJxFe-acBrTbEhf95fCRPKE8Wnj-GN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_05,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060008
 
-Hi Ling,
+On Tue, Aug 5, 2025 at 3:56=E2=80=AFPM Sasha Levin <sashal@kernel.org> wrot=
+e:
+>
+> Restructure submit_lock_objects() to use a single loop with break
+> statements to fix objtool warning:
+>
+>   drivers/gpu/drm/msm/msm.o: warning: objtool: submit_lock_objects+0x451:
+>   sibling call from callable instruction with modified stack frame
+>
+> The drm_exec_until_all_locked() macro uses computed gotos internally
+> for its retry loop. Having return statements inside this macro, or
+> immediately after it in certain code paths, confuses objtool's static
+> analysis of stack frames, causing it to incorrectly flag tail call
+> optimizations.
 
-kernel test robot noticed the following build warnings:
+Maybe we should instead just split out a separate
+submit_lock_objects_vmbind() and restore the error path 'goto error'
+instead of returning from within the loop?  Ie. basically revert
+submit_lock_objects to the way it was before commit 92395af63a99
+("drm/msm: Add VM_BIND submitqueue"), and then move the rest into a
+new fxn (with 'goto error' instead of 'return ret'?  In retrospect the
+vmbind case is kinda just shoehorned into the existing fxn.
 
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.16 next-20250806]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+I can type up this version if you have better things to do.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ling-Xu/misc-fastrpc-Save-actual-DMA-size-in-fastrpc_map-structure/20250806-200133
-base:   char-misc/char-misc-testing
-patch link:    https://lore.kernel.org/r/20250806115114.688814-5-quic_lxu5%40quicinc.com
-patch subject: [PATCH v2 4/4] misc: fastrpc: Skip reference for DMA handles
-config: hexagon-randconfig-002-20250807 (https://download.01.org/0day-ci/archive/20250807/202508070731.S30957lV-lkp@intel.com/config)
-compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project 7b8dea265e72c3037b6b1e54d5ab51b7e14f328b)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250807/202508070731.S30957lV-lkp@intel.com/reproduce)
+BR,
+-R
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202508070731.S30957lV-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/misc/fastrpc.c:368:30: warning: unused variable 'sess' [-Wunused-variable]
-     368 |         struct fastrpc_session_ctx *sess = fl->sctx;
-         |                                     ^~~~
-   1 warning generated.
-
-
-vim +/sess +368 drivers/misc/fastrpc.c
-
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  363  
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  364  
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  365  static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
-1922c68c56c660 Ling Xu                  2025-08-06  366  			    struct fastrpc_map **ppmap)
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  367  {
-9446fa1683a7e3 Abel Vesa                2022-11-24 @368  	struct fastrpc_session_ctx *sess = fl->sctx;
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  369  	struct fastrpc_map *map = NULL;
-d259063578ed76 Ling Xu                  2025-08-06  370  	struct dma_buf *buf;
-9446fa1683a7e3 Abel Vesa                2022-11-24  371  	int ret = -ENOENT;
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  372  
-d259063578ed76 Ling Xu                  2025-08-06  373  	buf = dma_buf_get(fd);
-d259063578ed76 Ling Xu                  2025-08-06  374  	if (IS_ERR(buf))
-d259063578ed76 Ling Xu                  2025-08-06  375  		return PTR_ERR(buf);
-d259063578ed76 Ling Xu                  2025-08-06  376  
-9446fa1683a7e3 Abel Vesa                2022-11-24  377  	spin_lock(&fl->lock);
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  378  	list_for_each_entry(map, &fl->maps, node) {
-d259063578ed76 Ling Xu                  2025-08-06  379  		if (map->fd != fd || map->buf != buf)
-9446fa1683a7e3 Abel Vesa                2022-11-24  380  			continue;
-9446fa1683a7e3 Abel Vesa                2022-11-24  381  
-9446fa1683a7e3 Abel Vesa                2022-11-24  382  		*ppmap = map;
-9446fa1683a7e3 Abel Vesa                2022-11-24  383  		ret = 0;
-9446fa1683a7e3 Abel Vesa                2022-11-24  384  		break;
-c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  385  	}
-9446fa1683a7e3 Abel Vesa                2022-11-24  386  	spin_unlock(&fl->lock);
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  387  
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  388  	return ret;
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  389  }
-8f6c1d8c4f0cc3 Vamsi Krishna Gattupalli 2022-02-14  390  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> Fixes: 92395af63a99 ("drm/msm: Add VM_BIND submitqueue")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 43 ++++++++++++----------------
+>  1 file changed, 19 insertions(+), 24 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/m=
+sm_gem_submit.c
+> index 5f8e939a5906..253347b6e328 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -276,46 +276,41 @@ static int submit_lock_objects(struct msm_gem_submi=
+t *submit)
+>  {
+>         unsigned flags =3D DRM_EXEC_INTERRUPTIBLE_WAIT;
+>         struct drm_exec *exec =3D &submit->exec;
+> -       int ret;
+> +       int ret =3D 0;
+>
+> -       if (msm_context_is_vmbind(submit->queue->ctx)) {
+> +       if (msm_context_is_vmbind(submit->queue->ctx))
+>                 flags |=3D DRM_EXEC_IGNORE_DUPLICATES;
+>
+> -               drm_exec_init(&submit->exec, flags, submit->nr_bos);
+> +       drm_exec_init(&submit->exec, flags, submit->nr_bos);
+>
+> -               drm_exec_until_all_locked (&submit->exec) {
+> +       drm_exec_until_all_locked (&submit->exec) {
+> +               if (msm_context_is_vmbind(submit->queue->ctx)) {
+>                         ret =3D drm_gpuvm_prepare_vm(submit->vm, exec, 1)=
+;
+>                         drm_exec_retry_on_contention(exec);
+>                         if (ret)
+> -                               return ret;
+> +                               break;
+>
+>                         ret =3D drm_gpuvm_prepare_objects(submit->vm, exe=
+c, 1);
+>                         drm_exec_retry_on_contention(exec);
+>                         if (ret)
+> -                               return ret;
+> -               }
+> -
+> -               return 0;
+> -       }
+> -
+> -       drm_exec_init(&submit->exec, flags, submit->nr_bos);
+> -
+> -       drm_exec_until_all_locked (&submit->exec) {
+> -               ret =3D drm_exec_lock_obj(&submit->exec,
+> -                                       drm_gpuvm_resv_obj(submit->vm));
+> -               drm_exec_retry_on_contention(&submit->exec);
+> -               if (ret)
+> -                       return ret;
+> -               for (unsigned i =3D 0; i < submit->nr_bos; i++) {
+> -                       struct drm_gem_object *obj =3D submit->bos[i].obj=
+;
+> -                       ret =3D drm_exec_prepare_obj(&submit->exec, obj, =
+1);
+> +                               break;
+> +               } else {
+> +                       ret =3D drm_exec_lock_obj(&submit->exec,
+> +                                               drm_gpuvm_resv_obj(submit=
+->vm));
+>                         drm_exec_retry_on_contention(&submit->exec);
+>                         if (ret)
+> -                               return ret;
+> +                               break;
+> +                       for (unsigned i =3D 0; i < submit->nr_bos; i++) {
+> +                               struct drm_gem_object *obj =3D submit->bo=
+s[i].obj;
+> +                               ret =3D drm_exec_prepare_obj(&submit->exe=
+c, obj, 1);
+> +                               drm_exec_retry_on_contention(&submit->exe=
+c);
+> +                               if (ret)
+> +                                       break;
+> +                       }
+>                 }
+>         }
+>
+> -       return 0;
+> +       return ret;
+>  }
+>
+>  static int submit_fence_sync(struct msm_gem_submit *submit)
+> --
+> 2.39.5
+>
 
