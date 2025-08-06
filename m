@@ -1,226 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-67906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AC88B1C579
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:52:53 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0D9FB1C5E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 14:31:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6FB23BB4D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:52:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8FA914E2F85
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 12:31:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90CEB28C2BF;
-	Wed,  6 Aug 2025 11:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 011B428A1CC;
+	Wed,  6 Aug 2025 12:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g/cgpcyk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFJ/g13i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565928C2B0;
-	Wed,  6 Aug 2025 11:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD78192D68;
+	Wed,  6 Aug 2025 12:31:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754481121; cv=none; b=aSagUAvFHh0u+7L9YW31/pJA2Mdr1yn3gCKZRZXGVWoYu4/6iwJoKi8kIGvdPgkT4La1YTj+NBLe3rYFdre9/WoQx22W628nUp6fa7oYIDq+iNojnCMjmkJL3neRsZF3/GJJ5EWOltl/kZrpmVxACO7Xn4NqshZcYbmKCBQfZus=
+	t=1754483490; cv=none; b=Ux+2F7HdcfO7tyKL00LVgGJWDeNgHVVwiHveS4mfSNH/YPN8JNytzREzZsLxNdvXyRnFTZ1fkEmevtT+8JAkHiuxNNvYggmFvYeoMmP+cLw/NXr7EWagi+2aZLsLEbDHua6PWUG659ainqdqvp9aU7thuV3h0oYo9E5MQjA2Lso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754481121; c=relaxed/simple;
-	bh=LlDptYXPOWubo/br2039xV8dQ2nTHpARiOHj+csODBY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bogNDXvb4hQ+VoRusgejy5sxA7j1P9uGAZCPy2yQFZJgbTdDbxnkyA3YkRck57GBtSofo4uGMHfdmsENHElh6i/l0Hedc5PI3NkSntwuQkszx+SFO273as2ysl5UunJPr/2UzeK+Nnv8RpOUKkoeo4WTgs+QJ9fDvL4G8mztrNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g/cgpcyk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576AMfCK017265;
-	Wed, 6 Aug 2025 11:51:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vFO6rmjckLLVKu2RdrnvwAaA0dZ1+j3gbeU8qFfMmHI=; b=g/cgpcykMVwb/IuF
-	92gNNe2LjEl7AKN0I9PqV2Uow4YPskGODFE8SIWyVDyYq25VJvLiyhno6HykoPGH
-	Ijqo5/D0ATZoQWloVQlRo3dRcLnaYY26n0ZmJDyHgLfvceBQx+dPhdPGQSiTNra7
-	O5s4fIj8qlgMBC5ygfGvy7PRUsQF3QAZGDqtTXShbUUak2y5Xru3+1m+KGwuHD4F
-	GpjmubakTEFLKwPjR/ytv3I1ZjK9ps5uAnpqEfe7OjP3qLWyniTXbf49h3X5pRwx
-	QRYN8zM7i45pypKz0Xf2+3SlKwZPw7yHCpur2GSrhk7TbopF9DKOeMycf1ykOMDF
-	HHYG6A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c58686b1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Aug 2025 11:51:52 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 576Bpp0V021877
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Aug 2025 11:51:51 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Wed, 6 Aug 2025 04:51:48 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>, <sumit.semwal@linaro.org>,
-        <christian.koenig@amd.com>, <thierry.escande@linaro.org>,
-        <quic_vgattupa@quicinc.com>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <linaro-mm-sig@lists.linaro.org>,
-        <linux-kernel@vger.kernel.org>, Ling Xu <quic_lxu5@quicinc.com>,
-        <stable@kernel.org>
-Subject: [PATCH v2 4/4] misc: fastrpc: Skip reference for DMA handles
-Date: Wed, 6 Aug 2025 17:21:14 +0530
-Message-ID: <20250806115114.688814-5-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250806115114.688814-1-quic_lxu5@quicinc.com>
-References: <20250806115114.688814-1-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1754483490; c=relaxed/simple;
+	bh=pddWyPwjs2fOn7Jr05/MG2ACl0zA9Y4SSHMKsBzkDy8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Vc+HKLeMCJua97Ec3A4eyfMVpRCiHOLisP1l7dROBXWKan999Lwb4bC4cdZ+fi2a9XBfZqDda+XQxwhcl90yfFf8toKULQSeCPkzhlfZDZxS9PKgjdnNqF8oKtwm1uC74phKGhSuP6kuCNlBcgHWdWMvfGICnp+L4DOF50Rrrmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFJ/g13i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4665C4CEF7;
+	Wed,  6 Aug 2025 12:31:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754483490;
+	bh=pddWyPwjs2fOn7Jr05/MG2ACl0zA9Y4SSHMKsBzkDy8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=WFJ/g13iFNkaHr2ywCr9SJjhaz+5pikuyhff1olloeRcHEszoBfd6GjeLMNBN3IDL
+	 HIyBIZp77EEgz4E/RcZ9pU/AnOmxutrgAWP4XYGQsABk7My9W7279xSBw4vSyZcrL1
+	 ZYEjplmCBrxt9r4DylI4d8nh1eyDZYq/VfdZ586lgDaOQEkbvWPpbMazpSjecLHxqo
+	 7iEqIRBgoR2DV3S8/DatxIY4SE/kWMtLr2tbTBgBSxRI9/THGBP005p9XK85JMCw1r
+	 MYL3xADx07My/pFHLIZ5cDqt18z6cXqt4WUTu0oKird956Dpdh1IBQYbBivvLp11Ve
+	 bl1cf5xgiEuJQ==
+From: Mark Brown <broonie@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Gabor Juhos <j4g8y7@gmail.com>
+Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250801-qpic-snand-oob-cwpp-fix-v1-1-f5a41b86af2e@gmail.com>
+References: <20250801-qpic-snand-oob-cwpp-fix-v1-1-f5a41b86af2e@gmail.com>
+Subject: Re: [PATCH] spi: spi-qpic-snand: use correct CW_PER_PAGE value for
+ OOB write
+Message-Id: <175448348842.51843.4908652099889522195.b4-ty@kernel.org>
+Date: Wed, 06 Aug 2025 13:31:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IXWq56583LaveKK_w542hCx4Ram19CAI
-X-Authority-Analysis: v=2.4 cv=MZpsu4/f c=1 sm=1 tr=0 ts=689341d8 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=65MDuzgJ9_6jycvYPFoA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: IXWq56583LaveKK_w542hCx4Ram19CAI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA2NCBTYWx0ZWRfX8AXCfwdECaAP
- BbB+KAtaVKf+CVbHicwG7uNwoJemkLEtmkSp13s+ClXfrgT7e7GsleD2kaUz0GWAndd5YhzUW/g
- BODrjglaCJIb7qdInodPFG3x1CCcGLgOZ+etrAw2gzjvIw3rh55KeFS1osOZYtUY6hC5rCfXUA0
- 2HfXn/j7Gcu6wDaO7k5a60NYy8OVRqIIxEb2OWYvsc6tA3WOLSwM0hi817XTFuBaElhtlSbokP4
- T8RSep2yW3dvAjyA+gfO7UXkHwtjmjtMvYtX2BOPCGCI6Bi9QA5t1i6bNfGKJKQU6tva1Yuykb3
- WoDm3oHwCpo3kSfGiJg5B3zArVy6LFhAPKXVLVFXxgGZp7fY11y/vJuNFFdF5TqXbWimIforEEC
- K/sXpf4O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-06_03,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0
- adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060064
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-cff91
 
-If multiple dma handles are passed with same fd over a remote call
-the kernel driver takes a reference and expects that put for the
-map will be called as many times to free the map. But DSP only
-updates the fd one time in the fd list when the DSP refcount
-goes to zero and hence kernel make put call only once for the
-fd. This can cause SMMU fault issue as the same fd can be used
-in future for some other call.
+On Fri, 01 Aug 2025 09:58:35 +0200, Gabor Juhos wrote:
+> The qcom_spi_program_oob() function uses only the last codeword to write
+> the OOB data into the flash, but it sets the CW_PER_PAGE field in the
+> CFG0 register as it would use all codewords.
+> 
+> It seems that this confuses the hardware somehow, and any access to the
+> flash fails with a timeout error after the function is called. The problem
+> can be easily reproduced with the following commands:
+> 
+> [...]
 
-Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
-Cc: stable@kernel.org
-Co-developed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c | 44 ++++++++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 17 deletions(-)
+Applied to
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index d950a179bff8..3b7ad4a043eb 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -363,7 +363,7 @@ static int fastrpc_map_get(struct fastrpc_map *map)
- 
- 
- static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
--			    struct fastrpc_map **ppmap, bool take_ref)
-+			    struct fastrpc_map **ppmap)
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-@@ -379,15 +379,6 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
- 		if (map->fd != fd || map->buf != buf)
- 			continue;
- 
--		if (take_ref) {
--			ret = fastrpc_map_get(map);
--			if (ret) {
--				dev_dbg(sess->dev, "%s: Failed to get map fd=%d ret=%d\n",
--					__func__, fd, ret);
--				break;
--			}
--		}
--
- 		*ppmap = map;
- 		ret = 0;
- 		break;
-@@ -757,7 +748,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- 	.release = fastrpc_release,
- };
- 
--static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
-+static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
- 			      u64 len, u32 attr, struct fastrpc_map **ppmap)
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
-@@ -766,9 +757,6 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 	struct scatterlist *sgl = NULL;
- 	int err = 0, sgl_index = 0;
- 
--	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
--		return 0;
--
- 	map = kzalloc(sizeof(*map), GFP_KERNEL);
- 	if (!map)
- 		return -ENOMEM;
-@@ -853,6 +841,24 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 	return err;
- }
- 
-+static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
-+			      u64 len, u32 attr, struct fastrpc_map **ppmap)
-+{
-+	struct fastrpc_session_ctx *sess = fl->sctx;
-+	int err = 0;
-+
-+	if (!fastrpc_map_lookup(fl, fd, ppmap)) {
-+		if (!fastrpc_map_get(*ppmap))
-+			return 0;
-+		dev_dbg(sess->dev, "%s: Failed to get map fd=%d\n",
-+			__func__, fd);
-+	}
-+
-+	err = fastrpc_map_attach(fl, fd, len, attr, ppmap);
-+
-+	return err;
-+}
-+
- /*
-  * Fastrpc payload buffer with metadata looks like:
-  *
-@@ -925,8 +931,12 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
- 		    ctx->args[i].length == 0)
- 			continue;
- 
--		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
--			 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
-+		if (i < ctx->nbufs)
-+			err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
-+				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
-+		else
-+			err = fastrpc_map_attach(ctx->fl, ctx->args[i].fd,
-+				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
- 		if (err) {
- 			dev_err(dev, "Error Creating map %d\n", err);
- 			return -EINVAL;
-@@ -1116,7 +1126,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
- 	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
- 		if (!fdlist[i])
- 			break;
--		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap, false))
-+		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap))
- 			fastrpc_map_put(mmap);
- 	}
- 
--- 
-2.34.1
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+
+Thanks!
+
+[1/1] spi: spi-qpic-snand: use correct CW_PER_PAGE value for OOB write
+      commit: 6bc829220b33da8522572cc50fdf5067c51d3bf3
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
