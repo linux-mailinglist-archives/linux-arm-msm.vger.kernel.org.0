@@ -1,192 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-67942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E30EAB1CAC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 19:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED7D1B1CAD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 19:32:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DAB96162541
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 17:28:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 125D11675CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 17:32:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 903EE1E7C03;
-	Wed,  6 Aug 2025 17:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 860F31E5B72;
+	Wed,  6 Aug 2025 17:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iH0Lum0L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fNFh9BOM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612B9EEA6;
-	Wed,  6 Aug 2025 17:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E801BCA07;
+	Wed,  6 Aug 2025 17:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754501325; cv=none; b=sgTI8sS8EFesAIKPPD/AErB4OhpRwuh7FNBWciSJm4I3wPb+/uJX9KLNyfopzCWoCUd/n99YalOuo0myc8QGxK+W3GP1NFMuzWYxT3UH6n1pWOJuqRejYB+EMDpgDzjfKQKEwq9WNpVZub1Qf6XsQTg5Y8aUZsEYbdtBlK6Rd+M=
+	t=1754501571; cv=none; b=ISuEoOpfxZ4lzcww98btAK4mJfrcUlQRDJ9ZiNBhRW9ujbrgqTdMUBRTnF3wfcix269KUnggZ3/ZRsQxcW3Ict9cAr9GC2NX9Gy6adrPcBGn7sK6ia8aPX86K/V9GNlNA9CfLnpju/u/imKTr7djA+YfWgDp2kXJiuev0pf9cDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754501325; c=relaxed/simple;
-	bh=XOh7ZW934UbNE6R+YKem0b85T3g/dZjtzAE7tD6zXO0=;
+	s=arc-20240116; t=1754501571; c=relaxed/simple;
+	bh=UCmqwkbmo34ciLb7WfjGPXOM2nraMZwv7KO2zm6w+7g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BY8zOTueEcecvr633lOmsY+jT0McLR4FjzfmiZ67TikIq15brz5f5yUu1WzI4Wkkc784vNGilTbpPLBE+KKLPTGAibrUBrUtLHXgoV6VxKBSulhNGTVriRw7xSKffUIbpZ5233rqY/71bjVPXv1SMqAKC7014EVLD795mpQ2Eik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iH0Lum0L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D6DC4CEE7;
-	Wed,  6 Aug 2025 17:28:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=o8ujKMA7ZtZS2Id4kHFwRpwexJoV2LpyD21oqucjUA126cM4v6HPqpl5g4TQDKrST6DHP8/DX7enQ0yODzVF7ppr37CM1PDccke521iORhjqfu3ZuDFP8p6CEywA9ZUv3eMxWN3aukBFNXV7lWwPrNjA0mpmoHr17zybFik7gIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fNFh9BOM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B936C4CEE7;
+	Wed,  6 Aug 2025 17:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754501324;
-	bh=XOh7ZW934UbNE6R+YKem0b85T3g/dZjtzAE7tD6zXO0=;
+	s=k20201202; t=1754501570;
+	bh=UCmqwkbmo34ciLb7WfjGPXOM2nraMZwv7KO2zm6w+7g=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iH0Lum0LENw7kN3xt7mfold6zbNxOFFqzvLy9h72OrLAxBXht5FEje6vG0IP2CJc8
-	 YmPF7ZpmfWcJlAJN5WFZt2FWCmGwLAumq/6Hwy6B5V8tQN4DjzSZhDRwHhLFpi5pNW
-	 GdBr6Bvvw9WMj6h5Cq9/rJghS7sULAKMlP/cotpBwWAIAAtwwq4RiNAZ7FFkLYUDqR
-	 TKv+PD21+cYPZYIVWRCiEcCoSCw3HtsAttCTyWdvl/IB2OrWCw7Nk4sFe6YcskEQxp
-	 MDIRbVfols+dM8wvpBZYoKuKEDusU+A7fao7i2pjj5FUKj+gXRzdrYd8laqp55oiip
-	 hjZejeKa0FuXg==
-Date: Wed, 6 Aug 2025 22:58:39 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vivek.Pernamitta@quicinc.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Vivek Pernamitta <quic_vpernami@quicinc.com>
-Subject: Re: [PATCH v2 3/5] bus: mhi: host: pci_generic: Remove MHI driver
- and ensure graceful device recovery
-Message-ID: <y3bvlfxjo5thagngezv57d5jwe6uwwot2hwqwdne2p6yvogor2@obs4nls47hx3>
-References: <20250710-sriov_vdev_next-20250630-v2-0-4bd862b822e8@quicinc.com>
- <20250710-sriov_vdev_next-20250630-v2-3-4bd862b822e8@quicinc.com>
+	b=fNFh9BOM3i71piPPEIEay1JN5rDPKJq6pR0Q29H19IoiGycKBtaRCN4XNRff3Pb+a
+	 3Jxh6wsmnfTZYwHJ6BGfiKYeCgiN5z0UeE/VUmQFz2MSb2fEHiNxUmaHN+CJeC/+iR
+	 wxxzz/RUVnNngBxWYds4hV3UL0ApNE3JPL8/mKLfwpjyl+GCQrJxmWNJppxCXCW9KQ
+	 TGi1W16XqFpnL2mVh0dDbWrncwkYLgJkhe+6R6BuoTDzu0JssBdykDdVc5FIdiGSCS
+	 gJ/r9Soe0yvjZ78emoK4LdZaHLP0X51KOu5GjJK9vBYof94XnJoz5D6bczc8T4gRJi
+	 BW0ySyWSMM1Sw==
+Date: Wed, 6 Aug 2025 10:32:45 -0700
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
+	linux-remoteproc@vger.kernel.org, Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] soc: qcom: mdt_loader: Fix check mdt_header_valid()
+Message-ID: <w7idutnucnkf2wodytpp6ozr4dxmm2qgjvbxsdz2pdlm4redhv@gfbtjzseonnw>
+References: <20250804-mdtloader-changes-v1-0-5e74629a2241@oss.qualcomm.com>
+ <20250804-mdtloader-changes-v1-3-5e74629a2241@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250710-sriov_vdev_next-20250630-v2-3-4bd862b822e8@quicinc.com>
+In-Reply-To: <20250804-mdtloader-changes-v1-3-5e74629a2241@oss.qualcomm.com>
 
-On Thu, Jul 10, 2025 at 02:28:34PM GMT, Vivek.Pernamitta@quicinc.com wrote:
-> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+On Mon, Aug 04, 2025 at 06:11:51PM +0530, Mukesh Ojha wrote:
+> Firmware binaries may lack section headers, in which case
+> the e_shentsize field in the ELF header can be zero.
 > 
-> When the MHI driver is removed from the host side, it is crucial to ensure
-> graceful recovery of the device. To achieve this, the host driver will
-> perform the following steps:
-
-Please rewrite the description in an imperative tone.
-
+> Update mdt_header_valid() to correctly handle this scenario
+> by adjusting the validation logic accordingly.
 > 
-> 1. Disable SRIOV for any SRIOV-enabled devices on the Physical Function.
 
-You haven't enabled SR-IOV at this point, but only in the next patch. So you
-need to swap patches 3 and 4.
+Thanks for the fix, Mukesh.
 
-> 2. Perform a SOC_RESET on Physical Function (PF).
-> 
-> Disabling SRIOV ensures that all virtual functions are properly shut down,
-> preventing any potential issues during the reset process. Performing
-> SOC_RESET on each physical function guarantees that the device is fully
+I posted and now merged
+https://lore.kernel.org/all/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com/
+for this.
 
-Each physical function? How many PF does this device support? It should be
-described somewhere on the total PF and VF it supports.
+As was mentioned, in the future, when you have a fix and some other
+changes, put the fix first in the series (or send it separately when
+possible) so that it can conveniently be picked up on its own by the
+maintainers.
 
-> reset and ready for subsequent operations.
-> 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+Regards,
+Bjorn
+
+> Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 26 +++++++++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
+>  drivers/soc/qcom/mdt_loader.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 4bafe93b56c54e2b091786e7fcd68a36c8247b8e..2d1381006293412fbc593316e5c7f0f59ac74da8 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -45,6 +45,8 @@
->   * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
->   *		   of inband wake support (such as sdx24)
->   * @no_m3: M3 not supported
-> + * @reset_on_driver_unbind: Set true for devices support SOC reset and
-> + *				 perform it when unbinding driver
-
-	reset_on_remove: Reset the device while removing the driver
-
->   */
->  struct mhi_pci_dev_info {
->  	const struct mhi_controller_config *config;
-> @@ -58,6 +60,7 @@ struct mhi_pci_dev_info {
->  	unsigned int mru_default;
->  	bool sideband_wake;
->  	bool no_m3;
-> +	bool reset_on_driver_unbind;
->  };
+> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> index 7522223835f5..8210fb3dd51a 100644
+> --- a/drivers/soc/qcom/mdt_loader.c
+> +++ b/drivers/soc/qcom/mdt_loader.c
+> @@ -39,7 +39,7 @@ static bool mdt_header_valid(const struct firmware *fw)
+>  	if (phend > fw->size)
+>  		return false;
 >  
->  #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> @@ -300,6 +303,7 @@ static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
->  	.dma_data_width = 32,
->  	.sideband_wake = false,
->  	.no_m3 = true,
-> +	.reset_on_driver_unbind = true,
->  };
+> -	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
+> +	if (ehdr->e_shentsize && ehdr->e_shentsize != sizeof(struct elf32_shdr))
+>  		return false;
 >  
->  static const struct mhi_channel_config mhi_qcom_sa8775p_channels[] = {
-> @@ -970,6 +974,7 @@ struct mhi_pci_device {
->  	struct work_struct recovery_work;
->  	struct timer_list health_check_timer;
->  	unsigned long status;
-> +	bool reset_on_driver_unbind;
->  };
->  
->  static int mhi_pci_read_reg(struct mhi_controller *mhi_cntrl,
-> @@ -1270,6 +1275,11 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	mhi_cntrl->mru = info->mru_default;
->  	mhi_cntrl->name = info->name;
->  
-> +	/* Assign reset functionalities only for PF */
-
-Remove the comment.
-
-> +	if (pdev->is_physfn)
-> +		mhi_pdev->reset_on_driver_unbind = info->reset_on_driver_unbind;
-> +
-> +
-
-Extra newline.
-
->  	if (info->edl_trigger)
->  		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->  
-> @@ -1336,7 +1346,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	return err;
->  }
->  
-> -static void mhi_pci_remove(struct pci_dev *pdev)
-> +static void mhi_pci_resource_deinit(struct pci_dev *pdev)
-
-Please do not create unsymmetric functions. There is no mhi_pci_resource_init().
-
->  {
->  	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
->  	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> @@ -1352,6 +1362,20 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->  	/* balancing probe put_noidle */
->  	if (pci_pme_capable(pdev, PCI_D3hot))
->  		pm_runtime_get_noresume(&pdev->dev);
-> +}
-> +
-> +static void mhi_pci_remove(struct pci_dev *pdev)
-> +{
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	/* Disable SRIOV */
-
-This one too.
-
-> +	pci_disable_sriov(pdev);
-> +	mhi_pci_resource_deinit(pdev);
-> +	if (mhi_pdev->reset_on_driver_unbind) {
-> +		dev_info(&pdev->dev, "perform SOC reset\n");
-
-This is just a spam, please drop.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+>  	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+> 
+> -- 
+> 2.50.1
+> 
 
