@@ -1,139 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-67901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F212BB1C55E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:49:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40D7EB1C567
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:51:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0D1D3AA610
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:49:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E01C83A2CDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:51:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00C328C2B6;
-	Wed,  6 Aug 2025 11:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE26523314B;
+	Wed,  6 Aug 2025 11:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jzqf0A5S"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z3OEHhFl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A653289E2A;
-	Wed,  6 Aug 2025 11:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF461E520F;
+	Wed,  6 Aug 2025 11:51:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754480861; cv=none; b=gF09/ryVzfQ1//hG1SFa2Jjdo09d+n98zM2arfCIq67fkSZ2yWlJvBJu4t3hmQiBCEmMZz4xrMi8d5SzH3i8KY0XYW0yvcgi+M9zye/1u/SdelcdFe9LoA4FIRALG+oA3DDehIHyI5YyxFRxLEOGHEAT9k++2tbA80X6zJbqHaw=
+	t=1754481104; cv=none; b=U/JIEbAner64ZDCQFV2W2Yy+vhnetBCnJVVUPhmbRzhrTq7qnL5j/6EnCjINt0xKZUMWuyskDUXXtbctqBBuuwqTne8B81tkYTUYx1LhQo/dWPQz6LmJSPGvIpkusIDAX7rc3iNggT2vt/NZCBU82pkqDkSI3ABq6ftIgmeVQjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754480861; c=relaxed/simple;
-	bh=RheRVwO2FUpu0rsXqKFB0Lfg7HiZelCTGFoLKDQeza0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TtWRnvVAR1NPn9pLvYyVs7qzybnJCwufKiQA0OhYXkBIkcRko4hk6bRPfL3lYfNj64dG/AESwta1UmXZEjnR7eEfQ5NgBFKnAs0+7wjdVukQCOG9kJcvyxVQ/8T5hsptXi4Lr8o842nRRqqhWwEeKBnud/E8qyHYPs7ZcMNvJtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jzqf0A5S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7675C4CEE7;
-	Wed,  6 Aug 2025 11:47:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754480861;
-	bh=RheRVwO2FUpu0rsXqKFB0Lfg7HiZelCTGFoLKDQeza0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jzqf0A5SwGAQSZMDlWO9vYFStboxN1q7RIlaqsxZR1JXlCz2JJI6eObw5YnajiSqX
-	 AIvx5Xo5HJELRn8eqVYMSbRvD3gYJxStIk5JE0BWTFVhXuIqEV28h7nK0unDv9E+Zr
-	 hSgaaDQhnx/gEJ/UKuXrRk5u94+KaUyAQWicron54Vv8VlFZSWguG2GqS8chhS1RjW
-	 VlfJEAMJTMd8HNQI/g/8SHippEdfxoz4hqAWx8wrhdn71bAj9PwmD21rwUhUAaHjxY
-	 0wvQ6AhuYvU5bUNjcNLi1jC22EAB24VGiIAUkSVf1CJ6BKr1TLWca+9PzDIKjI6Ppv
-	 Nb5TmLUr/5K2A==
-Message-ID: <70bd9beb-2f7f-4132-88a4-8d81d70ac50b@kernel.org>
-Date: Wed, 6 Aug 2025 13:47:34 +0200
+	s=arc-20240116; t=1754481104; c=relaxed/simple;
+	bh=axg8GVU+sQgT6RpBYpnPWl7+5BXIHmtnLpUwPFBT2VY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IQfc61zLhWMIPM+c58SOWZ/fsDZvGkHUI4LxE/uk0I3DxeHHtUUITiUQ3ZBlJWT8e7UgPgKsxCUug7B3ZHf5+jn2ckwKybbM7S/t5uPTkbPdYrDYZHB1ScCH+vJywS1OYzqoeCVMPqgWphEzCO9tKbAEmt42+ZMXQ9hQcqFnWaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z3OEHhFl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5766LUZ9010375;
+	Wed, 6 Aug 2025 11:51:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=PWJMON5MyDD8wzJM9aPsC2
+	YSHNjHQv1YLu+W8TKA8Nw=; b=Z3OEHhFlzD4VLjMLbKqIiWRNiXytT0gpgdCOxE
+	5eT30UWrPWkucYkbiMlzVjIPKCugq+97llzomCsAkpm8WFo0TfltGt9cLKZ6PwYn
+	g2dCsA6PUhEg+UrRQTL5udggDTeCobmGb4/TZuSatfzbQuyAedZZFPW2KRZaM2SN
+	sbOb/BPipWinyfvz6tqTKaeapBFxg4qwHS2f2ChVOqZy7LVhWtH8JtadnTV3Hy6Y
+	H+/dj2DBlrZSXT79T2+SagSH6/k116KNu3xc5cNELpIFWrad252bS8biXiwZjpEw
+	zE5PvRemiCGry4MqA5c+yU8PJDvyiC9oFKjLyaZhm9OjCAEw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpy7tk4f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Aug 2025 11:51:34 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 576BpXsM021549
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Aug 2025 11:51:33 GMT
+Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Wed, 6 Aug 2025 04:51:30 -0700
+From: Ling Xu <quic_lxu5@quicinc.com>
+To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <arnd@arndb.de>,
+        <gregkh@linuxfoundation.org>, <sumit.semwal@linaro.org>,
+        <christian.koenig@amd.com>, <thierry.escande@linaro.org>,
+        <quic_vgattupa@quicinc.com>
+CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <linaro-mm-sig@lists.linaro.org>,
+        <linux-kernel@vger.kernel.org>, Ling Xu <quic_lxu5@quicinc.com>
+Subject: [PATCH v2 0/4] Add missing fixes to FastRPC driver
+Date: Wed, 6 Aug 2025 17:21:10 +0530
+Message-ID: <20250806115114.688814-1-quic_lxu5@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
- apss clock controller
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
- djakov@kernel.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-Cc: Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Md Sadre Alam <quic_mdalam@quicinc.com>
-References: <20250806112807.2726890-1-quic_varada@quicinc.com>
- <20250806112807.2726890-2-quic_varada@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250806112807.2726890-2-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Mftsu4/f c=1 sm=1 tr=0 ts=689341c6 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=YlbaB52rY0KjSQttpCIA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: bcAMjXkqaeldELEsnnqkRXvN0K06xY-P
+X-Proofpoint-GUID: bcAMjXkqaeldELEsnnqkRXvN0K06xY-P
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX+AsFboWaDlW1
+ CYgUvJbW8x2l2nAF8LDh6eCd9UpYyiahzON7lyYVSmkEpQyroC6WhjMsVJyeIh2kB4yfB5twA+b
+ KY8AHZT/VzeoEwi/47Dk/POo0PvHYelT+ZLF+coD2x0LKfMp0UMDjLNl1BKg5mUid6/xorpn1T5
+ tIAeokaxdeUvlnmQlwhUji1pPFrl4ytHXPSiWc3m2CUesgKMPgS15vqkP4xJVAnsx0Rl9+f+uFr
+ V7rNL5bj6RuLXKCPccYIpQfW6FLFi/44iXeXkTrSBhRdl+vMkHLtwmQaBoYhXShnI2M5GcHFplr
+ gdh31FIGanUivMlJXM87/RGLC1oYqrq1VcrEyTiAw3IWH2S9yHLJm7zmeWeNv2bVr2iOm4+hjh9
+ jGnJSYOF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_03,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1011 priorityscore=1501 phishscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 adultscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508060009
 
-On 06/08/2025 13:28, Varadarajan Narayanan wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> 
-> The CPU core in ipq5424 is clocked by a huayra PLL with RCG support.
-> The RCG and PLL have a separate register space from the GCC.
-> Also the L3 cache has a separate pll and needs to be scaled along
-> with the CPU.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This patch series adds the listed bug fixes that have been missing
+in upstream fastRPC driver.
+- Store actual size of map and check it against the user passed size.
+- Consider map buf for map lookup.
+- Fix possible map leak in fastrpc_put_args.
+- Skip refcount increment for DMA handles.
+Patch [v1]: https://lore.kernel.org/all/20240822105933.2644945-1-quic_ekangupt@quicinc.com/
 
-This is oddly placed. Did you use b4 that it appeared here?
+Changes in v2:
+  - Fix possible map leak in fastrpc_put_args.
+  - Remove take_ref argument.
 
-> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> [ Added interconnect related changes ]
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v6: Add 'Reviewed-by: Krzysztof Kozlowski'
->     Drop 'clock-names'
+Ling Xu (4):
+  misc: fastrpc: Save actual DMA size in fastrpc_map structure
+  misc: fastrpc: Fix fastrpc_map_lookup operation
+  misc: fastrpc: fix possible map leak in fastrpc_put_args
+  misc: fastrpc: Skip reference for DMA handles
 
-Best regards,
-Krzysztof
+ drivers/misc/fastrpc.c | 88 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 58 insertions(+), 30 deletions(-)
+
+-- 
+2.34.1
+
 
