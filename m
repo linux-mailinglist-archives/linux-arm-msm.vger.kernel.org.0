@@ -1,156 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-67912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3E46B1C60B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 14:39:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3AF1B1C61E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 14:41:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE50418A85D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 12:39:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A37563B3883
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 12:41:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB4BC28C5A1;
-	Wed,  6 Aug 2025 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D8A9289808;
+	Wed,  6 Aug 2025 12:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MVZP7i65"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lSpdah93"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0228228C024
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 12:38:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA80CA5E;
+	Wed,  6 Aug 2025 12:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754483930; cv=none; b=QtrF04LLTD/0Viu5u/ZI7EgQMhaQPfP8yCjauAY1xWU2WdmKKG46d1Rez5V2HZf244z9gW78Xn7osGUmmd4LTOUU5PdhjqjoUt8A/VPo0WVex9zIMl658iUuKprFucQXcJjZxSjWe45wXTqYNjFnYoAU1j9m6Z/FI3jPdtxT0Bk=
+	t=1754484084; cv=none; b=ktUiGS4urwFaQKY1RR3WhcWo+DW3OBe35vjrlPV0rxp4YlHbBEAvmju4yGDA/K5ymeeZLS8zws/CN4sft6Bj6Big9aZ3IYSSoMDMNYYUUTb0fHMUjAzWt+WoK9gVjldWEVLYXZilaCKJ+dBw7cBxw3lhh13UAS45P3wLwZYYln0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754483930; c=relaxed/simple;
-	bh=Eu8xqyxmJT4cy+IkwFfzScYWzL17LKhf3pxRBEd5zMc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=seC4JDEqQMc9fRC96Q5emY6nbXWPYDUqiLf5r1r2xm/yep+2u5s0kBimbjT7OSruFtaGYS1LP5qZwdSFIaEqB4VKzWD7NzBQnBykO30rJvKWjBsR2ZXcleY5cKa7F2XIWPo067pE8hfK3p8OMmHjZYI8YUKs+UQX/riNMWZm3wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MVZP7i65; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-af946c07c84so92979166b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 05:38:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754483927; x=1755088727; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Iq1dXsHIjnJQgOoLlFKfB9bYrlfRitC3gfcfuZAFbrc=;
-        b=MVZP7i65XSbQrAR7rXu3inuUW1Bddbs9ltTsF8SR2YF8vxH8idvJS9C98eHFQozYwA
-         yQxU/yH9vpW2JvRKWgh7JBKLTIjyOlh5ZkExISQGhpYfM6Bu3QryCMNwwxafDKg1CmHm
-         /P7gDrLyhTDi++EUiPmyMXpIUKjfshgf6ElvZhDLoRMlfE7ur8vhVXvTdlOGACrffXAk
-         yC9MSOPCezohWNu33Z0V7xXmli3Vu0o7XKWVCZE3Frv3thqkfD2+NfASDPUqC5mH756x
-         qKqZfsq9vxXTtJb42rFKzVobRml97/j6QOdoOsIkxRbCmXasyFXvXoh45CsteyiiTMkz
-         ojYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754483927; x=1755088727;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Iq1dXsHIjnJQgOoLlFKfB9bYrlfRitC3gfcfuZAFbrc=;
-        b=buE8nyxlm2Gy01RZ6Qvtxq8DCkpHE2D3rhYZ9WMfbVn9YLPRy8dSJGzrySbbBaYDMI
-         jZLwDLQ8478D/jTn8ELpTM7Y6emZkQp3Yy8aS9A7UXcL1zB9CiX3gMkfNIAKcFhV1yhS
-         j95QxsHwh6xxVhyH8XIlvDQbc5DxUvywAHI+tp3wX7a4O/oHObVn4ScCov2NpkXcyHuF
-         BVgNIWooLTx29uG9CXSdl0eH9D5Ggn65n+IjY5H2T8/ci1tQ43Ov8Paeip0RCndHgDkh
-         dtcDkiNHkqA0lvOcHntPOAtBinjLsKjJLGuekZY5xZ+qqXepXtcSvnLS/u3dmtKVyWx7
-         hM2A==
-X-Gm-Message-State: AOJu0YzVEecCVWUwbeDGS3p5yPWZMX3kkILrGRc9iC25I4H1eaPq6GXL
-	IVC3uEhfrvmKTaA/3J7N28WFbifABwAR7+GVYXq3PXvXQ9VkJT+aQEOLCcYdOqaQ6cA=
-X-Gm-Gg: ASbGncv9hTSc1S5fZlY1AZBoXS22ObPOFt7Z0rmq4R4Q5kqZ4rJPDVO4BKYyA7wK3ec
-	e/b5qFyftwWFYUPFTu6ojKUrig4q5OTZu1xnsuTUyPUvJvjph2rCSRPvkmfaFkK9grrcxzfsOKy
-	2oUT8ZHPvaF67dfFW3QhuHELjHFJhtdmHurZzoN6W2LuajgVd0p5JrEgCQnG55A/EMAvCBnind+
-	OoXS5NTLHSnOb4kAGUycr8E5rWYQKnzupG9bH5361vxegdASqiSISN86WMs0+5PsGF5GAsEoldl
-	no2EsKqFo++adsalnFjoy3JuTWlXmlfx3HAQ+gyAZLQUuql4WJLOEOXykDGJbOSh7JWWrA/JMWT
-	kEjlg6tZNaxzH3l85ICkCuYauPrX7ohwnqqc5Azk=
-X-Google-Smtp-Source: AGHT+IH1MCcEAYbFWkRzhmxuZA3++Z7ES4Zu+n2T5+SGS8RGQVPQvJUlm5h2QcPvISw4DO4/Z8tu2w==
-X-Received: by 2002:a17:907:7e89:b0:ae3:63fd:c3b4 with SMTP id a640c23a62f3a-af99031ce8fmr121559966b.5.1754483927349;
-        Wed, 06 Aug 2025 05:38:47 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.218.223])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a21c081sm1083866766b.97.2025.08.06.05.38.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Aug 2025 05:38:46 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 06 Aug 2025 14:38:32 +0200
-Subject: [PATCH DO NOT MERGE RFC v2 3/3] arm64: dts: qcom: sm8750-qrd:
- Enable Iris codec
+	s=arc-20240116; t=1754484084; c=relaxed/simple;
+	bh=hnIdHHbQiqrM8IDX95keDvQrxjxn1k3aApmusKnqdJ4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SsX1z6mMiSM6kETkSuLjCYFuxXi0WUKfmEM54ogqO4C+ENSu8mKnSpN/VcByU+ff1CIgm7Tk7Mqhuli0+cFr56Pby3+ExKTi1YWJw5EejxQDOo46lMwV5SM4z/zURjZ1wgj9bgm5yCFrWajyDR4eHuLDCSuiTxmzyqOvMwjZ0cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lSpdah93; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576AMidR017322;
+	Wed, 6 Aug 2025 12:41:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	68tyvTM8jfB/ohgKr96ZvIfvfdK+rgKehP7ADxP0fm0=; b=lSpdah93g4GftZTp
+	f8fr/6U1U1wQUWK6bFjrXGsjVmh7fDHvlj0vsnBunIRjOvAPdEhBoix8NSpo5XMV
+	6iXE4GUCVXl0oKCiHtXW0PPtWqVPNXA8hRpA8Dy186PM90gx4/w+ZahND4P3u1IU
+	/k/0oa7MGd2gsOYUlxch2X9k94GLz6siW3DMSMMEZrhalNHmbNqFUihizsQ5LvWA
+	f/n2y8kV9uhJeA3fkiChF67g8+p1LBEQnhkguXzHn/34zXQg8T794pvOiF77MUop
+	NwUjFK379DNs3vxVDVnTJYVYoQKKvSjf5kGMUu2hiJE3x0dVm7uMcFt293Ti21e7
+	QA+6ag==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c5868a5t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Aug 2025 12:41:16 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 576CfFsJ017038
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Aug 2025 12:41:15 GMT
+Received: from [10.216.18.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 6 Aug
+ 2025 05:41:12 -0700
+Message-ID: <2e655067-cd7e-4584-aa07-998b517ac314@quicinc.com>
+Date: Wed, 6 Aug 2025 18:11:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for UFS controller v5
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>
+References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
+ <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
+Content-Language: en-US
+From: Palash Kambar <quic_pkambar@quicinc.com>
+In-Reply-To: <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250806-b4-sm8750-iris-dts-v2-3-2ce197525eed@linaro.org>
-References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
-In-Reply-To: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1068;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=Eu8xqyxmJT4cy+IkwFfzScYWzL17LKhf3pxRBEd5zMc=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBok0zQvyzCAYOL7BMZJSO9B6MNXCHo9gjkmhG0e
- Ry42X5ZExaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaJNM0AAKCRDBN2bmhouD
- 1649D/43FW6NDwKmazwEJrMxnzlc3KeXTnZnUw07I4ESJBiy0o44hxwfLy+qUz638ISoPl6cUbb
- Pu0OMk+SYBLhRjOcMZl/TboRkcdmncXsH15/zZveNm7wO5Cx1fM+odrferMgRhMMF7JRP9N9qqw
- okPLTpatYigUIGGk/ArTpmGKdeA6RV+FnKDA43qENTcuXCz+ZFuvQwRvIF2wQ+5pQ0b2bNG86tB
- Y6z4G8cbcbD8hVL0OkF4KyWB2tg4Gm2bB0Nuz5MiFvf6lUWdcFRsxNjnL7PWqkPZogSQepR0qeU
- +IFCSPSZccr7Kdlyix6DwuMwBHSrYT10W5Bh2nEKJc0o66yunch/eIYDQTBxpyMCVJyYVVbIaff
- vZeyMn09U5g1qSoEJHuZgeLMeyPnr/PGNaFE2nvO1Du1+a9Kz0MyR8qJ2M8CEBCqAOcj/OYaBW5
- 6wWxzOJ/C9DiRM3S78OExQp0vf/i44RgQOBWhf+PQi+QnWLjB4IpiDtSfVxcIdmA0tq36FRLB37
- pkHtn4vb4AYYMW14pDYBrjm+R6DRZzQAh2UMjMxUINibUYwYMbtyXVhAXigEu632g8NprkX448r
- 10fTazC18qOPvUHaPWk+OhlU2WCEYwEV9gxIbwXcwXRFM5Ui72UgnPv11zqy3YeVQ1LQ+/R4e6G
- aNXF2QZvNbkM0TA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YhqQcn8kDTu-GbIkcRuM_kIrd-kiFir0
+X-Authority-Analysis: v=2.4 cv=MZpsu4/f c=1 sm=1 tr=0 ts=68934d6d cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=AVhYfSqF_RTLDIin3-oA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: YhqQcn8kDTu-GbIkcRuM_kIrd-kiFir0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA2NCBTYWx0ZWRfX6Z0Wpxn5ADfP
+ ZeWMlYCgpAKnk/YGMLa1hTV32fT2J6oDYbaKUtMbgm8mlQuBfpyU5bIB8nhT3klDPvch3pUJyv7
+ 8zuP/Iyna9VO7PqkZjY/6YBG0cRXDT/al2xz+QUZOnFRT52NgFu08toET/DT7oyCOhOUit8e9WI
+ zITW+wDhCrl5Xy86hdpEoM/dheiX3aCc40XhWMeuLe5wtVBpRKkQ5AXFm7WjwZYB+K5JynCTZT5
+ vmBvJr5nPYybc0L7FhrJayv/Qd4gXRWU0tafIlJ1oTzYZhU5KymieLZRYUFKcSfFTSUqmKqtxUu
+ B+usJa5SYjKOZcduoFHi42jS9ufzSNyx+zWPfhUif3OG8SqEVW83yIe/ZbgiGV+W9+LyvyrSkxN
+ cO1/0tDK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_03,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060064
 
-Enable on SM8750 QRD the Iris video codec for accelerated video
-encoding/decoding.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
----
+On 8/6/2025 4:44 PM, Manivannan Sadhasivam wrote:
+> On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
+>> Disable of AES core in Shared ICE is not supported during power
+>> collapse for UFS Host Controller V5.0.
+>>
+>> Hence follow below steps to reset the ICE upon exiting power collapse
+>> and align with Hw programming guide.
+>>
+>> a. Write 0x18 to UFS_MEM_ICE_CFG
+>> b. Write 0x0 to UFS_MEM_ICE_CFG
+>>
+>> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+>> ---
+>>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
+>>  drivers/ufs/host/ufs-qcom.h |  2 ++
+>>  2 files changed, 26 insertions(+)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index 444a09265ded..2744614bbc32 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+>>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
+>>  		ufs_qcom_device_reset_ctrl(hba, true);
+>>  
+>> +	host->vdd_hba_pc = true;
+> 
+> What does this variable correspond to?
+Hi Manivannan,
 
-Do not merge because firmware (hard-coded in the driver) is not released.
+It corresponds to power collapse, will rename it for better readability.
 
-For Rob's bot reports:
+> 
+>> +
+>>  	return ufs_qcom_ice_suspend(host);
+>>  }
+>>  
+>> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>>  	return ufs_qcom_ice_resume(host);
+>>  }
+>>  
+>> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
+>> +				    enum uic_cmd_dme uic_cmd,
+>> +				    enum ufs_notify_change_status status)
+>> +{
+>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +
+>> +	/* Apply shared ICE WA */
+> 
+> Are you really sure it is *shared ICE*?
 
-qcom,sm8750-videocc bindings and clock headers dependency (will fail
-build):
-https://lore.kernel.org/all/20241206-sm8750_videocc-v1-0-5da6e7eea2bd@quicinc.com/
+ Yes Manivannan, I am.
 
-qcom,sm8750-iris bindings:
-https://lore.kernel.org/r/20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org
----
- arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+> 
+>> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
+>> +	    status == POST_CHANGE &&
+>> +	    host->hw_ver.major == 0x5 &&
+>> +	    host->hw_ver.minor == 0x0 &&
+>> +	    host->hw_ver.step == 0x0 &&
+>> +	    host->vdd_hba_pc) {
+>> +		host->vdd_hba_pc = false;
+>> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
+> 
+> Define the actual bits instead of writing magic values.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-index 13c7b9664c89cffb68a1f941c16b30074816af8b..369623f8e4c921e99532d5e22fe9f0049746ebaf 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-@@ -813,6 +813,10 @@ vreg_l7n_3p3: ldo7 {
- 	};
- };
- 
-+&iris {
-+	status = "okay";
-+};
-+
- &pm8550_flash {
- 	status = "okay";
- 
+Sure.
 
--- 
-2.48.1
+> 
+>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+>> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
+>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+> 
+> Why do you need readl()? Writes to device memory won't get reordered.
+
+Since these are hardware register, there is a potential for reordering.
+
+> 
+>> +	}
+>> +}
+>> +
+>>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>>  {
+>>  	if (host->dev_ref_clk_ctrl_mmio &&
+>> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+>>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
+>>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
+>>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
+>> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
+> 
+> This callback is not called anywhere. Regardeless of that, why can't you use
+> ufs_qcom_clk_scale_notify()?
+> 
+
+According to the HPG guidelines, as part of this workaround, we are required to reset the ICE controller during the Hibern8 exit sequence when the UFS controller resumes from power collapse. Therefore, this reset logic has been added to the H8 exit notifier callback.
+
+The ufs_clk_scale_notify function is invoked whenever clock scaling (up or down) occurs, regardless of whether a power collapse has taken place. Hence, the ICE controller reset was specifically added to the H8 exit notifier to ensure it is executed only in the appropriate context.
+
+
+Regards,
+Palash K 
 
 
