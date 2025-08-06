@@ -1,48 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-67861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB886B1C1F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 10:17:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 21567B1C232
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 10:32:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA2F3166943
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 08:17:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E34A187080
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 08:32:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B13521A428;
-	Wed,  6 Aug 2025 08:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77A65286416;
+	Wed,  6 Aug 2025 08:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mBlcnILQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iEjhkFMU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD7E1FB3;
-	Wed,  6 Aug 2025 08:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA096286422
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 08:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754468220; cv=none; b=WMGSlCIoh2/1YRIVrUF4Y/3KghnUoIPT2idOOE0XrFCZNbFEKkd+cXtwp6WOvGoudMEAOSMRPNApywMe4RSrnu+xr8034CQPfCNk+TKhS3IvM+1IR+Abc0Ad9Fx4tgWABGUzG0h7di2Xfl/IJ3f6mp3nKcY4JhOzzBhxKnyKak8=
+	t=1754469140; cv=none; b=sWqZLoH1VST648yi+krtn6I2iplhENtY/xVlwA0IroREVfg1jxJWgiCVqsmQJ/ahOQTEt0hzSrewzksfaU//UPbfMiXZZ6zGiU4UwCnXlBt4QetFtZ9fpdKgvtkwLbrV9XvE12W5Kc1VX2QGreN1P7mfAUp5tpGwlJku+IAo8Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754468220; c=relaxed/simple;
-	bh=mSezG6NRkxDtJlYf/ZFsHjMGCJmUaCUPnrgkbL+HJRE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RTXgsgHZ1CuANGhJNBsFqVrWzfv86fjk9NEgUHPbakFNa6NnuSZnDQ6BogoIEG0M+fK2HRAvB564Pqj3s91C4sdO09lStQ9+XvvErS8BlGKhHy394ngx6LiRuCLQnfNzFyYx1Bn1xJxfy/Nv5OoTrJjUiqqNkpBlAEGxkzODrXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mBlcnILQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657BBC4CEE7;
-	Wed,  6 Aug 2025 08:16:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754468219;
-	bh=mSezG6NRkxDtJlYf/ZFsHjMGCJmUaCUPnrgkbL+HJRE=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
-	b=mBlcnILQJQ8itwowSPTjPYWtbmq0X3J4O4tViHMM3acfOo0gkxWlN1i8bih8TRk/D
-	 QEK88TYFCCAgRdFf8N2vcHquOSOUzegVf8WhW/Lsok7t83wbntVOKbt/9YhJ0whgx3
-	 5Pw9TjucRRgCke06GxlfRg3jM6WSnxmB2mHB5KAF2EmEO8hgceOt4Z1OmiUmUg2AaV
-	 FwUr0faqAjE7o5R8MImS6WtgvVuPDjdbXIJiJkaVw/SZsYXDBQgOf6d9ctuBZbPmCU
-	 dj5qL0frPJSAHC86jkv/ZZcGOlf7y8hBVfvg5g40mjFEZISVqZUlox2uPFHVojc+hd
-	 jTKUIqp5zZJRg==
-Message-ID: <49e753f4-f626-49ae-bf23-d2aecfcc6282@kernel.org>
-Date: Wed, 6 Aug 2025 10:16:37 +0200
+	s=arc-20240116; t=1754469140; c=relaxed/simple;
+	bh=Gx9xYOEF6Hf8A4r6Jo6DWJlA8lab2iYthQr2Pd1bih8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Oq7U5FLohMW4Z+BWxYUzF8ED97rpuVjmYV5xKuHotOBpPd5GslHVm39yBtJaSQaSAYSbIW/MdFUUiLFFvNsRLJJKlTeG525Fx9+6S4OnVDQHM98z7ceQPnHNhkzgE5a5uXPPEk+Cq4pJHpuK/9xsFWWObjZ6uL6CvnjbDE2KteY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iEjhkFMU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5761enKH012377
+	for <linux-arm-msm@vger.kernel.org>; Wed, 6 Aug 2025 08:32:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gVl7KxhpUlQVfwGSCI7uwJIxFW0XwW0xZf2nUDVHT9c=; b=iEjhkFMUTvcNo9ab
+	GOcPwI87/CjUigO4zD+nwaSU3vs3ZnMjZKoct81/nobk5IjdSWYZMHGegA1zr9Xp
+	Lnw+xq1wj/kyL7YsE0CV6nqYE1UUpQoglz7N1EjgCAOv8ckeGtOj+R8HKaymqXhV
+	CIV7FYDSWg/iLq4NI5wgsSFABUwg5NF0m3RRilELVin+mXRU21CgkQeQGWz3owbV
+	DEwI1Z90KmzvqVtb/KKCLM/0gXfsPs6zmzUHjuT0oLuxEdN7lF6NG++lwFM//S8i
+	AicbCtS37zT9JNFeyMBMlb0HDP+DwNi42iMjtM2XK+5DcjBNrUCcDCmg6Cjj39+f
+	2uk3Jw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpw2t3a9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 08:32:17 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b423dcff27aso8022218a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 01:32:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754469136; x=1755073936;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gVl7KxhpUlQVfwGSCI7uwJIxFW0XwW0xZf2nUDVHT9c=;
+        b=ZTO+z/BZrrZpP2n6hAPgX8kNK1f08eOLrDA0RlfXRyVX1m+LHsQaRJH+XTGuUMCzI4
+         9Xq+pEPexF2S6MVD4CJGkEpBlY/0XEPfT2z3hBAboBk/EUFylqF3QEK1BtJmGfHjt537
+         dvJs3qOiVCta3inKLX92Auy1Wsxq9ZhpJIvH91HQgCT10M2Na6wtRJoGRUh/UZt6A6y/
+         l6qEAZ4aiSkQN5Av3pu8Z60i8+sAz3ADR9WI3sF4u0/boomHkQaVORIsGoeXe1j7T+w2
+         cbp2QkZQt8wAz3pR3z2R6Urmdw7w86yOiGGRB+hRdZWeMiZXt/4IPmvQ6FObgzU2acpT
+         OiWw==
+X-Forwarded-Encrypted: i=1; AJvYcCVnnGPA65vg/NQaUHzAzu8o7RgdXF9WlfVLh3H9FutAknbFZtCJ3MwDFv0HW1yOfowoUyaIEQLWl6aPZ/D1@vger.kernel.org
+X-Gm-Message-State: AOJu0YynSX4U9C0S2QuWdfHB9cEwafJtZg4TU67TMuG1fsKqzHEkFHX6
+	DnrF/vprK/yT8Txybsb1yh0oq2/aSLtWdUvM2hI9eQp8MJgL0UBc5PSG9VzT8hkwWRQV9LYzCj9
+	4uHiB0CVh2MbaN5JTlqwVx+fVNfEzF7iCFJlNvjy+gupHRPzREEY+WkK4pZeg9QxL8wC0
+X-Gm-Gg: ASbGncsXWsm6po/z+xfvzxyt5bvV1uzUJFPfjYAC9RaqS8BuB9BZsoUNRV8wiFFV4H2
+	iDFtfDQu+FEnb2IjejMZ9tt81k1dDyFJYB/5lzWvNylbHYpTF5dEBCfr563mgvetFddeCy8zaMD
+	x6Lv+0UEbY3H6AZy4jJqQ9K7MDMRVPrQM8zmLA5J9f0OD8c0vE5kORR2TFA22LPsdbyEsvcP6Ly
+	D+bgz6uYLomPh4wxLe7XEMUOm0e3ltdDYP9tkOzQ7zg3qkk4X6nS3RBfPDUIkw5XijYnkY1IPyo
+	KfREDmNcQ4CEEHJSM8JByUjWzpcer6opJRZkBLSWVytWhN+Jq/a7/AOzBDS8hsYcxNJCs4r0aHv
+	hEBP266e2AbL1MolRyMIU1yB9
+X-Received: by 2002:a17:902:cf0e:b0:23f:c760:fdf0 with SMTP id d9443c01a7336-242a0b8c6dfmr24782515ad.45.1754469136376;
+        Wed, 06 Aug 2025 01:32:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6aanRzxuxOdDFDL6IEoz3tFt0aU9YroEKfjh1dTfuTkVQmyF6r8Xa1vDHzKckrxBfjAPC+A==
+X-Received: by 2002:a17:902:cf0e:b0:23f:c760:fdf0 with SMTP id d9443c01a7336-242a0b8c6dfmr24782245ad.45.1754469135862;
+        Wed, 06 Aug 2025 01:32:15 -0700 (PDT)
+Received: from [10.133.33.195] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e899b5e5sm150607895ad.124.2025.08.06.01.32.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Aug 2025 01:32:15 -0700 (PDT)
+Message-ID: <33b6aa57-9675-4b4e-9ecd-f82ed7f6c380@oss.qualcomm.com>
+Date: Wed, 6 Aug 2025 16:32:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,235 +90,207 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH 11/65] media: Replace file->private_data access with
- custom functions
-To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Devarsh Thakkar
- <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
- Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
- Christian Gromm <christian.gromm@microchip.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Alex Shi
- <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
- Dongliang Mu <dzm91@hust.edu.cn>, Jonathan Corbet <corbet@lwn.net>,
- Tomasz Figa <tfiga@chromium.org>, Marek Szyprowski
- <m.szyprowski@samsung.com>, Andy Walls <awalls@md.metrocast.net>,
- Michael Tretter <m.tretter@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Bin Liu <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
- <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
- Mirela Rabulea <mirela.rabulea@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
- Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
- Michal Simek <michal.simek@amd.com>, Ming Qian <ming.qian@nxp.com>,
- Zhou Peng <eagle.zhou@nxp.com>, Xavier Roumegue
- <xavier.roumegue@oss.nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
- Samuel Holland <samuel@sholland.org>,
- Daniel Almeida <daniel.almeida@collabora.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Nas Chung <nas.chung@chipsnmedia.com>,
- Jackson Lee <jackson.lee@chipsnmedia.com>,
- Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
- Houlong Wei <houlong.wei@mediatek.com>,
- Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
- Tiffany Lin <tiffany.lin@mediatek.com>,
- Yunfei Dong <yunfei.dong@mediatek.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
- Jacob Chen <jacob-chen@iotwrt.com>,
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
- Heiko Stuebner <heiko@sntech.de>,
- Detlev Casanova <detlev.casanova@collabora.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
- Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
- Jacek Anaszewski <jacek.anaszewski@gmail.com>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Fabien Dessenne <fabien.dessenne@foss.st.com>,
- Hugues Fruchet <hugues.fruchet@foss.st.com>,
- Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Nicolas Dufresne <nicolas.dufresne@collabora.com>,
- Benjamin Gaignard <benjamin.gaignard@collabora.com>,
- Steve Longerbeam <slongerbeam@gmail.com>, Maxime Ripard
- <mripard@kernel.org>, Paul Kocialkowski <paulk@sys-base.io>,
- =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Corentin Labbe <clabbe@baylibre.com>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>,
- Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-staging@lists.linux.dev, linux-doc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-tegra@vger.kernel.org, imx@lists.linux.dev,
- linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
- linux-usb@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-rockchip@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, mjpeg-users@lists.sourceforge.net
-References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
- <20250802-media-private-data-v1-11-eb140ddd6a9d@ideasonboard.com>
-Content-Language: en-US, nl
-In-Reply-To: <20250802-media-private-data-v1-11-eb140ddd6a9d@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v4 08/10] coresight: add a new function in helper_ops
+To: Jie Gan <jie.gan@oss.qualcomm.com>, Mike Leach <mike.leach@linaro.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Jinlong Mao <jinlong.mao@oss.qualcomm.com>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250725100806.1157-1-jie.gan@oss.qualcomm.com>
+ <20250725100806.1157-9-jie.gan@oss.qualcomm.com>
+ <CAJ9a7Vi8qpHH2SjmKNjgeY4gdRXY9wnQXhkjN71EcbYSKqayuw@mail.gmail.com>
+ <40c8c2d0-1ac3-4944-b509-d23f21687476@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <40c8c2d0-1ac3-4944-b509-d23f21687476@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Vbz3PEp9 c=1 sm=1 tr=0 ts=68931311 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=y1r4oU-oRDH_k5QpEX0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: -49IbxaZmehEXlkQX9Qiq2AaiaeyhCxH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOCBTYWx0ZWRfX2GlO1A6gwCf9
+ dVAvebhkkAy5ZstD29+3BOuSkkEjTsmm7UFVqVIde0SBrgvW0uHpN1WFEbu89wjcdwkwLt0LLc+
+ j5s67xlHGX3KM8xUJocV38AUv+K73ZzidsULWr2ad+R0p22sLimKtPP9RmInka7m6ir13vGxbaR
+ 68IAFuDwKzrxmpcppBJWQqg9evoOX36GmvEGXi4cFdLD4Wo2kJpc8RRkjlMjhnG5HcmqjIVrDOz
+ e2OaRJjJbk5uW/YogWiBDaYujxifHiHckA95M/C6KafVorAXJ+UUTc/xct7nBajbmcaviKSnXlZ
+ CeWtDPxzqxc9ifAXpHzMQtQsoz31NcbB5t1LG3k5+dRVxJVDHpogR6mBgAOgCH9zrajITmJUHzr
+ TbeLJjhk
+X-Proofpoint-GUID: -49IbxaZmehEXlkQX9Qiq2AaiaeyhCxH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_01,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060008
 
-On 02/08/2025 11:22, Jacopo Mondi wrote:
-> From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+
+On 8/6/2025 8:35 AM, Jie Gan wrote:
 > 
-> Accessing file->private_data manually to retrieve the v4l2_fh pointer is
-> error-prone, as the field is a void * and will happily cast implicitly
-> to any pointer type.
 > 
-> Replace all remaining locations that read the v4l2_fh pointer directly
-> from file->private_data and cast it to driver-specific file handle
-> structures with driver-specific functions that use file_to_v4l2_fh() and
-> perform the same cast.
+> On 8/5/2025 8:30 PM, Mike Leach wrote:
+>> Hi,
+>>
+>> On Fri, 25 Jul 2025 at 11:08, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
+>>>
+>>> Add a new function to identifiy whether the byte-cntr function is
+>>> enabled or not in helper_ops.
+>>>
+>>> The byte-cntr's read_ops is expected if the byte-cntr is enabled when
+>>> the user try to read trace data via sysfs node.
+>>>
+>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>>> ---
+>>>   .../hwtracing/coresight/coresight-ctcu-core.c | 35 +++++++++++++++++++
+>>>   include/linux/coresight.h                     |  3 ++
+>>>   2 files changed, 38 insertions(+)
+>>>
+>>> diff --git a/drivers/hwtracing/coresight/coresight-ctcu-core.c b/ 
+>>> drivers/hwtracing/coresight/coresight-ctcu-core.c
+>>> index 8fc08e42187e..dec911980939 100644
+>>> --- a/drivers/hwtracing/coresight/coresight-ctcu-core.c
+>>> +++ b/drivers/hwtracing/coresight/coresight-ctcu-core.c
+>>> @@ -234,9 +234,44 @@ static int ctcu_disable(struct coresight_device 
+>>> *csdev, void *data)
+>>>          return ctcu_set_etr_traceid(csdev, path, false);
+>>>   }
+>>>
+>>> +static bool ctcu_qcom_byte_cntr_in_use(struct coresight_device *csdev,
+>>> +                                      void **data)
+>>> +{
+>>> +       struct ctcu_byte_cntr *byte_cntr_data;
+>>> +       struct coresight_device *helper;
+>>> +       struct ctcu_drvdata *drvdata;
+>>> +       int port;
+>>> +
+>>> +       if (!csdev)
+>>> +               return false;
+>>> +
+>>> +       helper = coresight_get_helper(csdev, 
+>>> CORESIGHT_DEV_SUBTYPE_HELPER_CTCU);
+>>> +       if (!helper)
+>>> +               return false;
+>>> +
+>>> +       port = coresight_get_in_port_dest(csdev, helper);
+>>> +       if (port < 0)
+>>> +               return false;
+>>> +
+>>> +       drvdata = dev_get_drvdata(helper->dev.parent);
+>>> +       /* Something wrong when initialize byte_cntr_read_ops */
+>>> +       if (!drvdata->byte_cntr_read_ops)
+>>> +               return false;
+>>> +
+>>> +       byte_cntr_data = &drvdata->byte_cntr_data[port];
+>>> +       /* Return the pointer of the ctcu_drvdata if byte-cntr has 
+>>> enabled */
+>>> +       if (byte_cntr_data && byte_cntr_data->thresh_val) {
+>>> +               *data = (void *)drvdata->byte_cntr_read_ops;
+>>> +               return true;
+>>> +       }
+>>> +
+>>> +       return false;
+>>> +}
+>>> +
+>>>   static const struct coresight_ops_helper ctcu_helper_ops = {
+>>>          .enable = ctcu_enable,
+>>>          .disable = ctcu_disable,
+>>> +       .qcom_byte_cntr_in_use = ctcu_qcom_byte_cntr_in_use,
+>>
+>> These ops structures are for generic functions used throughout the
+>> devices. Do not put this function here.
+>>
+>> This is a specific ctcu helper. Make it external to the file and
+>> declare it in coresight-ctcu.h
 > 
-> No functional change is intended, this only paves the way to remove
-> direct accesses to file->private_data and make V4L2 drivers safer.
-> Other accesses to the field will be addressed separately.
+> Will address the comment in next version.
+
+Hi Mike
+Cant add an external function in ctcu-core.c and called in tmc-core.c 
+because there is a cycle dependency error:
+depmod: ERROR: Cycle detected: coresight_tmc -> coresight_ctcu -> 
+coresight_tmc
+depmod: ERROR: Found 2 modules in dependency cycles!
+
+How about I add a function in tmc-core.c to directly retrieving the 
+sysfs_read_ops of the byte-cntr?
+
+like below:
+/* Return the byte-cntr's sysfs_read_ops if in use */
+static const struct sysfs_read_ops *tmc_qcom_byte_cntr_in_use(struct 
+tmc_drvdata *drvdata)
+{
+         struct ctcu_byte_cntr *byte_cntr_data;
+         struct ctcu_drvdata *ctcu_drvdata;
+         struct coresight_device *helper;
+         int port;
+
+         helper = coresight_get_helper(drvdata->csdev, 
+CORESIGHT_DEV_SUBTYPE_HELPER_CTCU);
+         if (!helper)
+                 return NULL;
+
+         port = coresight_get_in_port_dest(drvdata->csdev, helper);
+         if (port < 0)
+                 return NULL;
+
+         ctcu_drvdata = dev_get_drvdata(helper->dev.parent);
+         byte_cntr_data = &ctcu_drvdata->byte_cntr_data[port];
+         if (byte_cntr_data && byte_cntr_data->thresh_val)
+                 return ctcu_drvdata->byte_cntr_sysfs_read_ops;
+
+         return NULL;
+}
+
+Thanks,
+Jie
+
 > 
-> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-> ---
->  drivers/media/pci/ivtv/ivtv-driver.h               |  5 ++++
->  drivers/media/pci/ivtv/ivtv-fileops.c              | 10 +++----
->  drivers/media/pci/ivtv/ivtv-ioctl.c                |  8 +++---
->  drivers/media/platform/allegro-dvt/allegro-core.c  |  7 ++++-
->  drivers/media/platform/amlogic/meson-ge2d/ge2d.c   |  8 ++++--
->  .../media/platform/chips-media/coda/coda-common.c  |  7 ++++-
->  .../platform/chips-media/wave5/wave5-helper.c      |  2 +-
->  .../media/platform/chips-media/wave5/wave5-vpu.h   |  5 ++++
->  drivers/media/platform/m2m-deinterlace.c           |  7 ++++-
->  .../media/platform/mediatek/jpeg/mtk_jpeg_core.c   |  7 ++++-
->  drivers/media/platform/mediatek/mdp/mtk_mdp_m2m.c  |  7 ++++-
->  .../media/platform/mediatek/mdp3/mtk-mdp3-m2m.c    |  7 ++++-
->  .../mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c   |  2 +-
->  .../mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h   |  5 ++++
->  .../mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c   |  2 +-
->  .../mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h   |  5 ++++
->  drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c     |  7 ++++-
->  drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c |  7 ++++-
->  drivers/media/platform/nxp/mx2_emmaprp.c           |  7 ++++-
->  drivers/media/platform/renesas/rcar_fdp1.c         |  7 ++++-
->  drivers/media/platform/renesas/rcar_jpu.c          |  7 ++++-
->  drivers/media/platform/rockchip/rga/rga.c          |  3 +--
->  drivers/media/platform/rockchip/rga/rga.h          |  5 ++++
->  drivers/media/platform/rockchip/rkvdec/rkvdec.c    |  2 +-
->  drivers/media/platform/rockchip/rkvdec/rkvdec.h    |  5 ++++
->  .../media/platform/samsung/exynos-gsc/gsc-core.h   |  6 +++++
->  .../media/platform/samsung/exynos-gsc/gsc-m2m.c    |  6 ++---
->  .../media/platform/samsung/exynos4-is/fimc-core.h  |  5 ++++
->  .../media/platform/samsung/exynos4-is/fimc-m2m.c   |  2 +-
->  drivers/media/platform/samsung/s5p-g2d/g2d.c       |  7 +++--
->  .../media/platform/samsung/s5p-jpeg/jpeg-core.c    |  9 +++++--
->  drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c   |  6 ++---
->  .../platform/samsung/s5p-mfc/s5p_mfc_common.h      |  6 +++++
->  drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c   |  7 ++++-
->  drivers/media/platform/st/sti/delta/delta-v4l2.c   | 26 +++++++++++-------
->  drivers/media/platform/st/sti/hva/hva-v4l2.c       | 31 ++++++++++++----------
->  drivers/media/platform/st/sti/hva/hva.h            |  2 --
->  drivers/media/platform/st/stm32/dma2d/dma2d.c      |  7 +++--
->  drivers/media/platform/sunxi/sun8i-di/sun8i-di.c   |  3 +--
->  .../platform/sunxi/sun8i-rotate/sun8i_rotate.c     |  3 +--
->  drivers/media/platform/ti/omap3isp/ispvideo.c      |  4 +--
->  drivers/media/platform/ti/omap3isp/ispvideo.h      |  6 +++++
->  drivers/media/platform/verisilicon/hantro.h        |  5 ++++
->  drivers/media/platform/verisilicon/hantro_drv.c    |  3 +--
->  drivers/staging/media/imx/imx-media-csc-scaler.c   |  7 ++++-
->  drivers/staging/media/meson/vdec/vdec.c            | 24 ++++++-----------
->  drivers/staging/media/meson/vdec/vdec.h            |  5 ++++
->  drivers/staging/media/sunxi/cedrus/cedrus.c        |  3 +--
->  drivers/staging/media/sunxi/cedrus/cedrus.h        |  5 ++++
->  drivers/staging/media/sunxi/cedrus/cedrus_video.c  |  5 ----
->  50 files changed, 237 insertions(+), 100 deletions(-)
+> Thanks,
+> Jie
 > 
-> diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
-> index a6ffa99e16bc64a5b7d3e48c1ab32b49a7989242..cad548b28e360ecfe2bcb9fcb5d12cd8823c3727 100644
-> --- a/drivers/media/pci/ivtv/ivtv-driver.h
-> +++ b/drivers/media/pci/ivtv/ivtv-driver.h
-> @@ -388,6 +388,11 @@ static inline struct ivtv_open_id *fh2id(struct v4l2_fh *fh)
->  	return container_of(fh, struct ivtv_open_id, fh);
->  }
->  
-> +static inline struct ivtv_open_id *file2id(struct file *filp)
-> +{
-> +	return container_of(file_to_v4l2_fh(filp), struct ivtv_open_id, fh);
+>>
+>> Mike
+>>
+>>>   };
+>>>
+>>>   static const struct coresight_ops ctcu_ops = {
+>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>>> index 4ac65c68bbf4..b5f052854b08 100644
+>>> --- a/include/linux/coresight.h
+>>> +++ b/include/linux/coresight.h
+>>> @@ -419,11 +419,14 @@ struct coresight_ops_source {
+>>>    *
+>>>    * @enable     : Enable the device
+>>>    * @disable    : Disable the device
+>>> + * @qcom_byte_cntr_in_use:     check whether the byte-cntr is enabled.
+>>>    */
+>>>   struct coresight_ops_helper {
+>>>          int (*enable)(struct coresight_device *csdev, enum cs_mode 
+>>> mode,
+>>>                        void *data);
+>>>          int (*disable)(struct coresight_device *csdev, void *data);
+>>> +       bool (*qcom_byte_cntr_in_use)(struct coresight_device *csdev,
+>>> +                                     void **data);
+>>>   };
+>>>
+>>>
+>>> -- 
+>>> 2.34.1
+>>>
+>>
+>>
+> 
 
-Why not write:
-
-	return fh2id(file_to_v4l2_fh(filp));
-
-Same for all other drivers that do this. I prefer to have the contained_of()
-in just one place.
-
-> +}
-> +
->  struct yuv_frame_info
->  {
->  	u32 update;
-
-<snip>
-
-> diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
-> index 1f134e08923a528cc676f825da68951c97ac2f25..74977f3ae4844022c04de877f31b4fc6aaac0749 100644
-> --- a/drivers/media/platform/allegro-dvt/allegro-core.c
-> +++ b/drivers/media/platform/allegro-dvt/allegro-core.c
-> @@ -302,6 +302,11 @@ struct allegro_channel {
->  	unsigned int error;
->  };
->  
-> +static inline struct allegro_channel *file_to_channel(struct file *filp)
-> +{
-> +	return container_of(file_to_v4l2_fh(filp), struct allegro_channel, fh);
-> +}
-> +
->  static inline int
->  allegro_channel_get_i_frame_qp(struct allegro_channel *channel)
->  {
-> @@ -3229,7 +3234,7 @@ static int allegro_open(struct file *file)
->  
->  static int allegro_release(struct file *file)
->  {
-> -	struct allegro_channel *channel = fh_to_channel(file->private_data);
-> +	struct allegro_channel *channel = file_to_channel(file);
-
-So a file_to_channel inline function was added, but it is used in just one
-place.
-
-I would prefer to just drop the inline function and instead write:
-
-	struct allegro_channel *channel = fh_to_channel(file_to_v4l2_fh(file));
-
-If this is needed in two or more places, then the extra inline makes sense,
-but it is a fairly common pattern that it is only needed in the release function.
-
-Adding a new inline just for that seems overkill to me.
-
->  
->  	v4l2_m2m_ctx_release(channel->fh.m2m_ctx);
->  
-
-Regards,
-
-	Hans
 
