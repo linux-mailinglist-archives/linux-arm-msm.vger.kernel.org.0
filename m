@@ -1,167 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-67893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AE12B1C4CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:25:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED61EB1C4D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:28:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB97C3A4FB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:25:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EBF16244A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:28:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C197A25EFB6;
-	Wed,  6 Aug 2025 11:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2B3D289364;
+	Wed,  6 Aug 2025 11:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ju8QlN4M"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ccu1gR6r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA0219AD70;
-	Wed,  6 Aug 2025 11:25:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD5B25B66A;
+	Wed,  6 Aug 2025 11:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754479539; cv=none; b=phrB7N5V5I0jozf7j3NypGrH8J6m14dSq1WXPvF0lCIPH1Iv9gXPGOi5odyl/ECBXcKl6VefUQwOX68HHKs+1u97NP2jIkn+PP2TcWjiuCjlqjWVJtTAt760rlNdnsbgiwn8Pd/imG0DpVercVaz57T1zk1l1wdJzyZC3g0YDe4=
+	t=1754479717; cv=none; b=JIZaFKpYO5H5jMgb5odizRBHTly8br0P2lq6B4a15poQOi50CpOhyeqSO974uD7nOfTpGMBmUGX+0FhebR6g/jG03O9kofBs+FCWx6cmPYHRFmks34P/miyiZDTvjsEmbPg5UFJ6DurzYFML2ATGoT8wkkb/qis+twnCX2YJvy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754479539; c=relaxed/simple;
-	bh=62qvASXmUB4wVqE8rGuI4cmZ6A66fVDJY5o++OQtx1E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aKGGF4a/T1lm1iSTJzy2BUepE9aAcT9g3+BJ/xkE42I+Z23Rk6VSLuKIattDrmiY7dhXsMuJLaJDucXviCK3f1EXFvI2T8jAVU6xHnT7rUh3YobYLkZfO+H3ih3aDQnPQpF+V9BquEnjQi9Vl1bd7EjaMFVYAogdHTcaCBiB2ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ju8QlN4M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E163FC4CEE7;
-	Wed,  6 Aug 2025 11:25:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754479539;
-	bh=62qvASXmUB4wVqE8rGuI4cmZ6A66fVDJY5o++OQtx1E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ju8QlN4MKcK+y6xrlf6+3pMN1tpsFTYLt/TGb/6oPC+92B2NCLqBdSKyZd9YK0Z/9
-	 yE+ZvzuZORAJ8MvEekSepaatb1PDeCb7xWwWTJAMbflkB8rQqm+vLx7X/RvWUkO6wK
-	 f6oqA1iPbeTSayYShG0gGhpD+QJMCXZt0iybS67oy0eF5h3LSqnBDpi0YFUiJiQrPm
-	 dOAVGn4I1wnKqQV9mohur45DL2X1ctGSzyLhy49HPi/U4YapMi+58MJhig9kGlni+m
-	 j9v3FBiD1+SBHm+EQldKTLE6D6aak3UPMXftSpMPvVYCfKDmG9sAr/T1q2bXN8gop4
-	 ZbQt3wnkB1FtA==
-Date: Wed, 6 Aug 2025 16:55:30 +0530
-From: 'Manivannan Sadhasivam' <mani@kernel.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>, 
-	'Krzysztof Kozlowski' <krzk@kernel.org>, 'Ram Kumar Dwivedi' <quic_rdwivedi@quicinc.com>, 
-	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, agross@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
- properties to UFS
-Message-ID: <nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
-References: <b235e338-8c16-439b-b7a5-24856893fb5d@oss.qualcomm.com>
- <061b01dc062d$25c47800$714d6800$@samsung.com>
- <i6eyiscdf2554znc4aaglhi22opfgyicif3y7kzjafwsrtdrtm@jjpzak64gdft>
- <061c01dc062f$70ec34b0$52c49e10$@samsung.com>
- <87c37d65-5ab1-4443-a428-dc3592062cdc@oss.qualcomm.com>
- <061d01dc0631$c1766c00$44634400$@samsung.com>
- <3cd33dce-f6b9-4f60-8cb2-a3bf2942a1e5@oss.qualcomm.com>
- <06d201dc0689$9f438200$ddca8600$@samsung.com>
- <wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
- <06f301dc0695$6bf25690$43d703b0$@samsung.com>
+	s=arc-20240116; t=1754479717; c=relaxed/simple;
+	bh=oaiu44qJ+xCgX9y524WCfJYwAShfvp1cYbnsRYleUQ8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=u/T6IMNQX8iOL4AwYNc7vje6Q9CvXUgZIo11eezZUseZlsQ1ldAQ1kJFv59VKqnZHf2MZ6rSBlsdymiTIAVXP3Q6CjzHm1xSuM3SaBgN4z6ZV2uF9uTbSa/QgfI1BitkxIROHiI7H3aOLtLSCnzEIyIPrF4lVFbpObGQR7HUOzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ccu1gR6r; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5765fhNs031614;
+	Wed, 6 Aug 2025 11:28:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=7nPIi4UTi5rRXxVLQziK1a
+	GhMiR6sWzcqWJyxgZMFl4=; b=Ccu1gR6rDIJhlOZBiB8ZANSC/G5NSlabKJAstF
+	2zS00Rb/vsIU5vnA4FGT2KDThWzjD7ONQAn0/m3egNtO4WEg15R4r2/31SdmovY9
+	AT5DLHPsQZX/rNMDtiHJQz72zgfdC+qBAUcRwpe0b564Ducw+SsAnVPqfBBLnHaD
+	NQjq0JMcVLm7Bj5ToTjFmlZFf2BRFPHlU2ngs8QAk0fnioC5U1GvfgybS6WjrfXI
+	M90NZVZRJaV5+3yO+0Bv5xATUvbUGMjKgJY9iWxr4HRTR4kSqwXq2R6UyYXL7KIp
+	JKpP1EMXFq7JZ4Gy9OBhalVYIG/7L+w9Zjtwj9ppP4Kvfr/A==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpybajy6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Aug 2025 11:28:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 576BSOrK013704
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Aug 2025 11:28:24 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Wed, 6 Aug 2025 04:28:19 -0700
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konradybcio@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>, <djakov@kernel.org>,
+        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: [PATCH v6 0/4] Enable cpufreq for IPQ5424
+Date: Wed, 6 Aug 2025 16:58:03 +0530
+Message-ID: <20250806112807.2726890-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <06f301dc0695$6bf25690$43d703b0$@samsung.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX6j6Vsja/XFWg
+ Z8V/yPjPjCsR5xmzJQbm7N15pu1Af1bVt2XqFhLbsVH2kwffxAo+u5ygZ1IgXqQVVOzdRZzK7D8
+ am2WadJ47fOokzmQEkFpv4voVdgljIdEprJ5/Thvb2Mm7x51rFX8CmsvK2evm8DrcMi8o1i1YwU
+ BSHZDFsFNQRlGF1TDoO6iXiWz7iMHdR3vvmJ6yMjjO2cbtGXKBFk+zUj4EtZakGj6BLApaw6rBt
+ OBUb9f/jKPl92oouriWW3UcxRszDMGClC5Nt9Xwd3bTxueBg8mOJo3Tp2GxHKjIxQ9sqKyzXaSA
+ iyzdmIkH3ZqFfWSVlM3T+JH8Y+DhfxCELqKdtG4bTMY7+JGAG09s8OrU1Ofg8ekPCmk/3wp+/ZM
+ dRhLexAA
+X-Proofpoint-GUID: hpCuZZ5aFXIHgkKkwtPYMjiSP3VQghFo
+X-Authority-Analysis: v=2.4 cv=EavIQOmC c=1 sm=1 tr=0 ts=68933c59 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=hYIGFNv7twnpuLpzv7MA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: hpCuZZ5aFXIHgkKkwtPYMjiSP3VQghFo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_03,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
+ phishscore=0 spamscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508060009
 
-On Wed, Aug 06, 2025 at 11:16:11AM GMT, Alim Akhtar wrote:
-> 
-> 
-> > -----Original Message-----
-> > From: 'Manivannan Sadhasivam' <mani@kernel.org>
-> > Sent: Wednesday, August 6, 2025 10:35 AM
-> > To: Alim Akhtar <alim.akhtar@samsung.com>
-> > Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>; 'Krzysztof
-> > Kozlowski' <krzk@kernel.org>; 'Ram Kumar Dwivedi'
-> > <quic_rdwivedi@quicinc.com>; avri.altman@wdc.com;
-> > bvanassche@acm.org; robh@kernel.org; krzk+dt@kernel.org;
-> > conor+dt@kernel.org; andersson@kernel.org; konradybcio@kernel.org;
-> > James.Bottomley@hansenpartnership.com; martin.petersen@oracle.com;
-> > agross@kernel.org; linux-arm-msm@vger.kernel.org; linux-
-> > scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> > kernel@vger.kernel.org
-> > Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
-> > properties to UFS
-> > 
-> > On Wed, Aug 06, 2025 at 09:51:43AM GMT, Alim Akhtar wrote:
-> > 
-> > [...]
-> > 
-> > > > >> Introducing generic solutions preemptively for problems that are
-> > > > >> simple in concept and can occur widely is good practice (although
-> > > > >> it's sometimes hard to gauge whether this is a one-off), as if
-> > > > >> the issue spreads a generic solution will appear at some point,
-> > > > >> but we'll have to keep supporting the odd ones as well
-> > > > >>
-> > > > > Ok,
-> > > > > I would prefer if we add a property which sounds like "poor
-> > > > > thermal dissipation" or "routing channel loss" rather than adding
-> > > > > limiting UFS gear
-> > > > properties.
-> > > > > Poor thermal design or channel losses are generic enough and can
-> > > > > happen
-> > > > on any board.
-> > > >
-> > > > This is exactly what I'm trying to avoid through my suggestion - one
-> > > > board may have poor thermal dissipation, another may have channel
-> > > > losses, yet another one may feature a special batch of UFS chips
-> > > > that will set the world on fire if instructed to attempt link
-> > > > training at gear 7 - they all are causes, as opposed to describing
-> > > > what needs to happen (i.e. what the hardware must be treated as -
-> > > > gear N incapable despite what can be discovered at runtime), with
-> > > > perhaps a comment on the side
-> > > >
-> > > But the solution for all possible board problems can't be by limiting Gear
-> > speed.
-> > 
-> > Devicetree properties should precisely reflect how they are relevant to the
-> > hardware. 'limiting-gear-speed' is self-explanatory that the gear speed is
-> > getting limited (for a reason), but the devicetree doesn't need to describe
-> > the
-> > *reason* itself.
-> > 
-> > > So it should be known why one particular board need to limit the gear.
-> > 
-> > That goes into the description, not in the property name.
-> > 
-> > > I understand that this is a static configuration, where it is already known
-> > that board is broken for higher Gear.
-> > > Can this be achieved by limiting the clock? If not, can we add a board
-> > specific _quirk_ and let the _quirk_ to be enabled from vendor specific
-> > hooks?
-> > >
-> > 
-> > How can we limit the clock without limiting the gears? When we limit the
-> > gear/mode, both clock and power are implicitly limited.
-> > 
-> Possibly someone need to check with designer of the SoC if that is possible or not.
+CPU on Qualcomm ipq5424 is clocked by huayra PLL with RCG support.
+Add support for the APSS PLL, RCG and clock enable for ipq5424.
+The PLL, RCG register space are clubbed. Hence adding new APSS driver
+for both PLL and RCG/CBC control. Also the L3 cache has a separate pll
+modeled as ICC clock. The L3 pll needs to be scaled along with the CPU.
 
-It's not just clock. We need to consider reducing regulator, interconnect votes
-also. But as I said above, limiting the gear/mode will take care of all these
-parameters.
+v6:	* Drop clock-names in bindings, dts and driver and use index instead
+	* Fix 'opp-microvolt'
 
-> Did we already tried _quirk_? If not, why not? 
-> If the board is so poorly designed and can't take care of the channel loses or heat dissipation etc,
-> Then I assumed the gear negotiation between host and device should fail for the higher gear 
-> and driver can have a re-try logic to re-init / re-try "power mode change" at the lower gear. Is that not possible / feasible?
-> 
+v5: https://lore.kernel.org/linux-arm-msm/20250804112041.845135-1-quic_varada@quicinc.com/
+	* Remove previous maintainers from bindings file
+	* Use enums instead of clock names in clock struct
+	* Add '.sync_state = icc_sync_state'
+	* Add opp-816000000
 
-I don't see why we need to add extra logic in the UFS driver if we can extract
-that information from DT.
+v4: https://lore.kernel.org/linux-arm-msm/20250730081316.547796-1-quic_varada@quicinc.com/
+	* Address bindings related comments
 
-- Mani
+v3: https://lore.kernel.org/linux-arm-msm/20250724102540.3762358-1-quic_varada@quicinc.com/
+	* Use the qcom_cc_driver_data framework to trim down apss_ipq5424_probe
 
+v2: https://lore.kernel.org/linux-arm-msm/20250723110815.2865403-1-quic_varada@quicinc.com/
+	* Use icc-clk framework for l3 pll
+
+v1: https://lore.kernel.org/linux-arm-msm/20250127093128.2611247-1-quic_srichara@quicinc.com/
+
+Md Sadre Alam (1):
+  cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
+
+Sricharan Ramabadhran (3):
+  dt-bindings: clock: ipq5424-apss-clk: Add ipq5424 apss clock
+    controller
+  clk: qcom: apss-ipq5424: Add ipq5424 apss clock controller
+  arm64: dts: qcom: ipq5424: Enable cpufreq
+
+ .../bindings/clock/qcom,ipq5424-apss-clk.yaml |  55 ++++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         |  69 +++++
+ drivers/clk/qcom/Kconfig                      |   7 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/apss-ipq5424.c               | 264 ++++++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c          |   1 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c          |   5 +
+ include/dt-bindings/clock/qcom,apss-ipq.h     |   6 +
+ .../dt-bindings/interconnect/qcom,ipq5424.h   |   3 +
+ 9 files changed, 411 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq5424-apss-clk.yaml
+ create mode 100644 drivers/clk/qcom/apss-ipq5424.c
+
+
+base-commit: 5c5a10f0be967a8950a2309ea965bae54251b50e
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
 
