@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-67913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3AF1B1C61E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 14:41:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78182B1C632
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 14:45:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A37563B3883
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 12:41:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32A70188AF85
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 12:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D8A9289808;
-	Wed,  6 Aug 2025 12:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1699428A1D3;
+	Wed,  6 Aug 2025 12:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lSpdah93"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="piY2QrqA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA80CA5E;
-	Wed,  6 Aug 2025 12:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163522F767;
+	Wed,  6 Aug 2025 12:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754484084; cv=none; b=ktUiGS4urwFaQKY1RR3WhcWo+DW3OBe35vjrlPV0rxp4YlHbBEAvmju4yGDA/K5ymeeZLS8zws/CN4sft6Bj6Big9aZ3IYSSoMDMNYYUUTb0fHMUjAzWt+WoK9gVjldWEVLYXZilaCKJ+dBw7cBxw3lhh13UAS45P3wLwZYYln0=
+	t=1754484337; cv=none; b=mVw/oRqRCUx/osPnNHzSYfm+m+BiWXCsJKsBJh+dUeeIVK/pyfncyIF9aWa5L1yDrnUJPFR8WG5cmLOdhDlawiTuEUDrnRdNTpIKmfBECzh9QIkC+dV4hWBlG9n4cXZu+47QnjCOwVwGfm3n80Bi9ptgbOfSrG8arp2OykSQV08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754484084; c=relaxed/simple;
-	bh=hnIdHHbQiqrM8IDX95keDvQrxjxn1k3aApmusKnqdJ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SsX1z6mMiSM6kETkSuLjCYFuxXi0WUKfmEM54ogqO4C+ENSu8mKnSpN/VcByU+ff1CIgm7Tk7Mqhuli0+cFr56Pby3+ExKTi1YWJw5EejxQDOo46lMwV5SM4z/zURjZ1wgj9bgm5yCFrWajyDR4eHuLDCSuiTxmzyqOvMwjZ0cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lSpdah93; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576AMidR017322;
-	Wed, 6 Aug 2025 12:41:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	68tyvTM8jfB/ohgKr96ZvIfvfdK+rgKehP7ADxP0fm0=; b=lSpdah93g4GftZTp
-	f8fr/6U1U1wQUWK6bFjrXGsjVmh7fDHvlj0vsnBunIRjOvAPdEhBoix8NSpo5XMV
-	6iXE4GUCVXl0oKCiHtXW0PPtWqVPNXA8hRpA8Dy186PM90gx4/w+ZahND4P3u1IU
-	/k/0oa7MGd2gsOYUlxch2X9k94GLz6siW3DMSMMEZrhalNHmbNqFUihizsQ5LvWA
-	f/n2y8kV9uhJeA3fkiChF67g8+p1LBEQnhkguXzHn/34zXQg8T794pvOiF77MUop
-	NwUjFK379DNs3vxVDVnTJYVYoQKKvSjf5kGMUu2hiJE3x0dVm7uMcFt293Ti21e7
-	QA+6ag==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c5868a5t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Aug 2025 12:41:16 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 576CfFsJ017038
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Aug 2025 12:41:15 GMT
-Received: from [10.216.18.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 6 Aug
- 2025 05:41:12 -0700
-Message-ID: <2e655067-cd7e-4584-aa07-998b517ac314@quicinc.com>
-Date: Wed, 6 Aug 2025 18:11:09 +0530
+	s=arc-20240116; t=1754484337; c=relaxed/simple;
+	bh=vrDmqWuCtRp3CsCvQLuDwTzU8RUf2CvrKumyU6zb3Ok=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GQt9y32V/YIvM8Tsq38lXlG8gur83roUnDgRAtXyaTHmiP8nbeJ/CmfDkotjsK/UPWMqFhVWyCjVsd2b1oTA4EHudB8R/4MTJYliapOtRYOZWRhZoLQFuXZmK44kSVWRg6PXyBBsFvaXWCPlj+a3oxcG+GLOL1bEGt7SSvzpzrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=piY2QrqA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4AAC4CEE7;
+	Wed,  6 Aug 2025 12:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754484336;
+	bh=vrDmqWuCtRp3CsCvQLuDwTzU8RUf2CvrKumyU6zb3Ok=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=piY2QrqAz8Re20EZatq7znUbw5pHCiVHNr0AmhNRPE0MDM10HmfpdWd02d9i8tbdW
+	 E75PTNGi/w0FYgFIJnvX/BXnS/SvXPyQ9seXxkOyOZ7zJ0aOfRRVdb4s/IB6OlYGWX
+	 eGzXx+834KiDOoCU+8nK8fwVzqTKOTwSyOvq/we5j7dBgmFBvFnhVcaikg4QxsG3Ow
+	 eNHI0m7J7krY4D/AW4W0Ic/ki873otG6+qi8XZAxpJKL+nl6ve+/h5UhD3smasksSI
+	 31GfEPq8TJIP3QV/nzR3fqXJ0rFvGtrMjgIfsvva9ewHG8nil9RVHiEcnK1j0r7efu
+	 ou/p/iGbORZsA==
+Message-ID: <e9aaf929-5e0d-4379-996b-a564acd3e331@kernel.org>
+Date: Wed, 6 Aug 2025 14:45:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,146 +50,298 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
- ICE for UFS controller v5
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>
-References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
- <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
-Content-Language: en-US
-From: Palash Kambar <quic_pkambar@quicinc.com>
-In-Reply-To: <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
-Content-Type: text/plain; charset="UTF-8"
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH 27/65] media: Reset file->private_data to NULL in
+ v4l2_fh_del()
+To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Devarsh Thakkar
+ <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
+ Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
+ Christian Gromm <christian.gromm@microchip.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Alex Shi
+ <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
+ Dongliang Mu <dzm91@hust.edu.cn>, Jonathan Corbet <corbet@lwn.net>,
+ Tomasz Figa <tfiga@chromium.org>, Marek Szyprowski
+ <m.szyprowski@samsung.com>, Andy Walls <awalls@md.metrocast.net>,
+ Michael Tretter <m.tretter@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Bin Liu <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
+ <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Mirela Rabulea <mirela.rabulea@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Michal Simek <michal.simek@amd.com>, Ming Qian <ming.qian@nxp.com>,
+ Zhou Peng <eagle.zhou@nxp.com>, Xavier Roumegue
+ <xavier.roumegue@oss.nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+ Samuel Holland <samuel@sholland.org>,
+ Daniel Almeida <daniel.almeida@collabora.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Nas Chung <nas.chung@chipsnmedia.com>,
+ Jackson Lee <jackson.lee@chipsnmedia.com>,
+ Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+ Houlong Wei <houlong.wei@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Tiffany Lin <tiffany.lin@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
+ Jacob Chen <jacob-chen@iotwrt.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Heiko Stuebner <heiko@sntech.de>,
+ Detlev Casanova <detlev.casanova@collabora.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
+ Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Fabien Dessenne <fabien.dessenne@foss.st.com>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+ Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+ Steve Longerbeam <slongerbeam@gmail.com>, Maxime Ripard
+ <mripard@kernel.org>, Paul Kocialkowski <paulk@sys-base.io>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Corentin Labbe <clabbe@baylibre.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-staging@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-tegra@vger.kernel.org, imx@lists.linux.dev,
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-usb@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, mjpeg-users@lists.sourceforge.net
+References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
+ <20250802-media-private-data-v1-27-eb140ddd6a9d@ideasonboard.com>
+Content-Language: en-US, nl
+In-Reply-To: <20250802-media-private-data-v1-27-eb140ddd6a9d@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YhqQcn8kDTu-GbIkcRuM_kIrd-kiFir0
-X-Authority-Analysis: v=2.4 cv=MZpsu4/f c=1 sm=1 tr=0 ts=68934d6d cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=AVhYfSqF_RTLDIin3-oA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: YhqQcn8kDTu-GbIkcRuM_kIrd-kiFir0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA2NCBTYWx0ZWRfX6Z0Wpxn5ADfP
- ZeWMlYCgpAKnk/YGMLa1hTV32fT2J6oDYbaKUtMbgm8mlQuBfpyU5bIB8nhT3klDPvch3pUJyv7
- 8zuP/Iyna9VO7PqkZjY/6YBG0cRXDT/al2xz+QUZOnFRT52NgFu08toET/DT7oyCOhOUit8e9WI
- zITW+wDhCrl5Xy86hdpEoM/dheiX3aCc40XhWMeuLe5wtVBpRKkQ5AXFm7WjwZYB+K5JynCTZT5
- vmBvJr5nPYybc0L7FhrJayv/Qd4gXRWU0tafIlJ1oTzYZhU5KymieLZRYUFKcSfFTSUqmKqtxUu
- B+usJa5SYjKOZcduoFHi42jS9ufzSNyx+zWPfhUif3OG8SqEVW83yIe/ZbgiGV+W9+LyvyrSkxN
- cO1/0tDK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-06_03,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0
- adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060064
 
-
-
-On 8/6/2025 4:44 PM, Manivannan Sadhasivam wrote:
-> On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
->> Disable of AES core in Shared ICE is not supported during power
->> collapse for UFS Host Controller V5.0.
->>
->> Hence follow below steps to reset the ICE upon exiting power collapse
->> and align with Hw programming guide.
->>
->> a. Write 0x18 to UFS_MEM_ICE_CFG
->> b. Write 0x0 to UFS_MEM_ICE_CFG
->>
->> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
->> ---
->>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
->>  drivers/ufs/host/ufs-qcom.h |  2 ++
->>  2 files changed, 26 insertions(+)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index 444a09265ded..2744614bbc32 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
->>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
->>  		ufs_qcom_device_reset_ctrl(hba, true);
->>  
->> +	host->vdd_hba_pc = true;
+On 02/08/2025 11:22, Jacopo Mondi wrote:
+> From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 > 
-> What does this variable correspond to?
-Hi Manivannan,
-
-It corresponds to power collapse, will rename it for better readability.
-
+> Multiple drivers that use v4l2_fh and call v4l2_fh_del() manually reset
+> the file->private_data pointer to NULL in their video device .release()
+> file operation handler. Move the code to the v4l2_fh_del() function to
+> avoid direct access to file->private_data in drivers. This requires
+> adding a file pointer argument to the function.
 > 
->> +
->>  	return ufs_qcom_ice_suspend(host);
->>  }
->>  
->> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
->>  	return ufs_qcom_ice_resume(host);
->>  }
->>  
->> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
->> +				    enum uic_cmd_dme uic_cmd,
->> +				    enum ufs_notify_change_status status)
->> +{
->> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->> +
->> +	/* Apply shared ICE WA */
+> Changes to drivers have been generated with the following coccinelle
+> semantic patch:
 > 
-> Are you really sure it is *shared ICE*?
-
- Yes Manivannan, I am.
-
+> @@
+> expression fh;
+> identifier filp;
+> identifier release;
+> type ret;
+> @@
+> ret release(..., struct file *filp, ...)
+> {
+> 	<...
+> -	filp->private_data = NULL;
+> 	...
+> -	v4l2_fh_del(fh);
+> +	v4l2_fh_del(fh, filp);
+> 	...>
+> }
 > 
->> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
->> +	    status == POST_CHANGE &&
->> +	    host->hw_ver.major == 0x5 &&
->> +	    host->hw_ver.minor == 0x0 &&
->> +	    host->hw_ver.step == 0x0 &&
->> +	    host->vdd_hba_pc) {
->> +		host->vdd_hba_pc = false;
->> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
+> @@
+> expression fh;
+> identifier filp;
+> identifier release;
+> type ret;
+> @@
+> ret release(..., struct file *filp, ...)
+> {
+> 	<...
+> -	v4l2_fh_del(fh);
+> +	v4l2_fh_del(fh, filp);
+> 	...
+> -	filp->private_data = NULL;
+> 	...>
+> }
 > 
-> Define the actual bits instead of writing magic values.
-
-Sure.
-
+> @@
+> expression fh;
+> identifier filp;
+> identifier release;
+> type ret;
+> @@
+> ret release(..., struct file *filp, ...)
+> {
+> 	<...
+> -	v4l2_fh_del(fh);
+> +	v4l2_fh_del(fh, filp);
+> 	...>
+> }
 > 
->> +		ufshcd_readl(hba, UFS_MEM_ICE);
->> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
->> +		ufshcd_readl(hba, UFS_MEM_ICE);
+> Manual changes have been applied to Documentation/ to update the usage
+> patterns, to drivers/media/v4l2-core/v4l2-fh.c to update the
+> v4l2_fh_del() prototype and reset file->private_data, and to
+> include/media/v4l2-fh.h to update the v4l2_fh_del() function prototype
+> and its documentation.
 > 
-> Why do you need readl()? Writes to device memory won't get reordered.
-
-Since these are hardware register, there is a potential for reordering.
-
+> Additionally, white space issues have been fixed manually in
+> drivers/usb/gadget/function/uvc_v4l2.c
 > 
->> +	}
->> +}
->> +
->>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
->>  {
->>  	if (host->dev_ref_clk_ctrl_mmio &&
->> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
->>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
->>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
->>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
->> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
+> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+> ---
+>  Documentation/driver-api/media/v4l2-fh.rst                         | 4 ++--
+>  Documentation/translations/zh_CN/video4linux/v4l2-framework.txt    | 4 ++--
+>  drivers/media/pci/cx18/cx18-fileops.c                              | 4 ++--
+>  drivers/media/pci/ivtv/ivtv-fileops.c                              | 4 ++--
+>  drivers/media/pci/saa7164/saa7164-encoder.c                        | 2 +-
+>  drivers/media/pci/saa7164/saa7164-vbi.c                            | 2 +-
+>  drivers/media/platform/allegro-dvt/allegro-core.c                  | 2 +-
+>  drivers/media/platform/amlogic/meson-ge2d/ge2d.c                   | 2 +-
+>  drivers/media/platform/amphion/vpu_v4l2.c                          | 4 ++--
+>  drivers/media/platform/chips-media/coda/coda-common.c              | 4 ++--
+>  drivers/media/platform/chips-media/wave5/wave5-helper.c            | 2 +-
+>  drivers/media/platform/imagination/e5010-jpeg-enc.c                | 4 ++--
+>  drivers/media/platform/m2m-deinterlace.c                           | 2 +-
+>  drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c               | 4 ++--
+>  drivers/media/platform/mediatek/mdp/mtk_mdp_m2m.c                  | 4 ++--
+>  drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c                | 4 ++--
+>  .../media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c    | 4 ++--
+>  .../media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c    | 4 ++--
+>  drivers/media/platform/nvidia/tegra-vde/v4l2.c                     | 2 +-
+>  drivers/media/platform/nxp/dw100/dw100.c                           | 2 +-
+>  drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c                     | 4 ++--
+>  drivers/media/platform/nxp/imx-pxp.c                               | 2 +-
+>  drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c                 | 2 +-
+>  drivers/media/platform/nxp/mx2_emmaprp.c                           | 2 +-
+>  drivers/media/platform/qcom/iris/iris_vidc.c                       | 3 +--
+>  drivers/media/platform/qcom/venus/core.c                           | 2 +-
+>  drivers/media/platform/renesas/rcar_fdp1.c                         | 2 +-
+>  drivers/media/platform/renesas/rcar_jpu.c                          | 4 ++--
+>  drivers/media/platform/renesas/vsp1/vsp1_video.c                   | 2 +-
+>  drivers/media/platform/rockchip/rga/rga.c                          | 2 +-
+>  drivers/media/platform/rockchip/rkvdec/rkvdec.c                    | 2 +-
+>  drivers/media/platform/samsung/exynos-gsc/gsc-m2m.c                | 4 ++--
+>  drivers/media/platform/samsung/exynos4-is/fimc-m2m.c               | 4 ++--
+>  drivers/media/platform/samsung/s5p-g2d/g2d.c                       | 2 +-
+>  drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c                | 4 ++--
+>  drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c                   | 4 ++--
+>  drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c                   | 4 ++--
+>  drivers/media/platform/st/sti/delta/delta-v4l2.c                   | 4 ++--
+>  drivers/media/platform/st/sti/hva/hva-v4l2.c                       | 4 ++--
+>  drivers/media/platform/st/stm32/dma2d/dma2d.c                      | 2 +-
+>  drivers/media/platform/sunxi/sun8i-di/sun8i-di.c                   | 2 +-
+>  drivers/media/platform/sunxi/sun8i-rotate/sun8i_rotate.c           | 2 +-
+>  drivers/media/platform/ti/omap3isp/ispvideo.c                      | 5 ++---
+>  drivers/media/platform/ti/vpe/vpe.c                                | 2 +-
+>  drivers/media/platform/verisilicon/hantro_drv.c                    | 4 ++--
+>  drivers/media/test-drivers/vicodec/vicodec-core.c                  | 2 +-
+>  drivers/media/test-drivers/vim2m.c                                 | 2 +-
+>  drivers/media/test-drivers/visl/visl-core.c                        | 2 +-
+>  drivers/media/usb/pvrusb2/pvrusb2-v4l2.c                           | 3 +--
+>  drivers/media/v4l2-core/v4l2-fh.c                                  | 7 ++++---
+>  drivers/media/v4l2-core/v4l2-subdev.c                              | 5 ++---
+>  drivers/staging/media/imx/imx-media-csc-scaler.c                   | 4 ++--
+>  drivers/staging/media/meson/vdec/vdec.c                            | 2 +-
+>  drivers/staging/media/sunxi/cedrus/cedrus.c                        | 2 +-
+>  drivers/staging/most/video/video.c                                 | 4 ++--
+>  drivers/usb/gadget/function/uvc_v4l2.c                             | 3 +--
+>  include/media/v4l2-fh.h                                            | 5 ++++-
+>  57 files changed, 89 insertions(+), 90 deletions(-)
 > 
-> This callback is not called anywhere. Regardeless of that, why can't you use
-> ufs_qcom_clk_scale_notify()?
-> 
 
-According to the HPG guidelines, as part of this workaround, we are required to reset the ICE controller during the Hibern8 exit sequence when the UFS controller resumes from power collapse. Therefore, this reset logic has been added to the H8 exit notifier callback.
+<snip>
 
-The ufs_clk_scale_notify function is invoked whenever clock scaling (up or down) occurs, regardless of whether a power collapse has taken place. Hence, the ICE controller reset was specifically added to the H8 exit notifier to ensure it is executed only in the appropriate context.
+> diff --git a/drivers/media/v4l2-core/v4l2-fh.c b/drivers/media/v4l2-core/v4l2-fh.c
+> index b59b1084d8cdf1b62da12879e21dbe56c2109648..df3ba9d4674bd25626cfcddc2d0cb28c233e3cc3 100644
+> --- a/drivers/media/v4l2-core/v4l2-fh.c
+> +++ b/drivers/media/v4l2-core/v4l2-fh.c
+> @@ -67,7 +67,7 @@ int v4l2_fh_open(struct file *filp)
+>  }
+>  EXPORT_SYMBOL_GPL(v4l2_fh_open);
+>  
+> -void v4l2_fh_del(struct v4l2_fh *fh)
+> +void v4l2_fh_del(struct v4l2_fh *fh, struct file *filp)
 
+Instead of adding a second argument, perhaps it is better to
+just provide the filp pointer. After all, you can get the v4l2_fh
+from filp->private_data.
+
+It simplifies the code a bit.
 
 Regards,
-Palash K 
+
+	Hans
+
+>  {
+>  	unsigned long flags;
+>  
+> @@ -75,6 +75,8 @@ void v4l2_fh_del(struct v4l2_fh *fh)
+>  	list_del_init(&fh->list);
+>  	spin_unlock_irqrestore(&fh->vdev->fh_lock, flags);
+>  	v4l2_prio_close(fh->vdev->prio, fh->prio);
+> +
+> +	filp->private_data = NULL;
+>  }
+>  EXPORT_SYMBOL_GPL(v4l2_fh_del);
+>  
+> @@ -94,10 +96,9 @@ int v4l2_fh_release(struct file *filp)
+>  	struct v4l2_fh *fh = file_to_v4l2_fh(filp);
+>  
+>  	if (fh) {
+> -		v4l2_fh_del(fh);
+> +		v4l2_fh_del(fh, filp);
+>  		v4l2_fh_exit(fh);
+>  		kfree(fh);
+> -		filp->private_data = NULL;
+>  	}
+>  	return 0;
+>  }
+
+<snip>
+
+> diff --git a/include/media/v4l2-fh.h b/include/media/v4l2-fh.h
+> index d8fcf49f10e09452b73499f4a9bd1285bc2835a5..5e4c761635120608e0b588e0b0daf63e69588d38 100644
+> --- a/include/media/v4l2-fh.h
+> +++ b/include/media/v4l2-fh.h
+> @@ -114,12 +114,15 @@ int v4l2_fh_open(struct file *filp);
+>   * v4l2_fh_del - Remove file handle from the list of file handles.
+>   *
+>   * @fh: pointer to &struct v4l2_fh
+> + * @filp: pointer to &struct file associated with @fh
+> + *
+> + * The function resets filp->private_data to NULL.
+>   *
+>   * .. note::
+>   *    Must be called in v4l2_file_operations->release\(\) handler if the driver
+>   *    uses &struct v4l2_fh.
+>   */
+> -void v4l2_fh_del(struct v4l2_fh *fh);
+> +void v4l2_fh_del(struct v4l2_fh *fh, struct file *filp);
+>  
+>  /**
+>   * v4l2_fh_exit - Release resources related to a file handle.
+> 
 
 
