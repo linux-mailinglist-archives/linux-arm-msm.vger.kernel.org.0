@@ -1,166 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-67860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27EC5B1C1D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 10:09:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB886B1C1F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 10:17:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3DF718894ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 08:10:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA2F3166943
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 08:17:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93EC7220F3E;
-	Wed,  6 Aug 2025 08:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B13521A428;
+	Wed,  6 Aug 2025 08:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Hewp2yje"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mBlcnILQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D5822068D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 08:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD7E1FB3;
+	Wed,  6 Aug 2025 08:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754467779; cv=none; b=WEc+jHdIf6JeRrCo16AmseLFlT3PrAil+lBk6h87ajN+sTrn9wrmoYcanq94Y54OySe5VjElCE/EZ5Rzf1WQomfS3TdIP/mn/6jY1yY54BchCQxDEtd9uJue6zy1wpW3wKWqlfdNGxy4aMOsGUtJSQpwi7OlwryWjB3DKNyFvqI=
+	t=1754468220; cv=none; b=WMGSlCIoh2/1YRIVrUF4Y/3KghnUoIPT2idOOE0XrFCZNbFEKkd+cXtwp6WOvGoudMEAOSMRPNApywMe4RSrnu+xr8034CQPfCNk+TKhS3IvM+1IR+Abc0Ad9Fx4tgWABGUzG0h7di2Xfl/IJ3f6mp3nKcY4JhOzzBhxKnyKak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754467779; c=relaxed/simple;
-	bh=8xWq6P9sR5iwmq/Cs+gKFsJ6jwcyz/+tb5GyYG9xnOw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=h/almmgajo6LzCVMgW/Ogk26sVciP2RcNxrI36/g140qb6YA8rTpd+KXX6IyDHIKRyvz78yVw3ZN/zWxXfKccthI9mkwDHi/EOyqcrqy7H7Zko6Pp1C3/IhmxprItoWqCh/IwwN2eoc+uvoRqsu7wgRl0TreoXHm6i8w2sE9K9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Hewp2yje; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5766En9Y022856
-	for <linux-arm-msm@vger.kernel.org>; Wed, 6 Aug 2025 08:09:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=knUnYiygC/glMirhYnFsBNISXjfP0z20npG
-	9dhmwKMM=; b=Hewp2yjevG0elzb/Zof7MlkZNhDoXAm7hnHiZ7Gw7jsWIr3JNZT
-	bCZeKtAieTgWvpX8hEv7esFEPQYb+U4kMc0EeQ8sea2hMqA1TXD1xL28t1de+xZ5
-	Njk5lMf6djDj5qAnB4rwHIVHDFjLCkMvJYKLBqk+y2fuYjwuxLtHnwDX/QT6g4Wa
-	ZSeenNdAcRYDV3qyWs44UR2CGfT/cQjIvf6ejiqPsI0TOPpwmvizFop4T+DCud/N
-	CdieQgtUs5rt73x2dgGmOLY2JF8w9430lyJJFn9pdaPpA3nusVN+Uub5B25YEbVy
-	j/pBkbj0sD2Yjc8X0r6FAusfLM3MRBiUiNg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpya9vgq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 08:09:37 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b42464016c3so3725350a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 01:09:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754467776; x=1755072576;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=knUnYiygC/glMirhYnFsBNISXjfP0z20npG9dhmwKMM=;
-        b=EOJMIuBNbD3I6xsZVY3Bom/PEwkr9ZIKoBzWw0LLh2r7AOKFx90I2MTtIGP2h+3Ehq
-         yVDwqtKcvuJAYOVW/1xmU/9/JidXQ6amd/qoZSELFpL3C/yKz6RbV4RKcfxr9a/pA2p1
-         pv9pmyklWR8gTuW4V68/tajB2rXhEZvuHxVv04qJ6L9cpuPiNRxyKG5DNF7qmeis7HFZ
-         m9TWV59yW9NAcDcbUhY3BFlzNcTFys7PXQTeUVZcUdOGv2jUYvbvE297IV2K4qbSUS5H
-         QgJCflY48KzMijWg1IdMhDF9QXsbNYM6ZZEqLj6Hi444sZl0Hp+jIF/dvTR68jH3q+MC
-         4DQA==
-X-Forwarded-Encrypted: i=1; AJvYcCVLi5SoViidrR+gmdC2rqTUeF0TVlWcKcvx0jdec18yBwiqZFVkXezz15nVm8yO2hcp7cim/CpUd6X55/MX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVTSCBNCcgeuoJiNXImCnGOOW+qvxub2swTeUeHf+ITbpE+95H
-	SdX9iTX2p9Dk80/7lqatCjMaj/ddcKRrr760asWvbGM5wy/o/G7BL1P5QVXQmOxQmJ9obKdU1iJ
-	+J0FDFGS5esOuk6rSAlSqpd0eETCHxzMjPhGIoGwJ1Q9e/tu7jz6Xf3f5oPR/RTnVZp2T
-X-Gm-Gg: ASbGncvYvNhX39wphv5BNRGU/N2BEVKMgjyySDLXDLj1E8GmfusmJ8H5kN0t2NPFQgT
-	DThailLDBpzRrvkjmcLZtXQakMrZqHlyAArw2Idv8HNwaHP3TruVlmrhta/jb59aTMjlSZuWVV9
-	6QcjU+rrSmM2hKJslk93v4x0uR3C9S22ZUMkzOxr8qp99T98uao0fDdpg2nrhfNUSHyBDJwhF98
-	uCv6EHjTrgO+ZSRpuBilZZzxDt9v0jLumzTczUFiRlqZsmNZ/G7QVj0/s+xwy1b8mJt5DgP3Ph5
-	Wo8nxb9C3Yh4D6xc9wak2wgZw176V3y7Bnsv2bw0KODHnErSRh7vSZFuB869rqBES0tBwiCaoxs
-	cq+aWEJoYlvwMDcb5eag=
-X-Received: by 2002:a05:6a20:1584:b0:240:1e63:2dfd with SMTP id adf61e73a8af0-240314b5221mr3282858637.29.1754467776488;
-        Wed, 06 Aug 2025 01:09:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGO/5kf0TugUCngV86DUYMPF7cCHvVqLqvFAR0R+lx9ixwaYadjeYK63pbWIUa3NO/Pp3Vw4g==
-X-Received: by 2002:a05:6a20:1584:b0:240:1e63:2dfd with SMTP id adf61e73a8af0-240314b5221mr3282829637.29.1754467776090;
-        Wed, 06 Aug 2025 01:09:36 -0700 (PDT)
-Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce6f319sm14856195b3a.18.2025.08.06.01.09.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Aug 2025 01:09:35 -0700 (PDT)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: tingwei.zhang@oss.qualcomm.com, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v1] coresight: tpda: fix the logic to setup the element size
-Date: Wed,  6 Aug 2025 16:09:31 +0800
-Message-Id: <20250806080931.14322-1-jie.gan@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1754468220; c=relaxed/simple;
+	bh=mSezG6NRkxDtJlYf/ZFsHjMGCJmUaCUPnrgkbL+HJRE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RTXgsgHZ1CuANGhJNBsFqVrWzfv86fjk9NEgUHPbakFNa6NnuSZnDQ6BogoIEG0M+fK2HRAvB564Pqj3s91C4sdO09lStQ9+XvvErS8BlGKhHy394ngx6LiRuCLQnfNzFyYx1Bn1xJxfy/Nv5OoTrJjUiqqNkpBlAEGxkzODrXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mBlcnILQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657BBC4CEE7;
+	Wed,  6 Aug 2025 08:16:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754468219;
+	bh=mSezG6NRkxDtJlYf/ZFsHjMGCJmUaCUPnrgkbL+HJRE=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=mBlcnILQJQ8itwowSPTjPYWtbmq0X3J4O4tViHMM3acfOo0gkxWlN1i8bih8TRk/D
+	 QEK88TYFCCAgRdFf8N2vcHquOSOUzegVf8WhW/Lsok7t83wbntVOKbt/9YhJ0whgx3
+	 5Pw9TjucRRgCke06GxlfRg3jM6WSnxmB2mHB5KAF2EmEO8hgceOt4Z1OmiUmUg2AaV
+	 FwUr0faqAjE7o5R8MImS6WtgvVuPDjdbXIJiJkaVw/SZsYXDBQgOf6d9ctuBZbPmCU
+	 dj5qL0frPJSAHC86jkv/ZZcGOlf7y8hBVfvg5g40mjFEZISVqZUlox2uPFHVojc+hd
+	 jTKUIqp5zZJRg==
+Message-ID: <49e753f4-f626-49ae-bf23-d2aecfcc6282@kernel.org>
+Date: Wed, 6 Aug 2025 10:16:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: fTr3IWqC-5PXsH9hQnSGqgbTR9BeJurX
-X-Authority-Analysis: v=2.4 cv=MrlS63ae c=1 sm=1 tr=0 ts=68930dc1 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=eYArMgjR2MFx1z2CNlUA:9
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX1yj8M3i9Eihp
- NR35ncDWoCeqRqJ6l4vO93NDPbm+0MEyX+Bpg6VXfW6e/VOZdlqqbL2gw6qYH5oekO9F1PZs2aX
- pCIAdgIhW5WGdSZklWDqCo+BW/GFrKyNYiYlniNRFC7/bKBOU/BmTV5ae9loK9IybiGh2pklsOy
- RtcgPKYgal9VofS8KQiMF9rXDZKZR8ZXJUm4M+Hd7TCDaRVT4nJRr2M9StBqO2PsMG7xd9z9R7U
- lfMbTiOma5gJ7DlCVyL+cO8TQu6gCj8TYgsxodgXrLQ3+V/1t4zaThnWtnXdtQoW5UptWA+jICO
- fXkzId6LWlXS/Zt6N+SFhqzyuHszX4RXO2qQbI2DSTcfSy221/h+rOnXSdZDs20JlVSSvxx6F9D
- yzZx573v
-X-Proofpoint-GUID: fTr3IWqC-5PXsH9hQnSGqgbTR9BeJurX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-06_01,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 adultscore=0 priorityscore=1501 phishscore=0
- spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508060009
+User-Agent: Mozilla Thunderbird
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH 11/65] media: Replace file->private_data access with
+ custom functions
+To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Devarsh Thakkar
+ <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
+ Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
+ Christian Gromm <christian.gromm@microchip.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Alex Shi
+ <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
+ Dongliang Mu <dzm91@hust.edu.cn>, Jonathan Corbet <corbet@lwn.net>,
+ Tomasz Figa <tfiga@chromium.org>, Marek Szyprowski
+ <m.szyprowski@samsung.com>, Andy Walls <awalls@md.metrocast.net>,
+ Michael Tretter <m.tretter@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Bin Liu <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
+ <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Mirela Rabulea <mirela.rabulea@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Michal Simek <michal.simek@amd.com>, Ming Qian <ming.qian@nxp.com>,
+ Zhou Peng <eagle.zhou@nxp.com>, Xavier Roumegue
+ <xavier.roumegue@oss.nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+ Samuel Holland <samuel@sholland.org>,
+ Daniel Almeida <daniel.almeida@collabora.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Nas Chung <nas.chung@chipsnmedia.com>,
+ Jackson Lee <jackson.lee@chipsnmedia.com>,
+ Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+ Houlong Wei <houlong.wei@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Tiffany Lin <tiffany.lin@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
+ Jacob Chen <jacob-chen@iotwrt.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Heiko Stuebner <heiko@sntech.de>,
+ Detlev Casanova <detlev.casanova@collabora.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
+ Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Fabien Dessenne <fabien.dessenne@foss.st.com>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+ Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+ Steve Longerbeam <slongerbeam@gmail.com>, Maxime Ripard
+ <mripard@kernel.org>, Paul Kocialkowski <paulk@sys-base.io>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Corentin Labbe <clabbe@baylibre.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-staging@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-tegra@vger.kernel.org, imx@lists.linux.dev,
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-usb@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, mjpeg-users@lists.sourceforge.net
+References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
+ <20250802-media-private-data-v1-11-eb140ddd6a9d@ideasonboard.com>
+Content-Language: en-US, nl
+In-Reply-To: <20250802-media-private-data-v1-11-eb140ddd6a9d@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Some TPDM devices support both CMB and DSB datasets, requiring
-the system to enable the port with both corresponding element sizes.
+On 02/08/2025 11:22, Jacopo Mondi wrote:
+> From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> 
+> Accessing file->private_data manually to retrieve the v4l2_fh pointer is
+> error-prone, as the field is a void * and will happily cast implicitly
+> to any pointer type.
+> 
+> Replace all remaining locations that read the v4l2_fh pointer directly
+> from file->private_data and cast it to driver-specific file handle
+> structures with driver-specific functions that use file_to_v4l2_fh() and
+> perform the same cast.
+> 
+> No functional change is intended, this only paves the way to remove
+> direct accesses to file->private_data and make V4L2 drivers safer.
+> Other accesses to the field will be addressed separately.
+> 
+> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+> ---
+>  drivers/media/pci/ivtv/ivtv-driver.h               |  5 ++++
+>  drivers/media/pci/ivtv/ivtv-fileops.c              | 10 +++----
+>  drivers/media/pci/ivtv/ivtv-ioctl.c                |  8 +++---
+>  drivers/media/platform/allegro-dvt/allegro-core.c  |  7 ++++-
+>  drivers/media/platform/amlogic/meson-ge2d/ge2d.c   |  8 ++++--
+>  .../media/platform/chips-media/coda/coda-common.c  |  7 ++++-
+>  .../platform/chips-media/wave5/wave5-helper.c      |  2 +-
+>  .../media/platform/chips-media/wave5/wave5-vpu.h   |  5 ++++
+>  drivers/media/platform/m2m-deinterlace.c           |  7 ++++-
+>  .../media/platform/mediatek/jpeg/mtk_jpeg_core.c   |  7 ++++-
+>  drivers/media/platform/mediatek/mdp/mtk_mdp_m2m.c  |  7 ++++-
+>  .../media/platform/mediatek/mdp3/mtk-mdp3-m2m.c    |  7 ++++-
+>  .../mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c   |  2 +-
+>  .../mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h   |  5 ++++
+>  .../mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c   |  2 +-
+>  .../mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h   |  5 ++++
+>  drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c     |  7 ++++-
+>  drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c |  7 ++++-
+>  drivers/media/platform/nxp/mx2_emmaprp.c           |  7 ++++-
+>  drivers/media/platform/renesas/rcar_fdp1.c         |  7 ++++-
+>  drivers/media/platform/renesas/rcar_jpu.c          |  7 ++++-
+>  drivers/media/platform/rockchip/rga/rga.c          |  3 +--
+>  drivers/media/platform/rockchip/rga/rga.h          |  5 ++++
+>  drivers/media/platform/rockchip/rkvdec/rkvdec.c    |  2 +-
+>  drivers/media/platform/rockchip/rkvdec/rkvdec.h    |  5 ++++
+>  .../media/platform/samsung/exynos-gsc/gsc-core.h   |  6 +++++
+>  .../media/platform/samsung/exynos-gsc/gsc-m2m.c    |  6 ++---
+>  .../media/platform/samsung/exynos4-is/fimc-core.h  |  5 ++++
+>  .../media/platform/samsung/exynos4-is/fimc-m2m.c   |  2 +-
+>  drivers/media/platform/samsung/s5p-g2d/g2d.c       |  7 +++--
+>  .../media/platform/samsung/s5p-jpeg/jpeg-core.c    |  9 +++++--
+>  drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c   |  6 ++---
+>  .../platform/samsung/s5p-mfc/s5p_mfc_common.h      |  6 +++++
+>  drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c   |  7 ++++-
+>  drivers/media/platform/st/sti/delta/delta-v4l2.c   | 26 +++++++++++-------
+>  drivers/media/platform/st/sti/hva/hva-v4l2.c       | 31 ++++++++++++----------
+>  drivers/media/platform/st/sti/hva/hva.h            |  2 --
+>  drivers/media/platform/st/stm32/dma2d/dma2d.c      |  7 +++--
+>  drivers/media/platform/sunxi/sun8i-di/sun8i-di.c   |  3 +--
+>  .../platform/sunxi/sun8i-rotate/sun8i_rotate.c     |  3 +--
+>  drivers/media/platform/ti/omap3isp/ispvideo.c      |  4 +--
+>  drivers/media/platform/ti/omap3isp/ispvideo.h      |  6 +++++
+>  drivers/media/platform/verisilicon/hantro.h        |  5 ++++
+>  drivers/media/platform/verisilicon/hantro_drv.c    |  3 +--
+>  drivers/staging/media/imx/imx-media-csc-scaler.c   |  7 ++++-
+>  drivers/staging/media/meson/vdec/vdec.c            | 24 ++++++-----------
+>  drivers/staging/media/meson/vdec/vdec.h            |  5 ++++
+>  drivers/staging/media/sunxi/cedrus/cedrus.c        |  3 +--
+>  drivers/staging/media/sunxi/cedrus/cedrus.h        |  5 ++++
+>  drivers/staging/media/sunxi/cedrus/cedrus_video.c  |  5 ----
+>  50 files changed, 237 insertions(+), 100 deletions(-)
+> 
+> diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
+> index a6ffa99e16bc64a5b7d3e48c1ab32b49a7989242..cad548b28e360ecfe2bcb9fcb5d12cd8823c3727 100644
+> --- a/drivers/media/pci/ivtv/ivtv-driver.h
+> +++ b/drivers/media/pci/ivtv/ivtv-driver.h
+> @@ -388,6 +388,11 @@ static inline struct ivtv_open_id *fh2id(struct v4l2_fh *fh)
+>  	return container_of(fh, struct ivtv_open_id, fh);
+>  }
+>  
+> +static inline struct ivtv_open_id *file2id(struct file *filp)
+> +{
+> +	return container_of(file_to_v4l2_fh(filp), struct ivtv_open_id, fh);
 
-Currently, the logic treats tpdm_read_element_size as successful if
-the CMB element size is retrieved correctly, regardless of whether
-the DSB element size is obtained. This behavior causes issues
-when parsing data from TPDM devices that depend on both element sizes.
+Why not write:
 
-To address this, the function should explicitly fail if the DSB
-element size cannot be read correctly.
+	return fh2id(file_to_v4l2_fh(filp));
 
-Fixes: e6d7f5252f73 ("coresight-tpda: Add support to configure CMB element")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- drivers/hwtracing/coresight/coresight-tpda.c | 3 +++
- 1 file changed, 3 insertions(+)
+Same for all other drivers that do this. I prefer to have the contained_of()
+in just one place.
 
-diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-index 0633f04beb24..333b3cb23685 100644
---- a/drivers/hwtracing/coresight/coresight-tpda.c
-+++ b/drivers/hwtracing/coresight/coresight-tpda.c
-@@ -71,6 +71,8 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
- 	if (tpdm_data->dsb) {
- 		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
- 				"qcom,dsb-element-bits", &drvdata->dsb_esize);
-+		if (rc)
-+			goto out;
- 	}
- 
- 	if (tpdm_data->cmb) {
-@@ -78,6 +80,7 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
- 				"qcom,cmb-element-bits", &drvdata->cmb_esize);
- 	}
- 
-+out:
- 	if (rc)
- 		dev_warn_once(&csdev->dev,
- 			"Failed to read TPDM Element size: %d\n", rc);
--- 
-2.34.1
+> +}
+> +
+>  struct yuv_frame_info
+>  {
+>  	u32 update;
 
+<snip>
+
+> diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
+> index 1f134e08923a528cc676f825da68951c97ac2f25..74977f3ae4844022c04de877f31b4fc6aaac0749 100644
+> --- a/drivers/media/platform/allegro-dvt/allegro-core.c
+> +++ b/drivers/media/platform/allegro-dvt/allegro-core.c
+> @@ -302,6 +302,11 @@ struct allegro_channel {
+>  	unsigned int error;
+>  };
+>  
+> +static inline struct allegro_channel *file_to_channel(struct file *filp)
+> +{
+> +	return container_of(file_to_v4l2_fh(filp), struct allegro_channel, fh);
+> +}
+> +
+>  static inline int
+>  allegro_channel_get_i_frame_qp(struct allegro_channel *channel)
+>  {
+> @@ -3229,7 +3234,7 @@ static int allegro_open(struct file *file)
+>  
+>  static int allegro_release(struct file *file)
+>  {
+> -	struct allegro_channel *channel = fh_to_channel(file->private_data);
+> +	struct allegro_channel *channel = file_to_channel(file);
+
+So a file_to_channel inline function was added, but it is used in just one
+place.
+
+I would prefer to just drop the inline function and instead write:
+
+	struct allegro_channel *channel = fh_to_channel(file_to_v4l2_fh(file));
+
+If this is needed in two or more places, then the extra inline makes sense,
+but it is a fairly common pattern that it is only needed in the release function.
+
+Adding a new inline just for that seems overkill to me.
+
+>  
+>  	v4l2_m2m_ctx_release(channel->fh.m2m_ctx);
+>  
+
+Regards,
+
+	Hans
 
