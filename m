@@ -1,101 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-67822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06E66B1BE63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 03:37:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1027DB1BE69
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 03:48:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27A6C7AE094
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 01:35:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FAB57A2C18
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 01:46:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 944B213B293;
-	Wed,  6 Aug 2025 01:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1687E72614;
+	Wed,  6 Aug 2025 01:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ar7upmIc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ETZWtoZ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2591422DD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 01:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8D127455;
+	Wed,  6 Aug 2025 01:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754444234; cv=none; b=d6nJJEDEFbu0LLKYOqkt7jpQP0OsWUHckmyPPKpS9V32j2Ww4AHCV42q8Q1nKA0Mk1oVBFXo6MdsBuX8TEsMbqFTtN6tnGfeqqOkM52MQcjTbXleEz4DIKjpmiYyoTXBdHPZift21IrjggdNM9hV4XXEsoRXgG2ReDHEDCUdCPE=
+	t=1754444890; cv=none; b=iOZpyY5dsH2l6hXYyMmFSbdAzNLl2oTunKsid95TRq5OBEIImJ25Ovi8DpgdtUI8W32jjyveqXt9UfHeIO95pytwKIQdUmIv9AmJz3bKok1aEWUkINpJ/+Qg9AQ0ikDLcad4iHa1IlAMitQQplUema4kekSpSRwJtOWalrLqhq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754444234; c=relaxed/simple;
-	bh=RRE7SubbvLGoTInPGjBxocoPugbap9T5IPFdYvgN7rc=;
+	s=arc-20240116; t=1754444890; c=relaxed/simple;
+	bh=yOgUNYB83bxvih5HrdZGDPp9Csblycjbfn9C0Jfhjys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NSSE9ziyhaoeZyv+MprCCPfW84FWTX3RKPEAeZKI7v+WqMZQpHqUi/bg1MYRiAByZGVW/FN8dpqstKUlI9AywOeXImWq15vYsYktaHfFIUVZKtw2qnqmXg+f4yLfWRlWgDiMp9/R5eVpTG7yiHRADxrSLnaKtsOH3d4rFiqvxh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ar7upmIc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575I7bL2017946
-	for <linux-arm-msm@vger.kernel.org>; Wed, 6 Aug 2025 01:37:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Y5BGHsX5GwN0R/WPVZybiA6n
-	q6pOn7ZZQtqZPvsh1ZI=; b=ar7upmIcTc761VOtLtdC7DInUh1WzBUWngqNPJef
-	kyutXZ7bURFerkcVxvAMZGYzkJgT2d7x4TgcfZtmBbXxii3bCXoSflUqV4AIohc/
-	Eb0uYZCcKhXcS3mJ/DSTrX8MwVPrpLpgSIg3NGKkY2GFV/y6fHluxEbM03nJgvde
-	gmyEAPkDe0iPP/31TCgrn24ytFI75NFKZZDLFwImuW+YUzblEHFpio/LyiMHVxnR
-	6qeO0pvhdPqHhi6GnkOIjo6IMlRiS0ZKpeNOTbVMsxBMMjthMXVOLJhOk06Hd50f
-	+kmQIGTqvsB1pIOBT0mNNJ6ZDwiExAMt0OfJRgaUkzskLg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpy88ykx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 01:37:11 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b06a73b580so6410091cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Aug 2025 18:37:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754444230; x=1755049030;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y5BGHsX5GwN0R/WPVZybiA6nq6pOn7ZZQtqZPvsh1ZI=;
-        b=NM4aCAblRlTfS8AtPNPzdtM1Dfb8JdKZ1Su7C9ykS9IphELttaBWRQ6DGaYT0qj0k2
-         IZ61cmEyLGHl7qJ9pGGqHcjwSJiOWeC4Wnekxne0qdqCdfl3NlK0KX5ZsfSJ5zb8fc0C
-         zWO0Sl0qlgMug/qMHL2q3vdz5BzcUNlXVI47VSq+/lsySW3qG8BotBmQQJp3WVAN0750
-         XjtpI/vBoK09DEHcuCVI9TLiMSayB9A80R7/a4gOfDiGB/saM+V9SwV6wODDJDm88BLK
-         yNthniqTN25vtpPmKEnXlA9/D+ZDwOuhsOXAyzze5m3OFKe9NzWYCAaUFvMLxOAu7UIO
-         +4jg==
-X-Forwarded-Encrypted: i=1; AJvYcCWHbMruWu9F/D4cAqwrqxCBw1Y7y7D7XhqwXvbtAYdUR0/Iwc/0YeHCmC8do9Oxc8aY6zurInvb9myK+i65@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSLrrDOjGXGzNWyw+q+kSSHqwsNt/jw/peQwsvOUh1o1MwWxSv
-	x0eUtoiAmY4nDaB6w51PdjD6yOcdzD2d9IW6QVqy3z/SaOs4U0kplbEtej+yJ1uRk+tjkEuAi8t
-	4BXp24Fy15R6GsuLQkZWpqmLihaTe+fVgv7jqMJC6kgFN+RNW3BqNp1ZiXaZZfhK5WVaG
-X-Gm-Gg: ASbGncuLZbz16Fh7+LYffqsEO5bQkLjT1wcZeIPhHS/GO3YyMB1kDPsXssQEvdfOQ4U
-	QJYcML/OcbY5iHCsWVIr1AQWi6qC6BtrHCnm2mehITEoMJU4lq/UeYjdPaPDAEXkCfo2ZANwib9
-	k0z3aIEsIOaqObuw1u5dhOPmkyPojhoWkEsXRC5Q3t9ae2/UawrVLJL0W/Zjp7saVwSuo3xkXLl
-	q8Y0+sx4aH9A8pcCXfY0rCo2yP0g0VjtOiWJG4KQ34MKMXGDnGX9yEx60fqP130ihGvnbXkFbo4
-	75B6+P7h6sahFoqvzSESlsEYNbCgkfy2EZgnqRDx7sRbrNBhmP40WB9RCzEmzoUQiZE4UhWHkeI
-	YwbTYRqHMVkOQpyOWNM4v14xFJaOEBFtwY8BmTnxlzPBL64WqTbaY
-X-Received: by 2002:a05:622a:178c:b0:4b0:6ac0:c768 with SMTP id d75a77b69052e-4b0914d50e1mr16270611cf.30.1754444230374;
-        Tue, 05 Aug 2025 18:37:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRPy+CB7VNKZJKeGujjW/TC3XEhIKX487sXoFYQjy1GNxVzzWwyH5iYaG7LsA4AjRzdpZUzg==
-X-Received: by 2002:a05:622a:178c:b0:4b0:6ac0:c768 with SMTP id d75a77b69052e-4b0914d50e1mr16270471cf.30.1754444229806;
-        Tue, 05 Aug 2025 18:37:09 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898bd6esm2197151e87.6.2025.08.05.18.37.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 18:37:08 -0700 (PDT)
-Date: Wed, 6 Aug 2025 04:37:05 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Cc: bryan.odonoghue@linaro.org, quic_dikshita@quicinc.com,
-        quic_vgarodia@quicinc.com, konradybcio@kernel.org, krzk+dt@kernel.org,
-        mchehab@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 5/7] media: venus: core: Add qcm2290 DT compatible and
- resource data
-Message-ID: <to2hrxml3um6iep4fcxhkq7pbibuimfnv4kfwqzlwdkh4osk5f@orjzbuawwgko>
-References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
- <20250805064430.782201-6-jorge.ramirez@oss.qualcomm.com>
- <4chbcvub4scnv4jxjaagbswl74tz4ygovn3vhktfodakysbgy3@kukktkwd2zsr>
- <aJHgh8mon9auOHzi@trex>
- <aJHqpiqvulGY2BYH@trex>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CsHpWrUeQ2was6tI7fm51341YJIMlkMBRrTXCOqEB239JTchUlEUJr74RsuhKmkQyjlnA13GuZwc9cXbGL8kQlFYGcK4dGp2YD1vOYkLnDQsU/txw0O1RaSJGQI/udJ9H0IS+QIdY2sER8nxzL4NAGGWoCYJsNz0wAsUaBjK52c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ETZWtoZ1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDE7C4CEF0;
+	Wed,  6 Aug 2025 01:48:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754444889;
+	bh=yOgUNYB83bxvih5HrdZGDPp9Csblycjbfn9C0Jfhjys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ETZWtoZ1J1U6vPeKwtuBZ1llMNu5mGOu/Yn+4kgTVskXtRfvIMTC2GRZ4freoa01B
+	 U+mmSXTCvtkkjBuOnyIeXsIT1LV8CDltqYwl6X17lwyUENbA3mUcq9H1G4dlCwujft
+	 ZMi05QOzSuhzbCC8zsUPGT2KAkB0Az46SYYvkuD9Cday+/yqXk90QXSMvBzMA1PzOh
+	 Y4yn0pMkOLDGz6YQg/0E/0zO/cA1vZLqx6AWgKpAvBYSIh8ONqzIQgKslgPViKxKKJ
+	 3fcASWwtvkQc9tfS/TvofUr69/zA/wdXr2Ip4iOQLyTY3vCYKpKxaAPB7c6oFCr2O2
+	 WtOCaru9GQnMQ==
+Date: Tue, 5 Aug 2025 18:48:07 -0700
+From: Bjorn Andersson <andersson@kernel.org>
+To: Waqar Hameed <waqar.hameed@axis.com>
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, kernel@axis.com, linux-arm-msm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] usb: misc: eud: Remove error print for
+ devm_add_action_or_reset()
+Message-ID: <5bgmxatzdgkxvuko56siujzlokyie5ru53rgozxrdaey6awmqy@u5pzyrfc7ve3>
+References: <pndo6sukt8u.a.out@axis.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,99 +59,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aJHqpiqvulGY2BYH@trex>
-X-Proofpoint-GUID: bg94ff8iN8L9Y9YzfReV5DYW8yaMNrfz
-X-Proofpoint-ORIG-GUID: bg94ff8iN8L9Y9YzfReV5DYW8yaMNrfz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX0RE5MMtXFpnN
- sxMzlokN5xOKMor6sEMqZS6p6MQWocV8e33dEIoWuMIvRNN50sEyrS3+GSzPF8A6BrpGDjJXTPg
- cmfeyfgzG/OPXpfC1mEE+2OuVl7Y3oWFMnaFuxMEVCXilDNAkfFBqtJlHaW/TPbQIhymTCywSo2
- yJvpTqSO3d4XveAMmC4zvnupt5Q7HmjS1W19axLVn/s4v/hCVh3woE691z0Y2G5ApZAEd6qe5rc
- jGYBaVPkFwNGpjYAkcq6Ee+l194wzHI4DxDqB4zY2Z6WQUxHAyrebuG0Y2w8a7KrnLDpaiNtJEh
- LVpomnYfaWJl8bJ2XfJZqJZbf+XB2RXjMsJXtO1L+pl9dttmeDWBQMQ8X9m98G9bu7fq40xGoXf
- vUABHL0TvGxrCdRk9dvDItYStwNJ4Upwv5dw7+4BU18WpbHeGEHhAsAOeSnJXo4aTVTLEyxd
-X-Authority-Analysis: v=2.4 cv=GrlC+l1C c=1 sm=1 tr=0 ts=6892b1c7 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
- a=2yNqk32ZLtqgZHoNgFQA:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_05,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0 adultscore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
- definitions=main-2508060009
+In-Reply-To: <pndo6sukt8u.a.out@axis.com>
 
-On Tue, Aug 05, 2025 at 01:27:34PM +0200, Jorge Ramirez wrote:
-> On 05/08/25 12:44:23, Jorge Ramirez wrote:
-> > On 05/08/25 13:04:50, Dmitry Baryshkov wrote:
-> > > On Tue, Aug 05, 2025 at 08:44:28AM +0200, Jorge Ramirez-Ortiz wrote:
-> > > > Add a qcm2290 compatible binding to the Cenus core.
-> > > > 
-> > > > The maximum concurrency is video decode at 1920x1080 (FullHD) with video
-> > > > encode at 1280x720 (HD).
-> > > > 
-> > > > The driver is not available to firmware versions below 6.0.55 due to an
-> > > > internal requirement for secure buffers.
-> > > > 
-> > > > The bandwidth tables incorporate a conservative safety margin to ensure
-> > > > stability under peak DDR and interconnect load conditions.
-> > > > 
-> > > > Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > > > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > > > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> > > > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > > > Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> > > > ---
-> > > >  drivers/media/platform/qcom/venus/core.c | 50 ++++++++++++++++++++++++
-> > > >  1 file changed, 50 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> > > > index adc38fbc9d79..753a16f53622 100644
-> > > > --- a/drivers/media/platform/qcom/venus/core.c
-> > > > +++ b/drivers/media/platform/qcom/venus/core.c
-> > > > @@ -1070,6 +1070,55 @@ static const struct venus_resources sc7280_res = {
-> > > >  	.enc_nodename = "video-encoder",
-> > > >  };
-> > > >  
-> > > > +static const struct bw_tbl qcm2290_bw_table_dec[] = {
-> > > > +	{ 352800, 597000, 0, 746000, 0 }, /* 1080p@30 + 720p@30 */
-> > > > +	{ 244800, 413000, 0, 516000, 0 }, /* 1080p@30 */
-> > > > +	{ 216000, 364000, 0, 454000, 0 }, /* 720p@60  */
-> > > > +	{ 108000, 182000, 0, 227000, 0 }, /* 720p@30  */
-> > > > +};
-> > > > +
-> > > > +static const struct bw_tbl qcm2290_bw_table_enc[] = {
-> > > > +	{ 352800, 396000, 0, 0, 0 }, /* 1080p@30 + 720p@30 */
-> > > > +	{ 244800, 275000, 0, 0, 0 }, /* 1080p@30 */
-> > > > +	{ 216000, 242000, 0, 0, 0 }, /* 720p@60  */
-> > > > +	{ 108000, 121000, 0, 0, 0 }, /* 720p@30  */
-> > > > +};
-> > > > +
-> > > > +static const struct firmware_version min_fw = {
-> > > > +	.major = 6, .minor = 0, .rev = 55,
-> > > > +};
-> > > 
-> > > This will make venus driver error out with the firmware which is
-> > > available in Debian trixie (and possibly other distributions). If I
-> > > remember correctly, the driver can work with that firmware with the
-> > > limited functionality. Can we please support that instead of erroring
-> > > out completely?
-> > 
-> > yes, in V7 I did implement this functionality plus a fix for EOS
-> > handling (broken in pre 6.0.55 firmwares).
+On Tue, Aug 05, 2025 at 11:33:37AM +0200, Waqar Hameed wrote:
+> When `devm_add_action_or_reset()` fails, it is due to a failed memory
+> allocation and will thus return `-ENOMEM`. `dev_err_probe()` doesn't do
+> anything when error is `-ENOMEM`. Therefore, remove the useless call to
+> `dev_err_probe()` when `devm_add_action_or_reset()` fails, and just
+> return the value instead.
 > 
-> just re-reading your note, in case this was not clear, the _current_
-> driver upstream will never work with the current firmware if that is
-> what you were thinking (it would need v7 of this series to enable video
-> decoding).
+> Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
 
-I'd really prefer if we could support firmware that is present in Debian
-trixie and that has been upstreamed more than a year ago.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
+
+> ---
+> Changes in v2:
+> 
+> * Split the patch to one seperate patch for each sub-system.
+> 
+> Link to v1: https://lore.kernel.org/all/pnd7c0s6ji2.fsf@axis.com/
+> 
+>  drivers/usb/misc/qcom_eud.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index 83079c414b4f..67832790acad 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -193,8 +193,7 @@ static int eud_probe(struct platform_device *pdev)
+>  
+>  	ret = devm_add_action_or_reset(chip->dev, eud_role_switch_release, chip);
+>  	if (ret)
+> -		return dev_err_probe(chip->dev, ret,
+> -				"failed to add role switch release action\n");
+> +		return ret;
+>  
+>  	chip->base = devm_platform_ioremap_resource(pdev, 0);
+>  	if (IS_ERR(chip->base))
+> 
+> base-commit: 260f6f4fda93c8485c8037865c941b42b9cba5d2
+> -- 
+> 2.39.5
+> 
 
