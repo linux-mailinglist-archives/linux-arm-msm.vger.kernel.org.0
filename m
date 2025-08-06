@@ -1,145 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-67891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3AA1B1C495
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:00:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 056D0B1C4AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 13:14:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3362560789
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:00:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B278B3A286F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Aug 2025 11:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D24728B4F3;
-	Wed,  6 Aug 2025 11:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C8B1289803;
+	Wed,  6 Aug 2025 11:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zXhWhPTo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mlbv/7NT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD351C8603
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Aug 2025 11:00:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BAE1DE89B;
+	Wed,  6 Aug 2025 11:14:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754478010; cv=none; b=ozE2pA2pTGBkym2mlrnM0FpU2IScQyWf6iNBLF/VOPQc4EfdHE5EtQDYVHfjNu0Mk/LBH4o1vSTC9GnQLTsg273+/4+6OXQgMcDl76EpAMAWk19FG+YN7iiDpFu/Lf4h+0H5yJXql8XCOJFRxYJN+q02pinjr3Ud/HZ1ZD2PQ3I=
+	t=1754478861; cv=none; b=bVjedaClkuXuug/7gbXJTptuiglH8XrH2koXuPmW41tJ9bU0RuuKzJGajZ7sh1Yd71XXKwh9IRhRhHeAwvQ+i3xKuhK8QZWRn71UmSsNJykk9iBksVhG6Jdaie5Zd8ELPPWmj9vqs35YM3AX7naiAntYWM6aju4UpGHVyVeJnAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754478010; c=relaxed/simple;
-	bh=ztmA5grMhynCFB2kUGWvxLZcBQdunX1Q6gK/ADIuAQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TP6H5+XEAYJRIH2KYFq5k4lCBFh2s8ypgmff0Q7Yqvn3yQL4NT6fiszuG7tQsL0/gfax9ALsp5J1YWmzp4eyuBEGngfxqWMWGgDzzSarnaZgBLP8t1PMV5ILNX435F6kotmHCt904hlJwysgBr3o0R/E4QQrajnjpeQx+OsXECc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zXhWhPTo; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b794a013bcso5701963f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Aug 2025 04:00:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754478006; x=1755082806; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YCmVre5gjeM4nS/wqXusx4xVtaJFxkhLqF5sa87a9kc=;
-        b=zXhWhPTonY0/LNpKu0zP/6GZrHtMMsNMHG2zeLcGcIRxxjfVIuRJUQHg2C2wC7+zz/
-         jtBlY0fW7pYM276izuSRcz5uLs9p3adLSijYtdxJmUn+ArA4A/J/Hy4Q05Uq0fjgEQJp
-         4LbtZdrXYBH+45VKWuvJV0mDSa+EX5YPG5Iyn5xZC/6lz4gaMHkPEVAAmfZR84AR51VY
-         W37SJhdVfr6TbhijppYsTFmmJihvg5OOS75ZGi93HssHr8isI+ZwLajLPVplbhiL+dst
-         BlsrL6iD2VrYBgUya7FCSohs63Bn3SiPmNA3s8xA1s58XXhjylGLly841ksn0NbvXyob
-         MKow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754478006; x=1755082806;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YCmVre5gjeM4nS/wqXusx4xVtaJFxkhLqF5sa87a9kc=;
-        b=py6qQnQrsTlnum/MXNfQYaa2G2Uu8YaoA8P/fBrhmA7kWGYLCG8J8Ea/OkB3Z64NFV
-         a+ETzuto3jMoLdzcqT/KQctXyyl0Kvi8lFCAL/DtBrlbYn0blirPgZUn7bf2R2zZPDCD
-         2Nm6TjTOwo3aZGhDxGyPG3JbxGygLtqt+2xMhbq9i+KrevUjiQXnnNIs4b4GVQNKQrIx
-         2EkIlIGcKeQP4WvzHfYTggVpUguaNq4YfDrw99LSMf2KkXGRahvlfzV7m9kRzl27BPmC
-         XxpB2XklkmmLDHGQAi0eVsEW4KXdF9Dqx7YhNkGddbmx30ZYDDJTOAWDxhqDs01mpJ+t
-         OVEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWVlYIIC1xCfxmqQeJlG3gNhV0dcpBkJpSAAqJJ2HoCR4sZeH6QWRS54yU1nFmyj+ZhzWnwtpkBodUcjfq9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/iTrk/imxCqKrsvvnHR14iO/D0sR/p6GGLek94SrK/GSAOHgv
-	zCN0imgK77RaOJQ2L+Wmox5zl4jFlFk+xM+F/Otjh2wHEJ/sdKCtwEb7TuGPr1MCWIQ=
-X-Gm-Gg: ASbGnctL54Ex0SO343CaNIr5DifWx3UTZqGAvga0rkd0Wv9igJHrhWzhOWFY2XwQv1E
-	1JUIwbnU67TdmVH3plGqHlxKE32AvCBe4ZO8gOGSnCIJieTH0SKZGOuKAx2ThXds+7GJksi3LYB
-	fBYAF7TWh8OaTdi4V35Ws55Ip/lE7W1pOyFzjOAbMtcXnCvF+/4Nro/IjKD6XmgitfPvXRjHQQI
-	74Hwf5ca9gIfxZS0v3qaKayd7tDPAqPRMa1lK9vEppmkAJVETuTcZAw429NlR7lge3kV2Bwilee
-	wU3FFHnG5Rxw1mULwz17UbUeBBKdOaGr69HWKfkzrfK3/vyhX4KMBM948nwlnDBaZcSHwVREt34
-	1tcxkW1ADSPoGr9Y0hYlghdJXPSM=
-X-Google-Smtp-Source: AGHT+IED1ObJfhfJTF9IANk5X4B6IPDP0k6oF3FpmB8DzDbBAJ47RdFvv8Mlx8ZmKpcul2JbAtAwiA==
-X-Received: by 2002:a05:6000:2001:b0:3b7:8d70:dac5 with SMTP id ffacd0b85a97d-3b8f48de435mr1517659f8f.2.1754478006344;
-        Wed, 06 Aug 2025 04:00:06 -0700 (PDT)
-Received: from [192.168.1.3] ([185.48.76.109])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e585430csm43379465e9.11.2025.08.06.04.00.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Aug 2025 04:00:05 -0700 (PDT)
-Message-ID: <e08322f9-3bce-468f-b951-21eff63cde4d@linaro.org>
-Date: Wed, 6 Aug 2025 12:00:04 +0100
+	s=arc-20240116; t=1754478861; c=relaxed/simple;
+	bh=mNe25aTo3XYao1BlrSYDRvkkEi8DqHgrJvgLOBQ+9H8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AGW6fP/a9XAamfjHjugxvNtJ0SdXOAvL2wI6WnsBsTr5CJ26Mm73rfC06TYlPdAMJK9N2iosFCTy0tx/NzFchc09t67dciWfP3EemW121l4MMGaTNbZLBFayGa8byik29bj6BFXsvDKDx8B9coMilVajTpz/YsqKUXcrHPLgsl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mlbv/7NT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB80C4CEE7;
+	Wed,  6 Aug 2025 11:14:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754478861;
+	bh=mNe25aTo3XYao1BlrSYDRvkkEi8DqHgrJvgLOBQ+9H8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mlbv/7NTFliu1A7FMJ+jSoONJT/l4Gf9kt5Eo/nee7UHqFPtxqIMkID15z06ePOX6
+	 5rLDYr9lyZ+HJ7Tqfi6/kULPztklxU3uNgG8G6JUFyV9ZW8see3TT6haBvMZ1VXqWL
+	 0Ac4vNDwLBxOVGFga33yV2VQivJDputwTcECBFG9B9UNu+e8HbMgdjMJZ6SbD0FQ7f
+	 TZcRb+CTDFBdslFxFL4njQxpxX8U8wzJFyBOmIjNcZXAwWKgvRqEMX8LoT8pGkeMsT
+	 S/bpGElHajhHaT3nPj4+7gIkOK1xugc2p3kdgFTr+qSohoUZbHYrfKqb8vT+AC3eMi
+	 av2XtHJiVdy5Q==
+Date: Wed, 6 Aug 2025 16:44:14 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Palash Kambar <quic_pkambar@quicinc.com>
+Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_nitirawa@quicinc.com
+Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for  UFS controller v5
+Message-ID: <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
+References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] coresight: tpda: fix the logic to setup the element
- size
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: tingwei.zhang@oss.qualcomm.com, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Suzuki K Poulose <suzuki.poulose@arm.com>,
- Mike Leach <mike.leach@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Tao Zhang <quic_taozha@quicinc.com>, Mao Jinlong <quic_jinlmao@quicinc.com>
-References: <20250806080931.14322-1-jie.gan@oss.qualcomm.com>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20250806080931.14322-1-jie.gan@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250806063409.21206-1-quic_pkambar@quicinc.com>
 
-
-
-On 06/08/2025 9:09 am, Jie Gan wrote:
-> Some TPDM devices support both CMB and DSB datasets, requiring
-> the system to enable the port with both corresponding element sizes.
+On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
+> Disable of AES core in Shared ICE is not supported during power
+> collapse for UFS Host Controller V5.0.
 > 
-> Currently, the logic treats tpdm_read_element_size as successful if
-> the CMB element size is retrieved correctly, regardless of whether
-> the DSB element size is obtained. This behavior causes issues
-> when parsing data from TPDM devices that depend on both element sizes.
+> Hence follow below steps to reset the ICE upon exiting power collapse
+> and align with Hw programming guide.
 > 
-> To address this, the function should explicitly fail if the DSB
-> element size cannot be read correctly.
+> a. Write 0x18 to UFS_MEM_ICE_CFG
+> b. Write 0x0 to UFS_MEM_ICE_CFG
 > 
-> Fixes: e6d7f5252f73 ("coresight-tpda: Add support to configure CMB element")
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
 > ---
->   drivers/hwtracing/coresight/coresight-tpda.c | 3 +++
->   1 file changed, 3 insertions(+)
+>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-qcom.h |  2 ++
+>  2 files changed, 26 insertions(+)
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index 0633f04beb24..333b3cb23685 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -71,6 +71,8 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->   	if (tpdm_data->dsb) {
->   		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
->   				"qcom,dsb-element-bits", &drvdata->dsb_esize);
-> +		if (rc)
-> +			goto out;
->   	}
->   
->   	if (tpdm_data->cmb) {
-> @@ -78,6 +80,7 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->   				"qcom,cmb-element-bits", &drvdata->cmb_esize);
->   	}
->   
-> +out:
->   	if (rc)
->   		dev_warn_once(&csdev->dev,
->   			"Failed to read TPDM Element size: %d\n", rc);
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 444a09265ded..2744614bbc32 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
+>  		ufs_qcom_device_reset_ctrl(hba, true);
+>  
+> +	host->vdd_hba_pc = true;
 
-Reviewed-by: James Clark <james.clark@linaro.org>
+What does this variable correspond to?
 
+> +
+>  	return ufs_qcom_ice_suspend(host);
+>  }
+>  
+> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>  	return ufs_qcom_ice_resume(host);
+>  }
+>  
+> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
+> +				    enum uic_cmd_dme uic_cmd,
+> +				    enum ufs_notify_change_status status)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	/* Apply shared ICE WA */
+
+Are you really sure it is *shared ICE*?
+
+> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
+> +	    status == POST_CHANGE &&
+> +	    host->hw_ver.major == 0x5 &&
+> +	    host->hw_ver.minor == 0x0 &&
+> +	    host->hw_ver.step == 0x0 &&
+> +	    host->vdd_hba_pc) {
+> +		host->vdd_hba_pc = false;
+> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
+
+Define the actual bits instead of writing magic values.
+
+> +		ufshcd_readl(hba, UFS_MEM_ICE);
+> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
+> +		ufshcd_readl(hba, UFS_MEM_ICE);
+
+Why do you need readl()? Writes to device memory won't get reordered.
+
+> +	}
+> +}
+> +
+>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>  {
+>  	if (host->dev_ref_clk_ctrl_mmio &&
+> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
+>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
+>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
+> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
+
+This callback is not called anywhere. Regardeless of that, why can't you use
+ufs_qcom_clk_scale_notify()?
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
