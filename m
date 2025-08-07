@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-68034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77474B1DBC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 18:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE09B1DBC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 18:34:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6CEAF7A0141
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 16:32:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A39E7A43E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 16:32:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4881A2727E3;
-	Thu,  7 Aug 2025 16:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCA3927145D;
+	Thu,  7 Aug 2025 16:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dBHrxj0N"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inP1U+j8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9A7269CF0;
-	Thu,  7 Aug 2025 16:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14CB270EDF;
+	Thu,  7 Aug 2025 16:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754584420; cv=none; b=esNl79VxhYAwsBi8jP2K8WqxBjEowNQMGJw0LG2qibebsBQZM3JUrouwzvw6SvTSJ6myyWK7Z/47XHkrEBAoRkDBsaQUDtfOiZ+e6hHNzcBb9hLm8KmWNBZ97Wmh2PFCk/zYwtTDnoooBMqs1AZBuU9zOgHWDNYyqf5G0FUNxy8=
+	t=1754584425; cv=none; b=YKdIb7oIIh60QQyLgQBbZf3xRmHSZ1x0fGRQfmaOzIkGNoKgl8LPGXkX3sHGG2qkRLUd0u5U3CM1GVddrP2dVdR5PnIcRrJIfU2/px+xumKPY6blUOkspmtyQnJyOobRnV7onqd6XQNP7MqI+It5lHHwb05FIrssWXyrQdaAbBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754584420; c=relaxed/simple;
-	bh=jvWzq/jhwmzxUOYWJiEWx1AbYjz8lwwJJyycnQyUSE0=;
+	s=arc-20240116; t=1754584425; c=relaxed/simple;
+	bh=vH+XAhFoFw8bFy65i97uyeO5sSUgfdapXmGNVliPTCY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G/BVEwY1KQlfQRDhkgqDZaQ5gONy88/3fJhALVWmD7ognE2+0bzGU6YBtNA8/XRhgO2IT7+l0O23aaejt8nIy/ttcOzdVG0wGR3UYIu++Gk9//nZ0LDIHzaH3tCgz4ZphX66HOsIGDUv194b0KbfdP9Z7v6vAUCzNtizczZUqfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dBHrxj0N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED5FC4CEF7;
-	Thu,  7 Aug 2025 16:33:36 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=DUq7206QIGvGrD67yO7hEihPG0RJNdfvv/XSGR70Zu3mX5l3zrAkG9KDg/2lCpCFaeOYrdges7wG6dzTRUp0MVl2lSLVWSG/Vg/z3IEM2ydHDDY7Mwv8CWd3NGr7KIyiEKBreymCgpFiUhMXBpUZln0nhk1X6Jw29tRkz/l2pWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inP1U+j8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8D8C4CEEB;
+	Thu,  7 Aug 2025 16:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754584419;
-	bh=jvWzq/jhwmzxUOYWJiEWx1AbYjz8lwwJJyycnQyUSE0=;
+	s=k20201202; t=1754584423;
+	bh=vH+XAhFoFw8bFy65i97uyeO5sSUgfdapXmGNVliPTCY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=dBHrxj0NsrkSB4c4DT9Im33s/MGvLORvJm5GYeSnSSeAJYY7HRr8T6pWdiFRJm5Kb
-	 An16m++E8vMn6FIvlfJYZaYyWnWTTBieNOVAmcUOJsDjwG+SxaXjWRT8c6lt+7efZY
-	 zZ26F8DSDmcEHjohE3RZT+1dIboO6a56AL8Gw2WSdVR/TBuuao9vufBaJtXJ8CswMX
-	 FxfRNINjshIqR3dapAvT8lJCHMU3EXzdfc+glY0NgLS5TPFupbnm+EwjPHtvjtOdy+
-	 o76EYd1VnOD7+qRRxfIve/RwRATI20ru6+wShwwghF1QGwUe193chpf0nxIKSb2BC2
-	 TvyPP6KduFImQ==
+	b=inP1U+j8GLuygHdBHyI5g2HB8++hrj50TXnv9YbSqem2vjoV45o8w5WP9IZTMJrZb
+	 sLY46LvtRUvmVUq9ZkiZjiSzdbAdWi3VTuntv4XiTIj7c+QOOV3AoaOlg3iuxvstA9
+	 74qcPVw5oUOaBMB0VB5D1rAVtCArHJK13Fb8SIVpHL5yUi8hhaROOsh+Yn3BpkCiin
+	 pC/sjvAcdZ52vZQg2iTuvZRJYHBCpxn1VdhY6Huw3vbTkOIJ4TMI3gl6VisCVnxWOA
+	 SN8v/Q62sJTiy8iuCBejNQrj8syvCU+fWXBCzTt/oBeeSddmB9jGtkrRw9Rd9wahMw
+	 iAp0W6j6lS8jA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 07 Aug 2025 18:33:21 +0200
-Subject: [PATCH v4 3/6] phy: qcom: qmp-combo: store DP phy power state
+Date: Thu, 07 Aug 2025 18:33:22 +0200
+Subject: [PATCH v4 4/6] phy: qcom: qmp-combo: introduce QMPPHY_MODE
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250807-topic-4ln_dp_respin-v4-3-43272d6eca92@oss.qualcomm.com>
+Message-Id: <20250807-topic-4ln_dp_respin-v4-4-43272d6eca92@oss.qualcomm.com>
 References: <20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com>
 In-Reply-To: <20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -64,59 +64,105 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754584403; l=1451;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1754584403; l=3132;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=+D+J82kl0yf0XLZMz4TAWGQQKkf7pfXxbzQ3gQGkHyA=;
- b=AU+OQLFF8A1GAcGZDKFR80JBuuir7Yo8Y7YbSR24jYhoa5Ct/EOHXPKl7tZ4tZnN7PcI4lNWe
- /2aPdOIO1LoCzcbu6SFfvnLDJcWMeL31lBdEPxhQKhKeBMZ/lEeWZO8
+ bh=wwNxslbPGJK/G//pcTLP5e9hP0rnAe22Nbzx6I8BS6A=;
+ b=O3EkWAfpwOBee9+xb4F8ZXG5qiQHu0ZfS1BfuPaHUlsViOcPtkxfqQRmWujBK0WLBPAqRVqN7
+ 8fDIFIGYNwoAYNotjtZ4d1adHE6RtEJ2Q/LPHDE2w610r4MMtX/EPRl
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-Switching the PHY Mode requires the DisplayPort PHY to be powered off,
-keep track of the DisplayPort phy power state.
+Introduce an enum for the QMP Combo PHY modes, use it in the
+QMP commmon phy init function and default to COMBO mode.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+[konrad: some renaming and rewording]
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 44 +++++++++++++++++++++++++++----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 30749943f66280c3aa9e9673466f6f736d1adbc8..8395035754975808ee1b5b9c48d046a719e79e60 100644
+index 8395035754975808ee1b5b9c48d046a719e79e60..c65837fc9e4c38673fc61d3ae66072ba5a265a70 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -1853,6 +1853,7 @@ struct qmp_combo {
- 	unsigned int dp_aux_cfg;
- 	struct phy_configure_opts_dp dp_opts;
- 	unsigned int dp_init_count;
-+	bool dp_powered_on;
+@@ -62,6 +62,12 @@
  
- 	struct clk_fixed_rate pipe_clk_fixed;
- 	struct clk_hw dp_link_hw;
-@@ -3133,6 +3134,8 @@ static int qmp_combo_dp_power_on(struct phy *phy)
- 	/* Configure link rate, swing, etc. */
- 	cfg->configure_dp_phy(qmp);
+ #define PHY_INIT_COMPLETE_TIMEOUT		10000
  
-+	qmp->dp_powered_on = true;
++enum qmpphy_mode {
++	QMPPHY_MODE_USB3DP = 0,
++	QMPPHY_MODE_DP_ONLY,
++	QMPPHY_MODE_USB3_ONLY,
++};
 +
- 	mutex_unlock(&qmp->phy_mutex);
+ /* set of registers with offsets different per-PHY */
+ enum qphy_reg_layout {
+ 	/* PCS registers */
+@@ -1844,6 +1850,7 @@ struct qmp_combo {
  
- 	return 0;
-@@ -3147,6 +3150,8 @@ static int qmp_combo_dp_power_off(struct phy *phy)
- 	/* Assert DP PHY power down */
- 	writel(DP_PHY_PD_CTL_PSR_PWRDN, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
+ 	struct mutex phy_mutex;
+ 	int init_count;
++	enum qmpphy_mode qmpphy_mode;
  
-+	qmp->dp_powered_on = false;
+ 	struct phy *usb_phy;
+ 	enum phy_mode phy_mode;
+@@ -3037,12 +3044,33 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
+ 	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
+ 		val |= SW_PORTSELECT_VAL;
+ 	writel(val, com + QPHY_V3_DP_COM_TYPEC_CTRL);
+-	writel(USB3_MODE | DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
+ 
+-	/* bring both QMP USB and QMP DP PHYs PCS block out of reset */
+-	qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+-			SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
+-			SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
++	switch (qmp->qmpphy_mode) {
++	case QMPPHY_MODE_USB3DP:
++		writel(USB3_MODE | DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
 +
- 	mutex_unlock(&qmp->phy_mutex);
++		/* bring both QMP USB and QMP DP PHYs PCS block out of reset */
++		qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
++				SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
++				SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
++		break;
++
++	case QMPPHY_MODE_DP_ONLY:
++		writel(DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
++
++		/* bring QMP DP PHY PCS block out of reset */
++		qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
++				SW_DPPHY_RESET_MUX | SW_DPPHY_RESET);
++		break;
++
++	case QMPPHY_MODE_USB3_ONLY:
++		writel(USB3_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
++
++		/* bring QMP USB PHY PCS block out of reset */
++		qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
++				SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
++		break;
++	}
  
- 	return 0;
+ 	qphy_clrbits(com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
+ 	qphy_clrbits(com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
+@@ -4053,6 +4081,12 @@ static int qmp_combo_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_node_put;
+ 
++	/*
++	 * The hw default is USB3_ONLY, but USB3+DP mode lets us more easily
++	 * check both sub-blocks' init tables for blunders at probe time.
++	 */
++	qmp->qmpphy_mode = QMPPHY_MODE_USB3DP;
++
+ 	qmp->usb_phy = devm_phy_create(dev, usb_np, &qmp_combo_usb_phy_ops);
+ 	if (IS_ERR(qmp->usb_phy)) {
+ 		ret = PTR_ERR(qmp->usb_phy);
 
 -- 
 2.50.1
