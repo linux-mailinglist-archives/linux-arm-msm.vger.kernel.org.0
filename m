@@ -1,91 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-68026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 673B7B1D9FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 16:34:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5817BB1DA8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:07:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6788725F9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 14:34:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5521C18A836E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 15:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 519C2263C90;
-	Thu,  7 Aug 2025 14:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58B73264A97;
+	Thu,  7 Aug 2025 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tb+oAIJG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jgxtn1mY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14350262FE4;
-	Thu,  7 Aug 2025 14:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9364125DCE5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 15:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754577292; cv=none; b=Vt2WH75Nk5bpqu/bjnn0dwZhb3SYoe/7WZQx2opO4gT0ahBkZrnif9h2BEVS1w3zQZCWuPXWtO3wYPutdU9xnVRmHrDtEs7zeuBtM5JyfroArUTrip43SM3MxY/UWZubipYRB03UzAnBMv7uDCn8/+MIk3ZvNx9lWFIXhuZiwJQ=
+	t=1754579250; cv=none; b=WQr0j6vjuzaHqcAEoS7AYoJeaf3osPfP6Rrk579Fj1q0ro1qmcI7Ko2oadNIxA/S176Thy9WZrEoCRcZVpca1cHOIHOZVqFf1zYt5jT+zfE3OnbKzGWJAmodahBrMbR9Jf7ejnNDr4rquDgr9cOsKewFXHablFHS+h6+Fs4AlSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754577292; c=relaxed/simple;
-	bh=oIv1AhxQFm1DY8j3ea6WxxB3ZICPAWl1Q01D/LXQQNk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e+qdMTc5wVdAe32ECidtcHqzkgo43fGU3qQMfoEPYs2SF2hNut8snpfucRWl/79vfcg30vTW8nciz+bgdsEUQ5XEiBSmdObnqSHga5vKsZnknQPAB1zjcm5Peuo3g7KZxARObpCVBnowXgmSgv6yCPW0IFSJI8jb3TtpJaug7ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tb+oAIJG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3437BC4CEEB;
-	Thu,  7 Aug 2025 14:34:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754577291;
-	bh=oIv1AhxQFm1DY8j3ea6WxxB3ZICPAWl1Q01D/LXQQNk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tb+oAIJG1EQrqKdSa/yHJeVXXPszvhr/D0rOkd5DHzQNl9eFcZLP24GH4cqJZBDvV
-	 mdXyk4pdXIuts6n3HcV2hMhmnSGA/u+ZeHLvIarn/6C3ALmRfWFfphgcklcN5VDf57
-	 nOkuNpW+YGjEmmuWP7W/1C6EedU6jX0NzGYcHGtc2yzEzxLuklZAayWZASyORozzg4
-	 Osfb25rQf8BE6CzLRRxyTuOckLEJC2at53+sTM/OBdxk6j1nVFi9oh6wwXV+Hbb0To
-	 Rx1qNo2d4ujXXovSx1xDwsMuJEfC/kPJ6pbnSs1v3199nvePPhlWd5xRy5pIgEcmYv
-	 jzFDysiwIhDQQ==
-Date: Thu, 7 Aug 2025 07:34:44 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Arnd Bergmann <arnd@kernel.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Antonino Maniscalco <antomani103@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jun Nie <jun.nie@linaro.org>, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-Subject: Re: [PATCH] drm/msm/dpu: avoid uninitialized variable use
-Message-ID: <20250807143444.GA1009053@ax162>
-References: <20250807072016.4109051-1-arnd@kernel.org>
- <ouan6tfmoefwuvs7wmhpzjdwmxfhqh3ad26j5tmwdugnq7ieda@ddw6dfqtq27g>
+	s=arc-20240116; t=1754579250; c=relaxed/simple;
+	bh=igUCIrrVeGDZErz4UxdMxyeKYvyk5C5rg69rGcCFkFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SJHs7dE0yBXXTphnixTH0QRj9krPZ+yAwWQTIB+VCZbRmSmWmNe8UJYA2u4BhTA57cMF7+dW1L0N+5ZBm+I3vlYsa3Lw7emSTryESmhUZLOqDKnm3jHwL2YWNsrOJT1ZnAH1uenhe7pbWZyIoY99+fVmN60IhOjB69HIxQA4SIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jgxtn1mY; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-458b49c98a7so7782255e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 08:07:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754579247; x=1755184047; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HgzYIUCs5H0EjucoUMdBhHY0eYxFj3kegJfd7p4lHyw=;
+        b=jgxtn1mYLafJXNX4H96Umxia0R7Z9LwqBKvFX17OnrSb0ECn1aMJ0fMuWuT1kb2ZSi
+         +B6XuanWdg2Tzc9eDvBdqJcPSwwXfR1zUP74RfRswjwH4eIeOJV1sSm6dwOKvlOV6nNX
+         k48bpJaQ/CSiNTnIKJuv34An7PONJJ4Sonn0QZd9gp+UC47Rf5NYk5lxOvpSQOT+ShW6
+         3xZWF5JtewtqbgfwhoG++Sdq5ztYc0Jfjcj1Q70b8J9ES0af96qAxQwqF+EfyHdfvuU6
+         Tp7/UWFSGa4Lve6sab7mcogHFzC5Fd31RSlAByJiA8PdAAmrHK3tM9vf/gHEvQJCsjek
+         K6GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754579247; x=1755184047;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HgzYIUCs5H0EjucoUMdBhHY0eYxFj3kegJfd7p4lHyw=;
+        b=NpMxGsusWCPIhiE42o5NF7v6AXV0+LLuJ17C1cGmm8oeanrL0RzH0VxFco4rRc322N
+         lRm00VIoR9b56+SyX6gciNMn/rPT5MzHOYU6Fw/qc5YsNUQ0bQEkAwAej/aWfFg/S+8j
+         Tz0AG0REOy8pvJSeHkmaWW5ROJrTUawC7TvqaXhkEX3owPIxW0OLGWnDlLQ6f6MmTNyD
+         5iQEhd/VaJD3jyienwzt/B95+GAMA+OClOBQwTTmK+5rIUdtQ3TfTxWUhJst33zvK6Xv
+         Awgb11VsBSaVNf12WFF0/u4xZOx+TKvEb4IKcsK7mRcBaNF+j1E21jCYfrDDA7EQ0+mQ
+         es1w==
+X-Forwarded-Encrypted: i=1; AJvYcCVQfHXshBqyfJQbQRy99BHVR/Fvwg5Fa8/OmVFOSEC+aW/jobciff1FYHc2nBjOR/9UytMplgAyvtcq+Gfq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEBnbJfDL8x3MRTlEL/rrffUL3r5oA0I0jg4SY0cNu+m2Gn4wM
+	srIj21pUvv+Dl8RPVYBMaSrKturA6M0t7ILn4XWGPJ8B7B1m4F3ZQwzuyUYdZLDKvBI=
+X-Gm-Gg: ASbGncvogKfHXUvd+U9S1o1KgNlnbMLAPJFMAQ/tQPUgLWiij+4vXZnBuE1YlWrd/F3
+	Fmrs7vpLI1HrYCl7dqpQjjou+rMvssCjZAGq/CPAcGMdJY7NLdng6Y9ci+704S1wBulYdCrmGFY
+	KrzhZ/jmmUDdwZKuegWrLsrTmXmegSdTFka2zSViDAESc4Yj00TMm0c6n5/BAKyz6BsbF8ag87R
+	WnzRAmRBkDa8+mq4/FNFvRWkP7mvIlPGpFr8cKTVfxjU19D4KmbgT3sYXy1Vm+oO/g9rNpFGyk4
+	dzEE15rQVKYSYa0Z7NBfvFhNQI9zTbMCI0zi5YszMOranzvagU7T59Fd3zKwmOARVWimzJVDRLG
+	nuq4QxMaVywc3X4wEmpUbNEwX7BqhUJLGElDA0XzgRm1mZXGK1DUYyS2HC2fFrbI=
+X-Google-Smtp-Source: AGHT+IHbhigFLzcg3fsj4+0TiFhPaNiMmWn7iuuNGJLANEcANPokPhbhdIImZT953oUB7uv8oVzyaQ==
+X-Received: by 2002:a05:600c:3b03:b0:459:da89:b06 with SMTP id 5b1f17b1804b1-459e70eeaffmr72328125e9.16.1754579246485;
+        Thu, 07 Aug 2025 08:07:26 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5e99e04sm93498145e9.11.2025.08.07.08.07.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Aug 2025 08:07:26 -0700 (PDT)
+Message-ID: <63ce3c8b-51a3-45a7-a40e-330839d7dbf3@linaro.org>
+Date: Thu, 7 Aug 2025 16:07:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ouan6tfmoefwuvs7wmhpzjdwmxfhqh3ad26j5tmwdugnq7ieda@ddw6dfqtq27g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] [RFT] arm64: dts: qcom: sm8250: extend CAMSS with
+ new CSIPHY subdevices
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
+ <20250612011531.2923701-10-vladimir.zapolskiy@linaro.org>
+ <dcc33f04-1b19-47d7-aca2-03d38173b6b6@linaro.org>
+ <eb42d052-1fe0-49a2-9a83-05c5a5b7394e@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <eb42d052-1fe0-49a2-9a83-05c5a5b7394e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 07, 2025 at 11:09:38AM +0300, Dmitry Baryshkov wrote:
-> Having no plane->crtc is a valid setting and it is handled inside
-> drm_atomic_helper_check_plane_state() by setting plane_state->visible =
-> false and returning early. Setting crtc_state to NULL is a correct fix.
-> Could you please send it?
+On 07/08/2025 15:17, Neil Armstrong wrote:
+>>
+>> https://lore.kernel.org/linux-media/20250711-b4-linux-next-25-03-13- 
+>> dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org
+>>
+>> V2 of the CSIPHY above will incorporate feedback from Neil and 
+>> yourself on adding endpoint@ to the PHY however I think we need to 
+>> have a conversation about standards compliance at attaching two 
+>> sensors to one CSIPHY without VCs or TDM.
+> 
+> The PHY is able to setup 2 lanes as clock and connect 2 sensors over the 
+> 5 lanes available, like for example:
+> - lane0: cam0 data0
+> - lane1: cam0 data1
+> - lane2: cam1 data0
+> - lane3: cam1 clk
+> - lane4: cam0 clk
+> 
+> Any lane mapping is compliant. There some Meta slides about that at:
+> https://www.edge-ai-vision.com/wp-content/uploads/2024/09/T2R10_Kumaran- 
+> Ayyalluseshagiri-Viswanathan_Meta_2024.pdf slide 13
 
-I sent this fix three weeks ago, could this be applied?
+Hmm so that would require splitting the CSIPHY between two CSI decoders 
+which I'm not sure would work on our hardware, perhaps yes, perhaps no, 
+or routing both sensors into the one CSI decoder and then separating the 
+data-streams either in the driver or in user-space.
 
-https://lore.kernel.org/20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org/
+For such an esoteric setup I think my initial suggestion would be to 
+push it into user-space, even assuming you have gotten the PHY to 
+co-operate with having two simultaneous clock lanes per the above link.
 
-Cheers,
-Nathan
+Looking at the PHY regs, I guess you can set the bits but obviously the 
+analogue component of the PHY can only really operate from the one clock 
+lane....
+
+Interesting.
+
+---
+bod
+
+
 
