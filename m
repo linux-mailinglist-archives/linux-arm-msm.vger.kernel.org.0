@@ -1,144 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-68046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0AFAB1DC5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 19:18:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93556B1DC6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 19:26:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0C61584DF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:18:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60CA41897733
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:26:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97D7C26656F;
-	Thu,  7 Aug 2025 17:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ECF027146D;
+	Thu,  7 Aug 2025 17:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bz6yMIvr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tql3hRFA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F2A1DB127
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 17:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6DE26FA5A;
+	Thu,  7 Aug 2025 17:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754587119; cv=none; b=rUikkhP2DFyS1a75sV4bI4Qqiyea92ntnOSXhqZyRKz99hBqbZ8EB0gv5hdG9tQ6tUAB5bKJSOfJD7tMCmkCKBq42CF2djKKhZrDwtKQ8zol5yvrb+XkKMmGkeqwG7kH/WP2gqNBNfXxo3nU5R5uC4HTt9a9jRGeUrQwga/SD2M=
+	t=1754587592; cv=none; b=AsSrBBQs61Hd7SoopPGMvkgnG1M2C5/jFdkO50fFeJw0mYk1nfdAiZ8lWTsh0FonbH/KLx+enNrZ/p/weiRjFEyhllBcXjjd+kH95uMaINVciJ2wOM0z1d0JqoLKV228Wyy5I7kfK81guNda9jU4DEIthgoVrIEP3GWz4c3GH98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754587119; c=relaxed/simple;
-	bh=ix4wfzIRuANwVsXaP/80+i/iUtqcmQAOhg9cFDtjiV8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d1V4WxZCRIhv85531OfTNdCINbvIcV6NtIownnoy6IPTDtoD0sgUZWjrGzLCFffsbvlOF8fM0tC+eJj6EB55KghyM4c0m4DEkSkkMse9uNaHAYBkVPZsy/9lO6yslDYqZB1GOb+83zuxvKQ36tJIBd9W9mI0wAOXZ3hFz3snyjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bz6yMIvr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5779DBZd020477
-	for <linux-arm-msm@vger.kernel.org>; Thu, 7 Aug 2025 17:18:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nLC8GBJ52JS4DT8cnivnM/XJofTs0u4QYcTbqVdpwM0=; b=bz6yMIvrF9kz4XD5
-	JXh1ZKRAyPHsw7ms/x/AUct7v/ZICwoDIGWBEoXLH+y3rHmxk0r2ynysiQgGvbK5
-	M1NeeLuLYhvy6mhM3394k5ccr3MZ6tgu54fwlz1o+LVJbRoRdvMbRq4zz2hqrQXc
-	Klmc41t1EACwREobXBIWgMsIqpIb2TI4id8u3aWiwszLy8ISiEzfp3e2gSL2xCN1
-	SlryyDV+M26I+zlwStMSAxdGM4AG8wsFy8c9HS18M+Z4ZGYqD/xyoMy0z0TQ+j7o
-	mhIRzysGp+bw0kpmFtT5fTjzrl5jsOVQvzLOOdXJIzeEYIkATxpAVsyK9rYrtHr2
-	ij5G1w==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpy8f2u7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 17:18:37 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3215b3229c7so1404139a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 10:18:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754587116; x=1755191916;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nLC8GBJ52JS4DT8cnivnM/XJofTs0u4QYcTbqVdpwM0=;
-        b=BBPJD3QDid63ympLemKgNZh7QlorVX+VBv47GGhhsOgYXvYEQXtB6cM/pD6i2Z5kGX
-         hb4V3n+t3Rzkl9JoAMD2V53yAbQvU8z+qA80ZbgPLWYptwErBSysRoRNCLzmVdEP4g2K
-         TTZeXwpz8euSYkqHJp+/0VoZrO52CSLKY54v2smm2g0Wurq35P6ZTuogbEMRAbPm/i1Y
-         KLwecKnzWXGUDTW0WDs5ji2eKH1MPbV2vU0jNPtZc6On2vaQ8uc0yOwdGFF/4v25r/tO
-         ssUCmG0H/d+XpVY7XTBEOKV2KtpohZoiiXR8ZsAeG7S6gE9Z4/jowA1WZ8VasBzY6OOU
-         M/Mw==
-X-Forwarded-Encrypted: i=1; AJvYcCUGlJQSL4bd9g2jM65uCfZs+MMAjGVj3BvPsyhL4purdTtCkLZNrn3g5nUes+7L0EruGtmw98jjFfO6YzOe@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw31ZML88KDQ/bGKbYkCYRiiuXNS2ibEW1Q0pfM6z5y2HwVb87p
-	cO92T7I1n0s8+yV9J3C6BSMCHrKMTpTE3ClzZoS23w4iPUbZ+4zVe5sOtBJ753nRy/4DGCmKEj4
-	GDymOpxuTCAnpmtN1W3au4WfnKBqywJvhtUcoU53Rpog9fJ4nBNti/4b8vH7D16i+b8GL
-X-Gm-Gg: ASbGncunOjBbnaKgep/fGbZ2Yad88BV6F696VTHq2g/q2TcwzWa7yB7ksd3hjsl262z
-	F9fj0RRO5nc44ybNl6TAObLqtUlRO41NggL0ZJ3t7sF7u71i9mUi3Ug5lnE97vgIbPH5mi+STd7
-	3lXAdQM0WgGuwj07A31R1VOwPnt6x6oNHADyQCBPkPPy0yjuNJcTEc+gBM8QQPnZBvq1TqgMeWd
-	kkRxaV70jirXROsEuHJ9Pm21pXWRDZ6ukDGWcSLA/SF4MYfyWo5XYoNsRaWAjsNWAJNzZEPpY/O
-	IMx48YnHOdfR8MEHmtrGWifntW4Xk2DniaOjHm69c0bSIiZjoCFwzTfnP5uIGIarFRxW8xR2mbq
-	mIjlHHwZlPkDggOmnlz0=
-X-Received: by 2002:a17:90b:3806:b0:311:d05c:936 with SMTP id 98e67ed59e1d1-32166ca78dbmr12228080a91.17.1754587116447;
-        Thu, 07 Aug 2025 10:18:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDSBIxZMtyLHjJ8ZZPSYmQQchctU93wo3YtjIAb6ci0mllkfGZXT4TLleL1LzuppQ6KSZiwg==
-X-Received: by 2002:a17:90b:3806:b0:311:d05c:936 with SMTP id 98e67ed59e1d1-32166ca78dbmr12228044a91.17.1754587116004;
-        Thu, 07 Aug 2025 10:18:36 -0700 (PDT)
-Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3216129c8cfsm6088656a91.34.2025.08.07.10.18.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Aug 2025 10:18:35 -0700 (PDT)
-Message-ID: <9b1f4ea5-2948-4807-a4d2-0efe7b672a4d@oss.qualcomm.com>
-Date: Thu, 7 Aug 2025 10:18:33 -0700
+	s=arc-20240116; t=1754587592; c=relaxed/simple;
+	bh=dBqBLGaHfPvygOmUPgSRr7Lv3hSqvGhrJ/xgbHGOQEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E3b2LL31nP7EWxOhI7rSz/G6LdxqJhXA7y3M77Bnpw2GvtL7IGs3TAQIPEpB8x4M3aIBHfi8TMg0NViwTxNkeuq0bEYjP2Qdtgh+x8BVOwYW+KuwVln6uqH/2zP7e3g7E41G/T6MVz6329GLOE0mFbYE1uOh6QCMRKHJ0thWqco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tql3hRFA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA12C4CEEB;
+	Thu,  7 Aug 2025 17:26:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754587591;
+	bh=dBqBLGaHfPvygOmUPgSRr7Lv3hSqvGhrJ/xgbHGOQEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tql3hRFAbB7UmK9n+MyB/awAiw6Tt1INWh61kJC+RfPpdoun6czGMk18AEHB0r6g7
+	 AoHpyjQujOfsf241npskC61CJMXQa0R1IgPOV8XRFXMocrNznhJTDNfGYPg8UtboS8
+	 aH2U0LGItpsDkoKEsfjBwPHQ5qQmeNBIM9M4eZZ2R+pPXvtMiJ5D9BL+N+5LjFlTn2
+	 XGnT5rRXkGY0yZ68dZYguArynKD4dGk8DNkkjFkmpCHulxH7oP6AW3TVZkHzkfSydP
+	 VRAY0nBZm4k0ChVGRxIxNm5kWx9RUiovevMCBHB/2otnzkz4kY0sOuXpVDN7z3ctmp
+	 P4/MlTiHVvfqw==
+Date: Thu, 7 Aug 2025 18:26:25 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, vkoul@kernel.org,
+	kishon@kernel.org, mani@kernel.org, conor+dt@kernel.org,
+	bvanassche@acm.org, andersson@kernel.org, neil.armstrong@linaro.org,
+	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+	krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
+Message-ID: <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
+ <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+ <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
+ <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v3 3/3] soc: qcom: mdt_loader: Remove unused parameter
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-        linux-remoteproc@vger.kernel.org
-References: <20250807074311.2381713-1-mukesh.ojha@oss.qualcomm.com>
- <20250807074311.2381713-3-mukesh.ojha@oss.qualcomm.com>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20250807074311.2381713-3-mukesh.ojha@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: izm6LNhr35TbRjh4Siqz0WignwMdQean
-X-Proofpoint-ORIG-GUID: izm6LNhr35TbRjh4Siqz0WignwMdQean
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX5Zkt7xy+QJeG
- lyAA6UEzUnQWiG3wHTzC32AidhZ63Myk/YC4D2NFG/UXBdRHTlFHCegv+o+uydxn275LLh+utx3
- YkMZsN0w6cTAK1prjuoaSSvnozCi6f1INyiwgMYjbaTm7qxDW6o7+9HC8JeM04vU9IhJzQu1eGe
- 8M1joVUXU3XeiwmhLTUZPfk+vo0vGmYnMHcY9sX2d9+BkUdaq4V5rUEEew9gzrPPf5xlJSRiU03
- RDqJalUDjrtd0P9Gi6xIueGwQpyr1N/6SrnyNkN+aFhf57gCfLR1XnUi74NIrNOF8pOZ3xvhP6t
- xeGFZLdSEGlH2tYBauOFm96SAVE6B3qDlnYqVhuGdP47Z/3mRWt9hHIqR9+rwNsdpMfuZmvNHV3
- Eyt4K4jj
-X-Authority-Analysis: v=2.4 cv=GrlC+l1C c=1 sm=1 tr=0 ts=6894dfed cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=NyTICe1PHtTOfF-B13wA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-07_03,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- phishscore=0 adultscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508060009
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wdZedFUit1z97TcH"
+Content-Disposition: inline
+In-Reply-To: <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+X-Cookie: Real Users hate Real Programmers.
 
-On 8/7/2025 12:43 AM, Mukesh Ojha wrote:
-> fw_name in qcom_mdt_bins_are_split() seems unused now, it may have
-> used in the past for logging it but due to code refactor this parameter
-> is unused now.
-> 
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-Reviewed-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+--wdZedFUit1z97TcH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Thu, Aug 07, 2025 at 09:12:53PM +0530, Nitin Rawat wrote:
+> On 8/7/2025 7:14 PM, Mark Brown wrote:
+
+> > > The intended use is to set the load requirement and then only en/disable
+> > > the consumer, so that the current load is updated in core (like in the
+> > > kerneldoc of _regulator_handle_consumer_enable())
+
+> > > My question was about moving the custom parsing of
+> > > $supplyname-max-micromap introduced in this patch into the regulator
+> > > core, as this seems like a rather common problem.
+
+> > Wait, is this supposed to be some new property that you want to
+> > standardise?  I didn't see a proposal for that, it's not something that
+> > currently exists - the only standard properties that currently exist are
+> > for the regulator as a whole.
+
+> The UFS QMP PHY driver is not the first client to use regulator_set_load or
+> alternatively set load requirements and invoke enable/disable or
+> alternatively
+
+The issue isn't using regulator_set_load(), that's perfectly fine and
+expected.  The issue is either reading the value to use from the
+constraint information (which is just buggy) or adding a generic
+property for this (which I'm not convinced is a good idea, I'd expect a
+large propoprtion of drivers should just know what their requirements
+are and that a generic property would just get abused).
+
+> These drivers also define corresponding binding properties, as seen in the
+> UFS instances documented here:
+
+> UFS Common DT Binding ((link - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/ufs/ufs-common.yaml?h=next-20250807)
+
+Note that that's specifying OPPs which is different...
+
+> There was a previous effort to introduce similar properties
+> (vdda-phy-max-microamp and vdda-pll-max-microamp) in the device tree
+> bindings.
+> Link - (link- https://patchwork.kernel.org/project/linux-arm-msm/patch/20220418205509.1102109-3-bhupesh.sharma@linaro.org/#24820481)
+
+That patch also fails to supply any rationale for making this board
+specific or generally putting them in the DT, AFAICT it's one of these
+things just pulled out of the vendor tree without really thinking about
+it.  The changelog just says the properties are in downstream DTs.
+
+> Currently, the regulator framework does support automatic aggregation of
+> load requests from multiple client drivers. Therefore, it is reasonable and
+> necessary for each client to individually communicate its expected runtime
+> load to the regulator framework to put the regulators in current
+> operation mode.
+
+That doesn't mean that it's a good idea to put that information in the
+DT, nor if it is sensible to put in DT does it mean that it's a good
+idea to define a generic property that applies to all regulator
+consumers which is what I now think Konrad is proposing.
+
+--wdZedFUit1z97TcH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiU4cEACgkQJNaLcl1U
+h9A1uQf+IZqIzqVC/IwgEVeZML9aeON0xrr7zZEGxO38RsjJwp34I1y1phzbA8Zx
+6kAa4M2vu35vr1eJ2VmEY0bv7Afa6PHdITjGhB3URqGAG6ahCjrMBXZywus6/fuZ
+9J5GNkcNHBD/yfqBiU9s0F8eERBe5JddiyG33RcNJCbhA4/fgAb8ZN3EGbd8K8Ej
+1s0s0DkVUkdb7DriRcVgFRZN6z/AZnNlhjTOmjt7YAdBa5vYKX7CPT9A7PxnSRfE
+HqF7hok9fr3aL2lFNInip73/fB3x+4BUqJiwPaBwztBRsqellMrHMFSFzYtagjGc
+ULSqGXZGLtUEv/b0yNCSQNkXG0kH5w==
+=AEUg
+-----END PGP SIGNATURE-----
+
+--wdZedFUit1z97TcH--
 
