@@ -1,107 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-68054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 914C0B1DD5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 21:09:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74A30B1DD5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 21:10:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B99618C7B5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 19:09:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 342233AA0AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 19:10:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282312737EF;
-	Thu,  7 Aug 2025 19:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2997A267F48;
+	Thu,  7 Aug 2025 19:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVIIHWHS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U72ma2+j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4D626A1AC;
-	Thu,  7 Aug 2025 19:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34702222DA;
+	Thu,  7 Aug 2025 19:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754593750; cv=none; b=exJ2dIERcKhWjukzf2UNnXpWXgQZopR98Rvd93tQaeXP95chjQ/8Bq8eYyNUskIXer6Zb00sMRYBkbzWG+lhZZ6f1YvIznhGtkNiGx+NUICbBm92t5lTrQLdId0IHrlftEeEcDhsiezm/kYGalm+RHCIN+JIhxqmkBCGrfjXXBE=
+	t=1754593803; cv=none; b=HjkP8hBPBHQR4Dj2+NaHLcfWj4JbpK1j7CX+U61kpszk98m7S+7DFwhXxb7KtY6k8Qc7vmRjKPUVmq/CG5o6wqkDTbxsWRqzxCU6mKSQ/+umaW1pvIghqG9lNgxK/2z+3TNyv/i+RsrsUeLzpmdfUarWiOqGvyMfcKBjgjS8AJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754593750; c=relaxed/simple;
-	bh=h5F9tcewokv2v0wx3iMjy8IfFAlmrDNK0aJoLn0Qpyo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=KHcAk+uxner9j7XVPyAICFpsX1DaQEU1T62QL74iEqGEWunci/4mPqDVQc58ErjI8s4kyA2e1wfc3jMFNDZyRzujcsch8PtIuynwOQI7qU/bT5fuxEt7gtkLwiE1gqkvC4xB3KPnN7r+m9KiHF0E/OzBFC2HSkNZTLPHUCfXXok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVIIHWHS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE7BC4CEF7;
-	Thu,  7 Aug 2025 19:09:07 +0000 (UTC)
+	s=arc-20240116; t=1754593803; c=relaxed/simple;
+	bh=PcBVixaPhZIma1L0iYmSkiKVbdxAykP6NlB0vN5Hd9k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gHYIxgZVdvoeNwC9JgiPMZEB7iU+p94pfomeGyx09P58Axd61XE7BOh/KxcX0DeNnVtPaHaoG2dTWud6Wd0Xa7XR3a6PBwC1l9SF5MK9vEY9QBNgI/CcR7maiy3h2UmRBGvut7G/E1V/Ic+Y/y1JomzobedKQEEeBg4NKQ0g5Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U72ma2+j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846AEC4CEEB;
+	Thu,  7 Aug 2025 19:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754593749;
-	bh=h5F9tcewokv2v0wx3iMjy8IfFAlmrDNK0aJoLn0Qpyo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=pVIIHWHSzdnCE18ikP5QEvNUXONkDu+GsxtTfXSJZf8la3IxFqoVXeLrgHgpo7ap2
-	 u5mYkKG80fY4kWG6cDHeCxyMJBmUBv4RwY4iDqcyVnYkyT6XlCjrAsbw/ykiQkMnrt
-	 5fP5V6cvNNbuhANfslRaan05LMbI/AdgnKNbKReJXbAhnHs1Eqc5a4QNlZ1ZgJt8RK
-	 WvuJxbeKjb/0wXdkWcWeVl249jeOBk2M19GLLg9yKzIVSEOSNm/QvHJStB/Pnr7ox6
-	 ZYnP1B1kBDd8z823yk2J1eLNkfLm5s9MRU+lxjjPiOYbGwXTjufvuJrs1YCqd2QS26
-	 dWpr6mv8acvCQ==
+	s=k20201202; t=1754593802;
+	bh=PcBVixaPhZIma1L0iYmSkiKVbdxAykP6NlB0vN5Hd9k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U72ma2+jatKX2tdaIBlq82L/EbRZmu4VJqzECPOaIGMb5HdtGfpvr5N3eTwQ/aPA5
+	 9wWkvLV5pfDVm65CCodhw1kgGX0aYz5fqClorxgeFBdkHCikGQmwkeiwQEwF4euV8S
+	 4Nvlsdhvl1AfgTrORb8wfiKAKCCkmyIDtqDj/l+YNlN1kmHaspMusfYyaqWXPWGba5
+	 ao+uAIV7N8S681aPK4QJkdXgJ7FnrxsZ8maorziVw+xHXIzq3McR+7TB2che+XILW3
+	 q+K6WCCPtcsUDzG1b2vHJykKq+VsiPeR5Dyd7SvthO+aIhzYI+3tCzJTKqnacUfO8o
+	 NwzM41d68w/Iw==
+Date: Thu, 7 Aug 2025 20:09:56 +0100
 From: Mark Brown <broonie@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, Gabor Juhos <j4g8y7@gmail.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250805-qpic-snand-oob-ecc-fix-v2-1-e6f811c70d6f@gmail.com>
-References: <20250805-qpic-snand-oob-ecc-fix-v2-1-e6f811c70d6f@gmail.com>
-Subject: Re: [PATCH v2] spi: spi-qpic-snand: fix calculating of ECC OOB
- regions' properties
-Message-Id: <175459374764.106952.4861259092289102637.b4-ty@kernel.org>
-Date: Thu, 07 Aug 2025 20:09:07 +0100
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Nitin Rawat <quic_nitirawa@quicinc.com>, vkoul@kernel.org,
+	kishon@kernel.org, mani@kernel.org, conor+dt@kernel.org,
+	bvanassche@acm.org, andersson@kernel.org, neil.armstrong@linaro.org,
+	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+	krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
+Message-ID: <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
+References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
+ <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+ <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
+ <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+ <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+ <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-cff91
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZQ/9gvUlZUpmI6Wa"
+Content-Disposition: inline
+In-Reply-To: <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
+X-Cookie: Real Users hate Real Programmers.
 
-On Tue, 05 Aug 2025 18:05:42 +0200, Gabor Juhos wrote:
-> The OOB layout used by the driver has two distinct regions which contains
-> hardware specific ECC data, yet the qcom_spi_ooblayout_ecc() function sets
-> the same offset and length values for both regions which is clearly wrong.
-> 
-> Change the code to calculate the correct values for both regions.
-> 
-> For reference, the following table shows the computed offset and length
-> values for various OOB size/ECC strength configurations:
-> 
-> [...]
 
-Applied to
+--ZQ/9gvUlZUpmI6Wa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+On Thu, Aug 07, 2025 at 07:43:15PM +0200, Konrad Dybcio wrote:
+> On 8/7/25 7:26 PM, Mark Brown wrote:
 
-Thanks!
+> > Note that that's specifying OPPs which is different...
 
-[1/1] spi: spi-qpic-snand: fix calculating of ECC OOB regions' properties
-      commit: 13d0fe84a214658254a7412b2b46ec1507dc51f0
+> The microamp properties are in the top-level, not under OPP if
+> that's what you meant
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+I mean the OPPs use case is an existing well known one for dumping stuff
+into DT.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+> > That doesn't mean that it's a good idea to put that information in the
+> > DT, nor if it is sensible to put in DT does it mean that it's a good
+> > idea to define a generic property that applies to all regulator
+> > consumers which is what I now think Konrad is proposing.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+> Yeah, that's what I had in mind
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+> I was never able to get a reliable source for those numbers myselfe
+> either.. At least some of them are prooooobably? chosen based on the
+> used regulator type, to ensure it's always in HPM..
 
-Thanks,
-Mark
+That's what set_mode() is for.  Like I say it's becoming less and less
+relevant though.
 
+> That said, our drivers cover a wide variety of hardware, built on a
+> wide variety of process nodes, with different configurations, etc.,
+> so it's either polluting the DT, or polluting the driver with
+> per-compatible hardcoded data (and additional compatibles because
+> fallbacks wouldn't work most of the time)
+
+That's really not a persuasive argument for adding a genric property
+that applies to all regulator consumers...
+
+My instinct with this stuff is generally to avoid putting it in the DT,
+we see far too many instances where someone's typed some numbers in
+wrongly or discovers the ability to drive the hardware harder and needs
+to tune the numbers - once something is ABI you're stuck just trusting
+the numbers.  That said I'm not going to stop you putting something
+specific to this driver in there, I just don't think this is a good idea
+as a generic property.
+
+--ZQ/9gvUlZUpmI6Wa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiU+gQACgkQJNaLcl1U
+h9A6+Qf+P9rMcaISs2p5ORHNQ/KdH3BurrkFhaK5oNZcLsN/cOuTcSjAMt7Ln8rw
+Nj+TKRTJ/mByw4x7wgCunOwGRcUVJ840ilAA1jAsHIQZMKUCDqTNfLRc1PmeqG/e
+pdTpE+It81dpY5XpoulAhwu8h8fc9GX1YFw3/43/NWYX4NkGh94r8sLDtjv8jHwX
+enIET9goOxiiyfECGkBfpwXN8fjUVQX4Y9f5LeIiunXQk3/tRwzNqncI2m9+vAsB
+aSXD7Jg9yvrIzgC97tLsAVuD8weoo4w9YBYWczMwvmvywLXPgzCIjx1tL/6tG2Cz
+gJsPOQ9NajGkZ8Ud/Q5EPaqyiGb+hQ==
+=V89y
+-----END PGP SIGNATURE-----
+
+--ZQ/9gvUlZUpmI6Wa--
 
