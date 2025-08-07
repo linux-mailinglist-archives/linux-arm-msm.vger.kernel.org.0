@@ -1,144 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-67996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CCF6B1D6E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 13:46:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E6FEB1D6FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 13:52:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 452371897719
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 11:46:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C757166B8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 11:52:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D36471FFC41;
-	Thu,  7 Aug 2025 11:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF9C5224B0C;
+	Thu,  7 Aug 2025 11:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VcHSl8Id"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VRMyYURi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D85B2A1CF;
-	Thu,  7 Aug 2025 11:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7ACBA36
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 11:52:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754567187; cv=none; b=Z/BiG3fa/Lxeuv/lk9qt1RNzB1ZWDQ/eKzDVKL4MuO/XaG5ySJ6vtkvRF6ecFMEDEYUnCuftdMBXquXt42Y9G3XOo/Si5tkl6yi3FXiez34CwH4t10FyPEuPQQ87UnhhdnHxtoD0kF+D0sv09v0J5jkkL2YD4rBJZdaYQhcd6wE=
+	t=1754567536; cv=none; b=JEpKU4Yo/uqeQGoZqK1v3ETR8dngPppNJ5PjJy6siZtBp8JDiVrkVW0N5izLzGBVuo2AKEM089P9hMWAE9p8+Ref7CenU0Qw0wLNv69VT6eDlMaP0ntm3tLxCVpvMPv/Rsy9dBtg6orji/+NDZkZ6zF7cSbmtSdPd5tXTDjBdTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754567187; c=relaxed/simple;
-	bh=7EcW2IB/Hoo31JQCi+ZPT/KI3YtuMNEtsU4Q0qj9Ds0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=nEpyg60aV1/NPAFiTUxA4WpI4Qg0x5+rYoRmgOsnAWO9KLEhQxKFKY6jShiaXsZPkv+8pNnYEbPaQXHf/YDb2rkzZk4dMsdeU9eH9vYqi1/gR+CmGLSRKfOu/v0murWZTiNYCTa8bnLsDaNn8EAmWyCLRLyxnBDyZRHxf4sHUIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VcHSl8Id; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F9BC4CEEB;
-	Thu,  7 Aug 2025 11:46:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754567187;
-	bh=7EcW2IB/Hoo31JQCi+ZPT/KI3YtuMNEtsU4Q0qj9Ds0=;
-	h=Date:From:Subject:To:From;
-	b=VcHSl8IdZT7wDopZTf+iv0npq2wRAQi355OQWzi+WBefsthauEB/DbLwlD3OR7eMb
-	 qmWE2vIqmWgxnXmiGeBhmdGcqfCrusNHHr9rR+6T/WfuPcaQohSOhTMzaLsEAoq6fe
-	 c1SkmJ+zoaOFGp2O2dEY1XH1dZbHyv3lwITplV4osbd7pNMl5eMin9qDneXjCmGPeH
-	 L4TYR+r2dE46kaFcLF8SHzB1zO1J2LWEGjoyEuTybgTd7KGRii/4L9i0VpOkct8V8r
-	 Ynxso2jBXIIZkVgx4ANEaShHYW+K3dgLSPHzv3y1Kk/0LS9uwH04awKsl/9Siu10AF
-	 MqUWPQSz877KA==
-Message-ID: <8c59ef9a-7b5c-4fec-b630-ac84218ed955@kernel.org>
-Date: Thu, 7 Aug 2025 13:46:18 +0200
+	s=arc-20240116; t=1754567536; c=relaxed/simple;
+	bh=/yvBXdbIwoLc822AzkSPvfOLaLpqfBJuZaXWMOxZE58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b9vQL+eQ9wOD0H+o4WmFaLk1NnK/v+WtqYmW3Uy0YkRsze1/nP1nZmnv4wFXHO+9/jNKAWik54elkvM86fq9sVAT1Ajmde2v3jO2+8sEzZRgdplTvwIojrSdilbCAAwNmkZAk9nV3de7GK8X1G9S8xjPVGB8kFzbounnmKyxumM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VRMyYURi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5779Cv5o003594
+	for <linux-arm-msm@vger.kernel.org>; Thu, 7 Aug 2025 11:52:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3TtuB2QJTT6Kh1FdqGkLXhi3vASIByW9GukBZ9YBsj4=; b=VRMyYURiSM8dHaYi
+	+BTWCuxcoLUo1hsvNDctwhIoz0DFw6OM6LiCz959EY0A9OamIwU2/riNjT3OWSHG
+	kQK6DxH9POe3lP6FD3c5jzYS8pZj1n/NEZG3SJ9g5VF2Q59ATYudITXqdo1/YygP
+	EMGUsBfHEHcATI9bhXYrb413s1FFJGyH3Q/QP6Xeis9qVZUwDGg3gPRrRO9DdfnH
+	CGZ3n2kArVTRsit8BpdtmYoCVJ1RuE9fpndU3N3Uk7riwD+5AM6FftJI+/Pa/K4s
+	z8TNKdX7fRk+GEPhv1xIX5RqZyvCptaaC9aI2fGcBvJa+l1ciDLQ+IYpzd4toqb+
+	c5gq7g==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpyae4m2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 11:52:13 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b08898f776so21784981cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 04:52:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754567532; x=1755172332;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3TtuB2QJTT6Kh1FdqGkLXhi3vASIByW9GukBZ9YBsj4=;
+        b=ZnJMdL9GGrq/8HW43AWBAoaA1q4L6MOlp9ReqtksaREFRT86LTk14PybAYJxAFPfTs
+         0oCiAJz8p3/k9APviT9UdcKBZwzxC8FUPeayqyOUs0eSMSEu7gFejJBtKqLU9uHeqpQI
+         MgyAPVCXVmTZ2mNbLxUSz5ky+uV0W4CV0kdc2Ko8TxKsZC0V86tzPZztLDd62OXjJdr3
+         a3OWKmMCjMHwMqUSaknkW8DnWR4SEoVZXZU6TNkKxYIjQlJYkvtGIGOmG4/5PBt8GZ8w
+         kqzy5rfv4U/Ixjm4rBV9MU/KJZICu4/7wt0m/U2RUvTlbAYDh1vdgA6b1dIxCUFRf1Cl
+         yJ9w==
+X-Forwarded-Encrypted: i=1; AJvYcCXHnPaTolYSv8VojYWYjwXAUrLhCIjL6sNq772iLxrfeW/rNO9kQzSba+k4RLtJEL5rqA5wM9q8WckzAKUi@vger.kernel.org
+X-Gm-Message-State: AOJu0YzV/uElOwtqfn75QvJXcI+zCX13l+zLqbhdCnK/PXORP6IwGuOF
+	NDMCcO2SuTziMwoI8Wvgc96cnabkzHiuYRoZZgo4LxjZAXledbZg/7gnVGuBDCkNpyY2HyKjROy
+	Rxif4VRghNMmVxFgqMFwLjvy45nRdLP9Nlqik3WRk/ApxXenFn2JNusP/iJ42vMLxdExe
+X-Gm-Gg: ASbGncuFgJ0lvtDQGje4OHsv1bKHwm/eAZ4g7A3RdV+wY1LQ1mMfBTJMy5gnio7YVgi
+	TrrQYiP4gCD+asD3daAEa0X6akvcg+8mAQ3NuJzctRzQx3nmIqGVr6G1/mG0HX63ls8AVnPEdAj
+	j959GMyZ7+xVeMxsYmabVPnKlexNqHqtv9G7MlPvxsgcIb9W/d78swISx3e0IaFAy+8byVZzLWf
+	LGUm5L3EQkkG9ZaE5aSOHux3FfQTRFhe6g4rFm5CxINw0EB8pBUOTx1ckjhgoP3zF6wCtMnXo2c
+	RleRhqwK2Uvw87DCSmSfRCUBO0BAKqMC0AA6Y+fVZjkQVS3fIPjJQsg2Y/J7oAA34jX5GJqBw+u
+	bRAv12ERG2z9swripmmzQcE5WrMh8foJ5urbNolfBhm9FJeZK98mR
+X-Received: by 2002:ac8:5a8b:0:b0:4b0:7e8c:64cd with SMTP id d75a77b69052e-4b0912cfd4emr93040501cf.4.1754567531550;
+        Thu, 07 Aug 2025 04:52:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyfdrXA0GgbZGVmCS8cmtFoVgaAqjV7ozQHp8Lv5vDiP6EsF+5Th8qiti06L1chxeoNHrQrw==
+X-Received: by 2002:ac8:5a8b:0:b0:4b0:7e8c:64cd with SMTP id d75a77b69052e-4b0912cfd4emr93040081cf.4.1754567531027;
+        Thu, 07 Aug 2025 04:52:11 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b88c99078sm2582655e87.102.2025.08.07.04.52.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Aug 2025 04:52:09 -0700 (PDT)
+Date: Thu, 7 Aug 2025 14:52:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, bryan.odonoghue@linaro.org,
+        quic_dikshita@quicinc.com, quic_vgarodia@quicinc.com,
+        konradybcio@kernel.org, krzk+dt@kernel.org, mchehab@kernel.org,
+        conor+dt@kernel.org, andersson@kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 5/7] media: venus: core: Add qcm2290 DT compatible and
+ resource data
+Message-ID: <s3rr3p5axi3iu4zvgwgjyhjtxmv7sgp6bqkmsgv2l76p7zxu2k@rxzbblyr57an>
+References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
+ <20250805064430.782201-6-jorge.ramirez@oss.qualcomm.com>
+ <4chbcvub4scnv4jxjaagbswl74tz4ygovn3vhktfodakysbgy3@kukktkwd2zsr>
+ <aJHgh8mon9auOHzi@trex>
+ <aJHqpiqvulGY2BYH@trex>
+ <to2hrxml3um6iep4fcxhkq7pbibuimfnv4kfwqzlwdkh4osk5f@orjzbuawwgko>
+ <aJMMhIqNupwPjCN+@trex>
+ <0248afed-b82d-4555-8277-e84aacf153fd@oss.qualcomm.com>
+ <aJNTigOMy1JFOxot@trex>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [ANNOUNCEMENT / CFP] LPC 2025 Devicetree Microconference CFP
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-To: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>, Rob Herring
- <robh@kernel.org>, Conor Dooley <conor@kernel.org>,
- "imx@lists.linux.dev" <imx@lists.linux.dev>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- devicetree-compiler@vger.kernel.org, devicetree-spec@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aJNTigOMy1JFOxot@trex>
+X-Proofpoint-ORIG-GUID: NtxLuRqOI4h6HH9bN6c7Ui99kbnkhnnO
+X-Authority-Analysis: v=2.4 cv=MrlS63ae c=1 sm=1 tr=0 ts=6894936d cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=64HPk2-XXqlZgG7pdX4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX3JCXp1sX54bM
+ hR1AoCygcgwRCyWQRnHRuTuvAIy56j7Z0IB09pMVHy6HbO0RWqVXuk1+ckJeIVrfJaHC6Pju5rn
+ gn6YzenjXbmrYcbXQ9XJ80zV4rAZTGnEO6cy4c1O8pYLImTxvA/u4OWUQY2SxWfCC4pMr7ZtDlI
+ 0MnC4UOGPw+M/UnqsXPmfLEtM1r91X9m7VLQOglwTpOyT7zm33K/HaE9gnIQpzvaooFqsgf6qq2
+ vqukzqSHMTU/XHSi1p8GxvwtWsGppLtgm5ZkUDqIx/EdN2H9JI+pYltKYKfzyvs27JUyx637j9N
+ ucmaUDcaaEf8+x0kOpcd8swUjKZbvtF6Fuf9C95A5JxJ+40bIfpeCAelL6axU8B+WKTTqvymUnZ
+ GIoADIqB
+X-Proofpoint-GUID: NtxLuRqOI4h6HH9bN6c7Ui99kbnkhnnO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-07_02,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508060009
 
-There will be a dedicated Devicetree Microconference on Linux Plumbers
-2025 in December in Tokyo and Call For Papers is currently open.
+On Wed, Aug 06, 2025 at 03:07:22PM +0200, Jorge Ramirez wrote:
+> On 06/08/25 11:01:09, Konrad Dybcio wrote:
+> > On 8/6/25 10:04 AM, Jorge Ramirez wrote:
+> > > On 06/08/25 04:37:05, Dmitry Baryshkov wrote:
+> > >> On Tue, Aug 05, 2025 at 01:27:34PM +0200, Jorge Ramirez wrote:
+> > >>> On 05/08/25 12:44:23, Jorge Ramirez wrote:
+> > >>>> On 05/08/25 13:04:50, Dmitry Baryshkov wrote:
+> > >>>>> On Tue, Aug 05, 2025 at 08:44:28AM +0200, Jorge Ramirez-Ortiz wrote:
+> > >>>>>> Add a qcm2290 compatible binding to the Cenus core.
+> > >>>>>>
+> > >>>>>> The maximum concurrency is video decode at 1920x1080 (FullHD) with video
+> > >>>>>> encode at 1280x720 (HD).
+> > >>>>>>
+> > >>>>>> The driver is not available to firmware versions below 6.0.55 due to an
+> > >>>>>> internal requirement for secure buffers.
+> > >>>>>>
+> > >>>>>> The bandwidth tables incorporate a conservative safety margin to ensure
+> > >>>>>> stability under peak DDR and interconnect load conditions.
+> > >>>>>>
+> > >>>>>> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > >>>>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > >>>>>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> > >>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > >>>>>> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > >>>>>> ---
+> > >>>>>>  drivers/media/platform/qcom/venus/core.c | 50 ++++++++++++++++++++++++
+> > >>>>>>  1 file changed, 50 insertions(+)
+> > >>>>>>
+> > >>>>>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> > >>>>>> index adc38fbc9d79..753a16f53622 100644
+> > >>>>>> --- a/drivers/media/platform/qcom/venus/core.c
+> > >>>>>> +++ b/drivers/media/platform/qcom/venus/core.c
+> > >>>>>> @@ -1070,6 +1070,55 @@ static const struct venus_resources sc7280_res = {
+> > >>>>>>  	.enc_nodename = "video-encoder",
+> > >>>>>>  };
+> > >>>>>>  
+> > >>>>>> +static const struct bw_tbl qcm2290_bw_table_dec[] = {
+> > >>>>>> +	{ 352800, 597000, 0, 746000, 0 }, /* 1080p@30 + 720p@30 */
+> > >>>>>> +	{ 244800, 413000, 0, 516000, 0 }, /* 1080p@30 */
+> > >>>>>> +	{ 216000, 364000, 0, 454000, 0 }, /* 720p@60  */
+> > >>>>>> +	{ 108000, 182000, 0, 227000, 0 }, /* 720p@30  */
+> > >>>>>> +};
+> > >>>>>> +
+> > >>>>>> +static const struct bw_tbl qcm2290_bw_table_enc[] = {
+> > >>>>>> +	{ 352800, 396000, 0, 0, 0 }, /* 1080p@30 + 720p@30 */
+> > >>>>>> +	{ 244800, 275000, 0, 0, 0 }, /* 1080p@30 */
+> > >>>>>> +	{ 216000, 242000, 0, 0, 0 }, /* 720p@60  */
+> > >>>>>> +	{ 108000, 121000, 0, 0, 0 }, /* 720p@30  */
+> > >>>>>> +};
+> > >>>>>> +
+> > >>>>>> +static const struct firmware_version min_fw = {
+> > >>>>>> +	.major = 6, .minor = 0, .rev = 55,
+> > >>>>>> +};
+> > >>>>>
+> > >>>>> This will make venus driver error out with the firmware which is
+> > >>>>> available in Debian trixie (and possibly other distributions). If I
+> > >>>>> remember correctly, the driver can work with that firmware with the
+> > >>>>> limited functionality. Can we please support that instead of erroring
+> > >>>>> out completely?
+> > >>>>
+> > >>>> yes, in V7 I did implement this functionality plus a fix for EOS
+> > >>>> handling (broken in pre 6.0.55 firmwares).
+> > >>>
+> > >>> just re-reading your note, in case this was not clear, the _current_
+> > >>> driver upstream will never work with the current firmware if that is
+> > >>> what you were thinking (it would need v7 of this series to enable video
+> > >>> decoding).
+> > >>
+> > >> I'd really prefer if we could support firmware that is present in Debian
+> > >> trixie and that has been upstreamed more than a year ago.
+> > > 
+> > > 
+> > > I share your view — which is why I put the effort into v7 — but I also
+> > > understand that maintaining the extra code and EOS workaround for
+> > > decoding needs to be justifiable. So I chose to align with the
+> > > maintainers' perspective on this and removed it on v8 (partially also
+> > > because I wanted to unblock the current EOS discussion).
+> > 
+> > +$0.05
+> > 
+> > I thought we were going to eventually relax/drop the fw requirement
+> > when the driver learns some new cool tricks, but are we now straying
+> > away from that? (particularly thinking about the EOS part)
+> > 
+> 
+> um, no not really: the decision was to simply drop support for pre
+> 6.0.55 firmwares for the AR50_LITE.
+> 
+> Pre 6.0.55:
+> 
+> -  has a requirement for secure buffers to support encoding
+> -  requires a driver workaround for EOS (providing a dummy length)
+> -  during video encoding.
 
-The Devicetree Microconference focuses on discussing and solving
-problems present in the systems using Devicetree as firmware
-representation. Primarily this will be Linux kernel and U-Boot, but also
-can cover topics relevant to Zephyr or System Devicetrees.
+If it requires secure buffers to support encoding (which we do not
+implement), then EOS workaround is also not required (at this point).
 
-Topics suggested for discussion include, but are not limited to:
-1. DTS validation against DT schema,
-2. Style checking/linting for DTS,
-3. Using the Linux kernel DTS in U-Boot or other projects,
-4. DTB selection on EFI systems like arm64 laptops,
-5. Hot-pluggable hardware with Devicetree overlay,
-6. Common incorrect or problematic patterns of using OF Linux API, e.g.
-impossible to disable unconditional device_init_wakeup().
+When we get secure buffers support, we can either lift the requirement
+on encode side (and add  EOS workaround) or keep the requirement for
+newer firmware.
 
-Feel welcomed to bring any other topics I am not aware of. Few more
-ideas for discussions are mentioned on DT MC abstract page:
-https://lpc.events/event/19/sessions/237/
+> 
+> To support < 6.0.55, v7 of the driver patchset:
+> 
+> - uses the version to disable the encode node
+> - enables the video decode node
+> - implements the EOS workaround.
+> 
+> It was agreed that this complexity was not necessary and that we should
+> just drop <6.0.55 firmware support (which would in any case only include
+> video decode).
 
+Limiting < 6.0.55 to decode only sounds fine.
 
-CFP ends on: 14th of September 2025
+> 
+> And so on v8, I removed the above.
+> 
+> Now I have v9 ready to post it, but Dmitry is asking why cant we have
+> the v7 functionality so I am waiting for direction.
 
-Proposals can be submitted here:
-
-https://lpc.events/event/19/abstracts/
-
-
-This email has a list of people in Bcc. It is far from being complete,
-so feel free to forward it further.
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
