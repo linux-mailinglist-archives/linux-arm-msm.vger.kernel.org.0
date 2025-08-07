@@ -1,220 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-68029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1B76B1DAEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F310B1DB20
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:58:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 965C91AA015D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 15:43:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76E7F189A995
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 15:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B6F6265CC2;
-	Thu,  7 Aug 2025 15:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23D40264A97;
+	Thu,  7 Aug 2025 15:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZNKzaOT3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DEYHSKUi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C036262FE6;
-	Thu,  7 Aug 2025 15:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525C42367BF
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 15:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754581415; cv=none; b=J4c69W4W/UUqOeABZ/LZjFqiK0nUMBoxYQizxGKvT3b/ZdrDhI+rvuF4mRffxM7LYirOsAfImUNXorFeeWqw9BxrOXK6Ym101UBpck8DN9g/AEIvioxE4HVFUSSpo9XiT7yeCldukfHQtZDcum2KSyPnuK+uoBtIMfk37fijDBg=
+	t=1754582301; cv=none; b=n2RmgAbh/rpuIKq9VSnayc1P2deZZGbax3BeYRb8BvYenLpibDh4VUiCOekdLko9fqNBMoC/QZ+dw7NFCDV26o1KV79NgQskFUVkydrODPPaBA9Rdgbs7oB6qJ9zV/QkJCBqSrZbbml+DNBL47h6N/FGGkpbhZRudW2eipa0HfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754581415; c=relaxed/simple;
-	bh=n2C26bB53uYqLwMArTrdsHaeWmaRvLA9f0GSIbvnRt4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EftFfYfdVYVjd5CosaTJTmpeuzTkdEZBqY3u50VvY1Dp0TNN/XPp3nAzuD0RmhWUD+0qXpBOvqyRbw6N2niuwch89gtYrU29OlnCxx75Vi3MBtuFuMWCxkyIScaqlDJ7vWC+D75gn/c4hoRi3hVcg8jUoeUwcmK1BUlm+ZjMQCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZNKzaOT3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5779D8GD008408;
-	Thu, 7 Aug 2025 15:43:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6jO7Z0KtTPlEHzBs5tGbsIj+SNejx7v3PWSrlZ271lA=; b=ZNKzaOT3KtJ1wuy5
-	KmtlUmeT0yQjUjAQM6RE5Cqg3VcZVNyGbAUXlPWRyAizH3FzVVnJUtQ5FfZaW3Vb
-	e423rBTGSZ2bOe0XeuW8kYciVYkEcqOVilbJ4ZtzxXh37qQcwEamk6lNo1pL487p
-	Fj9HLmoCyV0h4OlszPbRtrWLCf4+sK2hBo/C4I+OsdiqLDOEUgFEjucvRdv0iKaB
-	qFXPOUqCY6bdcmjRc/3tpB6ZbOxhKB0Te91vHNBN6dYUX42dz/Oqvhi64yH9rzPw
-	KRoqyLY49Rnvq5gxTJbCCuE7kGpzC8sSl0gtnZfDKaY50Z32o/asDq7+x8nRGGKX
-	yPBpAg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c8u23tud-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Aug 2025 15:43:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 577FhNQJ009672
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 7 Aug 2025 15:43:23 GMT
-Received: from [10.216.57.148] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 7 Aug
- 2025 08:43:17 -0700
-Message-ID: <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
-Date: Thu, 7 Aug 2025 21:12:53 +0530
+	s=arc-20240116; t=1754582301; c=relaxed/simple;
+	bh=QABidHfaEGH04sZF9GZ8ns14VBHILBUE3waqwEqc90o=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=O3J96rikZ1cgzmfclFFywjVS4IDbus4g/NaycKTGYbrr2dtZqIKcKCtp9L6sn6tq1mezMvpOvWLrohuTv2KUDevQLnOnl/gXeV7iMwV0lVzG7JjfI/91S3snnYrIcmgyz3akbTfl6WQx2lrytsYgcmJcNK7Q0zm50m2R20AtZQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DEYHSKUi; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-458bc3ce3beso7727735e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 08:58:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754582293; x=1755187093; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UQgT5tBzxN5qfx3o4Typ3jR8hTsSFK29Qxza7W+WALc=;
+        b=DEYHSKUiFTIh5a2+/dOCqGdN/lG5PC0IHFJESrEF6FfWIOJKJ0p17GHXRvZAqukQh4
+         yNL307B+9kfElNTUdzX/rNcXlAtCVmk1sYdYBfl4iVABD2WwuL7cMAFSgkAbZM/wNBlI
+         0SQBYawv5oeTxAFCldWl4jISMjB1ikCFKUpP5qaz5dCHBpmC9ToD1vSDNuHohNq7dPTR
+         H1e6M88orPevHQ3awQxyd+IqaPtwE06gHozI0uLnN5O7T4cSuq9W5qkBRZb7vWI8Gstf
+         ebs9x4cri+mP4Ti9qqIO2jqEjCrfV/3HFAne7dQoAN6VM0hShgYXHmSwMWU58FOhVOz+
+         XDFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754582293; x=1755187093;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UQgT5tBzxN5qfx3o4Typ3jR8hTsSFK29Qxza7W+WALc=;
+        b=H14diHOZiDEgwaBSVlFIS3/JOg4TMVeBUyzC8sjLhcLYMMmZdmZ0LO2vwCDrpvBzV7
+         KvoTaJJdEozwJoV4AdvCrka7DOR0N4zlXMGCpF26pJNDfBqJWQD1byrBbpiVP5jVZl2P
+         vbKjwvTXH2f/ebggXgkbHaNHq+WScVT60902cHqs/8PEUz6xl9SU8+xkqc/pvCihOaD0
+         kAKWQql+w3ea9CsRDx1B6+NcQKiFdTHdMwIb9rSJoWg8Qx7AWzlYiEEPojXDCwsnIR9z
+         O59VPPImHnst61S8KURb1ACczrfYksSoj+2a3JQKV7M/PPoa8kUsevuh07hvasY2Q5PZ
+         vteA==
+X-Gm-Message-State: AOJu0YxpVuSfkJSAC9xWnz4+UD2ZvSKZJQDXjGFOZdjxCusdd7uEjkZm
+	ZXSy1qYZlQ1/6tNDByGHEMsF5VXeRAXDmTrV6gPee72rcgg1cJpLEtnBt/NVYUzkreiYd6jWz7p
+	NSWhX
+X-Gm-Gg: ASbGnctKkzoWQuug1AC+lFVUWod3K8rr1VUID6QwpXhwU2d3J+R0GY8KLOE3r2CZT1r
+	fMtsqNumqAdSp5+5xrgu62SKlXFLdEfb7wnI4n8bz2BqhE7kjByMaG2Sv86DsHGgO/SSFg07606
+	isXT1BOB0Fwv+3wzLO+tslyek6Zmxs8W8cN4eeLPeSvC4mcjz090v9l4KPssSNPPUHmj0BtlK4q
+	dkb9SOigGzcjTKHQ7IWilnpABYq2Am3LTFIPxGQ5cntOfFwyomu0TxpUNNPkU09d43uGc82zIMp
+	70whc4zoTGrRNC526f+3DM8C8CutGUj/dckezCUAGMBHyRDGfosB9npqkyV01jrDsfNf5b/dqbT
+	6VI7oGbfYLOzgY9k2mDMnQDyFR6CAzcu9
+X-Google-Smtp-Source: AGHT+IEBfpxxvZI8SJ+lglFD+cogAt+bs/wcnRgRAFXHWRDKw9o2UtQYdpJ3Q/ihA9IqrDfDLYSoiQ==
+X-Received: by 2002:a05:600c:35d4:b0:43d:abd:ad1c with SMTP id 5b1f17b1804b1-459e7440902mr60287635e9.6.1754582293450;
+        Thu, 07 Aug 2025 08:58:13 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-459e5852e28sm97558465e9.9.2025.08.07.08.58.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Aug 2025 08:58:12 -0700 (PDT)
+Date: Thu, 7 Aug 2025 18:58:09 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Subject: [bug report] soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+Message-ID: <aJTNEQsRFjrFknG9@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
- device tree
-To: Mark Brown <broonie@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
-        <conor+dt@kernel.org>, <bvanassche@acm.org>, <andersson@kernel.org>,
-        <neil.armstrong@linaro.org>, <dmitry.baryshkov@oss.qualcomm.com>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
- <20250806154340.20122-5-quic_nitirawa@quicinc.com>
- <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
- <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
- <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
- <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
-Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 007wsDf4NVvKUWcKyx2JR5oeGzaYx11_
-X-Authority-Analysis: v=2.4 cv=Q/TS452a c=1 sm=1 tr=0 ts=6894c99b cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=QDh6Yc-AApCNb2D2b04A:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 007wsDf4NVvKUWcKyx2JR5oeGzaYx11_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA5MCBTYWx0ZWRfX2vg4U5E+GGqo
- /JHedMPrJ4SdIFz7Wzk+G6Wl1gtq8x2t/9O4dl/OOrWh6QnClH7khu2RlmoNVLG8A1+2uHV6qou
- wzzxqOCuSafV8skMhpSYhlZS/2CVl8e5wMH99Dm9azLOKL+n4yk61/67/n2SvaO7B4pkNIaRr8f
- RhuYGHLcnrgmXdpZ4lhH0m1K/jQu62mwkFRvdmqU6jGcVWM6Ydvk54S2sKm2okLnSPEyAta949s
- IhSlD6jxWJ/Q5acV66dU/nIEdNQ/GALeA0aHF+2+N7bER1VR7OlZQP/LD1c537JjnwbnY+uYzyM
- QSxTfA/uke329QTPtFxE3KQXD5qVHSErAmyqdzvCjbyRKYnqV+12nKt8OgoJHiCFrRCHwlR3lmL
- N1vK15kv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-07_03,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hello Krzysztof Kozlowski,
 
+Commit b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring
+driver") from Jul 4, 2022 (linux-next), leads to the following Smatch
+static checker warning:
 
-On 8/7/2025 7:14 PM, Mark Brown wrote:
-> On Thu, Aug 07, 2025 at 03:06:01PM +0200, Konrad Dybcio wrote:
->> On 8/6/25 6:51 PM, Mark Brown wrote:
-> 
->>> I'm not clear why the driver is trying to do this at all, the driver is
->>> AFAICT making no other effort to manage the load at all.  We already
->>> impose any constraints that are defined for a regulator while initially
->>> parsing them so it's not clear to me what this is supposed to
->>> accomplish, and it'll be broken if the supply is ever shared since it'll
->>> set the load from this individual consumer to the maximum that's
->>> permitted for the regulator as a whole.
-> 
->> Qualcomm regulators feature a low- and a high-power mode. As one may
->> imagine, low- is preferred, and high- needs to be engaged if we go
->> over a current threshold.
-> 
-> Sure, but the driver is like I say doing nothing to actively manage the
-> current reporting.  It's just pulling a random number not specific to
-> the device (the max-microamp configuration is part of the constraints
-> which apply to the regualtor as a whole) out of the DT and throwing it
-> at the framework.
-> 
->> The specific regulator instances in question are often shared between
->> a couple PHYs (UFS, PCIe, USB..) and we need to convey to the
->> framework how much each consumer requires (and consumers can of course
->> go on/off at runtime). The current value varies between platforms, so
->> we want to read from DT.
-> 
-> In that case this will definitely encounter the bug I mentioned above
-> where it's trying to read the maximum load permitted for the regulator
-> as a whole and report it as the load from this one specific device.
-> 
->> The intended use is to set the load requirement and then only en/disable
->> the consumer, so that the current load is updated in core (like in the
->> kerneldoc of _regulator_handle_consumer_enable())
-> 
->> My question was about moving the custom parsing of
->> $supplyname-max-micromap introduced in this patch into the regulator
->> core, as this seems like a rather common problem.
-> 
-> Wait, is this supposed to be some new property that you want to
-> standardise?  I didn't see a proposal for that, it's not something that
-> currently exists - the only standard properties that currently exist are
-> for the regulator as a whole.
+	drivers/soc/qcom/icc-bwmon.c:693 bwmon_intr_thread()
+	error: 'target_opp' dereferencing possible ERR_PTR()
 
+drivers/soc/qcom/icc-bwmon.c
+    645 static irqreturn_t bwmon_intr_thread(int irq, void *dev_id)
+    646 {
+    647         struct icc_bwmon *bwmon = dev_id;
+    648         unsigned int irq_enable = 0;
+    649         struct dev_pm_opp *opp, *target_opp;
+    650         unsigned int bw_kbps, up_kbps, down_kbps, meas_kbps;
+    651 
+    652         bw_kbps = bwmon->target_kbps;
+    653         meas_kbps = bwmon->target_kbps;
+    654 
+    655         target_opp = dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_kbps, 0);
+    656         if (IS_ERR(target_opp) && PTR_ERR(target_opp) == -ERANGE)
+    657                 target_opp = dev_pm_opp_find_bw_floor(bwmon->dev, &bw_kbps, 0);
 
-Hi Mark,
+Smatch thinks both dev_pm_opp_find_bw_ceil() and dev_pm_opp_find_bw_floor()
+can return error pointers.
 
-The UFS QMP PHY driver is not the first client to use regulator_set_load 
-or alternatively set load requirements and invoke enable/disable or 
-alternatively
+    658 
+    659         bwmon->target_kbps = bw_kbps;
+    660 
+    661         bw_kbps--;
+    662         opp = dev_pm_opp_find_bw_floor(bwmon->dev, &bw_kbps, 0);
+    663         if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
+    664                 down_kbps = bwmon->target_kbps;
+    665         else
+    666                 down_kbps = bw_kbps;
+    667 
+    668         up_kbps = bwmon->target_kbps + 1;
+    669 
+    670         if (bwmon->target_kbps >= bwmon->max_bw_kbps)
+    671                 irq_enable = BIT(1);
+    672         else if (bwmon->target_kbps <= bwmon->min_bw_kbps)
+    673                 irq_enable = BIT(3);
+    674         else
+    675                 irq_enable = BWMON_IRQ_ENABLE_MASK;
+    676 
+    677         bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH],
+    678                             up_kbps);
+    679         bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED],
+    680                             down_kbps);
+    681         bwmon_clear_counters(bwmon, false);
+    682         bwmon_clear_irq(bwmon);
+    683         bwmon_enable(bwmon, irq_enable);
+    684 
+    685         trace_qcom_bwmon_update(dev_name(bwmon->dev), meas_kbps, up_kbps, down_kbps);
+    686         if (bwmon->target_kbps == bwmon->current_kbps)
+    687                 goto out;
+    688 
+    689         dev_pm_opp_set_opp(bwmon->dev, target_opp);
+    690         bwmon->current_kbps = bwmon->target_kbps;
+    691 
+    692 out:
+--> 693         dev_pm_opp_put(target_opp);
+    694         if (!IS_ERR(opp))
+    695                 dev_pm_opp_put(opp);
+    696 
+    697         return IRQ_HANDLED;
+    698 }
 
-Similar to other PHY drivers (such as USB, Display, and Combo PHYs),
-as well as various subsystem drivers like UFS, SDHCI, Bluetooth, and 
-others, the QMP UFS PHY driver is communicating/setting its load 
-requirements.
-
-These drivers also define corresponding binding properties, as seen in 
-the UFS instances documented here:
-
-UFS Common DT Binding ((link - 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/ufs/ufs-common.yaml?h=next-20250807) 
-
-
-Relevant properties include:
-
-vcc-max-microamp: Specifies the maximum load that can be drawn from the 
-VCC supply
-vccq-max-microamp: Specifies the maximum load that can be drawn from the 
-VCCQ supply
-vccq2-max-microamp: Specifies the maximum load that can be drawn from 
-the VCCQ2 supply
-
-There was a previous effort to introduce similar properties 
-(vdda-phy-max-microamp and vdda-pll-max-microamp) in the device tree 
-bindings.
-Link - (link- 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220418205509.1102109-3-bhupesh.sharma@linaro.org/#24820481)
-
-However, at that time, the driver-side implementation for aggregating 
-load requests was not in place, which led to the patch not being merged:
-Patch Reference
-
-Currently, the regulator framework does support automatic aggregation of 
-load requests from multiple client drivers. Therefore, it is reasonable 
-and necessary for each client to individually communicate its expected 
-runtime load to the regulator framework to put the regulators in current
-operation mode.
-
-Regards,
-Nitin
-
-> 
-> I'm not super convinced this is a particularly common issue, most
-> devices perform pretty much the same regardless of the board design so
-> the driver should just know their peak consumption and it's becoming
-> less and less common for regulators to need software help to adapt to
-> loads.  The main use case these days seems to be for safety (eg,
-> constraining how much can be drawn via a USB port) which seems like it'd
-> either be for the full supply or just known by the driver.
-
+regards,
+dan carpenter
 
