@@ -1,154 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-67988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60016B1D5A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 12:17:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52B47B1D5B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 12:21:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B7963AC54E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 10:17:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20A087AEF74
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 10:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41753218E8B;
-	Thu,  7 Aug 2025 10:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79AD22A4E1;
+	Thu,  7 Aug 2025 10:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EdrQb/x8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bOMALAMm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C333E22A4E1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 10:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A55D22A4D6;
+	Thu,  7 Aug 2025 10:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754561830; cv=none; b=U9N0SCD4VWNUWwkg6FcYzD4zefh9XdRvVbxXjnUhMnOIN7L3n0eV/WS+AKKR+8Py8LYBqZ4h3XjSESmEAcv69lFt3uHj9j5f8faXznFpRUBxTbwRgfNakb3K6mlBc5+f3dl2fqLl1wVeJKDU56H/HWKjZEdov4/eUyJpDSVvjbU=
+	t=1754562073; cv=none; b=bdnPchcNXTZrc+JUi3R51hwmXYPJVns32LRGly4gT7zCYScmQZFip366TLXzV6d7JkFTIvjhkTdJRxpSEvNv4xn6rzQkb8xgx44bVCmzsxoXilEnckBxsPTNVZDZgVWrVW+UgA+VyFoSEVB3RxFIfIY+uPW5kkl+2xWQ9xtIkh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754561830; c=relaxed/simple;
-	bh=hQqQrB9x5CTf2+b2miREUHPTZdmUilKcUNXrLQs7I/A=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AATUbXuep8btzb9mWSMetwII3RLfXuJzDN17gJcLCV25RW+/eizr8SOdarpun21xQn+9CSJYQiT30uGd3vuZbZiylOL9C+wB/pN8SdzSUNfH+aEauMmf5GnazLqCjTSk2yJ8f9Ce9bZVwmYXO2mRAEz02Jqyee3Kg0FC/7l/JyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EdrQb/x8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5779DA9S011872
-	for <linux-arm-msm@vger.kernel.org>; Thu, 7 Aug 2025 10:17:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=LSMAw16rqz9HkkSbuIAhf3q5
-	6NKWpVJbEjxeVNYRh0w=; b=EdrQb/x8xQH956TsVerEzZsaOrg+ke6vrRoRE8XI
-	SUZDkhNRRCezKN4sYiKnkBPNA7wG+ocvMa0ewCJA1ZkaUdDkMSfsh9D9L/zbGpvk
-	+GX1f4hcPsRfA7hzhNvEaRN6vDh/j2kLB+Noe3sem1xRen7QwqtAkU85zYiIw9Iy
-	kx/iEge4nHjXFS0QzHhR+Dfwgmia4gURjzNYdFoxeE5Q6PSWkFHI5mZdp4/5Fq1+
-	Xz6PeiijbH7qS3fQYMz1r+YSSZlkw08PNI+rGofdBmNtC1Hi2wwVrEEXSOQvInDs
-	ZkFep19tiGaQbm6ApQNP+WZ167uIMjLDSMJQHTI/v6u2Mw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48cpvy0nq3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 10:17:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4aedd0b5af9so18390861cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 03:17:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754561827; x=1755166627;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LSMAw16rqz9HkkSbuIAhf3q56NKWpVJbEjxeVNYRh0w=;
-        b=e4JqcLrDfizywovqplEoiMfmY9kqKAIjr2d212EOY2UWS0y6zGS+059A1et3kz3qrC
-         HtdwBq2oP7prYYpsOsQ3ioCoSh5BCZU4EeJmTI9uOY0vhFrFnBwbc4QjEQV+6S+3y9oL
-         DJPfFV/2AgNGmNOBR3VloWnIYVJyjE01Ggfb625VT7PEauT7ftDYgfelOMe1ptPz/P7Q
-         SzbNeDVNckN9WIvQASh0Kn/khttyR692CGRAQd/AtaILRa9eeOytObfsYrh1nJW2jQXW
-         K7mX0Yj9erAmp0WpA9zQTJFQ/MHT2EHbYEIMe1VVRJL2beHYi8/igIBuZ63MlaAX27iZ
-         33/g==
-X-Forwarded-Encrypted: i=1; AJvYcCW1+5piy1PJQ8+96PsckGeWnIcpnhzEqfDk3K0DKeENWJtb6zvNEnYuuKQH/mAvmGTvyy7OKwiUxK8tBq8p@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+DK4ipybnKJTbkF5JomtaSWKzDjJnEhvLi+3FBdSvIemR5IG2
-	15w37AY9iZvY/BLfjreFEL26ShCWfQEF9bbsrYA7zDBga4wfoXtvA2aQPdQ2keuAOtxtw3IXfz1
-	M0fCyZkI6IcHm1VPGjXAvVIidaoNBsUSHFf1u93Q25MpAVNkfya9Okh4zZ8VwUn6xeK10
-X-Gm-Gg: ASbGncs0z7RvCVN6XqdlTwcIp1xFd7jGpwKbW9Imsffn4st7tEwXF0NqZmC/+VyZc+O
-	Cxtwmwup5OtalRiYKhHMaSR9k2uSYhpitgSOPr1pGd01gMaY8s9PHk1qAcFFSAi5ID18ifxqqUi
-	/oOVgrwek7xM+C6Ve9UUb/psN40/72yFGnKb1mq000z/Gv3we/oSXFxRfP7Y0L2FQzOL8D2gAtY
-	hggZffVXaukqBL1YzHtKnQLVVCskvcXC33I+6cuFZ3mDwJIZeT9nQ5zuJFzLfEXClqq44EJ4X0m
-	p0TMaHKWl7/Sfh+4eV7voKgtKcWH1uv4XaJWXfuhYxT25N+WMqMq1S2yc7/kqkbb+hBkeQ==
-X-Received: by 2002:ac8:7c44:0:b0:4ab:b0a0:5b58 with SMTP id d75a77b69052e-4b0915b2ea7mr88011211cf.46.1754561826695;
-        Thu, 07 Aug 2025 03:17:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFog7XVeNO1DWuYUw+8uakXHI7VfO0Cam05IxQrT4njSSBu3k4GA9z89rCO/DGT0Q6+Lpq0A==
-X-Received: by 2002:ac8:7c44:0:b0:4ab:b0a0:5b58 with SMTP id d75a77b69052e-4b0915b2ea7mr88010821cf.46.1754561826232;
-        Thu, 07 Aug 2025 03:17:06 -0700 (PDT)
-Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c453ab0sm26613983f8f.44.2025.08.07.03.17.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Aug 2025 03:17:05 -0700 (PDT)
-From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
-Date: Thu, 7 Aug 2025 12:17:04 +0200
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        quic_dikshita@quicinc.com, quic_vgarodia@quicinc.com,
-        konradybcio@kernel.org, krzk+dt@kernel.org, mchehab@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 5/7] media: venus: core: Add qcm2290 DT compatible and
- resource data
-Message-ID: <aJR9IJYz47EfNamO@trex>
-References: <20250805064430.782201-1-jorge.ramirez@oss.qualcomm.com>
- <20250805064430.782201-6-jorge.ramirez@oss.qualcomm.com>
- <4chbcvub4scnv4jxjaagbswl74tz4ygovn3vhktfodakysbgy3@kukktkwd2zsr>
- <aJHgh8mon9auOHzi@trex>
- <ce9cf017-5447-457c-9579-700782f9f0c2@linaro.org>
- <aJRMUzF0GN2LFIZd@trex>
- <40d543e4-e53d-4289-9b87-5ca8c0139bbb@linaro.org>
+	s=arc-20240116; t=1754562073; c=relaxed/simple;
+	bh=s475RVZAS7x0vUjPOn4vXmXFJXXoo+PLljIhNivpLUA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XlIiJ2kDnAnOzmgB/HOXC+P7PdafhpUzutpqhr5L9fp68W6OTDqI8PF2bHj5lWIPz0XMO1yuz7rjbjao+c8km1X8yeH8lfYhtmrG45yYRXMIg5rdSJxaByRFJpYsuVs4jNZPz+o+vbtxoNkh3lTqlgsQsO4FUFz8haGmQe19GjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bOMALAMm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5779Cvf7018054;
+	Thu, 7 Aug 2025 10:21:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IvY5vL/w1/84Unanjy2ozgrdxb+9PrbcH2pDCHlkKds=; b=bOMALAMmLtM7ZjWj
+	A3umGjscO6tT3xXGHbQYsXznsE1r7YjKZ9RGWbeMf+Bck3JnqMX2OitP1buR7bp7
+	DjMqZ09TRtAvnoBwTFRWHbj/g7JWadKY2hI2S3EtJryLwaC0gbWk92j+uV+sE/fP
+	LbkMFv4FtAHU3T6QH5WjaMNBS0uh5zjqBVGlwSRt/g4Ao/3P69s/2sLMPgZqIT4u
+	Unaeob0ZpxvAUp/Xk9MFN+uLAVGXlC98ZWSQKSGABR6SM5tsgnPJtxq42aghd4IP
+	BBMXdL+kotX286f5n01LfJ7DK3OAjDImvNmqlQHDEMjsEi5p5JA00yweA09glofc
+	xDZTdA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c586bjks-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Aug 2025 10:21:04 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 577AL3iF014348
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Aug 2025 10:21:03 GMT
+Received: from [10.216.18.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 7 Aug
+ 2025 03:21:01 -0700
+Message-ID: <3601cdce-a269-4d29-bc21-b925fcc499e2@quicinc.com>
+Date: Thu, 7 Aug 2025 15:50:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <40d543e4-e53d-4289-9b87-5ca8c0139bbb@linaro.org>
-X-Authority-Analysis: v=2.4 cv=TJpFS0la c=1 sm=1 tr=0 ts=68947d24 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
- a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=7TY_VEaP9L5SwCdglBoA:9
- a=CjuIK1q_8ugA:10 a=ZXulRonScM0A:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: xb0LGPSpi2S0mfPbnF-A4-ZLn94sezSB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA3MDA0NiBTYWx0ZWRfX4xmyQYeWiari
- UaSx9KkfZ+mqTFpd0ZaRLQ5ScDYRt9V/O0m0ypLLUqUlZosmtbjM3Ay9WND2IuwDLuncWDkMjOm
- 28vYntMXmE4wzOk8ToEaXcdPfrWB6izYl8f92mLADkWaBs4CiaSXvjpiZjD/wNfIhvQm3n0CGY8
- V05iwpoc1650f53gbalRp2y6K6ziNxFex+KOqlXGtIkd28beO1vPBmdXJMyXDLCNQJIH6bbyYoZ
- xJSQe+o7CaLRT2U3mM1ic9nKqsrwP9N789Boji9Cyzd/quC7tr+C6NiC8H+/+HMkQ6W3JPeyQhm
- o2CKL0CLHDXhQaXb5pdZdqqR4YjuevmOymCrBvEQ0ImJWQrS9uZwVmD15qHEpXSBTXlMfdGTdlJ
- sVcEteNO
-X-Proofpoint-ORIG-GUID: xb0LGPSpi2S0mfPbnF-A4-ZLn94sezSB
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for UFS controller v5
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>
+References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
+ <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
+ <2e655067-cd7e-4584-aa07-998b517ac314@quicinc.com>
+ <pewnau4ltrf2yu3xxdq6rs6xhz45zlo3dt3jnkzhxitmezz2ft@2k7pgpoz5iey>
+Content-Language: en-US
+From: Palash Kambar <quic_pkambar@quicinc.com>
+In-Reply-To: <pewnau4ltrf2yu3xxdq6rs6xhz45zlo3dt3jnkzhxitmezz2ft@2k7pgpoz5iey>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xqKdEY3ZkDAYLfT4vvZHRNr3GSTl--_F
+X-Authority-Analysis: v=2.4 cv=MZpsu4/f c=1 sm=1 tr=0 ts=68947e10 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=fcW2ctK2qZEwMxF1O34A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: xqKdEY3ZkDAYLfT4vvZHRNr3GSTl--_F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA2NCBTYWx0ZWRfX3xc3tjtpZ/v1
+ 0nrK15U8yltNfVe1UVCoKWmg16wGDkEFB0PqW0HF1FBQAINO6BesYn04F8KXXXAbWk7AEvBtEsd
+ azY7MH2Tnp8NL7rZ6y3Kc3CMS7v7M+nI2ec4bTrigTpQ3ShW7L43FKQ+LG+X80ZXqTM97ocJJxg
+ dZab7PQQriKgAUh5P1mjcitFfZlsYX11oKKaN42rwl8Rf+404oGpWSbI2P5pmM3h5zZ+On6BbZd
+ Bg5aaRlIafMHs5rWkGNb621pMFy1AqMj0e/Fmav56ixg2VobKxuzFI76ZNlxcqTcsLeUM/lZ3wx
+ CAWXSYHNh8WVvT9vop3Ff9zpDycoHozBPbto4ZdEvhoSdpbVNWMB56hhv95yR+I/onVyT1x3Kzx
+ CgiOyn2i
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-07_01,2025-08-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- adultscore=0 spamscore=0 malwarescore=0 suspectscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508070046
+ impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060064
 
-On 07/08/25 11:11:31, Bryan O'Donoghue wrote:
-> On 07/08/2025 07:48, Jorge Ramirez wrote:
-> > > There's not alot of value to the user in that configuration.
-> > I dont know the user base but when I originally did the code (v7) I was
-> > thinking about security conscious users (signed firmwares) who might not
-> > be able to switch to the new fw release so easily (unnaccessible key
-> > management and updates).
+
+
+On 8/6/2025 11:19 PM, Manivannan Sadhasivam wrote:
+> On Wed, Aug 06, 2025 at 06:11:09PM GMT, Palash Kambar wrote:
+>>
+>>
+>> On 8/6/2025 4:44 PM, Manivannan Sadhasivam wrote:
+>>> On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
+>>>> Disable of AES core in Shared ICE is not supported during power
+>>>> collapse for UFS Host Controller V5.0.
+>>>>
+>>>> Hence follow below steps to reset the ICE upon exiting power collapse
+>>>> and align with Hw programming guide.
+>>>>
+>>>> a. Write 0x18 to UFS_MEM_ICE_CFG
+>>>> b. Write 0x0 to UFS_MEM_ICE_CFG
+>>>>
+>>>> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+>>>> ---
+>>>>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
+>>>>  drivers/ufs/host/ufs-qcom.h |  2 ++
+>>>>  2 files changed, 26 insertions(+)
+>>>>
+>>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>>>> index 444a09265ded..2744614bbc32 100644
+>>>> --- a/drivers/ufs/host/ufs-qcom.c
+>>>> +++ b/drivers/ufs/host/ufs-qcom.c
+>>>> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+>>>>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
+>>>>  		ufs_qcom_device_reset_ctrl(hba, true);
+>>>>  
+>>>> +	host->vdd_hba_pc = true;
+>>>
+>>> What does this variable correspond to?
+>> Hi Manivannan,
+>>
+>> It corresponds to power collapse, will rename it for better readability.
+>>
 > 
-> Since the driver for the LITE hasn't been upstreamed the # of users must be
-> ... zero
+> What is 'power collapse' from UFS perspective?
 
-sure but that is just one dimension of the problem isnt it? the other
-dimension is the number of users with a signed firmware that could _now_
-enable the driver and have a working decoder.
-
-that could be zero or plenty (I have no clue) 
+As part of UFS controller power collapse, UFS controller and PHY enters HIBERNATE_STATE
+during idle periods .The UFS controller is power-collapsed with essential registers 
+retained (for ex ICE), while PHY maintains M-PHY compliant signaling. Upon data transfer
+requests, software restores power and exits HIBERNATE_STATE without requiring re-initialization, 
+as configurations and ICE encryption keys are preserved.
 
 > 
-> ---
-> bod
+>>>
+>>>> +
+>>>>  	return ufs_qcom_ice_suspend(host);
+>>>>  }
+>>>>  
+>>>> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>>>>  	return ufs_qcom_ice_resume(host);
+>>>>  }
+>>>>  
+>>>> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
+>>>> +				    enum uic_cmd_dme uic_cmd,
+>>>> +				    enum ufs_notify_change_status status)
+>>>> +{
+>>>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>>>> +
+>>>> +	/* Apply shared ICE WA */
+>>>
+>>> Are you really sure it is *shared ICE*?
+>>
+>>  Yes Manivannan, I am.
+>>
+> 
+> Well, there are two kind of registers defined in the internal doc that I can
+> see: UFS_MEM_ICE and UFS_MEM_SHARED_ICE. And hence the question.
+> 
+>>>
+>>>> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
+>>>> +	    status == POST_CHANGE &&
+>>>> +	    host->hw_ver.major == 0x5 &&
+>>>> +	    host->hw_ver.minor == 0x0 &&
+>>>> +	    host->hw_ver.step == 0x0 &&
+>>>> +	    host->vdd_hba_pc) {
+>>>> +		host->vdd_hba_pc = false;
+>>>> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
+>>>
+>>> Define the actual bits instead of writing magic values.
+>>
+>> Sure.
+>>
+>>>
+>>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+>>>> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
+>>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+>>>
+>>> Why do you need readl()? Writes to device memory won't get reordered.
+>>
+>> Since these are hardware register, there is a potential for reordering.
+>>
+> 
+> Really? Who said that? Please cite the reference.
+> 
+>>>
+>>>> +	}
+>>>> +}
+>>>> +
+>>>>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>>>>  {
+>>>>  	if (host->dev_ref_clk_ctrl_mmio &&
+>>>> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+>>>>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
+>>>>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
+>>>>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
+>>>> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
+>>>
+>>> This callback is not called anywhere. Regardeless of that, why can't you use
+>>> ufs_qcom_clk_scale_notify()?
+>>>
+>>
+>> According to the HPG guidelines, as part of this workaround, we are required to reset the ICE controller during the Hibern8 exit sequence when the UFS controller resumes from power collapse. Therefore, this reset logic has been added to the H8 exit notifier callback.
+>>
+> 
+> Please wrap the replies to 80 column.
+> 
+> Well, we do call ufshcd_uic_hibern8_exit() from these callbacks. So why can't
+> you reset the ICE after calling ufshcd_uic_hibern8_exit() here?
+
+As per HPG guidance, the ICE Reset workaround is required only after the
+controller undergoes a power collapse. In the UFS subsystem, power collapse
+is managed via the GDSC (GCC_UFS_MEM_PHY_GDSC), which is part of GenPD
+(power domains). Since GenPD is tied to runtime suspend operations, we are
+setting the power collapse flag during runtime suspend and checking this
+flag during hibernate exit.
+
+
+> 
+>> The ufs_clk_scale_notify function is invoked whenever clock scaling (up or down) occurs, regardless of whether a power collapse has taken place. Hence, the ICE controller reset was specifically added to the H8 exit notifier to ensure it is executed only in the appropriate context.
+>>
+> 
+> Please define what 'power collapse' mean here. And as I said before, you are
+> not at all calling this newly introduced callback.
+
+This is not a newly introduced callback, Mani. We are registering for
+an already existing notifier. You may refer to ufshcd.c, where this
+notifier is invoked.
+
+> 
+> - Mani
+> 
+
 
