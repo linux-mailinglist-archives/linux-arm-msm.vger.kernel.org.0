@@ -1,148 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-68027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5817BB1DA8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:07:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8038EB1DA91
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 17:09:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5521C18A836E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 15:07:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F57F18A823A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 15:09:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58B73264A97;
-	Thu,  7 Aug 2025 15:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 238F225E44D;
+	Thu,  7 Aug 2025 15:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jgxtn1mY"
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="AcHYZ2Ai";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZGJFbCj7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from flow-b4-smtp.messagingengine.com (flow-b4-smtp.messagingengine.com [202.12.124.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9364125DCE5
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 15:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39B714884C;
+	Thu,  7 Aug 2025 15:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754579250; cv=none; b=WQr0j6vjuzaHqcAEoS7AYoJeaf3osPfP6Rrk579Fj1q0ro1qmcI7Ko2oadNIxA/S176Thy9WZrEoCRcZVpca1cHOIHOZVqFf1zYt5jT+zfE3OnbKzGWJAmodahBrMbR9Jf7ejnNDr4rquDgr9cOsKewFXHablFHS+h6+Fs4AlSY=
+	t=1754579338; cv=none; b=ZmV75kJBCtmX0Gf1HRKFxJzGDV1KhsC+gQ2fQDrfRLWRoSDrtfDiF8velvkJpRTTEjyaDAtdcw/IrbK8QTpDiBhMUphmKhDCme0BTK5xP8rNGX6CRdmSZsJOrLJrw5immtmVxu2UVzY4hL9MX0fOoAQrlL1E8k8aAsCRj9U2VYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754579250; c=relaxed/simple;
-	bh=igUCIrrVeGDZErz4UxdMxyeKYvyk5C5rg69rGcCFkFk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SJHs7dE0yBXXTphnixTH0QRj9krPZ+yAwWQTIB+VCZbRmSmWmNe8UJYA2u4BhTA57cMF7+dW1L0N+5ZBm+I3vlYsa3Lw7emSTryESmhUZLOqDKnm3jHwL2YWNsrOJT1ZnAH1uenhe7pbWZyIoY99+fVmN60IhOjB69HIxQA4SIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jgxtn1mY; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-458b49c98a7so7782255e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 08:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754579247; x=1755184047; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HgzYIUCs5H0EjucoUMdBhHY0eYxFj3kegJfd7p4lHyw=;
-        b=jgxtn1mYLafJXNX4H96Umxia0R7Z9LwqBKvFX17OnrSb0ECn1aMJ0fMuWuT1kb2ZSi
-         +B6XuanWdg2Tzc9eDvBdqJcPSwwXfR1zUP74RfRswjwH4eIeOJV1sSm6dwOKvlOV6nNX
-         k48bpJaQ/CSiNTnIKJuv34An7PONJJ4Sonn0QZd9gp+UC47Rf5NYk5lxOvpSQOT+ShW6
-         3xZWF5JtewtqbgfwhoG++Sdq5ztYc0Jfjcj1Q70b8J9ES0af96qAxQwqF+EfyHdfvuU6
-         Tp7/UWFSGa4Lve6sab7mcogHFzC5Fd31RSlAByJiA8PdAAmrHK3tM9vf/gHEvQJCsjek
-         K6GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754579247; x=1755184047;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HgzYIUCs5H0EjucoUMdBhHY0eYxFj3kegJfd7p4lHyw=;
-        b=NpMxGsusWCPIhiE42o5NF7v6AXV0+LLuJ17C1cGmm8oeanrL0RzH0VxFco4rRc322N
-         lRm00VIoR9b56+SyX6gciNMn/rPT5MzHOYU6Fw/qc5YsNUQ0bQEkAwAej/aWfFg/S+8j
-         Tz0AG0REOy8pvJSeHkmaWW5ROJrTUawC7TvqaXhkEX3owPIxW0OLGWnDlLQ6f6MmTNyD
-         5iQEhd/VaJD3jyienwzt/B95+GAMA+OClOBQwTTmK+5rIUdtQ3TfTxWUhJst33zvK6Xv
-         Awgb11VsBSaVNf12WFF0/u4xZOx+TKvEb4IKcsK7mRcBaNF+j1E21jCYfrDDA7EQ0+mQ
-         es1w==
-X-Forwarded-Encrypted: i=1; AJvYcCVQfHXshBqyfJQbQRy99BHVR/Fvwg5Fa8/OmVFOSEC+aW/jobciff1FYHc2nBjOR/9UytMplgAyvtcq+Gfq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEBnbJfDL8x3MRTlEL/rrffUL3r5oA0I0jg4SY0cNu+m2Gn4wM
-	srIj21pUvv+Dl8RPVYBMaSrKturA6M0t7ILn4XWGPJ8B7B1m4F3ZQwzuyUYdZLDKvBI=
-X-Gm-Gg: ASbGncvogKfHXUvd+U9S1o1KgNlnbMLAPJFMAQ/tQPUgLWiij+4vXZnBuE1YlWrd/F3
-	Fmrs7vpLI1HrYCl7dqpQjjou+rMvssCjZAGq/CPAcGMdJY7NLdng6Y9ci+704S1wBulYdCrmGFY
-	KrzhZ/jmmUDdwZKuegWrLsrTmXmegSdTFka2zSViDAESc4Yj00TMm0c6n5/BAKyz6BsbF8ag87R
-	WnzRAmRBkDa8+mq4/FNFvRWkP7mvIlPGpFr8cKTVfxjU19D4KmbgT3sYXy1Vm+oO/g9rNpFGyk4
-	dzEE15rQVKYSYa0Z7NBfvFhNQI9zTbMCI0zi5YszMOranzvagU7T59Fd3zKwmOARVWimzJVDRLG
-	nuq4QxMaVywc3X4wEmpUbNEwX7BqhUJLGElDA0XzgRm1mZXGK1DUYyS2HC2fFrbI=
-X-Google-Smtp-Source: AGHT+IHbhigFLzcg3fsj4+0TiFhPaNiMmWn7iuuNGJLANEcANPokPhbhdIImZT953oUB7uv8oVzyaQ==
-X-Received: by 2002:a05:600c:3b03:b0:459:da89:b06 with SMTP id 5b1f17b1804b1-459e70eeaffmr72328125e9.16.1754579246485;
-        Thu, 07 Aug 2025 08:07:26 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5e99e04sm93498145e9.11.2025.08.07.08.07.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Aug 2025 08:07:26 -0700 (PDT)
-Message-ID: <63ce3c8b-51a3-45a7-a40e-330839d7dbf3@linaro.org>
-Date: Thu, 7 Aug 2025 16:07:24 +0100
+	s=arc-20240116; t=1754579338; c=relaxed/simple;
+	bh=vzgA3qTYjPJp9hY7fpnHpt8kRGeoF4FUlNSoyFDZvN8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=pv2M+CubtnRyYHLFbjen2GMks20UvTVMnUFIpVptshICzsFqeQXYvOZECGDsEeRwj7h5TqYQgFJ4GYN3qMZjnttsAuHLi6dOtaylmy9xWAM4VPgKB2OkRvhMtsizvDNAl2R0EJYOemZZbwar1RPvfSY3sgwg1nc08LgOeNU4eXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=AcHYZ2Ai; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZGJFbCj7; arc=none smtp.client-ip=202.12.124.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailflow.stl.internal (Postfix) with ESMTP id 419E7130012C;
+	Thu,  7 Aug 2025 11:08:54 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Thu, 07 Aug 2025 11:08:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1754579334;
+	 x=1754586534; bh=ETDvl7tWBdMBZS3hOrCBLHn2gtJQObg0cR5a3IFLvN8=; b=
+	AcHYZ2AimpXOypR+CMXz74Cb5D24y7NeF43aDen3XqMAkfYBUD4Vkz9HaE3t+ytR
+	wab5R1W+sBps+ARXpLVBeS7jyoqObFwzHPm1nIWZXtOMj1EgKnUEtaAYbyr+jmhr
+	zBCM28Vn2COi2NPxNyJFi3hdTGT7cl10aJ+aIObAb4UjS1uI6NI9J3F3TcAYAbDT
+	d6Tfq+JXZpCXEtcU/7d/X7QjcsLQiuHFOnVQLp3n6CWHlUEIwV/AhSED5Q80kJWk
+	yQyBBi7DUFemSc8BPrGDSz5APlrMs6RBn5ch7yyca3DeMV1A9wGkZtsBsRRtX9lJ
+	B77r7IlM8y0mVtxRE8Ah7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754579334; x=
+	1754586534; bh=ETDvl7tWBdMBZS3hOrCBLHn2gtJQObg0cR5a3IFLvN8=; b=Z
+	GJFbCj7XGa06pNKD10MoPduaUgi3R/dwvhtvip4Fnwqy/5se3B3hR0/S/jA8z6ob
+	lU+EWsQi3HkhA0mtRb6CdwFN1A7bU4dEjEjKwD9hqD7pyd/0daEYYzDtYiLEjebW
+	nLiKI7aI1WZfCVRt7V9yOAc05E9YXTnvoSlEyvG9f4rN8XYkX6k5vW5waLbfmU+R
+	sO0ftGuR2Rmdu595o4N5uSBUjc3HyCh2iWk9Sn+plOR9UyWsSSrpTOljMBiNJznr
+	7zH3XRI6g7+w1usbXcNdeK5+otUCkNRtN9mju3M0iBsNGuWZwJj1Gm86nIwvRpdN
+	wnJhNS6vFgjTUAzkRFVew==
+X-ME-Sender: <xms:hcGUaNQB-_yfhZyudCUCxDyF7kNJcw9QVFPRsG2yhXheXIzek1Qx2Q>
+    <xme:hcGUaGxb6glOGrkBWTz4o7VoVUWXLCM81yQ4UXTOxKpd0i1J_doKrvRHf8kv-8niJ
+    nhltPMwpIPr2v2r4uc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdduvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhephfdthfdvtdefhedukeetgefggffhjeeggeetfefggfevudegudevledvkefhvdei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepvdefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghirh
+    hlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopegrnhhtohhmrghnihdutdefsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepnhhitghkrdguvghsrghulhhnihgvrhhsodhlkh
+    hmlhesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhsthhinhhsthhithhtsehgohho
+    ghhlvgdrtghomhdprhgtphhtthhopehmohhrsghosehgohhoghhlvgdrtghomhdprhgtph
+    htthhopegrrhhnugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhumhgrgheskhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepnhgrthhhrghnsehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:hcGUaN81N-1JIrR-P6_tJ8-TTlYLB7E29acrP-Zf6E_LSW1hV9gq2w>
+    <xmx:hcGUaEeWxs6NgN6PyglirqkqvhNrLA7m4uMKYsKQaMWGXorTOMKk6g>
+    <xmx:hcGUaH5hYiTCabNaAVO6RIBDDjbnrQeXBPekvkePxVrSol5dwDvhJQ>
+    <xmx:hcGUaI9noQJCO6uDDu3zVQ5tWa9qmePtZPhQd_FEKlR8yVsu6BfRtw>
+    <xmx:hsGUaERVOFIkKDFFc39kCkP1jZSms9Xz2e4ri8G44fvuGI8682QUGw3N>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 43083700065; Thu,  7 Aug 2025 11:08:53 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] [RFT] arm64: dts: qcom: sm8250: extend CAMSS with
- new CSIPHY subdevices
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
- <20250612011531.2923701-10-vladimir.zapolskiy@linaro.org>
- <dcc33f04-1b19-47d7-aca2-03d38173b6b6@linaro.org>
- <eb42d052-1fe0-49a2-9a83-05c5a5b7394e@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <eb42d052-1fe0-49a2-9a83-05c5a5b7394e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: T654cc969b17eaba3
+Date: Thu, 07 Aug 2025 17:08:31 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
+ "Arnd Bergmann" <arnd@kernel.org>
+Cc: "Rob Clark" <robin.clark@oss.qualcomm.com>,
+ "Dmitry Baryshkov" <lumag@kernel.org>, "Dave Airlie" <airlied@gmail.com>,
+ "Simona Vetter" <simona@ffwll.ch>, "Nathan Chancellor" <nathan@kernel.org>,
+ "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>,
+ "Jessica Zhang" <jessica.zhang@oss.qualcomm.com>,
+ "Sean Paul" <sean@poorly.run>,
+ "Marijn Suijten" <marijn.suijten@somainline.org>,
+ "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
+ "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
+ "Antonino Maniscalco" <antomani103@gmail.com>,
+ "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>,
+ "Jun Nie" <jun.nie@linaro.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev
+Message-Id: <76680ece-f88c-4960-a263-b96f64c35bbf@app.fastmail.com>
+In-Reply-To: 
+ <ouan6tfmoefwuvs7wmhpzjdwmxfhqh3ad26j5tmwdugnq7ieda@ddw6dfqtq27g>
+References: <20250807072016.4109051-1-arnd@kernel.org>
+ <ouan6tfmoefwuvs7wmhpzjdwmxfhqh3ad26j5tmwdugnq7ieda@ddw6dfqtq27g>
+Subject: Re: [PATCH] drm/msm/dpu: avoid uninitialized variable use
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 07/08/2025 15:17, Neil Armstrong wrote:
+On Thu, Aug 7, 2025, at 10:09, Dmitry Baryshkov wrote:
+> On Thu, Aug 07, 2025 at 09:19:48AM +0200, Arnd Bergmann wrote:
 >>
->> https://lore.kernel.org/linux-media/20250711-b4-linux-next-25-03-13- 
->> dtsi-x1e80100-camss-v7-0-0bc5da82f526@linaro.org
->>
->> V2 of the CSIPHY above will incorporate feedback from Neil and 
->> yourself on adding endpoint@ to the PHY however I think we need to 
->> have a conversation about standards compliance at attaching two 
->> sensors to one CSIPHY without VCs or TDM.
-> 
-> The PHY is able to setup 2 lanes as clock and connect 2 sensors over the 
-> 5 lanes available, like for example:
-> - lane0: cam0 data0
-> - lane1: cam0 data1
-> - lane2: cam1 data0
-> - lane3: cam1 clk
-> - lane4: cam0 clk
-> 
-> Any lane mapping is compliant. There some Meta slides about that at:
-> https://www.edge-ai-vision.com/wp-content/uploads/2024/09/T2R10_Kumaran- 
-> Ayyalluseshagiri-Viswanathan_Meta_2024.pdf slide 13
+>> The bug is real, but the suggestion from clang to set it to NULL is
+>> unfortunately just as harmful as dereferencing a NULL pointer is little
+>> better than uninitialized data.
+>
+>
+> Having no plane->crtc is a valid setting and it is handled inside
+> drm_atomic_helper_check_plane_state() by setting plane_state->visible =
+> false and returning early. Setting crtc_state to NULL is a correct fix.
+> Could you please send it?
 
-Hmm so that would require splitting the CSIPHY between two CSI decoders 
-which I'm not sure would work on our hardware, perhaps yes, perhaps no, 
-or routing both sensors into the one CSI decoder and then separating the 
-data-streams either in the driver or in user-space.
+Ah, I see. I saw the crtc_state dereference in
 
-For such an esoteric setup I think my initial suggestion would be to 
-push it into user-space, even assuming you have gotten the PHY to 
-co-operate with having two simultaneous clock lanes per the above link.
+  WARN_ON(plane_state->crtc && plane_state->crtc != crtc_state->crtc);
 
-Looking at the PHY regs, I guess you can set the bits but obviously the 
-analogue component of the PHY can only really operate from the one clock 
-lane....
+but that is indeed guarded by the plane_state->crtc check.
 
-Interesting.
+Nathan's patch is sufficient then.
 
----
-bod
-
-
+    Arnd
 
