@@ -1,172 +1,651 @@
-Return-Path: <linux-arm-msm+bounces-67971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-67972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04840B1D39D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 09:44:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC6DBB1D3E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 10:00:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16ADB565073
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 07:44:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44EE55845AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Aug 2025 08:00:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E436724DCE2;
-	Thu,  7 Aug 2025 07:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B8602517AF;
+	Thu,  7 Aug 2025 07:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kq23wH5D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDdnRTx5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E64246BA9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Aug 2025 07:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B0224A061;
+	Thu,  7 Aug 2025 07:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754552617; cv=none; b=nYnQwED11Lc8mykrQK7tTKSmfCcjsnXKQQlc151JGZsVCl6vAxsJwIPyNYwl8BoweIYM0fvYdlGiKvIH+Bey4DNJ8cKGCGSW1nLYjEllezp1gCZBFLRfrWmKBol1vJWgKzQhSVjugwhVkvrQssGiLUSFVUxdBk3HJpoz/q2HOjQ=
+	t=1754553540; cv=none; b=JtdMgKS95S5Ko8d1mltTiOXEJ8iqMRYw5mH2+CQ8sbNIsm0Ti02vFWGXsSLck7y2RQ7IIVe/d4rdwmQrV4N2yb4PotqQaJ1mwRGApTb/+5BWhhEEdE2wpv9IksbtoG9rEXtLnI3d7IluEpL+EuGKP1daRTFa0POUc+ATv1h5pVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754552617; c=relaxed/simple;
-	bh=RRxiBs16r7KTIHUs8Zak5jbdXnfM3F+ay1jRs1C93GE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPXXH5tciBAFIcwuIJFMds5DNLl7QNR7EjKAfVmmaxM7h46Q0JJ0mik5DI7CHvD5wfSA/4jVG7mqlhVC3bNTWcJiP9hCsWVii2gzAIHRD7X3ye3XEVB5jhF7qjHHZ34nXhnFUKh1FbZxjYFgYyuA0XWQUdCny6iI2+T66iLQsmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kq23wH5D; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576N7Dte025041
-	for <linux-arm-msm@vger.kernel.org>; Thu, 7 Aug 2025 07:43:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=IAd5Ze4vzEv
-	wh8CRNYeZ2qA7tHf7jWkHfXPtXA/b2Zg=; b=kq23wH5DE2+oLegmUvtX/zF+xtk
-	g/FzoL6TijTXlnE32k18k+uqSgh8GeqMAlROGd8glIE9JimOn/gvrPY6p1yT/M6c
-	hvUYYjy4mKzw+PWBhlybCB5wlRK4tCqB0FCGCASdh1dyJ9cLEs6wAAtNrJ2azJPT
-	SKfMOV/BLmhYZPeropj9mMsLU39N7O348ny4KPgPgyf2PN8cRiTk9ExORGz8YT64
-	ueOIL8NOdJKbRwlbVIpTO626RO+4buwTgyDjSliJXBp/cbm1jPai0e721awRoUc5
-	WYQjTUZUMkAhiXrnLddJIHwL6ITOAcnK7Y4a4wYDy9lIm9U/VAf+qaVK4Og==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpvywp78-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 07:43:35 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b321087b1cdso1092044a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Aug 2025 00:43:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754552614; x=1755157414;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IAd5Ze4vzEvwh8CRNYeZ2qA7tHf7jWkHfXPtXA/b2Zg=;
-        b=uQoE1WHYf5u4/XTEem2TX/FdTP7OLQDk9eW+X5RQx62J4sD5hL0W5axYHbKqZKjtUy
-         SP/MyOy4pX1xhd8y3y4eurzde/ku7cL1+Cakm/YEWJW0/cpI7eSLoOSXXK3PebvTuJZA
-         BnNDA/7FAfRH0vwlGm7SsT+hjet+xr6ehY4LQjW4q9TKBHkl65u1jAm/bYT5rLBFhbGA
-         F7uCLBMooPbmpCwMXrKWAYCiXcBpyNa/zGmNLMoaIQIJvpXeKc/h32XOSDIORw/8ho+r
-         CuNxJ1d7bB3RIlYB7JzEBy22Q1z7b3gIfAY8zBvOx5mYqCgbdtCxYh8gz94qEI4Odf/L
-         aQ1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWjvZjT3m+WG1vYPP9DVhrIuZsfol7dvSFu4DxGHubG/zWRIZqmm7FXulO8g8F0sg42wuXj1vq1leiIFUFv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwStG/RFZtOqbCf2GEDDHrEpfdMrfiprCp8X0dXIp/8m7FUcwFa
-	6qQ37uasQDii5aYuURP2PVuJG4ykLUmyUu/GRUTSPV24z+PKY47wiQP9gZxs0I4FG52egAL+j7f
-	JXeW0ioDn9/YpovMOs0qN3ONt7/NbMPPaKv4SecUUQ/ZJP8UMPPeMUzUO0I6ZKFBvmonv
-X-Gm-Gg: ASbGncsFPuEbVmU4Rg/ILPjWEF4sF6gpfc2sgyEtVrt/++YbUIHl5TuCHCXUoRSbB+b
-	5XMytX0EBvzRrrK3Br/8Lx97dqWRtmfFtI41MvrabaVo4/0KG9+2rXy7OuFryQpQyhcdbGl7t9o
-	rbgsxk11fmvTFfyVIDCWTo+qh8UZmRByoMs/Rk9IfPD6emm8oZHK6LvGMd+JNK7AIYnZV9nPP0r
-	wIcIUerSyBfIF3dKGEuQ4HVkb8cwa6vaWXsvyM1/ptyJG3bqwNDrAGcOZqWu1uPsZoWqtGwfDEO
-	eqWts7P/ePsGKq2954Q0R2FkgjIGoLy6c6VOH1VXvMhiU2jP/P7uPmA4bpcSuSNCqpQ=
-X-Received: by 2002:a17:902:f68f:b0:240:3915:99d6 with SMTP id d9443c01a7336-2429f4abfd4mr86270815ad.33.1754552614149;
-        Thu, 07 Aug 2025 00:43:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmQ70xW0VJBqeSlIUWMJPARL1fYQTkCAlkasjy9//oof5xTgkO6mW9mVoX4c12poiyfQ7JHg==
-X-Received: by 2002:a17:902:f68f:b0:240:3915:99d6 with SMTP id d9443c01a7336-2429f4abfd4mr86270555ad.33.1754552613777;
-        Thu, 07 Aug 2025 00:43:33 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef678dsm178166395ad.39.2025.08.07.00.43.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Aug 2025 00:43:33 -0700 (PDT)
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-        ath12k@lists.infradead.org, linux-remoteproc@vger.kernel.org,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Subject: [Patch v3 3/3] soc: qcom: mdt_loader: Remove unused parameter
-Date: Thu,  7 Aug 2025 13:13:11 +0530
-Message-ID: <20250807074311.2381713-3-mukesh.ojha@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250807074311.2381713-1-mukesh.ojha@oss.qualcomm.com>
-References: <20250807074311.2381713-1-mukesh.ojha@oss.qualcomm.com>
+	s=arc-20240116; t=1754553540; c=relaxed/simple;
+	bh=145ApTWr95/VGiROVjLOZIZMXH4cIZO7rxO9M5rNhog=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XjAlYPiaudQC2+0j63I4gT56lJcprsKWHTNq5l4dHIclu1eGyMbl9EY9kqgo3vyQPDmFzfPUG7yp629tUB3JKNP80FTm5ZMsCuVcg/92F3m8a7gzULIKg/2gO7k3q6ueCj97ndbg4gUN8dn+DPh8Dz2+kgGuCnTKmHXWYKab+Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDdnRTx5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEB3C4CEEB;
+	Thu,  7 Aug 2025 07:58:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754553538;
+	bh=145ApTWr95/VGiROVjLOZIZMXH4cIZO7rxO9M5rNhog=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=PDdnRTx5sTDdjdopqrcJefR7njgAMouuLyptP9M8nEMrwVIGaf/t6kZMo/fsGGWhd
+	 /aW8QEmr6p9gQxdhTy6IQCVWww+WkdxDyX3fJ7Xdfd+bWdyKG1SBsNQPDWtcTf91JU
+	 OMRcSQRC9EuCB4DcyMmYTCICJsXXFEobrHIYg5Ob4Rh5bQ4ZGBvsBZK1lt2P1ltrUk
+	 jMMyBv+hgh51VIliHKuRDDsKRqLBQdjJqgAHNGxrrBthxAoxDepSZYOMQI3DCQ+TvT
+	 O/4t4iJyiRSqO4b9dFjNOVutJRn6shNQWcoX6QY3V80Ih7THTjmCoNfkXp0BhTvrkT
+	 N2CsLxyWIUyOA==
+Message-ID: <28ddf35a-3e7a-4470-8305-c64a551fd8c7@kernel.org>
+Date: Thu, 7 Aug 2025 09:58:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: nFC4rwpB-DQcf1UCcoKhEfL-r_t3VoQ6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX2kOjT5ABOm0F
- VLEj1+wOmiSk8K/pjzc+2ZLTPhIHA64ww23NTXHH/B+KV12dgkFe3IsGSx0JHO+b3GErs8ONohA
- 3VKDQlB05v0muP3he/ERpKmHAhhQx0bqmToG2vghBoFjgNfg042OpOQg9gMBVw3DIGaJbkPLd8P
- XJSegkmXyeYTrMebEhGMswoCtYQ9ARO5pMcE2R5cRSL9xtD5rxpPcTT981RAVoGMjsPozZhbhFX
- MuHD48CohlxYRa43GXN2cV+ZDcCd/tMWVaqjyxo7oh8nZT2gtxKaV/0W30yqUY9fSHrIcY2opk+
- XHfzCOUbZdRJd8lttHcYS545r3aKYY5TCcGY2T6zdJQmFZn/DawrjRlyND5q/6B6wLBqCcUvXN7
- 6/C2KFrK
-X-Proofpoint-ORIG-GUID: nFC4rwpB-DQcf1UCcoKhEfL-r_t3VoQ6
-X-Authority-Analysis: v=2.4 cv=NsLRc9dJ c=1 sm=1 tr=0 ts=68945927 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=wln2f8d1oZJPYHCAfSYA:9
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-06_05,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
- adultscore=0 malwarescore=0 spamscore=0 suspectscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508060009
+User-Agent: Mozilla Thunderbird
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH 65/65] media: v4l2-ioctl: Stop passing fh pointer to ioctl
+ handlers
+To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Devarsh Thakkar
+ <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
+ Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
+ Christian Gromm <christian.gromm@microchip.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Alex Shi
+ <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
+ Dongliang Mu <dzm91@hust.edu.cn>, Jonathan Corbet <corbet@lwn.net>,
+ Tomasz Figa <tfiga@chromium.org>, Marek Szyprowski
+ <m.szyprowski@samsung.com>, Andy Walls <awalls@md.metrocast.net>,
+ Michael Tretter <m.tretter@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Bin Liu <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
+ <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Mirela Rabulea <mirela.rabulea@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Michal Simek <michal.simek@amd.com>, Ming Qian <ming.qian@nxp.com>,
+ Zhou Peng <eagle.zhou@nxp.com>, Xavier Roumegue
+ <xavier.roumegue@oss.nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+ Samuel Holland <samuel@sholland.org>,
+ Daniel Almeida <daniel.almeida@collabora.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Nas Chung <nas.chung@chipsnmedia.com>,
+ Jackson Lee <jackson.lee@chipsnmedia.com>,
+ Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+ Houlong Wei <houlong.wei@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Tiffany Lin <tiffany.lin@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
+ Jacob Chen <jacob-chen@iotwrt.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Heiko Stuebner <heiko@sntech.de>,
+ Detlev Casanova <detlev.casanova@collabora.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
+ Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Fabien Dessenne <fabien.dessenne@foss.st.com>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+ Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+ Steve Longerbeam <slongerbeam@gmail.com>, Maxime Ripard
+ <mripard@kernel.org>, Paul Kocialkowski <paulk@sys-base.io>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Corentin Labbe <clabbe@baylibre.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-staging@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-tegra@vger.kernel.org, imx@lists.linux.dev,
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-usb@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, mjpeg-users@lists.sourceforge.net
+References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
+ <20250802-media-private-data-v1-65-eb140ddd6a9d@ideasonboard.com>
+ <5bda2b73-0538-41d1-b065-9b541a027475@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <5bda2b73-0538-41d1-b065-9b541a027475@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-fw_name in qcom_mdt_bins_are_split() seems unused now, it may have
-used in the past for logging it but due to code refactor this parameter
-is unused now.
+On 07/08/2025 09:26, Hans Verkuil wrote:
+> On 02/08/2025 11:23, Jacopo Mondi wrote:
+>> From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>>
+>> Now that all drivers access the v4l2_fh from the file structure, there
+>> is no need to pass it as an explicit argument to ioctl handlers. Set the
+>> argument to NULL in the w__video_do_ioctl(), and drop the name of the
+>> void *fh argument in the ioctl handler declarations to indicate it is
+>> not used.
+>>
+>> The argument could be removed altogether with a mechanical change
+>> (probably using coccinelle), but there are plans to pass a new argument
+>> to the ioctl handlers in the near future. The tree-wide change to remove
+>> the argument, only to add another one soon after, would be too much
+>> churn.
+>>
+>> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+>> ---
+>>  drivers/media/v4l2-core/v4l2-ioctl.c |   5 +-
+>>  include/media/v4l2-ioctl.h           | 236 +++++++++++++++++------------------
+>>  2 files changed, 120 insertions(+), 121 deletions(-)
+>>
+>> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+>> index 44c2f5ef3dae407d9786c5278d13efc982be2ff0..248a0b5b56ec7a09f2d4c61114f81aa5a9b8b041 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+>> @@ -3078,7 +3078,6 @@ static long __video_do_ioctl(struct file *file,
+>>  	bool write_only = false;
+>>  	struct v4l2_ioctl_info default_info;
+>>  	const struct v4l2_ioctl_info *info;
+>> -	void *fh = file_to_v4l2_fh(file);
+>>  	struct v4l2_fh *vfh = NULL;
+>>  	int dev_debug = vfd->dev_debug;
+>>  	long ret = -ENOTTY;
+>> @@ -3140,11 +3139,11 @@ static long __video_do_ioctl(struct file *file,
+>>  
+>>  	write_only = _IOC_DIR(cmd) == _IOC_WRITE;
+>>  	if (info != &default_info) {
+>> -		ret = info->func(ops, file, fh, arg);
+>> +		ret = info->func(ops, file, NULL, arg);
+>>  	} else if (!ops->vidioc_default) {
+>>  		ret = -ENOTTY;
+>>  	} else {
+>> -		ret = ops->vidioc_default(file, fh,
+>> +		ret = ops->vidioc_default(file, NULL,
+>>  			vfh ? v4l2_prio_check(vfd->prio, vfh->prio) >= 0 : 0,
+>>  			cmd, arg);
+>>  	}
+> 
+> drivers/media/v4l2-core/v4l2-compat-ioctl32.c also calls ops->vidioc_query_ext_ctrl
+> directly, but still passes the fh as second argument: that needs to be replaced by
+> a NULL pointer as well. That should be fixed in this patch as well.
+> 
+> Regarding v4l2-ioctl.c: I would like a follow-up patch that pushes the NULL pointer
+> down into each ioctl helper function. I.e. drop the 'void *fh' argument in the
+> struct v4l2_ioctl_info 'func' callback, and all callbacks like v4l_g_fmt() just
+> replace 'fh' by 'NULL' when they call the vidioc op.
+> 
+> Part of it is that the core functions currently suggest that the second argument is
+> a filehandle (since it's still named 'fh'), which is obviously wrong. And I also think
+> that the core framework shouldn't use a dummy second argument at all. I admit that
+> changing all vidioc callbacks in the whole subsystem to drop the second argument is
+> too much churn, but for this core file I think it is something that should be done.
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
----
-Changes in v3: https://lore.kernel.org/lkml/20250806172531.1865088-4-mukesh.ojha@oss.qualcomm.com/
- - Caller of qcom_mdt_bins_are_split() was modified in 2/2 of this patch in
-   earlier version, bring the change here.
- - patch order changes due to drop of one patch from earlier version.
+A follow-up on this: I would not be against a large patch that drops the second priv
+argument from all vidioc ops since it is now unused. If nothing else, it helps ensure
+that it is really unused by all drivers :-)
 
-Changes in v2:
- - made this as separate patch.
+But if you don't want to go there, then there is something that I think need to be addressed:
+a lot of drivers name the second argument 'fh' or '_fh' or even 'fh0'. Can we add a patch that
+renames the second arg to 'priv'?
 
- drivers/soc/qcom/mdt_loader.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+At minimum I think this should be done for drivers/media/test-drivers and
+samples/v4l/v4l2-pci-skeleton.c. These drivers are often used as reference drivers,
+so they should be up-to-date.
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 74c415774657..7522223835f5 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -302,7 +302,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- }
- EXPORT_SYMBOL_GPL(qcom_mdt_pas_init);
- 
--static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_name)
-+static bool qcom_mdt_bins_are_split(const struct firmware *fw)
- {
- 	const struct elf32_phdr *phdrs;
- 	const struct elf32_hdr *ehdr;
-@@ -353,7 +353,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 	if (!mdt_header_valid(fw))
- 		return -EINVAL;
- 
--	is_split = qcom_mdt_bins_are_split(fw, fw_name);
-+	is_split = qcom_mdt_bins_are_split(fw);
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
--- 
-2.50.1
+I would also suggest to do this for uvc since it is by far the most widely used media
+driver.
+
+I also see the use of 'fh' in v4l2-mem2mem.c in a few places.
+
+Regards,
+
+	Hans
+
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>> diff --git a/include/media/v4l2-ioctl.h b/include/media/v4l2-ioctl.h
+>> index 82695c3a300a73219f262fb556ed61a8f09d273e..223e2c7a3516fc96fb486ab64226163e52f775a6 100644
+>> --- a/include/media/v4l2-ioctl.h
+>> +++ b/include/media/v4l2-ioctl.h
+>> @@ -293,144 +293,144 @@ struct v4l2_ioctl_ops {
+>>  	/* ioctl callbacks */
+>>  
+>>  	/* VIDIOC_QUERYCAP handler */
+>> -	int (*vidioc_querycap)(struct file *file, void *fh,
+>> +	int (*vidioc_querycap)(struct file *file, void *,
+>>  			       struct v4l2_capability *cap);
+>>  
+>>  	/* VIDIOC_ENUM_FMT handlers */
+>> -	int (*vidioc_enum_fmt_vid_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_vid_cap)(struct file *file, void *,
+>>  				       struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_vid_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_vid_overlay)(struct file *file, void *,
+>>  					   struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_vid_out)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_vid_out)(struct file *file, void *,
+>>  				       struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_sdr_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_sdr_cap)(struct file *file, void *,
+>>  				       struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_sdr_out)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_sdr_out)(struct file *file, void *,
+>>  				       struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_meta_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_meta_cap)(struct file *file, void *,
+>>  					struct v4l2_fmtdesc *f);
+>> -	int (*vidioc_enum_fmt_meta_out)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_fmt_meta_out)(struct file *file, void *,
+>>  					struct v4l2_fmtdesc *f);
+>>  
+>>  	/* VIDIOC_G_FMT handlers */
+>> -	int (*vidioc_g_fmt_vid_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vid_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_overlay)(struct file *file, void *,
+>>  					struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vid_out)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vid_out_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_out_overlay)(struct file *file, void *,
+>>  					    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vbi_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vbi_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_sliced_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_sliced_vbi_cap)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_sliced_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_sliced_vbi_out)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vid_cap_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_cap_mplane)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_vid_out_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_vid_out_mplane)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_sdr_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_sdr_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_sdr_out)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_sdr_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_meta_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_meta_cap)(struct file *file, void *,
+>>  				     struct v4l2_format *f);
+>> -	int (*vidioc_g_fmt_meta_out)(struct file *file, void *fh,
+>> +	int (*vidioc_g_fmt_meta_out)(struct file *file, void *,
+>>  				     struct v4l2_format *f);
+>>  
+>>  	/* VIDIOC_S_FMT handlers */
+>> -	int (*vidioc_s_fmt_vid_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vid_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_overlay)(struct file *file, void *,
+>>  					struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vid_out)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vid_out_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_out_overlay)(struct file *file, void *,
+>>  					    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vbi_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vbi_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_sliced_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_sliced_vbi_cap)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_sliced_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_sliced_vbi_out)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vid_cap_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_cap_mplane)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_vid_out_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_vid_out_mplane)(struct file *file, void *,
+>>  					   struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_sdr_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_sdr_cap)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_sdr_out)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_sdr_out)(struct file *file, void *,
+>>  				    struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_meta_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_meta_cap)(struct file *file, void *,
+>>  				     struct v4l2_format *f);
+>> -	int (*vidioc_s_fmt_meta_out)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fmt_meta_out)(struct file *file, void *,
+>>  				     struct v4l2_format *f);
+>>  
+>>  	/* VIDIOC_TRY_FMT handlers */
+>> -	int (*vidioc_try_fmt_vid_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_cap)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vid_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_overlay)(struct file *file, void *,
+>>  					  struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vid_out)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_out)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vid_out_overlay)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_out_overlay)(struct file *file, void *,
+>>  					     struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vbi_cap)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vbi_out)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_sliced_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_sliced_vbi_cap)(struct file *file, void *,
+>>  					     struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_sliced_vbi_out)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_sliced_vbi_out)(struct file *file, void *,
+>>  					     struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vid_cap_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_cap_mplane)(struct file *file, void *,
+>>  					     struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_vid_out_mplane)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_vid_out_mplane)(struct file *file, void *,
+>>  					     struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_sdr_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_sdr_cap)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_sdr_out)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_sdr_out)(struct file *file, void *,
+>>  				      struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_meta_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_meta_cap)(struct file *file, void *,
+>>  				       struct v4l2_format *f);
+>> -	int (*vidioc_try_fmt_meta_out)(struct file *file, void *fh,
+>> +	int (*vidioc_try_fmt_meta_out)(struct file *file, void *,
+>>  				       struct v4l2_format *f);
+>>  
+>>  	/* Buffer handlers */
+>> -	int (*vidioc_reqbufs)(struct file *file, void *fh,
+>> +	int (*vidioc_reqbufs)(struct file *file, void *,
+>>  			      struct v4l2_requestbuffers *b);
+>> -	int (*vidioc_querybuf)(struct file *file, void *fh,
+>> +	int (*vidioc_querybuf)(struct file *file, void *,
+>>  			       struct v4l2_buffer *b);
+>> -	int (*vidioc_qbuf)(struct file *file, void *fh,
+>> +	int (*vidioc_qbuf)(struct file *file, void *,
+>>  			   struct v4l2_buffer *b);
+>> -	int (*vidioc_expbuf)(struct file *file, void *fh,
+>> +	int (*vidioc_expbuf)(struct file *file, void *,
+>>  			     struct v4l2_exportbuffer *e);
+>> -	int (*vidioc_dqbuf)(struct file *file, void *fh,
+>> +	int (*vidioc_dqbuf)(struct file *file, void *,
+>>  			    struct v4l2_buffer *b);
+>>  
+>> -	int (*vidioc_create_bufs)(struct file *file, void *fh,
+>> +	int (*vidioc_create_bufs)(struct file *file, void *,
+>>  				  struct v4l2_create_buffers *b);
+>> -	int (*vidioc_prepare_buf)(struct file *file, void *fh,
+>> +	int (*vidioc_prepare_buf)(struct file *file, void *,
+>>  				  struct v4l2_buffer *b);
+>> -	int (*vidioc_remove_bufs)(struct file *file, void *fh,
+>> +	int (*vidioc_remove_bufs)(struct file *file, void *,
+>>  				  struct v4l2_remove_buffers *d);
+>>  
+>> -	int (*vidioc_overlay)(struct file *file, void *fh, unsigned int i);
+>> -	int (*vidioc_g_fbuf)(struct file *file, void *fh,
+>> +	int (*vidioc_overlay)(struct file *file, void *, unsigned int i);
+>> +	int (*vidioc_g_fbuf)(struct file *file, void *,
+>>  			     struct v4l2_framebuffer *a);
+>> -	int (*vidioc_s_fbuf)(struct file *file, void *fh,
+>> +	int (*vidioc_s_fbuf)(struct file *file, void *,
+>>  			     const struct v4l2_framebuffer *a);
+>>  
+>>  		/* Stream on/off */
+>> -	int (*vidioc_streamon)(struct file *file, void *fh,
+>> +	int (*vidioc_streamon)(struct file *file, void *,
+>>  			       enum v4l2_buf_type i);
+>> -	int (*vidioc_streamoff)(struct file *file, void *fh,
+>> +	int (*vidioc_streamoff)(struct file *file, void *,
+>>  				enum v4l2_buf_type i);
+>>  
+>>  		/*
+>> @@ -438,135 +438,135 @@ struct v4l2_ioctl_ops {
+>>  		 *
+>>  		 * Note: ENUMSTD is handled by videodev.c
+>>  		 */
+>> -	int (*vidioc_g_std)(struct file *file, void *fh, v4l2_std_id *norm);
+>> -	int (*vidioc_s_std)(struct file *file, void *fh, v4l2_std_id norm);
+>> -	int (*vidioc_querystd)(struct file *file, void *fh, v4l2_std_id *a);
+>> +	int (*vidioc_g_std)(struct file *file, void *, v4l2_std_id *norm);
+>> +	int (*vidioc_s_std)(struct file *file, void *, v4l2_std_id norm);
+>> +	int (*vidioc_querystd)(struct file *file, void *, v4l2_std_id *a);
+>>  
+>>  		/* Input handling */
+>> -	int (*vidioc_enum_input)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_input)(struct file *file, void *,
+>>  				 struct v4l2_input *inp);
+>> -	int (*vidioc_g_input)(struct file *file, void *fh, unsigned int *i);
+>> -	int (*vidioc_s_input)(struct file *file, void *fh, unsigned int i);
+>> +	int (*vidioc_g_input)(struct file *file, void *, unsigned int *i);
+>> +	int (*vidioc_s_input)(struct file *file, void *, unsigned int i);
+>>  
+>>  		/* Output handling */
+>> -	int (*vidioc_enum_output)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_output)(struct file *file, void *,
+>>  				  struct v4l2_output *a);
+>> -	int (*vidioc_g_output)(struct file *file, void *fh, unsigned int *i);
+>> -	int (*vidioc_s_output)(struct file *file, void *fh, unsigned int i);
+>> +	int (*vidioc_g_output)(struct file *file, void *, unsigned int *i);
+>> +	int (*vidioc_s_output)(struct file *file, void *, unsigned int i);
+>>  
+>>  		/* Control handling */
+>> -	int (*vidioc_query_ext_ctrl)(struct file *file, void *fh,
+>> +	int (*vidioc_query_ext_ctrl)(struct file *file, void *,
+>>  				     struct v4l2_query_ext_ctrl *a);
+>> -	int (*vidioc_g_ext_ctrls)(struct file *file, void *fh,
+>> +	int (*vidioc_g_ext_ctrls)(struct file *file, void *,
+>>  				  struct v4l2_ext_controls *a);
+>> -	int (*vidioc_s_ext_ctrls)(struct file *file, void *fh,
+>> +	int (*vidioc_s_ext_ctrls)(struct file *file, void *,
+>>  				  struct v4l2_ext_controls *a);
+>> -	int (*vidioc_try_ext_ctrls)(struct file *file, void *fh,
+>> +	int (*vidioc_try_ext_ctrls)(struct file *file, void *,
+>>  				    struct v4l2_ext_controls *a);
+>> -	int (*vidioc_querymenu)(struct file *file, void *fh,
+>> +	int (*vidioc_querymenu)(struct file *file, void *,
+>>  				struct v4l2_querymenu *a);
+>>  
+>>  	/* Audio ioctls */
+>> -	int (*vidioc_enumaudio)(struct file *file, void *fh,
+>> +	int (*vidioc_enumaudio)(struct file *file, void *,
+>>  				struct v4l2_audio *a);
+>> -	int (*vidioc_g_audio)(struct file *file, void *fh,
+>> +	int (*vidioc_g_audio)(struct file *file, void *,
+>>  			      struct v4l2_audio *a);
+>> -	int (*vidioc_s_audio)(struct file *file, void *fh,
+>> +	int (*vidioc_s_audio)(struct file *file, void *,
+>>  			      const struct v4l2_audio *a);
+>>  
+>>  	/* Audio out ioctls */
+>> -	int (*vidioc_enumaudout)(struct file *file, void *fh,
+>> +	int (*vidioc_enumaudout)(struct file *file, void *,
+>>  				 struct v4l2_audioout *a);
+>> -	int (*vidioc_g_audout)(struct file *file, void *fh,
+>> +	int (*vidioc_g_audout)(struct file *file, void *,
+>>  			       struct v4l2_audioout *a);
+>> -	int (*vidioc_s_audout)(struct file *file, void *fh,
+>> +	int (*vidioc_s_audout)(struct file *file, void *,
+>>  			       const struct v4l2_audioout *a);
+>> -	int (*vidioc_g_modulator)(struct file *file, void *fh,
+>> +	int (*vidioc_g_modulator)(struct file *file, void *,
+>>  				  struct v4l2_modulator *a);
+>> -	int (*vidioc_s_modulator)(struct file *file, void *fh,
+>> +	int (*vidioc_s_modulator)(struct file *file, void *,
+>>  				  const struct v4l2_modulator *a);
+>>  	/* Crop ioctls */
+>> -	int (*vidioc_g_pixelaspect)(struct file *file, void *fh,
+>> +	int (*vidioc_g_pixelaspect)(struct file *file, void *,
+>>  				    int buf_type, struct v4l2_fract *aspect);
+>> -	int (*vidioc_g_selection)(struct file *file, void *fh,
+>> +	int (*vidioc_g_selection)(struct file *file, void *,
+>>  				  struct v4l2_selection *s);
+>> -	int (*vidioc_s_selection)(struct file *file, void *fh,
+>> +	int (*vidioc_s_selection)(struct file *file, void *,
+>>  				  struct v4l2_selection *s);
+>>  	/* Compression ioctls */
+>> -	int (*vidioc_g_jpegcomp)(struct file *file, void *fh,
+>> +	int (*vidioc_g_jpegcomp)(struct file *file, void *,
+>>  				 struct v4l2_jpegcompression *a);
+>> -	int (*vidioc_s_jpegcomp)(struct file *file, void *fh,
+>> +	int (*vidioc_s_jpegcomp)(struct file *file, void *,
+>>  				 const struct v4l2_jpegcompression *a);
+>> -	int (*vidioc_g_enc_index)(struct file *file, void *fh,
+>> +	int (*vidioc_g_enc_index)(struct file *file, void *,
+>>  				  struct v4l2_enc_idx *a);
+>> -	int (*vidioc_encoder_cmd)(struct file *file, void *fh,
+>> +	int (*vidioc_encoder_cmd)(struct file *file, void *,
+>>  				  struct v4l2_encoder_cmd *a);
+>> -	int (*vidioc_try_encoder_cmd)(struct file *file, void *fh,
+>> +	int (*vidioc_try_encoder_cmd)(struct file *file, void *,
+>>  				      struct v4l2_encoder_cmd *a);
+>> -	int (*vidioc_decoder_cmd)(struct file *file, void *fh,
+>> +	int (*vidioc_decoder_cmd)(struct file *file, void *,
+>>  				  struct v4l2_decoder_cmd *a);
+>> -	int (*vidioc_try_decoder_cmd)(struct file *file, void *fh,
+>> +	int (*vidioc_try_decoder_cmd)(struct file *file, void *,
+>>  				      struct v4l2_decoder_cmd *a);
+>>  
+>>  	/* Stream type-dependent parameter ioctls */
+>> -	int (*vidioc_g_parm)(struct file *file, void *fh,
+>> +	int (*vidioc_g_parm)(struct file *file, void *,
+>>  			     struct v4l2_streamparm *a);
+>> -	int (*vidioc_s_parm)(struct file *file, void *fh,
+>> +	int (*vidioc_s_parm)(struct file *file, void *,
+>>  			     struct v4l2_streamparm *a);
+>>  
+>>  	/* Tuner ioctls */
+>> -	int (*vidioc_g_tuner)(struct file *file, void *fh,
+>> +	int (*vidioc_g_tuner)(struct file *file, void *,
+>>  			      struct v4l2_tuner *a);
+>> -	int (*vidioc_s_tuner)(struct file *file, void *fh,
+>> +	int (*vidioc_s_tuner)(struct file *file, void *,
+>>  			      const struct v4l2_tuner *a);
+>> -	int (*vidioc_g_frequency)(struct file *file, void *fh,
+>> +	int (*vidioc_g_frequency)(struct file *file, void *,
+>>  				  struct v4l2_frequency *a);
+>> -	int (*vidioc_s_frequency)(struct file *file, void *fh,
+>> +	int (*vidioc_s_frequency)(struct file *file, void *,
+>>  				  const struct v4l2_frequency *a);
+>> -	int (*vidioc_enum_freq_bands)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_freq_bands)(struct file *file, void *,
+>>  				      struct v4l2_frequency_band *band);
+>>  
+>>  	/* Sliced VBI cap */
+>> -	int (*vidioc_g_sliced_vbi_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_g_sliced_vbi_cap)(struct file *file, void *,
+>>  				       struct v4l2_sliced_vbi_cap *a);
+>>  
+>>  	/* Log status ioctl */
+>> -	int (*vidioc_log_status)(struct file *file, void *fh);
+>> +	int (*vidioc_log_status)(struct file *file, void *);
+>>  
+>> -	int (*vidioc_s_hw_freq_seek)(struct file *file, void *fh,
+>> +	int (*vidioc_s_hw_freq_seek)(struct file *file, void *,
+>>  				     const struct v4l2_hw_freq_seek *a);
+>>  
+>>  	/* Debugging ioctls */
+>>  #ifdef CONFIG_VIDEO_ADV_DEBUG
+>> -	int (*vidioc_g_register)(struct file *file, void *fh,
+>> +	int (*vidioc_g_register)(struct file *file, void *,
+>>  				 struct v4l2_dbg_register *reg);
+>> -	int (*vidioc_s_register)(struct file *file, void *fh,
+>> +	int (*vidioc_s_register)(struct file *file, void *,
+>>  				 const struct v4l2_dbg_register *reg);
+>>  
+>> -	int (*vidioc_g_chip_info)(struct file *file, void *fh,
+>> +	int (*vidioc_g_chip_info)(struct file *file, void *,
+>>  				  struct v4l2_dbg_chip_info *chip);
+>>  #endif
+>>  
+>> -	int (*vidioc_enum_framesizes)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_framesizes)(struct file *file, void *,
+>>  				      struct v4l2_frmsizeenum *fsize);
+>>  
+>> -	int (*vidioc_enum_frameintervals)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_frameintervals)(struct file *file, void *,
+>>  					  struct v4l2_frmivalenum *fival);
+>>  
+>>  	/* DV Timings IOCTLs */
+>> -	int (*vidioc_s_dv_timings)(struct file *file, void *fh,
+>> +	int (*vidioc_s_dv_timings)(struct file *file, void *,
+>>  				   struct v4l2_dv_timings *timings);
+>> -	int (*vidioc_g_dv_timings)(struct file *file, void *fh,
+>> +	int (*vidioc_g_dv_timings)(struct file *file, void *,
+>>  				   struct v4l2_dv_timings *timings);
+>> -	int (*vidioc_query_dv_timings)(struct file *file, void *fh,
+>> +	int (*vidioc_query_dv_timings)(struct file *file, void *,
+>>  				       struct v4l2_dv_timings *timings);
+>> -	int (*vidioc_enum_dv_timings)(struct file *file, void *fh,
+>> +	int (*vidioc_enum_dv_timings)(struct file *file, void *,
+>>  				      struct v4l2_enum_dv_timings *timings);
+>> -	int (*vidioc_dv_timings_cap)(struct file *file, void *fh,
+>> +	int (*vidioc_dv_timings_cap)(struct file *file, void *,
+>>  				     struct v4l2_dv_timings_cap *cap);
+>> -	int (*vidioc_g_edid)(struct file *file, void *fh,
+>> +	int (*vidioc_g_edid)(struct file *file, void *,
+>>  			     struct v4l2_edid *edid);
+>> -	int (*vidioc_s_edid)(struct file *file, void *fh,
+>> +	int (*vidioc_s_edid)(struct file *file, void *,
+>>  			     struct v4l2_edid *edid);
+>>  
+>>  	int (*vidioc_subscribe_event)(struct v4l2_fh *fh,
+>> @@ -575,7 +575,7 @@ struct v4l2_ioctl_ops {
+>>  					const struct v4l2_event_subscription *sub);
+>>  
+>>  	/* For other private ioctls */
+>> -	long (*vidioc_default)(struct file *file, void *fh,
+>> +	long (*vidioc_default)(struct file *file, void *,
+>>  			       bool valid_prio, unsigned int cmd, void *arg);
+>>  };
+>>  
+>>
+> 
+> 
 
 
