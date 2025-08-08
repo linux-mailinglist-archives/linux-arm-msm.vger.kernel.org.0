@@ -1,199 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-68078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 202E6B1E354
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:32:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7DF0B1E36C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:34:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11557582989
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 07:31:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6580718C616A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 07:33:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ED17263F5E;
-	Fri,  8 Aug 2025 07:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 135AC24A067;
+	Fri,  8 Aug 2025 07:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SjoHuh8E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fXTtI64z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DF324166F;
-	Fri,  8 Aug 2025 07:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA85F2264D9;
+	Fri,  8 Aug 2025 07:25:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754637766; cv=none; b=NXJF35xBAGVp9Slrmhoqf/fh4ZHrUGZEc1+nROKZb21JdaGV85pRVyKu0LK8323sfZJEWHS+SPoL8xmWEw4lln1zT2g+SbT/1C7HVMSLvi4F805gwWVYFVqOr4WmG5llySy8/uTM5HFeN/fKuB5u/gDAFuqS4FI7tNQwFyoWo+Q=
+	t=1754637953; cv=none; b=dZ3lmC3jTAJeWX8+c1WKxlNt42W3CbxTGsg0NHS17lySAFqf9jUxRtBGcr+HO6pn49IrYyJlf+w60ONYQm5ioZ+/SeagjDcu9CkMArDiBjhV//aOsVYqT/cG69XbW+NmEutdikGR5abtmFdzudgPMSPqx1+MQ1QUVHaue5dduyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754637766; c=relaxed/simple;
-	bh=fbLBorPezoJWXQtvSg4WV87SLfHofuZpGSIX8FwjR+A=;
+	s=arc-20240116; t=1754637953; c=relaxed/simple;
+	bh=4dII2zr2lKG9KmcQeK6dVUXaq5kcE5zY11ZU5f2bPgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ms1iq8uOCjvB/FKC1QIIwifZ+kmurlPsMzYDgElzbUydOMZBQ1BdMm10ThL49eWkgukouhuqmohoH9zMKQmrN/wz9jlS5H14B5xoDA04/7edggjEupUvBC1bGBvZkoEk+uZjUvhgymlT47tjhjxjPxzaRd9Bx5I9C+l2ECTtxJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SjoHuh8E; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754637765; x=1786173765;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fbLBorPezoJWXQtvSg4WV87SLfHofuZpGSIX8FwjR+A=;
-  b=SjoHuh8EtHrM7tgnpeCISrbn+ybxjw+1nTrgNHifhOx0XgOgVkr5Cuuq
-   QTgS2euRU21K08ExSx6XWM4R3aJ8MHoCdI5B9BeUSigO294lBNzoUbC4s
-   3qTDTaw6I8B2rpsik9gfMzELmwTRBR+1lR0r0bH9lLTXcB1xJXhtfCPts
-   GUjZiAOGkr3QPNoN903b6dHEavWdVXdEAoHumJnWb5Km9bjKoCgAv4RBG
-   GYMoPvvKd/s0yCUtz03HPgpoiRDbPr4wOkEFMm+Ux/OF22JWdWGT1dBHz
-   +oR2ceLdD6cLS/EVyr8iFK4KlFzt2aF94wG5fzNrbwYTdMRt9scHowyn5
-   g==;
-X-CSE-ConnectionGUID: tsMUf0+CT0yNRqN2IMlG6g==
-X-CSE-MsgGUID: yFhiMrAHSgmQ3jzzw3y3Ow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="82427449"
-X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; 
-   d="scan'208";a="82427449"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:44 -0700
-X-CSE-ConnectionGUID: OdNPlVlrR9m1H28JVd9Cfw==
-X-CSE-MsgGUID: 6MIOtN9XTOqpGi12upForA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; 
-   d="scan'208";a="188944168"
-Received: from fpallare-mobl4.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.245.151])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:33 -0700
-Received: from kekkonen.localdomain (localhost [127.0.0.1])
-	by kekkonen.fi.intel.com (Postfix) with SMTP id 7FB8211FC97;
-	Fri,  8 Aug 2025 10:22:31 +0300 (EEST)
-Date: Fri, 8 Aug 2025 07:22:31 +0000
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Devarsh Thakkar <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
-	Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
-	Christian Gromm <christian.gromm@microchip.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Alex Shi <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
-	Dongliang Mu <dzm91@hust.edu.cn>, Jonathan Corbet <corbet@lwn.net>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andy Walls <awalls@md.metrocast.net>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Bin Liu <bin.liu@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Michal Simek <michal.simek@amd.com>, Ming Qian <ming.qian@nxp.com>,
-	Zhou Peng <eagle.zhou@nxp.com>,
-	Xavier Roumegue <xavier.roumegue@oss.nxp.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>, Samuel Holland <samuel@sholland.org>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
-	Houlong Wei <houlong.wei@mediatek.com>,
-	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-	Tiffany Lin <tiffany.lin@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
-	Jacob Chen <jacob-chen@iotwrt.com>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	=?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>,
-	Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Fabien Dessenne <fabien.dessenne@foss.st.com>,
-	Hugues Fruchet <hugues.fruchet@foss.st.com>,
-	Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Steve Longerbeam <slongerbeam@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Niklas =?iso-8859-1?Q?S=F6derlund?= <niklas.soderlund@ragnatech.se>,
-	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-staging@lists.linux.dev, linux-doc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
-	imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-	linux-sunxi@lists.linux.dev, linux-usb@vger.kernel.org,
-	linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	mjpeg-users@lists.sourceforge.net
-Subject: Re: [PATCH 64/65] media: staging: ipu7: isys: Don't set
- V4L2_FL_USES_V4L2_FH manually
-Message-ID: <aJWltxB6NfXg53KI@kekkonen.localdomain>
-References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
- <20250802-media-private-data-v1-64-eb140ddd6a9d@ideasonboard.com>
- <aJRswZIVKCuzqCpr@kekkonen.localdomain>
- <20250807170135.GH11583@pendragon.ideasonboard.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Us9bN5lJqPn/7X7Lfv3vLzc/M9yvPFTBNv+AKL7dvaojjfwMwdEmf5rpLw0Q86sOhgjXWnqIEOWIYsggzQQ3m+wxuQLVfPh8e6LS04Wjc+vK0b5bR/wYttFnqqpw3insNGTGqaOE32EbXkLESkbFu0JyrtGDbvtvbPVKhyDZiAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fXTtI64z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65B5C4CEF0;
+	Fri,  8 Aug 2025 07:25:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754637952;
+	bh=4dII2zr2lKG9KmcQeK6dVUXaq5kcE5zY11ZU5f2bPgo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fXTtI64z0GrM2KCRlY7jZll6v0CI43RH8gvE1J0dHa1btco7q0ce7u9SfUvBjhEkR
+	 l8Hpqw60ozUF8506LpOZQ7vAykFNVg7gO6NdgQ5SPjVBnrAN2YJ/B71Y8hDeZFoqU7
+	 ASCL5CkasD59/6lhGl/fpisNjKmBe4qyJbXSuznk1s200imVGOAaWU/K7N19hJC17w
+	 SgcUopvrdnVYYytb+cqEp1kJ7qXiLzJb1wDDfcCQy2aDgYGBIR4mpKYL8botCUgz/9
+	 aVweM7F5c41FPLpQ2taYyAx4OeXec3zGY1RRazGi+6SJSMMz4wf9h6TPkFHE0EzQwS
+	 xdVd6sIa4X+vg==
+Date: Fri, 8 Aug 2025 09:25:49 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: Mark Brown <broonie@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, vkoul@kernel.org, kishon@kernel.org, mani@kernel.org, 
+	conor+dt@kernel.org, bvanassche@acm.org, andersson@kernel.org, 
+	neil.armstrong@linaro.org, dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org, 
+	krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
+Message-ID: <20250808-unbiased-classy-heron-cd7f3f@kuoka>
+References: <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+ <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+ <685e3d36-c0e3-4faa-b817-aecc15976a25@quicinc.com>
+ <c1435858-6288-4525-8c92-e27ed86cb55e@sirena.org.uk>
+ <31461227-3f3a-4316-9c8a-c851209d0278@quicinc.com>
+ <4efc8a3a-ceb6-40dc-b877-328b86348e0b@sirena.org.uk>
+ <52625e59-c7d0-45d1-8af3-d9958c5ef01a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250807170135.GH11583@pendragon.ideasonboard.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <52625e59-c7d0-45d1-8af3-d9958c5ef01a@quicinc.com>
 
-On Thu, Aug 07, 2025 at 08:01:35PM +0300, Laurent Pinchart wrote:
-> Hi Sakari,
-> 
-> On Thu, Aug 07, 2025 at 09:07:13AM +0000, Sakari Ailus wrote:
-> > On Sat, Aug 02, 2025 at 11:23:26AM +0200, Jacopo Mondi wrote:
-> > > From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > > 
-> > > The V4L2_FL_USES_V4L2_FH flag is set by v4l2_fh_init(). It is not meant
-> > > to be set manually by drivers. Drop it from the ipu7-isys driver.
-> > > 
-> > > Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > > Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-> > 
-> > Thanks, Jacopo!
-> > 
-> > Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-> 
-> Can we get you review on patch 63/65 too (for the IPU6 driver) too ?
+On Fri, Aug 08, 2025 at 02:15:31AM +0530, Nitin Rawat wrote:
+>=20
+>=20
+> On 8/8/2025 12:15 AM, Mark Brown wrote:
+> > On Thu, Aug 07, 2025 at 11:26:17PM +0530, Nitin Rawat wrote:
+> >=20
+> > > 1. Regulator and PMIC configurations are board-specific, meaning they=
+ can
+> > > vary significantly across different platforms. For example, some boar=
+ds may
+> > > use different generations of UFS devices =E2=80=94 such as UFS 2.x =
+=E2=80=94 which come with
+> > > distinct power and load requirements and some with UFS3.x which has i=
+t own
+> > > power/load requirement.
+> >=20
+> > Requirements from generations of UFS devices presumably come from the
+> > UFS spec and should just be known though?
+> >=20
+> > > 2. UFS PHY load and PMIC requirements also varies across targets, dep=
+ending
+> > > on the underlying technology node and the specific PHY capabilities. =
+These
+> > > differences can be influenced by the MIPI version or other implementa=
+tion
+> > > details.
+> >=20
+> > If you've got non-enumerable PHYs that have a big impact that's a much
+> > clearer use case for putting things in DT.
+>=20
+> What I meant is that different boards may use different UFS parts, and the
+> associated PHY load requirements are not governed by the UFS specification
+> itself. Instead, these requirements depend on our specific PHY design and
+> MIPI, which can vary across platforms.
 
-Done.
+The UFS controller knows which device it has attached - 2.x or 3.x - so
+power considerations are known to the driver.
 
--- 
-Sakari Ailus
+>=20
+> Because these characteristics =E2=80=94 such as load requirements =E2=80=
+=94 are not
+> enumerable or automatically detectable, it makes sense to describe them
+> explicitly in the device tree. This approach ensures that board-specific
+> variations are accurately captured without hardcoding them into the drive=
+r.
+
+But you never came with rationale why given board has that value.
+
+All this is done ONLY because downstream has it.
+
+Best regards,
+Krzysztof
+
 
