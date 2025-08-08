@@ -1,59 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-68123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71ACAB1E86E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 14:34:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DAF7B1E894
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 14:44:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 356437B0247
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 12:33:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF1261C23401
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 12:44:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36F8279DAD;
-	Fri,  8 Aug 2025 12:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0170327A124;
+	Fri,  8 Aug 2025 12:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5Ejamfu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HGNavPnY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4761EA84;
-	Fri,  8 Aug 2025 12:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976A42798E5;
+	Fri,  8 Aug 2025 12:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754656452; cv=none; b=Oo4fIIealtTF7k3928OGEBJllSyUISwGugRb/mwR+v/YRUCUctBnBSCib2f7/RRoDUbzoEOoIMxN579QXjFJGX7vRk03AqAdkYIfrnX7iYKHGGrMzCJCvSRbr0Gr39CruJBUw3Ne4huHp4BsEO2zYj/qm0cUf0sglrCHj9SIAIk=
+	t=1754657036; cv=none; b=iu05ZC1DYJPBSVWnLSF8akikSSdfTsnm9eiuuoxXzJrqKn+qnSrKdeNYkLhCdumAH6IPLr95xdZXsUcTvG6loOSajo2ywYNlM+foEb1ZOh3BbUOCIKSv4WgjvS/lKvb+pShUrs7MMYUuUqUnfo+wcTr6aukanc9K/NLFBts4Veg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754656452; c=relaxed/simple;
-	bh=bsBWuWydjwV6gpToYD0UMemkzbOVgo4dHyaxM95+a24=;
+	s=arc-20240116; t=1754657036; c=relaxed/simple;
+	bh=tsejBiC+/oFFTRAIabIuUh+wHi8GC0uRJVghpAoYPiQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hvvyjXcQluZVQLiSbGSs26OF+Cvl5Otbk6Ceug2XIKmPxBBEIXJZroboLxt5hC1qbndhO8wcQLXxQBKhK7MqOD9tWAGEm8RYUqNUZzBcQJcTRJc7FrAvnam5m4Dp1i+A0SWbmSkIN9sMXELDV/syM9p/+uAElD61sv8oTKLAENA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5Ejamfu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FEDC4CEF4;
-	Fri,  8 Aug 2025 12:34:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ANEBpvl/D1YCszpRIFNdavoHJFaMJK6hAtYaVpa7soRdGQIyo7M5qvdutdph77vxjHvqZp301HkczEaIoTbCwpnKm14zXn60EuYtLesO5cleHUHA+89hUQ9k3LySNz/je/+hByMeQHKDEFI6txGAOvwWPKF19RCC2LDza0Tr2qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HGNavPnY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2853BC4CEED;
+	Fri,  8 Aug 2025 12:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754656452;
-	bh=bsBWuWydjwV6gpToYD0UMemkzbOVgo4dHyaxM95+a24=;
+	s=k20201202; t=1754657036;
+	bh=tsejBiC+/oFFTRAIabIuUh+wHi8GC0uRJVghpAoYPiQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S5Ejamfu2Gi5t0Qk9/oMf87Ab0zV+Wo05mqeUuf+8751FQtXtm4epsLg+1kVLl3vm
-	 GN4phyce5gkDEAN1oD/0D1fI+foS4v6nGQsfljlh/WS3Tu1l2mcfIVWYhCIWXAqCd8
-	 Yix5rmgPEG21gSUhwpr8P0xIjvE7YlQI9uKDuCfxGqjG8Sa+bPywAlv+P9nDBNZz30
-	 xHnlxTv/cFvwlZnyZd5b9dmd4R3V3WPkTZUdKfCNuO5FJha+j1uBM45ztyjrW2yCMl
-	 rFZEbTaNR2GIqwNXkBBUPr/6f8r9owNnS2Ukk6briqUjKixqWmvqmbux2GZTvFgcu1
-	 LxeLeuV9JrThQ==
-Date: Fri, 8 Aug 2025 18:03:46 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, conor+dt@kernel.org, 
-	bvanassche@acm.org, andersson@kernel.org, neil.armstrong@linaro.org, 
-	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
- device tree
-Message-ID: <xrarnbg2qmhuivqgl7vzhmvfi6sc4zp6wa6zvpv4r4nufllc3p@u4wed2orm2cq>
-References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
- <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+	b=HGNavPnYc0BaIr4fEo7cDVyDXtlCaQML0x1+CLofQxH/7GBarUOAKyv10skBzgOgK
+	 oBVGlbo+qxNsKBCaltiF/bCMzTBM+JS4FArltyTTfnjQ0UZzWwTvC5Z4fjVOozD7ZS
+	 JQBbJfCugPeUJjdCovt0G2nAeOFRkzF2ecSo7UyiTk/Pksf1f3eKrhbfIpBuFzLAEx
+	 QclWPJs8EPUYzB93ylVucyqZE1nMpRAMkuM74f/8W99rRj70YM8rC+0ZgZSbBEtuVJ
+	 FPeW/jISkY1HYxlyyC8Mh2JyQuSegx01BsKlsUUy1Qsn0Gqy4ocgYNHR4fBT6G/d6D
+	 g+NePeMF1zeZA==
+Date: Fri, 8 Aug 2025 18:13:41 +0530
+From: 'Manivannan Sadhasivam' <mani@kernel.org>
+To: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>, 
+	'Krzysztof Kozlowski' <krzk@kernel.org>, 'Ram Kumar Dwivedi' <quic_rdwivedi@quicinc.com>, 
+	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, agross@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+Message-ID: <fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
+References: <061c01dc062f$70ec34b0$52c49e10$@samsung.com>
+ <87c37d65-5ab1-4443-a428-dc3592062cdc@oss.qualcomm.com>
+ <061d01dc0631$c1766c00$44634400$@samsung.com>
+ <3cd33dce-f6b9-4f60-8cb2-a3bf2942a1e5@oss.qualcomm.com>
+ <06d201dc0689$9f438200$ddca8600$@samsung.com>
+ <wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
+ <06f301dc0695$6bf25690$43d703b0$@samsung.com>
+ <CGME20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60@epcas5p1.samsung.com>
+ <nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
+ <0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,75 +73,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+In-Reply-To: <0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
 
-On Wed, Aug 06, 2025 at 09:13:40PM GMT, Nitin Rawat wrote:
-> Add support in QMP PHY driver to read optional vdda-phy-max-microamp
-> and vdda-pll-max-microamp properties from the device tree.
+On Thu, Aug 07, 2025 at 10:08:32PM GMT, Alim Akhtar wrote:
 > 
-> These properties define the expected maximum current (in microamps) for
-> each supply. The driver uses this information to configure regulators
-> more accurately and ensure they operate in the correct mode based on
-> client load requirements.
 > 
-> If the property is not present, the driver defaults load to
-> `QMP_VREG_UNUSED`.
+> > -----Original Message-----
+> > From: 'Manivannan Sadhasivam' <mani@kernel.org>
+> > Sent: Wednesday, August 6, 2025 4:56 PM
+> > To: Alim Akhtar <alim.akhtar@samsung.com>
+> > Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>; 'Krzysztof
+> [...]
 > 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 22 +++++++++++++++++++---
->  1 file changed, 19 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index 9c69c77d10c8..6e116f7370c3 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -39,6 +39,8 @@
->  #define PHY_INIT_COMPLETE_TIMEOUT		10000
->  
->  #define NUM_OVERLAY				2
-> +#define QMP_VREG_UNUSED				-1
-> +#define MAX_PROP_NAME				32
->  
->  /* set of registers with offsets different per-PHY */
->  enum qphy_reg_layout {
-> @@ -1894,15 +1896,29 @@ static int qmp_ufs_vreg_init(struct qmp_ufs *qmp)
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	struct device *dev = qmp->dev;
-> +	struct device_node *np = dev->of_node;
-> +	char prop_name[MAX_PROP_NAME];
->  	int num = cfg->num_vregs;
-> -	int i;
-> +	const char *supply;
-> +	int i, ret;
->  
->  	qmp->vregs = devm_kcalloc(dev, num, sizeof(*qmp->vregs), GFP_KERNEL);
->  	if (!qmp->vregs)
->  		return -ENOMEM;
->  
-> -	for (i = 0; i < num; i++)
-> -		qmp->vregs[i].supply = cfg->vreg_list[i];
-> +	for (i = 0; i < num; i++) {
-> +		supply = cfg->vreg_list[i];
-> +		qmp->vregs[i].supply = supply;
-> +
-> +		/* Defaults to unused */
-> +		qmp->vregs[i].init_load_uA = QMP_VREG_UNUSED;
+> > > >
+> > > > On Wed, Aug 06, 2025 at 09:51:43AM GMT, Alim Akhtar wrote:
+> > > >
+> > > > [...]
+> > > >
+> > > > > > >> Introducing generic solutions preemptively for problems that
+> > > > > > >> are simple in concept and can occur widely is good practice
+> > > > > > >> (although it's sometimes hard to gauge whether this is a
+> > > > > > >> one-off), as if the issue spreads a generic solution will
+> > > > > > >> appear at some point, but we'll have to keep supporting the
+> > > > > > >> odd ones as well
+> > > > > > >>
+> > > > > > > Ok,
+> > > > > > > I would prefer if we add a property which sounds like "poor
+> > > > > > > thermal dissipation" or "routing channel loss" rather than
+> > > > > > > adding limiting UFS gear
+> > > > > > properties.
+> > > > > > > Poor thermal design or channel losses are generic enough and
+> > > > > > > can happen
+> > > > > > on any board.
+> > > > > >
+> > > > > > This is exactly what I'm trying to avoid through my suggestion -
+> > > > > > one board may have poor thermal dissipation, another may have
+> > > > > > channel losses, yet another one may feature a special batch of
+> > > > > > UFS chips that will set the world on fire if instructed to
+> > > > > > attempt link training at gear 7 - they all are causes, as
+> > > > > > opposed to describing what needs to happen (i.e. what the
+> > > > > > hardware must be treated as - gear N incapable despite what can
+> > > > > > be discovered at runtime), with perhaps a comment on the side
+> > > > > >
+> > > > > But the solution for all possible board problems can't be by
+> > > > > limiting Gear
+> > > > speed.
+> > > >
+> > > > Devicetree properties should precisely reflect how they are relevant
+> > > > to the hardware. 'limiting-gear-speed' is self-explanatory that the
+> > > > gear speed is getting limited (for a reason), but the devicetree
+> > > > doesn't need to describe the
+> > > > *reason* itself.
+> > > >
+> > > > > So it should be known why one particular board need to limit the gear.
+> > > >
+> > > > That goes into the description, not in the property name.
+> > > >
+> > > > > I understand that this is a static configuration, where it is
+> > > > > already known
+> > > > that board is broken for higher Gear.
+> > > > > Can this be achieved by limiting the clock? If not, can we add a
+> > > > > board
+> > > > specific _quirk_ and let the _quirk_ to be enabled from vendor
+> > > > specific hooks?
+> > > > >
+> > > >
+> > > > How can we limit the clock without limiting the gears? When we limit
+> > > > the gear/mode, both clock and power are implicitly limited.
+> > > >
+> > > Possibly someone need to check with designer of the SoC if that is possible
+> > or not.
+> > 
+> > It's not just clock. We need to consider reducing regulator, interconnect
+> > votes also. But as I said above, limiting the gear/mode will take care of all
+> > these parameters.
+> > 
+> > > Did we already tried _quirk_? If not, why not?
+> > > If the board is so poorly designed and can't take care of the channel
+> > > loses or heat dissipation etc, Then I assumed the gear negotiation
+> > > between host and device should fail for the higher gear and driver can have
+> > a re-try logic to re-init / re-try "power mode change" at the lower gear. Is
+> > that not possible / feasible?
+> > >
+> > 
+> > I don't see why we need to add extra logic in the UFS driver if we can extract
+> > that information from DT.
+> > 
+> You didn’t answer my question entirely, I am still not able to visualised how come Linkup is happening in higher gear and then 
+> Suddenly it is failing and we need to reduce the gear to solve that?
 
-You don't need to initialize the load. It will be zero initialized at this point
-and if the property parsing fails below, it's value still be zero. And the
-regulator core will apply the load only if it is > 0.
+Oh well, this is the source of confusion here. I didn't (also the patch) claim
+that the link up will happen with higher speed. It will most likely fail if it
+couldn't operate at the higher speed and that's why we need to limit it to lower
+gear/mode *before* bringing the link up.
 
-> +
-> +		snprintf(prop_name, sizeof(prop_name), "%s-max-microamp", supply);
-> +		ret = of_property_read_u32(np, prop_name, &qmp->vregs[i].init_load_uA);
-> +		if (ret)
-> +			dev_dbg(qmp->dev, "No max microamp for %s, using default %d\n",
-> +				supply, QMP_VREG_UNUSED);
-
-This print doesn't make sense as it will print the default value of -1. Please
-drop it.
+As you can see, the driver patch is parsing the limits in its
+ufs_hba_variant_ops::init() callback, which gets called during
+ufshcd_hba_init().
 
 - Mani
 
