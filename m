@@ -1,224 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-68134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B760DB1EE30
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 20:06:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B6C4B1F0AA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 00:28:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC31F5673AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 18:06:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 261C55A13F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 22:28:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CDBE1F63CD;
-	Fri,  8 Aug 2025 18:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FF7A289829;
+	Fri,  8 Aug 2025 22:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gxwLTw4/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QOEOtT19"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170311E5B91;
-	Fri,  8 Aug 2025 18:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F822289819
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 22:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754676412; cv=none; b=eS+KXCzq7eFJqPO3y4k26pd/D/dN2sluJpnNgz5yCgfm35vVgT9mGy94qfEkcbcZEa+aXxEXqHwHA+J429SGCZSTP9T1y0Vwh6A5FJ24BoLXy82Hh+MiCR2+mcUHJKoAV6StAQGd0FnRR4mNI3cOk8kkAE7uBT3WSw/ZorsrLAs=
+	t=1754692118; cv=none; b=eS2Q7vkcIvs0zClKEhigjOc1MDCcfYLJHuAzjCqi6HHFlxGc79GH8m1l5Oq+A0ApACtoUFiQ8yxJKiIhbJjJr4ZaCfEJJU2IE+7hh3oMOo5FXXGGThAfhXg2Ny8UR5AH8SIcbiciW3uefpgK0e/Y/3DSyx3U1k/EApV/PQAnSF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754676412; c=relaxed/simple;
-	bh=Xlb6GlM1jikm1KAnIiq6BWNyPUh3O/ufUGpGhV+m/jo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TqZc2ZXxNbqpQqgBr3PO3l7M+vOtji0/Mv39mX3SmPqQEDfHqvw9/GssfStwuD1ZQHrkS9+5Z0u7DSj2PL4gogecyo2hhYcCS0zzjiN28peIyIeamQy0S9HfQFV0UtncjK+xWt6SPG+GeIiYMnzJLF1dwd9eUUI3pTdcZzpKwQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxwLTw4/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C1EC4CEED;
-	Fri,  8 Aug 2025 18:06:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754676411;
-	bh=Xlb6GlM1jikm1KAnIiq6BWNyPUh3O/ufUGpGhV+m/jo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gxwLTw4/P9blEJzA0NeI3VVQbvvogs/jKUkp1iwYTHHSGUM804PVH79cOqYwy09iE
-	 awuPFvEMVSoXT+AjyvUQ3qcGwltUw/yP/7k+aryoRr0vcLhPx2gFO8dWGfnnrkqZQD
-	 f0ZSizK/wCc7vY7mJ/LHyWNTjZmICn6D5KAH5Y2sWYxuSi8nBIX1ENZG6vkytJXRyP
-	 BTph3EjXTdPYlc/Vpy5gp4mkQPsQvP1LMBIpCeVUIuu4DrZlO3YKzQoJ2XDVp+QPB2
-	 KHxY5krriR4lcHJsErKEieb1GVPd9uNR5XzbsmSyQA+ZV4SrdsTn4m0GyoIT91slwV
-	 HciWeQ0kFikgw==
-Date: Fri, 8 Aug 2025 23:36:40 +0530
-From: 'Manivannan Sadhasivam' <mani@kernel.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>, 
-	'Krzysztof Kozlowski' <krzk@kernel.org>, 'Ram Kumar Dwivedi' <quic_rdwivedi@quicinc.com>, 
-	avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, agross@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
- properties to UFS
-Message-ID: <xqynlabahvaw4cznbofkkqjr4oh7tf6crlnxoivhpadlymxg5v@a4b5fgf55nqw>
-References: <061d01dc0631$c1766c00$44634400$@samsung.com>
- <3cd33dce-f6b9-4f60-8cb2-a3bf2942a1e5@oss.qualcomm.com>
- <06d201dc0689$9f438200$ddca8600$@samsung.com>
- <wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
- <06f301dc0695$6bf25690$43d703b0$@samsung.com>
- <CGME20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60@epcas5p1.samsung.com>
- <nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
- <0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
- <fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
- <0f8c01dc0876$427cf1c0$c776d540$@samsung.com>
+	s=arc-20240116; t=1754692118; c=relaxed/simple;
+	bh=uaHfEqDd/Vc7Vg2XZAn7x4HzGyqtpzws6/5+aFC7Elo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B5tr6wISke5pWqogsjKTtGvfhAJdvIP88juIgK6T1InHgGABCBnBsc+4d+O9tg3KnXc0hoQCdENYj4yG8nnh8EjTJkceagJ08GnkbcPov3EQOoQt7eroCuaTqmLW9sSIN3oPR84dlnuG2UnI3m/d7tjnpmu6dB2Sw3+x3vB9dCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QOEOtT19; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b8db5e9b35so1373037f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 15:28:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754692115; x=1755296915; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bk4Z92vldvgPQRm+g46xxvwEKtrsTK5zc7BqRXD51dg=;
+        b=QOEOtT19wKrtBOYLQiPirGTfz1xxJcBfhoCP26yr/MkvhnKh1CGZY8AL9DmQ8z8yT4
+         4MMrULA87CTsCnzS3J0e1Afu298Vx7AqVavTkwKkMGZewRvCXK5mMxyvv1x5uVAL8Jdw
+         K48LVWcDfO8GEYDvlgFEMRadmRKWWIv5zEj+rY4o4syq80JMSL6DTL3K6myTywXAX/SH
+         3MXDJS8Bui6mzMcJLgdRYtYwowTlchSCa0FuQgBNiQFrCdmuKF4BFXP6XG9A2iRpAJvq
+         TXFS2VkP8jBSjb1VyzBmwWxbQLnyAYBHbX/qKVroP3FaO1ZeBDh2kXUX8OAniTvLvTlM
+         n4Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754692115; x=1755296915;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bk4Z92vldvgPQRm+g46xxvwEKtrsTK5zc7BqRXD51dg=;
+        b=D0od0TZ8eA6Xvuook22dfIo8mSbOwlJbM5EFMhkb4J/5jF9CmHxpl5EC8oT5SYu2rc
+         pRibK/LLigT8lpoRCHyMLqX2NiruptvMTZX+x2EWarn7ir+4/lD5lSMICLf5GUhnPUaG
+         1xMrYNkDpnyQopaPTRjs1VINzNEPd9GkvDKLBfRXYJI0bizn75DNLGdyVKpnlcsSFp6O
+         dPpZaJuE6CzEJfw9wInliK7oVv3C+oP68G3w7Ko8BHvFVMgH5lQDHFHaYboxk4T4sM5t
+         tHNG7gfh6R0zI1osMnnHsNcyfWAnkc+i3TsWIp2dNC1dInhgx3uItn2EQBmMj5/yx+E6
+         l39Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX0rQYPtglU12UjZ8PMM+JhWfy0MbZq/okMIuqHcv8UGrN7QDKW6QkQY3ytF9ax90A91qYM+7Mx9fe/+id2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwD8hFlR5pTgoz/qmQ7v9h6rlwaXzd4Q/N10vY4Nysx+tFXAm81
+	CgHki5CuVLv6bfjJ3yidByDZzNdf5t7FLv1TdgUuRq8E3cyCqaDdu3nTlLjoE4zwkjFfm4aZ/xK
+	qfIxKbdgcvDf7VheqQfLBKvTvwJ3cQ8QLrnppwZwKSw==
+X-Gm-Gg: ASbGncvydk6iNCI59/83h75qsw9hQQTUB3WJSBB+CmVqCfpiuZmxI/mfQuMXemyem/Z
+	Z+CVzsHenFx87CqGbEOctuZLrRw6S8XzHUIuTMOSWtGohHaQW1DQbmaG7ZHWTLVUZgqI6fgoIwF
+	Bpi7fq3cP0U0N/3Tot11d9hqDAecpH+jbsxdYVJi1ioXWMBU6aNDSWuWjfOekGw5kdlbv5nU/ja
+	XtHUjW1Ng==
+X-Google-Smtp-Source: AGHT+IGy+JfWioN1EZvauRq8fNVKD77kq7pV11eEmcSqXqQw+Ty2x4MuKZfeT7+cYgy3zueauhd1kIbBdcArMua29PY=
+X-Received: by 2002:a05:6000:2f85:b0:3b7:8d70:e0ad with SMTP id
+ ffacd0b85a97d-3b900b4d8c1mr3401099f8f.32.1754692114271; Fri, 08 Aug 2025
+ 15:28:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0f8c01dc0876$427cf1c0$c776d540$@samsung.com>
+References: <20250731-wip-obbardc-qcom-t14s-oled-panel-v6-0-4782074104d1@linaro.org>
+ <20250731-wip-obbardc-qcom-t14s-oled-panel-v6-1-4782074104d1@linaro.org> <aJCyBbwNjZvTHnjT@hovoldconsulting.com>
+In-Reply-To: <aJCyBbwNjZvTHnjT@hovoldconsulting.com>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Fri, 8 Aug 2025 23:28:23 +0100
+X-Gm-Features: Ac12FXwR4FUrET6jv0_EOtK5Bc-B0SWbGu_iG6JN5BJKVMzOvOl3cxeCMpqOk-Q
+Message-ID: <CACr-zFCq08Pu2=eLfe5=sYdGWEHmy7w+=Eo++9AjP96uCLCNcQ@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: x1e78100-t14s: add hpd gpio to
+ dp controller
+To: Johan Hovold <johan@kernel.org>
+Cc: Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Aug 08, 2025 at 08:38:09PM GMT, Alim Akhtar wrote:
-> 
-> 
-> > -----Original Message-----
-> > From: 'Manivannan Sadhasivam' <mani@kernel.org>
-> > Sent: Friday, August 8, 2025 6:14 PM
-> > To: Alim Akhtar <alim.akhtar@samsung.com>
-> > Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>; 'Krzysztof
-> > Kozlowski' <krzk@kernel.org>; 'Ram Kumar Dwivedi'
-> > <quic_rdwivedi@quicinc.com>; avri.altman@wdc.com;
-> > bvanassche@acm.org; robh@kernel.org; krzk+dt@kernel.org;
-> > conor+dt@kernel.org; andersson@kernel.org; konradybcio@kernel.org;
-> > James.Bottomley@hansenpartnership.com; martin.petersen@oracle.com;
-> > agross@kernel.org; linux-arm-msm@vger.kernel.org; linux-
-> > scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> > kernel@vger.kernel.org
-> > Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
-> > properties to UFS
-> > 
-> > On Thu, Aug 07, 2025 at 10:08:32PM GMT, Alim Akhtar wrote:
-> > >
-> > >
-> > > > -----Original Message-----
-> > > > From: 'Manivannan Sadhasivam' <mani@kernel.org>
-> > > > Sent: Wednesday, August 6, 2025 4:56 PM
-> > > > To: Alim Akhtar <alim.akhtar@samsung.com>
-> > > > Cc: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>; 'Krzysztof
-> > > [...]
-> > >
-> > > > > >
-> > > > > > On Wed, Aug 06, 2025 at 09:51:43AM GMT, Alim Akhtar wrote:
-> > > > > >
-> > > > > > [...]
-> > > > > >
-> > > > > > > > >> Introducing generic solutions preemptively for problems
-> > > > > > > > >> that are simple in concept and can occur widely is good
-> > > > > > > > >> practice (although it's sometimes hard to gauge whether
-> > > > > > > > >> this is a one-off), as if the issue spreads a generic
-> > > > > > > > >> solution will appear at some point, but we'll have to
-> > > > > > > > >> keep supporting the odd ones as well
-> > > > > > > > >>
-> > > > > > > > > Ok,
-> > > > > > > > > I would prefer if we add a property which sounds like
-> > > > > > > > > "poor thermal dissipation" or "routing channel loss"
-> > > > > > > > > rather than adding limiting UFS gear
-> > > > > > > > properties.
-> > > > > > > > > Poor thermal design or channel losses are generic enough
-> > > > > > > > > and can happen
-> > > > > > > > on any board.
-> > > > > > > >
-> > > > > > > > This is exactly what I'm trying to avoid through my
-> > > > > > > > suggestion - one board may have poor thermal dissipation,
-> > > > > > > > another may have channel losses, yet another one may feature
-> > > > > > > > a special batch of UFS chips that will set the world on fire
-> > > > > > > > if instructed to attempt link training at gear 7 - they all
-> > > > > > > > are causes, as opposed to describing what needs to happen
-> > > > > > > > (i.e. what the hardware must be treated as - gear N
-> > > > > > > > incapable despite what can be discovered at runtime), with
-> > > > > > > > perhaps a comment on the side
-> > > > > > > >
-> > > > > > > But the solution for all possible board problems can't be by
-> > > > > > > limiting Gear
-> > > > > > speed.
-> > > > > >
-> > > > > > Devicetree properties should precisely reflect how they are
-> > > > > > relevant to the hardware. 'limiting-gear-speed' is
-> > > > > > self-explanatory that the gear speed is getting limited (for a
-> > > > > > reason), but the devicetree doesn't need to describe the
-> > > > > > *reason* itself.
-> > > > > >
-> > > > > > > So it should be known why one particular board need to limit the
-> > gear.
-> > > > > >
-> > > > > > That goes into the description, not in the property name.
-> > > > > >
-> > > > > > > I understand that this is a static configuration, where it is
-> > > > > > > already known
-> > > > > > that board is broken for higher Gear.
-> > > > > > > Can this be achieved by limiting the clock? If not, can we add
-> > > > > > > a board
-> > > > > > specific _quirk_ and let the _quirk_ to be enabled from vendor
-> > > > > > specific hooks?
-> > > > > > >
-> > > > > >
-> > > > > > How can we limit the clock without limiting the gears? When we
-> > > > > > limit the gear/mode, both clock and power are implicitly limited.
-> > > > > >
-> > > > > Possibly someone need to check with designer of the SoC if that is
-> > > > > possible
-> > > > or not.
-> > > >
-> > > > It's not just clock. We need to consider reducing regulator,
-> > > > interconnect votes also. But as I said above, limiting the gear/mode
-> > > > will take care of all these parameters.
-> > > >
-> > > > > Did we already tried _quirk_? If not, why not?
-> > > > > If the board is so poorly designed and can't take care of the
-> > > > > channel loses or heat dissipation etc, Then I assumed the gear
-> > > > > negotiation between host and device should fail for the higher
-> > > > > gear and driver can have
-> > > > a re-try logic to re-init / re-try "power mode change" at the lower
-> > > > gear. Is that not possible / feasible?
-> > > > >
-> > > >
-> > > > I don't see why we need to add extra logic in the UFS driver if we
-> > > > can extract that information from DT.
-> > > >
-> > > You didn’t answer my question entirely, I am still not able to
-> > > visualised how come Linkup is happening in higher gear and then Suddenly
-> > it is failing and we need to reduce the gear to solve that?
-> > 
-> > Oh well, this is the source of confusion here. I didn't (also the patch) claim
-> > that the link up will happen with higher speed. It will most likely fail if it
-> > couldn't operate at the higher speed and that's why we need to limit it to
-> > lower gear/mode *before* bringing the link up.
-> > 
-> Right, that's why a re-try logic to negotiate a __working__ power mode change can help, instead of introducing new binding for this case.
+Hi Johan,
 
-Retry logic is already in place in the ufshcd core, but with this kind of signal
-integrity issue, we cannot guarantee that it will gracefully fail and then we
-could retry. The link up *may* succeed, then it could blow up later also (when
-doing heavy I/O operations etc...). So with this non-deterministic behavior, we
-cannot rely on this logic.
 
-> And that approach can be useful for many platforms.
+On Mon, 4 Aug 2025 at 14:13, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Thu, Jul 31, 2025 at 09:51:26PM +0100, Christopher Obbard wrote:
+> > The eDP controller has an HPD GPIO. Describe it in the device tree
+> > for the generic T14s model, as the HPD GPIO is used in both the
+> > OLED and LCD models which inherit this device tree.
+>
+> > @@ -5779,6 +5779,11 @@ tlmm: pinctrl@f100000 {
+> >                       gpio-ranges = <&tlmm 0 0 239>;
+> >                       wakeup-parent = <&pdc>;
+> >
+> > +                     edp_hpd_active: edp-hpd-active-state {
+>
+> The node name and label needs an index as this SoC has two edp hpd pins
+> as I already pointed out.
 
-Other platforms could also reuse the same DT properties to workaround similar
-issues.
+Sure. After looking at the schematics this should be called
+edp0_hpd_active. I will fix this in the next revision.
 
-> Anyway coming back with the same point again and again is not productive.
-> I gave my opinion and suggestions. Rest is on the maintainers.
 
-Suggestions are always welcomed. It is important to have comments to try out
-different things instead of sticking to the proposed solution. But in my
-opinion, the retry logic is not reliable in this case. Moreover, we do have
-similar properties for other peripherals like PCIe, MMC, where the vendors would
-use DT properties to limit the speed to workaround the board issues. So we are
-not doing anything insane here.
+> > +                             pins = "gpio119";
+> > +                             function = "edp0_hot";
+>
+> And you also need to configure the bias somewhere as you should not rely
+> on the firmware having configured things for you (as I also pointed out
+> before).
+>
+> On my T14s the internal pull-up has been disabled.
 
-If there are better solutions than what is proposed here, we would indeed like
-to hear.
+I am still unsure of what else needs to be set here. Can you help me
+with the correct settings?
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Chris
 
