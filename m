@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-68077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 550FBB1E340
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:31:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 202E6B1E354
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:32:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA4C77271D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 07:31:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11557582989
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 07:31:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F3C5266EFE;
-	Fri,  8 Aug 2025 07:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ED17263F5E;
+	Fri,  8 Aug 2025 07:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WjsgncWl"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SjoHuh8E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2C4266582;
-	Fri,  8 Aug 2025 07:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DF324166F;
+	Fri,  8 Aug 2025 07:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754637743; cv=none; b=Y6jJc20HcmTB845R1ZYGNJYe+wltzg1VI6+c298ZDuBUhBP4pADH/4mqaVBwc6AcvKGwWwZyfb3nyrip083Oe0UD7e8vTMAFyp37yxhs+hl9PN/3hib9vW1DVVd4fKurIgcTb/Ov/MA32PdJ5fG7Ne2GGD+s7+PlN5SJLnUtxyc=
+	t=1754637766; cv=none; b=NXJF35xBAGVp9Slrmhoqf/fh4ZHrUGZEc1+nROKZb21JdaGV85pRVyKu0LK8323sfZJEWHS+SPoL8xmWEw4lln1zT2g+SbT/1C7HVMSLvi4F805gwWVYFVqOr4WmG5llySy8/uTM5HFeN/fKuB5u/gDAFuqS4FI7tNQwFyoWo+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754637743; c=relaxed/simple;
-	bh=D0yQI0889uGDxttAL1VW9IziZZW2CO6lra8hHuRfDUc=;
+	s=arc-20240116; t=1754637766; c=relaxed/simple;
+	bh=fbLBorPezoJWXQtvSg4WV87SLfHofuZpGSIX8FwjR+A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b+FNN3DWPOkeO1StuM6G+b7qyPOvPnpfxU/BMMnDz/qhNo2O7JnF3VqCPYWvFw7h9fr2HgFE/VA+3E1wtAcZ+tNB7H5l4q4ZIpgA4rVFq1oiF6YAwmaSeqfb9OIxsxNPjSF7N2Y3CUiAG6G18/J1VqQHO9RrkVTacf74WRALsDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WjsgncWl; arc=none smtp.client-ip=192.198.163.7
+	 Content-Type:Content-Disposition:In-Reply-To; b=ms1iq8uOCjvB/FKC1QIIwifZ+kmurlPsMzYDgElzbUydOMZBQ1BdMm10ThL49eWkgukouhuqmohoH9zMKQmrN/wz9jlS5H14B5xoDA04/7edggjEupUvBC1bGBvZkoEk+uZjUvhgymlT47tjhjxjPxzaRd9Bx5I9C+l2ECTtxJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SjoHuh8E; arc=none smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754637742; x=1786173742;
+  t=1754637765; x=1786173765;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=D0yQI0889uGDxttAL1VW9IziZZW2CO6lra8hHuRfDUc=;
-  b=WjsgncWlU4qkkCDJxmgS7f0J1Jf7O5CPnylHiBSPGlOhXNH7krbZSLUJ
-   ClmEuf8UoCPU4tUL8LvMWLZZGRq9x/ns+hp0VMhXu9yZyMYpdg7WvwFdd
-   eJ0UOyEKkXH2yND3R178FGpmzn713IsmQNwR7osYnkgGyA1kuAsX0hK53
-   an5sFpCOJVgGjwb+M30ld3apsgezvfIAlZNS4RgJOyYqoWTiHxDqEyP8m
-   0+KE2qVMey3qFlMSqO/cY5c7gL8cv025/8+kC/TwvIlfOzCGP9hOE9/JV
-   CC6XhzFEAhnC8IBa+/LwgWHILk9CRy1jkVJ8CbMyV7DhVNNi3zMgjF9HH
-   A==;
-X-CSE-ConnectionGUID: v5HXB0KGSqWicQ4r2Fqqvg==
-X-CSE-MsgGUID: sDJpXrSMTUCk4yAv3SVcnw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="82427387"
+  bh=fbLBorPezoJWXQtvSg4WV87SLfHofuZpGSIX8FwjR+A=;
+  b=SjoHuh8EtHrM7tgnpeCISrbn+ybxjw+1nTrgNHifhOx0XgOgVkr5Cuuq
+   QTgS2euRU21K08ExSx6XWM4R3aJ8MHoCdI5B9BeUSigO294lBNzoUbC4s
+   3qTDTaw6I8B2rpsik9gfMzELmwTRBR+1lR0r0bH9lLTXcB1xJXhtfCPts
+   GUjZiAOGkr3QPNoN903b6dHEavWdVXdEAoHumJnWb5Km9bjKoCgAv4RBG
+   GYMoPvvKd/s0yCUtz03HPgpoiRDbPr4wOkEFMm+Ux/OF22JWdWGT1dBHz
+   +oR2ceLdD6cLS/EVyr8iFK4KlFzt2aF94wG5fzNrbwYTdMRt9scHowyn5
+   g==;
+X-CSE-ConnectionGUID: tsMUf0+CT0yNRqN2IMlG6g==
+X-CSE-MsgGUID: yFhiMrAHSgmQ3jzzw3y3Ow==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="82427449"
 X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; 
-   d="scan'208";a="82427387"
+   d="scan'208";a="82427449"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:21 -0700
-X-CSE-ConnectionGUID: hM7JLmW/RPCNPH3wwurmHw==
-X-CSE-MsgGUID: QgYUze20SyS8phiQ3aIPmQ==
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:44 -0700
+X-CSE-ConnectionGUID: OdNPlVlrR9m1H28JVd9Cfw==
+X-CSE-MsgGUID: 6MIOtN9XTOqpGi12upForA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; 
-   d="scan'208";a="188944094"
+   d="scan'208";a="188944168"
 Received: from fpallare-mobl4.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.245.151])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:10 -0700
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2025 00:22:33 -0700
 Received: from kekkonen.localdomain (localhost [127.0.0.1])
-	by kekkonen.fi.intel.com (Postfix) with SMTP id 7740C11FC4D;
-	Fri,  8 Aug 2025 10:22:07 +0300 (EEST)
-Date: Fri, 8 Aug 2025 07:22:07 +0000
+	by kekkonen.fi.intel.com (Postfix) with SMTP id 7FB8211FC97;
+	Fri,  8 Aug 2025 10:22:31 +0300 (EEST)
+Date: Fri, 8 Aug 2025 07:22:31 +0000
 Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Devarsh Thakkar <devarsht@ti.com>, Benoit Parrot <bparrot@ti.com>,
 	Hans Verkuil <hverkuil@kernel.org>, Mike Isely <isely@pobox.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans de Goede <hansg@kernel.org>,
 	Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
 	Christian Gromm <christian.gromm@microchip.com>,
@@ -156,11 +156,13 @@ Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
 	linux-rockchip@lists.infradead.org,
 	linux-stm32@st-md-mailman.stormreply.com,
 	mjpeg-users@lists.sourceforge.net
-Subject: Re: [PATCH 63/65] media: ipu6: isys: Don't set V4L2_FL_USES_V4L2_FH
- manually
-Message-ID: <aJWlnxqLtAModloU@kekkonen.localdomain>
+Subject: Re: [PATCH 64/65] media: staging: ipu7: isys: Don't set
+ V4L2_FL_USES_V4L2_FH manually
+Message-ID: <aJWltxB6NfXg53KI@kekkonen.localdomain>
 References: <20250802-media-private-data-v1-0-eb140ddd6a9d@ideasonboard.com>
- <20250802-media-private-data-v1-63-eb140ddd6a9d@ideasonboard.com>
+ <20250802-media-private-data-v1-64-eb140ddd6a9d@ideasonboard.com>
+ <aJRswZIVKCuzqCpr@kekkonen.localdomain>
+ <20250807170135.GH11583@pendragon.ideasonboard.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -169,18 +171,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250802-media-private-data-v1-63-eb140ddd6a9d@ideasonboard.com>
+In-Reply-To: <20250807170135.GH11583@pendragon.ideasonboard.com>
 
-On Sat, Aug 02, 2025 at 11:23:25AM +0200, Jacopo Mondi wrote:
-> From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+On Thu, Aug 07, 2025 at 08:01:35PM +0300, Laurent Pinchart wrote:
+> Hi Sakari,
 > 
-> The V4L2_FL_USES_V4L2_FH flag is set by v4l2_fh_init(). It is not meant
-> to be set manually by drivers. Drop it from the ipu6-isys driver.
+> On Thu, Aug 07, 2025 at 09:07:13AM +0000, Sakari Ailus wrote:
+> > On Sat, Aug 02, 2025 at 11:23:26AM +0200, Jacopo Mondi wrote:
+> > > From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > > 
+> > > The V4L2_FL_USES_V4L2_FH flag is set by v4l2_fh_init(). It is not meant
+> > > to be set manually by drivers. Drop it from the ipu7-isys driver.
+> > > 
+> > > Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > > Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+> > 
+> > Thanks, Jacopo!
+> > 
+> > Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 > 
-> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+> Can we get you review on patch 63/65 too (for the IPU6 driver) too ?
 
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Done.
 
 -- 
 Sakari Ailus
