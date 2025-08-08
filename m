@@ -1,359 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-68128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D69AB1E9E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 16:04:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 521ADB1EB21
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 17:08:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44158AA06BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 14:04:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D990E7A1508
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 15:06:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDEBA27E07B;
-	Fri,  8 Aug 2025 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A387F280037;
+	Fri,  8 Aug 2025 15:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ohHUP9ZB"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="YeblZxfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2288427E05F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 14:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C1778F36
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 15:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754661848; cv=none; b=orh8XXnnytZKLy48Awa1scGlfv/xqg27pO0Bo3WJ5Zwt/JHwdIX1VaqqbnYvqcGo7+kFq/Te9fXz4LEu6NvCbUFKRfnXQFW4rhqTqqnJ/6cegeYDjgcdhzxT1fEg6VfgS0qttfP7HozhPQt9b1bc7Zhr3BPMuhXlVdQeHc5h7FI=
+	t=1754665699; cv=none; b=Yc26YVcLGYf/HHBEnCr4LwSmDF5yKHid+8Qn/2029rDZwGLrEdNS1KTaup+fHAqZNjSAhuqZxxKxpYVcTIBQm/W66VUZYYCB7T57S/C3dKts99qTvA+sB8FOn/YGaGqPhy/klfK2B/HYllpRyl0WNoE6ltvzs4j2fRMFRzYLPpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754661848; c=relaxed/simple;
-	bh=ZcE/MeEUMeGZH7b8eex156Qe1QyWbt01WWmziNtbiYo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=CUIqB+rC+BxeOQi6jSVBas/6tjWKy02ZMX5TsyrKGDUevz/Je7XDExsQcvL7Y1ocsQsEZjKk1makczPbeFq7Sw2G0eDVh4yRWhrZ5N2CsnNPesDOra7LJtrkNUKaVS53mr78PcqjwaRGee+6efivOKQMEe42GWN9vWxmcs4BNTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ohHUP9ZB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5787Rh97007669
-	for <linux-arm-msm@vger.kernel.org>; Fri, 8 Aug 2025 14:04:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=NyOKCYdO8dRhX3Md2A7GJTuQQJa5hPZwpwoviRAY2wY=; b=oh
-	HUP9ZBpWl90yj/7E65pT15eHepWZjgloKgxZQFrfaD3o7b9iBO9llSt1XWzoAaF7
-	R7B/c0oEHE5mab3s8LB0eXQyK3DUA8VqIhv/C0cmHpt9JRY0A3/k1hEAwhPV+OxC
-	y9c3Ptb4EfYnpzxLXwyCKnhk04QiPkiyy8LZPadIKvW5XluVU+mC00srULJIm47f
-	WYOOMbFmMRVvs4HSIJFcXwsvWl8+xh0J0Cidu6Zd2Kb03P0we65aDRxN8TEbtszq
-	6QBBhi/4liR2BGM4Zujj23q971Sd7SZJhHKpD0octitPOs59iEXSJ9JnjnaQS2GK
-	IifOHmm3x4wWhCIiAuAw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48c8u278qk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 14:04:06 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-75ab147e0a3so4523656b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 07:04:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754661844; x=1755266644;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NyOKCYdO8dRhX3Md2A7GJTuQQJa5hPZwpwoviRAY2wY=;
-        b=ZI9uPVEt+OOkbtDXY90U6vTtdFD9jYr+IMBv11UWpZaimpf05h7E1pu6akZtwVELOE
-         mIjlk4D6D3SH/3B5MkcuXQUVz0LZsIzgdAnyFB1qrvmzoW6VJfhrB9p/R2YL6Qm/7bSu
-         TmvE4AJb9zJGYM4nk/337X8xfVaYz7WHd9wps/0KzeD6R5PBgaWEfjB73+o/ZNV88yi6
-         aRtJkAm5JH63F6v4XiTYRAyJ5TjePR8qOTl0N4shLPo6CBNZdC46PklEmMU/zzPRuiXq
-         7/f75ymGNiy2YnjM19i8H2Qgdwt0sHct17gEoQBzeRdmjJEZ+CXxR26C22XMUrTPlGFn
-         9PtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXRXwJDSW6hmc5wbO9zh4cbFJp6o5HllSkgxHxBgka2L+LK5kcO4k3zdh62PfdYmZUofTq5LkfrZOh4QCVc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwsGkugO472bhtuWyZmyM+U0aZNpKdt8hWdKQiNNB6pj6HCUVh6
-	q5VVPwSLfqwQCvs3b8oH1jJQQdjjeNPYMlS4ucKmEmN5qjf/zwj6Zfny7ZW1HVTg7Xvmphf3eiG
-	gIeoTaBj1LLJZuWfLlJNTMrKrDsgAy/G9Gfwp/m5ODBFt3zt5YE8ij3s6aGszx9sbXbXp
-X-Gm-Gg: ASbGncvzwGh6Tcy9j+CP9UjZrywRFAWxpAT6sIElnsSQf4yR0GH9iq6wjBTFmd0JsrZ
-	H5rgXT9jQX7Kbs1TiAAP4N2iW+iloLoqz8mb55l8xuD7nkSvxJob++83Gmi/sGdEGyElw2iK596
-	pQ+DZa1J4Xrgs7BurRBucgWgHL5AjAqIiRVUMlzjreOn6OtDB2MYKEv9qftJ6Yg6STst1GB2MyR
-	49BNOuQd2/5/Ojw0iddlrEG9cPtR3fFAIE2aQvaQ/QLwUwH4SoSo5FgNmsQzfLIfgz80QjBTaUh
-	40HnqenZCXqIBVgQwYd30JAWYRAcB+IKjRhKJbGxp2lbVraXkMasCp56Tjz2vCm6eentdBo0iQ=
-	=
-X-Received: by 2002:a05:6a00:1409:b0:76b:f7af:c47d with SMTP id d2e1a72fcca58-76c460aa949mr4709690b3a.4.1754661844261;
-        Fri, 08 Aug 2025 07:04:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYzNEZoLYuCQsfE6sjScDxUN0v6Z/1i5E9FkZw7qvQySEK/E4ALZ6kvXwvvo8//QKF944E+Q==
-X-Received: by 2002:a05:6a00:1409:b0:76b:f7af:c47d with SMTP id d2e1a72fcca58-76c460aa949mr4709633b3a.4.1754661843723;
-        Fri, 08 Aug 2025 07:04:03 -0700 (PDT)
-Received: from hu-okukatla-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76c2078afd8sm8595621b3a.117.2025.08.08.07.03.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 07:04:03 -0700 (PDT)
-From: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
-        Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mike Tipton <mike.tipton@oss.qualcomm.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sa8775p: Add clocks for QoS configuration
-Date: Fri,  8 Aug 2025 19:33:00 +0530
-Message-Id: <20250808140300.14784-4-odelu.kukatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250808140300.14784-1-odelu.kukatla@oss.qualcomm.com>
-References: <20250808140300.14784-1-odelu.kukatla@oss.qualcomm.com>
-X-Proofpoint-GUID: Z7dZdjiA2RgzNDLXDSDxgi1CpqE4Aqm1
-X-Authority-Analysis: v=2.4 cv=Q/TS452a c=1 sm=1 tr=0 ts=689603d6 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=BfUXBPTVPglUz1mEt9YA:9
- a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: Z7dZdjiA2RgzNDLXDSDxgi1CpqE4Aqm1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDA5MCBTYWx0ZWRfX8LPhBORuVmGp
- OXHryOlL9nE3cCLS54m3O4xWIxKKvl31xWOGamP3rLI63MhiqNNweQC57plhTn5M/1IBkdushpy
- w8x8ljdk4wcf5CrEmSLW8O+AHvP/YsxgdGkmtGmCXa+33/zVKM9AjvzNAYpEgVWkyiXDoFpMygl
- 1vACikCKY6wDMTsd3+tGK6b4WC6gIC166kqQyqVAglSFkWDogFBir64weCyTWUWcIkkvMwbsWlm
- evFCcKaRaCR51AXmQV8FuPrPiK4f8i34JvzQK8BfoajGwpM7BtGtEca+VcwHH5Xj1LA+Z4GcMm4
- EqnZvcHgJDdn9GNrns2K3mxTh0XfOiDi5X91c4MiV8w6JikWxGWdpndZgpe7RcysGJRrGdgviVY
- JjbWO/Cw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-08_04,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1011 suspectscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508060090
+	s=arc-20240116; t=1754665699; c=relaxed/simple;
+	bh=KbyBa2RMxGvUa2qTjS8DYpX+dKFyENEXQ3F7PVCsezM=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=iYBY0VdxNbImQBsA39zTMLyZGmOqKPrGcr2QkdNhw/m9KBcrUtCexD43QoY8UbYcrvtcWRM3NEdNvHR7U7D4bQGfMHuLZERBjf9xFJ+RZOq4j1PtyTfYsHg1Mc9+z22ryGyWuokUxHDbo7kzXvqDbvg8YocghTXzcUH0QAUzMgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=YeblZxfC; arc=none smtp.client-ip=203.254.224.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250808150815epoutp030a0f08917e433fb8fe4689f4630a97f5~Z0ydH2XpV1198611986epoutp03w
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 15:08:15 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250808150815epoutp030a0f08917e433fb8fe4689f4630a97f5~Z0ydH2XpV1198611986epoutp03w
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1754665695;
+	bh=KbyBa2RMxGvUa2qTjS8DYpX+dKFyENEXQ3F7PVCsezM=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=YeblZxfCRgVAJ8Yhk6OeVGS4jBSJVQgSw4NoEDq8vypGi4G2OIvH2FK8R3EIsbqW0
+	 G0LfWv9ovZUUVCvze7Y/PaFncOSoG0USMMFQ8E4IulrWrPa+MBCmsy7axwL2pW/jBl
+	 FPwN/1wvT/oa73OJ5G5pzr6sEWjKivAIMB+0Xn0w=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250808150814epcas5p1819cab380f954c265dfc00d7557e35e9~Z0ycfsPfM2113721137epcas5p1t;
+	Fri,  8 Aug 2025 15:08:14 +0000 (GMT)
+Received: from epcas5p4.samsung.com (unknown [182.195.38.91]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4bz6q20zKBz3hhT3; Fri,  8 Aug
+	2025 15:08:14 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20250808150813epcas5p3eb081f2f6e90a15593e545ced68435f1~Z0ya_Ijdo2389323893epcas5p3J;
+	Fri,  8 Aug 2025 15:08:13 +0000 (GMT)
+Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250808150810epsmtip1f6ba1f6f143b53b5c12bf28410693323~Z0yYxxj3c1978819788epsmtip1Y;
+	Fri,  8 Aug 2025 15:08:10 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Manivannan Sadhasivam'" <mani@kernel.org>
+Cc: "'Konrad Dybcio'" <konrad.dybcio@oss.qualcomm.com>, "'Krzysztof
+ Kozlowski'" <krzk@kernel.org>, "'Ram Kumar Dwivedi'"
+	<quic_rdwivedi@quicinc.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+	<robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+	<andersson@kernel.org>, <konradybcio@kernel.org>,
+	<James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+	<agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+In-Reply-To: <fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
+Subject: RE: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+Date: Fri, 8 Aug 2025 20:38:09 +0530
+Message-ID: <0f8c01dc0876$427cf1c0$c776d540$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+Thread-Index: AQEJQrUlLhd2k13YhwqtNcYaDataOQJtFIHyAldjN/MB24cyRgGnpjwRAmX4p5MB936htgLh1QaLARPOx0QCD7g8CwGFQGz5tVzi6iA=
+X-CMS-MailID: 20250808150813epcas5p3eb081f2f6e90a15593e545ced68435f1
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60
+References: <061c01dc062f$70ec34b0$52c49e10$@samsung.com>
+	<87c37d65-5ab1-4443-a428-dc3592062cdc@oss.qualcomm.com>
+	<061d01dc0631$c1766c00$44634400$@samsung.com>
+	<3cd33dce-f6b9-4f60-8cb2-a3bf2942a1e5@oss.qualcomm.com>
+	<06d201dc0689$9f438200$ddca8600$@samsung.com>
+	<wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
+	<06f301dc0695$6bf25690$43d703b0$@samsung.com>
+	<CGME20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60@epcas5p1.samsung.com>
+	<nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
+	<0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
+	<fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
 
-Add register addresses and clocks which need to be enabled for
-configuring QoS on sa8775p SoC.
 
-Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 163 ++++++++++++++------------
- 1 file changed, 91 insertions(+), 72 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 9997a29901f5..a24c1ce4384f 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -518,90 +518,18 @@
- 		};
- 	};
- 
--	aggre1_noc: interconnect-aggre1-noc {
--		compatible = "qcom,sa8775p-aggre1-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	aggre2_noc: interconnect-aggre2-noc {
--		compatible = "qcom,sa8775p-aggre2-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	clk_virt: interconnect-clk-virt {
- 		compatible = "qcom,sa8775p-clk-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
- 
--	config_noc: interconnect-config-noc {
--		compatible = "qcom,sa8775p-config-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	dc_noc: interconnect-dc-noc {
--		compatible = "qcom,sa8775p-dc-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	gem_noc: interconnect-gem-noc {
--		compatible = "qcom,sa8775p-gem-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	gpdsp_anoc: interconnect-gpdsp-anoc {
--		compatible = "qcom,sa8775p-gpdsp-anoc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	lpass_ag_noc: interconnect-lpass-ag-noc {
--		compatible = "qcom,sa8775p-lpass-ag-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	mc_virt: interconnect-mc-virt {
- 		compatible = "qcom,sa8775p-mc-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
- 
--	mmss_noc: interconnect-mmss-noc {
--		compatible = "qcom,sa8775p-mmss-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspa_noc: interconnect-nspa-noc {
--		compatible = "qcom,sa8775p-nspa-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspb_noc: interconnect-nspb-noc {
--		compatible = "qcom,sa8775p-nspb-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	pcie_anoc: interconnect-pcie-anoc {
--		compatible = "qcom,sa8775p-pcie-anoc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	system_noc: interconnect-system-noc {
--		compatible = "qcom,sa8775p-system-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	/* Will be updated by the bootloader. */
- 	memory@80000000 {
- 		device_type = "memory";
-@@ -2675,6 +2603,62 @@
- 			reg = <0 0x010d2000 0 0x1000>;
- 		};
- 
-+		config_noc: interconnect@14c0000 {
-+			compatible = "qcom,sa8775p-config-noc";
-+			reg = <0x0 0x014c0000 0x0 0x13080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@01680000 {
-+			compatible = "qcom,sa8775p-system-noc";
-+			reg = <0x0 0x01680000 0x0 0x15080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16c0000 {
-+			compatible = "qcom,sa8775p-aggre1-noc";
-+			reg = <0x0 0x016c0000 0x0 0x18080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_QUPV3_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB2_PRIM_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sa8775p-aggre2-noc";
-+			reg = <0x0 0x01700000 0x0 0x1b080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
-+				 <&rpmhcc RPMH_IPA_CLK>;
-+		};
-+
-+		pcie_anoc: interconnect@1760000 {
-+			compatible = "qcom,sa8775p-pcie-anoc";
-+			reg = <0x0 0x01760000 0x0 0xc080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gpdsp_anoc: interconnect@1780000 {
-+			compatible = "qcom,sa8775p-gpdsp-anoc";
-+			reg = <0x0 0x01780000 0x0 0xe080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@17a0000 {
-+			compatible = "qcom,sa8775p-mmss-noc";
-+			reg = <0x0 0x017a0000 0x0 0x40000>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sa8775p-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
- 			reg = <0x0 0x01d84000 0x0 0x3000>;
-@@ -2784,6 +2768,13 @@
- 			};
- 		};
- 
-+		lpass_ag_noc: interconnect@3c40000 {
-+			compatible = "qcom,sa8775p-lpass-ag-noc";
-+			reg = <0x0 0x03c40000 0x0 0x17200>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		stm: stm@4002000 {
- 			compatible = "arm,coresight-stm", "arm,primecell";
- 			reg = <0x0 0x4002000 0x0 0x1000>,
-@@ -3859,6 +3850,20 @@
- 			status = "disabled";
- 		};
- 
-+		dc_noc: interconnect@90e0000 {
-+			compatible = "qcom,sa8775p-dc-noc";
-+			reg = <0x0 0x090e0000 0x0 0x5080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gem_noc: interconnect@9100000 {
-+			compatible = "qcom,sa8775p-gem-noc";
-+			reg = <0x0 0x09100000 0x0 0xf6080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		usb_0: usb@a6f8800 {
- 			compatible = "qcom,sa8775p-dwc3", "qcom,dwc3";
- 			reg = <0 0x0a6f8800 0 0x400>;
-@@ -6224,6 +6229,13 @@
- 			status = "disabled";
- 		};
- 
-+		nspa_noc: interconnect@260c0000 {
-+			compatible = "qcom,sa8775p-nspa-noc";
-+			reg = <0x0 0x260c0000 0x0 0x16080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_cdsp0: remoteproc@26300000 {
- 			compatible = "qcom,sa8775p-cdsp0-pas";
- 			reg = <0x0 0x26300000 0x0 0x10000>;
-@@ -6356,6 +6368,13 @@
- 			};
- 		};
- 
-+		nspb_noc: interconnect@2a0c0000 {
-+			compatible = "qcom,sa8775p-nspb-noc";
-+			reg = <0x0 0x2a0c0000 0x0 0x16080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_cdsp1: remoteproc@2a300000 {
- 			compatible = "qcom,sa8775p-cdsp1-pas";
- 			reg = <0x0 0x2A300000 0x0 0x10000>;
--- 
-2.17.1
-
+> -----Original Message-----
+> From: 'Manivannan Sadhasivam' <mani=40kernel.org>
+> Sent: Friday, August 8, 2025 6:14 PM
+> To: Alim Akhtar <alim.akhtar=40samsung.com>
+> Cc: 'Konrad Dybcio' <konrad.dybcio=40oss.qualcomm.com>; 'Krzysztof
+> Kozlowski' <krzk=40kernel.org>; 'Ram Kumar Dwivedi'
+> <quic_rdwivedi=40quicinc.com>; avri.altman=40wdc.com;
+> bvanassche=40acm.org; robh=40kernel.org; krzk+dt=40kernel.org;
+> conor+dt=40kernel.org; andersson=40kernel.org; konradybcio=40kernel.org;
+> James.Bottomley=40hansenpartnership.com; martin.petersen=40oracle.com;
+> agross=40kernel.org; linux-arm-msm=40vger.kernel.org; linux-
+> scsi=40vger.kernel.org; devicetree=40vger.kernel.org; linux-
+> kernel=40vger.kernel.org
+> Subject: Re: =5BPATCH 2/3=5D arm64: dts: qcom: sa8155: Add gear and rate =
+limit
+> properties to UFS
+>=20
+> On Thu, Aug 07, 2025 at 10:08:32PM GMT, Alim Akhtar wrote:
+> >
+> >
+> > > -----Original Message-----
+> > > From: 'Manivannan Sadhasivam' <mani=40kernel.org>
+> > > Sent: Wednesday, August 6, 2025 4:56 PM
+> > > To: Alim Akhtar <alim.akhtar=40samsung.com>
+> > > Cc: 'Konrad Dybcio' <konrad.dybcio=40oss.qualcomm.com>; 'Krzysztof
+> > =5B...=5D
+> >
+> > > > >
+> > > > > On Wed, Aug 06, 2025 at 09:51:43AM GMT, Alim Akhtar wrote:
+> > > > >
+> > > > > =5B...=5D
+> > > > >
+> > > > > > > >> Introducing generic solutions preemptively for problems
+> > > > > > > >> that are simple in concept and can occur widely is good
+> > > > > > > >> practice (although it's sometimes hard to gauge whether
+> > > > > > > >> this is a one-off), as if the issue spreads a generic
+> > > > > > > >> solution will appear at some point, but we'll have to
+> > > > > > > >> keep supporting the odd ones as well
+> > > > > > > >>
+> > > > > > > > Ok,
+> > > > > > > > I would prefer if we add a property which sounds like
+> > > > > > > > =22poor thermal dissipation=22 or =22routing channel loss=
+=22
+> > > > > > > > rather than adding limiting UFS gear
+> > > > > > > properties.
+> > > > > > > > Poor thermal design or channel losses are generic enough
+> > > > > > > > and can happen
+> > > > > > > on any board.
+> > > > > > >
+> > > > > > > This is exactly what I'm trying to avoid through my
+> > > > > > > suggestion - one board may have poor thermal dissipation,
+> > > > > > > another may have channel losses, yet another one may feature
+> > > > > > > a special batch of UFS chips that will set the world on fire
+> > > > > > > if instructed to attempt link training at gear 7 - they all
+> > > > > > > are causes, as opposed to describing what needs to happen
+> > > > > > > (i.e. what the hardware must be treated as - gear N
+> > > > > > > incapable despite what can be discovered at runtime), with
+> > > > > > > perhaps a comment on the side
+> > > > > > >
+> > > > > > But the solution for all possible board problems can't be by
+> > > > > > limiting Gear
+> > > > > speed.
+> > > > >
+> > > > > Devicetree properties should precisely reflect how they are
+> > > > > relevant to the hardware. 'limiting-gear-speed' is
+> > > > > self-explanatory that the gear speed is getting limited (for a
+> > > > > reason), but the devicetree doesn't need to describe the
+> > > > > *reason* itself.
+> > > > >
+> > > > > > So it should be known why one particular board need to limit th=
+e
+> gear.
+> > > > >
+> > > > > That goes into the description, not in the property name.
+> > > > >
+> > > > > > I understand that this is a static configuration, where it is
+> > > > > > already known
+> > > > > that board is broken for higher Gear.
+> > > > > > Can this be achieved by limiting the clock? If not, can we add
+> > > > > > a board
+> > > > > specific _quirk_ and let the _quirk_ to be enabled from vendor
+> > > > > specific hooks?
+> > > > > >
+> > > > >
+> > > > > How can we limit the clock without limiting the gears? When we
+> > > > > limit the gear/mode, both clock and power are implicitly limited.
+> > > > >
+> > > > Possibly someone need to check with designer of the SoC if that is
+> > > > possible
+> > > or not.
+> > >
+> > > It's not just clock. We need to consider reducing regulator,
+> > > interconnect votes also. But as I said above, limiting the gear/mode
+> > > will take care of all these parameters.
+> > >
+> > > > Did we already tried _quirk_? If not, why not?
+> > > > If the board is so poorly designed and can't take care of the
+> > > > channel loses or heat dissipation etc, Then I assumed the gear
+> > > > negotiation between host and device should fail for the higher
+> > > > gear and driver can have
+> > > a re-try logic to re-init / re-try =22power mode change=22 at the low=
+er
+> > > gear. Is that not possible / feasible?
+> > > >
+> > >
+> > > I don't see why we need to add extra logic in the UFS driver if we
+> > > can extract that information from DT.
+> > >
+> > You didn=E2=80=99t=20answer=20my=20question=20entirely,=20I=20am=20stil=
+l=20not=20able=20to=0D=0A>=20>=20visualised=20how=20come=20Linkup=20is=20ha=
+ppening=20in=20higher=20gear=20and=20then=20Suddenly=0D=0A>=20it=20is=20fai=
+ling=20and=20we=20need=20to=20reduce=20the=20gear=20to=20solve=20that?=0D=
+=0A>=20=0D=0A>=20Oh=20well,=20this=20is=20the=20source=20of=20confusion=20h=
+ere.=20I=20didn't=20(also=20the=20patch)=20claim=0D=0A>=20that=20the=20link=
+=20up=20will=20happen=20with=20higher=20speed.=20It=20will=20most=20likely=
+=20fail=20if=20it=0D=0A>=20couldn't=20operate=20at=20the=20higher=20speed=
+=20and=20that's=20why=20we=20need=20to=20limit=20it=20to=0D=0A>=20lower=20g=
+ear/mode=20*before*=20bringing=20the=20link=20up.=0D=0A>=20=0D=0ARight,=20t=
+hat's=20why=20a=20re-try=20logic=20to=20negotiate=20a=20__working__=20power=
+=20mode=20change=20can=20help,=20instead=20of=20introducing=20new=20binding=
+=20for=20this=20case.=0D=0AAnd=20that=20approach=20can=20be=20useful=20for=
+=20many=20platforms.=0D=0AAnyway=20coming=20back=20with=20the=20same=20poin=
+t=20again=20and=20again=20is=20not=20productive.=0D=0AI=20gave=20my=20opini=
+on=20and=20suggestions.=20Rest=20is=20on=20the=20maintainers.=0D=0A=0D=0A>=
+=20As=20you=20can=20see,=20the=20driver=20patch=20is=20parsing=20the=20limi=
+ts=20in=20its=0D=0A>=20ufs_hba_variant_ops::init()=20callback,=20which=20ge=
+ts=20called=20during=0D=0A>=20ufshcd_hba_init().=0D=0A>=20=0D=0A>=20-=20Man=
+i=0D=0A>=20=0D=0A>=20--=0D=0A>=20=E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=
+=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=E0=AF=8D=20=E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=
+=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=E0=AF=8D=0D=0A=0D=0A
 
