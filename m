@@ -1,148 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-68132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A560B1EDAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 19:15:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E753B1EDC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 19:22:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57BD4585C46
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 17:15:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05ACC3BB496
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 17:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD00D1D63D8;
-	Fri,  8 Aug 2025 17:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A37E1C84A0;
+	Fri,  8 Aug 2025 17:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLpBkwhn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SENV1KcE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8262877E5;
-	Fri,  8 Aug 2025 17:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898DC18871F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 17:22:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754673309; cv=none; b=ZBksqEkfN63gYrK+WQ0bf7Q6gyfzxkqrsQ8NBb/1vCXgrsJo45r4aqkHzDrL86b72kg8LEfh0Kk3gWYJg4jex7bdgaGkPOYinKp1BcG7HEE03qpw7yggPVKyb8sBxHb6zgbTz2FhkyNc2zU2qOfD5JxM1gjI1J7oTzIVPyfnW48=
+	t=1754673749; cv=none; b=geLeUscgn/Ugi7e0y4JyfOlgiIVplLn3VtQqdChwvzVoKMbrfwCjVE6pfXtEFOChqG6uk3IyZ7NKjfw0HqEN6+OK1sGCj/qqKBdvOAKqfSy+YB9FbOtXnB9DNSEOtAitBJgLt3hWaBNIjajvDwZRynfbavZqr+Ix986Xj5ulRe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754673309; c=relaxed/simple;
-	bh=Blelda5nVdG0722h9Q14mFfen2brYbIOdeyb+h0yll4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QhDJCkJ+Asml1NGDqmCy8hX6M6pInK8OpMU1NH3B6ftiiqZDsYAeEkqQ4QyWiX/cKIjP4cBh8W/x5M1YsRu2nDwXsU5c/Hsyh+BoyXLE9m3mfEdp+4lXfEnEkHp4/LXLiqk4DDoFOSH0/pIDect/NINmBWHENDczCgHtRWs4vqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLpBkwhn; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b7920354f9so1944772f8f.2;
-        Fri, 08 Aug 2025 10:15:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754673306; x=1755278106; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GPbiefG2OWimN6RVlxfEZ9aDoY/LizcSfvAZkPKTOf4=;
-        b=SLpBkwhnxZ7lMnamDFLdR8Ip3YSUeJkHCuTSwAULyrFWcj/G6uKmBmsB5Q8Y6zNnJq
-         lufmAojAx3wHDgi0Ea1YckryQnn7UsQ92Ui90bimJaTX3I1fdVNxAwvH+yyGVnrQjpGc
-         2ZbVY8jaurPmr/txWiSByg1Cc6OPEqYQ2GDQswWdzT4kypevwemdzCJ+/c1mHsKZW4ui
-         HhmDsT+SZGXR3hUSQCwQoxmxAUsgvwIiwzQztsfhtlH2+gBcMraGdXo6rTeepTldEazj
-         r6vAgItWID4n5H7iqJTTZK1v1L7qnx0wkbABRz8Hi3FZ0EiBAbeCX6J6pPC9/SO3gxq1
-         XTZA==
+	s=arc-20240116; t=1754673749; c=relaxed/simple;
+	bh=3WAdGz/hYjVsYN/qu58ud+DcdAdBOjsHo8ffxFaZN5w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kGczK9S/LJfg6R+af9yY6TcRlaa/c0JQ17HQwxQWhkyVLXKayCGtYfPmkP1K8ehi1nkxBrfgMMZMFe+qg4Bbz5CBLIPnkcxP/bG37oVYcNlqWcfw2N1nduF+mny9ldL7KoYpusM/wU+Qolvs8lpQl4uFXx95VzA12imD4k/V/k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SENV1KcE; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578EidlQ003895
+	for <linux-arm-msm@vger.kernel.org>; Fri, 8 Aug 2025 17:22:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jyBcXhZj2R8UGlkk97Lt6qighcQ9HpYxu7rqj/QliiY=; b=SENV1KcELHeGZRqf
+	IjVMPy8ZWUeiLQ9+XVXT2Zp/RN2dvaXHHww0ldnOYODlJn+b1e4NdpvZ8Ey2bKZB
+	2Lpvvn7SkQs1xRzHkfMY8AujzQ256aLJEb/fu09g77Xg/7znQPZw3y7Roa2v166I
+	kVdyoDW6bRGVl1mRIV5tYIXvGqG/InfGDP3sKL9AXYFjpMHnM2B2f4m4ctKPJiDm
+	mMySRYZvJoslz8SBkVrZ0U9fQ6HpgiPBI7/0OWBmts9g1wVsxCJoebg9WVMrXbBn
+	4iODIWDyfbeLZaNPu9OuzRbzcUPr8BRHFzFy62/v2/TpvLSFvMdsf0nn9MOa1V1A
+	VmuGhg==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpyajs8t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 17:22:26 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b31ca4b6a8eso1793393a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 10:22:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754673306; x=1755278106;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GPbiefG2OWimN6RVlxfEZ9aDoY/LizcSfvAZkPKTOf4=;
-        b=ljvGZKovhOaYXITkO1881uJBFy18Sv7Bq6Pe1ExjBz4DGmDCG3BIiPljEUynnk4Rmw
-         nv/VC5O9aavIzaQZlGzOnk8R+JU/U/BWbHzjhqS0y4KIV8wyVaEthoo2jGkdaXEQY6+s
-         MspX1BnG0X/eluJbV3s3zu//srfvZ9Yb0AjDVe09D72liGObWJZNlk8H+tEmCtVAoMux
-         kFWR/MZ9WFHT4JVePVn7Fpq3EpKogWE1yUuyqY1L6E0cXo7FYwigtwoXtdaPSEX88zKJ
-         VLWfhvGysNBW63vbAKZRORVd4g4VkeVfVQQ08ZyFjS1FhOlssl6KduKCmfF2SSv1FtJm
-         fu9g==
-X-Forwarded-Encrypted: i=1; AJvYcCVGQ3HXe5PpIKdgeZxVUC+SCPc8T7bhmvieHOx5szNQs5fe3euO1GBBRaQpZbPh0t4JbrI1dIBZfCJZWPcI@vger.kernel.org, AJvYcCX6oCWEo3acgwB0dCilpb4LLWENZYQurqAPTvfzExP/fO/VocvndLhc4xOvSucCsi//RrOucuBQfRI9@vger.kernel.org, AJvYcCX7WpxCNt6aIwjCSitoKADcZQK2JZxDMo2GpWyBBP8EfoHodg1qOE6L7kOyEAbkyqom2N/9Uj2UVqkJSlGV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqJpbv2scY/PlyAE40+6GYAv+r2QSuRU7KvLTVTdNm8d+aNQIR
-	VGx1MF523NfU5oqg/GzxA5rQLrmkkvBAtwryTGEuAzy+5f+coM0AZ6PfuqfOow==
-X-Gm-Gg: ASbGnctt0CLidh9BjhV5MRGYEZWm6K7GxJGQOMwiIGSdeai/pJYkzjULMCh0vO2SIMw
-	OEJkgp3mrZKA58+jO7YTwJnguvp44ULYYV28vywFmT0ticB+6C50QP/QktM5+J5oG8mJAGq8VKM
-	xgh9lcADs1mPQu0wWyfmJu4eMtQei2svMf0HJ7nEZK9L477fT9c48u92G5bcQHy3fUwEG02wIB1
-	tASLK0CvGtSKM5+of4OxKtzgXLSZ7kJ4CfKDRdohXaRb+KHpLr1wrL0zOWD9+5zLCvgH3v9wnB8
-	Eh9EMReUYzM0qX3Hk8/xR4ccRlmlxpK5K/U2/fvVG7k+NCCLu1X1bjsBtbKJ082hWDRFzkakBPz
-	UyuhnYowuqLMX8UL8KjPfmeJmkW/gYYaNKL0VgwqRObMYDtjEvLJ1WPvooOedpw==
-X-Google-Smtp-Source: AGHT+IHr2LVmYrP8y88MwtQsopBm0qhYmXUyUQcFF43HBCPAiZE/3OaipPy+JWDrsbyZXlsy6D9/WQ==
-X-Received: by 2002:a05:6000:2406:b0:3b7:95fa:ac4 with SMTP id ffacd0b85a97d-3b900b7aed8mr3106389f8f.32.1754673306175;
-        Fri, 08 Aug 2025 10:15:06 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3b8fc6ef28esm6308907f8f.60.2025.08.08.10.15.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 10:15:05 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Fri, 08 Aug 2025 19:15:01 +0200
-Subject: [PATCH] spi: spi-qpic-snand: handle 'use_ecc' parameter of
- qcom_spi_config_cw_read()
+        d=1e100.net; s=20230601; t=1754673746; x=1755278546;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jyBcXhZj2R8UGlkk97Lt6qighcQ9HpYxu7rqj/QliiY=;
+        b=G3youVlOu1ZvHB1bYx4+id78yjUId4zcrjrrBHmF0XDzVX6yRByhTthpdAR1QiRUQP
+         FXzgVq8TSrCUfVIZswWdcS1PF6xIMSeQePGLoLiRAmQywcaRHPV62wTGIfXYouVZba3H
+         C6Nt1BPnmv6CLmXL8fCTUu5sFcak2KFUL+efSy77B8pjhQRDkBDnOiekC6+KpjIflNKf
+         u5S9855DeDBtRrP3kHX/uEISjBClP6QzWnPHF1Fu/YiexvfomtleQnIpy3edfJxJY9u0
+         aTxCJcBULGG1GZhlBqUN2n+8tJRSEwooBdIEKlCjLaZtHqeHCumB9VjrJ6vzljIho5mg
+         8V4w==
+X-Gm-Message-State: AOJu0YwEraM6oUIht6MVrE6CM97CymzZg319p3J74GvHhIP2ZW3R3IBp
+	SNRt1mrM5B8FLR2efgXb+8BMt93skWqOmP3iUzXitGE1EJTQytRKIVpEeP+XDm8dESivZB5saKE
+	ESEE4sj6mrGoqbTHL2hd5kChGLnJrVTn0td9pV8Y9G3KZe9nc7N73bI+c38mGDzU1AVbx
+X-Gm-Gg: ASbGncsJkCwFxyWiqgmpQytjRjIorFFwWesuQ6ltM4S13/VcXTngce3MKvNSfab2RzJ
+	iW8wT8AIcwfCPXYOeIQHF1RWw90CVDqm94TopJvTFGNhQ8ffQCQGCuKPIV6zB2UEFcf3z6hUWaI
+	g0nMj+dzvhx0IgrOSUGVi+MSoBKvNuE5NyEtnTu93HZX5X0IpZuGMoqDpD4bxzWBuFyebgVaBrs
+	fs7/oh4toEtiO4IKU1mF14Sk9qe41uT5pPKnnl2TKysJHwb7cp+M9Dbmz9j8uMVfGYKvX+7pklu
+	VD+7vpBi4Bg0bjK+ndOAtka3eeCYCz2zutf8G92iHQjLFyECCKmh5ZNaj5jJM9yW
+X-Received: by 2002:a05:6a20:7d9f:b0:240:1132:6f0 with SMTP id adf61e73a8af0-240551eeac0mr6475866637.43.1754673745697;
+        Fri, 08 Aug 2025 10:22:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFi0ezLAvd5RkULpFWK7WLTaadsd+/Ps2gsqlHJKq3156s96y5T3Pq4HOvg12o43Wrff+vHAA==
+X-Received: by 2002:a05:6a20:7d9f:b0:240:1132:6f0 with SMTP id adf61e73a8af0-240551eeac0mr6475822637.43.1754673745264;
+        Fri, 08 Aug 2025 10:22:25 -0700 (PDT)
+Received: from [192.168.1.4] ([106.222.234.151])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422bac0d14sm18058211a12.41.2025.08.08.10.22.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Aug 2025 10:22:24 -0700 (PDT)
+Message-ID: <ba1d97d0-3420-4cca-8823-4d27cbe7bae6@oss.qualcomm.com>
+Date: Fri, 8 Aug 2025 22:52:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/17] drm/msm/a6xx: Fix PDC sleep sequence
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com>
+ <20250720-ifpc-support-v1-5-9347aa5bcbd6@oss.qualcomm.com>
+ <937197e9-09dd-4f3c-bdb4-4001f5217c07@oss.qualcomm.com>
+Content-Language: en-US
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <937197e9-09dd-4f3c-bdb4-4001f5217c07@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250808-qpic-snand-handle-use_ecc-v1-1-67289fbb5e2f@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAJQwlmgC/x2MUQqDMBAFryL77UKaElt7FRHR7Gu7UFKbRSmId
- zf4OQwzGxmywuhRbZSxquk3FbjUFcX3mF5glcLknQ/u7gL/Zo1saUzCxcsHvBgGxMiC1rfXWyP
- BTVT6OeOp//Pd9ft+AMSK76hrAAAA
-X-Change-ID: 20250805-qpic-snand-handle-use_ecc-de929376d50b
-To: Mark Brown <broonie@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+X-Proofpoint-ORIG-GUID: HesQra03iRMX6GscMRAlUFQwVu5Wb0m5
+X-Authority-Analysis: v=2.4 cv=MrlS63ae c=1 sm=1 tr=0 ts=68963252 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=YZlS21pjlsXJIaRBoB+Oqw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=g_v6zqOf2VaQD3ULXM8A:9
+ a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfXzCldlsfvSCew
+ 3YJmT+RtacDhQ+fnG1wHs1W1U0+n9dRvrqh4e9TNr1FmZHXwXumUYlaH5glf+i7q68i1Dg/ANQA
+ U/ndi1OC4tVaSuRIWcF1eF0+YjEaml04LpyQW2DeReg8DmuTmPb3DnjN6qg77AClEUZ8Z8G2QyX
+ qXJroSvkUj0jPVCqy1eOOru7f9+nFsHyir4CHnrQraL5kKIr6zVxxIzMxxQBCghOQ7kUAt+VCbN
+ SE8tDZYYyTfNUIBLT7M3PtN0NXAdkuQYhv6CSdMS1WxqF+AGFoeGQkLCsbk3VJ+mdmoaGPY7e/Q
+ VZ89oFk0BBfaaA2kE4mv4J3Xn44Dfv8Ix+/JGDEZpC/zvly2qhV256nJN4TQd4qGamB4Lp1LYiv
+ LXhVbHVr
+X-Proofpoint-GUID: HesQra03iRMX6GscMRAlUFQwVu5Wb0m5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508060009
 
-During raw read, neither the status of the ECC correction nor the erased
-state of the codeword gets checked by the qcom_spi_read_cw_raw() function,
-so in case of raw access reading the corresponding registers via DMA is
-superfluous.
+On 8/7/2025 7:21 PM, Konrad Dybcio wrote:
+> On 7/20/25 2:16 PM, Akhil P Oommen wrote:
+>> Since the PDC resides out of the GPU subsystem and cannot be reset in
+>> case it enters bad state, utmost care must be taken to trigger the PDC
+>> wake/sleep routines in the correct order.
+>>
+>> The PDC wake sequence can be exercised only after a PDC sleep sequence.
+>> Additionally, GMU firmware should initialize a few registers before the
+>> KMD can trigger a PDC sleep sequence. So PDC sleep can't be done if the
+>> GMU firmware has not initialized. Track these dependencies using a new
+>> status variable and trigger PDC sleep/wake sequences appropriately.
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>> ---
+> 
+> FWIW some time ago I made this patch, which tackles a similar issue,
+> perhaps it's a good idea to merge both:
+> 
+> From 7d6441fc6ec5ee7fe723e1ad86d11fdd17bee922 Mon Sep 17 00:00:00 2001
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Date: Thu, 20 Feb 2025 10:28:51 +0100
+> Subject: [PATCH] drm/msm/adreno: Delay the Adreno RPMh startup to HFI init
+> 
+> There's no use in trying to power up the GX logic before we're almost
+> ready to fire up the GPU. In fact, with A8xx the PDC and RSC uCode are
+> loaded by the GMU firmware, so we *must* wait for the GMU to fully
+> initialize before trying to do so.
+> 
 
-Extend the qcom_spi_config_cw_read() function to evaluate the existing
-(but actually unused) 'use_ecc' parameter, and configure reading only
-the flash status register when ECC is not used.
+iirc, this wake up sequence should be done before fw start. That aligns
+with downstream sequence order too.
 
-With the change, the code gets in line with the corresponding part of
-the config_nand_cw_read() function in the qcom_nandc driver.
+-Akhil
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 7b76d2c82a5287df13ee6fcebc4abbe58ca861ee..119003c4784890458a41c67fa8bc17d721030b0d 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -494,9 +494,14 @@ qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int c
- 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
- 
--	qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
--	qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
--			  NAND_BAM_NEXT_SGL);
-+	if (use_ecc) {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
-+		qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	} else {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	}
- }
- 
- static int qcom_spi_block_erase(struct qcom_nand_controller *snandc)
-
----
-base-commit: 13d0fe84a214658254a7412b2b46ec1507dc51f0
-change-id: 20250805-qpic-snand-handle-use_ecc-de929376d50b
-
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
+> Move it to right before HFI init.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 12 ++----------
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c |  2 +-
+>  3 files changed, 4 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 28e6705c6da6..3335583ada45 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -513,7 +513,7 @@ static int a6xx_gmu_notify_slumber(struct a6xx_gmu *gmu)
+>  	return ret;
+>  }
+>  
+> -static int a6xx_rpmh_start(struct a6xx_gmu *gmu)
+> +int a6xx_rpmh_start(struct a6xx_gmu *gmu)
+>  {
+>  	int ret;
+>  	u32 val;
+> @@ -842,19 +842,11 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>  	else
+>  		gmu_write(gmu, REG_A6XX_GMU_GENERAL_7, 1);
+>  
+> -	if (state == GMU_WARM_BOOT) {
+> -		ret = a6xx_rpmh_start(gmu);
+> -		if (ret)
+> -			return ret;
+> -	} else {
+> +	if (state == GMU_COLD_BOOT) {
+>  		if (WARN(!adreno_gpu->fw[ADRENO_FW_GMU],
+>  			"GMU firmware is not loaded\n"))
+>  			return -ENOENT;
+>  
+> -		ret = a6xx_rpmh_start(gmu);
+> -		if (ret)
+> -			return ret;
+> -
+>  		ret = a6xx_gmu_fw_load(gmu);
+>  		if (ret)
+>  			return ret;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index d1ce11131ba6..309305298a45 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -216,5 +216,6 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu);
+>  bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu);
+>  void a6xx_sptprac_disable(struct a6xx_gmu *gmu);
+>  int a6xx_sptprac_enable(struct a6xx_gmu *gmu);
+> +int a6xx_rpmh_start(struct a6xx_gmu *gmu);
+>  
+>  #endif
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index 8e69b1e84657..9ea01daf2995 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -910,7 +910,7 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state)
+>  	if (ret)
+>  		return ret;
+>  
+> -	return 0;
+> +	return a6xx_rpmh_start(gmu);
+>  }
+>  
+>  void a6xx_hfi_stop(struct a6xx_gmu *gmu)
 
 
