@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-68102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1897B1E539
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 11:02:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AB50B1E53E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 11:02:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 398BE16AA1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:01:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0758C1884920
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Aug 2025 09:02:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A92226E700;
-	Fri,  8 Aug 2025 09:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FDE726560A;
+	Fri,  8 Aug 2025 09:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xlr+tHg1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ydXIEDL5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79C121B9E7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 09:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA59225CC4D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Aug 2025 09:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754643692; cv=none; b=DbILksNQil/QL3ls0w2sZU5IDD4rHyLfP9j7QlKy4+TksdqjHtL/vGx8ZRZi6NpHpCfemByJuGBHMz+EXfVJuXyLEJdB1nlVpnDYFAwkCXaWwDmwxMej8i+gN7fmst3+qdExA/DwEsBBltqfK4l9NQ+MPLhHeqptwh2wb1AjVGs=
+	t=1754643732; cv=none; b=MqcCZlliz39v5/DbB+tFk5Vox5h9qpGHn2gifK4BPzykSkHl+lnyOHhF+gGbUg0uJzAT0bemxH21ugkRDBbZkdYNU7+zIjyPcTyfebYOWvDPgQ+1HGV7+L5mu02P9LXChyvP2+leKsbyGq4l/sF5iqh4nlmWKiR05/qRyvYBHJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754643692; c=relaxed/simple;
-	bh=+5mmSXXgQfg4o9txh+YZiXCmcXSiP1ZTVMOYqvAj0qk=;
+	s=arc-20240116; t=1754643732; c=relaxed/simple;
+	bh=fDzavJLkQQRW13faP4JIo9BN2hll5Ct+MBqPxVN6J7o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JUbvXfn4fbQoTM9yknLdLyPhgcjdb5oTUmQ0u+gzW2S8rKbXsGPx2aLIcb4FIcupJ6mt8IR8Z24ucjeT2ouk4T2HRyWk/WH7TqkoKBas87DMVzVL6eX0BMHXFITeTUNhrF+khtTaSYJfR1uJ4ZPQn0/nwFFDmFhvZW4hL7cY2L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xlr+tHg1; arc=none smtp.client-ip=209.85.221.49
+	 In-Reply-To:Content-Type; b=ncQ6+Rz1EXhjernjtYKtNxkCoibkl1lG49x7QmNJEhC5WrNPOwz1ubWZ2OPitcls0xzhqaLx2pZJy9t2/KkRTBo+DRun7H87khm/2b6qSLtM8g3Hq8vx9M8rjMxnvNqrW6O7bllr7InWKteqrb+hX3H0o2yP4MmJ+qvhbU165BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ydXIEDL5; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b8db5e9b35so979075f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 02:01:28 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-459e210bd2dso9727705e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 02:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754643687; x=1755248487; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1754643729; x=1755248529; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PH1sc0HOWazPmGzwk0Iil9DpgiFfEiqxA8M31CQZlCk=;
-        b=xlr+tHg1005RrOat2Wwb4pM+isp+i1hNprkpHOCqV/YiBYEmYz+HfzZRfbWuikWDX0
-         HgWHGnl9irdoXbqzPXbjojhlrRUfpANAYEb0ThAbTf6MQKTpPqlAzx+j3lGJzKPLG7t+
-         5DM5OiMGgufRQoM4AS41k9xH9mzwJYRLCfJaOQhq03UWwDF2q5ylPpjQNt8xf1/u+qOt
-         iTN46ZUr9DLebsxI9O4skLnBur2ho3uzr8wmqE1wE4i4RYD+s1RyY/NU9DceJWnfAvhx
-         4fOnU2J5doFo4A7/xUIoJKUiHU9nPTEzFw36oS565yjJMbaJPujzsaug4iyzDzklhJxm
-         3r7A==
+        bh=XcB29esXATuhjwQh2nnDRB1ldhsISGsvF6rcqzubLyU=;
+        b=ydXIEDL5s6IEpk3HGWRXJzmq7PXjUVDDJgjc6jz75VH0Q/DOZ26CdueEBfCL9UVuu3
+         86ntg2oHijBZMGQc0MewUNMmRJ1BrPlbckuEDqzOpfWjSKOWZBNCKL3mLy2ia5H3mtmD
+         JoA/Wsq+v+frqi9L2MrMyMaV/BavofetGY99IALFCtEzQpH/X+PxVyYcyO9CPW/wpyF0
+         aVZJd2DueU5dLr9+PF93NJTLlaERNkq99PrXvV3Qa5UH2ZbB90W56pFVjj6X5KYz4F0i
+         IwNDAwCKnSEzNp1W0mAmbK1UDD5pH68ryvDCONbJ/q0gspA/HkIh/D+RH5ZmZwaCSV28
+         c8wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754643687; x=1755248487;
+        d=1e100.net; s=20230601; t=1754643729; x=1755248529;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PH1sc0HOWazPmGzwk0Iil9DpgiFfEiqxA8M31CQZlCk=;
-        b=WRp+fVYDM9qXhx7tVGVdrNE3HA4VeP3pUqveciVEckPDFFQZGLDjykWdfoNrJEL7wr
-         OF6oJxCOp1XrneunulIbQNmvaO7KCa9apWppKCz7FWobM1JUUlBA3TywWqy23JzK7P52
-         tVO9uHbTpxLmji0Gp+/D3BOwFeum7offeHir+YSl6u5usTzVP33JLT/WIoLCRRYZ0clL
-         oLi0awQS4FJb1G8hxDSJPCsXaHmebv6wm3QhN2mm4Oe5OQqrGgTN9k666/Ia6EXM1BbQ
-         8kibAdAyM2ixyl4gE1NxXS6OFg16F5KCDaz5JToSPflTZDU0NSgXURnKn10tVC4bBBxh
-         MaiQ==
-X-Gm-Message-State: AOJu0YzzBTs5LrT3FeptoOguOyBfNvJR8SNh8QpOXzRHF0HkHg6nZ2j1
-	I1RDJM+5fqpUzdGdVjtbUw3dBEU1o/I2EICTWKYrywvGEnkHopldZ56c5yoiaYBGcp8Pr3sJXXp
-	4PXRME+s=
-X-Gm-Gg: ASbGncsqw4G4iOUwb1faMG1Ye9uqYnfr8k/VenZZ2BUPlXL57xSssrH9nHkbXPhIQFz
-	hYf5hKS7wmZUsjx5IO/muAUkUqCyKOSxpYtZYoNnhYj3pFGSParBHFLlvAOYBkb54E3sGaz32ex
-	Uf/c9CGJO1eWcS7guwJeyk65F1gLpHXvps2l2QIykfCMC8JFEPUwNTj/+6ktHJO8ZbS8Cp5Jl2y
-	+SqGM1CEvSpS54J6ZpetKPWX8k0Yb9L6tVVXXm37u7B32br6DlMdqok5CJnHIsDGCcMNjaTQIYv
-	lwAy9DFzcD8+ROFHGKLBhEzXJ0JeFrCDKJdm8XdF2uvvAkSO5kafVBXsv0CBRH0Q5MQKbF3RYLo
-	Bzp9Mh3nbQu7gaMw5nsqwK84FG8E/n73asTLIEoHx/bDcZbMUa1Rz7rZklm6rtIM=
-X-Google-Smtp-Source: AGHT+IHQSMBQxLb0BZuEhqNGRQomUFmT/lydrrM1kku7nF06fGNwjgx661NlU4HIkiIGSw1p8Q5DVw==
-X-Received: by 2002:a05:6000:2410:b0:3b8:ffd2:6745 with SMTP id ffacd0b85a97d-3b900b51264mr2127347f8f.44.1754643687141;
-        Fri, 08 Aug 2025 02:01:27 -0700 (PDT)
+        bh=XcB29esXATuhjwQh2nnDRB1ldhsISGsvF6rcqzubLyU=;
+        b=IgNymHt7AhhzR7DkrxWCSxeBLAH5kR26r52AHMEs3IJMQqigGRphjWn35sWWr3NM8e
+         pTD90vGHiSMnUCIpPmJZlRWWQwDECIezGJBHAaaj/cRKhLqaEArc2o2rBoll3SKMGnnM
+         t42444R6bwRROrU62jHgxsrGOYNb1kOtVmXeL0iRRal0oYyxmetu/rSS3rB4PKZMrQvp
+         YD+6W3b9fL2wCN3PmPh7UNoJRXh6UmFH0nRYroeHb12BObk1QzDXBra794Ep5DmmO9Yz
+         jOXCePA0YjvSwaxWnpTJtifX5Dz2avktyX/gwCduQSpuKuhbRxO/PUn2OuJgfu+mjXs0
+         wopQ==
+X-Gm-Message-State: AOJu0YwytZbUmmy86pkzW/kZxv7RMjc9HBAMJxUq0N4yhCBawbNZVu3O
+	utJ70a1wccDu53n9IpeUp4AZ0cc0AEoYz/WCaJQa9glmiyBziSbOr1wMfXj/jhrc1Pw=
+X-Gm-Gg: ASbGnctyByGyXzgde+5S7F12q90t4ppcYNFzpn9Ohx7z9e3ZaCto8qugzhXN6/VZOaJ
+	BFtigeRdwTdGtvUOwK3cUkYAGv4lcy440g5SYiscrA3ZiSAzHLowVpqPgNtRlScqWQWovcDFnOr
+	s4s1ZIqKyrtKdRmpDE+dngfE7Ig684OEExjQEeod9C3NAIkJ/8vEwXV1eh62kVSBzz62VRy81kR
+	9noNfQZ2A4kmsLvhJfPsJpZXW5O3kTu10w7upA868yJGVSMc8As48CK0Rie7YvNnGgkxU0/JAda
+	yozA05X+8lHNEhiIOV4/1n5e3exfEZo73rU905gVq1fHQO1b4p1sZjZ6rXMZppue3F3/5U9PmV3
+	sllaC4YLy1IQISs7T1Yo6ZfuQtCtnJKdkvRIGQ1HcKnWw5Kb3ADgnPotWj+LXKmg=
+X-Google-Smtp-Source: AGHT+IF4xWpCF3XDsGBbn+mook9Gvgj49NOgEPXm0we3aHZF2BikwKecUFu5oecUVvF8h37VelrB2Q==
+X-Received: by 2002:a05:6000:2482:b0:3b6:162a:8e08 with SMTP id ffacd0b85a97d-3b8f97c56bfmr6003028f8f.12.1754643728792;
+        Fri, 08 Aug 2025 02:02:08 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c45346asm29605740f8f.39.2025.08.08.02.01.25
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e0a24bf1sm153914825e9.1.2025.08.08.02.02.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Aug 2025 02:01:26 -0700 (PDT)
-Message-ID: <2c63a133-eedb-4b8c-82a7-6b183317f6f7@linaro.org>
-Date: Fri, 8 Aug 2025 10:01:23 +0100
+        Fri, 08 Aug 2025 02:02:08 -0700 (PDT)
+Message-ID: <00db8dc6-f8a6-42cc-ba5c-803ab56b9a06@linaro.org>
+Date: Fri, 8 Aug 2025 10:02:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +81,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/8] media: venus: Define minimum valid firmware
- version
+Subject: Re: [PATCH v9 6/8] media: venus: core: Add qcm2290 DT compatible and
+ resource data
 To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
  quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, krzk+dt@kernel.org,
  konradybcio@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
@@ -91,194 +90,99 @@ To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250808085300.1403570-1-jorge.ramirez@oss.qualcomm.com>
- <20250808085300.1403570-3-jorge.ramirez@oss.qualcomm.com>
+ <20250808085300.1403570-7-jorge.ramirez@oss.qualcomm.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250808085300.1403570-3-jorge.ramirez@oss.qualcomm.com>
+In-Reply-To: <20250808085300.1403570-7-jorge.ramirez@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 08/08/2025 09:52, Jorge Ramirez-Ortiz wrote:
-> Add support for specifying the minimum firmware version required for
-> correct operation.
+> Add a qcm2290 compatible binding to the Venus core.
 > 
-> When set, the driver compares this value against the version reported by
-> the firmware: if the firmware is older than required, driver
-> initialization will fail.
+> The maximum concurrency is video decode at 1920x1080 (FullHD) with video
+> encode at 1280x720 (HD).
 > 
-> The version check is performed before creating dynamic device tree
-> nodes, to avoid the need for reverting nodes on failure.
+> The driver is not available to firmware versions below 6.0.55 due to an
+> internal requirement for secure buffers.
 > 
+> The bandwidth tables incorporate a conservative safety margin to ensure
+> stability under peak DDR and interconnect load conditions.
+> 
+> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->   drivers/media/platform/qcom/venus/core.c     | 40 +++++++++++---------
->   drivers/media/platform/qcom/venus/core.h     | 13 ++++---
->   drivers/media/platform/qcom/venus/firmware.c | 20 ++++++++++
->   drivers/media/platform/qcom/venus/firmware.h |  1 +
->   4 files changed, 51 insertions(+), 23 deletions(-)
+>   drivers/media/platform/qcom/venus/core.c | 50 ++++++++++++++++++++++++
+>   1 file changed, 50 insertions(+)
 > 
 > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 4c049c694d9c..f45715c9b222 100644
+> index 9604a7eed49d..a7c960d1d818 100644
 > --- a/drivers/media/platform/qcom/venus/core.c
 > +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -448,19 +448,9 @@ static int venus_probe(struct platform_device *pdev)
->   	if (ret < 0)
->   		goto err_runtime_disable;
->   
-> -	if (core->res->dec_nodename || core->res->enc_nodename) {
-> -		ret = venus_add_dynamic_nodes(core);
-> -		if (ret)
-> -			goto err_runtime_disable;
-> -	}
-> -
-> -	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> -	if (ret)
-> -		goto err_remove_dynamic_nodes;
-> -
->   	ret = venus_firmware_init(core);
->   	if (ret)
-> -		goto err_of_depopulate;
-> +		goto err_runtime_disable;
->   
->   	ret = venus_boot(core);
->   	if (ret)
-> @@ -474,34 +464,48 @@ static int venus_probe(struct platform_device *pdev)
->   	if (ret)
->   		goto err_venus_shutdown;
->   
-> -	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_DEC);
-> +	ret = venus_firmware_check(core);
->   	if (ret)
->   		goto err_core_deinit;
->   
-> +	if (core->res->dec_nodename || core->res->enc_nodename) {
-> +		ret = venus_add_dynamic_nodes(core);
-> +		if (ret)
-> +			goto err_core_deinit;
-> +	}
-> +
-> +	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> +	if (ret)
-> +		goto err_remove_dynamic_nodes;
-> +
-> +	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_DEC);
-> +	if (ret)
-> +		goto err_of_depopulate;
-> +
->   	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_ENC);
->   	if (ret)
-> -		goto err_core_deinit;
-> +		goto err_of_depopulate;
->   
->   	ret = pm_runtime_put_sync(dev);
->   	if (ret) {
->   		pm_runtime_get_noresume(dev);
-> -		goto err_core_deinit;
-> +		goto err_of_depopulate;
->   	}
->   
->   	venus_dbgfs_init(core);
->   
->   	return 0;
->   
-> +err_of_depopulate:
-> +	of_platform_depopulate(dev);
-> +err_remove_dynamic_nodes:
-> +	venus_remove_dynamic_nodes(core);
->   err_core_deinit:
->   	hfi_core_deinit(core, false);
->   err_venus_shutdown:
->   	venus_shutdown(core);
->   err_firmware_deinit:
->   	venus_firmware_deinit(core);
-> -err_of_depopulate:
-> -	of_platform_depopulate(dev);
-> -err_remove_dynamic_nodes:
-> -	venus_remove_dynamic_nodes(core);
->   err_runtime_disable:
->   	pm_runtime_put_noidle(dev);
->   	pm_runtime_disable(dev);
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 5b1ba1c69adb..d1f0e9979ba4 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -58,6 +58,12 @@ enum vpu_version {
->   	VPU_VERSION_IRIS2_1,
+> @@ -1070,10 +1070,60 @@ static const struct venus_resources sc7280_res = {
+>   	.enc_nodename = "video-encoder",
 >   };
 >   
-> +struct firmware_version {
-> +	u32 major;
-> +	u32 minor;
-> +	u32 rev;
+> +static const struct bw_tbl qcm2290_bw_table_dec[] = {
+> +	{ 352800, 597000, 0, 746000, 0 }, /* 1080p@30 + 720p@30 */
+> +	{ 244800, 413000, 0, 516000, 0 }, /* 1080p@30 */
+> +	{ 216000, 364000, 0, 454000, 0 }, /* 720p@60  */
+> +	{ 108000, 182000, 0, 227000, 0 }, /* 720p@30  */
 > +};
 > +
->   struct venus_resources {
->   	u64 dma_mask;
->   	const struct freq_tbl *freq_tbl;
-> @@ -94,6 +100,7 @@ struct venus_resources {
->   	const char *fwname;
->   	const char *enc_nodename;
->   	const char *dec_nodename;
-> +	const struct firmware_version *min_fw;
->   };
->   
->   enum venus_fmt {
-> @@ -231,11 +238,7 @@ struct venus_core {
->   	unsigned int core0_usage_count;
->   	unsigned int core1_usage_count;
->   	struct dentry *root;
-> -	struct venus_img_version {
-> -		u32 major;
-> -		u32 minor;
-> -		u32 rev;
-> -	} venus_ver;
-> +	struct firmware_version venus_ver;
->   	unsigned long dump_core;
->   	struct of_changeset *ocs;
->   	bool hwmode_dev;
-> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-> index 66a18830e66d..3666675ae298 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.c
-> +++ b/drivers/media/platform/qcom/venus/firmware.c
-> @@ -280,6 +280,26 @@ int venus_shutdown(struct venus_core *core)
->   	return ret;
->   }
->   
-> +int venus_firmware_check(struct venus_core *core)
-> +{
-> +	const struct firmware_version *req = core->res->min_fw;
-> +	const struct firmware_version *run = &core->venus_ver;
+> +static const struct bw_tbl qcm2290_bw_table_enc[] = {
+> +	{ 352800, 396000, 0, 0, 0 }, /* 1080p@30 + 720p@30 */
+> +	{ 244800, 275000, 0, 0, 0 }, /* 1080p@30 */
+> +	{ 216000, 242000, 0, 0, 0 }, /* 720p@60  */
+> +	{ 108000, 121000, 0, 0, 0 }, /* 720p@30  */
+> +};
 > +
-> +	if (!req)
-> +		return 0;
+> +static const struct firmware_version min_fw = {
+> +	.major = 6, .minor = 0, .rev = 55,
+> +};
 > +
-> +	if (!is_fw_rev_or_newer(core, req->major, req->minor, req->rev))
-> +		goto error;
+> +static const struct venus_resources qcm2290_res = {
+> +	.bw_tbl_dec = qcm2290_bw_table_dec,
+> +	.bw_tbl_dec_size = ARRAY_SIZE(qcm2290_bw_table_dec),
+> +	.bw_tbl_enc = qcm2290_bw_table_enc,
+> +	.bw_tbl_enc_size = ARRAY_SIZE(qcm2290_bw_table_enc),
+> +	.clks = { "core", "iface", "bus", "throttle" },
+> +	.clks_num = 4,
+> +	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+> +	.vcodec_clks_num = 2,
+> +	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+> +	.vcodec_pmdomains_num = 2,
+> +	.opp_pmdomain = (const char *[]) { "cx" },
+> +	.vcodec_num = 1,
+> +	.hfi_version = HFI_VERSION_4XX,
+> +	.vpu_version = VPU_VERSION_AR50_LITE,
+> +	.max_load = 352800,
+> +	.num_vpp_pipes = 1,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.cp_start = 0,
+> +	.cp_size = 0x70800000,
+> +	.cp_nonpixel_start = 0x1000000,
+> +	.cp_nonpixel_size = 0x24800000,
+> +	.dma_mask = 0xe0000000 - 1,
+> +	.fwname = "qcom/venus-6.0/venus.mbn",
+> +	.dec_nodename = "video-decoder",
+> +	.enc_nodename = "video-encoder",
+> +	.min_fw = &min_fw,
+> +};
 > +
-> +	return 0;
-> +error:
-> +	dev_err(core->dev, "Firmware v%d.%d.%d < v%d.%d.%d\n",
-> +		run->major, run->minor, run->rev,
-> +		req->major, req->minor, req->rev);
-> +
-> +	return -EINVAL;
-> +}
-> +
->   int venus_firmware_init(struct venus_core *core)
->   {
->   	struct platform_device_info info;
-> diff --git a/drivers/media/platform/qcom/venus/firmware.h b/drivers/media/platform/qcom/venus/firmware.h
-> index aaccd847fa30..ead39e3797f0 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.h
-> +++ b/drivers/media/platform/qcom/venus/firmware.h
-> @@ -9,6 +9,7 @@ struct device;
->   
->   int venus_firmware_init(struct venus_core *core);
->   void venus_firmware_deinit(struct venus_core *core);
-> +int venus_firmware_check(struct venus_core *core);
->   int venus_boot(struct venus_core *core);
->   int venus_shutdown(struct venus_core *core);
->   int venus_set_hw_state(struct venus_core *core, bool suspend);
+>   static const struct of_device_id venus_dt_match[] = {
+>   	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>   	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+>   	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+> +	{ .compatible = "qcom,qcm2290-venus", .data = &qcm2290_res, },
+>   	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+>   	{ .compatible = "qcom,sc7280-venus", .data = &sc7280_res, },
+>   	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
