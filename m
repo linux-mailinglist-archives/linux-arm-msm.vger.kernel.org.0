@@ -1,238 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-68147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A01E4B1F1A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 02:38:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02F14B1F1AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 02:38:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7E75174333
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 00:38:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D21321AA8666
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 00:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9A8A264618;
-	Sat,  9 Aug 2025 00:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DD142376EC;
+	Sat,  9 Aug 2025 00:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J71t2Ve+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LdaISzC6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033A425D558
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Aug 2025 00:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB0323D29B
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Aug 2025 00:38:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754699755; cv=none; b=e8MqXrW30uiULl9FQV2TGaR0fMbO6e3gADVa8wHvGn4T0QTnDQnB4Sg84RDlbyk2cZJmhWyQHPxPbb7EERMGlGBwgRjeaLAf6/0VkUV1GKeFbGArqLnP62QDnBRWg5WD0Rp1trQTCecdjFEosXU3bi86TP5S3Ner0JPIF/isJ3E=
+	t=1754699912; cv=none; b=Vb12FyYXWLsKR6pJSN9cQHAA/gwmr413AJByx9CCW2L/Cv2vxNvEHYhBIDIvJDmPIs4Yy4SF9e74Lg0A1g8W1ju8r6XUv7z/+hB2K22UDft4rX2gpzgvZsAToHTcCfcDHhiUHizXJw+EiVeUwipd4v3XK4o/+A81grb+TLis2qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754699755; c=relaxed/simple;
-	bh=JQn53FWdqnsenAxhsXtXftYUURqXJ8dtPT1Q4jRdnDU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EzHXx/bCkBSmoJhK26Muk4PZEBI5Qqui6duJqnjPj5vu1t+Ddd0LGaWbo7WnY4JJIA8+a29gt8tncZbuRJZhVeBb1Zc0Aj0GxwIW1319XX8v7K8czd51Hc5s72WE1qmlP7r/+x0Zs94dHwqWL10k5BOGmu53RSwbes9KME/HpuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J71t2Ve+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1754699912; c=relaxed/simple;
+	bh=926dX9L2/JJUd/PVWhA4Ycu4EcbB+uexFLF9GYcID/Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AAxTRuFsiFaB1pZYu5TmztIOigrpt/VWrVQ6RzH1PYGW8oznKztjg3JzOq/ber5RQB79tOFpnjx+IK8burOu7QBOcRaJe9KDmNjUVLj3KrxTP9+CcCHUGB2ESHoaEGPjHAGaxKRzcxVgK4s00xbvfUoO1ZnNRLQPYxPb1Yd26co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LdaISzC6; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578ExSU9020381
-	for <linux-arm-msm@vger.kernel.org>; Sat, 9 Aug 2025 00:35:53 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578NExFg019380
+	for <linux-arm-msm@vger.kernel.org>; Sat, 9 Aug 2025 00:38:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lygnt7Zi/DkDBsXWW/2tMmsIMiJD5/QBa7Q1HdwAysI=; b=J71t2Ve+xg0D+Yw9
-	+Bs7s5zBjwvaNfF4eswxmyQNq3gopOMpfOaSBAuX18u+UZWwuOjMDeA8NdXkuT3U
-	pL0GlnI3zDkMj5Ed29gs8AVaZmkWi+U4xRlkqQ9tCLg7Hycp35tK4YoUy2r/jD6V
-	58BUZg+J1kDC0phV6l0tc2sjmlbiTBoW+U8eYgGlhzMlBXhFOJReMaNVhrH7lBgB
-	vH3duJW74/OYT9x9KpUIrWsjfApUBuBx3YLaHJHOTbrQL0dd3J3f1ynLJG5wyqTP
-	1piGel42/S7+ka33rRiD3jyVCLICRqCx+6JAFsYbZ6hSdltQx8FX+Xzld5+LxfLp
-	Vy5/YA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48bpy8kjhv-1
+	PTg6UPUR4TJzotk+aFNe0dYyDOUiRVQtN/7jSRoavTs=; b=LdaISzC6Mk0H1f3L
+	7wMT0DTVRifFjawkSDKdtlKTtj9B5XZw3HSXv3Qh036YEhFB9Gk6oRvW9wDquURO
+	opBBDh8NxQOpZinl0H7xKsxepoD8guczKynrt0ZcqcOdWLA0bz1qlru7VV5X4ggR
+	XAAdsAW/428KfD22FTODzhwf4ugbT3kl2aXmzPaoKkBFCfVQRpabZcB/NyZqCdog
+	6GuYU7Ia+UgQ06g2Kre+QDz7pB3BsiVxTDYg/N63eBkpU8f5ncGBoJwLBjEUfBu1
+	GgaA34FlsmBS43Y2UVpaZDHBxwLrTB2VFFvMlYUFAiGTrVqIvEuJyNs9NY6uxzvg
+	XYQYBg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ddkkt5x7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 09 Aug 2025 00:35:53 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b4274f5e065so2452710a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 17:35:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 09 Aug 2025 00:38:28 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b08a2b3e83so74565711cf.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 17:38:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754699752; x=1755304552;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lygnt7Zi/DkDBsXWW/2tMmsIMiJD5/QBa7Q1HdwAysI=;
-        b=FBYcRhtyaEYylHvRD9/4SIrWC6KrAcETjvXvCXa5nH0EmWCBM7XdkbfpD/fbjPZq3U
-         VyU3MdSw4EORu6nfPLYvrLMPllWuOCWZUaWKlVMVi1iP1BayMVLjW1MNBMGP9zYFxGsF
-         rSR2qcbJTm59nm/l5TRxt9gz0OpnrkoSv5dJT8I8dsK5RJAGjf/w4TZASvioA9SYyvaQ
-         bSC5ajiWqRLxHqnjORUkeAKz6feNtnPUfp5dS09Y0L1tMO5Ut2ObU+/FmkH+p4KpBtcQ
-         P9gUTg9qoR3Lzov5s32Nv0Fj0j3GIGFuPD01EfhSXUIZNDt4Gijxo+Yxxc94tHwaG2VI
-         VltA==
-X-Gm-Message-State: AOJu0YyuswphUNtG/5HGDWBs3zsHeZfcfMNCbr+vTYxSRIHGZ1kUYaUQ
-	DOzX7uV3VHIBUZoyBgVS3uYgZnZSOLxoUOf5UNSSUejDd23lbo30OtUOsCI4tQ+lhFjYhj4UKZy
-	5pXvOV6fz0ZGlLKm9kT9/3wpPheW2RFSEwfOJbnTErUntOCltVyTyleeCX24SZvmZ9D/ADux7uE
-	Iw
-X-Gm-Gg: ASbGnct3xmcWXYntbYEmH+w0d0RrzBYKEapgfiVfFjW9DoRrQ6JKpEPjhH1LkWkhunv
-	pR4qrfCzG3bs4TCzVlWxtwd9cphLHd/2yLBeUGpbNDW4Bqt4C1MkTowDL9iOy65Tn80/cBFvT+G
-	zqjDaZexws6ABvJ7EoC83qca4fKuJjwviOmTQ4vPVGiAFw576u5vqas9hfsTC6tpPUKblEmUUXl
-	qxcPkJ8WY+caCa2Hu11fV6i1coUKIKTbKgt1Qd+6PCk3hFVgPgwSYH7gnCaddfdCSRUrAK0mzFT
-	S6ku7CjgpLrVeUYFs3K82DCINcosMnn0WP+wD/U0uKR1ALZ2qwFZKfohxRv8c6wSblnvrCR2X9t
-	Ozqld5T8O9p/FP7nYm1KyZlVu
-X-Received: by 2002:a17:902:e550:b0:240:bf61:fee3 with SMTP id d9443c01a7336-242c225701dmr76135415ad.44.1754699752008;
-        Fri, 08 Aug 2025 17:35:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE33DCMAedQDUiF2/I3ZWb+fz5inLjDwdHMAuwQmrl6+a26bmnVEJtkyEOMMqC99p7LJwIB1g==
-X-Received: by 2002:a17:902:e550:b0:240:bf61:fee3 with SMTP id d9443c01a7336-242c225701dmr76135015ad.44.1754699751568;
-        Fri, 08 Aug 2025 17:35:51 -0700 (PDT)
-Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef678dsm219865355ad.39.2025.08.08.17.35.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 17:35:51 -0700 (PDT)
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Date: Fri, 08 Aug 2025 17:35:24 -0700
-Subject: [PATCH v2 12/12] drm/msm/dp: Add sink_count and link_ready to
- debug logs
+        d=1e100.net; s=20230601; t=1754699908; x=1755304708;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PTg6UPUR4TJzotk+aFNe0dYyDOUiRVQtN/7jSRoavTs=;
+        b=eQv9A+iAnc9uppcMSyFear/7w0+/eP5HTJ7fRmbTdobKbU5ADEM7TZxJPn96uHdBPm
+         lQnypxfRLTJtXjHlZjhr1aS6CxA8OZnSJXf+zu2ooDDNL5+LvyzBOQcb5GmtIC5RzRwh
+         I5yFVaImEw8fu3HJgQjZCieizy1G0HYUvsH935lqBzfVEkI8YO0tTBC9jhIhpxn2SZgK
+         BmR6bKt8vmU6zakuWqWGwCF0nsy4EytF91IdSQcNMNl1wEucA6fMhc+hG0KChQb8rnkE
+         cZnltNlf0kq0V1NBc37g1d8MUm9g7bUirNL2ZXRw0RGVtt/P7odaEmqwD0ntHT9jI/12
+         yRdw==
+X-Gm-Message-State: AOJu0YzFsXdGyS8WLT0c28yAJk9/Pby1mX/CUdh38lkRLrpVq7KBSk1L
+	X8MDyTZW/+H1xbsd9XHBjZcAzHJG6RH78HBiD6PZWYAzRoOS9lwqApTMQJf377rPoPl1Sp4pfJA
+	qs740vQeknAuW0+jj8g9P8v1DIleq8rmdN8ZUIgc/+/nQLX2WydmjfSCZ7IJASodAmHxe
+X-Gm-Gg: ASbGnctSGlkOV5MW3COwa/B9Ho+5bN0ShXdWaKWK0s9jzjSx2SN/i8lDqs4xsfwpVTr
+	i6mQiofPKnegUFP0+KDMWCap7cWL9PJxBuyZrUi/S0FTxrV+HD7G4gXEwc2056VSJgvywUSj5XP
+	TX5NFyHas0MqAIF+k/XzJzvTsxNt6EqQ57VS2TbdFUlS14f6XS7lMiq/JbCXxe+c9lrVPy+MvIZ
+	eZsBJ5OfXoN8ZUA2u8kLKNJ1ugvqmiOpfMGI+WjwgwaeojAIpaQ6e01IpCWD7dP0IR6sp/hCLFu
+	CHpz8roie7kpz2WN1ZgO9m53hgfMK0p91pUv8gUjj+vvKkrPNlfBNqJ0AUNBB5nIdBSdmE9Y+D9
+	FjYwkmJxQDENYLorfowQZ/SDrDhbrNOtklxOgKRR54sc=
+X-Received: by 2002:a05:622a:4088:b0:4b0:8e0a:f095 with SMTP id d75a77b69052e-4b0aed6b5a1mr75846321cf.26.1754699907723;
+        Fri, 08 Aug 2025 17:38:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt0Zzzi3J4BDnMVp/K7JP6Y2aCQjHuVGq6KrsN8qluameirnzlp9r1HdWb2M0KJC5/NMX4mA==
+X-Received: by 2002:a05:622a:4088:b0:4b0:8e0a:f095 with SMTP id d75a77b69052e-4b0aed6b5a1mr75845831cf.26.1754699907027;
+        Fri, 08 Aug 2025 17:38:27 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0c3:3a00::4c9? (2001-14ba-a0c3-3a00--4c9.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::4c9])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cc9af8413sm13671e87.28.2025.08.08.17.38.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Aug 2025 17:38:24 -0700 (PDT)
+Message-ID: <200ee7f2-ac66-4619-9401-220dc578f8d4@oss.qualcomm.com>
+Date: Sat, 9 Aug 2025 03:38:24 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250808-hpd-refactor-v2-12-7f4e1e741aa3@oss.qualcomm.com>
-References: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
-In-Reply-To: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/12] drm/msm/dp: fix HPD state status bit shift value
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Yongxing Mou <quic_yongmou@quicinc.com>
-X-Mailer: b4 0.15-dev-a9b2a
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754699734; l=3874;
- i=jessica.zhang@oss.qualcomm.com; s=20230329; h=from:subject:message-id;
- bh=JQn53FWdqnsenAxhsXtXftYUURqXJ8dtPT1Q4jRdnDU=;
- b=UfAJZEmii2W1xg/n7I3OixqLYvkqxFi5dqufHjpIdry9W5CQqZsyJUliQA/+ckK85WtgecgCZ
- CVY9K6KZqniDV8ngdPtL9w803gnE4hUnfeNcWL8TSsh2p37Dk/WXnlm
-X-Developer-Key: i=jessica.zhang@oss.qualcomm.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Proofpoint-GUID: z2cBHW_hs74qjy5s-Tqnq0eGi4o4ZY3k
-X-Proofpoint-ORIG-GUID: z2cBHW_hs74qjy5s-Tqnq0eGi4o4ZY3k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDAwOSBTYWx0ZWRfX7yXPnlXXuhX7
- VQPVQzknaehlgjUzYEHSX/Yd/lvjHK5r7oi0RLjOBofcPb6nYX8qtaS6o7//CIOo12+wYZsNnT1
- xX0DjilyB7+sTcg4XLAl1xECcegNPAEhUOjodo2HTsmult8sSukwvYvMb1tAtdwSW3HN4go+3m7
- TVPeOB54ZWQCEilz0cFVKLlVcgoUAr74tTneq3yuRmOjxzmPnBWNlhnp8jjQhQFHkqfNv5sBReW
- frHZDKWONUAkFmjMo6iZtKywbqn0V1LYjLnj9GL1ZEX59t9OGo/Uvxiw9n4vMOLTiP+HvEPGM6R
- 9djWDfuJqP1r8UmHNoOfZpOl69zBuiBk90/RufrWUx1U7AI5N7JMSzXy9qYz/+nSYLE6tBfqKxk
- 50dqJFfI
-X-Authority-Analysis: v=2.4 cv=GrlC+l1C c=1 sm=1 tr=0 ts=689697e9 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=nsv5_4zRg9i3qj8PKKQA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+References: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
+ <20250808-hpd-refactor-v2-1-7f4e1e741aa3@oss.qualcomm.com>
+Content-Language: en-US
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20250808-hpd-refactor-v2-1-7f4e1e741aa3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDA2NiBTYWx0ZWRfXzFxMV1tBmiH2
+ wO39wOaNmP2KbSCAI+9xBfbIXniCi8S+Ufqwz7M5PxrdfcbtC2TIjtUCdYOlep+f8cC6A0s+hVX
+ Jnjt5kN8QL42/5zJt3Im3Csr6e2713plHbdVCKnIKoZruSaLVlRS9RWlilwzfEu+nFK/IDrD7Cb
+ 6476MU6BvdtK/RGpBDssS7qhn7Eo9QuZ+2L9U9n4pWMt95C0wpquYmRiLUYUyWr/dIpENrp6jsm
+ SKcpzBBywgd9HNOaOS0yZT0k0KX0fhiWiOrg4WRgfKjzurOlWC4Cq2ZEqrtAjO6+F7SQq9XbFj9
+ hwz/l9fnE4NWdjgi1y2pk2iQMx3Nd6gx63w594jZJaH5FwhOGNBLFo4zl4evWGKn/WDWMTKYran
+ pmQnpg64
+X-Proofpoint-GUID: GGPNtomIPEHXcc6Nzti2YxnUnQ-wi-nj
+X-Proofpoint-ORIG-GUID: GGPNtomIPEHXcc6Nzti2YxnUnQ-wi-nj
+X-Authority-Analysis: v=2.4 cv=Xpv6OUF9 c=1 sm=1 tr=0 ts=68969884 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=tINfiVESruKu4bDgj1EA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-08_08,2025-08-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- phishscore=0 adultscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508060009
+ bulkscore=0 clxscore=1015 malwarescore=0 adultscore=0 phishscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508080066
 
-Add sink count and link_ready to the debug logs for [un]plug and HPD IRQ
-handling.
+On 09/08/2025 03:35, Jessica Zhang wrote:
+> The HPD state status is the last 3 bits, not 4 bits of the
+> HPD_INT_STATUS register.
 
-Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 38 ++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+Then the mask is incorrect too. Also, I'd suggest using 'most 
+significant' instead of 'last'. The latter one might be confusing.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index dd529942f7db..93ea623473f4 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -455,8 +455,10 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
- 
- 	msm_dp_aux_enable_xfers(dp->aux, true);
- 
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	if (dp->msm_dp_display.link_ready)
- 		return 0;
-@@ -473,8 +475,10 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
- 		pm_runtime_put_sync(&pdev->dev);
- 	}
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	/* uevent will complete connection part */
- 	return 0;
-@@ -500,8 +504,10 @@ static int msm_dp_hpd_unplug_handle(struct msm_dp_display_private *dp, u32 data)
- 
- 	msm_dp_aux_enable_xfers(dp->aux, false);
- 
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	if (!dp->msm_dp_display.link_ready)
- 		return 0;
-@@ -528,8 +534,10 @@ static int msm_dp_hpd_unplug_handle(struct msm_dp_display_private *dp, u32 data)
- 	/* signal the disconnect event early to ensure proper teardown */
- 	msm_dp_display_handle_plugged_change(&dp->msm_dp_display, false);
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d, sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	/* uevent will complete disconnection part */
- 	pm_runtime_put_sync(&pdev->dev);
-@@ -539,13 +547,17 @@ static int msm_dp_hpd_unplug_handle(struct msm_dp_display_private *dp, u32 data)
- static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
- {
- 	/* irq_hpd can happen at either connected or disconnected state */
--	drm_dbg_dp(dp->drm_dev, "Before, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "Before, type=%d, sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	msm_dp_display_usbpd_attention_cb(&dp->msm_dp_display.pdev->dev);
- 
--	drm_dbg_dp(dp->drm_dev, "After, type=%d\n",
--			dp->msm_dp_display.connector_type);
-+	drm_dbg_dp(dp->drm_dev, "After, type=%d, sink_count=%d, link_ready=%d\n",
-+			dp->msm_dp_display.connector_type,
-+			dp->link->sink_count,
-+			dp->msm_dp_display.link_ready);
- 
- 	return 0;
- }
-@@ -1540,7 +1552,7 @@ void msm_dp_bridge_hpd_notify(struct drm_bridge *bridge,
- 		hpd_link_status = msm_dp_aux_is_link_connected(dp->aux);
- 	}
- 
--	drm_dbg_dp(dp->drm_dev, "type=%d link connected=0x%x, link_ready=%d, status=%d\n",
-+	drm_dbg_dp(dp->drm_dev, "type=%d link hpd_link_status=0x%x, link_ready=%d, status=%d\n",
- 		   msm_dp_display->connector_type, hpd_link_status,
- 		   msm_dp_display->link_ready, status);
- 
+> 
+> Fix the bit shift macro so that the correct bits are returned in
+> msm_dp_aux_is_link_connected().
+> 
+> Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
+> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_reg.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> index 7c44d4e2cf13..b851efc132ea 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> @@ -69,7 +69,7 @@
+>   #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
+>   #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
+>   #define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
+> -#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
+> +#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
+>   
+>   #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
+>   #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
+> 
+
 
 -- 
-2.50.1
-
+With best wishes
+Dmitry
 
