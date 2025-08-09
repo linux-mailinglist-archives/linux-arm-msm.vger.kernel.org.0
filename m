@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-68141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A72F3B1F19D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 02:36:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 923DDB1F19E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 02:36:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6356CA04FFD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 00:36:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6882A1AA7BDC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Aug 2025 00:37:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBA2D241662;
-	Sat,  9 Aug 2025 00:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAC82242907;
+	Sat,  9 Aug 2025 00:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KFkS5kGJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E+SL+fuf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A1F23814A
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Aug 2025 00:35:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567842405E4
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Aug 2025 00:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754699746; cv=none; b=sW0gA90geiNutpdXhg3iWY+ztW+JlsbJWUkuK4IIRl+hm+o+S/wyzltFeuPanyNhD94s/3Ez5RC0lQSGZG+JrXvBLvfc/QYrsja70MKzOU0AkbR1sLe3xKC5zb/vHQ7+eMn/Ph0KXfq5fs1zYi7gMRUhmYC/ozkPOPlYWfBt794=
+	t=1754699747; cv=none; b=GzkHgLsH7pfnI4ppi31Mf9F+rogt1nzgHY/q4q1xX6keHZwzfve0de9pBqB1h0m46YXoDqGJAdNI2xz3bON3/cpJLiW0HLYb0zv1lyk4nJetny6YM2MneIRw8qBAL07xySZomu6MrLzqw07BMZcWKHhkiqPU9KLpvsrSKr1cp1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754699746; c=relaxed/simple;
-	bh=0luC8UsEHN9fWfXH6p1zip80kT4QBQaB8aTLon8BdOg=;
+	s=arc-20240116; t=1754699747; c=relaxed/simple;
+	bh=29HYP/DXnl5EwK/8eh4LDOHT+urC513pYg2fM9mWL2U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gKjiD8r1Vz9Bpsh95b4BNtUqxcVTxq8+JhDFsPpM0hjnlavHvOntyN/f9A51Uy/Z4QYleWNp54B6mQ/rROr7BUh1l32dlO9Gl7nRRe2Z/qXavyDqtS9ePvgGFrHKeZDgcaWUsMHqTKZG8vmgdy6McRiykJEhZBk2jsxs6xj1DUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KFkS5kGJ; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=mknXbJe1DLuKhgRWTS06tAF8qSeTiKND7yDG3A49E/vg443PqXQ3PHAP1Ur+ZkN4Ysbq1MCZHYh3Yc8QBdJNwErQxK/8Bow7kuz1qrtLx3cla78JPM1l4DOcF4hfT4jN94S5m4Gy8bbB2gaAPm4M06jz8CboS6IyQr0cDOnVMzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E+SL+fuf; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578HUOV2007705
-	for <linux-arm-msm@vger.kernel.org>; Sat, 9 Aug 2025 00:35:44 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578Dw9tV011818
+	for <linux-arm-msm@vger.kernel.org>; Sat, 9 Aug 2025 00:35:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AZ2xPxZ0aADglH/NNiPMVpiBOUDybWneJMhux20a+5g=; b=KFkS5kGJwoLDxjp8
-	bC3AjVCcdw/tfdFuNHCF+IhBgmBBehYl/9I6Aa2o9maWBN3eXY+tZhfVzIwaDuRE
-	zJHZ6ZlMk4YgKGGzmiVpo0wo7D+gZYL51sPqdj37qzE7GIAJiOt69limnIx8k8FH
-	L/ZReglf9rxUYsV8y5tFGqlOVBDTeoJnz/QMDzSMHrXrTCa1ssX7z6sxASFsDC5s
-	9QA7Jxaa5cVkW+t2vU2IvbcTvkjNCSdzH8r3c/06QPHhlWQpSjUHzOGSTSLX05wN
-	6B7WikKnFbqAwnMkLloSdKDK48NU961+pWBd/CCDlDDp6Umo0u9pD2+6jwyXWNJw
-	nTfPHQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ddkkt5qc-1
+	1hdCfTP1N1Lll13RFi4QL7o8c/WBGzlCEwL+AMYyzJM=; b=E+SL+fufl61vfuki
+	fbXAWnPJNTGbn1TtP32D96aGYWG66TAvIz1ls1heHdVLJhJ6l1leMvSqBGe7l/2u
+	+ANgQoqNvvFNAsy0Pm3lHdb1UBsy4Sf8h+R24sF5VbNtQDlw67ZGZdu1QmidD3br
+	vjWQ0N+H61kkPE3tThVmZ21ddln1VstzvLQaExVJJOMup4G3nNywTVOiNL8Uq2tP
+	bx3R91/G4Z6/9474W9SLawl5Hvyw0WSeN/OdQh01jJUTJLb0NbKZ8Kkj7ZCBroa1
+	MWVjTlBzNLeU5a/UW71dGOw6Ib/RR0lozSXh2m4Xg286s2pWr4qx/Lwkr5LOPpuh
+	5DGmKA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48cpvy69d8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 09 Aug 2025 00:35:44 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-242aa2e4887so58314905ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 17:35:44 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 09 Aug 2025 00:35:45 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b42aeac2d75so1103968a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Aug 2025 17:35:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754699743; x=1755304543;
+        d=1e100.net; s=20230601; t=1754699744; x=1755304544;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AZ2xPxZ0aADglH/NNiPMVpiBOUDybWneJMhux20a+5g=;
-        b=DWqgaLyCvqlm1cTswrG0yx5w7F6L7ShcMAWpFeLOizvI5ekKQ+GTmk0upnbqRND4A6
-         e3CRfGOO1yd+Y3OetQHxSTN7q4frdhbQrCuDFmuL2FFVygfJuNRdp/FMpw7V2ht1tIuy
-         Ip1cMD9dy0kwSSvSMH4brNWo40/dAA4c3Wf4CxIrMD3CK9O3sO5XOXWWdarWVJM3Nm/O
-         5ACWv2NDoiwIupj/gF9lQFimL62zGfrZii6ikn5kK2uEPzKDe3B+AO3jQ5u6bDBDPED7
-         /tN07EXMoP5FlezaxAe8IbJqd7iNXn2y6yO9saz7CLCcSDqYShrnO0N4OAK/4Rj8NWH8
-         8/LA==
-X-Gm-Message-State: AOJu0Yy6n9YErKl0ISPmMOdviYowKwim/5eXvwlWjpG/RdAQHHbr81Wq
-	dQgwpmxk/MLs4NKGuhKNSxzj679dWQFtYaYExNSkYQxEICqe86BXVc0Rihlclcjmv/3wCTE5fnU
-	xh85oAxiBZnaY2xsUvWAeKLam+X20Gmo21g/cJerj+nfRsRQgzEaYiDpFMq+PFDLBY7nmN6mqNT
-	M2
-X-Gm-Gg: ASbGncvfDmTzdjfx7z9RKoEIv7IsMINZEmlO9AFYJFLVJ+hK4Bi0LK+KyiSusPFmmUy
-	NfeN4WaV50FEqC0VNf3Y1OlXOakTmSi5mBEia8tnaCGepurdIpcRrvnOMlm93Wl253ExL4k2zm0
-	xjndds2HzEJQYwLJUtH2X8arc6iNl5yn5ihUn+UOMD+ER8BbbspKGfBPemsCvSy/em0OMOOILnu
-	lRsFFdERA25Ie7mTHAGfPspv0ft/KHUrWKwlsAUQQso1zn8qP/gFQsoFqSkY0SauWfECc6PJdwY
-	fbVsy2Qy3cxzWcNzs/6wSh/wIR2GTobAqpOXX3iUNcOiPJW20UB7DFqyIIxjJUDiGUjAWh9wK3c
-	IFQPkvfwd3YuI44w1s6GvpzKj
-X-Received: by 2002:a17:903:2987:b0:23f:8d56:b75b with SMTP id d9443c01a7336-242c224116cmr68534845ad.41.1754699742718;
-        Fri, 08 Aug 2025 17:35:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAEqIzA4w/9X4in72ZzPva96ldMzCraSZJQFVFPIFyVWnAUhCwow2pLKBe5AzUihPqywBT1w==
-X-Received: by 2002:a17:903:2987:b0:23f:8d56:b75b with SMTP id d9443c01a7336-242c224116cmr68534535ad.41.1754699742334;
-        Fri, 08 Aug 2025 17:35:42 -0700 (PDT)
+        bh=1hdCfTP1N1Lll13RFi4QL7o8c/WBGzlCEwL+AMYyzJM=;
+        b=VL4l1m8ms2qq2GG43Cy/t8h+UX2paIVmywudCkVaBTLW4JGxyZ5eVM1ZrifJ4ft4AJ
+         mFKMkoOBH6ids6mHnO2lCczdBt3f0+AGWNVWeQe2i2mK9Oed7skhnr4I53HfIGlc2tz9
+         6o0qgK4vDwzsH2BlEqcinfw6LYWhh2zqgbQo7Hp15HMhicZi0iEms/uSCWcOb70XrqIG
+         FgZ27dhmzKyZ5DI6zd5RcN6W1VCQu3jEPyd8RHalppLsC9OapMHXxsuov1cUt9vMuMSn
+         +FsZuWp764MOQhs9B+puRik6qwNCE/oAVpuLgkBcGOTP3JQ6aQrJX0IqcCat8skkTIil
+         dYJQ==
+X-Gm-Message-State: AOJu0Yw48sx54hQeYv1OXdRS/QAONwGLRAbU5Ueb8P67l/KLV1rS0M1H
+	Qe/vRjuWyV/cCWVUsbyHoLdT7GWaELfHZpjHig7vN+iVDByRdbOEC9KYWaNtHt5KiyP+ePvvjDw
+	gFYfeu+As0OU93q6kus42fsXsAuifDNtvjnu+qiw1RUzLzezM/F9FocH4C2YWJoZjyEm/3a5w0S
+	UJ
+X-Gm-Gg: ASbGncvErnFrJG5+Ga0GeEAU3113mkqR3wDn1arf8hhJD2ML4hXX3yOp7g+F621cfvX
+	mWlnl8LH9+5+7DGvWqSHVYWx6N2bcWPnlIzUEcYSQ/+Tley0ya3xlRh8gg5gOWMj1ledHiddhuX
+	7TqMCJoheVj2LB69K5HEZucoYbB7EiIvcq27Mrc2ehZs6s4gdAQRFo3ovdhAoRD8XsdMi9zheW1
+	qstr7AiEQr2qi4whdZedVqM3qmxhSkqe/O/H8MlVr51sJRKtBo4xuOJpobz1g4/kMmjy6wp52BZ
+	MA4qOpJ7A/j2bTV801ZfurGOHLyiRAGjnaidXuPQDylpIfjQyUE7umihltX+C0vlpWiTBYi2QCp
+	hyCAZ7bYzgg7Dm+LdVvZIHzB3
+X-Received: by 2002:a17:903:1c9:b0:240:e9d:6c54 with SMTP id d9443c01a7336-242c2271e8dmr79853075ad.48.1754699744046;
+        Fri, 08 Aug 2025 17:35:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiff/ThYc6UuyZtbEXTBnN49IuMPgSQgl9gfWHA+0K+TeLvuc4b9uNZ9TWhJt8aKuTgT0LiQ==
+X-Received: by 2002:a17:903:1c9:b0:240:e9d:6c54 with SMTP id d9443c01a7336-242c2271e8dmr79852665ad.48.1754699743574;
+        Fri, 08 Aug 2025 17:35:43 -0700 (PDT)
 Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef678dsm219865355ad.39.2025.08.08.17.35.41
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef678dsm219865355ad.39.2025.08.08.17.35.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 17:35:42 -0700 (PDT)
+        Fri, 08 Aug 2025 17:35:43 -0700 (PDT)
 From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Date: Fri, 08 Aug 2025 17:35:17 -0700
-Subject: [PATCH v2 05/12] drm/msm/dp: Drop EV_USER_NOTIFICATION
+Date: Fri, 08 Aug 2025 17:35:18 -0700
+Subject: [PATCH v2 06/12] drm/msm/dp: Use drm_bridge_hpd_notify()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250808-hpd-refactor-v2-5-7f4e1e741aa3@oss.qualcomm.com>
+Message-Id: <20250808-hpd-refactor-v2-6-7f4e1e741aa3@oss.qualcomm.com>
 References: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
 In-Reply-To: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -106,97 +106,105 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Yongxing Mou <quic_yongmou@quicinc.com>
 X-Mailer: b4 0.15-dev-a9b2a
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754699734; l=2134;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1754699734; l=2470;
  i=jessica.zhang@oss.qualcomm.com; s=20230329; h=from:subject:message-id;
- bh=0luC8UsEHN9fWfXH6p1zip80kT4QBQaB8aTLon8BdOg=;
- b=KNHcay1Gz47I5v9s9LO4RakqENVxCn6/IpqtvSmuQPh6gYrJ4N3079g2LhjPpuzGoc1HhXkfJ
- VeSdBpztAebC7a6u6j0IrGagrIck7UzQwpogYuVlmzDmeeGdRJ5o8hg
+ bh=29HYP/DXnl5EwK/8eh4LDOHT+urC513pYg2fM9mWL2U=;
+ b=hUDrHjRGa0KSwFA/brYTaqQ3aB1uEyojqFJUPg/WEOdZZ0zMPAQBmtvg12Q6ggaRIFRwqN2hA
+ NgI6QAvH7kCA9iTY0rUfx519/9SnrO0gy/ydRL5EGu4CCUm7Fs+e6Ka
 X-Developer-Key: i=jessica.zhang@oss.qualcomm.com; a=ed25519;
  pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDA2NiBTYWx0ZWRfXyYJcHlPCVte3
- Bo87HHwDcheloKY9/FjkxObe3PBafwsaR/T2zEA6TvjPOhXQ/MPF6JjgfsQKz1x87fIQPQma20Q
- 2ygL77rW6w5u42oEsOeMON27GNeI+ONavwPrYxqDIYGcsbnmSKYL7d0mmmQrq5nuae0bVR2fjEd
- 1Ziq9iCaQwVRnyTOP6DsaY5QWwOxJ3FpIynaHmv8dik8SS/puCtEP9QjcqqHNzeYTLhqSYbe561
- ZM1NSZ49WS1crC2Vwxs8J7mApvzuX+DUfs4pfMFHSjhmfNOyGaFtndggnOS5bLeNDMs7DKmUOAx
- PrymbDTRXnr5t1zJ7k/lTDCG9Vy+Fxel+0Vhjsh/m918r5j5bAjizdgMFpYGIkJPAr2bHlgU9zk
- oqTZUgIY
-X-Proofpoint-GUID: auO8U6catCj9ZcNoEdLA42T4PTJaP8vk
-X-Proofpoint-ORIG-GUID: auO8U6catCj9ZcNoEdLA42T4PTJaP8vk
-X-Authority-Analysis: v=2.4 cv=Xpv6OUF9 c=1 sm=1 tr=0 ts=689697e0 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=isfJdaZdMnE_RitM90UA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Authority-Analysis: v=2.4 cv=TJpFS0la c=1 sm=1 tr=0 ts=689697e1 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=vUZxlgmVQAOzQBO0PGoA:9
+ a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: RarILTxFmf1Vn_xPI9svp778q_ebTuuh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA3MDA0NiBTYWx0ZWRfX5Z4vHNi4wHYR
+ wsEFxfefoS3sSfjUTx0DhYX6k+aCYZSfMeW0BfhRHa3mdLre4BdmY9ZolP4b0QwaLyKszLWDz/y
+ 8d6k9+qMfv239W/gPM3LCGG8ZQlK1Fopgk6W7D5fce88+SQUjlOkBWowxZbX5/J8+aqjqsJ0qVL
+ BviS7f5UDGFRYzi7R8CKC4A0wTharnq4iT/CFm6+NtTZVHDbb6Mh3QO6/b6h93ep2+zQ6jcWHBX
+ VHVkU7PUjOjfnmRDtOJBSVdMIbHkrV2mmrVxCjKImecdNDVxocE4Y3bFlntu0IRQDcOp69K51a0
+ h4L/Vgiv7ATG5yqUqgw7Dn6Yebo1vNzKb+ANRK4F7aYba5LYXa3yyOrKuOQFtGqHIFfdzEif/Uw
+ TWeXIuJ1
+X-Proofpoint-ORIG-GUID: RarILTxFmf1Vn_xPI9svp778q_ebTuuh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-08_08,2025-08-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 malwarescore=0 adultscore=0 phishscore=0
- priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508080066
+ clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ adultscore=0 spamscore=0 malwarescore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508070046
 
-Currently, we queue an event for signalling HPD connect/disconnect. This
-can mean a delay in plug/unplug handling and notifying DRM core when a
-hotplug happens.
-
-Drop EV_USER_NOTIFICATION and signal the IRQ event as part of hotplug
-handling.
+Call drm_bridge_hpd_notify() instead of drm_helper_hpd_irq_event(). This
+way, we can directly call hpd_notify() via the bridge connector.
 
 Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++------------
+ drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c     |  2 ++
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index c849befe58f0..55fe8c95657e 100644
+index 55fe8c95657e..8779bcd1b27c 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -58,7 +58,6 @@ enum {
- 	EV_HPD_PLUG_INT,
- 	EV_IRQ_HPD_INT,
- 	EV_HPD_UNPLUG_INT,
--	EV_USER_NOTIFICATION,
+@@ -333,17 +333,6 @@ static const struct component_ops msm_dp_display_comp_ops = {
+ 	.unbind = msm_dp_display_unbind,
  };
  
- #define EVENT_TIMEOUT	(HZ/10)	/* 100ms */
-@@ -428,7 +427,7 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
- 
- 	msm_dp_link_reset_phy_params_vx_px(dp->link);
- 
--	msm_dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
-+	msm_dp_display_send_hpd_notification(dp, true);
- 
- end:
- 	return rc;
-@@ -497,7 +496,7 @@ static int msm_dp_display_notify_disconnect(struct device *dev)
+-static void msm_dp_display_send_hpd_event(struct msm_dp *msm_dp_display)
+-{
+-	struct msm_dp_display_private *dp;
+-	struct drm_connector *connector;
+-
+-	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+-
+-	connector = dp->msm_dp_display.connector;
+-	drm_helper_hpd_irq_event(connector->dev);
+-}
+-
+ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *dp,
+ 					    bool hpd)
  {
- 	struct msm_dp_display_private *dp = dev_get_dp_display_private(dev);
+@@ -367,7 +356,11 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
  
--	msm_dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-+	msm_dp_display_send_hpd_notification(dp, false);
+ 	drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
+ 			dp->msm_dp_display.connector_type, hpd);
+-	msm_dp_display_send_hpd_event(&dp->msm_dp_display);
++
++	drm_bridge_hpd_notify(dp->msm_dp_display.bridge,
++			      hpd ?
++			      connector_status_connected :
++			      connector_status_disconnected);
  
  	return 0;
  }
-@@ -518,7 +517,7 @@ static int msm_dp_display_handle_port_status_changed(struct msm_dp_display_priva
- 		drm_dbg_dp(dp->drm_dev, "sink count is zero, nothing to do\n");
- 		if (dp->hpd_state != ST_DISCONNECTED) {
- 			dp->hpd_state = ST_DISCONNECT_PENDING;
--			msm_dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-+			msm_dp_display_send_hpd_notification(dp, false);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index cc6e2cab36e9..60094061c102 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -16,6 +16,7 @@ struct msm_dp {
+ 	struct platform_device *pdev;
+ 	struct drm_connector *connector;
+ 	struct drm_bridge *next_bridge;
++	struct drm_bridge *bridge;
+ 	bool link_ready;
+ 	bool audio_enabled;
+ 	bool power_on;
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index e4622c85fb66..f935093c4df4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -340,6 +340,8 @@ int msm_dp_bridge_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
  		}
- 	} else {
- 		if (dp->hpd_state == ST_DISCONNECTED) {
-@@ -1112,10 +1111,6 @@ static int hpd_event_thread(void *data)
- 		case EV_IRQ_HPD_INT:
- 			msm_dp_irq_hpd_handle(msm_dp_priv, todo->data);
- 			break;
--		case EV_USER_NOTIFICATION:
--			msm_dp_display_send_hpd_notification(msm_dp_priv,
--						todo->data);
--			break;
- 		default:
- 			break;
- 		}
+ 	}
+ 
++	msm_dp_display->bridge = bridge;
++
+ 	return 0;
+ }
+ 
 
 -- 
 2.50.1
