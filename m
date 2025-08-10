@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-68216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FAC0B1F7A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Aug 2025 03:32:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14B9FB1F7A7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Aug 2025 03:32:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 44F48189A19A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Aug 2025 01:33:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 267533BFBB6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Aug 2025 01:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 527E71B21BF;
-	Sun, 10 Aug 2025 01:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB4A117333F;
+	Sun, 10 Aug 2025 01:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="bBL+Ppmx"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="mm7wwPn/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31AB335BA;
-	Sun, 10 Aug 2025 01:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476FB335BA;
+	Sun, 10 Aug 2025 01:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754789516; cv=none; b=iBJK9S+cXgv0awQsXajVdFr/XQVzmEmpj4QvF8yxk650iDxJGWpPbupqKsd95ZcVbl6LPWD6FcKv9rZDBTAA+Jw52xBS9ygGJRllWtQGtreMZmfRAzphECEm23vt3FJtFPqu2mK0EyqEKLA1H2r8cooZU7usZ2+FlhLac1Ax83Y=
+	t=1754789519; cv=none; b=pRNaM427HBQ69/Ws8Xa5zkDzkIEmoHQvoZ4LroLsbFBww6UodX9XUri0wBPV+4ksdsFPPrTz+yI/ZgQ0Hl12EMR5RVj65QFKIbHlBHT0GswQ0O/8UHRCsb2b8dlxu/X0WmlUdhdDFucHoxNYgbdkYiimNG0EdqtGu8wVINnkY14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754789516; c=relaxed/simple;
-	bh=8+zZuboUZF4aS+eDNQD/FJOQiR0mE9DzVdyFH3KT+Ns=;
+	s=arc-20240116; t=1754789519; c=relaxed/simple;
+	bh=LQftpGklhrY6ds1L039l+hWP96n63N1IzScSbl+008o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj/+qypLCiar06aPIHBSneINdNYgCONMoi6xHmkEZR4fS/Ezzw/bsHxuB3GbB+z4q5g7H09/GhfJdLu/iKFHl2GBHvnJ1ZZrw1nld5A4H5ZIP9QCvWbOrVYo5Els0B6c71EB50gurr1FG3GW3JTc1+DqWMQv2X8PeK5M2uulAas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=bBL+Ppmx; arc=none smtp.client-ip=213.167.242.64
+	 MIME-Version; b=sCCB99cOohhUeQd5CU7Q0O1pUcj06LtfHZQ+GUWze9UbcZM9ObezsM0a27hVWve/4NY5wubYvC8U/i8t5IFp4WjaN577xjY/ydhzM1NTO/cx2poN1Bi70zEmjPsjiUxVlrk/sKy331xfKdsNXEnANGq356DuDG4JerOf/lSu8aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=mm7wwPn/; arc=none smtp.client-ip=213.167.242.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id AC8DA8CB;
-	Sun, 10 Aug 2025 03:31:02 +0200 (CEST)
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 18DA78CB;
+	Sun, 10 Aug 2025 03:31:06 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1754789462;
-	bh=8+zZuboUZF4aS+eDNQD/FJOQiR0mE9DzVdyFH3KT+Ns=;
+	s=mail; t=1754789466;
+	bh=LQftpGklhrY6ds1L039l+hWP96n63N1IzScSbl+008o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBL+PpmxLWkPaQ4X0vAi5tGCp4Eu3EFRWqX64bLK5JD0eE4MRitMphBcag2k9Hfzd
-	 7ddhNSxGIkLcCk1+zttMVMtEv95vnlAFafLG4lJ1TrgSBGi8xosLJ1PDGqt2ikVfHL
-	 c7U6xKoZD/mHpcuzWRMwNJCN+1XP+msgkP3TYTws=
+	b=mm7wwPn/S/GDkz7oXulLBZvvbstxrX7Z/7T5tiMf2TfkIsSgf3iNPf9V1PKW8A8jM
+	 oGibq1b8gGl6AsY5ZoFIXQplyHKXwUVScXiJBSbNe7lYur7QisCbuOxe06dpH07sjA
+	 opvKCxrAW4/ALeYT7TANdmhXIsmIHW3rF4U3WRjQ=
 From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 To: linux-media@vger.kernel.org
 Cc: Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Hans Verkuil <hans@jjverkuil.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
 	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 20/76] media: camss: Remove custom .release fop()
-Date: Sun, 10 Aug 2025 04:30:02 +0300
-Message-ID: <20250810013100.29776-21-laurent.pinchart+renesas@ideasonboard.com>
+Subject: [PATCH v3 22/76] media: qcom: iris: Pass file pointer to iris_v4l2_fh_(de)init()
+Date: Sun, 10 Aug 2025 04:30:04 +0300
+Message-ID: <20250810013100.29776-23-laurent.pinchart+renesas@ideasonboard.com>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <20250810013100.29776-1-laurent.pinchart+renesas@ideasonboard.com>
 References: <20250810013100.29776-1-laurent.pinchart+renesas@ideasonboard.com>
@@ -65,44 +65,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+In preparation for a tree-wide rework automated with coccinelle that
+will need to access a struct file pointer in the iris_v4l2_fh_init() and
+iris_v4l2_fh_deinit() functions, pass it from the callers. There is not
+functional change yet.
 
-The 'file->private_data' pointer is reset in the vb2_fop_release()
-call path. For this reason a custom handler for the .release
-file operation is not needed and the driver can use
-vb2_fop_release() directly.
-
-Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vidc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index c5d02f9ebc6a..831486e14754 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -604,20 +604,11 @@ static const struct v4l2_ioctl_ops msm_vid_ioctl_ops = {
-  * V4L2 file operations
-  */
+diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+index 0c3b47b9958a..d5f99519def4 100644
+--- a/drivers/media/platform/qcom/iris/iris_vidc.c
++++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+@@ -21,14 +21,14 @@
+ #define STEP_WIDTH 1
+ #define STEP_HEIGHT 1
  
--static int video_release(struct file *file)
--{
--	vb2_fop_release(file);
--
--	file->private_data = NULL;
--
--	return 0;
--}
--
- static const struct v4l2_file_operations msm_vid_fops = {
- 	.owner          = THIS_MODULE,
- 	.unlocked_ioctl = video_ioctl2,
- 	.open           = v4l2_fh_open,
--	.release        = video_release,
-+	.release        = vb2_fop_release,
- 	.poll           = vb2_fop_poll,
- 	.mmap		= vb2_fop_mmap,
- 	.read		= vb2_fop_read,
+-static void iris_v4l2_fh_init(struct iris_inst *inst)
++static void iris_v4l2_fh_init(struct iris_inst *inst, struct file *filp)
+ {
+ 	v4l2_fh_init(&inst->fh, inst->core->vdev_dec);
+ 	inst->fh.ctrl_handler = &inst->ctrl_handler;
+ 	v4l2_fh_add(&inst->fh);
+ }
+ 
+-static void iris_v4l2_fh_deinit(struct iris_inst *inst)
++static void iris_v4l2_fh_deinit(struct iris_inst *inst, struct file *filp)
+ {
+ 	v4l2_fh_del(&inst->fh);
+ 	inst->fh.ctrl_handler = NULL;
+@@ -164,7 +164,7 @@ int iris_open(struct file *filp)
+ 	init_completion(&inst->completion);
+ 	init_completion(&inst->flush_completion);
+ 
+-	iris_v4l2_fh_init(inst);
++	iris_v4l2_fh_init(inst, filp);
+ 
+ 	inst->m2m_dev = v4l2_m2m_init(&iris_m2m_ops);
+ 	if (IS_ERR_OR_NULL(inst->m2m_dev)) {
+@@ -194,7 +194,7 @@ int iris_open(struct file *filp)
+ fail_m2m_release:
+ 	v4l2_m2m_release(inst->m2m_dev);
+ fail_v4l2_fh_deinit:
+-	iris_v4l2_fh_deinit(inst);
++	iris_v4l2_fh_deinit(inst, filp);
+ 	mutex_destroy(&inst->ctx_q_lock);
+ 	mutex_destroy(&inst->lock);
+ 	kfree(inst);
+@@ -259,7 +259,7 @@ int iris_close(struct file *filp)
+ 	iris_vdec_inst_deinit(inst);
+ 	iris_session_close(inst);
+ 	iris_inst_change_state(inst, IRIS_INST_DEINIT);
+-	iris_v4l2_fh_deinit(inst);
++	iris_v4l2_fh_deinit(inst, filp);
+ 	iris_destroy_all_internal_buffers(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+ 	iris_destroy_all_internal_buffers(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
+ 	iris_check_num_queued_internal_buffers(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
 -- 
 Regards,
 
