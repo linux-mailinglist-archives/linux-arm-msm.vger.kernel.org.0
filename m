@@ -1,148 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-68398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F4B2B20D1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:10:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9846CB20D3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:12:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E34D1884A7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 15:08:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0012D161452
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 15:11:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4B5F2E0905;
-	Mon, 11 Aug 2025 15:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052922DECB9;
+	Mon, 11 Aug 2025 15:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Is1Ec82t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q02aehD2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52192E06C3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 15:07:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED572C17B6;
+	Mon, 11 Aug 2025 15:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754924828; cv=none; b=tAyQm0vTNdAMX6C8/v7sw0H2u/C1sTWqLEBixKtXm7jAEnQYwJJAdYTyuyDl/qxYLIWtp34HMVpgXlkxCgm47YPtMTBKB3YCnuSLokd9puX2rNfmDUBAt4MBSo1Nx9pxuOYVfkPRiZCz0vAhCTLHmJJSq8yj6AJJT1bpcT2EC8g=
+	t=1754925075; cv=none; b=CG9ffVXz+otla2Eer4216Mh7S4AYBB7YjCybkznsiaLve48wfpP0hBG7iO+BvndeuUqF+lyleeF90NAIrhphI4gPD6NMAc6Mqt/29wNfvadueGBh3MlMrzXTBjH4imk/3T6Qnvh7dy2GGyLGcbicEYWo4QCIGjIDURDilg6DB9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754924828; c=relaxed/simple;
-	bh=Rlzycctntzu3MKLfHab3z+M8eAwhKWoMgPypGF15b6w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=r+LFAm+BjyhY26qbW6qZBGfAajDy+Go5npx/1iSekqoGFwO/aAMOWfc1VSdH4VlipJHY1SdDzTVuQC9VIoHVgnOpzO1fS/nzFnVo0aByb5oWLBo7dnGbX1gX47FSIT5dN5wSxSr/NbH0V1kKOrESx3RC+NAx2YbqRxylc3qUVx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Is1Ec82t; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-455fdfb5d04so22537155e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 08:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1754924825; x=1755529625; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=umNMW1zVA+xnt6ls9ddcILK5xFK/tWBrUkTSc9l7PlY=;
-        b=Is1Ec82t8yxI2xD+D4hpj42fpP3tNLs9XYn5PsMaHGVx4lwqXItt6YiednHUC/Io+4
-         dwsefo95PE70f3wXZde5I9A0xbqNFpuKQVwnI62HXklpGZ6lVYcW2CnzAsT1v9kOirP2
-         BnlqYzwBSc/t0KfExua8i4N3oquPG5jFI94Yo7RhGo5V2ghoHQW44JjjnalMDrhI3rP3
-         XR1MmHx/6oVk+SCPQdyUctt+7d1RpsYDZbXmNLUyNfGDUz6AbF55VsNBTO9hLyvt7bcq
-         +Aypx2Au6baIlRIYZ2LHHNNL9Chl/ddxZ9qN0B15IZUQtC8ZHcuzK/DlGX/MSnIy6mEb
-         0TIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754924825; x=1755529625;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=umNMW1zVA+xnt6ls9ddcILK5xFK/tWBrUkTSc9l7PlY=;
-        b=s0vVwQmAl1dvXXy6RArHbVUI4eN4pbCWYrQ4SA4HnUweMioOJUtvuGJKm/X5kGg/Mo
-         JroPmUFboRFYna/50wkbiopD9EKz8NCbnU19VtPXC+fgj8nrrtpjYpblBYwoS5NPwRr/
-         4TwDZ2zpNXoJj914cbxFCSM1Fie37g1QB6m6fl0DpxQ/OaZHXAZohqrWgWO/RiXVfekx
-         eGQ6M1zMLmfWsEiFLTiAekjQn91UHHO95/UZIYv4xga1gJwWnM49Ym2z5MzJxjSt4i0Y
-         gCJZBemKjfxPEe/E3txxrAAJzFMQ1R0B1kGZNCwS5uuDYxE+mWlHPfbtxei0WqT8YQ5s
-         7bcw==
-X-Gm-Message-State: AOJu0YxoSIzEKVvH1RyNi/C8KU6sd1XxeGLa7KCfW4YGSm1shKrDa8Av
-	GHUCtNqa3JYi2hhR1gPfm42/trIjmrcAiTHA+Y0E73u64+/ZdIJ5HSybYSlqLNZuKPg=
-X-Gm-Gg: ASbGncs8GR0Og9D47pEmdMUniJWO/1tsjSCkJ9QGrEYXFJ28DIml3iHS+4rEKC2QNLy
-	SeqC4aawMf5iHVTLvf1LVoXqUUiQaV2chGU8Jy5Vre+dKutWI7WkNDfuJd+sTtYgyiCVEY2BxZY
-	jBLfMotBHmYlf7bVDD7/Son16P65V7EM0RVhc1X1ivPCFPNFAj0i7/cEsDG7LYAX8uIQHNP1/1b
-	OeDWJ6R4v57DeoB+1M4HNBGtZ6nc/Pvkbqo6Hq/Lq0z4QyJ2DIEYTvr85n7uM81GQhrqXWPXxVR
-	ATdJj+aGI6+edTY6ETan4TDFKP2FYspDTaUOmVSoWPnWsx8I405hkcx6SW3xsQU6AUQL5vWnpLp
-	e0zFZhOfjJImvxt6VVIXBkemxIust
-X-Google-Smtp-Source: AGHT+IFsYp5+kmZAd8W7I1XRVAz3j1CWDnQ9mLcNlFcNDbLKroEh4NRpqfG+U9oyhuKbb8qf9DR3wA==
-X-Received: by 2002:a05:600c:4fc4:b0:456:db0:4f3d with SMTP id 5b1f17b1804b1-45a10c05aefmr270445e9.24.1754924825331;
-        Mon, 11 Aug 2025 08:07:05 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:6841:8926:4410:c880])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abf0csm40107411f8f.14.2025.08.11.08.07.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 08:07:02 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 11 Aug 2025 17:06:50 +0200
-Subject: [PATCH RESEND 3/3] arm64: dts: qcom: sdm845-samsung-starqltechn:
- fix GPIO lookup flags for i2c SDA and SCL
+	s=arc-20240116; t=1754925075; c=relaxed/simple;
+	bh=7HZKE3O+WT6DDNM9/2drqU5rxj0lRkDaLvloQLzT5lM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hR1eRenMhnnuLDWfl0ETAqQm6ENMQq/h8LhVUH/cuZ063HeVrIednz7NK6LUJkdZXKSy0pPWUJsAH9jSeB5wE3S0vbhGVKC9zi225pZXLd3bxQcTkO2A3TyCq4gBAGj4gTdfVmD0V0/OfOQJJcoBrhb76a8m7yZQqTdCoOz4rz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q02aehD2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93F6C4CEED;
+	Mon, 11 Aug 2025 15:11:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754925075;
+	bh=7HZKE3O+WT6DDNM9/2drqU5rxj0lRkDaLvloQLzT5lM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q02aehD2d6ncjMmY+jObE7v0Lyo+L5H3Xxy/XR80vOfJESLoOxs+i536u3aStBoX8
+	 s8RTsDXRej/j4IxSVli8GBBOnZZ2Gq+hmeysLS15mrGtoKiO5H2vt28mYxV3nYdDaJ
+	 48bIwUDFDO4E+3DVh73HPqg9i0mmZX8v/UqCEN8lJhPAFkA+zNWg8yh+WZpsrELdxq
+	 aDn+8+zeaApIbAd94JXx0BWSnup4NdVIbCXd3kpBxIDXHXL4CbWyiA+xSf1/sVP2D4
+	 atvuxZgKLZij9aVIUKwpEF4BY7aJuiMhtYy9Y0tpBz6sD4cSCFql6v4ltj6s7uglaF
+	 HtmFfldHq9bIQ==
+Date: Mon, 11 Aug 2025 10:11:12 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: cros-qcom-dts-watchers@chromium.org, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Describe on-SoC USB-adjacent
+ data paths
+Message-ID: <y6b5yqjbaz3sya5jg5fmcgivprtybj43eylpftd6z3mamrb737@kua5xzfonnpt>
+References: <20250808-topic-7180_qmpphy_ports-v1-1-718d7c52921a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250811-qcom-gpio-lookup-open-drain-v1-3-b5496f80e047@linaro.org>
-References: <20250811-qcom-gpio-lookup-open-drain-v1-0-b5496f80e047@linaro.org>
-In-Reply-To: <20250811-qcom-gpio-lookup-open-drain-v1-0-b5496f80e047@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1248;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=6wc+M2Tic42xKT7JSdCDpm9lQ5MO1L7g7K2EIBEDGpc=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBomgcOK+MnI5vyPYOBq5tG/nekBDWPVQIiZ98kP
- myoiQD3QQOJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaJoHDgAKCRARpy6gFHHX
- ctHEEADA6N4wnWwVaaUUYAIXtqlRIzTgcCv39CoSkVBuPwLys+SiZsORtY1Y9VrQRVPmM54SVUz
- BSNdBoH3T8pz2yCSQFISICp8s32k1jcK53KFPLw2ShkaJv1V7+JmnoD/Hvvjqg+1+C2r+xMVSs3
- NDF1HSw9p3IFXBeZRPXqI5O5TQeBNBAqzTBy9NhTfQeuYOT8GyqXY8b1nz6X8hhTF3zlXrSWI8l
- xh/6R8jdyKdt598UL1Akgwmz39iTx3vW6vK3OfgFMYHUHJwqX6ZZJPRkkaEl9UKiH3ZJAVffCy5
- sS2LHCv42qqyEr2hnGu//sbq0g1OBXO1+JGGBx+YsvXWt1bLaJ9of/Ftdw4xBJD1l3r2Faui6Lc
- 3Xqv8OMDZHh68VbK2XiTeDMkTIaX2Dj2Qnm1YY9Q6jyHbD1TX4+fT3ULhWCSVjc2yiGSeW3hcDp
- wUdZS+TGpwzbUYAmSU9cQrJnhiwTQrqjskU+0miD6s6Bobc6hnTbIzxntDMF2Ch0o9UDCGG8cem
- 85OkCMj931eJq638gazfUAclilRRCgeGV6xfQUNFosgGQYvHd5PHpfSEdycK55U4SEIslE5XUSc
- 3PxA8iuXyyRi+sQr9/QkpjOu1c6SNJ6e67rSsZvbXU+Icua2n1NEXAj7QS5iL23YkrPPcyBSRDv
- dPRo2TkgmPqe2pw==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250808-topic-7180_qmpphy_ports-v1-1-718d7c52921a@oss.qualcomm.com>
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, Aug 08, 2025 at 11:20:45AM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Define ports {} for the DWC controller & the QMPPHY and connect them
+> together for the SS lanes.
 
-The I2C GPIO bus driver enforces the SDA and SCL pins as open-drain
-outputs but the lookup flags in the DTS don't reflect that triggering
-warnings from GPIO core. Add the appropriate flags.
+Sounds quite reasonable to me, but I can only guess why you think it's a
+good idea. Please start with a paragraph documenting which problem
+you're solving.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Regards,
+Bjorn
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index d686531bf4eacae2105bbed3a9d5478b45a4b2a3..9076d8eb4d50af736d5c4de7158fbf32231f6629 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -145,8 +145,8 @@ rmtfs_mem: rmtfs-mem@fde00000 {
- 
- 	i2c21 {
- 		compatible = "i2c-gpio";
--		sda-gpios = <&tlmm 127 GPIO_ACTIVE_HIGH>;
--		scl-gpios = <&tlmm 128 GPIO_ACTIVE_HIGH>;
-+		sda-gpios = <&tlmm 127 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		scl-gpios = <&tlmm 128 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 		i2c-gpio,delay-us = <2>;
- 		pinctrl-0 = <&i2c21_sda_state &i2c21_scl_state>;
- 		pinctrl-names = "default";
-
--- 
-2.48.1
-
+> 
+> Leave the DP endpoint unconnected for now, as both Aspire 1 and the
+> Chromebooks (unmerged, see [1]) seem to have a non-trivial topology.
+> Take the creative liberty to add a newline before its ports' subnodes
+> though.
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20240210070934.2549994-23-swboyd@chromium.org/
+> 
+> Suggested-by: Rob Herring (Arm) <robh@kernel.org>
+> Closes: https://lore.kernel.org/linux-arm-msm/175462129176.394940.16810637795278334342.robh@kernel.org/
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 48 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 8f827f1d8515d6113c85a2ecacf7ac364e195242..a0df10a97c7f8aa5cd468c8983e74256490d1d06 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -2897,6 +2897,31 @@ usb_1_qmpphy: phy@88e8000 {
+>  
+>  			#clock-cells = <1>;
+>  			#phy-cells = <1>;
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					usb_1_qmpphy_out: endpoint { };
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					usb_1_qmpphy_usb_ss_in: endpoint {
+> +						remote-endpoint = <&usb_1_dwc3_ss>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +
+> +					usb_1_qmpphy_dp_in: endpoint { };
+> +				};
+> +			};
+>  		};
+>  
+>  		pmu@90b6300 {
+> @@ -3070,6 +3095,26 @@ usb_1_dwc3: usb@a600000 {
+>  				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>  				phy-names = "usb2-phy", "usb3-phy";
+>  				maximum-speed = "super-speed";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						usb_1_dwc3_hs: endpoint {
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						usb_1_dwc3_ss: endpoint {
+> +							remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
+> +						};
+> +					};
+> +				};
+>  			};
+>  		};
+>  
+> @@ -3384,8 +3429,10 @@ mdss_dp: displayport-controller@ae90000 {
+>  				ports {
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+> +
+>  					port@0 {
+>  						reg = <0>;
+> +
+>  						dp_in: endpoint {
+>  							remote-endpoint = <&dpu_intf0_out>;
+>  						};
+> @@ -3393,6 +3440,7 @@ dp_in: endpoint {
+>  
+>  					port@1 {
+>  						reg = <1>;
+> +
+>  						mdss_dp_out: endpoint { };
+>  					};
+>  				};
+> 
+> ---
+> base-commit: b1549501188cc9eba732c25b033df7a53ccc341f
+> change-id: 20250808-topic-7180_qmpphy_ports-e63404331685
+> 
+> Best regards,
+> -- 
+> Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
 
