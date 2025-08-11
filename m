@@ -1,134 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-68543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79CA2B2137C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:40:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D79C1B21458
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:29:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5FBA3E497E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:40:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C277068037D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:29:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5AA2D3A71;
-	Mon, 11 Aug 2025 17:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82DEC2E0B6E;
+	Mon, 11 Aug 2025 18:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UstHmftV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeEDpPuz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B4D21771B;
-	Mon, 11 Aug 2025 17:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581FE2D6E42;
+	Mon, 11 Aug 2025 18:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754934041; cv=none; b=Z/kEvRY2FLBMXdFSKOQb9pwLqmg73sw0p/xatF6UymyirhWB+DMylRvl5yyfOfgdoykYJJ7b1xvzeGfnax26bgJ7/G/n40+GQHbSVdLrFfYuVIFS7x1JNtIQAuXUYmRsYlPBLMG4viv7LaUmgcIm9fvKBqVZdLmzBodifoh24fs=
+	t=1754936912; cv=none; b=I2LBKrc4ySrmHMtLyXUkDIbwFZ+mbt3IHzqbvwfkV/Q9+i+DYjIHeCewj9fshc7VW3QOr01X0Dd8unMaMo7uG6oBezkpzm9Z0ycjltfDduU6L1N0W5ZsqjzTxTng0kFlpvVdjY6AaaXyL/UtZFuXHkMpl7ZFWswcxrKxXnPc/6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754934041; c=relaxed/simple;
-	bh=vNeEGZtQOxuFBJ03hCHxJ0zqee0UqgJZnTvwQUQSHrQ=;
+	s=arc-20240116; t=1754936912; c=relaxed/simple;
+	bh=tqwjdiTot5WYXpxvZnRpdn8Qr76CfS2H524SF/laMpc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HzgBvwaPU8AY9k1VOWqt7pOEsq9FYH26Za9bEV5h7PqxsTSIjMqRZlpqdxQoa3QkWhd+V9MNcWRu82upWgUr7Y878K1VB4bRK9eTShMQy755+8IMe11a5aD52fwG0rsezqN/Ka/kwl0onDJ9rYC67NuYOQYVUg9gJFz5ZJvb/y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UstHmftV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853A5C4CEED;
-	Mon, 11 Aug 2025 17:40:39 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=WGUMVIZJ6DiIcuGC104m23HFTNaEBgtFixa+Z+W+ctGwmkxnihMzR7HuYO2sQXfsGt7YkNmrx1xqcnX46DzzYV0qFAw7vCF+4RMoQrcHV8cKQH5gtBk6+Tumkfq+bS+1dHigLsKYr+drDBQfSkSgqhHQRJqFVHmPjgOs/Q/ihic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KeEDpPuz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D278C4CEED;
+	Mon, 11 Aug 2025 18:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754934040;
-	bh=vNeEGZtQOxuFBJ03hCHxJ0zqee0UqgJZnTvwQUQSHrQ=;
+	s=k20201202; t=1754936911;
+	bh=tqwjdiTot5WYXpxvZnRpdn8Qr76CfS2H524SF/laMpc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UstHmftVxCQTMDVIZqfzPXOXwi8NsvUVZuh7gnMbMAJO75iNtUapyN9pt3lojXddG
-	 2JFtVrEKDxONVM+YH8C2IvIIA7hW9k5x3y+nGBYfkkHsZivSgcckFrYyrVvKG794QY
-	 d0LyZfmVRfv+7aJfjat6kooL3o32XbPKKfYad6koOc1zZFJ2NmE/n9yhm6hJx68cX6
-	 svvQSl1PR4JA1TF76TO0BNZLm7vS2M/gL0QirKfeX5ZQ5DFqSd15GwcwnI9ZX51jTQ
-	 +gGpSQCL4epXTgu32ZuurDjucscXI+fHhDm4gWOzEAkYGWOdBkaU6vkk42hgZU0bAO
-	 ome+ZBHH2RKAA==
-Date: Mon, 11 Aug 2025 23:10:35 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-Message-ID: <aJorE6bL2d8se6E4@vaman>
-References: <CAO9ioeVuAO6mYpBSpiTW0jhFRPtkubZ5eEskd1yLBHVdR8_YMA@mail.gmail.com>
- <1b55d9d4-f3ff-4cd9-8906-5f370da55732@quicinc.com>
- <28d26c70-178f-413b-b7f8-410c508cfdd7@quicinc.com>
- <CAO9ioeXBwFYL8q7x7_fHvx5YO+qyAXk4wpnfPrku4iY9yBsk0Q@mail.gmail.com>
- <cac5e84b-fbdb-47a9-860d-16a7fa4dc773@quicinc.com>
- <4q3vlydi5xgltd3pcez54alxgrehhfn4pppg47ngwp6y5k7n33@d4d4htntj64k>
- <53dd18ec-9a65-4bf7-8490-ca3eb56ce2a5@quicinc.com>
- <iang2jpe4s6wmbypmtq5uswcm6n6xntqdulyhekcz5k6zxddu3@re3rrr4dso5p>
- <aICMDROkyjzBZFHo@vaman>
- <8a149580-5044-4744-b432-9f0eef0a0d31@quicinc.com>
+	b=KeEDpPuzsdOPDS3TchBRds2gIOJdr97Gf58AXbNqzgBsurWK+x0Tno5z7B519/7xE
+	 AXjNmPtTiB6BWmP1ViKGGSAkqtQhWH+Yskr/MxZ5gVJsaqvqde4qKNBto2rxL59arW
+	 2FPz8apmKzRMNvfG9f5kQdw5SDRAleHvsjly+QrxY2tBDLe2jVamRUURINuHfVRGol
+	 wpoLOFeSvbSkIbvJJlZzehERNg65zLJLVJdVdX4z93oKVFAYwZyVixj4LJZb239aMu
+	 CtBeYnFJzXw42jWH0wkgLRnJutoFDxFW94B1fWYMrXUTNohzQIqhmpJPpM8Se55Lah
+	 FL5m/LZgARBuQ==
+Date: Mon, 11 Aug 2025 13:28:29 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/2] Enable DPU and Display Port for Qualcomm
+ QCS8300-ride platform
+Message-ID: <3dn4lo43ozz6bkqkefotcog4zto5eiu3zqlyicpwowzany5vnp@i2ilryuroxhc>
+References: <20250806-dts_qcs8300-v5-0-60c554ec3974@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8a149580-5044-4744-b432-9f0eef0a0d31@quicinc.com>
+In-Reply-To: <20250806-dts_qcs8300-v5-0-60c554ec3974@quicinc.com>
 
-On 25-07-25, 16:20, Jyothi Kumar Seerapu wrote:
+On Wed, Aug 06, 2025 at 03:12:02PM +0800, Yongxing Mou wrote:
+> This series adds the MDSS, DPU and DPTX0 node on Qualcomm QCS8300 SoC.
+> It also enables Display Port on Qualcomm QCS8300-ride platform.
 > 
-> 
-> On 7/23/2025 12:45 PM, Vinod Koul wrote:
-> > On 22-07-25, 15:46, Dmitry Baryshkov wrote:
-> > > On Tue, Jul 22, 2025 at 05:50:08PM +0530, Jyothi Kumar Seerapu wrote:
-> > > > On 7/19/2025 3:27 PM, Dmitry Baryshkov wrote:
-> > > > > On Mon, Jul 07, 2025 at 09:58:30PM +0530, Jyothi Kumar Seerapu wrote:
-> > > > > > On 7/4/2025 1:11 AM, Dmitry Baryshkov wrote:
-> > > > > > > On Thu, 3 Jul 2025 at 15:51, Jyothi Kumar Seerapu
-> > 
-> > [Folks, would be nice to trim replies]
-> > 
-> > > > > > Could you please confirm if can go with the similar approach of unmap the
-> > > > > > processed TREs based on a fixed threshold or constant value, instead of
-> > > > > > unmapping them all at once?
-> > > > > 
-> > > > > I'd still say, that's a bad idea. Please stay within the boundaries of
-> > > > > the DMA API.
-> > > > > 
-> > > > I agree with the approach you suggested—it's the GPI's responsibility to
-> > > > manage the available TREs.
-> > > > 
-> > > > However, I'm curious whether can we set a dynamic watermark value perhaps
-> > > > half the available TREs) to trigger unmapping of processed TREs ? This would
-> > > > allow the software to prepare the next set of TREs while the hardware
-> > > > continues processing the remaining ones, enabling better parallelism and
-> > > > throughput.
-> > > 
-> > > Let's land the simple implementation first, which can then be improved.
-> > > However I don't see any way to return 'above the watermark' from the DMA
-> > > controller. You might need to enhance the API.
-> > 
-> > Traditionally, we set the dma transfers for watermark level and we get a
-> > interrupt. So you might want to set the callback for watermark level
-> > and then do mapping/unmapping etc in the callback. This is typical model
-> > for dmaengines, we should follow that well
-> > 
-> > BR
-> 
-> Thanks Dmitry and Vinod, I will work on V7 patch for submitting the I2C
-> messages until they fit and and unmap all processed messages together for
-> now.
-> 
-> Regarding the watermark mechanism, looks GENI SE DMA supports watermark
-> interrupts but it appears that GPI DMA doesn't have such provision of
-> watermark.
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
+> This series make top of 3 dt-bindings
+> https://lore.kernel.org/all/20250717-dp_mst_bindings-v3-0-72ce08285703@oss.qualcomm.com/
+> https://lore.kernel.org/all/20250730072725.1433360-1-quic_yongmou@quicinc.com/
+> https://lore.kernel.org/all/20250806-mdssdt_qcs8300-v6-0-dbc17a8b86af@quicinc.com/
 
-What is the mechanism to get interrupts from the GPI? If you submit 10
-txn, can you ask it to interrupt when half of them are done?
+Seems there's still discussions ongoing there. I'm dropping this from my
+review queue, please resubmit once all dependencies are available in
+linux-next.
 
--- 
-~Vinod
+Thanks,
+Bjorn
+
+> ---
+> Changes in v5: Fixed review comments from Konrad.
+> - Use interrupts-extended to introduce interruptions.
+> - Sort the dp_hot_plug_det node by pin number.
+> - Link to v4: https://lore.kernel.org/r/20250730-dts_qcs8300-v4-0-5e2dd12ddf6d@quicinc.com
+> 
+> Changes in v4:Fixed review comments from Krzysztof.
+> - Add the 4 pixel stream register regions and the correspondings clocks of the DP controller.
+> - Change DP controlller compatible to qcs8300-dp.
+> - Rebase to next-20250717.
+> - Link to v3: https://lore.kernel.org/r/20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com
+> 
+> Changes in v3:Fixed review comments from Konrad, Dmitry.
+> - Correct the Power-domain for DP PHY should be
+>   RPMHPD_MX.[Dmitry][Konrad]
+> - Correct the interconnects path for mdp and align the property order
+>   with x1e80100.dtsi.[Konrad]
+> - Rebase the patch to latest code base and update the dependencies in
+>   the cover letter.
+> - Link to v2: https://lore.kernel.org/r/20241226-dts_qcs8300-v2-0-ec8d4fb65cba@quicinc.com
+> 
+> Changes in v2:Fixed review comments from Konrad, Dmitry and Krzysztof.
+> - Reuse eDP PHY and DPU of SA8775 Platform.[Dmitry][Krzysztof]
+> - Reuse DisplayPort controller of SM8650.[Dmitry]
+> - Correct the regs length, format issues and power-domains.[Konrad]
+> - Integrate the dt changes of DPU and DP together.
+> - Link to v1: https://lore.kernel.org/all/20241127-dp_dts_qcs8300-v1-0-e3d13dec4233@quicinc.com/
+> ~
+> 
+> ---
+> Yongxing Mou (2):
+>       arm64: dts: qcom: qcs8300: add display dt nodes for MDSS, DPU, DisplayPort and eDP PHY
+>       arm64: dts: qcom: qcs8300-ride: Enable Display Port
+> 
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts |  42 ++++++
+>  arch/arm64/boot/dts/qcom/qcs8300.dtsi     | 215 +++++++++++++++++++++++++++++-
+>  2 files changed, 256 insertions(+), 1 deletion(-)
+> ---
+> base-commit: 024e09e444bd2b06aee9d1f3fe7b313c7a2df1bb
+> change-id: 20241225-dts_qcs8300-4d4299067306
+> prerequisite-message-id: <20250113-dpphy_qcs9300-v1-1-842798ceee78@quicinc.com>
+> prerequisite-patch-id: 2ea89bba3c9c6ba37250ebd947c1d4acedc78a5d
+> prerequisite-message-id: <20250806-mdssdt_qcs8300-v6-0-dbc17a8b86af@quicinc.com>
+> prerequisite-patch-id: 59af38ff68afe283dccd4295951153e59e512bfc
+> prerequisite-patch-id: 8bfdc32738e6cc937a71dd9a4e4fa23b5289e105
+> prerequisite-patch-id: 69e200a46a6742648379c1ae426cfba7edc064b8
+> prerequisite-patch-id: 465ab53516efbbe38f85409e7ccb3793b05402c6
+> prerequisite-patch-id: f664581f48278298bc3501eecf637d1eb16dbf9e
+> prerequisite-patch-id: 533900187c99bef436792ea43d79fff5bbc5412c
+> prerequisite-message-id: <20250717-dp_mst_bindings-v3-0-72ce08285703@oss.qualcomm.com>
+> prerequisite-patch-id: 4782272bb7d2403e2f2dbf762586d4570e6b6ba6
+> prerequisite-patch-id: cfdd5c37d38b2a4f1386af4021ba3920c6d8dcf8
+> prerequisite-patch-id: c874bf64aec8cb2ff0bc91051620ac771cbeeeea
+> prerequisite-patch-id: 63defbfb812a2f9c6365a98538421aea374e0e13
+> prerequisite-patch-id: 0ffa9d544d516d4e14700229a4ab6a9c7751823f
+> 
+> Best regards,
+> -- 
+> Yongxing Mou <quic_yongmou@quicinc.com>
+> 
 
