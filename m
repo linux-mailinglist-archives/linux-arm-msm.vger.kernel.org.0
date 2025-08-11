@@ -1,62 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-68597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3885B2194B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:30:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF6E1B2194F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:30:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B6F0462A09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:29:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A56762207B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:30:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE5F28153D;
-	Mon, 11 Aug 2025 23:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5EF2283FDB;
+	Mon, 11 Aug 2025 23:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A2lvhc/j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSUDJo7u"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1A28152B;
-	Mon, 11 Aug 2025 23:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2E8283CBF;
+	Mon, 11 Aug 2025 23:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754954853; cv=none; b=D0iaoLR5Kbs4yGGojBaPc9wLija9cncYE3qxzdnYloDG7cHpjhOu/CDJ8J1vF2sBcWPeERcr/1eF+MEstA0F4EJshZ7mAiL2YfePx6NVADnoLpMr7rW1FHbuZlMAfgjbrtbTKMbjipl4mxiG32CGwPG3k73tZaUaypK28/x1AX8=
+	t=1754954854; cv=none; b=CyBl+ILw1g1N/gvKk/vYw67DfI0IbwIfSmO1BJ6yAs50S3KJP8EXl7mc8FT61sbhR8p2zL+6Kwjb80pJCi+TgYjp5eVjgeAMPDQZmrPw9VJN3qEkd0snSshePfu4Bux+jKjdIqJkhAPz+knymc/HUe1wWcuOgjb/JFnpU4L0tlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754954853; c=relaxed/simple;
-	bh=uwE75RP/rC/UsT0Oz278buH7MuD18+4QVG/pJE6eMZU=;
+	s=arc-20240116; t=1754954854; c=relaxed/simple;
+	bh=chIQDZpRnyTsv6ULEvKC5vZHNloJA0QOssDX7HgJMd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XSlQmTExIp5SxKetgfCz5Hx1Vxd5ncX6Y5C5guVq9B8Ngp/jIu5eNJpG0G6eJO4RADcxkbiD/OKo0UabQ1blwSon0Qvm5unAZYkiJ4ApVMnVuGhtZAYE6RRNIMzs7Mo2buCAGnKp630opaU8DqO5hZM5uA7Uo2G4MyEz7Q17mos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A2lvhc/j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B89CC4CEF7;
+	 MIME-Version:Content-Type; b=ghNLlC+IstpL/a2GV2xHi++SCKdOZmN90bv2KOhlKgiQi/YWhrYSIcbPlKwHXnDlH7Xn483wm8Cziw9CEl5eZlf4exXS1F5oFQBcbHc2x3fDf+FTZ8EkL7uVEtmnrQxMcH/swEKm/V0v3hBYMYM8vH6c9A+WcYQ11BNzXnfK82w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSUDJo7u; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD2CC4CEFA;
 	Mon, 11 Aug 2025 23:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754954852;
-	bh=uwE75RP/rC/UsT0Oz278buH7MuD18+4QVG/pJE6eMZU=;
+	s=k20201202; t=1754954854;
+	bh=chIQDZpRnyTsv6ULEvKC5vZHNloJA0QOssDX7HgJMd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2lvhc/jV+eUjs6uxwKpFX42exLUGUlEZq7SwChPB26viLQjqsZpP90/Hkpco/CHS
-	 Xc/6XJcs8AC7cGfoT6ntADIcwzhMc+YyHsthMAoo3pdmiZfr/0CWsj0A1636uEXvm7
-	 06Zk3ofsqoFTS8RAwPhHdthdM1HKcNhwOO0vT9PA6qOzZow4YRoeWBthbqUBvvBjHI
-	 JIdcywclTh1o2hd7tL7ZIMJtcngNpKgDj/GdSVX+TfHU4i8NM1k4hcrTzM1H3d2ee1
-	 7uWA6phROe19OyV+datgszyzbgAYabIRngGtiPNsVlBSo7sLN8I1bCN8dG49q57Nne
-	 4i366DPMYZ7uw==
+	b=XSUDJo7udsUbzksDJ/70xCNx42Cvjnk2OtAWfz2daAhs20cHuwi8bf02VOd+xqi4k
+	 2Nn2IYfyPe3okxKEizeoMQGhr2QnZkyRsMCjfzDBYg1t9xTabQVEulMj5wcgZZlujt
+	 oKCWOZ+n+haVzvFh8fwRkPaoAnMV4Q7SeMIcRdh6k5IMVNnoO/AovrJby/30Kdn/hA
+	 sg16HMghh2Vk7VuAXDQesIN12ul0THqtKVRevOLmWbH4iENjHzJGEINP0uCiZvH66z
+	 mZ4Kydfje8FDnVxShyhJ3ieM4VCbJgpniUjfNHQ0qaxJFxTDTl6YUACejsDITzKIfg
+	 CMco14nCmlYOw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	Sayali Lokhande <quic_sayalil@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mmc@vger.kernel.org
-Subject: Re: [PATCH V4 0/2] Add eMMC support for qcs8300
-Date: Mon, 11 Aug 2025 18:27:05 -0500
-Message-ID: <175495482456.157244.16005731493669293033.b4-ty@kernel.org>
+	linux-clk@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/2] Add video clock controller DT support for sc8180x
+Date: Mon, 11 Aug 2025 18:27:06 -0500
+Message-ID: <175495482479.157244.11839510617849896155.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250716085125.27169-1-quic_sayalil@quicinc.com>
-References: <20250716085125.27169-1-quic_sayalil@quicinc.com>
+In-Reply-To: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
+References: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,24 +74,14 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 16 Jul 2025 14:21:23 +0530, Sayali Lokhande wrote:
-> Add eMMC support for qcs8300 board.
+On Thu, 10 Jul 2025 18:30:38 +0530, Satya Priya Kakitapalli wrote:
 > 
-> - Changed from V3
->  - used correct name for SLAVE_SDC1
-> 
-> Sayali Lokhande (2):
->   arm64: dts: qcom: Add eMMC support for qcs8300
->   arm64: dts: qcom: qcs8300-ride: Enable SDHC1 node
-> 
-> [...]
+
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: Add eMMC support for qcs8300
-      commit: 43b8556e82f38cc2e7a66c9dd44d1104be4fe73c
-[2/2] arm64: dts: qcom: qcs8300-ride: Enable SDHC1 node
-      commit: d81448d49cb26d9255479c7c74de03a257b5c528
+[1/2] dt-bindings: clock: qcom,videocc: Add sc8180x compatible
+      commit: f87dea8b362b29ab8a54d1f35a0430017a716ee1
 
 Best regards,
 -- 
