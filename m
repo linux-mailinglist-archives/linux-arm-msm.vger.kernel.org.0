@@ -1,110 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-68293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DF69B20424
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:46:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EABD0B2043A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:48:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FDA73B3B9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:46:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E5F4161E62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:48:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 895852DF3DA;
-	Mon, 11 Aug 2025 09:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17AAF238145;
+	Mon, 11 Aug 2025 09:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZrwLBJ6q"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="WjvEYiRA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB2A2D5C9F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 09:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CB22DA0B;
+	Mon, 11 Aug 2025 09:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754905498; cv=none; b=J0GuGU9CaoQoPJd0xx0B0dm8urFN+UOgN1nEqAMqVGWcRioPrSnOZnmVXfvYDOAA0hIpBVFAyza4XBlvPeuibZTj63fkTuMmObXJOto+/gkAjyKYtnl7QuDXLrDvkgvmx2yLDUQhtpGyhwdcCvuYQYrNh6j/Fjd7CO4i9ElQPw8=
+	t=1754905603; cv=none; b=J6k9W/qLwsLBSttsx1LdotmHCOEbEFeKEcfh49xuxjUkUgVEBS0ud50SB9UnSecsO1SJl7tVJ40QhVvJaJiDs8GD0SuidM+qCvSMd6A1d2K5XZNHWkq1cqGLEriuE3eUgiXTE8CS6sIeas/gR2XKfp1c3ep6TPJm300s5tA3uFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754905498; c=relaxed/simple;
-	bh=oOOiZ1lqQ3eCOyBC4RUT7MgiecSXIg9A00t08CokTII=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IsdnddwmwGgc/In8NpyPXN/11WmmLM7av6IIwyXpnif21RGFNQDAyTNE/ZZ75ZLp7LijzfRy//Rw4FaO3HRmsRoAHDfps3CFN/kyyAwB0RTzpA67C/3LEaVeHkEhdQHFYOtMjwTUBi2cEBMVK7P004nm+cy2LKpuN0hIhW4S7AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZrwLBJ6q; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b429abd429aso2104644a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 02:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754905496; x=1755510296; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nCoqLwhb4uI1eEgHGHZ1KDRkXmPyMcyy/GtcB68Vpww=;
-        b=ZrwLBJ6q7CR54OXI8khFF0A7T9EvvhJqm8bNzTCmHhQxhB5I1RzlII0tr4ntCdXqOT
-         AT3/NaTk2MlnB74BaNkVEA3J8v49Q3ArhLAWPIflcd+ddvRHrRNz+22Jeevrqm4No3dl
-         //huOxbZ/ZiD0I5pw4ta9kNgVzjXecgTs9qVtdS2KLgEYlEvzghBIIUFTSWkpIeJvxaq
-         ZmbMfJP3FAwZBKnCSpM22CpmdTngGgwWyEcLO3BflUjc+X5mAo81X3NAUPK8G5s0IK4S
-         ObSN8QVW5oJuJ3tVHCpkeCRJEbs/7AWiGDQM4kGrlLIxUWCdItro3L8dOg3Hy/1021F4
-         GXBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754905496; x=1755510296;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nCoqLwhb4uI1eEgHGHZ1KDRkXmPyMcyy/GtcB68Vpww=;
-        b=iwTKlz1cSGD7bGmiVbNFSfXF2JnLgIkXHrCgBMFFcfF2J9XCNmXJKA2ni4BJIBfnhZ
-         pH1Cs3GHLBUQkuTkn+rR1Uwo617+Ux3QKG4n8RHIRuLv8gVsMAH1RgscSh8q4Umdb5KU
-         C+iX5dqZRgCoTh8IfwyNpLMWYKUV29KEGp23rAxAiAcN8PaCosD+531lZvqubNzgfRd+
-         p0vJ7iNQYu0zxYMawLojYadQI5GmN6GLUQVnulC+qO4VoXWvG80af4DiXkjcFE+CsKDG
-         Wu1eR9GDzALwCxlqVXYGldei3I2W0Ssy496Jikq7/0l4ifcNztgTbiq6bZoXgFgXpiPT
-         11Ww==
-X-Forwarded-Encrypted: i=1; AJvYcCWYs31oPuWAVa4yBVjpyyHn30bMKNcu7FUiicVu8eSMxSjUGyTYtoe61LsCCSnnI0f7eCrAtVYlkIcR3l4Z@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywu1OtnLX+//w0BWMwV/RePisBqZ1FwjoPMA8l1Uoq1h85c/J1b
-	Gf39vTcCroK8qeXEICVHUK6BRmctD4OCzuAepI5KNV3smmD4ToYD9t9FjeiLCX2/t1U=
-X-Gm-Gg: ASbGncvxiLjsiOutdb2I0uA4a1d36dcynwVU60pnn+Md4qDNyLOEPaPU91DFR4qT9SK
-	+FvuX5YZcWYFiFdKEoyWmOXCxW+zoOjwm54ULP9j3hXR3tjjB4i/UuX5t+6bpLXzU7HZVuxyQ3d
-	Dc0kw7R2nLZ0UgAXgKDcMwf0UcLbNmQ6l8tWLjYbzBAHG7KbeBgWtDz4uDS8adQjOG9w6WPB0Q3
-	9NwrGTSnEY0lMh4nYiFNQNUbhGvPnbPWzFoXMJWL/yKh+Qd2Tsg5tcZrosPLUiDSnjpes9weigb
-	5G5RcDudSrv/lXCKyAhru2q1adQAYWeHpCOcQedNO8D2yW02OGv+DuAWwnJGsi5UgQTx4mhOpcw
-	H39d/qcZZvpH4amZeo7LeSpIo
-X-Google-Smtp-Source: AGHT+IHx6GR2e/+tS4c7qDRjnWjAYpd+pizXL7vvtruA+7iTSso7twvaaA2D0cifsUCnt3e92ef/zA==
-X-Received: by 2002:a17:903:292:b0:234:f4da:7eed with SMTP id d9443c01a7336-242c222bf2fmr179458745ad.44.1754905496369;
-        Mon, 11 Aug 2025 02:44:56 -0700 (PDT)
-Received: from localhost ([122.172.87.165])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32102a559bdsm15486233a91.1.2025.08.11.02.44.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 02:44:55 -0700 (PDT)
-Date: Mon, 11 Aug 2025 15:14:53 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	konradybcio@kernel.org, rafael@kernel.org, ilia.lin@kernel.org,
-	djakov@kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 3/4] cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
-Message-ID: <20250811094453.qvlpwwpmkpdyauzu@vireshk-i7>
-References: <20250811090954.2854440-1-quic_varada@quicinc.com>
- <20250811090954.2854440-4-quic_varada@quicinc.com>
- <20250811092202.auarwnyoagebcw3o@vireshk-i7>
- <aJm6ixlMamgX/+bV@hu-varada-blr.qualcomm.com>
+	s=arc-20240116; t=1754905603; c=relaxed/simple;
+	bh=OLLstMAMRkfwN83y2RbzQ0JJu+NUX4T+Z0mqY9GTV0Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eLQ3qlIaQ/EU+PkrTx4/XsVeXAC4jUPPCi8g3v5Bi+mXcigD6RZH/Hc0PBA3DIto6YDCkloEr9rHjMHsj1NkSHtECSzTzM4GwlgBw2RGOgVnKa5q/vojfrn+TleOTckaaeOzrXKJNoGPjC+dhXqrPV3LTzOPZHh324pzuqbVPj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=WjvEYiRA; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8AF744327C;
+	Mon, 11 Aug 2025 09:46:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1754905587;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=CvDR1lz19o0o9cINspVaDb6fr209Fw79mhQXFIrLWGE=;
+	b=WjvEYiRA+G2JvOacAceQjoT1jdvOMCW5Lpwt6OaFKBukLq1rRtWOwRce0Rs3McNK2hmSA1
+	JBDg48/n0au+/X0Mc1X4Jut5L2j8zh9iUDz05lTFpprY+I7RUf2YNgxmHuwJUu9LW5oqX9
+	F93TseV1JY0uWf7ob1+DAlrMNBYq5GWIsMoJ55ZGsNFZ55zPOtf8AZX3vwszs/gfJg2HYR
+	lEoJInd1ZaXsBqiSlVkGOuRtsduQZArw+NQnSY6bLxAj9PkwRWI0s2uxCSGoxgnvQmHc7L
+	+iDxqsqvv7OLWeXbPY44in6s3+8P69Larb6YmLWMy5wXSYSvPDAD7oSWW8K5wQ==
+Message-ID: <d52ac9f1-616b-427b-8742-781c4f5144d5@bootlin.com>
+Date: Mon, 11 Aug 2025 11:46:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJm6ixlMamgX/+bV@hu-varada-blr.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 7/8] drm/rcar_du: Adapt vkms writeback to new
+ drm_writeback_connector
+To: Suraj Kandpal <suraj.kandpal@intel.com>, kernel-list@raspberrypi.com,
+ amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
+Cc: ankit.k.nautiyal@intel.com, arun.r.murthy@intel.com,
+ uma.shankar@intel.com, jani.nikula@intel.com,
+ dmitry.baryshkov@oss.qualcomm.com, harry.wentland@amd.com,
+ siqueira@igalia.com, alexander.deucher@amd.com, christian.koenig@amd.com,
+ airlied@gmail.com, simona@ffwll.ch, liviu.dudau@arm.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ robin.clark@oss.qualcomm.com, abhinav.kumar@linux.dev, tzimmermann@suse.de,
+ jessica.zhang@oss.qualcomm.com, sean@poorly.run,
+ marijn.suijten@somainline.org, laurent.pinchart+renesas@ideasonboard.com,
+ mcanal@igalia.com, dave.stevenson@raspberrypi.com,
+ tomi.valkeinen+renesas@ideasonboard.com,
+ kieran.bingham+renesas@ideasonboard.com
+References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
+ <20250811092707.3986802-8-suraj.kandpal@intel.com>
+Content-Language: en-US
+From: Louis Chauvet <louis.chauvet@bootlin.com>
+Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
+ 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
+In-Reply-To: <20250811092707.3986802-8-suraj.kandpal@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvudefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepnfhouhhishcuvehhrghuvhgvthcuoehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeekieevtdefgedtkeehteehtddttdefhffhgeejleejjeeluddvhfdugedvkeehveenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehpdhhvghloheplgfkrfggieemvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehngdpmhgrihhlfhhrohhmpehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefhedprhgtphhtthhopehsuhhrrghjrdhkrghnughprghlsehinhhtvghlrdgtohhmpdhrtghpthhtohepkhgvrhhnv
+ ghlqdhlihhsthesrhgrshhpsggvrhhrhihpihdrtghomhdprhgtphhtthhopegrmhguqdhgfhigsehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrhgvnhgvshgrshdqshhotgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhrvggvughrvghnoheslhhishhtshdrfhhrvggvuggvshhkthhophdrohhrghdprhgtphhtthhopegurhhiqdguvghvvghlsehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhg
+X-GND-Sasl: louis.chauvet@bootlin.com
 
-On 11-08-25, 15:10, Varadarajan Narayanan wrote:
-> Sorry. Should I send a v8 with this dropped or is it okay?
+I think the commit title is wrong.
 
-No need of a resend for now.
+Le 11/08/2025 à 11:27, Suraj Kandpal a écrit :
+> Now that drm_writeback_connector is embedded with the drm_connector
+> adapt the rcar-du writeback functionality to this changes. This
+> includes changing the drm_writeback_connector to be changed to drm_connector
+> within the rcar_du_crtc.
+> Some other changes are done which are a result of the all the above
+> changes mentioned.
+> 
+> Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> ---
+>   .../gpu/drm/renesas/rcar-du/rcar_du_crtc.h    |  4 ++--
+>   .../drm/renesas/rcar-du/rcar_du_writeback.c   | 22 +++++++++++--------
+>   2 files changed, 15 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_crtc.h b/drivers/gpu/drm/renesas/rcar-du/rcar_du_crtc.h
+> index d0f38a8b3561..457c803d75bc 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_crtc.h
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_crtc.h
+> @@ -72,11 +72,11 @@ struct rcar_du_crtc {
+>   	const char *const *sources;
+>   	unsigned int sources_count;
+>   
+> -	struct drm_writeback_connector writeback;
+> +	struct drm_connector connector;
+>   };
+>   
+>   #define to_rcar_crtc(c)		container_of(c, struct rcar_du_crtc, crtc)
+> -#define wb_to_rcar_crtc(c)	container_of(c, struct rcar_du_crtc, writeback)
+> +#define connector_to_rcar_crtc(c)	container_of(c, struct rcar_du_crtc, connector)
+>   
+>   /**
+>    * struct rcar_du_crtc_state - Driver-specific CRTC state
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
+> index 9986a10e8114..95e6810612c2 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
+> @@ -47,10 +47,12 @@ static int rcar_du_wb_conn_get_modes(struct drm_connector *connector)
+>   				    dev->mode_config.max_height);
+>   }
+>   
+> -static int rcar_du_wb_prepare_job(struct drm_writeback_connector *connector,
+> +static int rcar_du_wb_prepare_job(struct drm_writeback_connector *wb_connector,
+>   				  struct drm_writeback_job *job)
+>   {
+> -	struct rcar_du_crtc *rcrtc = wb_to_rcar_crtc(connector);
+> +	struct drm_connector *connector =
+> +		container_of(wb_connector, struct drm_connector, writeback);
+> +	struct rcar_du_crtc *rcrtc = connector_to_rcar_crtc(connector);
+>   	struct rcar_du_wb_job *rjob;
+>   	int ret;
+>   
+> @@ -72,10 +74,12 @@ static int rcar_du_wb_prepare_job(struct drm_writeback_connector *connector,
+>   	return 0;
+>   }
+>   
+> -static void rcar_du_wb_cleanup_job(struct drm_writeback_connector *connector,
+> +static void rcar_du_wb_cleanup_job(struct drm_writeback_connector *wb_connector,
+>   				   struct drm_writeback_job *job)
+>   {
+> -	struct rcar_du_crtc *rcrtc = wb_to_rcar_crtc(connector);
+> +	struct drm_connector *connector =
+> +		container_of(wb_connector, struct drm_connector, writeback);
+> +	struct rcar_du_crtc *rcrtc = connector_to_rcar_crtc(connector);
+>   	struct rcar_du_wb_job *rjob = job->priv;
+>   
+>   	if (!job->fb)
+> @@ -199,7 +203,7 @@ static const u32 writeback_formats[] = {
+>   int rcar_du_writeback_init(struct rcar_du_device *rcdu,
+>   			   struct rcar_du_crtc *rcrtc)
+>   {
+> -	struct drm_writeback_connector *wb_conn = &rcrtc->writeback;
+> +	struct drm_writeback_connector *wb_conn = &rcrtc->connector.writeback;
+>   
+>   	struct drm_encoder *encoder;
+>   
+> @@ -212,7 +216,7 @@ int rcar_du_writeback_init(struct rcar_du_device *rcdu,
+>   
+>   	encoder->possible_crtcs = 1 << drm_crtc_index(&rcrtc->crtc);
+>   
+> -	drm_connector_helper_add(&wb_conn->base,
+> +	drm_connector_helper_add(&rcrtc->connector,
+>   				 &rcar_du_wb_conn_helper_funcs);
+>   
+>   	return drmm_writeback_connector_init(&rcdu->ddev, wb_conn,
+> @@ -231,7 +235,7 @@ void rcar_du_writeback_setup(struct rcar_du_crtc *rcrtc,
+>   	struct drm_framebuffer *fb;
+>   	unsigned int i;
+>   
+> -	state = rcrtc->writeback.base.state;
+> +	state = rcrtc->connector.state;
+>   	if (!state || !state->writeback_job)
+>   		return;
+>   
+> @@ -246,10 +250,10 @@ void rcar_du_writeback_setup(struct rcar_du_crtc *rcrtc,
+>   		cfg->mem[i] = sg_dma_address(rjob->sg_tables[i].sgl)
+>   			    + fb->offsets[i];
+>   
+> -	drm_writeback_queue_job(&rcrtc->writeback, state);
+> +	drm_writeback_queue_job(&rcrtc->connector.writeback, state);
+>   }
+>   
+>   void rcar_du_writeback_complete(struct rcar_du_crtc *rcrtc)
+>   {
+> -	drm_writeback_signal_completion(&rcrtc->writeback, 0);
+> +	drm_writeback_signal_completion(&rcrtc->connector.writeback, 0);
+>   }
 
 -- 
-viresh
+Louis Chauvet, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
 
