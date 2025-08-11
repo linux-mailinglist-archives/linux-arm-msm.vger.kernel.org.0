@@ -1,166 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-68248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A192B1FD02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 00:59:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF2CCB1FD86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 03:41:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73323172BD0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Aug 2025 22:59:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15A4C18930A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 01:41:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 874672D94A4;
-	Sun, 10 Aug 2025 22:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89B9C247282;
+	Mon, 11 Aug 2025 01:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="D2kM4GYt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mR4D7wBl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFD12D8DDF
-	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Aug 2025 22:58:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A9A2594;
+	Mon, 11 Aug 2025 01:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754866695; cv=none; b=GegrfkYJXjPeeDTmQxkM80KxRd2ZBR8KLMxJkcTdLniO/1v2irhNBIO8AMTJwdXDpE4Bb7QsrW2N5wU8v6tqpapKouU9axi+nvDOxPTOxltL5RG5DL7ke03DLk4JgO6AwdHd47stFgMx0NGdLNqANCizCrXgBWZzlBJxzvFqH6E=
+	t=1754876469; cv=none; b=ZBdEjse7JIH3+NkglcUqUFQ33+JRoIvzR6XRzr+YoBT6D4iU3rSjQhXrrGiolVyISMkCvfJFJ2Eerp/pDGGB6Q0yCIB8SRQ8aIbEekpgjQJPZ28hv+ZDv/EUuhXnhUCvMLQQqm6bhZf0PdDn2vZBw9qerGBI+5+tpC52T3DrnHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754866695; c=relaxed/simple;
-	bh=b3lpeRdsfILZNbKt0s4jDvsKWYmd9ZM6thqzD9ovEpA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nScwgQUnXHve7m5Rtnnss/QOhWan3n9KWcQb0v4TuvHsmfWR4E4LJieXBs325EK2RO3Om5DYjWSdDGWrMeY9TADsj7jdulmZL/AVdpcqFcBlQRp+FS7jffs1pd1tAEtYEeR87wNch+aHQu7D8L4rYX75moVHL/BjriIBogbSU4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=D2kM4GYt; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1754866692;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FbrTb5TIWzNpxLExdP2beMCh0zMQGTK+0dHd5wdG15k=;
-	b=D2kM4GYtpy3MRtgGqEIc73oaruJOEH5xA+MD5zSi2oR3aKMcCc9+MdOSLk12qiBL8v5MuB
-	NeMIMe4KNmxCPrAGR3TjljxLmpM5GmAmMhj8DTCFuc+TMxy2IUgeTpRCyYzUvKVyx8vBG4
-	HNclJAcJUJtyp7KcEl/1RqDeocrY4+s=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-JIIOve0NPzSKuF-tJ0VU0Q-1; Sun, 10 Aug 2025 18:58:11 -0400
-X-MC-Unique: JIIOve0NPzSKuF-tJ0VU0Q-1
-X-Mimecast-MFC-AGG-ID: JIIOve0NPzSKuF-tJ0VU0Q_1754866690
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70744318bdfso110822876d6.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Aug 2025 15:58:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754866690; x=1755471490;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FbrTb5TIWzNpxLExdP2beMCh0zMQGTK+0dHd5wdG15k=;
-        b=s4lPotuU/PN1eUEeb4PmD5oarnYu6ttQ+e1XMBsyLhREKqzZMnWRyh2z3KqGCD6fSV
-         3XDmcNlCGilUf87eWGCy+phDviEz5EBQui3CQu35g5VXpJ9f6tHvju5wc3rrTAL6dQey
-         xvzY+ToWbmmQAW1M4gBx10CYRqThEYdvx2hR+JvtE42rFUZL4cm8ntxOuv7GhinxaqjY
-         LYk5OqKpCgbfePbvD58NWRNh42UNrXwocnjqQ0IDszKWavsISrHOUpLoOduj8Lul9mmx
-         BXfKUMlD353tHojvKvqYLVv37OtdJyIV4toYhoWsIcK8BGhGLdRNY2Z9LRf0LR/+rzMH
-         wROg==
-X-Forwarded-Encrypted: i=1; AJvYcCXDl49yrceNrINe+9+PIGwD1MhMYVw2fdVUp/0luinGP0QlYFG1k1nNMvoLhOxfEX8LjpIf3jtkdWTceKps@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCpSf3E8RDRWtv0u+yQ0n5HbSNKc1IUB2vp2Tz+Tch+/nvOfaL
-	oJQHqiZCOfIqKLEnMy8aIPgb06EzdaOMuK3eg+VlpEK9v3cwVUxYljgHyMMabtTTFgiiObBArDN
-	KsrvMGqMnaO5T0M3/7CSLurN1iD1FkM2SOPziORiv5/Dhlb2GC12tXcMlluYJuLoNz8M=
-X-Gm-Gg: ASbGncvRmcz+w+FfPZjz+Zu6eakBI8JU5cYkZXUdy1k/m+BmStWt5ETwTBm0wDxufC3
-	wBlMvBE6IMAcxoMVAb3+e8Rn3pbo9+g6xb/T/FX80fA3W+g+aIwhx+8d3/81dfHm28D3+Z3w4X0
-	/NliOtEC2ifs1XB+U+4/O24heokShybxiXlLQryrLtkHZa4DF3Oyosf0lFeAoST3k3OljnBd7DA
-	Kphmno5b05nS1hx8Kipbgkor9uxkW5dwA+4btOWwMy2Zg9RkYXAnkJ1XFp7PliI0zVVTg6slj2k
-	n6U73zgFzcC9UDXMMovAojbdkkd8383Un8/1A+cJ5wKnIb4wxxZV3z3n3HAjRJicUGjGbq8yRbo
-	tdtrEgw==
-X-Received: by 2002:a05:6214:2469:b0:707:48b6:bcd4 with SMTP id 6a1803df08f44-7099a51356fmr150862486d6.48.1754866690656;
-        Sun, 10 Aug 2025 15:58:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGUGt1AwSBne/o9+rNR3LtSm/WoA2RbHO8v9LNVgg4wnAMJx+OP+IR27C+Pk0SSrEVzMCAAA==
-X-Received: by 2002:a05:6214:2469:b0:707:48b6:bcd4 with SMTP id 6a1803df08f44-7099a51356fmr150862326d6.48.1754866690271;
-        Sun, 10 Aug 2025 15:58:10 -0700 (PDT)
-Received: from [10.144.145.224] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7077cdd9916sm144266336d6.61.2025.08.10.15.58.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Aug 2025 15:58:09 -0700 (PDT)
-From: Brian Masney <bmasney@redhat.com>
-Date: Sun, 10 Aug 2025 18:57:31 -0400
-Subject: [PATCH v2 7/7] drm/msm/hdmi_phy_8998: convert from round_rate() to
- determine_rate()
+	s=arc-20240116; t=1754876469; c=relaxed/simple;
+	bh=aMpmyLAGd6/kSMWu63UdAdn5Vqx2f8K7tTIAh5F/b18=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CupHVeM6nC2FzjQYBtKUbE27TswCYqoU0iv+E7sFcr6Hpad9ufBMKu+Aj8/jekU4dfEXFdiM7tY13Uub+itlJ5dOy9ex64NIi1efTYVkizWA8JMvZ0d9hiitj3uKH0ZJd1a6vwKIfHqIJePH6mjKIX9H75pL4kmMrWpAerDwqHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mR4D7wBl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57AMrBkW005062;
+	Mon, 11 Aug 2025 01:40:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	s4kYYVIaYgURJG/3uxhhJMNsIpqknhcEx5A1MCpcLO8=; b=mR4D7wBlxowuCNW7
+	eEqN+qu6kpyBmqqYxjjThmYkjK+ZCEcoSrRBzo1K9LCH0uwN8/GMlnacXBqXDpzm
+	9DKmuM03xDkggbrYXPx33LGXnG7zXHN2EUAshNgPSoNIC/zGNo7bqBCcgq2n3b+Q
+	TF2mKoxdx4//VaUHfe176Io1cqEa0Vym4t7sGVZp6tOIhCfQslw3cx8aT42pBKc3
+	jEfjdkxZ7gMdf5GvRaCU1t7q9lvEv3+QGk3ADTk7cEQDKXsaeM/CW23qP2dWFMLR
+	J10P0jwMNHKT+5QrSuHuy5DTAeaBdHJg96mR+ntQaL7mgJScC8o4DqstFZG4xDDY
+	T2BkaA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxdutr64-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Aug 2025 01:40:57 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57B1euEZ010928
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Aug 2025 01:40:56 GMT
+Received: from [10.239.31.29] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Sun, 10 Aug
+ 2025 18:40:54 -0700
+Message-ID: <03578f03-4a3b-4845-a12e-b73726b19263@quicinc.com>
+Date: Mon, 11 Aug 2025 09:40:33 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250810-drm-msm-phy-clk-round-rate-v2-7-0fd1f7979c83@redhat.com>
-References: <20250810-drm-msm-phy-clk-round-rate-v2-0-0fd1f7979c83@redhat.com>
-In-Reply-To: <20250810-drm-msm-phy-clk-round-rate-v2-0-0fd1f7979c83@redhat.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maxime Ripard <mripard@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Brian Masney <bmasney@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754866653; l=1762;
- i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=b3lpeRdsfILZNbKt0s4jDvsKWYmd9ZM6thqzD9ovEpA=;
- b=bPI+bgndtQjl8U/B8CPlCWIm4ICh/KSI/9pQqEc+JGzlNlWdm7ffMObXa6FktebNdwMw2IQ7l
- yRXvUD2K69rChwg8WTjpcfmYgZ91P/5xMLfzNQFm4R78kNC3NkqT/fj
-X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
- pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] arm64: dts: qcom: sc7280: Add property for sc7280
+To: <cros-qcom-dts-watchers@chromium.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250701084905.872519-1-quic_lxu5@quicinc.com>
+Content-Language: en-US
+From: Ling Xu <quic_lxu5@quicinc.com>
+In-Reply-To: <20250701084905.872519-1-quic_lxu5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=68994a2a cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=oWUfCfD53TM6jlLAMLIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 4PAmbgrApusnxPkhskVhyc-kInvX2FPb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX4iScQVks+c46
+ shziv3m/4xAY+XOg6MiMX7207aMbVo2nIRoLHsIi+EU6WcrgoUOTvgndltxMLhi6SY7BdslK9cc
+ wp6TQQB84WbmJNmgiuWB5dbt++p7lauD6gKWjiF0WMm+kBKCcBoypJVBIKCNYYZIkMfj3on0nD8
+ 9RcW6YdOwjsZVpXXpc/wuKI6NF7PvQbtHAFvJv2TIFxvQc8+UKzZn4398JAo1Odekx6XqvW1srL
+ +nyUMpVa8XgoIeYvsiAvM/EQQCg152886S4UTKvk+C3IM3sBqk0XZ+oFgEIPGx0bMDTNqgt3B0m
+ xtPc7RdvF5n5nyRiX3t3MX52SgTgLtMWlikY+lKnsFVx7ti1ve6Pf0doLKocCTC30wGszrF8rhk
+ 4vtc6Xu3
+X-Proofpoint-GUID: 4PAmbgrApusnxPkhskVhyc-kInvX2FPb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-10_06,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090025
 
-The round_rate() clk ops is deprecated, so migrate this driver from
-round_rate() to determine_rate() using the Coccinelle semantic patch
-on the cover letter of this series. The change to use clamp_t() was
-done manually.
+在 7/1/2025 4:49 PM, Ling Xu 写道:
+> This patch series add memory region, nsessions and dma-coherent property
+> for sc7280.
+> Patch [v3]: https://lore.kernel.org/linux-arm-msm/20250626092952.847393-1-quic_lxu5@quicinc.com/
+> 
+> Changes in v4:
+>   - update commit message.
+> Changes in v3:
+>   - Dropped dma-coherent change.
+>   - Modified indentation.
+> Changes in v2:
+>   - Added compatible.
+> 
+> Ling Xu (2):
+>   arm64: dts: qcom: sc7280: Add memory region for audiopd
+>   arm64: dts: qcom: sc7280: Add nsessions property for adsp
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
----
- drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-index 33bb48ae58a2da13b7e90ff419c6e05fec1466af..a86ff370636972168124da19e114f0acab2249d2 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-@@ -646,16 +646,12 @@ static int hdmi_8998_pll_prepare(struct clk_hw *hw)
- 	return 0;
- }
- 
--static long hdmi_8998_pll_round_rate(struct clk_hw *hw,
--				     unsigned long rate,
--				     unsigned long *parent_rate)
-+static int hdmi_8998_pll_determine_rate(struct clk_hw *hw,
-+					struct clk_rate_request *req)
- {
--	if (rate < HDMI_PCLK_MIN_FREQ)
--		return HDMI_PCLK_MIN_FREQ;
--	else if (rate > HDMI_PCLK_MAX_FREQ)
--		return HDMI_PCLK_MAX_FREQ;
--	else
--		return rate;
-+	req->rate = clamp_t(unsigned long, req->rate, HDMI_PCLK_MIN_FREQ, HDMI_PCLK_MAX_FREQ);
-+
-+	return 0;
- }
- 
- static unsigned long hdmi_8998_pll_recalc_rate(struct clk_hw *hw,
-@@ -688,7 +684,7 @@ static int hdmi_8998_pll_is_enabled(struct clk_hw *hw)
- 
- static const struct clk_ops hdmi_8998_pll_ops = {
- 	.set_rate = hdmi_8998_pll_set_clk_rate,
--	.round_rate = hdmi_8998_pll_round_rate,
-+	.determine_rate = hdmi_8998_pll_determine_rate,
- 	.recalc_rate = hdmi_8998_pll_recalc_rate,
- 	.prepare = hdmi_8998_pll_prepare,
- 	.unprepare = hdmi_8998_pll_unprepare,
-
+Hi, this patch has been sent out for a long time, but it has not been reviewed yet.
+Could you please kindly review this patch?
 -- 
-2.50.1
+Thx and BRs,
+Ling Xu
 
 
