@@ -1,380 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-68265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0738B20173
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:11:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35AABB2018D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:17:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B23A0189E12B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 08:12:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED89D189E9F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 08:17:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E32CE2DA769;
-	Mon, 11 Aug 2025 08:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1C721772A;
+	Mon, 11 Aug 2025 08:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TAMuUoOd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UI48hWft"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910502DAFAB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 08:11:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D4D1E834B;
+	Mon, 11 Aug 2025 08:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754899904; cv=none; b=PycqLHtj6XvzMO42PGR7/gOgqJ9Uh3HGXlhuCIKyMt9u/W3axBVbp6C6IioxUufIlwcqzc2ALfSsOrrrmoUCw/FxpbIPJpCHsHefJqMbel4ZvBi7oRL5M+8LglBolUlN33QZrA++TLmdsIRYygCn0lydFexNaT4OQ6ecW/EbSD8=
+	t=1754900228; cv=none; b=E9ymAyDIZMBxuqTI4mA1y6fTzY+B5fPhS5lIQyxWq+uYsHOx67xNsDqHwdWFw1emJpunFi0PhsAjFXnYj5+ZkuZpoNGnN3RCFQZdbP+3MGIyRBU1r+e6ssL6n0HpFtdG1ULTKa7jfA4I7iY7DCCrdCh3xNzMVk62VD568lirGtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754899904; c=relaxed/simple;
-	bh=P23Stlr4keHU7Raxkl8z5iyyQmIO+NGHaLRZnTC9L9k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GFG5cX6JAsqgjxbY2ZfuJ0ufTgWCYfd5JpiA65Np6PqqiWq2SUZx6Fw2MiZ6WVC7XVNvwPY6NT9hg0cSWI1Ad7jebUvwyKLn4yllJcd+Lr3uwuMar8D1MUFSyMnYXS3Qp9QHsVszwUQtKsrGgs/RF744DXuod0tsqDN/fDRRuQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TAMuUoOd; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3b78a034f17so3127948f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 01:11:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754899901; x=1755504701; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2tkUesVl4jAFyoCBTmpuUr52QiKCqi3HcGLBzpIiqDk=;
-        b=TAMuUoOdWKxhoiOTg0rXVzIYoibrgMkCCoGE+dFDfi+LHTbcz8IRsjRypw/0gqXcZY
-         XEV1gXUPhMknUbBcQHMMhf/J2xqPTEdZT6XjqJF3ukaVGapQlaTZUi/24OLr3tpQbHRr
-         4XdjVg0T/lEne4HSMHYuWsobiHRmNr2JTLjNWEGutiBDEJF19syyzRyVMDu4L3BkdcVq
-         f7PcbtAmlarvSJwolBa1ce/kLzt1eVilIecO56HuezujO+b7rDyUVJOoT4BoFkDy7Lsm
-         vZM/xFCMAFR6XDRBmTYjYveuGq7gzVGeX2QF602wvJDJR4cz28RYW23w/EnbVekbcXMX
-         TTUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754899901; x=1755504701;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2tkUesVl4jAFyoCBTmpuUr52QiKCqi3HcGLBzpIiqDk=;
-        b=hnsCMozVgD7KbxcI4kRsBQxkNhHXzo1zkOr+xALTBz1DfzBXsTozZs1ou6WHvdULLS
-         HZBpU45ixuTnZvS2cxRO+fotrc4MqLxOsIDyKIoXTgAAmcdpQp3gBEHGBnuZPC4UxwPo
-         UHMp5GeHPw0wMgFhStWWw0R6w8EjTzbMJ4Mb800QIFvzQYLYXQ42qB3V8XpyOd85Nfb2
-         erkOdamQ+Kd0YmU+0XN/R4uXIgSZ8x1SDCkdZrXo/1kIk8gk0FYaIroiQQIfNl6M6wHT
-         ca3EgpMLErwG4g5mKiXfvqD6dYFh7CpTxldn3e1hdjOqyKl/v1bXclNrQu6sC2slaov2
-         sBnA==
-X-Forwarded-Encrypted: i=1; AJvYcCUeKgXHLR033IyuW7FJla/pLHJZUMvkDrLpXZwa2rVNH+U+7eVLHON10TsXHfI5m6ZXXdDc3IpKCRVvgWzB@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywwi0kXtd+nRQKVsRVZnRM3wnuuCfVQHq0Cyn3wEY4K3ADQhkKW
-	GeN5qk0VhhwqM65EYEA8fd6Iudh6TCOsFUIMnoJSwckFpQ0bwbQsCV1cFEB9rC+h2cQ=
-X-Gm-Gg: ASbGnct8Bl+jPOoAj4KnIX0fhAilN6s0xdilGtD4kNZoLZo3Xj0bqAlHUX5e5XCNuxU
-	dV7LUFM3ojBYvhx548kP0qoLt5E6mqGYe/wMBtNn/6aOqf85RPrbGHx6OQrMXSsASY00/dyWAwJ
-	PkVABo9F64nq9Ic3Ez4pS7vi/sAEYIExG0LSMsiRzkU2Rf6H93lOrxmkxP5c5BdSJuc7TM6nZga
-	DyLjBp64Bc4fSnstr9ew3p5a3kx35o3elfnw3awRKyj+bhiJzLw+SkYz70b21NidYz3M499H8/T
-	Hka8+Yrr+IEGeXcV+2U3xYLLVtlSH+bphwcUR94fkrUI3z1i2YvxeQFy62Iq+4WSkOkK8hRT/Z0
-	vzkUvb+KxA/Abh/a90jvNJYYc90BAYKV9JWwgJSFlrk9V/J/x9RnwT42bSjiuQ3U=
-X-Google-Smtp-Source: AGHT+IFZSCjB3EVVWN3j0xhyey0yOaCa7AbOuPwgJ7S7qfnZ/4InAfD2fBXGQz+A2XuMrW9cqBbDJA==
-X-Received: by 2002:a05:6000:2c04:b0:3b7:99cb:16e5 with SMTP id ffacd0b85a97d-3b900b750edmr10135158f8f.28.1754899900689;
-        Mon, 11 Aug 2025 01:11:40 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dc2647f6sm161537245e9.2.2025.08.11.01.11.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 01:11:40 -0700 (PDT)
-Message-ID: <90553ae1-8c40-4aa0-9cc3-f4e5f7cce15a@linaro.org>
-Date: Mon, 11 Aug 2025 09:11:39 +0100
+	s=arc-20240116; t=1754900228; c=relaxed/simple;
+	bh=yL/qUikanLs+aGEmFjlLt7vxOWxjOZmEwCqPg0afrV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kngh4iWH4Bh9MTSzLfmY9k05Jr+jM5Bhe/SGoQEX2opK8FvjK2egKNq6q+2LfeDsgBRmM1Ap1OMCpp1ZNKu10ppuuCKu7VpcaFZvBa7nvYXKKfo5YyTRbcefZ9NVaN271zLt+k9H3W6EpUgrXFTCcTm3BpjFoihyTE3/3iF6oEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UI48hWft; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B2AC4CEF6;
+	Mon, 11 Aug 2025 08:17:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754900227;
+	bh=yL/qUikanLs+aGEmFjlLt7vxOWxjOZmEwCqPg0afrV4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UI48hWft/oTk2ppV8lEBCRugT2YlIFQQaaS2fdZwl/4hq5z6Al8aeBmZhUQy9qDIV
+	 oWE1/rQxs5lZI20al/Kzhp23oW49q6idQJTpxGMBTJz6bxVwxDba0N81Xq6YiLgOve
+	 HFHnOpUA0dQoZmVuax6F7T2awFOoAkaGaFBvemFcrTUvKLapi1qwuEYZpXNK0FZhai
+	 64kXHx9qwq+kZw41mLJRl0kh85GWcdbNxPa71l8Mc3mDTF3DAEFIQT73x7gFUF2Lft
+	 nFuwfc81MeOtQX7BkBVjapukZkBIik1uIiGroU3msCHO0spiMal7f5Y5tK5v1aQ9kt
+	 QplmBTHv/ExQg==
+Date: Mon, 11 Aug 2025 13:46:55 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Palash Kambar <quic_pkambar@quicinc.com>
+Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_nitirawa@quicinc.com
+Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for UFS controller v5
+Message-ID: <edrf3bobjnknwydzeitfwns7lehgf65p5prcohmc7eexhzoami@ywlamyweunmn>
+References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
+ <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
+ <2e655067-cd7e-4584-aa07-998b517ac314@quicinc.com>
+ <pewnau4ltrf2yu3xxdq6rs6xhz45zlo3dt3jnkzhxitmezz2ft@2k7pgpoz5iey>
+ <3601cdce-a269-4d29-bc21-b925fcc499e2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: qcom: camss: Add support for regulator
- init_load_uA in CSIPHY
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250729-camss_csiphy_current-v2-1-da3c72a2055c@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250729-camss_csiphy_current-v2-1-da3c72a2055c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3601cdce-a269-4d29-bc21-b925fcc499e2@quicinc.com>
 
-On 29/07/2025 08:24, Wenmeng Liu wrote:
-> Some Qualcomm regulators are configured with initial mode as
-> HPM (High Power Mode), which may lead to higher power consumption.
-> To reduce power usage, it's preferable to set the initial mode
-> to LPM (Low Power Mode).
+On Thu, Aug 07, 2025 at 03:50:58PM GMT, Palash Kambar wrote:
 > 
-> To ensure the regulator can switch from LPM to HPM when needed,
-> this patch adds current load configuration for CAMSS CSIPHY.
-> This allows the regulator framework to scale the mode dynamically
-> based on the load requirement.
 > 
-> The current default value for current is uninitialized or random.
-> To address this, initial current values are added for the
-> following platforms:
-> SDM670, SM8250, SC7280, SM8550, and X1E80100.
+> On 8/6/2025 11:19 PM, Manivannan Sadhasivam wrote:
+> > On Wed, Aug 06, 2025 at 06:11:09PM GMT, Palash Kambar wrote:
+> >>
+> >>
+> >> On 8/6/2025 4:44 PM, Manivannan Sadhasivam wrote:
+> >>> On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
+> >>>> Disable of AES core in Shared ICE is not supported during power
+> >>>> collapse for UFS Host Controller V5.0.
+> >>>>
+> >>>> Hence follow below steps to reset the ICE upon exiting power collapse
+> >>>> and align with Hw programming guide.
+> >>>>
+> >>>> a. Write 0x18 to UFS_MEM_ICE_CFG
+> >>>> b. Write 0x0 to UFS_MEM_ICE_CFG
+> >>>>
+> >>>> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+> >>>> ---
+> >>>>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
+> >>>>  drivers/ufs/host/ufs-qcom.h |  2 ++
+> >>>>  2 files changed, 26 insertions(+)
+> >>>>
+> >>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> >>>> index 444a09265ded..2744614bbc32 100644
+> >>>> --- a/drivers/ufs/host/ufs-qcom.c
+> >>>> +++ b/drivers/ufs/host/ufs-qcom.c
+> >>>> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+> >>>>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
+> >>>>  		ufs_qcom_device_reset_ctrl(hba, true);
+> >>>>  
+> >>>> +	host->vdd_hba_pc = true;
+> >>>
+> >>> What does this variable correspond to?
+> >> Hi Manivannan,
+> >>
+> >> It corresponds to power collapse, will rename it for better readability.
+> >>
+> > 
+> > What is 'power collapse' from UFS perspective?
 > 
-> For SDM670, the value is set to -1, indicating that no default
-> current value is configured, the other values are derived
-> from the power grid.
+> As part of UFS controller power collapse, UFS controller and PHY enters HIBERNATE_STATE
+> during idle periods .The UFS controller is power-collapsed with essential registers 
+> retained (for ex ICE), while PHY maintains M-PHY compliant signaling. Upon data transfer
+> requests, software restores power and exits HIBERNATE_STATE without requiring re-initialization, 
+> as configurations and ICE encryption keys are preserved.
 > 
-> ---
-> Changes in v2:
-> - Change the source of the current value from DTS to CAMSS resource
-> - Link to v1: https://lore.kernel.org/all/20250620040736.3032667-1-quic_wenmliu@quicinc.com/
-> ---
+
+AFAIK, Hibern8 is a UFS *link* specific feature, not controller specific. In
+other peripherals, power collapse means powering off the controller entirely and
+then relying on the hardware logic to retain the register states. I believe the
+same behavior applies to UFS also.
+
+In that case, I would expect you to check for the power collapse in
+ufs_qcom_resume() using some logic and toggle the relevant bits in UFS_MEM_ICE.
+
+The current logic you proposed doesn't really make sure that the controller is
+power collapsed. You just assume that ufs_qcom_suspend() would allow the
+controller to enter power collapse state, but it won't. If the user has opted
+for 'spm_lvl' to be '0', then I don't think the controller can enter power
+collapse state.
+
+> > 
+> >>>
+> >>>> +
+> >>>>  	return ufs_qcom_ice_suspend(host);
+> >>>>  }
+> >>>>  
+> >>>> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+> >>>>  	return ufs_qcom_ice_resume(host);
+> >>>>  }
+> >>>>  
+> >>>> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
+> >>>> +				    enum uic_cmd_dme uic_cmd,
+> >>>> +				    enum ufs_notify_change_status status)
+> >>>> +{
+> >>>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> >>>> +
+> >>>> +	/* Apply shared ICE WA */
+> >>>
+> >>> Are you really sure it is *shared ICE*?
+> >>
+> >>  Yes Manivannan, I am.
+> >>
+> > 
+> > Well, there are two kind of registers defined in the internal doc that I can
+> > see: UFS_MEM_ICE and UFS_MEM_SHARED_ICE. And hence the question.
+> > 
+> >>>
+> >>>> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
+> >>>> +	    status == POST_CHANGE &&
+> >>>> +	    host->hw_ver.major == 0x5 &&
+> >>>> +	    host->hw_ver.minor == 0x0 &&
+> >>>> +	    host->hw_ver.step == 0x0 &&
+> >>>> +	    host->vdd_hba_pc) {
+> >>>> +		host->vdd_hba_pc = false;
+> >>>> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
+> >>>
+> >>> Define the actual bits instead of writing magic values.
+> >>
+> >> Sure.
+> >>
+> >>>
+> >>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+> >>>> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
+> >>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+> >>>
+> >>> Why do you need readl()? Writes to device memory won't get reordered.
+> >>
+> >> Since these are hardware register, there is a potential for reordering.
+> >>
+> > 
+> > Really? Who said that? Please cite the reference.
+> > 
+> >>>
+> >>>> +	}
+> >>>> +}
+> >>>> +
+> >>>>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+> >>>>  {
+> >>>>  	if (host->dev_ref_clk_ctrl_mmio &&
+> >>>> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+> >>>>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
+> >>>>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
+> >>>>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
+> >>>> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
+> >>>
+> >>> This callback is not called anywhere. Regardeless of that, why can't you use
+> >>> ufs_qcom_clk_scale_notify()?
+> >>>
+> >>
+> >> According to the HPG guidelines, as part of this workaround, we are required to reset the ICE controller during the Hibern8 exit sequence when the UFS controller resumes from power collapse. Therefore, this reset logic has been added to the H8 exit notifier callback.
+> >>
+> > 
+> > Please wrap the replies to 80 column.
+> > 
+> > Well, we do call ufshcd_uic_hibern8_exit() from these callbacks. So why can't
+> > you reset the ICE after calling ufshcd_uic_hibern8_exit() here?
 > 
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
->   drivers/media/platform/qcom/camss/camss-csiphy.c |  4 +++-
->   drivers/media/platform/qcom/camss/camss.c        | 26 ++++++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.h        |  1 +
->   3 files changed, 30 insertions(+), 1 deletion(-)
+> As per HPG guidance, the ICE Reset workaround is required only after the
+> controller undergoes a power collapse. In the UFS subsystem, power collapse
+> is managed via the GDSC (GCC_UFS_MEM_PHY_GDSC), which is part of GenPD
+> (power domains). Since GenPD is tied to runtime suspend operations, we are
+> setting the power collapse flag during runtime suspend and checking this
+> flag during hibernate exit.
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 2de97f58f9ae4f91e8bba39dcadf92bea8cf6f73..7a2d80a03dbd0884b614451b55cd27dce94af637 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -707,8 +707,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
->   			return -ENOMEM;
->   	}
->   
-> -	for (i = 0; i < csiphy->num_supplies; i++)
-> +	for (i = 0; i < csiphy->num_supplies; i++) {
->   		csiphy->supplies[i].supply = res->regulators[i];
-> +		csiphy->supplies[i].init_load_uA = res->regulators_current[i];
-> +	}
->   
->   	ret = devm_regulator_bulk_get(camss->dev, csiphy->num_supplies,
->   				      csiphy->supplies);
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index e08e70b93824baa5714b3a736bc1d05405253aaa..daf21c944c2b4818b1656efc255e817551788658 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -750,6 +750,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
->   	/* CSIPHY0 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { -1, -1 },
->   		.clock = { "soc_ahb", "cpas_ahb",
->   			   "csiphy0", "csiphy0_timer" },
->   		.clock_rate = { { 0 },
-> @@ -768,6 +769,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
->   	/* CSIPHY1 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { -1, -1 },
->   		.clock = { "soc_ahb", "cpas_ahb",
->   			   "csiphy1", "csiphy1_timer" },
->   		.clock_rate = { { 0 },
-> @@ -786,6 +788,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
->   	/* CSIPHY2 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { -1, -1 },
->   		.clock = { "soc_ahb", "cpas_ahb",
->   			   "csiphy2", "csiphy2_timer" },
->   		.clock_rate = { { 0 },
-> @@ -1188,6 +1191,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY0 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy0", "csiphy0_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1202,6 +1206,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY1 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy1", "csiphy1_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1216,6 +1221,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY2 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy2", "csiphy2_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1230,6 +1236,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY3 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy3", "csiphy3_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1244,6 +1251,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY4 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy4", "csiphy4_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1258,6 +1266,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
->   	/* CSIPHY5 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 17500, 10000 },
->   		.clock = { "csiphy5", "csiphy5_timer" },
->   		.clock_rate = { { 400000000 },
->   				{ 300000000 } },
-> @@ -1472,6 +1481,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
->   	/* CSIPHY0 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 16100, 9000 },
->   
->   		.clock = { "csiphy0", "csiphy0_timer" },
->   		.clock_rate = { { 300000000, 400000000 },
-> @@ -1487,6 +1497,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
->   	/* CSIPHY1 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 16100, 9000 },
->   
->   		.clock = { "csiphy1", "csiphy1_timer" },
->   		.clock_rate = { { 300000000, 400000000 },
-> @@ -1502,6 +1513,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
->   	/* CSIPHY2 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 16100, 9000 },
->   
->   		.clock = { "csiphy2", "csiphy2_timer" },
->   		.clock_rate = { { 300000000, 400000000 },
-> @@ -1517,6 +1529,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
->   	/* CSIPHY3 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 16100, 9000 },
->   
->   		.clock = { "csiphy3", "csiphy3_timer" },
->   		.clock_rate = { { 300000000, 400000000 },
-> @@ -1532,6 +1545,7 @@ static const struct camss_subdev_resources csiphy_res_7280[] = {
->   	/* CSIPHY4 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 16100, 9000 },
->   
->   		.clock = { "csiphy4", "csiphy4_timer" },
->   		.clock_rate = { { 300000000, 400000000 },
-> @@ -2158,6 +2172,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY0 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy0", "csiphy0_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2172,6 +2187,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY1 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy1", "csiphy1_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2186,6 +2202,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY2 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy2", "csiphy2_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2200,6 +2217,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY3 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy3", "csiphy3_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2214,6 +2232,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY4 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy4", "csiphy4_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2228,6 +2247,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY5 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy5", "csiphy5_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2242,6 +2262,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY6 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy6", "csiphy6_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2256,6 +2277,7 @@ static const struct camss_subdev_resources csiphy_res_8550[] = {
->   	/* CSIPHY7 */
->   	{
->   		.regulators = { "vdda-phy", "vdda-pll" },
-> +		.regulators_current = { 44000, 8900 },
->   		.clock = { "csiphy7", "csiphy7_timer" },
->   		.clock_rate = { { 400000000, 480000000 },
->   				{ 400000000 } },
-> @@ -2488,6 +2510,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
->   	{
->   		.regulators = { "vdd-csiphy-0p8",
->   				"vdd-csiphy-1p2" },
-> +		.regulators_current = { 105000, 58900 },
->   		.clock = { "csiphy0", "csiphy0_timer" },
->   		.clock_rate = { { 300000000, 400000000, 480000000 },
->   				{ 266666667, 400000000 } },
-> @@ -2503,6 +2526,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
->   	{
->   		.regulators = { "vdd-csiphy-0p8",
->   				"vdd-csiphy-1p2" },
-> +		.regulators_current = { 105000, 58900 },
->   		.clock = { "csiphy1", "csiphy1_timer" },
->   		.clock_rate = { { 300000000, 400000000, 480000000 },
->   				{ 266666667, 400000000 } },
-> @@ -2518,6 +2542,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
->   	{
->   		.regulators = { "vdd-csiphy-0p8",
->   				"vdd-csiphy-1p2" },
-> +		.regulators_current = { 105000, 58900 },
->   		.clock = { "csiphy2", "csiphy2_timer" },
->   		.clock_rate = { { 300000000, 400000000, 480000000 },
->   				{ 266666667, 400000000 } },
-> @@ -2533,6 +2558,7 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
->   	{
->   		.regulators = { "vdd-csiphy-0p8",
->   				"vdd-csiphy-1p2" },
-> +		.regulators_current = { 105000, 58900 },
->   		.clock = { "csiphy4", "csiphy4_timer" },
->   		.clock_rate = { { 300000000, 400000000, 480000000 },
->   				{ 266666667, 400000000 } },
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 63c0afee154a02194820016ccf554620d6521c8b..b46e92b10e096ca8e082ea2bb0b20032135e05b9 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -44,6 +44,7 @@
->   
->   struct camss_subdev_resources {
->   	char *regulators[CAMSS_RES_MAX];
-> +	int  regulators_current[CAMSS_RES_MAX];
->   	char *clock[CAMSS_RES_MAX];
->   	char *clock_for_reset[CAMSS_RES_MAX];
->   	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
 > 
-> ---
-> base-commit: 0b90c3b6d76ea512dc3dac8fb30215e175b0019a
-> change-id: 20250729-camss_csiphy_current-7793c2fab66f
+> > 
+> >> The ufs_clk_scale_notify function is invoked whenever clock scaling (up or down) occurs, regardless of whether a power collapse has taken place. Hence, the ICE controller reset was specifically added to the H8 exit notifier to ensure it is executed only in the appropriate context.
+> >>
+> > 
+> > Please define what 'power collapse' mean here. And as I said before, you are
+> > not at all calling this newly introduced callback.
 > 
-> Best regards,
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> This is not a newly introduced callback, Mani. We are registering for
+> an already existing notifier. You may refer to ufshcd.c, where this
+> notifier is invoked.
+> 
+
+Okay, my bad. You could've mentioned something about this callback in the commit
+message to make others aware that you are reusing an existing callback.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
