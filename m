@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B2D0B20C8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:50:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D78D6B20C93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:51:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91CE318848A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 14:45:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 306E61884BEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 14:46:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D520B2741D1;
-	Mon, 11 Aug 2025 14:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 791B32D23B8;
+	Mon, 11 Aug 2025 14:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5Hlbwp/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DUeRpwiC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AA523BCE3;
-	Mon, 11 Aug 2025 14:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497F3253B42;
+	Mon, 11 Aug 2025 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754923350; cv=none; b=s7FJg0acTrcTutnzYx8DAQY/hES9fWz8gydCI23FFgNYDz3ahlGqg1wg/807NiGBd7WoIEi8MzsX4ncVofybzL/T8OLnJ8i/cSoH+sIpDCgslWyzSO9m8Yf6zhE8yd96+Os5li963+vsA0Dsr7G0CpV7ds3vS/xs/+/PHYXjxIE=
+	t=1754923445; cv=none; b=JTqJ9DnsgXrX17F9CF5FclUWJicLGTSeQ1VsZ/brgsZWpFuR8rm2WIt3iOGi29lH0m6m719EXMbrBwWGzl1VMxaRS2g1IAxkxsX41u8Pp+pxDvgaqZA7O5U9N8UUucswPdpck2bIfWnYIzq5NNaMnL1pqQGiZP56sbmQxFfv0eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754923350; c=relaxed/simple;
-	bh=N4dy+EkDKWQXITuY/eS4xrGj4y3P2uiaBJ0qqcWhWrw=;
+	s=arc-20240116; t=1754923445; c=relaxed/simple;
+	bh=W+VGi/n0WjUYmmcqvfG/6Z/pBx9Gsr2/SuoZYs+30pY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fgpj4xJTz72SAxAoCm/A6ZvLaVfBnch/bXs4SPLRQJ40uDF9V3zO3PUB/HR4x3TlSqDYQo9cMhYP2/yWIfiY4QHzucbJM8wIMVG9+3OIn+y08XUYorXW6NkdXtpeiVag7UqMKk0Hk+/jqx5OIh3dWDaOLYHbW6qangw8BwAcmUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5Hlbwp/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6970FC4CEED;
-	Mon, 11 Aug 2025 14:42:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=J7uVvrl8VaJlsmN24JvuhNQtSsyYOLUaelpR+pcs2YJiNzgaPoYckR59l1gYTTflWnAz3m9oyArrEcDnNi5Mz0oKUW0++oVTcQZRQltkEk4ik/c1duKW8hyVuMMzY0GdZhTarMwvxb6CVz6o4QNx7lt4RMxf14UUsV9f4wsItlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DUeRpwiC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A0EC4CEED;
+	Mon, 11 Aug 2025 14:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754923350;
-	bh=N4dy+EkDKWQXITuY/eS4xrGj4y3P2uiaBJ0qqcWhWrw=;
+	s=k20201202; t=1754923444;
+	bh=W+VGi/n0WjUYmmcqvfG/6Z/pBx9Gsr2/SuoZYs+30pY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=P5Hlbwp/YfP1lkQ3Xt/J5pFIojL8xWtozyAxN1fX6vKW4DjVwiPEhs1W3W49Bu8i+
-	 xlIdL+SHBpvzfByW5LB3/S3FpqpEW7hqKnBjcZ5vsudk7S8uhdE6ZUCH+lsPxPqhiO
-	 9Gsp5h+ZeK18+fkWATIvDuL84H2MezJhpiZwHdqxOHi211XBnG+g7rW6/vmrmXJvNo
-	 exrWbBYr/pt1NNjwZtdkHyKvZoCvo4jPOSlLW1y+OISdgomtiv5v/+MBD5twci/aIZ
-	 zKPUG9cgC52rAFodeNBcdQzlirf4b93dIEAqIoIoVcB4n82ozI7UjZhLNKPvGsyCj6
-	 2A/dm0ijsfTpA==
-Message-ID: <f8405e89-9449-4564-82d1-3146d9b75655@kernel.org>
-Date: Mon, 11 Aug 2025 16:42:24 +0200
+	b=DUeRpwiCnlg0tQcfu/x8U9zCUrldW9eAUOuFGz7Swfh1oURjiQGooOiGic+dsDRFC
+	 5OGHlF+bKbszLlFGzZOuu3EHgR07m24Hfr0Wv30xLJb3C2d+vluz+Ft34E/kqF4YBv
+	 etvu16q7VKqXOMBZ2dR9eDSu6TWnLXhF8SVcnOkUDpowEFGSy2cHrWp9tXLP31v9Ju
+	 fvbqx7FHIfSB55Sd8/n5oqryL8in4e8grePfCyKrcvSmXF3x7j1siqmVZYftpC7a6z
+	 cRLlNgpe4shTl8hlhvfCUrhYNo3gyi5FVt7UK9xnApvAScG92jvmRhnM8n7Ax4XWAb
+	 4aaDfG6XUZORg==
+Message-ID: <67aedb2a-3ccc-4440-b2ff-b3dbedf5e25c@kernel.org>
+Date: Mon, 11 Aug 2025 16:43:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/4] dt-bindings: ufs: qcom: Document MCQ register
- space for UFS
+Subject: Re: [PATCH V2 2/4] arm64: dts: qcom: sm8650: Enable MCQ support for
+ UFS controller
 To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
  alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
@@ -60,7 +60,7 @@ To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250811143139.16422-1-quic_rdwivedi@quicinc.com>
- <20250811143139.16422-2-quic_rdwivedi@quicinc.com>
+ <20250811143139.16422-3-quic_rdwivedi@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,43 +106,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250811143139.16422-2-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250811143139.16422-3-quic_rdwivedi@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/08/2025 16:31, Ram Kumar Dwivedi wrote:
-> Document Multi-Circular Queue (MCQ) register space for
-> Qualcomm UFS controllers.
+> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+> on the Qualcomm SM8650 platform by updating the device tree node. This
+> includes adding new register region for MCQ and specifying the MSI parent
+> required for MCQ operation.
 > 
 > Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 > ---
->  .../devicetree/bindings/ufs/qcom,ufs.yaml        | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index 6c6043d9809e..daf681b0e23b 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -89,9 +89,13 @@ properties:
->      maxItems: 2
->  
->    reg-names:
-> -    items:
-> -      - const: std
-> -      - const: ice
-> +    oneOf:
-> +      - items:
-> +          - const: std
-> +          - const: ice
-> +      - items:
-> +          - const: ufs_mem
-> +          - const: mcq
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 
-No. Why are you sending this? You have been Cc-ed here:
+Way you organize your patchset is confusing. Why DTS is in the middle?
+It suggests dependency and this would be strong objection from me.
 
-https://lore.kernel.org/all/20250731-dt-bindings-ufs-qcom-v2-3-53bb634bf95a@linaro.org/
-
-Above is neither correct nor aligned with what I told you.
+Please read carefully writing bindings, submitting patches in DT and SoC
+maintainer profile.
 
 Best regards,
 Krzysztof
