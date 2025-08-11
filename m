@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-68547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D825B2148B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:41:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD0CB2148D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:41:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AC8B3E3E7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:41:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5D3B1A2313D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 664AD2E2DCA;
-	Mon, 11 Aug 2025 18:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BB472E2DE4;
+	Mon, 11 Aug 2025 18:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FL775uGd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NfdZHXTG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383442E2DC3;
-	Mon, 11 Aug 2025 18:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD032E2DDD;
+	Mon, 11 Aug 2025 18:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754937674; cv=none; b=iuY5ET3Be51FVyhugc5XDPRSWKCJp0OEFk7QZV7jeDetp4bDS7uRY2YzjIMGuOTzC7YGhh5jfENg0yxiQQnMHvcWIGPR+CMT1diMcZvCY58gd0yyoPQAn3VPuSdWZ6wPz20WSmrYY8+NM0plQovkHMjGJl5XtJboFSen9sU3QaA=
+	t=1754937675; cv=none; b=WhfaT++mb/B9WV8jM5eK9X8u50M6xkrhCoqTfQzUElG9rKaVmTFFzvP6zJP6ikl3i/9QEONxBdcvo3ttw7EJsQeCg2DG5jZ+y+BdKJqpKCZOFsQfdLW+XxHuneuGXJM3DJ3Y36lan9mT2c+jsmURCquxqIRxIShc/nsJWyCPLcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754937674; c=relaxed/simple;
-	bh=AvOebrjNFwwBhL05sJAsUtMcnL3yGkgGjM3AU4h6AO0=;
+	s=arc-20240116; t=1754937675; c=relaxed/simple;
+	bh=fNekBiIqJVoWfWojnpKyxxW8r/axma2XkS+M8s9SfMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GGJ+PddLXZHnue60gCGO9lVQ0/0xA6C/98Goctj7pKJtx1PbVSDUPfzTqFWELbM8j1p3gbHtrBnCNoiHmdCF9TEO4IfguCkKHOz7CYg26FO+fC6sEHP/jvcsgb2DLwbBaylFW/FjZFZiTgW12W7MrFk9D51iwF3BB7lUm4Kkxh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FL775uGd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C054C4CEED;
+	 MIME-Version:Content-Type; b=GTTQC9651D4NW4ECUZtJcJnGP56IQSrDXlbwfGbxGw3+E9ObNpWCSX48qHBG/4zyaChJR9+ZqrFWa1y5Zln4IKvqwfKXlEAWwgifNIJJwnXEdvweV9jpL2YmM07fxWtRI/cdx7AAKsYsYJTyna1OmbOijDpNs78upteLIwfXNRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NfdZHXTG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC00C4CEF6;
 	Mon, 11 Aug 2025 18:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754937673;
-	bh=AvOebrjNFwwBhL05sJAsUtMcnL3yGkgGjM3AU4h6AO0=;
+	s=k20201202; t=1754937674;
+	bh=fNekBiIqJVoWfWojnpKyxxW8r/axma2XkS+M8s9SfMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FL775uGd4ijyKK8SeSFDjLWqs7g0oznTF8+k5u1N+H4aZuhMsY9KCohMMMuHLkBHm
-	 d+lgbPY8uHswWQ+mWBL9EgNwtbE0QKKiZrQBiLLZcdgztOIyeAhStFn3fMklOTIIWK
-	 vpsjdd7uyaFOxPHxRiy8ACyckenOLkwsr5eOEqp2/cilxp9y4FS66cVK7BUSgfNN7Z
-	 DPBM9Vdgmt/LTSCp8sSukkXrD/Y4CMgB4TYQpIXcrY+XRk45ImcEltoDQi4tHdr7qU
-	 43GtrTg992shNL6Hq6/4483Vi766xw/vWa8lmC0R5rotqUqNBT/1/9EmniKPud4M47
-	 y1t0ZCm+i6QPw==
+	b=NfdZHXTGsAo42hKE3jqxNyxUC2m0OgZJ6Mafy5f0qC7ykokNjbYL3qOZEZknbBQcv
+	 RHQ7MVah3YOraqhpYKUCL4Ce1SXXXtpgvIcyatjH+HS3o/RdX5Evo8/HGbfhPYOkcq
+	 w32SGS8zLIprGPY8/JUfaDRSzLMfHQ7uJsgMMPU9kS5CTCtwiFu2priFb7imY1MK/q
+	 JUrtlbQMXh11daK6m3lG2fRLyyqSfHhfGJv+jkv10GcTJm6dS3RdQMFlkmn8yC+taO
+	 RqjxxAx+S9njTfAKENGdJIP74dAYECIz7qBfqtC/vK5HhZ51spfNEK7IR5zqVu8EsZ
+	 76JTjRA06pTfw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Mark Brown <broonie@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
+	sadre Alam <quic_mdalam@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	George Moussalem <george.moussalem@outlook.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-spi@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH RESEND 0/3] arm64: dts: qcom: fix GPIO lookup flags for i2c-gpio SDA and SCL pins
-Date: Mon, 11 Aug 2025 13:40:52 -0500
-Message-ID: <175493766105.138281.6476150731966428757.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/2] Add QPIC SPI NAND support for IPQ5018
+Date: Mon, 11 Aug 2025 13:40:53 -0500
+Message-ID: <175493766106.138281.13445269133786197923.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250811-qcom-gpio-lookup-open-drain-v1-0-b5496f80e047@linaro.org>
-References: <20250811-qcom-gpio-lookup-open-drain-v1-0-b5496f80e047@linaro.org>
+In-Reply-To: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
+References: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,25 +69,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 11 Aug 2025 17:06:47 +0200, Bartosz Golaszewski wrote:
-> Resending rebased on top of v6.17-rc1 as this missed the previous merge
-> window.
+On Thu, 01 May 2025 13:20:50 +0400, George Moussalem wrote:
+> Add support for the QPIC SPI NAND controller found in IPQ5018 which is
+> the same as the one found in IPQ5018.
 > 
-> There are three platforms in the QCom DTS tree that are missing the
-> open-drain lookup flag in their DT nodes associated with the i2c-gpio
-> device whose driver enforces open-drain outputs. This causes the GPIO
-> core to emit warnings such as:
 > 
-> [...]
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: qrb2210-rb1: fix GPIO lookup flags for i2c SDA and SCL
-      commit: b2659ddbc2999e8b56edbcd12251b3e469bd0bca
-[2/3] arm64: dts: qcom: qrb4210-rb2: fix GPIO lookup flags for i2c SDA and SCL
-      commit: f07f492773b70efe01f9966703fef658b428f17b
-[3/3] arm64: dts: qcom: sdm845-samsung-starqltechn: fix GPIO lookup flags for i2c SDA and SCL
-      commit: 25197809e78c5ff521353acce00406cc2b4bbc16
+[2/2] arm64: dts: qcom: ipq5018: Add SPI nand support
+      commit: 8d2a8e8dc448f218b36b3b9f3790c9c0dfaa2b74
 
 Best regards,
 -- 
