@@ -1,155 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-68542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A74B2131E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:27:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79CA2B2137C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:40:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A25A57A4D1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:25:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5FBA3E497E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:40:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F321D2D3A71;
-	Mon, 11 Aug 2025 17:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5AA2D3A71;
+	Mon, 11 Aug 2025 17:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IzwgtAtv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UstHmftV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CAE29BDBA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 17:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B4D21771B;
+	Mon, 11 Aug 2025 17:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754933244; cv=none; b=CjNwUPkTZikEM9pT7K3K+6tSL1cI8td/UtxPkYXbSnHRth8/hiv6r1P3dmGTUqZpe18W2RRiNrc4iVOUYn8kC4qYKo41wdgb4IuXeuOlBivlq/0MlmQcUcvzpHs6RsECSM/b/gTd2zSQ5agvqWCUHRFiCXWBwmYgeT1FYFi2F/Y=
+	t=1754934041; cv=none; b=Z/kEvRY2FLBMXdFSKOQb9pwLqmg73sw0p/xatF6UymyirhWB+DMylRvl5yyfOfgdoykYJJ7b1xvzeGfnax26bgJ7/G/n40+GQHbSVdLrFfYuVIFS7x1JNtIQAuXUYmRsYlPBLMG4viv7LaUmgcIm9fvKBqVZdLmzBodifoh24fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754933244; c=relaxed/simple;
-	bh=oBdTxqPKIbAma/i7QMyH23HvNHluobbtLiwBoEX4yXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XAyIR6CmuShIQRSiQ1+DwzdMX7q5XRs4WHcp0tEwzXX0yPEq9wMdru6lQ0jQTKAHosq/MY8Dz2RpclTnZZCdyx04dz0UaWJtcaFPmB4lnBQztNZ6Vt4yGB44phbmJ/oKAwot8eQozo26OpSS2wffZhO7YKRIhZxl6FsD51rj2vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IzwgtAtv; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b79bddd604so2699637f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754933241; x=1755538041; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NXe3oMcNYYT4mns/cdffmItPqtrlHjIjLChPEwu6yu0=;
-        b=IzwgtAtvBuLWvi5eqZT4MyoPt5yzv6gvskJRIlzCCRTPLzs0ttMcGdWPZKMq/mp0xt
-         ZPmHxXzHBVLtodOxH1hGFkjAWSxuFVXSSTOND1QBryqeGYTb9PJE/Bf9sfMsBphes/22
-         qXkO5AK3JWzVvrhcqUxeaFezctiQV+GJ4UJZEhAw5BSKmaJv2tI672G9tVU+lvo5qGM/
-         VTXTGIk0EspreHSc2PdqVutORXW8vkMzNX6oSktenNImk2zO1Fv6AzTdxAkKcVnoEzfc
-         ZVpqRls7v2+FSAm/jmldOu17beOmlZjP2vdeLIuaTfBtzzWGvrf67uE+h00tfTjAOD97
-         sF0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754933241; x=1755538041;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=NXe3oMcNYYT4mns/cdffmItPqtrlHjIjLChPEwu6yu0=;
-        b=Y84Ip1TyaxBKdpj++N9l1islut+pMKOFCgAmLjS9OI+eWQ5WRPCcvBBYEElumvi6po
-         AxhG5w8QaLtr7gVmT1W104Ip3Dy3MUFso2LoJaAyc9dDuZNLAjzDErVvlXmSijtJLW3n
-         75XbDCxH9cWIsRx+jGq3QEoOwKVOJESQFBZXJ3YsMDi2wdUC5G5tc/QD+Qj14zwcLJ5r
-         sBSQZia5TPZMpnyWgPOcwR1S06BMUKNMkyE3AxME62JEURdwC66je/AGQoJ99ZTeW1Yo
-         zyObgz0EwHuVuNXUUBbAGR81H6pu7JXRyxnGAeFUTTtW+QvTYMXnLMzc0IIB6iTf+S6F
-         bh+w==
-X-Forwarded-Encrypted: i=1; AJvYcCXkBMQ6T+LMYcP1sYa8rgoMSJlGPGtZAesy/EfLlFxNIDFS8y9WKerKZi2pcJVESsBRRDXbbIHcSysqAbzi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9QKtbpvYcj/w3KC6Qd7sxcwO7p58f96sPRXL+TwxOtSE8IE+j
-	uJoBifYiF+P7Nzp9qavjF16NvpbzHXBEs55SvDIky+5TvA0rFqcUcPvHkx3Qju3gwY/Po88lKvU
-	bVl3Q
-X-Gm-Gg: ASbGncuo/k1m7+CfC5ddJDlUFjuMwsj02Z3EvJhFnUmYOzU5TUaBUQjJ3ahRkOS2XGS
-	ULCbCh76uXOCU3kwThoByxeFGd/PDnAIRDizEu/TFpdmMO2C3NJ9eizNntxvcxKCshZStoLcSYx
-	/DaSZTgSvXYml4Ak8rtz1YCVPgTkU7iyMwkwCcjVH3c3acoQnMYvpjwsCzO5tvWJx5bvAPMULaV
-	OcCLiS6lVw0KJOU3JZgdjUhlHwKGd5xCmk5j6hKn+1ydf7GDBHwa6ibvpNouQnnyn6cxCIP9GFz
-	4nk5MSHEw5w5PjI53g4L7IxEk9ydKS72v7YGv8iY4z7kVdpfnHXjc9YrOhsHGBlNvb5ntrN2NFg
-	IkOThq+y3L1+jx4yKxNCfEReyYprrBPJQVLB0WucLilbPQ3ahtcdMqdpHTDPWh0UJyoPNnlWjl6
-	g=
-X-Google-Smtp-Source: AGHT+IFXH1MhGzvGB7oVp7Zph1jzJAZ+OdG4MQzi4NRmUzTr/P+qbxicUVWnGDGrds5h6H9pYXwtpw==
-X-Received: by 2002:a05:6000:220f:b0:3b7:644f:9ca7 with SMTP id ffacd0b85a97d-3b910fe019cmr483345f8f.25.1754933241412;
-        Mon, 11 Aug 2025 10:27:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:b0fa:b045:4b82:de09? ([2a01:e0a:3d9:2080:b0fa:b045:4b82:de09])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458b501f22dsm249243435e9.0.2025.08.11.10.27.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 10:27:21 -0700 (PDT)
-Message-ID: <5e3e3c8d-b382-4a50-a474-b9a01f940a53@linaro.org>
-Date: Mon, 11 Aug 2025 19:27:20 +0200
+	s=arc-20240116; t=1754934041; c=relaxed/simple;
+	bh=vNeEGZtQOxuFBJ03hCHxJ0zqee0UqgJZnTvwQUQSHrQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HzgBvwaPU8AY9k1VOWqt7pOEsq9FYH26Za9bEV5h7PqxsTSIjMqRZlpqdxQoa3QkWhd+V9MNcWRu82upWgUr7Y878K1VB4bRK9eTShMQy755+8IMe11a5aD52fwG0rsezqN/Ka/kwl0onDJ9rYC67NuYOQYVUg9gJFz5ZJvb/y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UstHmftV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853A5C4CEED;
+	Mon, 11 Aug 2025 17:40:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754934040;
+	bh=vNeEGZtQOxuFBJ03hCHxJ0zqee0UqgJZnTvwQUQSHrQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UstHmftVxCQTMDVIZqfzPXOXwi8NsvUVZuh7gnMbMAJO75iNtUapyN9pt3lojXddG
+	 2JFtVrEKDxONVM+YH8C2IvIIA7hW9k5x3y+nGBYfkkHsZivSgcckFrYyrVvKG794QY
+	 d0LyZfmVRfv+7aJfjat6kooL3o32XbPKKfYad6koOc1zZFJ2NmE/n9yhm6hJx68cX6
+	 svvQSl1PR4JA1TF76TO0BNZLm7vS2M/gL0QirKfeX5ZQ5DFqSd15GwcwnI9ZX51jTQ
+	 +gGpSQCL4epXTgu32ZuurDjucscXI+fHhDm4gWOzEAkYGWOdBkaU6vkk42hgZU0bAO
+	 ome+ZBHH2RKAA==
+Date: Mon, 11 Aug 2025 23:10:35 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
+ support
+Message-ID: <aJorE6bL2d8se6E4@vaman>
+References: <CAO9ioeVuAO6mYpBSpiTW0jhFRPtkubZ5eEskd1yLBHVdR8_YMA@mail.gmail.com>
+ <1b55d9d4-f3ff-4cd9-8906-5f370da55732@quicinc.com>
+ <28d26c70-178f-413b-b7f8-410c508cfdd7@quicinc.com>
+ <CAO9ioeXBwFYL8q7x7_fHvx5YO+qyAXk4wpnfPrku4iY9yBsk0Q@mail.gmail.com>
+ <cac5e84b-fbdb-47a9-860d-16a7fa4dc773@quicinc.com>
+ <4q3vlydi5xgltd3pcez54alxgrehhfn4pppg47ngwp6y5k7n33@d4d4htntj64k>
+ <53dd18ec-9a65-4bf7-8490-ca3eb56ce2a5@quicinc.com>
+ <iang2jpe4s6wmbypmtq5uswcm6n6xntqdulyhekcz5k6zxddu3@re3rrr4dso5p>
+ <aICMDROkyjzBZFHo@vaman>
+ <8a149580-5044-4744-b432-9f0eef0a0d31@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC v2 0/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
-To: Bjorn Andersson <andersson@kernel.org>,
- "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>
-References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
- <175449112353.639494.1882304081892662235.robh@kernel.org>
- <bs4bgbyrph4xwsianzvkonpmi72muihob2yaip3gz4yhlqon2s@uvbwrhlr2xlr>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <bs4bgbyrph4xwsianzvkonpmi72muihob2yaip3gz4yhlqon2s@uvbwrhlr2xlr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8a149580-5044-4744-b432-9f0eef0a0d31@quicinc.com>
 
-On 11/08/2025 18:15, Bjorn Andersson wrote:
-> On Wed, Aug 06, 2025 at 09:40:29AM -0500, Rob Herring (Arm) wrote:
->> On Wed, 06 Aug 2025 14:38:29 +0200, Krzysztof Kozlowski wrote:
-> [..]
->> arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: /soc@0/video-codec@aa00000: failed to match any schema with compatible: ['qcom,sm8750-iris']
->> arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: clock-controller@aaf0000 (qcom,sm8750-videocc): 'required-opps' is a required property
->> 	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8450-videocc.yaml#
+On 25-07-25, 16:20, Jyothi Kumar Seerapu wrote:
 > 
-> Can anyone help me understand why required-opps is a required property
-> in the videocc binding?
-
-Tee DT changes are to be picked, see https://lore.kernel.org/all/0a6baf09-b1b8-4573-b53d-574838efd9ec@quicinc.com/
-
-I asked for them to be re-sent, but no...
-
-Neil
-
 > 
-> Is there a valid level below "low_svs" that is otherwise selected, but
-> insufficient to keep the clock controller ticking?
+> On 7/23/2025 12:45 PM, Vinod Koul wrote:
+> > On 22-07-25, 15:46, Dmitry Baryshkov wrote:
+> > > On Tue, Jul 22, 2025 at 05:50:08PM +0530, Jyothi Kumar Seerapu wrote:
+> > > > On 7/19/2025 3:27 PM, Dmitry Baryshkov wrote:
+> > > > > On Mon, Jul 07, 2025 at 09:58:30PM +0530, Jyothi Kumar Seerapu wrote:
+> > > > > > On 7/4/2025 1:11 AM, Dmitry Baryshkov wrote:
+> > > > > > > On Thu, 3 Jul 2025 at 15:51, Jyothi Kumar Seerapu
+> > 
+> > [Folks, would be nice to trim replies]
+> > 
+> > > > > > Could you please confirm if can go with the similar approach of unmap the
+> > > > > > processed TREs based on a fixed threshold or constant value, instead of
+> > > > > > unmapping them all at once?
+> > > > > 
+> > > > > I'd still say, that's a bad idea. Please stay within the boundaries of
+> > > > > the DMA API.
+> > > > > 
+> > > > I agree with the approach you suggested—it's the GPI's responsibility to
+> > > > manage the available TREs.
+> > > > 
+> > > > However, I'm curious whether can we set a dynamic watermark value perhaps
+> > > > half the available TREs) to trigger unmapping of processed TREs ? This would
+> > > > allow the software to prepare the next set of TREs while the hardware
+> > > > continues processing the remaining ones, enabling better parallelism and
+> > > > throughput.
+> > > 
+> > > Let's land the simple implementation first, which can then be improved.
+> > > However I don't see any way to return 'above the watermark' from the DMA
+> > > controller. You might need to enhance the API.
+> > 
+> > Traditionally, we set the dma transfers for watermark level and we get a
+> > interrupt. So you might want to set the callback for watermark level
+> > and then do mapping/unmapping etc in the callback. This is typical model
+> > for dmaengines, we should follow that well
+> > 
+> > BR
 > 
-> Regards,
-> Bjorn
+> Thanks Dmitry and Vinod, I will work on V7 patch for submitting the I2C
+> messages until they fit and and unmap all processed messages together for
+> now.
+> 
+> Regarding the watermark mechanism, looks GENI SE DMA supports watermark
+> interrupts but it appears that GPI DMA doesn't have such provision of
+> watermark.
 
+What is the mechanism to get interrupts from the GPI? If you submit 10
+txn, can you ask it to interrupt when half of them are done?
+
+-- 
+~Vinod
 
