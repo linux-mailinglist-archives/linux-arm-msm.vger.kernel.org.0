@@ -1,196 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-68522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49D69B210FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:08:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 353ADB21134
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:12:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A59AA6E05DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:01:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 983525014C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8606229BD93;
-	Mon, 11 Aug 2025 15:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61B702E0909;
+	Mon, 11 Aug 2025 15:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UtKBmngQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q08EK/7G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997F829BD92;
-	Mon, 11 Aug 2025 15:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363052DECA3;
+	Mon, 11 Aug 2025 15:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754927260; cv=none; b=kib5Ek9i12VjG4OkKaumetYpNoJNNQvsEyVPOmsqc3u7e/AoijLtc37fd+1gRLGSrr6JmN1WfksgVw6wd48JbAn7R161u24XE/ySZTfBVUWpNpjsWQ8MMuXPfF6ZTHkGc6kGvBVNHLsnUn7OQj6X9LA7bHYr/yZqAqu/DwQbic8=
+	t=1754927431; cv=none; b=W9wuUAX31v6tbv3QidcVzLqF9SfCMQDpvc71Bt/vDSSrslzQ46gOM4PXY72WgrTlKxUQVoafFFHZLNTRE7kR2vCjBV9EXa9YQuu0JRTAOGpVuEQbpdko9iDG4M/jtMMW0RYdnXuH2sXJgDr7K6Cxf1eIQoIPAGpUFIsF8k+5NAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754927260; c=relaxed/simple;
-	bh=HqZVUyZfVpIoagKLdA4Wnmr1ax/f/DpaIg2D3Ho4d+g=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LWqW+KDWJWfC3+8sQcJjW2LFiMlnAG0/kfDPrA4Qxtv7sSQFkCuVXVwyNBv1OHxdTzRRiyDWVz5LhpbD/PPQGCve5N7iBp26MKiMoK7VIhoDFy5v+0FoN6tofc5CeJTieyvyLsLzLiHSaGHsDspM8y3sdIOeLBil6hEaJD6dHHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UtKBmngQ; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-af90fd52147so680495666b.3;
-        Mon, 11 Aug 2025 08:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754927256; x=1755532056; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HepA4l2VLL2ahLpWoV8gVaUs9oZFV/xKVn3GOH58US4=;
-        b=UtKBmngQszzpO/c/ctnB40SRIOUZT6tLbRDUjZi9DKZtMpnr7jFzBrEVy/fwtso+u6
-         U0nSQHxxTuuer8Xzkr7pDhmZZRmrh3E/sUX4YdSvvkNaBD6WNspBc4bvEYHWta7X8p95
-         1MvDyPU5PptjG23Y3VRxB5HXCdUK+fdtHmfdFT68M/pIDM/KyrJSgwwfok2qrvfvwXWn
-         bXjnYn3XbkHspkDNCo4dobqmwYL6NIGhf/Dv5PNttoVIuhmuKsRa6BKCAYohExhXOgw/
-         XGhKqQaBqZODgGqYXUP8hkhfNsxi8NpEm3c1+I9cLb6ije4UENh7PCwBJTrjJ2opYt8s
-         FzMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754927256; x=1755532056;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HepA4l2VLL2ahLpWoV8gVaUs9oZFV/xKVn3GOH58US4=;
-        b=SD0bSH8/uQjXb1x5yzHai4WVyN4cVhFWdqAeukwkvAAvsKgTHEJ/IfWutFFWDTcj4O
-         PfEbq9HlNk8nL7q3+t86ffdoqet8LvkFAbv8fDxz9kLq9dDvvsXEyed5nBW9q5RTP3No
-         ZdI8AtO+iqeFMnnDl8cvH5EGFsYcs0NqRk9CEUisGTmsmFmEXHUJVafSCpjLL3GxKQ8z
-         snMGBpbSRyc21AhIWsNTLK9011pzdK9PLPWK0SoihKUDhiWgwsQi24tj+qHwX4bT7oiq
-         cCRN2pCx0oq9dCpKmzkLw22MPc/7W/G2V7jz0szvXHsaubzZCvFgSNu6ENA1eqIh99xc
-         pIOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVUIl27eZeb01jvnx7i3Q4Eh4Nob3pNA7TLx/GYVDB2sGPDHjwHM84aPpdwJJZLNUcGg3LQe+YIcZS+gw==@vger.kernel.org, AJvYcCViP9GKPFjtRgjBjpIdLmNJ8LteLbHk+PawV7Ad+S+k7qITMCdfRaI5gZf+iQG6Tu8/QFnJcDALv45dJ1xI@vger.kernel.org, AJvYcCWSrNzpwt193uMS8+bxWWWHZBFp9rnGY6fWf2UrBMZr8nG+tyN6sR/67rzGjfgQjyJyf+7kRYZkTJnrzkEZAA==@vger.kernel.org, AJvYcCXEWYhQaAsvJaah4CFFkK8cihpc5LGTy70MouYRRt2xIP7gjJFTyBPu/TSoVrgRZpCOnlQeUHcw9wcj3rQ8M8+pXiY=@vger.kernel.org, AJvYcCXu8uEI+/nPV18muaMVxxPET5Rsp3IRxmyMPYnYwv1aLfemygLcO689jVGh5nZZHIbD/eK2JLOdrG2kEs2mOlHRxuM=@vger.kernel.org, AJvYcCXy7qNYMFevUdGvdXOHtO1fJxKW0Cnov6rWQZD7hSkxQ9zmyMgmW4qdkxe6G0nbU6XbWQB1hvybJg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGT+oXUCXQakCXWVtDvvRpCOA101Q5xHJiN4IyfUe1frynTKhi
-	5ZtSYIG3bICUbn24ygIQY831AY1URKkzswdJRoxO0+uJYxc3tqdPqGa2
-X-Gm-Gg: ASbGnctEdPi1O2lQ50Mjqxh5yA2hEYeN/l6KW4PvhuFs6k5c9P4JVYT64N6c2ex1oei
-	H0KlEBicL/jFp5I7gsYyae0jt8+3aPKG71S2JuCm/r8W6MlzxO8nu6Ax1Fr/6VLuIDo2KBHovsa
-	2Imtyv60AAJzX9TdbRuIc6eSjb2of/p+1KDNRRZNpykjIehDC5K1nXVc58JhoHBeKqm9IIlflOZ
-	TrYzVg9ckmSn7C4GYzH5/Iftrd5Qox4o+wDR5+ZYU9T9+xeydKH/XDG+8bBsE+ddWL5ihIvn0Z8
-	TrLgBbJNaDowBI4mXtdnfGkiV3B7rt1cP5iWYZ8W/9Hy+YClZy2GOKR58bK8HkDWr3TBIqOrat2
-	b17maqN4BP2cbgpw1ua5tNk5G/MksJRxepDmJY0g=
-X-Google-Smtp-Source: AGHT+IF0QNexCp3wac3HqRrzYFcQwTmRLRgzyDHjNrtoHTrtc/DjgfXz7LJ4ALK6NtSRdUvSvS+HtQ==
-X-Received: by 2002:a17:906:9f91:b0:af9:7823:620b with SMTP id a640c23a62f3a-af9c6517c2cmr1234169966b.44.1754927255767;
-        Mon, 11 Aug 2025 08:47:35 -0700 (PDT)
-Received: from giga-mm.home ([2a02:1210:8642:2b00:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a076409sm2048822966b.12.2025.08.11.08.47.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 08:47:35 -0700 (PDT)
-Message-ID: <597d4a777a13c2b67effaf5ba32959710d2f58f8.camel@gmail.com>
-Subject: Re: [PATCH 047/114] clk: sophgo: cv18xx-ip: convert from
- round_rate() to determine_rate()
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
- Marussi	 <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto	 <inochiama@gmail.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>,  Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Paul Cercueil	 <paul@crapouillou.net>, Keguang Zhang
- <keguang.zhang@gmail.com>, Taichi Sugaya	 <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,  Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team	
- <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Jacky Huang	
- <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, Vladimir
- Zapolskiy	 <vz@mleia.com>, Piotr Wojtaszczyk
- <piotr.wojtaszczyk@timesys.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan	 <dlan@gentoo.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon	
- <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai	
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue	 <alexandre.torgue@foss.st.com>, Michal Simek
- <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
- =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,  Manivannan Sadhasivam	
- <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
- <j@jannau.net>,  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
- <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,  Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
- internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
- Filippov <jcmvbkbc@gmail.com>, Matthias Brugger	 <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno	 <angelogioacchino.delregno@collabora.com>,
- Daniel Palmer <daniel@thingy.jp>,  Romain Perier <romain.perier@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement	
- <gregory.clement@bootlin.com>, Sebastian Hesselbarth	
- <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
- <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>,  Krzysztof
- Kozlowski	 <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi	 <cw00.choi@samsung.com>, Alim Akhtar
- <alim.akhtar@samsung.com>, Qin Jian	 <qinjian@cqplus1.com>, Viresh Kumar
- <vireshk@kernel.org>, Ulf Hansson	 <ulf.hansson@linaro.org>, Luca Ceresoli
- <luca.ceresoli@bootlin.com>, Alex Helms	 <alexander.helms.jy@renesas.com>,
- Linus Walleij <linus.walleij@linaro.org>,  Liviu Dudau
- <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, Nobuhiro
- Iwamatsu	 <nobuhiro1.iwamatsu@toshiba.co.jp>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
-	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Date: Mon, 11 Aug 2025 17:47:31 +0200
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-47-b3bf97b038dc@redhat.com>
-References: 
-	<20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-	 <20250811-clk-for-stephen-round-rate-v1-47-b3bf97b038dc@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1 
+	s=arc-20240116; t=1754927431; c=relaxed/simple;
+	bh=xz5SsscxKSvb837vq9ZUhdv9db22CG35nOkoNIMi8HI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KqaFtBy+InK7fC0syZV0jBkJAPw94b9LtZF+O+uKCbwsKcpgNupkUCHIjmm3jd4/4J8gJMBGKiAICmUvnBQRg9h6f2gyWlkOPo85xEbtOy7FFo6Of4XbfiVa9oh4zPuZSuhluZDBiEUfLgGYR9JQCmyHKbVpUKgF9l6uNNXHjG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q08EK/7G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9228CC4CEED;
+	Mon, 11 Aug 2025 15:50:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754927430;
+	bh=xz5SsscxKSvb837vq9ZUhdv9db22CG35nOkoNIMi8HI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q08EK/7GHBssiZw8op5dwHH01YjSrLS+vTvGeX2ipEeo4sQ6g8vVlIdr39/fFpQLu
+	 vYdWPRkUz3Ko+Loo643LYY0V80TLhXAjzdF8SouifuFxPCJ4i8+xbTu68NDQr5rQkZ
+	 gd3maA4A591/fDF056ZxnBhPKHOf7Fb1mcucQlq0Kl5sD08b8tdt6GI4CUWo8uc2t/
+	 HQ2o15UrQ3uYP74g3mxOK5dTv9fRRIAVib3/E3WIFUtI4z1rrj4lY8Ck4XQirGN2wN
+	 7ZKSjKeg4VAdMqlJmDf5XqirhlAHLzbxxeUK2mWDmnlILKboc8AL85Thru8cB/+hsu
+	 KMeyV2c6xu0WA==
+Date: Mon, 11 Aug 2025 10:50:27 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Nitin Rawat <quic_nitirawa@quicinc.com>, vkoul@kernel.org, kishon@kernel.org, mani@kernel.org, 
+	conor+dt@kernel.org, bvanassche@acm.org, neil.armstrong@linaro.org, 
+	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
+Message-ID: <kwp3q4r5rzahzro5f6l6ml24vbiutyxokrhjsbtzcb5kvanx5e@elagxv6w5dq7>
+References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
+ <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+ <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
+ <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+ <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+ <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
+ <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
 
-On Mon, 2025-08-11 at 11:18 -0400, Brian Masney via B4 Relay wrote:
-> From: Brian Masney <bmasney@redhat.com>
->=20
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->=20
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+On Thu, Aug 07, 2025 at 08:09:56PM +0100, Mark Brown wrote:
+> On Thu, Aug 07, 2025 at 07:43:15PM +0200, Konrad Dybcio wrote:
+> > On 8/7/25 7:26 PM, Mark Brown wrote:
+> 
+> > > Note that that's specifying OPPs which is different...
+> 
+> > The microamp properties are in the top-level, not under OPP if
+> > that's what you meant
+> 
+> I mean the OPPs use case is an existing well known one for dumping stuff
+> into DT.
+> 
+> > > That doesn't mean that it's a good idea to put that information in the
+> > > DT, nor if it is sensible to put in DT does it mean that it's a good
+> > > idea to define a generic property that applies to all regulator
+> > > consumers which is what I now think Konrad is proposing.
+> 
+> > Yeah, that's what I had in mind
+> 
+> > I was never able to get a reliable source for those numbers myselfe
+> > either.. At least some of them are prooooobably? chosen based on the
+> > used regulator type, to ensure it's always in HPM..
+> 
+> That's what set_mode() is for.  Like I say it's becoming less and less
+> relevant though.
+> 
 
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+set_mode() just applies the mode to the regulator_dev, so in cases where
+you have multiple consumers of a regulator_dev things would break.
 
-> ---
-> =C2=A0drivers/clk/sophgo/clk-cv18xx-ip.c | 10 ++++++----
-> =C2=A01 file changed, 6 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/clk/sophgo/clk-cv18xx-ip.c b/drivers/clk/sophgo/clk-=
-cv18xx-ip.c
-> index b186e64d4813e2701b17520e544c453fc13d0e77..c2b58faf0938b7d537dc3a81a=
-ef59c549b9c9c79 100644
-> --- a/drivers/clk/sophgo/clk-cv18xx-ip.c
-> +++ b/drivers/clk/sophgo/clk-cv18xx-ip.c
-> @@ -45,10 +45,12 @@ static unsigned long gate_recalc_rate(struct clk_hw *=
-hw,
-> =C2=A0	return parent_rate;
-> =C2=A0}
-> =C2=A0
-> -static long gate_round_rate(struct clk_hw *hw, unsigned long rate,
-> -			=C2=A0=C2=A0=C2=A0 unsigned long *parent_rate)
-> +static int gate_determine_rate(struct clk_hw *hw,
-> +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct clk_rate_request *req)
-> =C2=A0{
-> -	return *parent_rate;
-> +	req->rate =3D req->best_parent_rate;
-> +
-> +	return 0;
-> =C2=A0}
-> =C2=A0
-> =C2=A0static int gate_set_rate(struct clk_hw *hw, unsigned long rate,
-> @@ -63,7 +65,7 @@ const struct clk_ops cv1800_clk_gate_ops =3D {
-> =C2=A0	.is_enabled =3D gate_is_enabled,
-> =C2=A0
-> =C2=A0	.recalc_rate =3D gate_recalc_rate,
-> -	.round_rate =3D gate_round_rate,
-> +	.determine_rate =3D gate_determine_rate,
-> =C2=A0	.set_rate =3D gate_set_rate,
-> =C2=A0};
+Further, there are numerous cases where we have multiple consumers each
+needing a "low" mode, but their combined load requires a "high" mode.
 
---=20
-Alexander Sverdlin.
+set_load() and its aggregation of the inputs deals with both of these
+issues.
+
+
+Whether mode setting is becoming less relevant in our hardware, that I
+don't have the definitive answer to.
+
+> > That said, our drivers cover a wide variety of hardware, built on a
+> > wide variety of process nodes, with different configurations, etc.,
+> > so it's either polluting the DT, or polluting the driver with
+> > per-compatible hardcoded data (and additional compatibles because
+> > fallbacks wouldn't work most of the time)
+
+If this is our reason for putting it in DeviceTree, then we should write
+that in the commit message :)
+
+> 
+> That's really not a persuasive argument for adding a genric property
+> that applies to all regulator consumers...
+> 
+
+I agree, even if we determine that this belongs in DT, because it needs
+to be tweaked on a per-board basis, it's still only applicable to a
+fraction of our device nodes.
+
+Regards,
+Bjorn
+
+> My instinct with this stuff is generally to avoid putting it in the DT,
+> we see far too many instances where someone's typed some numbers in
+> wrongly or discovers the ability to drive the hardware harder and needs
+> to tune the numbers - once something is ABI you're stuck just trusting
+> the numbers.  That said I'm not going to stop you putting something
+> specific to this driver in there, I just don't think this is a good idea
+> as a generic property.
+
 
