@@ -1,52 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-68296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA6CCB20489
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:54:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8C6BB204A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:57:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70164170718
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:53:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 459D23B3A89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:55:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 669E9258CC4;
-	Mon, 11 Aug 2025 09:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13F5A1C1F05;
+	Mon, 11 Aug 2025 09:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="kDkleRp9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x26Xvxg4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A945C7E0E8;
-	Mon, 11 Aug 2025 09:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4502A204C0F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 09:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754905891; cv=none; b=JIarv8HNAAlPbl8wj9YgIA0NM5rC+5tW4NL0Dze++OB/R0J8ZBrMLDKqCeKGskhLyTy0bgUx9jU0hEkC3yZL58FJz27ot9nltHI1XPVJ34PcHkjSuJNpchfR3UeAhSXBBNebYZUI9tb8c5MIY05jBls4XssWbaPDODnemPLwgFs=
+	t=1754906072; cv=none; b=LkN+/hVsWUFx4ZagtjsnaLDCI1euXm0CiO6NGCFrmRZpbVYhlYlcnpNGHtyq5CSWa7CatoENrTWBewe2uZr1SK62eVgxjWxmgvFUv05I5+M0H+q1dm30dLy04nxoEH5rx28IYRrV7rRmZBYFnNsHNllnxhXToIp1LecX6kMXwdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754905891; c=relaxed/simple;
-	bh=CIdFgHGKXfMtyq/LSGdi+fapSuHT7uJeKz9JOuKNr3Y=;
+	s=arc-20240116; t=1754906072; c=relaxed/simple;
+	bh=Nr/Zc96NOCXVBYCb5kWDyvXIpmXjObnc67hVK+GSoIE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iWhXKImWSpthNb0XZgiQorOJvCyCObTiPh9MPJhmkidkdDRZxNyoSNui0F6ug1yg8X+W7F9pXZ4CXUfUKczV9MFeUTsKmd3ESefq9Rlsx7rZsSJ1dJCynfTJxUHCxcM/zxsKy2ssATnbDxQE4EC8MmDguMr6/WMLvwLpIy7UlsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=kDkleRp9; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 5FD9C42EF5;
-	Mon, 11 Aug 2025 09:51:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1754905880;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ATZgIzZqa81JTLzClnQDVHSuvQlypIxL4qy51wWr8tI=;
-	b=kDkleRp9ulx5espGtq0ahjUY0Ad5IOiRCFdjMEoP9VP3pCgl7KquPE/WQ4r1rB+G0AtT9r
-	VL4ej5WlJ2hQhK5XNpLfBNw39SOpcdzUuchwBaDbU1Ge0u78LEBgrXqS86jXdYXZx+2Zie
-	cr9ScWp9vO14nFlKtJeDrrtm5UcVdamYIMOVo5v4IP9oeS7xY5FcIijyCcAryn6PyJv5c/
-	qrhTJ6odZWWBlCCQMVA9AeKn+N12R+euo1/I23Xin+ZrwkGNpLvZa14nzOB4X1C35jNeES
-	CFySSEXXeKgLZ9CtG55BcQflddldfEh4/yOvtDVrpl7yIoZ4C+8yfSfwtWL+zQ==
-Message-ID: <28e1e51b-759c-4470-aef7-6ccb116e3920@bootlin.com>
-Date: Mon, 11 Aug 2025 11:51:16 +0200
+	 In-Reply-To:Content-Type; b=iOafqrL4r/9DC2BFNjdqSnXo80mXQw/Q5cDLaHaC6Ztmt3opITEBoPVqfctKXAl5YglCbIHmdjsUpWMItToEBDrJoYz+relWm2hMgj7kxdzyhhw6PesKS04f9zzvty3iGnhQ1VU2P1rp0pPVXyh4SfLOsUJnVu+EzhHDZVEkLpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x26Xvxg4; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b7961cf660so3386431f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 02:54:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754906069; x=1755510869; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SB4vnpXFiG3Tz1CHMP1RECPLWqu2Bxoslj8wFFWj+OA=;
+        b=x26Xvxg4P6SxW8hHlwLOsDuJFxZNhLomHiRoZ0E/rp6JeYNCnRjQAhnbMUJzqdqn7R
+         NgkS14VdPcHr9ZuKEOl5CzRj6JzErxLQ90WGJqNhfsfq2eWwHD56vIHoe2mwthVn0or5
+         p3nXkewtXvXhHTHRnxMJqQrz/9XLwJAsHces9Qay1lbXc378SpCtYSoOqlabxJAq/oRF
+         TjxbV/FV5AfonX3T7BYVB9vQtHX1OsNaK3k+BqqodN9xn3Tibt3fhwg8PYLX4Dnc9aBh
+         AAL05aOQGJuuKfZerm1O/kE6L0gPLApezhpVbK2COxa8ZqajoefzmFroMnllKmXRvDAj
+         F3DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754906069; x=1755510869;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SB4vnpXFiG3Tz1CHMP1RECPLWqu2Bxoslj8wFFWj+OA=;
+        b=Sln7FYvh+bSJP/PDzWwl+v3FUBxBnpTSfGxEool58OhF4U+RujyyB30iwiNgOmB33D
+         l6CgGp1kJL0HpspzQI5aU4yf4w6jFmi433ZEJdwOBteALU5h8vQ/Ha/hrG4aN1FUeraF
+         a5+GO6mmVSXQYT2N83HX/YX77bRAJKh0OTyv5/ySAAmJPODdErR8/hzS0R5vYniafIRt
+         v3nHct64HtdMMKswo5sT51wKgqKDGheBdtJXZbzVpVtEzG2dN8+ue0d9qeM3j2/dSDwF
+         Jiz2wkiWjQZkJ32NRQqRMTWbGlSLYd3MWzZgqdRggwHgdHI5joS8ALItlb14R1kOLUyV
+         CqHg==
+X-Forwarded-Encrypted: i=1; AJvYcCUNbUV592ORj83q6V5nYVYEYO91oeZCwpVuzWx1hHIfOeueviM4UoQuhGT4gT8UuVUFo7qh/uHhgGlamMTt@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywqy4thRbPUfzhNr09hSmqTqU6dSrXjyw9a+TwVY6xwI2ijw2ls
+	JB57zFh2Ox17R9NPdG1PPIoAz7mDCcWwKF3NxU4WgazpJE4cCWhEBa0y4bJexXlIPtM=
+X-Gm-Gg: ASbGncs29rEpjWRBtxM1TP8jITTegY249HTqX+/7ipIYoi8fUxl0T7cuYlkPlGJXB5U
+	3r9pPgATCNfg9RYcnEp0P40GSeKwZ7zNmNtgMWt12vwRdebgX/gqSk1GfyVgAeisXvGhBmpg0L0
+	WGpbEpSoGQgVHniGGWJFMJfJeKsgqENBWBp3SbB1ns8/6DlB4nWxjshJW0KcTyMRlQFuotINM47
+	aM4mm5DyFgLxOHQjMs4SM+p334ISPjhg4VvlssJXXX6EWgmxU7j7j0lHWlNDth/z/hvrUBRpvgi
+	rqgo7tcUzQkAszp2f5hg+Jyw7ZTCtfl5oqExUTlwhuzQrU1DaKK6Mh8TxmM1wezuxqSgAZnmAN9
+	EQlPNHrswMvYccldT+BakpyzLZyRaKSuodDze3DID9KU/S6V8xPGqZwI+2yLHwl/Qkn+nR+nEow
+	==
+X-Google-Smtp-Source: AGHT+IFLWaeyYt4QW6TcIL93toOpoOSpJi+FGEvUSeA8yqAuAWz6vKsBb7k0ryhdLbJ41J3PK6Tr+A==
+X-Received: by 2002:a05:6000:420e:b0:3b7:dd87:d741 with SMTP id ffacd0b85a97d-3b900b78c90mr9197547f8f.42.1754906068602;
+        Mon, 11 Aug 2025 02:54:28 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dcb86d6asm298162405e9.5.2025.08.11.02.54.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 02:54:28 -0700 (PDT)
+Message-ID: <06d96ac6-8006-4a46-8f55-e1988c0feb1d@linaro.org>
+Date: Mon, 11 Aug 2025 10:54:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,194 +83,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 6/8] drm/vkms: Adapt vkms writeback to new
- drm_writeback_connector
-To: Suraj Kandpal <suraj.kandpal@intel.com>, kernel-list@raspberrypi.com,
- amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
-Cc: ankit.k.nautiyal@intel.com, arun.r.murthy@intel.com,
- uma.shankar@intel.com, jani.nikula@intel.com,
- dmitry.baryshkov@oss.qualcomm.com, harry.wentland@amd.com,
- siqueira@igalia.com, alexander.deucher@amd.com, christian.koenig@amd.com,
- airlied@gmail.com, simona@ffwll.ch, liviu.dudau@arm.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- robin.clark@oss.qualcomm.com, abhinav.kumar@linux.dev, tzimmermann@suse.de,
- jessica.zhang@oss.qualcomm.com, sean@poorly.run,
- marijn.suijten@somainline.org, laurent.pinchart+renesas@ideasonboard.com,
- mcanal@igalia.com, dave.stevenson@raspberrypi.com,
- tomi.valkeinen+renesas@ideasonboard.com,
- kieran.bingham+renesas@ideasonboard.com
-References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
- <20250811092707.3986802-7-suraj.kandpal@intel.com>
+Subject: Re: [PATCH 01/25] media: iris: Fix buffer count reporting in internal
+ buffer check
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil
+ <hverkuil@xs4all.nl>, Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Vedang Nagar <quic_vnagar@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com>
+ <20250704-iris-video-encoder-v1-1-b6ce24e273cf@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Louis Chauvet <louis.chauvet@bootlin.com>
-Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
- xsFNBGCG5KEBEAD1yQ5C7eS4rxD0Wj7JRYZ07UhWTbBpbSjHjYJQWx/qupQdzzxe6sdrxYSY
- 5K81kIWbtQX91pD/wH5UapRF4kwMXTAqof8+m3XfYcEDVG31Kf8QkJTG/gLBi1UfJgGBahbY
- hjP40kuUR/mr7M7bKoBP9Uh0uaEM+DuKl6bSXMSrJ6fOtEPOtnfBY0xVPmqIKfLFEkjh800v
- jD1fdwWKtAIXf+cQtC9QWvcdzAmQIwmyFBmbg+ccqao1OIXTgu+qMAHfgKDjYctESvo+Szmb
- DFBZudPbyTAlf2mVKpoHKMGy3ndPZ19RboKUP0wjrF+Snif6zRFisHK7D/mqpgUftoV4HjEH
- bQO9bTJZXIoPJMSb+Lyds0m83/LYfjcWP8w889bNyD4Lzzzu+hWIu/OObJeGEQqY01etOLMh
- deuSuCG9tFr0DY6l37d4VK4dqq4Snmm87IRCb3AHAEMJ5SsO8WmRYF8ReLIk0tJJPrALv8DD
- lnLnwadBJ9H8djZMj24+GC6MJjN8dDNWctpBXgGZKuCM7Ggaex+RLHP/+14Vl+lSLdFiUb3U
- ljBXuc9v5/9+D8fWlH03q+NCa1dVgUtsP2lpolOV3EE85q1HdMyt5K91oB0hLNFdTFYwn1bW
- WJ2FaRhiC1yV4kn/z8g7fAp57VyIb6lQfS1Wwuj5/53XYjdipQARAQABzSlMb3VpcyBDaGF1
- dmV0IDxsb3Vpcy5jaGF1dmV0QGJvb3RsaW4uY29tPsLBlAQTAQgAPgIbAwULCQgHAgYVCgkI
- CwIEFgIDAQIeAQIXgBYhBItxBK6aJy1mk/Un8uwYg/VeC0ClBQJod7hIBQkJ0gcjAAoJEOwY
- g/VeC0ClghwP/RQeixyghRVZEQtZO5/UsHkNkRRUWeVF9EoFXqFFnWqh4XXKos242btk5+Ew
- +OThuqDx9iLhLJLUc8XXuVw6rbJEP5j5+z0jI40e7Y+kVWCli/O2H/CrK98mGWwicBPEzrDD
- 4EfRgD0MeQ9fo2XJ3Iv+XiiZaBFQIKMAEynYdbqECIXxuzAnofhq2PcCrjZmqThwu8jHSc55
- KwdknZU3aEKSrTYiCIRrsHHi1N6vwiTZ098zL1efw7u0Q8rcqxHu3OWNIAeKHkozsMy9yo1h
- h3Yc7CA1PrKDGcywuY4MrV726/0VlrWcypYOCM1XG+/4ezIChYizpAiBNlAmd7witTK0d2HT
- UNSZF8KAOQRlHsIPrkA5qLr94OrFHYx6Ek07zS8LmVTtHricbYxFAXnQ5WbugNSE0uwRyrL/
- Kies5F0Sst2PcVYguoWcHfoNxes6OeU3xDmzclnpYQTanIU7SBzWXB1fr5WgHF7SAcAVxPY8
- wAlJBe+zMeA6oWidrd1u37eaEhHfpKX38J1VaSDTNRE+4SPQ+hKGDuMrDn0mXfcqR5wO7n1Z
- Q6uhKj3k6SJNksAWh1u13NP0DRS6rpRllvGWIyp+653R03NN8TE9JNRWAtSqoGvsiryhQyCE
- FlPOsv6+Ed/5a4dfLcO1qScJwiuP/XjFHAaWFK9RoOX52lR4zsFNBGCG6KUBEADZhvm9TZ25
- JZa7wbKMOpvSH36K8wl74FhuVuv7ykeFPKH2oC7zmP1oqs1IF1UXQQzNkCHsBpIZq+TSE74a
- mG4sEhZP0irrG/w3JQ9Vbxds7PzlQzDarJ1WJvS2KZ4AVnwc/ucirNuxinAuAmmNBUNF8w6o
- Y97sdgFuIZUP6h972Tby5bu7wmy1hWL3+2QV+LEKmRpr0D9jDtJrKfm25sLwoHIojdQtGv2g
- JbQ9Oh9+k3QG9Kh6tiQoOrzgJ9pNjamYsnti9M2XHhlX489eXq/E6bWOBRa0UmD0tuQKNgK1
- n8EDmFPW3L0vEnytAl4QyZEzPhO30GEcgtNkaJVQwiXtn4FMw4R5ncqXVvzR7rnEuXwyO9RF
- tjqhwxsfRlORo6vMKqvDxFfgIkVnlc2KBa563qDNARB6caG6kRaLVcy0pGVlCiHLjl6ygP+G
- GCNfoh/PADQz7gaobN2WZzXbsVS5LDb9w/TqskSRhkgXpxt6k2rqNgdfeyomlkQnruvkIIjs
- Sk2X68nwHJlCjze3IgSngS2Gc0NC/DDoUBMblP6a2LJwuF/nvaW+QzPquy5KjKUO2UqIO9y+
- movZqE777uayqmMeIy4cd/gg/yTBBcGvWVm0Dh7dE6G6WXJUhWIUtXCzxKMmkvSmZy+gt1rN
- OyCd65HgUXPBf+hioCzGVFSoqQARAQABwsOyBBgBCAAmAhsuFiEEi3EErponLWaT9Sfy7BiD
- 9V4LQKUFAmh3uH8FCQnSA1kCQMF0IAQZAQgAHRYhBE+PuD++eDwxDFBZBCCtLsZbECziBQJg
- huilAAoJECCtLsZbECziB8YQAJwDRdU16xtUjK+zlImknL7pyysfjLLbfegZyVfY/ulwKWzn
- nCJXrLAK1FpdYWPO1iaSVCJ5pn/Or6lS5QO0Fmj3mtQ/bQTnqBhXZcUHXxZh56RPAfl3Z3+P
- 77rSIcTFZMH6yAwS/cIQaKRQGPuJoxfYq1oHWT0r7crp3H+zUpbE4KUWRskRX+2Z6rtNrwuL
- K1Az1vjJjnnS3MLSkQR4VwsVejWbkpwlq5icCquU5Vjjw0WkVR32gBl/8/OnegSz7Of/zMrY
- 8GtlkIPoCGtui1HLuKsTl6KaHFywWbX4wbm5+dpBRYetFhdW4WG+RKipnyMY+A8SkWivg2NH
- Jf88wuCVDtLmyeS8pyvcu6fjhrJtcQer/UVPNbaQ6HqQUcUU49sy/W+gkowjOuYOgNL7EA23
- 8trs7CkLKUKAXq32gcdNMZ8B/C19hluJ6kLroUN78m39AvCQhd4ih5JLU7jqsl0ZYbaQe2FQ
- z64htRtpElbwCQmnM/UzPtOJ5H/2M7hg95Sb20YvmQ/bLI23MWKVyg56jHU1IU0A/P7M9yi9
- WbEBpIMZxLOFBUlWWTzE+JvyDh+cjyoncaPvHLDwP13PGEJHYMgWZkvzgSc3tGP6ThUgZjsz
- 9xW/EvzWOVswYwREyZv3oK5r3PVE6+IYDUd7aBsc5ynqqYs27eemuV4bw8tlCRDsGIP1XgtA
- pT1zD/0dT+clFbGoCMaIQ5qXypYoO0DYLmBD1aFjJy1YLsS1SCzuwROy4qWWaFMNBoDMF2cY
- D+XbM+C/4XBS8/wruAUrr+8RSbABBI/rfiVmqv0gPQWDm676V8iMDgyyvMG2DotMjnG/Dfxj
- w9WVnQUs/kQSPD8GZCZZ3AcycFmxN24ibGHo4zC947VKR5ZYdFHknX+Dt92TdNDkmoBg2CEm
- 9S2Skki9Pwyvb/21zCYq/o4pRMfKmQgpF2LT2m51rdtmNg9oj9F4+BJUmkgyNxMyGEA1V1jM
- xQaVX4mRY61O4CimPByUDp2EH2VaEr2rEwvHszaWqFJdSQE8hdSDc4cqhik7rznNBjwgZAzq
- cefLctAVnKjasfKEWp0VhgkIVB8/Sos4S8YaG4qbeGviSfIQJ2GO1Vd9WQ2n1XGth3cY2Qwk
- dIo13GCFJF7b6y0J13bm+siRpPZQ3aOda7pn07GXqREjFsfq5gF04/9am5x/haehPse2yzcP
- wDN7ORknPndzxrq3CyB7b/Tk1e8Qx+6HU/pnMb4ZqwwMwZAMk24TZpsgg28o9MQiUNzad0h2
- gIszbeej9ryrtLHxMzyK8yKhHoI2i2ovxy5O+hsWeAoCPE9xwbqnAjLjOn4Jzd/pPovizrq/
- kUoX66YgvCuHfQMC/aBPLnVunZSP23J2CrkTrnsUzw==
-In-Reply-To: <20250811092707.3986802-7-suraj.kandpal@intel.com>
+In-Reply-To: <20250704-iris-video-encoder-v1-1-b6ce24e273cf@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvudefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepnfhouhhishcuvehhrghuvhgvthcuoehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeekieevtdefgedtkeehteehtddttdefhffhgeejleejjeeluddvhfdugedvkeehveenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehpdhhvghloheplgfkrfggieemvddttddumeekiedumeegudegtdemtgekiedtmeehugeiudemieeffeelmeeiiegrieemvgdtjeehngdpmhgrihhlfhhrohhmpehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefhedprhgtphhtthhopehsuhhrrghjrdhkrghnughprghlsehinhhtvghlrdgtohhmpdhrtghpthhtohepkhgvrhhnv
- ghlqdhlihhsthesrhgrshhpsggvrhhrhihpihdrtghomhdprhgtphhtthhopegrmhguqdhgfhigsehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrhgvnhgvshgrshdqshhotgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhrvggvughrvghnoheslhhishhtshdrfhhrvggvuggvshhkthhophdrohhrghdprhgtphhtthhopegurhhiqdguvghvvghlsehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhg
-X-GND-Sasl: louis.chauvet@bootlin.com
+Content-Transfer-Encoding: 7bit
 
-
-
-Le 11/08/2025 à 11:27, Suraj Kandpal a écrit :
-> Now that drm_writeback_connector is embedded with the drm_connector
-> adapt the vkms writeback functionality to this changes. This
-> includes changing the drm_writeback_connector to be changed to
-> drm_connector within the vkms_output.
-> Some other changes are done which are a result of the all the above
-> changes mentioned.
+On 04/07/2025 08:53, Dikshita Agarwal wrote:
+> Initialize the count variable to zero before counting unreleased
+> internal buffers in iris_check_num_queued_internal_buffers().
+> This prevents stale values from previous iterations and ensures accurate
+> error reporting for each buffer type. Without this initialization, the
+> count could accumulate across types, leading to incorrect log messages.
 > 
-> Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> Fixes: d2abb1ff5a3c ("media: iris: Verify internal buffer release on close")
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->   drivers/gpu/drm/vkms/vkms_composer.c  |  2 +-
->   drivers/gpu/drm/vkms/vkms_drv.h       |  2 +-
->   drivers/gpu/drm/vkms/vkms_writeback.c | 15 +++++++++------
->   3 files changed, 11 insertions(+), 8 deletions(-)
+>   drivers/media/platform/qcom/iris/iris_vidc.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
-> index fa269d279e25..b5f20637121c 100644
-> --- a/drivers/gpu/drm/vkms/vkms_composer.c
-> +++ b/drivers/gpu/drm/vkms/vkms_composer.c
-> @@ -543,7 +543,7 @@ void vkms_composer_worker(struct work_struct *work)
->   		return;
+> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+> index c417e8c31f806e03555cd5e2a662a6efe5d58f3e..8285bdaf9466d4bea0f89a3b1943ed7d6c014b7d 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -240,6 +240,7 @@ static void iris_check_num_queued_internal_buffers(struct iris_inst *inst, u32 p
 >   
->   	if (wb_pending) {
-> -		drm_writeback_signal_completion(&out->wb_connector, 0);
-> +		drm_writeback_signal_completion(&out->connector.writeback, 0);
->   		spin_lock_irq(&out->composer_lock);
->   		crtc_state->wb_pending = false;
->   		spin_unlock_irq(&out->composer_lock);
-> diff --git a/drivers/gpu/drm/vkms/vkms_drv.h b/drivers/gpu/drm/vkms/vkms_drv.h
-> index 8013c31efe3b..2e58a06c9ad8 100644
-> --- a/drivers/gpu/drm/vkms/vkms_drv.h
-> +++ b/drivers/gpu/drm/vkms/vkms_drv.h
-> @@ -213,7 +213,7 @@ struct vkms_crtc_state {
->    */
->   struct vkms_output {
->   	struct drm_crtc crtc;
-> -	struct drm_writeback_connector wb_connector;
-> +	struct drm_connector connector;
-
-Can you keep wb_connector here?
-
->   	struct drm_encoder wb_encoder;
->   	struct hrtimer vblank_hrtimer;
->   	ktime_t period_ns;
-> diff --git a/drivers/gpu/drm/vkms/vkms_writeback.c b/drivers/gpu/drm/vkms/vkms_writeback.c
-> index 45d69a3b85f6..13c2a5c8f57a 100644
-> --- a/drivers/gpu/drm/vkms/vkms_writeback.c
-> +++ b/drivers/gpu/drm/vkms/vkms_writeback.c
-> @@ -102,13 +102,16 @@ static int vkms_wb_prepare_job(struct drm_writeback_connector *wb_connector,
->   	return ret;
->   }
->   
-> -static void vkms_wb_cleanup_job(struct drm_writeback_connector *connector,
-> +static void vkms_wb_cleanup_job(struct drm_writeback_connector *wb_connector,
->   				struct drm_writeback_job *job)
->   {
->   	struct vkms_writeback_job *vkmsjob = job->priv;
-> +	struct drm_connector *connector = container_of(wb_connector,
-> +						       struct drm_connector,
-> +						       writeback);
->   	struct vkms_output *vkms_output = container_of(connector,
->   						       struct vkms_output,
-> -						       wb_connector);
-> +						       connector);
->   
->   	if (!job->fb)
->   		return;
-> @@ -127,8 +130,8 @@ static void vkms_wb_atomic_commit(struct drm_connector *conn,
->   	struct drm_connector_state *connector_state = drm_atomic_get_new_connector_state(state,
->   											 conn);
->   	struct vkms_output *output = drm_crtc_to_vkms_output(connector_state->crtc);
-> -	struct drm_writeback_connector *wb_conn = &output->wb_connector;
-> -	struct drm_connector_state *conn_state = wb_conn->base.state;
-> +	struct drm_writeback_connector *wb_conn = &output->connector.writeback;
-> +	struct drm_connector_state *conn_state = output->connector.state;
->   	struct vkms_crtc_state *crtc_state = output->composer_state;
->   	struct drm_framebuffer *fb = connector_state->writeback_job->fb;
->   	u16 crtc_height = crtc_state->base.mode.vdisplay;
-> @@ -166,7 +169,7 @@ static const struct drm_connector_helper_funcs vkms_wb_conn_helper_funcs = {
->   int vkms_enable_writeback_connector(struct vkms_device *vkmsdev,
->   				    struct vkms_output *vkms_output)
->   {
-> -	struct drm_writeback_connector *wb = &vkms_output->wb_connector;
-> +	struct drm_writeback_connector *wb = &vkms_output->connector.writeback;
->   	int ret;
->   
->   	ret = drmm_encoder_init(&vkmsdev->drm, &vkms_output->wb_encoder,
-> @@ -177,7 +180,7 @@ int vkms_enable_writeback_connector(struct vkms_device *vkmsdev,
->   	vkms_output->wb_encoder.possible_clones |=
->   		drm_encoder_mask(&vkms_output->wb_encoder);
->   
-> -	drm_connector_helper_add(&wb->base, &vkms_wb_conn_helper_funcs);
-> +	drm_connector_helper_add(&vkms_output->connector, &vkms_wb_conn_helper_funcs);
->   
->   	return drmm_writeback_connector_init(&vkmsdev->drm, wb,
->   					     &vkms_wb_connector_funcs,
-
--- 
-Louis Chauvet, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+>   	for (i = 0; i < internal_buffer_count; i++) {
+>   		buffers = &inst->buffers[internal_buf_type[i]];
+> +		count = 0;
+>   		list_for_each_entry_safe(buf, next, &buffers->list, list)
+>   			count++;
+>   		if (count)
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
