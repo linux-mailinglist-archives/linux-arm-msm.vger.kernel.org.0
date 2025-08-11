@@ -1,113 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-68371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87C57B20A2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 15:28:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1D0AB20BC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:25:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76C6B7A9563
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 13:27:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F4463A921C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 14:22:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4F582DE719;
-	Mon, 11 Aug 2025 13:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF12235047;
+	Mon, 11 Aug 2025 14:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p8f6b7Kw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d4qFdL7h"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D7F2DEA76
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 13:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B4E235076
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754918784; cv=none; b=B+Hl6cWszekmX1k1UQNvUkY/2Lfq5uWbG/DRjiIWYYsdI64m6s+ECX9rR1fgKwUHmHbCaCVJcaWN+2W0qwxPj9jC84AII2pvo7pAenIh1b/Jf8HoJPjMsJbPnpIQt4KK247BoSe87a3E/TFrNIfaxrVDyvHHZFu5fJkfPMwwT2s=
+	t=1754922165; cv=none; b=tD1Z8g3IA12drZ1tXzdkC1iXVpJ1hRlhYoju4FQLN5us2T9WfMweMKPT0jTULoc9C+bjrvBoCiTbUShyeV/6GkKqf7s7pgLSTSjU3cmVX+Bi2US6UZh0D736blNl5D17wjg0Ixz4bVDtaDuR7ash8/IlfBzacYoSwjg10w37bLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754918784; c=relaxed/simple;
-	bh=OTq73ODXf6BmvMGuOO/3rCMmGqcdD7/49PfTkqLOHOs=;
+	s=arc-20240116; t=1754922165; c=relaxed/simple;
+	bh=sGxVgbpfhkMiC2JIzxyPIDukcvGKIF5ZEd6qaix17IQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QzrrfaX8qCTXuzxCp7oeaPMvguxMYL63vmFvsX4PsrMvYJQ5yyXeeYO6E4VHLk7EUHTDtCe7AqGU2/3Fzn4wIbjbF+16TnL2moyZOs+cPlRNxMfqzQaIcz+ncpqWcL9UDaAft8D9V8rOc4Kg+fKpeGk8CgD/J9t8S3DWphos/bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p8f6b7Kw; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=IsKPAjOEr+yb4UwS9iw+J3ABrTp4eB6eYmnyYyx053P78mBsMUV5Lquj9g7pEiltzF/77pUvN/O1IOtsWz8liKf5w1L9fmsZD1FYufbALSmPDVOnJs9Uz9eGQtIbmF3QX2fRnKObqfElXnw9606UKAVZG/a9ynwIQhQ9SwzHWoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d4qFdL7h; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dCrp029349
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 13:26:22 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dANY028829
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 14:22:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=vRikIynOffv5hukm3CKQ6SgT
-	vsP8Ryyr+lMrwvSQIzY=; b=p8f6b7KwJiYJ1X2hf94LyRPBUQyawbhk9VSvJzGE
-	DcS0zOtYY2HjC5TEq5XRYFGd5ZmWt2OniURI87DtmkMygR94tLhXxzwXev1O7sGM
-	wsnL8Uct1JMYVLGowrnGkSpgkpzztPyGRQ/l6RrB4EQ/ZU87Pfn4saIFdqqWNQvw
-	0jmZ9nrljs7UUKQDs3hC5RJ71aqmfRcMwozM5IlDwOWBowpH9tKj/JmmgZrhQyqg
-	CutdLldAKoUXN5szorjHp7uTnYgn3AFufDl9qK7gZs3Cu+KcQp7ZWP+bD+kY3qHg
-	Xom/m64tqGBryAwEH7hMeuLe2b9WBcvSctNuyWxldJyHdQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dw9smp2h-1
+	:references:subject:to; s=qcppdkim1; bh=atvUDHFH97dMJ5RNFFG95hKk
+	/JrHvvz/NgsyopsiKk8=; b=d4qFdL7hFWSQqJiJGacCAfvwApxv3jP+S7g5HIx+
+	xQZpa8CGuoSfNX0Ddv6iHZBVmd671cQnR0HxEmfbbFfOOe6QQwNv4wMdXjWyGKeO
+	4FKZNZumtPL9JBwFDTS8VO9DPnAZVUHnE9u0rAHkGR89T22x+zLoexcUwsu/rmLe
+	IVrGrIQ2jcIwy4lIb/rVFiaZ/pqxzTSfwHrkDuDBurZJWdrOZjVvYLVYEyIlnUjP
+	vvyQNPFj1Af+30GpLQi3lSEoH19LLIvUR+9nqlwEfRIRhVNGr1lWxiRpAKFHOKa+
+	8tR3+/H/txKJAPgXzmnFt284sQTgOo42E3n9v2+Mfub82g==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dw9smtxf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 13:26:22 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4af14c04e5fso167875711cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 06:26:22 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 14:22:43 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-4fe1823af5eso1268851137.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 07:22:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754918781; x=1755523581;
+        d=1e100.net; s=20230601; t=1754922162; x=1755526962;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vRikIynOffv5hukm3CKQ6SgTvsP8Ryyr+lMrwvSQIzY=;
-        b=d6OEsdo86zL4HIuSwj2ngVpNCTYknDL9tlLiMJWs/v/fbupMg8m80WyxBlHkYg/0XN
-         5sWlxiYTlIBAPGFqSfx58U9N1V9TzGY91swKmcZl4qc7YbVcRBw1zal9g34cxeARjs6A
-         4ZGto/sNY2e/Y39beiSvoV6LN8lsdNA9leL6loMHYyBqhuvFxrEjr0EZ7pjBu/RpXvGY
-         0QXzgMNcbALc3lrqcBh1EAt4YLbSMh93qA2ZnxYWl/VDpuRjx2m6fWjkIX/TbItP1U+n
-         Fzix9XjAM3V1OOFNH/DWvRgfbUeI4ArP6MeHMD/5ZNrqVs1e6/a1DhHu+mCDlxgP5txr
-         DbsA==
-X-Forwarded-Encrypted: i=1; AJvYcCXu64aBZDserVaukUZNahiJqTJK8OXHez9p+qnOxHr7Uv0e+pQQMN79J3ZppUrK8zEJi6HRNxcZXW7tjctl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjJbd1+KXc/zMRWY4OkT2/wsY3v4kcqk3knS7wTigFmovH2OJp
-	ZZdTEecib47dGVnsY2y9BcfsHbDuOmYUFG10AEN6THzqyqw8yvwhim6ETMbtdoDHj6jlHhrPBnx
-	h59851zWVQxrH6sD6y9tELTElqQw7xsHSf279mqlOdpRf+uW9X2tvEesnKJG8LnTaSMtn
-X-Gm-Gg: ASbGncuR3pQOmRiIVm1fJwimo0fysMYKmUOm5tAkub1/HiAhDcyfeSK6pI472Y3y1pW
-	eBjEXDMWAO+xE2OZY8wuI/sG9n8VMM9YzQFI+lApIvxrLOmOyq/1diNTV6S5GFjveGu6RXqEFU5
-	LHeREFZ+mKBuUBBVCeub+zjFrrtISBeQSGrtTQmI8R9fsWUpiyrVedbFa5tqTcslq2owpwrItXQ
-	nBUHmmhmP5cBJEmsOehuoGwFnWx6CkjlcdV2P1V53qbFfK1BiukzXd4w0alXdG3ii6ShJEt5YIf
-	X1lxNLZW7iMPq/6JH+GeYN2oMG4Pyv6PUp8IGrb09SipE5AIzN8PMHBQ+od8lWVr1IXZdsvCY+4
-	WoUZwx4FlVq6SCigg/Tv3TBtQg94yOjPdYhWcbVIgy6d+NRZjldL4
-X-Received: by 2002:a05:622a:58c6:b0:4b0:75f1:4cd5 with SMTP id d75a77b69052e-4b0aed5ec14mr139029371cf.44.1754918780909;
-        Mon, 11 Aug 2025 06:26:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0wKTLCLx4/yIBgQvD8Ue94ZiVJ7wpTEfZ89QbuRpyBiuJsOKla4drlyaZDIdLWLJCAt0VIQ==
-X-Received: by 2002:a05:622a:58c6:b0:4b0:75f1:4cd5 with SMTP id d75a77b69052e-4b0aed5ec14mr139028901cf.44.1754918780301;
-        Mon, 11 Aug 2025 06:26:20 -0700 (PDT)
+        bh=atvUDHFH97dMJ5RNFFG95hKk/JrHvvz/NgsyopsiKk8=;
+        b=XA9ocmVXOKxyEN7P21u5fG1ENaICWHZWIO/vLYzVsTAmOJH/LDlaoLbuU/1OSe6vs3
+         J2yZ7VquoW3yv8HHkcktNBs/uRXZm5JkZMqFiiyPBJCjPic3mhLfcNsHiyYKy86bOAKR
+         z2IlnAuFYwfDc5zQFg54IKoGxbwYxLEc1yy58xl+k2b1PKdJwk31OxfXbsM/Tz2jvc8M
+         aTNWBuTbA5qpqZVN7hlEQGFuEokk/HLLPfYfuFmji+fQZ1+wU//i5WLvu23khypED80J
+         wG99YJ5U3+hLDmkj/ZpXa03MuuVO8HY+TEI42rAKqhYUwTiQe7A9T15GhKtbc0s4mwwa
+         AONQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV8WTda2VXiD+N1qwA3YM/B5tP3unloGk/F+vUTel6UtHn/vqSw/ZtC+Z72+LqU/Wo/u3a0jLYsqBHVu2Zh@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTkESKbfOheoQN90Bn2uw1HuSIQool0zXYkTY2ipuUazZ+VVTC
+	dF75tlUEiCB79kyMYHxyhbMgtkuWSoZKF7NU5kcDxJrwPMfBKRujd2BZXKfRaYIVepBB2tHfoeP
+	XIKeGoV02fbp5dWJpR77hcZM4ztjIZ3BatzrRuGJLtYxHq+8X+uxBq42r0mGVZcw2MhlL
+X-Gm-Gg: ASbGncvacMIVQf4ffgv5YH3Cxy8zP0hl2hjJH1kts6ep9MWV2NhR11ERDzRjqq6BCgF
+	MD0Q/8qN0cEO3JQBZGImE3qHGN66mfCi/C2SIi8fOIrMe4g959AY39zSGIDTDZxvzorkRvwQAgm
+	OAnhnaVokBZm5eJcMoJMVbEBX7WljYscfxmF/Nc43o6j6qrVCfeVw5oprYKMu43mC14NT/evYg5
+	2Qu0vG+C8SmXsM/f11UitP6mGW07a1joaTZgqoxGGXesaDCl6ptXp2JCh7XzdTrWOFn2qjKLTOq
+	cz3z2AIYo8MIwHRLc+fdFs5PN/3Rjk3+Cwn1CAhB2N8P0pMjRUIlvXvvxp9ctZsIXPpwAoS/GAJ
+	6LLoF6EL3v2qsSJ21RCjuAO1vck6T0qELUi8O/vSTVukna81WhDX8
+X-Received: by 2002:a05:6102:cd3:b0:4e2:ecd8:a27 with SMTP id ada2fe7eead31-5060cd85eb9mr4315518137.4.1754922161812;
+        Mon, 11 Aug 2025 07:22:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkf0wesS+SmsO1zroWaYcVzGdW2MbxxsG794FhvDnHJ+rgmgrOMISGY1WD1WC3+A+gym4Dsw==
+X-Received: by 2002:a05:6102:cd3:b0:4e2:ecd8:a27 with SMTP id ada2fe7eead31-5060cd85eb9mr4315484137.4.1754922161414;
+        Mon, 11 Aug 2025 07:22:41 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cc7c67a5asm1192051e87.77.2025.08.11.06.26.18
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b889ac575sm4336851e87.69.2025.08.11.07.22.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 06:26:19 -0700 (PDT)
-Date: Mon, 11 Aug 2025 16:26:17 +0300
+        Mon, 11 Aug 2025 07:22:40 -0700 (PDT)
+Date: Mon, 11 Aug 2025 17:22:38 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>, kernel-list@raspberrypi.com,
-        amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        ankit.k.nautiyal@intel.com, arun.r.murthy@intel.com,
-        uma.shankar@intel.com, jani.nikula@intel.com, harry.wentland@amd.com,
-        siqueira@igalia.com, alexander.deucher@amd.com,
-        christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
-        liviu.dudau@arm.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, robin.clark@oss.qualcomm.com,
-        abhinav.kumar@linux.dev, tzimmermann@suse.de,
-        jessica.zhang@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, mcanal@igalia.com,
-        dave.stevenson@raspberrypi.com,
-        tomi.valkeinen+renesas@ideasonboard.com,
-        kieran.bingham+renesas@ideasonboard.com, louis.chauvet@bootlin.com
-Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
- structure
-Message-ID: <2ah3pau7p7brgw7huoxznvej3djct76vgfwtc72n6uub7sjojd@zzaebjdcpdwf>
-References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
- <20250811092707.3986802-2-suraj.kandpal@intel.com>
- <20250811094429.GE21313@pendragon.ideasonboard.com>
- <awtqznhquyn7etojonmjn7karznefsb7fdudawcjsj5g2bok3u@2iqcdviuiz2s>
- <20250811111546.GA30760@pendragon.ideasonboard.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2] arm64: dts: qcom: sm8750-mtp: Add WiFi and
+ Bluetooth
+Message-ID: <l6u4y3suv3dpylexbiiznhcuyanlc4ouizhzj2cchblaf6o4wg@fe4laxrioaj5>
+References: <20250811131055.154233-2-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -116,20 +100,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250811111546.GA30760@pendragon.ideasonboard.com>
-X-Authority-Analysis: v=2.4 cv=J+Wq7BnS c=1 sm=1 tr=0 ts=6899ef7e cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=QyXUC8HyAAAA:8 a=4yu1Or5Oec3-_3BIJ7kA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: br5Iq9rBunUCTDm7tDhyaPR6ogNywSNx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAxNSBTYWx0ZWRfX00+ER3pQUtue
- TEkno/1vYCz4+ltZdp1tDifmJ3aOnVj7AJD/BrLp+LlHdEpLQoHAxECgP/zmAjD451kwyf1KUXW
- QzMShCEufdoyqwFTfWMTSDKL9Xo1+4jeOClz9MR6k1mymu/vJojv+YFyP10AXvnQITHgedrXeR9
- CaNUB0xjAlK/0o7T6Dm8HkX21a5GOLRJvfNHqushX7Z8D3up9JmVfNGDJBWKZXwFKvMaJpqdVEB
- D9gR1MTgEDECsDjI1L3pvImAkws6NtAAhGIuufmvS2LYSV8mz1BWb9TTr11y685anI0lmeDd0MU
- RmhSC0X83X/nWr1tStL/p1WDe271UBNQ+nHWVzyZLmYPi1El0sBDT3MoKXUBJlmFGhxOPem2+Z1
- xX/zwE93
-X-Proofpoint-GUID: br5Iq9rBunUCTDm7tDhyaPR6ogNywSNx
+In-Reply-To: <20250811131055.154233-2-krzysztof.kozlowski@linaro.org>
+X-Authority-Analysis: v=2.4 cv=J+Wq7BnS c=1 sm=1 tr=0 ts=6899fcb3 cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=TzfybVupH9i6CaRfqM8A:9 a=CjuIK1q_8ugA:10
+ a=crWF4MFLhNY0qMRaF8an:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: CvyfM5aGBoJVaTO2lBFHvhiOb9IyGcO8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAxNSBTYWx0ZWRfXzxHodypRKe+i
+ nL6/h3hGH+FL6zPItDFbo3FytDnubjq2uI6b8XnlLV/xK98+1s668uSgScHhFw0oLU2wVBqJxzo
+ 7SrTxa1AKhcz6Q3FKJwAg/Y66I3xNMGAOGYp/vrEuT2XtSahFph1E5EAf6LRm0jaUfOCswt4fn/
+ 6pQRAaaguP68SI16sq1zOlq3u6P+t/TOyTtcFLAFkddpFunuRVbK0wBxhUYPcDETAAgTpqHJOKC
+ U3ef9FSQGuDxuLuiyi7xSwWMABRr2/7bCJVbaQieL7pAD+EIoQcZphAhg6N+5HtBJblWI6hfXMt
+ Z4CrGNYQeCIQ5YeYDbYU3MdD+wA9lotDhtN79UNnOjqtfjT7J/t/HrfeiuStcKgnohRWjKwSs/T
+ 9uh7Fktp
+X-Proofpoint-GUID: CvyfM5aGBoJVaTO2lBFHvhiOb9IyGcO8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-11_02,2025-08-11_01,2025-03-28_01
@@ -139,95 +123,26 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2507300000 definitions=main-2508090015
 
-On Mon, Aug 11, 2025 at 02:15:46PM +0300, Laurent Pinchart wrote:
-> On Mon, Aug 11, 2025 at 01:22:30PM +0300, Dmitry Baryshkov wrote:
-> > On Mon, Aug 11, 2025 at 12:44:29PM +0300, Laurent Pinchart wrote:
-> > > On Mon, Aug 11, 2025 at 02:57:00PM +0530, Suraj Kandpal wrote:
-> > > > Some drivers cannot work with the current design where the connector
-> > > > is embedded within the drm_writeback_connector such as intel and
-> > > > some drivers that can get it working end up adding a lot of checks
-> > > > all around the code to check if it's a writeback conenctor or not.
-> > > > To solve this we move the drm_writeback_connector within the
-> > > > drm_connector and remove the drm_connector base which was in
-> > > > drm_writeback_connector. We do all other required
-> > > > modifications that come with these changes along with addition
-> > > > of new function which returns the drm_connector when
-> > > > drm_writeback_connector is present.
-> > > > All drivers will be expected to allocate the drm_connector.
-> > > > 
-> > > > Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-> > > > ---
-> > > >  drivers/gpu/drm/drm_writeback.c | 33 ++++++++++------
-> > > >  include/drm/drm_connector.h     | 60 +++++++++++++++++++++++++++++
-> > > >  include/drm/drm_writeback.h     | 68 ++++-----------------------------
-> > > >  3 files changed, 89 insertions(+), 72 deletions(-)
-> > > > 
-> > > > @@ -2305,6 +2360,11 @@ struct drm_connector {
-> > > >  	 * @cec: CEC-related data.
-> > > >  	 */
-> > > >  	struct drm_connector_cec cec;
-> > > > +
-> > > > +	/**
-> > > > +	 * @writeback: Writeback related valriables.
-> > > > +	 */
-> > > > +	struct drm_writeback_connector writeback;
-> > > 
-> > > No, sorry, that's a bad idea. Most connectors have nothing to do with
-> > > writeback, you shouldn't introduce writeback-specific fields here.
-> > > drm_writeback_connector happens to be a drm_connector because of
-> > > historical reasons (it was decided to reuse the connector API exposed to
-> > > userspace instead of exposing a completely separate API in order to
-> > > simplify the implementation), but that does not mean that every
-> > > connector is related to writeback.
-> > > 
-> > > I don't know what issues the Intel driver(s) have with
-> > > drm_writeback_connector, but you shouldn't make things worse for
-> > > everybody due to a driver problem.
-> > 
-> > Suraj is trying to solve a problem that in Intel code every drm_connector
-> > must be an intel_connector too. His previous attempt resulted in a loose
-> > abstraction where drm_writeback_connector.base wasn't initialized in
-> > some cases (which is a bad idea IMO).
-> > 
-> > I know the historical reasons for drm_writeback_connector, but I think
-> > we can do better now.
-> > 
-> > So, I think, a proper approach would be:
-> > 
-> > struct drm_connector {
-> >     // other fields
-> > 
-> >     union {
-> >         struct drm_connector_hdmi hdmi; // we already have it
-> >         struct drm_connector_wb wb;  // this is new
-> >     };
-> > 
-> >     // rest of the fields.
-> > };
-> 
-> I still don't like that. This really doesn't belong here. If anything,
-> the drm_connector for writeback belongs to drm_crtc.
+On Mon, Aug 11, 2025 at 03:10:56PM +0200, Krzysztof Kozlowski wrote:
+> MTP8750 rev 2.0 (power grid v8) boards come as two different variants
+> with different WiFi chips: WCN7850 and WCN786x.  WCN7850 is already
+> supported by the kernel, but WCN786x is not.  Both of the board variants
+> are considered newest revisions and the difference is only in MCN
+> numbers and internal codenames.
 
-Why? We already have generic HDMI field inside drm_connector. I am
-really hoping to be able to land DP parts next to it. In theory we can
-have a DVI-specific entry there (e.g. with the subconnector type).
-The idea is not to limit how the drivers subclass those structures.
+Are they soldered on board, installed via add-on cards or installed via
+M.2 slot?
 
-I don't see a good case why WB should deviate from that design.
-
-> If the issue is that some drivers need a custom drm_connector subclass,
-> then I'd rather turn the connector field of drm_writeback_connector into
-> a pointer.
-
-Having a pointer requires additional ops in order to get drm_connector
-from WB code and vice versa. Having drm_connector_wb inside
-drm_connector saves us from those ops (which don't manifest for any
-other kind of structure). Nor will it take any more space since union
-will reuse space already taken up by HDMI part.
+Are they going to be somewhat compatible (e.g. on the BT side?)
 
 > 
-> > I plan to add drm_connector_dp in a similar way, covering DP needs
-> > (currently WIP).
+> Add WCN7850 WiFi and Bluetooth to the MTP8750, stating that this DTS
+> represents the WCN7850 variant.  The S4D and S5F regulators should
+> operate at 0.85 V, thus adjust lower constraint and regulator name.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
 
 -- 
 With best wishes
