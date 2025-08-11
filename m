@@ -1,48 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-68541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 768A0B212FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:13:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19A74B2131E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:27:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E8143E114E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:13:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A25A57A4D1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 17:25:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91C0029BDB3;
-	Mon, 11 Aug 2025 17:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F321D2D3A71;
+	Mon, 11 Aug 2025 17:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="INnIVgCr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IzwgtAtv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AD1482FF;
-	Mon, 11 Aug 2025 17:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CAE29BDBA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 17:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754932390; cv=none; b=ojz5kulkNoUhuOAGmdDJ9Mf8XGgp5acMc0jPtCnxJwANXvaWnp2VtHJl06lR22C18F06JSsWeT7cWZaFW3p/BGcNTpMSzLzHtuJfcqmg5JbIGvyhz27ratD6YqOB3oJZzbZPjnoN+SrFTq+tb+FU9GT+IxgpcFb8RIEadZyIJ4w=
+	t=1754933244; cv=none; b=CjNwUPkTZikEM9pT7K3K+6tSL1cI8td/UtxPkYXbSnHRth8/hiv6r1P3dmGTUqZpe18W2RRiNrc4iVOUYn8kC4qYKo41wdgb4IuXeuOlBivlq/0MlmQcUcvzpHs6RsECSM/b/gTd2zSQ5agvqWCUHRFiCXWBwmYgeT1FYFi2F/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754932390; c=relaxed/simple;
-	bh=FPu5hQjGm+vHV3MlOKsGeTgCukCk03tTyteRGuQsup8=;
+	s=arc-20240116; t=1754933244; c=relaxed/simple;
+	bh=oBdTxqPKIbAma/i7QMyH23HvNHluobbtLiwBoEX4yXg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XMcRJeutuMFkQriBieNBMZkut1kpkyC8G1OtGn5iV06jIYZ02SyqJfaxspNiSITm0i4qSN2bZKQ13B6yhUociWKQdSjwtgyK10B1MhiPjeQ2smNUtlv4FpO5wLMVyQAsoo3GMNgohDFvvU0aEvLb622Rlm1r1XHb/vDQTEtxclQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=INnIVgCr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C72C4CEED;
-	Mon, 11 Aug 2025 17:13:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754932389;
-	bh=FPu5hQjGm+vHV3MlOKsGeTgCukCk03tTyteRGuQsup8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=INnIVgCr0ton64MB3wAu6vYa3ye1fwnwTSoRHv+DXq4yAnkVgF8xaDNr4gQvO+A8X
-	 e+uAKaRWrnJEnNKGRm0KZRf3rdGQ7pwo4Jvf3jLc4QUJ1fji6nZtE9MmZfJUhD2RK1
-	 drWKtnxw59EbCqud/zQ0NEaj4AP2D+wOYM+Ff6lmL+pnsq6CVw4l3cQc+6YeZTnUac
-	 nc/9ru1Xqnhf8/CyZBeL2UuhvEl2JM/qILW8Va124/ZiOmW4Cyxz1Msms9vW5BZd/W
-	 KRPBih+yrVujz4tOlNHZ4Ydh91Ux9OoA04+DS4ysR1WPWGFq3v/Cb0IuMBCwmJ8Gps
-	 4WiwWoBb3B7JA==
-Message-ID: <e263d0b4-04e9-4d65-ad43-197573b66721@kernel.org>
-Date: Mon, 11 Aug 2025 19:13:04 +0200
+	 In-Reply-To:Content-Type; b=XAyIR6CmuShIQRSiQ1+DwzdMX7q5XRs4WHcp0tEwzXX0yPEq9wMdru6lQ0jQTKAHosq/MY8Dz2RpclTnZZCdyx04dz0UaWJtcaFPmB4lnBQztNZ6Vt4yGB44phbmJ/oKAwot8eQozo26OpSS2wffZhO7YKRIhZxl6FsD51rj2vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IzwgtAtv; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b79bddd604so2699637f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754933241; x=1755538041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NXe3oMcNYYT4mns/cdffmItPqtrlHjIjLChPEwu6yu0=;
+        b=IzwgtAtvBuLWvi5eqZT4MyoPt5yzv6gvskJRIlzCCRTPLzs0ttMcGdWPZKMq/mp0xt
+         ZPmHxXzHBVLtodOxH1hGFkjAWSxuFVXSSTOND1QBryqeGYTb9PJE/Bf9sfMsBphes/22
+         qXkO5AK3JWzVvrhcqUxeaFezctiQV+GJ4UJZEhAw5BSKmaJv2tI672G9tVU+lvo5qGM/
+         VTXTGIk0EspreHSc2PdqVutORXW8vkMzNX6oSktenNImk2zO1Fv6AzTdxAkKcVnoEzfc
+         ZVpqRls7v2+FSAm/jmldOu17beOmlZjP2vdeLIuaTfBtzzWGvrf67uE+h00tfTjAOD97
+         sF0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754933241; x=1755538041;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NXe3oMcNYYT4mns/cdffmItPqtrlHjIjLChPEwu6yu0=;
+        b=Y84Ip1TyaxBKdpj++N9l1islut+pMKOFCgAmLjS9OI+eWQ5WRPCcvBBYEElumvi6po
+         AxhG5w8QaLtr7gVmT1W104Ip3Dy3MUFso2LoJaAyc9dDuZNLAjzDErVvlXmSijtJLW3n
+         75XbDCxH9cWIsRx+jGq3QEoOwKVOJESQFBZXJ3YsMDi2wdUC5G5tc/QD+Qj14zwcLJ5r
+         sBSQZia5TPZMpnyWgPOcwR1S06BMUKNMkyE3AxME62JEURdwC66je/AGQoJ99ZTeW1Yo
+         zyObgz0EwHuVuNXUUBbAGR81H6pu7JXRyxnGAeFUTTtW+QvTYMXnLMzc0IIB6iTf+S6F
+         bh+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXkBMQ6T+LMYcP1sYa8rgoMSJlGPGtZAesy/EfLlFxNIDFS8y9WKerKZi2pcJVESsBRRDXbbIHcSysqAbzi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9QKtbpvYcj/w3KC6Qd7sxcwO7p58f96sPRXL+TwxOtSE8IE+j
+	uJoBifYiF+P7Nzp9qavjF16NvpbzHXBEs55SvDIky+5TvA0rFqcUcPvHkx3Qju3gwY/Po88lKvU
+	bVl3Q
+X-Gm-Gg: ASbGncuo/k1m7+CfC5ddJDlUFjuMwsj02Z3EvJhFnUmYOzU5TUaBUQjJ3ahRkOS2XGS
+	ULCbCh76uXOCU3kwThoByxeFGd/PDnAIRDizEu/TFpdmMO2C3NJ9eizNntxvcxKCshZStoLcSYx
+	/DaSZTgSvXYml4Ak8rtz1YCVPgTkU7iyMwkwCcjVH3c3acoQnMYvpjwsCzO5tvWJx5bvAPMULaV
+	OcCLiS6lVw0KJOU3JZgdjUhlHwKGd5xCmk5j6hKn+1ydf7GDBHwa6ibvpNouQnnyn6cxCIP9GFz
+	4nk5MSHEw5w5PjI53g4L7IxEk9ydKS72v7YGv8iY4z7kVdpfnHXjc9YrOhsHGBlNvb5ntrN2NFg
+	IkOThq+y3L1+jx4yKxNCfEReyYprrBPJQVLB0WucLilbPQ3ahtcdMqdpHTDPWh0UJyoPNnlWjl6
+	g=
+X-Google-Smtp-Source: AGHT+IFXH1MhGzvGB7oVp7Zph1jzJAZ+OdG4MQzi4NRmUzTr/P+qbxicUVWnGDGrds5h6H9pYXwtpw==
+X-Received: by 2002:a05:6000:220f:b0:3b7:644f:9ca7 with SMTP id ffacd0b85a97d-3b910fe019cmr483345f8f.25.1754933241412;
+        Mon, 11 Aug 2025 10:27:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:b0fa:b045:4b82:de09? ([2a01:e0a:3d9:2080:b0fa:b045:4b82:de09])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458b501f22dsm249243435e9.0.2025.08.11.10.27.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 10:27:21 -0700 (PDT)
+Message-ID: <5e3e3c8d-b382-4a50-a474-b9a01f940a53@linaro.org>
+Date: Mon, 11 Aug 2025 19:27:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,105 +86,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/4] arm64: dts: qcom: sm8650: Enable MCQ support for
- UFS controller
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, mani@kernel.org,
- alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org,
- James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250811143139.16422-1-quic_rdwivedi@quicinc.com>
- <20250811143139.16422-3-quic_rdwivedi@quicinc.com>
- <67aedb2a-3ccc-4440-b2ff-b3dbedf5e25c@kernel.org>
- <9ff100b4-a3a5-4364-8172-1ccb5566e50c@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <9ff100b4-a3a5-4364-8172-1ccb5566e50c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH RFC v2 0/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
+To: Bjorn Andersson <andersson@kernel.org>,
+ "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>
+References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
+ <175449112353.639494.1882304081892662235.robh@kernel.org>
+ <bs4bgbyrph4xwsianzvkonpmi72muihob2yaip3gz4yhlqon2s@uvbwrhlr2xlr>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <bs4bgbyrph4xwsianzvkonpmi72muihob2yaip3gz4yhlqon2s@uvbwrhlr2xlr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/08/2025 18:54, Ram Kumar Dwivedi wrote:
+On 11/08/2025 18:15, Bjorn Andersson wrote:
+> On Wed, Aug 06, 2025 at 09:40:29AM -0500, Rob Herring (Arm) wrote:
+>> On Wed, 06 Aug 2025 14:38:29 +0200, Krzysztof Kozlowski wrote:
+> [..]
+>> arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: /soc@0/video-codec@aa00000: failed to match any schema with compatible: ['qcom,sm8750-iris']
+>> arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: clock-controller@aaf0000 (qcom,sm8750-videocc): 'required-opps' is a required property
+>> 	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8450-videocc.yaml#
 > 
-> 
-> On 11-Aug-25 8:13 PM, Krzysztof Kozlowski wrote:
->> On 11/08/2025 16:31, Ram Kumar Dwivedi wrote:
->>> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
->>> on the Qualcomm SM8650 platform by updating the device tree node. This
->>> includes adding new register region for MCQ and specifying the MSI parent
->>> required for MCQ operation.
->>>
->>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 7 ++++++-
->>>  1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> Way you organize your patchset is confusing. Why DTS is in the middle?
->> It suggests dependency and this would be strong objection from me.
-> 
-> Hi Krzysztof,
-> 
-> My current patch submission order is as follows:
-> 
-> 1.DT binding
-> 2.Device tree
-> 3.Driver changes
+> Can anyone help me understand why required-opps is a required property
+> in the videocc binding?
 
-Why are you repeating the obvious? That order is INCORRECT and that is
-why I commented.
+Tee DT changes are to be picked, see https://lore.kernel.org/all/0a6baf09-b1b8-4573-b53d-574838efd9ec@quicinc.com/
+
+I asked for them to be re-sent, but no...
+
+Neil
 
 > 
-> Please let me know if you'd prefer to rearrange the order and place the driver patch in the middle.
+> Is there a valid level below "low_svs" that is otherwise selected, but
+> insufficient to keep the clock controller ticking?
+> 
+> Regards,
+> Bjorn
 
-I need to you read the documents I mentioned. It is your task to read
-the docs, not asking me to quote them again because you do not bother
-with that.
-
-
-Best regards,
-Krzysztof
 
