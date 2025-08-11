@@ -1,195 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-68262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD114B2008F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:45:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A62AEB200C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:51:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8595D3BBC0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 07:45:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05FC43A98A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 07:50:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9822D9EC7;
-	Mon, 11 Aug 2025 07:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC0052D94AC;
+	Mon, 11 Aug 2025 07:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="D4o5i43M";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2UzyeJfD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j+7gqpAW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AAB2D97A4;
-	Mon, 11 Aug 2025 07:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E5220102C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 07:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754898298; cv=none; b=h/OHzJqM36j/o1yVc6/8NRKZfP3ADVS5a4FrsDV6EAINnTvs5+v6zA8R1+WrkspFbSD+6JCwzNh19LnPdL1HHrkyB8QDnOgIjctfmG6RH0b9RnHPuTjxoK4ATuWQIxvNnFbWLSyyy5rczv/bZGEx2oTloGRiRxCDJoyOklJ4mgI=
+	t=1754898640; cv=none; b=IHag7yzw/Q/95IpbjaDsorHSTyDiKTp4oowg8GZI5syNI0vBBHjuyG96mrqRqwpjs3HZNu7cER4MccYuE4GVOEWJ1L5v3ZAKBxr5gpbpPaydWDbQwFj6+NL9l+JlRiL1MJgJsy42OblzyyZTDw7xjWbPOVHNZkt37rAHA97P7y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754898298; c=relaxed/simple;
-	bh=nPAxLK0kdnoLLvkkz8FkxvMkrjhUSfR8Aw0JOl8BcCA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jyAzus6y2cY2sJIVrTF1YrhaN7mHNq/yVUOgKEuIS86dRKHpSoX/OD+kuy/KO3dZk1Z8hgw92VQXgY24xMvjKW460LAb7oweJIlAFaV+HpEe5dUcqeWADuWeEZm32JsGdKlsipY8JDPujbCEjULhrj/Tczye59vGZaRMOcTc3hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=D4o5i43M; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2UzyeJfD; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1754898295;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3yHhcIXpXP2XUzerFjjEaa8c+o1sXQ3vMEvbz0QEGMA=;
-	b=D4o5i43MOpkRlUOFH7cP60q+0t0OIzVxjjuqcnzgYIhdk3cdLVJxytWY+Vl9poEc/hIUa1
-	HK7FP0olLeTk/UCB2M5LgBgRREWdBdlIkktj1DC51waDvPiT7hfCddFfLf43oIQCRoeJAR
-	PEzIFznwgmNM/r5Bn48DV5/qBj8P0uKH7yEAnOcMaouoA+jI6Puhm5Wasgdk94TlqYAVZP
-	xkbk4YCHlZgWqTxb8vIHyIjXe6DkR54yvMWoNF5qgYrg6aFNcqpyRznrTxMN1nuYg5Qqak
-	vJwrSyuQQB1KbKnIy3psA/ocPPK+QQvM6uVWlpnyVL2sL90V+lKfT4nU4VvVvw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1754898295;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3yHhcIXpXP2XUzerFjjEaa8c+o1sXQ3vMEvbz0QEGMA=;
-	b=2UzyeJfDunSg5QI4TqDV3z2HC0G2CRqfwbdp9m5v/P34EmpCgQGbZU5YheTrCS4SV7cCL3
-	NHc2H7yjPK23h8BA==
-Date: Mon, 11 Aug 2025 09:44:42 +0200
-Subject: [PATCH v3] drm/msm: Don't use %pK through printk
+	s=arc-20240116; t=1754898640; c=relaxed/simple;
+	bh=he5Ch1XupGR8AHoR7p5gnlMAFx+EZtRc2z2UYWJC5js=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=VjLcz7G1ERACyj6XsrqJc4saANtA1HDqVqpcW9sjKF8L5QdrrZv8RAfWqgq2xbyyvCuwZxJSrS8AlhdHJYXK+SRAeGMVldmHlBZf8dDMb5ZdNgYrzMFLhK64xC7+Z59+YP2kVCeUs39GVi+l4PDAWHQ8U8ILWZ0T0vXGyXkNUvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j+7gqpAW; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b7910123a0so3784154f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 00:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754898637; x=1755503437; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=30AZFCe2shBXe+j7aE6yaDtvEpZeVPQgMPYSK8q/tP8=;
+        b=j+7gqpAWELh8xbXcLxrfvny6xFbhZkU0CCgq7moaeeIKNaUXcuGjrNqpKmmASrH3g6
+         ZaDnqj3Kd4tvx0wLprnAAiPt1LRcZKiW0ZfzIbbWIK3JjoUogtkVqAYWxr8GVqh3Qlde
+         bx2FMS0CL2kyvBg0mjhspFvOOx1oCMVLnoOgtjPC4fyIK0cLxuMHH51S1rYVJ2DPFZrz
+         dzD4hgzzHQG3nabMEkV7CNYv+AfcNFUjm00hG9Yjg7gRnbwL8LYOak5br5j/T2xcJ8eK
+         7R2L26e7yboLurRCwuNRfWxtNZDzyOUhdR0uYaGzCInPmTheOS+BnGRh/zVLY1u5KsSL
+         L0eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754898637; x=1755503437;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=30AZFCe2shBXe+j7aE6yaDtvEpZeVPQgMPYSK8q/tP8=;
+        b=nB8Uh3jc4PSuIQtZ1ix9F3uI34QTwVXujSQmO2QZARZAcejSlmRGRn3QLZQjBU8K6Y
+         hmztj2sEBHDBHfPUS8lmxkcJ5WvtRNfk0iNv8GZ+r8KSEFsY4zJRk6mizcSehITNRx8w
+         RjACgamSwyjgeVevTUw4ErYVZ5qwKJ73gmv9SwtXsUxK3/pDqk6buKp40DPD4wFRGj7p
+         GdM9TUMF0efOp73sXcCEdnS88wdFzgnc4+M7RwOXJfgNJhreg87wKpJ0rHCTYv5W9peN
+         lBuUPf4R1rK2sqBRAFZYlZdgAbQ0cv7q+50oSl8F796+KClHrhh3znDYAQJ5EEKtLt80
+         dmHA==
+X-Forwarded-Encrypted: i=1; AJvYcCVz0poFWOtk6oJGtbRfzX/3Z0Di9vksrYBUwPdvMQxLleGA87CX42ZvlBwwmYQqieT/WwbrJUnGGPIEUj9T@vger.kernel.org
+X-Gm-Message-State: AOJu0YxA+CeJAFHZtLHPPqzoNkqnnWv6A8s8KZ8edYd1y3VRhvSAb6vV
+	L1vVEi8EqjnLltzf+qjLpUGd+Haco6yl2LY35mYfUOK2Qix0LHAPQHWJanXIDVZ+0EA=
+X-Gm-Gg: ASbGncs509qB2w8Tpm9ft0u6BtCE1Upw2J1HeI5kV/TNfX5F+LuoFTnn2fUhxZvg1wV
+	WsvURBrxU+l9SppRaHUS1QosVXUApr6Ao78I0vtJi31MyMLULqhxfvuQMvyKIhhes4TRlmc6ldV
+	y0zzDK1ILM/ZgFvc+Y4X+EuQOyq+BzSfSHd51fcHJme0PtM/GmpwOW/1n7+zEYYmLCdaTBNxo5f
+	Uv7iyirZYKdpybiLQIF5jdYVrJfPT8wNuPSdD1FYZpe5m6R8zsq/VgcWsqqIHiv/Fh2E3PdkVnD
+	0BZ/OGDjwHmvxasJsZi+odCSsnkMtgDbJvPPfVuS9H+LG15m4DG8YYWqjUP1+hGK/43mURUv5aU
+	Y3zvrycStowxwYaTAIH8E/TZTYzMd1SXoAS9YEQoI5C87/tO5LcI2r/Tk4Lln6fMfHooYnnGODd
+	8=
+X-Google-Smtp-Source: AGHT+IHagE4Q3TN8RmcEeXIXp4O5y91lmjQYB8Ioobb9YS1YUVs1HCiyWsf+FBuGDHsZpkFt031tag==
+X-Received: by 2002:a05:6000:2dc9:b0:3b7:bedd:d268 with SMTP id ffacd0b85a97d-3b900b8bcc5mr9184769f8f.53.1754898637302;
+        Mon, 11 Aug 2025 00:50:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:b0fa:b045:4b82:de09? ([2a01:e0a:3d9:2080:b0fa:b045:4b82:de09])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e009e465sm31082080f8f.43.2025.08.11.00.50.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 00:50:36 -0700 (PDT)
+Message-ID: <09f29ccb-a074-48c4-b017-9d9cf1bc1cb0@linaro.org>
+Date: Mon, 11 Aug 2025 09:50:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250811-restricted-pointers-drm-v3-1-caadea353b42@linutronix.de>
-X-B4-Tracking: v=1; b=H4sIAGmfmWgC/33NTQ6CMBCG4auQrh3Tlp8WV97DuEA6yCRayLQSD
- OHuAi5MTHT5fsk8M4mATBjEIZkE40CBOr9EuktE3Vb+ikBuaaGlzmUmM2AMkamO6KDvyEfkAI7
- vYM3FyLQwZVM5sVz3jA2Nm3w6L91SiB0/t0eDWte3WSj70xwUSDBWoXTW1q7Uxxv5R+TO07h3K
- FZ30B/L/LM0KEhd2di8KJpSm29rnucXhKB7jw4BAAA=
-X-Change-ID: 20250404-restricted-pointers-drm-87b703679fad
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754898289; l=4461;
- i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=nPAxLK0kdnoLLvkkz8FkxvMkrjhUSfR8Aw0JOl8BcCA=;
- b=F9XWlcjzagfHm6pHcUlX/WHfjXUgibbjlJfGVvdhUaHNyxzQAkZaZsmghXKSbIANCepewbySy
- suALB1eHiaPA86Ktl4CKhSsu4Gb2hYH0ONXzNxqdy5AAbIwiPerIWsJ
-X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
- pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: sm8550: Add missing properties for
+ cryptobam
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+ Anusha Rao <quic_anusha@quicinc.com>, Md Sadre Alam
+ <quic_mdalam@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
+ <20250212-bam-dma-fixes-v1-3-f560889e65d8@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250212-bam-dma-fixes-v1-3-f560889e65d8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log.
-Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
-the regular %p has been improved to avoid this issue.
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping locks in atomic contexts.
+On 12/02/2025 18:03, Stephan Gerhold wrote:
+> num-channels and qcom,num-ees are required for BAM nodes without clock,
+> because the driver cannot ensure the hardware is powered on when trying to
+> obtain the information from the hardware registers. Specifying the node
+> without these properties is unsafe and has caused early boot crashes for
+> other SoCs before [1, 2].
+> 
+> Add the missing information from the hardware registers to ensure the
+> driver can probe successfully without causing crashes.
+> 
+> [1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+> [2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 433477c3bf0b ("arm64: dts: qcom: sm8550: add QCrypto nodes")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index eac8de4005d82f246bc50f64f09515631d895c99..ac3e00ad417719be2885d76d3197f96137848337 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1957,6 +1957,8 @@ cryptobam: dma-controller@1dc4000 {
+>   			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+>   			#dma-cells = <1>;
+>   			qcom,ee = <0>;
+> +			qcom,num-ees = <4>;
+> +			num-channels = <20>;
+>   			qcom,controlled-remotely;
+>   			iommus = <&apps_smmu 0x480 0x0>,
+>   				 <&apps_smmu 0x481 0x0>;
+> 
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-Changes in v3:
-- Rebase on v6.17-rc1
-- Add R-b from Dimtry
-- Link to v2: https://lore.kernel.org/r/20250718-restricted-pointers-drm-v2-1-3d9f8566f927@linutronix.de
-
-Changes in v2:
-- Drop already applied patches
-- Link to v1: https://lore.kernel.org/r/20250618-restricted-pointers-drm-v1-0-781e0d88cd92@linutronix.de
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 4 ++--
- drivers/gpu/drm/msm/msm_mdss.c              | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index d4b545448d74657aafc96e9042c7756654b4f0e7..94912b4708fb5be937f1b3898a5676f7b481bd42 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -596,7 +596,7 @@ static void _dpu_crtc_complete_flip(struct drm_crtc *crtc)
- 
- 	spin_lock_irqsave(&dev->event_lock, flags);
- 	if (dpu_crtc->event) {
--		DRM_DEBUG_VBL("%s: send event: %pK\n", dpu_crtc->name,
-+		DRM_DEBUG_VBL("%s: send event: %p\n", dpu_crtc->name,
- 			      dpu_crtc->event);
- 		trace_dpu_crtc_complete_flip(DRMID(crtc));
- 		drm_crtc_send_vblank_event(crtc, dpu_crtc->event);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-index 11fb1bc54fa92a5d9926addb437bc4b8f283723b..54b20faa0b697e3bf8ad81bd806adb49de98f2b5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-@@ -31,14 +31,14 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
- 	u32 base;
- 
- 	if (!ctx) {
--		DRM_ERROR("invalid ctx %pK\n", ctx);
-+		DRM_ERROR("invalid ctx %p\n", ctx);
- 		return;
- 	}
- 
- 	base = ctx->cap->sblk->pcc.base;
- 
- 	if (!base) {
--		DRM_ERROR("invalid ctx %pK pcc base 0x%x\n", ctx, base);
-+		DRM_ERROR("invalid ctx %p pcc base 0x%x\n", ctx, base);
- 		return;
- 	}
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 12dcb32b472497f9e59619db4e810abfbf610c7c..a306077647c317af9345eeff13082230906b5767 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1345,7 +1345,7 @@ static int dpu_kms_mmap_mdp5(struct dpu_kms *dpu_kms)
- 		dpu_kms->mmio = NULL;
- 		return ret;
- 	}
--	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
-+	DRM_DEBUG("mapped dpu address space @%p\n", dpu_kms->mmio);
- 
- 	dpu_kms->vbif[VBIF_RT] = msm_ioremap_mdss(mdss_dev,
- 						  dpu_kms->pdev,
-@@ -1380,7 +1380,7 @@ static int dpu_kms_mmap_dpu(struct dpu_kms *dpu_kms)
- 		dpu_kms->mmio = NULL;
- 		return ret;
- 	}
--	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
-+	DRM_DEBUG("mapped dpu address space @%p\n", dpu_kms->mmio);
- 
- 	dpu_kms->vbif[VBIF_RT] = msm_ioremap(pdev, "vbif");
- 	if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 1f5fe7811e016909282087176a42a2349b21c9c4..39885b333910bb7aab7f72b9846f49ab16cfe5cc 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -423,7 +423,7 @@ static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5
- 	if (IS_ERR(msm_mdss->mmio))
- 		return ERR_CAST(msm_mdss->mmio);
- 
--	dev_dbg(&pdev->dev, "mapped mdss address space @%pK\n", msm_mdss->mmio);
-+	dev_dbg(&pdev->dev, "mapped mdss address space @%p\n", msm_mdss->mmio);
- 
- 	ret = msm_mdss_parse_data_bus_icc_path(&pdev->dev, msm_mdss);
- 	if (ret)
-
----
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
-change-id: 20250404-restricted-pointers-drm-87b703679fad
-
-Best regards,
--- 
-Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
