@@ -1,149 +1,379 @@
-Return-Path: <linux-arm-msm+bounces-68291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B932CB203EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:40:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32BE4B20422
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:46:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA4891889D70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:41:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4403F3BBAFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:46:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BE62223DFF;
-	Mon, 11 Aug 2025 09:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509B42DE6F2;
+	Mon, 11 Aug 2025 09:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PUbyZh2B"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="qmUN6l41"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B46221572;
-	Mon, 11 Aug 2025 09:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A108224B01;
+	Mon, 11 Aug 2025 09:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754905244; cv=none; b=WNgrf0/kykZlNyK31Re7ew0N9HNBgoOJT+8iBM7t+qYLKBgOLA63BcVfLDG8tgGcqIVeHtFLgPiL/g5lC1DUyO+6jlK3rO5KEVWuZltM+blNTGCdIn8dff5iaCMMIfCtxf50ot40fI5IgTHook1grJHHZ5shIg4QYqYU2dL4U+c=
+	t=1754905492; cv=none; b=IEPf6GwIXKe36Eba8Yroiwsg8Jv/LATwbgwjQASM1NPjxDiOo9y0UoaFhdOMxnRpyIYtZnpi/2aKA4/X/9t8X2qZFRTgs+GPxdQaBy1bjtiqK5e7RpQDhXp1wgeM4qDvPfgH2sDdhNDHErBTXmsD7DnayUzz7i8iUiiHokI4JLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754905244; c=relaxed/simple;
-	bh=+hOAPtbaTnFQ2/PvS8u0w3Y8mEBnKScZUNxwKg8O2kU=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b/0/m3g9oF5CTNeF3+vHCysSdDmT2oCHHdfyUfypR9kL68wO7woUcFfK9QsCTOsY4HGDTn+5mFG1FZk88KdobOt+OSrzluUf+dNc21VjBuaNiDQzwVE6cTDCjLFnasgReY3j0zqRHl/7ZJOCSSt1cDg4DKQTudovb3gyd3xiCMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PUbyZh2B; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dL0l013542;
-	Mon, 11 Aug 2025 09:40:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=0+RVykyrDaRQS0uHm8EY+PEI
-	8EMBqo0ZjvNkV/gJZBk=; b=PUbyZh2BjZR6WdDNnJdRbkwnoApp/GNZoAvuY847
-	E0GEVzsVsHB8E4wNLz9ukreG/0Gm9tux/ZZhaNtDKhDx8p3o3PIBK+Ctf+AxEVhb
-	/cR3oqniqnHTrIBvQhY29k1kb34C/dPSKK7xxqal5YcxRRjeoJgRbQkTQ3vEtnkw
-	C1UGjIPq6CK8B9MgkojhkCF2TEEmSA014+0+bTm0QxSaS4mIJ6zsgfiV2lrw2Y5e
-	XssBTRwrCgm0Y+Z19vXPTK/oZaqfEBtc2snqXNDgqvJvH7CsLJxLCBlUFc2n3YBc
-	IZHRi5Foo3Vky560r8j8DM4vuQpqdTu8Up6RvtgN1p1jpg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dupmm0b1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 09:40:37 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57B9ealX006276
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 09:40:36 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Mon, 11 Aug 2025 02:40:31 -0700
-Date: Mon, 11 Aug 2025 15:10:27 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Viresh Kumar <viresh.kumar@linaro.org>
-CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>, <ilia.lin@kernel.org>,
-        <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        Md Sadre Alam
-	<quic_mdalam@quicinc.com>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 3/4] cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
-Message-ID: <aJm6ixlMamgX/+bV@hu-varada-blr.qualcomm.com>
-References: <20250811090954.2854440-1-quic_varada@quicinc.com>
- <20250811090954.2854440-4-quic_varada@quicinc.com>
- <20250811092202.auarwnyoagebcw3o@vireshk-i7>
+	s=arc-20240116; t=1754905492; c=relaxed/simple;
+	bh=UPWf30ZMlvogYjQ/MI9+xpo9+6mFRrRtQPnIp/bW4SE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hxq0epgVMwxHq0JxKFq7gAcPW7jmnc5hxp7Vk3jB3i/mvpUmfApnSaz5L9EEUx4emTh1QA9fa7OvA4hJcS5Z9Jsse/eduWNxJpzqaCuNFOPy1jv/cJPgFY92TWm7T7W3Z75wPrNuQQOQb0WBQxJlRyuVZ+yRYut7noYw0BcVZV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=qmUN6l41; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id AD4A74A4;
+	Mon, 11 Aug 2025 11:43:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1754905436;
+	bh=UPWf30ZMlvogYjQ/MI9+xpo9+6mFRrRtQPnIp/bW4SE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qmUN6l41QzLaqgRP8EvPL7HiBYQTQhDj35OzSZSqDxirRD/vdal5O6kvdCkBoe/NA
+	 WuOobkLmX/G5SwiKWSAxg+zWkCzB9Wpfnt3nJAfbPYzAx/bD9dEs0qAeLv7xq/3vk/
+	 MIvFrRCtzCJeDzQLS5Pf7r8FCA0caunSMJHdMVDA=
+Date: Mon, 11 Aug 2025 12:44:29 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Suraj Kandpal <suraj.kandpal@intel.com>
+Cc: kernel-list@raspberrypi.com, amd-gfx@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org, ankit.k.nautiyal@intel.com,
+	arun.r.murthy@intel.com, uma.shankar@intel.com,
+	jani.nikula@intel.com, dmitry.baryshkov@oss.qualcomm.com,
+	harry.wentland@amd.com, siqueira@igalia.com,
+	alexander.deucher@amd.com, christian.koenig@amd.com,
+	airlied@gmail.com, simona@ffwll.ch, liviu.dudau@arm.com,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	robin.clark@oss.qualcomm.com, abhinav.kumar@linux.dev,
+	tzimmermann@suse.de, jessica.zhang@oss.qualcomm.com,
+	sean@poorly.run, marijn.suijten@somainline.org, mcanal@igalia.com,
+	dave.stevenson@raspberrypi.com,
+	tomi.valkeinen+renesas@ideasonboard.com,
+	kieran.bingham+renesas@ideasonboard.com, louis.chauvet@bootlin.com
+Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
+ structure
+Message-ID: <20250811094429.GE21313@pendragon.ideasonboard.com>
+References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
+ <20250811092707.3986802-2-suraj.kandpal@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250811092202.auarwnyoagebcw3o@vireshk-i7>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=bY5rUPPB c=1 sm=1 tr=0 ts=6899ba95 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=48sKwPEyJ6cuvbcKtzIA:9 a=CjuIK1q_8ugA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: pdYdxVHQrS_cL44QHNremeJb1f5eIkQt
-X-Proofpoint-ORIG-GUID: pdYdxVHQrS_cL44QHNremeJb1f5eIkQt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAwMCBTYWx0ZWRfXya6ZjmzopblY
- 1IgjY2Sa1FF4m9InlwMKMTYql2fCPb5uTpxfN9qWNOCP9ZlPAumHAA837La1DcwA/rQr9fSFKMy
- H1oSi+MHuagM4qm7fHi/dUmnQ05AKIcACSdr3fIWkj/eGd+mcU7vVpts/pReKNi3ShmJQEcAVcH
- d7lqpjv/O/nyVIN0mw1CoTsXW/AXI7kZi8K6SBxKh9xcKrlLp7wPNbD4qgdAEOK+mQ8ry9WyxNu
- p7IzW9325Tvm2BYMaoJTNw22O1lO3Druvsu8Bco5Pey1az1IRB9G8+G+u0ZXa7fA2Q3fF/VPjUp
- MTSNOBxsop11kGS1roKeBENoQR4QnAhbp08z1dkqojx5hdtab0qIJylAMj0E+cM0h9okxyXJEIy
- sH3FtXJP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 clxscore=1015 phishscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090000
+In-Reply-To: <20250811092707.3986802-2-suraj.kandpal@intel.com>
 
-On Mon, Aug 11, 2025 at 02:52:02PM +0530, Viresh Kumar wrote:
-> On 11-08-25, 14:39, Varadarajan Narayanan wrote:
-> > From: Md Sadre Alam <quic_mdalam@quicinc.com>
-> >
-> > IPQ5424 have different OPPs available for the CPU based on
-> > SoC variant. This can be determined through use of an eFuse
-> > register present in the silicon.
-> >
-> > Added support for ipq5424 on nvmem driver which helps to
-> > determine OPPs at runtime based on the eFuse register which
-> > has the CPU frequency limits. opp-supported-hw dt binding
-> > can be used to indicate the available OPPs for each limit.
-> >
-> > nvmem driver also creates the "cpufreq-dt" platform_device after
-> > passing the version matching data to the OPP framework so that the
-> > cpufreq-dt handles the actual cpufreq implementation.
-> >
-> > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > [ Changed '!=' based check to '==' based check ]
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> > v5: Add 'Acked-by: Viresh Kumar'
-> > ---
-> >  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
-> >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 5 +++++
-> >  2 files changed, 6 insertions(+)
->
-> You should have dropped this one now, as I already applied the
-> previous version.
+On Mon, Aug 11, 2025 at 02:57:00PM +0530, Suraj Kandpal wrote:
+> Some drivers cannot work with the current design where the connector
+> is embedded within the drm_writeback_connector such as intel and
+> some drivers that can get it working end up adding a lot of checks
+> all around the code to check if it's a writeback conenctor or not.
+> To solve this we move the drm_writeback_connector within the
+> drm_connector and remove the drm_connector base which was in
+> drm_writeback_connector. We do all other required
+> modifications that come with these changes along with addition
+> of new function which returns the drm_connector when
+> drm_writeback_connector is present.
+> All drivers will be expected to allocate the drm_connector.
+> 
+> Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> ---
+>  drivers/gpu/drm/drm_writeback.c | 33 ++++++++++------
+>  include/drm/drm_connector.h     | 60 +++++++++++++++++++++++++++++
+>  include/drm/drm_writeback.h     | 68 ++++-----------------------------
+>  3 files changed, 89 insertions(+), 72 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_writeback.c b/drivers/gpu/drm/drm_writeback.c
+> index ec2575c4c21b..198b8c488056 100644
+> --- a/drivers/gpu/drm/drm_writeback.c
+> +++ b/drivers/gpu/drm/drm_writeback.c
+> @@ -89,8 +89,10 @@ static const char *drm_writeback_fence_get_driver_name(struct dma_fence *fence)
+>  {
+>  	struct drm_writeback_connector *wb_connector =
+>  		fence_to_wb_connector(fence);
+> +	struct drm_connector *connector =
+> +		drm_writeback_to_connector(wb_connector);
+>  
+> -	return wb_connector->base.dev->driver->name;
+> +	return connector->dev->driver->name;
+>  }
+>  
+>  static const char *
+> @@ -187,7 +189,8 @@ static int __drm_writeback_connector_init(struct drm_device *dev,
+>  					  struct drm_encoder *enc, const u32 *formats,
+>  					  int n_formats)
+>  {
+> -	struct drm_connector *connector = &wb_connector->base;
+> +	struct drm_connector *connector =
+> +		drm_writeback_to_connector(wb_connector);
+>  	struct drm_mode_config *config = &dev->mode_config;
+>  	struct drm_property_blob *blob;
+>  	int ret = create_writeback_properties(dev);
+> @@ -269,7 +272,8 @@ int drm_writeback_connector_init(struct drm_device *dev,
+>  				 struct drm_encoder *enc,
+>  				 const u32 *formats, int n_formats)
+>  {
+> -	struct drm_connector *connector = &wb_connector->base;
+> +	struct drm_connector *connector =
+> +		drm_writeback_to_connector(wb_connector);
+>  	int ret;
+>  
+>  	ret = drm_connector_init(dev, connector, con_funcs,
+> @@ -339,7 +343,8 @@ int drmm_writeback_connector_init(struct drm_device *dev,
+>  				  struct drm_encoder *enc,
+>  				  const u32 *formats, int n_formats)
+>  {
+> -	struct drm_connector *connector = &wb_connector->base;
+> +	struct drm_connector *connector =
+> +		drm_writeback_to_connector(wb_connector);
+>  	int ret;
+>  
+>  	ret = drmm_connector_init(dev, connector, con_funcs,
+> @@ -382,13 +387,15 @@ int drm_writeback_set_fb(struct drm_connector_state *conn_state,
+>  
+>  int drm_writeback_prepare_job(struct drm_writeback_job *job)
+>  {
+> -	struct drm_writeback_connector *connector = job->connector;
+> +	struct drm_writeback_connector *wb_connector = job->connector;
+> +	struct drm_connector *connector
+> +		= drm_writeback_to_connector(wb_connector);
+>  	const struct drm_connector_helper_funcs *funcs =
+> -		connector->base.helper_private;
+> +		connector->helper_private;
+>  	int ret;
+>  
+>  	if (funcs->prepare_writeback_job) {
+> -		ret = funcs->prepare_writeback_job(connector, job);
+> +		ret = funcs->prepare_writeback_job(wb_connector, job);
+>  		if (ret < 0)
+>  			return ret;
+>  	}
+> @@ -434,12 +441,14 @@ EXPORT_SYMBOL(drm_writeback_queue_job);
+>  
+>  void drm_writeback_cleanup_job(struct drm_writeback_job *job)
+>  {
+> -	struct drm_writeback_connector *connector = job->connector;
+> +	struct drm_writeback_connector *wb_connector = job->connector;
+> +	struct drm_connector *connector
+> +		= drm_writeback_to_connector(wb_connector);
+>  	const struct drm_connector_helper_funcs *funcs =
+> -		connector->base.helper_private;
+> +		connector->helper_private;
+>  
+>  	if (job->prepared && funcs->cleanup_writeback_job)
+> -		funcs->cleanup_writeback_job(connector, job);
+> +		funcs->cleanup_writeback_job(wb_connector, job);
+>  
+>  	if (job->fb)
+>  		drm_framebuffer_put(job->fb);
+> @@ -521,8 +530,10 @@ struct dma_fence *
+>  drm_writeback_get_out_fence(struct drm_writeback_connector *wb_connector)
+>  {
+>  	struct dma_fence *fence;
+> +	struct drm_connector *connector =
+> +		drm_writeback_to_connector(wb_connector);
+>  
+> -	if (WARN_ON(wb_connector->base.connector_type !=
+> +	if (WARN_ON(connector->connector_type !=
+>  		    DRM_MODE_CONNECTOR_WRITEBACK))
+>  		return NULL;
+>  
+> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+> index 8f34f4b8183d..da63fdafd9f2 100644
+> --- a/include/drm/drm_connector.h
+> +++ b/include/drm/drm_connector.h
+> @@ -1882,6 +1882,61 @@ struct drm_connector_cec {
+>  	void *data;
+>  };
+>  
+> +/**
+> + * struct drm_writeback_connector - DRM writeback connector
+> + */
+> +struct drm_writeback_connector {
+> +	/**
+> +	 * @pixel_formats_blob_ptr:
+> +	 *
+> +	 * DRM blob property data for the pixel formats list on writeback
+> +	 * connectors
+> +	 * See also drm_writeback_connector_init()
+> +	 */
+> +	struct drm_property_blob *pixel_formats_blob_ptr;
+> +
+> +	/** @job_lock: Protects job_queue */
+> +	spinlock_t job_lock;
+> +
+> +	/**
+> +	 * @job_queue:
+> +	 *
+> +	 * Holds a list of a connector's writeback jobs; the last item is the
+> +	 * most recent. The first item may be either waiting for the hardware
+> +	 * to begin writing, or currently being written.
+> +	 *
+> +	 * See also: drm_writeback_queue_job() and
+> +	 * drm_writeback_signal_completion()
+> +	 */
+> +	struct list_head job_queue;
+> +
+> +	/**
+> +	 * @fence_context:
+> +	 *
+> +	 * timeline context used for fence operations.
+> +	 */
+> +	unsigned int fence_context;
+> +	/**
+> +	 * @fence_lock:
+> +	 *
+> +	 * spinlock to protect the fences in the fence_context.
+> +	 */
+> +	spinlock_t fence_lock;
+> +	/**
+> +	 * @fence_seqno:
+> +	 *
+> +	 * Seqno variable used as monotonic counter for the fences
+> +	 * created on the connector's timeline.
+> +	 */
+> +	unsigned long fence_seqno;
+> +	/**
+> +	 * @timeline_name:
+> +	 *
+> +	 * The name of the connector's fence timeline.
+> +	 */
+> +	char timeline_name[32];
+> +};
+> +
+>  /**
+>   * struct drm_connector - central DRM connector control structure
+>   *
+> @@ -2305,6 +2360,11 @@ struct drm_connector {
+>  	 * @cec: CEC-related data.
+>  	 */
+>  	struct drm_connector_cec cec;
+> +
+> +	/**
+> +	 * @writeback: Writeback related valriables.
+> +	 */
+> +	struct drm_writeback_connector writeback;
 
-Sorry. Should I send a v8 with this dropped or is it okay?
+No, sorry, that's a bad idea. Most connectors have nothing to do with
+writeback, you shouldn't introduce writeback-specific fields here.
+drm_writeback_connector happens to be a drm_connector because of
+historical reasons (it was decided to reuse the connector API exposed to
+userspace instead of exposing a completely separate API in order to
+simplify the implementation), but that does not mean that every
+connector is related to writeback.
 
-Thanks
-Varada
+I don't know what issues the Intel driver(s) have with
+drm_writeback_connector, but you shouldn't make things worse for
+everybody due to a driver problem.
+
+>  };
+>  
+>  #define obj_to_connector(x) container_of(x, struct drm_connector, base)
+> diff --git a/include/drm/drm_writeback.h b/include/drm/drm_writeback.h
+> index 958466a05e60..2a52b6761797 100644
+> --- a/include/drm/drm_writeback.h
+> +++ b/include/drm/drm_writeback.h
+> @@ -15,66 +15,6 @@
+>  #include <drm/drm_encoder.h>
+>  #include <linux/workqueue.h>
+>  
+> -/**
+> - * struct drm_writeback_connector - DRM writeback connector
+> - */
+> -struct drm_writeback_connector {
+> -	/**
+> -	 * @base: base drm_connector object
+> -	 */
+> -	struct drm_connector base;
+> -
+> -	/**
+> -	 * @pixel_formats_blob_ptr:
+> -	 *
+> -	 * DRM blob property data for the pixel formats list on writeback
+> -	 * connectors
+> -	 * See also drm_writeback_connector_init()
+> -	 */
+> -	struct drm_property_blob *pixel_formats_blob_ptr;
+> -
+> -	/** @job_lock: Protects job_queue */
+> -	spinlock_t job_lock;
+> -
+> -	/**
+> -	 * @job_queue:
+> -	 *
+> -	 * Holds a list of a connector's writeback jobs; the last item is the
+> -	 * most recent. The first item may be either waiting for the hardware
+> -	 * to begin writing, or currently being written.
+> -	 *
+> -	 * See also: drm_writeback_queue_job() and
+> -	 * drm_writeback_signal_completion()
+> -	 */
+> -	struct list_head job_queue;
+> -
+> -	/**
+> -	 * @fence_context:
+> -	 *
+> -	 * timeline context used for fence operations.
+> -	 */
+> -	unsigned int fence_context;
+> -	/**
+> -	 * @fence_lock:
+> -	 *
+> -	 * spinlock to protect the fences in the fence_context.
+> -	 */
+> -	spinlock_t fence_lock;
+> -	/**
+> -	 * @fence_seqno:
+> -	 *
+> -	 * Seqno variable used as monotonic counter for the fences
+> -	 * created on the connector's timeline.
+> -	 */
+> -	unsigned long fence_seqno;
+> -	/**
+> -	 * @timeline_name:
+> -	 *
+> -	 * The name of the connector's fence timeline.
+> -	 */
+> -	char timeline_name[32];
+> -};
+> -
+>  /**
+>   * struct drm_writeback_job - DRM writeback job
+>   */
+> @@ -131,10 +71,16 @@ struct drm_writeback_job {
+>  	void *priv;
+>  };
+>  
+> +static inline struct drm_connector *
+> +drm_writeback_to_connector(struct drm_writeback_connector *wb_connector)
+> +{
+> +	return container_of(wb_connector, struct drm_connector, writeback);
+> +}
+> +
+>  static inline struct drm_writeback_connector *
+>  drm_connector_to_writeback(struct drm_connector *connector)
+>  {
+> -	return container_of(connector, struct drm_writeback_connector, base);
+> +	return &connector->writeback;
+>  }
+>  
+>  int drm_writeback_connector_init(struct drm_device *dev,
+
+-- 
+Regards,
+
+Laurent Pinchart
 
