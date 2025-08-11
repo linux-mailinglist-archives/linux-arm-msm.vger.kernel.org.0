@@ -1,69 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-68587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B562FB21929
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:28:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5907B2192C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:28:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2086846291A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:27:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1325E19086BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:28:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A126E261593;
-	Mon, 11 Aug 2025 23:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36537275AFC;
+	Mon, 11 Aug 2025 23:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YxKKFoph"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o38BbkSk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D93255E34;
-	Mon, 11 Aug 2025 23:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF927146A;
+	Mon, 11 Aug 2025 23:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754954839; cv=none; b=HAyOuao66erJOWkvcG5x2t2AdvHwP2/d9+gexZhgRMmGFHKPrwdsUSl+vewS5Gg5SJN71niyPnHREtArBdeeTIxgczCm6pL8n7uu0p6NRYkM84bQH20Lb4uGsHBX8Eens89LurEfzjYEvkGuDKXGq6cDxco3ifSuQ4d3gMIxDLY=
+	t=1754954841; cv=none; b=DDNIZdtEmYDvVaLl3XQ0d+zACNWEE3FmyyvIjPViLiETTybwjxn698TY0/lGqd5SzVQVgy+JDfLYhU+6OkukHjTCmEgksB0cJlRS42m1p7ocm38/67ow8yBtsBbOUj8EFtgIlejedX/AxzxBz2OFJhbeG3vBqY7NfXEHCcuku4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754954839; c=relaxed/simple;
-	bh=oEKIeomaSLSmtb9O+c6vF8ODZah1fEMj2JS83zzAivQ=;
+	s=arc-20240116; t=1754954841; c=relaxed/simple;
+	bh=a3tJqycywWx6VYcje/kbsIrUutzEeQbuRrhztsLOoio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ub4NpgyAAn2iuhMdzlEYDW90s6vVApyyeDVRFLIYFcWR+LK+3BDmYAXTM6Hy+824LGtrM0sSIHd6EOEBv0HhfFQwZOLAsgAd9zPDV3xky557011c4ynSEbUpJlZkhcHYsYED1lg/KYffgr/C2BrFde96Imb+Uw5KQCYpvK1seeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YxKKFoph; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C94C4CEED;
-	Mon, 11 Aug 2025 23:27:18 +0000 (UTC)
+	 MIME-Version:Content-Type; b=evXvfScng+nrKquKVj5bRImNMbNT2F94saLGfFT5wa7MHAkDmNWkQKLv+sqEcH2SCOWjOwgCB6hg8/ckFQqJtbm2onoMJlMXPK22emk/1DCGPAlaX3lXBxmY3kUVYmiGV4BsgeqFh19VyHpCrvG1sCM2/uRa7yvBm8oICR3MG4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o38BbkSk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A949C4CEFC;
+	Mon, 11 Aug 2025 23:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754954839;
-	bh=oEKIeomaSLSmtb9O+c6vF8ODZah1fEMj2JS83zzAivQ=;
+	s=k20201202; t=1754954840;
+	bh=a3tJqycywWx6VYcje/kbsIrUutzEeQbuRrhztsLOoio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxKKFophfNKsCis96v2TvoKgAxJ8+nIXOxcVQP+MYFENjvBPX44HTZQO6F/maNMJH
-	 yuX+GA248dEI7XTKQ8Sw1CNycBBCNEWPiabM1U2Yupe3YtzSLMvTJHEKYaLmpijMRg
-	 aWYekWA0lZc+uq6zQZTvp5LrcEez/h50/rTsCUJy6VrOmKwil/mIDrLZYKgKjpxAMi
-	 bdu6BYG1uLtsjyi5jysGN20ZWaQ1cnkmqrdBSiiuZ3DMQg92TNAJtCD62MldCi3FNi
-	 LGQp/WK9uIh44wOhPlUrOc5RQh7JoiB0oCwcUpu3JNFEtAphjLuaf9VsoXrHVqNnO4
-	 Cuom2gBvMBR8w==
+	b=o38BbkSk2bdeYu+uYtWqJAEdIyfXGlM2zL5q34lwcNldylUKgOhdHN1QI4XcOtgZk
+	 ljk7tqta2MKYsDrUnLJc9BnpeNWrqQQKmPC2uCNuHHzFMvVGLiFubWnj5268Q+Muge
+	 pFApXmDjlo8xPD+OFj8VY7Fg2DR9JLssx6mzKiSgvsZ1IEdQtcqd0Fq5UuxAarLacS
+	 cbD62zq18E90SYYSp7cabAI+PqybGnOtCjqwuVz1UccemFX8e3ZCmZLgmlBdujuklW
+	 zykq9/WT+tD/zS4bjUsedvCEHi/KhVcjXknYfoaAuU6HVmOjL83WpMauVXMCKfj9cX
+	 3pP1mX8XT2O1A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
 Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/4] Retire SDM845-cheza devboards
-Date: Mon, 11 Aug 2025 18:26:55 -0500
-Message-ID: <175495482455.157244.15046215797350240153.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Subject: Re: (subset) [PATCH v4 0/2] SM8750 CPU BWMONs
+Date: Mon, 11 Aug 2025 18:26:56 -0500
+Message-ID: <175495482452.157244.8001894319000750143.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
-References: <20250716-topic-goodnight_cheza-v2-0-6fa8d3261813@oss.qualcomm.com>
+In-Reply-To: <20250716-8750_cpubwmon-v4-0-12212098e90f@oss.qualcomm.com>
+References: <20250716-8750_cpubwmon-v4-0-12212098e90f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,27 +71,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 16 Jul 2025 12:16:06 +0200, Konrad Dybcio wrote:
-> Cheza was a prototype class of boards, based on the 2017 SDM845 SoC,
-> used for bringing up ChromiumOS on Snapdragon platforms.
+On Wed, 16 Jul 2025 14:25:45 +0200, Konrad Dybcio wrote:
+> Taking this series over from Melody, just adding some small changes
+> (see below):
 > 
-> Today, almost none are left in existence, and the small amount of
-> remaining ones don't get any real use.
-> 
-> To ease maintenance burden, remove it from the kernel tree.
+> Changes in v4:
+> - Extend the bindings as necessary
+> - Re-position the nodes to maintain order
+> - Add nonposted-mmio for the instance that needs it
+> Link to v3: https://lore.kernel.org/linux-arm-msm/20250304-sm8750_bwmon_master-v3-1-01a5cb330dd9@quicinc.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: Remove sdm845-cheza boards
-      commit: 5e4ca587f56319c3c9800b9d1a97443b9c364a15
-[2/4] dt-bindings: arm: qcom: Remove sdm845-cheza
-      commit: bae72efa3ca6674ff99668b00290376babae10f5
-[3/4] dt-bindings: arm-smmu: Remove sdm845-cheza specific entry
-      (no commit info)
-[4/4] MAINTAINERS: Remove sdm845-cheza device trees
-      (no commit info)
+[2/2] arm64: dts: qcom: sm8750: Add BWMONs
+      commit: bc6776fab8455762089274d469a67d104e3b96ae
 
 Best regards,
 -- 
