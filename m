@@ -1,135 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-68277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 742FFB20330
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:22:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C410B20334
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 11:23:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABEA218C1053
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:22:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C89953A3A8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:23:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 941992D8DC5;
-	Mon, 11 Aug 2025 09:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A6E6217F24;
+	Mon, 11 Aug 2025 09:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PnXipBWe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A7wmcPXG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71CD2BB1D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 09:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419171FBE8A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 09:23:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754904127; cv=none; b=vFDk416kw3C4mPDgQT3kkJ3hSRHo967kfZ8whLI4BvrVGEOKk0A+NnNiPFk2cvqpDztljIXIi9ZMudqnJfMW3D6cqX+/Oh+EMostz/mAyO17c6jO47gLfxcy0Vj2ZVCzocjeheerd9UBDAMR5xEw8G9zFGlYoXzr42kAgk8L6jw=
+	t=1754904222; cv=none; b=ZNWjth6WHlXy0MarnQUQYay4HoMdvp70YAbWcXk6Bqsy++8RvLavkVVo4kWAYjZflaK4KhLiq9z09rcO4wNu/U8e9ISCSoEQNd6d1u8kqGP8DHZbkbCKS4fuXmZMhpUW17SwE/pMAJsrVE3udUyrOGPv6xn/pwdpvD/IRwQoE+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754904127; c=relaxed/simple;
-	bh=K/zPVqxGg7tPN+JbH7RDbuwnwSJKsZfgYcJ/y4119IA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d54BXbaPqfQhwXQU5ND0f6DkzvMppGKU3ecwVY2jWv083/Yqnu1fJGYdW1V3VsQHrKFZrDraWYPnQKOcRT6mgW5iEma7loSX40QdDHlOz380+jFD6/M4igKGnSQZcjTCSoWeR7my3BR8ifIgTMAFNfimtxk33xaFlcUkf+ApZOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PnXipBWe; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1754904222; c=relaxed/simple;
+	bh=RgV3X8PbdbstKOgwdP5ORSeNGibm4oAEngoG/udq2RU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=j+nkZKIJWsfsfKWpqw9GbZYr2r4nae7UrWsvhsHzjBt2sr9fcYK25eVk7eC+k0MaTdWGLaZoWUm4HTSSTfglE2FiEdBAfV6uH9KsFUMokVz3bwH1MfWZEc3JE9gSgxjNDEpvejZzDHBJbVPgik62cfh9pzk2ovhFa6hKfLUOTb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A7wmcPXG; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-76bed310fa1so3354216b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 02:22:05 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-459ddf83023so24671275e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 02:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754904125; x=1755508925; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=n44ROEDa3iRmjIj2E/S0tuIP2QaLePXT+HAKtrIXfuc=;
-        b=PnXipBWeA2oYugnfcYMhifxpADIJqd+BzdtR/6Btms/qY7WjTCaCaTLicn36cZCZtp
-         SL6URDZief23E7YUR2GB9QKopMU7aWlVEWBTPLRVDszIDU04d90n0khK4r3RysZWVTdv
-         H2CrOc2bByNGC7n8+yVXXoemyInOdZCrLLzUbvOIse1HYoo7tuM/MQbhg4fY2AM1ZLTU
-         c956F3p8roLky8nVAD6fRssdntkdUilIWe6SJdiI0xPJGXFr0I1X/Twi7B+vT2y9tpdE
-         8Dvcl3sFEQur2SELjc8TBmyoY7NaCN1B+yBYuEWtZ84oCSW0PgNsMTxsknebkW+H0Nyt
-         OcoA==
+        d=linaro.org; s=google; t=1754904219; x=1755509019; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s42/SiaYyYGVE6EQRVYHXEsbuCtqW4KnVk5DzB7k5Zo=;
+        b=A7wmcPXGFfaW0JQdfV4pTwg02nhDtRagQhH25n58jfUOIMpUxv2nv7/X3nvOhtlhXF
+         v3Co5vPLOWo+l4bVBzfJDOmeC7keIblu1iixaZa2RD9jZI1VFu7Ghz2XOuPNiewWNm02
+         ZC5GDcTM+2Rkp44m9phTzntK5pJhzXwhFnjzp9CYk8BI7TaNVkDsnXhcIH7j+JspmZ8e
+         FdXUMf1i9g7DdOohUJ9xm6LP58teitGHjTWBBZhrqLQ0OQDmqHvh/axxcGEho+2ZdQCT
+         mhScgak78QCRku/rvbofP6epyxlbrRtNMd/9vlH9cSNpFj3NsOoyVr1KXHMUwZN3q5Sm
+         qXUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754904125; x=1755508925;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n44ROEDa3iRmjIj2E/S0tuIP2QaLePXT+HAKtrIXfuc=;
-        b=Vw2uyNrBKWJ5zJg/CkKRNJaDFhCBlByDT8LouakFwP+2Npqm2VxzJ9JiUJqLJaasn5
-         CX/VqL1qY+pDljfA/VeWG2NJhoT0rb7FFjb4t856a2OEwCj0QwwdAkmhUMlOMyg4GeaF
-         IBdo3oQ0+ZOKefzMIMeu7ZBqDVO8BDNajFuaOiLsLfJnN4n7an7G3e6g8K9Xqqa+xIXW
-         JaKoPN7rXrQHuWJnp/vB4pJUVWuLxw7J8fs6Jl8HLT1FG5hqhPZUm5OmTl1Ne3mPn33d
-         y5ZB9PW3KGSJC45Rbo247cl3pwCXTSnW7ExMEBZA6g87PWXWaPfsQ98BEccJmqoqvkbR
-         z5ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVm0GnshAmunfiiSV+IMFxMqm6d7UqeJ/v1t8PO7HCGb5IzXejFuqehK4w7TeVe1yP3W0j1gL9s6wgSNxM4@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTMeM7iTDEX3tCKg0QbsktQRC8OefTFQT4968jfDXbcTmoIJS1
-	9HtrpIM4SiWLfmfs+FUPtgEy7CY1IWWaCL9UABmpT4ci0U6CQyvTn10g4h0acjVFWhU=
-X-Gm-Gg: ASbGncvhNpWFTCFw0XBWVPK9AO/LqATChQXaUytUSFtdMSbSlLp/l74Z/mRkhr1GUsW
-	wJWcyhtG7MniMyzHagbF7p947bHOminCaRNp/8ih9yL0E+iTehz9GkrathKTBBpUtnopDJlHuRw
-	1NwtdTdemFEshM2olkciVYzSk2MOBySRxUbucksEl2E1NpBVPnwXHKIzMaPwWzN7sd0RmoZXNkt
-	fAKUD0K8uXiTTGepTgMMr1Z341WJoi4U5m9Dfgq9hrLzd5z2xmfy+wqZ2KuDR7csiNndnalZ8NH
-	wcUlxk86l4rswpb+q0Rcb7fpOCFkFFXkMzBGyWTVUkmfL9FVD/+nBX1gOjgfKj3OLyCA4+dguyn
-	6ltVRNPqIJoSS4jKz0UXiIHx4
-X-Google-Smtp-Source: AGHT+IEY0nvgGQRFqL9yezJOvWADh1/cHUUmKJ7QswLrUeIJdU75UuZ8LO0U21sJdWveXkp3OX6rWA==
-X-Received: by 2002:a05:6a21:32a3:b0:23d:de52:a5f0 with SMTP id adf61e73a8af0-24055204322mr19749640637.42.1754904125252;
-        Mon, 11 Aug 2025 02:22:05 -0700 (PDT)
-Received: from localhost ([122.172.87.165])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b423d2f5035sm20840763a12.39.2025.08.11.02.22.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 02:22:04 -0700 (PDT)
-Date: Mon, 11 Aug 2025 14:52:02 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	konradybcio@kernel.org, rafael@kernel.org, ilia.lin@kernel.org,
-	djakov@kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 3/4] cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
-Message-ID: <20250811092202.auarwnyoagebcw3o@vireshk-i7>
-References: <20250811090954.2854440-1-quic_varada@quicinc.com>
- <20250811090954.2854440-4-quic_varada@quicinc.com>
+        d=1e100.net; s=20230601; t=1754904219; x=1755509019;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=s42/SiaYyYGVE6EQRVYHXEsbuCtqW4KnVk5DzB7k5Zo=;
+        b=OI+VGdmPOmOfnFA9FKxeDXMIatPPXClAKkvOkU1bNRCUXlWmv1zvQZOd+9xjEYQw8F
+         498+I0Cx4XYdPCrrezFEn41q5ZWIUV1Q3soVOAlvBTq3+4gauvEsj5LzQusfQm7OaIfT
+         JeHHwtlkmr4meNl3L0LhLELdRONR9Q3ARl2ftBTa+Jnn15A8alkHZ50mEmwXwFcFs72F
+         6q7rul/CfgxBYEoD2G8aBaI/si2ApNheDa9i9Hvy/Ob7btSE12bKaVp08B/2cnLciluQ
+         iDtiYYdQPtslgPQSN7s1CWdeRDLg/1JzpPg0/tJwhfeeGwp/8+ya0Its/Vj4pFBaLZrf
+         r2kw==
+X-Gm-Message-State: AOJu0YwF4ElSora19A4EkXHi08la5Ant/pL6a4NilaDFr2zJnSzvdTKM
+	icwmEIBQWBoV+tGIcGH2TSnfgThI1eRwznzqGhM8EyB2NpNnYppJ094EeBzkBP8vZkE=
+X-Gm-Gg: ASbGncuHDLjqAtngeMQqEGGNUAXV7SSUQn/G09KBe0aUTFL1RBncgagzX3d/RpgqHRg
+	v8VvtSiVEQkVR0WSH+bW23TktBac+y9AO8J9Dqc7X4J3xvYyKlcmFdzU7bL38pz3JHykzYv19b4
+	4Tj0m9gAw9ECTomXAIPDP1RXbykSAz3mprfwJgTrgd/LdomQmFrltgdbZHoqYGt+PZ2IVpqnfUf
+	h41MLFYAL8IHQg2f+nCrexR5//ZIETTkLqIOVpj0Ev1ezmKSY1GpgpHpN8dFeJCw1F+RG9CGhcB
+	ua10mc8lH4uquI5lwVIVMD3Tkn/+iSGwtLaPpkzO2HwI9Ep9sS/2K/OjlhHMr3lgLLtg1C1+VfB
+	Tb3xRndKO2io/bmwTmoPjwGV9OXUz2896+bPsVsCKqtXuXDIXPFkMX5AARHBBO3eHft+qXsyQT0
+	g=
+X-Google-Smtp-Source: AGHT+IEdGL+y1Uqgip0hxEqXCVAiAkHGV2kdyCXZxciG28y4uXUjh6jqHgHg9EYUgBthnXXUxqCG4Q==
+X-Received: by 2002:a05:600c:3b86:b0:458:bc58:850c with SMTP id 5b1f17b1804b1-459f4eaa095mr92514795e9.1.1754904219463;
+        Mon, 11 Aug 2025 02:23:39 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:b0fa:b045:4b82:de09? ([2a01:e0a:3d9:2080:b0fa:b045:4b82:de09])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459ee17535bsm206884675e9.16.2025.08.11.02.23.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 02:23:39 -0700 (PDT)
+Message-ID: <00dc25ef-923f-499f-91ce-1d2463c48b35@linaro.org>
+Date: Mon, 11 Aug 2025 11:23:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250811090954.2854440-4-quic_varada@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Deal with zero e_shentsize
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Val Packett <val@packett.cool>
+References: <20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 11-08-25, 14:39, Varadarajan Narayanan wrote:
-> From: Md Sadre Alam <quic_mdalam@quicinc.com>
+On 30/07/2025 22:51, Bjorn Andersson wrote:
+> Firmware that doesn't provide section headers leave both e_shentsize and
+> e_shnum 0, which obvious isn't compatible with the newly introduced
+> stricter checks.
 > 
-> IPQ5424 have different OPPs available for the CPU based on
-> SoC variant. This can be determined through use of an eFuse
-> register present in the silicon.
+> Make the section-related checks conditional on either of these values
+> being non-zero.
 > 
-> Added support for ipq5424 on nvmem driver which helps to
-> determine OPPs at runtime based on the eFuse register which
-> has the CPU frequency limits. opp-supported-hw dt binding
-> can be used to indicate the available OPPs for each limit.
-> 
-> nvmem driver also creates the "cpufreq-dt" platform_device after
-> passing the version matching data to the OPP framework so that the
-> cpufreq-dt handles the actual cpufreq implementation.
-> 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> [ Changed '!=' based check to '==' based check ]
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
+> Reported-by: Val Packett <val@packett.cool>
+> Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
+> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 > ---
-> v5: Add 'Acked-by: Viresh Kumar'
-> ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 5 +++++
->  2 files changed, 6 insertions(+)
+>   drivers/soc/qcom/mdt_loader.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
 
-You should have dropped this one now, as I already applied the
-previous version.
+The issue solved by this fix is still present on v6.17-rc1, even if we reported
+a breakage over -next on the 22th of July.
 
--- 
-viresh
+Neil
 
