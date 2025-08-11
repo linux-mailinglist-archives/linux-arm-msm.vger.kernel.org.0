@@ -1,329 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-68299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8779B204D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 12:05:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E8E3B204DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 12:06:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE5E2189FD92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:06:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5305B167FCF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:06:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C4031FF1B2;
-	Mon, 11 Aug 2025 10:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6892021ADB9;
+	Mon, 11 Aug 2025 10:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="POVQZITM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H7wNvcmx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8EB1D7E4A;
-	Mon, 11 Aug 2025 10:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBDE201017
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754906754; cv=none; b=F5smxAUimSfy/cJftD5SbJjdv2O7qKAPoCbZAalq2RtbJqAPpGWFfoZnV0MGVbozQqySccbQyzEnDj1r58GXJOnwH0reLnnGXqHPFGgDcOQtkKaKLS+yO3ejo4CDZbpBlAs2QVOdeyUd1uo7YexlbbJrSArmNm8n4oNINNYuKt4=
+	t=1754906769; cv=none; b=e8emUj9tdhf+YyHKurCTSLk1SY9sJwauTR7NIhuPYXr5hfM0P/OVCz8TsLXlEHS6ysdKjFnrxAtTU0SIx126G9aFpcTGd4Xz9zv3ZuWC8FtczE7YRaCi3CBDWSHXECfhRLy61DauTEToUqalJ0EVHbWvv6yMvzVoIz+SoUCtSnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754906754; c=relaxed/simple;
-	bh=fxjTEqUImoF53drqVHSEnhgix2VVZt5sV1N0vgMdq8Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=p875TOcagplbZMGX0uvpG6NAx7z5oj0EgZg4IOtnKw6xuTDQtbRxrXc7MBVLZ+46oD/9KfAZTqLiBlNtRiEDnTfTW2UHdPhrfGoUtexaW0l9wEufrvsLoX6SJgjadYnlZ43WdQDvVYZwnn7CANk/afsFc8gUO4XHkr+u2LSecdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=POVQZITM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dCCa021620;
-	Mon, 11 Aug 2025 10:05:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1754906769; c=relaxed/simple;
+	bh=10ApFl6TQUysMY2QfW7/N2xTtY4LUe/cSjyKPP+pkb8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MxIxXwy6tMEZcVboLX21QnMSTgMWs8oWnc3KPEdc0x3tUbFVAab3V6v+xxCSyJddJbgfGW0p+VPIhyPBZZK7rJhIH3uEJX2U6uKg/sNv+fW++gPa/gUfODSgvifALU1ZKfEvZzHVfg+6GatDdIsQFTtcVb0VxUKMXwpWCmj28Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H7wNvcmx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dj58032547
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jnHSLgJERtsCjMps84k/6BBQYIQdG+I5hvDzioIab4Y=; b=POVQZITMO+sJVEOd
-	LLjNe0t0Rct5aDbi1lXfVB+YPaF09lfP/ZfMEo4dhe8bk6LHawzsL35JqOEvB5iX
-	qynT7euwCA0WJ4upstBKp1Ps8fOEOrCCvSDg/t6cj2WWRtiq1MFt2HEgdXiC00hK
-	FroGo/pSEKrLruR0Vi74I9t3HSyt/PFN22bGpgFmPSfzQCmnYM2ssVl10YanUF65
-	JfoHxOQnCobzANH4fdJRTlUg+de2FYxpCrPSpBxnpeMCsxWIk2zYBFm8LqQf1ds3
-	jP6+6bN20IVyStCSHAt80gfRzC9ejiOaFJyPt5w1rVz+OcGzr/U8fIVSCsHV+lee
-	+LwWyw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj43y3v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 10:05:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57BA5mQC009411
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 10:05:48 GMT
-Received: from [10.50.36.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 11 Aug
- 2025 03:05:44 -0700
-Message-ID: <beff5494-17b6-2fe8-1a5c-6a9a820204bb@quicinc.com>
-Date: Mon, 11 Aug 2025 15:35:41 +0530
+	TZ/dceqjtDi5aPbykVkxqjO86bUfZyp7+P+A+wh4Mr0=; b=H7wNvcmxZMObfY4f
+	8ZP1+dR0ATH95Yswyd74eOfO0A9mr8DWbfAVaM6RMEF4xzmYNcCzYsJ1Z+bgVCfn
+	byMQSGvdgXlN2lto1ndWTmcZ3hdxONN+BGmlWbWv8VvHe33i0YxZDENvZ1ftAxMk
+	ZWfWjVQ7Ihpm8W9YX1J6r5PZS5OYKc4z6TX0ORutdyUErrfG860H9TETY2z4n7IW
+	q39BfjOxxBGui/rA+Un8G9kfczgjHbLxAAcScKxJeV2NzTI17iWf9p459s0MlMbb
+	sg99W0CRbh2w2XlUdc9gXSPF9rKP7jhK8eDZ2yDpMvjwrEGJv4mVhazNYvZHL099
+	OXUMpQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dygmbw7k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b3f33295703so6475707a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 03:06:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754906766; x=1755511566;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TZ/dceqjtDi5aPbykVkxqjO86bUfZyp7+P+A+wh4Mr0=;
+        b=gyVDWCmTz6wDYck++pl7tTHLrO+/3F7by6gQ3TAhl7RMSU+xkHxkh357lbkMlLfKAb
+         Y368Qb00LNlgZ1Qx/S1Ew524fMlDW4rgWBLmkkzpwY+5mg6OshtcsbAtseqjTjA/mFIN
+         d+RjOZ+DxHCTgagVxT8nVGMa2AIyz0svJdR3Yu3ATUM5peZmorIU7k8c95IxaWkQNS0N
+         tMoICw02e9KXTbFbX4DKJ2w+XF5rt8G2pDh1r9Sw/fSYpW4uS/iITYw66/FIwK4pcs/j
+         6jB0me3yv8Credvd2TD/P3rfdtuCvgHAvsMgUeAVxCq81rRGmtlRT2lgoWSLOOwcyG95
+         G+jg==
+X-Forwarded-Encrypted: i=1; AJvYcCWFmFKHN/xHKOOvMYnYa6x8Gf6FcTAqOb4fiqoR+t0sSr23pK8658NijzmrXSc1IFeC7Ryw+ljx1n8DK59y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+E0goLuNQcPhEtSJGZ+aK1UZEAFiKGO4OpZIx+GuAuG8mhy09
+	9k8tNEm0S4arQda4Z4pktEajz3xHJYc1eDPEEGb8lbrCOKm0/aKac4rNN0gTI4kY4lBNx9Ca3iD
+	EdDQBtZUIr1VV1/MFk/nX9EXnNhlsUI5JEsEMQVDnxxQERwPFCFIzfzkN2ZjKXqOFL0Eg
+X-Gm-Gg: ASbGncsYTRVp+pSirhQs1fiNQkco3iPym81qb0t5whTBehzX/YNhaMlsmb7bkdL6gKB
+	7j+rgC8l0VqT8ZK8yULLx24vbRau4YvwgrFFh8XecvKdak4EdB0jWL667Yjj7F3WG0qRncNkfzL
+	+vJnvJ24wUmLm/4+y0ZFCQGm4396nt3U+UGwGJKeaEYZ+jdCEpxJf0sJ/lbEpIT1k5m4FbR+MBR
+	3tuELBf0EFA33i+QK7a8aODT/43tV2V6RKqbymPw6z3pEWADueMrouxF1LwTg5e6BrV6Zf+5E8j
+	H6K4Sl6QIfQ2aHom3pUvaFOXyKkVf78d97hmXqgrtJmpOiRT2vb3LdtWnaC9CehdnVaIi20MAw=
+	=
+X-Received: by 2002:a05:6a20:3949:b0:240:af8:1758 with SMTP id adf61e73a8af0-240551e9da8mr18321237637.45.1754906766037;
+        Mon, 11 Aug 2025 03:06:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBSXsYakz/wnYLLtXDpGCCBYPXdXvvOJ71swjbLGCAep7jA1LEkHm2HVopX9muR2HS2ZGZ7g==
+X-Received: by 2002:a05:6a20:3949:b0:240:af8:1758 with SMTP id adf61e73a8af0-240551e9da8mr18321186637.45.1754906765540;
+        Mon, 11 Aug 2025 03:06:05 -0700 (PDT)
+Received: from [10.218.42.132] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbd156sm26403355b3a.84.2025.08.11.03.06.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 03:06:05 -0700 (PDT)
+Message-ID: <8e67bfa0-e62c-4060-9ac4-de212ae63570@oss.qualcomm.com>
+Date: Mon, 11 Aug 2025 15:35:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v9 4/8] media: venus: hfi_plat_v4: Add capabilities for
- the 4XX lite core
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] opp: Add bw_factor support to adjust bandwidth
+ dynamically
+To: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250717-opp_pcie-v1-0-dde6f452571b@oss.qualcomm.com>
+ <0dfe9025-de00-4ec2-b6ca-5ef8d9414301@oss.qualcomm.com>
+ <20250801072845.ppxka4ry4dtn6j3m@vireshk-i7>
+ <7bac637b-9483-4341-91c0-e31d5c2f0ea3@oss.qualcomm.com>
+ <20250801085628.7gdqycsggnqxdr67@vireshk-i7>
+ <7f1393ab-5ae2-428a-92f8-3c8a5df02058@oss.qualcomm.com>
+ <20250804111340.t62d4y2zg77rr3rp@vireshk-i7>
+ <6035a961-7c5a-4fde-b4ea-e9ea9d88e6c1@oss.qualcomm.com>
+ <20250811084453.ocibslv6kxkib6po@vireshk-i7>
 Content-Language: en-US
-To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        <quic_vgarodia@quicinc.com>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>, <konradybcio@kernel.org>,
-        <dmitry.baryshkov@oss.qualcomm.com>, <mchehab@kernel.org>,
-        <robh@kernel.org>, <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250808085300.1403570-1-jorge.ramirez@oss.qualcomm.com>
- <20250808085300.1403570-5-jorge.ramirez@oss.qualcomm.com>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250808085300.1403570-5-jorge.ramirez@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250811084453.ocibslv6kxkib6po@vireshk-i7>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfX85iVX+lWrvsT
- Cn7aRrF4/AXdipNNpJ4WhaXbShW2J8LWaw7BTJxCxlbrrFGllzlU39N12bKllyz+/DhiuzKjm85
- raR3PyooqPz4xrREzjmwP5mJ4XIBHlxP2AJ1yVt/HkR23RsmksJOzeTETwUQ4sPQSa1N6cvjulH
- j/48BBM8utX3YLVobFZkfl/sTYv9gP2gGFVognw4xQSQUXVZC+xfPDv3jNmeV5FJEnKB78dBSBU
- ZdVFL6aCOCCqckpZ6vo0T3Lzpwes2X741IZ/IXOuJaQxqXVnYOAYzv/cHVJqTMevTraViz1FSWl
- m/L1BU9Nd8z8/jy8Ivnl5UdBdjbhCW+D929DBQaO8PBuY50eZzyE5FkpJFXEMsXP8QXNbMXsfpo
- HlPpnbbm
-X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=6899c07d cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=LzSCczN5UG7F6-Q5to0A:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: y423bYYgqOahd-89Oinr1AggfxW1OLEE
-X-Proofpoint-GUID: y423bYYgqOahd-89Oinr1AggfxW1OLEE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzNSBTYWx0ZWRfX6QzUtWXvrqiv
+ BSgu0WU1fdrnmwQuGjSSolJJ4wGA/x6hN//SK61H1Sp+TUR8xuVfMr9kxL+JVqKHG0UXXyPfXw2
+ ALd4XqxiqywAZw7dH54ZOZqhqSqz0RbWVfb0oVkLJ4Dcoh5ZNbeZntRl5swdhokfOKvmGDYVoDv
+ YAqHw/BGfi76lxcwQS7+p7WBGDWxbJ3sKyGhLJI9hJ5uqWcnl/Cf9EEQJGHyhyIni+IRgkQp+ty
+ lDXmRfFwnUpsoHbo/TEWc+sjAeL9QMLUgZllBL5oBJlmA/gEvDjwiNkifRDKb5z6Hg+QdHUeNKd
+ 2ZYnCE3LcbNGAWku8ba2abLXEOm9/7kiWHzGn8/HCjTuGR1RQ5V1WyUIvkjsr7tuTekStg/OXD6
+ zOZOqmHB
+X-Authority-Analysis: v=2.4 cv=FvMF/3rq c=1 sm=1 tr=0 ts=6899c08f cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=rbqKxxxGQXOgEjNPzAoA:9
+ a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-GUID: 6Y7FjkQpsHPdpWBVMOkiKuHH5yomu75V
+X-Proofpoint-ORIG-GUID: 6Y7FjkQpsHPdpWBVMOkiKuHH5yomu75V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
+ priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090027
+ engine=8.19.0-2507300000 definitions=main-2508090035
 
 
 
-On 8/8/2025 2:22 PM, Jorge Ramirez-Ortiz wrote:
-> Populate the HFI v4 lite capability set used by the AR50_LITE video
+On 8/11/2025 2:14 PM, Viresh Kumar wrote:
+> Sorry for the delay, I was travelling a bit recently.
+> 
+> On 06-08-25, 10:35, Krishna Chaitanya Chundru wrote:
+>> On 8/4/2025 4:43 PM, Viresh Kumar wrote:
+>>> On 01-08-25, 15:05, Krishna Chaitanya Chundru wrote:
+>>>> Currently we are fetching the OPP based on the frequency and setting
+>>>> that OPP using dev_pm_opp_set_opp().
+>>>>
+>>>> As you are suggesting to use dev_pm_opp_set_prop_name() here.
+>>>> This what I understood
+>>>>
+>>>> First set prop name using dev_pm_opp_set_prop_name then
+>>>> set opp dev_pm_opp_set_opp()
+>>>>
+>>>> if you want to change above one we need to first clear using
+>>>> dev_pm_opp_put_prop_name() then again call dev_pm_opp_set_prop_name
+>>>> & dev_pm_opp_set_opp()
+>>>
+>>> dev_pm_opp_set_prop_name() should be called only once at boot time and not
+>>> again later on. It is there to configure one of the named properties before the
+>>> OPP table initializes for a device. Basically it is there to select one of the
+>>> available properties for an OPP, like selecting a voltage applicable for an OPP
+>>> for a device.
+>>
+>> Then we can't use this dev_pm_opp_set_prop_name(), there is possibility
+>> link width x1, x2, x4 etc can also change at runtime.
+> 
+> Hmm, looking at the way you have implemented the bw multiplier, you
+> are going to call that every time you need to change the OPP
+> configuration. That doesn't look nice TBH. Such configurations are
+> normally provided via DT or are configured once at boot and not
+> touched after that. What you are basically doing is something like,
+> adding a single OPP in DT and changing the OPP frequency right before
+> setting it at runtime.
+> 
+> FWIW, you are allowed to add multiple OPPs with same frequency value
+> but different bandwidths or levels. I think you should use that and
+> correctly describe the hardware first (which is the step in the right
+> direction). And then you can find the right OPP at runtime and send a
+> request to configure it. That way we can avoid adding hacks in the OPP
 > core.
-> 
-> These capabilities define the supported codec formats and operational
-> limits specific to this streamlined VPU variant.
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../platform/qcom/venus/hfi_platform_v4.c     | 167 ++++++++++++++++--
->  1 file changed, 151 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> index 41e4dc28ec1b..cda888b56b5d 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> @@ -246,28 +246,150 @@ static const struct hfi_plat_caps caps[] = {
->  	.num_fmts = 4,
->  } };
->  
-> +static const struct hfi_plat_caps caps_lite[] = {
-> +{
-> +	.codec = HFI_VIDEO_CODEC_H264,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = { HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> +	.num_pl = 5,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_HEVC,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0 << 28 },
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_VP9,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-> +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_H264,
-> +	.domain = VIDC_SESSION_TYPE_ENC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> +	.num_caps = 15,
-> +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_5},
-> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_5},
-> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_5},
-> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_5},
-> +	.num_pl = 5,
-> +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.num_fmts = 2,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_HEVC,
-> +	.domain = VIDC_SESSION_TYPE_ENC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.caps[7] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
-> +	.caps[8] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-> +	.caps[9] = {HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE, 0, 244800, 1},
-> +	.caps[10] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-> +	.caps[11] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-> +	.caps[12] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-> +	.caps[13] = {HFI_CAPABILITY_SLICE_BYTE, 1, 10, 1},
-> +	.caps[14] = {HFI_CAPABILITY_SLICE_MB, 1, 10, 1},
-> +	.num_caps = 15,
-> +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_HIGH0},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.num_fmts = 2,
-> +} };
-> +
->  static const struct hfi_plat_caps *get_capabilities(struct venus_core *core,
->  						    unsigned int *entries)
->  {
-> -	if (is_lite(core))
-> -		return NULL;
-> +	*entries = is_lite(core) ? ARRAY_SIZE(caps_lite) : ARRAY_SIZE(caps);
->  
-> -	*entries = ARRAY_SIZE(caps);
-> -	return caps;
-> +	return is_lite(core) ? caps_lite : caps;
->  }
->  
->  static void get_codecs(struct venus_core *core,
->  		       u32 *enc_codecs, u32 *dec_codecs, u32 *count)
->  {
-> -	if (is_lite(core))
-> -		return;
-> +	const struct hfi_plat_caps *caps;
-> +	unsigned int num;
-> +	size_t i;
-> +
-> +	*enc_codecs = 0;
-> +	*dec_codecs = 0;
-> +
-> +	caps = get_capabilities(core, &num);
->  
-> -	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> -		      HFI_VIDEO_CODEC_VP8;
-> -	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> -		      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-> -		      HFI_VIDEO_CODEC_MPEG2;
-> -	*count = 8;
-> +	for (i = 0; i < num; caps++, i++) {
-> +		if (caps->domain == VIDC_SESSION_TYPE_ENC)
-> +			*enc_codecs |= caps->codec;
-> +		else
-> +			*dec_codecs |= caps->codec;
-> +	}
-> +
-> +	*count = num;
->  }
->  
->  static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
-> @@ -281,15 +403,28 @@ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
->  	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
->  };
->  
-> +static const struct hfi_platform_codec_freq_data codec_freq_data_lite[] = {
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 0, 675 },
-> +};
-> +
->  static const struct hfi_platform_codec_freq_data *
->  get_codec_freq_data(struct venus_core *core, u32 session_type, u32 pixfmt)
->  {
-> -	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-> -	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
-> +	const struct hfi_platform_codec_freq_data *data;
-> +	unsigned int i, data_size;
->  	const struct hfi_platform_codec_freq_data *found = NULL;
->  
-> -	if (is_lite(core))
-> -		return NULL;
-> +	if (is_lite(core)) {
-> +		data = codec_freq_data_lite;
-> +		data_size = ARRAY_SIZE(codec_freq_data_lite);
-> +	} else {
-> +		data = codec_freq_data;
-> +		data_size = ARRAY_SIZE(codec_freq_data);
-> +	}
->  
->  	for (i = 0; i < data_size; i++) {
->  		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
+Thanks Viresh for the suggestion. We will try this.
+Can you confirm this is what you are expecting.
 
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+dt change
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2214,13 +2214,23 @@ opp-2500000 {
+                                         opp-hz = /bits/ 64 <2500000>;
+                                         required-opps = 
+<&rpmhpd_opp_low_svs>;
+                                         opp-peak-kBps = <250000 1>;
++                                       opp-level = <1>;
+                                 };
+
+-                               /* GEN 1 x2 and GEN 2 x1 */
++                               /* GEN 1 x2 */
+                                 opp-5000000 {
+                                         opp-hz = /bits/ 64 <5000000>;
+                                         required-opps = 
+<&rpmhpd_opp_low_svs>;
+                                         opp-peak-kBps = <500000 1>;
++                                       opp-level = <1>;
++                               };
++
++                               /* GEN 2 x1 */
++                               opp-5000000 {
++                                       opp-hz = /bits/ 64 <5000000>;
++                                       required-opps = 
+<&rpmhpd_opp_low_svs>;
++                                       opp-peak-kBps = <500000 1>;
++                                       opp-level = <2>;
+                                 };
+
+                                 /* GEN 2 x2 */
+@@ -2228,6 +2238,7 @@ opp-10000000 {
+                                         opp-hz = /bits/ 64 <10000000>;
+                                         required-opps = 
+<&rpmhpd_opp_low_svs>;
+                                         opp-peak-kBps = <1000000 1>;
++                                       opp-level = <2>;
+                                 };
+
+                                 /* GEN 3 x1 */
+@@ -2235,13 +2246,23 @@ opp-8000000 {
+                                         opp-hz = /bits/ 64 <8000000>;
+                                         required-opps = <&rpmhpd_opp_nom>;
+                                         opp-peak-kBps = <984500 1>;
++                                       opp-level = <3>;
++                               };
++
++                               /* GEN 3 x2 */
++                               opp-16000000 {
++                                       opp-hz = /bits/ 64 <16000000>;
++                                       required-opps = <&rpmhpd_opp_nom>;
++                                       opp-peak-kBps = <1969000 1>;
++                                       opp-level = <3>;
+                                 };
+
+-                               /* GEN 3 x2 and GEN 4 x1 */
++                               /*GEN 4 x1 */
+                                 opp-16000000 {
+                                         opp-hz = /bits/ 64 <16000000>;
+                                         required-opps = <&rpmhpd_opp_nom>;
+                                         opp-peak-kBps = <1969000 1>;
++                                       opp-level = <4>;
+                                 };
+
+                                 /* GEN 4 x2 */
+@@ -2249,6 +2270,7 @@ opp-32000000 {
+                                         opp-hz = /bits/ 64 <32000000>;
+                                         required-opps = <&rpmhpd_opp_nom>;
+                                         opp-peak-kBps = <3938000 1>;
++                                       opp-level = <4>;
+                                 };
+                         };
+
+
+And in the driver I need to have a change in OPP framework which
+returns OPP based on both frequency and level something like
+dev_pm_opp_find_level_freq_exact(struct device *dev,
+unsigned int level, unsigned int freq);
+
+Please correct me if this is not suggested approach.
+
+- Krishna Chaitanya.
+> 
 
