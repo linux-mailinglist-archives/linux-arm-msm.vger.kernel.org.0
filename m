@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-68376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70F87B20C0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:37:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 374EBB20C11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:37:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 594A53AAF65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 14:32:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AADF3ACE0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 14:32:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31DBE2561A2;
-	Mon, 11 Aug 2025 14:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28182D3759;
+	Mon, 11 Aug 2025 14:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WMsHkOsr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cpIADKLU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAF9253954;
-	Mon, 11 Aug 2025 14:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B312561B9;
+	Mon, 11 Aug 2025 14:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754922741; cv=none; b=t7NR+FvkIASoSEmc4wIdPtW0ijSD3MZEAYzSidn7r9ZABKJOT2odEAdztoU2B2iFnkFYRgGlaDXIzvRSTbJMTo0R22ptQYuk9rW6gLMSUFN2XusrlKBtTZIdjZNV0RXtc0eOOoDACsojOzdly6GRPFw5mjiTstTIIOa32PwksNc=
+	t=1754922742; cv=none; b=KJ/B6Sp1miGTZEn3p6BqOndMF/EkHrGYL14kdgzFdxpEaDqhuUZY82DqtBj/s8TQD6Td5E1pri6gjGv0j7go89mQq26j335qMzb2qkl0wr6r7R6sA+fwVvShfpt5kZJhn+0pex0oogjSb0Nt+zadRlwjBW/BWxLl/Qnnyb+qJTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754922741; c=relaxed/simple;
-	bh=zMQSzU43geZRqQzfaOUxQiKDR4ywNE1VYOcEEc6W6nE=;
+	s=arc-20240116; t=1754922742; c=relaxed/simple;
+	bh=V2MITJkAWgVChAakqqHHWURqebOYZDjWFsXyQp74D78=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eqyaUHBCwCF4x+KMDRvXTFEtBgdmZzm/jEcb1HDuPh/qOAIfblrUv6ATZ6gjEhJ2dDMVyskqYtHdhnSXxWbaJGwfv1D+00nlmV5NBERchm6yG7AGU+RqzwDUeiEo4JbhZXT2QVwFFbGVf38zSKaJPD5CmF4ItNOFcvoYvZhx5OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WMsHkOsr; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=HRBt+znNMCaS14xPy0hM5VqA2/ABSRViJe/SexUIzyEUCMmEb7rX0m9rw/fqPWLtsF3xD47Ko2cZFKxE8KeqRobx0u9mocdf12rdcI2u5C5C2dEb8exCQzJ72k0S7Tg2ospRCgjMVFI5tWUFEXs4R6ALfnAq44GFNY0yG/UrCbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cpIADKLU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dCwq021654;
-	Mon, 11 Aug 2025 14:32:04 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57BAGpTY024514;
+	Mon, 11 Aug 2025 14:32:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1FxsZVSU7lmnYgpxflseIwFu8Dhx01Pd+TSdBewQmlw=; b=WMsHkOsrsGzAviPU
-	nw9U2Kxr/KEzhn/NfySJprM44DqFGiPiNeMee4s3Rh+XWNpe1S8pD6YC4n7QWf0j
-	wHWSkaJ6579zZFov64tQrX6PPK3XxJpIbicBPyVIeCwcFDxg7R0TnBr41uKpbie1
-	dj+gLUp4GQjOrAcFBcafRnMeH+RYv+2fplE4Yts+IBj/rA3HajsDFwWfv6purDQT
-	+nY+dKPYkiVHFiEtu+edhmSeJ5C2pSXG9OIhu1tvxmHIWaIw+DFsjC6/1ehIowj/
-	Jz3ELxLQrW16gCcW10kTMj4Hcx3d0gV12Kcs04MT2NsC2tDGYjrkjpKz4FqTVOn+
-	C9CS1Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj44r6p-1
+	YHuLfx+SzAPMH1Rcg6Ces3pJhMZfCmoX8Tp997ksbkg=; b=cpIADKLUwFy58/sV
+	U3E0jCsvlHC26ltfyYpX4VdOWztf1BmQlT6zKo0SxsUOiN98ik5UZl/gnjC8Wrry
+	5+pQyQ4ZwjYDgfAxblGkGGGKuuO95GPRGBxeWyi7NAir6POuMmOfANhUuVCmKsPA
+	7OLyWQkXHA6zzwT+GnDCxtBxdL0/e975lUHW2iuG8cfMHV0U/bE98e5vNsWz1vHR
+	LRVpiYXfqCo9+la9lBxc2Lza/ifv/f3cbDtxG/5eBXc+2dmI/t7D1kDsCSg0Kc7X
+	VodC/itU6jgI/YSViQC+7+SGPMikpDvSTWK/GZCDXYKG0rjegyPEtRkBuAZVBmHu
+	Um1dqg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fem48sp4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 14:32:03 +0000 (GMT)
+	Mon, 11 Aug 2025 14:32:09 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57BEW36b031954
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57BEW860027365
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 14:32:03 GMT
+	Mon, 11 Aug 2025 14:32:08 GMT
 Received: from hu-rdwivedi-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Mon, 11 Aug 2025 07:31:58 -0700
+ 15.2.1748.10; Mon, 11 Aug 2025 07:32:03 -0700
 From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 To: <mani@kernel.org>, <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
         <bvanassche@acm.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
@@ -64,9 +64,9 @@ To: <mani@kernel.org>, <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
         <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>
 CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH V2 1/4] dt-bindings: ufs: qcom: Document MCQ register space for UFS
-Date: Mon, 11 Aug 2025 20:01:36 +0530
-Message-ID: <20250811143139.16422-2-quic_rdwivedi@quicinc.com>
+Subject: [PATCH V2 2/4] arm64: dts: qcom: sm8650: Enable MCQ support for UFS controller
+Date: Mon, 11 Aug 2025 20:01:37 +0530
+Message-ID: <20250811143139.16422-3-quic_rdwivedi@quicinc.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250811143139.16422-1-quic_rdwivedi@quicinc.com>
 References: <20250811143139.16422-1-quic_rdwivedi@quicinc.com>
@@ -82,78 +82,63 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfX8oZCz+c2+0+P
- SJoIaI8JO/fI42bAd/9s8/BW8TNIlPAfDCCxJDmmSG+bZt8wFBAqGI4yqNZyqdr6YQiDMkLYSkl
- fmUsRRgj4SXSjINDS2NLBXpKvX1fMj5cvziehpD4CPWY2ExIlj4/tn7gA1vWrzHljCBLF56J13O
- sb+UWKBTvOmjAAIW112GSL1m3g/xbX4amJ27/XmvqIjuEfINRs+g5AoFVJk3jc8Uc8996um1bpD
- OjesibBeEdYz+GAvOjpQMSDwHOBgt2DxOlqetItuTPgkm7GqPhcGweFwF/w+HmK0VBjx9S/vROA
- /HsBL45S5EdNcZvlrhxCX0OdscZ0mp2DaCAethQ92Y8lP188ssOnhr38exmK8FsNg3Jr8WbqMNW
- TOqRDNAF
-X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=6899fee3 cx=c_pps
+X-Proofpoint-GUID: BhB2THmpboqQIdOtTmW6yM47_xQTN96x
+X-Proofpoint-ORIG-GUID: BhB2THmpboqQIdOtTmW6yM47_xQTN96x
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2OCBTYWx0ZWRfX7Iw/Fbo8Qnlx
+ Wo7n1iLDaENfhEtXAleeFBjz4oRCmeNmCTI3bv3H79ez4CXflrKVo1DAq2ZigZ12SsDygOvm8U7
+ A9O1LdQGDQQ0aFjvy3dl4AVAvIduGKyp1fSqNIITw42q9C8M4iUOLB5p52qRAjGqJyQLuweZ5Zi
+ iYJqFjkRL1OmfD21hC24K7uC371Eg0x4qdl1bDFXntq/5wqNUthzPi07qFNwjfYEH3s06NnHxne
+ SPV3Qhy2ZfEt3pvZLbCZ+iwObDf/NIOJQvo3+CvBg9sAM8/xjOWhG89/YyKossbaxCl+eXxgTJ/
+ sBdl6prqz3F1dVNqhp8Uhs+bDbLTudq9bsUODYxs3mq528wXA9ZoXYW25NWo1mUgbQaRtH/l+fD
+ F/CZ2ajY
+X-Authority-Analysis: v=2.4 cv=YMafyQGx c=1 sm=1 tr=0 ts=6899fee9 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=Y0JeA398hpKOggu2qcoA:9
+ a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=GbTRQnthUMyhj2PjmLAA:9
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: NCj4S3h1S3FPXxpaGjHtzcWHFSrncJCy
-X-Proofpoint-GUID: NCj4S3h1S3FPXxpaGjHtzcWHFSrncJCy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-11_03,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090027
+ bulkscore=0 clxscore=1015 priorityscore=1501 spamscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110068
 
-Document Multi-Circular Queue (MCQ) register space for
-Qualcomm UFS controllers.
+Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+on the Qualcomm SM8650 platform by updating the device tree node. This
+includes adding new register region for MCQ and specifying the MSI parent
+required for MCQ operation.
 
 Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 ---
- .../devicetree/bindings/ufs/qcom,ufs.yaml        | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index 6c6043d9809e..daf681b0e23b 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -89,9 +89,13 @@ properties:
-     maxItems: 2
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index e14d3d778b71..1885d88abc3a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -3982,7 +3982,10 @@ ufs_mem_phy: phy@1d80000 {
  
-   reg-names:
--    items:
--      - const: std
--      - const: ice
-+    oneOf:
-+      - items:
-+          - const: std
-+          - const: ice
-+      - items:
-+          - const: ufs_mem
-+          - const: mcq
+ 		ufs_mem_hc: ufshc@1d84000 {
+ 			compatible = "qcom,sm8650-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+-			reg = <0 0x01d84000 0 0x3000>;
++			reg = <0 0x01d84000 0 0x3000>,
++			      <0 0x1da0000 0 0x15000>;
++			reg-names = "ufs_mem",
++				    "mcq";
  
-   required-opps:
-     maxItems: 1
-@@ -177,9 +181,9 @@ allOf:
-             - const: rx_lane1_sync_clk
-         reg:
-           minItems: 1
--          maxItems: 1
-+          maxItems: 2
-         reg-names:
--          maxItems: 1
-+          maxItems: 2
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH 0>;
  
-   - if:
-       properties:
-@@ -280,7 +284,7 @@ allOf:
-     then:
-       properties:
-         reg:
--          maxItems: 1
-+          maxItems: 2
-         clocks:
-           minItems: 7
-           maxItems: 8
+@@ -4020,6 +4023,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			iommus = <&apps_smmu 0x60 0>;
+ 
++			msi-parent = <&gic_its 0x60>;
++
+ 			lanes-per-direction = <2>;
+ 			qcom,ice = <&ice>;
+ 
 -- 
 2.50.1
 
