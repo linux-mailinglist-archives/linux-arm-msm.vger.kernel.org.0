@@ -1,254 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-68577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB32FB2179D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:46:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F8BAB218D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:00:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01B09190529E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 21:46:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46AA9461C0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:00:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DB221FF53;
-	Mon, 11 Aug 2025 21:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D049322FF2D;
+	Mon, 11 Aug 2025 23:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RZWg6Fe3"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="r+8Ut49f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2046.outbound.protection.outlook.com [40.107.220.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34582311C2E;
-	Mon, 11 Aug 2025 21:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754948762; cv=none; b=n2RUpdahas5Xml84bO0TkCmrYaOw3Yte4qed8wk+la4mBLIFxZaJV5T+ZzT/cUcTBk+mLLToJaLUA7xllZV07vCZyUriTbAEOWgNZaTtAK0Tiwr2PECK3xOWXZzk95eQ98gVPY4LoH675+IuiRTfBXqcP5ZlYbZG+xGJEdCECvs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754948762; c=relaxed/simple;
-	bh=2Oe8kgGT21tommz/oAaFAC2kJoN97CNW8KHYWK8PUks=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SICJpOpuaHdgFtC6KYEe/sXj/O6MUsYg3EI4YpMksmipcvL5krT3BelnLTyRyCl+I/rFUg6Kk4dnVDMcPGUShDTfjtNp4lbBwPn3Ix7/4fV+ZlpdkV1Ml8cUThGTdOzMEINx1qddAjRI83oRMMdpmYFS/4SU74BYa/o1k5sp2B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RZWg6Fe3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57BFBJaR004770;
-	Mon, 11 Aug 2025 21:45:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZIjtyinG9nHtHhZQ8hhADmScgNe+P1our94TkbAJt70=; b=RZWg6Fe3kmL8QMZC
-	kzXSdNrvKitebLi/j5AMsOJz4cYy6ToMm0o3TkDBKFCFXJtBY4nLi/mj4TFvf66H
-	e+PLUtltJHEmKHxJpqs+s2lwiHnV10DTXrleukcmb4llhS1uZBZwSWW4lPItqFBS
-	wxhJs8mDk3sPnHmrjQ6aUjUBPLPsi18EL38ACFcXC9nLt6KFsGYrFk7+r/i9eMMP
-	UQRSlp4j35zOGYO72HuIneFA3ohLafFxJa4ZyucKd8Y39Q7CcZpr6hEjWrOwexB/
-	CqPbL/I1dPxAlTbMpUhBpoK+K7836sn6akSF2WfV1hV9bXhmGM4TTIC/Yt5ztpHp
-	Sy6hHA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fjxb90n7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 21:45:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57BLjmMx008283
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 21:45:48 GMT
-Received: from [10.216.45.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 11 Aug
- 2025 14:45:42 -0700
-Message-ID: <f5b4580c-4e68-405f-95fb-21fa1b105711@quicinc.com>
-Date: Tue, 12 Aug 2025 03:15:38 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82DA227586;
+	Mon, 11 Aug 2025 23:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754953228; cv=fail; b=PkYwfEOySb4Pxa+DJUBA3kplPoFoxedwtBV8X+da7OEB18UYr5N3x6N9hFUL9hgCgXdipLXlEQwIj3QHUwixFlY2dyJxZsIdnGl8mPbgC7JcM2ptKersvhsFx9pN6kjP82xihaX/wWs/jgJlwyR+Gx8mKczql/qVYtNz/YWfRDk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754953228; c=relaxed/simple;
+	bh=FjuAMDyLkFu9FIRu3qXEUlj9aJDOj2wuyJIl1GbSZBQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Oi+Lfd5OBZNS7VqUt1gi7fe16lPHKfYKDoVSR9EL6xv40UANQ8Y+tXx+V2J0Io5PLe/HjvvHO/CM6c4bmsvxBeGYgA6U8TbfoL55Z8YqSxasPWEEKGboP8tyvwflsCA5ptLWKQIpSCQy0hSWp327/9quZxSD1iNStDvYoJ1IrXY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=r+8Ut49f; arc=fail smtp.client-ip=40.107.220.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j41oAOiY5P3oM/kzVq6U3f9B7BIG0pBJYgT717C6wbLC4ifgdLlCoj/c11Qyv13PB9sDtBwRjdaM8KuRf+PvBDvq4+bSmKCppe1OdRtNa1i3N4UJ9kDbjmGtNH/MdvXi87OLEYd0WIskPMHFkyXTR2KUUCNKXY6hqrLfiNiOmvfpkbZf5a6DxwXMqToXFJYCXGpS+N0yLcSW+dFmatO0eRMdsVLF81Ua/vpBeZlifOlgMTnQ89vU4yU4D9I6uFZNvk15tCj/AOxqWPOerZKbXYx1ah0MBjtmmfAezSYyruByWWh+6J5ypAt+yhQd4mYgfJIUtS1IV9NOC0+ijIlvJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aAwe8+dNaMELmcdQi4G85paLJefvggmjozBKCxM0pJM=;
+ b=CoxMzq9npNisuiYN7TUmRVMoyym3fhAtLTFt4VTV13pbIXOwq9RKp3K5/x3+XdiaTtFr4EmhM0mjvE6/Z+pTO7UqEdElEJdzMeAMe6l/g1z7q/VqVtMaQTgiCcqUarJKXyOKJ535t0x1x9qWaZjAczMJmq85djMEbpTIk3DL5Psc86j/bDM5xNzxVCpcR6Jkc2Ht1LNE8GLnb1xesK94V+fE+wgXsnrQtJIAttG8wgcUHG3/KcQUwOU6+D//Zeq/DSim53i7IGHOvZPuTDy+rCjrCcAgnZYb97qk6Y+ffJziAghDRDiA4hFbOPK4jsIOzS+qcUWgrzadm9rMJutNIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aAwe8+dNaMELmcdQi4G85paLJefvggmjozBKCxM0pJM=;
+ b=r+8Ut49fYKURps5cVBTLC3TMHe9P084iBOTRsKahHJrncqO4HMRlqHR4PrgxYHRlNYtSHacnDP5luv6fiDgOWVym95il7KHY60rKa34MIKuRaJZFvyGXToE4kOrP6Nf9mdzIc0J2EbaOyiqAgepC5u7jw/t7AVexcKpHnTV8nfPDpUhVjmGVZY75P4H7s1teqqH8jx13HCNYwdbw/GDPw+zj+ys5yiNV7Rz4hRB2FeXlqJ8v/9x+/xaKtKIE5mtfYXTecyGvMo4jtm4uyfJ4M89WODXYV/ia3JbrVgn+Xdd3Ex1SEHpdLtmOisFnBXFEBg/hHis5xzPtr15x9/PShQ==
+Received: from BN8PR07CA0033.namprd07.prod.outlook.com (2603:10b6:408:ac::46)
+ by MW4PR12MB5668.namprd12.prod.outlook.com (2603:10b6:303:16b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.20; Mon, 11 Aug
+ 2025 23:00:22 +0000
+Received: from BL6PEPF0002256F.namprd02.prod.outlook.com
+ (2603:10b6:408:ac:cafe::ca) by BN8PR07CA0033.outlook.office365.com
+ (2603:10b6:408:ac::46) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9009.21 via Frontend Transport; Mon,
+ 11 Aug 2025 23:00:21 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL6PEPF0002256F.mail.protection.outlook.com (10.167.249.37) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9031.11 via Frontend Transport; Mon, 11 Aug 2025 23:00:21 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 11 Aug
+ 2025 16:00:04 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 11 Aug
+ 2025 16:00:03 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Mon, 11 Aug 2025 16:00:02 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <robin.murphy@arm.com>, <joro@8bytes.org>, <bhelgaas@google.com>,
+	<jgg@nvidia.com>
+CC: <will@kernel.org>, <robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
+	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>, <etzhao1900@gmail.com>
+Subject: [PATCH v3 0/5] Disable ATS via iommu during PCI resets
+Date: Mon, 11 Aug 2025 15:59:07 -0700
+Message-ID: <cover.1754952762.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
- properties to UFS
-To: 'Manivannan Sadhasivam' <mani@kernel.org>,
-        Alim Akhtar
-	<alim.akhtar@samsung.com>
-CC: 'Konrad Dybcio' <konrad.dybcio@oss.qualcomm.com>,
-        'Krzysztof Kozlowski'
-	<krzk@kernel.org>,
-        'Ram Kumar Dwivedi' <quic_rdwivedi@quicinc.com>, <avri.altman@wdc.com>,
-        <bvanassche@acm.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <James.Bottomley@hansenpartnership.com>,
-        <martin.petersen@oracle.com>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <06d201dc0689$9f438200$ddca8600$@samsung.com>
- <wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
- <06f301dc0695$6bf25690$43d703b0$@samsung.com>
- <CGME20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60@epcas5p1.samsung.com>
- <nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
- <0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
- <fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
- <0f8c01dc0876$427cf1c0$c776d540$@samsung.com>
- <xqynlabahvaw4cznbofkkqjr4oh7tf6crlnxoivhpadlymxg5v@a4b5fgf55nqw>
- <10ae01dc08c9$022d8aa0$06889fe0$@samsung.com>
- <o2lnzaxurshoyyxtdcyiyphprumisggd6m2qvcoeptvnkvh4ap@dm2nc4krinja>
-Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <o2lnzaxurshoyyxtdcyiyphprumisggd6m2qvcoeptvnkvh4ap@dm2nc4krinja>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=G6EcE8k5 c=1 sm=1 tr=0 ts=689a648d cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=pyoVPm71RKJ-DdxDm9cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA5NyBTYWx0ZWRfX4hNPXG7rrA/c
- UYoeeeMp5YAhGlGluUEtht4A587+suPjkkkUT+cPI3UeG/mbUdo2aDiRC3QtzR0pm1gtEsyzdid
- Nqu6G5dQ3s6J3ZOONVnVU9GxWELkfgsW+41Qhx3EUeSXLQtGcfxiLtbfJle5fKix1lO97UQ79lu
- mXx2kAeT2xj+OB5sDCxfTy8cCx30SGVMhEzMn4rMG4BV6adScVrCvJETFVAlnMHaz8mctM2fUao
- veA/BXMYkMUAJXzR5J/XQB9HoJcYWuFGqhsb1XaTWEebbS0grVEkrOuHqbgrPCWymwwLSE9d6ub
- qPLgtpfgS+8R78sA3rBw6GkFw1MVeMTwNEJozlIcUPGqfUYnXD5p5PmFKiRBbmc6QfyJ6vvhCyV
- CwoQxpS/
-X-Proofpoint-ORIG-GUID: vfhsHoI_08neQPc0-2oc0GfW9_30P2ni
-X-Proofpoint-GUID: vfhsHoI_08neQPc0-2oc0GfW9_30P2ni
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_04,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110097
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0002256F:EE_|MW4PR12MB5668:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9f8ea4cf-29d7-40be-522a-08ddd92ad962
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|1800799024|82310400026|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?pzEzXUFOtKGQTzg0K5HT9XQXN6lUJQC9VkBs7a7HgH10VsYVSuOGucrtmoA7?=
+ =?us-ascii?Q?OzQmduWgiMGBCj0hj6VlqrsOXuB9Q8L60MMJX2xOVDrRThPSnTrGgLDxJ7D3?=
+ =?us-ascii?Q?lQPjXV0Ckie4o9XOlK59h3O80jAxnTHFre0lftzL0M6iZVJzpr0m48633HiG?=
+ =?us-ascii?Q?TAnUkJ3rIT3cgEu4ToIX1GPTqCLfYR57nivSf28+tItbsFFrpcEGc1941u58?=
+ =?us-ascii?Q?aveKNEzM0ZFJP5a9fqWFg0FWq1woYg1dQH2ZAeHqJPAeGixy5efx/nxKczfT?=
+ =?us-ascii?Q?/S9smgHxIPf+CPo7t1EEJfCz7zQHZFeFGZpIXcP1sSdPw9Np87DjbDi7Jb4G?=
+ =?us-ascii?Q?QIn3SQ2tp2M7Qo9pApYWsgAbnrQIq5H9yHjNWKxm8riA0s9wf8A/A0DY5xOA?=
+ =?us-ascii?Q?cE6ObHOsejfyv9HU96lhX1SMQZq+CQSYgp1v1tLQNli+xrHz2SGXKY8dlRQO?=
+ =?us-ascii?Q?tZWnZX4LZetNjhUStaWWnQppwJSdoTO8W7dLZhPZRU7g7QSmm+ZBG1cbolQh?=
+ =?us-ascii?Q?F9pQD+tLGisY2kmx21PjIktEu+eKBD9e4XCpWN6UlwrwVwN/AxHDQbD2bfyG?=
+ =?us-ascii?Q?8S9vH82o25FT8rKn8et+0ypD8tajqXq33Y/c+7f0Cp+zJpgr/uxbObJWBQCh?=
+ =?us-ascii?Q?ZjgLHWsjy5MpGviBuENRAPNcWYm9mmrortxqwOUBc1Xwp+6C/BawsChNeJS4?=
+ =?us-ascii?Q?T5zP3YCak5+5sBrL2WOk/9UtOD1Hd0Xz8OnpZNTh/LlxWLI/8dl5vJkwiAey?=
+ =?us-ascii?Q?L6Gkj4crNfTAdhiL1u5v7r0GttJXzCuHflIFwRVxybit4n7u3TJd+KnBFHLF?=
+ =?us-ascii?Q?Ex/amY0L0P69GdM7zRvf2WarkKyMZhPLQ9RvFNUSizqvD5/90X9dhQkV4ZYd?=
+ =?us-ascii?Q?KTOOTn4OYcoh2krH5uSgxr/n9HYsIIYsec7Q4dOwOyvGjw2cUo5XhM8im2K2?=
+ =?us-ascii?Q?4FO8sETd3m/ctUQ2HT+k9RCNdf9bL9envSfpyyAtlT2Z9Zq25NKsivdubdRL?=
+ =?us-ascii?Q?1bGy4xAsm9V2E/1tNA2Xy7yCB2XrJ2opIUNC5KL4wyfS/vyGxkUipTuuXoPF?=
+ =?us-ascii?Q?mWi0gwkxuCR9/prsMZHtYHWwkLdvBt8XXajN/hvxUexgrM40w2lEHzOaGHjr?=
+ =?us-ascii?Q?Yt+8eA44wtrkL2S92JKW8B/ahAsBn2vvJS67sCGHPSwTN8Fr7iGuu0c9J/nq?=
+ =?us-ascii?Q?rbOFA/NEOfSe3BTs+pNGUzYuvJd4vj2hJHsdoWFWsLhsnbWLVVhC16YsrdIK?=
+ =?us-ascii?Q?tim3taBa+PNw8Bd16qHLlBZ7XZ0vAk+xh0DalNJwMQZ5LwZwRVmSyNAxyeMW?=
+ =?us-ascii?Q?yEv1fKnvxniwb0+HsR7uM915TP85IYLxlq8FtJsVKJ99SoKCUMDBVKY6LGLZ?=
+ =?us-ascii?Q?8Rsyw1iszKkXtZX2MsGwEJQoYgZCSAYmissea+j8kLsmfBmlbfXqijDFF97J?=
+ =?us-ascii?Q?ii9ZZdwLIQA/iKcEniZTgdvMfQtyonMHcidMt+1Cz3FOTWBH8ZWyECxFeHzM?=
+ =?us-ascii?Q?6lPWRVwj4BttYKmffyxYhB4ArFjlElmuQfBWJkalOjW7wHz3ifpjdNeGLg?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2025 23:00:21.3643
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f8ea4cf-29d7-40be-522a-08ddd92ad962
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF0002256F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5668
 
+Hi all,
 
+PCIe permits a device to ignore ATS invalidation TLPs, while processing a
+reset. This creates a problem visible to the OS where an ATS invalidation
+command will time out: e.g. an SVA domain will have no coordination with a
+reset event and can racily issue ATS invalidations to a resetting device.
 
-On 8/9/2025 4:43 PM, 'Manivannan Sadhasivam' wrote:
-> On Sat, Aug 09, 2025 at 06:30:29AM GMT, Alim Akhtar wrote:
-> 
-> [...]
-> 
->>>>>>>>>> I understand that this is a static configuration, where it
->>>>>>>>>> is already known
->>>>>>>>> that board is broken for higher Gear.
->>>>>>>>>> Can this be achieved by limiting the clock? If not, can we
->>>>>>>>>> add a board
->>>>>>>>> specific _quirk_ and let the _quirk_ to be enabled from
->>>>>>>>> vendor specific hooks?
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> How can we limit the clock without limiting the gears? When
->>>>>>>>> we limit the gear/mode, both clock and power are implicitly
->>> limited.
->>>>>>>>>
->>>>>>>> Possibly someone need to check with designer of the SoC if
->>>>>>>> that is possible
->>>>>>> or not.
->>>>>>>
->>>>>>> It's not just clock. We need to consider reducing regulator,
->>>>>>> interconnect votes also. But as I said above, limiting the
->>>>>>> gear/mode will take care of all these parameters.
->>>>>>>
->>>>>>>> Did we already tried _quirk_? If not, why not?
->>>>>>>> If the board is so poorly designed and can't take care of the
->>>>>>>> channel loses or heat dissipation etc, Then I assumed the gear
->>>>>>>> negotiation between host and device should fail for the higher
->>>>>>>> gear and driver can have
->>>>>>> a re-try logic to re-init / re-try "power mode change" at the
->>>>>>> lower gear. Is that not possible / feasible?
->>>>>>>>
->>>>>>>
->>>>>>> I don't see why we need to add extra logic in the UFS driver if
->>>>>>> we can extract that information from DT.
->>>>>>>
->>>>>> You didn’t answer my question entirely, I am still not able to
->>>>>> visualised how come Linkup is happening in higher gear and then
->>>>>> Suddenly
->>>>> it is failing and we need to reduce the gear to solve that?
->>>>>
->>>>> Oh well, this is the source of confusion here. I didn't (also the
->>>>> patch) claim that the link up will happen with higher speed. It will
->>>>> most likely fail if it couldn't operate at the higher speed and
->>>>> that's why we need to limit it to lower gear/mode *before* bringing the
->>> link up.
->>>>>
->>>> Right, that's why a re-try logic to negotiate a __working__ power mode
->>> change can help, instead of introducing new binding for this case.
->>>
->>> Retry logic is already in place in the ufshcd core, but with this kind of signal
->>> integrity issue, we cannot guarantee that it will gracefully fail and then we
->>> could retry. The link up *may* succeed, then it could blow up later also
->>> (when doing heavy I/O operations etc...). So with this non-deterministic
->>> behavior, we cannot rely on this logic.
->>>
->> I would image in that case , PHY tuning / programming is not proper.
-> 
-> I don't have the insight into the PHY tuning to avoid this issue. Maybe Nitin or
-> Ram can comment here. But PHY tuning is mostly SoC specific in the PHY driver.
-> We don't have board level tuning sequence AFIAK.
+The OS should do something to mitigate this as we do not want production
+systems to be reporting critical ATS failures, especially in a hypervisor
+environment. Broadly, OS could arrange to ignore the timeouts, block page
+table mutations to prevent invalidations, or disable and block ATS.
 
-Hi Alim and Mani,
+The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
+block ATS before initiating a Function Level Reset. It also mentions that
+other reset methods could have the same vulnerability as well.
 
-Here's my take:
+Provide a callback from the PCI subsystem that will enclose the reset and
+have the iommu core temporarily change domains to group->blocking_domain,
+so IOMMU drivers would fence any incoming ATS queries, synchronously stop
+issuing new ATS invalidations, and wait for existing ATS invalidations to
+complete. Doing this can avoid any ATS invaliation timeouts.
 
-There can be multiple reasons for limiting the gear/rate on a customer 
-board beyond PHY tuning issues:
+When a device is resetting, any new domain attachment should be deferred,
+until the reset is finished, to prevent ATS activity from being activated
+between the two callback functions. Introduce a new pending_reset flag to
+allow iommu core to cache the target domains in the SW level but bypass
+the driver-level attachment. Later, iommu_dev_reset_done() will re-attach
+these soft-attached domains via __iommu_attach_device/set_group_pasid().
 
-1. Board-level signal integrity concerns
-2. Channel or reference clock configuration issues
-3. Customer board layout not meeting layout design guidelines
+Finally, apply these iommu_dev_reset_prepare/done() functions in the PCI
+reset functions.
 
-This becomes especially critical in automotive platforms like the 
-SA8155, as mentioned by Ram. In such safety-critical applications, 
-customer prioritize reliability over peak performance, and hence 
-customers are generally comfortable operating at lower gears if 
-stability is ensured.
+This is on Github:
+https://github.com/nicolinc/iommufd/commits/iommu_dev_reset-v3
 
-For the current case customer had some issue #1 at their end(though 
-don't have complete details)
+Changelog
+v3
+ * Add Reviewed-by from Jason
+ * [iommu] Add a fast return in iommu_deferred_attach()
+ * [iommu] Update kdocs, inline comments, and commit logs
+ * [iommu] Use group->blocking_domain v.s. ops->blocked_domain
+ * [iommu] Drop require_direct, iommu_group_get(), and xa_lock()
+ * [iommu] Set the pending_reset flag after RID/PASID domain setups
+ * [iommu] Do not bypass PASID domains when RID domain is already the
+           blocking_domain
+ * [iommu] Add iommu_get_domain_for_dev_locked to correctly return the
+           blocking_domain
+v2
+ https://lore.kernel.org/all/cover.1751096303.git.nicolinc@nvidia.com/
+ * [iommu] Update kdocs, inline comments, and commit logs
+ * [iommu] Replace long-holding group->mutex with a pending_reset flag
+ * [pci] Abort reset routines if iommu_dev_reset_prepare() fails
+ * [pci] Apply the same vulnerability fix to other reset functions
+v1
+ https://lore.kernel.org/all/cover.1749494161.git.nicolinc@nvidia.com/
 
-As Mani pointed out, issues are more likely to surface under stress 
-conditions rather than during link startup. Therefore, IMHO if any 
-limitations are known, it's advisable to restrict the gear/rate during 
-initialization to avoid potential problems later.
+Thanks
+Nicolin
 
-Moreover, introducing quirks for such cases isn’t very effective, as it 
-requires specifying the exact gear/rate to be limited—which can vary 
-significantly across different targets.
+Nicolin Chen (5):
+  iommu: Lock group->mutex in iommu_deferred_attach
+  iommu: Pass in gdev to __iommu_device_set_domain
+  iommu: Add iommu_get_domain_for_dev_locked() helper
+  iommu: Introduce iommu_dev_reset_prepare() and iommu_dev_reset_done()
+  pci: Suspend iommu function prior to resetting a device
 
-Regards,
-Nitin
+ include/linux/iommu.h                         |  13 ++
+ .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |   2 +-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |   9 +-
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c       |   2 +-
+ drivers/iommu/dma-iommu.c                     |   2 +-
+ drivers/iommu/fsl_pamu_domain.c               |   2 +-
+ drivers/iommu/iommu.c                         | 205 +++++++++++++++++-
+ drivers/iommu/ipmmu-vmsa.c                    |   2 +-
+ drivers/iommu/msm_iommu.c                     |   2 +-
+ drivers/iommu/mtk_iommu.c                     |   2 +-
+ drivers/iommu/omap-iommu.c                    |   2 +-
+ drivers/iommu/tegra-smmu.c                    |   2 +-
+ drivers/pci/pci-acpi.c                        |  17 +-
+ drivers/pci/pci.c                             |  68 +++++-
+ drivers/pci/quirks.c                          |  23 +-
+ 15 files changed, 323 insertions(+), 30 deletions(-)
 
-> 
->>
->>>> And that approach can be useful for many platforms.
->>>
->>> Other platforms could also reuse the same DT properties to workaround
->>> similar issues.
->>>
->>>> Anyway coming back with the same point again and again is not productive.
->>>> I gave my opinion and suggestions. Rest is on the maintainers.
->>>
->>> Suggestions are always welcomed. It is important to have comments to try
->>> out different things instead of sticking to the proposed solution. But in my
->>> opinion, the retry logic is not reliable in this case. Moreover, we do have
->>> similar properties for other peripherals like PCIe, MMC, where the vendors
->>> would use DT properties to limit the speed to workaround the board issues.
->>> So we are not doing anything insane here.
->>>
->>> If there are better solutions than what is proposed here, we would indeed
->>> like to hear.
->>>
->> For that, more _technical_ things need to be discussed (e.g. Is it the PHY which has problem, or problem is happening at unipro level or somewhere else),
->> I didn't saw any technical backing from the patch Author/Submitter
->> (I assume Author should be knowing a bit more in-depth then what we are assuming and discussing here).
->>
-> 
-> Nitin/Ram, please share more details on what level the customer is facing the
-> issue.
-> 
-> - Mani
-> 
+-- 
+2.43.0
 
 
