@@ -1,161 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-68532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3A0FB211B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:23:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A87BB211F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:30:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 883033AED92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:16:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09EE75611FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 16:21:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43FE02E040C;
-	Mon, 11 Aug 2025 16:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE8D0311C15;
+	Mon, 11 Aug 2025 16:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dHnp3DXe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DQKZkosJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3172E06EA;
-	Mon, 11 Aug 2025 16:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C15311C0F;
+	Mon, 11 Aug 2025 16:14:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754928774; cv=none; b=Nrs9lldOxuizuUwmm+0Dq6pyCPxJULrRMSj9GzaFslVo9d56QUGwk5hWtr/sLk1h3vuEydTrgla7GhT7CUL/FNTqppORDg5BTwVXccLet/ugciKeOwZR1BZjJ62CxN6uhtQkL7QwvuGK67onvcrrqJd/K2HJusV0V88BPlcfwmw=
+	t=1754928854; cv=none; b=lSOUT/9Rrr3D8jyMymr9EFrtZuD1RVfLpNbob9vb/I4t/BapnVWcO1rC+jpbrnOYKq2Nehr0hBR0R1yGVth6v04Tjt6rMYe3jxteqtqETslbjBB6EIVajCNbRnv/UP+BpZGYwbemBmb889YVaEdvN3aBhfMkTdHaJduM1fjFOIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754928774; c=relaxed/simple;
-	bh=PJzclgFaw/7oF3ER7+6r3nUI9ZR5wx5E/Dkl3HE0Hc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ADjcFtVUOA2ijeaLulGjXXNh7IAcTnHky/fVhwM6gs5Z9TDV4b/WVtAiH16Ffx5HQyAGNSfKMKlKSI3qZt5f0KHNauz1wqvYIfHAftbuyKub1hBI69MEJoSFZy/LTH6GPyik8PZVdaXam5BNod1KVs3uDB5EdZwev21424W9jG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dHnp3DXe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57BFxiNA005283;
-	Mon, 11 Aug 2025 16:12:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I1o1Pk0355qzwcIB30VXMUZsa3a58W/7wwbkNHvqf0w=; b=dHnp3DXeQBRpj79L
-	meSqUFVq/lf129/r7sotIAA3+xJMRtr3Un62fcv5ZKz41QhrJ3h5xwcQi7FThzpe
-	76E63C5AMWTKXNOvjCqi1Fw07sR6L9MQdHo7dkA2owZnzT+HwbfvD4G69bR+mT6B
-	Ex1dSvMV1K2wsMHezMlXV73gpa/Q4a6os6s0izhaGdATbbe2n79i6vTRXwQZfUWt
-	JAqz8sFBsdVujS+jaQcjTfYZSESUy/hqmku0Hk8KXTnAOs2BdSHSEx97KYbhl1vI
-	cU66m2HAG7shf6GeR7GVbjo75abJqg0AljEHe8jNNsXwh0kxyxz2IAtsiDEaQDlc
-	ySBWhw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhx393h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 16:12:38 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57BGCbLG018631
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 16:12:38 GMT
-Received: from [10.218.4.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 11 Aug
- 2025 09:12:32 -0700
-Message-ID: <adb94e86-38a2-4456-9363-d02c487ff7b8@quicinc.com>
-Date: Mon, 11 Aug 2025 21:42:29 +0530
+	s=arc-20240116; t=1754928854; c=relaxed/simple;
+	bh=zUvFB3N7aRigcs85SVTI8l61IaGOrKzSv0p4/Mkmidc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gXSn9mNWinUWbsDAk0yaJZh64bX3FERr3r6GB+xebM0qhC+1SvySEmOck/VL9ccU5DqKiWPE7Z7HWlB91opstBSeNASqHha4+7nPNAuCeEQwGXoEdtOk1svkLSA3CxUgFYqM/mpRehBd8/RtgRtyqbDubosr3juREuuzFsydFks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DQKZkosJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5191C4CEED;
+	Mon, 11 Aug 2025 16:14:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754928854;
+	bh=zUvFB3N7aRigcs85SVTI8l61IaGOrKzSv0p4/Mkmidc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DQKZkosJk4fVVmEqzcG9LhpFHnU38nzt9N2S2KsEaamcoz4FpBvVMyt8LUi5F/qyF
+	 C7xYTz7BDI+O+TthuXIlRLj//tWa5hGP/mQFeP3RY1D7BBdE96qz7bPhym6uDrOUfG
+	 h3Ba79ALK1lk/EDrV16kcRHtTzzlxGx2QJbH6zaYuqjiacbN2CCuzlMEOZPVjlRGfc
+	 M8khlsQOvYvwWBPi1+H6wpxtC5VmewhfG7t/evRDD7HJ+nwM7crN9kBVNKZfz4Yc8J
+	 jB1kQGjrrMjle/7cA9taNeHCadeT9XICl+9qzYPkEoH5qxemzLwf25JOMIqRoefNAc
+	 vCl+lOKI+dMkQ==
+Date: Mon, 11 Aug 2025 17:14:08 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>, vkoul@kernel.org,
+	kishon@kernel.org, mani@kernel.org, conor+dt@kernel.org,
+	bvanassche@acm.org, neil.armstrong@linaro.org,
+	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+	krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
+Message-ID: <81858c88-151a-46ea-9172-76d3052467e9@sirena.org.uk>
+References: <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+ <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
+ <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+ <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+ <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
+ <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
+ <kwp3q4r5rzahzro5f6l6ml24vbiutyxokrhjsbtzcb5kvanx5e@elagxv6w5dq7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/4] dt-bindings: ufs: qcom: Document MCQ register
- space for UFS
-To: Krzysztof Kozlowski <krzk@kernel.org>, <mani@kernel.org>,
-        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <agross@kernel.org>,
-        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250811143139.16422-1-quic_rdwivedi@quicinc.com>
- <20250811143139.16422-2-quic_rdwivedi@quicinc.com>
- <f8405e89-9449-4564-82d1-3146d9b75655@kernel.org>
-Content-Language: en-US
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-In-Reply-To: <f8405e89-9449-4564-82d1-3146d9b75655@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX65p4MT9gqbCI
- LooDpNESSd/n3QnsMVWpl9cU4V7/i9Ogo3ipIFmeJ+rNYdgvNdzJpwuuI2eKpzEBcrDlIS3rcLi
- hkHST/ktkG4Iq2tCbfuwy3WOfBft30KVo4U2A4pTMQluRnBRuUtjyV+ujKvBIDeXndtoHwS5m+b
- /J9u3uDgc+zMoN0Ok2DFItSEyzNGDSoTnx47zQOQ6Ulz4TqHRwv1KnVc4ns9q0ZvL6JJX8lFjg6
- b+vfB21Z75/4U+r7KFktPxeAamdGMcionJ7ZsumyyXLuy268FFYc+ZzDIyZCtFGmc2BQ9nmfKfu
- 6YxsUa7gygiZZIE3kMQdCpvAUzSh9xhQlDqFhGdaWryjkhiu8N1RlkYKKLhyhxmLTzJTEijmpk5
- gslGXMw1
-X-Proofpoint-GUID: Q8K1_Sdj4k2ZPaEeTCCQJ1VxD4V1rQSC
-X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689a1677 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=n52dHJ6fqxtmaawsWVAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Q8K1_Sdj4k2ZPaEeTCCQJ1VxD4V1rQSC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_03,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RYB+8S+psHX1nRNn"
+Content-Disposition: inline
+In-Reply-To: <kwp3q4r5rzahzro5f6l6ml24vbiutyxokrhjsbtzcb5kvanx5e@elagxv6w5dq7>
+X-Cookie: Preserve the old, but know the new.
 
 
+--RYB+8S+psHX1nRNn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 11-Aug-25 8:12 PM, Krzysztof Kozlowski wrote:
-> On 11/08/2025 16:31, Ram Kumar Dwivedi wrote:
->> Document Multi-Circular Queue (MCQ) register space for
->> Qualcomm UFS controllers.
->>
->> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
->> ---
->>  .../devicetree/bindings/ufs/qcom,ufs.yaml        | 16 ++++++++++------
->>  1 file changed, 10 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> index 6c6043d9809e..daf681b0e23b 100644
->> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> @@ -89,9 +89,13 @@ properties:
->>      maxItems: 2
->>  
->>    reg-names:
->> -    items:
->> -      - const: std
->> -      - const: ice
->> +    oneOf:
->> +      - items:
->> +          - const: std
->> +          - const: ice
->> +      - items:
->> +          - const: ufs_mem
->> +          - const: mcq
-> 
-> No. Why are you sending this? You have been Cc-ed here:
-> 
-> https://lore.kernel.org/all/20250731-dt-bindings-ufs-qcom-v2-3-53bb634bf95a@linaro.org/
+On Mon, Aug 11, 2025 at 10:50:27AM -0500, Bjorn Andersson wrote:
+> On Thu, Aug 07, 2025 at 08:09:56PM +0100, Mark Brown wrote:
+> > On Thu, Aug 07, 2025 at 07:43:15PM +0200, Konrad Dybcio wrote:
 
-Hi Krzysztof,
+> > > I was never able to get a reliable source for those numbers myselfe
+> > > either.. At least some of them are prooooobably? chosen based on the
+> > > used regulator type, to ensure it's always in HPM..
 
-I understand I was Cc-ed on the patch thread you linked. However, if I send my patch on top of yours before it’s merged, the kernel bot might flag it due to missing base changes. Please let me know if you're okay with that — I can proceed with pushing my patch on top of yours.
+> > That's what set_mode() is for.  Like I say it's becoming less and less
+> > relevant though.
 
-Thanks,
-Ram.
+> set_mode() just applies the mode to the regulator_dev, so in cases where
+> you have multiple consumers of a regulator_dev things would break.
 
+> Further, there are numerous cases where we have multiple consumers each
+> needing a "low" mode, but their combined load requires a "high" mode.
 
-> 
-> Above is neither correct nor aligned with what I told you.
-> 
-> Best regards,
-> Krzysztof
+> set_load() and its aggregation of the inputs deals with both of these
+> issues.
 
+That sort of active mode management is not the suggestion above that all
+this stuff is just intended to force the regulator to always be in high
+power mode.  If that's the goal then like I say just use set_mode() and
+directly express it.
+
+> Whether mode setting is becoming less relevant in our hardware, that I
+> don't have the definitive answer to.
+
+I rather get the impression that nobody understands what any of this
+stuff is actually trying to accomplish in these systems and is just
+copying things around from older code or BSPs, I'm not entirely
+convinced it's actually doing anything useful in modern systems.
+
+--RYB+8S+psHX1nRNn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiaFs8ACgkQJNaLcl1U
+h9BxhQf/UJqZKs8mo12KlYBhGyWFco3u7lVCgt4l+vj3fCKJh/itUOLOKH88rJHY
+5bo974wYeOZIoR+rasvIWrlL4l6TD8GZJUKXrnwczYVD/V2saf5pDUdxIZN+QuwZ
+QZFAj8tK1iE5JorOYirLzAG4Y/VHpFK7PTXljI5DWeSzZsvxTtUqCPbxUyEtIwWi
+0TIbFBeEmU4Z6mZLO6DFcNmXJFajAQO3NVQQyQwnmqGm593+8OZpdSggKN/SrCO+
+1PTy9oucOf7K6cAM5SJEjT1ozMuCT5deSq+2C5SL+QxfoMtRjnD9rgGUoufst9KK
+vKK5kKDcrWDg+TRAFfl2FpHWzvB3HA==
+=y1Fm
+-----END PGP SIGNATURE-----
+
+--RYB+8S+psHX1nRNn--
 
