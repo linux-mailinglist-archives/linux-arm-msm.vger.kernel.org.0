@@ -1,231 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-68260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE161B2005E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:33:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0515EB2007F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 09:40:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D408D176B96
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 07:33:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11BAA16DD0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 07:40:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8105284B3E;
-	Mon, 11 Aug 2025 07:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD687AD23;
+	Mon, 11 Aug 2025 07:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d+HBgGny"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n/8nidds"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC16518CC13;
-	Mon, 11 Aug 2025 07:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC57E1534EC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 07:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754897630; cv=none; b=o3Sw2rf3hvUPZy6zdiYjxhz0PcfG6JOWfDcT1j41Q/rKRoo35TGwFBjvsInPK9ytMYHcMRYkMl/V2/RcMQdk6F/W8qdNmxQ9CU4MWYYyfKXq+Miqkhz5zRtUPVt554xxql0pac2WHiBGCyT5EEUua6XpPB/eaUKyNK7yrWv629Y=
+	t=1754898011; cv=none; b=CksCBB7cGIGzoZcb+3XjjGeDKZgW8ahi5a8oBLht5iaVaIJW3Z7OaeaKNMiCc1jRS4hRMlX8FNX1d5Y/+rjXqqecAtchL4PyuB+RmSkmi6JYllCW6HZJKf7RRFApjXBv/vLIF0zw2QVNbRadoZ/f1T/4zHRSRJx1VxbL911dNF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754897630; c=relaxed/simple;
-	bh=+XWE49nZuwMWpG+cBM6ZFAg3ISI+EuwAEezYT4iJHeg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=giq4LtoyrbXkjRmrylHyAlPDPxpx4QgqIn720ByBNQKvbtcYkiUUd7fAv33k2Mw7ihG/WfYsG/UBv1xEmhi/9XyXEtb84PF921uTZ4CtY64HnM1/PmHfm8ojZ40KOdK8ag0z+P/IfRSRZrQsZYFuG+b+ZV+thn36hnNhpnFNIeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d+HBgGny; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57AL01I9002174;
-	Mon, 11 Aug 2025 07:33:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=aiAmNZKt9E0YJvypmkacX51fMuTyDiCUFP9
-	6aaE7CEs=; b=d+HBgGny6BhUTvs6/d2sho6E9uoh6EvCdf3wHk7tg1/8BQrUati
-	u9lwwLweilq7Rd4gupyEjqEpB7ONDduUnnlRrTpSf1oEYeXbkLeYpjr1DctOevOs
-	yoWQY393GfuWnvhEqoAtKrCTCv95alkNYYUJKRIa77OBDZk+/wQp1UxjObwE1Zlf
-	YepuMmYto9j+xg82RqgYYN4OlJ4swDyjTGTo24S9+xZ294FzUJE597gU+WhNkHfr
-	9+/D3ySUaFyYA52XHsGJAf3ws+nGDxBdG+B8X5LiCakku6BjYlSoWzFsoS/+DCzo
-	/RNP35gfA/5A31S4gl4x5SFiyqC7KoJHUdQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxduuf81-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Aug 2025 07:33:35 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57B7XWol014548;
-	Mon, 11 Aug 2025 07:33:32 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 48dydkk18f-1;
-	Mon, 11 Aug 2025 07:33:32 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57B7XWU6014543;
-	Mon, 11 Aug 2025 07:33:32 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 57B7XWVc014542;
-	Mon, 11 Aug 2025 07:33:32 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 8170F571876; Mon, 11 Aug 2025 13:03:31 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, bvanassche@acm.org,
-        neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com,
-        tglx@linutronix.de
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH V2] ufs: ufs-qcom: Fix ESI null pointer dereference
-Date: Mon, 11 Aug 2025 13:03:30 +0530
-Message-ID: <20250811073330.20230-1-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1754898011; c=relaxed/simple;
+	bh=WaxqPwe60aGUkhXsZ36hb/BaEfdKvftcdVEBEnneZvY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Pc5ygjV+kyDDX2cbiUVDYwYKexwRPkuojMgdG6+QebWzxReyMnpEdvqVvcCk9vE6AEqT0J5IcDTepbbBeHrcjvMAT8vYRudO8oUFiXV2Gg7Yq6F7JToyadyWRHP9xqtwXwLQSZE7L1ArQpEqIlh6yE2XjDTX0I7+P+y4XIEPYQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n/8nidds; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-458b49c98a7so25157155e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 00:40:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754898008; x=1755502808; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=POALZcOL5uP4hmBAgsW0NLC3bq36nPwjL/gPbRn+/O8=;
+        b=n/8niddsEqxjRK+EuEcwA4m1Kh1sxcGL6NLj0rmLanaJTpojCV4ycONQpR4x49mWPN
+         7vdDpbJZJgcNjatAH6ZxCpNgqMYTP1XIt+YuQ/ZmqiejOUkOV3dT+VNMOJTGeDiTJe1k
+         TQEbGW4t1otUFMYXSJGrkCCApw1JgndqA/iOw4mz0/qBM/Q1ovVO7T8lyeBFNcPrmw3d
+         dRJhn5wDx46V+3PpG4CA0Z4bv22vXzxO69bSA/tegMrohqFznXtRxSoqIIXe/ZES2MCS
+         dO1Bl+Bp4qe2UWEKhXbCfuh6dSrGoe5ag4u0zlQCGXsX++tJL0OMP0V3IIXdts8ool5C
+         nLAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754898008; x=1755502808;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=POALZcOL5uP4hmBAgsW0NLC3bq36nPwjL/gPbRn+/O8=;
+        b=OfpJBU0uza8hTsJfZlCeUXiuEQY6J8C6DjkYaW86vMmB9A7DWtXh+0A/A7m8Fd1Xwm
+         ZhSwRkSGJNp4UFmEbTEXoLPNDfVyuzwcd/vE+07fwAfJHR6xEO+DIG4SD0BVZayet9Q7
+         Hs/Tqqme3RUKw5t5EtDG6AptIybXEfRCkPyjW0y8O37XpYfTWoUqbOtwhKkx4/5Mvm7y
+         CBcW/sZFT9eSXnQ1+mt4tYAmDWPm4igBv9SRcDGwJatt8kJt2MgMtNYtzICbFv5FfrXh
+         97wbyIENI4xoRX8R1+8hJtjKkOtW/wvz/jzh/IUU13BEwGFbLu0MjY1narYweGiPd4s8
+         6cLg==
+X-Forwarded-Encrypted: i=1; AJvYcCWp64hP3Ho0LOuU8f4vUeBd4QKXDInYhXt1QGAGuJ5wEfHKVnp4jywAlFNTMnUhLSLlIMEGrdTOS2hQVnnq@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOOjEoEhvMV+au1khFFptnIxRf1eDUfoP3c8QJxUR0PXzl0W5C
+	CIJ0snk4rZRDxphDT6D7F82CaM1Lou2bwyf6x0nsfEd5q2461J9VfEpMitS+5WIoSjczkV0kFSw
+	Pd3ho
+X-Gm-Gg: ASbGnctFGpycKAyTC/eR706oS8lDOQE4qTvsqMrvRPLxBBh7qwk0fiQaA/qL621gIqC
+	h2JxEOGhBUY9ndClR+Yuo4Ihh68O18Z+dCQj6GwXT6sN7lF4mO8oK8TDh588z4ZAwqiUkJbtR6K
+	LIH1mCWGA70ejgDS3O9AFkhkYN2nfbveei1nRPcnOGoGe7hlPJlpCZYlaz7UMvD4eqbm2aP5JlW
+	DWMlqJkFVqD3YfQVl7HAy2nqlwMvAzNXJwU7hQlh0QJb7A7QaqSMk9mhodQzPyPyjT1odJ/Ca/6
+	hAwmfZ07IpF6WIMc2TUap8WECE9qKZvt8kEq8Xs9gdeRnlbmSIhPWoM0rEFBglki3D15Hg4Elvj
+	oc39QxmSlx7wnDCC7zx1/4q0S6p9sjfBXfbz9sS4HxSVVRx/MAD9NeicHIbh2RWMzIo9TxBtFuG
+	CUHxrzVbCRDg==
+X-Google-Smtp-Source: AGHT+IH4eA/RKU/GboTJ9VfoA/pYzZzZec5od8RkolpPdI5Ifcjq96waQtwfFh9MBuje3p8eQLal9g==
+X-Received: by 2002:a05:600c:1c83:b0:456:2698:d4d9 with SMTP id 5b1f17b1804b1-459f4f2e2eemr97639165e9.3.1754898008092;
+        Mon, 11 Aug 2025 00:40:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:b0fa:b045:4b82:de09? ([2a01:e0a:3d9:2080:b0fa:b045:4b82:de09])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dbba5210sm314243925e9.2.2025.08.11.00.40.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 00:40:07 -0700 (PDT)
+Message-ID: <9f2bdd43-da4c-47b2-bba5-d69bc0b06ac7@linaro.org>
+Date: Mon, 11 Aug 2025 09:40:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=68999cd0 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=bLk-5xynAAAA:8 a=COk6AnOGAAAA:8
- a=sYN47ipuJMKu5r72jOkA:9 a=cvBusfyB2V15izCimMoJ:22 a=zSyb8xVVt2t83sZkrLMb:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: LvuBhDWOtgT0VijwQWxeMXoNLJ4TfqVS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX3O9LajmnJ3r6
- nEHp/NpK0CLj7QHB2F2lLEBsTiZiZFnoN+3Y9bWHVTRgXS3g1WzPt1XY4C0rEflXgMAl4Ron5rp
- VFRQSZ/QMEkx2ibXHmMef/dou2xDjkVfPE2H04WlE3ZYsMPJy+iYOfbxeVLElg5jVuFy9gbkYYb
- ufQeHtheS917zRegQzPYfvKKToraM8UwOKHfVMKA15lCz8mk//zsjtQEB/Ee8MGAyp1YR7Dg/7+
- DRu8k/vzU/MULFp6iiIfE2zU9+GTpES+SNHWgtAsceUhDO9pJ/V/cwgG4zjPxyon6E5PCPIOocE
- 6HZvRjC0kfeWkXcJ+iJwLxwlEY7/ZmSW3H7IOFwOs6Z7tbuosvbdp7YQ5fBKOf0sjMCXfNwqIz2
- fJMrkRlN
-X-Proofpoint-GUID: LvuBhDWOtgT0VijwQWxeMXoNLJ4TfqVS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090025
+User-Agent: Mozilla Thunderbird
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/6] phy: qcom: qmp-combo: Rename 'mode' to 'phy_mode'
+To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com>
+ <20250807-topic-4ln_dp_respin-v4-2-43272d6eca92@oss.qualcomm.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250807-topic-4ln_dp_respin-v4-2-43272d6eca92@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-ESI/MSI is a performance optimization feature that provides dedicated
-interrupts per MCQ hardware queue . This is optional feature and
-UFS MCQ should work with and without ESI feature.
+On 07/08/2025 18:33, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> There are a numbers of ""modes"" involved: USB mode, Type-C mode (with
+> its altmodes), phy_mode and QMP_PHY mode (DP/combo/USB/off).
+> 
+> Rename the generic sounding 'mode' to 'phy_mode' to hopefully make
+> the code easier to follow.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index f07d097b129fb7b3fad003103b7468b16c1c4390..30749943f66280c3aa9e9673466f6f736d1adbc8 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -1846,7 +1846,7 @@ struct qmp_combo {
+>   	int init_count;
+>   
+>   	struct phy *usb_phy;
+> -	enum phy_mode mode;
+> +	enum phy_mode phy_mode;
+>   	unsigned int usb_init_count;
+>   
+>   	struct phy *dp_phy;
+> @@ -3282,7 +3282,7 @@ static int qmp_combo_usb_set_mode(struct phy *phy, enum phy_mode mode, int submo
+>   {
+>   	struct qmp_combo *qmp = phy_get_drvdata(phy);
+>   
+> -	qmp->mode = mode;
+> +	qmp->phy_mode = mode;
+>   
+>   	return 0;
+>   }
+> @@ -3311,8 +3311,8 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
+>   	void __iomem *pcs_misc = qmp->pcs_misc;
+>   	u32 intr_mask;
+>   
+> -	if (qmp->mode == PHY_MODE_USB_HOST_SS ||
+> -	    qmp->mode == PHY_MODE_USB_DEVICE_SS)
+> +	if (qmp->phy_mode == PHY_MODE_USB_HOST_SS ||
+> +	    qmp->phy_mode == PHY_MODE_USB_DEVICE_SS)
+>   		intr_mask = ARCVR_DTCT_EN | ALFPS_DTCT_EN;
+>   	else
+>   		intr_mask = ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL;
+> @@ -3355,7 +3355,7 @@ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+>   {
+>   	struct qmp_combo *qmp = dev_get_drvdata(dev);
+>   
+> -	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
+> +	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->phy_mode);
+>   
+>   	if (!qmp->init_count) {
+>   		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+> @@ -3375,7 +3375,7 @@ static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
+>   	struct qmp_combo *qmp = dev_get_drvdata(dev);
+>   	int ret = 0;
+>   
+> -	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
+> +	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->phy_mode);
+>   
+>   	if (!qmp->init_count) {
+>   		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+> 
 
-Commit e46a28cea29a ("scsi: ufs: qcom: Remove the MSI descriptor abuse")
-brings a regression in ESI (Enhanced System Interrupt) configuration
-that causes a null pointer dereference when Platform MSI allocation
-fails.
-
-The issue occurs in when platform_device_msi_init_and_alloc_irqs()
-in ufs_qcom_config_esi() fails (returns -EINVAL) but the current
-code uses __free() macro for automatic cleanup free MSI resources
-that were never successfully allocated.
-
-Unable to handle kernel NULL pointer dereference at virtual
-address 0000000000000008
-
-  Call trace:
-  mutex_lock+0xc/0x54 (P)
-  platform_device_msi_free_irqs_all+0x1c/0x40
-  ufs_qcom_config_esi+0x1d0/0x220 [ufs_qcom]
-  ufshcd_config_mcq+0x28/0x104
-  ufshcd_init+0xa3c/0xf40
-  ufshcd_pltfrm_init+0x504/0x7d4
-  ufs_qcom_probe+0x20/0x58 [ufs_qcom]
-
-Fix by restructuring the ESI configuration to try MSI allocation
-first, before any other resource allocation and instead use
-explicit cleanup instead of __free() macro to avoid cleanup
-of unallocated resources.
-
-Tested on SM8750 platform with MCQ enabled, both with and without
-Platform ESI support.
-
-Fixes: e46a28cea29a ("scsi: ufs: qcom: Remove the MSI descriptor abuse")
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
-Changes from v1:
-1. Added correct sha1 of change id which caused regression.
-2. Address Markus comment to add fixes: and Cc: tags.
----
- drivers/ufs/host/ufs-qcom.c | 39 ++++++++++++++-----------------------
- 1 file changed, 15 insertions(+), 24 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 4bbe4de1679b..bef8dc12de20 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -2078,17 +2078,6 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
- 	return IRQ_HANDLED;
- }
-
--static void ufs_qcom_irq_free(struct ufs_qcom_irq *uqi)
--{
--	for (struct ufs_qcom_irq *q = uqi; q->irq; q++)
--		devm_free_irq(q->hba->dev, q->irq, q->hba);
--
--	platform_device_msi_free_irqs_all(uqi->hba->dev);
--	devm_kfree(uqi->hba->dev, uqi);
--}
--
--DEFINE_FREE(ufs_qcom_irq, struct ufs_qcom_irq *, if (_T) ufs_qcom_irq_free(_T))
--
- static int ufs_qcom_config_esi(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-@@ -2103,18 +2092,18 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
- 	 */
- 	nr_irqs = hba->nr_hw_queues - hba->nr_queues[HCTX_TYPE_POLL];
-
--	struct ufs_qcom_irq *qi __free(ufs_qcom_irq) =
--		devm_kcalloc(hba->dev, nr_irqs, sizeof(*qi), GFP_KERNEL);
--	if (!qi)
--		return -ENOMEM;
--	/* Preset so __free() has a pointer to hba in all error paths */
--	qi[0].hba = hba;
--
- 	ret = platform_device_msi_init_and_alloc_irqs(hba->dev, nr_irqs,
- 						      ufs_qcom_write_msi_msg);
- 	if (ret) {
--		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
--		return ret;
-+		dev_warn(hba->dev, "Platform MSI not supported or failed, continuing without ESI\n");
-+		return ret; /* Continue without ESI */
-+	}
-+
-+	struct ufs_qcom_irq *qi = devm_kcalloc(hba->dev, nr_irqs, sizeof(*qi), GFP_KERNEL);
-+
-+	if (!qi) {
-+		platform_device_msi_free_irqs_all(hba->dev);
-+		return -ENOMEM;
- 	}
-
- 	for (int idx = 0; idx < nr_irqs; idx++) {
-@@ -2125,15 +2114,17 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
- 		ret = devm_request_irq(hba->dev, qi[idx].irq, ufs_qcom_mcq_esi_handler,
- 				       IRQF_SHARED, "qcom-mcq-esi", qi + idx);
- 		if (ret) {
--			dev_err(hba->dev, "%s: Fail to request IRQ for %d, err = %d\n",
-+			dev_err(hba->dev, "%s: Failed to request IRQ for %d, err = %d\n",
- 				__func__, qi[idx].irq, ret);
--			qi[idx].irq = 0;
-+			/* Free previously allocated IRQs */
-+			for (int j = 0; j < idx; j++)
-+				devm_free_irq(hba->dev, qi[j].irq, qi + j);
-+			platform_device_msi_free_irqs_all(hba->dev);
-+			devm_kfree(hba->dev, qi);
- 			return ret;
- 		}
- 	}
-
--	retain_and_null_ptr(qi);
--
- 	if (host->hw_ver.major >= 6) {
- 		ufshcd_rmwl(hba, ESI_VEC_MASK, FIELD_PREP(ESI_VEC_MASK, MAX_ESI_VEC - 1),
- 			    REG_UFS_CFG3);
---
-2.48.1
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
