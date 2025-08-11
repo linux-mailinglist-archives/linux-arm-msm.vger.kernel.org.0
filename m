@@ -1,236 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-68266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35AABB2018D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:17:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22D98B201D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:31:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED89D189E9F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 08:17:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A789166C0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 08:31:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1C721772A;
-	Mon, 11 Aug 2025 08:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 010511F4C87;
+	Mon, 11 Aug 2025 08:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UI48hWft"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTQybxVK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D4D1E834B;
-	Mon, 11 Aug 2025 08:17:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C1D212B18;
+	Mon, 11 Aug 2025 08:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754900228; cv=none; b=E9ymAyDIZMBxuqTI4mA1y6fTzY+B5fPhS5lIQyxWq+uYsHOx67xNsDqHwdWFw1emJpunFi0PhsAjFXnYj5+ZkuZpoNGnN3RCFQZdbP+3MGIyRBU1r+e6ssL6n0HpFtdG1ULTKa7jfA4I7iY7DCCrdCh3xNzMVk62VD568lirGtc=
+	t=1754901077; cv=none; b=lZt7hHIGCZH85zoRpj7YWwEOc/6tae8NEBEOpMcbtgJ/3NrRdBKhyepmwmgunq+ZrSRb30QH7s7fOU/c2L9jAKjjdYITSvJ9xuDiNRZKWbUvsGV5D/mwoePaICN6BNGfZI+m9mWJ+y/kNLMm1Hb/hc0706y2Iu54sVoFFP7H2n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754900228; c=relaxed/simple;
-	bh=yL/qUikanLs+aGEmFjlLt7vxOWxjOZmEwCqPg0afrV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kngh4iWH4Bh9MTSzLfmY9k05Jr+jM5Bhe/SGoQEX2opK8FvjK2egKNq6q+2LfeDsgBRmM1Ap1OMCpp1ZNKu10ppuuCKu7VpcaFZvBa7nvYXKKfo5YyTRbcefZ9NVaN271zLt+k9H3W6EpUgrXFTCcTm3BpjFoihyTE3/3iF6oEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UI48hWft; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B2AC4CEF6;
-	Mon, 11 Aug 2025 08:17:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754900227;
-	bh=yL/qUikanLs+aGEmFjlLt7vxOWxjOZmEwCqPg0afrV4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UI48hWft/oTk2ppV8lEBCRugT2YlIFQQaaS2fdZwl/4hq5z6Al8aeBmZhUQy9qDIV
-	 oWE1/rQxs5lZI20al/Kzhp23oW49q6idQJTpxGMBTJz6bxVwxDba0N81Xq6YiLgOve
-	 HFHnOpUA0dQoZmVuax6F7T2awFOoAkaGaFBvemFcrTUvKLapi1qwuEYZpXNK0FZhai
-	 64kXHx9qwq+kZw41mLJRl0kh85GWcdbNxPa71l8Mc3mDTF3DAEFIQT73x7gFUF2Lft
-	 nFuwfc81MeOtQX7BkBVjapukZkBIik1uIiGroU3msCHO0spiMal7f5Y5tK5v1aQ9kt
-	 QplmBTHv/ExQg==
-Date: Mon, 11 Aug 2025 13:46:55 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Palash Kambar <quic_pkambar@quicinc.com>
-Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_nitirawa@quicinc.com
-Subject: Re: [PATCH v1] ufs: ufs-qcom: Align programming sequence of Shared
- ICE for UFS controller v5
-Message-ID: <edrf3bobjnknwydzeitfwns7lehgf65p5prcohmc7eexhzoami@ywlamyweunmn>
-References: <20250806063409.21206-1-quic_pkambar@quicinc.com>
- <ucr4imzntw6ghcvpeioprmva7gxrqnkphjirjppnqgdpq5ghss@y5nwjzzpvluj>
- <2e655067-cd7e-4584-aa07-998b517ac314@quicinc.com>
- <pewnau4ltrf2yu3xxdq6rs6xhz45zlo3dt3jnkzhxitmezz2ft@2k7pgpoz5iey>
- <3601cdce-a269-4d29-bc21-b925fcc499e2@quicinc.com>
+	s=arc-20240116; t=1754901077; c=relaxed/simple;
+	bh=U1qcYg35m6rNExe+OGQEhXL5x84bq0o3vE4mortfvIs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t5Y29IvqSp/wpPNoUt5eLFZvlc+CYPoOvEMM2Zi4Td4jewGwX3uu3xc7GP9oTHKahCyzzAROFN1qF5/zJQ8OIy/Dh2cvmtqFZ0HzPwSw5p/SkdCeQGZkmGBW1mLWI8cXiQvivB6528K8/m84mQ0YWEgctY9z+iRf3DxbZ/bUYKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTQybxVK; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-455fdfb5d04so20164895e9.2;
+        Mon, 11 Aug 2025 01:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754901072; x=1755505872; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wOtd9kWma43H7P5MqRsKQkGoPo3236xREv3Mb1e2gt4=;
+        b=dTQybxVK2QhDsDh3wkBgpKVCpM5ytEpzoKiYGbGhhnA3qYyMchKshSbJbMFm1yYV0n
+         7t4MyB666fOJ+qtjh+9i4HqsCqWlzALR3Mu75QtA02XQPlYERA/WJC4vFO+PqMgWKFFq
+         yakmXRf03IvinMVZ9JF1DMJU1HpCTg8IbOvM31Y/OGNbt8FDpE+NlBljWQGKbL5aStVj
+         hIxjxK/1vz6eP5kbz+sUP1ducn0xvw4awo76brRw/zuCyVT2IMlUYxMk9YGIwCrgQ8fp
+         RgE8ZFQcsApZyiXbnk9pyT5HNXNaWEFP6fRHSmIWOCFAGj6Nvp76WVew+hrsQh32mNPN
+         jRuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754901072; x=1755505872;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wOtd9kWma43H7P5MqRsKQkGoPo3236xREv3Mb1e2gt4=;
+        b=aKYz6uksBtf5L/hpi7nP15AXrTCvybsNdUsxa8mteDAKq/1ZcrFK5x6+Uu4/ubuP8D
+         1Q28QhbT7MZiU2X0/FCibWCXGEDO+9cU9Ynqho2B56gB1/Y7QNhlHCL9NofARR9q6loW
+         I+Fw4siz7bz4wUSEcIBAP5WIT7Wi6aAWRbOzDIC8YzjCbEf2MGHH4wj3c2QeTzrd/YMV
+         BPrGz7xZy+dEv8rizNsNmMYPC+LK+WMDzLMOzO+xdVX8r1KW4GSxx+kMX91sfxzay7yC
+         BkCC4K/mxvMD/2X7KC0+O6rfRcpiut8NeCCabacGIbcop03BBLMBoBRaSa6IHOSETJXk
+         sLbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUX6cpWk3osnYRm0yrIr+0fyf/325ctIi6cxWpM69BItfVNta7lTEUMCd2aqMiInlOSXWhIHfn5n5eyqTOx@vger.kernel.org, AJvYcCUezunxeL8wX5efB/MlTcN/glHVo+O4GqbxNZ775fuj/lmjTPGbI2cgWqc7bpBkvNjG/aWywwyJnyJnHsK+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaJUCSKqmgSEr79HYtfNny7AzTcLsjHbSWclmd0R9yM+nlYOh/
+	LB9V8zi3/dBE+PzoJ3+g5o9A9gxk7X8hvdw7WpKgeK8+lLPEO+M/tQs3s5penA==
+X-Gm-Gg: ASbGncsKKQmbqidRtmepurRDRECWHOsh/SxvDg5/9Ih0cvKgUVw0+qZVO712wetAmYw
+	L1HaiwQwyA+vZcOIBk48R3w8rfCN6XJwo9odp1pAciw8XIsWqwb222o4PVpORczXpU9wjU7807l
+	dNx8Kje18DRhnz0P2IBge0HlVc8iuMbxTXcNaFwD0xrZPMyPi4Ux7Xc/RWFC+wRco2KCt/cjs7k
+	60mLeOtAmiUCIhGzrR5750A48klRTjnDcDoajdEMydV0nqhAfCX3XdzQp6vHBSaTEA3BVenSA2o
+	cfvftKkOJiABWv5dfj2VXL/BdGP0FwWj5jPNF5afrRDuCJVan3lsTC9Jcrj8Jy0oOOzWUqs7e+c
+	EeccGQgcdR/Hrxq/lTU2KiMeYFD1KFhcNSwCWgjegjtFAC3paa/Q=
+X-Google-Smtp-Source: AGHT+IFgLlz/HnaQehSt4Y6L68idWWxRSs7RRcM0JgVnx/De2YA7SJzeSHYNdYXnIOPvP3AWZzaJ6Q==
+X-Received: by 2002:a05:600c:19d2:b0:456:29da:bb25 with SMTP id 5b1f17b1804b1-459f4f04f66mr107162695e9.19.1754901072370;
+        Mon, 11 Aug 2025 01:31:12 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-459e5887b7fsm243580255e9.30.2025.08.11.01.31.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Aug 2025 01:31:11 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Mon, 11 Aug 2025 10:30:42 +0200
+Subject: [PATCH] mtd: nand: qpic_common: use {cmd,data}_sgl_nitems for
+ sg_init_table()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3601cdce-a269-4d29-bc21-b925fcc499e2@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250811-qpic_common-sgl-nitems-v1-1-a71b5ece54ab@gmail.com>
+X-B4-Tracking: v=1; b=H4sIADGqmWgC/x3MQQqEMAxA0atI1hOoxYp6FRkGiVEDttVmEEG8u
+ 8XlW/x/gXISVuiKCxIfohJDRvkpgJYhzIwyZoM11pnGtLhvQj+K3seAOq8Y5M9esSV21VCPhqy
+ DHG+JJznfcf+97wevltygaAAAAA==
+X-Change-ID: 20250809-qpic_common-sgl-nitems-9ce54a6d0c25
+To: Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Thu, Aug 07, 2025 at 03:50:58PM GMT, Palash Kambar wrote:
-> 
-> 
-> On 8/6/2025 11:19 PM, Manivannan Sadhasivam wrote:
-> > On Wed, Aug 06, 2025 at 06:11:09PM GMT, Palash Kambar wrote:
-> >>
-> >>
-> >> On 8/6/2025 4:44 PM, Manivannan Sadhasivam wrote:
-> >>> On Wed, Aug 06, 2025 at 12:04:09PM GMT, Palash Kambar wrote:
-> >>>> Disable of AES core in Shared ICE is not supported during power
-> >>>> collapse for UFS Host Controller V5.0.
-> >>>>
-> >>>> Hence follow below steps to reset the ICE upon exiting power collapse
-> >>>> and align with Hw programming guide.
-> >>>>
-> >>>> a. Write 0x18 to UFS_MEM_ICE_CFG
-> >>>> b. Write 0x0 to UFS_MEM_ICE_CFG
-> >>>>
-> >>>> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
-> >>>> ---
-> >>>>  drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++++
-> >>>>  drivers/ufs/host/ufs-qcom.h |  2 ++
-> >>>>  2 files changed, 26 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> >>>> index 444a09265ded..2744614bbc32 100644
-> >>>> --- a/drivers/ufs/host/ufs-qcom.c
-> >>>> +++ b/drivers/ufs/host/ufs-qcom.c
-> >>>> @@ -744,6 +744,8 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-> >>>>  	if (ufs_qcom_is_link_off(hba) && host->device_reset)
-> >>>>  		ufs_qcom_device_reset_ctrl(hba, true);
-> >>>>  
-> >>>> +	host->vdd_hba_pc = true;
-> >>>
-> >>> What does this variable correspond to?
-> >> Hi Manivannan,
-> >>
-> >> It corresponds to power collapse, will rename it for better readability.
-> >>
-> > 
-> > What is 'power collapse' from UFS perspective?
-> 
-> As part of UFS controller power collapse, UFS controller and PHY enters HIBERNATE_STATE
-> during idle periods .The UFS controller is power-collapsed with essential registers 
-> retained (for ex ICE), while PHY maintains M-PHY compliant signaling. Upon data transfer
-> requests, software restores power and exits HIBERNATE_STATE without requiring re-initialization, 
-> as configurations and ICE encryption keys are preserved.
-> 
+Since commit ddaad4ad774d ("mtd: nand: qpic_common: prevent out of
+bounds access of BAM arrays"), the {cmd,data}_sgl_nitems members in
+the 'bam_transaction' structure are containing the number of elements
+in the cmd/data scatter-gather lists.
 
-AFAIK, Hibern8 is a UFS *link* specific feature, not controller specific. In
-other peripherals, power collapse means powering off the controller entirely and
-then relying on the hardware logic to retain the register states. I believe the
-same behavior applies to UFS also.
+Change the qcom_clear_bam_transaction() function to use these numbers
+while reinitializing the sg lists instead of recomputing the number of
+elements to make it less error prone.
 
-In that case, I would expect you to check for the power collapse in
-ufs_qcom_resume() using some logic and toggle the relevant bits in UFS_MEM_ICE.
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/mtd/nand/qpic_common.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-The current logic you proposed doesn't really make sure that the controller is
-power collapsed. You just assume that ufs_qcom_suspend() would allow the
-controller to enter power collapse state, but it won't. If the user has opted
-for 'spm_lvl' to be '0', then I don't think the controller can enter power
-collapse state.
+diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+index 8e604cc22ca310159edf4d8dbc2f6a82d5119eb4..db6c46a6fe01c71e8bb0379eb1f289c7e56701c9 100644
+--- a/drivers/mtd/nand/qpic_common.c
++++ b/drivers/mtd/nand/qpic_common.c
+@@ -89,10 +89,8 @@ void qcom_clear_bam_transaction(struct qcom_nand_controller *nandc)
+ 	memset(&bam_txn->bam_positions, 0, sizeof(bam_txn->bam_positions));
+ 	bam_txn->last_data_desc = NULL;
+ 
+-	sg_init_table(bam_txn->cmd_sgl, nandc->max_cwperpage *
+-		      QPIC_PER_CW_CMD_SGL);
+-	sg_init_table(bam_txn->data_sgl, nandc->max_cwperpage *
+-		      QPIC_PER_CW_DATA_SGL);
++	sg_init_table(bam_txn->cmd_sgl, bam_txn->cmd_sgl_nitems);
++	sg_init_table(bam_txn->data_sgl, bam_txn->data_sgl_nitems);
+ 
+ 	reinit_completion(&bam_txn->txn_done);
+ }
 
-> > 
-> >>>
-> >>>> +
-> >>>>  	return ufs_qcom_ice_suspend(host);
-> >>>>  }
-> >>>>  
-> >>>> @@ -759,6 +761,27 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
-> >>>>  	return ufs_qcom_ice_resume(host);
-> >>>>  }
-> >>>>  
-> >>>> +static void ufs_qcom_hibern8_notify(struct ufs_hba *hba,
-> >>>> +				    enum uic_cmd_dme uic_cmd,
-> >>>> +				    enum ufs_notify_change_status status)
-> >>>> +{
-> >>>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> >>>> +
-> >>>> +	/* Apply shared ICE WA */
-> >>>
-> >>> Are you really sure it is *shared ICE*?
-> >>
-> >>  Yes Manivannan, I am.
-> >>
-> > 
-> > Well, there are two kind of registers defined in the internal doc that I can
-> > see: UFS_MEM_ICE and UFS_MEM_SHARED_ICE. And hence the question.
-> > 
-> >>>
-> >>>> +	if (uic_cmd == UIC_CMD_DME_HIBER_EXIT &&
-> >>>> +	    status == POST_CHANGE &&
-> >>>> +	    host->hw_ver.major == 0x5 &&
-> >>>> +	    host->hw_ver.minor == 0x0 &&
-> >>>> +	    host->hw_ver.step == 0x0 &&
-> >>>> +	    host->vdd_hba_pc) {
-> >>>> +		host->vdd_hba_pc = false;
-> >>>> +		ufshcd_writel(hba, 0x18, UFS_MEM_ICE);
-> >>>
-> >>> Define the actual bits instead of writing magic values.
-> >>
-> >> Sure.
-> >>
-> >>>
-> >>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
-> >>>> +		ufshcd_writel(hba, 0x0, UFS_MEM_ICE);
-> >>>> +		ufshcd_readl(hba, UFS_MEM_ICE);
-> >>>
-> >>> Why do you need readl()? Writes to device memory won't get reordered.
-> >>
-> >> Since these are hardware register, there is a potential for reordering.
-> >>
-> > 
-> > Really? Who said that? Please cite the reference.
-> > 
-> >>>
-> >>>> +	}
-> >>>> +}
-> >>>> +
-> >>>>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
-> >>>>  {
-> >>>>  	if (host->dev_ref_clk_ctrl_mmio &&
-> >>>> @@ -2258,6 +2281,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
-> >>>>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
-> >>>>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
-> >>>>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
-> >>>> +	.hibern8_notify		= ufs_qcom_hibern8_notify,
-> >>>
-> >>> This callback is not called anywhere. Regardeless of that, why can't you use
-> >>> ufs_qcom_clk_scale_notify()?
-> >>>
-> >>
-> >> According to the HPG guidelines, as part of this workaround, we are required to reset the ICE controller during the Hibern8 exit sequence when the UFS controller resumes from power collapse. Therefore, this reset logic has been added to the H8 exit notifier callback.
-> >>
-> > 
-> > Please wrap the replies to 80 column.
-> > 
-> > Well, we do call ufshcd_uic_hibern8_exit() from these callbacks. So why can't
-> > you reset the ICE after calling ufshcd_uic_hibern8_exit() here?
-> 
-> As per HPG guidance, the ICE Reset workaround is required only after the
-> controller undergoes a power collapse. In the UFS subsystem, power collapse
-> is managed via the GDSC (GCC_UFS_MEM_PHY_GDSC), which is part of GenPD
-> (power domains). Since GenPD is tied to runtime suspend operations, we are
-> setting the power collapse flag during runtime suspend and checking this
-> flag during hibernate exit.
-> 
-> 
-> > 
-> >> The ufs_clk_scale_notify function is invoked whenever clock scaling (up or down) occurs, regardless of whether a power collapse has taken place. Hence, the ICE controller reset was specifically added to the H8 exit notifier to ensure it is executed only in the appropriate context.
-> >>
-> > 
-> > Please define what 'power collapse' mean here. And as I said before, you are
-> > not at all calling this newly introduced callback.
-> 
-> This is not a newly introduced callback, Mani. We are registering for
-> an already existing notifier. You may refer to ufshcd.c, where this
-> notifier is invoked.
-> 
+---
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+change-id: 20250809-qpic_common-sgl-nitems-9ce54a6d0c25
 
-Okay, my bad. You could've mentioned something about this callback in the commit
-message to make others aware that you are reusing an existing callback.
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Gabor Juhos <j4g8y7@gmail.com>
+
 
