@@ -1,57 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-68558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14FC5B214AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:44:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CE66B214B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:44:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0557D626BEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:44:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDDB61A2368E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:44:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCDE12E6115;
-	Mon, 11 Aug 2025 18:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9FB2E62A4;
+	Mon, 11 Aug 2025 18:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DcnfhFMB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y5myT04U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A786D2E610C;
-	Mon, 11 Aug 2025 18:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30812E6137;
+	Mon, 11 Aug 2025 18:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754937684; cv=none; b=ngssqRJUpQGsm3dW5qkPmDAwD7eaNPDYn5g3avrDDHRelGNLheccqsKQ1BaCIMmPSyx1w3178jJdWgxMojTTb5YtPCSoFh3gUYoqxPw6lmNSjrpkYtcJVc3hR4uNPc2avMlwbJv8jQ4z7zy1e+03EMw2X8sUjap0m0M7j8rFjxo=
+	t=1754937685; cv=none; b=DoKrtFCUQkOphZHkdY8DcnzixckoBBeWarY0dZQZasq6AVHhkIsmGQ5L6in52XEN5/DfuUtfGYmHrA/2fIZu8VpYZ0OX9k9JFFl6BUOotlebSBGaDsmNaVTk19xvxwPC4YR5jmmuGF5LXSNiRkcVyfMvRIvVoy7R+atYt7yRXKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754937684; c=relaxed/simple;
-	bh=xJsLln6e4U2tD4m5C9ONpEwYm5z/ITOB5PtDMCf03hs=;
+	s=arc-20240116; t=1754937685; c=relaxed/simple;
+	bh=EOfgba50+6CeVpleSRv0Q0EMWfqPtmAaWwa0kISde2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h2nG8/DC1vu+V8vKVCQuCQ6koJLsLsTJfYn4Va9xqb0l4y8kM8iGNdS7xw7fC0Epb9VD6cZYlU4bRSBrqZX+GQ3q1NMKZHzfJ3wjjIpiSUe+2wPMgAo2nNSYeXydgCvQEI/3ZTCHoPkXDckzn5Nf1VTJ8p8IMwJvFwhWtTYhCZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DcnfhFMB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EC8C4CEED;
-	Mon, 11 Aug 2025 18:41:23 +0000 (UTC)
+	 MIME-Version:Content-Type; b=hxSyp9nt3kGk0JS3MvIHxw4Au1QYBjQ9Xn53P6fiLrYD0tjonb2/Gq1IlJJTggOzIAS0+GpDISAEUOG4+7zA3a+PMPnQohp/8KvTEF8YzNrtKQleQXcD9Dj5h21EzxP+Rq3yt8/4WieogNvCB86R8SpG+poVZTQejO51lsVBmr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y5myT04U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C270C4CEF5;
+	Mon, 11 Aug 2025 18:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754937684;
-	bh=xJsLln6e4U2tD4m5C9ONpEwYm5z/ITOB5PtDMCf03hs=;
+	s=k20201202; t=1754937685;
+	bh=EOfgba50+6CeVpleSRv0Q0EMWfqPtmAaWwa0kISde2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcnfhFMBnihDZJNoVVXqZmP9uRET8Aki6EG7vROyw47ly2iHMLeUqw5i4Xvgt3dgx
-	 rZwb5IOfvIb4XTyra4jE3yn6eslw64P7mFocBcql50FWpDh0KMKrCpWgstHUfc0oqR
-	 pDYoZs+16aBbSX+22mCuUepTN6971k219zIT+3sqW6Zs5iur+jkoabWGUAnfe8Ykxj
-	 TBrXM6O475HH3fKC7S1kJij+mS3oyGo/xbzPIhhfZzT580w/lxlTa0sf4rMysOAizn
-	 XvkcGP+pyMKQwF2huvCoiqTk0lMaPaEdPB0riBkaJ3DWUSAbkdq8BpTpgfzhKQK3KP
-	 94q8qWIzyrDJg==
+	b=Y5myT04UfdY3QhEahpjI/jHBtn5TUMkfoDIpwAjD3Xo84YxlpgG0/faw5XzNJMD3M
+	 oWvo2pWrcU/lzXWFgJmEjxjoizDmKBkYSd/ZPm7Qh6hWn8j/S80sCkH3KWlw1grrz9
+	 WLgZZksjUgUcApM9NZgWjGPuPvMCHk3Y5uIB+AqNqGd3HZFkmCmh7p3qc9nyHdKAeT
+	 0i88rOc39yEjibU/Soct7g6m8+pLz7RAQ/HB3qQdl96tXPAbK1o0Rq85Z7cuzYqViW
+	 hV3Z5OLziqJL2ojO54GRbREcwxzeUGzjygg055bAdOld6Pp/1DcMFZnO5bhERiuAwY
+	 IHBoSQOVspinw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom: scm: preserve assign_mem() error return value
-Date: Mon, 11 Aug 2025 13:41:03 -0500
-Message-ID: <175493766084.138281.18393095674744557700.b4-ty@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [Patch v3 1/3] soc: qcom: mdt_loader: Remove unused parameter
+Date: Mon, 11 Aug 2025 13:41:04 -0500
+Message-ID: <175493766087.138281.3100955082494803844.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250807124451.2623019-1-mukesh.ojha@oss.qualcomm.com>
-References: <20250807124451.2623019-1-mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20250807074311.2381713-1-mukesh.ojha@oss.qualcomm.com>
+References: <20250807074311.2381713-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,18 +73,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 07 Aug 2025 18:14:51 +0530, Mukesh Ojha wrote:
-> When qcom_scm_assign_mem() fails, the error value is currently being
-> overwritten after it is logged, resulting in the loss of the original
-> error code. Fix this by retaining and returning the original error value
-> as intended.
+On Thu, 07 Aug 2025 13:13:09 +0530, Mukesh Ojha wrote:
+> commit f4e526ff7e38e ("soc: qcom: mdt_loader: Extract PAS
+>  operations") move pas specific code from __qcom_mdt_load()
+> to a separate function qcom_mdt_pas_init() after which the
+> pas_init variable became unused in __qcom_mdt_load().
 > 
+> Remove pas_init argument from __qcom_mdt_load().
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] firmware: qcom: scm: preserve assign_mem() error return value
-      commit: 121fcf3c871181edce0708a49d2397cedd6ad21f
+[1/3] soc: qcom: mdt_loader: Remove unused parameter
+      commit: 3bf7097bfdd4cf43874d7d41689957bc0d581d47
+[2/3] soc: qcom: mdt_loader: Remove pas id parameter
+      commit: 0daf35da397b083ea0ea5407196bb6bd210530ec
+[3/3] soc: qcom: mdt_loader: Remove unused parameter
+      commit: 3bf7097bfdd4cf43874d7d41689957bc0d581d47
 
 Best regards,
 -- 
