@@ -1,66 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-68550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B564B2149B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:42:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56F0EB21497
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 20:42:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 44FD57AB290
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:40:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84EE21A23250
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 18:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBE9D2E3382;
-	Mon, 11 Aug 2025 18:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB72C2E3AEE;
+	Mon, 11 Aug 2025 18:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AbuLZlDw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PdI0McYU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0232E336C;
-	Mon, 11 Aug 2025 18:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE8F2E3718;
+	Mon, 11 Aug 2025 18:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754937677; cv=none; b=XvAPpSY1ZKpK4aNn4iJHsGoCOoWMP1T3P0eizejuFgiUiCrdW0l/gNLVHFpZ/oarSBkJ+N7++/+ZrxkyS4s0GkIsUzDN/THK6Gsj9/lvD8ox6lx2kZ3OIIPqn3o5LDKBRdRdL338t0rbM7FnZVXcxMwVmBrQIoEyRjAiTxH0OYw=
+	t=1754937678; cv=none; b=FdjlhA+mQPW4zSiEv6qGEc4Pkhs5AQXGXVNUoyfN4gkpDySglWghYNh+S8s0lZIAalC/EFB8nxLvIzY8UEl3+and9RZVIUcKIoiUhIlyc/i5xfGvguC1I4f3+inqvMzsSgJfzJn9+g9ZZXFeVla1yWGnL1E0E0PpH7Z8KvFdFmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754937677; c=relaxed/simple;
-	bh=f+CLPephwGhFpFxL9fAwCN64RSUg7mbAh29TU2oyj+w=;
+	s=arc-20240116; t=1754937678; c=relaxed/simple;
+	bh=tsJArN5A9EGOZmuE/sUWM1eWH6VvwvEzXAMvV+eekHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bwR5VKNSPGJWvrvvB/BgzKeFwAk4eY7bRVqhKn3Llvdnl1fTRUMJTBivayOoFXwzFOLiOyudeu2RwlB/8qNf6HD3lr5PicY79SSGbBOLwgbX+omzJxw8a6kOaGfSecopkz/s6hRX9iYA6i1WdaHtD0AozoTW5X3WT9oTc+VvAzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AbuLZlDw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BE5C4CEFC;
-	Mon, 11 Aug 2025 18:41:16 +0000 (UTC)
+	 MIME-Version:Content-Type; b=D/LOlrEwM/sYh4vgYfGM3CfiMh9gZszmPhebxSi5JL3rSsKNTtVpmCRWjJE2PztgB0dm1WoaTxdVYSMcTZJ++Ddx+OHkH+tkZLh0QBvhP6d8NrG7d54GY5PEiWm8IOEa381i2Vn5Ien5FuIGxL5mOg9pfmq9I0ks2/8hrDvnCp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PdI0McYU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695C1C4CEFA;
+	Mon, 11 Aug 2025 18:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754937677;
-	bh=f+CLPephwGhFpFxL9fAwCN64RSUg7mbAh29TU2oyj+w=;
+	s=k20201202; t=1754937678;
+	bh=tsJArN5A9EGOZmuE/sUWM1eWH6VvwvEzXAMvV+eekHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbuLZlDwNBgm+xQloKdNcOn6oKVlHAvtzdBh7jp4kMYy3u3cO0CiF28boKQJdcKwp
-	 if5vcaOCONb6qQDYHasNoEyJn8A6i4eXFZoiuuUo1IqhzpEF3LecTJz0eWUjcFq32C
-	 gTpI41IG63C8inqlgGeC6LkZ3L0RWTQDzvctN9LcgaXO6uiDDvZle/TWkENRpfdZAE
-	 q70Rocxrl3GcNqgECwkaiHgx/UXVb0oH7B7h41I3Nud9b54zqZqKCy/A2XxdGl1UoC
-	 cp7mtitBFqJNc3jGO87UiNoo4nhERo1ygjb+OXkIQjAmIeJmJ/jIT5HLIM6XO23ps7
-	 1eWX2CnHNh6dg==
+	b=PdI0McYU7smiUGsgFphhUMF976bH9am4fNA42G5T/y/zQEpAu+AswDA6HF+7ckBa6
+	 LRyoNRhxh0nSZo3n7D6NR0FmXnrRQip4W3PmCF/TvwXg1Ov0vanDP3arg/OfgmCFNy
+	 AqOVM+LdKBsagyp1RJ7mUAMdaYan9VuWUu+joLA0WVi9D5CnI1z/F0De5IwQms30IR
+	 dTKgodBct7H0uhSQNppFVXQoZVG+4HDtX2aisa6frbU17LZqYZTqQT8EZLLPI7tz2Q
+	 L7WBBVLz8SIV6Y/jq/5knoxrwkOsvS0X9USYi7wHgTSPKdDrSWEpWHfvXC2+qJrSbn
+	 vsTOiVkDKDaWA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	bod.linux@nxsw.ie,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/4] Add support to read the restart reason from IMEM
-Date: Mon, 11 Aug 2025 13:40:55 -0500
-Message-ID: <175493766109.138281.3436384432329568509.b4-ty@kernel.org>
+Subject: Re: [PATCH] clk: qcom: Remove double-space after assignment operator
+Date: Mon, 11 Aug 2025 13:40:56 -0500
+Message-ID: <175493766091.138281.11024572697306167395.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
-References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+In-Reply-To: <20250802-topic-clk_qc_doublespace-v1-1-2cae59ba7d59@oss.qualcomm.com>
+References: <20250802-topic-clk_qc_doublespace-v1-1-2cae59ba7d59@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,21 +66,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 02 May 2025 18:47:48 +0530, Kathiravan Thirumoorthy wrote:
-> In Qualcomm IPQ SoC, if the system is rebooted due to the watchdog
-> timeout, there is no way to identify it. Current approach of checking
-> the EXPIRED_STATUS in WDT_STS is not working.
+On Sat, 02 Aug 2025 13:44:44 +0200, Konrad Dybcio wrote:
+> This is an oddly common hiccup across clk/qcom.. Remove it in hopes to
+> reduce spread through copy-paste.
 > 
-> To achieve this, if the system is rebooted due to watchdog timeout, the
-> information is captured in the IMEM by the bootloader (along with other
-> reason codes as well).
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] dt-bindings: sram: qcom,imem: Document IPQ5424 compatible
-      commit: 3fa1095979393d5b178264cc1bdfb473e80ab774
+[1/1] clk: qcom: Remove double-space after assignment operator
+      commit: 6ef38b0c16c20701fb8a06d2d2114080fbc785ad
 
 Best regards,
 -- 
