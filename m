@@ -1,58 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-68596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4B46B21949
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:29:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3885B2194B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 01:30:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F266C46306D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:29:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B6F0462A09
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:29:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C400280CFB;
-	Mon, 11 Aug 2025 23:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE5F28153D;
+	Mon, 11 Aug 2025 23:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dDb6WyG5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A2lvhc/j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EF9280329;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1A28152B;
 	Mon, 11 Aug 2025 23:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754954852; cv=none; b=SuQco8DgvwCu8vh9Q51uHr47wYu9blPWdrgLmyDW2ON8BpSM9Xf/JDQpxCOLAjr4cDdbU0zCJOsUL9bNkR69GvrKBPuSjbPhPt2V7Y0MBzZc5NuhE4QrauDkUK2foizDpDrP0Xk+c5w0IVNFcoFOOusBLNvcpp4BqStlERKskEw=
+	t=1754954853; cv=none; b=D0iaoLR5Kbs4yGGojBaPc9wLija9cncYE3qxzdnYloDG7cHpjhOu/CDJ8J1vF2sBcWPeERcr/1eF+MEstA0F4EJshZ7mAiL2YfePx6NVADnoLpMr7rW1FHbuZlMAfgjbrtbTKMbjipl4mxiG32CGwPG3k73tZaUaypK28/x1AX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754954852; c=relaxed/simple;
-	bh=FHFg0xJKWlFTi3MTsePgnAcfNPmkmoUwMw1qhfHJSqA=;
+	s=arc-20240116; t=1754954853; c=relaxed/simple;
+	bh=uwE75RP/rC/UsT0Oz278buH7MuD18+4QVG/pJE6eMZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EANDDqTo6YH+h73UB3DoJl0+oLHJbS8Ey8fJQgyKw6ePJnQiX47fBpkyMwlVHPL13Hmj1jQjZBKWKXxcX83jdoxRcMRROsBjJoYwOnWq5NfldF6Qol6ct/h1cjtPel8d5cKygaVDqgh40GAjo2x6fgi7k5ssTbMyfbyTsna3Qzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dDb6WyG5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88168C4CEED;
-	Mon, 11 Aug 2025 23:27:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=XSlQmTExIp5SxKetgfCz5Hx1Vxd5ncX6Y5C5guVq9B8Ngp/jIu5eNJpG0G6eJO4RADcxkbiD/OKo0UabQ1blwSon0Qvm5unAZYkiJ4ApVMnVuGhtZAYE6RRNIMzs7Mo2buCAGnKp630opaU8DqO5hZM5uA7Uo2G4MyEz7Q17mos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A2lvhc/j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B89CC4CEF7;
+	Mon, 11 Aug 2025 23:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1754954852;
-	bh=FHFg0xJKWlFTi3MTsePgnAcfNPmkmoUwMw1qhfHJSqA=;
+	bh=uwE75RP/rC/UsT0Oz278buH7MuD18+4QVG/pJE6eMZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDb6WyG5tvYzrr6luojtNV/cD49RHMUHhfyGe3C2n4djOBWD2qx4qvtNO0lx6Oc6w
-	 ae1s1HC5MMtXv8KXFZBzhLqlaRXJwSdQWiZc1DGnLH6U172Fe4jb5OXkrtf9koJAQ0
-	 ONZ2JjK+DypQBXoDy0XsfG3JsQ+WvSh7dOV8qTGALVr9iFesRtb3Pe5vOCbEZ1VNZU
-	 aR7kSKxtjsTU8DTLqUuj5Vc2ajS2C30wb4HOYyj+BlSDfpA8VTUSOjynz9yaa4Lw/+
-	 1VzzDfCZ9GmoJD90Fth0o+BWHyI1iw1UCTcN1qKyyDhx0mL0uYqsNIih2rnCAFOf3X
-	 kmctTqS5kbHxg==
+	b=A2lvhc/jV+eUjs6uxwKpFX42exLUGUlEZq7SwChPB26viLQjqsZpP90/Hkpco/CHS
+	 Xc/6XJcs8AC7cGfoT6ntADIcwzhMc+YyHsthMAoo3pdmiZfr/0CWsj0A1636uEXvm7
+	 06Zk3ofsqoFTS8RAwPhHdthdM1HKcNhwOO0vT9PA6qOzZow4YRoeWBthbqUBvvBjHI
+	 JIdcywclTh1o2hd7tL7ZIMJtcngNpKgDj/GdSVX+TfHU4i8NM1k4hcrTzM1H3d2ee1
+	 7uWA6phROe19OyV+datgszyzbgAYabIRngGtiPNsVlBSo7sLN8I1bCN8dG49q57Nne
+	 4i366DPMYZ7uw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Nikita Travkin <nikita@trvn.ru>
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	Sayali Lokhande <quic_sayalil@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom: tzmem: disable sc7180 platform
-Date: Mon, 11 Aug 2025 18:27:04 -0500
-Message-ID: <175495482434.157244.1529071502369291928.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mmc@vger.kernel.org
+Subject: Re: [PATCH V4 0/2] Add eMMC support for qcs8300
+Date: Mon, 11 Aug 2025 18:27:05 -0500
+Message-ID: <175495482456.157244.16005731493669293033.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru>
-References: <20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru>
+In-Reply-To: <20250716085125.27169-1-quic_sayalil@quicinc.com>
+References: <20250716085125.27169-1-quic_sayalil@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,18 +67,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 21 Jul 2025 18:28:03 +0500, Nikita Travkin wrote:
-> When SHM bridge is enabled, assigning RMTFS memory causes the calling
-> core to hang if the system is running in EL1.
+On Wed, 16 Jul 2025 14:21:23 +0530, Sayali Lokhande wrote:
+> Add eMMC support for qcs8300 board.
 > 
-> Disable SHM bridge on sc7180 devices to avoid that hang.
+> - Changed from V3
+>  - used correct name for SLAVE_SDC1
 > 
+> Sayali Lokhande (2):
+>   arm64: dts: qcom: Add eMMC support for qcs8300
+>   arm64: dts: qcom: qcs8300-ride: Enable SDHC1 node
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] firmware: qcom: tzmem: disable sc7180 platform
-      commit: 10a2bc3278c872db6841f2e3b738d89cba5e718c
+[1/2] arm64: dts: qcom: Add eMMC support for qcs8300
+      commit: 43b8556e82f38cc2e7a66c9dd44d1104be4fe73c
+[2/2] arm64: dts: qcom: qcs8300-ride: Enable SDHC1 node
+      commit: d81448d49cb26d9255479c7c74de03a257b5c528
 
 Best regards,
 -- 
