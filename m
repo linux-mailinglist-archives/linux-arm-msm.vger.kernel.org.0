@@ -1,381 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-68570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45F7EB2151F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 21:07:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 597A4B2171A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 23:11:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AA9316E4FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 19:07:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A20434204D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 21:11:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AF312E2EE5;
-	Mon, 11 Aug 2025 19:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D2A22E2DF0;
+	Mon, 11 Aug 2025 21:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QmJe5Bnz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MckaMkDZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238C42D6E5D;
-	Mon, 11 Aug 2025 19:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393062DBF5E;
+	Mon, 11 Aug 2025 21:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754939251; cv=none; b=RX+lxJYcIDANmnEyITrHBstWPkjkxVPhgh9GWcbtWuLPyJLtwS47VNIuR4jTgopqZm7th0GU11TlDqmsydzH0x9wQwv/BInbCofixWCFzY6C19d5ZwCc0qRZWF0EBH9ij+27J4RIlQfTj8FrZLUUfIKLHaHsWs4lpCe6ibCx3FA=
+	t=1754946688; cv=none; b=FqNV6mFyufP8HpNlVUuR9Ru07fgREN268G3imc/eqgEODfD/ZkUnHyDYoEvPj4LjUqdYLEq3htLn8VhLI1ziALC/w3bfs84+DZm03YKx2hRoSJsnBdnk8rpq0ORFLLxqpeo3StQx6Q6GMmNMXzaF+l5h8bvH8PASpIDRUegoDK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754939251; c=relaxed/simple;
-	bh=z9NgzLPdkixra/QUJxb+x6d8KoigZnVyhXR1Dq4delE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uvYqJOSE2I7Y9sAnlXCDD+Hn0UIOR+VQITJnSHhiWJcxOd43ay4g4m/1ODF+k01iRzMU34I7tHiJSzQso2kK0tL75UAf492Y0+S46Cm4DgjPjswsNXBgw76DyW3qfqT8Uga33lGBOvJUJmqQJxT4S83zLzMxwh8AgQkw0qDn+ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QmJe5Bnz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AF4FCC4CEFA;
-	Mon, 11 Aug 2025 19:07:30 +0000 (UTC)
+	s=arc-20240116; t=1754946688; c=relaxed/simple;
+	bh=bMFJMg+JfLXKlkC5wAUM3n6+D/HjWIAcPX4kjmfvdYA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YI2jWGSS7UdZxOyZW3Uqk9gqs/5YnRsQH/tICewYdpLtcODu+9UybechBa4eFT/4YCdsyQPvwoIGi7iLv70D0LRN6iUe/C0xl3fnwplI41mW0iCsAOPO3WBuuWXrPmOHUbaHN0hX5xwh+mhKmzphQY6ztlO7BFHZ9OZGdgAN+UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MckaMkDZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7200C4CEED;
+	Mon, 11 Aug 2025 21:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754939250;
-	bh=z9NgzLPdkixra/QUJxb+x6d8KoigZnVyhXR1Dq4delE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=QmJe5Bnz3I1OgZks51kAfBMvHOIxgC/qqslqFXCuDISRg48jckbt369fIs3fSvETm
-	 fuI+ZdqYJ5ox8WbHcLNZGqgweKnKQVeWjtWV0BN9JQcinwP99uuzB/nL38Ol0QvWtV
-	 0VQEHD7SCjPzGMERpN4TJZCWbUJzxeeSgF8q5mg7qzSdvv1WK9GTI8TQUV76zqGG9/
-	 dztnyM5snh67/X69gl5fP2RcjHql06eQOh7q19+yagKO1UBX/kPeg0OlXPI9e8URsd
-	 +F2PpzuzMmmrJdc8F4IMCqnfyRHxWpKPTtalOeal+XoMplTStyCosohkWfu2FpX2fE
-	 TxuJo/SKJvmKg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D4A9CA0EDB;
-	Mon, 11 Aug 2025 19:07:30 +0000 (UTC)
-From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
-Date: Mon, 11 Aug 2025 23:08:11 +0200
-Subject: [PATCH RESEND v4 3/3] arm64: dts: qcom: msm8953: Add device tree
- for Billion Capture+
+	s=k20201202; t=1754946687;
+	bh=bMFJMg+JfLXKlkC5wAUM3n6+D/HjWIAcPX4kjmfvdYA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MckaMkDZvm2/GN4sU8l1Jp5BDDLyteoMMrOV5XidYYTvenJuWUVqxd+Gt+E0MeioZ
+	 Ja8PlcRm7/JZ1bjA7up7vZHLLJrnRSZNARpF9uvUQ77l9f+KngpgsTdB0LvpP5hqw5
+	 zZQiiqJuzCt9gG+64qIjqTlabt+u3Tr0Bs2p/klxNKBZTyA1EmYVBvzY3KAjHsB3rI
+	 aYoqc/hWEPFej08/mub/FXhTbqnvGkX4cjMQ79dZNb8uYvcD0eonDtp4NRViKrG1EN
+	 EiQHXKkDAdUTRAkrIoMXrAo0HmR0pc9tKN06jd5SUMYz5s534lRFmhvbFqUpLRFlnq
+	 e5wuiT/ZUxVgQ==
+Message-ID: <642f8456-982f-4cb3-9cd1-8b18232387b2@kernel.org>
+Date: Tue, 12 Aug 2025 00:11:21 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
+ apss clock controller
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+ rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+Cc: Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ Md Sadre Alam <quic_mdalam@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250811090954.2854440-1-quic_varada@quicinc.com>
+ <20250811090954.2854440-2-quic_varada@quicinc.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20250811090954.2854440-2-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250811-rimob-initial-devicetree-v4-3-b3194f14aa33@protonmail.com>
-References: <20250811-rimob-initial-devicetree-v4-0-b3194f14aa33@protonmail.com>
-In-Reply-To: <20250811-rimob-initial-devicetree-v4-0-b3194f14aa33@protonmail.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, 
- Cristian Cozzolino <cristian_ci@protonmail.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754946504; l=7327;
- i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
- bh=qtnuNmfCBsjsZNE4PsKOQQMDD+xe/GZt7WSU7ruu8fI=;
- b=vD0w4BoLf8k7QH+aA9amV6HCAoaMUmpgEZsqNlARPSGiu7M2FXMUNdGDHJkWP+RX2KqKtqlmZ
- pEm/tBu8zsnD0EuvhaRBU6mDRYDX+xxrvTxSW60wlCLiou9bK2vx3dE
-X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
- pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
-X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
- with auth_id=438
-X-Original-From: Cristian Cozzolino <cristian_ci@protonmail.com>
-Reply-To: cristian_ci@protonmail.com
 
-From: Cristian Cozzolino <cristian_ci@protonmail.com>
+On 8/11/25 12:09 PM, Varadarajan Narayanan wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> 
+> The CPU core in ipq5424 is clocked by a huayra PLL with RCG support.
+> The RCG and PLL have a separate register space from the GCC.
+> Also the L3 cache has a separate pll and needs to be scaled along
+> with the CPU.
+> 
+> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> [ Added interconnect related changes ]
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v7: Fix 'Reviewed-by' placement
+> 
+> v6: Add 'Reviewed-by: Krzysztof Kozlowski'
+>      Drop 'clock-names'
+> 
+> v5: Remove previous maintainers
+>      Change clock@fa80000 to clock-controller@fa80000 in example
+>      Have one item per line for clocks and clock-names in example
+> 
+> v4: Add self to 'maintainers'
+>      s/gpll0/clk_ref/ in clock-names
+>      s/apss-clock/clock/ in example's node name
+> 
+> v2: Add #interconnect-cells to help enable L3 pll as ICC clock
+>      Add master/slave ids
+> ---
+>   .../bindings/clock/qcom,ipq5424-apss-clk.yaml | 55 +++++++++++++++++++
+>   include/dt-bindings/clock/qcom,apss-ipq.h     |  6 ++
+>   .../dt-bindings/interconnect/qcom,ipq5424.h   |  3 +
 
-Billion Capture+ (flipkart,rimob) is a smartphone released in 2017, based
-on Snapdragon 625 (MSM8953) SoC.
-
-Add a device tree with initial support for:
-
-- GPIO keys
-- SDHCI (internal and external storage)
-- USB Device Mode
-- Regulators
-- Simple framebuffer
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 255 +++++++++++++++++++++
- 2 files changed, 256 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 140b0b2abfb555b8ef61bd9ed0217d8997800809..af3757ca017b6e3d8c579e43f647a71fc64c62b3 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -70,6 +70,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918hd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-flipkart-rimob.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..ef4faf7631327ba3f7d954cef57bb1ebfc09a1cc
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-@@ -0,0 +1,255 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Cristian Cozzolino
-+ */
-+/dts-v1/;
-+
-+#include "msm8953.dtsi"
-+#include "pm8953.dtsi"
-+#include "pmi8950.dtsi"
-+
-+/delete-node/ &cont_splash_mem;
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Billion Capture+";
-+	compatible = "flipkart,rimob", "qcom,msm8953";
-+	chassis-type = "handset";
-+	qcom,msm-id = <293 0>;
-+	qcom,board-id = <0x340008 0>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer@90001000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x90001000 0 (1920 * 1080 * 3)>;
-+
-+			width = <1080>;
-+			height = <1920>;
-+			stride = <(1080 * 3)>;
-+			format = "r8g8b8";
-+
-+			power-domains = <&gcc MDSS_GDSC>;
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_key_default>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		cont_splash_mem: cont-splash@90001000 {
-+			reg = <0x0 0x90001000 0x0 (1080 * 1920 * 3)>;
-+			no-map;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+
-+&hsusb_phy {
-+	vdd-supply = <&pm8953_l3>;
-+	vdda-pll-supply = <&pm8953_l7>;
-+	vdda-phy-dpdm-supply = <&pm8953_l13>;
-+
-+	status = "okay";
-+};
-+
-+&pm8953_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8953-regulators";
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s6-supply = <&vph_pwr>;
-+		vdd_s7-supply = <&vph_pwr>;
-+		vdd_l1-supply = <&pm8953_s3>;
-+		vdd_l2_l3-supply = <&pm8953_s3>;
-+		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-+		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-+		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-+		vdd_l23-supply = <&pm8953_s3>;
-+
-+		pm8953_s1: s1 {
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <1156000>;
-+		};
-+
-+		pm8953_s3: s3 {
-+			regulator-min-microvolt = <1224000>;
-+			regulator-max-microvolt = <1224000>;
-+		};
-+
-+		pm8953_s4: s4 {
-+			regulator-min-microvolt = <1900000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8953_l1: l1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8953_l2: l2 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8953_l3: l3 {
-+			regulator-min-microvolt = <925000>;
-+			regulator-max-microvolt = <925000>;
-+		};
-+
-+		pm8953_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
-+
-+		pm8953_l8: l8 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <2900000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8953_l10: l10 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8953_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l13: l13 {
-+			regulator-min-microvolt = <3125000>;
-+			regulator-max-microvolt = <3125000>;
-+		};
-+
-+		pm8953_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l17: l17 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8953_l19: l19 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8953_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8953_l23: l23 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8953_l8>;
-+	vqmmc-supply = <&pm8953_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8953_l11>;
-+	vqmmc-supply = <&pm8953_l12>;
-+
-+	cd-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <135 4>;
-+
-+	gpio_key_default: gpio-key-default-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+};
-
--- 
-2.49.0
-
+Acked-by: Georgi Djakov <djakov@kernel.org>
 
 
