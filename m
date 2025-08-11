@@ -1,276 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-68300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E8E3B204DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 12:06:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C9A5B204FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 12:13:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5305B167FCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:06:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 370E67A1AB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Aug 2025 10:12:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6892021ADB9;
-	Mon, 11 Aug 2025 10:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A17472248BE;
+	Mon, 11 Aug 2025 10:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H7wNvcmx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FDwP+B0O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBDE201017
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B411C1F05
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754906769; cv=none; b=e8emUj9tdhf+YyHKurCTSLk1SY9sJwauTR7NIhuPYXr5hfM0P/OVCz8TsLXlEHS6ysdKjFnrxAtTU0SIx126G9aFpcTGd4Xz9zv3ZuWC8FtczE7YRaCi3CBDWSHXECfhRLy61DauTEToUqalJ0EVHbWvv6yMvzVoIz+SoUCtSnE=
+	t=1754907221; cv=none; b=KS6VPx5RBxAdl3OHVoLzhPRwJQ6m1UIsuH7sytH1jT6gVxpltqgQ/DWC9TMNWy2vOHoQDbw4U2HeJukM0lz/d0ajHguGtTYZMx0u9gz21IuPYxYcwlKYp0uJIwt6IKgIQpAmbbucDGwyWDAWZwP/yuXUwZMHE2m+x/UaWgaAGHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754906769; c=relaxed/simple;
-	bh=10ApFl6TQUysMY2QfW7/N2xTtY4LUe/cSjyKPP+pkb8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MxIxXwy6tMEZcVboLX21QnMSTgMWs8oWnc3KPEdc0x3tUbFVAab3V6v+xxCSyJddJbgfGW0p+VPIhyPBZZK7rJhIH3uEJX2U6uKg/sNv+fW++gPa/gUfODSgvifALU1ZKfEvZzHVfg+6GatDdIsQFTtcVb0VxUKMXwpWCmj28Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H7wNvcmx; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1754907221; c=relaxed/simple;
+	bh=l9bwAwp+otURd9HsCSu4lr2vMqpgTZAdByA4pdGWXJQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KOhV4PAbRFRiUc+SAQPSbQ/tWJqyY/3SlPowfowAQPaH7nnv3sMEU0oMIoWyEpJaXgfn5kVR0X5aNqoj48RtuYH1d1TX4tSZilkluTp+jMLkAGYPCCyQ3FcpKnQAQMaj8jI9mJXY4Pgutl11sh8OoSnEHkreL/d575EvTF4QPg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FDwP+B0O; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9dj58032547
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B9d9iE007563
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:13:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TZ/dceqjtDi5aPbykVkxqjO86bUfZyp7+P+A+wh4Mr0=; b=H7wNvcmxZMObfY4f
-	8ZP1+dR0ATH95Yswyd74eOfO0A9mr8DWbfAVaM6RMEF4xzmYNcCzYsJ1Z+bgVCfn
-	byMQSGvdgXlN2lto1ndWTmcZ3hdxONN+BGmlWbWv8VvHe33i0YxZDENvZ1ftAxMk
-	ZWfWjVQ7Ihpm8W9YX1J6r5PZS5OYKc4z6TX0ORutdyUErrfG860H9TETY2z4n7IW
-	q39BfjOxxBGui/rA+Un8G9kfczgjHbLxAAcScKxJeV2NzTI17iWf9p459s0MlMbb
-	sg99W0CRbh2w2XlUdc9gXSPF9rKP7jhK8eDZ2yDpMvjwrEGJv4mVhazNYvZHL099
-	OXUMpQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dygmbw7k-1
+	tQBekwLY985lR0kL588BU9IYUYSsm3EJi76WLENqjaQ=; b=FDwP+B0OX5UBuh1A
+	yaBnSgBA4PZ6KYN6UyxgXDpyNLwikqLtNO6NVZchMnFrdq1fHAr9zI3JLW/AKlB5
+	nxIdKbXb87PbAZ2UiPni3kloNPTITgFmGv6lF1CH2AdwpxGy6DNhc7/lMRaa26ok
+	AXFCp45EK0v4y/nT5fwiGnPWYU5wcC6mTKy1VYu3ol63+TOPdiuiJhcv9r7YqKYs
+	RQyuqXukejuJ37d/tRE8V2Cn/2VVJ0n0OTxLwyvmy5rBgwi3p4b6oJM3S+Eqe5Zd
+	9GSCTxs/jeBsJi5cJ0uWNqxOvHZKxGtVOz3gUSCF+MmelO9zM2JtUXFL9SlErhyO
+	3BHiYQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dv1fm60g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:06:07 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b3f33295703so6475707a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 03:06:07 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 10:13:39 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-7098e7cb2dcso76286756d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Aug 2025 03:13:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754906766; x=1755511566;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1754907218; x=1755512018;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TZ/dceqjtDi5aPbykVkxqjO86bUfZyp7+P+A+wh4Mr0=;
-        b=gyVDWCmTz6wDYck++pl7tTHLrO+/3F7by6gQ3TAhl7RMSU+xkHxkh357lbkMlLfKAb
-         Y368Qb00LNlgZ1Qx/S1Ew524fMlDW4rgWBLmkkzpwY+5mg6OshtcsbAtseqjTjA/mFIN
-         d+RjOZ+DxHCTgagVxT8nVGMa2AIyz0svJdR3Yu3ATUM5peZmorIU7k8c95IxaWkQNS0N
-         tMoICw02e9KXTbFbX4DKJ2w+XF5rt8G2pDh1r9Sw/fSYpW4uS/iITYw66/FIwK4pcs/j
-         6jB0me3yv8Credvd2TD/P3rfdtuCvgHAvsMgUeAVxCq81rRGmtlRT2lgoWSLOOwcyG95
-         G+jg==
-X-Forwarded-Encrypted: i=1; AJvYcCWFmFKHN/xHKOOvMYnYa6x8Gf6FcTAqOb4fiqoR+t0sSr23pK8658NijzmrXSc1IFeC7Ryw+ljx1n8DK59y@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+E0goLuNQcPhEtSJGZ+aK1UZEAFiKGO4OpZIx+GuAuG8mhy09
-	9k8tNEm0S4arQda4Z4pktEajz3xHJYc1eDPEEGb8lbrCOKm0/aKac4rNN0gTI4kY4lBNx9Ca3iD
-	EdDQBtZUIr1VV1/MFk/nX9EXnNhlsUI5JEsEMQVDnxxQERwPFCFIzfzkN2ZjKXqOFL0Eg
-X-Gm-Gg: ASbGncsYTRVp+pSirhQs1fiNQkco3iPym81qb0t5whTBehzX/YNhaMlsmb7bkdL6gKB
-	7j+rgC8l0VqT8ZK8yULLx24vbRau4YvwgrFFh8XecvKdak4EdB0jWL667Yjj7F3WG0qRncNkfzL
-	+vJnvJ24wUmLm/4+y0ZFCQGm4396nt3U+UGwGJKeaEYZ+jdCEpxJf0sJ/lbEpIT1k5m4FbR+MBR
-	3tuELBf0EFA33i+QK7a8aODT/43tV2V6RKqbymPw6z3pEWADueMrouxF1LwTg5e6BrV6Zf+5E8j
-	H6K4Sl6QIfQ2aHom3pUvaFOXyKkVf78d97hmXqgrtJmpOiRT2vb3LdtWnaC9CehdnVaIi20MAw=
-	=
-X-Received: by 2002:a05:6a20:3949:b0:240:af8:1758 with SMTP id adf61e73a8af0-240551e9da8mr18321237637.45.1754906766037;
-        Mon, 11 Aug 2025 03:06:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBSXsYakz/wnYLLtXDpGCCBYPXdXvvOJ71swjbLGCAep7jA1LEkHm2HVopX9muR2HS2ZGZ7g==
-X-Received: by 2002:a05:6a20:3949:b0:240:af8:1758 with SMTP id adf61e73a8af0-240551e9da8mr18321186637.45.1754906765540;
-        Mon, 11 Aug 2025 03:06:05 -0700 (PDT)
-Received: from [10.218.42.132] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbd156sm26403355b3a.84.2025.08.11.03.06.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 03:06:05 -0700 (PDT)
-Message-ID: <8e67bfa0-e62c-4060-9ac4-de212ae63570@oss.qualcomm.com>
-Date: Mon, 11 Aug 2025 15:35:58 +0530
+        bh=tQBekwLY985lR0kL588BU9IYUYSsm3EJi76WLENqjaQ=;
+        b=TKggzc7iYoRPpohqwKS5Gew2afZky4VOBsZdQlu7uOFIwGx6GWj4gqcAjTGWaj9Lf5
+         mxR0QDc+UUZrnXDlMFXkLosWKUYEBrHhlWxdB2Z/JItA/7XxLqWOVLmV4zyLNUGPxZlY
+         ZUY73TCTf6drrZRQF4ur9DkiSITUe9173zErCUfv1PC4cejN+8EgfMm1KvRjV8HpP7dT
+         3wQMhgOitoVRtZ+0L2ZqKj6jsiVwFeFlcwg1rqGxNZOq5PpMIbpX8GLPT4osukj7r1Zw
+         1OXkJhvY2AMFKQ6mQWbnqpGJkXDIhrRg9sX4cbOFit8wzjU8OowLb8374Vcg/nv30GNt
+         M4Sw==
+X-Forwarded-Encrypted: i=1; AJvYcCUohQnFtgMsLoSOdS7+yC6sQRv34BpXllFiRraANHdNk6Z7QsxylTQWt8DZqZIDnN17Ij9GJNvqYSr4GYgT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6IE/rFSZUOy9yZ9CIK87q2R1FAzr0EIjVlUCuvIvfwdbLE4XE
+	b/6PDRbpjVGDC9a9QgiBAljz/T58W4YrN1F94+m4QnYDHOrOnKHEnJ2cgoKU17cWejebWqRKspz
+	T2pWf4pMBn+5C12pRa7214zxQyYz33NZi3xmhuAaMit8fwH+RPdxQTkcOud0SczYVP1zB
+X-Gm-Gg: ASbGncuX8w1jmcyuTy41Bj9lMar+ufZ2qH2LRnxzNCYZDV6n/SO64ObXrCAtZsu9Bjn
+	PrAWzLvY+WUrorjsSuaI/eW3+dTYi3a53oxNfuPheM7nw0cZ1+ZrdRRl6uJIfWyNMaKXw6X96pk
+	L0p/FKtdmWFgrj2L5LMAqyvN9NmNmNrywafdJ4wGT6aZTlH/o1m/qZImXtpnFEpWqUqha+f2yap
+	0UCr/reML9TGsHqiXjhkc2InN1vsSZRm2Y+VEPigKykLx+PXQLo6FvJ7wgUGj+ZJl0iHBFzIXi3
+	oFVTns7iSOAsgzIgtXhhsurpTE7KJltw11dmdye+UaztrsQUFPSOTQJB1QsONUkx04nBdrnkfJ1
+	ATHjfyTgoviZh2Y1I6dWYLm8ZlQf8E2ZN9oZHq0Xrb8D0/iV0xjVr
+X-Received: by 2002:a05:6214:2422:b0:707:6409:d001 with SMTP id 6a1803df08f44-7098943a0camr242700216d6.21.1754907218054;
+        Mon, 11 Aug 2025 03:13:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9BY/zT1y+b3ji4GZxhC3ZVhQrv/r/mWPNZE1y3jpndTSli2Cjg/bMQSHGPbSf9yhMaetFWQ==
+X-Received: by 2002:a05:6214:2422:b0:707:6409:d001 with SMTP id 6a1803df08f44-7098943a0camr242699906d6.21.1754907217606;
+        Mon, 11 Aug 2025 03:13:37 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-332382a905fsm41770471fa.21.2025.08.11.03.13.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Aug 2025 03:13:36 -0700 (PDT)
+Date: Mon, 11 Aug 2025 13:13:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Suraj Kandpal <suraj.kandpal@intel.com>
+Cc: kernel-list@raspberrypi.com, amd-gfx@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, ankit.k.nautiyal@intel.com,
+        arun.r.murthy@intel.com, uma.shankar@intel.com, jani.nikula@intel.com,
+        harry.wentland@amd.com, siqueira@igalia.com, alexander.deucher@amd.com,
+        christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
+        liviu.dudau@arm.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, robin.clark@oss.qualcomm.com,
+        abhinav.kumar@linux.dev, tzimmermann@suse.de,
+        jessica.zhang@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org,
+        laurent.pinchart+renesas@ideasonboard.com, mcanal@igalia.com,
+        dave.stevenson@raspberrypi.com,
+        tomi.valkeinen+renesas@ideasonboard.com,
+        kieran.bingham+renesas@ideasonboard.com, louis.chauvet@bootlin.com
+Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
+ structure
+Message-ID: <gvshpndrbnojzwewwa3icd5fjwecqj57jj6gfgoips5xq2oo3l@3dsebzcjwr7t>
+References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
+ <20250811092707.3986802-2-suraj.kandpal@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] opp: Add bw_factor support to adjust bandwidth
- dynamically
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250717-opp_pcie-v1-0-dde6f452571b@oss.qualcomm.com>
- <0dfe9025-de00-4ec2-b6ca-5ef8d9414301@oss.qualcomm.com>
- <20250801072845.ppxka4ry4dtn6j3m@vireshk-i7>
- <7bac637b-9483-4341-91c0-e31d5c2f0ea3@oss.qualcomm.com>
- <20250801085628.7gdqycsggnqxdr67@vireshk-i7>
- <7f1393ab-5ae2-428a-92f8-3c8a5df02058@oss.qualcomm.com>
- <20250804111340.t62d4y2zg77rr3rp@vireshk-i7>
- <6035a961-7c5a-4fde-b4ea-e9ea9d88e6c1@oss.qualcomm.com>
- <20250811084453.ocibslv6kxkib6po@vireshk-i7>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250811084453.ocibslv6kxkib6po@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzNSBTYWx0ZWRfX6QzUtWXvrqiv
- BSgu0WU1fdrnmwQuGjSSolJJ4wGA/x6hN//SK61H1Sp+TUR8xuVfMr9kxL+JVqKHG0UXXyPfXw2
- ALd4XqxiqywAZw7dH54ZOZqhqSqz0RbWVfb0oVkLJ4Dcoh5ZNbeZntRl5swdhokfOKvmGDYVoDv
- YAqHw/BGfi76lxcwQS7+p7WBGDWxbJ3sKyGhLJI9hJ5uqWcnl/Cf9EEQJGHyhyIni+IRgkQp+ty
- lDXmRfFwnUpsoHbo/TEWc+sjAeL9QMLUgZllBL5oBJlmA/gEvDjwiNkifRDKb5z6Hg+QdHUeNKd
- 2ZYnCE3LcbNGAWku8ba2abLXEOm9/7kiWHzGn8/HCjTuGR1RQ5V1WyUIvkjsr7tuTekStg/OXD6
- zOZOqmHB
-X-Authority-Analysis: v=2.4 cv=FvMF/3rq c=1 sm=1 tr=0 ts=6899c08f cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=rbqKxxxGQXOgEjNPzAoA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: 6Y7FjkQpsHPdpWBVMOkiKuHH5yomu75V
-X-Proofpoint-ORIG-GUID: 6Y7FjkQpsHPdpWBVMOkiKuHH5yomu75V
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250811092707.3986802-2-suraj.kandpal@intel.com>
+X-Proofpoint-GUID: J-X9VzBhZvmMH0TsPowJL9ilBh5Du7xA
+X-Authority-Analysis: v=2.4 cv=cLTgskeN c=1 sm=1 tr=0 ts=6899c253 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=2OwXVqhp2XgA:10 a=QyXUC8HyAAAA:8 a=JhAXgKmwuo5aGy_CkLIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAwMyBTYWx0ZWRfX3hKDP+7q94rd
+ 12fluqp70q1+xL+xpn+5G69be3iiZNgAtAk5g2o7nViVgsCChJ4FA4ehnKYoiAaNuZ7c6HNu5py
+ rATcd/sHR0QAuv/wRXuJDQySmuEaOXvzzHyahBwHy8dnuMjP4gRy9JqsBBTCafjP/ofsFzTPmf1
+ /mWb0LGLKXubWwg4VJ3Zm14EOT8capnX8jy9O2KkRZ3/x8dp8zrbqJrrRqo+2mzwf9DcYBCRZmz
+ kb8y2BO/MTrP34c5lYPjTdOkrX4liu+DWHFRnF3fubrPXZRFm8Q2OV+Lv2mdvA+l9UMu5VEtYuc
+ JdTwOE0bdVXs9d1mZmIskhJPwFUetciaGRst7vzDyRZIBIMF7jHhRcYVa3E7y8a2JoztfvvFmce
+ d+0k4Gfi
+X-Proofpoint-ORIG-GUID: J-X9VzBhZvmMH0TsPowJL9ilBh5Du7xA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
- clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 classifier=typeunknown
+ priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090035
+ engine=8.19.0-2507300000 definitions=main-2508090003
 
-
-
-On 8/11/2025 2:14 PM, Viresh Kumar wrote:
-> Sorry for the delay, I was travelling a bit recently.
+On Mon, Aug 11, 2025 at 02:57:00PM +0530, Suraj Kandpal wrote:
+> Some drivers cannot work with the current design where the connector
+> is embedded within the drm_writeback_connector such as intel and
+> some drivers that can get it working end up adding a lot of checks
+> all around the code to check if it's a writeback conenctor or not.
+> To solve this we move the drm_writeback_connector within the
+> drm_connector and remove the drm_connector base which was in
+> drm_writeback_connector. We do all other required
+> modifications that come with these changes along with addition
+> of new function which returns the drm_connector when
+> drm_writeback_connector is present.
+> All drivers will be expected to allocate the drm_connector.
 > 
-> On 06-08-25, 10:35, Krishna Chaitanya Chundru wrote:
->> On 8/4/2025 4:43 PM, Viresh Kumar wrote:
->>> On 01-08-25, 15:05, Krishna Chaitanya Chundru wrote:
->>>> Currently we are fetching the OPP based on the frequency and setting
->>>> that OPP using dev_pm_opp_set_opp().
->>>>
->>>> As you are suggesting to use dev_pm_opp_set_prop_name() here.
->>>> This what I understood
->>>>
->>>> First set prop name using dev_pm_opp_set_prop_name then
->>>> set opp dev_pm_opp_set_opp()
->>>>
->>>> if you want to change above one we need to first clear using
->>>> dev_pm_opp_put_prop_name() then again call dev_pm_opp_set_prop_name
->>>> & dev_pm_opp_set_opp()
->>>
->>> dev_pm_opp_set_prop_name() should be called only once at boot time and not
->>> again later on. It is there to configure one of the named properties before the
->>> OPP table initializes for a device. Basically it is there to select one of the
->>> available properties for an OPP, like selecting a voltage applicable for an OPP
->>> for a device.
->>
->> Then we can't use this dev_pm_opp_set_prop_name(), there is possibility
->> link width x1, x2, x4 etc can also change at runtime.
+> Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> ---
+>  drivers/gpu/drm/drm_writeback.c | 33 ++++++++++------
+>  include/drm/drm_connector.h     | 60 +++++++++++++++++++++++++++++
+>  include/drm/drm_writeback.h     | 68 ++++-----------------------------
+>  3 files changed, 89 insertions(+), 72 deletions(-)
+
+This patch breaks building of drivers:
+
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c: In function ‘dpu_encoder_phys_wb_prepare_for_kickoff’:
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:487:36: error: ‘struct drm_writeback_connector’ has no member named ‘base’
+  487 |         drm_conn = &wb_enc->wb_conn->base;
+      |                                    ^~
+
+Please perform step-by-step modifications, making sure that on each
+step all the drivers can be built and function as expected.
+
 > 
-> Hmm, looking at the way you have implemented the bw multiplier, you
-> are going to call that every time you need to change the OPP
-> configuration. That doesn't look nice TBH. Such configurations are
-> normally provided via DT or are configured once at boot and not
-> touched after that. What you are basically doing is something like,
-> adding a single OPP in DT and changing the OPP frequency right before
-> setting it at runtime.
-> 
-> FWIW, you are allowed to add multiple OPPs with same frequency value
-> but different bandwidths or levels. I think you should use that and
-> correctly describe the hardware first (which is the step in the right
-> direction). And then you can find the right OPP at runtime and send a
-> request to configure it. That way we can avoid adding hacks in the OPP
-> core.
-Thanks Viresh for the suggestion. We will try this.
-Can you confirm this is what you are expecting.
+> @@ -2305,6 +2360,11 @@ struct drm_connector {
+>  	 * @cec: CEC-related data.
+>  	 */
+>  	struct drm_connector_cec cec;
+> +
+> +	/**
+> +	 * @writeback: Writeback related valriables.
+> +	 */
+> +	struct drm_writeback_connector writeback;
 
-dt change
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2214,13 +2214,23 @@ opp-2500000 {
-                                         opp-hz = /bits/ 64 <2500000>;
-                                         required-opps = 
-<&rpmhpd_opp_low_svs>;
-                                         opp-peak-kBps = <250000 1>;
-+                                       opp-level = <1>;
-                                 };
+I will respond to this in another thread.
 
--                               /* GEN 1 x2 and GEN 2 x1 */
-+                               /* GEN 1 x2 */
-                                 opp-5000000 {
-                                         opp-hz = /bits/ 64 <5000000>;
-                                         required-opps = 
-<&rpmhpd_opp_low_svs>;
-                                         opp-peak-kBps = <500000 1>;
-+                                       opp-level = <1>;
-+                               };
-+
-+                               /* GEN 2 x1 */
-+                               opp-5000000 {
-+                                       opp-hz = /bits/ 64 <5000000>;
-+                                       required-opps = 
-<&rpmhpd_opp_low_svs>;
-+                                       opp-peak-kBps = <500000 1>;
-+                                       opp-level = <2>;
-                                 };
+>  };
+>  
+>  #define obj_to_connector(x) container_of(x, struct drm_connector, base)
 
-                                 /* GEN 2 x2 */
-@@ -2228,6 +2238,7 @@ opp-10000000 {
-                                         opp-hz = /bits/ 64 <10000000>;
-                                         required-opps = 
-<&rpmhpd_opp_low_svs>;
-                                         opp-peak-kBps = <1000000 1>;
-+                                       opp-level = <2>;
-                                 };
-
-                                 /* GEN 3 x1 */
-@@ -2235,13 +2246,23 @@ opp-8000000 {
-                                         opp-hz = /bits/ 64 <8000000>;
-                                         required-opps = <&rpmhpd_opp_nom>;
-                                         opp-peak-kBps = <984500 1>;
-+                                       opp-level = <3>;
-+                               };
-+
-+                               /* GEN 3 x2 */
-+                               opp-16000000 {
-+                                       opp-hz = /bits/ 64 <16000000>;
-+                                       required-opps = <&rpmhpd_opp_nom>;
-+                                       opp-peak-kBps = <1969000 1>;
-+                                       opp-level = <3>;
-                                 };
-
--                               /* GEN 3 x2 and GEN 4 x1 */
-+                               /*GEN 4 x1 */
-                                 opp-16000000 {
-                                         opp-hz = /bits/ 64 <16000000>;
-                                         required-opps = <&rpmhpd_opp_nom>;
-                                         opp-peak-kBps = <1969000 1>;
-+                                       opp-level = <4>;
-                                 };
-
-                                 /* GEN 4 x2 */
-@@ -2249,6 +2270,7 @@ opp-32000000 {
-                                         opp-hz = /bits/ 64 <32000000>;
-                                         required-opps = <&rpmhpd_opp_nom>;
-                                         opp-peak-kBps = <3938000 1>;
-+                                       opp-level = <4>;
-                                 };
-                         };
-
-
-And in the driver I need to have a change in OPP framework which
-returns OPP based on both frequency and level something like
-dev_pm_opp_find_level_freq_exact(struct device *dev,
-unsigned int level, unsigned int freq);
-
-Please correct me if this is not suggested approach.
-
-- Krishna Chaitanya.
-> 
+-- 
+With best wishes
+Dmitry
 
