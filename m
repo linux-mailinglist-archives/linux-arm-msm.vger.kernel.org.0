@@ -1,100 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-68845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4698B23B4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:52:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B29BCB23B62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:58:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C8DA585FCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:50:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 135012A7BC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:56:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48CA12E3709;
-	Tue, 12 Aug 2025 21:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C34A52DECB7;
+	Tue, 12 Aug 2025 21:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="L5Es3lyl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPlAnokc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FC82E0915;
-	Tue, 12 Aug 2025 21:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DC72DA75B;
+	Tue, 12 Aug 2025 21:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755035318; cv=none; b=anoQ5zqFeAfvrBl3SJt86n4MCaYK1MoVJytXjfs4VfGr0ZDTMDmbUqMFPvhSx4kF8UUGhNkMJ8JgcdMa5VQzYdTl/Eingxz1SUP1XFAl2fDcdft/2LbFET7WuDBtQCvBtVXAYl+//efDwn6if/7KQPHp+qtNOjykALLxJhiS+es=
+	t=1755035797; cv=none; b=Tj73BPWGxJvRJ/8iCa7F3CxB7alIKJp+wpvtb5WHJbKJPIYR8IJs5ZJVZ2lvKu28EKMWHnHDhYUYtY/bYXcMIyhchFZ/chKY8IHLd37X+ot1iEwulsj5gakvO5jSGV1WUyywm90HM8VRo1XR6sPwSwvOdzZrYajh7haJ9iUoNTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755035318; c=relaxed/simple;
-	bh=uXD9YFkjdH32fOGUkk6wPAsbMepaqe2zOMOXLZb1/ZM=;
+	s=arc-20240116; t=1755035797; c=relaxed/simple;
+	bh=Q3c4MC5rDf2gMQI33FsItoO2jYwr1g+W2GEJzxzNhUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKQwyn//dkyhIAFx6qqS3MeYGwcy0e6Y7RVp/t536vCuo5jms0m7ZsbPq7MdRT/uf1ZPrWEz+ZbX9YaOJvamP9KByCCviILvpaTHRNJecp+Bt7o1jdSt3e7r+YKbZeXPsY6/SwkP0TLC/cJQJXDkyrDunwlHScQXAP074SrGYyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=L5Es3lyl; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 8E1DC15BF;
-	Tue, 12 Aug 2025 23:47:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1755035262;
-	bh=uXD9YFkjdH32fOGUkk6wPAsbMepaqe2zOMOXLZb1/ZM=;
+	 MIME-Version:Content-Type; b=a6UBy1A7amA38vySXCUyyfnlhSFX55WKUVxa9U4PTQG3yoUvTNdUkA7Vo30lo/V3i6Z1jYAFnV1n5TW4sFaQwUcymCB2bmZy7FmlkhlTnb1zNDa1v428q9e7IX+B9W6lrIyuWSRXxd0VWPj4btf4RGkzSHvZfQqpvXo5REPCbY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPlAnokc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0428CC4CEF0;
+	Tue, 12 Aug 2025 21:56:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755035795;
+	bh=Q3c4MC5rDf2gMQI33FsItoO2jYwr1g+W2GEJzxzNhUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5Es3lylPE7h5CjzvvyhbLxoYZZrxMxoW9p7iGf3TM1YMXcNUyEwidlcnzOfVn0Ye
-	 rzp4UcmpJ6KuNqnOMUh2bphQjyrMCU4spUXs/kXXxzGEJ36c2C5cNwKBjD4YP1oWbO
-	 XdxQnUfD2D0yWgpDuvpOS+StAsJb9DpQPtzdl2dg=
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: linux-media@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	b=hPlAnokccbRTu189OBuTxCb7KrbgpZWBudkr2/0OEUboXVU1paW+SXQzGwpDYJXiv
+	 yspjbTO6oP8stTmQx9F0JBc643DoBGCoCPETNAmll5k1FQzqFBMMYYQ4o6QsZngpDp
+	 g6LX9BG1Z4Ob+78VFq78zdZCLYa4rJk+CXj9x5yFzWUWfhlFqm4ZcK1lIij0GtXZxs
+	 CoJ9syEFrE5UCbgs2VbYUpsz81a/D/low2DE3RXjPvCNPdg8FMqva4pLSJrfzejLAC
+	 BEcUgd277BzX6bbL3oIrvnB1Yi2yE2oD+/HFOIlrC6jgDsvfWuQW0bj12HGUf0iCB5
+	 tqxzh9uLECEVg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: cros-qcom-dts-watchers@chromium.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH v2 70/72] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Replace clock-frequency in camera sensor node
-Date: Wed, 13 Aug 2025 00:46:18 +0300
-Message-ID: <20250812214620.30425-71-laurent.pinchart@ideasonboard.com>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250812214620.30425-1-laurent.pinchart@ideasonboard.com>
-References: <20250812214620.30425-1-laurent.pinchart@ideasonboard.com>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Pushpendra Singh <quic_pussin@quicinc.com>
+Cc: kernel@quicinc.com,
+	kernel@oss.qualcomm.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add support for two additional DDR frequencies
+Date: Tue, 12 Aug 2025 16:56:18 -0500
+Message-ID: <175503322845.231048.8592460381842700019.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250702000120.2902158-1-quic_pussin@quicinc.com>
+References: <20250702000120.2902158-1-quic_pussin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-The clock-frequency for camera sensors has been deprecated in favour of
-the assigned-clocks and assigned-clock-rates properties. Replace it in
-the device tree.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
-This patch depends on "media: i2c: ov8856: Use V4L2 legacy sensor clock
-helper", which we tentatively plan to merge for v6.18. It should
-therefore be postponed to v6.19.
----
- .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso      | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Wed, 02 Jul 2025 05:31:20 +0530, Pushpendra Singh wrote:
+> The SC7280 SoC now supports two additional frequencies. This patch
+> add those frequencies to the BWMON OPP table and updates the frequency
+> mapping table accordingly.
+> 
+> These changes do not impact existing platforms, as the updated mapping
+> only affects the highest OPP. On any given platform, this will continue
+> to vote for the maximum available OPP.
+> 
+> [...]
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index 51f1a4883ab8..dbe1911d8e47 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -44,7 +44,8 @@ camera@10 {
- 
- 		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
- 		clock-names = "xvclk";
--		clock-frequency = <19200000>;
-+		assigned-clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
-+		assigned-clock-rates = <19200000>;
- 
- 		/*
- 		 * The &vreg_s4a_1p8 trace is powered on as a,
+Applied, thanks!
+
+[1/1] arm64: dts: qcom: sc7280: Add support for two additional DDR frequencies
+      commit: 393d69df0fda903dc41e071fef76baf485510672
+
+Best regards,
 -- 
-Regards,
-
-Laurent Pinchart
-
+Bjorn Andersson <andersson@kernel.org>
 
