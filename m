@@ -1,88 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-68720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C1E0B22334
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:32:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 959BEB22359
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:38:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 282D77A9E05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:31:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84E833A92C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:36:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89CEB2E8DFB;
-	Tue, 12 Aug 2025 09:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E25F2E7197;
+	Tue, 12 Aug 2025 09:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VRwOt31B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AARhKlah"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4EA2E88B0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAB42E4256
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754991154; cv=none; b=I++L0dudQQE4UpxTH/0aR4a4CnAXqcAe58Ar2q8HVSeOszZmcD8ex+6nzmT8WpaWnsEMxzKR7HUCqB5rCI18vZ7ahxifJWtqg13YgSeq17P5eNZy7yjBX2kyIhLA/JB4zMHleqctbY8hWfOz10SSbCK4D91NsxYQdFv0+nvvn2Q=
+	t=1754991418; cv=none; b=ZjKeXB9hCINJLFJWm8xB+00zwmWFggOgBOFGgIZrlzY1W21MpOyf5UO9eEqJP6D9FQmPLfzohLt50hffTx4iwuiq1RNuy+rgUeZ8+Gj4TTQuEGdbsp4JMUfmMcLyd5Uwe9Hq8Rpn5OixHwmrBviRPgzG7NEKroYdYjWA2cbWlmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754991154; c=relaxed/simple;
-	bh=KBltDy1VlOm6vly3kEqikeo37kbO/rgKlf8mjUJGwKc=;
+	s=arc-20240116; t=1754991418; c=relaxed/simple;
+	bh=xy7fu3bqLVGUxcOG89JTlBYxbGin5ym/A9LZ46qGwJY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FoOmmMt2g0KkDd3gp4BfIWjhD60MmdTXiidj97PecZW1B7tu4v7PHj8Qql7lOqEt3OvzB5XLTIF8zxZAFnethbAR/sAfmi/p9nP184khKB6LzwCq/rclNwpSvRpjTU4Mwj2csFDcLlOEV3QHzN1/C1pUx5yvXVeCocDDEDUVS88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VRwOt31B; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C5nLFH023606
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:32:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7n24b5y09554bTu/Veo3VDRFW4pPHKlo+XBhAE2yofU=; b=VRwOt31B+kdwV4Lc
-	HbCkN4bGsdbKDoq6E9J/tAgN+Siin1Fd5VRPjlzYzVehmkdAJsl4h6iSzOSXrgo9
-	fVmKvsD1M38R6Cf/xtch0CCyZiiUg2QfsrfigToFbGgw99XNnMb2lT1A5/5ZiSF1
-	bkzG7EqGv0nNhebOYPUwO1otY1USFEl06+cs+uTGRl0vvmjaGjPvkO+oSivykrk4
-	GTaJgm1F7gaVZBYrDbOgrPrP7SzmpiM9tSizkHUmxlQiR5mJrmmaeF6YMPeYe5w2
-	3TYEikwPLlve3n2zyT8jNU3143grbvJyoQau1KqR3zY6vB84F442EBSE4RSfu6ia
-	ZvSSGw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fem4bks0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:32:31 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-240012b74dfso39047175ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 02:32:31 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=XNra4DDE3cRCdr/YVN6eo7YbPWnrDDRhHdWvMPSEufU3VzvKhMtRXr6TM4YHxCRABOY3NQ31SB6n66fSG7Euq/EhqP+TzFZKO6fMsiqZvHu5JOReC/fUfqkqyuc2+RnRfcKeYR7IJYYSCDxDEPOpebdz6zcBd5/rbFgFtNwYiYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AARhKlah; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6155fbff3caso865973a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 02:36:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1754991415; x=1755596215; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADwSJg/JZOng+mwbjsbxIO67zpngBFcvDlGmCvsbQyQ=;
+        b=AARhKlahzRKOKfy8S7Xrm7cNEz3PNIGlMwfaiYtivkx79Q8gxTUVOLDV8VnnMvTUW5
+         3fH/C9Br0CRCeoLDvfvL4tv0WUxhVaJ76WRSjTMRUsmoMn+LFwryR3t1nbD9pAJ+Tmb6
+         fEBi9WXAsuqev/4PPjpPmv6S8EINKJsmZeO6Gx+tGYlDCEbbtROGUyHK3Q6AA6OhfLBy
+         tZB2Ri/iAhqFIn5EdWigz/0CrcS6rho6D7A9LePqbek49eY0DqX+1Ctca/bxmpZZtj0w
+         vbTpbPoxIOqPgVJEM1bGKo/opDlIOCXfChOWcUjuSPN4UhYl0VEsazXSU9M1N5sh42r/
+         Hy7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754991150; x=1755595950;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7n24b5y09554bTu/Veo3VDRFW4pPHKlo+XBhAE2yofU=;
-        b=SjhPbizrzw5ultIVQGvfosPZWTTMkNDmuy4lZd/qRgdSJwxYvL1moaUsSpdHqqVolr
-         5dcSoFLll3xC4bvbbhhkQfHqa35tAvBcbJsG109nH8ZRwG7kKzxmlFpi5KqFD4p7zN1G
-         iXeMUIEPE7qofMYYHr3+XndNiBj1fVKAE9Diuhrd01RAJJcZD+7xHE+Mowc9j42Lt5+4
-         R2a83b/lZxS4yDU3ZDrKy/4xs1Kgu/thiDtWc5GSkz3ZkH6gySKjtr1NB/4jYv5YsgAy
-         XYkIp1s5Vj+2es3r/PMlaYO/E9htUoyaVxRESGJXR21VSl0ySmJAkjqE6F8H598mLf+B
-         fOrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWIRyMsOnmLs7vOxiApNyvAs+6BUz3t5PcwWDTvWitN1h3+1+/DVVhsMMBx7Wy3sJZFrmM4/3Fh2QX2qHns@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzR9pXgDQk0OhM41nu6G3Lq353fGPF2gj7qVmQPWEJIIaEkBf/
-	xNl+Ujw6G60AM4n9yLM+HlxM6Gu8TKboP4AO+MMZvgRCrDyccHe/XsU7axoYcZTkkZtapLzT8Af
-	Z7hHC7TnFBkDxRI2pbsVO632koZHsOBdsAg9BS+Mudq3flPLhszgeQoQDsuwaqAQk1e22
-X-Gm-Gg: ASbGncs6u3VHNoISkyuoXE9CG16tOTsloQaB3I6I95SNk2DQwYRSRLbeJmvpSk4ljAx
-	GVwmW5oKhyAEdwjVAkfECFEWYS3xXU35d0RR4AoPj1OHwpwBx5Kcq/DuSQC9AOB9AbEzI6ZVZIp
-	b8PtgXoiWh3/H1DpB06s3f5fJPfqn9KXMwYAS6oudHs3mTbbjhskV1KqsT47FZwBqyJ3QD3smZZ
-	IQtvnVRmzAddubnyo2mzn4jni5JFS4MBHs7l/Cco3PuDOYG9Gl0b5cq0ZSpJDxc0AxzJAY4y6La
-	0gEC9ovszn6gyX2Hm6162CepofpHb9y29S7WmU7FhQL5njpW845dB7eZWDSPyM2ZR/GyFcexEg=
-	=
-X-Received: by 2002:a17:902:ef07:b0:243:485:269d with SMTP id d9443c01a7336-24304852b18mr13228455ad.31.1754991150204;
-        Tue, 12 Aug 2025 02:32:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9kdodTnnV+PESNDgF1+JEyc7nLGF4AcUeaMfke5Rq0BxrIP5ikbInr31f30kDeqp4lDDApQ==
-X-Received: by 2002:a17:902:ef07:b0:243:485:269d with SMTP id d9443c01a7336-24304852b18mr13227695ad.31.1754991149647;
-        Tue, 12 Aug 2025 02:32:29 -0700 (PDT)
-Received: from [10.218.42.132] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e8aa9055sm296829815ad.150.2025.08.12.02.32.23
+        d=1e100.net; s=20230601; t=1754991415; x=1755596215;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ADwSJg/JZOng+mwbjsbxIO67zpngBFcvDlGmCvsbQyQ=;
+        b=q6TKj5kk6iIbI7Jdy97bsku8fScQDtqVb2ccRLJix5bdgz+9ZRg2xkRxxKXCAO1swT
+         Fink1El6SPRnSClpRvSh66dwvSYYimro6oMOM1ikow1Cih1BsgQ6eXYeDf2uv4/HZUIE
+         bZk8BvW5lUIsLfd/iUflgiSObmjudYtVBoS6SozVxFDj8ogdWH3Qzq5f//dgu/9162oR
+         erLTOdiX3qzx2eWGxeLdUqiZ0xQQHc12i9L7mqZqkakP7mGByXOH7leDAqamxQYeVoOf
+         rTtir64+hTNVPxs+vmbzs3akJY0g0PiZHNlXF9XmF0JvOkBtBeRQ/4i3rvOdOiuDdGWU
+         oSeg==
+X-Forwarded-Encrypted: i=1; AJvYcCUVE8nkXjx61Q0bOndPCpP14W3pu/jzFGO6XBD2qBe2DcODZtldIgF5FkBsq+DSfRHMSU6CFWit6L+2gAvs@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0nF3Kg9y77+yCpE1oKUdn1f0jCuhmPZsUNCToH4l4gidBkbsm
+	ujnYEd80pAnJrc4b+Z0TK3ZCk0aWROuyk5ZXOBT+P29Vzt63YP5sRGQEMlfeOkbHm3U=
+X-Gm-Gg: ASbGnctDcOgYa/UGNu97BoWE75a/hf7gQf7KSTRXcQxtiwRzyCh95R78tZLZDoYcfk4
+	QqE+xJr2lncqwxSV49bpGSe6K3U8TZzjvcG/oNeYg5ik4rul+ZnRCGcAtOcbXkb+/l8+MKl+fC2
+	zM1NyvBO4vaPylHnYzbGPFy0qMSMmPVB3140etGrjs1ztqRO0KW4Nye7uszt/ZCJ4EcixrBgXpd
+	I7ymQEjw7SFNxTMtFG9wA6tG2qMDoQdHz8+gTw5nD2fZD+B7Nbpt8w4lFDhB+anBllzKRMQEs+A
+	4Ws/Bm94Z1pkQNvA9TXOVsk/WznkhrsyzgfwkijS7ZEBY3zjUiqp9HFnEn3vQLTbPxwE2ZQLmoW
+	3yCatpW36W+08lGQReVq2TWSXCoUUZASkH5BjMH8Hx5o=
+X-Google-Smtp-Source: AGHT+IH68+DTudLvhjWZFe9I337nrE98NoV0wQLFkeyCzhFX8lSKM7+7m3H9OfPa7R3X5pnbmsMnZA==
+X-Received: by 2002:a05:6402:34c8:b0:615:894a:7c27 with SMTP id 4fb4d7f45d1cf-618599ffb9bmr409681a12.5.1754991414905;
+        Tue, 12 Aug 2025 02:36:54 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8f2a448sm19945005a12.20.2025.08.12.02.36.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 02:32:29 -0700 (PDT)
-Message-ID: <5dbd782a-1d52-4614-9e7e-3b7d9dfd099f@oss.qualcomm.com>
-Date: Tue, 12 Aug 2025 15:02:18 +0530
+        Tue, 12 Aug 2025 02:36:54 -0700 (PDT)
+Message-ID: <7322c2a0-82a4-464a-8aa6-75d04dece2f4@linaro.org>
+Date: Tue, 12 Aug 2025 11:36:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,160 +83,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/11] PCI/bwctrl: Add support to scale bandwidth
- before & after link re-training
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Helgaas <helgaas@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi
- <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-        qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-        quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-References: <20250711213602.GA2307197@bhelgaas>
- <55fc3ae6-ba04-4739-9b89-0356c3e0930c@oss.qualcomm.com>
- <d4078b6c-1921-4195-9022-755845cdb432@oss.qualcomm.com>
- <68a78904-e2c7-4d4d-853d-d9cd6413760e@oss.qualcomm.com>
- <3939605c-7335-4401-ba32-b88ee900f1d5@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/3] media: iris: Add support for SM8750 (VPU v3.5)
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org>
+ <c009fe77-8590-c467-a0a4-76bd6ec7cba4@quicinc.com>
+ <363cfc88-9664-483f-9503-9eca7c8e617c@kernel.org>
+ <76731f2a-d120-ed3d-6a1c-e339b0a6ad10@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <3939605c-7335-4401-ba32-b88ee900f1d5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <76731f2a-d120-ed3d-6a1c-e339b0a6ad10@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: kpRofZHAlMg71FjYNcvqgfC2tvv1G21-
-X-Proofpoint-ORIG-GUID: kpRofZHAlMg71FjYNcvqgfC2tvv1G21-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2OCBTYWx0ZWRfX44axvjqeWl8l
- EOIgfzQQTLsGSqvxbZbmBEXcT+wHp7U5BaG1eg/NpHjxFpnKFwg7yz1NyAHPAO3UNiOvBrFaBH1
- t8nf99qKUAqSSi8e2ke0cGNgAE2vQk23MBKd9qlzrZS7uAe/K/ueZXt5WtWH/pvCuDbkcMif/fR
- OiB/Ak+bYMPQTU4Wh0E4Qd2ywot52aD97WDJi4EbgKvmaOxnz8NKVRqzREGVHLXfrY1Tib8gsGC
- X2UioWClm8UW9bcKWMILTsewyww+257RNAzsLwZ859H7RfcPvIWUJnYZ/X97MRjNwBX4mn4otOg
- iicK3tiLylWlKXDT3hU88K0LA+4jxoCCuJY9JRC3jQExdqYv2Xf6nnZWZ0F0UfU2KixBFEr6QGy
- Xz0NaVmX
-X-Authority-Analysis: v=2.4 cv=YMafyQGx c=1 sm=1 tr=0 ts=689b0a2f cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=Jnfc8Lo_MkJUCzdN-ZEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 priorityscore=1501 spamscore=0 suspectscore=0
- adultscore=0 impostorscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110068
 
-
-
-On 8/12/2025 2:57 PM, Konrad Dybcio wrote:
-> On 8/12/25 6:05 AM, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 7/22/2025 4:33 PM, Krishna Chaitanya Chundru wrote:
->>>
->>>
->>> On 7/12/2025 4:36 AM, Krishna Chaitanya Chundru wrote:
->>>>
->>>>
->>>> On 7/12/2025 3:06 AM, Bjorn Helgaas wrote:
->>>>> On Mon, Jun 09, 2025 at 04:21:23PM +0530, Krishna Chaitanya Chundru wrote:
->>>>>> If the driver wants to move to higher data rate/speed than the current data
->>>>>> rate then the controller driver may need to change certain votes so that
->>>>>> link may come up at requested data rate/speed like QCOM PCIe controllers
->>>>>> need to change their RPMh (Resource Power Manager-hardened) state. Once
->>>>>> link retraining is done controller drivers needs to adjust their votes
->>>>>> based on the final data rate.
->>>>>>
->>>>>> Some controllers also may need to update their bandwidth voting like
->>>>>> ICC BW votings etc.
->>>>>>
->>>>>> So, add pre_link_speed_change() & post_link_speed_change() op to call
->>>>>> before & after the link re-train. There is no explicit locking mechanisms
->>>>>> as these are called by a single client Endpoint driver.
->>>>>>
->>>>>> In case of PCIe switch, if there is a request to change target speed for a
->>>>>> downstream port then no need to call these function ops as these are
->>>>>> outside the scope of the controller drivers.
->>>>>
->>>>>> +++ b/include/linux/pci.h
->>>>>> @@ -599,6 +599,24 @@ struct pci_host_bridge {
->>>>>>        void (*release_fn)(struct pci_host_bridge *);
->>>>>>        int (*enable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
->>>>>>        void (*disable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
->>>>>> +    /*
->>>>>> +     * Callback to the host bridge drivers to update ICC BW votes, clock
->>>>>> +     * frequencies etc.. for the link re-train to come up in targeted speed.
->>>>>> +     * These are intended to be called by devices directly attached to the
->>>>>> +     * Root Port. These are called by a single client Endpoint driver, so
->>>>>> +     * there is no need for explicit locking mechanisms.
->>>>>> +     */
->>>>>> +    int (*pre_link_speed_change)(struct pci_host_bridge *bridge,
->>>>>> +                     struct pci_dev *dev, int speed);
->>>>>> +    /*
->>>>>> +     * Callback to the host bridge drivers to adjust ICC BW votes, clock
->>>>>> +     * frequencies etc.. to the updated speed after link re-train. These
->>>>>> +     * are intended to be called by devices directly attached to the
->>>>>> +     * Root Port. These are called by a single client Endpoint driver,
->>>>>> +     * so there is no need for explicit locking mechanisms.
->>>>>
->>>>> No need to repeat the entire comment.  s/.././
->>>>>
->>>>> These pointers feel awfully specific for being in struct
->>>>> pci_host_bridge, since we only need them for a questionable QCOM
->>>>> controller.  I think this needs to be pushed down into qcom somehow as
->>>>> some kind of quirk.
->>>>>
->>>> Currently these are needed by QCOM controllers, but it may also needed
->>>> by other controllers may also need these for updating ICC votes, any
->>>> system level votes, clock frequencies etc.
->>>> QCOM controllers is also doing one extra step in these functions to
->>>> disable and enable ASPM only as it cannot link speed change support
->>>> with ASPM enabled.
->>>>
->>> Bjorn, can you check this.
->>>
->>> For QCOM devices we need to update the RPMh vote i.e a power source
->>> votes for the link to come up in required speed. and also we need
->>> to update interconnect votes also. This will be applicable for
->>> other vendors also.
->>>
->>> If this is not correct place I can add them in the pci_ops.
->> Bjorn,
->>
->> Can you please comment on this.
->>
->> Is this fine to move these to the pci_ops of the bridge.
->> Again these are not specific to QCOM, any controller driver which
->> needs to change their clock rates, ICC bw votes etc needs to have
->> these.
+On 12/08/2025 11:28, Dikshita Agarwal wrote:
+> As a maintainer, I believe it is my responsibility to ensure that anyone
+> enabling support for any SoC with this driver has tested its basic
+> functionality. Please note, my intention is not to block anyone’s patches.
 > 
-> Do you even need to set the OPP explicitly? The global irq handler
-> already does so on linkup, and you seem to toggle the link state in
-> the newly introduced helpers
+> To clarify, I am not asking you to provide any test reports. If you have
+> already tested this series with v4l2-ctl or GST, please just mention it in
+> your cover letter.
 > 
-> Now not all DTs currently have a global interrupt, but that's a mass
-> fixup to be done anyway..
-> 
-Konrad,
+> Thanks,
+> Dikshita
+>>
+>> so asking others of this is just unfair and unjustified obstacle. If you
+>> have technical comments, then share. If you are just making fake
+>> obstacles to stop some patchset then refrain from commenting.
+>>
+>> Unless you want statement like:
+>>
+>>
+>> All patches have been tested with v4l2-compliance, v4l2-ctl and
+>> Gstreamer on SM8750.
+>>
+>> Then I can give you such statement, just like you did for your patchset:
+>>
+>> All patches have been tested with v4l2-compliance, v4l2-ctl and
+>> Gstreamer on SM8750.
 
-global IRQ in the qcom controllers will only come in only on initial
-linkup, and later on link speed change through bwctrl driver we will
-not get global IRQ.
+I gave you the answer here.
 
-For QCOM controllers we need to change the RPMH vote for example if
-we want to update the PCIe data rate from 5 GT/s to 8 GT/s we might
-need to update the RPMh vote from low_svs to NOM corner before we
-initiate link up. for that reason we are introducing pre & post
-link_speed_change function pointer.
-
-- Krishna Chaitanya.
-> Konrad
+Best regards,
+Krzysztof
 
