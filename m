@@ -1,136 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-68751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D604B2252C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 13:03:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE964B224B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:40:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF31B3A686C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:02:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C104C562368
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:40:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAF2B2ECD33;
-	Tue, 12 Aug 2025 11:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2790C2EBB9E;
+	Tue, 12 Aug 2025 10:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="ZN2aCNDZ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="S/w4E4vh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C66A23BCE7;
-	Tue, 12 Aug 2025 11:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41942EBBAD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:39:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754996528; cv=none; b=cKrwus4kGhf9wpvJ2xJCJX3LNkUNGp+9o5jthUlu0j5Q8bW0zsBWXtmALNEOGf/HCA1EcXNrx8VfmW5gT0powb6p5HFG1kUeWHbLHnisyhE7UPjAWNCmofk9r6b+1qjIChoV5mCc63hYmDnTGdDK8e7r+UEEQ5B1ruAAVwaEPwQ=
+	t=1754995195; cv=none; b=B6AhQL4Y522y7HQY7FKMl3kRveY23gKhf6gG5Qnm/ludoSric1CW61odratgFvDYD5qmV61bOIg8ONCFv7TcSwnsADR5j1HdiGl0NmABHXfmnHqEggAF6MSygeaVOI8e6BnW2giA06DRnhVzlNRCmHryHx7CHXSqhfJKCQP9XdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754996528; c=relaxed/simple;
-	bh=3OwEx3ATq9hTzfxnY3gg+hw0Eg7P8zJzOgQ50ls1n/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aWlFv0zNXvp4wAtf+yuQSXsv8fwgwG4MSK+PtnORHTOrFMYWVZIVJUmSyLz5YjJbwT6VF4w+hqur/EQ62OzzKPpq5wjUPJVYtwNDaNbuyJm+RORmZV3nT0jPgG78Jv9yCflWTIeNRQQOca9ZNGWMlgUAmUSSg5TIg4Gzvab6Bos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=ZN2aCNDZ; arc=none smtp.client-ip=212.227.126.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1754996506; x=1755601306;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=3OwEx3ATq9hTzfxnY3gg+hw0Eg7P8zJzOgQ50ls1n/Q=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ZN2aCNDZ7+fuca61kc8CwXfxWDreYBIubAXXY/0vhJZejfjvV3QrUYr+23fiR12H
-	 uU9WPoA2nIee4iGyVEbsAW2YoGFcX4Rk8WAwWgeA38QJyWBqfOKX3D5/TRn/W7vvz
-	 Hpxwh3ujch4RPenca6d+PR/hkhkC2Tv1OLRET1XM6B/Xv2tjAtNRe/rvHnHuDmn07
-	 GtmL2h9QKnANIlqNQN3bV139iggemmRFK6l3h2r8NiLDvT8Gl1gdHsBS0ul39HuUu
-	 TWh0L4YqaH5nI7EeviiYQ6bNG50HW4yE1rdJ0rIpX8+d8FZVdZ57vfWLd8ItswoPA
-	 n8qIVOgOcfkA7IybhA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.107] ([80.128.171.52]) by mrelayeu.kundenserver.de
- (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1M6lxe-1ufi5X04P0-0063Tk; Tue, 12 Aug 2025 12:35:45 +0200
-Message-ID: <8672fcd0-cae3-428e-b1e6-cfbdea1ebbb7@oldschoolsolutions.biz>
-Date: Tue, 12 Aug 2025 12:35:43 +0200
+	s=arc-20240116; t=1754995195; c=relaxed/simple;
+	bh=aKQ469kMuJqyRpyBBj4VAGrI2TpqLDn80ts4I+YLbE4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PIns8tahlrgN42+RFtkXp/9TGROBuWxENkNa0gkpATe6SOgHeWulSnPliSRDnfQ/AKiz60xcB/E9PQJzAE86D5jFyYNL10VQWxHayhsJKyZC+koXNSHCmINkJQ2dfhSlNqtC4RxONP3PZyJVOnEL9EFsq+RwNy/rbFsU9TA/Cdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=S/w4E4vh; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1754995191;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZNmGluZMVEODqqLey7tscfNEcE8jZgnd0oIotEJMQE8=;
+	b=S/w4E4vhnIv9g5/m9EpOWKn80bn4jOLxEYmhjX2Zk5jVtdrmkheWJ3H5FTJz+lA4GV7cpg
+	0HdTqXuvrzYOKAK1KSgY9ClDl19f1K7v1Dh2PBKtF4pjpzlLSn3qdkp0A7yJsCCYKnMm92
+	1h0YWugJgjLnJlwBhuZZdczNBgjsnjM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-602-NOKXI6fnOb-Br0bac7NNrg-1; Tue, 12 Aug 2025 06:39:50 -0400
+X-MC-Unique: NOKXI6fnOb-Br0bac7NNrg-1
+X-Mimecast-MFC-AGG-ID: NOKXI6fnOb-Br0bac7NNrg_1754995190
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e7fc5f1e45so1103627585a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 03:39:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754995190; x=1755599990;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZNmGluZMVEODqqLey7tscfNEcE8jZgnd0oIotEJMQE8=;
+        b=ujhPOrmtkFFb9D0cmzP8CMDCN7/yix5q5tEXcfga8J1X13A87KrSqdA2UDD+a8wZWk
+         aoxR86g8eeKmOLrSIBtNDRxWIdXfhlBHC3xqt38U+WoAk2igXlt8QxyDm7Tqpx2E/plf
+         6pJYgRnx3TXAOC+ATw7KsliMy2TQhM445HJOkWm8+uWb6UE6Znhi/xppNK7z+k4qiu0k
+         iEAs1h7sPeXBOwdNJiDo8oAvynRvEWIGpHfouEf6XNpCJHP3ZT3tt98fgWdF8YR+8GWx
+         dzYEosAf/f9IXYNQPxBVylKOYQoW4QdT6dTqRrhDm4+GyMckgRyytc9oKcts487cOM5k
+         YxIw==
+X-Forwarded-Encrypted: i=1; AJvYcCXkgaQtx69QEmqnsmfPEC/6OQNjk4bv8n3HEywZipyh4aX4hxUNutbc8/jNawviHtUGgUaSc4zdcRmPzQUn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7JA6Q2anxeIRb/dCo4qsWDdG2v/FIkHKX/6aXbKbqEjAZG5TB
+	Lf7F6j+ywLjUz/fvv5kVxeUIpDn2XlleOPcgLy63Q3mvwYOUr/9scr3peQIoXxqA0ywDfwYTy7v
+	ZU3Hz7sZJsjuechaYM2sWX4ApzlmTmTadlKNGedsugkLAVXC4UtdHdZrrvR2Zz4x1T6A=
+X-Gm-Gg: ASbGnctKoUM+1aOwUqJnMYo5H0HeFMvo3VZ1r2OlXauglZWMD7vmxF6Trj6DvGNV+RP
+	0mEeP+hr7DeCWihUOEst3OrIy+h9chxJTA9Rlz3unhfRtxREGIfJ1WKaKxaYVCnliYkjaKscW5I
+	yP89zn3nifpfp4Gw/eQrfeb3czchAOXPkLRF4mudG26hK26uHb4lbXRAeRGrxFxsIOelYjGTEdp
+	jlkAlr5x3ZrPXXOEwVYne6Nb8lh1cfzWXa4X1jGDjr9mOguwDwwCKhjT1X9CrMIoVNs7ndgMQLt
+	r7PYHuh/l8rxDCuzVrp1g/79oEg3LSqPtststD9DD0Dn6LkCz/FZPVxPleJbxDg=
+X-Received: by 2002:a05:620a:126c:b0:7e8:15ce:bf9f with SMTP id af79cd13be357-7e8588b064emr355640085a.33.1754995189794;
+        Tue, 12 Aug 2025 03:39:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnBK/VwO9xaDEZqPIr5Ki0EDBjQlgku4qoR/ofUy7muXwNiOHVcU/4sdcTQibJSWhG5zm1ew==
+X-Received: by 2002:a05:620a:126c:b0:7e8:15ce:bf9f with SMTP id af79cd13be357-7e8588b064emr355631785a.33.1754995188996;
+        Tue, 12 Aug 2025 03:39:48 -0700 (PDT)
+Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e67f73101asm1727614485a.68.2025.08.12.03.39.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 03:39:47 -0700 (PDT)
+Date: Tue, 12 Aug 2025 06:39:41 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Romain Perier <romain.perier@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Alex Helms <alexander.helms.jy@renesas.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
+	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
+ round_rate() to determine_rate()
+Message-ID: <aJsZ7bs0OMXcrStU@x1>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 3/3] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
- device tree
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20250810-tb16-dt-v10-0-0bfed6d75c69@oldschoolsolutions.biz>
- <20250810-tb16-dt-v10-3-0bfed6d75c69@oldschoolsolutions.biz>
- <388aed37-03c1-4a5f-a425-5ed8c4f9cb34@oss.qualcomm.com>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <388aed37-03c1-4a5f-a425-5ed8c4f9cb34@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:TKFUv73J8yNj5Mz4hRnRFr6FPpJQYkvdiCBpYbKd9Prxuz1qIWS
- 9NJm9gFQ9CTjMut18m4Bmfw2YOpQo7doTleF6kP9b4uDz5UyNBJ7oPZ9SDx5a8b1XXrk8VG
- RGgv9Pq2vHG5+UCWRBnQ0gigRX45I49xvUwyO4LwfNsusmLjJve7uOpxnYSR98abXJXatAu
- QU/64lyrPzFNxzoHD1QLw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BO9bf+wCaaE=;21li4PT0UtvQmLP3+6YDaP5Sc/T
- 5T+MwSOnH4GK9g+0tLn/MzAK/LoPaGqIm1eYDtMeun3n1fVSxXatmK8M9RACEB1FfhbkFP8ze
- w/7vGJ7TS8CUtUtwVpLCxeKEfFIKbk0yEht+CYi+2c/DEjoLRfSXtHNVflfEa7ypJqsrvKmOq
- WHs+VwR+sSDac3wPa/WKCXZU9a+3LNeyipDpCALGldTvNoOOnz5F6uipsz4O12IuRANweXJfl
- TGJ85fExqvxprVOjZS9yS76yjHhjrL6uM7IEOLIMWSqz3LSiadLU3gGxydJknPYO5ez145lUC
- WYYeQ/1YfoAsLYMhyIdhuodmILCBM1zIFoGAmlwr8R+khUz89qGUwly5x7YYnncdCqBqL8Qt0
- kuo4Cq/dXL5O5497Hkzn6K+73/70sTKobAle1fIYUEPvnqg8hpQKP3bslYarM2KUWZUT/R6md
- d+4Eg2yCBmr/DsWgcHyq2hULmYpBusKXmMKU377hg4YTwXrZOmjOMoqcGb4pwOXzkNNjMC6Rs
- PPBJKT6uMh6ZH5nq3lMctOG7Fsp/0BAKu2VeS7m1IhkGtxgnzrJ1ePTQomdeGLva6/P39URmk
- n9cWJKvkp4UyjO7Ytb7lCXwS8FvA1LnUnfvXR38vLGI/JJSMsmx2mJMxBPa3XV39kb94sa7+0
- BvrGOA5icihVHQeUITYWhACAAvnYmO93WdR4cR7pCKuRKPV7xqb16dMGIqmxkrHmW0ESJHBB8
- DUTTmxpPV2uIu9sM+BSED5HL6j6BNRi74a7/FQg0gjklOir0LOjfo9iqitpEfiZ/sJc0dEaCM
- DXpcuPJXPH+gMcfFbENJa6741Vl/lDtFHAJj2HhHiVpF2UZDKHXNzQNB/f45Cdk7/5jpyVCYK
- TnYJsynQNOS34oXIA5nIsrCWIhUATnMxQfodT+1Q9b6SGW6jdKFR12+UzA8eKp6D3kD9p1JC0
- /zIk+SxzG2k4eL2Tyhaxd3olYarZZVmShMwj853+euP5ft0xJg4MLmLUjtKQhRT8azuDBW0Nk
- FpQEdLV4QK4g1/4Cuo3fL7RmUz9ImstI1dT+1onGPt10l6NjQPDbqYqP+vw0YXIn28JSXTRQH
- esmG61e7Rs/fNhbjqUdxyrYqhLdes7i8wbB+nt7pgHshFjUKn9MYzuRSlXK46EnvwAum1IuyN
- R1Htq9aEp/AQkp0rmXYl3O+NqjEwLPXwa91WfHJKU5/Tl6HbZLpUW5jvXvYwrbIhWiQWgBktf
- esNAFT50sKpPpYBaafTWj1gy1VCjTuwKnX5wAsrX3YA9QxQ96pi6hJw/zTPL3ubjWxsXseAhg
- l0lRrTPmYi/61UKWkPq4GHpL55xP2pGPkSIWWKUAEKfbxJBxf7xzXvIJUp+LKZkXxFnpw+Fi0
- Ork6Ts9hqTX4ygo5L1Bgqi1pjf5vprsTK/7uu1sbUfAIgMBtF50yT/NgHfVf+DWHKieoGZsvV
- lmywC28cOPbvaLtHlp6S1hBfyH3SmtJYsdn3Yu/pska4wqepa57uxI0gelQk7IIPFT25MB4Pn
- ihBWz5Z73rBx/Jbcnp/BEgSCYNccusxwy6rGbov5jAw5d21yc3IkvuO9UhftfQvCjs694BAa1
- HtousJAS0CWhG8XEWILYOeWMwKQ9wAE7dG5lNVD7yrhhS80max8Nw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 
-On 12.08.25 12:17, Konrad Dybcio wrote:
-> On 8/10/25 7:37 PM, Jens Glathe via B4 Relay wrote:
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/ar=
-ch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
->> similarity index 77%
->> copy from arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
->> copy to arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-> I understand that git may have gotten confused, but the diff is now
-> impossible to review
+On Mon, Aug 11, 2025 at 11:17:52AM -0400, Brian Masney via B4 Relay wrote:
+> Once all of my conversion patches across the various trees in the kernel
+> have been merged, I will post a small series that removes the
+> round_rate() op from the clk core and the documentation. Here's the
+> other patch series that are currently in flight that need to be merged
+> before we can remove round_rate() from the core.
+> 
+> - arm32 (3): https://lore.kernel.org/linux-clk/20250710-arm32-clk-round-rate-v1-0-a9146b77aca9@redhat.com/T/
+> - clk/tegra (6): https://lore.kernel.org/linux-clk/20250710-clk-tegra-round-rate-v1-0-e48ac3df4279@redhat.com/T/
+> - clk/ti (7): https://lore.kernel.org/linux-clk/20250811-b4-clk-ti-round-rate-v1-0-cc0840594a49@redhat.com/T/
+> - clocksource (1): https://lore.kernel.org/linux-clk/20250810-clocksource-round-rate-v1-1-486ef53e45eb@redhat.com/T/
+> - drm (9): https://lore.kernel.org/linux-clk/20250811-drm-clk-round-rate-v2-0-4a91ccf239cf@redhat.com/T/
+> - drm/msm (7): https://lore.kernel.org/linux-clk/20250810-drm-msm-phy-clk-round-rate-v2-0-0fd1f7979c83@redhat.com/T/
+> - i2c (1): https://lore.kernel.org/linux-clk/20250810-i2c-round-rate-v1-1-9488b57153e7@redhat.com/T/
+> - media (4): https://lore.kernel.org/linux-clk/20250710-media-clk-round-rate-v1-0-a9617b061741@redhat.com/T/
+> - mips (1): https://lore.kernel.org/linux-clk/20250810-mips-round-rate-v1-1-54e424c520dd@redhat.com/T/
+> - net (1): https://lore.kernel.org/linux-clk/20250810-net-round-rate-v1-1-dbb237c9fe5c@redhat.com/T/
+> - peci (1): https://lore.kernel.org/linux-clk/20250810-peci-round-rate-v1-1-ec96d216a455@redhat.com/T/
+> - phy (9): https://lore.kernel.org/linux-phy/20250810-phy-clk-round-rate-v2-0-9162470bb9f2@redhat.com/T/
+> - pmdomain (1): https://lore.kernel.org/linux-clk/20250810-pmdomain-round-rate-v1-1-1a90dbacdeb6@redhat.com/T/
+> - tty (1): https://lore.kernel.org/linux-clk/20250810-tty-round-rate-v1-1-849009f3bdfd@redhat.com/T/
 
-Oh wow. Yes I get that, haven't seen. Needs either a tweak for the=20
-similarity index (needs to be really high) or I need to disable=20
-=2D-find-copies-harder. [1] How do I go about this: is this a resend or a=
-=20
-new version?
+Konrad noticed on patch 90 the space after the cast. I thought I fixed
+all of those by hand, but apparently not. I looked through this series
+(and the others above) with `grep "u64) "` and `grep "long) "`, and found
+4 other cases.
 
-with best regards
+Patch 38: clk: nxp: lpc32xx: convert from round_rate() to determine_rate()
+Patch 64: clk: x86: cgu: convert from round_rate() to determine_rate()
+Patch 68: clk: zynqmp: divider: convert from round_rate() to determine_rate()
+Patch 95: clk: rockchip: half-divider: convert from round_rate() to determine_rate()
 
-Jens
-
-[1]:=20
-https://lore.kernel.org/all/20250705-format-harder-v1-1-55c5342be55c@oldsc=
-hoolsolutions.biz/
-
+Brian
 
 
