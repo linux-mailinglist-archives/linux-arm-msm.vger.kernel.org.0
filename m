@@ -1,316 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-68729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61576B22406
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:05:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32DAEB2240A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:06:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C2771A20335
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:05:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37023175D55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:06:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C37F2EACE9;
-	Tue, 12 Aug 2025 10:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D282EAB9D;
+	Tue, 12 Aug 2025 10:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zr+F9DbR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ICbAEpAu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9212EA754
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E732D4B77
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754993131; cv=none; b=HoT5QNFwBKeaB/NcfBb994UMuj5E0fjhqHnOJI636ANAzqSPNKBiLIVT5M0hI3tje6ujPh6Sdn1MS08XMA+7ZPMY7r4VRIF4w0oj2CeJM+s9GPrHQBvEMgVXVxT4gPYO3c6yOiWfUvZNq3iRjoowOb+qY8UwwHd+jdtma69OeyQ=
+	t=1754993207; cv=none; b=VzND8ym0Ka1SA8tpsmrZiZ0WsNJDZbr0c1FhsL7Z5K58tiqY4V+8oRv8onXCMonENWHeLM2ZBNFedTDphjoTuk/h49XNtPCp91WGcQK3Q1v0PYRJ08+RVmnVOLH8VAdKx3t36b+cLGi7IgIFK/pRgW01JiM+bOJPm2IA1ubHnk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754993131; c=relaxed/simple;
-	bh=XWLmAcxb47LR5YyiumJRk7B+Aw0Td4c8Q4AvQT48z8U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=DxAERjWpg/ok8NVkyCsExxq1CPantxDt0JwG4jrkulOgsbL7MLslW8lsdU15/DYUFrtbFsk1x63NGRnYmY9UUIM5mzxQsHNm7ZfWPFDiZukX1BNoR7uXYSl8zCNsCxFsE4t9pNIcu9lN9JCoSLxK+MxiCKCNW74IUpZ1NrVfZrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zr+F9DbR; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-459e3926cbbso22132945e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 03:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754993128; x=1755597928; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g4puXE3WG3G/o6QrhUTZRedOpdszGi21yFpntx6Hhf0=;
-        b=Zr+F9DbRm6bKzpi5hJSCw3G7QuojjYnOZ+Bm0VN6KzoOYmvBzmhgyXDFhCXuo0zlZ/
-         W0WGUHIFY7PntRSe8YDDejrzBnrvqCK4laehgdFIbqW9cI9TqY/ZL+DtdO8jpXAFj8mB
-         3TjXOLC7mL4njevQS5xvmmjQKJlOXqSkpdmmJ8CI46aOZ/XHR5TA57k/vUL2ZarFwGIl
-         Htel/dkRxYucWgnn1/YswZ9EJkBwQf5J3jaoK2vTK0oRIz2KLgAbFekACxPiNhJUvAZP
-         4hK+O8T4jaSYzm1VX718lKl65pZIBh6jo/9YpO57ltWu3su3Nq99vNutWK4uUBxoFnzH
-         m3xA==
+	s=arc-20240116; t=1754993207; c=relaxed/simple;
+	bh=p86wGcuXouV66IvwXNLN1S5SQ13PEZX8gi4dx6Jnpzo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eDEUznPfkEV6ADFIbfFJ2xgQm0/tk855FfWDHFxwLrlETLrkeFR9yFeEjsdqZn8VAeRGQzZ8/JJ2CmvAbc2d71/ABqTTYnfJmPxjUHr8KNGRyPvmz6+P1KXXYorCQvTMmOXea+9G9MAGyNo7RaLt02sGPHdzCt5giQiXgD5iCAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ICbAEpAu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C4PvZS013093
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=A8T8ZatYaGf8wMEcyEX+SVkI
+	kdVBoSOYx1hxOAACmEE=; b=ICbAEpAuy0MSvABsrlO/4K/W8IleGPdGZWCoTe7x
+	AYKCE2rZpFDnGwb7w7DsRmJuF59YhjkCtvT8AeGwhD2EZJiHUCOpCSvQ1NFTeY97
+	NWX4MCIMsSx4uaGbnFSP8PCGVHNSN1kghrClnjR0NwxYRfaLBXDU23/edu3anooI
+	dNCHDQLQmO2iOWlQdQO+gvcQWMwURez70bn2FuDqnZJxk9WldZj/jLLAh99bletX
+	h+q3vXQ2fgJ59T5QQmfP7tBVqcCDvdh6FQ+rFwWqq09cveP2Xgl8r+SNyrBvdDdu
+	f4xA0WEa68Hv0Wp+YDgmp4wP8J/Yp/qHD8tOL/QpKrI0yg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dupmqujb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:43 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b081b2a94cso176298201cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 03:06:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754993128; x=1755597928;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=g4puXE3WG3G/o6QrhUTZRedOpdszGi21yFpntx6Hhf0=;
-        b=p1eXMuaxCEQjR21kRmXSu6IZsVW7cOjOo9piyiGpzbCf3rxfv8zNm0N/fuslkVvAQu
-         glv7GzKFTe8pqELlYLKNxHYJS4L8GreRIp6xojlkXzJ2OIxh81ecKYFbG1ivE2Ew39FD
-         NZSBMru4sxCLnRpyL3h4scGAZWO1H1vgGiN3UzZTg6NpaUest5H/U+4qHHpuTlvzq4zq
-         j47YraHnCazHPYsG4b1G83q7QnBObsDfZ6vkwCgoQjipG9gIiWHGNN9G2HgQ2mYVpsHc
-         JPePs7aXYNFrGzCuEBsn/ZvSDRM2tQ/ju//hmDU/tEpd9hKH2VYAGvzbvm/834JTHfML
-         xPqA==
-X-Forwarded-Encrypted: i=1; AJvYcCUjNShAwWAdGkTa42pXF9Dg4kjJaGjwTQoSADAsW2dU8WQmGaSD6+RFdRl6hYxd6NfprJV4i3aJd3kzVCHe@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyhntfj6fu6/4eKtkwqwoRpViHTOALEN2JgKKyrSB/VlFmSuHqB
-	cOCR+DVmvlsCEWIdhfAFNURdywbiogrlNmLKM/zub0j3pRLhUS1yb1cd8xN9dhJiSog=
-X-Gm-Gg: ASbGncsRaGtVusl69aDtIDuZJmP3Od4VPZqLh2/cNk6aYiCDGSoM3JPwp8h2DcKjxAz
-	rYH24mOUcs6cL2Xzvt7oFosKlBq4+L0Z/NnZSqiy83xQsA/UBtvTpXTF3MkmYsRPOQprubLrIJV
-	IMsrsF+itA+2aNMt7En2TzLo1n15cTtZaaGmOK4RFzfUoVc7ilrPLSgD+Bms3Eo9VGr+Qncj8N2
-	seLNRpZjS4O+uSmFYTesUdk0f1VvgsEaWMOvPksq+OwfvVa8AfIXaQxmCYN//6dTcfs8Nntgxjf
-	TZdoS56w9JdzGFPQV0hJK9RAqfefNhVjL3gk0KOlfnn0+bHZfSV9X2F3LgqRRBeo3Cn/SrQ44+g
-	KO8iqbwhAxuIPJLbGwxJW4W/U+jI=
-X-Google-Smtp-Source: AGHT+IFgVaBDrE/OVb0Lh1YQvuxoYmxXAVREy1eRPSTlBSW7jn1WRvr6YcYi0LzfZNKXStQpAN7nxA==
-X-Received: by 2002:a05:600c:c4b7:b0:458:f70d:ebdd with SMTP id 5b1f17b1804b1-45a10bea224mr24581875e9.16.1754993127536;
-        Tue, 12 Aug 2025 03:05:27 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:42cc:2c69:7a9c:4dff])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dc7e1ddesm381057535e9.27.2025.08.12.03.05.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 03:05:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754993203; x=1755598003;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A8T8ZatYaGf8wMEcyEX+SVkIkdVBoSOYx1hxOAACmEE=;
+        b=f3H16/9VA7pLCG7HRvzrGVaPCOpiAKCnipsRduS2ibYStnzw/CYVxS5o3pCcj89zJq
+         7OQQI+cAghChn7VPhfZpFM2MsSWsfhQQmZ1F0UypmCIBNpkgh8v93b+/DJlIYycBJHi0
+         sLU0TZNSysplL2ibZEXLNvvKwN8xx3Shv5R6q0xSgKNqpFDbgOJBmI872Ab6DXiRzUzI
+         YuKey+piNg/8TUI2hIHSufU1BekZoH/PLc+EI27/ySfL9keEr+bOPuISjrFEPIwexGwr
+         E/rRFiH6budPpKtbxpnOPsUNw7GA3scit5ung2iOj2KiaaAy3G1tPgSopKoCHCnIXcm/
+         FZxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXDp1z+JFOQbIiGj8Uv90AB7HwVrg1ZkvK9Rby0/5pI1tuVwf9jq3dAPqIPzSemV0XQjm1hoP8V8o9xIgL4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yze8mkEieo2JKcv013xtzsK/oOqiU4qoURUYNTU6bTl39eF7R90
+	pLtuuJT6Gr/wIZzKsrrFk89LeNr/XXrTa/J0oclXNRgqg2oHj7t0qKR37GCXM/2TtaxF3TZ4LSw
+	T82c/tfs9FXT1wpqXrG8IbJJJ7F3TjwLO+vjgC2bBiALqLpY4T79Bjr6iz/EGaUCrnU9+
+X-Gm-Gg: ASbGncuXpvCL417ie8VoMpTaLFZSrFYXnA+t3xsVo25kN+uyYT3j+6KdeYSewLfoCBu
+	LeRL1jEyW+nzJO3/LOBgrfMPew21Ic5EGsnr7mhuPn9HXI+LPfGR6a+oHbkSRlTgMTUdG0smusp
+	huJMoyOecHfAi84SQe3AQDMXOxlNpbQeJxgr66lJ3qlob6/Z83/tWYKdTHM8tp2OQimUCC9yJmq
+	bTQlV59korw1CdMJytFWhYmhhQ61p96Ezrhr6CTi4KqVInmgMqi+Zk69pHJtYDgaBso0hPD6eNv
+	NNEkDq/PVGfnnliLtCUNIWUWZEeiWBpVJPY23ssuK4a4LFmINGJXmjS4k5TfxZ82/tM02T9RvEr
+	bYDHca+gpX55PZV4CETNswEVEMDvv9iIJWESllfQeluwkeOsLCQ+h
+X-Received: by 2002:a05:622a:993:b0:4b0:7b80:4759 with SMTP id d75a77b69052e-4b0ecbdfb41mr34852001cf.20.1754993202575;
+        Tue, 12 Aug 2025 03:06:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMlxzUMM54lZpUCjMGfkRuTDxqeDDulNqKujbwTvnh1hN5pHNNiRG8zIikUZyWOyfTNB5HMQ==
+X-Received: by 2002:a05:622a:993:b0:4b0:7b80:4759 with SMTP id d75a77b69052e-4b0ecbdfb41mr34851841cf.20.1754993202166;
+        Tue, 12 Aug 2025 03:06:42 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898bb4asm4657815e87.16.2025.08.12.03.06.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 03:06:41 -0700 (PDT)
+Date: Tue, 12 Aug 2025 13:06:39 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] media: qcom: camss: Add support for regulator
+ init_load_uA in CSIPHY
+Message-ID: <hosfuvk34iolc4ylzqu2pyoozomw4nzirlfdj54x3777eyuok6@renjfbqznl4r>
+References: <20250729-camss_csiphy_current-v2-1-da3c72a2055c@quicinc.com>
+ <d32cbtfzhwpzsvxpb7esvndpqxooergkzhlx2jp4ikuc3bsaop@gyxnlusuptg3>
+ <e08cb2a3-e96b-4b06-b56e-0b630cff38fa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Aug 2025 11:05:26 +0100
-Message-Id: <DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org>
-Subject: Re: [PATCH v7 7/8] serial: qcom-geni: Enable PM runtime for serial
- driver
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Praveen Talari" <quic_ptalari@quicinc.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
- <dmitry.baryshkov@oss.qualcomm.com>
-Cc: <psodagud@quicinc.com>, <djaggi@quicinc.com>,
- <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
- <quic_arandive@quicinc.com>, <quic_cchiluve@quicinc.com>,
- <quic_shazhuss@quicinc.com>, "Jiri Slaby" <jirislaby@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
- <bryan.odonoghue@linaro.org>, <neil.armstrong@linaro.org>,
- <srini@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250721174532.14022-1-quic_ptalari@quicinc.com>
- <20250721174532.14022-8-quic_ptalari@quicinc.com>
-In-Reply-To: <20250721174532.14022-8-quic_ptalari@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e08cb2a3-e96b-4b06-b56e-0b630cff38fa@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=bY5rUPPB c=1 sm=1 tr=0 ts=689b1233 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=SCioppmI-r5X7Irv_ikA:9
+ a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: ynWavhyzXO43_2jiuaHIoT6HZztIOVrr
+X-Proofpoint-ORIG-GUID: ynWavhyzXO43_2jiuaHIoT6HZztIOVrr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAwMCBTYWx0ZWRfX2yXb7HJBio5p
+ J0Tu3f9jxJq1o1cmdpwinHBE29pLpWydLCyGK33FuRwrqdevMFd3ZRtLAdoxOB84a9f/0FBXtPj
+ 7AWGn9A9Vz1piLuK+/TnqKSVB2HJ2AQIgAgP2UHgYSJFU6kyadvnEVkjjCWASWEfcpv858aoA7x
+ dqkcVpKYU6GQAw2MLXhJ+EwJbmFyxVg9Ai0Em/9rJqLUh+mPQlGGxkWdLbyBtOcqLCs6SXyK7Fa
+ k06GztqyWBFuMM/RD1e8i1nDC6Nw+x4MhTN3J9BKV+5eBZVlBcVURRFufqPK1Mmxo7HXu/aj+pZ
+ Bb60C68I05MCjGSbAWXC26QvSR4eznzOi3zeOWanq6bjm+NNhAF9a17NfaeRiw55ejTKkBjtNv5
+ vpkob9WE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 clxscore=1015 phishscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090000
 
-(c/c Neil and Srini)
+On Tue, Aug 12, 2025 at 02:05:55PM +0800, Wenmeng Liu wrote:
+> 
+> 
+> On 2025/8/11 18:39, Dmitry Baryshkov wrote:
+> > On Tue, Jul 29, 2025 at 03:24:55PM +0800, Wenmeng Liu wrote:
+> > > Some Qualcomm regulators are configured with initial mode as
+> > > HPM (High Power Mode), which may lead to higher power consumption.
+> > > To reduce power usage, it's preferable to set the initial mode
+> > > to LPM (Low Power Mode).
+> > > 
+> > > To ensure the regulator can switch from LPM to HPM when needed,
+> > > this patch adds current load configuration for CAMSS CSIPHY.
+> > > This allows the regulator framework to scale the mode dynamically
+> > > based on the load requirement.
+> > > 
+> > > The current default value for current is uninitialized or random.
+> > > To address this, initial current values are added for the
+> > > following platforms:
+> > > SDM670, SM8250, SC7280, SM8550, and X1E80100.
+> > > 
+> > > For SDM670, the value is set to -1, indicating that no default
+> > > current value is configured, the other values are derived
+> > > from the power grid.
+> > > 
+> > > ---
+> > > Changes in v2:
+> > > - Change the source of the current value from DTS to CAMSS resource
+> > > - Link to v1: https://lore.kernel.org/all/20250620040736.3032667-1-quic_wenmliu@quicinc.com/
+> > > ---
+> > > 
+> > > Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> > > ---
+> > >   drivers/media/platform/qcom/camss/camss-csiphy.c |  4 +++-
+> > >   drivers/media/platform/qcom/camss/camss.c        | 26 ++++++++++++++++++++++++
+> > >   drivers/media/platform/qcom/camss/camss.h        |  1 +
+> > >   3 files changed, 30 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> > > index 2de97f58f9ae4f91e8bba39dcadf92bea8cf6f73..7a2d80a03dbd0884b614451b55cd27dce94af637 100644
+> > > --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+> > > +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> > > @@ -707,8 +707,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
+> > >   			return -ENOMEM;
+> > >   	}
+> > > -	for (i = 0; i < csiphy->num_supplies; i++)
+> > > +	for (i = 0; i < csiphy->num_supplies; i++) {
+> > >   		csiphy->supplies[i].supply = res->regulators[i];
+> > > +		csiphy->supplies[i].init_load_uA = res->regulators_current[i];
+> > 
+> > Could you possibly refactor to use devm_regulator_bulk_get_const()? It
+> > would save you from this data moving.
+> Initially, we were aiming for a minimal-change implementation.
+> Consider refactor for save data moving, will be refactored in the next
+> version.
+> > 
+> > > +	}
+> > >   	ret = devm_regulator_bulk_get(camss->dev, csiphy->num_supplies,
+> > >   				      csiphy->supplies);
+> > > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> > > index e08e70b93824baa5714b3a736bc1d05405253aaa..daf21c944c2b4818b1656efc255e817551788658 100644
+> > > --- a/drivers/media/platform/qcom/camss/camss.c
+> > > +++ b/drivers/media/platform/qcom/camss/camss.c
+> > > @@ -750,6 +750,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
+> > >   	/* CSIPHY0 */
+> > >   	{
+> > >   		.regulators = { "vdda-phy", "vdda-pll" },
+> > > +		.regulators_current = { -1, -1 },
+> > 
+> > If it's unset, it should be 0, not -1.
+> I considered existing implementations as a reference:
+> https://lore.kernel.org/all/20220804073608.v4.5.I55a9e65cb1c22221316629e98768ff473f47a067@changeid
+> 
+> but based on the implementation of regulator_bulk_get, setting it to 0 seems
+> to be a better approach:
 
-On Mon Jul 21, 2025 at 6:45 PM BST, Praveen Talari wrote:
-> The GENI serial driver currently handles power resource management
-> through calls to the statically defined geni_serial_resources_on() and
-> geni_serial_resources_off() functions. This approach reduces modularity
-> and limits support for platforms with diverse power management
-> mechanisms, including resource managed by firmware.
->
-> Improve modularity and enable better integration with platform-specific
-> power management, introduce support for runtime PM. Use
-> pm_runtime_resume_and_get() and pm_runtime_put_sync() within the
-> qcom_geni_serial_pm() callback to control resource power state
-> transitions based on UART power state changes.
->
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+Ack. Also please try to provide a sensible value for all platforms, not
+just the most recent ones.
 
+> 
+> drivers/regulator/core.c
+> consumers[i].init_load_uA > 0
+> 
+> Thanks,
+> Wenmeng
+> 
 
-This breaks at least RB1 (QRB2210), maybe others.
-Currently broken on -master and on linux-next.
-
-Upon login prompt random parts of kernel seems to be off/failed and
-debugging led to udev being stuck:
-
-[   85.369834] INFO: task kworker/u16:0:12 blocked for more than 42 seconds=
-.
-[   85.376699]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
-[   85.382660] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables =
-this message.
-[   85.390547] task:kworker/u16:0   state:D stack:0     pid:12    tgid:12  =
-  ppid:2      task_flags:0x4208060 flags:0x00000010
-[   85.401748] Workqueue: async async_run_entry_fn
-[   85.406349] Call trace:
-[   85.408828]  __switch_to+0xe8/0x1a0 (T)
-[   85.412724]  __schedule+0x290/0x7c0
-[   85.416275]  schedule+0x34/0x118
-[   85.419554]  rpm_resume+0x14c/0x66c
-[   85.423111]  rpm_resume+0x2a4/0x66c
-[   85.426647]  rpm_resume+0x2a4/0x66c
-[   85.430188]  rpm_resume+0x2a4/0x66c
-[   85.433722]  __pm_runtime_resume+0x50/0x9c
-[   85.437869]  __driver_probe_device+0x58/0x120
-[   85.442287]  driver_probe_device+0x3c/0x154
-[   85.446523]  __driver_attach_async_helper+0x4c/0xc0
-[   85.451446]  async_run_entry_fn+0x34/0xe0
-[   85.455504]  process_one_work+0x148/0x290
-[   85.459565]  worker_thread+0x2c4/0x3e0
-[   85.463368]  kthread+0x118/0x1c0
-[   85.466651]  ret_from_fork+0x10/0x20
-[   85.470337] INFO: task irq/92-4a8c000.:71 blocked for more than 42 secon=
-ds.
-[   85.477351]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
-[   85.483323] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables =
-this message.
-[   85.491195] task:irq/92-4a8c000. state:D stack:0     pid:71    tgid:71  =
-  ppid:2      task_flags:0x208040 flags:0x00000010
-[   85.502290] Call trace:
-[   85.504786]  __switch_to+0xe8/0x1a0 (T)
-[   85.508687]  __schedule+0x290/0x7c0
-[   85.512231]  schedule+0x34/0x118
-[   85.515504]  __synchronize_irq+0x60/0xa0
-[   85.519483]  disable_irq+0x3c/0x4c
-[   85.522929]  msm_pinmux_set_mux+0x3a8/0x44c
-[   85.527167]  pinmux_enable_setting+0x1c4/0x28c
-[   85.531665]  pinctrl_commit_state+0xa0/0x260
-[   85.535989]  pinctrl_pm_select_default_state+0x4c/0xa0
-[   85.541182]  geni_se_resources_on+0xd0/0x15c
-[   85.545522]  geni_serial_resource_state+0x8c/0xbc
-[   85.550282]  qcom_geni_serial_runtime_resume+0x24/0x3c
-[   85.555470]  pm_generic_runtime_resume+0x2c/0x44
-[   85.560139]  __rpm_callback+0x48/0x1e0
-[   85.563949]  rpm_callback+0x74/0x80
-[   85.567494]  rpm_resume+0x39c/0x66c
-[   85.571040]  __pm_runtime_resume+0x50/0x9c
-[   85.575193]  handle_threaded_wake_irq+0x30/0x80
-[   85.579771]  irq_thread_fn+0x2c/0xb0
-[   85.583443]  irq_thread+0x16c/0x278
-[   85.587003]  kthread+0x118/0x1c0
-[   85.590283]  ret_from_fork+0x10/0x20
-[   85.593943] INFO: task (udev-worker):228 blocked for more than 42 second=
-s.
-[   85.600873]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
-[   85.606846] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables =
-this message.
-[   85.614717] task:(udev-worker)   state:D stack:0     pid:228   tgid:228 =
-  ppid:222    task_flags:0x400140 flags:0x00000818
-[   85.625823] Call trace:
-[   85.628316]  __switch_to+0xe8/0x1a0 (T)
-[   85.632217]  __schedule+0x290/0x7c0
-[   85.635765]  schedule+0x34/0x118
-[   85.639044]  async_synchronize_cookie_domain.part.0+0x50/0xa4
-[   85.644854]  async_synchronize_full+0x78/0xa0
-[   85.649270]  do_init_module+0x190/0x23c
-[   85.653154]  load_module+0x1708/0x1ca0
-[   85.656952]  init_module_from_file+0x74/0xa0
-[   85.661273]  __arm64_sys_finit_module+0x130/0x2f8
-[   85.666023]  invoke_syscall+0x48/0x104
-[   85.669842]  el0_svc_common.constprop.0+0xc0/0xe0
-[   85.674604]  do_el0_svc+0x1c/0x28
-[   85.677973]  el0_svc+0x2c/0x84
-[   85.681078]  el0t_64_sync_handler+0xa0/0xe4
-[   85.685316]  el0t_64_sync+0x198/0x19c
-[   85.689032] INFO: task (udev-worker):229 blocked for more than 42 second=
-s.
-
-
-Usually wifi, all remoteprocs and anything that depends on lpass/pinctrl fa=
-il to probe.
-
-Reverting these:
-86fa39dd6fb7 serial: qcom-geni: Enable Serial on SA8255p Qualcomm platforms
-1afa70632c39 serial: qcom-geni: Enable PM runtime for serial driver
-
-resolves the regression. Couldn't say if we should go with reverting since =
-86fa39dd6fb7
-adds support of serial on SA8255p and for clean revert both have to be reve=
-rted.
-
-Any thoughts?
-
-Best regards,
-Alexey
-
-
-
-
-
-> ---
-> v6 -> v7
-> From Bjorn:
-> - used devm_pm_runtime_enable() instead of pm_runtime_enable()
-> - updated commit text.
->
-> v5 -> v6
-> - added reviewed-by tag in commit
-> - added __maybe_unused to PM callback functions to avoid
->   warnings of defined but not used
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
-com_geni_serial.c
-> index 81f385d900d0..aa08de659e34 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1713,10 +1713,10 @@ static void qcom_geni_serial_pm(struct uart_port =
-*uport,
->  		old_state =3D UART_PM_STATE_OFF;
-> =20
->  	if (new_state =3D=3D UART_PM_STATE_ON && old_state =3D=3D UART_PM_STATE=
-_OFF)
-> -		geni_serial_resources_on(uport);
-> +		pm_runtime_resume_and_get(uport->dev);
->  	else if (new_state =3D=3D UART_PM_STATE_OFF &&
->  		 old_state =3D=3D UART_PM_STATE_ON)
-> -		geni_serial_resources_off(uport);
-> +		pm_runtime_put_sync(uport->dev);
-> =20
->  }
-> =20
-> @@ -1878,6 +1878,8 @@ static int qcom_geni_serial_probe(struct platform_d=
-evice *pdev)
->  	if (ret)
->  		return ret;
-> =20
-> +	devm_pm_runtime_enable(port->se.dev);
-> +
->  	ret =3D uart_add_one_port(drv, uport);
->  	if (ret)
->  		return ret;
-> @@ -1909,6 +1911,22 @@ static void qcom_geni_serial_remove(struct platfor=
-m_device *pdev)
->  	uart_remove_one_port(drv, &port->uport);
->  }
-> =20
-> +static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device=
- *dev)
-> +{
-> +	struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
-> +	struct uart_port *uport =3D &port->uport;
-> +
-> +	return geni_serial_resources_off(uport);
-> +}
-> +
-> +static int __maybe_unused qcom_geni_serial_runtime_resume(struct device =
-*dev)
-> +{
-> +	struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
-> +	struct uart_port *uport =3D &port->uport;
-> +
-> +	return geni_serial_resources_on(uport);
-> +}
-> +
->  static int qcom_geni_serial_suspend(struct device *dev)
->  {
->  	struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
-> @@ -1952,6 +1970,8 @@ static const struct qcom_geni_device_data qcom_geni=
-_uart_data =3D {
->  };
-> =20
->  static const struct dev_pm_ops qcom_geni_serial_pm_ops =3D {
-> +	SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
-> +			   qcom_geni_serial_runtime_resume, NULL)
->  	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
->  };
-> =20
-
+-- 
+With best wishes
+Dmitry
 
