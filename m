@@ -1,145 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-68762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816D4B225F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 13:36:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A105CB22606
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 13:38:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 952BB3A9984
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:36:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD28F1888DA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:39:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799BD2ED870;
-	Tue, 12 Aug 2025 11:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E23A72EBB98;
+	Tue, 12 Aug 2025 11:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gLbpccFc"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ZneyDZj2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F541EF0A6;
-	Tue, 12 Aug 2025 11:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F0522EB5C7;
+	Tue, 12 Aug 2025 11:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754998591; cv=none; b=mDeRV6xIMqhYJNv0qHksD2FpTsZXCqofpL/U/r4Wy4fnz30Jk2HengOC8PFzVpmC+nKjO3nd9K4m7a5NlRJz4TIMfo+anS97wEPB2mjIBj/g+Le2Q/fb3zNCdPlfOOJ/WXHYmdA84x5EoYxIZ8P/oyy46NJGotiiU5awShn52l8=
+	t=1754998729; cv=none; b=On+Y54CUkpdXoiV9/Jwi4eOO2nlHUHItCFk1bkUvrMhhNk63QwYv8uKjG3STsH1LU9cN1Ntdd8HSTCfNWRVgo3NVphxW/L/4DW4BmJgOs968jtr1C6K3BX1XhR2VXxCN4GiP3bCrPtmE2mbOI84+qIVoMqbim3ZVxm/miIFOCKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754998591; c=relaxed/simple;
-	bh=XrrTaQC2x0LJ3m2PgZHSfof9kgFnUUKG0+ebuJ2ih6s=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=H5DPhpoz04CGihtY9FCE1Ut0JqUg76eZFGW1wspHmKWuZ4ZDM4U4//Nv1YigAqFOeBz/ip/WHl7K3t8UAZuZFHvtAC/JXb2f1oG7ZKaActXfcQVPqXCIKYrfI2JCbxsbiODdwsjTDVfzQbWpsB9baBtkNTgTpGjxBffKy/uyfOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gLbpccFc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CAveog029539;
-	Tue, 12 Aug 2025 11:36:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=OZJdTzgLVZQ
-	H3wPGatNmiWGfzAWQMrSyZVVHIlxHMIM=; b=gLbpccFcnNI2nxI2XaRLGRIBzjs
-	bsvPxrcWueQrctuP/MP+yWy32T7v5g01Oywsf4Qmh9YXWJJ/GS1OciSFgcfSSPa9
-	YKgD9MCl58X7BnZU30OdtpaGctykztkfe/+xzK/hHJv7yLDB0k9Mkc/Hto2hIeYJ
-	GJHB1B0WzfryLyrJSgghaVg6RBdP0CJOgO6wqKdCYgyf1PD44TbJqfEhhNimSH0S
-	aNdYjd9zeJyJP+WwE1onD0Fg1J1PRF84y9FCuIyMpKXBJycMk55uWoUSiZorXknQ
-	1vONEaVz7/SQpOlbq4JQHLiba0C2AvK43MjyQMieSNPxex0QsGh1dD+HIlg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dy3g7wtx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:29 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57CBaPli003754;
-	Tue, 12 Aug 2025 11:36:27 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 48dydm4r5d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:27 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57CBaRQH003777;
-	Tue, 12 Aug 2025 11:36:27 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 57CBaQCY003776
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:27 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id E25DF223D5; Tue, 12 Aug 2025 19:36:25 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: quic_bt@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH 4/4] driver: bluetooth: hci_qca: SSR(Sub-System Restart)process failed due to tx_idle_timer timeout
-Date: Tue, 12 Aug 2025 19:36:20 +0800
-Message-Id: <20250812113620.3135226-5-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
-References: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
+	s=arc-20240116; t=1754998729; c=relaxed/simple;
+	bh=SUMqwwAsdFKrR8rANLxE4W/5RKurQaqBSysIbfpj4gg=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WqWs73mG6miFYmc4+8Ue5uc5iD2/KraWUCsYgz6RcOiBB1w2J7jNUZQsvZLGUW2ynvOXEq8AqOV/f5AINDXeco0750kUdEp/gCEBvwPJR9fIOnSGSCoXsq+5kR7KI+Lzbi2GxjQci4dJ5Bkw6raiTJKAMigRWQ7zuz7JFVUHb6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ZneyDZj2; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version:
+	Content-Type; bh=SUMqwwAsdFKrR8rANLxE4W/5RKurQaqBSysIbfpj4gg=;
+	b=ZneyDZj2lYjPfyV2c2yW95rYr+HVgR63659pGjG6P9pVaFidxpHqvhS1+MgXeU
+	6W22/Tom/uRRfUDchVOrZrbW2STSHyOYNffHpjbKpQeVbRPGQkG8pWSrfgRQTvFo
+	NXuo2EETB0cKJ6LTKS2tIafigAdp4Ll2CRad6JXvXYFIQ=
+Received: from root (unknown [])
+	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wA3PtKeJ5to2j7gBQ--.59669S2;
+	Tue, 12 Aug 2025 19:38:07 +0800 (CST)
+From: <yizhijiao2025@163.com>
+To: "'Dmitry Baryshkov'" <dmitry.baryshkov@oss.qualcomm.com>,
+	"'Nitin Rawat'" <quic_nitirawa@quicinc.com>
+Cc: "'Manivannan Sadhasivam'" <mani@kernel.org>,
+	"'Krzysztof Kozlowski'" <krzk@kernel.org>,
+	"'Konrad Dybcio'" <konrad.dybcio@oss.qualcomm.com>,
+	<vkoul@kernel.org>,
+	<kishon@kernel.org>,
+	<conor+dt@kernel.org>,
+	<bvanassche@acm.org>,
+	<andersson@kernel.org>,
+	<neil.armstrong@linaro.org>,
+	<konradybcio@kernel.org>,
+	<krzk+dt@kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<linux-phy@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>
+References: <20250806154340.20122-1-quic_nitirawa@quicinc.com> <20250806154340.20122-3-quic_nitirawa@quicinc.com> <20250808-calm-boa-of-swiftness-a4a7ce@kuoka> <9af71063-0629-4ccc-bc76-3fb588677bf4@oss.qualcomm.com> <292907f3-25d6-40d9-be6e-b6b83e646d73@kernel.org> <5e32be05-0dbd-4d6f-879d-8ce97fb430ba@quicinc.com> <rh3qxu2rijpjswfash3rpmmh6sw47l3b6j5p5upti6zffknasz@cywwm3fypghd> <89ab7e51-f82e-465a-aa22-1ccb8e7a0f6d@quicinc.com> <ljythvl2yfilcnmgdwt2cyyefxmgl54osll5e76qn7njadhgqq@rwrl3dy6ykt3>
+In-Reply-To: <ljythvl2yfilcnmgdwt2cyyefxmgl54osll5e76qn7njadhgqq@rwrl3dy6ykt3>
+Subject: =?UTF-8?Q?=E5=9B=9E=E5=A4=8D:_=5BPATCH_V1_2/4=5D_arm64:_dts:_q?=
+	=?UTF-8?Q?com:_sm8750:_add_max-microamp_fo?=
+	=?UTF-8?Q?r_UFS_PHY_and_PLL_supplies?=
+Date: Tue, 12 Aug 2025 19:38:06 +0800
+Message-ID: <006d01dc0b7d$929184a0$b7b48de0$@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=X4lSKHTe c=1 sm=1 tr=0 ts=689b273d cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=7-08G_DUf5nQLP0U7KQA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzMSBTYWx0ZWRfX6iCg/U+xMisO
- nCfqn5Vk0BU6JaHDYckcH7rUMeFXl7EQELTk5cejeT2m0fVw0GvEW+h7b1i88qL7l6mywLgVjeW
- YgDSJ9mzALC/QfhcI7BsAu+0GKdYUkmiYWxQtSdohrULnAetNAJk07s93vIds025aRsdIGimK1g
- R4u+0QP5aRW5TAgvSap2H4bWAgP1TcmAEJN8kFLTyvPaCawzr7zFWTTHApxaP1f0OL4eWd8m1HN
- d9XEbz7Tj/Lhfdt1NxJJ0RLcm0r4dLjB9MtZFAaXA8pNLYZmW+UkIchPnQLP7vYMNzgvpay5TWH
- a+nwBAGiPIExF0laUDQebhPCZA8JSKf9u/fLjNNz9VW47c5a0mqUVZTPzERjUJp8ZMck/PWEedy
- FkSmRNXq
-X-Proofpoint-GUID: g9Gl2Wc0gu724vWVMWraWnzUklCVYqJ9
-X-Proofpoint-ORIG-GUID: g9Gl2Wc0gu724vWVMWraWnzUklCVYqJ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_06,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
- spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090031
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHw68n7M+zVsTQSVPTKb0yDblC+5AHCXxAmAu7qHlMC9bBv8QHbgC77Achl3XUC2ks/ZQMzbyiqAPNFKSKzosSUwA==
+Content-Language: zh-cn
+X-CM-TRANSID:_____wA3PtKeJ5to2j7gBQ--.59669S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3Wr1kKFWkXrWxXFW5Wr4fAFb_yoWxGr4xpF
+	W8WFWDCr1kAryfAw4vgw4xCa4Fqw1DAr1avrn8Gw47A390vF1FqFnFyr15uFyDZr1kZ3WY
+	vrWjqry2qa4Y9FJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jChFxUUUUU=
+X-CM-SenderInfo: x1l2xxpmld0jqqsvqiywtou0bp/xtbBgBqnbGibIQmfdgAAsj
 
-When the SSR (Sub-System Restart) duration exceeds 2 seconds, it triggers
-host tx_idle_timeout, which sets host TX state to sleep. due to the
-hardware pulling up bt_en, the firmware is not downloaded after the SSR.
-As a result, the controller does not enter sleep mode. Consequently,
-when the host sends a command afterward, it sends 0xFD to the controller,
-but the controller does not respond, leading to a command timeout.
 
-So reset tx_idle_timer after SSR to prevent host enter TX IBS_Sloeep mode.
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
- drivers/bluetooth/hci_qca.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+-----=E9=82=AE=E4=BB=B6=E5=8E=9F=E4=BB=B6-----
+=E5=8F=91=E4=BB=B6=E4=BA=BA: =
+linux-arm-msm+bounces-68747-yizhijiao2025=3D163.com@vger.kernel.org =
+<linux-arm-msm+bounces-68747-yizhijiao2025=3D163.com@vger.kernel.org> =
+=E4=BB=A3=E8=A1=A8 Dmitry Baryshkov
+=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4: 2025=E5=B9=B48=E6=9C=8812=E6=97=A5 =
+18:52
+=E6=94=B6=E4=BB=B6=E4=BA=BA: Nitin Rawat <quic_nitirawa@quicinc.com>
+=E6=8A=84=E9=80=81: Manivannan Sadhasivam <mani@kernel.org>; Krzysztof =
+Kozlowski <krzk@kernel.org>; Konrad Dybcio =
+<konrad.dybcio@oss.qualcomm.com>; vkoul@kernel.org; kishon@kernel.org; =
+conor+dt@kernel.org; bvanassche@acm.org; andersson@kernel.org; =
+neil.armstrong@linaro.org; konradybcio@kernel.org; krzk+dt@kernel.org; =
+linux-arm-msm@vger.kernel.org; linux-phy@lists.infradead.org; =
+linux-kernel@vger.kernel.org; devicetree@vger.kernel.org
+=E4=B8=BB=E9=A2=98: Re: [PATCH V1 2/4] arm64: dts: qcom: sm8750: add =
+max-microamp for UFS PHY and PLL supplies
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 33c2dd7b8..1fb8eea09 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1668,6 +1668,15 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
- 		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
- 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-+		/*
-+		 * When the SSR (Sub-System Restart) duration exceeds 2 seconds,
-+		 * it triggers host tx_idle_timeout, which sets host TX state
-+		 * to sleep. Reset tx_idle_timer after SSR to prevent
-+		 * host enter TX IBS_Sloeep mode.
-+		 */
-+		mod_timer(&qca->tx_idle_timer, jiffies +
-+			  msecs_to_jiffies(qca->tx_idle_delay));
-+
- 		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
- 		qca->memdump_state = QCA_MEMDUMP_IDLE;
- 		msleep(50);
--- 
-2.34.1
+On Tue, Aug 12, 2025 at 01:25:02AM +0530, Nitin Rawat wrote:
+>=20
+>=20
+> On 8/9/2025 4:37 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Aug 08, 2025 at 08:49:45PM GMT, Nitin Rawat wrote:
+> > >=20
+> > >=20
+> > > On 8/8/2025 3:09 PM, Krzysztof Kozlowski wrote:
+> > > > On 08/08/2025 10:58, Konrad Dybcio wrote:
+> > > > > On 8/8/25 9:29 AM, Krzysztof Kozlowski wrote:
+> > > > > > On Wed, Aug 06, 2025 at 09:13:38PM +0530, Nitin Rawat wrote:
+> > > > > > > Add `vdda-phy-max-microamp` and `vdda-pll-max-microamp`=20
+> > > > > > > properties to the UFS PHY node in the device tree.
+> > > > > > >=20
+> > > > > > > These properties define the maximum current (in microamps) =
+
+> > > > > > > expected from the PHY and PLL regulators. This allows the=20
+> > > > > > > PHY driver to configure regulator load accurately and=20
+> > > > > > > ensure proper regulator mode based on load requirements.
+> > > > > >=20
+> > > > > > That's not the property of phy, but regulator.
+> > > > > >=20
+> > > > > > Also reasoning is here incomplete - you just post downstream =
+
+> > > > > > code. :/
+> > > > >=20
+> > > > > The reason for this change is good, but perhaps not explained=20
+> > > > > clearly
+> > > > >=20
+> > > > > All of these values refer to the maximum current draw that=20
+> > > > > needs to be allocated on a shared voltage supply for this=20
+> > > > > peripheral (because the
+> > > >=20
+> > > >=20
+> > > > It sounds very different than how much it can be drawn. How much =
+
+> > > > can be drawn is the property of the regulator. The regulator=20
+> > > > knows how much current it can support.
+> > >=20
+> > > Consumers are aware of their dynamic load requirements, which can=20
+> > > vary at runtime=E2=80=94this awareness is not reciprocal. The =
+power grid=20
+> > > is designed based on the collective load requirements of all=20
+> > > clients sharing the same power rail.
+> > >=20
+> > > Since regulators can operate in multiple modes for power=20
+> > > optimization, each consumer is expected to vote for its runtime=20
+> > > power needs. These votes help the regulator framework maintain the =
+
+> > > regulator in the appropriate mode, ensuring stable and efficient =
+operation across all clients.
+> > >=20
+> > >=20
+> > > Stability issues can arise if each consumer does not vote for its=20
+> > > own load requirement.
+> > > For example, consider a scenario where a single regulator is=20
+> > > shared by two consumers.
+> > >=20
+> > > If the first client requests low-power mode by voting for zero or=20
+> > > a minimal load to regulator framework during its driver's LPM=20
+> > > sequence, and the second client (e.g., UFS PHY) has not voted for=20
+> > > its own load requirement through the regulator framework, the =
+regulator may transition to low-power mode.
+> > > This can lead to issues for the second client, which expects a=20
+> > > higher power state to operate correctly.
+> > >=20
+> >=20
+> > I think we all agree on consumers setting the load for shared=20
+> > regulators, but the naming and description of the DT property is =
+what causing confusion here.
+> > There is no way the consumers can set the *max* current draw for a=20
+> > shared regulator. They can only request load as per their=20
+> > requirement. But the max current draw is a regulator constraint.
+>=20
+> To avoid confusion with regulator-level constraints, I'm open to=20
+> renaming the property vdda-phy-max-microamp to something more=20
+> descriptive, such as vdda-phy-client-peak-load-microamp or=20
+> vdda-phy-peak-load-microamp. Along with updating the description, this =
+
+> would better reflect the property's actual intent: to specify the=20
+> maximum current a client may draw during peak operation, rather than=20
+> implying it defines the regulator=E2=80=99s maximum capability.
+
+Move them into the driver please.
+
+>=20
+>=20
+> Having said that, I had a follow-up discussion with the PHY designer=20
+> to confirm whether this value could vary at the board level. Based on=20
+> their response, it's a fixed value for the SoC and does not change=20
+> across different boards(atleast for now). Therefore, I can remove from =
+
+> device tree and replaced with hardcoded, per-compatible data in the =
+driver.
+>=20
+> >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > > supply's capabilities change depending on the maximum=20
+> > > > > potential load at any given time, which the regulator driver=20
+> > > > > must be aware of)
+> > > > >=20
+> > > > > This is a property of a regulator *consumer*, i.e. if we had a =
+
+> > > > > chain of LEDs hanging off of this supply, we'd need to specify =
+
+> > > > > NUM_LEDS * MAX_CURR under the "led chain" device, to make sure =
+
+> > > > > that if the aggregated current requirements go over a certain=20
+> > > > > threshold (which is unknown to Linux and hidden in RPMh fw),=20
+> > > > > the regulator can be reconfigured to allow for a higher=20
+> > > > > current draw (likely at some downgrade to efficiency)
+> > > >=20
+> > > >=20
+> > > > The problem is that rationale is downstream. Instead I want to=20
+> > > > see some
+> > > > reason: e.g. datasheets, spec, type of UFS device (that was the=20
+> > > > argument in the driver patch discussion).
+> > >=20
+> > >=20
+> > > The PHY load requirements for consumers such as UFS, USB, PCIe are =
+
+> > > defined by Qualcomm=E2=80=99s PHY IP and are well-documented in =
+Qualcomm=E2=80=99s=20
+> > > datasheets and power grid documentation. These values can=20
+> > > depending on the process or technology node, board design, and =
+even the chip foundry used.
+> > >=20
+> > > As a result, the load values can differ across SoCs or may be even =
+
+> > > board(unlikely though) due to variations in any of these =
+parameters.
+> > >=20
+> >=20
+> > Okay. This goes into the commit message and possibly some part of it =
+
+> > to property description also.
+>=20
+>=20
+>=20
+>=20
+> >=20
+> > - Mani
+> >=20
+>=20
+
+--
+With best wishes
+Dmitry
 
 
