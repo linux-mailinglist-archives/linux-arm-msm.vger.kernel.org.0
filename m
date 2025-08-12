@@ -1,238 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-68712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFF62B222F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:23:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 190FCB222F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:23:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34F5E3BC731
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:19:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 362BA1882C50
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:19:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACE4E2E972E;
-	Tue, 12 Aug 2025 09:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66C4D2E9ED9;
+	Tue, 12 Aug 2025 09:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MsSwylZJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dgpR5eZC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB4A1A9F91
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C842E92C2;
+	Tue, 12 Aug 2025 09:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754990220; cv=none; b=EP5troG9kfFL1pZmppiqlP0nxDqCatbVA1z17w5GLMvvAFDMxgoOk0M8kvY/ymY3aAmfCMo5JkKfGLmqIPr1ffQhlJ8WXMsMgSYxxWXZnTBlGzdhYcLSXVtJPzKcw4XiI+V5st262KEKYz3zu8OoNS6ymc3QtQRl8wyrHFuNiRw=
+	t=1754990260; cv=none; b=O6XlybJvAoSbgyxBcZ4KqVRi6g4w9NknxpHSw8F/UCRuiOcD6UCE07aiNtUhKFkiqa6p2ExEA4Zg+PEcdVPesNxqo61A/lGbisg5Qh9OHBrSUoVvu8ig/jmv5SC2ktWbYY640MPuskpqxySXUGn9W0NAEjmMhAzwFlCfjrQBGkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754990220; c=relaxed/simple;
-	bh=3vxrRJAh+EqyzgyBhex5r9Yo+PAKpEu68mEfY7pR1MI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dOvFRlHAQtH4oqjAFPtfINF8/3ToAv/UwJYIncd/Na1i+CLfpGlQIwSuM4tC7vRruJVqkwUQQKim0cUl/Be1eaUHt3Upi3SYbVTSxPOAIWRrEi0egpk81EoaLEIlkioY6Ib1SO8pku1rxEYXXFEKfmjyqMoL4LhMs8Mx6bePSc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MsSwylZJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C5P1sA022882
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:16:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	szoFZFn3zyipQklF/BzIbtuPr+6uKdGBAsaMiBXKvR8=; b=MsSwylZJY+3ibgJC
-	fNiPBU4FTg9cssCQ9U9HILeP2nJG9HKbc449cq+p5EpjhqxahasZoA8p37wZ3BCt
-	crVxwJil8Rb/mdyxf2dKW+Ewz0S0j2MnDyB+gVd+7ut44WnExaWQ4VA5JMr6/HFp
-	oB8WhuSjgB/mxAOoIFF6X3wUdPLc9Z5Vui1mjbu1n9ucTfruGgP2G/ia0+BgbV4N
-	x/W4/Dgl54U+5nNjbs+1D4+bzOYSj6LbP2w1m1mDtAPjtoyVMIYcIJiN2zdkn4Oz
-	wIhqjn/G91h0etISHReHyovTc9CceS7rietBqhshanuVQS8tQreIWesG1GSH1yJ2
-	zBb+sg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj47hfe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:16:58 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b0dfcd82ebso2266441cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 02:16:57 -0700 (PDT)
+	s=arc-20240116; t=1754990260; c=relaxed/simple;
+	bh=MgJgkqy4X7VBkdUHQgmnpgJcaBRPxSksxSZ/rty4i9U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pkFTQP/zdQsAIn4053eSAtP/TBHZhklJkrUgxWOhfO/guCQzerTeKc9u6+KIE35q9hZ5TycqakRaUuMAHkp3feh/avgRXZVncB/mYoK82vHzgauEWQ9xhoPvJjS5tJ/voWljcK4yAzTyxImqYHJ228ox5xuPMo3E8WKdf3fWmzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dgpR5eZC; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-433fa926c9eso3134381b6e.0;
+        Tue, 12 Aug 2025 02:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754990258; x=1755595058; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OsZfh7jnCZM1qIdbyzshEpg7lU806F0f1eIeVxq5DZ4=;
+        b=dgpR5eZC2d8TRvFbRYJkhqN8eEBMTUkC51PFOLOuuoV+qqwq7Bh4ZEdOl27Zg9xYrI
+         skh5QFjRtyijhEC/QHmmkWkCM8EUvX38CCTVHTN8QEiZhgzf0VPw2zxbLozqwS+Vt+qx
+         AJFhcfvikM/oJk6yu1IoqfHFT3pyYTIEQKlYXO57ARUHX+67yXXgr3KNqcMXUjY4/4VR
+         dSI65JfJRtBpks6KCCM0cekfiJUNI9TN4Eet6snpjwo/T9M0YnQALhVCle1GQHV1INNJ
+         XoJ7Ao/Je4P0xDNamUsfHw/WWHXOKIr5yUaPL2gnyGoVGXsq/j3ROyZOm+JJRlGfwIXh
+         QHXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754990217; x=1755595017;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=szoFZFn3zyipQklF/BzIbtuPr+6uKdGBAsaMiBXKvR8=;
-        b=m9RIxR1mGAwWPruxUeHOBRk3f9+bsB3L2hbTRy/4f1aQ6hpVkiLcqK/ccW8j6YUqUM
-         fgDyEHlF6eBsViBOGQPZfalwOSQbtben7J5THUP18PCp7VpEkdbo0yAD3CKqsG3743PT
-         Zdhu04wqCIRwuX/Z7JKa+aUtje6FkOrMHEyexPJKK9bxFLpqDp1+W2IDnZzULTpV7GPL
-         7YmbfMb2K8V8khFjqIok7+VZ+gMsSAdsKtS7iPMHsZY+AA4qm5eue/+qBuazgjw1RCHl
-         i0zN4S88rsl4JrYwKomOAmydhUSUEQKomQKl5uleVCnkodXFbprj8y8dZpnzhfTOwMUW
-         HwKg==
-X-Forwarded-Encrypted: i=1; AJvYcCU/IWRILCO6fbktDpA2fyk+mByTadLqQzMVoCRZx8+v0CN/umtQBeXdDeoMHm2ZSbfoT7Ss108nXY9MX4y5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5B57DKKtHh/4Q/C73aeZsvmfReN9qS80dF24ewaHbKwz903yf
-	9yWt3NZG7Pm4Dt1YYMOQPG5KSySOukI2QlXJqjY0DO62gYkAe/bWIzCWn23ntazt1f6H2axz4Y2
-	a8QISGLdwxASp26tdbKPWvTkWciiMK4D1gZrddrTHYnVeqD5gTR+0cyL6CnX+NdB8ZDUF
-X-Gm-Gg: ASbGncs8fqqDhN5tE0LYBaPulOvb8LZewfrVawHUVTxZbVG4eN9wrWLx6CMAstqDxVe
-	J7YUt5ScGk8G4ZMYQTpPLPccjv4fFTKrdvbQ7cjTW9LeYdQHBhrsta05+F+UaK7iMDrXOCxCWxw
-	xdN4D1ESOIIlaG8OmxLiSUj1aFPPvH4eiDQ8txuZSLK/2S6twIZIflQzGV/6woJnCOWnaRJj0hK
-	MCPAkAfk/2kMyiTyq5NXCq5tcUR9AcbrF8EbJQyLk9i/ggeXyv+j2shPqKcpXG1Kih4z4llhwGZ
-	bjx8iIVfchLfNztez+kBjPJ9+SsYGXp6+JdBQDas+BhsooGWpO9oYkmu+iC1ytg2ivPXi+lk4mk
-	Asqp70ZmOslC4sgnrhg==
-X-Received: by 2002:a05:622a:1a29:b0:4a9:a320:f528 with SMTP id d75a77b69052e-4b0f48fa006mr2988671cf.3.1754990216692;
-        Tue, 12 Aug 2025 02:16:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEb8BIOiMB2aaszVUO5sc5ldVeAaDIfkEujTFUEDPXKgEEwpNoWILRyxCr9Ql2Svsw3ZJzZXQ==
-X-Received: by 2002:a05:622a:1a29:b0:4a9:a320:f528 with SMTP id d75a77b69052e-4b0f48fa006mr2988531cf.3.1754990216019;
-        Tue, 12 Aug 2025 02:16:56 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a219ecfsm2165172566b.94.2025.08.12.02.16.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 02:16:55 -0700 (PDT)
-Message-ID: <3f712fec-a4c6-41a3-9b7a-34b9edc1d9b0@oss.qualcomm.com>
-Date: Tue, 12 Aug 2025 11:16:54 +0200
+        d=1e100.net; s=20230601; t=1754990258; x=1755595058;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OsZfh7jnCZM1qIdbyzshEpg7lU806F0f1eIeVxq5DZ4=;
+        b=lfIAI1skF1O/rk0EAWEeiu6HNK5GiVSOY/TJJ29lSF0OEgqA8ME81uSbqgc/0IuYsD
+         +DiJJx4quQ1TlqJcSMLCQzY4RLCgvbezkFyYVyTRTq1nk+dOZx7xMdMDnl7El2E/GChb
+         IoU4EQtNF0bZ6bNIFxgbfJQ+69NK2q+oRci7w+R+NYtujsLQdGnlMHMhu2EPrGH0oySv
+         Q1KpJFi5D+IFPs9IOXUjaaQO7l3qIyEeGWp3OcgGZThZUMgnLBtXqkCOqpQyOAoCqptl
+         CDbD2PzsLsH2IyG2y5xtj6ikF8Hv/vre2eylpC5vBLA0c7yA2ahduD8bVMNYbvlxVivl
+         m/MA==
+X-Forwarded-Encrypted: i=1; AJvYcCU14KdR0sdckBuOjnpg5DgCaJF0yA8aritcnKRM2yIOouT90/txK+psIjcuOXbzg437LCuk6i2ZpA==@vger.kernel.org, AJvYcCUbA3aWeC7maF85fz6PzczmwrAntNqyaKaP/oT/PdiWG0/wtsfBDU2C3O/wluydrzH6iqFZQyIjn2YS@vger.kernel.org, AJvYcCVE/BOGsSNmf6yncpczhRM86SjHdJytv4AOxl1bAgdT6ZoRXscy3pgF35VjnBO+cLCFix8YPN+KETAA/E4X@vger.kernel.org, AJvYcCVnYWrnTwsBvNa0hWlDaILxJtr4Qtu2wB2hDFvkURydT7Lmk15niJhrPDuvRWsppuO+8Gp+UNLBXgBPOA==@vger.kernel.org, AJvYcCWbjuqhlorFUiEemPY8hzuMYrWPWdK8xlzd7wfW6UZesCBioDZdaVB/+dMYqcxeF+DnE3+tV9TqyKZzV1LZw7oexQE=@vger.kernel.org, AJvYcCXG6J3awt3WSIj0g45MxqO715iv6nBOsZ4hAkXsrW5mz3pfaK0PisnjCEfMhzXSsR6vOd3lmXP0HN69/5GjmkV0r68=@vger.kernel.org, AJvYcCXbXMUH0GmioWdVvvPwRdDbek14OAzlTNKd7MJB2VPilcpecDZ3Jc6TatSa0u+euaSUP+iJ28QHOPZeC3fFxw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YydCI3g01dnGQsYIs0hhNP+Yy8TLStkCn7Wm6gmIoX9BAy43qub
+	lfSg5/dziyNErwqDTin2CGNJciQi/mqP0AzjX3jqb+/ZUNzUnhn/g3Y66gJPHD1fGdTniL3JYeE
+	sgsEEdpiXK6phwUnTHmhAlFZuMEVBHwE=
+X-Gm-Gg: ASbGncvV/ye5N6hXepPjHi9DNaMzh2CcP489Vk0ZY0gPSkNHLFvQOx0SStnQtcLF5/5
+	wE0LdoQvTgxIuLjZEf2Z6TWuIXQ1wYLaCiSsTBXm/fqSLqDusIyuNETCOju2Ql1H5sSM1VP8t55
+	cohg5b4WnJAY+8u4rfzAhjUkc7nf8pHFj1ssAeeMRkHlkpe5dzlUsKwOxtCilGYQFzGiG4Rrkd+
+	ujHOosnN/NbVolYQcdwug==
+X-Google-Smtp-Source: AGHT+IGeKg+1AsHT8OzWJRaAIn4nQ5un+51PPsEFZqXXG7zkpSAAOASU4iUV34U5Po600E/i/8biPwPW0aGpB8iXi3U=
+X-Received: by 2002:a05:6808:30a4:b0:433:fd1b:73f3 with SMTP id
+ 5614622812f47-43597b3b9d0mr10072751b6e.5.1754990257436; Tue, 12 Aug 2025
+ 02:17:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] driver: bluetooth: hci_qca: fix ssr fail when BT_EN
- is pulled up by hw
-To: Shuai Zhang <quic_shuaz@quicinc.com>, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc: quic_bt@quicinc.com
-References: <20250715051618.724475-1-quic_shuaz@quicinc.com>
- <20250715051618.724475-2-quic_shuaz@quicinc.com>
- <ee84aeb0-728a-4642-9686-3abb9588bb24@oss.qualcomm.com>
- <e7e700e4-e87c-4e2c-8df1-634870ba91b2@quicinc.com>
- <0a6d6ae7-67f2-4974-b005-f36ee8707c67@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <0a6d6ae7-67f2-4974-b005-f36ee8707c67@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfX1G9bSORDya86
- +Ka9EifDoE+v8W8y9uFK+Rzm6jxnS452Rx2ICGChAtZwbjj7F4coJSs4j2GgmLfGkzlOoJMSmwp
- iaITtqgpY1AtfhunQy9NBw3NNJ2gHj8DidOAQL107eOgmKNB1GeWf8RSsPm7FWgVoRGG1U8lZCT
- G0ImnWSUxSMONSs9eNUmPA+qweGLJ1NUSzIaZlaVA2t4Quq+agGiEMb9Vgqmwgua9CgvM0DZewp
- p+1J+OG0mni14XsjJnDjNUDtxW/FLmn1eF08RdKgO7E5x7HUrf16NKrGSGGpXnM0v5Y33jRokCu
- gDOn++8pdUUFjGHJTvHvG4GJiS05bF/0WG+hqd+A9oXbltOP/c4Uekr2oVn9s75/UjbiapHVuv0
- OV8LQ0uP
-X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=689b068a cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=TmvEoTIt-G6_DD21KxUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: rXu5fesLFWttuulp9DqMCU1Kmgq4P6_Y
-X-Proofpoint-GUID: rXu5fesLFWttuulp9DqMCU1Kmgq4P6_Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090027
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com> <20250811-clk-for-stephen-round-rate-v1-53-b3bf97b038dc@redhat.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-53-b3bf97b038dc@redhat.com>
+From: Chunyan Zhang <zhang.lyra@gmail.com>
+Date: Tue, 12 Aug 2025 17:17:01 +0800
+X-Gm-Features: Ac12FXwWvkLhtiiPhiHwQqmN1cgPTqDfCjN_x0Nmsu9rzni9NmKJK-aaPD6k1MI
+Message-ID: <CAAfSe-spVF480JyBwxFN=KH82CdKNR0oY87oR6fsR+-CUH356Q@mail.gmail.com>
+Subject: Re: [PATCH 053/114] clk: sprd: div: convert from round_rate() to determine_rate()
+To: bmasney@redhat.com
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
+	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
+	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Michal Simek <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, 
+	=?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Daniel Palmer <daniel@thingy.jp>, 
+	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Gregory Clement <gregory.clement@bootlin.com>, 
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Andrea della Porta <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, 
+	Viresh Kumar <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Luca Ceresoli <luca.ceresoli@bootlin.com>, Alex Helms <alexander.helms.jy@renesas.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
+	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/12/25 10:03 AM, Shuai Zhang wrote:
-> Hi Konrad
-> 
-> On 7/19/2025 7:32 AM, Shuai Zhang wrote:
->> Hi Konrad 
->>
->> On 7/15/2025 5:11 PM, Konrad Dybcio wrote:
->>> On 7/15/25 7:16 AM, Shuai Zhang wrote:
->>>> the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
->>>> This leads to reset command timeout.
->>>
->>> This is a description of what goes wrong in terms of the code of
->>> this driver, and it doesn't explain why you gate the code addition
->>> with HCI_QUIRK_NON_PERSISTENT_SETUP, please share more details about
->>> what you're doing, and more importantly, why.
->>>
->>
->> The problem encountered is that when the host actively triggers ssr 
->> and collects the coredump data, the bt will send a reset command to 
->> the controller. However, due to the aforementioned flag not being set, 
->> the reset command times out.
->>
->> I'm not clear whether you want to ask about the function of 
->> HCI_QUIRK_NON_PERSISTENT_SETUP or why the changes are placed 
->> under if(!HCI_QUIRK_NON_PERSISTENT_SETUP).
->>
->> Regarding the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, 
->> you can refer to this commit. 740011cfe94859df8d05f5400d589a8693b095e7
->>
->> As for why it's placed in if(!HCI_QUIRK_NON_PERSISTENT_SETUP), 
->> since HCI_QUIRK_NON_PERSISTENT_SETUP is related to BT_EN, it can be 
->> used to determine if BT_EN exists in the DTS.
->>
->>>>
->>>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
->>>> ---
->>>>  drivers/bluetooth/hci_qca.c | 12 ++++++++++++
->>>>  1 file changed, 12 insertions(+)
->>>>
->>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->>>> index 4e56782b0..791f8d472 100644
->>>> --- a/drivers/bluetooth/hci_qca.c
->>>> +++ b/drivers/bluetooth/hci_qca.c
->>>> @@ -1653,6 +1653,18 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
->>>>  		skb_queue_purge(&qca->rx_memdump_q);
->>>>  	}
->>>>  
->>>> +	/* If the SoC always enables the bt_en pin via hardware and the driver
->>>> +	 * cannot control the bt_en pin of the SoC chip, then during SSR,
->>>
->>> What is the "SoC" here? Bluetooth chip? MSM?
->>
->> yes, Bluetooth chip on qcs9075-evk platform
->>
->>>
->>> What does "enabling the pin via hardware" refer to? Do we ever expect
->>> that a proper platform description skips the bt_en pin?
->>>
->>> Also:
->>>
->>> /*
->>>  * If the..
->>>
->>
->> Sorry, I’m not quite sure I follow—could you clarify what you meant?
->> Here is my understanding.
->>
->> Enabling pins through hardware refers to "the pin is  pulled up by hardware".
->> qcs9075-evk platform use the m.2 connective card, the bt_en always pull up.
->>
->>
->>>> +	 * the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
->>>> +	 * This leads to a reset command timeout failure.
->>>> +	 * Also, add msleep delay to wait for controller to complete SSR.
->>>
->>> Googling "bluetooth SSR" yields nothing, so it's fair for me to ask
->>> you to explain that acronym.. it's used a number of times across the
->>> driver, so perhaps a comment somewhere at the top in a separate commit
->>> would be good as well. I'm guessing "subsystem reset"?
->>
->> Just to clarify, SSR is short for Subsystem Restart
->>
->>>
->>> Konrad
->>>
->>>> +	 */
->>>> +	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
->>>> +		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
->>>> +		clear_bit(QCA_IBS_DISABLED, &qca->flags);
->>>> +		msleep(50);
->>>> +	}
->>>> +
->>>>  	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
->>>>  }
->>>>  
->>
->> Shuai
->>
-> 
-> Please let me know if there are any updates. Thank you.
+On Mon, 11 Aug 2025 at 23:18, Brian Masney via B4 Relay
+<devnull+bmasney.redhat.com@kernel.org> wrote:
+>
+> From: Brian Masney <bmasney@redhat.com>
+>
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 
-You're expected to address the review comments in a subsequent patchset
-revision, in this case please put the answers to the questions I asked
-in the commit message, or in the comments, so that someone else can
-make sense of the change
+Reviewed-by: Chunyan Zhang <zhang.lyra@gmail.com>
 
-Konrad
+> ---
+>  drivers/clk/sprd/div.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/clk/sprd/div.c b/drivers/clk/sprd/div.c
+> index 936782c241271832c0a1957c99cbecc287351d1b..013423881968002d29c4e9536e7cd7b944779196 100644
+> --- a/drivers/clk/sprd/div.c
+> +++ b/drivers/clk/sprd/div.c
+> @@ -9,13 +9,16 @@
+>
+>  #include "div.h"
+>
+> -static long sprd_div_round_rate(struct clk_hw *hw, unsigned long rate,
+> -                               unsigned long *parent_rate)
+> +static int sprd_div_determine_rate(struct clk_hw *hw,
+> +                                  struct clk_rate_request *req)
+>  {
+>         struct sprd_div *cd = hw_to_sprd_div(hw);
+>
+> -       return divider_round_rate(&cd->common.hw, rate, parent_rate, NULL,
+> -                                 cd->div.width, 0);
+> +       req->rate = divider_round_rate(&cd->common.hw, req->rate,
+> +                                      &req->best_parent_rate,
+> +                                      NULL, cd->div.width, 0);
+> +
+> +       return 0;
+>  }
+>
+>  unsigned long sprd_div_helper_recalc_rate(struct sprd_clk_common *common,
+> @@ -75,7 +78,7 @@ static int sprd_div_set_rate(struct clk_hw *hw, unsigned long rate,
+>
+>  const struct clk_ops sprd_div_ops = {
+>         .recalc_rate = sprd_div_recalc_rate,
+> -       .round_rate = sprd_div_round_rate,
+> +       .determine_rate = sprd_div_determine_rate,
+>         .set_rate = sprd_div_set_rate,
+>  };
+>  EXPORT_SYMBOL_GPL(sprd_div_ops);
+>
+> --
+> 2.50.1
+>
+>
 
