@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABBB0B22B37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:59:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 453C0B22B3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:59:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFD353A6067
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 14:53:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4A7718938FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 14:54:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29DAE2EA494;
-	Tue, 12 Aug 2025 14:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1BD52ECEA1;
+	Tue, 12 Aug 2025 14:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LK9PYvLY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nui3s+qa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB7427A11B;
-	Tue, 12 Aug 2025 14:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AF3311C18;
+	Tue, 12 Aug 2025 14:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755010386; cv=none; b=PUPwkphKZWSvA1Imv0dPUINJbbN7KvlJ7ni+ut8Go56V4oOeKwvppMm6fvPlq5FYwMP8oTqZv7Q6wExo6Cdx/UTwA95wNYpfmD+3ElMR5NNMa6bJazhF63P0xFSX1yBb31frJ1h7OtC5nuLtkHKcMzrVPG9YDTqbUYKvSZBRD+8=
+	t=1755010451; cv=none; b=VI9eNOP4E+xlEBc4EkC0Hff8doSUCNBI0goliZKV13GhxT/9y5IX8K+J5wVvFy+2LV4B9jCTbOGJtcBYjguOuiLdFtrFX+REyXbPl5+WAXcTXrRWPd7SooFw/xViJk2QGNswfKTTtaGrnirU6l69I9BZPE4UN8nGgGhNPRByeyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755010386; c=relaxed/simple;
-	bh=eBOnVqZXAYT2kt9PO9dWWMa5gg88jPJRWe9xlZvw/fE=;
+	s=arc-20240116; t=1755010451; c=relaxed/simple;
+	bh=g5fCqBl5dsv0V0pGbaBLBzhJRhsjr3sc5D0pgtO0H+A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PHI0BFnntNaWwG08zxjY2LNRnxmJaiVk0JXmtLKT9TwMOvbXzLxLjoU5/4BUcuyWz/gNSX1/jBD96fFcmu/infhA7O4+1XKNJGFHF9aLSaWDDEyFPpxIO/cRUuFeWlBpzVuhjfqBFPWWtu3bH26rnEE+e5c9AwZ7rqVgIWIyBkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LK9PYvLY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1EFC4CEF6;
-	Tue, 12 Aug 2025 14:53:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=p6EVvmIRZGODhrPRr9bz56NfKmGXxBGwesHjyYWKnTi/k2yjab7vOpoUs/99fAGr4C2YSlqIEDNmy78D7TApl6LOkIrXccY4wrv8Uhe9GSIulZ5WZgieJbguuZtPhK+baknZCIQ2cgBp8f3gVz0yuScfiJEB4HwOwfmVmGcoEpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nui3s+qa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE68C4CEF1;
+	Tue, 12 Aug 2025 14:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755010385;
-	bh=eBOnVqZXAYT2kt9PO9dWWMa5gg88jPJRWe9xlZvw/fE=;
+	s=k20201202; t=1755010451;
+	bh=g5fCqBl5dsv0V0pGbaBLBzhJRhsjr3sc5D0pgtO0H+A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LK9PYvLY47dkV0uWF8R4G3MV9yz2s+qndqR/sW9HKSy2Pfz1rmlBwbKN4+BoedhSX
-	 JIpXOmYk4jXTkUWOfDqPOilg4nbuLNzaRl9Trf1PEW+aEeaa82CHJJtTLJNKcO752R
-	 zYLrZ+hgzDJQ4ma4q5i0XCWMV65lf5rwFQrej5Opnwnj5HME+xjsBjeeR6Z5POehEG
-	 1VA51ADePXuF+fQW1QK6AWLNUKzeZGY4sMvTMP/zZ1ypbYsX0y6OVCTUETN1xtVsu7
-	 5X/nwwuM3EIq7IE1VaHFnq2W5rH5Qs7SPN/qHHObf+0zGRwGZfWvXc+TddUcidxXXY
-	 nwZZgBe7rZJrg==
-Message-ID: <fd08bf8f-9aa7-4bd8-8618-5e4247180f2c@kernel.org>
-Date: Tue, 12 Aug 2025 16:53:01 +0200
+	b=nui3s+qa6E5ph5emm8GzgJS34DPE8xcxaDPyvQ1LR2UdgA16EY4mGquDSUXLCRQlC
+	 6RnoTDF+oJl8ALq/rbjYMGAxycTPqhJnwCJsC9K67Xjpiay/KjzUaoRMOtZ0HQsuh/
+	 IqMdCt0Icjg0a4pJYSkXGR1mtroKkr3yHf79vzW6T3p4XriLvtA8QMo+piSD1SCd3O
+	 L+07pzBWYt/EnsH6K01PbswMTdZEvyBqaYawYhY8zFSk/QH/LrFHqHnb1oFGv7JCw9
+	 uOUSn8TO4rXWzJdBxhInI8LvGNN6KNY7tUkLpudQXRQKBXImSc25aPK1OoCk18CrUb
+	 RNMriTJvJOeWg==
+Message-ID: <fb8f154b-3da4-4bee-82e1-3a1597a35c46@kernel.org>
+Date: Tue, 12 Aug 2025 16:54:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Describe the first PCIe
- controller and PHY
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH RFC v2 1/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250811-sc7280-pcie0-v1-1-6093e5b208f9@oss.qualcomm.com>
- <8d5eb27e-e299-4fd9-a591-2d90f4693838@oss.qualcomm.com>
- <xirkug7igbf33nkxtkpdnma5wsepndasmka6fp3q3n6xsk4npj@jucnjfd7bqc2>
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
+ <20250806-b4-sm8750-iris-dts-v2-1-2ce197525eed@linaro.org>
+ <e414163e-e171-466f-965d-afb9203d32fa@oss.qualcomm.com>
+ <be5f18d9-a642-4b4e-bf69-e0108e988faf@kernel.org>
+ <6ffa8d6f-d5fb-4a94-ab7c-1a923cae1332@oss.qualcomm.com>
+ <7798fa0f-4786-42d2-913b-b76af91c94bc@linaro.org>
+ <1292b023-e575-4270-9cbe-8943ab137eb5@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,35 +112,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <xirkug7igbf33nkxtkpdnma5wsepndasmka6fp3q3n6xsk4npj@jucnjfd7bqc2>
+In-Reply-To: <1292b023-e575-4270-9cbe-8943ab137eb5@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/08/2025 16:45, Dmitry Baryshkov wrote:
-> On Tue, Aug 12, 2025 at 01:34:44PM +0200, Konrad Dybcio wrote:
->> On 8/12/25 5:16 AM, Bjorn Andersson wrote:
->>> Only one PCIe controller has been described so far, but the SC7280 has
->>> two controllers/phys. Describe the second one as well.
->>>
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->>> ---
+On 12/08/2025 16:45, Krzysztof Kozlowski wrote:
+>>> Weird, there's an entry in the frequency table for it (well, * 3 the
+>>> rate) and it comes out of the same PLL as other ones.. what sort of
 >>
->> [...]
+>> You mean freq_tbl in P_VIDEO_CC_PLL0_OUT_MAIN? Yeah, I also saw that.
 >>
->>> +		pcie0_phy: phy@1c06000 {
->>> +			compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy";
+>>> opp failures do you see?
 >>
->> :(
+>> Only:
 >>
->> BTW I noticed that Krishna also tackled the same issue just yesterday
->> on the internal mailing list.. would you prefer him to take it, or do
->> you want me to review this patch instead?
+>> [    9.306006] qcom-iris aa00000.video-codec: dev_pm_opp_set_rate:
+>> failed to find OPP for freq 630000000 (-34)
+>> [    9.316078] qcom-iris aa00000.video-codec: power on failed
+>> [    9.322001] qcom-iris aa00000.video-codec: core init failed
 > 
-> That means one thing: a lot of our engineers don't need to post patches
-> to the internal ML.
+> But I misunderstood you - I thought you want to replace 630, to match
+> downstream driver. If just added, then it's fine.
 
-
-Or waiting between v1 and v2 could be shortened to less than 2 years.
+... and to confirm: it works and I double checked it now with frequency
+plans, so I will add missing 570.
 
 Best regards,
 Krzysztof
