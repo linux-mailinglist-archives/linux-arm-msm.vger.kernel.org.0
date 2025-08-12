@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-68622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FF3CB21B51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:06:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86D3AB21B4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:06:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82C30620729
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:05:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 761BA189FC33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:06:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAA0D2E425E;
-	Tue, 12 Aug 2025 03:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ECB82E5417;
+	Tue, 12 Aug 2025 03:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nfoApEwy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RnDaSnPz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832332E4256;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A192E540A;
 	Tue, 12 Aug 2025 03:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754967898; cv=none; b=K38ynHEMlFvnYWmR1vjZ/Sh4SVhUE/8tU1ft7N9dzJhc4n45lmjTK+h1gg61gdmDm9/UH3oZ++zSZFok4tIX4pVq9gAcwGIL03+aTmLzCbcib55TaHUW5VpuByxJS+JDc6fNrduYn1dGA57O6/e/A1EH6Dvr8QduNfcc+1x99HU=
+	t=1754967899; cv=none; b=Kc+eaAanAbEwNUvouv4WRP/axpmxztOMyD6M3TFUXQw2gpijQsXz1BB9hxCt1xz6XBT5la6tK3aUEKQG+27m74mDFg/H1Cbrn1WEsvQEdRFH7NESV3OHP8QzyeN14sfmjMn+xdo2ioaR2QUW3+94OSRd9iKFQSY5Hvis43bOkFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754967898; c=relaxed/simple;
-	bh=1d29raijKfgWHD5hCxW0vbmlPpycZRFj22wMOw5cebc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDxY41B9qO0GuBAult4WggvYsMUV2qdMXB4qJliQ/Qgny5HBRFayVIu9MELxnoNbSjaqYc/0UILKg3axjGaay7WwBr1ioANEjYjY00pIWA+NEr6Ab4KtsYwPbG8KOcZi4p3DpO+RYfjh7ICB8VLgUG15G5I32dEXF9QifQJqBU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nfoApEwy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95ACCC4CEF6;
-	Tue, 12 Aug 2025 03:04:57 +0000 (UTC)
+	s=arc-20240116; t=1754967899; c=relaxed/simple;
+	bh=xo58y1MDcGiqstndJoFb6xcQeZgrGSPnsQNrDsmfHZs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qDoeQ6+QW2oMxCt1OkYtVlli22sqM3abjzVPhFBJzAFv45f00s9xG5ZY9mkSjj7ttx4MxsmM5oyOSurroIxtPj7YFa03kVJbVT2+NIif/TmNy4IgdR8A2QiGtWB0p0aOOJwVZxvQ7f+O3eA4UOiTBR8jFlwhLoEqcMyshBB19zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RnDaSnPz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4838EC4CEFD;
+	Tue, 12 Aug 2025 03:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1754967898;
-	bh=1d29raijKfgWHD5hCxW0vbmlPpycZRFj22wMOw5cebc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfoApEwy13s4DqPxHcP9FNk/+hF4on+mmb8pjXXhHn/ePdEwh8cGzBYPKATCfHdQG
-	 zfqT42XzNgsV9snc8vhoHf45L9n/Lqry0m4DqUhef1xjTUel+iR9sbGx/GjnjVnu0Y
-	 yk9HSntdeErRjG/fO9BiisAGOBe4a3VwQiRXEDCj7dX9173RR0u8YSeiXzekB5ntGc
-	 sY6WgNzlOUnAAKNkFJM88ieeNsnu7CprecmcWBnUZSuHlNef08Wx7zAchgUAUpFaDT
-	 63gvsrcB90IOWWoW0tT2qFKO2NI4iP1RocZN6UwOEdAJN81sVzQ1XgqmblqzsUTE6j
-	 S62M1Xq7WrZrQ==
+	bh=xo58y1MDcGiqstndJoFb6xcQeZgrGSPnsQNrDsmfHZs=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=RnDaSnPzc0o5oznt0L6gKnOfF4YXXNBiSHdmiXsjd57fpBaAE2Kkfen+se0+j4qo9
+	 cLIyIFINSOZUxd/lRdLkC3lwM831kNIYZ+lzVSwX0R1eLvBvqjbtnNMJeROPQT9T7q
+	 nziuWRIrhjHZQDkyR5oAul88CThIYxvD8oqnA2ENbXO5ewBRzpWLvyNI8/5DeaT3w/
+	 Ypvs0Nvmu0CoG6sjodPM2WAff2nc78MQcKSayrbNSVRS7/je2naUtZYUe9BzMhLW/0
+	 hyjGjxDUuSI3UQ/8wCpxVRMYDTuuChNJPJwvU8FQB5VyPEF67aUoQW7FdsgyKjEzs+
+	 tVAoPEQTW6Zaw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: robh@kernel.org,
-	krzk+dt@kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcm2290: Enable HS eMMC timing modes
-Date: Mon, 11 Aug 2025 22:04:47 -0500
-Message-ID: <175496788915.165980.5201241552223819071.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm670-google-sargo: enable charger
+Date: Mon, 11 Aug 2025 22:04:48 -0500
+Message-ID: <175496788910.165980.13558830629669575275.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
-References: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
+In-Reply-To: <20250630224158.249726-2-mailingradian@gmail.com>
+References: <20250630224158.249726-2-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,16 +65,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 28 Jul 2025 11:34:26 +0200, Loic Poulain wrote:
-> The host controller supports HS200/HS400 and HS400 enhanced strobe mode.
-> On RB1, this improves Linux eMMC read speed, from ~170MB/s to 300MB/s.
+On Mon, 30 Jun 2025 18:41:59 -0400, Richard Acayan wrote:
+> The Pixel 3a has a rechargeable 3000 mAh battery. Describe it and enable
+> its charging controller in PM660.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcm2290: Enable HS eMMC timing modes
-      commit: 1d363a6cf8a2627f31bc3609a0fa9d85dfb0d9dc
+[1/1] arm64: dts: qcom: sdm670-google-sargo: enable charger
+      commit: 8839b8e6e849e209b52bf0ae4d0770d89c036b0e
 
 Best regards,
 -- 
