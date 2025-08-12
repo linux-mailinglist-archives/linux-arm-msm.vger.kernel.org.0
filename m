@@ -1,174 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-68714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34845B222E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:23:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75BA5B22319
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:27:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE63E189F289
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:19:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3BA8816232C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 09:24:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C0092E92B0;
-	Tue, 12 Aug 2025 09:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE962E8DE7;
+	Tue, 12 Aug 2025 09:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lV4eq8Yz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AAdFQshg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4111C5D46;
-	Tue, 12 Aug 2025 09:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDEC2DECD8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754990258; cv=none; b=UxKKZ5VixcQVlPV7uaOcDzJ/4HrgVyC10hF7CCibhNmf4+p4ebyMdKbXVqaKDIq05L4UcwKv5zargwCCt2jeHQMohTVzjCrrljWYixIxdTnnyxusctwxtDUbP2rfz4ORqoMAi5IamX2ppc3M+yNgBo9hgScq+rJ3lCDqOIuehJ4=
+	t=1754990670; cv=none; b=n4wSDySEQ+PBecO7OCe/DPStz6qBdfv+XFjtmXjIFlFI1HJXAAnIoELqHmUV+oXXBNsbFVH5Q93W5dnuBw6X9oXYj4vvCM/T2Azcn6HOlnmSuHK0qZIHoQ0lZgvaSVhRgZTiSHY2/vgXSw9UixIa3QJyLYh5Mq4LcNVTzmeFdLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754990258; c=relaxed/simple;
-	bh=l+JPmVSGkKQNgqZW0QHP1wnt+nmYWZ0r+uotxr/gTtg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hGCkrEtCUO0QpExteV3/GYxR7XRzppne+ENOJUVTpBJ7/lz1J0XHQeRvwpdeS9l6eBH3d/HKw7jfok/hRBI3jrEm18RTMRAexsF2gDhDvPr8Nf8wyOyA+cfyjAX1yoXFv4Etdoj6I4CBdlza1OIqJz066fXm7j1QNc6QHG4s+vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lV4eq8Yz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C7FhQh008171;
-	Tue, 12 Aug 2025 09:17:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=iyvIoy5EeZGmERvcNtqAnD
-	yjt7Kpu0kI1S5BLe32aXY=; b=lV4eq8YziAKVw/fUM4WBmrihYxmoRGo74IOT9T
-	9CdNrMAPjyGTtXkc8kKiLKARCkUN7zuCO2lSseYn0ePwjyOYzlJbXXLI9altO0Rw
-	+1WhLE7KMaKXxu/IIU5QWaQQXi7updx3VuPemzfPETfWVBUe1+h2urVMrDPRNFZN
-	dG7Kz5wRUskFCporkoQ/1B8aB64Q64WhjPmh3V4CcRrD+v+Nt8tQNpuUNDZuW9Tu
-	Y5lAXQTkDQOTVxkqfZjHIzaKKCuEuLzxHViGv5pDmlGlMtLHClPO5l4efRCC+eKd
-	L9Q0QLAWYAqLJCUuQVQczmrDrt7O5lNdTleAqjGL72Ed2PLA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffhjkchf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 09:17:31 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57C9HUrm026331
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 09:17:30 GMT
-Received: from hu-pkambar-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Tue, 12 Aug 2025 02:17:28 -0700
-From: Palash Kambar <quic_pkambar@quicinc.com>
-To: <mani@kernel.org>, <James.Bottomley@HansenPartnership.com>,
-        <martin.petersen@oracle.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>,
-        Palash Kambar
-	<quic_pkambar@quicinc.com>
-Subject: [PATCH v3] ufs: ufs-qcom: Align programming sequence of Shared ICE for  UFS controller v5
-Date: Tue, 12 Aug 2025 14:47:14 +0530
-Message-ID: <20250812091714.774868-1-quic_pkambar@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1754990670; c=relaxed/simple;
+	bh=DQcGFfWnXmbY3cGH+AQhW2Dqz8CqmcsACn1g+EsVxDo=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wghoh3Qziz+mD9eFeOfjUd8MxdWySvtcgdHdRo/HskAxK2AGZ6zJgs6Vq/mT9FqvTc5nSFGqzMuJoCBNRejwZA4/WbSlerESF2BYH5nhfsIAk3I+DUBgDKwhKTc4te2xhiciFlIlk3xdS2DThVIGLOpcwGSflLRQYsegkm3tJOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AAdFQshg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C5P1tM022882
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:24:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=JbNwrBojJxdkzYo7Fd0J7AxB
+	G4xLKOGzvLpUDuXINjs=; b=AAdFQshgTrya4uNddpws/falCZqWiVjiB3wp709T
+	hqK/l+OKzCDqECVJmi5VUnAOoFQ29QPPnjlawlhaIXSu3DiyDv7Aqk5Y0zF8A+qg
+	TBrEZ95ztA4HDn8MWi51oMnOSPEUw1vJXwhjMflpTofmWqA7GsAYgtZgADnfTBTM
+	KnoDovPt3ZZ+pr4I6pA+iECQUzz9kPmlyL6lC4VZWlyq+m884NAYV+cwhewG/qp/
+	COnGsU1+VqCQBliGvPPwiKOayj7aSNY0CxaVhwmfMal68V0/ImTMJQjw1I0oMt5z
+	MhSi9gnNaTmTQRKovuDOdKGmcvcUCQNM7nXnXdxJ4Ppm6w==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj47j9b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 09:24:27 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b092c12825so145002931cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 02:24:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754990666; x=1755595466;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JbNwrBojJxdkzYo7Fd0J7AxBG4xLKOGzvLpUDuXINjs=;
+        b=m9HJ8rA+ecGsSfVts56GMT1y6M0g1IvRhE9cKaRTziwWRmoH8BMxdKyGWs8Ap/zmHJ
+         tnlHopZvC+b0UY7zZdRVjRcDDVQW4RVtfkJZYyRlc8tKVjGsL05f9IzHbnMDqDopOZQn
+         /cvsaNOSTkmrYHhmN7sx6hZvaEmf6YaXw9qmTV02w4fF3U3nUKferZ1+a6ARM1F3XByQ
+         sBuirmxJrwIAuDGi4SD0BPymwndwyMtvT8K3zxRllFAowDgVUR5bLNsu3RSGmSR7pqQX
+         gHwovv44S1Jn2oWMmsFfovjb7Dh6IXfH5hcoYkgQ1BPxVtAXek2mJcBn5wysm61fa4i+
+         vI3w==
+X-Forwarded-Encrypted: i=1; AJvYcCVY1sYPgsjY9aNRy6s7kGiby+q1o5X24fyikqqRcU7CA1wJokZPJaX6fj4T0Fk/Oo/MKr3QpFmAkelDU8gq@vger.kernel.org
+X-Gm-Message-State: AOJu0YycJQYr5AB2psZ6J390ZR0ATvUbo54Qg5JFkX4CVsqNXCgyMM9N
+	8A6NxdYIbv1u3jrQZpKDEABOmZmH+KHRo8FzPpIUai4ru19EJpx9C5OkFiHU8AcczAiUkPylL/G
+	GA1u3SvRb7aymQgBPc77V4fyA98wyja2yYLwJgnPyCSk8zZLV6l12UNkhXSutLktxzHDr
+X-Gm-Gg: ASbGnct8qqYj+7mzQhBZGx9vchBpqpYWw7qvPCHldDeurg5wsbgJ7hTYB+FXFgna1Nc
+	HIDHS9GBh8qyiVn0Ut8Ts5sPM2Ri9HZRo+eqBtii1EvBLPHhutu1FuCJ1mre630V4Op6V/Thhxk
+	93vKzpufL99ccCuPYa2Q94jCiBY2fmhPsdt3kJugdBNlEtoCwV4Q0dsVCVl+soWNYiNhllEaHj7
+	iaDxHFEb/CK8dmHodw6vE87YP5QAMMDrD8K1o7ZKQUBHuBypkkwB1Mys561MsWWoqu1/6XCL+9q
+	DuUXk8x8omgc6CEfGqdPnXtuH5Ns1rVB7t+vDws1gLh+p4U/GyYNZ25uu3PIZ76jN/je1A==
+X-Received: by 2002:ac8:5751:0:b0:4ab:751e:9d97 with SMTP id d75a77b69052e-4b0aed720a2mr256867351cf.49.1754990666365;
+        Tue, 12 Aug 2025 02:24:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBBYPf5IiNltyvzhJjTZ4jKDXmmEi9Yg+eQEVvuuplz7NeEAprCbyMCK3NFdwyFBTEoCSfJg==
+X-Received: by 2002:ac8:5751:0:b0:4ab:751e:9d97 with SMTP id d75a77b69052e-4b0aed720a2mr256867161cf.49.1754990665913;
+        Tue, 12 Aug 2025 02:24:25 -0700 (PDT)
+Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459db3048bdsm390721525e9.29.2025.08.12.02.24.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 02:24:25 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Tue, 12 Aug 2025 11:24:24 +0200
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] media: iris: vpu3x: Add MNoC low power handshake during
+ hardware power-off
+Message-ID: <aJsISDlgx1EZCzKn@trex>
+References: <20250812-sm8650-power-sequence-fix-v1-1-a51e7f99c56c@quicinc.com>
+ <acdff7a4-bd9f-45c1-b620-25e667d1f628@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NCBTYWx0ZWRfX4FjLjF4dWYWU
- 6S/HLygM0xSiydTRfPCINc4a91DPxUzwsUWO0gkv7YECR2qvX8rgk5iCZzVqIQy219Js6WbPe8s
- bzI/87dP3VkMeFZzePEAhNzOEGsh/sH6aLaRjNUhCtAK8LuC6pdKTPl9X2bQ1xDpKMutGv4qz1B
- 7GNi2OBPVl0Rs2vVMX97fkvdiDNkapZA0QipWoOJp2QQgfFf4p+KEuvLw9+dZEdJjyRwZcBD9h5
- VaiuY3KKxeB98ykz7aYikR5yowP46CYa2P+Sdl314qNEoOFYnIQnxnZ8VFcswTdsV+SMTwXneeC
- pDJxrJD7yFeXi49ktlfdRDHHqEv9ZWWNTikzxtbhI3kL5Ko5t5Jqptkyt65N7JV2nEHfJzIaERu
- 4BUMkgjp
-X-Proofpoint-GUID: 7WUXzIBLcuq0cE-PQirWhe3mnPo-VcFU
-X-Authority-Analysis: v=2.4 cv=TJFFS0la c=1 sm=1 tr=0 ts=689b06ac cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=VXgbpkJe1Aw4WB-MpbAA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 7WUXzIBLcuq0cE-PQirWhe3mnPo-VcFU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acdff7a4-bd9f-45c1-b620-25e667d1f628@linaro.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfX5JMQ2K4E9+J7
+ MHckjC/E9Tj9E8SAfupZqk3r7JRf4e3MvkODO4lg5DCRAsod4rnvBRxWENU7s6VcAMENzvPatcc
+ jA0ehdJ5fiI4H4Z5uRu/vSBICJJscCU61kTeLoapeAlZzU8smjoXNs7XUqscnRS6qe34kmbZWR5
+ QOhZF33v8S6SJspAnMtb2XsFXZ1YcKhZh7Rq13UPcBPixNemU1DkAsW79qX/2LOYJEHTcM8o/wE
+ 5aCQDgQ5sqkcP95RBS+LGksrNUqIizoaKp2H/8xuy0jcpPcuBZpfw1mrIYKCpQlYLdiZzpI/7ob
+ ghlbCSsWBZi6SuEPeY9W+69SLO4Aw1LowU38nGEShISKKf9Uu+HQMD6oe97uNUq7pG3LcTH05Sb
+ p6Naz37M
+X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=689b084b cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
+ a=Ovw8jLjI9PxWGIGDV-AA:9 a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: TYowfD-H_RPvXZjoysWLYnWGcqwUHIcq
+X-Proofpoint-GUID: TYowfD-H_RPvXZjoysWLYnWGcqwUHIcq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 classifier=typeunknown
+ malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110074
+ engine=8.19.0-2507300000 definitions=main-2508090027
 
-Disable of AES core in Shared ICE is not supported during power
-collapse for UFS Host Controller V5.0.
+On 12/08/25 10:06:40, Neil Armstrong wrote:
+> On 12/08/2025 09:48, Dikshita Agarwal wrote:
+> > Add the missing write to AON_WRAPPER_MVP_NOC_LPI_CONTROL before
+> > reading the LPI status register. Introduce a handshake loop to ensure
+> > MNoC enters low power mode reliably during VPU3 hardware power-off with
+> > timeout handling.
+> > 
+> > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > ---
+> >   drivers/media/platform/qcom/iris/iris_vpu3x.c | 23 +++++++++++++++++++++--
+> >   1 file changed, 21 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> > index 9b7c9a1495ee2f51c60b1142b2ed4680ff798f0a..c2e6af575cbe4b3e3f2a019b24eecf3a5d469566 100644
+> > --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> > +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> > @@ -110,6 +110,7 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
+> >   static void iris_vpu33_power_off_hardware(struct iris_core *core)
+> >   {
+> >   	u32 reg_val = 0, value, i;
+> > +	u32 count = 0;
+> >   	int ret;
+> >   	if (iris_vpu3x_hw_power_collapsed(core))
+> > @@ -128,13 +129,31 @@ static void iris_vpu33_power_off_hardware(struct iris_core *core)
+> >   			goto disable_power;
+> >   	}
+> > +	/* set MNoC to low power */
+> > +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> > +
+> > +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+> > +
 
-Hence follow below steps to reset the ICE upon exiting power collapse
-and align with Hw programming guide.
+for readibility purposes, could this code be restructed a bit
+differently? maybe all the write/read operations in a single do while
+loop with the exit conditions assigned to variables with an
+identifiable meaning?
 
-a. Write 0x18 to UFS_MEM_ICE_CFG
-b. Write 0x0 to UFS_MEM_ICE_CFG
+maybe also check/report errors outside the loop itself?
 
-Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
 
----
-changes from V1:
-1) Incorporated feedback from Konrad and Manivannan by adding a delay
-   between ICE reset assertion and deassertion.
-2) Removed magic numbers and replaced them with meaningful constants.
-
-changes from V2:
-1) Addressed Manivannan's comment and moved change to ufs_qcom_resume.
----
- drivers/ufs/host/ufs-qcom.c | 14 ++++++++++++++
- drivers/ufs/host/ufs-qcom.h |  2 +-
- 2 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 444a09265ded..60bf5e60b747 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -38,6 +38,9 @@
- #define DEEMPHASIS_3_5_dB	0x04
- #define NO_DEEMPHASIS		0x0
- 
-+#define UFS_ICE_RESET_ASSERT_VALUE	0x18
-+#define UFS_ICE_RESET_DEASSERT_VALUE	0x00
-+
- enum {
- 	TSTBUS_UAWM,
- 	TSTBUS_UARM,
-@@ -756,6 +759,17 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	if (err)
- 		return err;
- 
-+	if ((!ufs_qcom_is_link_active(hba)) &&
-+	    host->hw_ver.major == 5 &&
-+	    host->hw_ver.minor == 0 &&
-+	    host->hw_ver.step == 0) {
-+		ufshcd_writel(hba, UFS_ICE_RESET_ASSERT_VALUE, UFS_MEM_ICE);
-+		ufshcd_readl(hba, UFS_MEM_ICE);
-+		usleep_range(50, 100);
-+		ufshcd_writel(hba, UFS_ICE_RESET_DEASSERT_VALUE, UFS_MEM_ICE);
-+		ufshcd_readl(hba, UFS_MEM_ICE);
-+	}
-+
- 	return ufs_qcom_ice_resume(host);
- }
- 
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 6840b7526cf5..cc1324ce05c7 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -60,7 +60,7 @@ enum {
- 	UFS_AH8_CFG				= 0xFC,
- 
- 	UFS_RD_REG_MCQ				= 0xD00,
--
-+	UFS_MEM_ICE				= 0x2600,
- 	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
- 	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
- 
--- 
-2.34.1
-
+> > +	while (!(value & BIT(0)) && (value & BIT(2) || value & BIT(1))) {
+> > +		writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> > +
+> > +		usleep_range(10, 20);
+> > +
+> > +		writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> > +
+> > +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+> > +		if (++count >= 1000) {
+> > +			dev_err(core->dev, "LPI handshake timeout\n");
+> > +			break;
+> > +		}
+> > +	}
+> > +
+> >   	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
+> >   				 reg_val, reg_val & BIT(0), 200, 2000);
+> >   	if (ret)
+> >   		goto disable_power;
+> > -	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
+> > -	writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> > +	writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> >   	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
+> >   	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
+> > 
+> > ---
+> > base-commit: d968e50b5c26642754492dea23cbd3592bde62d8
+> > change-id: 20250812-sm8650-power-sequence-fix-ba9a92098233
+> > 
+> > Best regards,
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+> 
+> Thanks,
+> Neil
+> 
 
