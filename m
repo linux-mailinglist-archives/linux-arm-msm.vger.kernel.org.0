@@ -1,69 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-68848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F2F4B23B64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:58:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CA4B23B6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:59:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0A563B14A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:57:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E8DF6858B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:57:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BBA02E3AFC;
-	Tue, 12 Aug 2025 21:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C542E2DD4;
+	Tue, 12 Aug 2025 21:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U6okl9Iz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qZ5Z459G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CD52E2DD4;
-	Tue, 12 Aug 2025 21:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047A62D979B;
+	Tue, 12 Aug 2025 21:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755035801; cv=none; b=HhgvlkNl3Tgh/nlATNjbdBOPHl7WH0gtYaJlOWKdRVEwwP8Xnuv8zbTOw8TwVPo/TXZBsSJERagM2pZqYKA8udQiucedD99nHXPWLul2Ivke6HmCz0EE9M9qTxOUzMpl96eCNhMutoQh6KXg3jEAI8p9hImQSV6rD7HxUz3umJM=
+	t=1755035806; cv=none; b=gkGYYNQd73oYsXYRR3t5G02JL8vpCy3RiCv0pAyn09x7T6Lez4F2IfaY02ZqDCa82nFEhqOvPqBlcaKfFTNBMhzlEuo22t7zVElgrNx4n0K4Ke3aT2x194Qz7A7qcFHzYsgyl3xRNaEnIf42itrnFkjijWovTfdjKPKVDMK0QPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755035801; c=relaxed/simple;
-	bh=LeAvm0kodbf6Ts9L7dMnSh08EnxztEITYKbiYnbeZMk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g2JkqCbLaOOHRnQZCvTaMpg3Ame3C3QE/9jqD7Bnb/xCvs4QgTdcRZUKQX7PACpm/7dhGH97TgjE3z1JhAV5JYRGU8DZCmY44fq3rk4rp6hfHsYEt0iMP1L6hWAjyR/Sf1eQjQ4+wkXFJj5PT2lutlm2dkzBJlw7HyCBqdrXwhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U6okl9Iz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBF2C4CEF1;
-	Tue, 12 Aug 2025 21:56:39 +0000 (UTC)
+	s=arc-20240116; t=1755035806; c=relaxed/simple;
+	bh=NDLD3NsVvCXtl7LDr+SPcEI3AsU+BouXXm9SZWAoNvc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=awAH3vW1s5c+U8CyXlS8bjdbyxg2ym3acgaIzLsSSEMwVSkM50uQTM4/MSEtDJRVOdVaHvC7tF49EqLyD2QZXgI3PkHX/b68I65TAqzvrdCD2RzIKrwdnrryAIauLI4ZPJNjxN05pQhLIauYt5LsRazxdkAZUjOGsKKUBKORybQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qZ5Z459G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9988C4CEFB;
+	Tue, 12 Aug 2025 21:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755035800;
-	bh=LeAvm0kodbf6Ts9L7dMnSh08EnxztEITYKbiYnbeZMk=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=U6okl9IzBp8G8Eu/da8JtZmSbYQTvsi3bwYktct9KkSFsGty+cBk4A5OE5GF6S4Dr
-	 lynn4+uo3z/UsHFKyxsn5i7LclHBOTquXErS+J7UPj6sD9edRlRq2HE8YFpFwc2yL8
-	 d8iogu3Uu7deRlJareyDjtQWrsyph54wK+1u7NL3qbru6hO8AJPT4TN6DDz8qMqoik
-	 CnxM1usZslV9hPieDRpiByKwT/+uk1fsjYHctYO70mhf5EpD0X2LhhhG+wi3kiG7k3
-	 DJ5341IeGeTFSnz1CGLofCVcVIVgmW+qxG6n/PiT3e08Ogs/jSsj5bIzVeVc3kZQIm
-	 ENHVbmZozGVrw==
+	s=k20201202; t=1755035804;
+	bh=NDLD3NsVvCXtl7LDr+SPcEI3AsU+BouXXm9SZWAoNvc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qZ5Z459GffBJIyh6TZhRYzXPGGhVALpP4XAaVJjz0ooCUr7FWpFaMx6/daU26qfig
+	 ELva8aAQPv74C2Z7ekqlfzAWSb0Z5d7BkCK8Dh21WQpIkW00+ERMFl2dhNa5DTCOUj
+	 k74qx2fwNea0QFypcDWhqlrp684GFA+docEH12VP1WkpNmVFYze295W0q0ldgl7rL8
+	 QSAz/2xRCAwogmwFrLuIebgrS2iPyPOkXFoi81ewhywsjlv+eSY4VChMH72WwOHRhd
+	 1nT7eruMiT9/a972171OfhW5erTH4xgjWxMtRrpNWEPsuJHFeLWWxn+dGaGlSrdlny
+	 HLNFJGBvVBFgA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: mturquette@baylibre.com,
-	sboyd@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	rafael@kernel.org,
-	viresh.kumar@linaro.org,
-	ilia.lin@kernel.org,
-	djakov@kernel.org,
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v7 0/4] Enable cpufreq for IPQ5424
-Date: Tue, 12 Aug 2025 16:56:20 -0500
-Message-ID: <175503322864.231048.3923613819705551334.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v2 0/6] clk: qcom: Add video clock controller and resets for X1E80100
+Date: Tue, 12 Aug 2025 16:56:21 -0500
+Message-ID: <175503322861.231048.10717647956893595316.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250811090954.2854440-1-quic_varada@quicinc.com>
-References: <20250811090954.2854440-1-quic_varada@quicinc.com>
+In-Reply-To: <20250709-x1e-videocc-v2-0-ad1acf5674b4@linaro.org>
+References: <20250709-x1e-videocc-v2-0-ad1acf5674b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,23 +76,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 11 Aug 2025 14:39:50 +0530, Varadarajan Narayanan wrote:
-> CPU on Qualcomm ipq5424 is clocked by huayra PLL with RCG support.
-> Add support for the APSS PLL, RCG and clock enable for ipq5424.
-> The PLL, RCG register space are clubbed. Hence adding new APSS driver
-> for both PLL and RCG/CBC control. Also the L3 cache has a separate pll
-> modeled as ICC clock. The L3 pll needs to be scaled along with the CPU.
+On Wed, 09 Jul 2025 12:08:52 +0200, Stephan Gerhold wrote:
+> In preparation of adding iris (video acceleration) for Qualcomm X1E80100,
+> enable support for the video clock controller and additional needed reset
+> controls. Since iris in X1E is largely identical to SM8550, reuse the
+> existing videocc-sm8550 driver with slightly adjusted PLL frequencies and
+> adapt the reset definitions from the SM8550 GCC driver.
 > 
-> v7: Fix 'Reviewed-by' placement for bindings patch
->     Use enum instead of clock names for l3 pll
->     Select IPQ_APSS_5424 if IPQ_GCC_5424 is enabled
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: ipq5424: Enable cpufreq
-      commit: 77abf70ee126d40dba9ada0a4ccb4c7743f6a3e6
+[6/6] arm64: dts: qcom: x1e80100: Add videocc
+      commit: a8a5ea012471dd19ea9cb4d668c27ac678e84a3e
 
 Best regards,
 -- 
