@@ -1,86 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-68693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60BECB221B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:50:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB15B22198
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:46:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5295E628006
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:40:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D089566F92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:41:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A16722E8E1A;
-	Tue, 12 Aug 2025 08:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B8692E92AD;
+	Tue, 12 Aug 2025 08:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gufhqA2Z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZT3lTJhA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A102E8E0E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8072E92AF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754987873; cv=none; b=K09zhA/vtFvYZTHRQ6tTwdjneWQGUjIAscR5l0rrHuKGKNhZIvPDC7wbJ4pxcx4a3gU788n5XygmYJCev1jUo5zwME2LDyGYIy6GAQ6USIG5cqc3dYC8ZCWeJOi6KfpSfusoYbKN5/IYPbBf2nM+lwovQcuPhE9zQWnGwtniMjs=
+	t=1754987878; cv=none; b=cRN34DGUJyfjXOfLn/3gza7sCe3GW4JEWwy/QFTXWcppqKHQevQQ2Em7KuV6Qn8yUXQkvLzIqqs6BYWmk0GYCmrXOlv0am/8hrB9frtLQgEZvPyuVKKeOIqxnyD7nouo6mVkHJPPRgpvK6mO51a48XH/At1UwDoikZtBlnRIH1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754987873; c=relaxed/simple;
-	bh=D/F4ojh5lN6J1g3jMwklYOcZ7lTVu6mETleBG8wgOTk=;
+	s=arc-20240116; t=1754987878; c=relaxed/simple;
+	bh=XGiX4Gfca5hhkZ5WBB5kzoN3+KaO9zxGm+JxwB+Qnqw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hHbksOT03t/Scw2zXA6jNJy7hajhady+QDc+HWjKt4HljVxSBBAdC3P4DQd97msK5M7ZJZr4EIyYfvVptnEEnaVUEoVqWIKxgPUYfuRn9v1CwyEM+OF8z6Dehj40GhxXFFu1grqUOQSvGKgSbmQ9b5UiqoDRLej/G+I9Dl40hNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gufhqA2Z; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=CeXODUQ9skbV/j4IbZiBYU1x6FJWtAze3S6HOwvR/ikXm08pwAqnOzyhSIE07y6NEWW8JNI0FQYoVvuBxVG2U/1ky+SWSZf7NtM45j4BCFENYszHa8Stz+K8ALNn/VUd5M76sxhkoyX/cPpPeMW3eJzgkWAT3/uSp7jv3O0sNFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZT3lTJhA; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C5aB4W021352
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:51 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C5XLuT029228
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=wrGu5dBmfdM
-	mzrfdvoTs2DIE+CWt05hHpp1+g0Qaf2o=; b=gufhqA2ZBtkvBSF2b8ZHeibVtt5
-	H43hsVSJWZzwVH70ZTx66iee0kXSpyLFjt+WIp2nL/iJ10+tej5R08Dv4/VDezcV
-	kajiTaj4wwFt4VPqzZi7Lh5wwMxkEAF9r516yTN3ncFqMcTyKkNhez8wbYmg3NSU
-	ONPJprHDkB0q2vdSXmZ5QhokpifwubucDWxGjfMoqOIVrMZhX5Soc+NomHwPOww1
-	uMKm2Bk05Ar3iiqkoi1r6LXWS5PJN+6dACdhWbUCFcZA38v0KrAbkVhy6y6mWj0l
-	SuVOxLx9wkq/eJ8dmitZ8AsOqgluTivUGHqAcPJkB3g9RjL3Z6b5oYh3ahQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fm3vja8a-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=x1IUpmlclQ0
+	9bHbCcAYuy6OSpZ8BPA7QouFBaqx7SR4=; b=ZT3lTJhAaIKaH4BVqDqRNS0xXEX
+	lFUrMOzmBpNorqpYX2q4LRTIkcj6NzzoQ7sOVX+5ivF3sbaqGs38RgNEGw1H3p/+
+	B+8WvrCrl92OGiCbcQRtTFf7cYZhz+xep2u7r8np4k8WNgiXgw9S1DA+Jjsgt9fj
+	U0OGPBw2NkkcXfCrk/dXpNE9grpf9NMmmNUp5hHpRzRHLHjUXSs+4+yXG0P4W0mv
+	YGcGvtzTSRmuibOfd3HSzc3plNTDAtlKB37weNjHMsAoRcqyPs7gWAJrreyTwihh
+	3w4BCtOtPKiQwiszSen6ATR7NNIrKLdfSlqHl/o2NCSiRS3jzFYZicuOedQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dygmfcv2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:50 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-24011c9da24so47870335ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 01:37:50 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:37:56 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-240607653f4so46415765ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 01:37:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754987869; x=1755592669;
+        d=1e100.net; s=20230601; t=1754987875; x=1755592675;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wrGu5dBmfdMmzrfdvoTs2DIE+CWt05hHpp1+g0Qaf2o=;
-        b=MymKPXyXlNqfF5SvATO1fT34G7n7NsOmCewUUAL7DuZZhbeouK/u3P3LKkprlADkvb
-         w6A+6zSUSQIO/mA+pxgPkZ7QkWaXd8WoQ10U8T/073YNUuK54ScdS6+JJmRKc+Vm5/Na
-         dR1mrSgFBjWdTg+ktaJJ1u8QIQkV45+wmGS00MUgkccaJqOwYPhWeHInBa87x6j03BCt
-         M1rc9GnjYpDF8EpBojPD2b9AGJVyJZT2VlBr9J96WDJiQJZoP5cmeQZzApHPlh/I+6lW
-         Sj6O38EZTn65Ew4U6NUeJDte/vk1mYh/VpBA/PmGpxOrqeCkBA3AD8/XracjJkyrvAuP
-         82Jg==
-X-Forwarded-Encrypted: i=1; AJvYcCXtOFhSPhLU1dmp8634SiW2QrIW/iaCPnI4WB7Ruz9mmH7xCO4JqNfi5F96+uvIbp5SoWHxX0uREH0WisGc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbCfPcKgZuK73w3K002F6LCCzshF/8oio0ro9EjwrW6NCd8xZB
-	YzjIhRXgX5/c8Zh6Euke3IptdwYHEXnn8bV+XbquKIW9y3n+VHZ2lCXc4Jxvm/RFj7a0ltGuB1m
-	9nDEdJ0wGdcaPUsey8VRAXj9Yc3ZI3E6/bW03OavLDAeDlztT8wtZGwXG+RQwjgmHCQ4UnoJLRq
-	9l0vQ=
-X-Gm-Gg: ASbGncvFgQSH4Kz9Qud9s/N4u+Taq8b/rBEM4rJG+qlOEzY6Pl/CRdk4rp3PnFVr9ah
-	80M3GU/3xdOUhwN4o/1udvl3+XN/JiuY/WzJYsLrlXxIjFRwAN811Ew+lcOQ/rELrewEVDUO3MD
-	1eGiVJVIMZ7AWU3qNF+gGjuLLWKUp9qfhJWzvD++nLEcKkT1QK71KjyacUrV7xrYPcQ+6PWQOh1
-	FknJ/+N9YF9TgY4xfbgXVeAfWToWeyIXWZsi/XrWGM/gLj1OQZ1B1COma0SfhT42bS8eUAIxBJn
-	fWs97zoYMS9DOdngIeIQWrsfoxPO96xPTP6RY4JmlVYwOfDQ143UVVs4AT90AiAJbUybBjtJG6q
-	vrZ+V7FkIncs+quLfjsc=
-X-Received: by 2002:a17:903:32d0:b0:240:6fc0:3421 with SMTP id d9443c01a7336-242fc2df919mr32671905ad.3.1754987869213;
-        Tue, 12 Aug 2025 01:37:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1epWZtnF2IBB4X6gRIcAxheEo7d+5Pdk6LBydS5mLgAm0zXrYNJ+qesoW7cmIPGP6RrbrFw==
-X-Received: by 2002:a17:903:32d0:b0:240:6fc0:3421 with SMTP id d9443c01a7336-242fc2df919mr32671605ad.3.1754987868720;
-        Tue, 12 Aug 2025 01:37:48 -0700 (PDT)
+        bh=x1IUpmlclQ09bHbCcAYuy6OSpZ8BPA7QouFBaqx7SR4=;
+        b=k8DeyQYxkVHHr3lcHzo3IskJfTyPsMA57Cr1RyKgr24bK29lRYkAXeeRwtK4/BQh6d
+         bqxzwTkuBsC95p9pSZ/dzi3MYBHeOo0f3TapUWsGuDCYZzuFp3NhnyrkUNV8tohmlZWX
+         hCMFYZwPaN+6I/kceW7a+X+RaBs5e21PKQb6iF7gfsLN8ztXW3HwFyrwA+oEvh7vcISw
+         ugkNHmldvVpniTpdslXXu6+kczYGnL1UwR/PR003XPCXZ1bAdPOGAIsonTahOq9vtG5K
+         b+zo/bUedbqyhMwRwDv2QPid9h0pgIYzAEV0jV37QxfKIFWFeKdKkjsQjwTHWUgDER38
+         ROhA==
+X-Forwarded-Encrypted: i=1; AJvYcCUxV+M0bszVLCTNtgnw+q14sbVkz1e1EvtfXPvy9uMnaeg3aMV3w8h8RLumlYlCy8i5bBtqIbXqBAs1CpGA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzz+fqpJohXUmFgIWmkV/K2qvXBUwe6FjfSy48hH1rgrLD4oXGQ
+	x+2HVuI34iVXEIY/kYTEWuVaYA/tjutUjiqldwF2zzyI4y6Sol8CAoyb0bCFMt/Sdnsh+onY7Gx
+	EhHR7ftmYEgnzrX8nEM5LlHvxI2tEdIT85+Ti9jUF0+xE93RuZCp8wPSt8FNzwS0ETuGm
+X-Gm-Gg: ASbGncuVCh+qFsPgl8LbAJrdA/td2J8E1w1+anta5W9mYSfTBuk+U3X67/dKmnvMogh
+	XllYnf/b24HRxlxwbQ+dZYp0jGb6BRDJXWHHjGT2+bl4zmlMrA4TcGviTHuvCQrRq81Txm0gcwX
+	eKDgpuOK9X8keCvED//BDnPMNrsu1XnpAuV5Aajn43JtmGtaJbLWnwkFzJ7AGeyOO+WORXiR5Ve
+	v7nM5suY4uhugHINX3JgljdUwSeeqlKAnhQW/26AzhcEnl0TsBgiNcuSZnSUdLrKTPzJ7ekgbIK
+	X1hA7h417mlV/aULgNsw5igOGO9kEDMGlXJySfSIh8axp5LiY11WbrFePMKRIvo+HH+y3oCnd9a
+	YqwV7m88jAPRqnYNCXjE=
+X-Received: by 2002:a17:903:1a0f:b0:23f:c005:eab0 with SMTP id d9443c01a7336-242c22085e0mr247517395ad.40.1754987875214;
+        Tue, 12 Aug 2025 01:37:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSyTwItp4AzURKgkqbIXylqMcchbdJF5mW3fYQFHbXyc1v7LKgkg38a0UoXB11ZfsFFDrQmQ==
+X-Received: by 2002:a17:903:1a0f:b0:23f:c005:eab0 with SMTP id d9443c01a7336-242c22085e0mr247517015ad.40.1754987874696;
+        Tue, 12 Aug 2025 01:37:54 -0700 (PDT)
 Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-243086849b3sm1915345ad.175.2025.08.12.01.37.43
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-243086849b3sm1915345ad.175.2025.08.12.01.37.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 01:37:48 -0700 (PDT)
+        Tue, 12 Aug 2025 01:37:54 -0700 (PDT)
 From: Jie Gan <jie.gan@oss.qualcomm.com>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
         Mike Leach <mike.leach@linaro.org>,
@@ -97,9 +96,9 @@ To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v5 2/9] coresight: core: add a new API to retrieve the helper device
-Date: Tue, 12 Aug 2025 16:37:24 +0800
-Message-Id: <20250812083731.549-3-jie.gan@oss.qualcomm.com>
+Subject: [PATCH v5 3/9] coresight: tmc: add etr_buf_list to store allocated etr_buf
+Date: Tue, 12 Aug 2025 16:37:25 +0800
+Message-Id: <20250812083731.549-4-jie.gan@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250812083731.549-1-jie.gan@oss.qualcomm.com>
 References: <20250812083731.549-1-jie.gan@oss.qualcomm.com>
@@ -110,98 +109,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDEwNyBTYWx0ZWRfX1SOaaX/U3/9J
- Kz2o0PvDP/FSsABXsrSMc1YUCUSiHgTAHBRy0AoxDUtXFhJg7MBRbcAlF94YOxzkp8SPeM80e/m
- rQutznYZDtq04CboSk0n6QkofT9m1ZxB/X2hYgXYP/jWGquwIU3OiGH5Qo2U7JXDX8pLEBzeWt2
- 36LKDYXaRUD6XwD3e3FQmjR2Jzv6/K/T4fb6NncntZwolpSfAWvdCN4AYjk0Wf9oID2qW25LKam
- T4oKPd71kEGfijXP1lhH+C7UsTtWVa5WU9GpLP+N8KXmfFgjYZJvcsLwlUVLa2P6q8rKcxNbih7
- eI8TLRTCP/vXYFAWwzh1cbUzOBZueZq/TQO4+5rCWotteP9uiZaZSaVejI5gs/ORHBaAxFCfgXo
- hTLgk83o
-X-Proofpoint-GUID: YLygSvL-9o8NKPRgoFwLYZ9biA3o5IdS
-X-Authority-Analysis: v=2.4 cv=A+1sP7WG c=1 sm=1 tr=0 ts=689afd5e cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=ViBFXQGRTvhYuEXyb1sA:9
- a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: YLygSvL-9o8NKPRgoFwLYZ9biA3o5IdS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzNSBTYWx0ZWRfX6wXHKF1C7oj2
+ wq7Vh6HJNS4er7MkGa2pVCXM6VVTQcs9XBm1fe3dH6T2xC15Kb5LN7nAr/lo/dgIGmQQSUq/3zl
+ IUizME/lxWp9XB213fVIeFxN4pv6PRDs3uIudPSp72jk38JnTlGDUcIPvSyzsFEUl7SFRgFGZQi
+ 3IkDgJwWze4ZDyuv2ASc4mVyCJmWghmwHxtS19CTdq/ZsHG32XCFT9ptw9WoEJvIDbNgeQiH8CB
+ LZ+FwSYSHs0Qa1UasH2xB0n+HhhydwWsXQ3dhQa6iIvD7cCEFUEPgOj3h04nGmG508+kxCxirmO
+ JG99t63CyAkUq/iImgwWk0+UZidBd1Tz5jnmcyLUL8e9t/eVQYlA3QGLCFGrwgGFwLksvHzd1IU
+ IIylglom
+X-Authority-Analysis: v=2.4 cv=FvMF/3rq c=1 sm=1 tr=0 ts=689afd64 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=JdrPKQqGaJHjzi2MttEA:9
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-GUID: cOzi17VX5RvSxKhczfRrnF94KA0e3B6M
+X-Proofpoint-ORIG-GUID: cOzi17VX5RvSxKhczfRrnF94KA0e3B6M
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 classifier=typeunknown
+ priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110107
+ engine=8.19.0-2507300000 definitions=main-2508090035
 
-Retrieving the helper device of the specific coresight device based on
-its helper_subtype because a single coresight device may has multiple types
-of the helper devices.
+Add a list to store allocated etr_buf.
 
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
+The byte-cntr functionality requires two etr_buf to receive trace data.
+The active etr_buf collects the trace data from source device, while the
+byte-cntr reading function accesses the deactivated etr_buf after is
+has been filled and synced, transferring data to the userspace.
+
 Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 35 ++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-priv.h |  2 ++
- 2 files changed, 37 insertions(+)
+ .../hwtracing/coresight/coresight-tmc-core.c    |  1 +
+ drivers/hwtracing/coresight/coresight-tmc.h     | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 042c4fa39e55..018b1119c48a 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -580,6 +580,41 @@ struct coresight_device *coresight_get_sink(struct coresight_path *path)
- }
- EXPORT_SYMBOL_GPL(coresight_get_sink);
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-core.c b/drivers/hwtracing/coresight/coresight-tmc-core.c
+index be964656be93..4d249af93097 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-core.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-core.c
+@@ -830,6 +830,7 @@ static int __tmc_probe(struct device *dev, struct resource *res)
+ 		idr_init(&drvdata->idr);
+ 		mutex_init(&drvdata->idr_mutex);
+ 		dev_list = &etr_devs;
++		INIT_LIST_HEAD(&drvdata->etr_buf_list);
+ 		break;
+ 	case TMC_CONFIG_TYPE_ETF:
+ 		desc.groups = coresight_etf_groups;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+index 6541a27a018e..292e25d82b62 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.h
++++ b/drivers/hwtracing/coresight/coresight-tmc.h
+@@ -208,6 +208,19 @@ struct tmc_resrv_buf {
+ 	s64		len;
+ };
  
 +/**
-+ * coresight_get_helper: find the helper device of the assigned csdev.
-+ *
-+ * @csdev: The csdev the helper device is conntected to.
-+ * @type:  helper_subtype of the expected helper device.
-+ *
-+ * Retrieve the helper device for the specific csdev based on its
-+ * helper_subtype.
-+ *
-+ * Return: the helper's csdev upon success or NULL for fail.
++ * @sysfs_buf:	Allocated sysfs_buf.
++ * @is_free:	Indicates whether the buffer is free to choose.
++ * @pos:	Position of the buffer.
++ * @node:	Node in etr_buf_list.
 + */
-+struct coresight_device *coresight_get_helper(struct coresight_device *csdev,
-+					      int type)
-+{
-+	int i;
-+	struct coresight_device *helper;
-+
-+	/* protect the connections */
-+	mutex_lock(&coresight_mutex);
-+	for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
-+		helper = csdev->pdata->out_conns[i]->dest_dev;
-+		if (!helper || !coresight_is_helper(helper))
-+			continue;
-+
-+		if (helper->subtype.helper_subtype == type) {
-+			mutex_unlock(&coresight_mutex);
-+			return helper;
-+		}
-+	}
-+	mutex_unlock(&coresight_mutex);
-+
-+	return NULL;
-+}
-+EXPORT_SYMBOL_GPL(coresight_get_helper);
++struct etr_buf_node {
++	struct etr_buf		*sysfs_buf;
++	bool			is_free;
++	loff_t			pos;
++	struct list_head	node;
++};
 +
  /**
-  * coresight_get_in_port_dest: get the in-port number of the dest device
-  * that is connected to the src device.
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index e51b22b8ebde..f80122827934 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -158,6 +158,8 @@ void coresight_path_assign_trace_id(struct coresight_path *path,
- 				   enum cs_mode mode);
- int coresight_get_in_port_dest(struct coresight_device *src,
- 			       struct coresight_device *dest);
-+struct coresight_device *coresight_get_helper(struct coresight_device *csdev,
-+					      int type);
+  * struct tmc_drvdata - specifics associated to an TMC component
+  * @pclk:	APB clock if present, otherwise NULL
+@@ -242,6 +255,8 @@ struct tmc_resrv_buf {
+  *		(after crash) by default.
+  * @crash_mdata: Reserved memory for storing tmc crash metadata.
+  *		 Used by ETR/ETF.
++ * @etr_buf_list: List that is used to manage allocated etr_buf.
++ * @reading_node: Available buffer for byte-cntr reading.
+  */
+ struct tmc_drvdata {
+ 	struct clk		*pclk;
+@@ -271,6 +286,8 @@ struct tmc_drvdata {
+ 	struct etr_buf		*perf_buf;
+ 	struct tmc_resrv_buf	resrv_buf;
+ 	struct tmc_resrv_buf	crash_mdata;
++	struct list_head        etr_buf_list;
++	struct etr_buf_node     *reading_node;
+ };
  
- #if IS_ENABLED(CONFIG_CORESIGHT_SOURCE_ETM3X)
- int etm_readl_cp14(u32 off, unsigned int *val);
+ struct etr_buf_operations {
 -- 
 2.34.1
 
