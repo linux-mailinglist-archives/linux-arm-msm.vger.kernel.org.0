@@ -1,126 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-68731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BE46B22460
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:17:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB6D8B22455
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:14:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98FFC1B66EF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:14:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A9D317A588
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:14:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A66EC2EAD01;
-	Tue, 12 Aug 2025 10:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DCD1248F5A;
+	Tue, 12 Aug 2025 10:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLYXDj/x"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="DtpD1KnN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B582EACF9;
-	Tue, 12 Aug 2025 10:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D76A2EAD05
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754993607; cv=none; b=bLx8zNEcN7FIJyHkjGg88NMdWPQBn4zLzDXOxHTUJdtq5hC6xdgKuRmCqoegrhLaJ5ZRaPbuuDpAckPSISJxrvXv17eDR0gP+hfIYm8gxRb0Z8Q+MzZFNkfUVBwVq0g7eDxU4COfTpHRZaQR6eksO5u6AybWQNgUdCArUq3GJbk=
+	t=1754993624; cv=none; b=YtqCJ6XwnnqR2q98gqouowMHi8B9xdQf+ZSSNrPtH3MLlyMpNnWPar0wWOt6gmIqye1/6jYwk8uGh6Q4tTwBDUMP38wdl2BrnZ9KcPgg8BMNgUhZlCQ9rjNHzrkh3OHhs3w8Ttq/elx1ClSGu76C883NV2+SMnLeLhhsO0ABOng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754993607; c=relaxed/simple;
-	bh=BSRg+8J5PmIMQFGn3bsuR4yy/D1eKIlCM6YV8z7Osl8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Eyo5D9160a5WH3gvT5jDyRZfU+M375as+dQDXswSnx+de/3UdrNi5p8y4ioadh5JkpNtc0+qw+F87YTVDB80k6NTQ7TZLOs8vYRs1NUhfTdK0DkQ6oOfM7509XvBeWIa6UXYIE+ytffubadxAIH8tuJb5huxXXC9Y+KEHeDEi1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLYXDj/x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79B0C4CEF0;
-	Tue, 12 Aug 2025 10:13:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754993607;
-	bh=BSRg+8J5PmIMQFGn3bsuR4yy/D1eKIlCM6YV8z7Osl8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DLYXDj/xTXBF79kXrhl/gTeKer6+8xlN5E3U1ka7woIVt1fYHqe+kW6sH+wzcxyvX
-	 jwWwiQF0RZeTk4mwzb0m7wg6b1Wu0+KkJbTl10PE7Q8o6CVjpIZ289hlK1c40IdyUT
-	 UzRTR/KI7K9NR78JQeZ/Gv9m4UVVDhtyXJ6Y3u5yNwHB8UdHL1joyhOZfftbUeLQdf
-	 bDfTdfR/jG6IYZWf+JGZE+3N5QNFEy/4BwEStwfoq5/Y414h3qpc3FDfgxXxFr5bVu
-	 6yPbiOpYu25aDodX3VrEir7dZzMfsEi/kvG9jWInbTfgpnfdGadW8ZdUcgEkcYr/19
-	 UyD3vAt7OOjSw==
-Message-ID: <0291cbad-a904-4df7-8875-244f5657a46e@kernel.org>
-Date: Tue, 12 Aug 2025 12:13:22 +0200
+	s=arc-20240116; t=1754993624; c=relaxed/simple;
+	bh=BUfIlbd5/UkD2wVzHyZHd6/3DmqElGGDfku/aZ/JPzU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=mf0INUz1XOwaBNeKx07wcc4TKbQUrcegUhxLnQWK41f6MxCnOhdslWVabWUnxzia8PPYDqjrdUsYkRpiq9nyeeHgMv8s1DYwljRmLU+lubuAI/ANoFgV4eRB4gSXl+Btu6MLq0H0jV8Mn3z8xgb4OLEWYwsUFIOTR8MiSJYGlnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=DtpD1KnN; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-af94e75445dso951979966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 03:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1754993621; x=1755598421; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mFxusUULII2JCz6cFWedFdJO93eFdX6UtIqw/uCfDBk=;
+        b=DtpD1KnNeqMhJH76tZWp/JAkq/8BQn/FcoTLPjHVOQglkBCuyjBRFXflS4gB/q23Wh
+         0sj4smO7AuHu0SXW1y1QH7k6l+lUfXdtuvO+JmRWxsNe56NYb5Cz57Gig2lf3qudpS6D
+         DgDSCZ7x4g5p7zX1xPXOcqFZ/3yFQIOMiZaGAJ84N99AP4QhtdDIUb9f1Pz7cLFy5sai
+         xwoOxc1ST/p9/l9dM6kmtwYe4DLeYRjCoWAmRRAGF0Fnak6RqYQja1hB5EvQBgc9WFFz
+         dyaTvmMouqJR5KzuCuvNPYCHdledrHaZ08CNlUM6vpr07eFKHeGku6Fx51wKMIbdoGOF
+         c8hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754993621; x=1755598421;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mFxusUULII2JCz6cFWedFdJO93eFdX6UtIqw/uCfDBk=;
+        b=r8wSCn4gQVfp5W0+WJF5MMev8rCeaNhrF+9kGnzhxMtHCRgm8HOcCKH3nM781XElNr
+         T2CKvQKtEFpBoKd2JKJsVEazXVn9SrY1pWFcWNBvjFXDPhTyowUlo0hVOmQSr0/gGyot
+         ZBRb3BYzTaaUeid0UeLFb9CV7kDuzMmola1/ISnpwhs+jAl8QPUxwF+VPC+58qy63jQD
+         4iVPaDW557TGOheESUWnzkUaAgRhchocY8jiaGLVrzqhmNsUj7LHIysYjZv8doCB1+Pv
+         ZiB65c2jAwwNz+M6aBfBzShTsF/ea9Xs+JBihgMOD2XgI+KKc+qTcok6Ql74XJLMa7z0
+         PItQ==
+X-Gm-Message-State: AOJu0YwvFZvNIyBElapZ/nrQvGfkNVZn/dctdC0nlMKIo7nABUg69BLV
+	RyUtXNCfY0+hIG3ZUtyEhJ37XprlwAd+tUfZ9w7qZneueUzZC1kwgm6qiE15fRkfbkg=
+X-Gm-Gg: ASbGncu3GyTA7LiieACNxrUh80YCXEVci0rDpvS4PXnySXCFEsF1VjUl1EpyuULSycO
+	7yh9kWzDBNsUt0Ny4JtbCntK/v0rNgOmUMEaAUYTQliPf7SJdf3cI9e2exWICTiaUj8Z6Mu8UGs
+	MdzI7jNV+b1L5faLQptiNcvZGQMz8stSB6bxcpvPBkfVJm70YVHvhRGyOu5Tgk8FN+vkd0gtWNP
+	q5+O5FqEkGUL6AvoMc6beb6H+r4T/5vNOKrxqtO0SPNf3lVr9aBdYZHDrdtbEoRXSZRgHHyw/WD
+	zvPC0Bbh9Lxo37la+vZfHarITBnnaA1JpQBCtMjRtwKapIU2aESDbOErIOJNWQD85OHbIEDynMH
+	TD3OIldGY6UGWjkFrCjS3PQ8UUcRgAw==
+X-Google-Smtp-Source: AGHT+IG4ua34nZK6YcSnAqJDbTdQgxSKRc/Mui8zRSNQj1FuZgDFYh3if8GQtcr/adYrVmTV/vsBYA==
+X-Received: by 2002:a17:907:7fa8:b0:ae9:ca8f:9642 with SMTP id a640c23a62f3a-afa1e04122bmr244712166b.15.1754993620573;
+        Tue, 12 Aug 2025 03:13:40 -0700 (PDT)
+Received: from localhost ([2a05:2d01:2025:1908:e499:6dcf:1e86:8748])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a23ffc3sm2177082666b.124.2025.08.12.03.13.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Aug 2025 03:13:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: platform: qcom: Add a media/platform/qcom
- MAINTAINERS entry
-To: bod@kernel.org, quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
- hverkuil@xs4all.nl, mchehab@kernel.org, abhinav.kumar@linux.dev
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
-References: <20250812094718.11378-1-bod@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250812094718.11378-1-bod@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Tue, 12 Aug 2025 12:13:39 +0200
+Message-Id: <DC0DBER6477Q.143SU9KXEI6FN@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] phy: qualcomm: phy-qcom-eusb2-repeater: fix override
+ properties
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Pengyu Luo" <mitltlatltl@gmail.com>, "Vinod Koul" <vkoul@kernel.org>,
+ "Kishon Vijay Abraham I" <kishon@kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Konrad Dybcio"
+ <konrad.dybcio@oss.qualcomm.com>, "Abel Vesa" <abel.vesa@linaro.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250812093957.32235-1-mitltlatltl@gmail.com>
+In-Reply-To: <20250812093957.32235-1-mitltlatltl@gmail.com>
 
-On 12/08/2025 11:47, bod@kernel.org wrote:
-> From: Bryan O'Donoghue <bod@kernel.org>
-> 
-> Point the MAINTAINERS file to the linuxtv.org patchwork, to me for
-> merging media/platform/qcom and to the media-comitters gitlab.
-> 
-> Remove my +R from venus and iris so that get_maintainers.pl lists me for
-> drivers/media/platform/qcom as +M.
-> 
-> Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+On Tue Aug 12, 2025 at 11:39 AM CEST, Pengyu Luo wrote:
+> property "qcom,tune-usb2-preem" is for EUSB2_TUNE_USB2_PREEM
+> property "qcom,tune-usb2-amplitude" is for EUSB2_TUNE_IUSB2
+>
+> The downstream correspondence is as follows:
+> EUSB2_TUNE_USB2_PREEM: Tx pre-emphasis tuning
+> EUSB2_TUNE_IUSB2: HS trasmit amplitude
+> EUSB2_TUNE_SQUELCH_U: Squelch detection threshold
+> EUSB2_TUNE_HSDISC: HS disconnect threshold
+> EUSB2_TUNE_EUSB_SLEW: slew rate
+>
+> Fixes: 31bc94de7602 ("phy: qualcomm: phy-qcom-eusb2-repeater: Don't zero-=
+out registers")
+
+Oh, not sure how this happened. Thanks for catching this, I do see the
+problem in my original commit.
+
+Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Regards
+Luca
+
+> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 > ---
-
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Best regards,
-Krzysztof
+>  drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy=
+/qualcomm/phy-qcom-eusb2-repeater.c
+> index d7493c229..3709fba42 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> @@ -127,13 +127,13 @@ static int eusb2_repeater_init(struct phy *phy)
+>  			     rptr->cfg->init_tbl[i].value);
+> =20
+>  	/* Override registers from devicetree values */
+> -	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &val))
+> +	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
+>  		regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, val);
+> =20
+>  	if (!of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &val))
+>  		regmap_write(regmap, base + EUSB2_TUNE_HSDISC, val);
+> =20
+> -	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
+> +	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &val))
+>  		regmap_write(regmap, base + EUSB2_TUNE_IUSB2, val);
+> =20
+>  	/* Wait for status OK */
 
 
