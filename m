@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-68661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15422B22026
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:02:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46F7AB22030
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:04:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B05043A7CB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:01:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6778A17CA56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:04:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79C392D8DA9;
-	Tue, 12 Aug 2025 08:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75632DE6F7;
+	Tue, 12 Aug 2025 08:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R1NZAJHd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ceqWJ7AD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498F1311C3B;
-	Tue, 12 Aug 2025 08:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A56442C;
+	Tue, 12 Aug 2025 08:03:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754985663; cv=none; b=aOwjerLQ9XOri8h9Lm2dlnAZwJoDqnGSwWxRcTLxXbvlSRV7fVpGtQ99fSH6Hw3iEuflRoU2tM8VCtrXclmlzXQf11jocTlQ3zHzqb8n/TL/ryvNwJnspjyZdOtDYbM/Ybz05lCnPMdkId3lT5Vn8Sn3rmqekPd/cwiVlky60vg=
+	t=1754985835; cv=none; b=lVhDQhRig5Fq7uIc3IefKDYmkbZsYprYcDlc7S1cg2bweL1CLqEimxnvmOlCKLjoNMnZ8FSItSHg/KvLChtfjiMFMSeBQIOTCD7c9FMTp/hVwiG3IbESfETzkJ1h9fm+kNG5iW1nuL7duJSsvtKtPvqGfUOmFuUWFEJDXxmUTp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754985663; c=relaxed/simple;
-	bh=Qz5rVNLv9JvrQB+FK58nkzEJzkYI9AFUBSjceIHbWTY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UO5dYUnV5f3V+oepRA7jVFn4SDp3Ldp1v1khd8HoZwF5iM6e8Jdlxnjn9Jqlr8hc/eBPuTvqMNWFxv/Cxi9w+x0C6CirfQ8dQLLmTcwuilNRKUxrm0C/gQXcpgdz4BTew7zM6cUblJoXxnYta8082yBYqrNJrNFGTlPo6s7bSuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R1NZAJHd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E95C4CEF4;
-	Tue, 12 Aug 2025 08:00:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754985662;
-	bh=Qz5rVNLv9JvrQB+FK58nkzEJzkYI9AFUBSjceIHbWTY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R1NZAJHdrQE8ELLxJtSEPOn5EJepDr1Pr6ive+2JtpZazE4JGXu8T/3RVijwhP9am
-	 jXSx6AvJOCXjp0Js0w/jkipA3dfKdRWNltbKL4+6MLHSwZ4pdtaRJcvMDuEoyyFSh6
-	 TVa1WukLM9tYO5bdbcKEF4RkfWntddCuWLSKxenTR2WwDwxfxkO1iWDaZ6XDtqsCea
-	 DuVnjoUQJOEdqIv5XMELAOFFRAqJHK5mdDjzJvxc5qBDmuXyZfrbXcPkj+btcRmGq+
-	 /NZrfyKCwHDvVNMRm+ScC9M+ciVj/nsd7bb1/HTWqNydVAO1mFGRQGq9DMTkzZVPGS
-	 vzCprcrrzeOkw==
-Message-ID: <8d8dcaef-eb96-4e7b-9a0a-8b3836cb284c@kernel.org>
-Date: Tue, 12 Aug 2025 10:00:58 +0200
+	s=arc-20240116; t=1754985835; c=relaxed/simple;
+	bh=zhC1bFpNgvEo+/bXsCr9kxpuP5NFxHWfs9bUmivwlBk=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=NMXln1dqRCUPLXtCdbBEStvZV4RVWiXz1cVqgFyo+p88y16JRzT23Qj/bmEdrJKt5V9p4vvqgoI/Axa52AmaO081+784sPP8duB2qJz7zhAMwRkkhcKZIWKz9kNz14DLjLX30UNsmN8+zPRGHc8sQ3wdxPKqMryGfyWbCj7ufbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ceqWJ7AD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C4anuP019037;
+	Tue, 12 Aug 2025 08:03:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jYGNuMqNEzyoSiM1coiwrxw+b216a1k5SRmtSYIjUK0=; b=ceqWJ7ADue83R747
+	+DZkkOhxoJxK059vUH0LiLRx68v6P+FdU/Ei8Mn8NuKjlk7J1Yte56z3/yGiwKtH
+	jYyjOIGMHBFFtCQrI4O/xGAtfL34t3o9mzE9Jlduvj0iTbhxg8q9u8jHps4uS43s
+	+Y8ZeCTVSi8yKWTqYrI2GqnOihvPEMbqz0Oi1M9FyXngzwcAGBMtj6qburXBP4uq
+	tPM6wQN7FNhoeg22Ij830TGjrQmgpqj9mZr7TxbssVRLSgPgyEGk85NM7FOpdUPq
+	QpcYXl2mkiRv7pTkDLMsJelJ3A8bS+nrgxC5ms+eM7t+JIps2FZay1dmJE/sQ45c
+	kZ2bMw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxduyadp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Aug 2025 08:03:52 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57C83pUt010814
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Aug 2025 08:03:51 GMT
+Received: from [10.253.11.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 12 Aug
+ 2025 01:03:49 -0700
+Message-ID: <0a6d6ae7-67f2-4974-b005-f36ee8707c67@quicinc.com>
+Date: Tue, 12 Aug 2025 16:03:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,92 +65,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] media: dt-bindings: qcom,sm8550-iris: Add SM8750
- video codec
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org>
- <20250804-sm8750-iris-v2-1-6d78407f8078@linaro.org>
- <683024c7-3740-cb9a-6924-33816edd63f3@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 1/3] driver: bluetooth: hci_qca: fix ssr fail when BT_EN
+ is pulled up by hw
+From: Shuai Zhang <quic_shuaz@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC: <quic_bt@quicinc.com>
+References: <20250715051618.724475-1-quic_shuaz@quicinc.com>
+ <20250715051618.724475-2-quic_shuaz@quicinc.com>
+ <ee84aeb0-728a-4642-9686-3abb9588bb24@oss.qualcomm.com>
+ <e7e700e4-e87c-4e2c-8df1-634870ba91b2@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <683024c7-3740-cb9a-6924-33816edd63f3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <e7e700e4-e87c-4e2c-8df1-634870ba91b2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=689af568 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=0mwEwrqexmEsALdfmGcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: CITD3p83s6-kO_y15Mr0xYYgYau1HFGz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX1ofGM8DFBhxN
+ g0oaSmMhAT3JdPx695ImdQr+fpUJcWVzWTP1mubDknRdViafKi31F/FX0/YnnGcVWQUb0WOo/so
+ Vf/ueGWXq1HlMZpWuE8xs5cDT5nZSCJuC5f05K1M035fgZUiyEeQsXwRi8RgXu3tJJ3OpsTNdr1
+ tbdveUllcmGfLg8jVF3meC9sp8EM0HaLxW5Q1wOIK6ChL5sIN2g2r8bnaDzLdiqk/BO1gbmD0zH
+ oY2fmirpc9PyW5h0UgiyevjMARpvKkO4RXgHfqz+ej84lPV8Mj7r6oXFUg0buIo9xWvo+dPgAlz
+ 6DN2xGeiEU+MgQ5pD6d3C775WphSjrzT95vPun5m+OiA1Ep0rThN7h3m/qcZ2gME6YMAg2L03RQ
+ frjFvY1f
+X-Proofpoint-GUID: CITD3p83s6-kO_y15Mr0xYYgYau1HFGz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090025
 
-On 12/08/2025 09:54, Dikshita Agarwal wrote:
+Hi Konrad
+
+On 7/19/2025 7:32 AM, Shuai Zhang wrote:
+> Hi Konrad 
 > 
-> 
-> On 8/4/2025 7:07 PM, Krzysztof Kozlowski wrote:
->> Add binding for Qualcom SM8750 Iris video codec, which comes with
->> significantly different powering up sequence than previous SM8650, thus
->> different clocks and resets.  For consistency keep existing clock and
->> clock-names naming, so the list shares common part.
+> On 7/15/2025 5:11 PM, Konrad Dybcio wrote:
+>> On 7/15/25 7:16 AM, Shuai Zhang wrote:
+>>> the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
+>>> This leads to reset command timeout.
 >>
->> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../bindings/media/qcom,sm8750-iris.yaml           | 186 +++++++++++++++++++++
->>  1 file changed, 186 insertions(+)
+>> This is a description of what goes wrong in terms of the code of
+>> this driver, and it doesn't explain why you gate the code addition
+>> with HCI_QUIRK_NON_PERSISTENT_SETUP, please share more details about
+>> what you're doing, and more importantly, why.
 >>
 > 
-> Query:
-> Can the additional reset and clocks be accommodated in existing 8550-iris
+> The problem encountered is that when the host actively triggers ssr 
+> and collects the coredump data, the bt will send a reset command to 
+> the controller. However, due to the aforementioned flag not being set, 
+> the reset command times out.
+> 
+> I'm not clear whether you want to ask about the function of 
+> HCI_QUIRK_NON_PERSISTENT_SETUP or why the changes are placed 
+> under if(!HCI_QUIRK_NON_PERSISTENT_SETUP).
+> 
+> Regarding the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, 
+> you can refer to this commit. 740011cfe94859df8d05f5400d589a8693b095e7
+> 
+> As for why it's placed in if(!HCI_QUIRK_NON_PERSISTENT_SETUP), 
+> since HCI_QUIRK_NON_PERSISTENT_SETUP is related to BT_EN, it can be 
+> used to determine if BT_EN exists in the DTS.
+> 
+>>>
+>>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+>>> ---
+>>>  drivers/bluetooth/hci_qca.c | 12 ++++++++++++
+>>>  1 file changed, 12 insertions(+)
+>>>
+>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>>> index 4e56782b0..791f8d472 100644
+>>> --- a/drivers/bluetooth/hci_qca.c
+>>> +++ b/drivers/bluetooth/hci_qca.c
+>>> @@ -1653,6 +1653,18 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
+>>>  		skb_queue_purge(&qca->rx_memdump_q);
+>>>  	}
+>>>  
+>>> +	/* If the SoC always enables the bt_en pin via hardware and the driver
+>>> +	 * cannot control the bt_en pin of the SoC chip, then during SSR,
+>>
+>> What is the "SoC" here? Bluetooth chip? MSM?
+> 
+> yes, Bluetooth chip on qcs9075-evk platform
+> 
+>>
+>> What does "enabling the pin via hardware" refer to? Do we ever expect
+>> that a proper platform description skips the bt_en pin?
+>>
+>> Also:
+>>
+>> /*
+>>  * If the..
+>>
+> 
+> Sorry, I’m not quite sure I follow—could you clarify what you meant?
+> Here is my understanding.
+> 
+> Enabling pins through hardware refers to "the pin is  pulled up by hardware".
+> qcs9075-evk platform use the m.2 connective card, the bt_en always pull up.
+> 
+> 
+>>> +	 * the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
+>>> +	 * This leads to a reset command timeout failure.
+>>> +	 * Also, add msleep delay to wait for controller to complete SSR.
+>>
+>> Googling "bluetooth SSR" yields nothing, so it's fair for me to ask
+>> you to explain that acronym.. it's used a number of times across the
+>> driver, so perhaps a comment somewhere at the top in a separate commit
+>> would be good as well. I'm guessing "subsystem reset"?
+> 
+> Just to clarify, SSR is short for Subsystem Restart
+> 
+>>
+>> Konrad
+>>
+>>> +	 */
+>>> +	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
+>>> +		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
+>>> +		clear_bit(QCA_IBS_DISABLED, &qca->flags);
+>>> +		msleep(50);
+>>> +	}
+>>> +
+>>>  	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
+>>>  }
+>>>  
+> 
+> Shuai
+> 
 
-No, different hardware. Although it is hardware from your domain and
-your company, so I would assume you know the answer.
+Please let me know if there are any updates. Thank you.
 
-Best regards,
-Krzysztof
+BR,
+Shuai
+
 
