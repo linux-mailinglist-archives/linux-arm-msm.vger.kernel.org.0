@@ -1,63 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-68621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27855B21B42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:05:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FF3CB21B51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:06:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8F7B464261
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:05:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82C30620729
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0893E2E3B00;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAA0D2E425E;
 	Tue, 12 Aug 2025 03:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L91uTGKs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nfoApEwy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AEA2E370F;
-	Tue, 12 Aug 2025 03:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832332E4256;
+	Tue, 12 Aug 2025 03:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754967897; cv=none; b=QAWZpzoQ4sU5d/JF3BNcwQOTDyVwPgOlb7itGldMBvuCthp7wSIgOFSmYFEX2zRcOw8TFvbHuV7KHL5eSZtf1Yrh69I7SUvPPlWZ3vj4kT02scr74bmqm1XnhvZAEtCpHSQrchyB1bRlgHJTWtxl4jfZo6GRSEKT2ginN6tJmvo=
+	t=1754967898; cv=none; b=K38ynHEMlFvnYWmR1vjZ/Sh4SVhUE/8tU1ft7N9dzJhc4n45lmjTK+h1gg61gdmDm9/UH3oZ++zSZFok4tIX4pVq9gAcwGIL03+aTmLzCbcib55TaHUW5VpuByxJS+JDc6fNrduYn1dGA57O6/e/A1EH6Dvr8QduNfcc+1x99HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754967897; c=relaxed/simple;
-	bh=cp8a6HIynIq9+EZwCU1mEZl2oMBlXHSZ/lMlEtjWJ7A=;
+	s=arc-20240116; t=1754967898; c=relaxed/simple;
+	bh=1d29raijKfgWHD5hCxW0vbmlPpycZRFj22wMOw5cebc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=joOqcNzz0CAm3DahriUphhG96upAt8S8OVKponuXqz/g58JQWYVvjuaDySiVJ0UJaqrpsSZ9QiIqjXkBHDnFgPAer55xl6cGudTvG1l7H1UeFE1JZ9t6cphqcdbLaqbaq503Oq+JkBuWMbUDfV1ady2bSGM6Il2nr3AQsrT5aXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L91uTGKs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA40DC4CEFB;
-	Tue, 12 Aug 2025 03:04:56 +0000 (UTC)
+	 MIME-Version:Content-Type; b=IDxY41B9qO0GuBAult4WggvYsMUV2qdMXB4qJliQ/Qgny5HBRFayVIu9MELxnoNbSjaqYc/0UILKg3axjGaay7WwBr1ioANEjYjY00pIWA+NEr6Ab4KtsYwPbG8KOcZi4p3DpO+RYfjh7ICB8VLgUG15G5I32dEXF9QifQJqBU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nfoApEwy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95ACCC4CEF6;
+	Tue, 12 Aug 2025 03:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754967897;
-	bh=cp8a6HIynIq9+EZwCU1mEZl2oMBlXHSZ/lMlEtjWJ7A=;
+	s=k20201202; t=1754967898;
+	bh=1d29raijKfgWHD5hCxW0vbmlPpycZRFj22wMOw5cebc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L91uTGKsSdnj9/XI3Do9i3ka2pMpwiGoCiayxIxVydUe9yYvvezLcWzRMzVoHlAoj
-	 R6ZMDwGvrO5zy/kGAypJA0ZL78r9sqKQOBAEKIuDokh2za4sd0SNynFRw6n4fFg6+r
-	 UBcwZWkFwtAP1y53YaVH5ArE54MASIrQ59NkCOyjoXf1LRSvcfpS5bf45zw23pS6JE
-	 iUYNMQEk5DW1sUWbgYurz9dSg8G5rFxyG6GkLvVCwOgGUAwObOStleHDcztABV6/RG
-	 z/hFLxCEr0kn8GeNayNWwxb0uvMJ/oh/UMKi2/GWoEf8rtqiSQGpZ9tgH0xHpDWoNJ
-	 NqJ2z+ADr+dEg==
+	b=nfoApEwy13s4DqPxHcP9FNk/+hF4on+mmb8pjXXhHn/ePdEwh8cGzBYPKATCfHdQG
+	 zfqT42XzNgsV9snc8vhoHf45L9n/Lqry0m4DqUhef1xjTUel+iR9sbGx/GjnjVnu0Y
+	 yk9HSntdeErRjG/fO9BiisAGOBe4a3VwQiRXEDCj7dX9173RR0u8YSeiXzekB5ntGc
+	 sY6WgNzlOUnAAKNkFJM88ieeNsnu7CprecmcWBnUZSuHlNef08Wx7zAchgUAUpFaDT
+	 63gvsrcB90IOWWoW0tT2qFKO2NI4iP1RocZN6UwOEdAJN81sVzQ1XgqmblqzsUTE6j
+	 S62M1Xq7WrZrQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: cros-qcom-dts-watchers@chromium.org,
+To: konradybcio@kernel.org,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Flatten usb controller nodes
-Date: Mon, 11 Aug 2025 22:04:46 -0500
-Message-ID: <175496788918.165980.17430518825409421820.b4-ty@kernel.org>
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcm2290: Enable HS eMMC timing modes
+Date: Mon, 11 Aug 2025 22:04:47 -0500
+Message-ID: <175496788915.165980.5201241552223819071.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250728035812.2762957-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250728035812.2762957-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
+References: <20250728093426.1413379-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,16 +64,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 28 Jul 2025 09:28:12 +0530, Krishna Kurapati wrote:
-> Flatten usb controller nodes and update to using latest bindings
-> and flattened driver approach.
+On Mon, 28 Jul 2025 11:34:26 +0200, Loic Poulain wrote:
+> The host controller supports HS200/HS400 and HS400 enhanced strobe mode.
+> On RB1, this improves Linux eMMC read speed, from ~170MB/s to 300MB/s.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc7280: Flatten usb controller nodes
-      commit: d72cb0551d113a0a42e12dcdfdad78ade2c63f50
+[1/1] arm64: dts: qcom: qcm2290: Enable HS eMMC timing modes
+      commit: 1d363a6cf8a2627f31bc3609a0fa9d85dfb0d9dc
 
 Best regards,
 -- 
