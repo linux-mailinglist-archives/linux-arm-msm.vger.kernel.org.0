@@ -1,58 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-68839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA002B23A80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:16:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F07E2B23A79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 23:15:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A75F1899A32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:14:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A57A584FB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 21:15:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 777B32D061D;
-	Tue, 12 Aug 2025 21:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE8B204C36;
+	Tue, 12 Aug 2025 21:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K4D7z+GW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ih3LCefU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500F02512F5;
-	Tue, 12 Aug 2025 21:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D2B2F0698;
+	Tue, 12 Aug 2025 21:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755033259; cv=none; b=O7qAlAMk5dL3PFsfRCdyxrap3kIZNG0msxYfhZcy71HdKmojCkQ8gvvuBqqpF+JX0nYLZKvicrIERq1x5fuWF7C8s1cKu7JuiuV4S2kKShpP4+iax8X4/1VDxmZeX5qEGACpoYqokJoWJ1KYUpxBM/y0KbrdIvtCEMHZ9y1YFQw=
+	t=1755033341; cv=none; b=Wax8j/0zzZ8gT+KSNuwwodGJpf65+oBM8d7SIOMNOx7LCcYUfIZmCeNLbnm6TzDdI0Q6/XKHRWVS0mpSEYJuv+fTwffFRaH+5cSsATmw+Rq4Q0WesURYLK7iYI9KPKxqU4YJ7efez/Vhgo1gapxgdwp75iUEBay4aAPs4czWD6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755033259; c=relaxed/simple;
-	bh=l1TeicWjiWBRD0Qr1qknQQP4Wv9kfWJUr80iSElIacg=;
+	s=arc-20240116; t=1755033341; c=relaxed/simple;
+	bh=HcOxzS6qBsSVE3yw+XQzBxASJfQdC62OPfuwpF03smk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FopTkc12dLDRQfOy5ExKE03yBBafm1m8N/BnvlT1WVBsQahA+7oSXwmtbon1eZZjeDL6ZjbULG+/eKVIkctmxWTCVi+taizc5+EviqypWMZIflFPrmG6scXrPYJ+O8x0d7p3oSHKUGF+bp5byHACvhQ9mJMMgUEO84j8qtHvtSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K4D7z+GW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8323C4CEF9;
-	Tue, 12 Aug 2025 21:13:59 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Ijpd1V076h0A4DEHpckgCe1+nhwCCb09cUFe17rfRS5Nha2l8dIaKu8YlSA+/qjrdL0Tb6ZwVvvXaAKAAKEonCgYuzW2svSJo10CVil/OfAv1lKUZmOBQ96AU5IhTe/NIBucJJwDE0WFqxNGDoiYDSWafOpuEwZitvtTa4L0ORQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ih3LCefU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E79FC4CEF1;
+	Tue, 12 Aug 2025 21:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755033259;
-	bh=l1TeicWjiWBRD0Qr1qknQQP4Wv9kfWJUr80iSElIacg=;
+	s=k20201202; t=1755033340;
+	bh=HcOxzS6qBsSVE3yw+XQzBxASJfQdC62OPfuwpF03smk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4D7z+GWWRd/DLlH4gxgjvsPcluttd7ze8nCQ/ipvUOhGohtak6i6Z3Wb97g6F4JO
-	 EQe8eUq+17gJZFyenWiqciAyCwrS2Sn3aXJtq40aowu3jtppLBlJL34R2srKcGr+5a
-	 M7QDk89XcRXvToY98b3FkjFt38wgwKcyMaJIOkagMuDY7namw+awP9axWYBBvuMTRU
-	 OjpTbxNx0S9NDeQvfUqcFJyu5MgumkTHG16yFJ0l2OoIenpzdFidKCcPsZDEGEFlwz
-	 UC51r6JKLlLQdYkNuxpZ+rbsaKYaFTEqEhNLRvf9uWCyukmBXPNVYtT6q3UyT6LVpj
-	 ULF+hXvaYXJzg==
+	b=Ih3LCefUSY+rnDkCyvJfBQnEGfKpKIUG/SSgONBmpBJeaT8QvIGebsBiqMguuhfpB
+	 kmzwwUJgNIkoUCTTP0Ko+F0pwbeMAiYph673Q73CY0OG3x44WvDpUnKnlxF5AsMih2
+	 YoqLCTYDvK/i5zeqoLD5x6WErxtRkgRHLYvKfO4S4xBC8XfbuLYuT8ppFQFIbgyx5u
+	 MKpFAIomBeARZaSYF2XEBlV+YRzPMV7I/CUA8l1m2mSPg8CsQkTpRv0qg7CI4V8Hwy
+	 /vyMz50naNCGd17P9GC2LQJR6ocg/UejODSxHS78IfVtNGIg5ybxWym2uNu9AzkVGI
+	 znoIKJjgpyZiA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-Cc: devicetree@vger.kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH] dt-bindings: arm: qcom: document r0q board binding
-Date: Tue, 12 Aug 2025 16:13:44 -0500
-Message-ID: <175503322852.231048.4441689312374680275.b4-ty@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] arm64: dts: qcom: ipq5424: Describe the 4-wire UART SE
+Date: Tue, 12 Aug 2025 16:13:45 -0500
+Message-ID: <175503322847.231048.7613485046039418494.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250615204438.1130213-1-ghatto404@gmail.com>
-References: <20250615204438.1130213-1-ghatto404@gmail.com>
+In-Reply-To: <20250812-ipq5424_hsuart-v4-1-f1faa7704ea9@oss.qualcomm.com>
+References: <20250812-ipq5424_hsuart-v4-1-f1faa7704ea9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,17 +66,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 15 Jun 2025 20:44:37 +0000, Eric Gonçalves wrote:
-> Adds compatible for the Samsung Galaxy S22 (SM-S901E) (r0q), based on the Snapdragon 8 Gen 1 SoC.
+On Tue, 12 Aug 2025 16:02:41 +0530, Kathiravan Thirumoorthy wrote:
+> QUPv3 in IPQ5424 consists of six Serial Engines (SEs). Describe the
+> first SE, which supports a 4-wire UART configuration suitable for
+> applications such as HS-UART.
 > 
+> Note that the required initialization for this SE is not handled by the
+> bootloader. Therefore, add the SE node in the device tree but keep it
+> reserved. Enable it once Linux gains support for configuring the SE,
+> allowing to use in relevant RDPs.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: arm: qcom: document r0q board binding
-      commit: ebfe5797ac3e6e9fb56340b6b228d2747fdec912
-[1/1] arm64: dts: qcom: add initial device tree for Samsung Galaxy S22
-      commit: 46952305d2b64e9a2498c53046a832b51c93e5a8
+[1/1] arm64: dts: qcom: ipq5424: Describe the 4-wire UART SE
+      commit: d56ddcee0101a4b948be0d388e91f5f38f14d448
 
 Best regards,
 -- 
