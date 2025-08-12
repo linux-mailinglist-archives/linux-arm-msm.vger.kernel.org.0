@@ -1,60 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-68831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2761B22E08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 18:46:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BDD5B22E0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 18:46:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA07D3A36EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:40:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CE6D18992BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:41:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7182FA0E9;
-	Tue, 12 Aug 2025 16:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9F02FAC1D;
+	Tue, 12 Aug 2025 16:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sFWWAhPW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDGo2CNW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657DC2FA0E8;
-	Tue, 12 Aug 2025 16:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA3C2FA0FA;
+	Tue, 12 Aug 2025 16:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755016820; cv=none; b=lQwXVFTC7m+bur+pspOW6NdjkI3cuzS2Nwo5Xmjp3gV2SY3A7U9BD992BlWrDkVDgxtmxOqREFdH5AWv8ZBgHq/SSncpmcfW8EJWd1sWqZtJmxrIp1yPM6z23tpG/AZLY9Z0ABJLVb6+zzPh84odXsNwprnMQzAcQ2hBtdBzi+Y=
+	t=1755016834; cv=none; b=SzVof/Fbj5ITX7NCgOCJlOZRSM6ReLIje8WEPYgtHu2YoxTrYEdCQFO6qEmSKTaJ/ccrI6PRstrCqMNelodRfLO/+Gpdu5NYfTDwjnuH2Z5gmL/HxWYMoufZCU+ZDq2tk86IJhAxnDmZLNXpd81C5FFbSuZS1IskHtj0RUWYsKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755016820; c=relaxed/simple;
-	bh=k8qMfbp9FpXJlzkhvTknfoxCnJOkfXP1yU8UVJVUij8=;
+	s=arc-20240116; t=1755016834; c=relaxed/simple;
+	bh=c0imZ72TUJ70OzV/83zxsZL4bXqGEF0O9JOXyLfWMgY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=e58ziv3qoFZdS1o0CBXH6udUiKpNnEz4VU2pjTja4XSbQX8usD6SBOvmk9ZU93SuNooR9LO9nwxV2Bd5CBWRZev7v3JFxvK/kIn27o71tbSQOzRN+475B84TzSIYAqnOCMMkxWXkZLDgPaQV8IhYYWyuA9n6yKHWRZ/VdAYXPlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sFWWAhPW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D868C4CEF0;
-	Tue, 12 Aug 2025 16:40:16 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Vaf3XKZri+8BALFvZ9qF92tc2kGonhe3exqirCG545m8EuLh1Mt4hplrmKQ6X0rbBttUxIezqdzzn/iyA8tDCqPvnnroaKwEUtlmbydwNnMONFpYpfzQEajUZwBtfUtEQ98Nw6Bvuojjte3Lcv4Chq9T48SZPN8Wo5s/UfqURhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDGo2CNW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318FAC4CEF0;
+	Tue, 12 Aug 2025 16:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755016820;
-	bh=k8qMfbp9FpXJlzkhvTknfoxCnJOkfXP1yU8UVJVUij8=;
+	s=k20201202; t=1755016834;
+	bh=c0imZ72TUJ70OzV/83zxsZL4bXqGEF0O9JOXyLfWMgY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=sFWWAhPWeN7cFpFmZ/sKZpfkrXDhnr2fBrcMLyx//4IP5so9isZRVBpIzvZ4nzMKG
-	 +nN0YKEsk8YXCML09ef+8niir4juD0dQ+0oNN3L9WvMpTZqNSmebJhKJwmGz/5kFA2
-	 vKcAv9J+s7UuxTezpcHrvtjBjDdvisvv6eM35r3MKHM4G7CO/7NuLpONgYJ9NNzsF5
-	 tBUWM9yKec/dDeKdQvjR9mGgXLjUsW6w+z4ltvhfAnVo/hYHlw+9jVgZgtm+f9XPxe
-	 xeAnr5I9foYHGP+1PRe6L/WMnOWQ4q0Y4dnNvk5Ck2fkRBmHOFy46RPo2MZ7VL3vUU
-	 GUFchW7Dh+imQ==
+	b=WDGo2CNWD1Bi+gY3wt+qreis05jO5RimzwXEGs3acdX6RAtHFtlQuV4lEyAZSyS/R
+	 zWRqi351ysteb4BfND75gZkKyRcItV6BvEoGa9/2FsjIYm5/YnhXeach63vNJiw1Z6
+	 F74DVKTxRMMSOh3qWAEKeaywAzVPYCHjZSW7h4VV8YBgry5Xh9lf+pVoGT/M06o8LW
+	 LHmDOyKO9JjG7AHaXNSj10nUs9NeGTypfiqLeARh4qs4V/tg8Hlhw8MH+JMTJjJaAA
+	 o3z/VQ3staVVr1j3uNMC7IW43prPdg6aJk53cS/lGek5OOFtu8DwtdUgM2IaqcXI+8
+	 OL1elNUz5QZ9g==
 From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Abel Vesa <abel.vesa@linaro.org>, Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250812093957.32235-1-mitltlatltl@gmail.com>
-References: <20250812093957.32235-1-mitltlatltl@gmail.com>
-Subject: Re: [PATCH] phy: qualcomm: phy-qcom-eusb2-repeater: fix override
- properties
-Message-Id: <175501681673.633066.704631034138052201.b4-ty@kernel.org>
-Date: Tue, 12 Aug 2025 22:10:16 +0530
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+ krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, 
+ mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org, 
+ bhelgaas@google.com, johan+linaro@kernel.org, kishon@kernel.org, 
+ neil.armstrong@linaro.org, abel.vesa@linaro.org, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+ linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
+ quic_krichai@quicinc.com, quic_vbadigan@quicinc.com, 
+ Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+In-Reply-To: <20250725102231.3608298-1-ziyue.zhang@oss.qualcomm.com>
+References: <20250725102231.3608298-1-ziyue.zhang@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v7 0/3] pci: qcom: drop unrelated clock and
+ add link_down reset for sa8775p
+Message-Id: <175501682675.633066.14367700051268770361.b4-ty@kernel.org>
+Date: Tue, 12 Aug 2025 22:10:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,23 +71,24 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Tue, 12 Aug 2025 17:39:56 +0800, Pengyu Luo wrote:
-> property "qcom,tune-usb2-preem" is for EUSB2_TUNE_USB2_PREEM
-> property "qcom,tune-usb2-amplitude" is for EUSB2_TUNE_IUSB2
+On Fri, 25 Jul 2025 18:22:28 +0800, Ziyue Zhang wrote:
+> This series drop gcc_aux_clock in pcie phy, the pcie aux clock should
+> be gcc_phy_aux_clock. And sa8775p platform support link_down reset in
+> hardware, so add it for both pcie0 and pcie1 to provide a better user
+> experience.
 > 
-> The downstream correspondence is as follows:
-> EUSB2_TUNE_USB2_PREEM: Tx pre-emphasis tuning
-> EUSB2_TUNE_IUSB2: HS trasmit amplitude
-> EUSB2_TUNE_SQUELCH_U: Squelch detection threshold
-> EUSB2_TUNE_HSDISC: HS disconnect threshold
-> EUSB2_TUNE_EUSB_SLEW: slew rate
+> Have follwing changes:
+>   - Update pcie phy bindings for sa8775p.
+>   - Document link_down reset.
+>   - Remove aux clock from pcie phy.
+>   - Add link_down reset for pcie.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] phy: qualcomm: phy-qcom-eusb2-repeater: fix override properties
-      commit: 942e47ab228c7dd27c2ae043c17e7aab2028082c
+[1/3] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+      commit: aac1256a41cfbbaca12d6c0a5753d1e3b8d2d8bf
 
 Best regards,
 -- 
