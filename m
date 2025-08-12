@@ -1,83 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FD13B2205C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:10:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E41B22083
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:17:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 718432A2D38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:07:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B9E813A323B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:16:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D42E22E093F;
-	Tue, 12 Aug 2025 08:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B5F62D9ECF;
+	Tue, 12 Aug 2025 08:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ux+jFxnT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fJQFV4Wx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A3B2E093E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:06:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9861D52B;
+	Tue, 12 Aug 2025 08:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754986005; cv=none; b=ecC4ujodrCEY8dnW8Vjcct37repe4mBl8qT8V3SoBXzCkIfLb3OlCRhnZImRBa7MKaiDZKczQc+tnEpGUjJvJpIWdQPg3J3FPqxTuBZvzuLGHeBhlPrxRzcCjATqVGUgJS5zXX5nC9WSILtXowshmMeKVOJY36++eE6rRBW+2b8=
+	t=1754986603; cv=none; b=XuyksSDU2Iq62BwHz6QV38+/iBT+MY2atnVSsPRVfrdKRkH908KO/2ecLfjn97WG/D9Cmli+d6KvdxCG1ebbiaZZWtX58FVomD824WHnV/wgIdf4kUMM2QJh/toyz8XfkwD+QV/BjVdRvMXK93Bx8TSYTlAMCFCG6GBxsRM0alw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754986005; c=relaxed/simple;
-	bh=bik/ZxUCbsiXR2/hrDV2nu377/7N0cOxs2aUthTSLgw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=i+LBYTOCrnidLTl8ZJtfmNcSfOH38/sDMeUq0OpoaXHRNVZnL3LnXRyVBtnWmmjGx1XdPK82pDtkr0k6vNxcW9lSn29U2sQ4OfEWWSZ156UtrLuzD3rGXU38uPa/T9Mwtdhhm77CYTelXc9oMySuVPp8xDCyXp1XSqMkDIE3/mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ux+jFxnT; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3b78d337dd9so3291169f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 01:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754986001; x=1755590801; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KB/9AiQUNaaeoTiNfFmXrTqb4RmKBU2EHYLBB9k4Yeg=;
-        b=ux+jFxnTmNFmE2PgEOW3qdafEsdddQxyPTpkj46m02roJvgnRrFv3KXfoQr1q41NBR
-         /PhKeruEqUPAQCzN/GK9TvVsBVeSCKKFyRnF4r2lKJRX2605h7QaJoOA2eo6ObYc7viK
-         Wz9EDnLjs0r0b89QR6/u0tVWBYjkunZ5nAMkqwYSQV+e2LE8fCvognLE8aYKyevT9p+0
-         ODXS/FUDeZePbGtHmZ9sFtJSO69/+m30slIO+Ajdj3apXQmCT12gIdS2N/1ra6C0s7/8
-         xp8ryiv29fsmtJMV1GdSxMps2BneEROjjdgXR9K9LPkGh0YjOkbKu+fxh6D3F5odNUBc
-         AQBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754986001; x=1755590801;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KB/9AiQUNaaeoTiNfFmXrTqb4RmKBU2EHYLBB9k4Yeg=;
-        b=ch3RluEMKbkcw9iysddSNHaW2cSEkOSmzqcYbDa35Ld5iJnq3/U40DNXN/Wr4cICD0
-         K5hBNX9icAd8nYDLzL21JG0LEY9souGIeNKLZfdZR9oN3fpeNZdbOES2KvJL0PsrgyUP
-         KFUSIfCM7K9FnvGTR9A6MQtXgg6vJb06xZxIcl3wmY0jYgUjKWTMhDexfP6D8525c0kU
-         mRWQQhIrU5X6FV5jZX+LUiGlRIEXGa7/dY9J/Aeon0SY6fUv+MNfl1miu3pKs33Sd4/H
-         ILhK1ibhAeAyEcNTgRGL1nyCiBczFnk1kowswa6GfQ9D4hd4UXENqSqC2yULoQpV5yBv
-         3ZJw==
-X-Forwarded-Encrypted: i=1; AJvYcCXd9cv1U8k74e79fitqe7VnjcMnx+vQDYtt81FBZctV2AxZe8zs7F2KOc4vCdy8nbBjTkTWcnoC8z3odq2E@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8etm1njpDWI4HoCpBr3UORzdGX1xsrieFJK9Mv8IwpO7ss5xF
-	qDX1rEZf7WyprrbfuJrTRWxkkfbwk6Z6jmprsUB61Cx6ybdcxczNFm38otiKElw0bZw=
-X-Gm-Gg: ASbGnct2pAIsotk+humemarwF5zzp99tu6ip6NO12tjYX8TLK/SeJwR8owk5yLiIImz
-	A5nG3YvXvPTqK2m9XGG+IHIGMdOf8iHmFY6FG3gsQIY2ShAQlzxzR1rSAzDRneAwrDtu1w6l22i
-	9XmM/nw9FulsU8hLjR2wC8OVMRiA9CIo4sCN1dDv8mVZy7wjS/hKKq9UokvG9T/2In6o3FzyOb7
-	TSiwsvX8cAuWcGC1D02+mfcqqaA9pSfs5w+6HAf094+NRdUmcRSGQF32jg5lIyuWRmwby/GDlv3
-	1hhIZRQbaxEnzDh8MX6AP1Tshqp934q+iu0E9JmyQblixj+YXmw1EqqKsIjejXd1OdOrXe5AidV
-	HIovmqODQJEP7l/IlsjF4C9rMDqyGVRonTBm41gB5GCbe9TTuzvXzviD+UHkFeOqsO3xCosmAC1
-	A=
-X-Google-Smtp-Source: AGHT+IETI+UV2HZkfItiK02d7e6yOOmac7nlYx0JTMj896CyxMKBI5HQuVCk7U+zzLBdJUldXLTRuA==
-X-Received: by 2002:a5d:5849:0:b0:3b7:8ddc:87a1 with SMTP id ffacd0b85a97d-3b90092cafemr13572895f8f.4.1754986001129;
-        Tue, 12 Aug 2025 01:06:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:9086:bd36:16a7:1f8b? ([2a01:e0a:3d9:2080:9086:bd36:16a7:1f8b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c45346asm43290824f8f.39.2025.08.12.01.06.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 01:06:40 -0700 (PDT)
-Message-ID: <acdff7a4-bd9f-45c1-b620-25e667d1f628@linaro.org>
-Date: Tue, 12 Aug 2025 10:06:40 +0200
+	s=arc-20240116; t=1754986603; c=relaxed/simple;
+	bh=P/4iHug9aWMJUEbfqYNlF4Q9hMiKkkjLX3Wk1MYqj+E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QRN1tsYaj1q5r5jrOUXRYKkfFGXWNpy2hsB0aTI+9sLlNhNbJJKS4cBa2gO7NwYYzDLnn30OIDgv1TZk/sc0OPOnf7TwndWYu73HxTqstcl4uUOC/IiozIWj0+B/jlmebcqJ2/HC7cpbTpITl+Q9a8QuJByaRMZCNhA3qaLzI24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fJQFV4Wx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7400FC4CEF0;
+	Tue, 12 Aug 2025 08:16:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754986602;
+	bh=P/4iHug9aWMJUEbfqYNlF4Q9hMiKkkjLX3Wk1MYqj+E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fJQFV4WxW1ldsuOPyZ4PgSM1LHloFHo9u8dEP0cFlKN2klN+QMyZUCUG7lnAK+Cb1
+	 L7tCJmDqnrCmSjzyNwT5Oz1khEfKX0+DrIH0Rp1K6yBnKPBse5TB3wy8yV9PrssE1J
+	 eu6qzwN/aS4UfPURh7PvZgwLliSLHfgofRi/P9WhbKqjizDmSqgKAPuJS9vrMQkg7r
+	 n/uqQpZbf9tlrw2wPv/pvkNaFfJ+ynpNtTKm2Mmq8b6SzU0Hart74QPU3xQ3SKOdN2
+	 pNk5m0te5xuqrQhQvgLtNYio1UkLWYc2aljKvRl5RoOw1VsWn1tvJHSfoBhXKHPlBb
+	 QPy3oliDy7eoQ==
+Message-ID: <db11085e-bca3-4d54-b435-c8f8d8672acd@kernel.org>
+Date: Tue, 12 Aug 2025 10:16:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,114 +50,201 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] media: iris: vpu3x: Add MNoC low power handshake during
- hardware power-off
+Subject: Re: [PATCH v2 3/3] media: iris: Add support for SM8750 (VPU v3.5)
 To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
  Abhinav Kumar <abhinav.kumar@linux.dev>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250812-sm8650-power-sequence-fix-v1-1-a51e7f99c56c@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250812-sm8650-power-sequence-fix-v1-1-a51e7f99c56c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org>
+ <20250804-sm8750-iris-v2-3-6d78407f8078@linaro.org>
+ <83205cad-14f5-65a1-1818-677335a1ab91@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <83205cad-14f5-65a1-1818-677335a1ab91@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/08/2025 09:48, Dikshita Agarwal wrote:
-> Add the missing write to AON_WRAPPER_MVP_NOC_LPI_CONTROL before
-> reading the LPI status register. Introduce a handshake loop to ensure
-> MNoC enters low power mode reliably during VPU3 hardware power-off with
-> timeout handling.
+On 12/08/2025 10:05, Dikshita Agarwal wrote:
+>>  
+>>  struct platform_clk_data {
+>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> index d3026b2bcb708c7ec31f134f628df7e57b54af4f..c7c384fce2332255ea96da69ef4dc0bc1a24771c 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> @@ -1,6 +1,7 @@
+>>  // SPDX-License-Identifier: GPL-2.0-only
+>>  /*
+>>   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2025 Linaro Ltd
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->   drivers/media/platform/qcom/iris/iris_vpu3x.c | 23 +++++++++++++++++++++--
->   1 file changed, 21 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> index 9b7c9a1495ee2f51c60b1142b2ed4680ff798f0a..c2e6af575cbe4b3e3f2a019b24eecf3a5d469566 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> @@ -110,6 +110,7 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
->   static void iris_vpu33_power_off_hardware(struct iris_core *core)
->   {
->   	u32 reg_val = 0, value, i;
-> +	u32 count = 0;
->   	int ret;
->   
->   	if (iris_vpu3x_hw_power_collapsed(core))
-> @@ -128,13 +129,31 @@ static void iris_vpu33_power_off_hardware(struct iris_core *core)
->   			goto disable_power;
->   	}
->   
-> +	/* set MNoC to low power */
-> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
-> +
-> +	while (!(value & BIT(0)) && (value & BIT(2) || value & BIT(1))) {
-> +		writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +		usleep_range(10, 20);
-> +
-> +		writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
-> +		if (++count >= 1000) {
-> +			dev_err(core->dev, "LPI handshake timeout\n");
-> +			break;
-> +		}
-> +	}
-> +
->   	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
->   				 reg_val, reg_val & BIT(0), 200, 2000);
->   	if (ret)
->   		goto disable_power;
->   
-> -	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
-> -	writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +	writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->   
->   	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
->   	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
-> 
-> ---
-> base-commit: d968e50b5c26642754492dea23cbd3592bde62d8
-> change-id: 20250812-sm8650-power-sequence-fix-ba9a92098233
-> 
-> Best regards,
+> I don't see a need to add a copyright here.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+And I see the need, I added there quite a lot of lines.
 
-Thanks,
-Neil
+Look at your commit bb8a95aa038e099f5ec82c466e996b006e05abd7
+https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bb8a95aa038e099f5ec82c466e996b006e05abd7
+
+and this hunk:
+drivers/media/platform/qcom/iris/iris_resources.h
+
+which adds 7 (!) declarations and a copyright.
+
+If you claim you copyright 7 lines of such declarations:
+
++struct iris_core;
++
++int iris_enable_power_domains(struct iris_core *core, struct device
+*pd_dev);
++int iris_disable_power_domains(struct iris_core *core, struct device
+*pd_dev);
++int iris_unset_icc_bw(struct iris_core *core);
++int iris_set_icc_bw(struct iris_core *core, unsigned long icc_bw);
++int iris_disable_unprepare_clock(struct iris_core *core, enum
+platform_clk_type clk_type);
++int iris_prepare_enable_clock(struct iris_core *core, enum
+platform_clk_type clk_type);
+
+then me adding here 68 lines of NEW CREATIVE WORK is copyrightable as well.
+
+Anyway, you cannot reject someone's copyrights. The work is
+copyrightable regardless if you see a need.
+
+> 
+>> +
+>> +	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
+>> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
+>> +}
+>> +
+>> +static int iris_vpu35_power_off_controller(struct iris_core *core)
+>> +{
+>> +	u32 clk_rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+>> +	u32 val = 0;
+>> +	int ret;
+>> +
+>> +	writel(MSK_SIGNAL_FROM_TENSILICA | MSK_CORE_POWER_ON, core->reg_base + CPU_CS_X2RPMH);
+>> +
+>> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
+>> +
+>> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_STATUS,
+>> +				 val, val & BIT(0), 200, 2000);
+>> +	if (ret)
+>> +		goto disable_power;
+>> +
+>> +	writel(0x0, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
+>> +
+>> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_CONTROL);
+> 
+> 
+> Read initial status of AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_STATUS
+> 
+> based on value, run the retry loop.
+> This loop runs till the desired LPI state is reached i.e. BIT(0) is set,
+> and hardware is idle i.e. BIT(1) or BIT(2) are unset. This suggests a
+> situation where the hardware might be stuck or slow to transition.
+> 
+> This sequence was not needed for SM8650 since it doesn't have
+> AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_CONTROL/STATUS registers.
+> But required for SM8750, so please add.
+
+
+Sure
+
+> 
+> 
+>> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_STATUS,
+>> +				 val, val & (BIT(0) | BIT(1) | BIT(2)), 15, 1000);
+>> +	if (ret)
+>> +		goto disable_power> +
+>> +	writel(0x0, core->reg_base + AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_CONTROL);
+>> +
+>> +	writel(0x0, core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL);
+>> +
+>> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS,
+>> +				 val, val == 0, 200, 2000);
+>> +	if (ret)
+>> +		goto disable_power;
+>> +
+>> +disable_power:
+>> +	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
+>> +	iris_disable_unprepare_clock(core, IRIS_CTRL_FREERUN_CLK);
+>> +	iris_disable_unprepare_clock(core, IRIS_AXI1_CLK);
+>> +
+>> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
+>> +
+>> +	reset_control_bulk_reset(clk_rst_tbl_size, core->resets);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int iris_vpu35_power_on_controller(struct iris_core *core)
+>> +{
+>> +	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+>> +	int ret;
+>> +
+>> +	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = reset_control_bulk_reset(rst_tbl_size, core->resets);
+>> +	if (ret)
+>> +		goto err_disable_power;
+> 
+> 
+> this reset is not needed to power-on this SOC.
+
+
+Hm, I will trust you on that, thanks.
+
+Best regards,
+Krzysztof
 
