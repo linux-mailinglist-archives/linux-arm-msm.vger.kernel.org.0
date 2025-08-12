@@ -1,282 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-68789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 919B5B22983
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:02:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25CE2B22A00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:19:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD52958673D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 13:48:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A561E1C23675
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 13:57:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917B7286D6E;
-	Tue, 12 Aug 2025 13:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32FE2882C4;
+	Tue, 12 Aug 2025 13:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3xQY9H7"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Nb+FuEM1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64754286D62;
-	Tue, 12 Aug 2025 13:47:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE852882A2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 13:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755006456; cv=none; b=UzGa4Vnp6VfeXEDvlf5aDoDEiRhaX2O2C1mtyryPhW9TnW8uAJjp9gviQ0SrobUP3otmaWi8LaD9Ba0cQRXfgfsY42Fky9xrjU/7eLH3zB099Vt3ns18cKRd6BAmSYWNyCkTqVYtiHhddDkYgeD/46XRnEqrn1/zVXXuGGWQU7I=
+	t=1755006847; cv=none; b=evcuX8b/IxnFxahrXFZvsadniVyvN5XWJrb5HHGrr2k8iEZbmprgVp4LGMfoqMk3qcyvJ37YpfzXevN7Rk/e/WkRJqiSBpymbRH35sdDPwNBySdLmdnL21Iq0iOkb74iCu+chzNPT89pbndYsKdfdhoSM6w4qDUSlUD6F2If0yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755006456; c=relaxed/simple;
-	bh=X6n/+3xEiROoaLOeAyKDEfF8djhS8Jnz2Ne7NWGpc7c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iqIWaCDUzb04u7pvrgVIs4He+KR0FL+EW1QnYBuhWbI2pHArefCY0BNFYpuPX3tEflTJAmEcxBs3KrqkIw56nT0feXt1kp+YnIMSQYduvuVi4ecCFR/QJbclIYz63alPALJ6C6GUu0BdmBD8M3kHNF8Eq2fo5CILaiBhf7raiMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3xQY9H7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB291C4CEF6;
-	Tue, 12 Aug 2025 13:47:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755006456;
-	bh=X6n/+3xEiROoaLOeAyKDEfF8djhS8Jnz2Ne7NWGpc7c=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=X3xQY9H7xOVd/abyJtucpPtLEGbGbksIwjAOL383bi2NaMMp/rvcbNrtlT6Mni4es
-	 gkTc7mpJfb3waYRDLCnD8XmKMvHHCze1ANPpfrPMDk8NAgUsPxci58aZTlaA1KfOoB
-	 i5vw+MzkvzLkgEZWdtpu6+eYs9RVlyO1dVKkZoL7DHvANDiL/VYZAOdJVOncaTWyud
-	 gTXunRW71OfAiEiEQfQVSqNybl0ZrUWO2tSEuvJJ3S624BSl72W5FtZtZilU114mRT
-	 TnwaljKMaCuQQ7Ybvy14o9cchqD0ENqumSWFTD662dkx22qZOvKsAIICHuepcN2uW3
-	 5zQEsTTtWOZ6w==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 12 Aug 2025 15:47:24 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: x1e80100-romulus: Add WCN7850
- Wi-Fi/BT
+	s=arc-20240116; t=1755006847; c=relaxed/simple;
+	bh=Q//s+/zCNBEzjNslOllCQGV4nFuLBeOueQxvALXBZS0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HEXyfLQP4TbrZpIPQNGm9J1dXaeHPxn4u3vhuwcHa8TbZrn9WOz+Y1Ih8KL11EbGnb2P7e4K1pS73DoxgM5eaBxHWd8GO+1By4hOiwS9hIlUAZCd9Wra4SUtUzp7LO2TrVFsGer6WCvLC9Cu5UssfFibHA5f7kgkhWlHmYadPa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Nb+FuEM1; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1755006845;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Q//s+/zCNBEzjNslOllCQGV4nFuLBeOueQxvALXBZS0=;
+	b=Nb+FuEM13ufwK+wdBEE7potiNvbe73C+R+GfaKPY+CfiFfZHfoIyUMRGAjGpSip+aR49Tp
+	eKBTM0WCGhlfo/xo7dxN7ZGbo0iU2LvILac+T2sPaWy4H351XrjYD1HcSahH18HgxK6Llp
+	fSamHVKVY76BkyOHlhibqXgKzmxk4fw=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-17-FQZ6ctk6OHeULAQMTleZUw-1; Tue, 12 Aug 2025 09:54:02 -0400
+X-MC-Unique: FQZ6ctk6OHeULAQMTleZUw-1
+X-Mimecast-MFC-AGG-ID: FQZ6ctk6OHeULAQMTleZUw_1755006842
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b092c12825so151121521cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 06:54:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755006842; x=1755611642;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q//s+/zCNBEzjNslOllCQGV4nFuLBeOueQxvALXBZS0=;
+        b=BOl/U7Yh1ibAI7Via1SwWLI9thoTwk6Ly2JheZT2j2RlvmvmDxJRiFLnZTd//6gMyg
+         UjdGDsFOhDelUSUyw+Dxip9Uy8+72i4+ANv4VPwbVWbowltoelWnV2UihbQTr+RDBW+U
+         z4f5eCberTBlnZfpr6xY7bo4rt4hvwbtb5dsd1MWcQ5A6Q0qZrwIMeMoY/LjvSssS38x
+         r9qafg1+qcHBODlsACjGKCrz8Vl08dgp97/1erU71zyFu5UnumYX89wbAp+gKG0Yuic0
+         ZAQMjDYMsCA1BqSEJBTd4OxwvkjdIU/EfVAcFk2hyhJLEnQbnFaG9WspJKZAvMuG7We9
+         PTSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWR2jqggSRvXOzfCQAgr16OyFb1SCnEaRe+hs91c41YPG+nn4HhuTAh780G97TdCBPPk0MNeRxlSCyly5mB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTV/JwYvWf6cN1hbTMsLVNRY5KXjCMUcw/fj5ExrtaNmpWkQx3
+	dTQ8aOszgyXeTUM5wORFzsa02nJYBawT/1olRN/X9iSVW/eaEqAW+0HwkHwD4NRoEcR0HlDba1/
+	rWdZy7kV/o59QDcl/KloMhko4JkiP8atu1hS2YPHPa2ftUXIKajsHpuXfouRw3Adp3PU=
+X-Gm-Gg: ASbGnctPJnOruYLCLxpPXpxOR4Z0jTFcJ/TLxEBqKrHACtXNL5IGDzlG7Z7NvxIdrWt
+	neqowgpNBe0zQ0QPKM4g2S18fkTvQ0GBkXIjggUwaztBHaCRrfsihrMd+8Gdhfzgc2KheaSWtwv
+	b5kCGvywiYY6pvIFKxsvQItqvmqkeqPTfI9LwNValGwuO3CksfHPOKbR7zuERnxzPYqirNUzMRu
+	hOvnrtYjOKva6tD7inhyBp6erflucAbDqp/cF8jJQKjz3ACUQdV2eW00hehWSj/EIBgNM9Z4gI/
+	IBAOtnXHegGju3kzpXyRKeesjJ7Z1kaU+jUe6v88yxE7bseny5hAhg9gWEk01t0=
+X-Received: by 2002:a05:622a:30c:b0:4a4:2c4c:ccb3 with SMTP id d75a77b69052e-4b0aed36723mr265510301cf.38.1755006841691;
+        Tue, 12 Aug 2025 06:54:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHL0wdDdlaxY3Jk0TgFfLYMOMEPwCaVnL7cxWLBN3HaRHoOlakRNGI4PvbhwBJNSUpcz9s5eQ==
+X-Received: by 2002:a05:622a:30c:b0:4a4:2c4c:ccb3 with SMTP id d75a77b69052e-4b0aed36723mr265508911cf.38.1755006840909;
+        Tue, 12 Aug 2025 06:54:00 -0700 (PDT)
+Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b0aa1efe78sm75493211cf.8.2025.08.12.06.53.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 06:54:00 -0700 (PDT)
+Date: Tue, 12 Aug 2025 09:53:54 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Icenowy Zheng <uwu@icenowy.me>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Romain Perier <romain.perier@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Alex Helms <alexander.helms.jy@renesas.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
+	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
+ round_rate() to determine_rate()
+Message-ID: <aJtHcs8_671G33Ez@x1>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <a151ed7c1caac83e872cf6075c215fa55bd21f82.camel@icenowy.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250812-topic-romulus_wifi_pci-v1-2-2adbed1b1f1d@oss.qualcomm.com>
-References: <20250812-topic-romulus_wifi_pci-v1-0-2adbed1b1f1d@oss.qualcomm.com>
-In-Reply-To: <20250812-topic-romulus_wifi_pci-v1-0-2adbed1b1f1d@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755006446; l=5113;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=YrfeJ4a+N+nuR8SIwAnAuBWoP6xTXRmOMVpzKvzHzb4=;
- b=SB6w7LL2/SZR+vZAGi0OWU958n99GsgwcXsLpy2g8Am7GfyImkFgp/jcvvZIvwIWObIf6Lsov
- M1jlg+cqmVPCE0+BceJf5v7cHsXesMZoF6J9wS7HvJaVv8TzU99n1qX
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a151ed7c1caac83e872cf6075c215fa55bd21f82.camel@icenowy.me>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Tue, Aug 12, 2025 at 09:39:45PM +0800, Icenowy Zheng wrote:
+> I was doing a patch to add divider setting support to clk-th1520-ap
+> driver and sent patch now, should I remove round_rate from the next
+> revision and just keep determine_rate? Is it safe to do this even if
+> this patchset is not merged?
 
-It comes soldered onboard, just like on the QCP.
+Yes, you only need to implement the determine_rate() clk op. Please
+remove any references to the round_rate() clk op from your driver. If
+you implement both, then only the determine_rate() clk op is actually
+used by the clk core.
 
-Unfortunately, the rfkill pin is triggered by default, so a workaround
-is needed to convince the Linux driver to enable the hw, after which it
-works just fine.
+> In addition, will the clk_round_rate() API exported to other subsystems
+> be affected?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  | 143 +++++++++++++++++++++
- 1 file changed, 143 insertions(+)
+No, that will stay as is, and with the same name. The underlying
+implementation in the clk core uses the determine_rate() clk op.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-index 3a4df8f8066ae699eb7d889530f976fce565757e..d5105ebbfc387f3a6626f1f135cab8a5f92b8e6b 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-@@ -379,6 +379,42 @@ vreg_pcie_3v3_main: regulator-pcie-3v3-main {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_wcn_0p95: regulator-wcn-0p95 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_0P95";
-+		regulator-min-microvolt = <950000>;
-+		regulator-max-microvolt = <950000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_1p9: regulator-wcn-1p9 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_1P9";
-+		regulator-min-microvolt = <1900000>;
-+		regulator-max-microvolt = <1900000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_3p3: regulator-wcn-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&wcn_sw_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	sound {
- 		compatible = "qcom,x1e80100-sndcard";
- 		model = "X1E80100-Romulus";
-@@ -458,6 +494,65 @@ platform {
- 			};
- 		};
- 	};
-+
-+	wcn7850-pmu {
-+		compatible = "qcom,wcn7850-pmu";
-+
-+		vdd-supply = <&vreg_wcn_0p95>;
-+		vddio-supply = <&vreg_l15b>;
-+		vddaon-supply = <&vreg_wcn_0p95>;
-+		vdddig-supply = <&vreg_wcn_0p95>;
-+		vddrfa1p2-supply = <&vreg_wcn_1p9>;
-+		vddrfa1p8-supply = <&vreg_wcn_1p9>;
-+
-+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
-+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&wcn_wlan_bt_en>;
-+		pinctrl-names = "default";
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p8: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p8";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -1087,6 +1182,23 @@ &pcie4_phy {
- 	status = "okay";
- };
- 
-+&pcie4_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1107";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pcie6a {
- 	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-@@ -1310,6 +1422,13 @@ ssam_state: ssam-state-state {
- 		bias-disable;
- 	};
- 
-+	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
-+		pins = "gpio116", "gpio117";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	pcie3_default: pcie3-default-state {
- 		perst-n-pins {
- 			pins = "gpio143";
-@@ -1385,6 +1504,13 @@ wcd_default: wcd-reset-n-active-state {
- 		output-low;
- 	};
- 
-+	wcn_sw_en: wcn-sw-en-state {
-+		pins = "gpio214";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	cam_indicator_en: cam-indicator-en-state {
- 		pins = "gpio225";
- 		function = "gpio";
-@@ -1408,6 +1534,23 @@ embedded-controller {
- 	};
- };
- 
-+&uart14 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn7850-bt";
-+		max-speed = <3200000>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+	};
-+};
-+
- &usb_1_ss0_hsphy {
- 	vdd-supply = <&vreg_l3j>;
- 	vdda12-supply = <&vreg_l2j>;
-
--- 
-2.50.1
+Brian
 
 
