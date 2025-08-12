@@ -1,142 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-68819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 453C0B22B3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 16:59:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCAF2B22B50
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 17:02:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4A7718938FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 14:54:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B17E3AB0EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 14:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1BD52ECEA1;
-	Tue, 12 Aug 2025 14:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC57E2ED149;
+	Tue, 12 Aug 2025 14:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nui3s+qa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ct53i35n"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AF3311C18;
-	Tue, 12 Aug 2025 14:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB22DE703;
+	Tue, 12 Aug 2025 14:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755010451; cv=none; b=VI9eNOP4E+xlEBc4EkC0Hff8doSUCNBI0goliZKV13GhxT/9y5IX8K+J5wVvFy+2LV4B9jCTbOGJtcBYjguOuiLdFtrFX+REyXbPl5+WAXcTXrRWPd7SooFw/xViJk2QGNswfKTTtaGrnirU6l69I9BZPE4UN8nGgGhNPRByeyo=
+	t=1755010499; cv=none; b=s/mDqy2CJDq25JIgmL1HzemYSQz5OsTwpsX92x8f+voiahdff0PE/0XadaZ0DySeRslxSN+Zto0E2LF8rw9yjRmgUhZ+uzg6J9JEmzUfNmV2jsTNX9wvfdSFwXIFZO3S1pgLR/wDO/xxEn+1q0XkxxGKMiGQiNRZMKdbjElT5e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755010451; c=relaxed/simple;
-	bh=g5fCqBl5dsv0V0pGbaBLBzhJRhsjr3sc5D0pgtO0H+A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p6EVvmIRZGODhrPRr9bz56NfKmGXxBGwesHjyYWKnTi/k2yjab7vOpoUs/99fAGr4C2YSlqIEDNmy78D7TApl6LOkIrXccY4wrv8Uhe9GSIulZ5WZgieJbguuZtPhK+baknZCIQ2cgBp8f3gVz0yuScfiJEB4HwOwfmVmGcoEpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nui3s+qa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE68C4CEF1;
-	Tue, 12 Aug 2025 14:54:08 +0000 (UTC)
+	s=arc-20240116; t=1755010499; c=relaxed/simple;
+	bh=lJnQY+aWGBe5007j6NioyIK8Sb6art474dNbjRtW7y0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qe0fJvSs63Qa4IKbShAhs0GiwwvrKkmKKvZxk0ey2PVSvh2YCWv7joTjNnhJljRzg19mktH30p8AVKlJkfDfrSqZqUZeXHVu66Sx2nZwGbAEHU0rsOQ3u0n5i6iGgiN425KfqrpprqX6CowyJJLZlR7FZh3tKgNLU1R9UER4IM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ct53i35n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C40FC4CEF0;
+	Tue, 12 Aug 2025 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755010451;
-	bh=g5fCqBl5dsv0V0pGbaBLBzhJRhsjr3sc5D0pgtO0H+A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nui3s+qa6E5ph5emm8GzgJS34DPE8xcxaDPyvQ1LR2UdgA16EY4mGquDSUXLCRQlC
-	 6RnoTDF+oJl8ALq/rbjYMGAxycTPqhJnwCJsC9K67Xjpiay/KjzUaoRMOtZ0HQsuh/
-	 IqMdCt0Icjg0a4pJYSkXGR1mtroKkr3yHf79vzW6T3p4XriLvtA8QMo+piSD1SCd3O
-	 L+07pzBWYt/EnsH6K01PbswMTdZEvyBqaYawYhY8zFSk/QH/LrFHqHnb1oFGv7JCw9
-	 uOUSn8TO4rXWzJdBxhInI8LvGNN6KNY7tUkLpudQXRQKBXImSc25aPK1OoCk18CrUb
-	 RNMriTJvJOeWg==
-Message-ID: <fb8f154b-3da4-4bee-82e1-3a1597a35c46@kernel.org>
-Date: Tue, 12 Aug 2025 16:54:06 +0200
+	s=k20201202; t=1755010499;
+	bh=lJnQY+aWGBe5007j6NioyIK8Sb6art474dNbjRtW7y0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ct53i35n+qUOyANFK08CZAoJcWjU4JRsrJp/fL+pa3KtkPdpUhDeMNO8NX/DOZjDY
+	 //JEvmLanzEAig7vgHAKqlUy6hoS1RhWc0WJWeT2nP9zOMilDT1wd4q02NcN98pC8o
+	 sfrke2dNyx0vozDKpi1hUjzL64BVWhdKOtxpLcNxym/lre5v9m00Y8a0ZDsHVM3VQT
+	 ghAG9AyFW6K42eDCQe421JZeocGqa4BakPlj0lf8iX0KuQ2RPAU82jUTMaLxetz2Mg
+	 Q2JA7CrBSP5ezl4P5ShWWffe7QKYbNktfe2rb3JjliobHciFkMVtj//V5kUIHC/Qwe
+	 vKPqKRFYKqOiA==
+Date: Tue, 12 Aug 2025 09:54:56 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] clk: qcom: dispcc-sc7280: Add dispcc resets
+Message-ID: <fh3uvnu3ydgdtez77ruuhlgq2obry4jifn5w3kok2qbjdkmtoz@j6jsealfbxzu>
+References: <20250811-sc7280-mdss-reset-v1-0-83ceff1d48de@oss.qualcomm.com>
+ <20250811-sc7280-mdss-reset-v1-2-83ceff1d48de@oss.qualcomm.com>
+ <ed0341b3-4056-4826-bec7-e835a6da4fad@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 1/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
- <20250806-b4-sm8750-iris-dts-v2-1-2ce197525eed@linaro.org>
- <e414163e-e171-466f-965d-afb9203d32fa@oss.qualcomm.com>
- <be5f18d9-a642-4b4e-bf69-e0108e988faf@kernel.org>
- <6ffa8d6f-d5fb-4a94-ab7c-1a923cae1332@oss.qualcomm.com>
- <7798fa0f-4786-42d2-913b-b76af91c94bc@linaro.org>
- <1292b023-e575-4270-9cbe-8943ab137eb5@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <1292b023-e575-4270-9cbe-8943ab137eb5@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ed0341b3-4056-4826-bec7-e835a6da4fad@oss.qualcomm.com>
 
-On 12/08/2025 16:45, Krzysztof Kozlowski wrote:
->>> Weird, there's an entry in the frequency table for it (well, * 3 the
->>> rate) and it comes out of the same PLL as other ones.. what sort of
->>
->> You mean freq_tbl in P_VIDEO_CC_PLL0_OUT_MAIN? Yeah, I also saw that.
->>
->>> opp failures do you see?
->>
->> Only:
->>
->> [    9.306006] qcom-iris aa00000.video-codec: dev_pm_opp_set_rate:
->> failed to find OPP for freq 630000000 (-34)
->> [    9.316078] qcom-iris aa00000.video-codec: power on failed
->> [    9.322001] qcom-iris aa00000.video-codec: core init failed
+On Tue, Aug 12, 2025 at 10:35:30AM +0530, Taniya Das wrote:
 > 
-> But I misunderstood you - I thought you want to replace 630, to match
-> downstream driver. If just added, then it's fine.
+> 
+> On 8/12/2025 8:41 AM, Bjorn Andersson wrote:
+> > Like many other platforms the sc7280 display clock controller provides
+> > a couple of resets for the display subsystem. In particular the
+> > MDSS_CORE_BCR is useful to reset the display subsystem to a known state
+> > during boot, so add these.
+> > 
+> 
+> In this issue I believe the requirement is to have a clean sheet and
+> restart the MDSS explicitly. Historically MDSS never required a BCR reset.
+> 
 
-... and to confirm: it works and I double checked it now with frequency
-plans, so I will add missing 570.
+On most targets we rely on the display driver coming up and configuring
+the hardware anew in a way that happens to be aligned with the existing
+state (boot splash) - or there was no state, which makes this easier.
 
-Best regards,
-Krzysztof
+But I had to introduce the use of the BCR reset in compute platforms
+when I worked on DP, because some of the state left by the bootloader
+would conflict with what Linux was doing. Similar on this target, as
+we're trying to initialize the display driver, we get a bunch of iommu
+faults.
+
+Ultimately, the display driver should likely read back the hardware
+state and attempt a graceful transition between whatever state the
+bootloader left the hardware in and what Linux wants it to be.
+
+When this feature is implemented, the display driver can simply stop
+pulling the BCR.
+
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
+> >  drivers/clk/qcom/dispcc-sc7280.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/drivers/clk/qcom/dispcc-sc7280.c b/drivers/clk/qcom/dispcc-sc7280.c
+> > index 8bdf57734a3d47fdf8bd2053640d8ef462677556..465dc06c87128182348a4e0ea384af779647bd84 100644
+> > --- a/drivers/clk/qcom/dispcc-sc7280.c
+> > +++ b/drivers/clk/qcom/dispcc-sc7280.c
+> > @@ -17,6 +17,7 @@
+> >  #include "clk-regmap-divider.h"
+> >  #include "common.h"
+> >  #include "gdsc.h"
+> > +#include "reset.h"
+> >  
+> >  enum {
+> >  	P_BI_TCXO,
+> > @@ -847,6 +848,11 @@ static struct gdsc *disp_cc_sc7280_gdscs[] = {
+> >  	[DISP_CC_MDSS_CORE_GDSC] = &disp_cc_mdss_core_gdsc,
+> >  };
+> >  
+> > +static const struct qcom_reset_map disp_cc_sc7280_resets[] = {
+> > +	[DISP_CC_MDSS_CORE_BCR] = { 0x1000 },
+> > +	[DISP_CC_MDSS_RSCC_BCR] = { 0x2000 },
+> > +};
+> > +
+> >  static const struct regmap_config disp_cc_sc7280_regmap_config = {
+> >  	.reg_bits = 32,
+> >  	.reg_stride = 4,
+> > @@ -861,6 +867,8 @@ static const struct qcom_cc_desc disp_cc_sc7280_desc = {
+> >  	.num_clks = ARRAY_SIZE(disp_cc_sc7280_clocks),
+> >  	.gdscs = disp_cc_sc7280_gdscs,
+> >  	.num_gdscs = ARRAY_SIZE(disp_cc_sc7280_gdscs),
+> > +	.resets = disp_cc_sc7280_resets,
+> > +	.num_resets = ARRAY_SIZE(disp_cc_sc7280_resets),
+> >  };
+> >  
+> >  static const struct of_device_id disp_cc_sc7280_match_table[] = {
+> > 
+> 
+> Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> 
+
+Thanks,
+Bjorn
+
+> -- 
+> Thanks,
+> Taniya Das
+> 
 
