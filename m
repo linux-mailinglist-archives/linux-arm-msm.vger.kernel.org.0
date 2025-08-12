@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-68625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 176D2B21B4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:06:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED9AAB21B52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 05:06:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6ADD467422
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:05:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74C10167831
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 03:06:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 307482E54AA;
-	Tue, 12 Aug 2025 03:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEF732E5B1C;
+	Tue, 12 Aug 2025 03:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C/To2Qb+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mQvIWMQD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06750256C84;
-	Tue, 12 Aug 2025 03:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8650B2E5B12;
+	Tue, 12 Aug 2025 03:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754967901; cv=none; b=K1nJ46TNbj1dm7cITa2TzCqeuSbrro1KuPmH0IUWOAYYvMhWuTFv2vFDVqp7iybH/zg90rglepDUVkG+v1qQdriSI3GoDLJ2UdqT3WZvEJHC1PNf/ziM9m71jZXptAu4Gvw57HVLy/cQ7hY+Rr1baJDZdYJIjoSl/Vi+m+HNWQM=
+	t=1754967902; cv=none; b=OEe2tEHnSNCWg9+YApUDJC11Bl8ga27uHsONYpKQS3IWB2Bebb8Xn/8SwGkJ/HNakG9t9I9ynkkfFra5dLLyi2d9fDwDftYaiWOkcNv3DFOpAu2l38J88YEpBq5aDN8AmMkVqoy9b9oBtGK/1revZzLRPJ5l6CMVElSx8139twk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754967901; c=relaxed/simple;
-	bh=jal1r2ODednPkjyVamwxs8obImbWoUqVaMNDNV0Iz/M=;
+	s=arc-20240116; t=1754967902; c=relaxed/simple;
+	bh=JWKebbiMG5ibFDajIQCk6uT9iUuCYPCsFaK9FvIddh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rJbSDkixQQTKtXurM8ivIph8v9Q4J1Li2CHva0Gv3MJE3GGy6e4CzzPm9Mcq6rf+vpGzuSTLZmAdrLFKVdYtKPvDSgmLnlpcBab5WIATP8iLaP5ATHxpyquMThTBdJCcN+kMfwZnFF9Xkqk4S8xp1gmbLGzYW6XwI7HVyDssOvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C/To2Qb+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDECC4CEF5;
-	Tue, 12 Aug 2025 03:04:59 +0000 (UTC)
+	 MIME-Version:Content-Type; b=iFaIw1hB0tOM6e9C7zR3AS2HuvKCaK9CBTRnxYW/6o7zSVaiZHdLKy5uHRnaDaUopYD9gUx3cLTICgCKk9H2Br8Mgm0YP4mH/gVCCoguw93X/Y5UxdwQRbELnOCfj5eMspK2JSF7Ujd2qGowES6REbo96NdAGP7Esz5bGhyB0jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mQvIWMQD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B842C4CEF8;
+	Tue, 12 Aug 2025 03:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754967900;
-	bh=jal1r2ODednPkjyVamwxs8obImbWoUqVaMNDNV0Iz/M=;
+	s=k20201202; t=1754967902;
+	bh=JWKebbiMG5ibFDajIQCk6uT9iUuCYPCsFaK9FvIddh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/To2Qb+71ED1FJqeVKyQ15vw33dKPkx+EQbaE66aykQkFLRke4scFAI/AqfiMTij
-	 1/4khnh1tLiTDr9RDP3noU8zV7aQvqOWat8N2d6iRdt4lV8o4WiUumE9Xg93EfsjVc
-	 QD6cPEkIOjKOUJCwmliX/CKD+44/a04byYNtlnr7MXd02bMbDgxSJ5G79jGFvN2YV8
-	 kv3Hwy7jEKj1It595tkZ3vzcp4k+o7YR0A8xaYeu2yT+GMIzIw2gpHq4LBnMVj9C6E
-	 WPZIpZbi3FI1r+kAb2metYt+jayv61VaieVhIuR37aONX+tkGABkDIU3F93qe0rBEA
-	 PMxkKOCinzr7Q==
+	b=mQvIWMQD0E3UX6woCMGL4ddTaGL1MzLTJzCD3Cwg1Ufqkas+72nGUzs0TgU2fa0uJ
+	 VubM6uC59TJJSUfvw3+zUREhvAaKapp/qDLkcSseKc2ZWlWrywsOVpUU6JX6pVANTV
+	 apS6/VtTu0TMOUZJ8vsaP7bIMTCiuCd13PWovmfx2cpOA6amUdIzLAx09s9IyWnr0t
+	 WxzaHgyj147uXSTGiuWCV3cs02kxh8GOWc4vqzdfmQiUpmTAc8tzc20B2c3PddY0Ad
+	 4ytIkeWazKEvRNwQyMtZbnE0hTF8V6qwkgym8P7m2P/04HrLtsL2wiXqaGSktcWyr5
+	 SGkFfxshAIBJg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
+To: linux-arm-msm@vger.kernel.org,
+	Sumit Garg <sumit.garg@kernel.org>
+Cc: konradybcio@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	Ling Xu <quic_lxu5@quicinc.com>
-Cc: quic_kuiw@quicinc.com,
-	ekansh.gupta@oss.qualcomm.com,
 	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sm6150: Add ADSP and CDSP fastrpc nodes
-Date: Mon, 11 Aug 2025 22:04:50 -0500
-Message-ID: <175496788915.165980.6862378710869668869.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm2290: Add TCSR download mode address
+Date: Mon, 11 Aug 2025 22:04:51 -0500
+Message-ID: <175496788912.165980.17274100378129843095.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250729031259.4190916-1-quic_lxu5@quicinc.com>
-References: <20250729031259.4190916-1-quic_lxu5@quicinc.com>
+In-Reply-To: <20250730132230.247727-1-sumit.garg@kernel.org>
+References: <20250730132230.247727-1-sumit.garg@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,15 +67,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 29 Jul 2025 08:42:59 +0530, Ling Xu wrote:
-> Add ADSP and CDSP fastrpc nodes for SM6150 platform.
+On Wed, 30 Jul 2025 18:52:30 +0530, Sumit Garg wrote:
+> Allow configuration of download mode via qcom_scm driver via specifying
+> download mode register address in the TCSR space. It is especially useful
+> for a clean watchdog reset without entry into download mode.
 > 
+> The problem remained un-noticed until now since error reporting for
+> missing download mode configuration feature was explicitly suppressed.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm6150: Add ADSP and CDSP fastrpc nodes
-      commit: d15cb624a60ab0119ec1b92d0a94f1cc305019e5
+[1/1] arm64: dts: qcom: qcm2290: Add TCSR download mode address
+      commit: dc231840dca64793da7a80ff156fa1d99584f3ea
 
 Best regards,
 -- 
