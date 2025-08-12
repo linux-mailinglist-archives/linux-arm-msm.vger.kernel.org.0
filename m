@@ -1,87 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55492B22231
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:59:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61E67B22242
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 11:02:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C20AB1797E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:55:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B237F3A571C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 08:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B6822E62A0;
-	Tue, 12 Aug 2025 08:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4320C2E62C8;
+	Tue, 12 Aug 2025 08:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oe9JsDNZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mwDjLlNm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CFA2E6125
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008B32E6138;
+	Tue, 12 Aug 2025 08:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754988923; cv=none; b=EdRlH9EdOvKG1L2w2WVNd6ZfQXgrUhHt4fOjR+3/LDr3hinvi0njmHIdUT1QoiUpj4aesnpgqfpMMyWq5JQgBmVUhKW7/uIAS+KWTaurNScBOEgUHYqCLSjvEiBBdM837qPGrZi9uR8XeW+RTfnQPjp3q0zDuTHy84ArumLVlJE=
+	t=1754989127; cv=none; b=gGXWoFUGy7UY7d0cJaiUbqiKjzSffw+FRrbg8J2Aaii9EZN2GxJg0zFT5MY9JmmKCOUrykZRZ051js83mZxs2pntDpuVM2jHZbluCTSMqagfAMGhJ58YVS1aSdcOAXUPLFTFM4rnUVOdFIxEV1qR52QvlY1E6pSrpYhmVBZzmNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754988923; c=relaxed/simple;
-	bh=xSs6dS+KyRDNFjNfeFIgB59xgPp98X9tQpRjtakfgRU=;
+	s=arc-20240116; t=1754989127; c=relaxed/simple;
+	bh=Jz3zWQc4zQWbozG7bpplB5qBv8LJG+ZXy/MF5G7tI98=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QO16IG2GuBgBbkdUUkp/x3jlKMVXcl0kNtyygBDwR53kiBYA8kTtyF0tBugIRRA/eg6KRyDASm/mRMyTZ53BMv8WMG87FbkwHNkFg/aO+XEJ4XqX+W0fbX3hnua9+ILgzZoWRY0PzPUo26owg3MDeS1eKO+hGX+4Ln7v8sNXSvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oe9JsDNZ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C6oWpK005641
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:55:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ebzLashfQv7DGHl2pjGLWaRMjZRcLyKDg5E66/KXdh4=; b=oe9JsDNZUHdy5vFJ
-	PdStn1nMaBC7PB3A0D5Qvl+Ps/yy8wI+I+E31mAKnZccBAVI2HKidilkjMQ5JA4A
-	B8ohSVBrvYXSRFCi8AZ1iRGkEsZyC9Q1cYCMZaULUbnMw+au0/xsgNBd78U02r0D
-	r5yyrz3MpMVTYgff8/WmNZlREMmI/eXHYDlvD0zAudyfmawHYUZTcCPlWqP3ZlHK
-	KlbT0EDWLpSO2qD8BlfDSda5AcCrVgYMKD3sbf+KhwP2rdQXCiXZM4ss8Op4/RwK
-	JDDxfvg8bDZhRmEvQ/LWcvcgJsydvIAyop4RutGezTdlVAGQAEZ+1tSPCEu4zqa8
-	t2mjAQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffq6kad5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 08:55:20 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-76b6d359927so3347009b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 01:55:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754988920; x=1755593720;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ebzLashfQv7DGHl2pjGLWaRMjZRcLyKDg5E66/KXdh4=;
-        b=M1ugv1PYoNjwG4udXSPpL8gcLJKk3ey0JbAuZS9ymXGIF6CpI3pKBQimwiazwIxive
-         RiK0Li4Btk1vJa/9i5pzkJa+YUX+b1veyTHYdob0Um3b3UUkaWUO9+JIqDUUeuu8TXMq
-         0kjrwW3Ip41lwFRxECwBxV6K3MbAS0jK2TXFdMcQVsmFZ0ERpKcsEyHRdozq8lhG8Xaz
-         0EfzOSsiwyG4vxiuWLIx1H2fuIdooxYvDrMoE4vteZTxZujeoKxtchZKoZU9hOjcA4XJ
-         A2Z0Uv6F2uTkTGhKN7ejsKd/KZ1POwmNtOr45Rxc4f+gmc79l8fDej4bVzLsMybD6ChP
-         Wm6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUCWQeFXe4i0Uz51CSZYBhtrUIYBAwgNxc8i/eHElfVawJOWUmOT+s59P0+/KzP1ie8CAUTIfSWIjOlVT7T@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSE4kVv/GyFiP+oYf74dCTXSCEczaP+k2TQi03ZOXjn370uLtu
-	oSMX3qmo5ztBCZTyX82amaZ/gOkSzgc9bUOJIwdTtQFCV5SiadiQVPDkEWNAGOEIy3hKBkqgBg4
-	LPSJxE0rsplTcQTVGtAuict3N4GKoSUNTKO37lbdRC6mo0THcOQSTcfCMHDJZuqphbaXj
-X-Gm-Gg: ASbGncvFHiV5UCpz6PSDsOtTmduybCa/h/viQDCiT/va8j6cvFmP0hwb6C7/jndXTaX
-	CeADu4JOK9Buj2ctRawuNfaYfhX1ceb012SrAJyOFKRFwU7LZOSGbxaPf4kQUyrPHjNmEzBQdeT
-	e+WORIcTdrBLKwELD5Y4f46CFukI8lutcP2M2yxPvp99Nuhurn9uGYvObaIMUHpHPTHaH7fz6Da
-	cQaajDy8Q10eya1xFEInU5zjEgnxfsk/IrSTgtOHFK30H8L/qf25q71w7LOpUObyoJIphWLJbw3
-	+ivxKT56T4oX+1Pdrr4WSyUADMwSGjR8S17kL5zO+lgl9p5Z38Vbs4kDPRVTwe3k0EC1
-X-Received: by 2002:a05:6a21:9988:b0:23d:781f:1516 with SMTP id adf61e73a8af0-240551604f0mr25082533637.22.1754988919656;
-        Tue, 12 Aug 2025 01:55:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlnXmlEPEhmClJA7oU3TLCmpGyzifixg3hvVecLC6bS5LjgZJzR0qSooNP83dnLrlUeNXW9A==
-X-Received: by 2002:a05:6a21:9988:b0:23d:781f:1516 with SMTP id adf61e73a8af0-240551604f0mr25082483637.22.1754988919136;
-        Tue, 12 Aug 2025 01:55:19 -0700 (PDT)
-Received: from [10.217.217.159] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b424ca987desm19854361a12.40.2025.08.12.01.55.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 01:55:18 -0700 (PDT)
-Message-ID: <d56920b0-0bbb-4951-aa02-152da6b9f9d2@oss.qualcomm.com>
-Date: Tue, 12 Aug 2025 14:25:12 +0530
+	 In-Reply-To:Content-Type; b=WTqkFWpGaDit2Y/08XBatkrvwGfYDrdLCH40+BGMLblDIAlaOT2STlmlNCMD1mrcXFuu7nf00t3/AOZq59FIndgquxbgYoBWW9T2Te6Wc0t/GV/wEewpBCpYZDRUZm816kt19vcztiFrSnmM5p82GC+WVjqBpuSKdl8NxkM2Ekg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mwDjLlNm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09663C4CEF0;
+	Tue, 12 Aug 2025 08:58:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754989126;
+	bh=Jz3zWQc4zQWbozG7bpplB5qBv8LJG+ZXy/MF5G7tI98=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mwDjLlNmqdE0G3fwVwgRK8xQfZsigeYX9zIQqAZaEj+KVYndZPwaxWzZ6WSdosmpB
+	 CfnD9oRH9GVkUf1DnPYIdarDxapq9Zg+MeA0F3BxjZke4QVC4u1BDuVrBijpeB1qNl
+	 sHC/qezAGKyq8bM5Nic5x81f0HLjwTgm6T/8Yh6Ly5cuz/kHkFmHJ9ctytjLFLiXu5
+	 WSRcu4PR6TGcK+gHILhvfH9uSXpJAa96kNjXQg0yZbJmcojFqQKjgEsOsz1oVoqkeP
+	 qxRV48bxPPZihIaF/3DyMau6RiDAyBiMLMyyKj15mlUcDyOImuiq7pHRbSxw4171LY
+	 RxhreUKl+k1BQ==
+Message-ID: <ca1f08c9-244d-482b-b719-c7997913f56e@kernel.org>
+Date: Tue, 12 Aug 2025 10:58:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,89 +50,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: qcs615: Add clock nodes for
- multimedia clock
-To: Bjorn Andersson <andersson@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250702-qcs615-mm-cpu-dt-v4-v5-0-df24896cbb26@quicinc.com>
- <20250702-qcs615-mm-cpu-dt-v4-v5-2-df24896cbb26@quicinc.com>
- <vxeadjzwywqjjqm7elg5pltq3jtnv7fprquhdoydhxnjihpsw7@tlqoq5wpgcr3>
+Subject: Re: (subset) [PATCH 00/72] media: i2c: Reduce cargo-cult
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-media@vger.kernel.org, Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Mehdi Djait <mehdi.djait@linux.intel.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?=
+ <git@apitzsch.eu>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Arec Kao <arec.kao@intel.com>,
+ Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Bryan O'Donoghue <bod@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Daniel Scally <djrscally@gmail.com>,
+ Dongcheng Yan <dongcheng.yan@intel.com>,
+ Dongchun Zhu <dongchun.zhu@mediatek.com>, Fabio Estevam
+ <festevam@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>,
+ Hans de Goede <hansg@kernel.org>, Hans Verkuil <hverkuil@kernel.org>,
+ Hao Yao <hao.yao@intel.com>,
+ Heimir Thor Sverrisson <heimir.sverrisson@gmail.com>,
+ Jacopo Mondi <jacopo@jmondi.org>, Jason Chen <jason.z.chen@intel.com>,
+ Jimmy Su <jimmy.su@intel.com>, Jingjing Xiong <jingjing.xiong@intel.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+ Leon Luo <leonl@leopardimaging.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Magnus Damm <magnus.damm@gmail.com>, Manivannan Sadhasivam
+ <mani@kernel.org>, Mark Brown <broonie@kernel.org>,
+ Matthew Majewski <mattwmajewski@gmail.com>,
+ Matthias Fend <matthias.fend@emfend.at>,
+ Mikhail Rudenko <mike.rudenko@gmail.com>,
+ Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+ Pavel Machek <pavel@kernel.org>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Ricardo Ribalda <ribalda@chromium.org>, Rob Herring <robh@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
+ Shunqian Zheng <zhengsq@rock-chips.com>,
+ Sylvain Petinot <sylvain.petinot@foss.st.com>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Tarang Raval <tarang.raval@siliconsignals.io>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>, Todor Tomov <todor.too@gmail.com>,
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ Tony Lindgren <tony@atomide.com>, Zhi Mao <zhi.mao@mediatek.com>,
+ devicetree@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org
+References: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
+ <175495482477.157244.17354544707184168458.b4-ty@kernel.org>
+ <20250812085112.GH30054@pendragon.ideasonboard.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <vxeadjzwywqjjqm7elg5pltq3jtnv7fprquhdoydhxnjihpsw7@tlqoq5wpgcr3>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250812085112.GH30054@pendragon.ideasonboard.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NSBTYWx0ZWRfXzdxL3v09lDOe
- x6Z8RmJxi6TQv8WCWv7NA3mhcuRVtcXD5s/aVl+RJJyc1azOq1aSKKcDrTVoAxTo/06bKyVo72s
- Vl7dDwj2G7aNiW0+pIt37SH8VNfghBC702KObgxejbW0LrQGqDBCSSZ1DXMHAwsodO2h0dAtZa9
- UtWZFTIVwFH1nlP/W3IHWGEZH7YWVnGuCqS8hKtF1NrNQyhOmCFSmp3dALzArk2vka7YOFAUaY6
- bHsuewJ7GMEUeyj/bNR9tzVV3JPM7OGiwQ0V/Nn4efF7uGxrC12zwtBLi7dFkmFvg8gnDPYCYiM
- YKb/uLA/e/UcwIKzC1Zb2jQPpzFbhFz0XkW1tUZHShoJbzNu5d6g+OzfN14POYqWMj0PSY/XS/8
- wyG30xQF
-X-Authority-Analysis: v=2.4 cv=TLZFS0la c=1 sm=1 tr=0 ts=689b0178 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=Kl_B17VGIN1bcdT5aTYA:9 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: EnEw0DfiY__KANt2lC63voCu1RPYcwqQ
-X-Proofpoint-ORIG-GUID: EnEw0DfiY__KANt2lC63voCu1RPYcwqQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110075
 
-
-
-On 8/12/2025 9:15 AM, Bjorn Andersson wrote:
-> On Wed, Jul 02, 2025 at 02:43:10PM +0530, Taniya Das wrote:
->> Add support for video, camera, display and gpu clock controller nodes
->> for QCS615 platform.
+On 12/08/2025 10:51, Laurent Pinchart wrote:
+> Hi Bjorn,
+> 
+> On Mon, Aug 11, 2025 at 06:27:01PM -0500, Bjorn Andersson wrote:
+>> On Thu, 10 Jul 2025 20:46:56 +0300, Laurent Pinchart wrote:
+>>> This patch series build on top of Mehdi's introduction of the
+>>> devm_v4l2_sensor_clk_get() helper (see [1]) to drastically reduce
+>>> cargo-cult in camera sensor drivers.
+>>>
+>>> A large number of camera sensor drivers directly use the
+>>> "clock-frequency" property to retrieve the effective or desired external
+>>> clock rate. This is standard behaviour on ACPI platforms that don't
+>>> implement MIPI DisCo for Imaging, but usage of the property has leaked
+>>> to OF-based platforms, due to a combination of historical reasons (using
+>>> "clock-frequency" was initially considered right until before the
+>>> introduction of "assigned-clock-rates") and plain cargo-cult.
+>>>
+>>> [...]
 >>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> ---
+>> Applied, thanks!
+>>
+>> [12/72] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Replace clock-frequency in camera sensor node
+>>         commit: 5433560caa5e7e677a8d4310bbec08312be765b4
 > 
->   DTC [C] arch/arm64/boot/dts/qcom/qcs615-ride.dtb
-> /home/bjorn/sandbox/kernel/db845c/arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@100000: 'clock-names' is a required property
->         from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-gcc.yaml#
-> /home/bjorn/sandbox/kernel/db845c/arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@5090000: clocks: [[43, 0], [45, 2]] is too short
->         from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-gpucc.yaml#
-> /home/bjorn/sandbox/kernel/db845c/arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@5090000: Unevaluated properties are not allowed ('clocks' was unexpected)
->         from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-gpucc.yaml#
-> /home/bjorn/sandbox/kernel/db845c/arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@af00000: clocks: [[43, 0], [45, 29]] is too short
->         from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-dispcc.yaml#
-> /home/bjorn/sandbox/kernel/db845c/arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@af00000: Unevaluated properties are not allowed ('clocks' was unexpected)
->         from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-dispcc.yaml#
+> I'm afraid that's too soon. This will introduce a breakage without a
+> corresponding change to the camera sensor driver.
 > 
-> 
-> The missing clock-names in clock-controller@100000 predates this series.
-> Sorry for merging broken patches in the past, please fix that as well.
-> 
+> I will post a v2 with the patches reordered. We could merge the V4L2
+> side in a rc1-based stable branch and merge than in the arm-soc tree as
 
-Bjorn, would you prefer that I add the clock-names property to the GCC
-clock node to resolve the warning, or should I instead remove the
-required: clock-names entry from the qcom,qcs615-gcc.yaml schema?
 
-Let me know which approach aligns better with your expectations.
+You cannot ("cannot" as not following the process) merge drivers into
+DTS branch.
 
--- 
-Thanks,
-Taniya Das
 
+> well, but I think we can also delay the .dts changes to the next kernel
+
+
+All users of DTS will be anyway affected and commit msg should address that.
+
+> version. Do you have a preference ?
+
+
+
+Best regards,
+Krzysztof
 
