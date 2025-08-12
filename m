@@ -1,218 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-68730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32DAEB2240A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:06:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BE46B22460
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 12:17:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37023175D55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:06:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98FFC1B66EF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Aug 2025 10:14:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D282EAB9D;
-	Tue, 12 Aug 2025 10:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A66EC2EAD01;
+	Tue, 12 Aug 2025 10:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ICbAEpAu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLYXDj/x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E732D4B77
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B582EACF9;
+	Tue, 12 Aug 2025 10:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754993207; cv=none; b=VzND8ym0Ka1SA8tpsmrZiZ0WsNJDZbr0c1FhsL7Z5K58tiqY4V+8oRv8onXCMonENWHeLM2ZBNFedTDphjoTuk/h49XNtPCp91WGcQK3Q1v0PYRJ08+RVmnVOLH8VAdKx3t36b+cLGi7IgIFK/pRgW01JiM+bOJPm2IA1ubHnk8=
+	t=1754993607; cv=none; b=bLx8zNEcN7FIJyHkjGg88NMdWPQBn4zLzDXOxHTUJdtq5hC6xdgKuRmCqoegrhLaJ5ZRaPbuuDpAckPSISJxrvXv17eDR0gP+hfIYm8gxRb0Z8Q+MzZFNkfUVBwVq0g7eDxU4COfTpHRZaQR6eksO5u6AybWQNgUdCArUq3GJbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754993207; c=relaxed/simple;
-	bh=p86wGcuXouV66IvwXNLN1S5SQ13PEZX8gi4dx6Jnpzo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eDEUznPfkEV6ADFIbfFJ2xgQm0/tk855FfWDHFxwLrlETLrkeFR9yFeEjsdqZn8VAeRGQzZ8/JJ2CmvAbc2d71/ABqTTYnfJmPxjUHr8KNGRyPvmz6+P1KXXYorCQvTMmOXea+9G9MAGyNo7RaLt02sGPHdzCt5giQiXgD5iCAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ICbAEpAu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57C4PvZS013093
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=A8T8ZatYaGf8wMEcyEX+SVkI
-	kdVBoSOYx1hxOAACmEE=; b=ICbAEpAuy0MSvABsrlO/4K/W8IleGPdGZWCoTe7x
-	AYKCE2rZpFDnGwb7w7DsRmJuF59YhjkCtvT8AeGwhD2EZJiHUCOpCSvQ1NFTeY97
-	NWX4MCIMsSx4uaGbnFSP8PCGVHNSN1kghrClnjR0NwxYRfaLBXDU23/edu3anooI
-	dNCHDQLQmO2iOWlQdQO+gvcQWMwURez70bn2FuDqnZJxk9WldZj/jLLAh99bletX
-	h+q3vXQ2fgJ59T5QQmfP7tBVqcCDvdh6FQ+rFwWqq09cveP2Xgl8r+SNyrBvdDdu
-	f4xA0WEa68Hv0Wp+YDgmp4wP8J/Yp/qHD8tOL/QpKrI0yg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dupmqujb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 10:06:43 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b081b2a94cso176298201cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 03:06:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754993203; x=1755598003;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A8T8ZatYaGf8wMEcyEX+SVkIkdVBoSOYx1hxOAACmEE=;
-        b=f3H16/9VA7pLCG7HRvzrGVaPCOpiAKCnipsRduS2ibYStnzw/CYVxS5o3pCcj89zJq
-         7OQQI+cAghChn7VPhfZpFM2MsSWsfhQQmZ1F0UypmCIBNpkgh8v93b+/DJlIYycBJHi0
-         sLU0TZNSysplL2ibZEXLNvvKwN8xx3Shv5R6q0xSgKNqpFDbgOJBmI872Ab6DXiRzUzI
-         YuKey+piNg/8TUI2hIHSufU1BekZoH/PLc+EI27/ySfL9keEr+bOPuISjrFEPIwexGwr
-         E/rRFiH6budPpKtbxpnOPsUNw7GA3scit5ung2iOj2KiaaAy3G1tPgSopKoCHCnIXcm/
-         FZxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXDp1z+JFOQbIiGj8Uv90AB7HwVrg1ZkvK9Rby0/5pI1tuVwf9jq3dAPqIPzSemV0XQjm1hoP8V8o9xIgL4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yze8mkEieo2JKcv013xtzsK/oOqiU4qoURUYNTU6bTl39eF7R90
-	pLtuuJT6Gr/wIZzKsrrFk89LeNr/XXrTa/J0oclXNRgqg2oHj7t0qKR37GCXM/2TtaxF3TZ4LSw
-	T82c/tfs9FXT1wpqXrG8IbJJJ7F3TjwLO+vjgC2bBiALqLpY4T79Bjr6iz/EGaUCrnU9+
-X-Gm-Gg: ASbGncuXpvCL417ie8VoMpTaLFZSrFYXnA+t3xsVo25kN+uyYT3j+6KdeYSewLfoCBu
-	LeRL1jEyW+nzJO3/LOBgrfMPew21Ic5EGsnr7mhuPn9HXI+LPfGR6a+oHbkSRlTgMTUdG0smusp
-	huJMoyOecHfAi84SQe3AQDMXOxlNpbQeJxgr66lJ3qlob6/Z83/tWYKdTHM8tp2OQimUCC9yJmq
-	bTQlV59korw1CdMJytFWhYmhhQ61p96Ezrhr6CTi4KqVInmgMqi+Zk69pHJtYDgaBso0hPD6eNv
-	NNEkDq/PVGfnnliLtCUNIWUWZEeiWBpVJPY23ssuK4a4LFmINGJXmjS4k5TfxZ82/tM02T9RvEr
-	bYDHca+gpX55PZV4CETNswEVEMDvv9iIJWESllfQeluwkeOsLCQ+h
-X-Received: by 2002:a05:622a:993:b0:4b0:7b80:4759 with SMTP id d75a77b69052e-4b0ecbdfb41mr34852001cf.20.1754993202575;
-        Tue, 12 Aug 2025 03:06:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMlxzUMM54lZpUCjMGfkRuTDxqeDDulNqKujbwTvnh1hN5pHNNiRG8zIikUZyWOyfTNB5HMQ==
-X-Received: by 2002:a05:622a:993:b0:4b0:7b80:4759 with SMTP id d75a77b69052e-4b0ecbdfb41mr34851841cf.20.1754993202166;
-        Tue, 12 Aug 2025 03:06:42 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898bb4asm4657815e87.16.2025.08.12.03.06.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 03:06:41 -0700 (PDT)
-Date: Tue, 12 Aug 2025 13:06:39 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] media: qcom: camss: Add support for regulator
- init_load_uA in CSIPHY
-Message-ID: <hosfuvk34iolc4ylzqu2pyoozomw4nzirlfdj54x3777eyuok6@renjfbqznl4r>
-References: <20250729-camss_csiphy_current-v2-1-da3c72a2055c@quicinc.com>
- <d32cbtfzhwpzsvxpb7esvndpqxooergkzhlx2jp4ikuc3bsaop@gyxnlusuptg3>
- <e08cb2a3-e96b-4b06-b56e-0b630cff38fa@quicinc.com>
+	s=arc-20240116; t=1754993607; c=relaxed/simple;
+	bh=BSRg+8J5PmIMQFGn3bsuR4yy/D1eKIlCM6YV8z7Osl8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Eyo5D9160a5WH3gvT5jDyRZfU+M375as+dQDXswSnx+de/3UdrNi5p8y4ioadh5JkpNtc0+qw+F87YTVDB80k6NTQ7TZLOs8vYRs1NUhfTdK0DkQ6oOfM7509XvBeWIa6UXYIE+ytffubadxAIH8tuJb5huxXXC9Y+KEHeDEi1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLYXDj/x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79B0C4CEF0;
+	Tue, 12 Aug 2025 10:13:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754993607;
+	bh=BSRg+8J5PmIMQFGn3bsuR4yy/D1eKIlCM6YV8z7Osl8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DLYXDj/xTXBF79kXrhl/gTeKer6+8xlN5E3U1ka7woIVt1fYHqe+kW6sH+wzcxyvX
+	 jwWwiQF0RZeTk4mwzb0m7wg6b1Wu0+KkJbTl10PE7Q8o6CVjpIZ289hlK1c40IdyUT
+	 UzRTR/KI7K9NR78JQeZ/Gv9m4UVVDhtyXJ6Y3u5yNwHB8UdHL1joyhOZfftbUeLQdf
+	 bDfTdfR/jG6IYZWf+JGZE+3N5QNFEy/4BwEStwfoq5/Y414h3qpc3FDfgxXxFr5bVu
+	 6yPbiOpYu25aDodX3VrEir7dZzMfsEi/kvG9jWInbTfgpnfdGadW8ZdUcgEkcYr/19
+	 UyD3vAt7OOjSw==
+Message-ID: <0291cbad-a904-4df7-8875-244f5657a46e@kernel.org>
+Date: Tue, 12 Aug 2025 12:13:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e08cb2a3-e96b-4b06-b56e-0b630cff38fa@quicinc.com>
-X-Authority-Analysis: v=2.4 cv=bY5rUPPB c=1 sm=1 tr=0 ts=689b1233 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=SCioppmI-r5X7Irv_ikA:9
- a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: ynWavhyzXO43_2jiuaHIoT6HZztIOVrr
-X-Proofpoint-ORIG-GUID: ynWavhyzXO43_2jiuaHIoT6HZztIOVrr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAwMCBTYWx0ZWRfX2yXb7HJBio5p
- J0Tu3f9jxJq1o1cmdpwinHBE29pLpWydLCyGK33FuRwrqdevMFd3ZRtLAdoxOB84a9f/0FBXtPj
- 7AWGn9A9Vz1piLuK+/TnqKSVB2HJ2AQIgAgP2UHgYSJFU6kyadvnEVkjjCWASWEfcpv858aoA7x
- dqkcVpKYU6GQAw2MLXhJ+EwJbmFyxVg9Ai0Em/9rJqLUh+mPQlGGxkWdLbyBtOcqLCs6SXyK7Fa
- k06GztqyWBFuMM/RD1e8i1nDC6Nw+x4MhTN3J9BKV+5eBZVlBcVURRFufqPK1Mmxo7HXu/aj+pZ
- Bb60C68I05MCjGSbAWXC26QvSR4eznzOi3zeOWanq6bjm+NNhAF9a17NfaeRiw55ejTKkBjtNv5
- vpkob9WE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_04,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 clxscore=1015 phishscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: platform: qcom: Add a media/platform/qcom
+ MAINTAINERS entry
+To: bod@kernel.org, quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+ hverkuil@xs4all.nl, mchehab@kernel.org, abhinav.kumar@linux.dev
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
+References: <20250812094718.11378-1-bod@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250812094718.11378-1-bod@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 12, 2025 at 02:05:55PM +0800, Wenmeng Liu wrote:
+On 12/08/2025 11:47, bod@kernel.org wrote:
+> From: Bryan O'Donoghue <bod@kernel.org>
 > 
+> Point the MAINTAINERS file to the linuxtv.org patchwork, to me for
+> merging media/platform/qcom and to the media-comitters gitlab.
 > 
-> On 2025/8/11 18:39, Dmitry Baryshkov wrote:
-> > On Tue, Jul 29, 2025 at 03:24:55PM +0800, Wenmeng Liu wrote:
-> > > Some Qualcomm regulators are configured with initial mode as
-> > > HPM (High Power Mode), which may lead to higher power consumption.
-> > > To reduce power usage, it's preferable to set the initial mode
-> > > to LPM (Low Power Mode).
-> > > 
-> > > To ensure the regulator can switch from LPM to HPM when needed,
-> > > this patch adds current load configuration for CAMSS CSIPHY.
-> > > This allows the regulator framework to scale the mode dynamically
-> > > based on the load requirement.
-> > > 
-> > > The current default value for current is uninitialized or random.
-> > > To address this, initial current values are added for the
-> > > following platforms:
-> > > SDM670, SM8250, SC7280, SM8550, and X1E80100.
-> > > 
-> > > For SDM670, the value is set to -1, indicating that no default
-> > > current value is configured, the other values are derived
-> > > from the power grid.
-> > > 
-> > > ---
-> > > Changes in v2:
-> > > - Change the source of the current value from DTS to CAMSS resource
-> > > - Link to v1: https://lore.kernel.org/all/20250620040736.3032667-1-quic_wenmliu@quicinc.com/
-> > > ---
-> > > 
-> > > Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> > > ---
-> > >   drivers/media/platform/qcom/camss/camss-csiphy.c |  4 +++-
-> > >   drivers/media/platform/qcom/camss/camss.c        | 26 ++++++++++++++++++++++++
-> > >   drivers/media/platform/qcom/camss/camss.h        |  1 +
-> > >   3 files changed, 30 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> > > index 2de97f58f9ae4f91e8bba39dcadf92bea8cf6f73..7a2d80a03dbd0884b614451b55cd27dce94af637 100644
-> > > --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> > > +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> > > @@ -707,8 +707,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
-> > >   			return -ENOMEM;
-> > >   	}
-> > > -	for (i = 0; i < csiphy->num_supplies; i++)
-> > > +	for (i = 0; i < csiphy->num_supplies; i++) {
-> > >   		csiphy->supplies[i].supply = res->regulators[i];
-> > > +		csiphy->supplies[i].init_load_uA = res->regulators_current[i];
-> > 
-> > Could you possibly refactor to use devm_regulator_bulk_get_const()? It
-> > would save you from this data moving.
-> Initially, we were aiming for a minimal-change implementation.
-> Consider refactor for save data moving, will be refactored in the next
-> version.
-> > 
-> > > +	}
-> > >   	ret = devm_regulator_bulk_get(camss->dev, csiphy->num_supplies,
-> > >   				      csiphy->supplies);
-> > > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> > > index e08e70b93824baa5714b3a736bc1d05405253aaa..daf21c944c2b4818b1656efc255e817551788658 100644
-> > > --- a/drivers/media/platform/qcom/camss/camss.c
-> > > +++ b/drivers/media/platform/qcom/camss/camss.c
-> > > @@ -750,6 +750,7 @@ static const struct camss_subdev_resources csiphy_res_670[] = {
-> > >   	/* CSIPHY0 */
-> > >   	{
-> > >   		.regulators = { "vdda-phy", "vdda-pll" },
-> > > +		.regulators_current = { -1, -1 },
-> > 
-> > If it's unset, it should be 0, not -1.
-> I considered existing implementations as a reference:
-> https://lore.kernel.org/all/20220804073608.v4.5.I55a9e65cb1c22221316629e98768ff473f47a067@changeid
+> Remove my +R from venus and iris so that get_maintainers.pl lists me for
+> drivers/media/platform/qcom as +M.
 > 
-> but based on the implementation of regulator_bulk_get, setting it to 0 seems
-> to be a better approach:
+> Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+> ---
 
-Ack. Also please try to provide a sensible value for all platforms, not
-just the most recent ones.
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-> 
-> drivers/regulator/core.c
-> consumers[i].init_load_uA > 0
-> 
-> Thanks,
-> Wenmeng
-> 
+Best regards,
+Krzysztof
 
--- 
-With best wishes
-Dmitry
 
