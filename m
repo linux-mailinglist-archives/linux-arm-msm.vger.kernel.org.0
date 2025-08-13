@@ -1,184 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-69038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56769B2522F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 19:40:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36390B25301
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 20:26:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10BDB8822A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 17:40:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C72717E81C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:26:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFF3F244673;
-	Wed, 13 Aug 2025 17:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A2702E54D8;
+	Wed, 13 Aug 2025 18:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WZHLL5AQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PCj7LPDe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE9F1F582E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 17:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32EA19F424
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 18:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755106831; cv=none; b=K+bfodN4ibjmAD1uuHTTatJ4KGRJ44WnBIVS4InsM4i9WFDC2Icw0dkUg8ZT+PDmMdKt/kR9E9GBxgquM8eItYjgxcW6myiHfNx5JOiwL+4L9/174xeWqKngW9+0CEZwWXMgTth6rXzO1QJ460hmvQZGImyyOQzZDhNpnNYoraY=
+	t=1755109568; cv=none; b=mN/hTjWMXJVlVY8YvZl0Q/eNgBDtoTDVzyd0F1t3EgFrJDsbiudG0WlrAqHZ2Pp5wKwJcsm0PBEwLnzSgZciRGrPIF1Nt1ap4FWpRVcJFythvvYw/5miATyHI3DfsYzm8Feif8HAxwwq0EfctGvPvspFQjP5lrZnA/cmjio7KgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755106831; c=relaxed/simple;
-	bh=wOSj2Ah2UgduIpbrNuIewezDqNh/Xvc0kQlIW+94XPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SWpxwM9b2BZSfEXe1C+rM70klwCajJd6W717cP1vAblW56JpGJhZ6u1sLAQGsB/uFcmjQqMObCyL8o0fV74haUbg61j3XK6O+EUJ0BsVhFkr3NSmQTeT23JSNHq0VRdUIFBwwcqcxWQLEHgna6ZPU/MxUTSeqgi9fnzsMSOQHbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WZHLL5AQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLgkr030136
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 17:40:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SGOnx8wASardlLmh6F+MJ3xLLydD3abWl/e37ujFDdw=; b=WZHLL5AQnirT0KJQ
-	1IJe83vJhzUs/s44Jt9JxckEh+IY5kC5OixiGT+CLmR1z37ANq7EwwVaiUeN+4S7
-	0aCWLW4gZJkrqSdxLm1dQp7XYaWcSEvEw+vjMzimZHhiZeW2P/ZV7inhrnFo7dKI
-	G7vZgD+2LFYLvqtx0kcx5FVmksOKvN03zMDNFXecKKnLlikeQci8YdlkLyDi4SVF
-	ib7JdMiyEGZpH4tssw7jZ5qP6Vb3eb8xB2wkzCiaktGdyjDzAbdr1AV3Apocvv96
-	MRGcpOT7wjh8Aa24mo9X3wRXSdfRqUP6ue3UUQ71yiuF2Gd39D60epy5GvpZYZjT
-	zGbLKw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fm3vqn63-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 17:40:28 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b10993f679so2463081cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 10:40:28 -0700 (PDT)
+	s=arc-20240116; t=1755109568; c=relaxed/simple;
+	bh=kjaqRalQ6f+VnPUzPJ3lUTMCHNI4Mqln+f9A2PCWars=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=chmbhp74BTkzuRNnnU0ds2LVGEBDF9wdgsy7dCTmGUnQBitg5Ojia7PQZFJO9+5v0wvJ9mQe7Puiffj+09ybWC+c8LBNJeSEYFZyVwj0NVQw6vD+kP411gX78ol5lbr0tEl9OqoX8IxB3xHqneH+yPtzIRq1Rh1dfcR9WfGuI5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PCj7LPDe; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb79fb221so1858466b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 11:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755109563; x=1755714363; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PG2XQ09YxGQDAljbZJ1dBpExZdNgeyI6Zcz42FxK4Mc=;
+        b=PCj7LPDeYAXaowVBmpom8m5uScmjxGfFgqFzlR1fSVb7AeboS5eohYmo4ywE9kL95V
+         aBSePNtjlvdtnNb7TpI9Mnlx8jwf/fiRrpOW7gnAFidJ89cxI2K6EU8LOqokfsWw+CKB
+         Su8w9jKFsZwsWgpxnHoIRECsy0coAmxZ+/vy3VoS6lGL9STAMfTx/YcV4ADduNDn39AF
+         /F20vkcFco2SLmIUkRL7DcSjYsWs8QeK6AvFs8gOitpDcfwsjX6MsPWvltJmeLEnLQJz
+         ZGDFOiVjYYeFJdekSgGnTDLNR3FuIjZfm3KiF7DEo/XQFoimthpHVan+uOmjVMvp5g7c
+         yxAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755106828; x=1755711628;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SGOnx8wASardlLmh6F+MJ3xLLydD3abWl/e37ujFDdw=;
-        b=Mx3CJ0GxqZ94SuHRwyw698tm/GsQPiS70phKk/he05FMbj9AzjSmHZyOAMuXQ3fM52
-         uGJYR7lW13weVHSQhTa7HnvIkB8Gp0EbwilOt7d0lnttaTuDlCfDWDrwGVGffYcHiveU
-         ti64jTWmLActo60MtixvFsQRhz39grJylYzmk1kzIpVU3ILZO0uDk3Fs3xmXkhTKpEr0
-         /bWunxVeCr6iKs/dQApgQ0TDs4InVhQbnOnBMSJaByHSJUVOSnO14NAf6SmLy+4Gv6mP
-         GwZXWNyby7oL0wgqzOWp17LPxzM/5U5bizmPW5dCL9p9XOBFYfkhqqywjaAS0UyjiQCQ
-         d81w==
-X-Forwarded-Encrypted: i=1; AJvYcCU4QuO8wsnkunl8OlI2xU3iPQv5tGcGGlGmdsqtLGRegusWAAdptklArJe+r0NGc72ntbcPoMXd6CvIecHy@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLuhTJ3BTKxQCu8vBkaDX4P1T0ZcaX4upW/NoQzDAB/ZIag5mF
-	UlbbZnyBSkqy8uFmF6OW1AFUf0iE41xsuF3afeviEHNEVEH+zrv9Z7zsB5biEynOjx0D4XhmH+r
-	BUB6hALvmtLnnv/UoeBwGbvhtsHBtEMrLmxI4V85tNUrLw6SidSJfcShQETrAAbJbjYHj
-X-Gm-Gg: ASbGncs7ZkwuvqvgJ/XTmv6OyyC0+KOzsMzvZoW/o8ZEj0eYCbKmqr4LDbd7ZVl2YqF
-	v7q8bXS1ZrbGMpkb7j26MvshXZ5gOPqH5W0PJZ2ARQDf8dnluwh9pSveFJpC6y1QP1m/Yp+Zg+x
-	BtvkKoyN8ZkDZYMLFWdZ+/eNe9E44ZV3zvaZHdXJ7jecLySLviM6VIOQZjBEsyU3KExCMips+iH
-	aG2kUJH0+B88cYmo50dHEKviemfdeC0kXy/zL0ajqVnqX1xeF3+J/4cOKAop+tBOL4HUIKugrXG
-	CZwD7zh1XJRg7ogPhypEZpocmGhmuxE5ZfpU3IOETSh9VFXHTjjXzU1w9INgo3TnT6MQ3Gj9eVx
-	EVn4z4Hn0Uy0dyPoVOojsYwPQIF/u9tVLdkNG6LJnrALnuM1gnGR/
-X-Received: by 2002:a05:622a:1826:b0:4b0:80c7:ba32 with SMTP id d75a77b69052e-4b10aa6b551mr698431cf.38.1755106827958;
-        Wed, 13 Aug 2025 10:40:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGSYwB2jPhXDGF7QnvYQoWrDeEZN5VgRz2fGxMg00AQDFPHwe889FhEH4ieuMEs9en12IG6Q==
-X-Received: by 2002:a05:622a:1826:b0:4b0:80c7:ba32 with SMTP id d75a77b69052e-4b10aa6b551mr697831cf.38.1755106827256;
-        Wed, 13 Aug 2025 10:40:27 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898bd63sm5375446e87.20.2025.08.13.10.40.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 10:40:26 -0700 (PDT)
-Date: Wed, 13 Aug 2025 20:40:24 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Chenyuan Yang <chenyuan0y@gmail.com>
-Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-        jessica.zhang@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
-        tglx@linutronix.de, krzysztof.kozlowski@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Add a null ptr check for
- dpu_encoder_needs_modeset
-Message-ID: <2rtdf7azwluus757f3azwjacoiqussnoxfqqxtr3p3l4l7rkrt@dbk5pfdglugu>
-References: <20250722211740.3697191-1-chenyuan0y@gmail.com>
- <ciawdvjevycjjuowmykfux2v25lvr66kzey4jklq7t5cjzqalj@qfcva77k2bvr>
- <CALGdzurR2XPoai8qshTX6hzgF-zLQ-FrsWxu5NGjrkjNzWaHaQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1755109563; x=1755714363;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PG2XQ09YxGQDAljbZJ1dBpExZdNgeyI6Zcz42FxK4Mc=;
+        b=oTbgUshvpV4f/lDD/QIBkC3AkVScosWVnWQ7Qfma+4+s2djmcf8jlHv88tuRkjREUq
+         AMZc0oAFvFMEy61rniCL6+fV1PAl2oWm5enR685KB2p+cvlp/4NwhWaUNmP3lShUkI/H
+         tn0Y6zFZSnDWPhPl+BYGkvJTUZ3LLM4MSTI2Wv1JYymhx/EgF8SIoavF5Pv36tggXTEW
+         4QyZJzC176Ol9L38rMW37fS/jZw+DAFrcBQS3sDdmuOl35X0e3oSq/gWD7foJ3ENCLmD
+         g3kX2HoFze1DLriDpCpNIwADeIuwhrmvmVevYhFo6AKsjxZbTFSVj+cJQGHAIN8vRRrq
+         8ZRw==
+X-Gm-Message-State: AOJu0Ywij7uoiKzbNeH23R4E3yAayPCn995gnoyuQyaipyqsSjKErzK0
+	00N1+JXPW0oM/Nhf2EifXP26EoDi4qgoHzVEpzMenVSFoQzeDyBz3r3q4c31IEICOxA=
+X-Gm-Gg: ASbGncsMwWT8H8rxsS8ywmrYAArAxeYf86wsipLUZiPICmIpWP5BA8Tbsg2MEBRUMED
+	B1rvhuLR44EK2yX5QXpHV6VFfcgtSrYhd/wiUHQlO4Ggvgwd4K/bz9FrEW0Qo9a/z/xJ/HkhjvL
+	O8hupYUXbL2EtWM/5z8owB/5khj74ZyRLyHklM9D+wmAQkl99dgYEpKqBwL8dtpfiKSL99XTyYa
+	IlxgaNXzUDBRyEBB+dfZ6lGx/FjW+pVLVBlOHprlwQ3ir1fiuMx/oa12O90FeohZmCQ61zgMD5p
+	BfXCyYOqM8x4iumXJscmEBlF5lusKd4J262bla83hh7PCsa8u0APk2IVkh1C+DicONpT95CFby2
+	mzv4nZC+p4AOvYoviJ5/Cujxu+yKvFuI+WQ3VvRybRW0=
+X-Google-Smtp-Source: AGHT+IFaN9KUjjqPxBrud3j7rI49y4RZJJQ73wRUqjRKrKs4uhIrrRPKHQ6crcL+1sNOlr+nwDLI0Q==
+X-Received: by 2002:a17:907:d88:b0:ae3:5d47:634 with SMTP id a640c23a62f3a-afcb98e24d8mr8259266b.9.1755109562455;
+        Wed, 13 Aug 2025 11:26:02 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0766f9sm2488355966b.24.2025.08.13.11.26.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Aug 2025 11:26:01 -0700 (PDT)
+Message-ID: <c0864d4f-fede-4d2e-8f93-c52d870adb5d@linaro.org>
+Date: Wed, 13 Aug 2025 20:25:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALGdzurR2XPoai8qshTX6hzgF-zLQ-FrsWxu5NGjrkjNzWaHaQ@mail.gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDEwNyBTYWx0ZWRfX7ioslMVAS+RE
- jSDoZOU6Iqg4vZ2SGW1qgqQjvASyneH9TUtPmvBx9Kyl8Z6XIDYCkx0CYajUHdHtJyrGbRi2ev4
- IzG9IZoxjN9mxTPcEpkdXJwXQh4q+xEJh9KMQzgsOsisFv2duTJ5nTYkZH3JCrvCZ1hOdylXvrq
- v92tEdOVA6j6ehylK76eKeRHhZHVE0OjD+Xmsx96TTDA+T5KHRHXoAzkLZtygdQbQcm/z0PB/4T
- h1OyFLr24g00U/ewZd07DBVnkzwNLIBu8b7RlCopTy2OBG7KseGKuvyj/30V2pGGqob6x7x7j1+
- Gr6Wda+T68FoZouuzdOGvKYfw+Q6yqq4lmNtGoQI/G//GbU5wZF++1bc6HQp9x1rYnHNuluH7Sp
- 9rQAoDhZ
-X-Proofpoint-GUID: QRBr67P2_7QOYC5oH6xVSb_wDtE5TQyq
-X-Authority-Analysis: v=2.4 cv=A+1sP7WG c=1 sm=1 tr=0 ts=689cce0d cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=jpGDCbsBDmrldJ3tXloA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: QRBr67P2_7QOYC5oH6xVSb_wDtE5TQyq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110107
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 06/17] drm/msm/dsi/phy: Toggle back buffer resync after
+ preparing PLL
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ Abel Vesa <abel.vesa@linaro.org>, Srinivas Kandagatla <srini@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250610-b4-sm8750-display-v6-0-ee633e3ddbff@linaro.org>
+ <20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 23, 2025 at 12:43:06PM -0700, Chenyuan Yang wrote:
-> On Wed, Jul 23, 2025 at 12:05 PM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> >
-> > On Tue, Jul 22, 2025 at 04:17:40PM -0500, Chenyuan Yang wrote:
-> > > The drm_atomic_get_new_connector_state() can return NULL if the
-> > > connector is not part of the atomic state. Add a check to prevent
-> > > a NULL pointer dereference.
-> > >
-> > > This follows the same pattern used in dpu_encoder_update_topology()
-> > > within the same file, which checks for NULL before using conn_state.
-> > >
-> > > Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-> > > Fixes: 1ce69c265a53 ("drm/msm/dpu: move resource allocation to CRTC")
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > index c0ed110a7d30..4bddb9504796 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > @@ -729,6 +729,8 @@ bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_st
-> > >               return false;
-> > >
-> > >       conn_state = drm_atomic_get_new_connector_state(state, connector);
-> > > +     if (!conn_state)
-> > > +             return false;
-> >
-> > Did this happen in a real case or is it just
-> > yet-another-static-analysys?
+On 10/06/2025 16:05, Krzysztof Kozlowski wrote:
+> According to Hardware Programming Guide for DSI PHY, the retime buffer
+> resync should be done after PLL clock users (byte_clk and intf_byte_clk)
+> are enabled.  Downstream also does it as part of configuring the PLL.
 > 
-> This is a static-analysis detected bug.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-
-
+> Driver was only turning off the resync FIFO buffer, but never bringing it
+> on again.
 > 
-> > >
-> > >       /**
-> > >        * These checks are duplicated from dpu_encoder_update_topology() since
-> > > --
-> > > 2.34.1
-> > >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
--- 
-With best wishes
-Dmitry
+
+BTW, this and two other fixes from this thread were for some reason not
+picked up.
+
+One fix got comments, but it does not stop rest of the fixes,
+considering they were reviewed.
+
+Best regards,
+Krzysztof
 
