@@ -1,83 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-68916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07D27B24445
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 10:28:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6ED46B24468
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 10:35:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87B6A16BD6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:26:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7022C7B6522
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:33:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A5D62D2388;
-	Wed, 13 Aug 2025 08:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E1A32BE039;
+	Wed, 13 Aug 2025 08:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="npiwyHt+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b5Y7GJw9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CA22EBB98
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6D92EBBAC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755073584; cv=none; b=lsc3+5ZnGQZIrUSkCAQChyIV59EV2e25GA+wysy5n/BwoVzbQ0rFk7gTwVjjk9kzgFmcs56ID8KAje7j51gihD4A43NNs2Li2EACiv8Sdnp4ichPvPqxyUAyUIFBALsEMYljoMAyMCUJoVCPqNAbumqleuR3pKS/VFlouSWkVIs=
+	t=1755074098; cv=none; b=aVA4A5l67vt6xT3P8AZVFKO+2HBICoTuemaFIATFXGfpjqLxDJPMh70A0zM0Inl3GRwTj7aQdOVnqCoEfxT9U5kI6nbf9+nBx4RDhlrieVzSAMMhRToFqqWbm2PCZcA9UnWnbQcGrnGQ8zz6nDi/jWACtfT2jrQN9BBukpKriPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755073584; c=relaxed/simple;
-	bh=ow3nCKIZJTiEJCUMKg884Dzp9UOiC9b7yUPwrBeg9sg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UEzcBprsKdyBoAHr96be1fswd5mesF2DKcLyDfVKTH7qczhzsDMNFkpz+0oT0wfmpe+/FpxAoCDW+cyzHa40eV3J/wr9ox49zEPeTpvDjmQ0BqgCbP6w8EUQ7iu8Ig54zjYC/cc6cYGo4YQkINYA+4rpL8TY0vK80fmDvUGdvMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=npiwyHt+; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-459ddf9019cso20527995e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 01:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755073580; x=1755678380; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MmVPi1TkVGoBOlA3mTfpnGt8GB15mzm46GxusQjBdHM=;
-        b=npiwyHt+QzHeZxXuJP8zhCFonrTwUXl+4tntItSAZj23eitJWcl2HY6s1LFxNdWJc/
-         Ef0fYQg7jULwSOARtpWl43DWnqAljjfXfS/MRws3pJCp1axRcFarib5/zX2cMl7GCMTQ
-         M0b8Y+Iayrz9V8ucTKjoxnwfegugcnVCj6st7DCNq2ExuTi2wuhI4OjJnyd3gzGMkJ+o
-         WpukAV9jxNG0kXbec2k2XZ5DqjW2n1ZtfucOzkHtOWrSI5koGi2VG5ca0fqnYDO1q4nx
-         a2/0DCHBCRA7dZDdTepa0lV54gn/DCvSTkxIAaIdasjxsTpmdJ1uP1b5Vk2mBBX8vo4j
-         yvDA==
+	s=arc-20240116; t=1755074098; c=relaxed/simple;
+	bh=BJsNPLCsMWCuoh56cczBIajDM67zaMKaTgolfgD8pys=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CbL7xIIi1vz+vz1t3OA7C40FYekdPqahJijfBN6kb5Cs88yGwcPnmvbnD8QS2XXNqZGywkd8lfxbStNg4O7d3jJlD8thwdPnF/KaDEwbB1NW0A+IW0StYpEFA3ksvpoZMiG1YtIEjl9ENKRWWZ+FtA78FmhaT5zx4ylvI/UxMsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b5Y7GJw9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D6mNEK028928
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:34:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7vD8uV2t75HZFSBKmavWfIArKi9bpVPP6he9Z/LG/mE=; b=b5Y7GJw9bBvoxizg
+	4OLMKKLNwyX0N09rL4bO1YeSgL4Jhodi6Mn9Ewoqq+a6HcoNYS61BX0Py6L3CBKV
+	CRI+SbhQRkrIh6EJTJUpbEssUdxUieiGjLnhNF7KKK163KXggMtqM12pomJ7YRfK
+	2dZnvqdRAVbAoiiIxq2COln0WlUoNma4CxxkEqERtY9uEVaK3PqVo+HPQc78XrSK
+	jduWJfHWPt1+6vOEHYPvMazpANRjtCh9vrfOWrM1VQ1P6BDgFSPUP7Qjuz3GFGwl
+	4EMZ2UqhBGDuKBvhGw/HOb7mZOcTY8Wy/wfPOmwbFxKO4h8sO8XzdhIuB5niaIA8
+	k1FWnw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj4b3k4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:34:56 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-24011c9da24so6355565ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 01:34:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755073580; x=1755678380;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MmVPi1TkVGoBOlA3mTfpnGt8GB15mzm46GxusQjBdHM=;
-        b=t9nVb3JweyPrZXy5X0O8yPAIY+2tqZjQpC+7AKIFg62W6XXbMeFAXT2tEKICTJyp0r
-         lnWTYv/5kE6LRqZfiv34lRVHkSIr4ggfouCI0y7nbKeKL7zdplhuI5ttDjQS2hXPNgx4
-         /EbF7hu0TX7blj/cScsiw1HH3SvxpvY/Cky6t9SV59ZZYsIZJ7hTAzjz4hx2HoUonkBy
-         hIMHr8B5CSOj7OH6ZTSydXQd7exxpp0YXt0zXlwJ/r4QrALeAi8mDFGNRL0Q97HnGTeB
-         1e82Lh/gqUvaB9jkK2p6h95RcnDL01SBXtcsRnRuY5wSlN00fgABjEHYyfoej5PxkUCE
-         k1HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQJDnw68/2p6D34qLUG5pClNjYxE/dS90iY+Bbcz39jcm/FrmrxPsshExPr1lNp8cSpY1ElnbVwq1b4JKC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfCSWvr0MjsgD6od4XUsseZVtOmjJTcc1hsCo+J5VX8kac0502
-	CdqGhBlZx6VMRvSUvh+rXS/a8qvzjDyXIwFRnFqvoWbEdnRIeETxosBAx4bzNQno6m4=
-X-Gm-Gg: ASbGncubKsmT/1odH9ZQyEooYJBiQ62gdvamKssDX0ZGB+u6sLovn4FHQ9jDudVMaig
-	CKFklpT2Ir4sbupQxqSFAJsijvoJ4k1t6ozDYTLSWuhXSg5K1p5Q7mXHh2DZcpqkqgXQScSn9su
-	WgVYdhiQZhhf31jyvpCSvS9cWpTNNFMZTWNkYS1QiVlTAfJdEFSntvjNHYeOFdLG5anoQs7jC+R
-	tGc4dGX2N8upm0LV4hVLew/6VorWLV/6xdG+o4ZcyIw9riAsrPzeGUBZXQSaqxcirFtGQsyIyZR
-	lQgRTmv3gRU3RYkuWO2d+Ct/HpLM/SJNtQUIJCI5L3UYupxPExTg/yQWCISEh6ryiU6tbF/bl0C
-	hXKeJnZYaQGgFOfCcqTxMRdojLgxH8vZjxAgs+WgpbtT8HipNL/gjl9sqA5V5ThO/i8QWtGE3Iw
-	Z6VzNHTwsi1Q==
-X-Google-Smtp-Source: AGHT+IF2tdy5U27h5sRbKSKrBXJKY7csqOtxELBj5eXcJuYRanuSo4SwNaNC2NdVLpSSWAwN538YrA==
-X-Received: by 2002:a05:600c:3b25:b0:456:18cf:66b5 with SMTP id 5b1f17b1804b1-45a165db037mr15277265e9.22.1755073580429;
-        Wed, 13 Aug 2025 01:26:20 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:3e43:d171:89d1:18e8? ([2a01:e0a:3d9:2080:3e43:d171:89d1:18e8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abf0csm45909628f8f.14.2025.08.13.01.26.19
+        d=1e100.net; s=20230601; t=1755074095; x=1755678895;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7vD8uV2t75HZFSBKmavWfIArKi9bpVPP6he9Z/LG/mE=;
+        b=T/zwzITgfVVq0Yj9AZrRKtpEQyhAha9psPUGyuju0eeYYBFfKaQhR5RO2fcREsK/2Y
+         EzGBk5KujF9OXOIlvvxX/n/F1D1FHIP5zd9NVBWw8yUcmQUPr2SYtY6OKELCuwu2pMpu
+         VGInE5tVVbN2eKc8kgl0p/gECj5o6MBMmu5pQ6gRTvqKko8RdfnjMXHvCuEHAVXwvSo4
+         zcG8mPpwKR2xZv1lbnOxvDf5AYW3+VxahBpDx6LyImIDqsIy/pYYHm618t4NnautXyx9
+         B6eG2DVt49ctES4EBeQg+4qwMR1CYPqM37E5c9OwliCMq/JgSYx/M5o154hL6OZF6Km+
+         FLsg==
+X-Forwarded-Encrypted: i=1; AJvYcCWTrNC2IzNPFhhB0CNSiVPutgP6eug8OyuSB5Zxjf1qp9DhXhYtuVtNI2vcR3v6DgGBl/+QiDwnX+k1869z@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx16o2c+YBjZVq6reBNwPlrgBpq7QBYKeR0dJ5Dvtqmq+crApe0
+	9sMKJekq9XDQmjJol5sd8MaWWTwSUy8N6TlSg2/W6ZMKLJmPSfCSDaqZ8CfLbSRnSntS9QaoOV7
+	wbuxzliXwbU3wenPBEwKVbzDq6UsXJX0GAzO5sAKEhYZT7ni/noiKcCmyAwc+ItD8DdVu
+X-Gm-Gg: ASbGncsPZ7hfvDlru0hKBKvDRyp+w/wRxJvzqk/j0wHVqRIrqJ4A0sH6nom92+AYLR0
+	l1BAC0VU4Mrb/xLZ5NdE4yvEq3lm28zjGY77wWkClyYJygyP3ZXjNNyr9fMdVGZo/RLxKm1s7vX
+	KTvTmonNCUWJHEwG3srKQK1Dqmw2u68gK79Q3R4yWHBBqUflQQRYMHE+a8hsrJBGhvMd1/BfVn/
+	OvOAHokWDd0wnpfOiA9JSBhvJeBlM4jI1oWXBs2MCy4Th6MJkpUv9+4OI/nAjWCrre20NpAfXHX
+	Ta8QSLqdSE/n6HuO8yGjJgDoHmh04e2Cpvue9bY6UNID/r2NzhTDrqpGZfCOXCgyJgb4joI=
+X-Received: by 2002:a17:902:db02:b0:240:9d6:4554 with SMTP id d9443c01a7336-2430eae02b8mr23183995ad.21.1755074095412;
+        Wed, 13 Aug 2025 01:34:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtwP6EhgGczqdw69+FCzTPeDqzNTzM6qfuthNnA+SimcTyI9+YyBr8qv6iPBl/3QLmyphKiA==
+X-Received: by 2002:a17:902:db02:b0:240:9d6:4554 with SMTP id d9443c01a7336-2430eae02b8mr23183465ad.21.1755074094530;
+        Wed, 13 Aug 2025 01:34:54 -0700 (PDT)
+Received: from [10.92.180.108] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1f0f7ccsm318630375ad.57.2025.08.13.01.34.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Aug 2025 01:26:20 -0700 (PDT)
-Message-ID: <f1cff45e-5455-4151-b6f0-5a86859b1bd5@linaro.org>
-Date: Wed, 13 Aug 2025 10:26:19 +0200
+        Wed, 13 Aug 2025 01:34:54 -0700 (PDT)
+Message-ID: <fa3c54d3-aa8b-4991-8709-89a8bf9eead1@oss.qualcomm.com>
+Date: Wed, 13 Aug 2025 14:04:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,140 +89,121 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2] media: iris: vpu3x: Add MNoC low power handshake
- during hardware power-off
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250813-sm8650-power-sequence-fix-v2-1-9ed0fc2c45cb@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250813-sm8650-power-sequence-fix-v2-1-9ed0fc2c45cb@quicinc.com>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sm8450: Flatten usb controller
+ node
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
+        devicetree@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250715052739.3831549-1-krishna.kurapati@oss.qualcomm.com>
+ <20250715052739.3831549-3-krishna.kurapati@oss.qualcomm.com>
+ <f9219b68-35a6-456d-911e-c4e8590d69ea@kernel.org>
+Content-Language: en-US
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <f9219b68-35a6-456d-911e-c4e8590d69ea@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-
-On 13/08/2025 09:53, Dikshita Agarwal wrote:
-> Add the missing write to AON_WRAPPER_MVP_NOC_LPI_CONTROL before
-> reading the LPI status register. Introduce a handshake loop to ensure
-> MNoC enters low power mode reliably during VPU3 hardware power-off with
-> timeout handling.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
-> Changes in v2:
-> - Restructured loop for readability (Jorge)
-> - Used defines for bits (Konrad, Jorge)
-> - Used udelay for short waits (Konrad)
-> - Link to v1: https://lore.kernel.org/r/20250812-sm8650-power-sequence-fix-v1-1-a51e7f99c56c@quicinc.com
-> 
-> Please note that I have not added "Tested-by" tag from Neil in this update,
-> as the NOC handshake loop has been restructured.
-> ---
->   drivers/media/platform/qcom/iris/iris_vpu3x.c | 30 +++++++++++++++++++++++++--
->   1 file changed, 28 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> index 9b7c9a1495ee2f51c60b1142b2ed4680ff798f0a..a621878f02f7196de29c9e290a6c5acea34eba8c 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> @@ -19,6 +19,9 @@
->   #define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
->   #define REQ_POWER_DOWN_PREP			BIT(0)
->   #define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
-> +#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
-> +#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
-> +#define NOC_LPI_STATUS_ACTIVE		BIT(2) /* Indicates the NOC is active */
->   #define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
->   #define CORE_CLK_RUN				0x0
->   
-> @@ -109,7 +112,9 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
->   
->   static void iris_vpu33_power_off_hardware(struct iris_core *core)
->   {
-> +	bool handshake_done = false, handshake_busy = false;
->   	u32 reg_val = 0, value, i;
-> +	u32 count = 0;
->   	int ret;
->   
->   	if (iris_vpu3x_hw_power_collapsed(core))
-> @@ -128,13 +133,34 @@ static void iris_vpu33_power_off_hardware(struct iris_core *core)
->   			goto disable_power;
->   	}
->   
-> +	/* set MNoC to low power */
-> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +	do {
-> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
-> +
-> +		handshake_done = value & NOC_LPI_STATUS_DONE;
-> +		handshake_busy = value & (NOC_LPI_STATUS_DENY | NOC_LPI_STATUS_ACTIVE);
-> +
-> +		if (handshake_done || !handshake_busy)
-> +			break;
-> +
-> +		writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +		udelay(15);
-> +
-> +		writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +	} while (++count < 1000);
-> +
-> +	if (!handshake_done && handshake_busy)
-> +		dev_err(core->dev, "LPI handshake timeout\n");
-> +
->   	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
->   				 reg_val, reg_val & BIT(0), 200, 2000);
->   	if (ret)
->   		goto disable_power;
->   
-> -	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
-> -	writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +	writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->   
->   	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
->   	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
-> 
-> ---
-> base-commit: d968e50b5c26642754492dea23cbd3592bde62d8
-> change-id: 20250812-sm8650-power-sequence-fix-ba9a92098233
-> 
-> Best regards,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfXyQaSbt7JXxCY
+ 5mPaiNgBhGOBbaInbzVbaSCPeAwewN4pb6zB7Q/Jq21DSP5WtsYeauFhP5nKUSyCAsGo/XX68XQ
+ eeckz0HX+r0NZNTim997I0RSv5SKbNr7gsccNqBkb7pVZitjwZc+IUsQyR7IfhD126gYncQnlrp
+ s1ItwhYaO80G2emYEGgJe+PEBO4ymSPmMji7BgnFNm8VsUAwY2X4io1xsi8IVm/ekg+berG+GgU
+ DqYyIZnuLjU7UunXhkDZrw6DW375PGIxD9OBY5NAkKtvzjjZfr2t/8BgBHF4+h+ACIasFBDW/uJ
+ RJFAxE6np3c1c9U4I+0Srn0Ak9Uyh5C9SBRsGWNtgPapvazUMKd16FSizBME/uT1JpLRz9ME6pa
+ tHCnbizY
+X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=689c4e30 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=vr-wfZUyanrvw1r9NhMA:9
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: pZq-_oucMh-aof3T_vF9pg37Aiog3GmF
+X-Proofpoint-GUID: pZq-_oucMh-aof3T_vF9pg37Aiog3GmF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090027
 
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 
-Thanks,
-Neil
+On 8/13/2025 12:57 PM, Krzysztof Kozlowski wrote:
+> On 15/07/2025 07:27, Krishna Kurapati wrote:
+>> Flatten usb controller node and update to using latest bindings
+>> and flattened driver approach.
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8450-hdk.dts       |  5 --
+>>   .../dts/qcom/sm8450-sony-xperia-nagara.dtsi   |  5 +-
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi          | 57 +++++++++----------
+>>   3 files changed, 27 insertions(+), 40 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> index 2ff40a120aad..0c6aa7ddf432 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> @@ -1199,11 +1199,6 @@ &usb_1 {
+>>   	status = "okay";
+>>   };
+>>   
+>> -&usb_1_dwc3 {
+>> -	dr_mode = "otg";
+>> -	usb-role-switch;
+>> -};
+>> -
+>>   &usb_1_dwc3_hs {
+>>   	remote-endpoint = <&pmic_glink_hs_in>;
+>>   };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+>> index cc1335a07a35..6bd315e10992 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+>> @@ -781,11 +781,8 @@ &uart7 {
+>>   };
+>>   
+>>   &usb_1 {
+>> -	status = "okay";
+>> -};
+>> -
+>> -&usb_1_dwc3 {
+>>   	dr_mode = "peripheral";
+>> +	status = "okay";
+>>   };
+>>   
+>>   &usb_1_hsphy {
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 54c6d0fdb2af..89dbac3bdd2b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -5417,12 +5417,9 @@ opp-202000000 {
+>>   		};
+>>   
+>>   		usb_1: usb@a6f8800 {
+>> -			compatible = "qcom,sm8450-dwc3", "qcom,dwc3";
+>> -			reg = <0 0x0a6f8800 0 0x400>;
+>> +			compatible = "qcom,sm8450-dwc3", "qcom,snps-dwc3";
+>> +			reg = <0 0x0a600000 0 0xfc100>;
+> 
+> 
+> So this was never checked. Can you start using tools before you send
+> code upstream?
+> 
+> 
+
+Hi Krzysztof,
+
+  Apologies. I didn't compile it with W=1 previously. When I did after 
+the kernel test robot complained, I saw the issue.
+
+  Also I rebased it on top of latest linux next where I see the 
+flattened patch is present.
+
+Regards,
+Krishna,
 
