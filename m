@@ -1,87 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-68880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D623B23F18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 05:39:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13980B23F34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 05:57:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40FE66E2D69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 03:39:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E32F91B677ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 03:56:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19032247293;
-	Wed, 13 Aug 2025 03:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5241F2BE63A;
+	Wed, 13 Aug 2025 03:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b1CrhF2/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MzoMEIEP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FBF2BD5B9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B552BE02B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755056348; cv=none; b=VxwcfMr8IZqqYYdxgY8AFbHPRl2fpx6wBGO6H55JxCEla6peou9qd+M8VFHSTwQiPiReeP+2FtVUefpJ+omW/UrQQeQhAquAK7aH2KK9AIsKmIXXtrACcNRlzgg1yxmyOCmiKMmMWepcPTG27rLoOJgmD8jmUGoxc3TDhtvWP48=
+	t=1755057315; cv=none; b=CI1XUD/7QuVvsouGQptwGkarHyOTgyZbNGlmlneobjgAj11BBK0Rq5VAkpKtrExujYlljrs5pDGtslH2J/tKvPZd3gCdHhQ645IxCe9u+eYhThPpGEfCA1UDCLddG1qd5HnnhDxG8LYyiV57sdv3U91U4pqf/Q8BnSAHBGpoFkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755056348; c=relaxed/simple;
-	bh=frlVhelmwCmI3FqNV6bRhotoX2pNLqbCYY9VDbY5LIM=;
+	s=arc-20240116; t=1755057315; c=relaxed/simple;
+	bh=dnz52Dgxeba8OreSCFoW8AzKahq6NE+sYCZabA34LQo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nov0XJDE2d6JRmhfRHcXsc7HSFpKHeH5zwFBdeUO0MQPoJpw5SnymZBp3bvA3fgGXdQ/bEmbrrwpVddu2GBg4ZmzcZcnSmAPpTXLgUMccqKYB8ygOetzH72Ft1uTfR22K0+YVCaYG45nLNGOiZ4PE1hBwZ1NmyjN3KAdwVVlUVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b1CrhF2/; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Q4PxUs6AAASqxpPskqHbSo8EgAJy8w5fG3FpEBbbgMhARcAdphthdKuBa2ix9ml2KC55rHwEu8ze9iKhhsr+nQpDhnyWHTk9N2GtPP64OICFu/pnJvtG2kF1UdD/zB/XvgB/Yrsj2GUGNEaTVYMwMJYDdtvSFuI18Layewu7qjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MzoMEIEP; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D3d5Ih017356
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:39:05 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D3nbAt007781
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:55:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kPk2QHiPe8RX6UEDtLds9t18fcrz/o5b6wJ1xFIzlzU=; b=b1CrhF2/X9+nRAGy
-	jxH3iSNiY82vvBMXrCIZwU5tQKZUIWVDE4vvEpzR6f56/ESdSKueLgUHOZARE436
-	gSXra5kfjgyPwP547q/TavfYCAG3nrjznbntndN9wzLKBctTNWhkjZkegaBWyFUl
-	SwSPcPSDPoK3KbCpXuzrbJeG+PlROXLpsLjwSsGiK6TC+6uoKkjoM8Q/lQhLLQ06
-	4MKt/x+cohTvfivExPkWyy4rJFEjyeFhnNuaNAOGjKREzKDGEBmivvupzL9WNTIA
-	s751HkCVMyfbHS08CQz5rkF7Oome+KgBh6wISISYnVkMaos3JvY7E6xQSJl1eLED
-	A+9M/w==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48g5hma82d-1
+	nL73GNJKLk9gxYhZAyNJw/OghTTtC6l/WSrfhqhdCug=; b=MzoMEIEPMWSVoNUJ
+	3sk0aj2VjkqD3b8AyFo6WpEwt8aIVsj4ufroqT3KgThb9nUcDLnfknXUywqb0bif
+	jmlCYgJduTOO2IfnHo+PtlO9nwL3z8Xylhf2EFCrE9e0+Ik/45GhJihZqtBptd7S
+	LEHKIewo8ZpbSfIiDVo7LcWkaaFump4j4z1DiqqCHuPNexgS0bMwWB8VHS5i9IuH
+	1ltASY2fCZ9XrwK9+PDBJc+gFLL4G6yHyxjSirc5jqwrA9c54IBNnVw+hvf1cluq
+	bNN9c4oLcG3HtzWd2t1y0ArTQG+4b2mHkhFcPTRalnIJK+8SaTDBn8y+E6TtYFVD
+	O+LvzA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxj4ac4y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:39:05 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b2fa1a84566so5322324a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 20:39:05 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 03:55:12 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-321c4003961so2587801a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Aug 2025 20:55:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755056341; x=1755661141;
+        d=1e100.net; s=20230601; t=1755057311; x=1755662111;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kPk2QHiPe8RX6UEDtLds9t18fcrz/o5b6wJ1xFIzlzU=;
-        b=V09yfP5sWjtTBT11uG3TGnxHhlc6DNuhoMU2vN4MTALRGGFZ+CmsN5RCWdjcb09dgd
-         jxaH/9JDWahNGdAkdRlomzZlJstBHd5LIXLMgNeHAbnXqZBSOHzXNQXp1gQcy0maDiD/
-         QIi2Kgd5JetVsHw25K00EnXjnyaoluY5P3RUPOHZqcUNQboV3ZQL0NuqEjiA4SeYXy7t
-         Talj8bvEdw1+mZdHPNXvdUl4VbLGJmmDXMiMFQo4o1BlTi5QKW7XK8YqoUVmN9H+Ona+
-         gvgXQuZ3Q+pHe7sbhFQVzPu2bhpaGUYcTvvs97k64OlgmDQS1UfLRDwLQuZm+mRTFZIS
-         Lv/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV4EQKaE7mRccfuORL6ykzd2e34Wmqu8f6LIsl+13vx0iH87ijnOlLIv+L7CU0G17VisvVVU3hOnezK6/47@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4LAPms1Ue9kg78j242fb4VJmNvp6xokuJkrwGz3zuGIMvmgOx
-	J0Do0kg8y7vDNoFsVTjMM+oCilsFB6FCTeKcTo+fM+h6OCo0CQAWo/qJVkVQ0PdFulf5h2CKFEz
-	TNcpTkeOTHkNIWicsFCWqE3dZC93ddIbpkxQQoF1zhAuPNtjDm9KV/9vG5zpgSFECZmre
-X-Gm-Gg: ASbGncvSsxAfwFkOzEHVzUlIA8P9SqIL27zHju2BUS95fufRmETKP+7kC3EWJbiEEgq
-	rfMIuTu84VzF8q4qW3CZ4MmZAVBK55EUSRK+zbLXedYHLvQpTdZ7ZfSanXRcAnCtZPnBJmg+Snf
-	ZCKXr16xD+x/Mq2v5yRPLhj+IKGmuKdGH25vkEdc7S5pDapCuhWLPIcPu+OsUwtP/MB+w3+lzxF
-	eQUyO1usMqWsTWTll5pRzln72mhh63v0AIj/FzRgF3zwlKH48ujtemxHnhySldbDJH+i4yNpZ9C
-	+pORaX9Q7kIc1mAEkqol4xrjUnSh2XyG6Z491kySu/1DioQdaykZA0YGkG4kPJbzLOsfJTk=
-X-Received: by 2002:a05:6a20:3d84:b0:240:50d:4285 with SMTP id adf61e73a8af0-240a8b9cfa5mr2979703637.38.1755056341267;
-        Tue, 12 Aug 2025 20:39:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7Dd5mSG7zW09Ug10gS3SwTUD5Aiujc5HgrqnSUnyzFaDo3SkczONNSwK3UtDk1yxa8/vXZQ==
-X-Received: by 2002:a05:6a20:3d84:b0:240:50d:4285 with SMTP id adf61e73a8af0-240a8b9cfa5mr2979665637.38.1755056340853;
-        Tue, 12 Aug 2025 20:39:00 -0700 (PDT)
-Received: from [10.206.107.125] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b428e6244a5sm12413901a12.23.2025.08.12.20.38.56
+        bh=nL73GNJKLk9gxYhZAyNJw/OghTTtC6l/WSrfhqhdCug=;
+        b=lMNaMG/Pa6ONeOTHsk3+wiJNEMkEPEMcFLAGFaQkpqqqDvq6r2ZJEhCrJMHdhfiDUB
+         qXnjNgdUBnf62QnpUjUM82Njo6OB5M6T4xbR00egCJzBEsspx4xjT5OUmkxo6gxkGheo
+         ZknlNGAbJpGkn6tiN8d5YZIbouxa/vf/QItHlHkLC5N3DmRVqbzRUDH+iEXQT8vKNG2C
+         GPAAs28phOp/N0kT6sL3/+CmQR3hAi//mPZ3pElY5tZsbwuRIldSADAKQADFc3WqXbgX
+         zgYIf+GHgDhAtqnnG6uhzzs9ecTiSwgeTMFNzf372L4Rh4r2VnpocLZoQlIsK5zifi4r
+         rxgA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6tmtT16ZutPOfrKze9xufGAQnd69Ow3drz7nv3buyi2vnR2vzLNKnC1mwQzHAk6xbDfeT/rdOOvflUxqC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzsApe1EZFt8FuU8mXPYFpEoMP+DRQPpFP0+wfOAZo48FK2DlY
+	ktBkcSlLo05Cnj3+1hUdA2YWGbUdfBnrujUyzQa9OTUSzCfuu0tocs/xleOc2st9oVK7ksDOlmM
+	UaPlrNfypvAkQfM9b2M6lVp3lgyVHlW1QUOVV3kBK4O35/7+xgncon+ZS8SEmnOyoreQxXEmJVi
+	/a
+X-Gm-Gg: ASbGncsKMCS6WKEkO+tB3GyL2/62We8lg7eJcV1mhPvxb02bKBvv6h0Wkyay4XRYAfu
+	5QPkgD6pimSck4jrs6UgxUtGgpQjNF1dDhGla/hhDf8A+vWsrNv7qb6kl/IDrldpwG870aCbpAc
+	hwn8aJLRJg+/wcdYBiqH+X6THPZ89IU0zHm7H7PIFqhScMY6QITfCGwgh2+fKcH1yyXPxGnmJLl
+	SiMPuYuDhXsT+22K7DH85NnxSDtQ8dxghFX5khGZ210RbQtLCvL79Etksq3L7vTXJ68gm5qucp9
+	yp+rp3qkHZx80RJ8YyuATDZHmKUbMj19M9q3d4LTuPmoDTQxIRisUuiMmYfDW1RMo9imXYUcXQ=
+	=
+X-Received: by 2002:a17:90b:2808:b0:311:a4d6:30f8 with SMTP id 98e67ed59e1d1-321d0da48c2mr1826572a91.13.1755057311368;
+        Tue, 12 Aug 2025 20:55:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6DBH2kfzGflZ64cNW7+2CaKUESotFcZzef6cAyZ1L/M83j5cwOGYdfHt9J3/vXq3xPUnICQ==
+X-Received: by 2002:a17:90b:2808:b0:311:a4d6:30f8 with SMTP id 98e67ed59e1d1-321d0da48c2mr1826528a91.13.1755057310792;
+        Tue, 12 Aug 2025 20:55:10 -0700 (PDT)
+Received: from [10.218.42.132] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-321d1db5da0sm668773a91.16.2025.08.12.20.55.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 20:39:00 -0700 (PDT)
-Message-ID: <a0420827-cdd3-4442-83aa-d7f5072a28d4@oss.qualcomm.com>
-Date: Wed, 13 Aug 2025 09:08:55 +0530
+        Tue, 12 Aug 2025 20:55:10 -0700 (PDT)
+Message-ID: <ec0e3b33-76f4-4ad5-8497-5c8c8b42f67e@oss.qualcomm.com>
+Date: Wed, 13 Aug 2025 09:25:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,137 +91,176 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 2/5] arm64: dts: qcom: lemans: add GDSP
- fastrpc-compute-cb nodes
-To: Ling Xu <quic_lxu5@quicinc.com>, srini@kernel.org,
-        amahesh@qti.qualcomm.com, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-        arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: quic_kuiw@quicinc.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250813030638.1075-1-quic_lxu5@quicinc.com>
- <20250813030638.1075-3-quic_lxu5@quicinc.com>
+Subject: Re: [PATCH v4 02/11] PCI/bwctrl: Add support to scale bandwidth
+ before & after link re-training
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lorenzo Pieralisi
+ <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+        quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+References: <20250711213602.GA2307197@bhelgaas>
+ <55fc3ae6-ba04-4739-9b89-0356c3e0930c@oss.qualcomm.com>
+ <d4078b6c-1921-4195-9022-755845cdb432@oss.qualcomm.com>
+ <68a78904-e2c7-4d4d-853d-d9cd6413760e@oss.qualcomm.com>
+ <ycbh6zfwae3q4s6lfxepmxoq32jaqu5i7csa2ayuqaanwbvzvi@id4prmhl3yvh>
 Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <20250813030638.1075-3-quic_lxu5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDExOSBTYWx0ZWRfX19T6aFcjD5Oq
- k+vsU79ceZjR+bMW3WuypkJYQ8+xDibuF2WdRZnX0amHdruNYgKVqglhYszv9qvtKqftNk0+uuR
- aPG4wntxOPxNYnkaalqjAnipYem1a1cASwEXaCCIpdhp4R3+Ie8uuCrUiWF7/SYOXV5hmrlNs4B
- jISkapqIb9Ag+D+tJ9KuXiNRyZPzra4PZESYbjxA3irLoiiZgkdWWGOEQ8hqoGNp2ereOnfIY+p
- Tx1213UosxNA8tCANjTbpv2+XtMCk/BdzskyDLtm5l73OvC7sX/pFQi2B4waIL0v/0dpuqGAhd7
- f8UqivfZkXHt40mz6SyGUkSBqWNCoFeY0fU9Oq8u+Af/epzIkUMj1hpKpAcDjY06ZsNh6G4tqes
- Ce7if21L
-X-Proofpoint-GUID: qJLFpILMi3Nd-teIvnhn_CZA42YzFvvr
-X-Proofpoint-ORIG-GUID: qJLFpILMi3Nd-teIvnhn_CZA42YzFvvr
-X-Authority-Analysis: v=2.4 cv=d4b1yQjE c=1 sm=1 tr=0 ts=689c08d9 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=2Ucg9gNHWiGhv-ArepgA:9 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
- a=TjNXssC_j7lpFel5tvFf:22
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <ycbh6zfwae3q4s6lfxepmxoq32jaqu5i7csa2ayuqaanwbvzvi@id4prmhl3yvh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNyBTYWx0ZWRfX5HhhnNHaKNB0
+ iefMqyJTYtZcnPU2v9IrEsdNVZw6bhCYEf/obOpGNdBr+Hd0OPYnc5e1GH9N4CjYqbWEty3cMrT
+ LyRjG/qYSxNQ9BS8FQR7e8P/mJ6XlwR1l0TJy8T1HkLJGGVKoONJuOtiHN/HuFO3Gd0rm2sN3m5
+ dKCeHKar5ao2pqVl0fiBJcFYllMesIHu0e6tW5peviUHhW83qHL1+NXo2D15bX5PDBbtpx3UzU2
+ 18/oG/Tnfa7ftwea7d99wW+3dNQbk0wTpNJb58leTHW4/feDgHQVHXa5qeQ3HP8ixMMBT3+Dunz
+ QuvkJkQqj4cNMEIPipGrKOHrfRef931+fdGYOUQ/Qe7tv2hK1IUV5aOcep4qpIpA1qo5FHfv7AS
+ 6LnRh7Xc
+X-Authority-Analysis: v=2.4 cv=fvDcZE4f c=1 sm=1 tr=0 ts=689c0ca0 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=Rc7TGh9G46w0mRT8ouYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: 1_maxKdFvSj7cQSkN2J_u4RrtAvALoxV
+X-Proofpoint-GUID: 1_maxKdFvSj7cQSkN2J_u4RrtAvALoxV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508120119
+ malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090027
 
 
 
-On 8/13/2025 8:36 AM, Ling Xu wrote:
-> Add GDSP0 and GDSP1 fastrpc compute-cb nodes for lemans SoC.
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/lemans.dtsi | 58 ++++++++++++++++++++++++++++
->  1 file changed, 58 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> index 322abd0294be..a4c79194cee9 100644
-> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> @@ -6092,6 +6092,35 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  
->  				label = "gpdsp0";
->  				qcom,remote-pid = <17>;
-> +
-> +				fastrpc {
-> +					compatible = "qcom,fastrpc";
-> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
-> +					label = "gdsp0";
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					compute-cb@1 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <1>;
-> +						iommus = <&apps_smmu 0x38a1 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@2 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <2>;
-> +						iommus = <&apps_smmu 0x38a2 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@3 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <3>;
-> +						iommus = <&apps_smmu 0x38a3 0x0>;
-> +						dma-coherent;
-> +					};
-> +				};
->  			};
->  		};
->  
-> @@ -6135,6 +6164,35 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  
->  				label = "gpdsp1";
->  				qcom,remote-pid = <18>;
-> +
-> +				fastrpc {
-> +					compatible = "qcom,fastrpc";
-> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
-> +					label = "gdsp1";
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					compute-cb@1 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <1>;
-> +						iommus = <&apps_smmu 0x38c1 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@2 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <2>;
-> +						iommus = <&apps_smmu 0x38c2 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@3 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <3>;
-> +						iommus = <&apps_smmu 0x38c3 0x0>;
-> +						dma-coherent;
-> +					};
-> +				};
->  			};
->  		};
+On 8/12/2025 10:13 PM, Manivannan Sadhasivam wrote:
+> On Tue, Aug 12, 2025 at 09:35:46AM GMT, Krishna Chaitanya Chundru wrote:
+>>
+>>
+>> On 7/22/2025 4:33 PM, Krishna Chaitanya Chundru wrote:
+>>>
+>>>
+>>> On 7/12/2025 4:36 AM, Krishna Chaitanya Chundru wrote:
+>>>>
+>>>>
+>>>> On 7/12/2025 3:06 AM, Bjorn Helgaas wrote:
+>>>>> On Mon, Jun 09, 2025 at 04:21:23PM +0530, Krishna Chaitanya
+>>>>> Chundru wrote:
+>>>>>> If the driver wants to move to higher data rate/speed than
+>>>>>> the current data
+>>>>>> rate then the controller driver may need to change certain
+>>>>>> votes so that
+>>>>>> link may come up at requested data rate/speed like QCOM PCIe
+>>>>>> controllers
+>>>>>> need to change their RPMh (Resource Power Manager-hardened) state. Once
+>>>>>> link retraining is done controller drivers needs to adjust their votes
+>>>>>> based on the final data rate.
+>>>>>>
+>>>>>> Some controllers also may need to update their bandwidth voting like
+>>>>>> ICC BW votings etc.
+>>>>>>
+>>>>>> So, add pre_link_speed_change() & post_link_speed_change() op to call
+>>>>>> before & after the link re-train. There is no explicit
+>>>>>> locking mechanisms
+>>>>>> as these are called by a single client Endpoint driver.
+>>>>>>
+>>>>>> In case of PCIe switch, if there is a request to change
+>>>>>> target speed for a
+>>>>>> downstream port then no need to call these function ops as these are
+>>>>>> outside the scope of the controller drivers.
+>>>>>
+>>>>>> +++ b/include/linux/pci.h
+>>>>>> @@ -599,6 +599,24 @@ struct pci_host_bridge {
+>>>>>>        void (*release_fn)(struct pci_host_bridge *);
+>>>>>>        int (*enable_device)(struct pci_host_bridge *bridge,
+>>>>>> struct pci_dev *dev);
+>>>>>>        void (*disable_device)(struct pci_host_bridge *bridge,
+>>>>>> struct pci_dev *dev);
+>>>>>> +    /*
+>>>>>> +     * Callback to the host bridge drivers to update ICC BW
+>>>>>> votes, clock
+>>>>>> +     * frequencies etc.. for the link re-train to come up
+>>>>>> in targeted speed.
+>>>>>> +     * These are intended to be called by devices directly
+>>>>>> attached to the
+>>>>>> +     * Root Port. These are called by a single client
+>>>>>> Endpoint driver, so
+>>>>>> +     * there is no need for explicit locking mechanisms.
+>>>>>> +     */
+>>>>>> +    int (*pre_link_speed_change)(struct pci_host_bridge *bridge,
+>>>>>> +                     struct pci_dev *dev, int speed);
+>>>>>> +    /*
+>>>>>> +     * Callback to the host bridge drivers to adjust ICC BW
+>>>>>> votes, clock
+>>>>>> +     * frequencies etc.. to the updated speed after link
+>>>>>> re-train. These
+>>>>>> +     * are intended to be called by devices directly attached to the
+>>>>>> +     * Root Port. These are called by a single client Endpoint driver,
+>>>>>> +     * so there is no need for explicit locking mechanisms.
+>>>>>
+>>>>> No need to repeat the entire comment.  s/.././
+>>>>>
+>>>>> These pointers feel awfully specific for being in struct
+>>>>> pci_host_bridge, since we only need them for a questionable QCOM
+>>>>> controller.  I think this needs to be pushed down into qcom somehow as
+>>>>> some kind of quirk.
+>>>>>
+>>>> Currently these are needed by QCOM controllers, but it may also needed
+>>>> by other controllers may also need these for updating ICC votes, any
+>>>> system level votes, clock frequencies etc.
+>>>> QCOM controllers is also doing one extra step in these functions to
+>>>> disable and enable ASPM only as it cannot link speed change support
+>>>> with ASPM enabled.
+>>>>
+>>> Bjorn, can you check this.
+>>>
+>>> For QCOM devices we need to update the RPMh vote i.e a power source
+>>> votes for the link to come up in required speed. and also we need
+>>> to update interconnect votes also. This will be applicable for
+>>> other vendors also.
+>>>
+>>> If this is not correct place I can add them in the pci_ops.
+>> Bjorn,
+>>
+>> Can you please comment on this.
+>>
+>> Is this fine to move these to the pci_ops of the bridge.
+>> Again these are not specific to QCOM, any controller driver which
+>> needs to change their clock rates, ICC bw votes etc needs to have
+>> these.
+>>
+> 
+> No, moving to 'pci_ops' is terrible than having it in 'pci_host_bridge' IMO. If
+> we want to get rid of these ops, we can introduce a quirk flag in
+> 'pci_host_bridge' and when set, the bwctrl code can disable/enable ASPM
+> before/after link retrain. This clearly states that the controller is quirky and
+> we need to disable/enable ASPM.
+> 
+> For setting OPP, you can have a separate callback in 'pci_host_bridge' that just
+> allows setting OPP *after* retrain, like 'pci_host_bridge:link_change_notify()'.
+> I don't think you really need to set OPP before retrain though. As even if you
+> do it pre and post link retrain, there is still a small window where the link
+> will operate without adequate vote.
+> 
+Hi Mani,
 
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+we need to update the OPP votes before link retrain, for example if
+there is request  to change data rate from 5 GT/s to 8 GT/s on some
+platforms we need to update RPMh votes from low_svs to NOM corner
+without this clocks will not scale for data rates 8 GT/s and link
+retrain will fail. For that reason we are trying to add pre and post
+callbacks.
 
->  
-
+- Krishna Chaitanya.
+> - Mani
+> 
 
