@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39619B2489D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 13:40:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 423A2B248F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 13:58:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E6A6189E1C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:40:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D01D1BC4007
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 907972F7445;
-	Wed, 13 Aug 2025 11:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9DEE2F83A0;
+	Wed, 13 Aug 2025 11:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lTiqdsfR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mr7IdpWM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040FF74420;
-	Wed, 13 Aug 2025 11:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989622F3C05;
+	Wed, 13 Aug 2025 11:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755085189; cv=none; b=kpdjPlv5B/ZjBuer1aFv/aaInQQy6wWGJMHLzupCZzNFWn5plVdZJqAtCBEnVffyLAgmpbjthnpTyUnFUEVyiiS1tMDWSt3qiP4+sybzk5ZjatPUX7oBtrmJzFYmclh59bQX2wIXWNzVC7icXojI5z0keeJUfM5wm5lrhy3ZES8=
+	t=1755086203; cv=none; b=h5Bbh0Y/VtjVz5/+PvfiV1gQTn+cntkFvh59fVB+hI2OeHL8DQW4S8nWXxV/M7TwTUbriTo6H9PheZdqxpO13xQzgbUO0LnUwJ21Kj1xPAPPM1C/tR3RQ2Iyx+KuoNKG29HBT62eRZPRtXUPopSXszy0oyi9RQvMfTp0MsOy2+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755085189; c=relaxed/simple;
-	bh=Zi6Z75oIMtn8beKtFputqAn8NKkyXzfJHRrfLH3JN/w=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=FVtjUWZ9+WGlPEHEBahvRrsW2pivIK59IMwHqbKr8eKUd3ez8uaQCrfuBWZJkhIBzlgS/PiwDp5BM2GcjPFnRYbqIjVXAEVgc9TPRP4PhI+VgF5fjh3QrRffwifZXQBVEO44vZcZKY/0mjqIg8YBakGgup29/pD5wXCZ+FIwMQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lTiqdsfR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLbgk002778;
-	Wed, 13 Aug 2025 11:39:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UJq5xl9wnlbTfrwZF8n2U+4EQciaitdnUfm2jP4aBNY=; b=lTiqdsfRl1pFVuwm
-	yg/nPzzH+T/3ZpVcXGcBcKvj6W4CUgQt3GrsWAXt0o25/nzrEC/gWww87fvRxrjy
-	wkykHSme6IyOui/BEd2p6kDz3FySkuGb2mUcmj/Fl7V+mSa7i+btrZKEL8gE9oTq
-	TUJP3Jt68qZ11KxOjR52tATYHhFCBVlcTtWyqMBGnipDC+5ETpUwEcfWNFrHf8kJ
-	y1DJJi/0cSD122xtpTMXWa7jMqgN9NaHxV2vicnfJhiqDBN7vsWYBbxnZf1yHRG1
-	l9SKICOO5cULnBCgKkljTu7u22HJka8Edre01kUYg1lbSxyfo+IEDwRFyMHRE/rG
-	+JA73Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxdv3kk5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 11:39:31 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DBdUQo008472
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 11:39:30 GMT
-Received: from [10.235.9.75] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
- 2025 04:39:25 -0700
-Message-ID: <ccb022ab-45a8-4e97-8b63-4d2921ebfadc@quicinc.com>
-Date: Wed, 13 Aug 2025 19:39:23 +0800
+	s=arc-20240116; t=1755086203; c=relaxed/simple;
+	bh=/d6a1yqkECHdUAWWgDLMEHjp7+fyvZon8+GWiqZYD5c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QJl9P0SPUIO3iOudtoqnIDdK1L8gzVX2h2kXeXXJyAlKh6gimd6ntjqoZ0OTWoSOL8am6JXbrUYEfbWwKC8w7G1VZQ9lTOU0er7dZPjBfyNEgvZyoN3jt+MsCz5Hy6HFIUBVOxwqvTn1ozBzJjMQ0FfC+rVNgjuOaSXBglPGxEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mr7IdpWM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9FFC4CEEB;
+	Wed, 13 Aug 2025 11:56:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755086203;
+	bh=/d6a1yqkECHdUAWWgDLMEHjp7+fyvZon8+GWiqZYD5c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mr7IdpWMlZ7IFBxvWnhW3HseAxlcCCFkAZuUKfiXGH79Peq6tfuWkZ7S+uBHFK898
+	 9RmWop7yd1dvWh2yTUEDC0nwgcf1P1QR5vDg940gVJSZCQK/gOA/0nql/QBrBoKfHF
+	 J/ULhmC0FH1NnwAitX7jLEGeYD2ItGRYAPhml1HZQv/xaUNBu1X3FBJ9rora3rB0X4
+	 zuyiar9eIcWf+qGOS6r4eoz0mgCMfNfbPW93HYsiCBPkexWg9hf0iuc2g0eTLQV1SN
+	 km1KmjA/5CwYH1IuZ5jqSNFBwBjMXLEpMbMDK5nSUShCGPIoGUHarNLtWqm3Xrz9TE
+	 ArZUr/oZqxuRg==
+Message-ID: <a93fb5bf-1fd5-4e00-8338-b8608a9ba8fa@kernel.org>
+Date: Wed, 13 Aug 2025 13:56:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,97 +50,137 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Luo Jie <quic_luoj@quicinc.com>
-Subject: Re: [PATCH net-next v7 03/14] net: ethernet: qualcomm: Add PPE driver
- for IPQ9574 SoC
-To: Randy Dunlap <rdunlap@infradead.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Lei Wei <quic_leiwei@quicinc.com>,
-        "Suruchi
- Agarwal" <quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, Kees Cook
-	<kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>
-References: <20250812-qcom_ipq_ppe-v7-0-789404bdbc9a@quicinc.com>
- <20250812-qcom_ipq_ppe-v7-3-789404bdbc9a@quicinc.com>
- <5ee33ac3-c23e-4da7-87bc-2a5ea6e93afe@infradead.org>
+Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Remove SDR104/SDR50
+ broken capabilities
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Sarthak Garg <quic_sartgarg@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+ quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+ quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20250801084518.2259767-1-quic_sartgarg@quicinc.com>
+ <20250801084518.2259767-5-quic_sartgarg@quicinc.com>
+ <69f2807c-9a28-4b31-97cc-2756f0ab9fd4@kernel.org>
+ <c7e36755-9255-4209-9d53-20077bd1d3ba@quicinc.com>
+ <8b023e56-435b-43df-8b15-c562a494e06f@kernel.org>
+ <ab5d3811-9fbf-4749-9463-4457fbf50023@quicinc.com>
+ <4091c488-996c-4318-82ad-c054a9ef5a22@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <5ee33ac3-c23e-4da7-87bc-2a5ea6e93afe@infradead.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=689c7973 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=yauDWUx4ckUadswYq4AA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: HPXd7wzleDymh-hJW_R1aw-SCfLCbgzB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX5i13+qW4nDqh
- usNlwPqDoA5CNuTNowKAdonAV7zadljzx9q3fqcxT+1U2TJ07AUN/7VCjWN15jv3mbCvze9A2Uz
- QI4CwGUmrc62E2ULgQkvAOJuGB9UCEj7XUtOTo8ReP8uZjXUj7Bgn5qTfTCa+dbzSNWi5iCzo2a
- z6VUSqtH1stODts+15mlPPTJ4kD9k1TJh9yonz9Uqhceyx9MaoD5cbPclc6gAq9ArsbZJp44udY
- OjHGH8SMve90uCrZo52J30m8Rj3hHkOaiwQUYbLe94ZZ3e9vZS/j/J1JnOpnzk9gCVhyXBwKNmS
- GkodGwC94senKvc1Sy2Cv6boQGsLhbMsz2WwD0EI//G8DsPU1vRzGiR8Ws+yPTJxzv2/JQWBGrm
- nwqGpvKy
-X-Proofpoint-GUID: HPXd7wzleDymh-hJW_R1aw-SCfLCbgzB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
- clxscore=1011 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090025
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <4091c488-996c-4318-82ad-c054a9ef5a22@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-
-On 8/13/2025 12:54 AM, Randy Dunlap wrote:
+On 13/08/2025 13:21, Konrad Dybcio wrote:
+> On 8/13/25 1:08 PM, Sarthak Garg wrote:
+>>
+>>
+>> On 8/5/2025 2:55 PM, Krzysztof Kozlowski wrote:
+>>> On 05/08/2025 11:19, Sarthak Garg wrote:
+>>>>
+>>>>
+>>>> On 8/1/2025 2:32 PM, Krzysztof Kozlowski wrote:
+>>>>> On 01/08/2025 10:45, Sarthak Garg wrote:
+>>>>>> The kernel now handles level shifter limitations affecting SD card
+>>>>>> modes, making it unnecessary to explicitly disable SDR104 and SDR50
+>>>>>> capabilities in the device tree.
+>>>>>>
+>>>>>> However, due to board-specific hardware constraints particularly related
+>>>>>> to level shifter in this case the maximum frequency for SD High-Speed
+>>>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
+>>>>>> card in HS mode. This is achieved using the max-sd-hs-frequency property
+>>>>>> in the board DTS.
+>>>>>>
+>>>>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+>>>>>> ---
+>>>>>>    arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 1 +
+>>>>>>    arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 1 +
+>>>>>>    arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 1 +
+>>>>>>    arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 3 ---
+>>>>>>    4 files changed, 3 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>
+>>>>> This will break MMC for all of the users and nothing in commit msg or
+>>>>> cover letter explains that or mentions merging strategy.
+>>>>>
+>>>>> Exactly this case is covered by your internal guideline, no? Please read it.
+>>>>>
+>>>>> Best regards,
+>>>>> Krzysztof
+>>>>
+>>>> Just to make sure I’m addressing the right concern — are you primarily
+>>>> worried about the introduction of the max-sd-hs-frequency property in
+>>>> the board DTS files, or about the removal of the sdhci-caps-mask
+>>>> from the common sm8550.dtsi?
+>>>
+>>>
+>>> Apply this patch and test MMC. Does it work? No. Was it working? Yes.
+>>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>
+>>
+>> You're absolutely right to raise the concern about potential breakage.
+>> After conducting additional testing across multiple boards, I’ve confirmed that the removal of SDR104/SDR50 broken capabilities does indeed affect V1 SM8550 devices.
 > 
-> 
-> On 8/12/25 7:10 AM, Luo Jie wrote:
->> diff --git a/drivers/net/ethernet/qualcomm/Kconfig b/drivers/net/ethernet/qualcomm/Kconfig
->> index a4434eb38950..6e56b022fc2d 100644
->> --- a/drivers/net/ethernet/qualcomm/Kconfig
->> +++ b/drivers/net/ethernet/qualcomm/Kconfig
->> @@ -60,6 +60,21 @@ config QCOM_EMAC
->>   	  low power, Receive-Side Scaling (RSS), and IEEE 1588-2008
->>   	  Precision Clock Synchronization Protocol.
->>   
->> +config QCOM_PPE
->> +	tristate "Qualcomm Technologies, Inc. PPE Ethernet support"
->> +	depends on HAS_IOMEM && OF
->> +	depends on COMMON_CLK
->> +	select REGMAP_MMIO
->> +	help
->> +	  This driver supports the Qualcomm Technologies, Inc. packet
->> +	  process engine (PPE) available with IPQ SoC. The PPE includes
->> +	  the ethernet MACs, Ethernet DMA (EDMA) and switch core that
-> 
-> Please use ethernet or Ethernet consistently.
+> v1 is a prototype revision, please forget it exists, we most definitely
+> do not support it upstream
 
-OK, I will update to use "Ethernet" consistently throughout the code.
 
-> 
->> +	  supports L3 flow offload, L2 switch function, RSS and tunnel
->> +	  offload.
->> +
->> +	  To compile this driver as a module, choose M here. The module
->> +	  will be called qcom-ppe.
->> +
+You should double check. SM8450 (not v1!) needed it, so either it was
+copied to SM8550 (v2!) by mistake or was also needed.
 
+
+Best regards,
+Krzysztof
 
