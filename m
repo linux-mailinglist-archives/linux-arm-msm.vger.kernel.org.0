@@ -1,141 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-69071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B690B256A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 00:29:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B099B256E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 00:45:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EFF31C2450B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 22:29:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ECE63A6799
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 22:42:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA051F582A;
-	Wed, 13 Aug 2025 22:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E28822FCC17;
+	Wed, 13 Aug 2025 22:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OIYExKi2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Qc9mVHMB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF624302765
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 22:28:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A05D2FCC04
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 22:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755124131; cv=none; b=Y/Dp8r3/BuTCvm25FPkPP8A/0SoJcFYlyKH83Mo7C2omyhgCsweawGALmyGOLPEC+Io8Ut9JyBzO40LaXZgM8/RfIepGFX76Ykel6QdnRVLpUNoK4uNyXxDJIRV8rEP0Db4p09clj9J+o04k0q30BNxbSoIoEtFT/c0j36ZEgeo=
+	t=1755124940; cv=none; b=HwFlUaUM97uLddvWaBYIWvmugb2PkkIeTAQkijWkuoynuufHTGQaXdVzkqOa4b5nYOjDOjtcCPsVU07DfwhGxO8zYfbAp4dSqvKt5xovm4Ebnt1hc+jf9VVlpWHZQbxZ56b8alglUffAyf1ONDFEx+n/WGMNw9iBk078dLvFBJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755124131; c=relaxed/simple;
-	bh=GTN+5WirIPVzvLSwAv3/9YAKlkgOlUeRjCYAsj/rpzw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=Z7AnD31h3MA1dKTfEJBayZuGYKH35wiISWzolh5uqTuDXvpFd7tvfX+9X7nvN+VuM98nvL8uGMAe/6FaXsDDc2uW3RRfaXqTGQT/FgYKEwcWPZ8cM5+FPCAW5ay92GeHD9bIuQz96uffB0HZyrEVl36zvSZk9hUlJktCCUFWOHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OIYExKi2; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3b9ba300cb9so283206f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 15:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755124127; x=1755728927; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Sloit53e7whTsQFAQynr7aVEZzM4yMZh+xfD4/W9sqg=;
-        b=OIYExKi2Kt17S9SHvoPHNIXnCbSXM+5Ql6yGxlpWrkVEYJ7ptqeMjR1/EBjQvmyqps
-         Wsaf/uswP2XByKaRfrx+iPEJDXBy1eh0qE0a1RwtPbCx5fBg4wo+hggEmgPEAVO9C6pi
-         q3ckgc8l9yhIXzf7x2z2jyH8+N/GqGSXF9sX6GaXnbIRTOApxe9cn9Y9hhnmd18M60bl
-         hYWIDQ/TMVj/ERzAkj0fDCQZY4cRYZqwP2j70IYe48DHwEP804QYT2JFDir3UVjbvg1F
-         /YAxI5fgszeYOOp4cV8K+PM4ZgKQmmwWPLjFSOyOVVTANwZXyEbF5KNgh8ZzARK2Z35H
-         LYbQ==
+	s=arc-20240116; t=1755124940; c=relaxed/simple;
+	bh=HKtBdZ6TDTNd5owO1H3gyhJGO4bKwPP3mCFmHHenSwA=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UI22aiMIIxswyHYhC72EcBpOv7YGwRlhbIuN44hnfF917Ds14TWOS6JpbPVLl2dDG/sfiI/7EM7xpJRUkaQQE6z+yztdQHIQQeatezqvGWaWOLVpGbyKqVx8qnXVWS2p8LvzzdFaqe7DrT24Uuo2GmGTDrxgTaIDbgT6IvgLsYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Qc9mVHMB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBMGTl027115
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 22:42:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Gq43x9DS30JDovCPMRQp1uHs
+	Nm+sjZ4fDdkhVAciSrU=; b=Qc9mVHMB7hBtlNpFToyhqJp5+4BfDHbEa7Z3+0Jn
+	tKSPmvpzHXXwz2QP6UjBwWE/pn+jiBR5LMIhFQeS/wH2e0sqdU8aQVJgk+mDK21p
+	EMWPJY3+hlHmYP5ZTKIiOQQFGTqC0T4H4uS9DLkv+3t82MNQCcJSR6Zz3oU7+hTk
+	nIqCKYj/jBCzv4QGfR9rOIeOVbH6LlQASwX0Ufk56T9pfvhG2p8PrBO/yG9cbQ+1
+	3L0hfnpeTh2f3VYIcEhIAVbF0m/O9XA1dnJtpfJhS4FPrfV+jyw2LiRRYDP9FsFH
+	FX6aed0vQvTLli52CqC8S6cMsOA0RZ9bTCMrdiCdO1QsGw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dy3gddk7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 22:42:17 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b109be41a1so13011891cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 15:42:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755124127; x=1755728927;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Sloit53e7whTsQFAQynr7aVEZzM4yMZh+xfD4/W9sqg=;
-        b=nUSAg81X9RcxH5kXRE4J89W2l1r9HjwkLgIsR1Si+jgBX54liHxVyJbC0+lZsjVNBm
-         W2Tx5Bh3N8rxvegPkp6iGXjv3vsjSlUrlwtr1dJhkVrEDvLHz4Qk+d9ELw6/iQ06dAyd
-         HuuL7jfCr6kMVTTnRar7zhEltEBrvIqIU8JYzZRZfVfp/dSfB0twiB84Ntz9Tq0M80bp
-         /dq0SUIWXeC6OXybOvE0ERltk+6YsxerIjDBuFqb5X2+NVU1gYNVmQIUl7henJ1Vuh0M
-         qwYhbReorDnRjuVGbs95JClLaAiFqbTXSL8kfBJL3BIsiPVWR4s0xr67T+3Jo7ZWF1Lr
-         rEtw==
-X-Forwarded-Encrypted: i=1; AJvYcCW2XXkjpz6ZJR9vi/g6zANObYf1G9suRhSCssAhuTfieZmuaQ5D4atTVNjcKz6rjoqJhQgk9DTV9Pe9oQAs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3Y3LivYbzeJG4mHOZbMeUa3RBTwgq3VPM5tgaWsQPjy5AZlxJ
-	6xARjHKZ72Fd7eDmnSMnznE2qWpaoPybDsCT056dK8+eqYpzBEwI5hbJCuegdrJCQSE=
-X-Gm-Gg: ASbGnctANXZHGJYjnXOlmOcSzqSTauKoFkMhHhIoyZO+Sne8h+ZCh7Rsn64MpiCXH77
-	nvpXXWLePFkLn3rd8bTCclr9EBLRzhSxb5aBG/TQyKMUD+iEVJurJVytsJHpv28pUIv45X13lve
-	slReDQzM5VShDNiQMEPgJwCERfB+UbUJNDd/4qLl9eLugAqFJY0m1/ZplQkG+2M5/rT9JMx0vGU
-	tV1LkKhyn3ZZPDP+rrdV+yaVz9ODQN6RhPBx8YJAY+V7NTUZEfFwUPokBM0rBkI6B1tDBxc3IND
-	GTyP1FCRWWnW8GWqGoq8x5uWznIC94ytadr2R5OAljZSc/Wx84aEsa1rswWUfpCwJowzAeA3Ytd
-	1Q/gIIAAr8Mlr/Yg5xIvNF+GCpnU=
-X-Google-Smtp-Source: AGHT+IFaVC8EcfmFnezsgQds3hcWeHYfy6YLXuZiaXqv+d9hK1doPUatpRJ57+lgFQ8CFRK3tCcYgw==
-X-Received: by 2002:a05:6000:2dc1:b0:3b6:d0d:79c1 with SMTP id ffacd0b85a97d-3ba5067fcd2mr272072f8f.10.1755124127183;
-        Wed, 13 Aug 2025 15:28:47 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:7f3a:5ab2:26aa:831f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1b1db885sm4014715e9.0.2025.08.13.15.28.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Aug 2025 15:28:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755124936; x=1755729736;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gq43x9DS30JDovCPMRQp1uHsNm+sjZ4fDdkhVAciSrU=;
+        b=jzEdzqJW5eTSczmaF0pW7J6rnzeCOoRMUvnYS5jAFTslnFzhfWuZ6/RPdc8jF/Z08a
+         gYQacs24oyvMxvV6WudeoInkjb7ceRm3DVJfufTy/d07VyNfjw+xVcISfBgSEQd79l5u
+         qq9gi+whqiJsDchVtswGT1CzTFVUrBu88X139cHgjeWNnWrDnCRrmyxxSp8+dE9rXxEZ
+         nZ63K2iA/qTVCasDwngDWmg354+upnWjxne1gAhNERRyxBOVI0DhihWfjtMQX4FDPnWO
+         LtQ1OOaBIL/C8PKwecKByhF463s1woSfOcVXsvw/gDqToqCKIM6T8oOyJNTswaCI+0F0
+         lgTw==
+X-Forwarded-Encrypted: i=1; AJvYcCX8lfDwWmDdorkCJv9QR7VxbhWc2TdlHjwWin7M16aqwBZd8rGMRBqxeJqWVT/jbsAtPBblncZvpaKf0aa2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyAEJfAHKRL0zFwFYifQ5BW2Wr2j7CRbECBIt/r4e+9DBS1PUpI
+	/3VbNdTpgDMJrXtMEB68yDUgeVjZoiNaG9IXc0nhkFNtB1WkOCc6d912Pzrjcdd/JVfTPGWop2B
+	nlmhm2Zs9qOiAUGbega+197qCaD+ZFZmtvZDI0HcK6gqoyzlU+Ph6WpjLJSkNBQwyoe6A
+X-Gm-Gg: ASbGncshKzi0/7Pp+YRwL+g5Yh7InaWywGtpPIAsmVKOWCaA+RJ4/ib6BEg5LzigYW7
+	Q1d5caszkhAsepcxyRFRZhODxkidKXNanx91872g19d6uJz5Tmd+PYbiRNCRKbLYJAZ+sKbfkeY
+	HuDsTF6RhHhj83ygt+nK19HQyuUz6+dT6Q/GduxcM/haIRtK+KicgZvyLLDHaG61J40HQMI83hR
+	ss8HVrPGb2jGNawRLSGRMd10CrAYrk+3w69DuAPtVWV/YXwEskI7Tl5AlBNGD2RTdHw7hY2xjpM
+	KbaPxOv0204Gtuu+Ax9IDfucdLQkJI177YN20o/IOrHD2P4puAYGfLg0SP5GmSA/J2TzvA==
+X-Received: by 2002:ac8:5c8b:0:b0:4b0:8190:5c13 with SMTP id d75a77b69052e-4b10ab52e65mr15453181cf.40.1755124936199;
+        Wed, 13 Aug 2025 15:42:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2UjsrH/J0iSZScKz7qT8qxg9qYGGtFUn72OoewbCEYNGixkDcA6fwtibk9Ix4IUxf+JCrsQ==
+X-Received: by 2002:ac8:5c8b:0:b0:4b0:8190:5c13 with SMTP id d75a77b69052e-4b10ab52e65mr15452841cf.40.1755124935676;
+        Wed, 13 Aug 2025 15:42:15 -0700 (PDT)
+Received: from trex (205.red-83-60-94.dynamicip.rima-tde.net. [83.60.94.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1a517d49sm17320675e9.11.2025.08.13.15.42.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 15:42:15 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Thu, 14 Aug 2025 00:42:13 +0200
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, quic_vgarodia@quicinc.com,
+        quic_dikshita@quicinc.com, krzk+dt@kernel.org, konradybcio@kernel.org,
+        dmitry.baryshkov@oss.qualcomm.com, mchehab@kernel.org, robh@kernel.org,
+        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 0/8] media: venus: Add QCM2290 support with AR50_LITE
+ core
+Message-ID: <aJ0UxeMKrYOGccPa@trex>
+References: <20250808085300.1403570-1-jorge.ramirez@oss.qualcomm.com>
+ <bd8a88f1-403d-4089-b174-f62ba69e188f@linaro.org>
+ <aJ0QJVnafFf/S0EF@trex>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Aug 2025 23:28:46 +0100
-Message-Id: <DC1NKSHIXLHX.21F0AXCTRNINS@linaro.org>
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Lee Jones" <lee@kernel.org>
-Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Stephen Boyd" <sboyd@kernel.org>, "Jaroslav
- Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Dmitry
- Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srinivas.kandagatla@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: sound: add bindings for pm4125
- audio codec
-X-Mailer: aerc 0.20.0
-References: <20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org>
- <20250711-pm4125_audio_codec_v1-v2-1-13e6f835677a@linaro.org>
- <20250718134334.GF11056@google.com> <DBKDVB96ZC98.NOF39E05HZ8H@linaro.org>
- <7b012ae4-32b8-4de8-97a5-9b73cced2e4c@kernel.org>
-In-Reply-To: <7b012ae4-32b8-4de8-97a5-9b73cced2e4c@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJ0QJVnafFf/S0EF@trex>
+X-Authority-Analysis: v=2.4 cv=X4lSKHTe c=1 sm=1 tr=0 ts=689d14c9 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=Rr2dNH5/fcnoRoBmcVUeRg==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=e5mUnYsNAAAA:8 a=QX4gbG5DAAAA:8
+ a=xOd6jRPJAAAA:8 a=OKeeDrLR6-MU7LyzxQUA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=Vxmtnl_E_bksehYqCbjh:22 a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzMSBTYWx0ZWRfX4owbeTjJiC7s
+ C6AKhatqZOYQdjTLYmQkzU+LSNiwpKl1SDCrNFqSruZoZwMYr2DEiavHtdTuxf4S8XDZI/CPppr
+ /4qO3rHwud40wTTut8TNVgmF+0oZfbuueyHa+Tohp7y143KsfAL2kjteRFhJa5XxA2MUVzkjtkN
+ PKnKx0wfwqC70hQROmAeLMBthkrsLPogGmXcTwHvrc1ecHze4An9YDDYHVcsqUpMMTSCWhhFQPl
+ dNraSQGpVBGMIn0nUXQ6UJJSCkUQ6VgHqmBT86usbfT0odcBSXpv0D9rVqTXfGFOluJNKLQ4W3l
+ l0egwWTnptPM9urhrw+Q5KPGmVQOfJ4pPOULgExUaZTszVNBCDLC45xsbHAbgnqX1FQaPGk7YZm
+ dB2UXqqp
+X-Proofpoint-GUID: 2E1VvcHqEPfd_30ESlg0XGF1NXXOZtwU
+X-Proofpoint-ORIG-GUID: 2E1VvcHqEPfd_30ESlg0XGF1NXXOZtwU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090031
 
-On Thu Jul 24, 2025 at 4:48 PM BST, Krzysztof Kozlowski wrote:
-> On 24/07/2025 17:17, Alexey Klimov wrote:
->> On Fri Jul 18, 2025 at 2:43 PM BST, Lee Jones wrote:
->>> On Fri, 11 Jul 2025, Alexey Klimov wrote:
->>>
->>>> The audio codec IC is found on Qualcomm PM4125/PM2250 PMIC.
->>>> It has TX and RX soundwire slave devices hence two files are added.
->>>>
->>>> While at this, also add pattern for respecive node in mfd
->>>> qcom,spmi-pmic schema so the devicetree for this audio block of
->>>> PMIC can be validated properly.
->>>>
->>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>> ---
->>>>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |   4 +-
->>>>  .../bindings/sound/qcom,pm4125-codec.yaml          | 134 ++++++++++++=
-+++++++++
->>>>  .../devicetree/bindings/sound/qcom,pm4125-sdw.yaml |  79 ++++++++++++
->>>
->>> Do you have to submit these all in a single patch?
->>=20
->> qcom,pm4125-codec.yaml and qcom,pm4125-sdw.yaml describe one device (sub=
--device)
->> and change for qcom,spmi-pmic.yaml is needed to avoid failing dtbs check=
-.
->
-> Preferred way to solve this is to just list compatibles, instead of
-> other schema, just like all qcom display bindings are doing.
+On 14/08/25 00:22:29, Jorge Ramirez wrote:
+> > Trying to apply your series and getting a few or more than one splat anyway,
+> > on media-comitters/next
+> > 
+> > Could you fix this series and test up as a V10 ?
+> 
+> sure, let me rebase and retest.
+> 
+> FYI when I posted I applied it on top
+> 
+> 
+>     media: rkvdec: Unstage the driver
+>     
+>     The TODO list for unstaging being empty, the driver can now be moved to the
+>     main media folder.
+>     
+>     Also add myself as maintainer.
+>     
+>     Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+>     Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+>     Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+>     Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+> 
+> 
+> > 
+> > https://gitlab.freedesktop.org/linux-media/users/bodonoghue/-/commits/b4/bod-media-committers-next-platform-qcom-6.17-rc1
+> > 
+> > ---
+> > bod
+> > 
+> > 
 
-Ok, thanks. I reimplemented it for next version. Couldn't say that I've got=
- it correctly though.
+um, are these venus patches in next already merged?
 
-Best regards,
-Alexey
+16 hours.. 277966749f46 media: Reset file->private_data to NULL in v4l2_fh_del()     Laurent ..[Hans Verkuil]
+16 hours.. 47f4b1acb4d5 media: Set file->private_data in v4l2_fh_add()               Laurent ..[Hans Verkuil]
+16 hours.. 32eab5181105 media: qcom: venus: Pass file pointer to venus_close_commo.. Laurent ..[Hans Verkuil]
+16 hours.. 8003313d388f media: Replace file->private_data access with file_to_v4l2.. Laurent ..[Hans Verkuil]
+
+should we try to keep a consistent subject format, for example:
+
+media: venus: core: Add qcm2290 DT compatible and resources
+media: venus: core: Sort dt_match alphabetically
+media: venus: hfi_plat_v4: Add capabilities for the 4XX line
+
+instead of mixing formats like:
+
+media: Reset file->private_data to NULL in v4l2_fh_del()
+media: qcom: venus: Pass file pointer to venus_close_common()
+
+This way the commit history stays more coherent when searching for "media: venus:"....anything we can do about it?
+
+will post my update in the morning after testing
+
+
+
 
 
