@@ -1,136 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-68905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6864B242CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:34:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A6FB2432C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:50:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 153131AA7DCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 07:32:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08F2F5653E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 07:49:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C002D2390;
-	Wed, 13 Aug 2025 07:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 775512E36FA;
+	Wed, 13 Aug 2025 07:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M4qp8j40"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XLyuCYqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B812BDC26;
-	Wed, 13 Aug 2025 07:31:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9032DEA60
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 07:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755070296; cv=none; b=k/r6v4BbIxWudFAAfny1hBk7URtt3QQFhehgRijGdhoSifhY5OFSqIJV5hdYJ9JGMMsOyTMQmiaKef6n+x2EImohPnkM852Uv3j0+XsCzSnfrhri3GT2UsX56WQ89IiNMi6KJBlUNBgG8QOxXZUy075ywtJrm1I/5ZTllfv5yOo=
+	t=1755071382; cv=none; b=HHHKgTYoGjM1f2rtvX9VIYT9aoQ3KJGDZeYcr25wivaU2qcVJf+1E3nutHKoLZmPF92pa+FBeViuWACh5hRKcmRMrUm9ghXlV6AhcOwmjJafol/F+R7jkeanx5qVWlhVEDKAy0hig+ptYUYKnUcgb2PgmBLAcEH1DY9r5hzvMHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755070296; c=relaxed/simple;
-	bh=OdSR0i8Mi33zK1F01A5u8CnaWsyAunhbK9iCNvR7S1A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EGzFfMRxfK/xAcLsouCxREkHTDPHffyZwsqFNCzoFcTkb3t9Y1akX5aT7Lc57IS2lJeopJcbcjCwno5gmVS2GNefDJYymb/WOxfEWwZ6tRvhoJJkpA6Lkn/qa4D6Z+SZU8YBlaI57rC5wx70i/oqeu17ELuIn7MkQQplCPCEYn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M4qp8j40; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52253C4CEED;
-	Wed, 13 Aug 2025 07:31:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755070295;
-	bh=OdSR0i8Mi33zK1F01A5u8CnaWsyAunhbK9iCNvR7S1A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=M4qp8j40sUo7KdPoQ26wAhG97vwHMqBdoAhtNrXnFuoYWtjIUpyfkjwxOdOOGohUf
-	 +zDGbSPhhD+bZEDKG5HU310ghOqbtsMxdZpxA637xDJUdOMWyzCEFRgO72Keypn2Nl
-	 27fPl6X9YDTW8hcsbSKz7hnQkzCsmakujpT1E2xq5FttYGf6zTApcWMdIiso5xa3br
-	 ZLRUJzkEWmIiZxmExt2r4t07maEhdgNzq3bS/Je8I1Pn4I9QNGJmxXiRaSC4JC285g
-	 3oE7EbIEDktwj8TfV0Wht9avzEo5HepmF500kpJR3/rHKaeVV/B0cssjZfWZ3/sgFO
-	 /Oy5ry8W4HzpA==
-Message-ID: <17b90fbc-ccce-4eb1-b334-5fdef82c094c@kernel.org>
-Date: Wed, 13 Aug 2025 09:31:30 +0200
+	s=arc-20240116; t=1755071382; c=relaxed/simple;
+	bh=wfeJn6OXLOSd2GklhvEK2KXBF/te/QhNlLJRLLpT6NU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B//oHzYqSM5srjwjZpujAjKunhpnjip3eZct6xHg+MMvhHhYsiNxe/fZ98IrJ77yT9McAqHB6nCWgXQPJzIuDO18/ALo8QZ8Jula42XsBGvfREHeV+EQjm9cknuzJ4gDmzW734FT1wFMe+eXvoo/hJK2P0gcjK26+DSqZj6hzQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XLyuCYqE; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-619a603b7cdso1885476eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 00:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755071379; x=1755676179; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wfeJn6OXLOSd2GklhvEK2KXBF/te/QhNlLJRLLpT6NU=;
+        b=XLyuCYqEnk9yF8JdXGunyN+ujw1Fymw1txYThuFHVO2alhysN1K4UCef6XGGbyw5it
+         2w0IztDtFaXf65o16a9X5/C6QcWHc/D94mgHCUwA34dngIcBBdYYDnV54lk3yrY6Si7x
+         gIewLX3Vp/4GbAGHr/ZjpbHAauw2rtEsgLo7/PNdYPphtnLTjL1YCQiJFlIzHn6ofNsW
+         nD76UpLQUHYCKuBeJiR8PSOAuOchc/t5lZ7/SIK75NQw5Fir5TTIkgblpdxglIh/dcZm
+         i19+M2atTq0+VCm9ibcrVebj29D6Bute5K5CHRYwwqLlty+2MyY5WNCJ0vWDrPpSnkAv
+         mkkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755071379; x=1755676179;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wfeJn6OXLOSd2GklhvEK2KXBF/te/QhNlLJRLLpT6NU=;
+        b=Nc1+ZdVn7GS1tCBDBgytHbSNAz7QoyxXZbrpdSPy8Hjoo1oOtCLzawqri2JF8rIciC
+         pCza67rdHyncElRZfzabiSdmcboC8MyU5GP2q8fx2uQ12exNu6PDv43bAqJa88ydVfdn
+         n8yfI2FAGsTqlsTRUR/YFuVG+SV2UnbhNnWgPkThjWPA9f1e2WUMtoRlIzoqLj34tHJJ
+         h1uUkJfM2xpB4qXhiV5vsr2h4qH+vBpACk8a9Mcs632a7x6VvSLBQSocLXOUynx0AEuh
+         lVj6E7zwfnDysrDjCNTxt6nscJNuATwPFwx5AAwFM5Q+NdQO8R8HKIKb8sl+0/ubNq5I
+         F51A==
+X-Forwarded-Encrypted: i=1; AJvYcCWhwBWsGGBUG4JUZ0ZiTQP/5/53oUjhxbLvRvGs+MTcpS+rSUYV8Wf9uFtXn+CJSbnJuHq6URFJrAWLlE7C@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYG68Lj95oCNERuUOmust4CZFOFKXG+2v/KXBjFoTD0WcpgKt7
+	1AswTECtPBP8vSqajtC/nvEUTgy8kTTmrYCN8KGphbU61QZWeclzA/gxDqmDT5blptTDoMs8TbI
+	Qok+K1Aa3m8vvf7ekF0jX1Kf12Jr4Tly7zWi+SfEAOw==
+X-Gm-Gg: ASbGncv0fqWezodcPAQWbvD5uUR35KgOOV5BeENiVnA9Fv0PcgoVEIA9f+TZgik3Xsc
+	jU55DVUWSeAS90KrrvfWoS+zQxrLo9LSCqDpYU1uIFVlaGgf9BUsJYo2WDVI7AQ6MoZkTfG9GlK
+	EeM/hY8Fd51vrNTzmf00mDGfT0E21AH2Z+WQIoDPuUvYZaJyjWGRAWCRe8LZVzZu3WCvle/cv5a
+	ZLV6eb6z7B1Q14Y3XM=
+X-Google-Smtp-Source: AGHT+IFAfPPXVnV/fIsv8KnI8b8Bl+IOsf+U5t0pmvRJM0gZ8xG3AukFt3DXdXVb9aF/gWZVqDSUuTyRuSP2uDtgU3s=
+X-Received: by 2002:a05:6820:1ac1:b0:619:a6c0:b4b with SMTP id
+ 006d021491bc7-61bc758538amr1013523eaf.5.1755071379266; Wed, 13 Aug 2025
+ 00:49:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/2] pinctrl: qcom: Introduce Pinctrl for Glymur
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, andersson@kernel.org,
- linus.walleij@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, rajendra.nayak@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250813065533.3959018-1-pankaj.patil@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250813065533.3959018-1-pankaj.patil@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250812-qcom-tee-using-tee-ss-without-mem-obj-v7-0-ce7a1a774803@oss.qualcomm.com>
+In-Reply-To: <20250812-qcom-tee-using-tee-ss-without-mem-obj-v7-0-ce7a1a774803@oss.qualcomm.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Wed, 13 Aug 2025 09:49:27 +0200
+X-Gm-Features: Ac12FXyfvHrDtrackOzZC99WcBb71C_WC3_DT2d5Ppi_3YWKQtwtthH808vWulI
+Message-ID: <CAHUa44FJ9iRMyDHffRBwgxxX27vTwsAwNiCCEGQ8fMQPZS_D+g@mail.gmail.com>
+Subject: Re: [PATCH v7 00/11] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Sumit Garg <sumit.garg@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org, 
+	Sumit Garg <sumit.garg@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 13/08/2025 08:55, Pankaj Patil wrote:
-> Introduce Top Level Mode Multiplexer dt-binding and driver for
-> Qualcomm's next gen compute SoC - Glymur.
-> Device tree changes aren't part of this series and will be posted separately after the official announcement of the Glymur SoC
-> 
-> Changes in v5:
-> Rebased on top of v6.17-rc1
-> RESOUT_GPIO_N changed to lowercase in bindings and driver
-> 
-> Changes in v4:
-> Updated bindings to column length of 80 char
-> 
-> Changes in v3:
-> Fixed indentation for example tlmm node in bindings file
-> Fixed s-o-b and review comments in the driver
-> 
-> Changes in v2:
-> Fixed dt-bindings error from example node's reg propery
-> Fixed gpio-line-name maxItems
-> Driver UFS_RESET macro updated
-> Removed obsolete comment for pingroups
-> Updated ngpio to include ufs_reset pin
+Hi Amir,
 
-Where are lore links? Why aren't you using b4?
+On Wed, Aug 13, 2025 at 2:37=E2=80=AFAM Amirreza Zarrabi
+<amirreza.zarrabi@oss.qualcomm.com> wrote:
+>
+> This patch series introduces a Trusted Execution Environment (TEE)
+> driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+> and services to run securely. It uses an object-based interface, where
+> each service is an object with sets of operations. Clients can invoke
+> these operations on objects, which can generate results, including other
+> objects. For example, an object can load a TA and return another object
+> that represents the loaded TA, allowing access to its services.
+>
 
-Best regards,
-Krzysztof
+There are some build errors/warnings for arm and x86_64, see
+https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/jens/plans/31DmCOn1pF=
+2JGVDk3otBOXOL6kV
+
+Thanks,
+Jens
 
