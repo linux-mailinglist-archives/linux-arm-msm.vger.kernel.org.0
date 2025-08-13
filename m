@@ -1,460 +1,475 @@
-Return-Path: <linux-arm-msm+bounces-68923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F873B24587
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:36:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72CB7B24589
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:38:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A4BB72003C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:36:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E36B0624B33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:38:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AB12D1913;
-	Wed, 13 Aug 2025 09:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4B502EFDA5;
+	Wed, 13 Aug 2025 09:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GwpT86EQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QfN7p7cP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD72581;
-	Wed, 13 Aug 2025 09:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A281C2EA47D;
+	Wed, 13 Aug 2025 09:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755077790; cv=none; b=k+EjgYiHVn1fKyXSGcBbvLh4CEvmmO+IFRjBIGYNFG85huF5BgY9gvRbEdN6XJ2+ihe9xuUnBt/BVPGaTYlgZ5mRpE/GomFdYdCmkgB4NbwE206YMLedxAPka0EPotQrnL4EAE7MwOIDjDSFFLfpPtHQhbU35bJyDbIqmrCoSCY=
+	t=1755077911; cv=none; b=iols2RSaF3sP/z5l1W5PSYJ7LkOP5AIvUzJBmFw+M9quGn9SJofndlkF4PNZQ1LnHaWVPoJd5j0I7w+e+gSqNNeO3TWql5M4RHOR+4odgC6AOoU28rEea6A4DExp6IUxOdp2Hf39RxQyqp+9T7aXtzCjSdRU1zj5hgXwjZiaztk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755077790; c=relaxed/simple;
-	bh=lPzttazSCCf8LOSF1mw4vFUIp/7hxMu7f2j2q+0HbJo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jG7k6KgIsNaq4ND7qYUjzsIOFUldCaxXAhcrXvhkD/e4K+D0UgLp2+wvQp2oQvYoQe+OpZT5SnBwVIIJTs3BBugnzzK2D9/4wd/b2XkQT7VEd5lC+1quehaQCh1S1e7Ag6NWVaLWIg9W4L9uqHgpPcgwWsKtUaAB63cJJkf0r7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GwpT86EQ; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1755077911; c=relaxed/simple;
+	bh=YLCnAto9lxjlb1FleikPRuJwGtAi6hamTiM+hzHW6oU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=VfK7WhjLfcdXvGwv9a5chPl8Y2pJS3tSi8TETfxwg9R0GO2/6EH+LPlBtOk/cQbspM918ZmqdEUE0/QfaaqvOUdVKaquszKAIEmZupkfkWs7KciOYtB/1voThBh4JA2HkPMMwoVkOMSB8FJiTIp88C+YnkiRqSm+TPS+PB3KHl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QfN7p7cP; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D6mIvS020477;
-	Wed, 13 Aug 2025 09:36:18 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D6mNYU008768;
+	Wed, 13 Aug 2025 09:38:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1s84W2H68M75UiDlQ3DS8fGcXqxpmjW4a9xrs2qxFEg=; b=GwpT86EQtNfPPCAH
-	atlxdCocbOcKfDQb4vR5JcmJ++hj9DYO2Y4dKSMcUWvn2pFxQ7dDm6rxYVbHWrj5
-	pSA5DSvL5rZUnYydkt2ULC8AlE7xWwNY3jxubqHKgaQPWVaBPftOcyJmNPSdBTRP
-	Y+VDKq/QuyzFYa+Gu+lBitunaEDA2r4FkNpXEWDDcZbZpqFYEIIt6k2z54Y3r9BX
-	OWMay6P7lrQk1+xJf2uEZXbDNqpS6hUCS+q+xPWkzwxxddni20BtDQ5zxxuvBZjY
-	dPxZ2XOOaLniITyWjio5r9v29RKretiu4aJK/SJOWCqtEq8qMnIi8FOe7Q+LWcqS
-	DFoN6g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhx9dpn-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MyLTisPZIoCY2FLdMf6R8g
+	Iy3UGjR1zk3fhAFP5kIzE=; b=QfN7p7cPSLTmf4eTstfsHnlzvLtc8XIo8HNE0H
+	ivc3TQjOTAwHbykokrCllwW1+lHUtFGbVdRZ4MTh8TTN+APu8K5mwjInkbxBqVad
+	mm0w0bw/os6mGlztyYXm4Pc3CtWOtpdNAw9taHEuUps9jdumrDEWQl9xTySrog7+
+	gy/Df/Vba5iyLQYs1lpoCfQkmIUZrKnscklcUYsjuszxBYP13ExZJAv6VvgC0Sjd
+	j4NOzq6QhVosSnR8uHHEi22px+VwEFfKnootKOS+/oAOEZqiDbpJezfWO/aOCHSO
+	PwjLnrMuoCKk4mo2GaLJXU4yXske4ZMDruMXxG2ccjkh0TPw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fem4f85t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 09:36:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57D9aH2P031554
+	Wed, 13 Aug 2025 09:38:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57D9cLuB019036
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 09:36:17 GMT
-Received: from [10.133.33.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
- 2025 02:36:12 -0700
-Message-ID: <48c61bce-21e6-488a-b976-da53004b6226@quicinc.com>
-Date: Wed, 13 Aug 2025 17:36:10 +0800
+	Wed, 13 Aug 2025 09:38:21 GMT
+Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Wed, 13 Aug 2025 02:38:17 -0700
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v2 00/24] Enable H.264/H.265 encoder support and fixes in
+ common code
+Date: Wed, 13 Aug 2025 15:07:50 +0530
+Message-ID: <20250813-iris-video-encoder-v2-0-c725ff673078@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/38] drm/msm/dp: break up dp_display_enable into two
- parts
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO9cnGgC/32NQQ6CMBBFr0Jm7ZjSglVX3sOwoMMgs7DFVhsN4
+ e5WDuDyveS/v0DiKJzgXC0QOUuS4AvoXQU09f7GKENh0Eq3yqoGJUrCLAMHZE9h4IiuPhnTKtc
+ cbQ9lOEce5b1Fr13hSdIzxM/2keuf/ZvLNSp0B2LdsLaGxsvjJSSe9hTu0K3r+gVhDlTZtgAAA
+ A==
+X-Change-ID: 20250704-iris-video-encoder-b193350b487a
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
         Abhinav Kumar
 	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-3-a54d8902a23d@quicinc.com>
- <gwib6zcvkxsxcz222cno5jbvsnt2abdoqfnymlxq7e6c6wdfvn@nlplodnco2sw>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <gwib6zcvkxsxcz222cno5jbvsnt2abdoqfnymlxq7e6c6wdfvn@nlplodnco2sw>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil
+	<hverkuil@xs4all.nl>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        "Vedang
+ Nagar" <quic_vnagar@quicinc.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Renjiang Han <quic_renjiang@quicinc.com>,
+        Wangao Wang <quic_wangaow@quicinc.com>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755077895; l=14921;
+ i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
+ bh=YLCnAto9lxjlb1FleikPRuJwGtAi6hamTiM+hzHW6oU=;
+ b=YkMpNCqich5Y2Q3NRFGSqHlqgquLSoxhwbSDsc/oGeMisXgaHKomiO5I4A8G8I53M6neMYVUk
+ tf3z50SdG9uAhS0GXH7AOgbOuhTqaJH3qIe/NQu4Gtg/fk8bDsgn0dT
+X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
+ pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX4PdcXcukTa2P
- URMhVEhBNdNH725gJHQm0vGR0aEeaLNImRkDguUmL5r5fYiFpPLbNe+0BoW5ww6l4R8ZXjXAVBM
- UEZkkCsCiqBQwi1LwPMGHSYEt9aDAeNIbl9nvPzQXPahqF9meO2VIIJ8QC52/Jdc8F/SS332uhs
- 4aEYZyW1/Mki/Rl7wq70tmiHs4cbGZv983fUo2JKRQXIbGJZOyBFbcMMJqIOsmonxSjsgTG7loM
- mCul9tZ8mJXjt4qeQiN9Y29fpZ6asybU4J/Ad8aCY473c3S7ubvodXIS/reBJNlBQdTAKTRfN2l
- dr/3JwBoBlxOZjDBk2g1G84lBEfRiEVUICTh/ChWLGDfWVeF+4EZHc6tIv6w8e13e4iJsonJa+d
- 2I8bJagW
-X-Proofpoint-GUID: tVZXj0YtTUN59EnYnrCn4GhSGQZ26VXV
-X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689c5c92 cx=c_pps
+X-Proofpoint-GUID: QRXMvNBoR8X-1R4ZFsLkVQDFOAUXJhrV
+X-Proofpoint-ORIG-GUID: QRXMvNBoR8X-1R4ZFsLkVQDFOAUXJhrV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2OCBTYWx0ZWRfX6I7mkqNMcnKK
+ yFItbcBVVK8vlw9jxFU7RwArCvpMkDNu29cvT74BGQO40rYln3ENemL2oSfF9Xej3kP1QdBFmA2
+ elR67UvWGWyPdYbZizwQXVhYWNndm0t/XaSd1aVGVjeP9iWgHxfUu/t36Lp/Uky4uvyeQrGw97X
+ iU2uCbGtEJpD1KkVzHAvoT+eMSDYyRccNf2ufwOIxn75jigdDBnSpqjr+MOA6mb51Po4/MkhqKm
+ TJhDMcLcQcbgiO55HcnrG3yY016LORT/sqaEZPtGNY2p5nSh4DhJBzzYCC8zIUkWH9n50w4qmQH
+ lqDvQuf2Ol2HLeCE3QuKwFyxNB603Ug0mQIQxFEfRLRm1j7/rHsa48eEKzSTCPv4X75uSIAgpGK
+ ANNY/MQL
+X-Authority-Analysis: v=2.4 cv=YMafyQGx c=1 sm=1 tr=0 ts=689c5d0e cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=a1Dkl4VKOg0tngf4JrsA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: tVZXj0YtTUN59EnYnrCn4GhSGQZ26VXV
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=CDV9YodVZmp-j6WmXcwA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 clxscore=1015 priorityscore=1501 spamscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110068
 
+Hi All,
 
+This patch series adds support for H.264 and H.265 encoder in iris 
+driver and includes a few fixes and cleanup in the common code that were 
+identified during encoder bring-up process.
 
-On 2025/6/9 20:59, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:22PM +0800, Yongxing Mou wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->> dp_display_enable() currently re-trains the link if needed
->> and then enables the pixel clock, programs the controller to
->> start sending the pixel stream. Splite these two parts into
->> prepare/enable APIs, to support MST bridges_enable inserte
-> 
-> typos
-> 
->> the MST payloads funcs between enable stream_clks and programe
->> register.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 57 +++++++++++++--------
->>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 +-
->>   drivers/gpu/drm/msm/dp/dp_display.c | 99 +++++++++++++++++++++++++++----------
->>   drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->>   4 files changed, 111 insertions(+), 49 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index a50bfafbb4ea85c114c958ea0ed24362a1f23136..1e13ca81b0155a37a4ed7a2e83c918293d703a37 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1980,40 +1980,61 @@ static int msm_dp_ctrl_link_retrain(struct msm_dp_ctrl_private *ctrl)
->>   	return msm_dp_ctrl_setup_main_link(ctrl, &training_step);
->>   }
->>   
->> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
->> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
->>   {
->>   	int ret = 0;
->> -	bool mainlink_ready = false;
->>   	struct msm_dp_ctrl_private *ctrl;
->> -	unsigned long pixel_rate;
->> -	unsigned long pixel_rate_orig;
->>   
->>   	if (!msm_dp_ctrl)
->>   		return -EINVAL;
->>   
->>   	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->>   
->> -	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
->> -
->> -	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
->> -		pixel_rate >>= 1;
->> -
->> -	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
->> -		ctrl->link->link_params.rate,
->> -		ctrl->link->link_params.num_lanes, pixel_rate);
->> +	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d\n",
->> +		   ctrl->link->link_params.rate,
->> +		   ctrl->link->link_params.num_lanes);
-> 
-> Please don't mix whitespace changes with the actual code changes. It
-> makes reviewing the patch much harder.
-> 
->>   
->>   	drm_dbg_dp(ctrl->drm_dev,
->> -		"core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
->> -		ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
->> +		   "core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
->> +		   ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
->>   
->>   	if (!ctrl->link_clks_on) { /* link clk is off */
->>   		ret = msm_dp_ctrl_enable_mainlink_clocks(ctrl);
->>   		if (ret) {
->>   			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
->> -			goto end;
->> +			return ret;
->>   		}
->>   	}
->>   
->> +	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
->> +		msm_dp_ctrl_link_retrain(ctrl);
->> +
->> +	/* stop txing train pattern to end link training */
->> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->> +
->> +	return ret;
->> +}
->> +
->> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
->> +{
->> +	int ret = 0;
->> +	bool mainlink_ready = false;
->> +	struct msm_dp_ctrl_private *ctrl;
->> +	unsigned long pixel_rate;
->> +	unsigned long pixel_rate_orig;
->> +
->> +	if (!msm_dp_ctrl)
->> +		return -EINVAL;
->> +
->> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->> +
->> +	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
->> +
->> +	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
->> +		pixel_rate >>= 1;
->> +
->> +	drm_dbg_dp(ctrl->drm_dev, "pixel_rate=%lu\n", pixel_rate);
->> +
->>   	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->>   	if (ret) {
->>   		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> @@ -2031,12 +2052,6 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
->>   		ctrl->stream_clks_on = true;
->>   	}
->>   
->> -	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
->> -		msm_dp_ctrl_link_retrain(ctrl);
->> -
->> -	/* stop txing train pattern to end link training */
->> -	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->> -
->>   	/*
->>   	 * Set up transfer unit values and set controller state to send
->>   	 * video.
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
->> index b7abfedbf5749c25877a0b8ba3af3d8ed4b23d67..42745c912adbad7221c78f5cecefa730bfda1e75 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
->> @@ -18,7 +18,8 @@ struct msm_dp_ctrl {
->>   struct phy;
->>   
->>   int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl);
->> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train);
->> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl);
->> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *dp_ctrl, bool force_link_train);
->>   void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl);
->>   void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
->>   void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl);
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 9d2db9cbd2552470a36a63f70f517c35436f7280..5ac5dcf35b789f2bda052a2c17aae20aa48d8e18 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -831,7 +831,37 @@ static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
->>   	return 0;
->>   }
->>   
->> -static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_link_train)
->> +static int msm_dp_display_prepare(struct msm_dp_display_private *dp)
->> +{
->> +	int rc = 0;
->> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->> +	bool force_link_train = false;
->> +
->> +	drm_dbg_dp(dp->drm_dev, "sink_count=%d\n", dp->link->sink_count);
->> +	if (msm_dp_display->prepared) {
->> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
->> +		return 0;
->> +	}
-> 
-> How can it be prepared here? It is called at the beginning of the
-> .atomic_enable() only, so there is no way this can be true.
-> 
-Emm, sorry for forget this case.. Whern MST enabled, 
-msm_dp_display_prepare() will be called from 
-mst_bridge_atomic_pre_enable, that means, when second stream called this 
-func, it already prepared, so we should skip here. so this condition 
-will really hit in MST case..
->> +
->> +	rc = pm_runtime_resume_and_get(&msm_dp_display->pdev->dev);
->> +	if (rc) {
->> +		DRM_ERROR("failed to pm_runtime_resume\n");
->> +		return rc;
->> +	}
->> +
->> +	if (dp->hpd_state == ST_CONNECTED && !msm_dp_display->power_on) {
->> +		msm_dp_display_host_phy_init(dp);
->> +		force_link_train = true;
->> +	}
->> +
->> +	rc = msm_dp_ctrl_prepare_stream_on(dp->ctrl, force_link_train);
->> +	if (!rc)
->> +		msm_dp_display->prepared = true;
->> +
->> +	return rc;
->> +}
->> +
->> +static int msm_dp_display_enable(struct msm_dp_display_private *dp)
->>   {
->>   	int rc = 0;
->>   	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->> @@ -842,7 +872,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_l
->>   		return 0;
->>   	}
->>   
->> -	rc = msm_dp_ctrl_on_stream(dp->ctrl, force_link_train);
->> +	rc = msm_dp_ctrl_on_stream(dp->ctrl);
->>   	if (!rc)
->>   		msm_dp_display->power_on = true;
->>   
->> @@ -872,13 +902,10 @@ static int msm_dp_display_post_enable(struct msm_dp *msm_dp_display)
->>   	return 0;
->>   }
->>   
->> -static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->> +static void msm_dp_display_audio_notify_disable(struct msm_dp_display_private *dp)
->>   {
->>   	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->>   
->> -	if (!msm_dp_display->power_on)
->> -		return 0;
->> -
->>   	/* wait only if audio was enabled */
->>   	if (msm_dp_display->audio_enabled) {
->>   		/* signal the disconnect event */
->> @@ -889,6 +916,14 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->>   	}
->>   
->>   	msm_dp_display->audio_enabled = false;
->> +}
->> +
->> +static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->> +{
->> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->> +
->> +	if (!msm_dp_display->power_on)
->> +		return 0;
->>   
->>   	if (dp->link->sink_count == 0) {
->>   		/*
->> @@ -1506,9 +1541,8 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->>   	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
->>   	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
->>   	int rc = 0;
->> +
->>   	struct msm_dp_display_private *msm_dp_display;
->> -	u32 hpd_state;
->> -	bool force_link_train = false;
->>   
->>   	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
->>   
->> @@ -1516,29 +1550,23 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->>   		msm_dp_hpd_plug_handle(msm_dp_display, 0);
->>   
->>   	mutex_lock(&msm_dp_display->event_mutex);
->> -	if (pm_runtime_resume_and_get(&dp->pdev->dev)) {
->> -		DRM_ERROR("failed to pm_runtime_resume\n");
->> -		mutex_unlock(&msm_dp_display->event_mutex);
->> -		return;
->> -	}
->>   
->> -	hpd_state = msm_dp_display->hpd_state;
->> -	if (hpd_state == ST_DISCONNECT_PENDING) {
->> +	rc = msm_dp_display_prepare(msm_dp_display);
->> +	if (rc) {
->> +		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
->>   		mutex_unlock(&msm_dp_display->event_mutex);
->>   		return;
->>   	}
->>   
->> -	if (hpd_state == ST_CONNECTED && !dp->power_on) {
->> -		msm_dp_display_host_phy_init(msm_dp_display);
->> -		force_link_train = true;
->> -	}
->> -
->> -	msm_dp_display_enable(msm_dp_display, force_link_train);
->> -
->> -	rc = msm_dp_display_post_enable(dp);
->> -	if (rc) {
->> -		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
->> -		msm_dp_display_disable(msm_dp_display);
->> +	if (dp->prepared) {
->> +		rc = msm_dp_display_enable(msm_dp_display);
->> +		if (rc)
->> +			DRM_ERROR("DP display enable failed, rc=%d\n", rc);
->> +		rc = msm_dp_display_post_enable(dp);
->> +		if (rc) {
->> +			DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
->> +			msm_dp_display_disable(msm_dp_display);
->> +		}
->>   	}
->>   
->>   	/* completed connection */
->> @@ -1560,6 +1588,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
->>   	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
->>   }
->>   
->> +static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
->> +{
->> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->> +
->> +	if (!msm_dp_display->prepared) {
->> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
->> +		return;
->> +	}
-> 
-> Why/ how is it possible?
-> 
->> +
->> +	pm_runtime_put_sync(&msm_dp_display->pdev->dev);
->> +
->> +	msm_dp_display->prepared = false;
->> +}
->> +
->>   void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->>   				       struct drm_atomic_state *state)
->>   {
->> @@ -1580,6 +1622,8 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->>   		drm_dbg_dp(dp->drm_dev, "type=%d wrong hpd_state=%d\n",
->>   			   dp->connector_type, hpd_state);
->>   
->> +	msm_dp_display_audio_notify_disable(msm_dp_display);
->> +
->>   	msm_dp_display_disable(msm_dp_display);
->>   
->>   	hpd_state =  msm_dp_display->hpd_state;
->> @@ -1588,9 +1632,10 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->>   		msm_dp_display->hpd_state = ST_DISCONNECTED;
->>   	}
->>   
->> +	msm_dp_display_unprepare(msm_dp_display);
->> +
->>   	drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
->>   
->> -	pm_runtime_put_sync(&dp->pdev->dev);
->>   	mutex_unlock(&msm_dp_display->event_mutex);
->>   }
->>   
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
->> index cc6e2cab36e9c0b1527ff292e547cbb4d69fd95c..2394840e9f28e136705004c3e6af93fbe13c33c5 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
->> @@ -19,6 +19,7 @@ struct msm_dp {
->>   	bool link_ready;
->>   	bool audio_enabled;
->>   	bool power_on;
->> +	bool prepared;
->>   	unsigned int connector_type;
->>   	bool is_edp;
->>   	bool internal_hpd;
->>
->> -- 
->> 2.34.1
->>
-> 
+The changes include:
+- Enabling support for H.264 and H.265 encoding.
+- Fixes and improvements in shared componenets used by both encoder and 
+decoder paths.
+- Ensuring compatibility and stability with the existing decoder flow.
+
+Changes in v2:
+- Fixed sparse/coccinnelle issues.
+- Fixed the kernel doc warning.
+- Removed unsupported PEAK_BITRATE property from SM8250.
+- Dropped patch 04/25 to fix quality issue with encoder.
+- Enhanced command handling for encoder to allow start/stop commands.
+- Expanded rate control condition checks to include additional rate
+  control types for HFI Gen2.
+- Updated default value to MAX_QP for all caps related to max QP settings.
+- Add support for INPUT/OUTPUT_BUF_HOST_MAX_COUNT caps for encoder.
+- Link to v1: https://lore.kernel.org/r/20250704-iris-video-encoder-v1-0-b6ce24e273cf@quicinc.com
+
+All patches have been tested with v4l2-compliance, v4l2-ctl and 
+Gstreamer on SM8250 and SM8550 for encoder, at the same time ensured 
+that the existing decoder functionality remains uneffected.
+
+Commands used for V4l2-ctl validation:
+
+v4l2-ctl --verbose --set-fmt-video-out=width=1280,height=720,pixelformat=NV12
+--set-selection-output target=crop,top=0,left=0,width=1280,height=720
+--set-fmt-video=pixelformat=H264 --stream-mmap --stream-out-mmap
+--stream-from=/media/cyclists_1280x720_92frames.yuv
+--stream-to=/tmp/cyclists_1280x720_92frames.h264 -d /dev/video1
+
+v4l2-ctl --verbose --set-fmt-video-out=width=1280,height=720,pixelformat=NV12
+--set-selection-output target=crop,top=0,left=0,width=1280,height=720
+--set-fmt-video=pixelformat=HEVC --stream-mmap --stream-out-mmap
+--stream-from=/media/cyclists_1280x720_92frames.yuv
+--stream-to=/tmp/cyclists_1280x720_92frames.hevc -d /dev/video1
+
+Commands used for GST validation:
+
+gst-launch-1.0 -v filesrc location=/media/cyclists_1280x720_92frames.yuv !
+rawvideoparse format=nv12 width=1280 height=720 framerate=30/1 ! v4l2h264enc
+capture-io-mode=4 output-io-mode=4 ! filesink sync=true
+location=/tmp/gst_cyclists_1280x720_92frames.h264
+
+gst-launch-1.0 -v filesrc location=/media/cyclists_1280x720_92frames.yuv !
+rawvideoparse format=nv12 width=1280 height=720 framerate=30/1 ! v4l2h265enc
+capture-io-mode=4 output-io-mode=4 ! filesink sync=true
+location=/tmp/gst_cyclists_1280x720_92frames.hevc
+
+The result of v4l2-compliance on SM8550:
+v4l2-compliance 1.29.0-5270, 64 bits, 64-bit time_t
+v4l2-compliance SHA: dc947661089e 2024-11-11 10:25:38
+
+Compliance test for iris_driver device /dev/video1:
+
+Driver Info:
+        Driver name      : iris_driver
+        Card type        : Iris Encoder
+        Bus info         : platform:aa00000.video-codec
+        Driver version   : 6.16.0
+        Capabilities     : 0x84204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+        Detected Stateful Encoder
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
+
+Allow for multiple opens:
+        test second /dev/video1 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 37 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test CREATE_BUFS maximum buffers: OK
+        test VIDIOC_REMOVE_BUFS: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+        test blocking wait: OK
+
+Test input 0:
+
+Streaming ioctls:
+        test read/write: OK (Not Supported)
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (select, REQBUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (epoll, REQBUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (select, CREATE_BUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (epoll, CREATE_BUFS): OK
+        test USERPTR (select): OK (Not Supported)
+        test DMABUF: Cannot test, specify --expbuf-device
+
+Total for iris_driver device /dev/video1: 54, Succeeded: 54, Failed: 0, Warnings: 0
+
+The result of v4l2-compliance on SM8250:
+v4l2-compliance 1.29.0-5270, 64 bits, 64-bit time_t
+v4l2-compliance SHA: dc947661089e 2024-11-11 10:25:38
+
+Compliance test for iris_driver device /dev/video1:
+
+Driver Info:
+        Driver name      : iris_driver
+        Card type        : Iris Encoder
+        Bus info         : platform:aa00000.video-codec
+        Driver version   : 6.16.0
+        Capabilities     : 0x84204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+        Detected Stateful Encoder
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
+
+Allow for multiple opens:
+        test second /dev/video1 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 19 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test CREATE_BUFS maximum buffers: OK
+        test VIDIOC_REMOVE_BUFS: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+        test blocking wait: OK
+
+Test input 0:
+
+Streaming ioctls:
+        test read/write: OK (Not Supported)
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (select, REQBUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (epoll, REQBUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (select, CREATE_BUFS): OK
+        Video Capture Multiplanar: Captured 61 buffers
+        test MMAP (epoll, CREATE_BUFS): OK
+        test USERPTR (select): OK (Not Supported)
+        test DMABUF: Cannot test, specify --expbuf-device
+
+Total for iris_driver device /dev/video1: 54, Succeeded: 54, Failed: 0, Warnings: 0
+
+Looking forward to your review and feedback.
+
+Thanks,
+Dikshita
+
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+Dikshita Agarwal (24):
+      media: iris: Fix buffer count reporting in internal buffer check
+      media: iris: Report unreleased PERSIST buffers on session close
+      media: iris: Fix memory leak by freeing untracked persist buffer
+      media: iris: Fix port streaming handling
+      media: iris: Allow substate transition to load resources during output streaming
+      media: iris: Always destroy internal buffers on firmware release response
+      media: iris: Update vbuf flags before v4l2_m2m_buf_done
+      media: iris: Allow stop on firmware only if start was issued.
+      media: iris: Send dummy buffer address for all codecs during drain
+      media: iris: Fix missing LAST flag handling during drain
+      media: iris: Add support for video encoder device
+      media: iris: Initialize and deinitialize encoder instance structure
+      media: iris: Add support for ENUM_FMT, S/G/TRY_FMT encoder
+      media: iris: Add support for ENUM_FRAMESIZES/FRAMEINTERVALS for encoder
+      media: iris: Add support for VIDIOC_QUERYCAP for encoder video device
+      media: iris: Add encoder support for V4L2 event subscription
+      media: iris: Add support for G/S_SELECTION for encoder video device
+      media: iris: Add support for G/S_PARM for encoder video device
+      media: iris: Add platform-specific capabilities for encoder video device
+      media: iris: Add V4L2 streaming support for encoder video device
+      media: iris: Set platform capabilities to firmware for encoder video device
+      media: iris: Allocate and queue internal buffers for encoder video device
+      media: iris: Add support for buffer management ioctls for encoder device
+      media: iris: Add support for drain sequence in encoder video device
+
+ drivers/media/platform/qcom/iris/Makefile          |   5 +-
+ drivers/media/platform/qcom/iris/iris_buffer.c     | 220 ++++--
+ drivers/media/platform/qcom/iris/iris_buffer.h     |   7 +-
+ drivers/media/platform/qcom/iris/iris_common.c     | 232 ++++++
+ drivers/media/platform/qcom/iris/iris_common.h     |  18 +
+ drivers/media/platform/qcom/iris/iris_core.h       |  20 +-
+ drivers/media/platform/qcom/iris/iris_ctrls.c      | 675 +++++++++++++++-
+ drivers/media/platform/qcom/iris/iris_ctrls.h      |  15 +
+ drivers/media/platform/qcom/iris/iris_hfi_common.h |   2 +-
+ .../platform/qcom/iris/iris_hfi_gen1_command.c     | 485 +++++++++---
+ .../platform/qcom/iris/iris_hfi_gen1_defines.h     | 112 ++-
+ .../platform/qcom/iris/iris_hfi_gen1_response.c    |  60 +-
+ .../platform/qcom/iris/iris_hfi_gen2_command.c     | 357 ++++++---
+ .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  44 +-
+ .../platform/qcom/iris/iris_hfi_gen2_response.c    |  46 +-
+ drivers/media/platform/qcom/iris/iris_instance.h   |  24 +
+ .../platform/qcom/iris/iris_platform_common.h      |  74 +-
+ .../media/platform/qcom/iris/iris_platform_gen2.c  | 522 ++++++++++++-
+ .../platform/qcom/iris/iris_platform_qcs8300.h     | 352 ++++++++-
+ .../platform/qcom/iris/iris_platform_sm8250.c      | 234 +++++-
+ drivers/media/platform/qcom/iris/iris_probe.c      |  39 +-
+ drivers/media/platform/qcom/iris/iris_state.c      |   9 +-
+ drivers/media/platform/qcom/iris/iris_state.h      |   1 +
+ drivers/media/platform/qcom/iris/iris_utils.c      |  36 +
+ drivers/media/platform/qcom/iris/iris_utils.h      |   2 +
+ drivers/media/platform/qcom/iris/iris_vb2.c        |  58 +-
+ drivers/media/platform/qcom/iris/iris_vdec.c       | 249 +-----
+ drivers/media/platform/qcom/iris/iris_vdec.h       |  13 +-
+ drivers/media/platform/qcom/iris/iris_venc.c       | 579 ++++++++++++++
+ drivers/media/platform/qcom/iris/iris_venc.h       |  27 +
+ drivers/media/platform/qcom/iris/iris_vidc.c       | 299 +++++++-
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 847 ++++++++++++++++++++-
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.h |  20 +
+ 33 files changed, 4970 insertions(+), 713 deletions(-)
+---
+base-commit: c26e8dcd9d4e86d788c5bf7a5dd0ea70a95ab067
+change-id: 20250704-iris-video-encoder-b193350b487a
+
+Best regards,
+-- 
+Dikshita Agarwal <quic_dikshita@quicinc.com>
 
 
