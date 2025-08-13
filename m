@@ -1,123 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-69015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF742B24FA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:27:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F99EB25061
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:59:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 068353A9521
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:21:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1BF07B880D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:56:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD8EC286D6B;
-	Wed, 13 Aug 2025 16:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 156C528B7E6;
+	Wed, 13 Aug 2025 16:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7mlNFqv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ApNM+ubm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6100428643E;
-	Wed, 13 Aug 2025 16:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1F928B415;
+	Wed, 13 Aug 2025 16:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755101964; cv=none; b=sLBQBxFBtucWqHorfgr0SSVbxQ1YMprUqy3hLxlOC+wMONz7PmAvHP9KpcMqXhcp2cfJyUkoyn3SZmQCX6hIpRAj4bWbeRdVqyAYLsq/EMU49FSofuv+x6lVZ45lHwF89xvX2+1f5qi0pl1OvWmxolDl359mNqksNX8ZO31LgfY=
+	t=1755104261; cv=none; b=eTuihXQIcKFuVt3/mFotCMkKZ1K4BJXr1Qq5hwxLNYEWWfMBez0nMON0/wo2Jwp7z99tQP7hZL2onc2eMI6ohS8zm4zrNPkINnDseg/z/SSoun1voObkkaZryu5F4fbOeJIDbwSvxOtC0kh5Ik11E9ho4/pwo3jVpHSTiYM20w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755101964; c=relaxed/simple;
-	bh=sb9I6gZ698T0YMzdob5qzS5OmWKkhnJooYHE0jSsT9w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5LAO1siq+zrNzPN7Y7GmST7wUNJKsKfs3iRM+prsZTIQEQTRv2bA+pif9JNT5/woa0EsXKrd1gqLu4FHHmCEdIU7QZ39DDLBdhZR2Bh4bfZ/EXQnBRap3k7bqYVvF9/5ldzdsD6Zi/vWlF8DcPyQo/2JcQQ1TjGxDSbePMIpsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7mlNFqv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A67C4CEEB;
-	Wed, 13 Aug 2025 16:19:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755101964;
-	bh=sb9I6gZ698T0YMzdob5qzS5OmWKkhnJooYHE0jSsT9w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=w7mlNFqvZF9pEhNTxGRTYgiBZ4jO2B2ma2KuB96pBAu9Vy85606aBUmLEdTa2hrFD
-	 Az3VfGGGnk+fETyXkRDdxOKpwgYyZKBQ+rpu/wAUFME2dxOJK1OCXoTTfHsJ/w7NCG
-	 n1FVrcVsIPS0kDZtqqK5GTrLZ6HsQ30X22dq/8sU=
-Date: Wed, 13 Aug 2025 18:19:20 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>, sboyd@kernel.org,
-	mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, quic_rjendra@quicinc.com,
-	taniya.das@oss.qualcomm.com, linux-clk@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 7/7] clk: qcom: gcc: Add support for Global Clock
- Controller
-Message-ID: <2025081338-backwash-oak-0677@gregkh>
-References: <20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com>
- <20250716152017.4070029-8-pankaj.patil@oss.qualcomm.com>
- <28ea2b11-a269-4536-8306-185bf272bd60@kernel.org>
- <2yekmjqihkzsfjr223vepigfj4hfruleigguhrlekp6s7riuxk@ta5kghr2kafi>
- <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
+	s=arc-20240116; t=1755104261; c=relaxed/simple;
+	bh=d5wzBkVFNX6qAoxoJebtm0HqVmOo3GmOYnWMCd8weXs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qi7ob+ZtrLVVySobUDDg7RDy0YgNl4yjYXjUtu9NCusKQloBhCWf+nYso14zVeaCPblexC3+OBHOYu9EjjPw02zQ+IIZsD4rvutPGeScvDuv5s3Dm/ILCK05PvLJuH88H5Y+vcen+ug+RSF8NSVTZitUV3gdQgeOZPpPIlFZJVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ApNM+ubm; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a3b3a9so6984466b.2;
+        Wed, 13 Aug 2025 09:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755104258; x=1755709058; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a2gxI4yFXWVOtLhM/0polO/7seLsXtV2FXKtzlfxTr8=;
+        b=ApNM+ubmRwM7RSC40DNjE+ofpXjCz0yVpOG/2xfbZi7qscg3jPcd0V1xK83tfflzLO
+         xQQlfAD4bgsOZcSMc67YABOsyEF6BXTj5BH2upqRzKtS2Altdfq6vhhhP/7xyuZTRLw+
+         69ny3NIaMzt0MQQEQAutWV+QfX93MxlGgyAykiy+GLYt8EvrisfyCpZTFn1GwdzCRzkJ
+         MH3O+wRG8+n3jEaEctWMEIsjWc4iXIV5pxnkR1WZkgZJDJ6GapcKHjw5Tbsfar7c12Bg
+         xdB1OvsDYRk7kSQOc2nI21dgx6rKom352XD0xuHGhr1P29M7Evm+IOllImUPOVV/gWwS
+         6FGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755104258; x=1755709058;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a2gxI4yFXWVOtLhM/0polO/7seLsXtV2FXKtzlfxTr8=;
+        b=ROBFyP7FXRAoMOQA9puH7RV1e+pK4tlgzizwsHAxkc2T2KFurKXxf18jnEp/Xk74kH
+         3Xe/1a2phHMo8hH/xB8y8bieWK1bS7lOhHGCWs7tJWiu4AmAnkE3tjwUjBXYuug9ieEd
+         jJG+nRkfjlhaCKWyuySRxZ8TjPVW3gsMsDHZDaXUBWPl0VZg/ye44uBE6Zi8+X1jEUAZ
+         aB+j2cK/gplAjEdjLsj/UA3QNAk91uKpOrSL80SNOCCecy0TKW2DNHm/rP4vaGcFOO8E
+         33rx/bVxXIfhzD4k9dZFKXg3vLx03ZFCYXRztnnA4USq550yiBg4xMc47MXDWG+DGLly
+         zTEw==
+X-Forwarded-Encrypted: i=1; AJvYcCUFb/n2JjPOu+zVN0OpJD5bZwH6eGBLsD5d7DAv6L9YHIdMD3b+KbEm+cfQLNAOHDBtQCyMXptz+YjslA==@vger.kernel.org, AJvYcCUP8BuxXXlOY9TMnZ/VD5tK6sjv0S13p63uOvvr90XZptPa5RoHXfYjgJvqf7atW4bXyOC3m748YAZ/Dg==@vger.kernel.org, AJvYcCV1bSdJq0Z/LPIvpipkgXlLXQnN2nZl87MGMArkAeMtDq1Jy12bwMXvUxbLlpXPwwhlva6T/vKs2UNV2gouSkCB@vger.kernel.org, AJvYcCVrwpaCIGrNeuijpvLKerhBzw4o4uOurA6c9XrYjP2f9ZpjvqNzd7TxepUNKxKSNl33unVrk4TAWaniHN6s@vger.kernel.org, AJvYcCWUknLfk/wYmVAYugSHt3TnD5PEmZGk1zXkLIWb3c6uFNWeqpLUUniVc8hcY07/7aKV4fmOJ3pG4GxhwQ==@vger.kernel.org, AJvYcCWb/Ndlo8q3BUH80OzxEitcaS/f7JIvCRPkowjJosNxWLWYQGrzt6ZQvLL6MYcI4iejGZvwHXTHi+cnybW5@vger.kernel.org, AJvYcCWdigR4/hLNteSLuUQHxSzRd5A428Xy0WdFVH//gJaUTiGeWqQR+jl6xqxND6EfYC5iHDryYD1s8R33VPwuW9fIHcg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzhyqgZclVJHPondCKLNK8BuomvBV97MPaE9FWZH2oHA3ugNqaa
+	agiFpvx2BaCWd5PChZmqZ2yrMT+dtIGgJXeJNA77Ui/c22Fu2SM4FRTw9xDSwH7JiL07kUyyiC3
+	vuI/S2qSjAbBCFdjvzx/wOcAF634KxoE=
+X-Gm-Gg: ASbGncsIOMOGI6ZYGV8RcPe4fZAMDUblFDMD9hUgtTSdwG8wix5q5Nsi3YMegNgeaBX
+	nQPXHn2AZKzqwieFJp2k1jEOnJrqDh4vPeLhd75yDNt2YwnWEXtK6fMsAMvgh49amTV4wL7BNwu
+	0s/vT0Yz74ymLMzbQtMfq1jwPltmI6gfLaEzkz40xcyhg4KriywShqk1yhhV/oj14Itz5zF82dE
+	4QDzlAu/w==
+X-Google-Smtp-Source: AGHT+IHbk44OEj1r3kasIcTcyEDngMuhrBuyXGAMgY2npDrtdlj0x5dJHeL/vjl9xwrgnQvrGKpG6wybKFGCryjWMzw=
+X-Received: by 2002:a17:907:3f0b:b0:af9:116c:61c4 with SMTP id
+ a640c23a62f3a-afca4e44cd7mr358157166b.48.1755104257569; Wed, 13 Aug 2025
+ 09:57:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4559a710-8b4f-4988-b063-40486fe0ffe2@kernel.org>
+References: <20250812-pinctrl-gpio-pinfuncs-v4-0-bb3906c55e64@linaro.org> <20250812-pinctrl-gpio-pinfuncs-v4-3-bb3906c55e64@linaro.org>
+In-Reply-To: <20250812-pinctrl-gpio-pinfuncs-v4-3-bb3906c55e64@linaro.org>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 13 Aug 2025 18:57:00 +0200
+X-Gm-Features: Ac12FXzRwEdbOG7WcfkJrIX52h7RVyVAx5HnOB8PpoXFNYyQXL2enxp09SWUXag
+Message-ID: <CAHp75VeSA=AYDKOV5XQ5nnz7EZRmnhbbVyJrcBUcMO2LrRMTmQ@mail.gmail.com>
+Subject: Re: [PATCH v4 03/15] pinctrl: airoha: replace struct function_desc
+ with struct pinfunction
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 20, 2025 at 02:18:19PM +0200, Krzysztof Kozlowski wrote:
-> On 20/07/2025 05:46, Bjorn Andersson wrote:
-> > On Wed, Jul 16, 2025 at 06:28:15PM +0200, Krzysztof Kozlowski wrote:
-> >> On 16/07/2025 17:20, Pankaj Patil wrote:
-> > [..]
-> >>> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-> >>> new file mode 100644
-> >>> index 000000000000..a1a6da62ed35
-> >>> --- /dev/null
-> >>> +++ b/drivers/clk/qcom/gcc-glymur.c
-> >>> @@ -0,0 +1,8623 @@
-> >>> +// SPDX-License-Identifier: GPL-2.0-only
-> >>> +/*
-> >>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> >>
-> >> Missing date.
-> >>
-> > 
-> > Per updated company guidelines we don't want a year here. Please let us
-> > know if you have any concerns with this.
-> > 
-> I remember the guidelines and they were about publishing your code, not
-> about contributing to open-source projects. And whatever you have
-> internally does not cover us at all. You can have internal guideline
-> saying you need to buy me a beer or I need to buy you a beer. Does not
-> matter.
-> 
-> That above copyright statement without date does not adhere to expected
-> format. Explanation how this should be written:
-> 
-> https://www.gnu.org/licenses/gpl-howto.en.html#copyright-notice
-> 
-> The GPL-2.0 license in the kernel also uses date:
-> 
-> "Copyright (C) <year>  <name of author>    "
-> 
-> There is no option without date in the license or GPL faq. I am not a
-> lawyer, so no clue whether this is what we want, but I also should not
-> be my task to figure out whether different copyright statement is okay
-> or not. It's your burden.
-> 
-> Or drop the Copyright statement complete to avoid any questions.
+On Tue, Aug 12, 2025 at 10:27=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> struct function_desc is a wrapper around struct pinfunction with an
+> additional void *data pointer. This driver doesn't use the data pointer.
+> We're also working towards reducing the usage of struct function_desc in
+> pinctrl drivers - they should only be created by pinmux core and
+> accessed by drivers using pinmux_generic_get_function(). Replace the
+> struct function_desc objects in this driver with smaller struct
+> pinfunction instances.
 
-Note, we don't take legal advice from the FSF :)
+...
 
-That being said, any/none of the above is just fine, there's not even a
-requirement for a copyright line at all.  It's up to the author of the
-file as to the format for what they want to do in the end, none of it
-matters to the actual existance of the copyright itself, which is
-implicit with or without a copyright line.
+>  #define PINCTRL_FUNC_DESC(id)                                          \
+>         {                                                               \
+>                 .desc =3D {                                              =
+ \
+> -                       .func =3D {                                      =
+ \
+> -                               .name =3D #id,                           =
+ \
+> -                               .groups =3D id##_groups,                 =
+ \
+> -                               .ngroups =3D ARRAY_SIZE(id##_groups),    =
+ \
+> -                       }                                               \
+> +                       .name =3D #id,                                   =
+ \
+> +                       .groups =3D id##_groups,                         =
+ \
+> +                       .ngroups =3D ARRAY_SIZE(id##_groups),            =
+ \
 
-thanks,
+Can this use PINCTRL_PINFUNCITON() ?
 
-greg "I talk to too many lawyers" k-h
+>                 },                                                      \
+>                 .groups =3D id##_func_group,                             =
+ \
+>                 .group_size =3D ARRAY_SIZE(id##_func_group),             =
+ \
+
+>  };
+
+--=20
+With Best Regards,
+Andy Shevchenko
 
