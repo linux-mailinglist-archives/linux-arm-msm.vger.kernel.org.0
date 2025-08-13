@@ -1,149 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-68920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1C43B2448D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 10:43:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21C2CB24488
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 10:42:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B5D35A0B71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:42:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B20ED1B62C3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:42:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA70C2EFDBB;
-	Wed, 13 Aug 2025 08:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CADB82EFD98;
+	Wed, 13 Aug 2025 08:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="pIi2UAXc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P9gi59EG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27E92EFD88;
-	Wed, 13 Aug 2025 08:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E632ECE82
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755074529; cv=none; b=gGJopKJcLdAW+of5JQ2gVXm4ZkjSoIbabKTH7qZYaUpyJJ4WXMYdPhpamNMiaCYAz8tmQsaC3d5r5CNLoKaD+AwxGKjabL1j0aaZ+/y8oBKy2xr8tnxBbJ9zSEQhJ373FKwO00KLKFtnPm63vOvfag/yzn6IGjoD2oL4xcAajC8=
+	t=1755074527; cv=none; b=nVzfVsfElcTnlW1ruOAhmC9JSNqCTfVPrKae782+m7VgfHT0YlLQtz0BbHOULve8qIxQyz2vKvc+NhosrFww2apt+4cLDkal4FIqebGI9DcBl5/2hFGiK2EdppjNxGARumOhKc6p9XSmTBRXsY8BP82BsQxzO7K0ASMwV2FPcww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755074529; c=relaxed/simple;
-	bh=Md87crP7XvrIg/32S+o/qDrdc4VwxcksNoXwwhiGwsg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lBug/UQuRqEipffnK6Omepz7d64o/bfacRUhRqohT9ZdpraVfLuKFU3QDj2byK+VeewVxEelUhH7UgcJsJ7Dl3zPk/T8N8AooMmJ9uLcKQ9Rd94IPy/C0M5YvYhOCEzYxc2oXLPVrqAFzR13B11jy+pQkaB3BFtpW8Z++5dfLls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=pIi2UAXc; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 1E0A2346;
-	Wed, 13 Aug 2025 10:41:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1755074472;
-	bh=Md87crP7XvrIg/32S+o/qDrdc4VwxcksNoXwwhiGwsg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pIi2UAXc77OYxdCzuJVZEoMcuMzkf39RZGUsU40DeVBghp7VCoEc7LbqVhsaKcBMz
-	 Ms3GxWk4hvXhWkKiaCMZGs5+1OmF9qv5vpbApxxLAZ9MZFdTrnSnYYymrC/8kL+yRb
-	 QQ7kK/NO9iB7L3mnvwpmvDA84BEMtlPSs27evlT4=
-Date: Wed, 13 Aug 2025 11:41:46 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Robert Foss <rfoss@kernel.org>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Todor Tomov <todor.too@gmail.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-	Dongchun Zhu <dongchun.zhu@mediatek.com>
-Subject: Re: [PATCH v2 01/72] dt-bindings: media: Deprecate clock-frequency
- property for camera sensors
-Message-ID: <20250813084146.GA6440@pendragon.ideasonboard.com>
-References: <20250812214620.30425-1-laurent.pinchart@ideasonboard.com>
- <20250812214620.30425-2-laurent.pinchart@ideasonboard.com>
- <175506028291.2605875.11473205221167147078.robh@kernel.org>
+	s=arc-20240116; t=1755074527; c=relaxed/simple;
+	bh=WNNH0ET37ePoWKGj+PIeK6vmooE+vGlIujVn+r10wJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AkddpDL01FGDo43nLdMvIr2ve4Tm29IAjYgCNzi9iGvPcsDMwY2af/RP+a8XvBG8+JwXmCkt0zl05JIQwKjWZDvweYFXRcj8Ez59/Hlpw19O7vHgEFBB9pIt6yqA82iTOwyUOEOfg6rbxNwB0DR8ZiCK/Tfh4uOlKsH8wX5vvl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P9gi59EG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D6mL84019437
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:42:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UAbBLVeRLE4MnH9XmfajRWZXa7M9EckNL81JeGoopF4=; b=P9gi59EGmq01oSc2
+	xE7lTt3uDuL5duZrwvfHkWzjApSmX3zvezdjcXFwVjJcUhFF1JXwgTz5RFTjIIgF
+	c/NyR9tEn9OkrrCE1Ra4RFL0PkU2yxgAHx+dS1VLdkaP9YQD8Y5mH4CnUiFmIyg3
+	PvKLu1GDutU/j4NSH1yfHeE+v1TtCovGm1T48MA7lgRs4IX/GU860r9oFjtCu+5J
+	3Okwtufa9XIj0HZPEulwfxt9xIIDBhqIr216OVYWzdIKkWLy3mb9fXQchq7r1wUR
+	9spj41CMsXm0/s0rcNKYzOHWAm+Y1akS5cVwhuXMJaH1SO42lBuo6ttPWgPb00Io
+	/cV4nQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffq6q06p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:42:04 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-31366819969so7873311a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 01:42:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755074523; x=1755679323;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UAbBLVeRLE4MnH9XmfajRWZXa7M9EckNL81JeGoopF4=;
+        b=gvoLnVd6Ne2/NWgL2wFS2UHVquBxdRuv+O9KubGIl93VO+Opf6LyRldBkE54Oao+GY
+         YHD+6EXtv+e+emFbojKG7lNHiJIPNlrJsVM3zwlXgJwQw8DLqCVxfMN1csVjfPK+mh16
+         ptr2Nq+VY2C8a4K6k13q1TjlFUIf3E14ioZBE/QmulSQBHoSB7QTtmEc9tsQ198m/K8w
+         o0O1FbVX/hJsWbUK2dLZAysg0isM3ZENar9myO8OLE3CMLoGZh2kDcjxqf0y/sbeUgRs
+         1UF4ysJ3VdX3OB9aRzw3t7nMNgIzcz2CugdqGENBrMz0Ev1BWMQQoPWA5yNmB5w27aM8
+         wYOg==
+X-Forwarded-Encrypted: i=1; AJvYcCWXyJXNBnsuqXC+98EYK88hCVBSE6/4aDaEtTVckFdAP7WZXFEufNLa8RGg6YhKp52OPtaJAVSIZ1eYxBC7@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywqv5gAfJiqVwqexcwDTeVudUv1JGdnBbxAJtx46SB83tAoOp55
+	KhdplG+gKO333pzzmTmUifPSTqdaBGnJgsXBTNBVp3KM+ZBmWqGXpOgzVkGVKnkBWc2VgLCbi/H
+	CqM4fDhgxbWuu3jZrlSB/yOfcWyC5tYcnqPIcfPIrwELh+6CR4rD5bNcG6+0rHe02S2/k
+X-Gm-Gg: ASbGncsWm884py4AxMxs2Vq1tAgc7EY4ADGh8SYfjLDPzQc+iXrC3/Fy6vfr+ViKAmY
+	V240QsxL8g06MOVwm3v+nl593q7E2+rMSDnRgU6pGdtV8gd17Qo0pKV7FtpdhCJ9pkuChqEu1jD
+	R3itgZfbEKYeGrD2Lz94/D+UdbFlhqufMLENUHpXzF8FnHfnwcskouASAzGc+wW1NHXcF7jI9e1
+	PaYJ2milTUuwn/Du0mIVRoLeMS3SNDP4SbIFLu8RV/8ItPkR84k1H0mO6FgCm+s1crRUejvI/yj
+	9SoagHaV21e9UmfhaWAggLXeKwMwQ4CK/ecJDWhn4tlWEsg+nbB/Rs/3FlGNgpxnvNYjgDUnbnn
+	fjA==
+X-Received: by 2002:a17:90a:e18d:b0:321:380b:9e85 with SMTP id 98e67ed59e1d1-321d0d65539mr2869306a91.8.1755074523543;
+        Wed, 13 Aug 2025 01:42:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE78DKpGzv0dikvRvGBGlmfDBiN2T03wU71V1qUXMFRMqi3RCjr6n/8XTvRYRr2gYlKm8HcZw==
+X-Received: by 2002:a17:90a:e18d:b0:321:380b:9e85 with SMTP id 98e67ed59e1d1-321d0d65539mr2869266a91.8.1755074522860;
+        Wed, 13 Aug 2025 01:42:02 -0700 (PDT)
+Received: from [10.92.163.82] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b7bb0c0sm26483924a12.20.2025.08.13.01.41.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Aug 2025 01:42:02 -0700 (PDT)
+Message-ID: <46dff289-9215-4dd5-b522-c1690abfd9ca@oss.qualcomm.com>
+Date: Wed, 13 Aug 2025 14:11:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <175506028291.2605875.11473205221167147078.robh@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/2] Enable audio on qcs9075-evk board
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_pkumpatl@quicinc.com, kernel@oss.qualcomm.com
+References: <20250724155632.236675-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <l7kwna7lebazoaqxz3zdkv325kw4ohsuidfzltdy3msfiburb6@iz4atympejdx>
+Content-Language: en-US
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <l7kwna7lebazoaqxz3zdkv325kw4ohsuidfzltdy3msfiburb6@iz4atympejdx>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NSBTYWx0ZWRfX1LQDwhQGapVZ
+ lffZfF3BJtImyPTsezxmuY4Hco8iAI6bTsxxhhHOqDTcQsn51KWNos9UkTM4g5q9pjvwdlWPfat
+ ScWleP0JmDLS6PuT9W3vZbTPD1uCh0QL71OOr62XQSUQAyXWuYUfkOoo6oE1IS+0VcE8v1RgYDV
+ sf1apOiU3dJ0GzVWqtDx05HOgYna7PV8mQeSMfQC++pNj8i8BkSuqih2acSZoVTgWse8JDtvhJZ
+ DsZv+JGJxzX8jgwWwz5QKEmP4ySvoP3jO0T2bnSUdsd1R23/lSjtf9/Q7bwDAruPzxPeo0Q+nMN
+ e/NLYb1x9/4e2WAP3D/gkEPyU3BGyxaDw3JiJMVJmQFFAWq5bs9B2Stt/rAv6QL80tMPm4wtYzO
+ GPaCYI2f
+X-Authority-Analysis: v=2.4 cv=TLZFS0la c=1 sm=1 tr=0 ts=689c4fdc cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=9s0Y7IdbV4TWvyFR1rIA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: GQsUz4ZAEZBg3YaUtLGuvTC0x2m4WtXK
+X-Proofpoint-ORIG-GUID: GQsUz4ZAEZBg3YaUtLGuvTC0x2m4WtXK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110075
 
-On Tue, Aug 12, 2025 at 11:44:42PM -0500, Rob Herring (Arm) wrote:
-> 
-> On Wed, 13 Aug 2025 00:45:09 +0300, Laurent Pinchart wrote:
-> > Usage of the clock-frequency property for camera sensors is discouraged
-> > in favour of using assigned-clock-rates (and assigned-clock-parents
-> > where needed). Mark the property as deprecated.
-> > 
-> > Update the examples accordingly. In DT examples where the sensor input
-> > clock appears to come from a programmable clock generator, replace
-> > clock-frequency by the assigned-clocks and assigned-clock-rates
-> > properties. Otherwise, just drop clock-frequency.
-> > 
-> > Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-> > ---
-> > Changes since v1:
-> > 
-> > - Adapt examples in bindings that reference sensors
-> > ---
-> >  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml    | 6 ++++--
-> >  Documentation/devicetree/bindings/media/i2c/mipi-ccs.yaml  | 7 +++++--
-> >  .../devicetree/bindings/media/i2c/ovti,ov02a10.yaml        | 3 +--
-> >  .../devicetree/bindings/media/i2c/ovti,ov5645.yaml         | 6 +++++-
-> >  .../devicetree/bindings/media/i2c/ovti,ov7251.yaml         | 6 +++++-
-> >  .../devicetree/bindings/media/i2c/ovti,ov8856.yaml         | 3 +--
-> >  .../devicetree/bindings/media/i2c/samsung,s5k5baf.yaml     | 6 +++++-
-> >  .../devicetree/bindings/media/i2c/samsung,s5k6a3.yaml      | 6 +++++-
-> >  .../devicetree/bindings/media/i2c/sony,imx290.yaml         | 5 +++--
-> >  .../bindings/media/samsung,exynos4212-fimc-is.yaml         | 4 ++--
-> >  Documentation/devicetree/bindings/media/samsung,fimc.yaml  | 3 ++-
-> >  11 files changed, 38 insertions(+), 17 deletions(-)
-> > 
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/samsung,exynos4212-fimc-is.example.dtb: image-sensor@10 (samsung,s5k6a3): 'clocks' is a required property
-> 	from schema $id: http://devicetree.org/schemas/media/i2c/samsung,s5k6a3.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/samsung,exynos4212-fimc-is.example.dtb: image-sensor@10 (samsung,s5k6a3): 'clocks' is a dependency of 'clock-names'
-> 	from schema $id: http://devicetree.org/schemas/clock/clock.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/samsung,exynos4212-fimc-is.example.dtb: image-sensor@10 (samsung,s5k6a3): 'anyOf' conditional failed, one must be fixed:
-> 	'clocks' is a required property
-> 	'#clock-cells' is a required property
-> 	from schema $id: http://devicetree.org/schemas/clock/clock.yaml#
 
-This is what I get for relying blindly on CI :-/ Sorry about that, I'll
-fix it (and try to fix CI too).
 
-> doc reference errors (make refcheckdocs):
+On 8/12/2025 7:54 AM, Bjorn Andersson wrote:
+> On Thu, Jul 24, 2025 at 09:26:30PM +0530, Mohammad Rafi Shaik wrote:
+>> Enable audio support on qcs9075-evk board.
+>>
+>> Introduce HS (High-Speed) MI2S pin control support.
+>> The I2S max98357a speaker amplifier is connected via HS0 and I2S
+>> microphones utilize the HS2 interface.
+>>
+>> DT-Binding link for sound compatible:
+>> https://lore.kernel.org/linux-sound/20250519083244.4070689-3-mohammad.rafi.shaik@oss.qualcomm.com/
+>>
+>> ---
+>> This patch series depends on patch series:
+>> https://lore.kernel.org/linux-arm-msm/20250530092850.631831-1-quic_wasimn@quicinc.com/
 > 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250812214620.30425-2-laurent.pinchart@ideasonboard.com
+> Please resubmit once this is tested on a clean upstream branch.
 > 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+ACK,
 
--- 
-Regards,
+sure, will resubmit on top of clean upstream branch.
 
-Laurent Pinchart
+Thanks & Regards,
+Rafi.
+
+
+> Thanks,
+> Bjorn
+> 
+>> ---
+>>
+>> changes in [v3]:
+>> 	- Updated link-name from HS0 MI2S to HS1 MI2S and sorted nodes in order.
+>> 	- Link to V2 : https://lore.kernel.org/linux-arm-msm/20250616070405.4113564-1-mohammad.rafi.shaik@oss.qualcomm.com/
+>>
+>> changes in [v2]:
+>> 	- Updated commit message as suggested by Dmitry Baryshkov.
+>> 	- Link to V1 : https://lore.kernel.org/linux-arm-msm/20250525155356.2081362-1-mohammad.rafi.shaik@oss.qualcomm.com/
+>>
+>> Mohammad Rafi Shaik (2):
+>>    arm64: dts: qcom: sa8775p: Add gpr node
+>>    arm64: dts: qcom: qcs9075-evk: Add sound card
+>>
+>>   .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 52 ++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 54 +++++++++++++++++++
+>>   2 files changed, 106 insertions(+)
+>>
+>>
+>> base-commit: a933d3dc1968fcfb0ab72879ec304b1971ed1b9a
+>> prerequisite-patch-id: 853eaf437b81f6fa9bd6d36e6ed5350acaf73017
+>> prerequisite-patch-id: 6d9fd3e0257f120cff342c287774454aad2be2e8
+>> prerequisite-patch-id: 736cbcd47d5e7cfcc53fcaa7da920eac757ce487
+>> prerequisite-patch-id: 4eddce6daeaa125f14380586c759f8cb8997c601
+>> prerequisite-patch-id: baac180e8715b5cf2922f79346440d92569704f6
+>> prerequisite-patch-id: 65730290d31f18e66e2ba0dfdeb1844d7442c272
+>> -- 
+>> 2.34.1
+>>
+
 
