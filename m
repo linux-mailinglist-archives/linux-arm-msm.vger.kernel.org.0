@@ -1,175 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-69006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14B28B24F26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:14:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9FF8B24F8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:24:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26FC468427C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:08:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F16595C498F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:11:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F63305E00;
-	Wed, 13 Aug 2025 16:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA32328643E;
+	Wed, 13 Aug 2025 16:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="grzu0JVx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HciJ1eXc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310602FFDD3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 15:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FC627F011;
+	Wed, 13 Aug 2025 16:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755100802; cv=none; b=Mh1J3lkgrcH8BwiAa3WVpOZ5KitPy4Hk5HvXuxPA827kQbDdGWqB+wxt89CMdj3GOEAI6cVg5LHLBdpnswWDZkKRELemH1pMXTQoEITIovqWotOqm5EGEHA1YD3jpdFq41Pp5KtRb9D31mw0bUFqGgW0UjRUeP6h9lHyKs4HM/Q=
+	t=1755100935; cv=none; b=PaPdjHqqCnFJr/wWBWtq9omE6UXOjxZDSBWfxR+aAvKoXCWTmSgHOy5KipiC/L8PWvAIJqEQAyhaCkLi/BsA9FVIWVV7NE4a8wsriH4u1K/Vi2Gka5jBht2S43ByslbWH01ogHmZwAizZ09TwMlUq5NGUIwEXFyeSURgNTAPs8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755100802; c=relaxed/simple;
-	bh=qiKwpUDsQ6u+ZSXEONMrJDU1DbDchi+t8h17TOIbq4k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rJqsXRdBhwkR4GgCDAe00SoemYGBuB53u+awGBKj8FgoXGqIwWaGtAQr2L0KtAZGR8MrKRp0ctIVBgW7QJjqysDE0UH8FKLvXU4j4NIZkvRFn2agya9sxytHtFtHOkbv6E3DxOzxJce2FR6fslbB4n9lXbScxlOqpx73GQvN8Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=grzu0JVx; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-458bc3ce3beso40974055e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 08:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755100797; x=1755705597; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g/5O3rsN50RWBzdZJkvVZFuj2lxPpa47FoF26sdFJd8=;
-        b=grzu0JVxwIQ1TmkL+Nu9EiimjmeQnh/+xb2ofpJSoGYK+iVirn8tr3kzfBxQhRqRx7
-         Sr3IxUkm5h9xG8/7qpbNiXspTD+djZVYCIKy/t25eplyg4rUdVc7KP5fUboXn2APIaKw
-         YpXbbxOJ0uOYgpaVNQLwkhgQlZwRDKRY08w9+1WFi4/urzJ0MZilpN41Mt9/PP3FhWys
-         jxVYHrHI2oHqXh0ceHbBCkBxBVIvNidMgAV6v4mR9wcAoTIEYTQC0OwnqkdXcL+FlZrP
-         yiXOtzWOBjMAj+PHwCOF4NYfsqPnVPCzNc8L+tlU1TizKYIxJ7P9BslXyTvdNKZm/qam
-         aTaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755100797; x=1755705597;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g/5O3rsN50RWBzdZJkvVZFuj2lxPpa47FoF26sdFJd8=;
-        b=EpXuzwnhpuTkaw8Wy0x7MN4JC9umK9g5AHz4+B7Pcn99ybjRDpmcL3rnT6tpPKTSsn
-         0vvBWydjFZTwc6jG5g2yZTHfojxDpLvyp8uA2VF66cdHi9DDTZ4FjDM+aiIRsAArnJ+K
-         QwOXmkEpHKdXzsVWOER4TnbczQGvOHwKhVoRjl9algWAn1BIRwGK0gQzGu/arR+f34sd
-         MD3nHEUk0Q35mGKqnruZPXbyB/fqfvC+eWZM8gyF6LV8EF1dZvJ8ILi4TBzqyD8gpwBi
-         34CKcEBA/Y1sWRsZ9KQpVBC6CzDohlpaMzLx75TDmuoIpQd0UasNwbXv1T0vUIWGGluV
-         9cDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVV7DzpJkDWLzvFzrNHF8A6ffjmzOrU74jKly92FetU6rkczJ1VscFPYEE+IXbb/JT6GuBCWH+NlNEJtAB5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDYvlw35XVJCgjkT/8EajXAKK7l3bHynbUpvV19lCz8RcJxTCs
-	nzs+c/LVGXuDYScl/Ai+xs0bPNz3M7Yaw4g50bXNT7ZzQ3jzg4wwjqxh1tMBSDy8p9I=
-X-Gm-Gg: ASbGncu0RIUGArz+3Gej1rWHdp/5fwwpJKqp4CTO3sFwfWbsgIG14LZ7IEAzi9FQfVc
-	aLmdxwASWcvmzB8XpvC1yyozyozGwCP/K+1nPYVMxV1/q6xVQA85ONuMBkf6byYLmOZeiEAP573
-	2FukwL3Bfr71mtJj+7ZVdgUAIMr3mGJXWs/907d4ht+VH90LHIjrIbCVk7IhGmpscm6Juvt+ATk
-	+tJpMNF+i0IqS53T2zr9/X7a4n9OQFMTdUBZRPqFCZMS0mBA0N7+iSW/4d/DQ1m3dJ3nMZC0CmV
-	xKCwR4b8wA/TKR+QHTd2WEH+GwFUZvrGxVLy7TgGGHMHghOm0zNLnQWKdbjm9FaxjBEJoX3gOi4
-	plaJBF1ibLEHPozl9qGXd5mzOlUM+UyzyLdFqJg==
-X-Google-Smtp-Source: AGHT+IEKYtoxzxuy+5t0PBzrNJANU2HNWNNftC9SgcRXHpB7LOzIj4yHz5DFjPniOubwnabHZeKWQg==
-X-Received: by 2002:a05:600c:3b1d:b0:445:1984:247d with SMTP id 5b1f17b1804b1-45a165a2a9fmr29523415e9.7.1755100797405;
-        Wed, 13 Aug 2025 08:59:57 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:4537:5d58:c08d:204b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1a517c26sm7087755e9.7.2025.08.13.08.59.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 08:59:56 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 13 Aug 2025 17:59:06 +0200
-Subject: [PATCH 9/9] arm64: dts: qcom: x1e80100: Disable audio codecs by
- default
+	s=arc-20240116; t=1755100935; c=relaxed/simple;
+	bh=/IInu1GSbHtzTPZpYgApvUKxtuzp3AMbxp5bRS+CSKs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DLy0Z9e/W35dk8UUBOU4zWFoX8OrAHxDmvvookorLHn09kUwuPySZmZhiieBGSfGySR7OlX46TUTyV1NJ/qobxAi3Inmk5sm0g4kpOMqLGaAuQnHT3/TjP0vK95G5ZhOHbpc2xfOcL1ftLXr2v38KufUACchtz40CO4etUkWsU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HciJ1eXc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLtgL012998;
+	Wed, 13 Aug 2025 16:02:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tOU6SdsJCLYdXKqlaVp+vUFgj1ZmLPafp6bUHKPnOgU=; b=HciJ1eXc4aRksPmt
+	Jc8vdM9ipLuQKYcy8P5hkSZIQ6xc7XLvYxIMpbeom658YqF0sFIrFfTqXimTyR/S
+	LDrexqLzVKGiv6eALosS1VA4ndUFrjIs9EGkbPRWS4pjvNErhKuabX1zq/XiS/TS
+	cu477Sz40q3gta1tShS8ADvzr25+9tP8/IqbDDkBJx6sWWPHSZexg4MTMYqNNw4F
+	NIuSwBt4QIX4OglJnOVCDEpN+nbOUTSt5v2DQd2FVN8WTPSSB6AFOAjHTHPiNpI2
+	0tlKLvrtHq/CseoJvPJbl01T/oVEbzTrrvUxBQH/VOT5GYX3AY2T/3fqmnHLep4S
+	dugjJA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhxagtf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Aug 2025 16:02:04 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DG23tN012748
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Aug 2025 16:02:03 GMT
+Received: from [10.216.60.81] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
+ 2025 09:02:00 -0700
+Message-ID: <4c70139e-2026-4221-88d8-b64f675ad78e@quicinc.com>
+Date: Wed, 13 Aug 2025 21:31:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for UFS controller v5
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>
+References: <20250812091714.774868-1-quic_pkambar@quicinc.com>
+ <x5pkfdxwnpqv66d4y3bucpd6vpxbsahdt2mdj6mdlb43emfkxn@dktn4wpuosgr>
+Content-Language: en-US
+From: Palash Kambar <quic_pkambar@quicinc.com>
+In-Reply-To: <x5pkfdxwnpqv66d4y3bucpd6vpxbsahdt2mdj6mdlb43emfkxn@dktn4wpuosgr>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250813-x1e80100-disable-audio-codecs-v1-9-af82d9576f80@linaro.org>
-References: <20250813-x1e80100-disable-audio-codecs-v1-0-af82d9576f80@linaro.org>
-In-Reply-To: <20250813-x1e80100-disable-audio-codecs-v1-0-af82d9576f80@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan@kernel.org>
-X-Mailer: b4 0.14.2
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX25yngnbUoLE1
+ IYj5Ds1okxAwSVEX1P0ZDB+8g8kmXVuPrmahmBREVwk2K6TPLMaut+eDKD82IAjxP0PNHtIGKRN
+ eENLp/wLxofNyKcPgHyAaR76Vc7ATMwZj58xpy/Qy7oyegkXuUtJNB8rlVdZX/iZQ9sgPBkouHY
+ 0rwajmcLXoIPDKTCdBWMBWyhvKDoGzOOhgRQliNr2Kb+/WctkIN6Y9m+DjH/172iJMCNYfS+lWb
+ YS5DDDbPZ4yJpXfV1s+2KDWPc4PdvFjsn+qDMr62YUWeE1Eng3mXusW9RSdNDStykF+1Ms9k3Cm
+ iDwE5A9/HU5xaaaPZ1qrzoin/tpxshEXsYyKfTv0SwrNtT7zRy59D31uJZAmNhHaAafp9CfOOMo
+ GZegczhy
+X-Proofpoint-GUID: ZAK3Cs5ebEjQLy8SDZYd8uuD6eL4VohX
+X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689cb6fc cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=bFtwN0H5KFSSgKAYKl4A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ZAK3Cs5ebEjQLy8SDZYd8uuD6eL4VohX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
 
-Currently, the macro audio codecs are enabled by default in x1e80100.dtsi.
-However, they do not probe without the ADSP remoteproc, which is disabled
-by default. Also, not all boards make use of all the audio codecs, e.g.
-there are several boards with just two speakers. In this case, the
-&lpass_wsa2macro is not used.
 
-Now that all boards explicitly enable the needed audio codecs, disable all
-of them by default in x1e80100.dtsi.
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+On 8/13/2025 3:25 PM, Manivannan Sadhasivam wrote:
+> On Tue, Aug 12, 2025 at 02:47:14PM GMT, Palash Kambar wrote:
+>> Disable of AES core in Shared ICE is not supported during power
+>> collapse for UFS Host Controller V5.0.
+>>
+> 
+> Could you please add more info on the issue observed?
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index f293b13ecc0ce426661187ac793f147d12434fcb..7b90dce872773970b62a6d37f5c9c70305710050 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -4160,6 +4160,8 @@ lpass_wsa2macro: codec@6aa0000 {
- 			clock-output-names = "wsa2-mclk";
- 			#sound-dai-cells = <1>;
- 			sound-name-prefix = "WSA2";
-+
-+			status = "disabled";
- 		};
- 
- 		swr3: soundwire@6ab0000 {
-@@ -4209,6 +4211,8 @@ lpass_rxmacro: codec@6ac0000 {
- 			#clock-cells = <0>;
- 			clock-output-names = "mclk";
- 			#sound-dai-cells = <1>;
-+
-+			status = "disabled";
- 		};
- 
- 		swr1: soundwire@6ad0000 {
-@@ -4258,6 +4262,8 @@ lpass_txmacro: codec@6ae0000 {
- 			#clock-cells = <0>;
- 			clock-output-names = "mclk";
- 			#sound-dai-cells = <1>;
-+
-+			status = "disabled";
- 		};
- 
- 		lpass_wsamacro: codec@6b00000 {
-@@ -4276,6 +4282,8 @@ lpass_wsamacro: codec@6b00000 {
- 			clock-output-names = "mclk";
- 			#sound-dai-cells = <1>;
- 			sound-name-prefix = "WSA";
-+
-+			status = "disabled";
- 		};
- 
- 		swr0: soundwire@6b10000 {
-@@ -4364,6 +4372,8 @@ lpass_vamacro: codec@6d44000 {
- 			#clock-cells = <0>;
- 			clock-output-names = "fsgen";
- 			#sound-dai-cells = <1>;
-+
-+			status = "disabled";
- 		};
- 
- 		lpass_tlmm: pinctrl@6e80000 {
-@@ -4379,6 +4389,8 @@ lpass_tlmm: pinctrl@6e80000 {
- 			#gpio-cells = <2>;
- 			gpio-ranges = <&lpass_tlmm 0 0 23>;
- 
-+			status = "disabled";
-+
- 			tx_swr_active: tx-swr-active-state {
- 				clk-pins {
- 					pins = "gpio0";
+Sure Mani.
 
--- 
-2.50.1
+> 
+>> Hence follow below steps to reset the ICE upon exiting power collapse
+>> and align with Hw programming guide.
+>>
+>> a. Write 0x18 to UFS_MEM_ICE_CFG
+>> b. Write 0x0 to UFS_MEM_ICE_CFG
+>>
+> 
+> Please be explicit about the fields you are writing to.
+> 
+>> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+>>
+>> ---
+>> changes from V1:
+>> 1) Incorporated feedback from Konrad and Manivannan by adding a delay
+>>    between ICE reset assertion and deassertion.
+>> 2) Removed magic numbers and replaced them with meaningful constants.
+>>
+>> changes from V2:
+>> 1) Addressed Manivannan's comment and moved change to ufs_qcom_resume.
+>> ---
+>>  drivers/ufs/host/ufs-qcom.c | 14 ++++++++++++++
+>>  drivers/ufs/host/ufs-qcom.h |  2 +-
+>>  2 files changed, 15 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index 444a09265ded..60bf5e60b747 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -38,6 +38,9 @@
+>>  #define DEEMPHASIS_3_5_dB	0x04
+>>  #define NO_DEEMPHASIS		0x0
+>>  
+>> +#define UFS_ICE_RESET_ASSERT_VALUE	0x18
+>> +#define UFS_ICE_RESET_DEASSERT_VALUE	0x00
+> 
+> Please define the actual bits as per the documentation, not the value you are
+> writing. Here, you are changing two fields:
+> 
+> ICE_SYNC_RST_SEL BIT(3)
+> ICE_SYNC_RST_SW BIT(4)
+
+ok Mani.
+
+>> +
+>>  enum {
+>>  	TSTBUS_UAWM,
+>>  	TSTBUS_UARM,
+>> @@ -756,6 +759,17 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>>  	if (err)
+>>  		return err;
+>>  
+>> +	if ((!ufs_qcom_is_link_active(hba)) &&
+>> +	    host->hw_ver.major == 5 &&
+>> +	    host->hw_ver.minor == 0 &&
+>> +	    host->hw_ver.step == 0) {
+>> +		ufshcd_writel(hba, UFS_ICE_RESET_ASSERT_VALUE, UFS_MEM_ICE);
+>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+>> +		usleep_range(50, 100);
+> 
+> Please add a comment above the delay to make it clear that the delay is not as
+> per the doc:
+
+Sure.
+
+> 		/*
+> 		 * HW documentation doesn't recommend any delay between the
+> 		 * reset set and clear. But we are enforcing an arbitrary delay
+> 		 * to give flops enough time to settle in.
+> 		 */
+> 
+>> +		ufshcd_writel(hba, UFS_ICE_RESET_DEASSERT_VALUE, UFS_MEM_ICE);
+>> +		ufshcd_readl(hba, UFS_MEM_ICE);
+>> +	}
+>> +
+>>  	return ufs_qcom_ice_resume(host);
+>>  }
+>>  
+>> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+>> index 6840b7526cf5..cc1324ce05c7 100644
+>> --- a/drivers/ufs/host/ufs-qcom.h
+>> +++ b/drivers/ufs/host/ufs-qcom.h
+>> @@ -60,7 +60,7 @@ enum {
+>>  	UFS_AH8_CFG				= 0xFC,
+>>  
+>>  	UFS_RD_REG_MCQ				= 0xD00,
+>> -
+>> +	UFS_MEM_ICE				= 0x2600,
+> 
+> As the internal doc, this register is called UFS_MEM_ICE_CFG.
+
+Ok will update the register name.
+
+
+> - Mani
+> 
 
 
