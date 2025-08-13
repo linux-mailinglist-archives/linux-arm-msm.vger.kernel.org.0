@@ -1,329 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-68977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBF77B248ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 13:57:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A5B9B24904
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 14:00:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A67F13B3033
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:57:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33E063AAFCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 12:00:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1AB2FD1C3;
-	Wed, 13 Aug 2025 11:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42092FDC56;
+	Wed, 13 Aug 2025 12:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="loiZe62l"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="rOg9wUHI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918362FD1AD;
-	Wed, 13 Aug 2025 11:57:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526C92FAC1D;
+	Wed, 13 Aug 2025 12:00:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755086226; cv=none; b=h0f2GEPjtKJoCYapj/40TTF50noqaVoWz7wz8ZAeygLyUjim8ng6rEUEnwNc0xyL1B4bUA+/5Apu9J1e75TkW/EDNm/fupQwi7RWxU+gBWio6h2rIY0YM18ni/nvNO6R+L6PWNG+4QooS1K7m37iG2/XS6FNf0z0+wMUIleT/R8=
+	t=1755086451; cv=none; b=HkE8L/eJMZpZSVpRfn2lYWa46hDqRZ/5hAs75wkq2/K/PwNmpG+iH2ai9OuKG3pubXaT3MErvYVMOTjH33kKYjmQtWEj0vYK7tTlRv0rY1vtApDcS8FRqoOFXbfTrHRDFZvUsCRgvp/d4uY5w3DzFkdQ8DpJTQK2S5ut1q3ptpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755086226; c=relaxed/simple;
-	bh=DYe8Y9XpD5W+kSlyuoU+GPJ/ccxmoxmsaYtiOXOLNtU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WcCGb3r55idsdyQykbcwy+nPUhOPuZyagq3NV4PM0bq3aGTEdKHDM7AWmB6oqUcpQCbH5Sox8YOpBUWStzqR4g9+HdOxIZ8JUUDOyKSv3k/U/TouVNpG3A+yz+NetXF2i+xnNGiF0mVuHKFe+rj9dDQ+OmOfN6uktapz1wL/whk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=loiZe62l; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLhio020736;
-	Wed, 13 Aug 2025 11:56:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ScSNKkjpVNqkt8xw0KExEZDqJCC3ogyqFs0kGjXvUNs=; b=loiZe62lb9RT6XMg
-	ikGdyrAHtIOgkGWlLPXUHA69P0IWhp6nMoHkAsP+AUYyuTmDv59PTaD6WsCNKFGl
-	COiMAwqgQszDY0gPMkVUY21o/9pl/5+0jQNKAzeXokRJW2B6BiJrar3uJuyCHD6j
-	xIgyvIojSWJLjffXMulBqlLs3W26dzG7uWQHgvRz1Uu9o//jNI0kQQvvlgF9X0H3
-	LXyvT+9OxePSrQCWVdib9izxGGDevGC2lbfcgQImZeaYCB20Oz/l21lx3N+B2CUx
-	6QG/eLnSXy7G0k5Pavu1wWavo6KFrVwFbZeiNPGtedKaxe/yB5kUNqF74aS7Wg7r
-	fXMyhw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dw9suvj8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 11:56:48 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DBum66030166
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 11:56:48 GMT
-Received: from [10.133.33.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
- 2025 04:56:44 -0700
-Message-ID: <552ce804-1aa2-48ca-a68c-8a98621e7363@quicinc.com>
-Date: Wed, 13 Aug 2025 19:56:41 +0800
+	s=arc-20240116; t=1755086451; c=relaxed/simple;
+	bh=Z0Wd8Ul5IDIWW8lxpyrGHrFqOEXZiZV2mDebB4u5iE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M+rJInLHndCbyizAP8Fmt9+EwB/eWWh9BnSS5HUFsbSSbxCRW4lukDd5Vy63Ls6q9gmfvam3PHbw3dxw4S78ud9dQEYi66R7GvqXKywU9Xbk6LzixLMbwn5+XyzayjAaopBNiU3k5KtVLLvMCSa50cGYzjhFSL3FyRTTDUuRZFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=rOg9wUHI; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 5AE853D5;
+	Wed, 13 Aug 2025 13:59:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1755086394;
+	bh=Z0Wd8Ul5IDIWW8lxpyrGHrFqOEXZiZV2mDebB4u5iE0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rOg9wUHIbPEf8oD+S/HQgLiT+Ai8eRs5plN7KfY2BBIY0wfkrzEz3ag5dCeEf2/i3
+	 RF6xNPKTXbUbsF/QoBV6L8GEne60I13yX3l803DuYWioasayslSxglfN+k9p0fzG/W
+	 FevitONufT6X9SIEpJrGUMhPwvU+lq60Z0MZc1tI=
+Date: Wed, 13 Aug 2025 15:00:29 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: "Kandpal, Suraj" <suraj.kandpal@intel.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>,
+	"amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+	"Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>,
+	"Murthy, Arun R" <arun.r.murthy@intel.com>,
+	"Shankar, Uma" <uma.shankar@intel.com>,
+	"Nikula, Jani" <jani.nikula@intel.com>,
+	"harry.wentland@amd.com" <harry.wentland@amd.com>,
+	"siqueira@igalia.com" <siqueira@igalia.com>,
+	"alexander.deucher@amd.com" <alexander.deucher@amd.com>,
+	"christian.koenig@amd.com" <christian.koenig@amd.com>,
+	"airlied@gmail.com" <airlied@gmail.com>,
+	"simona@ffwll.ch" <simona@ffwll.ch>,
+	"liviu.dudau@arm.com" <liviu.dudau@arm.com>,
+	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
+	"mripard@kernel.org" <mripard@kernel.org>,
+	"robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
+	"abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>,
+	"tzimmermann@suse.de" <tzimmermann@suse.de>,
+	"jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>,
+	"sean@poorly.run" <sean@poorly.run>,
+	"marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
+	"mcanal@igalia.com" <mcanal@igalia.com>,
+	"dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>,
+	"tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>,
+	"kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>,
+	"louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
+Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
+ structure
+Message-ID: <20250813120029.GE20174@pendragon.ideasonboard.com>
+References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
+ <20250811092707.3986802-2-suraj.kandpal@intel.com>
+ <20250811094429.GE21313@pendragon.ideasonboard.com>
+ <awtqznhquyn7etojonmjn7karznefsb7fdudawcjsj5g2bok3u@2iqcdviuiz2s>
+ <20250811111546.GA30760@pendragon.ideasonboard.com>
+ <2ah3pau7p7brgw7huoxznvej3djct76vgfwtc72n6uub7sjojd@zzaebjdcpdwf>
+ <DM3PPF208195D8D0E55A761A3C16B87BAEEE32AA@DM3PPF208195D8D.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/38] drm/msm/dp: move the pixel clock control to its
- own API
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-6-a54d8902a23d@quicinc.com>
- <5b2lpjd2raqmowi466avustasdjsssl2tjwogd3ixjg7gi3dxv@cqtkbtcijnlc>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <5b2lpjd2raqmowi466avustasdjsssl2tjwogd3ixjg7gi3dxv@cqtkbtcijnlc>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=J+Wq7BnS c=1 sm=1 tr=0 ts=689c7d80 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=hdPSHQnkDWgsf_opGwoA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: eIzyrElTwVyFL53DnzA7DeRQUIEXl9uy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAxNSBTYWx0ZWRfX8xjwgCvuPyM/
- ag8VIySIzHToY+rMiF8YbYYdh6AT4lmP013p8+DUjVjwJiH6rzn5T4pQiWxTG3SvjQzT/m8uM6p
- xSOTE4qJOCFquS56rareFRBvJNDq/L8XKibJGEHJvuRmBJWwFd/h2fSLwR0Gvmz93AsudWkwJ76
- NGmASpibpBtBEOMYiIC9dlhHVmITkXN8Zem1+NFxvz+uSFP7zqj++cjDKaWa1qX6pNvZBicMuhE
- Dt9n1TREbPYQt/jZ8f8/uC7fsJQeLFDDs2xcacBRmWRVnAJZ+74YyE7K6ROoixTQGVzXNzUSlEZ
- l2QYjCgOdfLFs96L9ff0HlJqmiGkhF1cmEUWjrq3bR5HzfPBj6I3IkEEEuL1te27FMn7sGwpZ7I
- rMI5g5eh
-X-Proofpoint-GUID: eIzyrElTwVyFL53DnzA7DeRQUIEXl9uy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- phishscore=0 suspectscore=0 spamscore=0 clxscore=1015 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090015
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DM3PPF208195D8D0E55A761A3C16B87BAEEE32AA@DM3PPF208195D8D.namprd11.prod.outlook.com>
 
-
-
-On 2025/6/9 21:16, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:25PM +0800, Yongxing Mou wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->> Enable/Disable of DP pixel clock happens in multiple code paths
->> leading to code duplication. Move it into individual helpers so that
->> the helpers can be called wherever necessary.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c | 98 +++++++++++++++++++++-------------------
->>   1 file changed, 52 insertions(+), 46 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index aee8e37655812439dfb65ae90ccb61b14e6e261f..ed00dd2538d98ddbc6bdcbd5fa154fd7043c48d6 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -97,7 +97,7 @@ struct msm_dp_ctrl_private {
->>   
->>   	bool core_clks_on;
->>   	bool link_clks_on;
->> -	bool stream_clks_on;
->> +	bool pixel_clks_on;
+On Wed, Aug 13, 2025 at 10:04:22AM +0000, Kandpal, Suraj wrote:
+> > > > };
+> > >
+> > > I still don't like that. This really doesn't belong here. If anything,
+> > > the drm_connector for writeback belongs to drm_crtc.
+> > 
+> > Why? We already have generic HDMI field inside drm_connector. I am really
+> > hoping to be able to land DP parts next to it. In theory we can have a DVI-
+> > specific entry there (e.g. with the subconnector type).
+> > The idea is not to limit how the drivers subclass those structures.
+> > 
+> > I don't see a good case why WB should deviate from that design.
+> > 
+> > > If the issue is that some drivers need a custom drm_connector
+> > > subclass, then I'd rather turn the connector field of
+> > > drm_writeback_connector into a pointer.
+> > 
+> > Having a pointer requires additional ops in order to get drm_connector from
+> > WB code and vice versa. Having drm_connector_wb inside drm_connector
+> > saves us from those ops (which don't manifest for any other kind of structure).
+> > Nor will it take any more space since union will reuse space already taken up by
+> > HDMI part.
 > 
-> As you are touching this part, how many paths lead to pixel clock being
-> enabled and/or disabled? Can we sort them out and drop this flag, making
-> sure that the clock can be enabled only in one place and disabled in
-> another one (hopefully)?
-> 
-Here we only have 2 paths to enable/disable pixel, 
-1.msm_dp_ctrl_process_phy_test_request 2.msm_dp_display_enable/disable.
-both of them are in pairs. Maybe we can keep this state to make it 
-easier to access the on/off status of each of them in the case of 4 MST 
-streams. when we get the snapshot of the pixel clk, we can visit here.
->>   };
->>   
->>   static int msm_dp_aux_link_configure(struct drm_dp_aux *aux,
->> @@ -1406,8 +1406,8 @@ int msm_dp_ctrl_core_clk_enable(struct msm_dp_ctrl *msm_dp_ctrl)
->>   	ctrl->core_clks_on = true;
->>   
->>   	drm_dbg_dp(ctrl->drm_dev, "enable core clocks \n");
->> -	drm_dbg_dp(ctrl->drm_dev, "stream_clks:%s link_clks:%s core_clks:%s\n",
->> -		   str_on_off(ctrl->stream_clks_on),
->> +	drm_dbg_dp(ctrl->drm_dev, "pixel_clks:%s link_clks:%s core_clks:%s\n",
->> +		   str_on_off(ctrl->pixel_clks_on),
->>   		   str_on_off(ctrl->link_clks_on),
->>   		   str_on_off(ctrl->core_clks_on));
->>   
->> @@ -1425,8 +1425,8 @@ void msm_dp_ctrl_core_clk_disable(struct msm_dp_ctrl *msm_dp_ctrl)
->>   	ctrl->core_clks_on = false;
->>   
->>   	drm_dbg_dp(ctrl->drm_dev, "disable core clocks \n");
->> -	drm_dbg_dp(ctrl->drm_dev, "stream_clks:%s link_clks:%s core_clks:%s\n",
->> -		   str_on_off(ctrl->stream_clks_on),
->> +	drm_dbg_dp(ctrl->drm_dev, "pixel_clks:%s link_clks:%s core_clks:%s\n",
->> +		   str_on_off(ctrl->pixel_clks_on),
->>   		   str_on_off(ctrl->link_clks_on),
->>   		   str_on_off(ctrl->core_clks_on));
->>   }
->> @@ -1456,8 +1456,8 @@ static int msm_dp_ctrl_link_clk_enable(struct msm_dp_ctrl *msm_dp_ctrl)
->>   	ctrl->link_clks_on = true;
->>   
->>   	drm_dbg_dp(ctrl->drm_dev, "enable link clocks\n");
->> -	drm_dbg_dp(ctrl->drm_dev, "stream_clks:%s link_clks:%s core_clks:%s\n",
->> -		   str_on_off(ctrl->stream_clks_on),
->> +	drm_dbg_dp(ctrl->drm_dev, "pixel_clks:%s link_clks:%s core_clks:%s\n",
->> +		   str_on_off(ctrl->pixel_clks_on),
->>   		   str_on_off(ctrl->link_clks_on),
->>   		   str_on_off(ctrl->core_clks_on));
->>   
->> @@ -1475,8 +1475,8 @@ static void msm_dp_ctrl_link_clk_disable(struct msm_dp_ctrl *msm_dp_ctrl)
->>   	ctrl->link_clks_on = false;
->>   
->>   	drm_dbg_dp(ctrl->drm_dev, "disabled link clocks\n");
->> -	drm_dbg_dp(ctrl->drm_dev, "stream_clks:%s link_clks:%s core_clks:%s\n",
->> -		   str_on_off(ctrl->stream_clks_on),
->> +	drm_dbg_dp(ctrl->drm_dev, "pixel_clks:%s link_clks:%s core_clks:%s\n",
->> +		   str_on_off(ctrl->pixel_clks_on),
->>   		   str_on_off(ctrl->link_clks_on),
->>   		   str_on_off(ctrl->core_clks_on));
->>   }
->> @@ -1737,6 +1737,42 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
->>   	return success;
->>   }
->>   
->> +static int msm_dp_ctrl_on_pixel_clk(struct msm_dp_ctrl_private *ctrl, unsigned long pixel_rate)
->> +{
->> +	int ret;
->> +
->> +	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->> +	if (ret) {
->> +		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	if (ctrl->pixel_clks_on) {
->> +		drm_dbg_dp(ctrl->drm_dev, "pixel clks already enabled\n");
->> +	} else {
->> +		ret = clk_prepare_enable(ctrl->pixel_clk);
->> +		if (ret) {
->> +			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> +			return ret;
->> +		}
->> +		ctrl->pixel_clks_on = true;
->> +	}
->> +
->> +	return ret;
->> +}
->> +
->> +static void msm_dp_ctrl_off_pixel_clk(struct msm_dp_ctrl *msm_dp_ctrl)
->> +{
->> +	struct msm_dp_ctrl_private *ctrl;
->> +
->> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->> +
->> +	if (ctrl->pixel_clks_on) {
->> +		clk_disable_unprepare(ctrl->pixel_clk);
->> +		ctrl->pixel_clks_on = false;
->> +	}
->> +}
->> +
->>   static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl,
->>   						struct msm_dp_panel *msm_dp_panel)
->>   {
->> @@ -1763,22 +1799,7 @@ static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl
->>   	}
->>   
->>   	pixel_rate = msm_dp_panel->msm_dp_mode.drm_mode.clock;
->> -	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->> -	if (ret) {
->> -		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> -		return ret;
->> -	}
->> -
->> -	if (ctrl->stream_clks_on) {
->> -		drm_dbg_dp(ctrl->drm_dev, "pixel clks already enabled\n");
->> -	} else {
->> -		ret = clk_prepare_enable(ctrl->pixel_clk);
->> -		if (ret) {
->> -			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> -			return ret;
->> -		}
->> -		ctrl->stream_clks_on = true;
->> -	}
->> +	ret = msm_dp_ctrl_on_pixel_clk(ctrl, pixel_rate);
->>   
->>   	msm_dp_ctrl_send_phy_test_pattern(ctrl);
->>   
->> @@ -1998,8 +2019,8 @@ int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_li
->>   		   ctrl->link->link_params.num_lanes);
->>   
->>   	drm_dbg_dp(ctrl->drm_dev,
->> -		   "core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
->> -		   ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
->> +		   "core_clk_on=%d link_clk_on=%d pixel_clks_on=%d\n",
->> +		   ctrl->core_clks_on, ctrl->link_clks_on, ctrl->pixel_clks_on);
->>   
->>   	if (!ctrl->link_clks_on) { /* link clk is off */
->>   		ret = msm_dp_ctrl_enable_mainlink_clocks(ctrl);
->> @@ -2038,21 +2059,10 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *
->>   
->>   	drm_dbg_dp(ctrl->drm_dev, "pixel_rate=%lu\n", pixel_rate);
->>   
->> -	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->> +	ret = msm_dp_ctrl_on_pixel_clk(ctrl, pixel_rate);
->>   	if (ret) {
->> -		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> -		goto end;
->> -	}
->> -
->> -	if (ctrl->stream_clks_on) {
->> -		drm_dbg_dp(ctrl->drm_dev, "pixel clks already enabled\n");
->> -	} else {
->> -		ret = clk_prepare_enable(ctrl->pixel_clk);
->> -		if (ret) {
->> -			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> -			goto end;
->> -		}
->> -		ctrl->stream_clks_on = true;
->> +		DRM_ERROR("failed to enable pixel clk\n");
->> +		return ret;
->>   	}
->>   
->>   	/*
->> @@ -2080,7 +2090,6 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *
->>   	drm_dbg_dp(ctrl->drm_dev,
->>   		"mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
->>   
->> -end:
->>   	return ret;
->>   }
->>   
->> @@ -2154,10 +2163,7 @@ void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl)
->>   
->>   	msm_dp_catalog_ctrl_reset(ctrl->catalog);
->>   
->> -	if (ctrl->stream_clks_on) {
->> -		clk_disable_unprepare(ctrl->pixel_clk);
->> -		ctrl->stream_clks_on = false;
->> -	}
->> +	msm_dp_ctrl_off_pixel_clk(msm_dp_ctrl);
->>   
->>   	dev_pm_opp_set_rate(ctrl->dev, 0);
->>   	msm_dp_ctrl_link_clk_disable(&ctrl->msm_dp_ctrl);
->>
->> -- 
->> 2.34.1
->>
-> 
+> Seems like this thread has died. We need to get a conclusion on the design.
+> Laurent do you have any issue with the design given Dmitry's explanation as to why this
+> Design is good for drm_writeback_connector.
 
+I'm busy, I'll try to reply in the next few days.
+
+> > > > I plan to add drm_connector_dp in a similar way, covering DP needs
+> > > > (currently WIP).
+
+-- 
+Regards,
+
+Laurent Pinchart
 
