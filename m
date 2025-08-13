@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4842AB25328
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 20:42:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDE71B2534E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 20:50:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E340D7A9C04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:41:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C6171B67C6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:50:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 732AF2E92A6;
-	Wed, 13 Aug 2025 18:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 795F12FABF1;
+	Wed, 13 Aug 2025 18:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNyWklw8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GLABF9lm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F775281368;
-	Wed, 13 Aug 2025 18:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24F19F424;
+	Wed, 13 Aug 2025 18:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755110547; cv=none; b=NXwJEFfY9uNrxhvy0XAW00H3lyrRj+Q1dn0cp+I6hrkWXtBfB+NbpiRGtLyPI/gk5WregNqkuW5/9ainzRH6WektxuTO42FvpNqZDVPHQujDoLI2Fiawk0SICs1+k4eKOJtk6kaxt2PJqb9X8wtraSR0jByaw8QyHB6Ie1GpDQI=
+	t=1755111001; cv=none; b=XBPTWjN1KpZ4Dhof4oyAh0DXqMu93VsYoHm10FW/2Ey2pmEjnEzIsZFsD8MtYljbnGGMED2qyxaXNiT3tW6NuDGMbeAAg7gMBxFySyAivTWlIp5iJTTBqWWvl5zA85IJ5b8lsicyTc0fpq72aNgpGeaA5V+IU91CdB/KyhXi7FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755110547; c=relaxed/simple;
-	bh=SH0uIji80952DdM3EuokHnshYZOwEbP2lV+ij36AS+I=;
+	s=arc-20240116; t=1755111001; c=relaxed/simple;
+	bh=6NdsD61bTOfCurNri0RvHdL+4iZxW9ysSAUi7LLEMgI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lAw81mY1zKCNXuL/X4mXkX3D1lxc8UTz/xg8YURoH/1JlvHbmzkXbuSEsZwPm6pR2/nnodG5WKtrEqsaJTVrfrjFAX3R0GddahXZ7yc2ZRWgvNMP7hy0rwHoMPLk6Z5jJ2oPuFJL7IXvp1fG+7MZsUjxYySFdYBafEb0QgxTRCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNyWklw8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9BBC4CEEB;
-	Wed, 13 Aug 2025 18:42:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QYSD92K37qWb1HlM4FXuRqzlwwS1/sZvUuHS/K1XHZdrB4/586j91G/CuYBITfsWsaOZDXDwbDOIPcqAonB9/YKDr6ovem4LRI8nGlFQgs71/ReYZJWXKwsCWddoO2iUBR1lewYiRQf2XpzEf5zMbI427EfZ1jqaNZNKI8hBHXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GLABF9lm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BC6C4CEEB;
+	Wed, 13 Aug 2025 18:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755110546;
-	bh=SH0uIji80952DdM3EuokHnshYZOwEbP2lV+ij36AS+I=;
+	s=k20201202; t=1755111000;
+	bh=6NdsD61bTOfCurNri0RvHdL+4iZxW9ysSAUi7LLEMgI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lNyWklw8LqeewY1G+bWsTSKiKa41Urs4ZGMJ9xfOP2iTZELL97CRQdtFUpW1Cijrq
-	 OjrT7+boBK+Mqc5Q0DciYf6O9fzUeFcrnnotud0HPjkjssibAFWrmJSl3bRDfC1oaI
-	 En51pfSuujfV9J1aklqFLDuBAS8d2xZrO72QiIzA5FarJTDheXCVPuwWhMRGUYftVG
-	 QxR6hK5CKg1AVASj7KX84xDRI/U2nDeoa1PFE9y9Zji6bbKxG2UQwD0BaKo5rXl9tB
-	 xw9zGha/c6t74pNCxbr8AphFgjkqcblOYGsspYhTpWBWdIOyXt8MjzxB+RF3C189Pt
-	 7NBsBfk3d+sBw==
-Message-ID: <40546666-1a49-41a0-a1e4-ad3af4ddc81c@kernel.org>
-Date: Wed, 13 Aug 2025 20:42:22 +0200
+	b=GLABF9lmHWMW8DfrZ/PNRKiLkqw2Z5KF+uQ5O9BigBbaQmpbnVxmtflNeTpSgHgWX
+	 9qoLuOW1OcFUlFmRj7pN0rt4naNKr9lhYTMW2jMFRQN/hMtBCfwnkIqsW0XDVhNPdi
+	 APnMHM5CAMeDpCAv1SBbYWwlkLyTdDRS4R+QW4F01cKB2GLuDN6dERK4piceJGgr53
+	 IoYd7b0z2Ypl14CbXjKdO7wdgJmy4cSu5PcCe1Bgq2NjN3+rO6XuawAdnnINORL8Vj
+	 kU2dyEhXYqULJBGFLbhvr3fB58Pb56lqTy20ydGQcnVMyfr5SSDmgiQFisVXE1Ilpc
+	 sscEg3Xrw+W5Q==
+Message-ID: <8fc497df-116e-4df2-a33f-bd71476ce065@kernel.org>
+Date: Wed, 13 Aug 2025 20:49:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8450: Fix address for usb
- controller node
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [RFC PATCH v2] arm64: dts: qcom: sm8750-mtp: Add WiFi and
+ Bluetooth
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- kernel test robot <lkp@intel.com>
-References: <20250813160914.2258033-1-krishna.kurapati@oss.qualcomm.com>
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250811131055.154233-2-krzysztof.kozlowski@linaro.org>
+ <l6u4y3suv3dpylexbiiznhcuyanlc4ouizhzj2cchblaf6o4wg@fe4laxrioaj5>
+ <481985cb-fa84-4b09-9b95-948ee70b557a@linaro.org>
+ <k7mw7rj7cno3con2t57nps23y7evd3da6gahyl5gnrxss7e3s4@qncnuekxr7lb>
+ <f7704cc1-95b4-4860-86ea-96ec18f61c8a@linaro.org>
+ <ibitgekdjsktpvr6zmouuhgzcbfjfeuv4l4zsl6vszv4hauug5@one6zo6gdykb>
+ <3239685a-97af-4d56-a0cc-984f26db5f76@linaro.org>
+ <3jrs5gkxzjgrjmfbd65qr3uzblzzz5ae4apo5qwpxb63jm4i23@jzpaxp3dxais>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,42 +112,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250813160914.2258033-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <3jrs5gkxzjgrjmfbd65qr3uzblzzz5ae4apo5qwpxb63jm4i23@jzpaxp3dxais>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/08/2025 18:09, Krishna Kurapati wrote:
-> Correct the address in usb controller node to fix the following warning:
+On 12/08/2025 14:45, Dmitry Baryshkov wrote:
 > 
-> Warning (simple_bus_reg): /soc@0/usb@a6f8800: simple-bus unit address
-> format error, expected "a600000"
+>> Devices will be different, they will have different compatibles, thus
+>> you CANNOT have one DTS for both. What else - not my task, not my
+>> expertise, not relevant to this submission.
 > 
-> Fixes: c5a87e3a6b3e ("arm64: dts: qcom: sm8450: Flatten usb controller node")
-> Cc: stable@vger.kernel.org
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202508121834.953Mvah2-lkp@intel.com/
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> ---
-> This change was tested with W=1 and the reported issue is not seen.
-> Also didn't add RB Tag received from Neil Armstrong since there is a
-> change in commit text.
+> Them having different compatibles is exactly my question. It's not
+> obvious if they are compatible or not.
 
 
-Really? That is NOT the reason to drop people's review?
+So we talk about basics now... even if devices are compatible, they will
+have different "compatible" property, so your question about
+compatibility does not matter. They could be compatible or could be not.
+Different DTS in both cases, so this is just bikeschedding this patch.
 
-Apart from that, THERE IS NO change in commit txt, so dropping tags is
-not justified by any means. It's really not acceptable.
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
-of patchset, under or above your Signed-off-by tag, unless patch changed
-significantly (e.g. new properties added to the DT bindings). Tag is
-"received", when provided in a message replied to you on the mailing
-list. Tools like b4 can help here. However, there's no need to repost
-patches *only* to add the tags. The upstream maintainer will do that for
-tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+> 
+> We've discussed this offline and I hope that the next iteration will
+> cover all these details.
+> 
 
 
 Best regards,
