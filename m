@@ -1,161 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-69009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7940EB24FB4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:29:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 635A3B24F7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 18:23:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4679B5A5391
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:16:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 072891C2694B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 16:17:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF9B285C90;
-	Wed, 13 Aug 2025 16:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A705628751F;
+	Wed, 13 Aug 2025 16:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="QCJ48aON"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="e3W5luwE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26544284681
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 16:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E58285C8D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 16:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755101769; cv=none; b=bpqxPchbvgNTMPw3UupBb3WUNmZmy4JoANvzI1154Tqwm3wlj2QvKTCLDgE0dpwyiAblxBFd3d7gHPlprF9fYDetLhvleJ+5cTtSnrvus8GHH8h/njIOr4BMOSIRLTG0xIOPF12lUDGXp8xFM3aI38CnbaOky5tRkBNwx00fRvY=
+	t=1755101780; cv=none; b=X7bi7deF8GV+ciseQg9p4c6k3Rc+G7yoXasvpHGAdUPuW9JYlvZFdk+WI8u2iQgBPYSxPpgbCQMhHfwFvbxSgtATTYZyMVuYB4w3xgm81VjzU80SAcZabFNRfuJ9byommYXjH1yXbPCnW56/VgIPtAjeOZRlrQrv3O33yHE+Yi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755101769; c=relaxed/simple;
-	bh=KmcwvgRJ1zt5K4wDAvtiaw17GSzeXpuI2dv9vCkYQUg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sv8gflOzvoA/NdOO/IUXeIRrVzl0QsncSHmmq10Fr2uIFm9gTsFvnZpNofe7kKj2YwmwJbEQo/lHoSkorOu/4YZZO3islHdIBhVC53+3MoUrOUyQCzR/wHFgQkSBJzRyF/k3yBi2jd/hleSrcdHK5D4rzWx5ZQxXBK1/KRhymb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=QCJ48aON; arc=none smtp.client-ip=194.117.254.33
+	s=arc-20240116; t=1755101780; c=relaxed/simple;
+	bh=Gh2Yz8gjWjQZkAGhz/iK0DJeSpG4cbVaeFoFlPtZ4iI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=le/dqdHWWNoxAXMDmHr1X5MpLTf5Dy+Q89bWt2KTcvAWGFA9NANl93oOfjx73P0W1BsSi2ZKLOPmfpFJTQKFhSASUyxl+U90vIQ8OoNpD5kpq0AE61l93pbajncM4XWsuzg/aGssVHmlKy6a9B9VwyLAwqFqQqFtV4m/NxJDbMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=e3W5luwE; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
-	:mime-version:content-transfer-encoding; s=k1; bh=8r/LCX9rzyog3y
-	rylwFjwRMpIaemTxzslMXi3Wwcda8=; b=QCJ48aONHnHPI67IOJ/3D8OQB3Cd/k
-	va3dqQAxVecMFTPLNQfZkeRCBnr21f5AP85A+ko/Co2kn3d1vUsGdjjGnQSoqHT/
-	XhtDURAzo7LNMG2Hw6aJkJP1nHKCJDt/I4UFOhqYSkFA3npSGKStA4S5hsN3gfb8
-	C8iP/CLkf5T/WRnlry5E/M4rY/ikuUABioRBeFix0sZAgPzikWKDzZXwcrM/PlZn
-	9QF5GBzn0iIdqib/tI3qtiZXmnTMTK2djC7YMTKPNRHBv7OXt7TeyHMZFzQFHHD9
-	4yuXLJeM/fwFHXJlvGUnp8QGyn4bljRJZaBZSVKQgiNlixK49bkom2HA==
-Received: (qmail 694422 invoked from network); 13 Aug 2025 18:15:54 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 13 Aug 2025 18:15:54 +0200
-X-UD-Smtp-Session: l3s3148p1@6vOVeEE8NodtKLKq
+	:in-reply-to:references:mime-version:content-transfer-encoding;
+	 s=k1; bh=lKwqJsBpJtiLoQ0zbkH5Yo2FxcXE4tE/k0bw9vuSqOA=; b=e3W5lu
+	wEeATWkuqFnhlaNI5TPJ9vWzSMDUH3XjFzY0JzIKnQDExc59WA0iRJnIE/kd/jk5
+	v/iZZZC8DhKWFn0Bd14amGpQ0MglBVhzoRq2g+JYpBSKkwRjNcd4L3rQsp3sMpDt
+	wILYwwr4PJ/TAdGr+fOoRaxhGOTyiDjIKiMQ/ehNI9USc4L930iJZqnUWTe1b18u
+	BNkncyo8udnS3l19qCF8NFfk+0cNOb5106PMAIY+sVwuFRU7yVyTrLQwypZPHvEN
+	NXpIJVJVdyHz10+q/VoWCdjyjrR1lsHrNRE0GZJmeGlhGk34CyLgK9I9C6KyjzF0
+	NgGmoZiIH+OSBJXA==
+Received: (qmail 694614 invoked from network); 13 Aug 2025 18:15:59 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 13 Aug 2025 18:15:59 +0200
+X-UD-Smtp-Session: l3s3148p1@Xe7eeEE8EpVtKLKq
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: linux-kernel@vger.kernel.org
 Cc: Mark Brown <broonie@kernel.org>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	David Airlie <airlied@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Drew Fustini <fustini@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	Fabio Estevam <festevam@gmail.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Fu Wei <wefu@redhat.com>,
-	Guo Ren <guoren@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-	imx@lists.linux.dev,
-	Iwona Winiarska <iwona.winiarska@intel.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-actions@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-input@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-pwm@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-rtc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	openbmc@lists.ozlabs.org,
-	Patrick Venture <venture@google.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Sandy Huang <hjc@rock-chips.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Vladimir Zapolskiy <vz@mleia.com>,
-	Xiubo Li <Xiubo.Lee@gmail.com>,
-	Yangtao Li <tiny.windzz@gmail.com>,
-	Zhang Rui <rui.zhang@intel.com>
-Subject: [PATCH 00/21] treewide: remove unneeded 'fast_io' parameter in regmap_config
-Date: Wed, 13 Aug 2025 18:14:46 +0200
-Message-ID: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Drew Fustini <fustini@kernel.org>,
+	Guo Ren <guoren@kernel.org>,
+	Fu Wei <wefu@redhat.com>,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-actions@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH 02/21] clk: remove unneeded 'fast_io' parameter in regmap_config
+Date: Wed, 13 Aug 2025 18:14:48 +0200
+Message-ID: <20250813161517.4746-3-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -164,132 +77,159 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-While working on a driver using regmap with MMIO, I wondered if I need
-to set 'fast_io' in the config. Turned out I don't need to, so I added
-documentation for it with commit ffc72771ff6e ("regmap: Annotate that
-MMIO implies fast IO").
+When using MMIO with regmap, fast_io is implied. No need to set it
+again.
 
-This series fixes the existing users in the tree which needlessly set
-the flag. They have been found using this coccinelle script:
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+---
+No dependencies, can be applied directly to the subsystem tree. Buildbot is
+happy, too.
 
-===
+ drivers/clk/actions/owl-common.c  | 1 -
+ drivers/clk/clk-axm5516.c         | 1 -
+ drivers/clk/nxp/clk-lpc32xx.c     | 1 -
+ drivers/clk/qcom/a53-pll.c        | 1 -
+ drivers/clk/qcom/a7-pll.c         | 1 -
+ drivers/clk/qcom/apss-ipq-pll.c   | 1 -
+ drivers/clk/qcom/clk-cbf-8996.c   | 1 -
+ drivers/clk/qcom/clk-cpu-8996.c   | 1 -
+ drivers/clk/qcom/hfpll.c          | 1 -
+ drivers/clk/qcom/ipq-cmn-pll.c    | 1 -
+ drivers/clk/thead/clk-th1520-ap.c | 1 -
+ 11 files changed, 11 deletions(-)
 
-@ match @
-expression dev, clk, regs;
-identifier config;
-@@
-
-(
-	regmap_init_mmio(dev, regs, &config)
-|
-	devm_regmap_init_mmio(dev, regs, &config)
-|
-	regmap_init_mmio_clk(dev, clk, regs, &config)
-|
-	devm_regmap_init_mmio_clk(dev, clk, regs, &config)
-)
-
-@ fix depends on match @
-identifier match.config;
-@@
-
-	struct regmap_config config = {
+diff --git a/drivers/clk/actions/owl-common.c b/drivers/clk/actions/owl-common.c
+index c62024b7c737..b3dded204dc5 100644
+--- a/drivers/clk/actions/owl-common.c
++++ b/drivers/clk/actions/owl-common.c
+@@ -18,7 +18,6 @@ static const struct regmap_config owl_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+ 	.max_register	= 0x00cc,
+-	.fast_io	= true,
+ };
+ 
+ static void owl_clk_set_regmap(const struct owl_clk_desc *desc,
+diff --git a/drivers/clk/clk-axm5516.c b/drivers/clk/clk-axm5516.c
+index 4a3462ee8f3e..3823383f3fa6 100644
+--- a/drivers/clk/clk-axm5516.c
++++ b/drivers/clk/clk-axm5516.c
+@@ -529,7 +529,6 @@ static const struct regmap_config axmclk_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+ 	.max_register	= 0x1fffc,
+-	.fast_io	= true,
+ };
+ 
+ static const struct of_device_id axmclk_match_table[] = {
+diff --git a/drivers/clk/nxp/clk-lpc32xx.c b/drivers/clk/nxp/clk-lpc32xx.c
+index e00f270bc6aa..96a1a527b380 100644
+--- a/drivers/clk/nxp/clk-lpc32xx.c
++++ b/drivers/clk/nxp/clk-lpc32xx.c
+@@ -68,7 +68,6 @@ static const struct regmap_config lpc32xx_scb_regmap_config = {
+ 	.reg_stride = 4,
+ 	.val_format_endian = REGMAP_ENDIAN_LITTLE,
+ 	.max_register = 0x114,
 -	.fast_io = true,
-	};
-
-===
-
-It misses occasions where 'config' is an expression and not an
-identifier. These are rare, though, I can fix them manually later. The
-advantage of this approach is that it produces no false positives to the
-best of my knowledge.
-
-Please apply individually per subsystem. There are no dependencies and
-buildbot is happy. Patches are based on 6.17-rc1
-
-Happy hacking,
-
-   Wolfram
-
-
-Wolfram Sang (21):
-  bus: remove unneeded 'fast_io' parameter in regmap_config
-  clk: remove unneeded 'fast_io' parameter in regmap_config
-  gpio: remove unneeded 'fast_io' parameter in regmap_config
-  drm: remove unneeded 'fast_io' parameter in regmap_config
-  iio: remove unneeded 'fast_io' parameter in regmap_config
-  Input: remove unneeded 'fast_io' parameter in regmap_config
-  mailbox: remove unneeded 'fast_io' parameter in regmap_config
-  media: remove unneeded 'fast_io' parameter in regmap_config
-  mfd: remove unneeded 'fast_io' parameter in regmap_config
-  mmc: remove unneeded 'fast_io' parameter in regmap_config
-  peci: remove unneeded 'fast_io' parameter in regmap_config
-  phy: remove unneeded 'fast_io' parameter in regmap_config
-  pinctrl: remove unneeded 'fast_io' parameter in regmap_config
-  pmdomain: remove unneeded 'fast_io' parameter in regmap_config
-  regulator: remove unneeded 'fast_io' parameter in regmap_config
-  reset: remove unneeded 'fast_io' parameter in regmap_config
-  rtc: remove unneeded 'fast_io' parameter in regmap_config
-  soc: remove unneeded 'fast_io' parameter in regmap_config
-  spi: remove unneeded 'fast_io' parameter in regmap_config
-  thermal: remove unneeded 'fast_io' parameter in regmap_config
-  ASoC: remove unneeded 'fast_io' parameter in regmap_config
-
- drivers/bus/bt1-apb.c                             | 1 -
- drivers/clk/actions/owl-common.c                  | 1 -
- drivers/clk/clk-axm5516.c                         | 1 -
- drivers/clk/nxp/clk-lpc32xx.c                     | 1 -
- drivers/clk/qcom/a53-pll.c                        | 1 -
- drivers/clk/qcom/a7-pll.c                         | 1 -
- drivers/clk/qcom/apss-ipq-pll.c                   | 1 -
- drivers/clk/qcom/clk-cbf-8996.c                   | 1 -
- drivers/clk/qcom/clk-cpu-8996.c                   | 1 -
- drivers/clk/qcom/hfpll.c                          | 1 -
- drivers/clk/qcom/ipq-cmn-pll.c                    | 1 -
- drivers/clk/thead/clk-th1520-ap.c                 | 1 -
- drivers/gpio/gpio-mvebu.c                         | 1 -
- drivers/gpio/gpio-sifive.c                        | 1 -
- drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi2.c    | 1 -
- drivers/gpu/drm/imx/dc/dc-cf.c                    | 1 -
- drivers/gpu/drm/imx/dc/dc-de.c                    | 1 -
- drivers/gpu/drm/imx/dc/dc-ed.c                    | 2 --
- drivers/gpu/drm/imx/dc/dc-fg.c                    | 1 -
- drivers/gpu/drm/imx/dc/dc-fl.c                    | 1 -
- drivers/gpu/drm/imx/dc/dc-fw.c                    | 2 --
- drivers/gpu/drm/imx/dc/dc-ic.c                    | 1 -
- drivers/gpu/drm/imx/dc/dc-lb.c                    | 2 --
- drivers/gpu/drm/imx/dc/dc-tc.c                    | 1 -
- drivers/gpu/drm/imx/ipuv3/imx-tve.c               | 2 --
- drivers/gpu/drm/rockchip/dw-mipi-dsi2-rockchip.c  | 1 -
- drivers/iio/adc/sun4i-gpadc-iio.c                 | 1 -
- drivers/input/touchscreen/fsl-imx25-tcq.c         | 1 -
- drivers/mailbox/qcom-apcs-ipc-mailbox.c           | 1 -
- drivers/media/cec/platform/stm32/stm32-cec.c      | 1 -
- drivers/mfd/exynos-lpass.c                        | 1 -
- drivers/mfd/fsl-imx25-tsadc.c                     | 1 -
- drivers/mfd/stm32-lptimer.c                       | 1 -
- drivers/mfd/sun4i-gpadc.c                         | 1 -
- drivers/mmc/host/sdhci_am654.c                    | 1 -
- drivers/peci/controller/peci-npcm.c               | 1 -
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 1 -
- drivers/phy/rockchip/phy-rockchip-usbdp.c         | 1 -
- drivers/phy/ti/phy-am654-serdes.c                 | 1 -
- drivers/phy/ti/phy-j721e-wiz.c                    | 1 -
- drivers/pinctrl/pinctrl-rp1.c                     | 1 -
- drivers/pmdomain/imx/gpc.c                        | 1 -
- drivers/regulator/qcom-refgen-regulator.c         | 1 -
- drivers/reset/reset-intel-gw.c                    | 1 -
- drivers/reset/reset-qcom-pdc.c                    | 1 -
- drivers/reset/reset-th1520.c                      | 1 -
- drivers/rtc/rtc-meson.c                           | 1 -
- drivers/soc/qcom/llcc-qcom.c                      | 1 -
- drivers/soc/qcom/ramp_controller.c                | 1 -
- drivers/spi/spi-altera-platform.c                 | 1 -
- drivers/thermal/armada_thermal.c                  | 1 -
- drivers/thermal/sun8i_thermal.c                   | 1 -
- sound/soc/fsl/fsl_sai.c                           | 1 -
- 53 files changed, 57 deletions(-)
-
+ };
+ 
+ static struct regmap *clk_regmap;
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+index f43d455ab4b8..724a642311e5 100644
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -33,7 +33,6 @@ static const struct regmap_config a53pll_regmap_config = {
+ 	.reg_stride		= 4,
+ 	.val_bits		= 32,
+ 	.max_register		= 0x40,
+-	.fast_io		= true,
+ };
+ 
+ static struct pll_freq_tbl *qcom_a53pll_get_freq_tbl(struct device *dev)
+diff --git a/drivers/clk/qcom/a7-pll.c b/drivers/clk/qcom/a7-pll.c
+index c4a53e5db229..f95aefc43119 100644
+--- a/drivers/clk/qcom/a7-pll.c
++++ b/drivers/clk/qcom/a7-pll.c
+@@ -50,7 +50,6 @@ static const struct regmap_config a7pll_regmap_config = {
+ 	.reg_stride		= 4,
+ 	.val_bits		= 32,
+ 	.max_register		= 0x1000,
+-	.fast_io		= true,
+ };
+ 
+ static int qcom_a7pll_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+index d6c1aea7e9e1..3a8987fe7008 100644
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -169,7 +169,6 @@ static const struct regmap_config ipq_pll_regmap_config = {
+ 	.reg_stride		= 4,
+ 	.val_bits		= 32,
+ 	.max_register		= 0x40,
+-	.fast_io		= true,
+ };
+ 
+ static int apss_ipq_pll_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+index ce4efcd995ea..0b40ed601f9a 100644
+--- a/drivers/clk/qcom/clk-cbf-8996.c
++++ b/drivers/clk/qcom/clk-cbf-8996.c
+@@ -212,7 +212,6 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
+ 	.reg_stride		= 4,
+ 	.val_bits		= 32,
+ 	.max_register		= 0x10000,
+-	.fast_io		= true,
+ 	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
+ };
+ 
+diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+index 72689448a653..21d13c0841ed 100644
+--- a/drivers/clk/qcom/clk-cpu-8996.c
++++ b/drivers/clk/qcom/clk-cpu-8996.c
+@@ -411,7 +411,6 @@ static const struct regmap_config cpu_msm8996_regmap_config = {
+ 	.reg_stride		= 4,
+ 	.val_bits		= 32,
+ 	.max_register		= 0x80210,
+-	.fast_io		= true,
+ 	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
+ };
+ 
+diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
+index b0b0cb074b4a..385964196185 100644
+--- a/drivers/clk/qcom/hfpll.c
++++ b/drivers/clk/qcom/hfpll.c
+@@ -99,7 +99,6 @@ static const struct regmap_config hfpll_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+ 	.max_register	= 0x30,
+-	.fast_io	= true,
+ };
+ 
+ static int qcom_hfpll_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
+index b3d7169c63e5..dafbf5732048 100644
+--- a/drivers/clk/qcom/ipq-cmn-pll.c
++++ b/drivers/clk/qcom/ipq-cmn-pll.c
+@@ -108,7 +108,6 @@ static const struct regmap_config ipq_cmn_pll_regmap_config = {
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+ 	.max_register = 0x7fc,
+-	.fast_io = true,
+ };
+ 
+ static const struct cmn_pll_fixed_output_clk ipq5018_output_clks[] = {
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index cf1bba58f641..cff4f014bddb 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -1056,7 +1056,6 @@ static const struct regmap_config th1520_clk_regmap_config = {
+ 	.reg_bits = 32,
+ 	.val_bits = 32,
+ 	.reg_stride = 4,
+-	.fast_io = true,
+ };
+ 
+ struct th1520_plat_data {
 -- 
 2.47.2
 
