@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-68904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D08DAB242C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:33:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6864B242CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:34:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36B16164514
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 07:29:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 153131AA7DCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 07:32:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71D052D46D4;
-	Wed, 13 Aug 2025 07:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C002D2390;
+	Wed, 13 Aug 2025 07:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUDg6u1k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M4qp8j40"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454182D0C9B;
-	Wed, 13 Aug 2025 07:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B812BDC26;
+	Wed, 13 Aug 2025 07:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755070191; cv=none; b=i4jbu7Z5FRVtrH6OJAsPwdHAlm//HlIqERaIoiAYBasZ6yoMDk9j1L62G/7V+1z7NEdsTxwcQFz8+NA4PH8qHgaq/kP+2itIHkUEL1TKJReY98oIWs6K/vFA4cFQAJU/neoE/A5XYhHVhtDYsyRt4lpXh5saD5aKDi9RJ3JKNAI=
+	t=1755070296; cv=none; b=k/r6v4BbIxWudFAAfny1hBk7URtt3QQFhehgRijGdhoSifhY5OFSqIJV5hdYJ9JGMMsOyTMQmiaKef6n+x2EImohPnkM852Uv3j0+XsCzSnfrhri3GT2UsX56WQ89IiNMi6KJBlUNBgG8QOxXZUy075ywtJrm1I/5ZTllfv5yOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755070191; c=relaxed/simple;
-	bh=saY+wgT/qb8l8l5eN/tBvLjaCSu9tJjgQ9MfbbvDoq4=;
+	s=arc-20240116; t=1755070296; c=relaxed/simple;
+	bh=OdSR0i8Mi33zK1F01A5u8CnaWsyAunhbK9iCNvR7S1A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RocffWAYBDeT3dKR3Ie7qumdUfFX/teVIwFSBH761kKprVxve1gwkH2mEshVqVBBGrtZGWptHXOiX5ob5nB/xmmaLGEqA5Dc1B2HoHe0YPToiHcZxIv/m6optOHoX654Fblo2ZDqDuJYfl17MK0QpY1dG5nm0YrzmHguC0LbJ5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUDg6u1k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AABAC4CEEB;
-	Wed, 13 Aug 2025 07:29:47 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EGzFfMRxfK/xAcLsouCxREkHTDPHffyZwsqFNCzoFcTkb3t9Y1akX5aT7Lc57IS2lJeopJcbcjCwno5gmVS2GNefDJYymb/WOxfEWwZ6tRvhoJJkpA6Lkn/qa4D6Z+SZU8YBlaI57rC5wx70i/oqeu17ELuIn7MkQQplCPCEYn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M4qp8j40; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52253C4CEED;
+	Wed, 13 Aug 2025 07:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755070190;
-	bh=saY+wgT/qb8l8l5eN/tBvLjaCSu9tJjgQ9MfbbvDoq4=;
+	s=k20201202; t=1755070295;
+	bh=OdSR0i8Mi33zK1F01A5u8CnaWsyAunhbK9iCNvR7S1A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GUDg6u1kJ24lRLJgMGrJYC38ECBKZBOTeY5IvwNKY2pYgXvvNVRSRs+YrN7TnYNPR
-	 akMh9sCSPsxMr9wi1OU5BoODFyu4W/2Yd83x7vTxXy6DoPDNYluop30/braRNO1B5G
-	 2c8r3gLgI6i7dpELqhsYbNrekObMfJ68JmzWSPKNuhBAaXPdE87sy8s53Xg8NEbyVu
-	 AL2eM06ezaj5ja/lrqCILGC4SiPLbePLUK+kOKQGOfGboP8Utmt9HXmecurRZsjHMw
-	 u3xwmKNg3mkGM3UmHfzBsOTEyJpF5YURlbOHc4DZwLQjOzFEfQ06W2ElU/kBpcbCIa
-	 bX5WeS9fdk7Og==
-Message-ID: <dcd42e01-d14c-4e52-97f7-c1aedc81653b@kernel.org>
-Date: Wed, 13 Aug 2025 09:29:46 +0200
+	b=M4qp8j40sUo7KdPoQ26wAhG97vwHMqBdoAhtNrXnFuoYWtjIUpyfkjwxOdOOGohUf
+	 +zDGbSPhhD+bZEDKG5HU310ghOqbtsMxdZpxA637xDJUdOMWyzCEFRgO72Keypn2Nl
+	 27fPl6X9YDTW8hcsbSKz7hnQkzCsmakujpT1E2xq5FttYGf6zTApcWMdIiso5xa3br
+	 ZLRUJzkEWmIiZxmExt2r4t07maEhdgNzq3bS/Je8I1Pn4I9QNGJmxXiRaSC4JC285g
+	 3oE7EbIEDktwj8TfV0Wht9avzEo5HepmF500kpJR3/rHKaeVV/B0cssjZfWZ3/sgFO
+	 /Oy5ry8W4HzpA==
+Message-ID: <17b90fbc-ccce-4eb1-b334-5fdef82c094c@kernel.org>
+Date: Wed, 13 Aug 2025 09:31:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Flatten usb controller nodes
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH v5 0/2] pinctrl: qcom: Introduce Pinctrl for Glymur
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, andersson@kernel.org,
+ linus.walleij@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, rajendra.nayak@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250728035812.2762957-1-krishna.kurapati@oss.qualcomm.com>
- <175496788918.165980.17430518825409421820.b4-ty@kernel.org>
-Content-Language: en-US
+References: <20250813065533.3959018-1-pankaj.patil@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,24 +102,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <175496788918.165980.17430518825409421820.b4-ty@kernel.org>
+In-Reply-To: <20250813065533.3959018-1-pankaj.patil@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/08/2025 05:04, Bjorn Andersson wrote:
+On 13/08/2025 08:55, Pankaj Patil wrote:
+> Introduce Top Level Mode Multiplexer dt-binding and driver for
+> Qualcomm's next gen compute SoC - Glymur.
+> Device tree changes aren't part of this series and will be posted separately after the official announcement of the Glymur SoC
 > 
-> On Mon, 28 Jul 2025 09:28:12 +0530, Krishna Kurapati wrote:
->> Flatten usb controller nodes and update to using latest bindings
->> and flattened driver approach.
->>
->>
+> Changes in v5:
+> Rebased on top of v6.17-rc1
+> RESOUT_GPIO_N changed to lowercase in bindings and driver
 > 
-> Applied, thanks!
+> Changes in v4:
+> Updated bindings to column length of 80 char
 > 
-> [1/1] arm64: dts: qcom: sc7280: Flatten usb controller nodes
->       commit: d72cb0551d113a0a42e12dcdfdad78ade2c63f50
+> Changes in v3:
+> Fixed indentation for example tlmm node in bindings file
+> Fixed s-o-b and review comments in the driver
+> 
+> Changes in v2:
+> Fixed dt-bindings error from example node's reg propery
+> Fixed gpio-line-name maxItems
+> Driver UFS_RESET macro updated
+> Removed obsolete comment for pingroups
+> Updated ngpio to include ufs_reset pin
 
-Was this patch ever checked against bindings?
+Where are lore links? Why aren't you using b4?
 
 Best regards,
 Krzysztof
