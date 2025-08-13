@@ -1,142 +1,460 @@
-Return-Path: <linux-arm-msm+bounces-68922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F45B24507
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:08:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F873B24587
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 11:36:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6BC23BEDA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:08:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A4BB72003C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 09:36:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3AAD2EE5FE;
-	Wed, 13 Aug 2025 09:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AB12D1913;
+	Wed, 13 Aug 2025 09:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="RBcxly02"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GwpT86EQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E527280E;
-	Wed, 13 Aug 2025 09:08:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD72581;
+	Wed, 13 Aug 2025 09:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755076091; cv=none; b=KVuB4MrIQs1aQDnOV1Ox2SirZC1xVYjYJnYS/Lqgg9wko3k5QADFynXZlHjCC4Jmes/VURTwqmFr7G3swqh1PlO4Q9eJACpBp/5xIlYyBTSIziM64XcPm60JM7ytT8U8YNAuHl3BVPlWYhSY9m1tsrNrZp4RLqAv4ddAZChI+Fo=
+	t=1755077790; cv=none; b=k+EjgYiHVn1fKyXSGcBbvLh4CEvmmO+IFRjBIGYNFG85huF5BgY9gvRbEdN6XJ2+ihe9xuUnBt/BVPGaTYlgZ5mRpE/GomFdYdCmkgB4NbwE206YMLedxAPka0EPotQrnL4EAE7MwOIDjDSFFLfpPtHQhbU35bJyDbIqmrCoSCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755076091; c=relaxed/simple;
-	bh=/SPdHAwhvXyCqoH/t4/l4FNys/9/FT+CFV8bKu69lmc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L7knbgfvoSv1a3+yKX+lc1RHA8j4Q6QPLM5+4XWngLQbVDCe4VGlrR5VWtXz2KRaLLaQqeSNGS8ScIi/Bbt9qTm5ukHAyWVacziXqX+w4KWVxkoywaUQEUvTCka7e86EnDzeMGuSE7/WR2UV3/HKw4giX60Ua+pR7e7uewP9cZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=RBcxly02; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 9806843283;
-	Wed, 13 Aug 2025 09:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1755076079;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zeW3w+muABU56lk8AynPRRMO7XtEP4qDrJkq+5Lwhw0=;
-	b=RBcxly02YqHg6yIG6IVGb6L0wWxwyXgbzexV7fz5MW/s00R1yXLzqz8R0Q4Hp6XCzFEgKy
-	aJQuxXVY2VuM3LcR+HuKLiDTJxPk7hPeIic299sk4PSxG2ekcA+2ZeJQZ9DJMqGpdiEK55
-	dlmn2pZocXR5RTpeMH7mXYpDsa1p5LBc6yeLbl5BB9RJI44aKGy2UdQyipWgEiGweTT6Zs
-	yKZjMHYwq/2e6TLrhQ1n/5tSh0xMWWU8ZMi+8EvpkTaKYRbcurnOinRJ6WojpOPIpt9hGK
-	EGL3JqryRCMP/IrQCvVCa6eDAFIGmMSS2+OxScw07Z8iZPtIZg8PP1xYwoncfg==
-Date: Wed, 13 Aug 2025 11:07:45 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org>
-Cc: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
- Marussi <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
- <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
- <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Jacky Huang
- <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, Vladimir
- Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk
- <piotr.wojtaszczyk@timesys.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon
- <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek
- <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
- =?UTF-8?B?RsOkcmJlcg==?= <afaerber@suse.de>, Manivannan Sadhasivam
- <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
- <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
- <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
- internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
- Filippov <jcmvbkbc@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement
- <gregory.clement@bootlin.com>, Sebastian Hesselbarth
- <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
- <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>, Krzysztof
- Kozlowski <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar
- <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, Viresh Kumar
- <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Alex Helms
- <alexander.helms.jy@renesas.com>, Linus Walleij <linus.walleij@linaro.org>,
- Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, Nobuhiro Iwamatsu
- <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev,
- linux-mips@vger.kernel.org, imx@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
- linux-actions@lists.infradead.org, asahi@lists.linux.dev,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 106/114] clk: versaclock5: convert from round_rate() to
- determine_rate()
-Message-ID: <20250813110745.63523645@booty>
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-	<20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1755077790; c=relaxed/simple;
+	bh=lPzttazSCCf8LOSF1mw4vFUIp/7hxMu7f2j2q+0HbJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jG7k6KgIsNaq4ND7qYUjzsIOFUldCaxXAhcrXvhkD/e4K+D0UgLp2+wvQp2oQvYoQe+OpZT5SnBwVIIJTs3BBugnzzK2D9/4wd/b2XkQT7VEd5lC+1quehaQCh1S1e7Ag6NWVaLWIg9W4L9uqHgpPcgwWsKtUaAB63cJJkf0r7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GwpT86EQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57D6mIvS020477;
+	Wed, 13 Aug 2025 09:36:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1s84W2H68M75UiDlQ3DS8fGcXqxpmjW4a9xrs2qxFEg=; b=GwpT86EQtNfPPCAH
+	atlxdCocbOcKfDQb4vR5JcmJ++hj9DYO2Y4dKSMcUWvn2pFxQ7dDm6rxYVbHWrj5
+	pSA5DSvL5rZUnYydkt2ULC8AlE7xWwNY3jxubqHKgaQPWVaBPftOcyJmNPSdBTRP
+	Y+VDKq/QuyzFYa+Gu+lBitunaEDA2r4FkNpXEWDDcZbZpqFYEIIt6k2z54Y3r9BX
+	OWMay6P7lrQk1+xJf2uEZXbDNqpS6hUCS+q+xPWkzwxxddni20BtDQ5zxxuvBZjY
+	dPxZ2XOOaLniITyWjio5r9v29RKretiu4aJK/SJOWCqtEq8qMnIi8FOe7Q+LWcqS
+	DFoN6g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhx9dpn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Aug 2025 09:36:18 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57D9aH2P031554
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Aug 2025 09:36:17 GMT
+Received: from [10.133.33.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
+ 2025 02:36:12 -0700
+Message-ID: <48c61bce-21e6-488a-b976-da53004b6226@quicinc.com>
+Date: Wed, 13 Aug 2025 17:36:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/38] drm/msm/dp: break up dp_display_enable into two
+ parts
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar
+	<abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-3-a54d8902a23d@quicinc.com>
+ <gwib6zcvkxsxcz222cno5jbvsnt2abdoqfnymlxq7e6c6wdfvn@nlplodnco2sw>
+Content-Language: en-US
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <gwib6zcvkxsxcz222cno5jbvsnt2abdoqfnymlxq7e6c6wdfvn@nlplodnco2sw>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeeftdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeehffejffekudfhkeeklefgjeeuheekffelheejgfeijeehieelkedttdfhjedtnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepkeelpdhrtghpthhtohepuggvvhhnuhhllhdosghmrghsnhgvhidrrhgvughhrghtrdgtohhmsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegsmhgrshhnvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehmthhurhhqu
- hgvthhtvgessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepshgsohihugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhuuggvvghprdhhohhllhgrsegrrhhmrdgtohhmpdhrtghpthhtoheptghrihhsthhirghnrdhmrghruhhsshhisegrrhhmrdgtohhmpdhrtghpthhtohepuhhnihgtohhrnhgpfigrnhhgsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepihhnohgthhhirghmrgesghhmrghilhdrtghomh
-X-GND-Sasl: luca.ceresoli@bootlin.com
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX4PdcXcukTa2P
+ URMhVEhBNdNH725gJHQm0vGR0aEeaLNImRkDguUmL5r5fYiFpPLbNe+0BoW5ww6l4R8ZXjXAVBM
+ UEZkkCsCiqBQwi1LwPMGHSYEt9aDAeNIbl9nvPzQXPahqF9meO2VIIJ8QC52/Jdc8F/SS332uhs
+ 4aEYZyW1/Mki/Rl7wq70tmiHs4cbGZv983fUo2JKRQXIbGJZOyBFbcMMJqIOsmonxSjsgTG7loM
+ mCul9tZ8mJXjt4qeQiN9Y29fpZ6asybU4J/Ad8aCY473c3S7ubvodXIS/reBJNlBQdTAKTRfN2l
+ dr/3JwBoBlxOZjDBk2g1G84lBEfRiEVUICTh/ChWLGDfWVeF+4EZHc6tIv6w8e13e4iJsonJa+d
+ 2I8bJagW
+X-Proofpoint-GUID: tVZXj0YtTUN59EnYnrCn4GhSGQZ26VXV
+X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689c5c92 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=a1Dkl4VKOg0tngf4JrsA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: tVZXj0YtTUN59EnYnrCn4GhSGQZ26VXV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
 
-On Mon, 11 Aug 2025 11:19:38 -0400
-Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org> wrote:
 
-> From: Brian Masney <bmasney@redhat.com>
+
+On 2025/6/9 20:59, Dmitry Baryshkov wrote:
+> On Mon, Jun 09, 2025 at 08:21:22PM +0800, Yongxing Mou wrote:
+>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> dp_display_enable() currently re-trains the link if needed
+>> and then enables the pixel clock, programs the controller to
+>> start sending the pixel stream. Splite these two parts into
+>> prepare/enable APIs, to support MST bridges_enable inserte
 > 
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
+> typos
 > 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+>> the MST payloads funcs between enable stream_clks and programe
+>> register.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 57 +++++++++++++--------
+>>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 +-
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 99 +++++++++++++++++++++++++++----------
+>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+>>   4 files changed, 111 insertions(+), 49 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> index a50bfafbb4ea85c114c958ea0ed24362a1f23136..1e13ca81b0155a37a4ed7a2e83c918293d703a37 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> @@ -1980,40 +1980,61 @@ static int msm_dp_ctrl_link_retrain(struct msm_dp_ctrl_private *ctrl)
+>>   	return msm_dp_ctrl_setup_main_link(ctrl, &training_step);
+>>   }
+>>   
+>> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
+>> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
+>>   {
+>>   	int ret = 0;
+>> -	bool mainlink_ready = false;
+>>   	struct msm_dp_ctrl_private *ctrl;
+>> -	unsigned long pixel_rate;
+>> -	unsigned long pixel_rate_orig;
+>>   
+>>   	if (!msm_dp_ctrl)
+>>   		return -EINVAL;
+>>   
+>>   	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+>>   
+>> -	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
+>> -
+>> -	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
+>> -		pixel_rate >>= 1;
+>> -
+>> -	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
+>> -		ctrl->link->link_params.rate,
+>> -		ctrl->link->link_params.num_lanes, pixel_rate);
+>> +	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d\n",
+>> +		   ctrl->link->link_params.rate,
+>> +		   ctrl->link->link_params.num_lanes);
+> 
+> Please don't mix whitespace changes with the actual code changes. It
+> makes reviewing the patch much harder.
+> 
+>>   
+>>   	drm_dbg_dp(ctrl->drm_dev,
+>> -		"core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
+>> -		ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
+>> +		   "core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
+>> +		   ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
+>>   
+>>   	if (!ctrl->link_clks_on) { /* link clk is off */
+>>   		ret = msm_dp_ctrl_enable_mainlink_clocks(ctrl);
+>>   		if (ret) {
+>>   			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
+>> -			goto end;
+>> +			return ret;
+>>   		}
+>>   	}
+>>   
+>> +	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
+>> +		msm_dp_ctrl_link_retrain(ctrl);
+>> +
+>> +	/* stop txing train pattern to end link training */
+>> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
+>> +{
+>> +	int ret = 0;
+>> +	bool mainlink_ready = false;
+>> +	struct msm_dp_ctrl_private *ctrl;
+>> +	unsigned long pixel_rate;
+>> +	unsigned long pixel_rate_orig;
+>> +
+>> +	if (!msm_dp_ctrl)
+>> +		return -EINVAL;
+>> +
+>> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+>> +
+>> +	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
+>> +
+>> +	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
+>> +		pixel_rate >>= 1;
+>> +
+>> +	drm_dbg_dp(ctrl->drm_dev, "pixel_rate=%lu\n", pixel_rate);
+>> +
+>>   	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
+>>   	if (ret) {
+>>   		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
+>> @@ -2031,12 +2052,6 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
+>>   		ctrl->stream_clks_on = true;
+>>   	}
+>>   
+>> -	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
+>> -		msm_dp_ctrl_link_retrain(ctrl);
+>> -
+>> -	/* stop txing train pattern to end link training */
+>> -	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>> -
+>>   	/*
+>>   	 * Set up transfer unit values and set controller state to send
+>>   	 * video.
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> index b7abfedbf5749c25877a0b8ba3af3d8ed4b23d67..42745c912adbad7221c78f5cecefa730bfda1e75 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> @@ -18,7 +18,8 @@ struct msm_dp_ctrl {
+>>   struct phy;
+>>   
+>>   int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl);
+>> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train);
+>> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl);
+>> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *dp_ctrl, bool force_link_train);
+>>   void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl);
+>>   void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
+>>   void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl);
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 9d2db9cbd2552470a36a63f70f517c35436f7280..5ac5dcf35b789f2bda052a2c17aae20aa48d8e18 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -831,7 +831,37 @@ static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
+>>   	return 0;
+>>   }
+>>   
+>> -static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_link_train)
+>> +static int msm_dp_display_prepare(struct msm_dp_display_private *dp)
+>> +{
+>> +	int rc = 0;
+>> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>> +	bool force_link_train = false;
+>> +
+>> +	drm_dbg_dp(dp->drm_dev, "sink_count=%d\n", dp->link->sink_count);
+>> +	if (msm_dp_display->prepared) {
+>> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
+>> +		return 0;
+>> +	}
+> 
+> How can it be prepared here? It is called at the beginning of the
+> .atomic_enable() only, so there is no way this can be true.
+> 
+Emm, sorry for forget this case.. Whern MST enabled, 
+msm_dp_display_prepare() will be called from 
+mst_bridge_atomic_pre_enable, that means, when second stream called this 
+func, it already prepared, so we should skip here. so this condition 
+will really hit in MST case..
+>> +
+>> +	rc = pm_runtime_resume_and_get(&msm_dp_display->pdev->dev);
+>> +	if (rc) {
+>> +		DRM_ERROR("failed to pm_runtime_resume\n");
+>> +		return rc;
+>> +	}
+>> +
+>> +	if (dp->hpd_state == ST_CONNECTED && !msm_dp_display->power_on) {
+>> +		msm_dp_display_host_phy_init(dp);
+>> +		force_link_train = true;
+>> +	}
+>> +
+>> +	rc = msm_dp_ctrl_prepare_stream_on(dp->ctrl, force_link_train);
+>> +	if (!rc)
+>> +		msm_dp_display->prepared = true;
+>> +
+>> +	return rc;
+>> +}
+>> +
+>> +static int msm_dp_display_enable(struct msm_dp_display_private *dp)
+>>   {
+>>   	int rc = 0;
+>>   	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>> @@ -842,7 +872,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_l
+>>   		return 0;
+>>   	}
+>>   
+>> -	rc = msm_dp_ctrl_on_stream(dp->ctrl, force_link_train);
+>> +	rc = msm_dp_ctrl_on_stream(dp->ctrl);
+>>   	if (!rc)
+>>   		msm_dp_display->power_on = true;
+>>   
+>> @@ -872,13 +902,10 @@ static int msm_dp_display_post_enable(struct msm_dp *msm_dp_display)
+>>   	return 0;
+>>   }
+>>   
+>> -static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+>> +static void msm_dp_display_audio_notify_disable(struct msm_dp_display_private *dp)
+>>   {
+>>   	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>>   
+>> -	if (!msm_dp_display->power_on)
+>> -		return 0;
+>> -
+>>   	/* wait only if audio was enabled */
+>>   	if (msm_dp_display->audio_enabled) {
+>>   		/* signal the disconnect event */
+>> @@ -889,6 +916,14 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+>>   	}
+>>   
+>>   	msm_dp_display->audio_enabled = false;
+>> +}
+>> +
+>> +static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+>> +{
+>> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>> +
+>> +	if (!msm_dp_display->power_on)
+>> +		return 0;
+>>   
+>>   	if (dp->link->sink_count == 0) {
+>>   		/*
+>> @@ -1506,9 +1541,8 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>>   	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
+>>   	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
+>>   	int rc = 0;
+>> +
+>>   	struct msm_dp_display_private *msm_dp_display;
+>> -	u32 hpd_state;
+>> -	bool force_link_train = false;
+>>   
+>>   	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+>>   
+>> @@ -1516,29 +1550,23 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>>   		msm_dp_hpd_plug_handle(msm_dp_display, 0);
+>>   
+>>   	mutex_lock(&msm_dp_display->event_mutex);
+>> -	if (pm_runtime_resume_and_get(&dp->pdev->dev)) {
+>> -		DRM_ERROR("failed to pm_runtime_resume\n");
+>> -		mutex_unlock(&msm_dp_display->event_mutex);
+>> -		return;
+>> -	}
+>>   
+>> -	hpd_state = msm_dp_display->hpd_state;
+>> -	if (hpd_state == ST_DISCONNECT_PENDING) {
+>> +	rc = msm_dp_display_prepare(msm_dp_display);
+>> +	if (rc) {
+>> +		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
+>>   		mutex_unlock(&msm_dp_display->event_mutex);
+>>   		return;
+>>   	}
+>>   
+>> -	if (hpd_state == ST_CONNECTED && !dp->power_on) {
+>> -		msm_dp_display_host_phy_init(msm_dp_display);
+>> -		force_link_train = true;
+>> -	}
+>> -
+>> -	msm_dp_display_enable(msm_dp_display, force_link_train);
+>> -
+>> -	rc = msm_dp_display_post_enable(dp);
+>> -	if (rc) {
+>> -		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+>> -		msm_dp_display_disable(msm_dp_display);
+>> +	if (dp->prepared) {
+>> +		rc = msm_dp_display_enable(msm_dp_display);
+>> +		if (rc)
+>> +			DRM_ERROR("DP display enable failed, rc=%d\n", rc);
+>> +		rc = msm_dp_display_post_enable(dp);
+>> +		if (rc) {
+>> +			DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+>> +			msm_dp_display_disable(msm_dp_display);
+>> +		}
+>>   	}
+>>   
+>>   	/* completed connection */
+>> @@ -1560,6 +1588,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
+>>   	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
+>>   }
+>>   
+>> +static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
+>> +{
+>> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>> +
+>> +	if (!msm_dp_display->prepared) {
+>> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
+>> +		return;
+>> +	}
+> 
+> Why/ how is it possible?
+> 
+>> +
+>> +	pm_runtime_put_sync(&msm_dp_display->pdev->dev);
+>> +
+>> +	msm_dp_display->prepared = false;
+>> +}
+>> +
+>>   void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>>   				       struct drm_atomic_state *state)
+>>   {
+>> @@ -1580,6 +1622,8 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>>   		drm_dbg_dp(dp->drm_dev, "type=%d wrong hpd_state=%d\n",
+>>   			   dp->connector_type, hpd_state);
+>>   
+>> +	msm_dp_display_audio_notify_disable(msm_dp_display);
+>> +
+>>   	msm_dp_display_disable(msm_dp_display);
+>>   
+>>   	hpd_state =  msm_dp_display->hpd_state;
+>> @@ -1588,9 +1632,10 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>>   		msm_dp_display->hpd_state = ST_DISCONNECTED;
+>>   	}
+>>   
+>> +	msm_dp_display_unprepare(msm_dp_display);
+>> +
+>>   	drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
+>>   
+>> -	pm_runtime_put_sync(&dp->pdev->dev);
+>>   	mutex_unlock(&msm_dp_display->event_mutex);
+>>   }
+>>   
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+>> index cc6e2cab36e9c0b1527ff292e547cbb4d69fd95c..2394840e9f28e136705004c3e6af93fbe13c33c5 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+>> @@ -19,6 +19,7 @@ struct msm_dp {
+>>   	bool link_ready;
+>>   	bool audio_enabled;
+>>   	bool power_on;
+>> +	bool prepared;
+>>   	unsigned int connector_type;
+>>   	bool is_edp;
+>>   	bool internal_hpd;
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
