@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-68990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59403B24AD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 15:43:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B27DBB24AEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 15:46:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFA09885437
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 13:41:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C78921BC8406
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 13:42:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42DBE2EAB6C;
-	Wed, 13 Aug 2025 13:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86F8D2EFD98;
+	Wed, 13 Aug 2025 13:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PKdJqjnw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ue8xZgup"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E46C2EA74B;
-	Wed, 13 Aug 2025 13:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596C22EF67E;
+	Wed, 13 Aug 2025 13:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755092425; cv=none; b=AOjnU63NkmD/DOfbGneM5drdDwj4LqBm5JTmlbHW8kXDQ3nYwO0LPtshj9F+Y58nd/fDnBvw2sZ8csag0mMdeAYr3BpQ4IsxQZZtI/y7KK8nwKERjXm2oPOFgVHSKuArVc9IX6JiTe7SV0VYwZW5pEKbTw+KGqDAB/JMePnIujY=
+	t=1755092482; cv=none; b=WmWybOLTUsTubGxLsDI0A1xTUocFbc02L56oonT/NI59PASo9xEdl9ylN2Z6KkT5Md0KptwkOuRmhypGYsstZvtkZVGo61scXIrdkq5YL/O9BmWfJGKcZsqUM+NYstm7goed3Mzyb8qxuDp6JYnJF6PiNDcfxxJQIymtmML2Yr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755092425; c=relaxed/simple;
-	bh=ABkUOWC9dO33/kmvZXFne3hwNpt57QUxop/u2rKx5No=;
+	s=arc-20240116; t=1755092482; c=relaxed/simple;
+	bh=75ouafMcM1RjH+OPfqPokKQM96pO03FrNAvY+f1w4rA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jD2m0/tlgifzd72ay5jF6f0CUF+oDD4K35rwjTs7Og8+AbK2cy69B7Zec7V49rDenLbpNZSdGW9YzIJZm12fhjyFF5n0A6X8p3DegsFDrnC8KhsGCbg6Qk0oT0X5NUdemocVspIOujUFN6/FGhk5/QzAxVOKZ5HG85Q0b/XDQf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PKdJqjnw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9234CC4CEEB;
-	Wed, 13 Aug 2025 13:40:23 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=uFXNNe2DjfxIyXLEMw7hCVifEzZAphlMPx4T7e4ctePkbo41T2UvsxtDNgy1k5Pu0x489/3xgtczD1A76zUAIViIpj42F9Xyvp700GthRAPEgWkIS/s1u42f2n9cJBYyFxu0KCjPjrQ8W/n7xlII0IBYUlC4jX/ncQ6nWgDNnxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ue8xZgup; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6D6C4CEEB;
+	Wed, 13 Aug 2025 13:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755092424;
-	bh=ABkUOWC9dO33/kmvZXFne3hwNpt57QUxop/u2rKx5No=;
+	s=k20201202; t=1755092482;
+	bh=75ouafMcM1RjH+OPfqPokKQM96pO03FrNAvY+f1w4rA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PKdJqjnwYAKslBfUceq8onLF4jjachPiy4mmNcgq3HWu1XGDi2k1DP3hLd9f8W9id
-	 GGuMAsU/MiK6w5+fY9EZVG1Ywh/d5gdPiS16rFsdKAACKk23B7OE35APtKfLzWyzLd
-	 FhR1pmm7yE0G70DmX46s9f0AYJa9PzkVEOaW7IyzhAbTrg0dOmfvZmlPCSdPgw5dyG
-	 ndYVkSXO6QGPVpuzgyQuFA7OToXs2ksLxxoJONhLz9KWpeNbDBcGZ9oYlX9iMt3dJT
-	 F2fWcZXr+GqOpFCS6ylEW0HuLX48mX/MDnO3mlFOSWCG/2NP8gL8VpWJ9KnRxhch8B
-	 l2E+MmtA/0wSA==
-Date: Wed, 13 Aug 2025 08:40:21 -0500
+	b=ue8xZgupZ2fj4mz+/5wAFT15002hRkaONYVFAbqNeIgg8azyWa7iK/J2eodrdY1a5
+	 /a/MQAyrRYvkz4K/no/ljvc16eJDqVQ+b6uohxsmlg7cEknHiMKFvp4C4jGY5fsG6t
+	 zVjdZOVfGyIZ3U2fWicUDzzj/kN6snx+s8ormGhust17E05YXIfdA0yH0SyIxuKZ6c
+	 AM03ro2iboMqZGct4GvlFCZo407CYVP973LdclVevz0oJJf+gSJ5tWXtHKoCCzz/+Z
+	 ps0CoGp89+Tl8Y2v2YmSMPsRxjWCT42PyXQWtGblsn5yf1DKIuAFX7NIE/HD8N3QnC
+	 ymh1RqmY9fc6A==
+Date: Wed, 13 Aug 2025 08:41:19 -0500
 From: Bjorn Andersson <andersson@kernel.org>
 To: Taniya Das <taniya.das@oss.qualcomm.com>
 Cc: Michael Turquette <mturquette@baylibre.com>, 
@@ -51,11 +51,11 @@ Cc: Michael Turquette <mturquette@baylibre.com>,
 	Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
 	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/7] dt-bindings: clock: qcom-rpmhcc: Add support for
- Glymur SoCs
-Message-ID: <y4g3xj3i6hpnetoxiq6uh2altlxjdnrff3wv5c4tk42uh52jn7@ymb4qhehvy4n>
+Subject: Re: [PATCH v4 2/7] dt-bindings: clock: qcom: Document the Glymur SoC
+ TCSR Clock Controller
+Message-ID: <2ckimmzf6swpmckgaxw4ys4ocxhhno3pzx7fidqgzftfhww6tt@jiq2q72jgonf>
 References: <20250813-glymur-clock-controller-v4-v4-0-a408b390b22c@oss.qualcomm.com>
- <20250813-glymur-clock-controller-v4-v4-1-a408b390b22c@oss.qualcomm.com>
+ <20250813-glymur-clock-controller-v4-v4-2-a408b390b22c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,32 +64,84 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250813-glymur-clock-controller-v4-v4-1-a408b390b22c@oss.qualcomm.com>
+In-Reply-To: <20250813-glymur-clock-controller-v4-v4-2-a408b390b22c@oss.qualcomm.com>
 
-On Wed, Aug 13, 2025 at 01:25:17PM +0530, Taniya Das wrote:
-> Add bindings and update documentation compatible for RPMh clock
-> controller on Glymur SoC.
+On Wed, Aug 13, 2025 at 01:25:18PM +0530, Taniya Das wrote:
+> The Glymur SoC TCSR block provides CLKREF clocks for EDP, PCIe, and USB. Add
+> this to the TCSR clock controller binding together with identifiers for
+> the clocks.
 > 
+
+Very nice, thank you!
 
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
+Regards,
+Bjorn
+
 > Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml           |  3 +++
+>  include/dt-bindings/clock/qcom,glymur-tcsr.h       | 24 ++++++++++++++++++++++
+>  2 files changed, 27 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> index a4414ba0b287b23e69a913d10befa5d7368ff08b..78fa0572668578c17474e84250fed18b48b93b68 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> @@ -17,6 +17,7 @@ description: |
->  properties:
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> index 2ed7d59722fc7e1e8ccc3adbef16e26fc44bf156..2c992b3437f29b38d9c73e3c600f2c55e0b8ae98 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> @@ -8,12 +8,14 @@ title: Qualcomm TCSR Clock Controller on SM8550
+>  
+>  maintainers:
+>    - Bjorn Andersson <andersson@kernel.org>
+> +  - Taniya Das <taniya.das@oss.qualcomm.com>
+>  
+>  description: |
+>    Qualcomm TCSR clock control module provides the clocks, resets and
+>    power domains on SM8550
+>  
+>    See also:
+> +  - include/dt-bindings/clock/qcom,glymur-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8550-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8650-tcsr.h
+>    - include/dt-bindings/clock/qcom,sm8750-tcsr.h
+> @@ -22,6 +24,7 @@ properties:
 >    compatible:
->      enum:
-> +      - qcom,glymur-rpmh-clk
->        - qcom,milos-rpmh-clk
->        - qcom,qcs615-rpmh-clk
->        - qcom,qdu1000-rpmh-clk
+>      items:
+>        - enum:
+> +          - qcom,glymur-tcsr
+>            - qcom,milos-tcsr
+>            - qcom,sar2130p-tcsr
+>            - qcom,sm8550-tcsr
+> diff --git a/include/dt-bindings/clock/qcom,glymur-tcsr.h b/include/dt-bindings/clock/qcom,glymur-tcsr.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..72614226b113bb60f1e430fc18e13c46c8b043d3
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,glymur-tcsr.h
+> @@ -0,0 +1,24 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_TCSR_CC_GLYMUR_H
+> +#define _DT_BINDINGS_CLK_QCOM_TCSR_CC_GLYMUR_H
+> +
+> +/* TCSR_CC clocks */
+> +#define TCSR_EDP_CLKREF_EN					0
+> +#define TCSR_PCIE_1_CLKREF_EN					1
+> +#define TCSR_PCIE_2_CLKREF_EN					2
+> +#define TCSR_PCIE_3_CLKREF_EN					3
+> +#define TCSR_PCIE_4_CLKREF_EN					4
+> +#define TCSR_USB2_1_CLKREF_EN					5
+> +#define TCSR_USB2_2_CLKREF_EN					6
+> +#define TCSR_USB2_3_CLKREF_EN					7
+> +#define TCSR_USB2_4_CLKREF_EN					8
+> +#define TCSR_USB3_0_CLKREF_EN					9
+> +#define TCSR_USB3_1_CLKREF_EN					10
+> +#define TCSR_USB4_1_CLKREF_EN					11
+> +#define TCSR_USB4_2_CLKREF_EN					12
+> +
+> +#endif
 > 
 > -- 
 > 2.34.1
