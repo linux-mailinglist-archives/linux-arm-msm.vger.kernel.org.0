@@ -1,149 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-68894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B44A0B240E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:03:04 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70FE1B24139
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 08:16:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 068173BA503
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 06:03:03 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 539B04E40BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 06:16:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4DA12BEC25;
-	Wed, 13 Aug 2025 06:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499752BE03B;
+	Wed, 13 Aug 2025 06:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WwKcSNC9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnbS1CC0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C22223D7C6;
-	Wed, 13 Aug 2025 06:03:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C293597B;
+	Wed, 13 Aug 2025 06:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755064981; cv=none; b=l5itHCBR1p1+mqyDWJEDTGVtBAbuBt812HVUCeoIfsRzKYGNfy0o4GNAeVAQfhpAdVeHSucrqnDmDtZxT5rXCE6ZwS8Loas89lI7/qpMONPIAiyIW2t4Lx2mov3Ry2V1APYs/yYmXa8Zoq+ywQ/ENUj7vMTUydXqMCOvL1jDzuA=
+	t=1755065770; cv=none; b=YOhVcGvmk9mKFA5wwLQ6br2ux7tfX+x0mAERJYvvhjpOKqRA4xB+ufQiwQb7J3mYAN9hrRiQpEDRtV5bPnQYbEct/gqZjjwCJ+h7FRvewC5bazYfsVrGSHcAJnqQyV1mRCr50w/dLWODUMWrNOQX5guM0T35+afx2BtpXe867/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755064981; c=relaxed/simple;
-	bh=xpVzbfzh6K6iNq6MqiRnNFbqoopiD+3fbmgHO4xwcoA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q39OrmYLbcO+yvWTl5lEgka3c3bL4QVUaf1oMp/bQnuni8OdE/Z575bl3LuxexaV+HSegEqzOT6RsTpj9TZ0nRcN5yJDG2OYbRv5CF8z4rRTQTQRd6hYAgt1ZJ7XRXvedSs8EXOB87w+SAcpA651bAZmdqK1712XYiaJVgQuOqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WwKcSNC9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F1DC4CEEB;
-	Wed, 13 Aug 2025 06:02:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755064981;
-	bh=xpVzbfzh6K6iNq6MqiRnNFbqoopiD+3fbmgHO4xwcoA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WwKcSNC9+WKcBiR0WI7W+oj5vHF06GmzwnHKwufyA24L2WlFEpVHGjwtdNo+kpd3c
-	 k3sNKSNuuM/wE3tbVcb2lL9BgIW17btp5bJqECxq9+qGV5omaU7va0xllfwYMghpvh
-	 8d5LizqldFW4FvaKeFM7aBLJcf5m8Tq2Z6QwkbvgTvJl4rlJws6A2+k5mOyQqVszRT
-	 gi4sfxMtzNDbdeI/WdLHmU+ZF04yWdlzTveRp1QRFZAehj9gvu0cc0iMHD12E4+bMX
-	 +saz7uQZXc82DqpLfSdVlrky5TbVC9rDgcMDf/M3h2zAM56Qz6fEzauP6Q/4CbyMqu
-	 aNS8HNvLr4hWQ==
-Message-ID: <ac83c453-c24d-4c4d-83bc-9ed13f2f9d1e@kernel.org>
-Date: Wed, 13 Aug 2025 08:02:55 +0200
+	s=arc-20240116; t=1755065770; c=relaxed/simple;
+	bh=c+TZbzGFvRmXvp8+YzDXRVZQDNo78fe6EUXMrbYg4iM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B2q0LR9n3SyVX1+KFkc0DVZcJFRy7hxJNFXNPLsNbZfxW39t5b4PJno7QBmUd9wOiwd8HR8FLAKMmRgre59eneFs/kdcDbcmxAYSxogQmeKLpHqXcZASw22yIQ1/HslgH6HkALKCgWwhsjYtHjLY0gTC8nHW1acWfspo7t7p3xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnbS1CC0; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-71bfdb6ff81so45645407b3.2;
+        Tue, 12 Aug 2025 23:16:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755065767; x=1755670567; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qGHs+XddNJPqC55SFwg8V5Yk+L2d1CEXmOV4NbKbVaI=;
+        b=MnbS1CC0qs+B9S8tj0skMW+uNvj/KiwsepdNNyVV5B4mZCjr0w4bfnvZ09h82OwKQY
+         BiQXf3Tu2fZzQZ7XFdle7hxPERiZqliSpW8KCxmNK2cmkZZcKbC2cV3cJTf2TIjETm69
+         LPy4oVAiiP7egZlyCHgxiLgyUcp47VqvId7hRITeSnGsRzqO9SEidBBw/iHqCC8YIGhN
+         b4N1FmsWIgkQfr06hGX229gOUaI8bAL2SI/EI7H8+HTpeYEtLX6mqgP6Ny+epSFdb0PG
+         /8lLNdDtR8KS9QCbPOixkQD94O/dEEFx3sfSCF+HYjs7+9cYh3LCdQrpj62PdpJxewPO
+         Vfhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755065767; x=1755670567;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qGHs+XddNJPqC55SFwg8V5Yk+L2d1CEXmOV4NbKbVaI=;
+        b=cLDg774c0GxPJRV9pwDxnjwi3wfO0E/zh/WTOq0lZ+jjPArt9zSP0jmOWOX55Ab7pl
+         817qCwZmL7mBbLBhSVdi6wkn7eX1ZBBgE89WBY7JQsPBeGRgJ+iO1QyIoldAMJBPJKfQ
+         1kKe4lrTFp8aOyn9LZ3eSsXGjJXbeV5PDwfeJloC61pJJwp0wHCSs+yMgC4rhucl7DOy
+         4InQgQ+K7BZfuBtS1JyYrWYLNyhKbksXNdeOvngE3fFXB0y1A8JvSbvZsL9u1Gtgtr96
+         dAdY0VYmGydftyN8JjqfY0azi3cbzqdPpOwUkIg+AHs4eUg/gvbMKQrOef8w+0ytXkHB
+         CVtg==
+X-Forwarded-Encrypted: i=1; AJvYcCUw6kpzxrmFTyQbpvHkFazALb9RqwBKuGCVmGO7BLtWsNWzuDDpfqjhy2ta57RgUNLELoMejJUNVq/7HzK3@vger.kernel.org, AJvYcCVHsCTlcbmG6jsOuw/e0/gIsnhr/rVN+vZ/QtDff3xWZyNV6Evl7HZPtwoY05WDEVdlxY0I0WJOpfWR@vger.kernel.org, AJvYcCWBmFOj9KI7HSS7PGiBKawxsp3keWj0+vRt8YqSsVROtLgy1z68DAY0ZFyz8gA3kG5cnQo7Fq8JivTuNGH8@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfZSIiBddGaBa0wWDR2OTa5Eeb+V9KndW6TKg0USZczUMLYlrS
+	GceX7aC1W3zE6qbHHyHupXBlqn1/R94zYCx5sAk2XCPYDAihqY5OTVGgTNoTrFpNaPtLRbi3YDH
+	MePv26CHiPO2mNfGegBr7VFYG9WL1D+k=
+X-Gm-Gg: ASbGncvsjIyHJL/j1yDUx+/h3nBi5cve0bYa1hLG2MoUa7+Ri9BbUDw7KUri4tCf4gh
+	zbhSgD9dOpvYNaVx/lez9m717XJvBHw4mdMf01y6sLNU9gy5za8Ar4lgAQvkEgUOc8vq4qK5R9h
+	tsqLqv6AmqL871i3zRJZ7cYBSscvTk9Nf0Bqe9KjhbZFK9rS/7c9KupxweV2A1xXN7tFfBZ61cK
+	AjlTw==
+X-Google-Smtp-Source: AGHT+IGvaTDOsSIZvcUhUIprekNfw4eqFtn3SKGv+2RTxiz9DQaG05Rg1F9rAYDGp1NHpAqlRVW3X/RQNstQZ3imKo8=
+X-Received: by 2002:a05:690c:308a:b0:71c:16b7:518e with SMTP id
+ 00721157ae682-71d4e588b36mr25640677b3.28.1755065767619; Tue, 12 Aug 2025
+ 23:16:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: interconnect: add clocks property to
- enable QoS on sa8775p
-To: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Mike Tipton <mike.tipton@oss.qualcomm.com>
-References: <20250808140300.14784-1-odelu.kukatla@oss.qualcomm.com>
- <20250808140300.14784-2-odelu.kukatla@oss.qualcomm.com>
- <90b51e31-3217-4483-bb5b-ec328665a723@kernel.org>
- <28b97952-1b67-411f-a7fb-ddd558739839@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <28b97952-1b67-411f-a7fb-ddd558739839@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250812055542.1588528-1-krishna.kurapati@oss.qualcomm.com> <20250812055542.1588528-4-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250812055542.1588528-4-krishna.kurapati@oss.qualcomm.com>
+From: Peter Chen <hzpeterchen@gmail.com>
+Date: Wed, 13 Aug 2025 14:16:21 +0800
+X-Gm-Features: Ac12FXzHVrNJ22jQgp5TTCQxddFQnye2KLkEtZEXVGLumYDMBYwBKhcv7bn2N3Q
+Message-ID: <CAL411-qmWLJ9vYTc+NHFYymsJ27ryge88nTc71NAnzDa7TrExg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] usb: xhci: plat: Facilitate using autosuspend for
+ xhci plat devices
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Mathias Nyman <mathias.nyman@intel.com>, 
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 13/08/2025 07:55, Odelu Kukatla wrote:
-> 
-> 
-> On 8/12/2025 3:47 PM, Krzysztof Kozlowski wrote:
->> On 08/08/2025 16:02, Odelu Kukatla wrote:
->>> Add reg and clocks properties to enable the clocks required
->>> for accessing QoS configuration.
->>
->>
->> Nothing here explains why EXISTING hardware is being changed. I also
->> remember big discussions and big confusing patches regarding sa8775p
->> (its rename, dropping/changing all providers), and this patch feels like
->> pieces of it without proper justification.
->>
-> Thanks for the review.
-> I have added description in cover letter, i will add here as well in next revision.> And this is hidden ABI break, no justification, no mentioning either.
->> Again we are discussing basics of ABI breaking patches?
->>
-> If you are talking ABI break if we load old DT which may lead to crash, we have .qos_requires_clocks flag which takes care of skipping QoS if required clocks are not enabled.we have addressed this issue through https://lore.kernel.org/all/20240704125515.22194-1-quic_okukatla@quicinc.com/ 
+On Tue, Aug 12, 2025 at 1:58=E2=80=AFPM Krishna Kurapati
+<krishna.kurapati@oss.qualcomm.com> wrote:
+>
+> Allow autosuspend to be used by xhci plat device. For Qualcomm SoCs,
+> when in host mode, it is intended that the controller goes to suspend
+> state to save power and wait for interrupts from connected peripheral
+> to wake it up. This is particularly used in cases where a HID or Audio
+> device is connected. In such scenarios, the usb controller can enter
+> auto suspend and resume action after getting interrupts from the
+> connected device.
+>
+> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> ---
+>  drivers/usb/host/xhci-plat.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+> index 5eb51797de32..dd57ffedcaa2 100644
+> --- a/drivers/usb/host/xhci-plat.c
+> +++ b/drivers/usb/host/xhci-plat.c
+> @@ -171,6 +171,7 @@ int xhci_plat_probe(struct platform_device *pdev, str=
+uct device *sysdev, const s
+>                 return ret;
+>
+>         pm_runtime_set_active(&pdev->dev);
+> +       pm_runtime_use_autosuspend(&pdev->dev);
+>         pm_runtime_enable(&pdev->dev);
+>         pm_runtime_get_noresume(&pdev->dev);
+>
 
-Format your emails correctly, it's difficult to read.
+There is an xhci quirk XHCI_DEFAULT_PM_RUNTIME_ALLOW for it, try to use it.
 
-Your binding did not require reg and clocks. Now it requires reg and
-clocks. This is called ABI break.
-
-Please follow Qualcomm extensive upstreaming guide, it explains this,
-doesn't it? Or follow writing bindings...
-
-Best regards,
-Krzysztof
+Peter
 
