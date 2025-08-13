@@ -1,169 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-69045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79B1B253A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 21:07:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5C7EB25475
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 22:20:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA64A1C8499A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 19:08:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B56A7B6959
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 20:19:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E0012FFDCA;
-	Wed, 13 Aug 2025 19:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A68E327FD5A;
+	Wed, 13 Aug 2025 20:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G6uJk+M2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pPr8ULQQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DA223B63F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 19:07:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05032AE90
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 20:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755112069; cv=none; b=Kn94SxHThdEBfpnk3vM4QvXOehlo5KXt61LAwz+y57N3vEx9YfAlEkumVkpMFmjM99lpHKTi2N2hw4zzSAcPyRH1HT956xGaCjHzdyxzWg38nQBS+tS6+ACPbQ941dieSX0u1PIeqPCvyKgF+E8OeVPCGrBr/RkwIGdbgzVVbNw=
+	t=1755116440; cv=none; b=MBxRDXGE/n67vz7HcwfmRxseLwdQXqGwcLF1J58tuBtgemMU7tze4M1f3/B8RMNXYTa0Tx26GLnW93CIDZsBkLSytAc7a/BJSSXDYz0HwaZTTfLYqx3hk3ATa/1lWz0KwYX5kZ5BjvrsLaJ09u0/mQYu/+uHSbMIWLvxMYdSVI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755112069; c=relaxed/simple;
-	bh=WCbeaj9cuuf/zmyd2iAsdv+J8nh7PcnIVnjEAOvB+Fk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qxvQRaVREq/MkZHwKKY8UZvd/T0yxg9YrYVNyg7p1yZAmO0ZNsDQOX6MCaKO+wtJE7jwZcGCQxUSgLxi/rO/4DJ0S3t2Q5GNPdZ85YfXYi1aqg0rG8MgmPLr42BsWVrPEnuQPMIxj9KA5dNSoh8W0CrHOpJ4y2i1Jvha9E8TMxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G6uJk+M2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLgaI027042
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 19:07:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=lGgb5haUX0R28BdimfN03qfR
-	bmNTvI4oS3VC1C2Vmak=; b=G6uJk+M2+jklEiWGmyrHG9f3JHdZAL2475YQTz0A
-	4BY4SG/1M4kIhkW7r2TBSyTEgsqCLQY1HrXPp71DlQmaby8irvY0PQPu5Jh18iB6
-	mOOjTzw6FaFDtL8Qvvmxnlk+EBtM7JbWmN90egOhu1oE/uGnQoXSCNKEC27Ulg6Z
-	9hScyVdM2koCbJ+/X7hBxxrvTEu/zGvpPZY8QlYrENBdt+RnYebpJLc+qdcY0K/n
-	s7/6IrViwUTFPI0wNJ3rzj+eFNhvJyNyRbIuEVM55rfud8tHq2yxaKPFhhktXHPK
-	48HYH1W6uC/PI2sRDgc06KLnktx14CF8cIhMA6QtcPzuJQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffhjrtvn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 19:07:46 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70a9289280dso4771386d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 12:07:46 -0700 (PDT)
+	s=arc-20240116; t=1755116440; c=relaxed/simple;
+	bh=rR+D3tBr5Y7TWuY2UOSpzkXUuslrs0FnyhVARRKHYQU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=quhwLKqv3uqpu+VvH0qG4foeeKkzoL/mx7L4g0hH4jApky5BaIZKa41dxe5nkuE9fHzsB53JKxaexHG+rzOJ+dfbO478oF8LzbkTU1z8sVTQAL0gLNTWYoEw6JFCKVhgWSgZZ023ix6h27dlOJShueUnq7+p2+Odlk1xa6OIKh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pPr8ULQQ; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45a1ac7c066so1773485e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 13:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755116437; x=1755721237; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F/1t3EFEgXHUBAHB72RnZ06wSpjDj+54/Frk/ThDsww=;
+        b=pPr8ULQQFQFl7vanrN6bHhHRWjrHy2Kga2slWZ+ikhD8zspOIiKIgD/6M8YEl29Tek
+         yjBNHJU7GqDsfpPU7gE/mKP5oZM3IZNkjm2w6M/APudhBp4qp61Fy6tLiddDdltFrL0Z
+         s2Z5z45BK0p2c3JYdv+CwwtAO8T3DO+VLVynnjUGI0trR0NvZvHDxymyfBrqjkS1nRhq
+         S3AeOMSca7UsNMV532vvEWOYzZX7XWbLPBuynyPC18J4VHFWV84G2P4G1Y/q4xm4pmp+
+         GKJSPFT9l9CsLwERm8+vsp6DVQmxVLU4RHy5eNTtJxBo1zNP3BmJJB1uhW1hm4gN6fAG
+         GVdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755112066; x=1755716866;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lGgb5haUX0R28BdimfN03qfRbmNTvI4oS3VC1C2Vmak=;
-        b=cdpZBWLHWu39PXUjnhxrNXkxGlwRceMVOI6yvdnYdW4Grhw000IAE2zQ9HYRYIny/A
-         DDiMndBjLBqhQKr28AhXRQ2RKEpKAJv9UfCo0b/a1z+oyMOGh7O4yTsKiSNzfJMTuiLa
-         HCAAQ2W0F3Tbu3FcV8jjVx63FoFxaYuVIEgGpF5yRv0WLeaHMmRAVXbjDma2IQth5Uak
-         ap1TSxzgdzx8hEb0W5ulAtenKdD+WcX/ClQ1LLdezW0Emz9YlewfyURH7t9v3G1R9IbH
-         gM+UaxX9ujRuqm+jjtjWqNJPwmF2wb1bEwo7/q6maMtP2v4suH+liTk9QjzvPZtWOfce
-         eCvA==
-X-Forwarded-Encrypted: i=1; AJvYcCWqoBjCJZH+4k3NOESZ7QF9D1BwlOt8ARZ5gEB/x/vf2HOkwoOz06pwQD9DYORYh3Lihr72yt0LGnZHCIEv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQQPUBrlq4j65gcwASPlbfYYJAhh70gITAOifNJYEuWWf0xIMh
-	G7TWNdnHLOeHsjZFXEkNauT30YBNhE0OrRkFlx6udluJkfLQN7HXCvU02G/qFwRet7DmOeWr9/P
-	Mvqv6pFc0jk+srNGMSe2KOjZFBece358CzvzdYoecVpgnsyy0hFv0/3ElKbPUJf6criAl
-X-Gm-Gg: ASbGncuGsKcnw6mmbJbGJHB2nUilffc//cQ9Jp4GnffLZOUMvKSrkOHTxkr4prIcqbZ
-	rQFoRRH485WJd9ly0lxdsuSEm7+Ax9xCmu8WZid1cME46wDbcFKHgOlPFKqXuwXJquV3X50OB0k
-	oDFdM0Ra7jiL4KfyruqMG45wjmhVcJOZaIqopidUerZKuZtZ0lSybcB/v6mo6wJd0FLdDaFpOuB
-	w9i8fvn4a9iWt78KzxYOkqJlvwcQXrpRNtwyrJ6FHmrQvqvJ1yvq/4oR3Pk2NZzZ/mqeaVREgrn
-	ndZTdEjxJmx2nyjZ3GpqKhWwJABosws8sq+A6XQMGH66OjA8CvaVa+AwxyUHZAdX+vLBAGwXGDU
-	SHMpxeSwBoAwptLbPg2YIY+AgplcZj387zNOW5wmnDp8LOvemBJ7o
-X-Received: by 2002:a05:6214:2245:b0:707:6364:792f with SMTP id 6a1803df08f44-70af5b8042amr5890026d6.11.1755112065912;
-        Wed, 13 Aug 2025 12:07:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5CH4F+MncTr6A3qh0Qne1j9KUeMdHfJ4BuHh47gTWxWDXbgOj4yyXBcS8NC2bzatyhL9TWg==
-X-Received: by 2002:a05:6214:2245:b0:707:6364:792f with SMTP id 6a1803df08f44-70af5b8042amr5889626d6.11.1755112065427;
-        Wed, 13 Aug 2025 12:07:45 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b889ad021sm5413158e87.74.2025.08.13.12.07.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 12:07:44 -0700 (PDT)
-Date: Wed, 13 Aug 2025 22:07:42 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2] arm64: dts: qcom: sm8750-mtp: Add WiFi and
- Bluetooth
-Message-ID: <zwqjinjqzs7cdbsb2yduym6jx77kjqtyjcinvo3mqvavdj2trz@cmwm2nlynqlu>
-References: <20250811131055.154233-2-krzysztof.kozlowski@linaro.org>
- <l6u4y3suv3dpylexbiiznhcuyanlc4ouizhzj2cchblaf6o4wg@fe4laxrioaj5>
- <481985cb-fa84-4b09-9b95-948ee70b557a@linaro.org>
- <k7mw7rj7cno3con2t57nps23y7evd3da6gahyl5gnrxss7e3s4@qncnuekxr7lb>
- <f7704cc1-95b4-4860-86ea-96ec18f61c8a@linaro.org>
- <ibitgekdjsktpvr6zmouuhgzcbfjfeuv4l4zsl6vszv4hauug5@one6zo6gdykb>
- <3239685a-97af-4d56-a0cc-984f26db5f76@linaro.org>
- <3jrs5gkxzjgrjmfbd65qr3uzblzzz5ae4apo5qwpxb63jm4i23@jzpaxp3dxais>
- <8fc497df-116e-4df2-a33f-bd71476ce065@kernel.org>
+        d=1e100.net; s=20230601; t=1755116437; x=1755721237;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/1t3EFEgXHUBAHB72RnZ06wSpjDj+54/Frk/ThDsww=;
+        b=us6qZzOB37/AQQVSiatiwbUkYSEbwh1kzyK710wcT47+iyZqzof3362Ga/Mlz/urXF
+         5eVGgtzJ6iZynV7+vjbhRopjbLdQZecod6q4e5aMgzjVlGmFSIdWhq9l4uRyDlFpx5Lj
+         Ratd+EgST3ZtUUEfZsg7LXK5G19c9FqfVY8Gn6pmV/lphACheetTGe+gGGR5aTAUprpL
+         w/EgLtIRBeK5zvtl4vEGg8LXmxeJItvfie609VwMgq4Tog1lKxF3TFcNy/Gz/ENHhUvb
+         lHqFKtfLN4b6zt5lgUnfEagoemviY0Urr8OSIOe7k26/8TmAFwacSUa66HBTYZaQCVez
+         UdiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUpl/loPeBtANQkI+oXiqQ8dGfdN+MkZWzBv0OeRL4nqRqKWkBPjs5e/vRIJkGSQU4K2TvW20bheUGLJP5U@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAqt/XozOxhPG2wFK4C0we3mhO//F6noJORyMpd7Ml6U4hpIO9
+	DHBp1NmH7GpA5jGS1IA0ZlqXgsPbddGMR6J/foeIh7FTaldVxFvCNT47bs1B+iJlshY=
+X-Gm-Gg: ASbGncsyo7eRt4ktVcG59V2Xir1W7UB+Pdquk6e6OX7K2vBZUYzzNrfoPs7a7Kmwm5k
+	SnrTw67/6LHHMfcA1nMiMRwMm2p7q8gGA28HhmSVS+bVr72N5uUN+bSGPgPX51/BAJtEVZYXVqH
+	E9PLs7mtQ9vuOFqPWnNSs4L2NesZrt7xHRglSv40B+SBkWHNzpgWhVfA2vIB8Yqm3b4chWALw5W
+	iJhOeW86jsUY9YPjucT1bM8XGXPpxCM0a2sa4CRfCw3HerbaftFQLXqZzA/ljQIGtqog2NaVKkI
+	kE5VWw+K+cBtLEzbCgeKhR7EwAbI7P7CPmS5TySIZp8aPl7O3MCHsDXmKQKYwH7gv8/OlfcNKx+
+	7LO0T5F/0iKIvMpNhKZ7NIPOiMezry2vF+UsINn7LrWtXvfSH2vl9js46cYLhtlE=
+X-Google-Smtp-Source: AGHT+IElNKXelLAOHt8GQdvDS1nqHvpRfu2/IblCpP/yU0lQ3cWvxbEeQ3xIecHM4pnAO9YWIbdQzQ==
+X-Received: by 2002:a05:600c:8283:b0:459:d9d5:7f2b with SMTP id 5b1f17b1804b1-45a1b7bf687mr343085e9.16.1755116436947;
+        Wed, 13 Aug 2025 13:20:36 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b915deec6bsm4945531f8f.7.2025.08.13.13.20.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Aug 2025 13:20:36 -0700 (PDT)
+Message-ID: <bb919b4f-b51f-41c5-aed8-a3809316f7fb@linaro.org>
+Date: Wed, 13 Aug 2025 21:20:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8fc497df-116e-4df2-a33f-bd71476ce065@kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NCBTYWx0ZWRfX0WwI5B/iOwxQ
- CDcDus+3o6WyL7Vu+Qq3cz7X4a6WZUQr0NcGSTUFuZWutve2+vrK/+nY4xoHBwhiuwGbc6hOwKT
- NWEL6lSTnNFTOcL0q8HqL30sivm/L4YCNcGbcFeO9oNCmgVAaq6owBwRi2HtZtFN/GgXmdW1nIT
- MrEDBoCojq+KHBJ2t+Tj/QTaGnPSgAqViTUXmFLxZIChOX9SxccYvgQxYycehHiU+Esq8sZHKhR
- JcQWsEbxYIojUc+t5GfVXHos7PQBF69lo2Pkc+aoe3pSyv9EHZ4HDEb1qqMYBxTiQBS2EVdLHIj
- rtKx8ZEy94oh6eJqpDSKjUn2Lu3/KViR8wuzwDIBOTPLed7FsHOTkZdRS/HUNhUgx1BxQcMWkg1
- V/2yM9eK
-X-Proofpoint-GUID: r2nYLbzcRWg-hafKrXM-D-5mOfju3kmh
-X-Authority-Analysis: v=2.4 cv=TJFFS0la c=1 sm=1 tr=0 ts=689ce282 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=YsNNlNSR1bvWMWsHUq0A:9 a=CjuIK1q_8ugA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-ORIG-GUID: r2nYLbzcRWg-hafKrXM-D-5mOfju3kmh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110074
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: iris: vpu3x: Add MNoC low power handshake
+ during hardware power-off
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250813-sm8650-power-sequence-fix-v2-1-9ed0fc2c45cb@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250813-sm8650-power-sequence-fix-v2-1-9ed0fc2c45cb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 13, 2025 at 08:49:56PM +0200, Krzysztof Kozlowski wrote:
-> On 12/08/2025 14:45, Dmitry Baryshkov wrote:
-> > 
-> >> Devices will be different, they will have different compatibles, thus
-> >> you CANNOT have one DTS for both. What else - not my task, not my
-> >> expertise, not relevant to this submission.
-> > 
-> > Them having different compatibles is exactly my question. It's not
-> > obvious if they are compatible or not.
-> 
-> 
-> So we talk about basics now... even if devices are compatible, they will
-> have different "compatible" property, so your question about
-> compatibility does not matter. They could be compatible or could be not.
-> Different DTS in both cases, so this is just bikeschedding this patch.
+On 13/08/2025 08:53, Dikshita Agarwal wrote:
+> +	/* set MNoC to low power */
+> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +
+> +	do {
+> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+> +
+> +		handshake_done = value & NOC_LPI_STATUS_DONE;
+> +		handshake_busy = value & (NOC_LPI_STATUS_DENY | NOC_LPI_STATUS_ACTIVE);
+> +
+> +		if (handshake_done || !handshake_busy)
+> +			break;
+> +
+> +		writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +
+> +		udelay(15);
+> +
+> +		writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +	} while (++count < 1000);
 
-Yes, we seem to be talking about the basics. Having hardware which is
-compatible with another hardware released earlier.
+So if this loop executes 999 times but succeeds on the 1000th try, your 
+test would fail because your final write never gets evaluated in a 
+subsequent loop.
 
-I'll leave this to the maintainer's discretion.
+Wouldn't this be more logical like this
 
-> 
-> > 
-> > We've discussed this offline and I hope that the next iteration will
-> > cover all these details.
-> > 
-> 
-> 
-> Best regards,
-> Krzysztof
+do {
+	/* issue command */
+	writel(REQ_POWER_DOWN_PREP, core->reg_base +
+	       AON_WRAPPER_MVP_NOC_LPI_CONTROL);
 
--- 
-With best wishes
-Dmitry
+	/* wait for command to take effect */
+	udelay(15);
+
+	/* read back status */
+	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+
+	handshake_done = value & NOC_LPI_STATUS_DONE;
+	handshake_busy = value & (NOC_LPI_STATUS_DENY |
+				  NOC_LPI_STATUS_ACTIVE);
+
+	if (handshake_done || !handshake_busy)
+		break;
+
+	/* power down? the mnoc */
+	writel(0, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+
+	/* Let that command take effect ? */
+	udelay(15);
+
+} while (++count < 1000);
+
+That way you exit the loop with the mnoc state in a known state, instead 
+of as your loop currently is perhaps having succeeded but incorrectly 
+signalling failure.
+
+Also why 1000 ? Thats 1000 x 1.5 microseconds - 1.5 milliseconds 
+potentially in your submitted patch now nearly 3 milliseconds assuming 
+the power-down command similarly requires a grace period.
+
+Please at least fix the loop so that the last power-on command should it 
+succeed at the termination of your loop can be captured.
+
+> +	if (!handshake_done && handshake_busy)
+> +		dev_err(core->dev, "LPI handshake timeout\n");
+
+---
+bod
 
