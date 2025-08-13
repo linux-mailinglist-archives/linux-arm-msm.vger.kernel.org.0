@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-69047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 841DDB254B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 22:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDB9DB254EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 23:01:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66921621AA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 20:47:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79306882381
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 21:01:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6019825EF81;
-	Wed, 13 Aug 2025 20:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 569B028935D;
+	Wed, 13 Aug 2025 21:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h5kEcq1U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cr3RZjnb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD9B1F3B9E;
-	Wed, 13 Aug 2025 20:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE9C188715;
+	Wed, 13 Aug 2025 21:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755118047; cv=none; b=Xc+g4tv5KUD47GA0Be4qelnZ5tttYvcaVZlO3EDAnvFIb2OrsFaIQIKR3mtljEjSZbrvYqD14VbvlXJTLAbS2L/dbed0NX12jDENyUTBThb0N4PFBUYkhIK3fxRES3bzVj4lSFGUmfEnVIzMQDCvmY431CWw6v+249/4z/QCCXg=
+	t=1755118904; cv=none; b=I3PU5LbUtod6AUCLp5xluLNp6B8S4mu4r3TXPgy03Gb+VYqRO9kWKfhSvHFKfCzJkjKEpVKb6yCpqhJQjpSkOXAMVOKc8pcUjOpotgi4FG3MP2MLrpViIIkEn9c29DzLmgsWRr9ysZlxoAAq+klUB/JJoZJk6idVyMfoEINykNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755118047; c=relaxed/simple;
-	bh=jJ1cBtJw6JliBhmjT/0AntCbKa+I5hSke8o2xyUE/50=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bCgbWvnSW3/t/+Cp3p459rA6sZSq2zIdd2vA9nQTpPIyvugF2iGgtcRT7A1CoqcUPf3o7lbJEFBgax+3Qcs3al+IXgp9lm7tL93+Uc//5PS9B0VZr+sVYXxOIwD3BMX2KRRk3J3lvEnDqhQoIpPrLML+CzWmSQcS5PArSm/bojw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h5kEcq1U; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1755118904; c=relaxed/simple;
+	bh=gLIt5lVsljB4/ZYXgNd3f4IPTjbeg3Uhy7FmOeKqCLI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=P1+j12eqtQOyna9wfjJ724EMFDnCTsq+m2C57g1LkljhQu5hMibfZZrPuBcWknAfrqKOqDJrebLP+ODIBgeY16LEiHRFX6Tc78se0Kr3X4nP952h27aZlhpZceMqxmlAobQqyb9GOCJUV1XbZf7QNuUBkP2alxnpoGOEOJlAxGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cr3RZjnb; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLdnt023971;
-	Wed, 13 Aug 2025 20:47:15 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLdHA023974;
+	Wed, 13 Aug 2025 21:01:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rs7wtH6LdR98sZjYL4DLDsySGPlJJZ6AL8nA/khRlrY=; b=h5kEcq1U8nitrjFq
-	OMVR7wV2agR08vLdkhPSetzySp9t+m6qNhZKp40WkmAVd4CdYv9uevX/Qp4jF2Y5
-	nmquXJMyMdu1WADa6deLwXycAqLLbevLCpwUy4cRRxXXwatBRg9V1fMT96+1DrVT
-	ltFdtI8pkFJZgQiG8XXGEoBjSKL/9ITmD9hG5eaDJMNYDMMtxvQDgkaa8HCRtvNL
-	v7VmCCXkscWMeE85Q7PWuOlmBzj2/0AHjmj86uBWw5Lb8ZX2wqsOnBR3HZtlXAdH
-	E1NhlMoHGPa0wcgoZ/McD3XX9qU95lGbeyEphKvu1SnWjQQFNPy8jCZrbOE2WSXS
-	JyFbeg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48gr9rsvcq-1
+	rZkAh7aOlglWCrpyUB48asdjXVLQmajgdjNHXeqwaVA=; b=Cr3RZjnbxTqyV0Fm
+	HMD3/3KO5VpoWF0P4m+i2UHbc9wqhkgwL5ulFKDRmW+k+2RIIC0BgnCgJlcPNOAr
+	VICLzUqd4mQ7+6WH5B3Ay11jpAL4ezNiBTWISusluthCs3zVr9ZKPugvgYo8UUUD
+	v1VztULgBgRmapGVgSLpPc8MnY8a6Fa2uDzBTLyrf7DUvTH8njQ5uEOfOXzIByDA
+	tICi2184GN2M3ZLN/2Wx5m80gGnMvBsGLnfhnQnAWGEPUNqu+406n62j4ZGaseQQ
+	Ouh6d1jWGx0Eu41bJomlUQLjGzlHexaWwJUC/WZwE8KdDDNAk8KddzlxjlZ9JZXR
+	WjY3yw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48gr9rsw9j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 20:47:15 +0000 (GMT)
+	Wed, 13 Aug 2025 21:01:32 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DKlEE4016361
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DL1VKr008529
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 20:47:15 GMT
+	Wed, 13 Aug 2025 21:01:31 GMT
 Received: from [10.216.55.173] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
- 2025 13:47:09 -0700
-Message-ID: <4e996a17-c996-4194-b57d-128e7d05e8ad@quicinc.com>
-Date: Thu, 14 Aug 2025 02:17:04 +0530
+ 2025 14:01:25 -0700
+Message-ID: <2dc54d35-4811-4153-bd36-843a374d9c4f@quicinc.com>
+Date: Thu, 14 Aug 2025 02:31:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,49 +65,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/4] arm64: dts: qcom: sm8750: add max-microamp for UFS
- PHY and PLL supplies
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Manivannan Sadhasivam <mani@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <conor+dt@kernel.org>, <bvanassche@acm.org>,
-        <andersson@kernel.org>, <neil.armstrong@linaro.org>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
- <20250806154340.20122-3-quic_nitirawa@quicinc.com>
- <20250808-calm-boa-of-swiftness-a4a7ce@kuoka>
- <9af71063-0629-4ccc-bc76-3fb588677bf4@oss.qualcomm.com>
- <292907f3-25d6-40d9-be6e-b6b83e646d73@kernel.org>
- <5e32be05-0dbd-4d6f-879d-8ce97fb430ba@quicinc.com>
- <rh3qxu2rijpjswfash3rpmmh6sw47l3b6j5p5upti6zffknasz@cywwm3fypghd>
- <89ab7e51-f82e-465a-aa22-1ccb8e7a0f6d@quicinc.com>
- <ljythvl2yfilcnmgdwt2cyyefxmgl54osll5e76qn7njadhgqq@rwrl3dy6ykt3>
-Content-Language: en-US
+Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
+ device tree
 From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <ljythvl2yfilcnmgdwt2cyyefxmgl54osll5e76qn7njadhgqq@rwrl3dy6ykt3>
+To: Bjorn Andersson <andersson@kernel.org>, Mark Brown <broonie@kernel.org>
+CC: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <mani@kernel.org>, <conor+dt@kernel.org>,
+        <bvanassche@acm.org>, <neil.armstrong@linaro.org>,
+        <dmitry.baryshkov@oss.qualcomm.com>, <konradybcio@kernel.org>,
+        <krzk+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
+ <20250806154340.20122-5-quic_nitirawa@quicinc.com>
+ <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
+ <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
+ <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
+ <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
+ <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
+ <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
+ <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
+ <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
+ <kwp3q4r5rzahzro5f6l6ml24vbiutyxokrhjsbtzcb5kvanx5e@elagxv6w5dq7>
+ <d072b19d-bc01-45c8-8cf3-bceb53ca9b2c@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <d072b19d-bc01-45c8-8cf3-bceb53ca9b2c@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEzMDA5NCBTYWx0ZWRfX+Jpg+HZUGy71
- GdpuCMe5Xd2IgTfp+AF4YryseqNntuG12d02ay4s4cFQUzpxoVdAWF4HLqRPgZuk+IIP3Hr5CiV
- WNsnZVWW25EyUxYIoP0R6fIQQR1L00o1y1TjGWBhC/wZS2QbMAyUF6ebg1HI573NFtGE83n/dZr
- bEboj5MYxe17zEeJd1lPGABMHxMnyfzX/9YtOs7enZ3C3M6AHx2x7BUlUv1Xa8iotCGEfsRoGdt
- xeLghWRiMbzzu2eqWC4/A1jhSBbocvhCTen36U7Tbw95gkOj1kJ42HWqgW12wGLSNb2vbWxDzrl
- QZ2Yj19BXB8sIXOjpn9rybztRTBloJTPuiMbj3aPrcKvOrwlFyOEdw8V4AUjpjrY39Elql6/i7r
- d/FKzllo
-X-Authority-Analysis: v=2.4 cv=NIrV+16g c=1 sm=1 tr=0 ts=689cf9d3 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEzMDA5NCBTYWx0ZWRfXwb5sofLS7ooy
+ w9vhdBpRMnzCGHdYBC992Gm97tPkCeN38o9bC3ssT6Qg83unWtySq+oPJzZ6Akgwe1UlAjIZjHG
+ l5DSIp/1a1Wx/D9uSNsi7HkjGtEp280vvg824mGZkFHZuEptIRRfGrdCYkisAKY8vYhwGomapXs
+ kcTERdE2EkTXA2JTCgH20TihdrW2s05tnUaCv+wslfpWvx2j81gADGrgUZTW/vWhEr1s717p9bJ
+ NpM7CjhGAhB7ycshtVrt8n9jaK8+yaNNfgJfNO/YIB5AuS04OhkGpTfXSkRAFb66szcRqJrWior
+ sUEmAnDW87rlufPpCMauH11dduPyIoA7FGW2/Smw/bapM3focyOY4IZTs60FfaZmWR+/L/YDPZQ
+ 11U3BtiQ
+X-Authority-Analysis: v=2.4 cv=NIrV+16g c=1 sm=1 tr=0 ts=689cfd2c cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=MBlCXbtx4y3c8zbCj10A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: X15fmfcYpaZVSSpbYs4CM75upDHndglW
-X-Proofpoint-GUID: X15fmfcYpaZVSSpbYs4CM75upDHndglW
+ a=ULkvDhI3a0wY5DhI7wsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 59E_3mNuvokWRgEuwNcnI43mszk0FYe8
+X-Proofpoint-GUID: 59E_3mNuvokWRgEuwNcnI43mszk0FYe8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
@@ -119,134 +120,108 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 
 
 
-On 8/12/2025 4:22 PM, Dmitry Baryshkov wrote:
-> On Tue, Aug 12, 2025 at 01:25:02AM +0530, Nitin Rawat wrote:
->>
->>
->> On 8/9/2025 4:37 PM, Manivannan Sadhasivam wrote:
->>> On Fri, Aug 08, 2025 at 08:49:45PM GMT, Nitin Rawat wrote:
->>>>
->>>>
->>>> On 8/8/2025 3:09 PM, Krzysztof Kozlowski wrote:
->>>>> On 08/08/2025 10:58, Konrad Dybcio wrote:
->>>>>> On 8/8/25 9:29 AM, Krzysztof Kozlowski wrote:
->>>>>>> On Wed, Aug 06, 2025 at 09:13:38PM +0530, Nitin Rawat wrote:
->>>>>>>> Add `vdda-phy-max-microamp` and `vdda-pll-max-microamp` properties to
->>>>>>>> the UFS PHY node in the device tree.
->>>>>>>>
->>>>>>>> These properties define the maximum current (in microamps) expected
->>>>>>>> from the PHY and PLL regulators. This allows the PHY driver to
->>>>>>>> configure regulator load accurately and ensure proper regulator
->>>>>>>> mode based on load requirements.
->>>>>>>
->>>>>>> That's not the property of phy, but regulator.
->>>>>>>
->>>>>>> Also reasoning is here incomplete - you just post downstream code. :/
->>>>>>
->>>>>> The reason for this change is good, but perhaps not explained clearly
->>>>>>
->>>>>> All of these values refer to the maximum current draw that needs to be
->>>>>> allocated on a shared voltage supply for this peripheral (because the
->>>>>
->>>>>
->>>>> It sounds very different than how much it can be drawn. How much can be
->>>>> drawn is the property of the regulator. The regulator knows how much
->>>>> current it can support.
->>>>
->>>> Consumers are aware of their dynamic load requirements, which can vary at
->>>> runtime—this awareness is not reciprocal. The power grid is designed based
->>>> on the collective load requirements of all clients sharing the same power
->>>> rail.
->>>>
->>>> Since regulators can operate in multiple modes for power optimization, each
->>>> consumer is expected to vote for its runtime power needs. These votes help
->>>> the regulator framework maintain the regulator in the appropriate mode,
->>>> ensuring stable and efficient operation across all clients.
->>>>
->>>>
->>>> Stability issues can arise if each consumer does not vote for its own load
->>>> requirement.
->>>> For example, consider a scenario where a single regulator is shared by two
->>>> consumers.
->>>>
->>>> If the first client requests low-power mode by voting for zero or a minimal
->>>> load to regulator framework during its driver's LPM sequence, and the second
->>>> client (e.g., UFS PHY) has not voted for its own load requirement through
->>>> the regulator framework, the regulator may transition to low-power mode.
->>>> This can lead to issues for the second client, which expects a higher power
->>>> state to operate correctly.
->>>>
->>>
->>> I think we all agree on consumers setting the load for shared regulators, but
->>> the naming and description of the DT property is what causing confusion here.
->>> There is no way the consumers can set the *max* current draw for a shared
->>> regulator. They can only request load as per their requirement. But the max
->>> current draw is a regulator constraint.
->>
->> To avoid confusion with regulator-level constraints, I'm open to renaming
->> the property vdda-phy-max-microamp to something more descriptive, such as
->> vdda-phy-client-peak-load-microamp or vdda-phy-peak-load-microamp. Along
->> with updating the description, this would better reflect the property's
->> actual intent: to specify the maximum current a client may draw during peak
->> operation, rather than implying it defines the regulator’s maximum
->> capability.
+On 8/12/2025 1:18 AM, Nitin Rawat wrote:
 > 
-> Move them into the driver please.
-
-Sure Dmitry. I’ll will take care of this in next patchset.
+> 
+> On 8/11/2025 9:20 PM, Bjorn Andersson wrote:
+>> On Thu, Aug 07, 2025 at 08:09:56PM +0100, Mark Brown wrote:
+>>> On Thu, Aug 07, 2025 at 07:43:15PM +0200, Konrad Dybcio wrote:
+>>>> On 8/7/25 7:26 PM, Mark Brown wrote:
+>>>
+>>>>> Note that that's specifying OPPs which is different...
+>>>
+>>>> The microamp properties are in the top-level, not under OPP if
+>>>> that's what you meant
+>>>
+>>> I mean the OPPs use case is an existing well known one for dumping stuff
+>>> into DT.
+>>>
+>>>>> That doesn't mean that it's a good idea to put that information in the
+>>>>> DT, nor if it is sensible to put in DT does it mean that it's a good
+>>>>> idea to define a generic property that applies to all regulator
+>>>>> consumers which is what I now think Konrad is proposing.
+>>>
+>>>> Yeah, that's what I had in mind
+>>>
+>>>> I was never able to get a reliable source for those numbers myselfe
+>>>> either.. At least some of them are prooooobably? chosen based on the
+>>>> used regulator type, to ensure it's always in HPM..
+>>>
+>>> That's what set_mode() is for.  Like I say it's becoming less and less
+>>> relevant though.
+>>>
+>>
+>> set_mode() just applies the mode to the regulator_dev, so in cases where
+>> you have multiple consumers of a regulator_dev things would break.
+>>
+>> Further, there are numerous cases where we have multiple consumers each
+>> needing a "low" mode, but their combined load requires a "high" mode.
+>>
+>> set_load() and its aggregation of the inputs deals with both of these
+>> issues.
+>>
+>>
+>> Whether mode setting is becoming less relevant in our hardware, that I
+>> don't have the definitive answer to.
+>>
+>>>> That said, our drivers cover a wide variety of hardware, built on a
+>>>> wide variety of process nodes, with different configurations, etc.,
+>>>> so it's either polluting the DT, or polluting the driver with
+>>>> per-compatible hardcoded data (and additional compatibles because
+>>>> fallbacks wouldn't work most of the time)
+>>
+>> If this is our reason for putting it in DeviceTree, then we should write
+>> that in the commit message :)
+>>
+>>>
+>>> That's really not a persuasive argument for adding a genric property
+>>> that applies to all regulator consumers...
+>>>
+>>
+>> I agree, even if we determine that this belongs in DT, because it needs
+>> to be tweaked on a per-board basis, it's still only applicable to a
+>> fraction of our device nodes.
+> 
+> Hi Bjorn & Mark,
+> 
+> I had a follow-up discussion with the PHY designer to confirm whether 
+> this value could vary at the board level. Based on their response, it's 
+> a fixed value for the SoC and remains consistent across different 
+> boards. Therefore, I'm comfortable removing it from the device tree and 
+> using hardcoded, per-compatible data in the driver.
+> 
+> The only concern is that this approach may lead to driver bloat over 
+> time, as more SoCs are added and each requires its own hardcoded 
+> configuration.
+> 
+> Regards,
+> Nitin
+> 
+> 
+Based on the current understanding, I plan to post a revised patch that 
+uses hardcoded, per-compatible data within the driver, rather than 
+specifying it in the device tree. Please let me know if anyone has any 
+concerns with this approach.
 
 Thanks,
 Nitin
 
 
 > 
+> 
+> 
+> 
 >>
+>> Regards,
+>> Bjorn
 >>
->> Having said that, I had a follow-up discussion with the PHY designer to
->> confirm whether this value could vary at the board level. Based on their
->> response, it's a fixed value for the SoC and does not change across
->> different boards(atleast for now). Therefore, I can remove from device tree
->> and replaced with hardcoded, per-compatible data in the driver.
->>
->>>
->>>>
->>>>>
->>>>>
->>>>>> supply's capabilities change depending on the maximum potential load
->>>>>> at any given time, which the regulator driver must be aware of)
->>>>>>
->>>>>> This is a property of a regulator *consumer*, i.e. if we had a chain
->>>>>> of LEDs hanging off of this supply, we'd need to specify NUM_LEDS *
->>>>>> MAX_CURR under the "led chain" device, to make sure that if the
->>>>>> aggregated current requirements go over a certain threshold (which is
->>>>>> unknown to Linux and hidden in RPMh fw), the regulator can be
->>>>>> reconfigured to allow for a higher current draw (likely at some
->>>>>> downgrade to efficiency)
->>>>>
->>>>>
->>>>> The problem is that rationale is downstream. Instead I want to see some
->>>>> reason: e.g. datasheets, spec, type of UFS device (that was the argument
->>>>> in the driver patch discussion).
->>>>
->>>>
->>>> The PHY load requirements for consumers such as UFS, USB, PCIe are defined
->>>> by Qualcomm’s PHY IP and are well-documented in Qualcomm’s datasheets and
->>>> power grid documentation. These values can depending on the process or
->>>> technology node, board design, and even the chip foundry used.
->>>>
->>>> As a result, the load values can differ across SoCs or may be even
->>>> board(unlikely though) due to variations in any of these parameters.
->>>>
->>>
->>> Okay. This goes into the commit message and possibly some part of it to property
->>> description also.
->>
->>
->>
->>
->>>
->>> - Mani
->>>
+>>> My instinct with this stuff is generally to avoid putting it in the DT,
+>>> we see far too many instances where someone's typed some numbers in
+>>> wrongly or discovers the ability to drive the hardware harder and needs
+>>> to tune the numbers - once something is ABI you're stuck just trusting
+>>> the numbers.  That said I'm not going to stop you putting something
+>>> specific to this driver in there, I just don't think this is a good idea
+>>> as a generic property.
 >>
 > 
 
