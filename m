@@ -1,144 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-68873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-68874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF8E6B23EF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 05:23:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D064B23F07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 05:32:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8511E3A7822
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 03:23:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2790D16B5E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 03:32:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 698BF26E6E1;
-	Wed, 13 Aug 2025 03:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A90602AE6A;
+	Wed, 13 Aug 2025 03:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J+9U38FI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ksGs1bHh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58DF1C860B;
-	Wed, 13 Aug 2025 03:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8B81A275;
+	Wed, 13 Aug 2025 03:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755055390; cv=none; b=blsbpSxfGzpg8HQZVp++xaDog6ptjzKcsSCtAt7/zPVC30iDUQ8g0AvmUWLb6V6JLNZru7WuINhnqQB8bCGcoKZpg5D3USroN4WzaFMBsqvRzofGJlUkodVERyW++SQop+O232uWARNvvF2T67tkccyX57cHKhY5wdE3khcC3n0=
+	t=1755055924; cv=none; b=Ujh7Fu+3q2TWUuYcTzABBaX/A1SLypTT1YX9y0uvObaBMUxV6HKmhgpvRbgZ9aUa/cbvZYF3P2Z98M8vPky/30L6dMbPKC9+L8Y1uhH2eNiDOMpR6LSzTlrSsa5qxELuruOLyqRb9Z4fvHuyNaXW5f/yiiJQAIfT7lHwpO4uVvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755055390; c=relaxed/simple;
-	bh=Q3CAbHLCBVDyiOb5ExsJtxT9sJ3zARgcXcaVYKZzXvU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S6mVhLWUu20afFUdagbglXsgnsXQ7pN1H6zf79NqrGL9oXArbilKtDXSkud2bzEwv1ZquUrs2pz7tl6BIIRix70f5Ly5sVaiscz1RJkK8EPxVJQ0bUl7C6KHFvIkMRbEMq4lnUd5IRqbDhcF1pxj3LJpMHQ5ie2hvmFqQy0qB4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J+9U38FI; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1755055924; c=relaxed/simple;
+	bh=1q8TVMTxm2hDL3PQEZyIt6gSyS09g0Dq8EeGoQivsmI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rnY/IwB76S7Gp6sMyr/UdT3Gig6V/1F8poDz5G+GraWNMpCe2IaXwf0EPow9GTcQpI0YaBR+H/8vNGNBYBoAVfKgBfHhwQx07ND6G1REnQHRhirdvQOqmEr/JNbsd+ONPOU1cn8IyqLhtF+39OePcRUseWLeJS2J1/vi3RLAvp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ksGs1bHh; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CK5NoU032275;
-	Wed, 13 Aug 2025 03:23:07 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CK3jcY025463;
+	Wed, 13 Aug 2025 03:32:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=TyQ8V+iTVg28IwajxsYPxQLlMjOJohRSq+X
-	yP8tZTpk=; b=J+9U38FIW9SGG4+TCub6yS+fbqFTJPbT92bCicBRu+6EcCo8CCZ
-	cdqFZRu1ftg4gtOnPEFMpjQYQThUlzZQxs3JKiYGPbt/QEtMaSfHOH6PTPA8zr9C
-	g+GXVdst2nzv8dqEb8bPTkzEc7gO6Wlz5KmbPrt+CNcdxAuJW/pnLL7tNrasgBuV
-	w2xXh2LKXjO5f/8YeVGjPJoC6TU6fNatnp4NJYQitAjXvs9FfREYu0FGaT4N/nqA
-	HBBZ4SpPv7WDaJt8ld9hvKCbD8uaO4kSGqjQK3OFAQJ4b9oo3jy4wkLOq5iqf0Oa
-	NGeUidxwPi1SPa6Qbv/lyaa1M90/0af1WEg==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fm3vn6jm-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J/6FpbvDPYPzG8EhlvANCYWGU65cg/Pc1BWVdmJqyWA=; b=ksGs1bHhOaKxWJbR
+	/DhKoxCzCuZWAuwPfOIuJbhYNULcKZraKtRflvMg0XTFp4MA8Cx93Sth0jHsNeRJ
+	rCCD+MrfF869ZdHWPLJzOI2VKeJKnRyQJmC1RjC/HJZqc+X/0la3Wae+llr4S0bw
+	2U+WZ+lAf4lfdV9OrIspuMZgNqg+PLKAfpz4ftQtYa/gtGj5xSn5O5O5mGoDRqi4
+	H/Y1uTK9arM2iNrubVQM7KLRD9DE/cMFe5EZYXGziZ21LXh/O4GnElTQak3hvHii
+	l/UiDwF+/eJUmBRmvPgodS1MxP9JYo7cbzvOWsiLt7j2OdRDSHeiFrGy1yWPeTYH
+	g4d34g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dw9stgq4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 03:23:07 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57D3N430030140;
-	Wed, 13 Aug 2025 03:23:04 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 48dydm0e1b-1
+	Wed, 13 Aug 2025 03:32:02 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57D3W1RT001208
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 03:23:04 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57D3N4t6030133;
-	Wed, 13 Aug 2025 03:23:04 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 57D3N471030127
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 03:23:04 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 9611221D7A; Wed, 13 Aug 2025 11:23:03 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: quic_shuaz@quicinc.com
-Cc: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/4] Fix SSR(SubSystem Restart) issues caused by BT_EN being pulled up by hardware
-Date: Wed, 13 Aug 2025 11:22:58 +0800
-Message-Id: <20250813032302.3852504-1-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	Wed, 13 Aug 2025 03:32:01 GMT
+Received: from [10.239.96.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 12 Aug
+ 2025 20:32:00 -0700
+Message-ID: <38c6baab-f9fd-468f-ba20-3e2a24de8e9d@quicinc.com>
+Date: Wed, 13 Aug 2025 11:31:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] driver: bluetooth: hci_qca: fix ssr fail when BT_EN
+ is pulled up by hw
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC: <quic_bt@quicinc.com>
+References: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
+ <20250812113620.3135226-2-quic_shuaz@quicinc.com>
+ <4ac0db96-8107-4809-8b13-580d75948ef9@oss.qualcomm.com>
+Content-Language: en-US
+From: Shuai Zhang <quic_shuaz@quicinc.com>
+In-Reply-To: <4ac0db96-8107-4809-8b13-580d75948ef9@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDEwNyBTYWx0ZWRfX/xpktq+3L8Kz
- ogtQrEg5UTg31R0dki0gruhvN5pnAqYiZPXX3flPFodDAva9F6ZiR/YGEHQL6RkGYyFp5+v26HG
- TXfLzW82C5QaGYof1KftA2LY7dguHxo8yjI248Ksqst3N+ww8caP+z39kKrV6HEfCe6+sjUc1IL
- lvo4yZ/b3uWyqY/gGYYBP1+MK73SKRrS7cOMs2HMlxsJVCb5T7E2T8oKPF6dFGf8ak3qPtKHvW1
- qcd2hgA2/imf6eQoE49ucvYyMlulu6hslI2U0jrjR9HAU4LWH1sGtItWe8Shhj5iYL8tkR316xr
- Z3tVhxgJA3Wg99Lvsf1zrr3beBgenxnGOnYp/ibW6rD0csQrI5ERsTSxHX5oOjoWXf9bBk8enu1
- vWOfSVba
-X-Proofpoint-GUID: BGwhBGTieBD4JzWt1hfNc_w2wckpcOge
-X-Authority-Analysis: v=2.4 cv=A+1sP7WG c=1 sm=1 tr=0 ts=689c051b cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=Dei6p5SHAAAA:8
- a=pGLkceISAAAA:8 a=CVKY41Y29sSDTK7O-P4A:9 a=TjNXssC_j7lpFel5tvFf:22
- a=M-Yerj1wOn-OpK7r_3ei:22
-X-Proofpoint-ORIG-GUID: BGwhBGTieBD4JzWt1hfNc_w2wckpcOge
+X-Authority-Analysis: v=2.4 cv=J+Wq7BnS c=1 sm=1 tr=0 ts=689c0732 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=s1kbfEM2HHd9KEI90ywA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: k2BglOsaFvjqTzifxBCLAZ4G_Yd8zs6_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAxNSBTYWx0ZWRfXyUMFPD5EzhCR
+ J1fiM+H6gwRn9c0Nehn7uduY7WVo3iWefJgy5B1Ad1AM/O41LJSPzknxtwY9N//C6DsaTqQ1isf
+ dIs4SeqwcuKHj9y4jREj79UjNn1sfZQOkXr/1i0oE80eqHYUnm1N5r2pYmv8f+fbyca/aDqJByx
+ /ollT/zFX55b7CBjd680mMuaLRvtnhD0vsbCz8YXeRxbP7L94JFwY4bVTnVrG+Qeb/pCiROvlBB
+ BHTsx5Vak6tiu6NVl0LbcLGIG7gCRLIyuy5JNWMo1IamerwMx03wbGQXR6UspVuDKK5qUoNX2h8
+ 5QeUe+BmxVzsFGHL2ZYciDW19iHDUAaq77nBv0T5MJ9C9AgfO2Y1zlxyndtuZBMtzlabgvOzzIa
+ whOv57Nv
+X-Proofpoint-GUID: k2BglOsaFvjqTzifxBCLAZ4G_Yd8zs6_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-12_08,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 classifier=typeunknown
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 clxscore=1015 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110107
+ engine=8.19.0-2507300000 definitions=main-2508090015
 
-This patch series addresses issues encountered during SSR when
-the BT_EN pin is pulled up by hardware. The main issues fixed are:
+Dear,Konrad
 
-1. Timeout when sending reset command.
-2. IBS state of host and controller not being synchronized.
-3. Multiple triggers of SSR generating only one coredump file.
-4. SSR process failed due to tx_idle_timer timeout
+On 8/12/2025 8:36 PM, Konrad Dybcio wrote:
+> On 8/12/25 1:36 PM, Shuai Zhang wrote:
+>> When the host actively triggers SSR and collects coredump data,
+>> the Bluetooth stack sends a reset command to the controller. However,due
+>> to the inability to clear the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits,
+>> the reset command times out.
+>>
+>> For the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, please refer to
+>> commit: 740011cfe94859df8d05f5400d589a8693b095e7.
+>>
+>> The change is placed under if (!HCI_QUIRK_NON_PERSISTENT_SETUP)
+>> because this quirk is associated with BT_EN, and can be used to
+>> determine whether BT_EN is present in the device tree (DTS).
+>>
+>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+>> ---
+> 
+> I have received this series two times, you didn't add a version
+> prefix (make the next one v3 so as not to confuse the tooling), there
+> is no changelog and you still haven't added the relevant people to CC.
+> 
+> Please read the internal guidelines at go/upstream and switch to using
+> the b4 tool.
+> 
+> Konrad
+I apologize for not including the version number due to my oversight.
+I will update it to v3 accordingly. Since the patch has already been 
+generated, I won’t use b4 this time. Going forward, 
+I will use b4 for all future submissions. Thank you
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
-To: Marcel Holtmann <marcel@holtmann.org>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-
----
-Changes in v2:
-- Update commit messages.
-- Add new change to fix Idle_timer timeout.
-- Link to v1: https://lore.kernel.org/all/20250715051618.724475-1-quic_shuaz@quicinc.com/
----
-
-Shuai Zhang (4):
-  driver: bluetooth: hci_qca: fix ssr fail when BT_EN is pulled up by hw
-  driver: bluetooth: hci_qca: fix host IBS state after SSR
-  driver: bluetooth: hci_qca: Multiple triggers of SSR only generate one
-    coredump file
-  driver: bluetooth: hci_qca: SSR(SubSystem Restart)process failed due
-    to tx_idle_timer timeout
-
- drivers/bluetooth/hci_qca.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
--- 
-2.34.1
+BR,
+Shuai
 
 
