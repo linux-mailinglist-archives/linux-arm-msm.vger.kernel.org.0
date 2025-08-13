@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-69077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BCF9B2572A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 01:04:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53840B25737
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 01:07:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A4621C81360
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 23:04:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 555595A6B07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 23:07:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF7B72F3C36;
-	Wed, 13 Aug 2025 23:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2647D2FC86B;
+	Wed, 13 Aug 2025 23:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QCrrJARN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kk6ofFEG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D572EA16E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 23:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0D72FB98D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 23:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755126260; cv=none; b=G+zwU1B7PxsVVvlXZW8XT2zt48As79NvQ8Y+Gbn76BHhu3ePt4feuqW5hOYcmeROiYtJxNBPj1Ng/tMn423Y3FgX1KC1eGGQDBqa2CZD9ulQuSrqJGa8odfasb+3FqYnIDydAbfRYlpbEciVbg+AOaDpAt5m3DAjr/dTnF65NP8=
+	t=1755126441; cv=none; b=ISLapRXXLzYlXz4cG3N5EtrlzxrzrJX2q88ciS5BfjW6YXEnDJqf3mEMgpoCXYmwvkvmyfhi/ipnMpoMEV7qQYOYhxTu2VGLK1bkWMu2iSuaNljdMc4ybvMbywSzbZx/TvEcyfEg1G5vGotp/UiYtPCS2a4/JSyof8yaIcnWcGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755126260; c=relaxed/simple;
-	bh=V8tv6QYmtZ4XrciW/E5chTrle+DeFBzxKefuKdwTNlM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=U2UuNynZx64Xdbrjj+MpDhs6JvPtyMJw2JcEGAYBidY+Dtm0rou4MFwbJx7d2ELu71239LQyrhhnq3N3st+AjiHNUhSc4IFuFtmCngdS5O0bRFbu8Be1cDxFMoI3mNles5IssAqvZZQcuJ5T9hOnlSHaA8Cr6cYmxh7s25640DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QCrrJARN; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1755126441; c=relaxed/simple;
+	bh=/qpjGm0i7AdI98kp/Vvxql5u9hFiHNoiTyqr2D7TQGo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=dWa2CxsxQrAjJPiefhjYLGXTREX2j3S7MK8fJMbdj5ac/reWBckxdVpvCs6CJFb/rsLgFZtacT7Ex2I+0lbOY5efv0NoCXERdV1uoA2XxomuAXfAyZJIyiD1thxs7wr3t5Ku9Gj0zOxa8Vangx1vQl+02Lzz4STSvPdRGXny6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kk6ofFEG; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1b0bd237so2201465e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 16:04:16 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1b0b42d5so1926815e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 16:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755126255; x=1755731055; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=linaro.org; s=google; t=1755126437; x=1755731237; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Fma0jMGy51uQlwxrCY+Lr/EVRe0o/h9sqaHsep6/mww=;
-        b=QCrrJARNSh9iaSZvMuLHTJrAvyUYevsj50a8XYfzDzJySWtRLRCV0oWPxEM54Uciow
-         H5I+wgQjaGuvBQafg2Sr7GZ7ZQ3FB37f+ki9+ta/QT3d2l3PcWK5mfu6NYarAjGZl0hf
-         sCZUCDAxxi6qCFuaLW5S5Py3NcG1hEyrxqiQ1kmOYNnDJuWbxUZMi92zzQivS3K+ZsJg
-         R2RDwEObZTx+NJWRAqa5YN1bAatk7mFYWW9JQY+U1NUOnH4s7kxpbKIYgmQYAgnY++Sv
-         YnYTXbBaHTZHkJaUNCem8KviTBw01M8TKG8oABtlySbbaNqdPxSMn1VUmPMm2Lv+NQMz
-         063A==
+        bh=t1w1jD5uAhWjkLk2dF1OZgC9h1u3edFNggTts1awcIQ=;
+        b=kk6ofFEGAQbqV2f9QfuvY1fOYFszjFBJrY7z+D3RZuqFVUHW7hVKITWNl1l5Cb4qHW
+         qmqsd8H43xaAZ7BBrFA7tqd8mb6yllhFdN9oEOZysNa03Eyz0DOU84FFEHW9a2xR5nbs
+         5w3ctgof0ow81fziQBf4xMTmE+7LStTySFToDLjGpeLzU5Mi9bdQ19otpba8jVqGFsIi
+         m5DArBnd5hkLd8ie2nR90+srsZz9EXKCQJZ67OImSNLodl+vtaI0m9P8351cBBzZWd1u
+         UXwl1r6e66jC9DUyeLm9P50VQ3go4nM6QWiRwhB04TP84LuRrUdwfN8l2QmS16UGzBJ8
+         UY2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755126255; x=1755731055;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=1e100.net; s=20230601; t=1755126437; x=1755731237;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Fma0jMGy51uQlwxrCY+Lr/EVRe0o/h9sqaHsep6/mww=;
-        b=QFyRGs7EX5oaNttGEtcBp7ffnsi4+m2AiPwhwebagNXp9TE41zERLY9qz+5iNr3HvE
-         WpwfrchMMRVnWJR+55vDEo7ohSBnRVIc+oJtiEtIv++0JHe7e1Hz/zcyiZYgV9msYBHa
-         ozwDVj06Zu8D4QmUFp9IH9oA/EMByPv7ZsMYvy2nOgaPHgyrerbkNwf+NzUtY3lsS7L+
-         B5BKcupEtEZr6DGOR9CMTqLBNiIHTc9wpsGckbojQsZOr+taQFSHNiHr6oVTQUKJGvmR
-         6SoVDMQ3ZagFq5fLYU19RkNkb+dcB+juCXPgi7N+gPuYkgI46g+S8qQk0pwuxp59Db2w
-         w3Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCWLHLy6NngYhD4dqM8HVMxVilJSWVD3A9UNcbtTsm7EOd3kddM8brfYKhrxoRbpAymbPswbLBFey5k3Qw73@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywq3nfLRC0KTPmqq1/wcdhxlc9YgsX3qXTxqu5UxErdLxdrZfTr
-	PlFjSqbh8EFBF8psORFMdtOUA1fQo3MtF4bRBSPhgJcCzISfX/k1xRtjCs/sqkKEPMM=
-X-Gm-Gg: ASbGncutM03hbzgMakX8ZOb+DJ+8Bxpk8ejLYP/QasDdfys6KGrvThSrL4TUSCAtGSh
-	dKR83yFMYHin+jMXYnRyFyGrMlYTMHa8RKCb+iKI5EHz+PhHkULFwU484wBZ9g+QrIb6rjNY2LN
-	AwpbQecwtHgvDpzuQP/F3kKEXY6mdCLLY/Y1fQKFn4vxP8ydkWjKoJpTavK1Ty2pKznZEZ/BcM+
-	PbqZKFus7LTaNvWZ33x8Hq/EAzwgtYA0ngscEzreoaG7OnrLbbyy7OcPiaSvumsVrq+qCs3DMIE
-	9w6QMLBMvQVpZplIirC+tlKgdyHfhyF+Ulz//Q44A55PBjDymdLPRv8AS7r8udpNR6aYGRAFsHH
-	fZQFqmTBhyXliJ7c2EBj4UT4G3y8=
-X-Google-Smtp-Source: AGHT+IEhcbKpnrTTmO41bGN+y6+XLDkw2c1iBzsSYn8Otej+XJU1Ch8JUGavn+Mdu+oPYs7fT9Y/tQ==
-X-Received: by 2002:a05:600c:3515:b0:456:1923:7549 with SMTP id 5b1f17b1804b1-45a1b6553a8mr3339795e9.26.1755126254989;
-        Wed, 13 Aug 2025 16:04:14 -0700 (PDT)
+        bh=t1w1jD5uAhWjkLk2dF1OZgC9h1u3edFNggTts1awcIQ=;
+        b=j6/gv+/jOBkNdcOUyzevnBkUrEGovvyWgfPqsrNgqZ+WiN/EE6u6d59+Ivl+bu9G+e
+         1/UsaJyYtZX0zCi+sY7E9BjkFFforiP/1NHblz2D9M8ejF6+VrGRdVoDKVUvFAzhZfjE
+         mtbgivRG90Y8StjiYXhZl7gtTBag4Y0C3mQqzoj9yP5LcMO/gkE5FIxPI/omcNlfLefW
+         Z1eqFms76UN+KHc4Pm4mepc2wt/xlIbonKqWBBuHDR3DFOwZrEWfeCp/ArgaHZSn7sD7
+         Wq4YJ4V1+Ac9BEnQNiAL+NNHBohgEL/UWwQ9dNNk50jdcwCcb0bzosdPGl/sQvWjhPtL
+         d16A==
+X-Forwarded-Encrypted: i=1; AJvYcCWqttIKtWd1enr+IP66cPekICgczrd/+6E5FX1CjUfKNgbKdS5cOkmk7wwZIs8eJGPq5l5MMHExKHD4DahV@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEvDJcS7t2ZVDD/WyddBssRv3R0rkvK+xT7IRPcFa33b0bXgr/
+	EZ1mrejr4nnOknDpgXvTiL132z2NihXmjyhjNdJJ93LrLXAs7zNUY5hYzbiCWRrHhtE=
+X-Gm-Gg: ASbGncsoheJdX57TDFlddgWs8LAlfai4Yz6EImSowfnFfCm/OaPvZZujO9C5an0El8Z
+	tLJ9Z33V0vWHHRO4FQuLE0rIynzROrqlHxzJESIhByZHw/amKpDR5StkBVbGEgP2nQG6m8+mZBB
+	28aHMRGybvEeO5+j3Yp3+6Mt6SBRQCnjT2zylRvKNLF6b7LoQsZhhZG/CwotGtmwe6o7zQoFbWW
+	EG/JfItMW5TS01dZ2uHLlG4Ws8pgpaWtS9P1A9xkqHLj26A4IIwPFsSEUCydHo4AKiGto/QTJjh
+	r8UV0YdD3pDNAw4g0zMYVV0fXeXKNKc9ecPI3Pt8fspSsoCaz59AAf3gpLTgucRHGSnr6p2/Ail
+	xxji8dQE/TdEBY1oQmDSkjOp8Jms=
+X-Google-Smtp-Source: AGHT+IHLYhRGc4JYIFTUPFhdxnROSBPBG4POVhF8NCo8fac7mqIyrnBrDgT2tDgDmUZXysWtmKuWyQ==
+X-Received: by 2002:a05:600c:354e:b0:456:1442:86e with SMTP id 5b1f17b1804b1-45a1b66929dmr3241165e9.21.1755126437430;
+        Wed, 13 Aug 2025 16:07:17 -0700 (PDT)
 Received: from localhost ([2a02:c7c:7259:a00:7f3a:5ab2:26aa:831f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1a50b9e6sm19416515e9.6.2025.08.13.16.04.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1a541788sm17732825e9.30.2025.08.13.16.07.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Aug 2025 16:04:14 -0700 (PDT)
+        Wed, 13 Aug 2025 16:07:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,261 +81,162 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 14 Aug 2025 00:04:13 +0100
-Message-Id: <DC1OBXZ7UUTZ.2V473MOKABPKJ@linaro.org>
+Date: Thu, 14 Aug 2025 00:07:16 +0100
+Message-Id: <DC1OE9UIUPON.2DOURP7NEQS54@linaro.org>
+Subject: Re: [PATCH v2 2/3] ASoC: codecs: add new pm4125 audio codec driver
 From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Christophe JAILLET" <christophe.jaillet@wanadoo.fr>
-Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Stephen Boyd" <sboyd@kernel.org>, "Lee
- Jones" <lee@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
- <tiwai@suse.com>, <linux-arm-msm@vger.kernel.org>,
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Srinivas
+ Kandagatla" <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>,
+ "Mark Brown" <broonie@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Stephen Boyd" <sboyd@kernel.org>
+Cc: "Lee Jones" <lee@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>,
+ "Takashi Iwai" <tiwai@suse.com>, <linux-arm-msm@vger.kernel.org>,
  <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
  <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srinivas.kandagatla@oss.qualcomm.com>
-Subject: Re: [PATCH v2 2/3] ASoC: codecs: add new pm4125 audio codec driver
+ <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: aerc 0.20.0
 References: <20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org>
  <20250711-pm4125_audio_codec_v1-v2-2-13e6f835677a@linaro.org>
- <0acde3b4-a437-4fa1-b5bd-fe1810309bb8@wanadoo.fr>
-In-Reply-To: <0acde3b4-a437-4fa1-b5bd-fe1810309bb8@wanadoo.fr>
+ <87a56d1e-2bbd-4abf-91c8-5129835d8d87@oss.qualcomm.com>
+In-Reply-To: <87a56d1e-2bbd-4abf-91c8-5129835d8d87@oss.qualcomm.com>
 
-On Fri Jul 11, 2025 at 4:15 PM BST, Christophe JAILLET wrote:
-> Hi,
-
-Hi Christophe,
-
->> +static int pm4125_probe(struct sdw_slave *pdev, const struct sdw_device=
-_id *id)
->> +{
->> +	struct device *dev =3D &pdev->dev;
->> +	struct pm4125_sdw_priv *priv;
->> +	u8 master_ch_mask[PM4125_MAX_SWR_CH_IDS];
->> +	int master_ch_mask_size =3D 0;
->> +	int ret, i;
->> +
->> +	priv =3D devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
->> +	if (!priv)
->> +		return -ENOMEM;
->> +
->> +	/* Port map index starts at 0, however the data port for this codec st=
-arts at index 1 */
->> +	if (of_property_present(dev->of_node, "qcom,tx-port-mapping")) {
->> +		priv->is_tx =3D true;
->> +		ret =3D of_property_read_u32_array(dev->of_node, "qcom,tx-port-mappin=
-g",
->> +						 &pdev->m_port_map[1], PM4125_MAX_TX_SWR_PORTS);
->> +	} else
->> +		ret =3D of_property_read_u32_array(dev->of_node, "qcom,rx-port-mappin=
-g",
->> +						 &pdev->m_port_map[1], PM4125_MAX_SWR_PORTS);
+On Fri Jul 11, 2025 at 2:32 PM BST, Srinivas Kandagatla wrote:
+> On 7/11/25 4:00 AM, Alexey Klimov wrote:
+>> The audio codec is found in Qualcomm PM2250/PM4125 PMICs and is used on
+>> platforms like Qualcomm QCM2290. It has soundwire interface and
+>> corresponding RX and TX slave devices.
+>>=20
+>> It has only two input channels: HPH left and right. The line output (LO)
+>> is linked to HPHL so the hardware has some limitations regarding concurr=
+ent
+>> playback via HPH and LO for instance.
+>>=20
+>> The codec driver also uses WCD MBCH framework. The MBHC functionality is
+>> implemented in a minimalistic way to enable IRQs and avoid different
+>> issues with IRQs.
+>>=20
+>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.c=
+om>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com=
 >
-> Nitpick: If a branch of an if needs { }, I think that both should have.
-
-Yes. Thanks.
-
->> +
->> +	if (ret < 0)
->> +		dev_info(dev, "Error getting static port mapping for %s (%d)\n",
->> +			 priv->is_tx ? "TX" : "RX", ret);
->> +
->> +	priv->sdev =3D pdev;
->> +	dev_set_drvdata(dev, priv);
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>
+> Thanks for doing this Alexey,
+>
+> I have tested Headset playback, headset recording and Lineout.
+>
+> While testing I have noticed one issue with the places where enable_irq
+> is being used, there is a possiblity of things going wrong in some cases.
+>
+>
+>> ---
+>>  sound/soc/codecs/Kconfig      |   18 +
+>>  sound/soc/codecs/Makefile     |    8 +
+>>  sound/soc/codecs/pm4125-sdw.c |  546 +++++++++++++
+>>  sound/soc/codecs/pm4125.c     | 1767 ++++++++++++++++++++++++++++++++++=
++++++++
+>>  sound/soc/codecs/pm4125.h     |  314 ++++++++
+>>  5 files changed, 2653 insertions(+)
+>>=20
 >
 > ...
+>> +static int pm4125_codec_enable_lo_pa(struct snd_soc_dapm_widget *w,
+>> +				     struct snd_kcontrol *kcontrol, int event)
+>> +{
+>> +	struct snd_soc_component *component =3D snd_soc_dapm_to_component(w->d=
+apm);
+>> +	struct pm4125_priv *pm4125 =3D snd_soc_component_get_drvdata(component=
+);
+>> +
+>> +	switch (event) {
+>> +	case SND_SOC_DAPM_PRE_PMU:
+>> +		snd_soc_component_update_bits(component, PM4125_ANA_COMBOPA_CTL_5, 0x=
+04, 0x00);
+>> +		usleep_range(1000, 1010);
+>> +		snd_soc_component_update_bits(component, PM4125_ANA_COMBOPA_CTL_4, 0x=
+0F, 0x0F);
+>> +		usleep_range(1000, 1010);
+>> +		snd_soc_component_write_field(component, PM4125_ANA_COMBOPA_CTL,
+>> +					      PM4125_ANA_COMBO_PA_SELECT_MASK,
+>> +					      PM4125_ANA_COMBO_PA_SELECT_LO);
+>> +		snd_soc_component_write_field(component, PM4125_DIG_SWR_PDM_WD_CTL0,
+>> +					      PM4125_WDT_ENABLE_MASK,
+>> +					      (PM4125_WDT_ENABLE_RX0_M | PM4125_WDT_ENABLE_RX0_L));
+>> +		break;
+>> +	case SND_SOC_DAPM_POST_PMU:
+>> +		usleep_range(5000, 5010);
+>> +		snd_soc_component_update_bits(component, PM4125_ANA_COMBOPA_CTL_4, 0x=
+0F, 0x04);
+>> +		enable_irq(pm4125->hphl_pdm_wd_int);
 >
->> +static const struct sdw_device_id pm4125_slave_id[] =3D {
->> +	SDW_SLAVE_ENTRY(0x0217, 0x10c, 0), /* Soundwire pm4125 RX/TX Device ID=
- */
->> +	{ },
+> if headset playback dapm widgets are powered up or active and you try to
+> play on lineout you would get below splat:
 >
-> No need for a trailing comma after a terminator
-
-Ok.
-
-
->> +};
->> +MODULE_DEVICE_TABLE(sdw, pm4125_slave_id);
->
+> [ 1181.352762] ------------[ cut here ]------------
+> [ 1181.357435] Unbalanced enable for IRQ 156
+> [ 1181.361489] WARNING: CPU: 1 PID: 877 at kernel/irq/manage.c:753
+> __enable_irq+0x4c/0x7c
 > ...
 >
->> +#include <linux/component.h>
->> +#include <linux/delay.h>
->> +#include <linux/device.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/pm_runtime.h>
->> +#include <linux/regmap.h>
->> +#include <linux/regulator/consumer.h>
->> +#include <linux/slab.h>
->> +#include <sound/jack.h>
->
-> Maybe, keep alphabetical order?
+> [ 1181.483541] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS
+> BTYPE=3D--)
+> [ 1181.490534] pc : __enable_irq+0x4c/0x7c
+> [ 1181.494405] lr : __enable_irq+0x4c/0x7c
+> [ 1181.498278] sp : ffff8000840ab8a0
+> [ 1181.501618] x29: ffff8000840ab8a0 x28: ffffd79b9725d588 x27:
+> ffff8000840ab948
+> [ 1181.508796] x26: 000000000000309b x25: 0000000000000080 x24:
+> 0000000000000080
+> [ 1181.515980] x23: ffffd79b9698f250 x22: 0000000000000000 x21:
+> 0000000000000000
+> [ 1181.523153] x20: 000000000000009c x19: ffff23c347fd9400 x18:
+> 0000000000000006
+> [ 1181.530335] x17: 0000000000000001 x16: ffffd79b94dbcce8 x15:
+> ffff8000840ab46f
+> [ 1181.537508] x14: 0000000000000000 x13: 3635312051524920 x12:
+> ffffd79b96d96768
+> [ 1181.544691] x11: 0000000000000058 x10: 0000000000000018 x9 :
+> ffffd79b96d96768
+> [ 1181.551862] x8 : 000000000000024f x7 : ffffd79b96dee768 x6 :
+> ffffd79b96dee768
+> [ 1181.559044] x5 : ffff23c3bbbb8508 x4 : 0000000000000000 x3 :
+> 0000000000000027
+> [ 1181.566217] x2 : 0000000000000000 x1 : 0000000000000000 x0 :
+> ffff23c35a0a4600
+> [ 1181.573392] Call trace:
+> [ 1181.575871]  __enable_irq+0x4c/0x7c (P)
+> [ 1181.579748]  enable_irq+0x60/0xd8
+> [ 1181.583098]  pm4125_codec_enable_lo_pa+0x6c/0x1a0 [snd_soc_pm4125]
+> [ 1181.589319]  dapm_seq_check_event+0x11c/0x144
+> [ 1181.593720]  dapm_seq_run_coalesced+0x130/0x1d0
+> [ 1181.598286]  dapm_seq_run+0x264/0x374
+> [ 1181.601991]  dapm_power_widgets+0x664/0x900
+> [ 1181.606212]  snd_soc_dapm_stream_event+0xf4/0x178
+> [ 1181.610957]  __soc_pcm_prepare+0x64/0x120
+> [ 1181.614998]  dpcm_be_dai_prepare+0x120/0x168
+> [ 1181.619299]  dpcm_fe_dai_prepare+0x94/0x178
+> [ 1181.623517]  snd_pcm_do_prepare+0x30/0x50
+> [ 1181.627567]  snd_pcm_action_single+0x48/0xa4
+> [ 1181.631872]  snd_pcm_action_nonatomic+0x94/0xb0
+> [ 1181.636435]  snd_pcm_prepare+0x7c/0xe0
+> [ 1181.640222]  snd_pcm_common_ioctl+0xca4/0x16e0
+> [ 1181.644705]  snd_pcm_ioctl+0x34/0x4c
+> [ 1181.648315]  __arm64_sys_ioctl+0xac/0x104
+> [ 1181.652355]  invoke_syscall+0x48/0x104
+> [ 1181.656147]  el0_svc_common.constprop.0+0x40/0xe0
+> [ 1181.660892]  do_el0_svc+0x1c/0x28
+> [ 1181.664242]  el0_svc+0x30/0xcc
+> [ 1181.667340]  el0t_64_sync_handler+0x10c/0x138
+> [ 1181.671737]  el0t_64_sync+0x198/0x19c
+> [ 1181.675430] ---[ end trace 0000000000000000 ]---
 
-It looks like the headers were sorted in pm4125-sdw.c.
-However, in pm4125.c I changed the order a bit for the next submission.
 
->> +#include <sound/pcm_params.h>
->> +#include <sound/pcm.h>
->> +#include <sound/soc-dapm.h>
->> +#include <sound/soc.h>
->> +#include <sound/tlv.h>
->
-> ...
->
->> +static int pm4125_bind(struct device *dev)
->
-> If an error occures at some point, should things be undone before returni=
-ng?
-
-Thanks! This probably inherited from other codecs.
-I reimplemented this for the next version.
-
->> +{
->> +	struct pm4125_priv *pm4125 =3D dev_get_drvdata(dev);
->> +	int ret;
->> +
->> +	/* Give the soundwire subdevices some more time to settle */
->> +	usleep_range(15000, 15010);
->> +
->> +	ret =3D component_bind_all(dev, pm4125);
->> +	if (ret) {
->> +		dev_err(dev, "Slave bind failed, ret =3D %d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	pm4125->rxdev =3D pm4125_sdw_device_get(pm4125->rxnode);
->> +	if (!pm4125->rxdev) {
->> +		dev_err(dev, "could not find rxslave with matching of node\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	pm4125->sdw_priv[AIF1_PB] =3D dev_get_drvdata(pm4125->rxdev);
->> +	pm4125->sdw_priv[AIF1_PB]->pm4125 =3D pm4125;
->> +
->> +	pm4125->txdev =3D pm4125_sdw_device_get(pm4125->txnode);
->> +	if (!pm4125->txdev) {
->> +		dev_err(dev, "could not find txslave with matching of node\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	pm4125->sdw_priv[AIF1_CAP] =3D dev_get_drvdata(pm4125->txdev);
->> +	pm4125->sdw_priv[AIF1_CAP]->pm4125 =3D pm4125;
->> +
->> +	pm4125->tx_sdw_dev =3D dev_to_sdw_dev(pm4125->txdev);
->> +	if (!pm4125->tx_sdw_dev) {
->> +		dev_err(dev, "could not get txslave with matching of dev\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	/*
->> +	 * As TX is the main CSR reg interface, which should not be suspended =
-first.
->> +	 * expicilty add the dependency link
->> +	 */
->> +	if (!device_link_add(pm4125->rxdev, pm4125->txdev,
->> +			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
->> +		dev_err(dev, "Could not devlink TX and RX\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (!device_link_add(dev, pm4125->txdev,
->> +			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
->> +		dev_err(dev, "Could not devlink PM4125 and TX\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (!device_link_add(dev, pm4125->rxdev,
->> +			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
->> +		dev_err(dev, "Could not devlink PM4125 and RX\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	pm4125->regmap =3D dev_get_regmap(&pm4125->tx_sdw_dev->dev, NULL);
->> +	if (!pm4125->regmap) {
->> +		dev_err(dev, "could not get TX device regmap\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	ret =3D pm4125_irq_init(pm4125, dev);
->> +	if (ret) {
->> +		dev_err(dev, "IRQ init failed: %d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	pm4125->sdw_priv[AIF1_PB]->slave_irq =3D pm4125->virq;
->> +	pm4125->sdw_priv[AIF1_CAP]->slave_irq =3D pm4125->virq;
->> +
->> +	ret =3D pm4125_set_micbias_data(pm4125);
->> +	if (ret < 0) {
->> +		dev_err(dev, "Bad micbias pdata\n");
->> +		return ret;
->> +	}
->> +
->> +	ret =3D snd_soc_register_component(dev, &soc_codec_dev_pm4125,
->> +					 pm4125_dais, ARRAY_SIZE(pm4125_dais));
->> +	if (ret)
->> +		dev_err(dev, "Codec registration failed\n");
->> +
->> +	return ret;
->> +}
-
-[..]
-
->> +static int pm4125_probe(struct platform_device *pdev)
->> +{
->> +	struct component_match *match =3D NULL;
->> +	struct device *dev =3D &pdev->dev;
->> +	struct pm4125_priv *pm4125;
->> +	struct wcd_mbhc_config *cfg;
->> +	int ret;
->> +
->> +	pm4125 =3D devm_kzalloc(dev, sizeof(*pm4125), GFP_KERNEL);
->> +	if (!pm4125)
->> +		return -ENOMEM;
->> +
->> +	dev_set_drvdata(dev, pm4125);
->> +
->> +	pm4125->supplies[0].supply =3D "vdd-io";
->> +	pm4125->supplies[1].supply =3D "vdd-cp";
->> +	pm4125->supplies[2].supply =3D "vdd-mic-bias";
->> +	pm4125->supplies[3].supply =3D "vdd-pa-vpos";
->> +
->> +	ret =3D devm_regulator_bulk_get(dev, PM4125_MAX_BULK_SUPPLY, pm4125->s=
-upplies);
->
-> devm_regulator_bulk_get_enable() could certainly be used to save a few=20
-> lines of code after fix the missing regulator_bulk_disable() in the=20
-> error handling of the probe.
-
-Thanks! I'll reimplement this.
-For me it looks like after staring at devm_regulator_bulk_get_enable()
-that regulator_bulk_disable() is not needed.
-
-[..]
-
->> +static void pm4125_remove(struct platform_device *pdev)
->> +{
->> +	struct device *dev =3D &pdev->dev;
->> +	struct pm4125_priv *pm4125 =3D dev_get_drvdata(dev);
->> +
->> +	component_master_del(&pdev->dev, &pm4125_comp_ops);
->> +
->> +	pm_runtime_disable(dev);
->> +	pm_runtime_set_suspended(dev);
->> +	pm_runtime_dont_use_autosuspend(dev);
->> +
->> +	regulator_bulk_disable(PM4125_MAX_BULK_SUPPLY, pm4125->supplies);
->> +	regulator_bulk_free(PM4125_MAX_BULK_SUPPLY, pm4125->supplies);
->
-> Is it correct? (it looks related to devm_regulator_bulk_get())
-
-I'll take a look at that.
+Yep, I noticed that one time only but was puzzled how to reproduce.
+As you suggested during out of email list discussion I will move handling
+of IRQs into separate widget.
 
 Thank you,
 Alexey
+
 
