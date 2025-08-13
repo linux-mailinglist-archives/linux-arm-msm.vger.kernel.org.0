@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-69048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDB9DB254EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 23:01:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 182B7B2550F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 23:16:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79306882381
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 21:01:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 029981C26369
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Aug 2025 21:15:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 569B028935D;
-	Wed, 13 Aug 2025 21:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B762ED179;
+	Wed, 13 Aug 2025 21:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cr3RZjnb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iEBG+XJo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE9C188715;
-	Wed, 13 Aug 2025 21:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8E52C21D4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 21:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755118904; cv=none; b=I3PU5LbUtod6AUCLp5xluLNp6B8S4mu4r3TXPgy03Gb+VYqRO9kWKfhSvHFKfCzJkjKEpVKb6yCpqhJQjpSkOXAMVOKc8pcUjOpotgi4FG3MP2MLrpViIIkEn9c29DzLmgsWRr9ysZlxoAAq+klUB/JJoZJk6idVyMfoEINykNQ=
+	t=1755119718; cv=none; b=TDA/DLVBRWWEBCT9yeTy8cjTINzHzb8FeotvAGpv2Ms3vf17784Q5ZD+HqvJyyA14lzRvXVoWMRnpwLnLl9TpceNMwf0hFXMmyl480/2IdHa/y6NIB8pyKqvY5Cn2FkYMvbx33hlppX09DrYdyGIsSE8rS4n0XRDJcwoRGlL28M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755118904; c=relaxed/simple;
-	bh=gLIt5lVsljB4/ZYXgNd3f4IPTjbeg3Uhy7FmOeKqCLI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=P1+j12eqtQOyna9wfjJ724EMFDnCTsq+m2C57g1LkljhQu5hMibfZZrPuBcWknAfrqKOqDJrebLP+ODIBgeY16LEiHRFX6Tc78se0Kr3X4nP952h27aZlhpZceMqxmlAobQqyb9GOCJUV1XbZf7QNuUBkP2alxnpoGOEOJlAxGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cr3RZjnb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBLdHA023974;
-	Wed, 13 Aug 2025 21:01:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rZkAh7aOlglWCrpyUB48asdjXVLQmajgdjNHXeqwaVA=; b=Cr3RZjnbxTqyV0Fm
-	HMD3/3KO5VpoWF0P4m+i2UHbc9wqhkgwL5ulFKDRmW+k+2RIIC0BgnCgJlcPNOAr
-	VICLzUqd4mQ7+6WH5B3Ay11jpAL4ezNiBTWISusluthCs3zVr9ZKPugvgYo8UUUD
-	v1VztULgBgRmapGVgSLpPc8MnY8a6Fa2uDzBTLyrf7DUvTH8njQ5uEOfOXzIByDA
-	tICi2184GN2M3ZLN/2Wx5m80gGnMvBsGLnfhnQnAWGEPUNqu+406n62j4ZGaseQQ
-	Ouh6d1jWGx0Eu41bJomlUQLjGzlHexaWwJUC/WZwE8KdDDNAk8KddzlxjlZ9JZXR
-	WjY3yw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48gr9rsw9j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 21:01:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57DL1VKr008529
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Aug 2025 21:01:31 GMT
-Received: from [10.216.55.173] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
- 2025 14:01:25 -0700
-Message-ID: <2dc54d35-4811-4153-bd36-843a374d9c4f@quicinc.com>
-Date: Thu, 14 Aug 2025 02:31:21 +0530
+	s=arc-20240116; t=1755119718; c=relaxed/simple;
+	bh=f0mOh5zW36wEzOojcDIcMa7UEWLFOqZuK/fsupPNmY4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VsZm7VYbyxntcaB7m8r7GF6Cxch0szKWgdhQLcdcA7K1Zj0UOxN3kZTmVgBI59urVJUJtB8GJZcMcUkSvAnBv5w/J1WEv1KMxAoja0lIJOHXZlMh4rlq6KVeISGk1G6Z4pOMLwI/7mdW2s6AyjsqniwYE0F49pwLAbAxbncG8xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iEBG+XJo; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b004954so1639505e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 14:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755119713; x=1755724513; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ewofpmx2u2AWLuh72EpS+Kxy8uzpjMF+7SbnHvsYlc4=;
+        b=iEBG+XJoLFsnrn6dm5Fsa2J/ukEKZdfxok99/Qz+ZSBT/ocPZbg0cyOtkO8wFB1KxC
+         V3oC2YQBwEQUo2hGLlfssLsSgzJJV2AI0N1RT/sXR4WfEFRmX/hA8VvttnVRe032Y+N2
+         zzgGyQ5h0GwZWuNI70flYcztveCpUA8hhA9ql+CCz5tFCVMfipttR+S+z7bfKHcpQguk
+         D9rK2uXZtl461kj3WFMQ7hKMksw5q8UJ7Ya9vVG3BquGU1Cx5mYhGhJ9Iyc7ZV0Zjj21
+         UpUlgmAxmXwh1WFYYQlopN+fXiKFIkHwVvdOP0ahGMk6YPSfSG3bxu66eiNgMC4EiTHo
+         G53A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755119713; x=1755724513;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ewofpmx2u2AWLuh72EpS+Kxy8uzpjMF+7SbnHvsYlc4=;
+        b=GcfempU7LzztgbZU56vbvChMzr+hsGSBtsQN4oyTOfGfpL1cmkXku5LuKwbKnrIz7V
+         kX+H4I4eHfIBe20MLm0kMRUQncinAX/i0WbSOPDabaB51cjvjidvq2MZzirdmc+MxpIy
+         UECizzBQTUxts79Lt/Qjj/Wa8nUK7pVYDOnb2eJi5VRrWE5mGFAuXGTmj+ZdZXk8IGTu
+         dgvSQCbc4gZs4Em0h/Vo4M4HpzWHxVdKlP7fAaCRQ9ImST/6remn3mCod8h6qzqs1MZL
+         A+3u6MKOp4G67F0dheQvMoItUi7Y0FRVHEBz/ebNH5d383w/2cO0NgVQPV0UkTsgKkTN
+         BfcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2jM4jP8HwIbTqDqVq+WJ8s+X2FCIAjqwRa44MgwQzqjuw5JpaZHT16GVsSMr/5+yvdwATifqNFIe7sTNH@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSsPZrg6iy41vtnG5EZvUwcqEMztxDOR8B+YoH18be2bNRbfMc
+	S2HpZ9j/72hQpiiU7D+N3lEc3R5MfgNMIrv1Q2NytBJhPs1hSg01UUCmGWv081GTx8U=
+X-Gm-Gg: ASbGncur1+QWv6YadlknWZy6pyfG7cwp3db5EnkYSDpBtgCrIGZY6gUxp3GtNdC67U9
+	CveYkta+jsULW5bR/oVQRM/PWFEQv7+mE3Ctp11w7TrXwvj5590+Ns+OwP5fRBZVnShPgwj5TDF
+	+D9cOUtZqQCJ6bqg/Ly3vMT/EH0Cdu09GxLrt129d0I2seDhFDc9QKiel1zGUBov7d2X8vDcaPd
+	ldnLCNXIjJh1Ygh7UEjEbBS7TJAhmXloi/ep8+hq1BxOxHKi5eTt8wi+RMgBwBudNgYfIsKT0EE
+	8jXb5I1wyrPS+OtsJe9duOSdzlqPnCr5MhZmmxEvEw4nZ4fit6RmdIoLWvmcWOw55L5IgWEq3z8
+	xZACMvNsDYsB3cPFVoHunN/HOVEXMAvSbU2ps5Bir2qY0FSh/dikpB2a387f0M25F
+X-Google-Smtp-Source: AGHT+IESt7Dqns9DwMc5t6p93qJ/wntgnWbJwzl+NSSOoNpJ0QKJzEMjsB+Jf37ThCfpJRFyEsk/pw==
+X-Received: by 2002:a05:6000:4283:b0:3b9:8224:d3cf with SMTP id ffacd0b85a97d-3b9fc2f813bmr578094f8f.54.1755119712975;
+        Wed, 13 Aug 2025 14:15:12 -0700 (PDT)
+Received: from [192.168.0.13] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b91b05b28fsm2527911f8f.21.2025.08.13.14.15.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Aug 2025 14:15:12 -0700 (PDT)
+Message-ID: <93e35282-52a3-4c3e-8065-b2a6c363c974@linaro.org>
+Date: Wed, 13 Aug 2025 22:15:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,164 +82,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 4/4] phy: qcom-qmp-ufs: read max-microamp values from
- device tree
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, Mark Brown <broonie@kernel.org>
-CC: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <mani@kernel.org>, <conor+dt@kernel.org>,
-        <bvanassche@acm.org>, <neil.armstrong@linaro.org>,
-        <dmitry.baryshkov@oss.qualcomm.com>, <konradybcio@kernel.org>,
-        <krzk+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20250806154340.20122-1-quic_nitirawa@quicinc.com>
- <20250806154340.20122-5-quic_nitirawa@quicinc.com>
- <f368b6da-1aa3-4b8e-9106-3c29d4ab5c5e@oss.qualcomm.com>
- <fe2bc07c-8fe9-47fd-bcd7-c2f0ebbd596f@sirena.org.uk>
- <aed1de56-fafe-4ccc-b542-69400b574def@oss.qualcomm.com>
- <acf89420-743b-4178-ac05-d4ca492bfee3@sirena.org.uk>
- <599b8a4b-324a-4543-ba27-0451f05c3dfd@quicinc.com>
- <3aa82f65-4812-4bf0-9323-96f40824a004@sirena.org.uk>
- <8c7f8cfc-2090-449e-b6ec-688a0021bac4@oss.qualcomm.com>
- <14566f49-7f7b-4583-98b7-8a473054f7c3@sirena.org.uk>
- <kwp3q4r5rzahzro5f6l6ml24vbiutyxokrhjsbtzcb5kvanx5e@elagxv6w5dq7>
- <d072b19d-bc01-45c8-8cf3-bceb53ca9b2c@quicinc.com>
+Subject: Re: [PATCH v2 1/3] media: dt-bindings: qcom,sm8550-iris: Add SM8750
+ video codec
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org>
+ <20250804-sm8750-iris-v2-1-6d78407f8078@linaro.org>
+ <683024c7-3740-cb9a-6924-33816edd63f3@quicinc.com>
+ <8d8dcaef-eb96-4e7b-9a0a-8b3836cb284c@kernel.org>
+ <e33a22ba-f82a-412a-b1fd-d1cd50f6b21d@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <d072b19d-bc01-45c8-8cf3-bceb53ca9b2c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEzMDA5NCBTYWx0ZWRfXwb5sofLS7ooy
- w9vhdBpRMnzCGHdYBC992Gm97tPkCeN38o9bC3ssT6Qg83unWtySq+oPJzZ6Akgwe1UlAjIZjHG
- l5DSIp/1a1Wx/D9uSNsi7HkjGtEp280vvg824mGZkFHZuEptIRRfGrdCYkisAKY8vYhwGomapXs
- kcTERdE2EkTXA2JTCgH20TihdrW2s05tnUaCv+wslfpWvx2j81gADGrgUZTW/vWhEr1s717p9bJ
- NpM7CjhGAhB7ycshtVrt8n9jaK8+yaNNfgJfNO/YIB5AuS04OhkGpTfXSkRAFb66szcRqJrWior
- sUEmAnDW87rlufPpCMauH11dduPyIoA7FGW2/Smw/bapM3focyOY4IZTs60FfaZmWR+/L/YDPZQ
- 11U3BtiQ
-X-Authority-Analysis: v=2.4 cv=NIrV+16g c=1 sm=1 tr=0 ts=689cfd2c cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=ULkvDhI3a0wY5DhI7wsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 59E_3mNuvokWRgEuwNcnI43mszk0FYe8
-X-Proofpoint-GUID: 59E_3mNuvokWRgEuwNcnI43mszk0FYe8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0
- spamscore=0 malwarescore=0 phishscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508130094
+In-Reply-To: <e33a22ba-f82a-412a-b1fd-d1cd50f6b21d@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 12/08/2025 09:04, Krzysztof Kozlowski wrote:
+> On 12/08/2025 10:00, Krzysztof Kozlowski wrote:
+>> On 12/08/2025 09:54, Dikshita Agarwal wrote:
+>>>
+>>>
+>>> On 8/4/2025 7:07 PM, Krzysztof Kozlowski wrote:
+>>>> Add binding for Qualcom SM8750 Iris video codec, which comes with
+>>>> significantly different powering up sequence than previous SM8650, thus
+>>>> different clocks and resets.  For consistency keep existing clock and
+>>>> clock-names naming, so the list shares common part.
+>>>>
+>>>> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>>   .../bindings/media/qcom,sm8750-iris.yaml           | 186 +++++++++++++++++++++
+>>>>   1 file changed, 186 insertions(+)
+>>>>
+>>>
+>>> Query:
+>>> Can the additional reset and clocks be accommodated in existing 8550-iris
+>>
+>> No, different hardware. Although it is hardware from your domain and
+>> your company, so I would assume you know the answer.
+> I guess I misread - I thought you want to re-use existing properties or
+> something like that, but you just want to create one huge binding?
+> 
+> No. Don't grow these unmaintainable patterns. We have been changing this
+> for some time already :/
+> 
+> Best regards,
+> Krzysztof
 
+@Dikshita can you revert here are you happy with a new binding or 
+requesting in-line changes in Iris - my reading here is a binding is 
+justified.
 
-On 8/12/2025 1:18 AM, Nitin Rawat wrote:
-> 
-> 
-> On 8/11/2025 9:20 PM, Bjorn Andersson wrote:
->> On Thu, Aug 07, 2025 at 08:09:56PM +0100, Mark Brown wrote:
->>> On Thu, Aug 07, 2025 at 07:43:15PM +0200, Konrad Dybcio wrote:
->>>> On 8/7/25 7:26 PM, Mark Brown wrote:
->>>
->>>>> Note that that's specifying OPPs which is different...
->>>
->>>> The microamp properties are in the top-level, not under OPP if
->>>> that's what you meant
->>>
->>> I mean the OPPs use case is an existing well known one for dumping stuff
->>> into DT.
->>>
->>>>> That doesn't mean that it's a good idea to put that information in the
->>>>> DT, nor if it is sensible to put in DT does it mean that it's a good
->>>>> idea to define a generic property that applies to all regulator
->>>>> consumers which is what I now think Konrad is proposing.
->>>
->>>> Yeah, that's what I had in mind
->>>
->>>> I was never able to get a reliable source for those numbers myselfe
->>>> either.. At least some of them are prooooobably? chosen based on the
->>>> used regulator type, to ensure it's always in HPM..
->>>
->>> That's what set_mode() is for.  Like I say it's becoming less and less
->>> relevant though.
->>>
->>
->> set_mode() just applies the mode to the regulator_dev, so in cases where
->> you have multiple consumers of a regulator_dev things would break.
->>
->> Further, there are numerous cases where we have multiple consumers each
->> needing a "low" mode, but their combined load requires a "high" mode.
->>
->> set_load() and its aggregation of the inputs deals with both of these
->> issues.
->>
->>
->> Whether mode setting is becoming less relevant in our hardware, that I
->> don't have the definitive answer to.
->>
->>>> That said, our drivers cover a wide variety of hardware, built on a
->>>> wide variety of process nodes, with different configurations, etc.,
->>>> so it's either polluting the DT, or polluting the driver with
->>>> per-compatible hardcoded data (and additional compatibles because
->>>> fallbacks wouldn't work most of the time)
->>
->> If this is our reason for putting it in DeviceTree, then we should write
->> that in the commit message :)
->>
->>>
->>> That's really not a persuasive argument for adding a genric property
->>> that applies to all regulator consumers...
->>>
->>
->> I agree, even if we determine that this belongs in DT, because it needs
->> to be tweaked on a per-board basis, it's still only applicable to a
->> fraction of our device nodes.
-> 
-> Hi Bjorn & Mark,
-> 
-> I had a follow-up discussion with the PHY designer to confirm whether 
-> this value could vary at the board level. Based on their response, it's 
-> a fixed value for the SoC and remains consistent across different 
-> boards. Therefore, I'm comfortable removing it from the device tree and 
-> using hardcoded, per-compatible data in the driver.
-> 
-> The only concern is that this approach may lead to driver bloat over 
-> time, as more SoCs are added and each requires its own hardcoded 
-> configuration.
-> 
-> Regards,
-> Nitin
-> 
-> 
-Based on the current understanding, I plan to post a revised patch that 
-uses hardcoded, per-compatible data within the driver, rather than 
-specifying it in the device tree. Please let me know if anyone has any 
-concerns with this approach.
+@Krzysztof 
+https://lore.kernel.org/linux-arm-msm/fb8f154b-3da4-4bee-82e1-3a1597a35c46@kernel.org/
 
-Thanks,
-Nitin
+Are you sending a v3 here ?
 
+I can also just add the OPP when applying this patch.
 
-> 
-> 
-> 
-> 
->>
->> Regards,
->> Bjorn
->>
->>> My instinct with this stuff is generally to avoid putting it in the DT,
->>> we see far too many instances where someone's typed some numbers in
->>> wrongly or discovers the ability to drive the hardware harder and needs
->>> to tune the numbers - once something is ABI you're stuck just trusting
->>> the numbers.  That said I'm not going to stop you putting something
->>> specific to this driver in there, I just don't think this is a good idea
->>> as a generic property.
->>
-> 
+---
+bod
 
 
