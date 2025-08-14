@@ -1,58 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-69291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954CAB27199
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 00:26:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2E33B271A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 00:34:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4290A1CC4F27
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 22:26:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC343173969
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 22:34:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 508C827FD6B;
-	Thu, 14 Aug 2025 22:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA2027FD44;
+	Thu, 14 Aug 2025 22:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YrPSpGBC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kPRDvgWK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2746627FB28;
-	Thu, 14 Aug 2025 22:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2B923D7E2;
+	Thu, 14 Aug 2025 22:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755210368; cv=none; b=sU8nyiJq96iOHuExRZnh81Rzf5Vk6CcPgDHbsSpy0Sh5DEijMAJevVE/WgTpqpDQENjYiJD2OxgSqFn1VKToivSBxpU8mTFXRFj6mSQvV4d/sT0xsKGb93F0gDjCA3p1x25GdeGkutsVBJLVgA5FglQWFoo8YEmDTz5OEX2/hT8=
+	t=1755210868; cv=none; b=GnbV7zRfth74tNcHhR9qbqpbQ+Pesi7o7rVrY17gICWdRVssYctAJAZQAGRpKg5TB48bjh1kmzchhocrHuJGK9ywxqUsDO42sEQ21vu8QxQf9lt0r9JAwzlhmFHKx6XJL2hMNpnp9pXiKs7V6k69T8lbn391ybuGcrCwWSzZmNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755210368; c=relaxed/simple;
-	bh=PpBhujVqq3G2HXm3lppYS9UmsqQ/kcjSTxjYIgy9JsQ=;
+	s=arc-20240116; t=1755210868; c=relaxed/simple;
+	bh=r5sVScVg8A+4RvvS2qufgrLSgNQ4hfZIM+ozBjWCA/Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oq7zsfgcsM4Sm7omdd30TqDUTEeCUHgQQxpQUryHgnTL3e3sL3/p9iZzgY0UtcMtGPqhgbR0NLjIe3vmz1rv/X9b4FTy177kgePsWkJHe0UMifUS8URkhX4CKBxl7LJgbgES1w7pJMsB+3uW7Dq0C7s9JXY/dHqYlFebJM5+Dx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YrPSpGBC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9108C4CEED;
-	Thu, 14 Aug 2025 22:26:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZlwDhkEIUeiifkjpzuYJGv1TTtKhBlnTrHKctlGIPyuCjtoqVu6MMWiaaFQRckjrkT+v4gzIyL8BgxbTPt+xrP7omAXjwKw0apq3oPfHyxl6HPdko2O9MD23rXfH++JdGn/TizpWN+0+r276/YPlrm+kjgQ1ksLPfqUZDeh7mXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kPRDvgWK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E2BC4CEED;
+	Thu, 14 Aug 2025 22:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755210367;
-	bh=PpBhujVqq3G2HXm3lppYS9UmsqQ/kcjSTxjYIgy9JsQ=;
+	s=k20201202; t=1755210867;
+	bh=r5sVScVg8A+4RvvS2qufgrLSgNQ4hfZIM+ozBjWCA/Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YrPSpGBCHsXyFNPh/6g8o48PRM8/VHyukR+Q2tNpy/lPpGHzqxIv+PX4iMKS8xziU
-	 /1IDAXelY11oCexwNRsr1KJ9SauhS55BkB+y12+9MbtdPUo6XIK649neJkr+KizhWr
-	 tIL/SbPWTXMKu3BR0+3UMabEjQhOTES3bDgd/GqH/2VNKqqmLLPjKCHcW3OO2FfSXj
-	 Lijt6iv/rlDxjBPPx1JsFvjIQKibcvoDRQplXwTZgGVHX/AlzE8RcFJu22ubNZIUiS
-	 Jc/wlLLoMwew5dvkJp/f8Say7hXWS0D5CJEtcbiQ20ijkioAV9Gsk8/Wk593jwt998
-	 TKxvHrli/s4fw==
-Date: Thu, 14 Aug 2025 17:26:05 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Wenbin Yao <quic_wenbyao@quicinc.com>, 
-	Qiang Yu <qiang.yu@oss.qualcomm.com>, Manivannan Sadhasivam <mani@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v2] phy: qcom: qmp-pcie: Fix PHY initialization when
- powered down by firmware
-Message-ID: <e5hn42qxz2eqgjanyoxb2456wvuw6zy55ibbg6fh33jma7utvq@mlq2a57owz4g>
-References: <20250814-phy-qcom-qmp-pcie-nocsr-fix-v2-1-fe562b5d02a1@linaro.org>
+	b=kPRDvgWKPpmzN7VJ2NuXCIhNUk20jsFdncWyMVJdPSCtDm2Mdpuqbyu2KbYY4Ctou
+	 kQffSmYPoX7edg9+ZK2Ls6HIS1AGhO6N+RJ0jew1OVOCBGbC+YDl1DahkKC9bZcfTJ
+	 jrCz2yko6n+qQfbrEhqNM+yUNY57d52ic1AIALYx3poUO30Dryfgw4kTknvlwQfTAN
+	 FHei49OlsWYktOT61tiSUY850UnjADhShH2EkJTh2vMB+ur0yieyhTd/HErDvRTNjv
+	 TSkq1CCv1Rbo8WmCfZBi0xkZ4hMdoBk3psBqOxtZ2yNb4n+w0fWTZCtCQIRfLkDpnX
+	 YF842IRv9Va1g==
+Date: Thu, 14 Aug 2025 17:34:26 -0500
+From: Rob Herring <robh@kernel.org>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v11 06/16] dt-bindings: net: dp83822: Deprecate
+ ti,fiber-mode
+Message-ID: <20250814223426.GA4036754-robh@kernel.org>
+References: <20250814135832.174911-1-maxime.chevallier@bootlin.com>
+ <20250814135832.174911-7-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,104 +80,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250814-phy-qcom-qmp-pcie-nocsr-fix-v2-1-fe562b5d02a1@linaro.org>
+In-Reply-To: <20250814135832.174911-7-maxime.chevallier@bootlin.com>
 
-On Thu, Aug 14, 2025 at 11:27:10AM +0200, Stephan Gerhold wrote:
-> Commit 0cc22f5a861c ("phy: qcom: qmp-pcie: Add PHY register retention
-> support") added support for using the "no_csr" reset to skip configuration
-> of the PHY if the init sequence was already applied by the boot firmware.
-> The expectation is that the PHY is only turned on/off by using the "no_csr"
-> reset, instead of powering it down and re-programming it after a full
-> reset.
+On Thu, Aug 14, 2025 at 03:58:21PM +0200, Maxime Chevallier wrote:
+> The newly added ethernet-connector binding allows describing an Ethernet
+> connector with greater precision, and in a more generic manner, than
+> ti,fiber-mode. Deprecate this property.
 > 
-> The boot firmware on X1E does not fully conform to this expectation: If the
-> PCIe3 link fails to come up (e.g. because no PCIe card is inserted), the
-> firmware powers down the PHY using the QPHY_PCS_POWER_DOWN_CONTROL
-> register. The QPHY_START_CTRL register is kept as-is, so the driver assumes
-> the PHY is already initialized and skips the configuration/power up
-> sequence. The PHY won't come up again without clearing the
-> QPHY_PCS_POWER_DOWN_CONTROL, so eventually initialization fails:
-> 
->   qcom-qmp-pcie-phy 1be0000.phy: phy initialization timed-out
->   phy phy-1be0000.phy.0: phy poweron failed --> -110
->   qcom-pcie 1bd0000.pcie: cannot initialize host
->   qcom-pcie 1bd0000.pcie: probe with driver qcom-pcie failed with error -110
-> 
-> This can be reliably reproduced on the X1E CRD, QCP and Devkit when no card
-> is inserted for PCIe3.
-> 
-> Fix this by checking the QPHY_PCS_POWER_DOWN_CONTROL register in addition
-> to QPHY_START_CTRL. If the PHY is powered down with the register, it
-> doesn't conform to the expectations for using the "no_csr" reset, so we
-> fully re-initialize with the normal reset sequence.
-> 
-> Also check the register more carefully to ensure all of the bits we expect
-> are actually set. A simple !!(readl()) is not enough, because the PHY might
-> be only partially set up with some of the expected bits set.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 0cc22f5a861c ("phy: qcom: qmp-pcie: Add PHY register retention support")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 > ---
-> Changes in v2:
-> - Ensure that all expected bits are set (Konrad)
-> - Link to v1: https://lore.kernel.org/r/20250812-phy-qcom-qmp-pcie-nocsr-fix-v1-1-9a7d0a5d2b46@linaro.org
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
+>  .../devicetree/bindings/net/ti,dp83822.yaml    | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 95830dcfdec9b1f68fd55d1cc3c102985cfafcc1..80973527fafcb294273dff1864828532dab738db 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -3067,6 +3067,14 @@ struct qmp_pcie {
->  	struct clk_fixed_rate aux_clk_fixed;
->  };
+> diff --git a/Documentation/devicetree/bindings/net/ti,dp83822.yaml b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
+> index 28a0bddb9af9..c1fd6f0a8ce5 100644
+> --- a/Documentation/devicetree/bindings/net/ti,dp83822.yaml
+> +++ b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
+> @@ -47,6 +47,9 @@ properties:
+>         is disabled.
+>         In fiber mode, auto-negotiation is disabled and the PHY can only work in
+>         100base-fx (full and half duplex) modes.
+> +       This property is deprecated, for details please refer to
+> +       Documentation/devicetree/bindings/net/ethernet-connector.yaml
+> +    deprecated: true
 >  
-> +static bool qphy_checkbits(const void __iomem *base, u32 offset, u32 val)
-> +{
-> +	u32 reg;
-> +
-> +	reg = readl(base + offset);
-> +	return (reg & val) == val;
-> +}
-> +
->  static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -4339,10 +4347,12 @@ static int qmp_pcie_init(struct phy *phy)
->  	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	void __iomem *pcs = qmp->pcs;
-> -	bool phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
->  	int ret;
->  
-> -	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
-> +	qmp->skip_init = qmp->nocsr_reset &&
-> +		qphy_checkbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START) &&
-> +		qphy_checkbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], cfg->pwrdn_ctrl);
+>    rx-internal-delay-ps:
+>      description: |
+> @@ -143,5 +146,20 @@ examples:
+>          mac-termination-ohms = <43>;
+>        };
+>      };
+> +  - |
+> +    mdio1 {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      fiberphy0: ethernet-phy@0 {
+> +        reg = <0>;
+> +        mdi {
+> +          connector-0 {
+> +            lanes = <1>;
+> +            media = "BaseF";
+> +          };
 
-IMHO the "phy_initialized" variable does provide valuable context to
-what those (now) two lines represents. That is particularly relevant as
-the second one is active low...so at least I need to think a bit extra
-to understand what's going on.
+If you respin, just add this to the existing example.
 
-Other than that, I think this looks good.
-
-Regards,
-Bjorn
-
-> +
->  	/*
->  	 * We need to check the existence of init sequences in two cases:
->  	 * 1. The PHY doesn't support no_csr reset.
-> 
-> ---
-> base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
-> change-id: 20250812-phy-qcom-qmp-pcie-nocsr-fix-1603106294cd
-> 
-> Best regards,
-> -- 
-> Stephan Gerhold <stephan.gerhold@linaro.org>
-> 
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
