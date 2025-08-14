@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-69120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 004A0B25CD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:15:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF649B25D01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:22:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 09C354E01CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:15:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03F1516179E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D95B23D7E9;
-	Thu, 14 Aug 2025 07:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667A2263F5F;
+	Thu, 14 Aug 2025 07:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OqteK6wp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UJEXMVqL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B971A9F8F;
-	Thu, 14 Aug 2025 07:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C677B255F31;
+	Thu, 14 Aug 2025 07:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755155733; cv=none; b=KuTVBHejsxyNCQbNI68blXCaNw7DXAL2023KJ1VBxtqThZCVVDBzZbc8ZzR6FOb4jOAwGy9Rc23cM+BL560qgO/hKNKGJB5LnrcuE6LJIUNUgWOPAHqxkrDVVTPml4D5ML2IiorRFNAq9UpIe4oEQJSUlA5CtrMpPDLI636CSQE=
+	t=1755156066; cv=none; b=NwMLtQog7xsr9e63w5+qe0mWqpBrZdFZfDHYmZjvVecaQxG+eeFHI13EIavbv++RyZPa/Y14pEH9BmMH8WSv7aFBSg5HgugekHzdtuxIrXXfNZzRXMs2BJVSm+8WZiazhh0EFi/FEOjCoBFGpfDmYRtD5o40ieoWTLANNpoZRFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755155733; c=relaxed/simple;
-	bh=Q76elz5OfAOCUyiPxLaPswZ/mRc86NecebFPSfGGyCU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=F7wrcw2Q/oYINv0w0GyIHNCH1tQJih66ArJeP/3d3ngRDI3wo5luUvUuYQ/RAGa12ywtQjnQp6806ujkEbxEdLDcy+8Qcqqw3ySia7hCViPfAYvNXQfUTaJul+SRDAS09NQEURQYG4kNbiTgmsspsbtfObHsKKNbHyoEcYV6Db4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OqteK6wp; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1755156066; c=relaxed/simple;
+	bh=QVWJfxryv5an2qu/yYFf6jH5snA22fzCZz+X9kWErqY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=PPqLHBzRplgvJGqzGYfLm6pwfxpmygc2Pwt2Vxntng3GEhBlxUv6nPcbVUPGhqWAEuZ8uv+KpEH/HFSLbnpuo4bvvmY9LMWQu+5CPdMfTLRsP3S4HLsCmzGndTGB6N9Opi7K0zDPGzGFu+8YfgCJjV2bcfyXQSgTGMQsTPy2sfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UJEXMVqL; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DNS32b025686;
-	Thu, 14 Aug 2025 07:15:28 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DLkD4k031974;
+	Thu, 14 Aug 2025 07:20:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MVJ2/ZBIIfsqqOG7o0XSDJgZ8RX55I7X6cWhwMyyOS4=; b=OqteK6wpH4Yf/IMk
-	rRsdvBCEc6bm1FaSCf481VRDkxtMFUlWo0fDyX7sMXqs692hKLJcq5wG/Yj3wwvr
-	O7mUQ/9jKw9p/gp3luL3DUG8LTyetw9Bkt620eUhPdH+V/rFutrZltNuucFHKN37
-	AkzBYpQAAJW8n6XGYznW4HycmxMkX970dr0Y2ZZFEOSQxbwiEe6DHLhCdkUdY56+
-	k3NN/KfaD1AGd7MhUDNbm1UeD2rWioKyZY8A3Xf69ZDF4NnvAsyhOAF8JRd2jieX
-	pJE2yb9hdgm2PjeA9m9YOUETjpIjWinaqIjct2Wb9oUT1TFM0e8duToDrnjVPEBD
-	R5ly3w==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dy3gene1-1
+	RsScPcpy4lyc0qyWfKF/vKWfu+4Gt4nFM/6cBTbAPSw=; b=UJEXMVqLLcZi+p3N
+	A2lCRP16sPiscs5eIT/WBC+BLzjgjQz3HwTkUl/mEyfXFs95l3YC3XFmZZaTrWy8
+	Z0q26ZpvykYw1yEW5W+wmowIocUU2RWgw1qvoZLNWyyW7D2ZM/GdvDSKt7ZvoeVZ
+	DOOXWO8ppvLnUQmnmW9fpe6gSqOarUV/QCxKXX9ULJvQlsSK5ip+gizxxZsZZb+L
+	TBiT3oN2bSKldWGUZpa/ABlXTpfTq/7Obfe6VudWCtpAoiqISX3SKc9sU7nCfHEy
+	XYJAtk33KfZE3y0atJjlN6rzhF3OrvvTwW2pycCVTO63qp7ZJAhjr3Yr8t1CBK74
+	cryiFA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fem4jq28-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 07:15:27 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E7FRhq022400
+	Thu, 14 Aug 2025 07:20:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E7KSFX021991
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 07:15:27 GMT
-Received: from [10.204.78.60] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 14 Aug 2025 07:20:28 GMT
+Received: from [10.216.15.102] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 14 Aug
- 2025 00:15:21 -0700
-Message-ID: <dda9a2ef-5b86-4883-8347-b5ccf25e8d5d@quicinc.com>
-Date: Thu, 14 Aug 2025 12:45:18 +0530
+ 2025 00:20:21 -0700
+Message-ID: <bc001360-1cfe-4886-a023-367a8edc21c5@quicinc.com>
+Date: Thu, 14 Aug 2025 12:50:17 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,152 +65,171 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Remove SDR104/SDR50
- broken capabilities
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <kernel@oss.qualcomm.com>
-References: <20250801084518.2259767-1-quic_sartgarg@quicinc.com>
- <20250801084518.2259767-5-quic_sartgarg@quicinc.com>
- <69f2807c-9a28-4b31-97cc-2756f0ab9fd4@kernel.org>
- <c7e36755-9255-4209-9d53-20077bd1d3ba@quicinc.com>
- <8b023e56-435b-43df-8b15-c562a494e06f@kernel.org>
- <ab5d3811-9fbf-4749-9463-4457fbf50023@quicinc.com>
- <4091c488-996c-4318-82ad-c054a9ef5a22@oss.qualcomm.com>
- <a93fb5bf-1fd5-4e00-8338-b8608a9ba8fa@kernel.org>
- <f2f13082-20d6-4f22-8dfb-f11b01cd6706@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] dts: describe x1e80100 ufs
+To: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>, <marcus@nazgul.ch>,
+        <kirill@korins.ky>, <vkoul@kernel.org>, <kishon@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <mani@kernel.org>, <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
+        <bvanassche@acm.org>, <andersson@kernel.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>
+References: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
+ <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
 Content-Language: en-US
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <f2f13082-20d6-4f22-8dfb-f11b01cd6706@oss.qualcomm.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=X4lSKHTe c=1 sm=1 tr=0 ts=689d8d0f cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=bExINVLK0oqGhwCZNEEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzMSBTYWx0ZWRfX8CUu284FyLnM
- IwIk9PTqDxDN5GrBUfAzjyOrwijF6Ued3IbM4tWsz+u7O3gWV5nqWCD8QDYJd3rt/x13SoqKkTI
- jKzFrGtueFaHWKEJj7OT6eDVdYDBI34u1XHoj7jLgSoKHlAx8SfnXoY6l1LHiun+OrRqOGo/v+R
- 6/NoSufiekkDfMLLjsuYKEcu1SOAVsxhynnXeZjhnKiNsBJAWYLQCwYx3M8zo/O/6Rm6eZJOdoz
- Csp2QHMs7pfViljnOw+ld68t4lY+k9Wj0AaXZpxYF6xtyTuTnLEJJ10GSLJ3Qe8tQIYsbn5W0FD
- XzfiJbZjjK0oq9hAuUOcBh6VVnAl7hS2UQcSbVNSHpC3q7zJS8/ZXJkBT672xR8AJ7cIMgfBwOH
- zZjpfmsm
-X-Proofpoint-GUID: r5uJAFNl0ZtT51drEVfGfxf6wGMoljaP
-X-Proofpoint-ORIG-GUID: r5uJAFNl0ZtT51drEVfGfxf6wGMoljaP
+X-Proofpoint-GUID: YSxe04GFzNwz5z3pryrGGbxCF4rljt4H
+X-Proofpoint-ORIG-GUID: YSxe04GFzNwz5z3pryrGGbxCF4rljt4H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2OCBTYWx0ZWRfX7ifYVO1VrwO9
+ 2uaWKsyal7TYIgXXTDi76hHS/MDZcG5/kwWI8LvPyih8rS8SUwv2m9/RdrKv7CB+5QqlgJJu1tI
+ kCBeRajqk3vMF041wqz+XxZjZImXndbDYYiJDjSaQjo4At/aOr3NVPliiLTrX5s7Tydf/3u+imt
+ XjjlsOaL0mDzFHlzw0q8iogO4Ztdh/L7igK9STf4hMZpJzDzAgJmq3gasMwHEMuclRGDGi8Im7b
+ VRPFb68lUDDuCJfXYrdVcy7C7CQ9JVzM88KRCjyk7ThV3sFwcrot+b2dwEnhKmTCzTbWyqWdXPD
+ HG7AsZoMs5gTD+plgSe/1u4gW/gqnaq1v76zWo8wTNdLt0ghUYE8pBQvypHJlgdulzFJE8KoSYv
+ 9op27r2X
+X-Authority-Analysis: v=2.4 cv=YMafyQGx c=1 sm=1 tr=0 ts=689d8e3d cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=bSFmR1_Cq-7rNE1wWKgA:9
+ a=Kjs97tkqnXMi_ocT:21 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
- spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090031
+ bulkscore=0 clxscore=1011 priorityscore=1501 spamscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110068
 
 
 
-On 8/13/2025 5:37 PM, Konrad Dybcio wrote:
-> On 8/13/25 1:56 PM, Krzysztof Kozlowski wrote:
->> On 13/08/2025 13:21, Konrad Dybcio wrote:
->>> On 8/13/25 1:08 PM, Sarthak Garg wrote:
->>>>
->>>>
->>>> On 8/5/2025 2:55 PM, Krzysztof Kozlowski wrote:
->>>>> On 05/08/2025 11:19, Sarthak Garg wrote:
->>>>>>
->>>>>>
->>>>>> On 8/1/2025 2:32 PM, Krzysztof Kozlowski wrote:
->>>>>>> On 01/08/2025 10:45, Sarthak Garg wrote:
->>>>>>>> The kernel now handles level shifter limitations affecting SD card
->>>>>>>> modes, making it unnecessary to explicitly disable SDR104 and SDR50
->>>>>>>> capabilities in the device tree.
->>>>>>>>
->>>>>>>> However, due to board-specific hardware constraints particularly related
->>>>>>>> to level shifter in this case the maximum frequency for SD High-Speed
->>>>>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
->>>>>>>> card in HS mode. This is achieved using the max-sd-hs-frequency property
->>>>>>>> in the board DTS.
->>>>>>>>
->>>>>>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>>>>>>> ---
->>>>>>>>     arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 1 +
->>>>>>>>     arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 1 +
->>>>>>>>     arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 1 +
->>>>>>>>     arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 3 ---
->>>>>>>>     4 files changed, 3 insertions(+), 3 deletions(-)
->>>>>>>>
->>>>>>>
->>>>>>> This will break MMC for all of the users and nothing in commit msg or
->>>>>>> cover letter explains that or mentions merging strategy.
->>>>>>>
->>>>>>> Exactly this case is covered by your internal guideline, no? Please read it.
->>>>>>>
->>>>>>> Best regards,
->>>>>>> Krzysztof
->>>>>>
->>>>>> Just to make sure I’m addressing the right concern — are you primarily
->>>>>> worried about the introduction of the max-sd-hs-frequency property in
->>>>>> the board DTS files, or about the removal of the sdhci-caps-mask
->>>>>> from the common sm8550.dtsi?
->>>>>
->>>>>
->>>>> Apply this patch and test MMC. Does it work? No. Was it working? Yes.
->>>>>
->>>>>
->>>>> Best regards,
->>>>> Krzysztof
->>>>
->>>>
->>>> You're absolutely right to raise the concern about potential breakage.
->>>> After conducting additional testing across multiple boards, I’ve confirmed that the removal of SDR104/SDR50 broken capabilities does indeed affect V1 SM8550 devices.
->>>
->>> v1 is a prototype revision, please forget it exists, we most definitely
->>> do not support it upstream
->>
->>
->> You should double check. SM8450 (not v1!) needed it, so either it was
->> copied to SM8550 (v2!) by mistake or was also needed.
+On 8/14/2025 6:29 AM, Harrison Vanderbyl wrote:
+> Describe device tree entry for x1e80100 ufs device
+> Signed-off-by: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
+> ---
+>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 91 ++++++++++++++++++++++++++
+>   1 file changed, 91 insertions(+)
 > 
-> I believe that the speed capabilities are indeed restricted on 8550-final
-> and that's why this patchset exists in the first place
-> 
-> Konrad
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index a9a7bb676c6f..effa776e3dd0 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -2819,6 +2819,97 @@ tsens3: thermal-sensor@c274000 {
+>   			#thermal-sensor-cells = <1>;
+>   		};
+>   
+> +
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible = "qcom,x1e80100-ufshc",
+> +			"qcom,ufshc", "jedec,ufs-2.0";
+> +			reg = <0 0x01d84000 0 0x3000>;
+> +			
+> +			
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +
+> +			lanes-per-direction = <2>;
+> +
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +
+> +			reset-gpios = <&tlmm 238 GPIO_ACTIVE_LOW>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +
+> +			iommus = <&apps_smmu 0x1a0 0x0>;
+> +
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +
+> +			freq-table-hz = <100000000 403000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<100000000 403000000>,
+> +					<100000000 403000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +
+Please use OPP table instead of freq-table-hz.
 
-Hi Krzysztof, Konrad,
 
-Konrad is right — this patch series addresses limitations seen on
-SM8550-final silicon.
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
 
-SDR50 mode: The tuning support introduced in this series helps ensure
-reliable operation.
-SDR104 mode: limitations are resolved in SM8550 v2.
+For Config Path, use QCOM_ICC_TAG_ACTIVE_ONLY.
 
-But still to avoid regressions, *I’ll like to retain sdhci-caps-mask in
-sm8550.dtsi for now and revisit its removal for future targets after
-thorough validation and testing from the beginning.*
+YOu can refer to ICC discussion link for SM8750 - 
+https://lore.kernel.org/linux-devicetree/354f8710-a5ec-47b5-bcfa-bff75ac3ca71@oss.qualcomm.com/ 
 
-Konrad suggested placing max-sd-hs-frequency in the SoC dtsi.
-Krzysztof, could you please share your thoughts on this approach?
 
-Best regards,
-Sarthak Garg
+
+
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+> +
+> +			qcom,ice = <&ice>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_mem_phy: phy@1d80000 {
+> +			compatible = "qcom,x1e80100-qmp-ufs-phy";
+> +			reg = <0 0x01d80000 0 0x2000>;
+> +
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +
+> +			clock-names = "ref",
+> +				      "ref_aux",
+> +				      "qref";
+> +
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		ice: crypto@1d90000 {
+> +			compatible = "qcom,x1e80100-inline-crypto-engine",
+> +				     "qcom,inline-crypto-engine";
+> +			reg = <0 0x1d88000 0 0x8000>;
+> +
+> +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+> +		};
+> +
+>   		usb_1_ss0_hsphy: phy@fd3000 {
+>   			compatible = "qcom,x1e80100-snps-eusb2-phy",
+>   				     "qcom,sm8550-snps-eusb2-phy";
+
 
