@@ -1,294 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-69145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F407FB25F77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:48:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00AAFB25F89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:51:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 327D918884AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:48:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 276EB5C4A62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:50:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31E0728BAB5;
-	Thu, 14 Aug 2025 08:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9C2D2E8885;
+	Thu, 14 Aug 2025 08:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="bkUq5WZY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tr7ERJbE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011026.outbound.protection.outlook.com [52.103.68.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAB81DD0C7;
-	Thu, 14 Aug 2025 08:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.26
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755161301; cv=fail; b=mcU7qJFOmU6IxyL2pu7fNzKXmz2kLHL1Qs5POUefp/yiZohsE2vuTQ9OYjl8fKJzo1kXdMqSHlxj1wqCZ5WOIFvGgYWfVavyvHfN9EUvrmcK9P/3hjr79yS5oXn9qAAqK007LcnX+vM4m6nY9ZRhhMs/O9Nj+G7eiwS2aEROpw0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755161301; c=relaxed/simple;
-	bh=npXqHw74q6C7npyCpXtPekEvAZMTsiN7MJYbpmjw5zQ=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=B0iAtBz8nk49vqonMIvpTq2I2baBcIbf1nEpNuwo8ncaVTM/39Wr/zFFodbSEJm6Dm2xHL55zuovGCPQIPMLALA75JEuIeWork782diTGInRm9v3I4ushtSWK5LTaWRxZGGpV4nDX5ytY9JXeJ9UKwtePTUeP2F9AUtrxou29KY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=bkUq5WZY; arc=fail smtp.client-ip=52.103.68.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V05/rQYhjgXKvtCU/4f5QAbDxj03OeC7sNYSE2y9W++Mgh8IlfcxNNBuPYFVotnc32QvOQKu8KCg4UyHhRbfPeQE2oMgJnS42h88cDLaOjlsEkvugADy0HV+OhFhPFE8GouGfUZvJS1w9VHxmlSsIMemVOhRh+6tMjT913TOXqqr/DFCdos4zHpxTItpl0C+whLUshrOsUQN+kcYCdeCRrNZyW+hX2qrYnyPDEGmrPeQ37xAJJbimIawHXSdWOH73Ac/IRGBogdoPuBGAVp5vqrOgMdROjzF3XSE+gUgA8fjI07u8+FivHW0DI5lWTxe1wigffbAD5wTR/oZbGhw1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2ACe8AHuhmUm8RQCLguFaLp80YsDyGpX5pwpLxKQtfU=;
- b=YmW6fV+mf1zXe8Cd3u3j6/fmlPq0iXwPAtjrkEA1uekK0jfBzScUxOIeHvUK/9WHtn8Xg1kmYvvcd9IAap4HRj9jns3OrkLScsVasUzkU+9dEUyCQplByVqZIBTc5z8nLFxHPVIvXFiDSkZRCy7wM91rK8Xk8Cr/zWPpB3VICmKePgIhRONhTdx2aRrjVTpFquxZiwRmJ5RYqKmHLADGlkFDruYkwy17+KHH+cHY+haohoO59cQ2dJWqR0tIB8YAWf97ewuedVCGm1txtP3AzzXbXzMG29uW7mEHSzXN/GP6ItxzrevMkYmvFu1+EFpehEDYYkosBu8NI+7q8H25Mg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2ACe8AHuhmUm8RQCLguFaLp80YsDyGpX5pwpLxKQtfU=;
- b=bkUq5WZYQPuSVfLcJzwnBmDWZKX5ZHUakDxhDVK7l7ga3HbKfRk/h+ugHwFkaDqxHOonxD1UmUVMwJXHqLgHAcz/oPTnzjBTlAr/ItL7wSPWcfBqHWQEyejZVOVoQfFE7r5G1LMKlitCNZFQ1sHBDyPP/Gd0RV67CnV2wzMqF5w0XMLdAX026oAfGfs2h+10glRS9u0fLas/FCutDY972svRSG0F3VdAObrDQntKxnvVT6UWFSqwZDNyupNhTo4nbeoFLEXp1ipjiDkwANgICutrw3LavvR7hzaxfJHABmjf5XRcwFo/K7vBoN5ei1p1fJGeUlqY7w0p1ALZCm3hZA==
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16) by MAYPR01MB10650.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:158::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.17; Thu, 14 Aug
- 2025 08:47:53 +0000
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9031.014; Thu, 14 Aug 2025
- 08:47:53 +0000
-Message-ID:
- <MAUPR01MB110724C32BF11045318A6AE0EFE35A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 14 Aug 2025 16:47:35 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 048/114] clk: sophgo: sg2042-clkgen: convert from
- round_rate() to determine_rate()
-To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
- Cristian Marussi <cristian.marussi@arm.com>,
- Inochi Amaoto <inochiama@gmail.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
- <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Jacky Huang <ychuang3@nuvoton.com>,
- Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>,
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>,
- Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Michal Simek <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>,
- =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
- Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>,
- Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
- Neal Gompa <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>,
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Andrea della Porta
- <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
- Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Alex Helms <alexander.helms.jy@renesas.com>,
- Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
- linux-actions@lists.infradead.org, asahi@lists.linux.dev,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <20250811-clk-for-stephen-round-rate-v1-48-b3bf97b038dc@redhat.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-48-b3bf97b038dc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP286CA0179.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:3c6::7) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16)
-X-Microsoft-Original-Message-ID:
- <9fa46633-da56-4a5e-9abc-0445c3799b12@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE8E1DD0C7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 08:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755161432; cv=none; b=ETkek457Oh8Dh5vfjSdrr90vXoiwnoQXAhLXi+1yMaCOzm5S2ID2pOi/MeiwlvbaB3it0P6HOCR7akQzY1MkAPK3XwmD5C2QL5UHTEkmC/vr3JV02XFccsoJhT1UtW6hmDZHfT4HcRzA/v/o1FQxsvmfLthjlgWSCggxnJ4ZOCQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755161432; c=relaxed/simple;
+	bh=hW/O9G7IgmILusfUj0IWPaVApb+q/27reNADXspEMho=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9EX5xYIzHbz08TrLDCMFa2CdJSXXW+fHII6EUNZ4tGJtMA8j1RH0KnSPnkeuvhkZaXhF6O8oaVM6w4dSjd7othtHXmRZvAg+azmxxd2x87pYhfzkEncgFmK1qjXdda3dy1JYdaR/DTfhAA9ubrUfukF8Nh99BTArmKVyilDOh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tr7ERJbE; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb7a0442bso118058166b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 01:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755161429; x=1755766229; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lTNSw9oc6wzrpyE+IZc30gYg25qmqZrCj3OycJEGey0=;
+        b=Tr7ERJbEFVy3aXDtqrb5IqQ2x6B6H+NtG5E8YlJqQ5Ggv5Cq4oR6Zwzr6zQ42uf7j6
+         GZsNE0g/59yU/75I/jy1XhtoHJl8aC8pd/elRlAJ7UdcRH7w6dxR3VVQxCcE6Borlf8z
+         dLXg1fZj8atCk6FsOMhCjKSZKhflZwWf1WDU921NFxboBG5TcwgrHT1gTmCVqbgxrhFv
+         rF5Ze0bg3QTH2Fz82JaHqE1QXiMWcJFDY/S7mapiL+4sRKi5ruZqRd4O8TAlPfMZnSO6
+         jZSrpJqv/R/N8aHqaQywKeM3V7ZLhQxnAm7nj/jCBJfOSV45nQJqKjC01nv8bLLbweyf
+         nDSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755161429; x=1755766229;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lTNSw9oc6wzrpyE+IZc30gYg25qmqZrCj3OycJEGey0=;
+        b=dYJbar1BC+sSRirlterPhZGFYgFXyj7Lw5p+1mIiDBItRrQKdijTLz3T5McYr8SgAD
+         TGv1sgTzBnYYkKGB+z/D81JoeTxlQU/VzD6Hn5/GFSDC15gpkl2gGsUfdBt/rzyRLcch
+         zBGGsk5vA+Mb+zmCT7s/C1ZarUK7K8J+r0wZK+CIkZuIJJp7r+32h0gIoYKdKogbZjUq
+         jlfb9ijFyOLLTaw8itNz1l2HqAE8gRp9CWJ+opFBwBOstNDAwMckL/ccPtzBZ4VQseuP
+         CC2utP6jvTk6dHXDNdzv5mnY7sFBmnhDI1HlpqjnU5NkIUlnTLXFrHgZBZr8iJwcQU/t
+         yT0g==
+X-Forwarded-Encrypted: i=1; AJvYcCVc//HbbNdnEprUyLNaKr62/C5wrVz8F6/m8YHKNgAXJN7p1gS1zSEJJoofsx9VCZB4GRLhWffG6Pr4UDjS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxz3RskO7R2kAah24FA9TEYIfI0HbLXPhgMTh9NU2sxPNOSjORn
+	WFIHQcUjoH24nwWCB/anlJZ0N01P+omdetzTl6VeykE8aVGU/PbjIJ6+OaY7l08Wqr0=
+X-Gm-Gg: ASbGncse6ocIT3g8QUnNYQC7KNMn7Cg/Snld4RTuLzQEUmfh2Zx/LwEM/EZHjrN/Y77
+	SzUnHXExE6LRictTc+5rcT4orjn28axWCuk7CMy/fVZzUfnRmKWay8fd2KJot2XZxSneEN5sD7M
+	KDNlewgOtOdtpLCB9KiPVLucCm8HUsWcsU7vZ9NJgiHdLcVjdmSa8HgAwEhUbrjzofaMfEOE96q
+	bkA6+5jbyS6n2bAoe9SB91r4cwQlekVqQx2OeUgTWg1G1GLqMFyvI0qJkd7YVTzdam1bby5OFIg
+	Gw9zs0RG4eILi9MHWTrkUb/q5NmhJRrSpj/NaK/WJx80JDys+J3Icg+4tHjiC95QkbBGcdFoPhF
+	Kp5JJg0JV/Hz/afYCj3eUQd15gTrSk03ZDhA=
+X-Google-Smtp-Source: AGHT+IHLXrSfTIPAKGMxZ00QdZB/8mDbm+vGJBS91ORg//JjE3LnG31wgWeozZezROslUUb9Abi/4w==
+X-Received: by 2002:a17:906:9f85:b0:af9:5260:9ed3 with SMTP id a640c23a62f3a-afcb9799755mr188094366b.14.1755161429200;
+        Thu, 14 Aug 2025 01:50:29 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:b68e:8fe9:fd92:805e])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af99148eab9sm1604853966b.77.2025.08.14.01.50.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 01:50:28 -0700 (PDT)
+Date: Thu, 14 Aug 2025 10:50:24 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 0/9] arm64: dts: qcom: x1: Disable audio codecs by default
+Message-ID: <aJ2jUDaBAgeRcYfz@linaro.org>
+References: <20250813-x1e80100-disable-audio-codecs-v1-0-af82d9576f80@linaro.org>
+ <5de00c2e-2b81-42f4-ab17-6db0f1daf7ff@oss.qualcomm.com>
+ <c4a63197-9fef-4261-a0e0-9d57e009263a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|MAYPR01MB10650:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6142f3f4-d83e-4fe3-de5e-08dddb0f4186
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|15080799012|6090799003|41001999006|23021999003|19110799012|8060799015|461199028|5072599009|440099028|51005399003|40105399003|41105399003|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QzMzS1lYbFNxeExQWUNGb0VpN3V1bUkvbFlpbU03WFd4QTZNS0JNRVFKb1I1?=
- =?utf-8?B?WVFNaFRCWGxOVDhZdkRwUlhzaGsyQTE0S1JJUlQydlcyeGdHOEZpeGNJYVln?=
- =?utf-8?B?dVdTd3JnZXVWRC9EN2psNEtGdTRFYThkeDEySWZnT2Q3U1doc0NVRzZIQi81?=
- =?utf-8?B?VkFWU0JJVjNRMVJxLzVjdXpqZ0JBdDBscVF4S2RITlllNUM5UWtEYStkY2Nv?=
- =?utf-8?B?ejdNNzRxcWRUdlBLYS8rZTNSNjFicG1rMGxEMG8vWnpWSFVxempFaVhleVQy?=
- =?utf-8?B?ZWxWUG5KS2s1Yk5aZmxYaDE3QnYxRTE1ZEp3aUJqYXVENUpNWHBSalM0SjFF?=
- =?utf-8?B?ay80dnJwVjA3Vm1oSjVvVW0xYWNNenp3ZnY5eTQ0Skl0ZW5Xay9maC9OWGpQ?=
- =?utf-8?B?MXZqZS9WN0lmMVh1OUI5OGN5UnRHUHRqNXlieWwyYklmVlRObDVyWjRNczJI?=
- =?utf-8?B?eHhxYXpYcUNtR3cvT3EvQ2RycG1MZ09pUXpTaWllbTZ2TDQ4aXlObVlzS0hW?=
- =?utf-8?B?bnhTT0cvRlgvKzI0cGVwWEVRZ2l1NFgrRHJ6QmZaWWdyNHU1ZDVObTNxZVJL?=
- =?utf-8?B?VzE3MUhBR3kvbmFGTUNOZWk2M3ArTXdaY0l4UWxNb3NJekdwSk0rZEtVdXFn?=
- =?utf-8?B?ZTNlakd4OWN6WG9KOEU0WkdWWXdZSlU5b05TU3Nlc3RlUEhDS3hpVGVRb05m?=
- =?utf-8?B?Q1dBVi8xOEZESXp5UWN3REhlUnUrV1dwdno0U0RGV01nZTFmWU5zM05YY2Zx?=
- =?utf-8?B?RGsrNmR5amZzcDBNYVEvSGNjNVRZaUF0YlRteUVqMVFmNjVzd2h1c0NEVW1n?=
- =?utf-8?B?RVdNU0NJcm1GSDc3ZFdrTDJyeDBDZDNRNkV1aTZXV0RSNzRTZC9Id2toRHc2?=
- =?utf-8?B?cVNPOU1BMlJMd01PeWxZM3BLN284cXRuMUlQME4yVDRyaTM4Tm45ZkErSjZi?=
- =?utf-8?B?ZVFMS29jeXJ5Q3lvSjlCUEQ0YlBGZzN2dk5sTytWUFFWS0hHU3NqQzNwUUhn?=
- =?utf-8?B?SmlZTXRmK3pmV2lTM0YwcFNLUFMrWVpjcjJZOUxuYnhVUnZDQnR4NWhpUVFo?=
- =?utf-8?B?ZnBFdW5taEJJTkd3eVg2NGxXWGw3UzE4bkkycjVUdW5qQTZPOVJZUGZPMUwz?=
- =?utf-8?B?RXE5SmFOaEgzR0hwVFE2dytzZ212V1BJSjJCTUFDQXQzV3F6bUpNdWpQanZo?=
- =?utf-8?B?a0NwU0QreWdjUndsMXRBTVNnMzVaam9wTUk2aDAxT0ZPd2RaN3lYeU5HeldN?=
- =?utf-8?B?Sk96TU5MSHFlQ2gybC9FQm5zejVmRXNFb0xBU1l5bFJldlpQOGRmZk8vYmdq?=
- =?utf-8?B?ZHZORWpHUGFjK0FGU1p3VkpXdEYreUMvU1ZTR0YvUG1wUW1KYVpIclc4MkJs?=
- =?utf-8?B?b1JLOXpjOHJZNkV6bzR6OEdzbndCdFN4T1l2QndQNHRaVmNOTG15cHQ3RnAx?=
- =?utf-8?B?SGUwa2tOVllvTTk0cEY1UXdNUFVvMEJnNVdBUW5qNzVyV0RSd0puTTJldm5C?=
- =?utf-8?B?a1o0RnBRaHhtcDNwM1VGWVU3WnRMWUNOaEJIVXd1ODRmZURXcVY0RGNRZFk0?=
- =?utf-8?B?RUZ0a2ZvcUJJZi9lUUVrN1JYTnYxMzJ4amk5REFRVVNrTmpNNlJMTXBpdTlF?=
- =?utf-8?B?YUc5UFZxUHFxZWhEa3VGL1VFSythLzNvUXlzM2VjazRDb1FYQ2JqdEVqcmJX?=
- =?utf-8?B?TlNrcklxaTJBVTM5OG0wNjRWT0FzcFc5czZkbm1nL0FXVzlhbVhUTEpRPT0=?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Q0hnaDliZjRKZmRxbnhPR2xlR1BVRnZPUTl1dUtxeENGSXhRU05zdGF1aWhL?=
- =?utf-8?B?VnlXRGRTNzNHdlRMWmxWNk9XK1VaUGxKcTE2Q1V6UFIxMUxjTWhsbFMyTTg4?=
- =?utf-8?B?RmhqMElETG0yc1NsQTFVZ09JN1VINklmUFJ2TXM0SGVQRW9BdDRCMkRyRGpF?=
- =?utf-8?B?QTJOSU1VN0lJNzViTk16Vko0aVZhY1ZVb09RN2F5T1lKakR3TDNPVDJZdlJ0?=
- =?utf-8?B?TjlHb0EyNkk0dm04UEM5MFozQ1V0QlpraXhiaVZnRmVjZkhBemhZZjVxWjky?=
- =?utf-8?B?bVcvMTlUeFRFMHAvY2NPcEJsTFhudk9zQUtmbTBRWVppdkdtaTRpZmV2Z3hV?=
- =?utf-8?B?dVY4OG1xeFlQekVnNkI1bFRyeHJZd1VhTk5jN3BkNmtCZFFsV2g5Vnk5dWhI?=
- =?utf-8?B?T0tGT0FVMVVXdXNKVjI0OEhEWkNmOENpYkpUSWtrODRSU0lLN2k3dXYvSUN0?=
- =?utf-8?B?OWxYK1JDeGZYZytLenRQbWdYZnRpUVl0TUhjaHY0c0NVWGxyQ3p1dmM0M2Jz?=
- =?utf-8?B?ZGMyZXdQTFQvN3Z6MU1LbGNjNWUvSy9YZldVTHJUYkpLTXR5eFkzTFN5dEVU?=
- =?utf-8?B?SzY2NW5hN1dmYU94WVk4cklXVDRlTVY2QzZveGNucDNkeVA0TFplOGlNOWxF?=
- =?utf-8?B?aEE1dlNBbE40eUI0bHhjVFdIMTVyMXZlWVpaYnhrVEJ4SXJDVTB4MkF1OG0r?=
- =?utf-8?B?WG1Wd1p2K0QzWTlBQnI2bGI5OEZnQWt4bHRDTXdsWHp4Zk03dHhsSXpTbUFv?=
- =?utf-8?B?ZkxkWmd4ZUpLZlAxdFJrRG1YemgyaGE4NXA5Nkl1YlJuaUZKSnhnN1o3SjNh?=
- =?utf-8?B?MURsc2hyWlZHM3hNYS9Vd0F2c2RTcUNHWDY1OVloMzN6VDV0NGVOZFk1YVdq?=
- =?utf-8?B?L1IyQU5oNEVKTEZxZjZ5MUUwYzRZbms0VU9waEpPbVd1M3VTUnUxT2VYcUdB?=
- =?utf-8?B?cW0vSUR3cWc0Q1RaSmZLcTM5b2N1MHZFYzFQaGVGZ2U5alhzSHJIcHRwY3Vm?=
- =?utf-8?B?U0F3RUREUFVUeVMyYytmV0puOVdBOG1ZQk14N0VjS0JwQ1Roc2dnUWFJekhv?=
- =?utf-8?B?WTZzbGNDT3JTdGkyVVM0WlZteDUzVm15WkRlU25naW42cWxXZGpPT1JqbG1O?=
- =?utf-8?B?S1hoY2hvcFVENDEyL0didUsybXdORlJXbk5zTlMzdkF3NTVYNWtDUzVOamhz?=
- =?utf-8?B?Q3lhMmU5MVM5enlaOW41S0NnNkk1MUY4cmIwNXFsVkVvbXR6dnYvb3hsaTFq?=
- =?utf-8?B?K05hejdEZnorcGFMdFh0eGtSTFFjdlBoQThvd1NJaWJsN2tRdm9vejMwekl2?=
- =?utf-8?B?MXYvSmpzSDFzMW1rUU5xd0E2Mlo4TXRDVDlueFM4YWh0NUNCWEppb1EvVHRP?=
- =?utf-8?B?OGg0RjlMZVhjdzRmTlltQjJPMUg5QzR6UG03VVhCQ1Z3NGxsRXZ5TzVmNklu?=
- =?utf-8?B?cHptQThBQnlSY2NGbjM4NXF3UHRQUjJVaXVzVEdKK3RjMWJTS3hUYXlFWFlQ?=
- =?utf-8?B?VGFCSWU4SU1CR0xtdEk2bit1Ylg5SnZPa1VobDVLQlNCeWtCaXU3UzBnZ1JC?=
- =?utf-8?B?YjB5VTdoSWdNcjFaVUt3aXJnTG9Hc2xDS3VRdVVNS1F5ZUJQbnFEQnk1eTVi?=
- =?utf-8?B?ak1YcVRjQWExckRqaFdHdExvT3R1c1F0TndSemxiYVNyK3BDWWRQbnljeVFL?=
- =?utf-8?B?bUdjNnVONFMrRXRuWCtFTGVhcGllNW5jZzFHbGVmVFNaZHMxY2RNTG9mSllt?=
- =?utf-8?Q?HiiQSi6qSTmGr3VZ35sO2PUgCofgcMYgFPTtdlA?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6142f3f4-d83e-4fe3-de5e-08dddb0f4186
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2025 08:47:53.7093
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAYPR01MB10650
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c4a63197-9fef-4261-a0e0-9d57e009263a@linaro.org>
 
+On Thu, Aug 14, 2025 at 08:07:17AM +0200, Krzysztof Kozlowski wrote:
+> On 14/08/2025 01:09, Konrad Dybcio wrote:
+> > On 8/13/25 5:58 PM, Stephan Gerhold wrote:
+> >> Currently, the macro audio codecs are enabled by default in x1e80100.dtsi.
+> >> However, they do not probe without the ADSP remoteproc, which is disabled
+> >> by default.
+> > 
+> > FWIW if the ADSP doesn't start, you can't really consider the platform
+> > working.. It just does oversees too much of the SoC to even seriously
+> > consider using the device without it
+> 
+> 
+> I agree. ADSP is supposed to come up for every or almost every platform,
+> because it is crucial for USB and charging.
+> 
 
-On 8/11/2025 11:18 PM, Brian Masney via B4 Relay wrote:
-> From: Brian Masney <bmasney@redhat.com>
->
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+I agree with that as well, especially because I have an upcoming patch
+series that allows reusing the "lite" ADSP firmware from UEFI for USB
+and charging, so you don't even need to have firmware present for that.
 
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+The question for this patch series is separate though: Should we enable
+the SoC audio codecs by default? What happens if a board does not make
+use of them?
 
-Same comment as Alex. I will test this out after you send out v2.
+> It's true that LPASS macro codec nodes need resources from ADSP, but
+> still these are resources internal to the SoC. We disable nodes in DTI
+> which need an external resource. That's not really the case for LPASS.
+
+The reason that triggered this patch series is that I was seeing an
+error from the va_macro when testing on x1e001de-devkit. That board does
+not have DMICs defined, so it doesn't make direct use of the va_macro:
+
+ va_macro 6d44000.codec: qcom,dmic-sample-rate dt entry missing
+
+We should fix this in the lpass-va-macro driver. You could take this
+case one step further though: What if a board uses none of the audio
+functionality? Apparently, X1E is also going to be an IoT platform. It's
+very well possible we will end up with a board that doesn't have any
+audio functionality. I would argue it's valid to use a minimal kernel
+config in that case that has all of the audio subsystem disabled. That
+won't work though, since we need to probe all the enabled audio codecs
+to reach sync_state().
+
+This might be a Linux issue unrelated to the device tree, but in my
+opinion an audio codec without audio inputs/outputs is not
+"operational", it should not be status = "okay". That's quite subjective
+though.
+
+At the end, I realized that x1e001de-devkit actually does have DMICs and
+I just need to enable them properly to get rid of the error. I only sent
+this series because I believe it fits better to our conventions. Given
+that I don't need it anymore, I'm also happy to just drop it. Let me
+know what you prefer.
 
 Thanks,
-
-Chen
-
-> ---
->   drivers/clk/sophgo/clk-sg2042-clkgen.c | 17 +++++++++--------
->   1 file changed, 9 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/clk/sophgo/clk-sg2042-clkgen.c b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-> index 9e61288d34f3757315702c355f2669577b29676f..1d3b1656bcf2e6655e0299e68ab39f32189744dc 100644
-> --- a/drivers/clk/sophgo/clk-sg2042-clkgen.c
-> +++ b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-> @@ -176,9 +176,8 @@ static unsigned long sg2042_clk_divider_recalc_rate(struct clk_hw *hw,
->   	return ret_rate;
->   }
->   
-> -static long sg2042_clk_divider_round_rate(struct clk_hw *hw,
-> -					  unsigned long rate,
-> -					  unsigned long *prate)
-> +static int sg2042_clk_divider_determine_rate(struct clk_hw *hw,
-> +					     struct clk_rate_request *req)
->   {
->   	struct sg2042_divider_clock *divider = to_sg2042_clk_divider(hw);
->   	unsigned long ret_rate;
-> @@ -192,15 +191,17 @@ static long sg2042_clk_divider_round_rate(struct clk_hw *hw,
->   			bestdiv = readl(divider->reg) >> divider->shift;
->   			bestdiv &= clk_div_mask(divider->width);
->   		}
-> -		ret_rate = DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
-> +		ret_rate = DIV_ROUND_UP_ULL((u64)*&req->best_parent_rate, bestdiv);
->   	} else {
-> -		ret_rate = divider_round_rate(hw, rate, prate, NULL,
-> +		ret_rate = divider_round_rate(hw, req->rate, &req->best_parent_rate, NULL,
->   					      divider->width, divider->div_flags);
->   	}
->   
->   	pr_debug("--> %s: divider_round_rate: val = %ld\n",
->   		 clk_hw_get_name(hw), ret_rate);
-> -	return ret_rate;
-> +	req->rate = ret_rate;
-> +
-> +	return 0;
->   }
->   
->   static int sg2042_clk_divider_set_rate(struct clk_hw *hw,
-> @@ -258,13 +259,13 @@ static int sg2042_clk_divider_set_rate(struct clk_hw *hw,
->   
->   static const struct clk_ops sg2042_clk_divider_ops = {
->   	.recalc_rate = sg2042_clk_divider_recalc_rate,
-> -	.round_rate = sg2042_clk_divider_round_rate,
-> +	.determine_rate = sg2042_clk_divider_determine_rate,
->   	.set_rate = sg2042_clk_divider_set_rate,
->   };
->   
->   static const struct clk_ops sg2042_clk_divider_ro_ops = {
->   	.recalc_rate = sg2042_clk_divider_recalc_rate,
-> -	.round_rate = sg2042_clk_divider_round_rate,
-> +	.determine_rate = sg2042_clk_divider_determine_rate,
->   };
->   
->   /*
->
+Stephan
 
