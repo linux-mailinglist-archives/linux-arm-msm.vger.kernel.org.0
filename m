@@ -1,63 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-69168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16879B26059
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:12:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F77CB2605C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:13:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5EAD97BD981
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:11:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9DB67A2FB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:11:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BFB523D7F6;
-	Thu, 14 Aug 2025 09:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEA422EA466;
+	Thu, 14 Aug 2025 09:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pZrlPDFi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eWw0Gvyb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767FA2701CF;
-	Thu, 14 Aug 2025 09:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF6E2E9EBD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755162690; cv=none; b=hIrfY5VgLBKHDCEk9qdbu1jg3jDOJ7RC7injRDnnPU9jnqiNiL7vU1FkAz8RVTigRQR7klS9P8X7Hm4KnSakVDiQLeOwCKyZEQkepSAyCu05dJLesamJZO/+9ohj1GeWOtKQEcJ11KaNp7Nnc6BWtkHGku2VImxQXSv9EuNgITc=
+	t=1755162700; cv=none; b=b1C3hg3LgRCMcD2UdV+Y+ldobIIe8zfLJyljVZxzCUrpQEypn65QmfHAJglMJOatdcq+p0Daa12UXo+SenC8SuZW6zUpcPE9jTuvca/dLywmn6Qy+cgdw7X+ItLrOU3jQVTls+8HoD3jJZY9VoqSsR1jlnOhTlmhMuJsPEIX3PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755162690; c=relaxed/simple;
-	bh=qNvwJhcYLhnbBPmx4kKfq9wII4mIG69VnJAM/C0L7Gk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rC1Gq6IZ74M/y/zP1hSBzf6z6I3wcqLD6i2QHC6PDDxQfJloE2TR4wozDd3q4a9Hggnf/RFGTdzl18bGBw6gKV5qhLjFdgPEnkc3JmaET8v7uxwDoBb7qAKWW6tp8WEvzfbe/Z0qk+YmEIrd8cDrOYuw0JDTh9GPmo9Hav1ICVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pZrlPDFi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DMxxcF025656;
-	Thu, 14 Aug 2025 09:11:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1755162700; c=relaxed/simple;
+	bh=kk0YI5StxFttNwDA3oGkDubt9hnirRjZcrzk0IXAslM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dG6glZD93XwkAvfVCpaVFYiD2DK/BAPrirJq2jTLA3O9+pgyDDymPO+89PHqY9fgbJeGqZg/gydmpTZjXvO5QY6eOBChbH+ddexpn1hT/zfwobGMDpRu0SKsI785GQ4m22DRVElo60BfX0iU4yHO9yRU5PEVDhZXrXSFnu9Cp5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eWw0Gvyb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57E8uYnK027030
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:11:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1/iGF2Af2BkLG8WZ/tTUpHnPSkZL8t0ynCZUt+sdALU=; b=pZrlPDFi2FNB/l93
-	9CuqirMqhthG8tAaWMogtKRxwtP6KU2aReSqLOfGaAozvsMjNaFIZdzeUHZm2uu6
-	fAh4IVvChHT3btfodaZ3VTOyCtjP91mWWZAWTUhNSHHDR9pROr/YbzQLyFj4UmX+
-	1jrX1HrniLH/GvnmWJPjKi+jlQGNhgqyD6QqCHPZ56NI3QrzurE9R3iIrdFt0Qke
-	yR3tqj//jN/0DergyPpepr+uVeHdUE+gLMUV5bdNRva7dcTWAZ83Vcfegugh/f5q
-	u2L+bXyo5SVdjkPZRe/f31LnzRZ21B6odURjI4d2lBBrdOhU3eKDCPvS4NlNzYpI
-	8gW5Ww==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dy3gf0qm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 09:11:20 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E9BJg7019673
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 09:11:19 GMT
-Received: from [10.133.33.15] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 14 Aug
- 2025 02:11:15 -0700
-Message-ID: <01ccebf2-1a2c-4996-8b56-1fb951a6d8c6@quicinc.com>
-Date: Thu, 14 Aug 2025 17:11:13 +0800
+	YlOPAbajSUn2z2Yifxmwpg2ez5fT2y1/JNo9XnxqhhY=; b=eWw0GvybcHWh/gIw
+	aO79mFAkVMKjUUNRfDdPM1I5+w6JwkS0PwpLaQ+o4UZVRiry5ckSReNMKT2BUiwX
+	LP+05XXRwQKjQxcc1ZBasaHSZMMXuuG9/LnLqCzwmdfe11gBWOhi+sO8JKbzEsz6
+	fLW5AjeGRV/OA0F4JlQEO2LuSkcWGz4yMMcaGTiF09GgXkMtoekdkVHQswU8Fd4w
+	AcLd4niQc/A6qWb9w6DekbIp6vDwhbmESQRhQiHCsZU7oUMk6nbnu7wId7H92JtY
+	I/PXSLgtIIiVz88sy6WCiIyPiSZF5/fN+UODGBNE/RKFUXtNMYICEj62fUbWVyye
+	A4LEvg==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffhjtxea-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:11:37 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b4716f9dad2so1099954a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:11:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755162696; x=1755767496;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YlOPAbajSUn2z2Yifxmwpg2ez5fT2y1/JNo9XnxqhhY=;
+        b=bttQNRiVAlZB4UD7bDRyik1EXKEttWmMdj/A9wkmbpEg+nvdTkKPzaOocueADunZrr
+         10D4s2c/OdvQYasT4NaFX1G+QY5yNrg32wi6tGg1DH282tYjue75/3Qc19xVtm/ShGZ8
+         fR+ZTNb8ZH0NdFZY2q1XccdL/m8aItB8ia7qpbVvEsIVCDgpv+nmrjTw+qzZAMIkU/nl
+         WECI7tsE5s/iwYvJLJU53MIcf1PIS2tQ64JbZk1cYoHNFtn19LgzNHWyIop1IJcDEQFL
+         vjkl5L/h/it8E7qMGGJmtpMbYJ7wThjAIyB2u+4JJrogmuW/IXs8ruCh7c2g80jsc1t1
+         pwPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU3c7Pmzj1h8Ge4yCLyA5pL3W50tEsH6Ve3a1u2PgJxBQn/7FEwIrhfDRMk5d4ZeQMWttYF65xsMzLOXFrT@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEfIE8xdMiw/MfokgdOqrNh5KeCc+lvACM2hye+Anps2EmlIpi
+	rlSc2zHT0tfn7hioSsAmTfLoaOTsi5ZVH5HGGFe14GOhTZf3XvEcMHu3xY4hEWgLW2evj42Krtx
+	Di7NiPjLFRJEpFdZgFT+7GRtLUXQi6Eky7UzLO1iU6wi52Pa5i2AjtHfvDLWQGDlOHRYiRk9ltM
+	DTqG0=
+X-Gm-Gg: ASbGncvVWpM9NvKUmzs8Y6EDXHQO9Krt76w/nG+3bd36wovKSsivot8sKEgYtdKd9Ab
+	48NDL3RvvQLTnNSPcyOCVvDMwbMvq9J2M9/Ldw/Jq/EcpwYvdQkIf+KF/zvN2hHjtaa3d7rj3pa
+	X4kErQKDS3fZWvq2yVeS43t9a53+dcB1thJU4v9hoRwUvI3RMerrqVWl6Zs60EmstoUbyepBJSO
+	mVPtQZ7EB92VOL2xl1wHCnjuKNg58mA/NoHbAzFLfdFULnWAaWAFQekzq7bZMCkNALpTlvYw7hG
+	J9qrytRhAl1SN5Y373lazBOdQk6L84araGhY/cNOt2U7gFJWHcg3thaAVx3apA9P63NHrJZaWmI
+	r9dwqSwO39CURX0SJ/gi/mKTthIk=
+X-Received: by 2002:a05:6a20:12cb:b0:23d:4777:49bd with SMTP id adf61e73a8af0-240bd23964dmr3285085637.21.1755162696316;
+        Thu, 14 Aug 2025 02:11:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5rs4ptpFP+eE+aDbms6k70Iy3D9l8fxNcaggUmf3/3yois4BxDJjb+13OkBOz7Zojg5Z2kA==
+X-Received: by 2002:a05:6a20:12cb:b0:23d:4777:49bd with SMTP id adf61e73a8af0-240bd23964dmr3285040637.21.1755162695865;
+        Thu, 14 Aug 2025 02:11:35 -0700 (PDT)
+Received: from [10.133.33.40] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbcef6sm34219011b3a.85.2025.08.14.02.11.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Aug 2025 02:11:35 -0700 (PDT)
+Message-ID: <652c8f5d-ecd5-46ed-b7f5-9387ee11cce3@oss.qualcomm.com>
+Date: Thu, 14 Aug 2025 17:11:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,205 +91,157 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 33/38] drm/msm: initialize DRM MST encoders for DP
- controllers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-33-a54d8902a23d@quicinc.com>
- <hxqeilu5fcgsykghxwbhp4r3exu3o45n5lftzeupjxam7r7ux7@wdrfc6lor4gl>
+Subject: Re: [PATCH v5 0/3] Initial support for Qualcomm Hamoa IOT EVK board
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Yingying Tang <quic_yintang@quicinc.com>,
+        Shuai Zhang <quic_shuaz@quicinc.com>,
+        Yongxing Mou <quic_yongmou@quicinc.com>
+References: <20250814-hamoa_initial-v5-0-817a9c6e8d47@oss.qualcomm.com>
+ <5reeryefhw7burzf2lymhg5wivaq2n4gq5hszvfp57dergvpyx@qehaf334gdrn>
+ <7e5d39e0-115e-40be-b44f-0195a4827a0c@oss.qualcomm.com>
+ <63ecde5c-8234-4630-97e8-5806b9ff3eea@kernel.org>
 Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <hxqeilu5fcgsykghxwbhp4r3exu3o45n5lftzeupjxam7r7ux7@wdrfc6lor4gl>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=X4lSKHTe c=1 sm=1 tr=0 ts=689da838 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=dP0PvF52YB23nZRe8tUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzMSBTYWx0ZWRfX4Bh/5V+HPUx9
- VDi8edSJz8osxD9wghKYqfKKCRZ2BFPL8cqEjdw1859INpPdJKXnPwHwTR7BxsqBaubG7RXgy1b
- N7/Y9L5xjpaasiIfQ3Hw66a7OdZPCHAsB55clA+7bb2ZeteYY65BXT/7TYbowt37mqchurbJQeT
- HHLsHq7YPDBr5kI6P57ZEE9UCAn2+z27GldS8fQPu87ZI6QjDV/P1pvpzfZYTJmkBToH9CNMToR
- IPsNHk7isrktVj4Nf2A52blhBi+R7NcKMmCNL/wdzqpvWS3QD/9FNC7uOnRODcEvRsYw9qEIflz
- KstG43p/fJ+n3HjemdBz05VfLhnhphmFUq1Fg5LCf1bUQukub+SkZnnfM3RkwdU9/2kS/1nV9nI
- Z7xe3T2Z
-X-Proofpoint-GUID: zPUnsn3d8c9SlH0ncwKPzaLOKwM0vSfP
-X-Proofpoint-ORIG-GUID: zPUnsn3d8c9SlH0ncwKPzaLOKwM0vSfP
+From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+In-Reply-To: <63ecde5c-8234-4630-97e8-5806b9ff3eea@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NCBTYWx0ZWRfX8MpRqqcaHlzX
+ YD0QqPiW/X3POhhQWkmtlhsu15DoGJ5giyAuJaPJURF/oNK+ZBdON0A9Ojdl6xWzTjNM+5sUHCZ
+ 7BTVv+lBoePBOIlmrKa47uBuj9fL6nv4rP1OgRZDjoCiNIGnkDky1aXns2Z34sRT9wtMB9+BcDl
+ rc8EvQhpk2H4D/rERfH4bRWpE83o+D/Rhyw8hgsdCACR/BhgN6lq+as2Xs1kVaVeQdnvZ0iPwAE
+ sakGunKQSc/v4qu/9L9ALpplgFALiJp39J4p2nvgexQg0Jlj603GJ9dX8qPxIT3Sj5cTr6AQULM
+ K5J9Ee2RaeaAY9QVGnhPdvtnwcjPfSo4fKhZVN0gG2qfj2tCGpNor7x0esRJxFV+0oMdXASKEj3
+ hkJ+KV3W
+X-Proofpoint-GUID: qBPmB09ZlY4YaqLNLVgtsUOjbk38liAP
+X-Authority-Analysis: v=2.4 cv=TJFFS0la c=1 sm=1 tr=0 ts=689da849 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=r9z8OYCOk6cqr7l9vhsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-ORIG-GUID: qBPmB09ZlY4YaqLNLVgtsUOjbk38liAP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
- spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0 classifier=typeunknown
+ priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090031
+ engine=8.19.0-2507300000 definitions=main-2508110074
 
 
 
-On 2025/6/9 22:17, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:52PM +0800, Yongxing Mou wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On 2025-08-14 17:05, Krzysztof Kozlowski wrote:
+> On 14/08/2025 10:54, Yijie Yang wrote:
 >>
->> Initiliaze a DPMST encoder for each  MST capable DP controller
->> and the number of encoders it supports depends on the number
->> of streams it supports.
 >>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  2 ++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 23 ++++++++++++++++++++++-
->>   drivers/gpu/drm/msm/dp/dp_display.c         | 14 ++++++++++++++
-> 
-> Please don't mix DP and DPU changes in a single patch.
-> 
-Got it, thanks, will separate it.
->>   drivers/gpu/drm/msm/msm_drv.h               | 13 +++++++++++++
->>   4 files changed, 51 insertions(+), 1 deletion(-)
+>> On 2025-08-14 16:24, Dmitry Baryshkov wrote:
+>>> On Thu, Aug 14, 2025 at 03:27:27PM +0800, Yijie Yang wrote:
+>>>> Introduce the device tree, DT bindings, and driver modifications required
+>>>> to bring up the HAMOA-IOT-EVK evaluation board—based on the X1E80100 SoC—to
+>>>> a UART shell.
+>>>> This patch set focuses on two key hardware components: the HAMOA-IOT-SOM
+>>>> and the HAMOA-IOT-EVK carrier board.
+>>>> The HAMOA-IOT-SOM is a compact System on Module that integrates the SoC,
+>>>> GPIOs, and PMICs. It is designed to be modular and can be paired with
+>>>> various carrier boards to support different use cases.
+>>>> The HAMOA-IOT-EVK is one such carrier board, designed for IoT scenarios.
+>>>> It provides essential peripherals such as UART, on-board PMICs, and
+>>>> USB-related components.
+>>>> Together, these components form a flexible and scalable platform, and this
+>>>> patch set enables their initial bring-up through proper device tree
+>>>> configuration and driver support.
+>>>>
+>>>> Qualcomm SoCs often have multiple product variants, each identified by a
+>>>> different SoC ID. For instance, the x1e80100 SoC has closely related
+>>>> variants such as x1e78100 and x1e001de. This diversity in SoC identifiers
+>>>> can lead to confusion and unnecessary maintenance complexity in the device
+>>>> tree and related subsystems.
+>>>> To address this, code names offer a more consistent and project-agnostic
+>>>> way to represent SoC families. They tend to remain stable across
+>>>> development efforts.
+>>>> This patch series introduces "hamoa" as the codename for the x1e80100 SoC.
+>>>> Going forward, all x1e80100-related variants—including x1e81000 and others
+>>>> in the same family—will be represented under the "hamoa" designation in the
+>>>> device tree.
+>>>> This improves readability, streamlines future maintenance, and aligns with
+>>>> common naming practices across Qualcomm-based platforms.
+>>>>
+>>>> Features added and enabled:
+>>>> - UART
+>>>> - On-board regulators
+>>>> - Regulators on the SOM
+>>>> - PMIC GLINK
+>>>> - USB0 through USB6 and their PHYs
+>>>> - Embedded USB (eUSB) repeaters
+>>>> - USB Type-C mux
+>>>> - PCIe6a and its PHY
+>>>> - PCIe4 and its PHY
+>>>> - Reserved memory regions
+>>>> - Pinctrl
+>>>> - NVMe
+>>>> - ADSP, CDSP
+>>>> - WLAN, Bluetooth (M.2 interface)
+>>>> - USB DisplayPort
+>>>>
+>>>> DTS Dependency:
+>>>> https://lore.kernel.org/all/20250724-move-edp-endpoints-v1-3-6ca569812838@oss.qualcomm.com/
+>>>>
+>>>> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>> ---
+>>>> To: Bjorn Andersson <andersson@kernel.org>
+>>>> To: Konrad Dybcio <konradybcio@kernel.org>
+>>>> To: Rob Herring <robh@kernel.org>
+>>>> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+>>>> To: Conor Dooley <conor+dt@kernel.org>
+>>>> Cc: linux-arm-msm@vger.kernel.org
+>>>> Cc: devicetree@vger.kernel.org
+>>>> Cc: linux-kernel@vger.kernel.org
+>>>>
+>>>> ---
+>>>> Changes in v5:
+>>>> - Update base commit.
+>>>> - Drop an already merged patch:
+>>>> https://lore.kernel.org/all/20250804-hamoa_initial-v4-2-19edbb28677b@oss.qualcomm.com/
+>>>> - Link to v4: https://lore.kernel.org/r/20250804-hamoa_initial-v4-0-19edbb28677b@oss.qualcomm.com
+>>>
+>>> Please keep full changelog rather than trimming previous iterations.
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index ca1ca2e51d7ead0eb34b27f3168e6bb06a71a11a..2eb4c39b111c1d8622e09e78ffafef017e28bbf6 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -28,6 +28,7 @@
->>    * @h_tile_instance:    Controller instance used per tile. Number of elements is
->>    *                      based on num_of_h_tiles
->>    * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
->> + * @stream_id		stream id for which the interface needs to be acquired
->>    * @vsync_source:	Source of the TE signal for DSI CMD devices
->>    */
->>   struct msm_display_info {
->> @@ -35,6 +36,7 @@ struct msm_display_info {
->>   	uint32_t num_of_h_tiles;
->>   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
->>   	bool is_cmd_mode;
->> +	int stream_id;
->>   	enum dpu_vsync_source vsync_source;
->>   };
->>   
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index 1fd82b6747e9058ce11dc2620729921492d5ebdd..45fedf7e74e9c6dfed4bde57eb675e3dd1762fc7 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -652,7 +652,8 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
->>   	struct msm_display_info info;
->>   	bool yuv_supported;
->>   	int rc;
->> -	int i;
->> +	int i, stream_id;
->> +	int stream_cnt;
->>   
->>   	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
->>   		if (!priv->dp[i])
->> @@ -675,6 +676,26 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
->>   			DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
->>   			return rc;
->>   		}
->> +
->> +		stream_cnt = msm_dp_get_mst_max_stream(priv->dp[i]);
->> +
->> +		if (stream_cnt > 1) {
->> +			for (stream_id = 0; stream_id < stream_cnt; stream_id++) {
->> +				info.stream_id = stream_id;
->> +				encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DPMST, &info);
->> +				if (IS_ERR(encoder)) {
->> +					DPU_ERROR("encoder init failed for dp mst display\n");
->> +					return PTR_ERR(encoder);
->> +				}
->> +
->> +				rc = msm_dp_mst_bridge_init(priv->dp[i], encoder);
->> +				if (rc) {
->> +					DPU_ERROR("dp mst bridge %d init failed, %d\n",
->> +						  stream_id, rc);
->> +					continue;
->> +				}
->> +			}
->> +		}
->>   	}
->>   
->>   	return 0;
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 9dbcf4553cad70c9e3722160a87403fc815765d7..ab1ad0cb6427eb4f86ee8ac6c76788b1a78892a8 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1417,6 +1417,20 @@ static int msm_dp_display_get_connector_type(struct platform_device *pdev,
->>   	return connector_type;
->>   }
->>   
->> +int msm_dp_get_mst_max_stream(struct msm_dp *dp_display)
->> +{
->> +	struct msm_dp_display_private *dp_priv;
->> +
->> +	dp_priv = container_of(dp_display, struct msm_dp_display_private, msm_dp_display);
->> +
->> +	return dp_priv->max_stream;
->> +}
->> +
->> +int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
->> +{
->> +	return msm_dp_mst_drm_bridge_init(dp_display, encoder);
+>> Sure, I will restore them.
+>>
+>>>
+>>> Also, is there a reason why you didn't pick up audio and display chunks
+>>> as it was requested on the corresponding reviews?
+>>
+>> Display-related changes have been merged into '[PATCH v5 3/3] arm64:
+>> dts: qcom: Add base HAMOA-IOT-EVK board' and are already present there.
+>>
+>> Audio support is still under debugging due to unresolved issues, and
+>> it's unclear when it will be ready. Would it be acceptable to proceed
+>> without it for now?
+> Audio was sent to the lists, so this is confusing. What was the point of
+> that posting? It clearly said:
 > 
-> What's the point in this oneliner?
+> "Basic test is good in Hamoa-IOT-EVK board."
 > 
-Emm, here we consider declaring the msm_dp_mst_drm_bridge_init() in 
-msm_drv.h and drop the one-line wrapper.
+> So was that true or not?
 
+True.
 
->> +}
->> +
->>   static int msm_dp_display_probe(struct platform_device *pdev)
->>   {
->>   	int rc = 0;
->> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
->> index a65077855201746c37ee742364b61116565f3794..dd403107b640ee5ef333d2773b52e38e3869155f 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.h
->> +++ b/drivers/gpu/drm/msm/msm_drv.h
->> @@ -372,6 +372,9 @@ bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
->>   			       const struct drm_display_mode *mode);
->>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
->>   
->> +int msm_dp_get_mst_max_stream(struct msm_dp *dp_display);
->> +int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
->> +
->>   #else
->>   static inline int __init msm_dp_register(void)
->>   {
->> @@ -388,6 +391,16 @@ static inline int msm_dp_modeset_init(struct msm_dp *dp_display,
->>   	return -EINVAL;
->>   }
->>   
->> +static inline int msm_dp_get_mst_max_stream(struct msm_dp *dp_display)
->> +{
->> +	return -EINVAL;
->> +}
->> +
->> +static inline int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
->> +{
->> +	return -EINVAL;
->> +}
->> +
->>   static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display)
->>   {
->>   }
->>
->> -- 
->> 2.34.1
->>
 > 
+> Best regards,
+> Krzysztof
+
+-- 
+Best Regards,
+Yijie
 
 
