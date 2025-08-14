@@ -1,218 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-69172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77EB2B260BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:24:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D28ABB260D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:27:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 858C01C83462
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:19:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 471CD3B45CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:22:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 198752E975B;
-	Thu, 14 Aug 2025 09:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E35F42EA155;
+	Thu, 14 Aug 2025 09:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E8s6wYjm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RPoCU6+v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241472EA483
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37109281508
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755163104; cv=none; b=BhsM/kI9p53yhCAU5VJMYgMm9nNti+tqBVID11j3as6BStGfv4CtCi10qo17/HJPjio4RyM6yfh/04krlpi9tFhJ0FiSeStHQsjTbbBxposWjLU5iS2ohysS3qhKxpNmOH0a2AOoNv53gY88xtrAoZU1cunTKNGeUX6ce/jnGpA=
+	t=1755163357; cv=none; b=Lw8RVcikEjsX8hJeWObsL6SsPioNFOn6Kb3QpD3k/vQv55SaKSm64zToBDy5AkiE+qbj931ZkIyiCzp1gh3fdG01zhrZ84XjMyyP5VdA3L8fkgsUmOILfLR9L/8QMLtKp2i/zwrl+zbeChM+TFV0HlypFrxJSOqnzkdOBtZ7uFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755163104; c=relaxed/simple;
-	bh=46LJa2wDbshNFnzJs1SRupO9qJEw9lE6qDyw8MpBQY0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OYDbNhIzZv7iMpz129f38WqdDp9ewxps1CaKylq2Q6G7jRT3/zVEgyYJU1n07H6rugtXbJRgH9BV65rJvpxy+t0/7niwFpfLhrEVofknWU6BMPfxEYfAoqFuoea1DtS5LcbP3BX+EbMnvbrIJe7MQkaVyUZ29WR6FppK9II/MfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E8s6wYjm; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45a1b0c52f3so3560295e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:18:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755163100; x=1755767900; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Sw1jsJRwABde2QJUqyand4FN1Jn1+zxeyEdBFH61xAc=;
-        b=E8s6wYjm3yibyxK2pSPB5gGXEGEorRFWmtAb8L6BvchilgpnrIN5tkhV0KRxlnuLwZ
-         f/Vn4FLWmB66AsUI4PIOT8qNLkGl7sLFqK69EWNzgPK4XVgs0HQuAD8ZGnZ58LL4wRaf
-         urx+vTUzJN17SefCB0xGYNzektLlNXGPI27gKaXPxN8ImQrzldT/AyxTNCtvnUomddnK
-         WvHMl1IWbtsNO12OxeGsDHZErnAOCaHuQ3oD1pkfvFCdvVVwk8lQqSHCTTD49UwAIIW1
-         TQvzkRkt9+omZnEHD3dow5dt+0PDA3TFiugOglo9n9y+GVmZjgjrbPPrfutEhQwy/8kB
-         bEiQ==
+	s=arc-20240116; t=1755163357; c=relaxed/simple;
+	bh=s49HL7/bLHdHJpcalZIgVtBqRvt78dyeuJMWCJeAdHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AMpe42rscfJIFVbzdQQjjFzNBg8Ei7c8vAryFgUfYAYjRvgpdvLnKtexsN63isSe/ByR5f9TUFTXh/LJmVsOleu2Btnz27VHxWocUbWytEHS98qnqZafpapUZK0z2qN9Yh4XiOHdoO9wnjsk+fEuGt5RGoSuRk7M8as23l/zl9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RPoCU6+v; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57E8ssD8020597
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:22:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QJ6/FNrbXINXT+uENEUe8q0L4h+wvX79RTpEz2Y4Ltk=; b=RPoCU6+vwR7AsMkL
+	F1NA15aHXWFd5rt2OT3nhVLQl1Agw/lOQj3rJIcNG3Bsnt7JyybzpgJ1JLQbjm7h
+	m7hBf62gmRaSqedMb2KGyPrume7iG+fCdixc6VXrYfo8+O02pmPsXYEu+2niEEnm
+	hP6trzG/jbVlJlaNovE955XRaxkIEPLID1MmEfUwV7j9jYfIl8q/8Ee7bX4p2obn
+	CmyeogD9UnLWk0wJB2YcaYNhTUjNylo7PJcXTO2tAxdoSTPHuojOAqgJHe7nIveg
+	RhRAihZwolPu5jaEL6R3WAx9fNe7SSV67eyMAlU8CBI6HX2PLtKHZ6kjyhYlSNG1
+	dBjuIw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48g5hmf3n1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:22:35 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b109bd9b3dso2451051cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:22:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755163100; x=1755767900;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Sw1jsJRwABde2QJUqyand4FN1Jn1+zxeyEdBFH61xAc=;
-        b=WX1uUDUyuhoLGVX+XzhpEUkOUtkhUoVPG4qRi48HVJddnIm9g1bs2Xu5OyhW3hWdMP
-         5eDKbSkII+qZ2hi9+pIj8lheRmG1/xwK+xWaTlkl2rcQiT+S44BiOYajIVJQIEay4r4J
-         bt+Bwei38LfPy6bNSXF7xUzHMpqrFFEYNyqog69Xqqsx0DysE0aHT+6unzcmjA1O04r6
-         74dNeoCZlJ5LlbRxbWvcCWo+heV1y8G1nnos7ieo0Y29yRR/gbRNZML/s616Znpd1vSp
-         ciuOaaAGJEKS4knfLXo3ttUUaLe7uL03RhsWZGSqvOlyZXgi/QI6TN9YG+vfGmaCCHDL
-         Q/xQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWG8nHTGj1ZFlyGLT/+jewCJ2/CZ+tG473fKMVpSsTzTgbYlFDcMyrEsFSAqrK0+PKbqsxMXqw20AGzkcBt@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyYaPNRyv+9LXlIZiTzDThPA/KRHvzI/FOVuFVC2+WEoHWjUjv
-	TbD/w0b/Wb+KDmu6yI83DdmEoWGvnc69EhI8We5UWtChIw/1ma0EIPsh8IeyJzCLf6A=
-X-Gm-Gg: ASbGncspi7GNmG/IXt+UjnZ52IrTp7tisfDonLbEUn/JjbfmP8bv5BAcVDehZ9zcTC0
-	NKu9MekTYF22fkv+aVLppcRju29Gtkdws/PYAKNTexP3/Vog7Xps2Ayvq4VES5+Pe2/imNKfH2k
-	s3rGGLYpN1WPVbp4dvXdF0Sc8FipEq8QvQ3+/ntyW2gsXzryMrfgBdD66eoRvcYw5U3XaapKDrE
-	zBoFOkC+I6AX+yyXaLuQEFaIEjh7PU22CAYnI39t3U2/mFan/jYeEjeZrv/v++Zq4FKM0ciI4FI
-	WnoCzzV31NBZtp8yDVXSvtyc0/pGA8Hrxuzx2P04scKiY7U9VOMysAs18dIfeCAPtY4Lt8457TV
-	dp3gVhyyVgCCSO4b/CnqUAX0PgA5S/nAZp1De
-X-Google-Smtp-Source: AGHT+IHgCKHrKmlG0XE5ASsl3flO7xdPvj24GpGqa+EV9hH/V/JZ27mTKnghzyA1i5XsC1PyFXNpXg==
-X-Received: by 2002:a05:600c:3151:b0:459:e3f8:92ec with SMTP id 5b1f17b1804b1-45a1b60e2e8mr20488895e9.10.1755163100162;
-        Thu, 14 Aug 2025 02:18:20 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:ea13:2485:4711:708])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c74876csm13861925e9.14.2025.08.14.02.18.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 02:18:19 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Thu, 14 Aug 2025 11:18:07 +0200
-Subject: [PATCH 2/2] drm/msm: dp: Delay applying clock defaults until PHY
- is fully enabled
+        d=1e100.net; s=20230601; t=1755163354; x=1755768154;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QJ6/FNrbXINXT+uENEUe8q0L4h+wvX79RTpEz2Y4Ltk=;
+        b=rIYne7KBu98HdJvGhB/r6PSwxK8a/HGcPrf7ugoJQ8ncSJfu78TNMQfYxo67GZL1Ik
+         4o7kDVm+tWVAD2im8bet3Qifl9ZzMgqDU6efsjx9E/8s/CMCkAuXmdqgWXb5hvDHCygw
+         LJvCGVoeylvy8AQzdxe0TvS2k5kIDpZThNO20lblmTv02PGEtg7nptSDW3rEkrtc7WCy
+         HX3oxVpNMA0++hOnG/M414KlLMPQlKCvbMhm6pDOerr2MORIYTR2NsiaOF0ahrCRxe7f
+         DBukqMCxzJ/pq0vZJ708ZiPvX/d5Pj2IM8on+wfLDNdnzGATD9TpgnKisQT18bd9V+PB
+         tWtA==
+X-Forwarded-Encrypted: i=1; AJvYcCU3mjMDQ/bwbfzJ3RuOC8EzO1fEf3+9XXZtxnuDeT3AS54sW+Jlv2CYp9qYq2WwCLJxSZl18qkRH9+W/euK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7VoFI2Eu4DyjoHw8eixU/F5g/hACT5riK7gyYrHwZAPspvjzF
+	n8AQ4kKvVqi/VrayWX4iWCiRlsAYn0UX0FvlerLoZ71fi1rUKD3QIa2P4m9z5V8PtMMTnP0SZdb
+	m3vSpDokFXckhSTP674vvLWKy0JYTZMRghnnK7sYnwisxjW6uTdkJUQQ3cxn31x2GZ9zz
+X-Gm-Gg: ASbGncucFz5G/SH2eQBaUmOmEOp7gotbe0rC7lu4sVUmpQyHW+5BdDlZqXnVlUnfXCm
+	6GlglgzePKwNN5qj9ND6EwUx0QHWZUa+MQ3Aa+6Ij5h5BrQr1ik/1qiS2GHASl5r0dEN457tn1F
+	cO47lmpL+EC0PnipLsN00b2zX3m+OkcTAUnF+LBt/kwLJjeVxeiZQ8oeXXxulM1OotC//0vydC3
+	zX+HkDNXhfRUFMENgJ53CD3N2SYT5i18TCrob8MjsAc7ZEXKbo9Tl4jPiOVu03Ipsn5HA105OA/
+	hBsiFUATu1nYVDZHoyynVhMjfOGg2ARt4kUQNza3WuxPulxjtYOV/RIe/PlmaF5AsO/r5HwZQO6
+	dYFiMEreLzwBfR8xhyA==
+X-Received: by 2002:a05:622a:110e:b0:4a9:a2d2:5cd5 with SMTP id d75a77b69052e-4b10aa7c696mr16254551cf.6.1755163354012;
+        Thu, 14 Aug 2025 02:22:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaovu+UsVZJS4lKl04sg931xBYBvbcoaHSVfWBwnxzo5yJfyGkDSpfa7CkedYAK8XXTLYluA==
+X-Received: by 2002:a05:622a:110e:b0:4a9:a2d2:5cd5 with SMTP id d75a77b69052e-4b10aa7c696mr16254391cf.6.1755163353555;
+        Thu, 14 Aug 2025 02:22:33 -0700 (PDT)
+Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af928c84154sm2476125466b.84.2025.08.14.02.22.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Aug 2025 02:22:32 -0700 (PDT)
+Message-ID: <6683bd67-1f81-47f7-88c1-bdbf9a589bbf@oss.qualcomm.com>
+Date: Thu, 14 Aug 2025 11:22:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] arm64: dts: qcom: x1: Disable audio codecs by default
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+References: <20250813-x1e80100-disable-audio-codecs-v1-0-af82d9576f80@linaro.org>
+ <5de00c2e-2b81-42f4-ab17-6db0f1daf7ff@oss.qualcomm.com>
+ <c4a63197-9fef-4261-a0e0-9d57e009263a@linaro.org>
+ <aJ2jUDaBAgeRcYfz@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aJ2jUDaBAgeRcYfz@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250814-platform-delay-clk-defaults-v1-2-4aae5b33512f@linaro.org>
-References: <20250814-platform-delay-clk-defaults-v1-0-4aae5b33512f@linaro.org>
-In-Reply-To: <20250814-platform-delay-clk-defaults-v1-0-4aae5b33512f@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Michael Walle <mwalle@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDExOSBTYWx0ZWRfX+d37JL3TL3ht
+ dKpGqHWPQI8HhaAEUbHr2zyJwcCSe5pXFA1NqUJRNSTdf8GnIEYPCB7+wOw2XbSgCK6aXjKHZYO
+ Cx+pXRJW7YLwxjs5toOqsoxqD3hyLZcfiJ3jEc5zbBtpX2YCKvd/q9JEpMFIEflsAyrE2WK140q
+ 7XzmzJeacN0fefaXt0t8fAslg2Wi3BTjpBdDNiRkX186tXBfqi+NsVJAu8elTh/k5BTqn7ad7Mc
+ F7R94xYtDzLAB9JEuIJFiqBJTDoGlq8CtRWfxgCY5LhPGew5x1cLoS2LABzsFiILumj6TySc+SJ
+ fKcPgOJE9eazqwuMVZyV3YMVyVfSiHAW7qmzj3mgh4H94TY9YedyHYrz/6TvcCKP+Qsq4By9fzO
+ MC1m2z1x
+X-Proofpoint-GUID: zvJTAtba8yqC2LVgeIDd-mOspVHcc3q4
+X-Proofpoint-ORIG-GUID: zvJTAtba8yqC2LVgeIDd-mOspVHcc3q4
+X-Authority-Analysis: v=2.4 cv=d4b1yQjE c=1 sm=1 tr=0 ts=689daadb cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=jMPNYyMxw5xcEw4wFiMA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 spamscore=0 phishscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508120119
 
-On some Qualcomm platforms, we cannot safely reparent clocks when the new
-parent is not already powered up. This problem occurs for the DP and DSI
-controller when we try to reparent the link clocks using the standard
-"assigned-clock-parents" property to the clock source provided by the PHY.
-We often bypass this problem, because the clocks are already assigned to
-the correct parent by the boot firmware. Without that, there is an error
-during boot in the kernel log and DP/DSI is not functional.
+On 8/14/25 10:50 AM, Stephan Gerhold wrote:
+> On Thu, Aug 14, 2025 at 08:07:17AM +0200, Krzysztof Kozlowski wrote:
+>> On 14/08/2025 01:09, Konrad Dybcio wrote:
+>>> On 8/13/25 5:58 PM, Stephan Gerhold wrote:
+>>>> Currently, the macro audio codecs are enabled by default in x1e80100.dtsi.
+>>>> However, they do not probe without the ADSP remoteproc, which is disabled
+>>>> by default.
+>>>
+>>> FWIW if the ADSP doesn't start, you can't really consider the platform
+>>> working.. It just does oversees too much of the SoC to even seriously
+>>> consider using the device without it
+>>
+>>
+>> I agree. ADSP is supposed to come up for every or almost every platform,
+>> because it is crucial for USB and charging.
+>>
+> 
+> I agree with that as well, especially because I have an upcoming patch
+> series that allows reusing the "lite" ADSP firmware from UEFI for USB
+> and charging, so you don't even need to have firmware present for that.
 
-For example, the following error occurs on X1E if the &mdss_dp3 controller
-was not initialized by the boot firmware:
+Really nice!
 
-  clk: failed to reparent disp_cc_mdss_dptx3_link_clk_src to aec5a00.phy::link_clk: -16
-  disp_cc_mdss_dptx3_link_clk_src: rcg didn't update its configuration.
-  WARNING: CPU: 0 PID: 77 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xe8
-  pc : update_config+0xd4/0xe8
-  Call trace:
-   update_config+0xd4/0xe8 (P)
-   clk_rcg2_set_parent+0x58/0x68
-   __clk_set_parent+0x4c/0x214
-   clk_core_set_parent_nolock+0xe8/0x1f4
-   clk_set_parent+0xa4/0x13c
-   of_clk_set_defaults+0x15c/0x4a8
-   platform_probe+0x3c/0xc4
-   ...
-  clk: failed to reparent disp_cc_mdss_dptx3_pixel0_clk_src to aec5a00.phy::vco_div_clk: -16
-  disp_cc_mdss_dptx3_pixel0_clk_src: rcg didn't update its configuration.
-  WARNING: CPU: 0 PID: 77 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xe8
-  ...
+> The question for this patch series is separate though: Should we enable
+> the SoC audio codecs by default? What happens if a board does not make
+> use of them?
 
-In the current implementation, it is tricky to solve this from any of the
-involved drivers, because the call to clk_set_parent() happens from the
-platform driver core (before the probe() function of the DP driver is
-called). Similarly, the PHY/clock driver cannot solve this alone, because
-it doesn't know which clock rate and configuration to use for the PHY.
+Then they (should) get parked (powered down, or re-programmed if
+necessary)
 
-For DSI on SM8750, we solved this by avoiding use of assigned-clock-parents
-and calling clk_set_parent() separately from the DSI controller driver (see
-commit 80dd5911cbfd ("drm/msm/dsi: Add support for SM8750")). We could do
-that for the DP controller as well, but this would require changing the
-existing DT bindings for a number of platforms, just to workaround a
-limitation in the Linux driver model. The DT does not specify when to apply
-the assigned-clock-parents, so there is nothing wrong with the current
-hardware description.
+>> It's true that LPASS macro codec nodes need resources from ADSP, but
+>> still these are resources internal to the SoC. We disable nodes in DTI
+>> which need an external resource. That's not really the case for LPASS.
+> 
+> The reason that triggered this patch series is that I was seeing an
+> error from the va_macro when testing on x1e001de-devkit. That board does
+> not have DMICs defined, so it doesn't make direct use of the va_macro:
+> 
+>  va_macro 6d44000.codec: qcom,dmic-sample-rate dt entry missing
 
-Instead, fix this by using the new "driver_managed_clk_defaults" option in
-the platform_driver struct. Delay the call to of_clk_set_defaults() until
-we have set up the PHY to avoid the error shown above.
+Perhaps we can print the error if there's any sound connections, i.e.
+if it's "really" used?
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 10 ++++++++++
- drivers/gpu/drm/msm/dp/dp_display.c |  2 ++
- 2 files changed, 12 insertions(+)
+> We should fix this in the lpass-va-macro driver. You could take this
+> case one step further though: What if a board uses none of the audio
+> functionality? Apparently, X1E is also going to be an IoT platform. It's
+> very well possible we will end up with a board that doesn't have any
+> audio functionality. I would argue it's valid to use a minimal kernel
+> config in that case that has all of the audio subsystem disabled. That
+> won't work though, since we need to probe all the enabled audio codecs
+> to reach sync_state().
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c42fd2c17a328f6deae211c9cd57cc7416a9365a..21249d2b85b308ef2437f1c7a309c795103599f6 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/types.h>
- #include <linux/clk.h>
-+#include <linux/clk/clk-conf.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
- #include <linux/iopoll.h>
-@@ -140,6 +141,7 @@ struct msm_dp_ctrl_private {
- 	bool core_clks_on;
- 	bool link_clks_on;
- 	bool stream_clks_on;
-+	bool clk_defaults_set;
- };
- 
- static inline u32 msm_dp_read_ahb(const struct msm_dp_ctrl_private *ctrl, u32 offset)
-@@ -1789,6 +1791,14 @@ static int msm_dp_ctrl_enable_mainlink_clocks(struct msm_dp_ctrl_private *ctrl)
- 	phy_configure(phy, &ctrl->phy_opts);
- 	phy_power_on(phy);
- 
-+	if (!ctrl->clk_defaults_set) {
-+		ret = of_clk_set_defaults(ctrl->dev->of_node, false);
-+		if (ret)
-+			return ret;
-+
-+		ctrl->clk_defaults_set = true;
-+	}
-+
- 	dev_pm_opp_set_rate(ctrl->dev, ctrl->link->link_params.rate * 1000);
- 	ret = msm_dp_ctrl_link_clk_enable(&ctrl->msm_dp_ctrl);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d87d47cc7ec3eb757ac192c411000bc50b824c59..b8a0e61b806e6e386980f9c6ad6f58b487a68c7e 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1487,6 +1487,8 @@ static struct platform_driver msm_dp_display_driver = {
- 		.suppress_bind_attrs = true,
- 		.pm = &msm_dp_pm_ops,
- 	},
-+	/* Apply clock parents after PHY is fully initialized */
-+	.driver_managed_clk_defaults = true,
- };
- 
- int __init msm_dp_register(void)
+Because of the resources being driven by the OS, I don't think removing
+information from the device tree (i.e. cutting down on the plumbing
+data) is fair.. Enabling all the hardware (minus firmwares) should result
+in only a couple hundred kilobytes of added RAM use, but will get rid of
+a huge number of edge cases where sketchy combinations cause annoying
+issues.
 
--- 
-2.50.1
+> This might be a Linux issue unrelated to the device tree, but in my
+> opinion an audio codec without audio inputs/outputs is not
+> "operational", it should not be status = "okay". That's quite subjective
+> though.
 
+If the codec is present on board, there's no less reason to disable it
+vs leaving it hanging, unaware by the OS.. cutting the power by hand is
+at least predictable
+
+Konrad
+
+> At the end, I realized that x1e001de-devkit actually does have DMICs and
+> I just need to enable them properly to get rid of the error. I only sent
+> this series because I believe it fits better to our conventions. Given
+> that I don't need it anymore, I'm also happy to just drop it. Let me
+> know what you prefer.
+> 
+> Thanks,
+> Stephan
 
