@@ -1,138 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-69276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D39BAB26ADC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 17:26:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21736B26ABF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 17:22:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2F501C230DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 15:22:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 008C67AEE02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 15:20:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAEBE21B8F8;
-	Thu, 14 Aug 2025 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D25C620B803;
+	Thu, 14 Aug 2025 15:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iNWpmuQK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ey9GAAzl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C132746C;
-	Thu, 14 Aug 2025 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7978F49;
+	Thu, 14 Aug 2025 15:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755184908; cv=none; b=A0P7PCVJxWv+2zgGfqEp6UpmyQpschxY/yM5HxpDQi2/0bobQyeuyfGbf9RHnOblaZ0TlWdpvcUd8VGNVVPYyZdsgT2nocwbNuKtuacrr64BFS7j8lo9EzHTN5bMGT3tiggtrRG/FQYGxaEPc3WPl3Df59AvzEUQ2Rgt2Hvzo7Y=
+	t=1755184940; cv=none; b=p3wiDU6T6TSsVnby587HZ2zaUt9k98TyRRkH3vKT4QgIS+kCf0bJNcDgk9Z+m1JtI9MQzjMg4j7tR8Sd5uEGDSmi2RPGClSs0lv8ghAgOFdEthuO6rZSkDTjoy4GQgWO1E/9evO7+9I6FuXaE50W77oNvB4RiFPLNDFNqPTLTqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755184908; c=relaxed/simple;
-	bh=BxH6frzEx2Nl3V2ClnA48ry3Dd7sJkgks2idYBbkBRI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M0yvrtelycN5FO52UIXcQj+nEbyhl/3TCMQdFiwNsdWW14Rj7NYPhL2YZOBmxO0SdoxE66jvVETCVZuTHMnp0iKJImF6mwjc7hSR2OFwLqKtmYb8MuOUdgfy99fQojE7fBOUU52dKj1tG9Cu5dosQwz2l40MKXfaOg4E/MSgvZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNWpmuQK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CBDC4CEED;
-	Thu, 14 Aug 2025 15:21:41 +0000 (UTC)
+	s=arc-20240116; t=1755184940; c=relaxed/simple;
+	bh=7y2t1s04GKrnujTi5HTYb2X9WQXQ2FTgCTLmgBGTTdA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tBPzTgPaZLWCA0pIZEeU3z98mgqY6Is5NHCqD40MVNPkHNC7rXACZ0OYJDQoIQrZVY6vr7wRBiurhnQVC4TdS9ZsrfajRMxXdL8mumpOjoEcJv5chi5BfPM8IHtNzsWpKlFIHtQpllc6BRbi4z8JO8G6r47pM8f44WFuP7Nv0mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ey9GAAzl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71072C4CEED;
+	Thu, 14 Aug 2025 15:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755184908;
-	bh=BxH6frzEx2Nl3V2ClnA48ry3Dd7sJkgks2idYBbkBRI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=iNWpmuQKfgFHOHkXVDC2foQTi3+J+peXo2P1+gHRDe4BfU1c99GqsNMzEY/U6LPvH
-	 50j+Wm0cqy3iul7p7cdbh9W/VRa220LYzlGK/JGMnJU2p65iwV+8Y2TJcocMZqYT/y
-	 CbuMvlQWDwQmzyQJvQm1uNz/fo9Sbz5j4/mPSIMjdrbHf4UnKCAbH1TF8yqAtB2Ckd
-	 1k16TQ4se2ILx02IeaOKovaGBCaWbFJ8/fGmCudak3Q6z1MpiZVgE8pIgCabCYJQbo
-	 0jG10pkamtAmu/qxmbaKY7kfqDCjaPS8Tgns41D5X1Yfljr2OMr/40zY/QZL2hijLS
-	 TyPbFNyxu1orw==
+	s=k20201202; t=1755184939;
+	bh=7y2t1s04GKrnujTi5HTYb2X9WQXQ2FTgCTLmgBGTTdA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ey9GAAzl20ggH45t2sOIC8P5NZN46k/V8WFt2t+4cyKYNhtscpEtuuFYkulLJtfnT
+	 ztBtIlMyJlty6OklLgptnAHo0nBZXSeDMHcNIyzz52OFHggm46k35dU0q7ttXfastU
+	 mSBAeyBrV6mtSRLXNXAEL07Rof+F+PhHPASKrLAFEB0t95mynbjGaBFHZcLNjh1NkH
+	 2ULIJZvqEZDB5WyAyIgN2DHWyUQ5wPl5CeTwTEBKLxDBDKdjKD7r2FTv6Ld2fLNxVp
+	 EX08pnYZdXolW9e/CXnKueaZb+iMkeV879DaI5Yw2uw/zUMZrpieoMVLEEbeHTi1nw
+	 +kIq66+zwjxEQ==
 From: Niklas Cassel <cassel@kernel.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+To: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
 	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>
+	Bjorn Helgaas <bhelgaas@google.com>
 Cc: Niklas Cassel <cassel@kernel.org>,
 	linux-pci@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@axis.com,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH 00/13] PCI: Drop superfluous pci_epc_features initialization
-Date: Thu, 14 Aug 2025 17:21:19 +0200
-Message-ID: <20250814152119.1562063-15-cassel@kernel.org>
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 11/13] PCI: qcom-ep: Drop superfluous pci_epc_features initialization
+Date: Thu, 14 Aug 2025 17:21:30 +0200
+Message-ID: <20250814152119.1562063-26-cassel@kernel.org>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250814152119.1562063-15-cassel@kernel.org>
+References: <20250814152119.1562063-15-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2026; i=cassel@kernel.org; h=from:subject; bh=BxH6frzEx2Nl3V2ClnA48ry3Dd7sJkgks2idYBbkBRI=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDLm/vvApNE/bZPy/8YKh26Pres/ct7tSfT5wTUv13x/f 99CNZ1vHaUsDGJcDLJiiiy+P1z2F3e7TzmueMcGZg4rE8gQBi5OAZiIJR8jw/ZnrL9lb2jOOcXT LTbpfry0xJMNyfXGl2/+3bF76tk7VtsZGZ4cq779xajRP4xPaPftGJbfzr+WH3wo5bTo2sEIvbs LfvIBAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=903; i=cassel@kernel.org; h=from:subject; bh=7y2t1s04GKrnujTi5HTYb2X9WQXQ2FTgCTLmgBGTTdA=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDLm/vtxZX3LWafzHtIKk/gvigWUP2Ve8qKhvnr+1O3f7 4s2hfDt7ChlYRDjYpAVU2Tx/eGyv7jbfcpxxTs2MHNYmUCGMHBxCsBEFpUy/PdY0LYjINucoS17 hv2s/MlztqsUK9+cNueTY+tKj++/qg0ZGfZOuhE5fa1j5pRbK+Ty3h7nVvY8cVi37r7MpzO7zhp 86eAHAA==
 X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
 Content-Transfer-Encoding: 8bit
-
-Hello all,
 
 struct pci_epc_features has static storage duration, so all struct members
 are zero initialized implicitly. Thus, remove explicit zero initialization
 of struct members.
 
-Series is based on pci/next.
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Feel free to squash to a single commit if that is preferable.
-
-Kind regards,
-Niklas
-
-
-Niklas Cassel (13):
-  PCI: cadence-ep: Drop superfluous pci_epc_features initialization
-  PCI: rcar-ep: Drop superfluous pci_epc_features initialization
-  PCI: rockchip-ep: Drop superfluous pci_epc_features initialization
-  PCI: dra7xx: Drop superfluous pci_epc_features initialization
-  PCI: imx6: Drop superfluous pci_epc_features initialization
-  PCI: keystone: Drop superfluous pci_epc_features initialization
-  PCI: artpec6: Drop superfluous pci_epc_features initialization
-  PCI: designware-plat: Drop superfluous pci_epc_features initialization
-  PCI: dw-rockchip: Drop superfluous pci_epc_features initialization
-  PCI: keembay: Drop superfluous pci_epc_features initialization
-  PCI: qcom-ep: Drop superfluous pci_epc_features initialization
-  PCI: rcar-gen4: Drop superfluous pci_epc_features initialization
-  PCI: tegra194: Drop superfluous pci_epc_features initialization
-
- drivers/pci/controller/cadence/pcie-cadence-ep.c  | 2 --
- drivers/pci/controller/dwc/pci-dra7xx.c           | 1 -
- drivers/pci/controller/dwc/pci-imx6.c             | 4 ----
- drivers/pci/controller/dwc/pci-keystone.c         | 1 -
- drivers/pci/controller/dwc/pcie-artpec6.c         | 2 --
- drivers/pci/controller/dwc/pcie-designware-plat.c | 1 -
- drivers/pci/controller/dwc/pcie-dw-rockchip.c     | 2 --
- drivers/pci/controller/dwc/pcie-keembay.c         | 1 -
- drivers/pci/controller/dwc/pcie-qcom-ep.c         | 1 -
- drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 2 --
- drivers/pci/controller/dwc/pcie-tegra194.c        | 2 --
- drivers/pci/controller/pcie-rcar-ep.c             | 2 --
- drivers/pci/controller/pcie-rockchip-ep.c         | 1 -
- 13 files changed, 22 deletions(-)
-
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index bf7c6ac0f3e3..60afb4d0134c 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -831,7 +831,6 @@ static void qcom_pcie_ep_init_debugfs(struct qcom_pcie_ep *pcie_ep)
+ static const struct pci_epc_features qcom_pcie_epc_features = {
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+-	.msix_capable = false,
+ 	.align = SZ_4K,
+ 	.bar[BAR_0] = { .only_64bit = true, },
+ 	.bar[BAR_1] = { .type = BAR_RESERVED, },
 -- 
 2.50.1
 
