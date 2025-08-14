@@ -1,203 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-69132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 376FDB25DD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:44:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A1F5B25E17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:54:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDE241B68EF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:43:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 921E63AE70F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:51:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79450283128;
-	Thu, 14 Aug 2025 07:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 915872E265A;
+	Thu, 14 Aug 2025 07:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Q4ehJ9mj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FQpcOBij"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1F28506C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 07:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DA02E7F10;
+	Thu, 14 Aug 2025 07:51:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755157410; cv=none; b=Rv2/eM9ZDyY2eg2e0/pfj9SWsCEJHZY4kF+w72LiGP20/YN2GHDlhGY2agL1HFPowqzNy9TxBFVYvrlvAHyXpOHjl1vJUMAtaY2bxg+vQtepulndIviAhrXx6RSr8Hf1ISUyrS99GbWweS+uen2y+IKUrSkpfK/qGjjp74iFSjk=
+	t=1755157876; cv=none; b=G95UFavcpa3Kx0Jp8mCuUTKSgfrW0IDD551fEWCEKQ29ho2Ha2ZS7nNPT8+x/up7HpjEf7x0afF49tPrmSEug1BxpuIO/Bw6u5lHDgyL9e5m/1NWlBnVKF+Dwd25Ag2b5vIfSOF52AkVUJVNgyXJoTrwe/IoR1iZLte/WTVqQp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755157410; c=relaxed/simple;
-	bh=qAgWfAMIF/sZ4uaQqkFCjMJESgODY6hQ+grRgSP7pFc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Sn3fCQuwT7oDQERIx01fNf9Wp7kXc1mTfUHj6xhV/+9RGOjCKle01Cihekm6JWvhnVzZ0OaH6+hXCMeTiPX0jZ9y/RjomWc4AQWUC8j6TxvBUDyoyWRkyZoiOxHV9RMf4Iv07y9Bh+5Cx4XJOM8Ur/5DdWAMYjO4YIZAjHFez4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Q4ehJ9mj; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-afca3e71009so259461466b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 00:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1755157407; x=1755762207; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jPuQF6+pTC/R1aoe0VWkF/cqD5w1tUDK9xrST9p9p6Q=;
-        b=Q4ehJ9mjO3FF/ltRg87CRvPvVz51dQlcEIYaXCJBjUxujImPPltJaXVpzzCb47QX8K
-         fpK9o1X1wXGKgkyMQiGwf2+664dPZPtMYw3z02KkkATbBFTPyl1VQ0csoacxe4VyWBC+
-         MgfSnVIPeVf4++FJ9fRHyeMwjlh/3WUCU1EY6y/O86bG5hIHk4cXhXQtv1B2qOuRjCba
-         j1HHKBIWbK8EYmIOt29iYnsMNDAO4AhmmnfIk0HDwmdrt3WV1tM8YwTDyIQHnat0hMNI
-         Y797fiVPrqEBLPxEzO/WLGWYwJ0h+LZXXGy6vrz5p3FDaLHBj8eyt+AWWIWqSOvdF3Ai
-         FApg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755157407; x=1755762207;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jPuQF6+pTC/R1aoe0VWkF/cqD5w1tUDK9xrST9p9p6Q=;
-        b=XyIw89gODVDi2MtVIHoGTzsg5W9IPnkMXB5bupukU1Wp3fewt5Eo5hsbu4VQOKOcpe
-         wExxUpFTGOUtm8FWpK3wnl7/j13fNDlHReWHrNyl6dNW3XWDvxsgWAawEs7OfPcp5/hE
-         J+quW7YXvNSSMXsW4fI6vb67Tt1T0nW+UAAFc8P1NTxbV565ehYeZ636Ubu97IgyznwN
-         sPyz9Xr+Y36B2xVUc11I5iyI+EvzLXSK36amDJ6jEMPX+0VdisutIuCzm7y3E/VTNI68
-         Jmf7aVSDpQPq0cbfPbqOadiU9s3pcc9bgVi2irUinw6OpII17XSgF8lr9oNuMdVbdGTa
-         8Urw==
-X-Forwarded-Encrypted: i=1; AJvYcCUbaxyUZrnO8JXmj12eDa5d/1zRoDlXy+CBpJVPgG040+35hoJlBOXHM2dUfbBRa+AAy5tVe/RBfsIHTeKC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6gNglwPzEypstD4vdsdwy9Y0u7R5e64Qr9/h0LEDeWawZqGAW
-	xEBpR7fBdPN78YNfedPVVFRdNvuRzJvnKyJ7BfwFu/b2ZLg+OAcg/0RiiicvhXk3GWY=
-X-Gm-Gg: ASbGncusK5BtpriuzLiPtcUUFxp2e5x/qIHnSxwPcmSPiIrrJ8VBRzQBoQH2NcNtqmp
-	am+LLUDAsMjwRP76sXyrpFKyLp68EceE3GN03EUAYY/DNvw8Mo57YR4dhleUPP06aKC0YWTDyZ+
-	eHAjyOeJqPHHe5r5Elynsb2XFsQzaC6nPvMG4JWAlCMZMt4mxHrfBxbF9LZZot1QnI0Oup3oSOP
-	XVys+X4ucLY4f0QkEUFponZd034+5SEjUa2W1Dxt7Bea3Kh6yWoFwSQK25zYukDsi3Ch/ucCYL9
-	LLblBmheQITMK9PXyKXnkzYqtLmnXsERWZhCZyUPfRC17PUiQwQ1kYWrg/L5Gk7z29NmXB7/3JQ
-	73MIx0kpEek0CstHjY9vNpbSpfgFHz7FB3+cZ5izWGQGGt7m0xEk7WqM24LfoOwsM5L7A/LpNfA
-	vlFYNMnA5B0z0Y+g==
-X-Google-Smtp-Source: AGHT+IGCzaOzIDJ94jFmyMeyUg84rKzPilT3aLYjT6q7n+bcrWWTqiKm+8lDogVs/9Xr3+ze0xv6lg==
-X-Received: by 2002:a17:907:781:b0:af9:8d61:b78e with SMTP id a640c23a62f3a-afcbd9334a5mr149784766b.30.1755157406894;
-        Thu, 14 Aug 2025 00:43:26 -0700 (PDT)
-Received: from [172.16.220.71] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8f26cc6sm23651682a12.23.2025.08.14.00.43.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Aug 2025 00:43:26 -0700 (PDT)
-Message-ID: <d87eedaf-e239-4809-b4cf-61308d5b3a2e@fairphone.com>
-Date: Thu, 14 Aug 2025 09:43:26 +0200
+	s=arc-20240116; t=1755157876; c=relaxed/simple;
+	bh=d1f4mmUw+s4rQ40HwrviQrVXwuM1d7NMgIi8LdtLCFQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IWuB72xFyyeDqDpo49daOjkrjKkAXJ4UbYsJwDr2awkrQ7YSNkVzatpeAhKp1Na6y+u7/mdsXEog513ET2lt7YKi+aBPkSRAR5MRuvzVNiCI893U8qAWecrJqSJX3iw6YdjvEqx9q3VIScUhvdTjAi8F16As4g4us9X98OBs2eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FQpcOBij; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DNM9c2012828;
+	Thu, 14 Aug 2025 07:50:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	p81hshlx7Wv2iXZggKjLGGwXSZ+o/tdplFet3Iz+J18=; b=FQpcOBij43kJkvBJ
+	XaW579auirQeHP7Cdpa+5KYZm7bUozy2g9RoI7PHi08NL7vbP45iSlKe7TFDvvl2
+	rQqEQ5Dw9KnCioh6uwz4N1gXaCXcPETa2oERNxZSVpnVXwzxhKu/Sc5mgYq8FdeZ
+	GuqE5aMJFESJuEeQ383TyNyitG1oFhzckXxSkSdtaeRitEIktQsGPbZMGmyT8ozx
+	8SDF7fA/RFiakolbKTky2lW++iJMgz23tb411/l7cR/HjRgBA549/TYwMq9NJ+3o
+	gFXKVyLNqWyARA69hc1aalmRXjRLO/phrC2lKeH9arab+KrW675Iu0ohZMeJlxVq
+	iouw2g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhxd04g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Aug 2025 07:50:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E7osLq014428
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Aug 2025 07:50:54 GMT
+Received: from [10.50.5.139] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 14 Aug
+ 2025 00:50:49 -0700
+Message-ID: <a4f05871-0229-8ac6-d2c3-b0dd71a9aa57@quicinc.com>
+Date: Thu, 14 Aug 2025 13:20:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] Input: aw86927 - add driver for Awinic AW86927
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss
- <luca.weiss@fairphone.com>, linux-input@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250811-aw86927-v2-0-64be8f3da560@fairphone.com>
- <20250811-aw86927-v2-2-64be8f3da560@fairphone.com>
- <vuv26omdn4a5jniv6znepcxel65buzymu6te2ys2dgtkttk6sg@edqm6xpddudn>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 05/24] media: iris: Allow substate transition to load
+ resources during output streaming
 Content-Language: en-US
-From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-In-Reply-To: <vuv26omdn4a5jniv6znepcxel65buzymu6te2ys2dgtkttk6sg@edqm6xpddudn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod.linux@nxsw.ie>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Abhinav Kumar
+	<abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil
+	<hverkuil@xs4all.nl>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        "Vedang
+ Nagar" <quic_vnagar@quicinc.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Renjiang Han <quic_renjiang@quicinc.com>,
+        Wangao Wang <quic_wangaow@quicinc.com>
+References: <20250813-iris-video-encoder-v2-0-c725ff673078@quicinc.com>
+ <20250813-iris-video-encoder-v2-5-c725ff673078@quicinc.com>
+ <24714b00-cc15-4c9b-b0d4-8c76d702fcc2@nxsw.ie>
+ <cd2ded3a-ab91-4199-9edf-8acc8d6d11ba@oss.qualcomm.com>
+ <11acb8fd-9d81-460e-ac2c-38f370324ea5@kernel.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <11acb8fd-9d81-460e-ac2c-38f370324ea5@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfXzg8A53NeMbjq
+ 8M2Bsx1SY16128wd4ZXnQvvRGrKzU2Qj7Tx45VqEKPpfpqKLvFajq8xQ7Do61MCZPozheYg1SxC
+ JZyWm9JFu5WWDEEsKDzUG7LAmzMpY9l8mwHf0ZQmyo9bZK9GXtfW2ZZbA+9PFuenTjmLaXJ5cWs
+ t0qOeypXC6gAOMFguNSKF+1XKQP26kiG1frNkghZQfcxLInZZPw5fDKVP5Md/cqraIGkSly4l3U
+ VMdPE2tYrn793Mi9Iqix9I3rD7kPnZrTvOjProfo6ociqbAEmEq96AxSpj21w2QNoQ+5y96mWZm
+ u5Hwt5m8711oF7ly2sdTRSjegbu2/2CK6Sf6Fd2ZVjWAzkP/r+3b11AWWGZ8XafTSs+Wifuf8PO
+ fs+RBFMH
+X-Proofpoint-GUID: kOPeFGcpcAFlSnOGAI1PaFCaT2jnFDfO
+X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689d955f cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=yK6j1-holOLB1QIQiPAA:9 a=QEXdDO2ut3YA:10 a=1R1Xb7_w0-cA:10
+ a=OREKyDgYLcYA:10
+X-Proofpoint-ORIG-GUID: kOPeFGcpcAFlSnOGAI1PaFCaT2jnFDfO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
 
-Hello Dmitry!
 
-On 8/11/25 18:35, Dmitry Torokhov wrote:
-> Hi Griffin,
+
+On 8/14/2025 11:43 AM, Krzysztof Kozlowski wrote:
+> On 14/08/2025 00:55, Konrad Dybcio wrote:
+>> On 8/13/25 11:51 PM, Bryan O'Donoghue wrote:
+>>> On 13/08/2025 10:37, Dikshita Agarwal wrote:
+>>>> However, now after removing that restriction, the instance state can be
+>>>> OUTPUT_STREAMING when firmware start is triggered and substate needs to
+>>>> be moved to LOAD_RESOURCES.
+>>>>
+>>>> Fixes: 547f7b8c5090 ("media: iris: add check to allow sub states transitions")
+>>>
+>>> If a restriction has been removed, has that restriction been marked as a 
+>>> Fixes: ?
+>>>
+>>> If not then we can't actually backport this fix as the dependency - the 
+>>> restriction removal has not been marked for backport.
+>>
+>> Please stop confusing fixes and backports..
+>>
+>> If you're really paranoid about this commit getting autoselected, see
+>> 'noautosel' under this section:
+>>
+>> https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html#option-1
 > 
-> On Mon, Aug 11, 2025 at 01:12:02PM +0200, Griffin Kroah-Hartman wrote:
-(..)
->> +struct aw86927_sram_waveform_header {
->> +	uint8_t version;
->> +	struct {
->> +		__be16 start_address;
->> +		__be16 end_address;
->> +	} __packed waveform_address[1];
+> Commit still needs to explain what is the bug, what is observable issue
+> being fixed here. Lack of feature is not a bug.
+
+Ok, will add more info.
+
+Regards,
+Dikshita
 > 
-> Why does this need to be an array? 
-
-Great question, during development this was used to include multiple 
-wave-forms, but it was decided that the feature was unnecessary as of 
-now. I will remove the array for simplicity.
-
->> +static int aw86927_haptics_play(struct input_dev *dev, void *data, struct ff_effect *effect)
->> +{
->> +	struct aw86927_data *haptics = input_get_drvdata(dev);
->> +	int level;
->> +
->> +	level = effect->u.rumble.strong_magnitude;
->> +	if (!level)
->> +		level = effect->u.rumble.weak_magnitude;
->> +
->> +	/* If already running, don't restart playback */
-> 
-> Why not if effect parameters are changing? Also what if someone is
-> issuing stop for already stopped effect?
-
-It it's current state, the driver only has one level of vibration, 
-therefore adjusting the effect does not matter as it is either vibrating 
-or off.
-For your second question I don't think I understand what you are asking. 
-If someone gives magnitude 0 to a vibration that has ceased playback, 
-the vibration has already stopped, so we don't need to stop it again.
-
->> +
->> +	haptics->regmap = devm_regmap_init_i2c(client, &aw86927_regmap_config);
->> +	if (IS_ERR(haptics->regmap))
->> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->regmap),
->> +					"Failed to allocate register map\n");
->> +
->> +	haptics->input_dev = devm_input_allocate_device(haptics->dev);
->> +	if (!haptics->input_dev)
->> +		return -ENOMEM;
->> +
->> +	haptics->reset_gpio = devm_gpiod_get(haptics->dev, "reset", GPIOD_OUT_HIGH);
->> +	if (IS_ERR(haptics->reset_gpio))
->> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->reset_gpio),
->> +				     "Failed to get reset gpio\n");
-> 
-> Is it mandatory to wire the reset pin? I see the chip supports software
-> reset so maybe this can be optional?
-
-In the datasheet, it is never explicitly mentioned that the pin is 
-optional, and in the downstream driver it is mandatory.
-If the reset pin is not found the probe will fail.
-
-If somebody has a board with that use-case they can modify this driver 
-easily.
-
->> +
->> +	/* Hardware reset */
->> +	aw86927_hw_reset(haptics);
->> +
->> +	/* Software reset */
->> +	err = regmap_write(haptics->regmap, AW86927_RSTCFG, AW86927_RSTCFG_SOFTRST);
->> +	if (err)
->> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->regmap),
->> +					"Failed Software reset\n");
-> 
-> Do you need to issue software reset together with hardware reset? Is
-> one or the other not enough?
-
-The datasheet does not mention whether one is enough, the downstream 
-driver does it with both so I have assumed that this would be best 
-practice with this chip.
-
->> +	err = devm_request_threaded_irq(haptics->dev, client->irq, NULL,
->> +					aw86927_irq, IRQF_ONESHOT, NULL, haptics);
-> 
-> Error handling? Also it looks like here it is safe to register the
-> interrupt handler early since it does not actually do anything, but
-> better to move it after the bulk of initialization in case it will get
-> expanded.
-
-I will fix the error handling :). If someone were to implement FIFO mode 
-then this would be the correct placement of the initialization, so I 
-think for now it would make sense to keep it here.
-
-> 
-> Thanks.
-> 
-
-Thank you for your comments!
+> Best regards,
+> Krzysztof
 
