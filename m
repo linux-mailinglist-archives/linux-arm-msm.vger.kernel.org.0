@@ -1,203 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-69097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1E51B25992
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 04:42:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 258F2B25A20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 05:56:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 118C51C8573E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 02:42:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C65D87210E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 03:56:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB65256C6F;
-	Thu, 14 Aug 2025 02:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E0611C8FBA;
+	Thu, 14 Aug 2025 03:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKSv53dd"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="EvInC0dP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B0A24C68B;
-	Thu, 14 Aug 2025 02:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4D719B5A7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 03:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755139350; cv=none; b=ijdqSR52skSKB5QQEs0T4U5i140cEqXF8BA2vvEtj5u95IMEiOTtYnx05Q+BP+D96tT9Lgmd6NSlVLtHp+Gd2fMWycj4B8tujXDanPLkC8q4QRsJDNTxfEHu6T7IvtFhZBwB+8QcFhIeDmoEm45/o1IHoKYSfeFXdjRA46ypZtY=
+	t=1755143766; cv=none; b=WofkORZgSQxn5gpGhONKZvo2s6Cr76sSksG9aVGe92pyF3/n6r3jYaFITEETCIH7FfoEkZxMf30P8DgbzXNzQcSwX457f7BvBupHF38PPREyatNGuOQzUwsG5CUtKlYT20s52PnUVwtud7n9Ei50iIV0PNySOM3e2rNVYEiLiM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755139350; c=relaxed/simple;
-	bh=gO3lJXgabc7AUPzva2vdMGiplMe6IOlcwtjT6/u0L4k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iM7Qse65lbYRApOBSIJ2oB1QhXvsHDkMgEiJqxeH78yFeBv5P66Qw4Lp1UOJCiKuKrqAvDu4my5IlQ/jsTKzOFO2xV9NGXNo23NCJVsj1I+LkwCaPtRm0WocrNa1hGaalJbrKbR3B1+pOpM6mJRml3187Qtjl4VLIh6TPLCijlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKSv53dd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94629C4CEEB;
-	Thu, 14 Aug 2025 02:42:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755139349;
-	bh=gO3lJXgabc7AUPzva2vdMGiplMe6IOlcwtjT6/u0L4k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WKSv53ddCeFZktY6OTHrIsl/pgos9p00zm1sqO2e4PozAJ2sBskiudD4873TCmr/F
-	 0GZMdS/bl9LHR4T1vDPy0fBzdVA7ftX7HTxsyetASg9t0jLT/18/EWl2CVWv3bSTqy
-	 8v9DcoQ1yNCsd+45madOmFEVYNIt2LVTGVPqr0QooP2BGuKbt3OhGOBhdXQf/M2HHX
-	 Z//mD73GnVVHdhFNKPGFeY+l7dJt8YUs/6Q4tbSW/5N2OHydmvfkRDLX3hb0cBCI/V
-	 4dw4a2ic2Xm4QREt25fdp2ZSzZS+SYvzbb7t3V+rACvq33MnArlB/Ikq7UI54dC0b9
-	 86W8UyaTdGbnw==
-Date: Wed, 13 Aug 2025 21:42:26 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
-Cc: marcus@nazgul.ch, kirill@korins.ky, vkoul@kernel.org, 
-	kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, 
-	agross@kernel.org, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 3/3] dts: describe x1e80100 ufs
-Message-ID: <tlkv63ccpnti367am47ymhaw3agjnyuonqstgtfaazhhptvgsp@q4wzuzdph323>
-References: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
- <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
+	s=arc-20240116; t=1755143766; c=relaxed/simple;
+	bh=QPXgL5JA1NadViWzO3at4LaILf4SB9CfhgF57NmFOj0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gA8qVF9u6Un0M/IBLym827venVZwcuWRAsFD6WpqGqM29EL0Wtj6XS2Ge8Co+z9EevTAdgbo4MbP8m4pJO6G8cIC9QhRD+Hb0ndh8pJtdrL7MwHE3ksnxr5Fa2qc41B2AwTE/kJpjt7PeNMoJpOfcVLemRTtRA/91+By/xRZIgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=EvInC0dP; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-55ce5243f6dso522640e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 20:56:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1755143762; x=1755748562; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QPXgL5JA1NadViWzO3at4LaILf4SB9CfhgF57NmFOj0=;
+        b=EvInC0dPxLsxOgrcXaABeghM/4bT5PLVmE6f2aI+gEfPRh5bcJCK3IFSzB//2toRIW
+         qsHUSOgJq+PQj9Yw8ZwlWorNd/cPgDsXGTxs3D1Q4OZCWZN3kL9Xhmrk8WyxYsHAGyHm
+         e/jNSSc8EsiSs9zykXjkkGMzt/KMzDxyZTVOs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755143762; x=1755748562;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QPXgL5JA1NadViWzO3at4LaILf4SB9CfhgF57NmFOj0=;
+        b=JpA++0+mWNTXVMiEsIhGYRr4cmVwRl94WfWA4FWZPs321nLJQ6lFggtICAScPoWzQ8
+         BfGIGM+bBZp3j5m4Js4evjAdNAR5+z2S+bgfJng/bLbNDgBxK5+XM1EJ7Q6fjAL3eTrs
+         MvQD7i1/wb4vtpR73ipr6ygtGJsrzWwL8+raz5FbXZfMYk0FBIRLMCmL3dmDOiLC2LZ4
+         dUFF5I6AnW6X2iheF/rvtfN4Bh0fhghA41Sn2Zx5XmB319F7yGK9rUyAQEFQ11JjqGh1
+         h+fjKTKA8J/UUBB+NYYUPnwvDkMGeikMWWnrwiQ/12ORvF+e7ySnfAgnKHyLzY9V9Cme
+         Zu7w==
+X-Forwarded-Encrypted: i=1; AJvYcCWJoh9kH4fEQGWoFCe2K3xUDYsjgl5W3+XX8hDbeGWEj7/BMIQJTzLQXI6hlh2qL2uLbJ8oUvBWPvCAB5gT@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkeQxz5H2wzB7fqzrWpk4EUdMuDXpLivEoObAnT2fUUiXjIqmX
+	2NJ04iNTOUVzX8XnPChYV+CjuKG4aMu2nekLmOhPvJjRfd+YKoOeqy0Us5pEFx4Cc9YPyEPRI1m
+	JfOhYZvuE2un4Dh8/VTkWqLyfBZevRHFcwHMuTmRM
+X-Gm-Gg: ASbGncvBC5xWBulrf4Lnu9BXZTrXTqkLb3ZYboj3nd6EUr6IVF6I65Am4Wdnabu/uHB
+	O/ZZhy3m6jy1bYy9Rkw9O8e+PMEnGr8+zm1bG8sxeMKSWV2Nfp5FlQ1nDGqRg4RGyr5wdHm+E09
+	WVt/rzxMMtRGDk1ch2odx8rUfAdR599XwycLSKS9EHNIDVJoeCAyhladgh79RyOt5bWTmtR6ap9
+	PQMrS8LA3Gtmrh2/ClPfHI41z/oFN/7VEW+fsJPrzYWqQ==
+X-Google-Smtp-Source: AGHT+IHQMv69+04AP9otNVcxhwI8uWKlLmUkdvXFQ1PCUQkCenB9LDrLy/Vl+cHfeBSUvo7zV0jpH3UAnLNxpErRIuE=
+X-Received: by 2002:a05:6512:4406:b0:553:2868:6355 with SMTP id
+ 2adb3069b0e04-55ce4ffa5f7mr485589e87.18.1755143762579; Wed, 13 Aug 2025
+ 20:56:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
+References: <20250812-pinctrl-gpio-pinfuncs-v4-0-bb3906c55e64@linaro.org> <20250812-pinctrl-gpio-pinfuncs-v4-5-bb3906c55e64@linaro.org>
+In-Reply-To: <20250812-pinctrl-gpio-pinfuncs-v4-5-bb3906c55e64@linaro.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Thu, 14 Aug 2025 11:55:50 +0800
+X-Gm-Features: Ac12FXwQl-cvQ51JsCsvzfEY1EzqeHLXUhAtiyz4lnmgFYbrRneNtPbyaTw1wc8
+Message-ID: <CAGXv+5GE4eUjMhewRm9oa+GbJWt8tMC0RXvT0R5FEfVOAsJ3fQ@mail.gmail.com>
+Subject: Re: [PATCH v4 05/15] pinctrl: mediatek: moore: replace struct
+ function_desc with struct pinfunction
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 14, 2025 at 10:59:04AM +1000, Harrison Vanderbyl wrote:
+On Tue, Aug 12, 2025 at 8:36=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> struct function_desc is a wrapper around struct pinfunction with an
+> additional void *data pointer. This driver doesn't use the data pointer.
+> We're also working towards reducing the usage of struct function_desc in
+> pinctrl drivers - they should only be created by pinmux core and
+> accessed by drivers using pinmux_generic_get_function(). Replace the
+> struct function_desc objects in this driver with smaller struct
+> pinfunction instances.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Welcome to LKML, Harrison. Some small things to improve.
-
-Please extend the subject prefix to match other changes in the files of
-each patch, e.g. this one would be "arm64: dts: qcom: x1e80100: ".
-
-"git log --oneline -- file" is your friend here.
-
-> Describe device tree entry for x1e80100 ufs device
-
-A blank line here please.
-
-> Signed-off-by: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 91 ++++++++++++++++++++++++++
->  1 file changed, 91 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index a9a7bb676c6f..effa776e3dd0 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -2819,6 +2819,97 @@ tsens3: thermal-sensor@c274000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> +
-
-Watch out for unnecessary white spaces, we want to keep things neat and
-tidy.
-
-> +		ufs_mem_hc: ufs@1d84000 {
-
-Please place nodes sorted based on address, then name, then label (i.e.
-in this case, only address).
-
-> +			compatible = "qcom,x1e80100-ufshc",
-> +			"qcom,ufshc", "jedec,ufs-2.0";
-
-This line break is a bit weird, please indent it.
-
-Regards,
-Bjorn
-
-> +			reg = <0 0x01d84000 0 0x3000>;     
-> +			
-> +			
-> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			phys = <&ufs_mem_phy>;
-> +			phy-names = "ufsphy";
-> +
-> +			lanes-per-direction = <2>;
-> +
-> +			#reset-cells = <1>;
-> +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> +
-> +			reset-gpios = <&tlmm 238 GPIO_ACTIVE_LOW>;
-> +			reset-names = "rst";
-> +
-> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> +
-> +			iommus = <&apps_smmu 0x1a0 0x0>;
-> +
-> +			clock-names = "core_clk",
-> +				      "bus_aggr_clk",
-> +				      "iface_clk",
-> +				      "core_clk_unipro",
-> +				      "ref_clk",
-> +				      "tx_lane0_sync_clk",
-> +				      "rx_lane0_sync_clk",
-> +				      "rx_lane1_sync_clk";
-> +
-> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> +
-> +			freq-table-hz = <100000000 403000000>,
-> +					<0 0>,
-> +					<0 0>,
-> +					<100000000 403000000>,
-> +					<100000000 403000000>,
-> +					<0 0>,
-> +					<0 0>,
-> +					<0 0>;
-> +
-> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "ufs-ddr", "cpu-ufs";
-> +
-> +			qcom,ice = <&ice>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		ufs_mem_phy: phy@1d80000 {
-> +			compatible = "qcom,x1e80100-qmp-ufs-phy";
-> +			reg = <0 0x01d80000 0 0x2000>;
-> +
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-> +
-> +			clock-names = "ref",
-> +				      "ref_aux",
-> +				      "qref";
-> +
-> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> +
-> +			resets = <&ufs_mem_hc 0>;
-> +			reset-names = "ufsphy";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		ice: crypto@1d90000 {
-> +			compatible = "qcom,x1e80100-inline-crypto-engine",
-> +				     "qcom,inline-crypto-engine";
-> +			reg = <0 0x1d88000 0 0x8000>;
-> +
-> +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> +		};
-> +
->  		usb_1_ss0_hsphy: phy@fd3000 {
->  			compatible = "qcom,x1e80100-snps-eusb2-phy",
->  				     "qcom,sm8550-snps-eusb2-phy";
-> -- 
-> 2.48.1
-> 
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
 
