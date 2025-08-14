@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37363B25EAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:24:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0307B25F18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:39:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 759239E500A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:24:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12A2D724B5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:39:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4BBD2E7BBB;
-	Thu, 14 Aug 2025 08:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A6712E8E1A;
+	Thu, 14 Aug 2025 08:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IEayfplB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mfr3RrNp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4D32E765D;
-	Thu, 14 Aug 2025 08:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2DF1A317D;
+	Thu, 14 Aug 2025 08:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755159863; cv=none; b=bk2Aw8vPcZ+47O/RAc/6OY4qgtfBAtehkUqgqpyVLdFcofkqUF/KYGtOhzN+Le7aIbcz9BngAs5RtqolHV+NszaPDvR9ry6ftj1YRL1fIglgDUKzzD3eUcqUFUt5A+JTepuFVktt5bxmsQC3v2GC2yLNQCwzDhPYMWZLDzr2BbA=
+	t=1755160741; cv=none; b=r/oe25iMbW4G8wBa9ps19aZcIPDMmrdkMY/dt5IetMuo1cUWMQH5dYcfTi+je+mEwyseFJ1kpzn90hz/rpvZl6p2GXjSQj7b5z/cgM8G2V0XMKtJ+rb0TmSGxifFvqkuao2py5hla/QpMbJ3LnKYwI2+0dlylBUoqMdEAOfOGSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755159863; c=relaxed/simple;
-	bh=aASuKHKL3mPUvMBJFo6SmagCsY4bnRW90Zs6x5bDR1M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jaCFowCCkh5tBXzGK2EACgLAA57RPSrz7VtzfYpW2e0G5Px2L4wm55Fv1/S/QN80JKUcmXJryz4Rr4o26CXAkatkzQACWwSZw0B4oUlk9nsaheTSxF3pw+M3qhgxzhgA0Fzb7IxKD8kdVtVDh/sU0Ie1Yh4qpp2JYcJ0eNaJGTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IEayfplB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DMK63Z002802;
-	Thu, 14 Aug 2025 08:24:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	szT/7VYEBT/i5GUPMjZjxaNeVR3yEWoylClLnLJqr60=; b=IEayfplBxKjeaews
-	/zUHucINY3YUc96+ar4knPO5acsNRdG+JDpWRWiJm7pLFVmVJKH/1SWiXGe6fa+G
-	KYq8VrIiOLDH+unWPVt1tfemahWjO9lV9ERbyb50ho7ejrkm8oraZDQK3+o6nNo7
-	xf1FAVdU6O4FuyFsAa1aVWCTQR9LkscUPWbgxY91LaIvJLu8fl7vOkV/7Pr8NeRT
-	0+kBSY380UXaPGBFk1b+Jr5eDy8iilzvBbM7g078aWEhyGpJ8KXP6hIK8npIuvr/
-	5F5nm6YyUTmTFRJzNrzeDMv6mjviFEKQEDEKH5o9yN9yprEu8CQc2wHgQpOEpCjX
-	F2KT5g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxdv6xq1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 08:24:12 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E8OBJM013091
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Aug 2025 08:24:11 GMT
-Received: from [10.133.33.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 14 Aug
- 2025 01:24:07 -0700
-Message-ID: <93c5b8c8-891b-4643-9da6-c669eaa34750@quicinc.com>
-Date: Thu, 14 Aug 2025 16:24:05 +0800
+	s=arc-20240116; t=1755160741; c=relaxed/simple;
+	bh=kQaDaY3pQLr2E9PAy8sKF2YRobCVPIAPQgcNNQ8dVKs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mim7+aFmoIEnZYQyW3eNOXBxDwzTsM/VD7V1ILVwk4UUpSaSEw8zVmf0/pmvNOrsSZTJvVQmFBnV0LtVEbg03IBeQGGgN0REZ6t9kvI3HFQ+H5WTlgj8HK1bHQG5D6cAy2f9wIUamUKbIthbO/EyUegndMH7EDr3HXwxXUk32ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mfr3RrNp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CA9C4CEEF;
+	Thu, 14 Aug 2025 08:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755160740;
+	bh=kQaDaY3pQLr2E9PAy8sKF2YRobCVPIAPQgcNNQ8dVKs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Mfr3RrNp+m89cj4pjYeaVoHpoEzISu8jczWMeXsjC26Mizjskz8i2nRhG3JNa6fW1
+	 s7g9C5L2Tr3lBX714t6hsiKqj4KPMsr6hF2QFntu/SS6MIPibrHGhu8IqBTR12TdgS
+	 m1GtqvkoSdFNnBurhzbUAvnupdXiNWUgCFkkipYAo8EmAR6LyQgUjoffyoL2caZJcl
+	 S/T5KvWCFnTVB8YwLWMlGAVLOamNesiNlDxMOUEbDcMuMxrgL4jOUyyuKVSPievjyZ
+	 vQ0UIRWkE3yH0UWcM6EXYA3W7t8WqPAKZV6Qip2rsWrgeexNY4FqKMo+sUKYZtOzEK
+	 vJFuPlmdnOXDg==
+Message-ID: <7a986acc-ad7a-4b89-bc84-1184391eb9ad@kernel.org>
+Date: Thu, 14 Aug 2025 10:38:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,107 +50,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 31/38] drm/msm/dp: propagate MST state changes to dp
- mst module
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-31-a54d8902a23d@quicinc.com>
- <4w6rtzhetxrco5ncynr52qeveypfpqkclh24kcdpfcn5u3v5at@evxsz3xdxfio>
+Subject: Re: [PATCH v5 0/3] Initial support for Qualcomm Hamoa IOT EVK board
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Yijie Yang <yijie.yang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Yingying Tang <quic_yintang@quicinc.com>,
+ Shuai Zhang <quic_shuaz@quicinc.com>, Yongxing Mou <quic_yongmou@quicinc.com>
+References: <20250814-hamoa_initial-v5-0-817a9c6e8d47@oss.qualcomm.com>
+ <5reeryefhw7burzf2lymhg5wivaq2n4gq5hszvfp57dergvpyx@qehaf334gdrn>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <4w6rtzhetxrco5ncynr52qeveypfpqkclh24kcdpfcn5u3v5at@evxsz3xdxfio>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <5reeryefhw7burzf2lymhg5wivaq2n4gq5hszvfp57dergvpyx@qehaf334gdrn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=689d9d2d cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=5dxOTwhkvzhATaH7nOcA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: hvg2gk1y84MVIM3NTfVYHMKjpKaxTJys
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX9z2K+JQ6amlS
- VGgMpx8TyAffQcJfm1yHwZ985kGjfDamTmjV3hzlpeWNZaWPNtuYrDJwFDpLU2NNuJQhKrej57Y
- V1jbFeXPtEJfU8y60P4VBPlR4fXKN/RuVTUfLhLb8RwK+lWmIzaRwjb0cixs9iqecR65GMG76fU
- ObOAZirYAR7Mq5As3o8ck7v2qkTee6x0NyRLercJboxgCloxR7o1K4/SKOSk5fVzLiGga+/2fSy
- JGO3CiZeAPp2/4N7gzPhyE/HuwI0R5uAeiXHa4jPnOrSs2rfj3z3Q9c9gUAgu+WSiS1rfAdebik
- Fb2MMueBSj7akiiDgdkWKbOwFgPIYtbgnGANxooApqzPA34psuLaFTCImOoz+INcgI4+UcRsXD2
- OcOL6R/y
-X-Proofpoint-GUID: hvg2gk1y84MVIM3NTfVYHMKjpKaxTJys
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090025
 
-
-
-On 2025/6/9 22:56, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:50PM +0800, Yongxing Mou wrote:
->> Introduce APIs to update the MST state change to MST framework when
->> device is plugged/unplugged.
->>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> Hmm, who is the author of the patch?
-> 
-Sorry for that. will update it . author is Abhinav
+On 14/08/2025 10:24, Dmitry Baryshkov wrote:
 >> ---
->>   drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 15 +++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.h |  1 +
->>   3 files changed, 36 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 323d1c0a9efa4fa30ce97317e873607c54409a11..9dbcf4553cad70c9e3722160a87403fc815765d7 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -29,6 +29,7 @@
->>   #include "dp_drm.h"
->>   #include "dp_audio.h"
->>   #include "dp_debug.h"
->> +#include "dp_mst_drm.h"
->>   
->>   static bool psr_enabled = false;
->>   module_param(psr_enabled, bool, 0);
->> @@ -420,6 +421,17 @@ static void msm_dp_display_mst_init(struct msm_dp_display_private *dp)
->>   	msm_dp->mst_active = true;
->>   }
->>   
->> +static void msm_dp_display_set_mst_mgr_state(struct msm_dp_display_private *dp,
->> +					     bool state)
->> +{
->> +	if (!dp->msm_dp_display.mst_active)
->> +		return;
->> +
->> +	msm_dp_mst_display_set_mgr_state(&dp->msm_dp_display, state);
->> +
->> +	drm_dbg_dp(dp->drm_dev, "mst_mgr_state: %d\n", state);
+>> Changes in v5:
+>> - Update base commit.
+>> - Drop an already merged patch:
+>> https://lore.kernel.org/all/20250804-hamoa_initial-v4-2-19edbb28677b@oss.qualcomm.com/
+>> - Link to v4: https://lore.kernel.org/r/20250804-hamoa_initial-v4-0-19edbb28677b@oss.qualcomm.com
 > 
-> Yet-another-oneliner? Noooo. Really, no.
+> Please keep full changelog rather than trimming previous iterations.
 > 
-Got it. Will remove it and call msm_dp_mst_display_set_mgr_state directly.
->> +}
->> +
->>   static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->>   {
->>   	struct drm_connector *connector = dp->msm_dp_display.connector;
-> 
+> Also, is there a reason why you didn't pick up audio and display chunks
+> as it was requested on the corresponding reviews?
 
+
+Thanks for noticing it, I totally forgot we requested that.
+
+Best regards,
+Krzysztof
 
