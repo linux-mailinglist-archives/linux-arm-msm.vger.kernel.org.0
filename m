@@ -1,186 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-69181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55E5AB26102
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:33:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B44DB26105
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:33:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 986893A59DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:31:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97A9C5663ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:30:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 560BD2F3C3E;
-	Thu, 14 Aug 2025 09:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0FC42ECD2F;
+	Thu, 14 Aug 2025 09:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="loRxQ2Ta"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oBLjGASS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770412F39BB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:27:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DF82D63F3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755163648; cv=none; b=ou7QDJOrBs0jewlxnGYdgT+PsVOTCxhunOSYjzwVrNYFSME7dCDED5zMrrMXuNR9tHLJATor5d5seaZrg99wAYlmeM0WUfqlN0g3KXZkLwpovB39q6lC20Y7r4XuOiGMUhuYVbg7zc4aoBhmJ3dMOU91qTO4VOjJjl97g/j5uII=
+	t=1755163638; cv=none; b=LbDSEm8rOU6XFLFN6ntWJDwy2rs5HSy53dP6LViLN3jHToTjO92iSYM18EIJeGj+fCNDMi+gcxaX954flQ48LY7I8k3BOZNL3MZozxVnWf23fBN0LODMz4Uwnz5A6bOlIbtFgYbElR1LUqdTs7KaCO6P/M1YtsQ/zIVgoHSQJgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755163648; c=relaxed/simple;
-	bh=YdEsh9QrnxVUJ6j5Jg4QecwD0EyZRBdHjXrYunFZiEM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GttBdxbW9Cw36GM9/vWilbGEmq3dfHJkmECcNfundTAKWdusz079joo1gDUT3MBYlWWkK9lFEIosaXfE9FXQ9ck0O8awvHaXOPr0cT5jkykxg94WcrcULFNVaQytRtEC99vql5Gd8LeW308pocjFBgAterf3cMXG8U4/jB9UqBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=loRxQ2Ta; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b05ac1eso3131065e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:27:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755163644; x=1755768444; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XqAuWv6c6I6Tmj7XNLmRavDkRG/hDMAr96wkLjEqxuw=;
-        b=loRxQ2TafEZPIaUTwYcLzIvL6wEILQ3Pke5dfBq8Ne+NOo5DiRbMF2XDV5Xa43PfcM
-         xTCj5zZia6h3rpjlKblcUj8r5wx8bjeXSJWrbNGktpU6ntdj6UJk8XdP1Bcz48ybxNt1
-         wxB88/GLt2sqNBObFx1WTk9yW4Ajxdbkeof7XAS5sZnhk9di3CbDGm6Pq/iJWZbZxj9s
-         /wDNkpafVIeugAibkRb8qhyNsp5gGzqf8n9jwWVJR0Xc1BiIAHgO2fxk21F3VRwmkrLS
-         QOqpvh6OLk7i1sFAeKO/Q1NRsqF/BILifNyxXwAgDznqEN98M7lg6VvfsWVai28asEuY
-         lHjw==
+	s=arc-20240116; t=1755163638; c=relaxed/simple;
+	bh=WyOK9uLeBlvzO0w6/3VCi9t0XrcdmhDRVNlFrc7JmHw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eNSVJ9ZTtJUF+SYVamDsJEw1tD3Rpm6FiPFg4MahCjv+wGVR/Mt5oiyPOyRHjRNYktVuaFlk+1GEy97qq8kdTrnamRMG/lgh7aWHIEz5BeGgfDC54wHangUTcWRNbbgmb4zCnpt8EoVPkhrK/eL2a6ovUNzBv9HCJdnskUIRd30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oBLjGASS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57E91xl0012072
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:27:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zvxCWSRBlZv5hDIRk34myOM8
+	a1Wew5iutKQ7yJWvhmc=; b=oBLjGASSkhi5Jx8pEoMRu8jNPs+eaB126S8Gjm3X
+	KdDVYScRqmwQidLE5b7vEvkYaf/ckR6NA4AXwrJhSayXjTcSUyQbXixsLFGHHS1V
+	kuTV4/iOsA/Um0A82sgfwGsAk1wrV0b6MayHVJNjms8MT9UwJAz/wivsewOl4Cc0
+	vVZmFIN420+NFp7rHESUjcGEciqdNVlTZoCnumRrAPm7h7arbtwyvCFM1Tb4Ic2r
+	G1xh69Dlz5YgN7xB6gnnj6YGzb4DQZ9jqYUact+8wsaFULzWEDyQFEFsaZemaQWH
+	0E3pYh701SdXkF2SRrR+XJdHZoA53rKMYFw60QARpr6b6g==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48fjxbja40-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:27:16 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b0fa8190d4so47926761cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:27:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755163644; x=1755768444;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XqAuWv6c6I6Tmj7XNLmRavDkRG/hDMAr96wkLjEqxuw=;
-        b=XApmeKKLQCx7YpErzSwHMbsypjhKASr+h8sgOq3wxheSdl6akHBeAgNqjl81xBY1EC
-         foj9Sk7UiNyex3LZ7PX1mIRa2HT4I0wUK3zeQuLXhCG70XuT8J6gTSdry2q+3K+C9IOM
-         J3CgOOROtFHuOloRRGPtqA+dY7YRjVASE58jYACIggx+vGEaWXxBLM0FEjGRxbSt96zS
-         zga18trEdKFXCwYABS1WJN6KgYJT8SzIFt2RjSTKzl5S3QzpbWhGE4vKpC4fFa4BUdhw
-         tB6+EBuWC98VNiJtUn0kh+yRFOt6B4mTmTt2ZaHwruCYW8u+zhxknZvy07k8BT6nn+a6
-         T1wA==
-X-Forwarded-Encrypted: i=1; AJvYcCWGb2xbp0hEyhhJVLEDqAbQMQdVM+DegdLxVF4/af76cj/IsI3eHJCy7/slZpajJPSdq+BClJwjUIKeF74u@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAZwA0+CbfjLuIfJT/4Yy4q0bm9SXZEHX0lt9SVCDQS8rETisI
-	zsIU4l8aYZsM3KUFRXKv6LuKI+Lm3iLzTidjQsMg07yejng7dCkejPOPS2skV5klW+4=
-X-Gm-Gg: ASbGncu6wO+LPh06+aHVqyvLvAJEx0PEk4dP7k+6njKGu60z8h0s0xRvVbqlCUQVBNU
-	JQ49OyadtWCUmJi6G7RRaO8nXsOeWhUfEBMNUPGCQDXmk5UxjQ55imkGYiOrehjO8/0JtXmSzLU
-	cuNR+0Q0aYVoMvp/L9tXkqBJ1aBIKtCPmqChx+xvKRqYnbXJ87BSGRZhMkXHw52t1bTWfZN/HcP
-	/0jQ0UhiB1KF/gx4JapUHGWTC9BASx6ffSVOq4fmePycUrNUpRIYR1pXdOyOEN6IYMwFyylI+aH
-	tu1y5FlkhdkNhuERkSJrANj/p++UMjzls492WG2gt5VCxBlYSdqTpwVg5XoPaVo+7SQKDVWR2jE
-	am1hIuGn0W1/UamtFg6fbi/uvm6ZnF/mokh6T
-X-Google-Smtp-Source: AGHT+IHd8S//p6vOsVTG4x5VxdE8TgAqYiOfk7VAHWwTIJ/ja0G7fBRZA7iqBF/C2V/BVdk/rCDUYQ==
-X-Received: by 2002:a05:600c:3507:b0:458:ba04:fe6d with SMTP id 5b1f17b1804b1-45a1b60ce04mr17300535e9.14.1755163643794;
-        Thu, 14 Aug 2025 02:27:23 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:ea13:2485:4711:708])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c790689sm14706025e9.28.2025.08.14.02.27.22
+        d=1e100.net; s=20230601; t=1755163635; x=1755768435;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zvxCWSRBlZv5hDIRk34myOM8a1Wew5iutKQ7yJWvhmc=;
+        b=ddws6xabKu/BSCbyHYg55KvIF/vjLhiCyCpdjb3fMjjARIWXqaZs9gvYiCuWjKDrAV
+         QGxBVTEbC5w5Bm4GUYE8zqvoUbZR2ZCIU2Y8W1bqqFlEA+dpPPZVcBLdol/wWFI76POT
+         Zgm8hq6n4tOqiGWi4MsxiBFqg79TRlqEbI1pvP0gbw5oJEoj8/CLwEWRl5yyrf1oP/30
+         sOhuCQl6NA+djwt3RSlaTAYU0Sya7O0kZP7HPWJLxhqUrCtN9AnDkdETdceO4Y+QsyL0
+         KYbzzq95W+XuK6ethD8rZfTLTylA39+P1zOo9AQIIZaby61yi1xViqpb7wd6xZJViuJU
+         SziQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWNuhDN6W61EK/0jBiT/Elqo86L4yU1248xHDgCbFjI1CgBsB/Hrlm4aakwBPx+coTwR7NZz04TOShUtw/r@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+VpK6cmYRLvayPqgsJJMltDtKgek9wrihAvtgv7SIb6E/3WpX
+	t7gHoraWGqOm6eC/p5Gq7WxjVjNacBBMcGb1Bn2FBGf1EY8AqR4NBSAkdT6ioFpJQR4JqzrfYsP
+	9EhGMzhIVZdjwpX7D4BmvHz/xEk2Gv889Ue8yRn0FaWUlY2Kp7fupj92doUv+GsbF8ekE
+X-Gm-Gg: ASbGnctjPQgk9I2JfN9n07fKl3k2j5Oxnkw0cbW4kUK3faqv87F09VszmKtT3SzPBW+
+	3kJ99Y4nYI3c45UkIP1Qo6Mc/pCGnvy8VuCclu0iHEWhtA2nrpxw5niYCQEGBaB9qmENOi3JnG0
+	5SAQgmhngixJ2RNX+UJXDFSx/nmRyvcbOx+E+7Juu5IHge0xAE2H114i81DYkNX/DFtumsYPf5j
+	4Ljg9hQSMElm8K24TNWcaAz20RrvIGaeytJFL1kuKnHociXX00m2rk1L/4Wy/eEfRn7BEc3JERZ
+	RHYm7SdHtb43334mEvRhXU0va11JvviRxD+5GfvxtroZgNfPY7edunBGtndob79/2Ss1eP5ZISk
+	CJ2mzaSVgDBIojFqSEfGIqAbeQ/Sw5pBQA4AMzE7G2TY0PAHqLF2o
+X-Received: by 2002:ac8:7d8a:0:b0:4b0:69ef:8209 with SMTP id d75a77b69052e-4b10c03f7e8mr20699891cf.26.1755163634732;
+        Thu, 14 Aug 2025 02:27:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBjVvw/Dh9L2WDNaCrSVxcKNewmCQ7QcEKe6lAOLf6M3q1psXddyfkwfj70vcyEZ6Y9oS9JQ==
+X-Received: by 2002:ac8:7d8a:0:b0:4b0:69ef:8209 with SMTP id d75a77b69052e-4b10c03f7e8mr20699641cf.26.1755163634235;
+        Thu, 14 Aug 2025 02:27:14 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-333f8cbc6f4sm2275421fa.9.2025.08.14.02.27.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 02:27:23 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Thu, 14 Aug 2025 11:27:10 +0200
-Subject: [PATCH v2] phy: qcom: qmp-pcie: Fix PHY initialization when
- powered down by firmware
+        Thu, 14 Aug 2025 02:27:13 -0700 (PDT)
+Date: Thu, 14 Aug 2025 12:27:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v2 26/38] drm/msm/dp: skip reading the EDID for MST cases
+Message-ID: <pbbisppntd7fntghbjbyjmdvbxqc7uux42kiuryau4trgf3w47@4d5fi6zpcdf5>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-26-a54d8902a23d@quicinc.com>
+ <lusd35wv2pj5sy6mdiw7axqxnei2wqo57pf6ju5ys2ibfrkidu@63lkbckuu2n6>
+ <e3b5721d-cf37-4b35-9851-5e822fa16c09@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250814-phy-qcom-qmp-pcie-nocsr-fix-v2-1-fe562b5d02a1@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAO2rnWgC/42NQQ6CMBAAv0L27Jq2Aoon/2E41LbCJtKWrSES0
- r9beYHHmcPMBskxuQTXagN2CyUKvoA6VGBG7QeHZAuDEqoRF6kwjivOJkw4TxGjIYc+mMT4pA/
- KVpykaFVXGwulENkVvdfvfeGR0jvwus8W+bP/dReJEjt9tkI3Vj3q9vYirzkcAw/Q55y/t94P3
- ccAAAA=
-X-Change-ID: 20250812-phy-qcom-qmp-pcie-nocsr-fix-1603106294cd
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Wenbin Yao <quic_wenbyao@quicinc.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e3b5721d-cf37-4b35-9851-5e822fa16c09@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=G6EcE8k5 c=1 sm=1 tr=0 ts=689dabf4 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=jWxsxo1frd0NMcvgwksA:9 a=CjuIK1q_8ugA:10
+ a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA5NyBTYWx0ZWRfX4JIeJ3uF1/fJ
+ PA3STB9aDLs6ATHIScOLkVfg8qrsSsrG4W9NauZaMlLduW0P17PGKFj17e8+5CP/aEWyyvxYvD0
+ uukoE/1aTkZ+TgYGp7IZWCHQW9RTKkKEYIrRx5JXEGrAkbGNHgO2v1yDPmGYFyUy6uBqq9BnSbs
+ 07KwBXnRH4jyMSdaNftJGxtMJhuQUx9C3pNlYTtx1q1RmipFG0bvPLSneIAm1O5OgbtwBcZINS/
+ B1VaepVH9or71xZZJouyZPSISKMIUSTy0UUr+oX7SUgD5EoBCSrlPYE8Lqj9pm866/Ach5hIAck
+ xirYFdSRx0TUa3+DIEcjz+vx/1/NpRSZXScylxtkcfoL2VPp2AhloFXOOh1VhGv2bojglNCcCVA
+ XiJTy639
+X-Proofpoint-ORIG-GUID: pF6wDLNrkHZCEXPB4enAcWLQXh1YKL1f
+X-Proofpoint-GUID: pF6wDLNrkHZCEXPB4enAcWLQXh1YKL1f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110097
 
-Commit 0cc22f5a861c ("phy: qcom: qmp-pcie: Add PHY register retention
-support") added support for using the "no_csr" reset to skip configuration
-of the PHY if the init sequence was already applied by the boot firmware.
-The expectation is that the PHY is only turned on/off by using the "no_csr"
-reset, instead of powering it down and re-programming it after a full
-reset.
+On Thu, Aug 14, 2025 at 04:22:44PM +0800, Yongxing Mou wrote:
+> 
+> 
+> On 2025/6/9 23:58, Dmitry Baryshkov wrote:
+> > On Mon, Jun 09, 2025 at 08:21:45PM +0800, Yongxing Mou wrote:
+> > > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > 
+> > > For MST cases, EDID is handled through AUX sideband messaging.
+> > > Skip the EDID read during hotplug handle for MST cases.
+> > 
+> > Why? It makes sense to read it during the HPD processing, ping HDMI
+> > codec, update CEC info, etc.
+> > 
+> For MST case to read EDID. we will use drm_dp_mst_edid_read when MST
+> connetors .get_modes() called.
 
-The boot firmware on X1E does not fully conform to this expectation: If the
-PCIe3 link fails to come up (e.g. because no PCIe card is inserted), the
-firmware powers down the PHY using the QPHY_PCS_POWER_DOWN_CONTROL
-register. The QPHY_START_CTRL register is kept as-is, so the driver assumes
-the PHY is already initialized and skips the configuration/power up
-sequence. The PHY won't come up again without clearing the
-QPHY_PCS_POWER_DOWN_CONTROL, so eventually initialization fails:
+I see that other MST drivers indeed read EDID from get_modes(). The only
+issue that I can foresee is the audio handling. We've discussed that
+some time ago (for the HDMI implementation) and it's generally expected
+that we notify ASoC (and provide ELD) from the HPD (detect) path rather
+than the get_modes() or e.g. atomic_enable().
 
-  qcom-qmp-pcie-phy 1be0000.phy: phy initialization timed-out
-  phy phy-1be0000.phy.0: phy poweron failed --> -110
-  qcom-pcie 1bd0000.pcie: cannot initialize host
-  qcom-pcie 1bd0000.pcie: probe with driver qcom-pcie failed with error -110
+Note: AMD / Radeon, Nouveau and Intel drivers don't have this problem
+since they don't use ASoC and hdmi_codec ops.
 
-This can be reliably reproduced on the X1E CRD, QCP and Devkit when no card
-is inserted for PCIe3.
+> > > 
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/dp/dp_display.c | 8 +++++---
+> > >   1 file changed, 5 insertions(+), 3 deletions(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > index 88cae0ca66015377e59bee757462edeae5ae91bf..b1b025d1d356046f8f9e3d243fc774185df24318 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > @@ -438,9 +438,11 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+> > >   	if (rc)
+> > >   		goto end;
+> > > -	rc = msm_dp_panel_read_edid(dp->panel, connector);
+> > > -	if (rc)
+> > > -		goto end;
+> > > +	if (!dp->mst_supported || !drm_dp_read_mst_cap(dp->aux, dp->panel->dpcd)) {
+> > > +		rc = msm_dp_panel_read_edid(dp->panel, connector);
+> > > +		if (rc)
+> > > +			goto end;
+> > > +	}
+> > >   	msm_dp_link_process_request(dp->link);
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> 
 
-Fix this by checking the QPHY_PCS_POWER_DOWN_CONTROL register in addition
-to QPHY_START_CTRL. If the PHY is powered down with the register, it
-doesn't conform to the expectations for using the "no_csr" reset, so we
-fully re-initialize with the normal reset sequence.
-
-Also check the register more carefully to ensure all of the bits we expect
-are actually set. A simple !!(readl()) is not enough, because the PHY might
-be only partially set up with some of the expected bits set.
-
-Cc: stable@vger.kernel.org
-Fixes: 0cc22f5a861c ("phy: qcom: qmp-pcie: Add PHY register retention support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
-Changes in v2:
-- Ensure that all expected bits are set (Konrad)
-- Link to v1: https://lore.kernel.org/r/20250812-phy-qcom-qmp-pcie-nocsr-fix-v1-1-9a7d0a5d2b46@linaro.org
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 95830dcfdec9b1f68fd55d1cc3c102985cfafcc1..80973527fafcb294273dff1864828532dab738db 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -3067,6 +3067,14 @@ struct qmp_pcie {
- 	struct clk_fixed_rate aux_clk_fixed;
- };
- 
-+static bool qphy_checkbits(const void __iomem *base, u32 offset, u32 val)
-+{
-+	u32 reg;
-+
-+	reg = readl(base + offset);
-+	return (reg & val) == val;
-+}
-+
- static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
- {
- 	u32 reg;
-@@ -4339,10 +4347,12 @@ static int qmp_pcie_init(struct phy *phy)
- 	struct qmp_pcie *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	void __iomem *pcs = qmp->pcs;
--	bool phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
- 	int ret;
- 
--	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
-+	qmp->skip_init = qmp->nocsr_reset &&
-+		qphy_checkbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START) &&
-+		qphy_checkbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], cfg->pwrdn_ctrl);
-+
- 	/*
- 	 * We need to check the existence of init sequences in two cases:
- 	 * 1. The PHY doesn't support no_csr reset.
-
----
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
-change-id: 20250812-phy-qcom-qmp-pcie-nocsr-fix-1603106294cd
-
-Best regards,
 -- 
-Stephan Gerhold <stephan.gerhold@linaro.org>
-
+With best wishes
+Dmitry
 
