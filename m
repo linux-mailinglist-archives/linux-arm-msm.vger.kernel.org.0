@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-69092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4F0EB258BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 03:02:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 835DAB258AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 03:00:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B542188A0D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 01:00:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D14F35A801F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 01:00:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1B3B155757;
-	Thu, 14 Aug 2025 00:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58BB61922F5;
+	Thu, 14 Aug 2025 01:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m7xnWi5v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A4omru8z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5AA14386D;
-	Thu, 14 Aug 2025 00:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95C91552FA;
+	Thu, 14 Aug 2025 01:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755133198; cv=none; b=fvr8xHHVaRCn9zVsh335RcVy7/UmQs3jmb4H8/1N8dQwKFjALvArnLFYMlVx1TIxkyQC6rLwGzUAp/COjxDiaUVH982/hz9nXaUPCX+JIPNDTkPTipookGsSTyeDfc2I4zMf7IbTrgfaAzr7h60u7nc/HwqXozk5o/eD5CEnhNE=
+	t=1755133208; cv=none; b=BVnNviSll/BnwN/aHZ+4PH6i3gbpsGU8LwEmYiwYy7GBNAy6HrpBOH3JrSGw6XtOwUw1qTe3HEus2R3EyvAhnX7Am4fZOJXaI7Xjs0Siq5r2MsYqZrhYxZ4Ieiq87jN7l0oQCAHk/3rIShLyQG11Tc9lgDJLacZgFs+WgmlOCs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755133198; c=relaxed/simple;
-	bh=UDwjKU1e4eL4bXCo46QVOIuwnhA5vxkMIdaq8TOnBxc=;
+	s=arc-20240116; t=1755133208; c=relaxed/simple;
+	bh=joHzLwB0tI4eUsVNFbgaJ6JLw19JdxrZacb3tp+BNIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fb/ZbSB+mKshO4YUWqjeW/cghzMnCwaKv0G509sB2KIp0lckNEJjws0gaoAZ3YbgoQ50+4tptvmmSiaRY70k0VJZDR/VQ3XtjuI8zPQGLDDHCyIWB/r8C54o2ru5W6y7iWFxoZ63bgIxh2+DBZ/IjN6cMX8aINm8Wt0eVFNy0LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m7xnWi5v; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=B/UKEfYzPxXwqSDf3pQoDS1ZvS3PsoKshGNpAjhhOU75jciguvnyx0i0QyOmgDK5gI1IPKOcRunwTyf3i/c4zfxUL7fFCM4dvh2QKzngLeoaj0diKySWUBi+URoybU6v7pFDWKearK+w4YFrmf/sdnfnpkORQOPISnl15oxesus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A4omru8z; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-76e2e8e2d2dso308267b3a.1;
-        Wed, 13 Aug 2025 17:59:57 -0700 (PDT)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-76e2ea933b7so500208b3a.1;
+        Wed, 13 Aug 2025 18:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755133197; x=1755737997; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755133206; x=1755738006; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Av1Ijp3yREaOIIrOjE6hDH01SRduzURtend/0/9r/9w=;
-        b=m7xnWi5vG1gvJBRxKzh/0M8NAls0Fh67abLyghIkV5mx3yQ8rvDjQYMm1CgU97rr4G
-         AtokbRq4TyMHlL5x8D4LD90Fh+et8cNMwYQa/XFumFn5nF0+aOeZTNZtozD9BPPdwyix
-         8II/pZYG3gZWcPkvpuQ8a8kmNUISxERgkMYrGIdVoCZQl3TsLmSy9bxSS9P2V+kd8KXP
-         xg9H7pinqKKO2lPw1CffoFOj0cVqBjbP5Qx74xE3/YiR0Nr1AuTnEKRpO8IivS8AV7jz
-         sjMxWajQeE2eFxZmJXNZEUXbnzuSOODMON3D9DjOp0rosv1pG8Se/idRtxYpSlJAW6o+
-         b/vg==
+        bh=+nTzWFSPtkgXprasSk5PD3IWmtoaI6AUAN+qR6gSFNQ=;
+        b=A4omru8zxvh+8FJWHDshHKrziNX6lPCbdV2ZYGwVVGTljRNjiKJHlvy6mTCIbhHm0g
+         vomRvNYhzswiqzc1knRExyoW0IKqZSVFdhknzM6l/2mmeHajQOJ4cbC1BKa5Mw5uMR0e
+         86yAl1Fexv/e8xDZKpLRY/9EcG8+W2fNU6bbDczap8KBsm1WE+YuBFVNipHDSlB76oZM
+         qORQ3qdwTUN14RZ35egFkmXESuGWyFfORgUTRguCzD40e+vQT1oxXlKu4hxlVbznGTB3
+         qKCgvjQicB0YlElUSg90HgOJsozQP5V6yoel5ccAyJ545fDP7tXnwA+JWHeza02BKhH1
+         EvFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755133197; x=1755737997;
+        d=1e100.net; s=20230601; t=1755133206; x=1755738006;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Av1Ijp3yREaOIIrOjE6hDH01SRduzURtend/0/9r/9w=;
-        b=eQv5h8+wJWqSP4wF8XOtOGnnbwxDjEKSOKNfOswx4KRzlCa2aryMtBjZyw3Jt0zwjK
-         oN9BBJS7annGu9ToNC20Rmml5+rg7/h/EuL+FaR30ZICQDUjJxQpA1rctJZV0J0FTjUm
-         VgZTjW5zSgPzLqbt66bRHot183sIy5n2B9+pfhOIbYLnyS9Ap0qElDpAunepc2gN8VW/
-         /AdPaetWkx58zWp/J0DLEoj5LWZVCcEEIlpoL33fDbIdviwhO8fzgjo+IW3zCw+jeVUb
-         oOjttCDdNNDJnPyvJ3gAugbAOpdzon8vS49xKGZf2vQMB/WhzaSY8tyG/PGf3c1jJ+dL
-         81Fw==
-X-Forwarded-Encrypted: i=1; AJvYcCUCFDP2V/TKGjXOi7VUDJZYiO88crR1CqxHNZyqFMY2fk00+5QRZjsBG+cqR6dVeSQZgY3TNxaRUUfa@vger.kernel.org, AJvYcCVQeTBGSHT5r7ZO8n+/nMocV0L6RqMdVh4xQS8QFBDGSj86yi+LT0a0NnF4v+IZMh7vTfR1FNYnwub2WQ==@vger.kernel.org, AJvYcCVoGAGwHUoZNaY6wwMR7/2ndIxfCZHiKfNFBCVgHMG1uAzeUHty0Ki5QVduBChYlRgcrvm/wY3Pj66lWU/U@vger.kernel.org, AJvYcCXVjqbzxyra/qgK0bpNdJLXcxwKwxKw6zIutfRXIOrtrvYk4Bfxxf0F8B+iODJtL8OGXPXMAGMERXCjAao5DA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjAwxbSa74TKigtpl+BW9Yw9+wiSz62N/ONA/FPwnYtbCoRlnk
-	HZe1mKNxbmSBFADCiGTita46Nz105pv+qzwr0Ws+NFgoJdkFAkZk/y1o
-X-Gm-Gg: ASbGncuEd/3Ulo2IH+oo25KOc5JB34bvjDj7t0XAZGLaVhKApURDOwF5gKjvSEF1xMV
-	/aVcrIx4X8DZZ2zxVFs9tzzEfFNnBTQ/rOvwZjfQ7MluWV7vP3or7JCCEynpAGsb8Bq3bdSBa4Z
-	SrGUEy1gl5E2MLiLn0pAzrSqOfxUerGQbZnaqJq5DbHsdY5H/iQImuz0xb4xQyUMX+KINpjHpIp
-	ad4fGWAzw/gH3BQoyhfKNfnhQw/pbZL1A7HYlKPDDyQX2n0Dd4KcuGpzfsVCaHk9qRpTPpVLtA0
-	PkDJr3waj5Yre5Syp58A2u5vF2oZbkft00e9y2NrkEmNTCCGqT6kpDxpyEHNwoLWDRIPT/5VFrQ
-	0A3lkijPy3Cz44JxUKs4kJLRSobefwSrERSbfxO1+qhHslKxcbccXXlm+vZMIS2PGPkgwWB5kjf
-	X73EFF9QFF5SdHDyCnVYK14A==
-X-Google-Smtp-Source: AGHT+IHw822HbCZdhcd9mDtB5qCrUoxERRHmeNwKz7oQV+bksDBgEr1QZ+027JGplWiK2+Z/VMIxXQ==
-X-Received: by 2002:a05:6a00:4f8d:b0:730:9946:5973 with SMTP id d2e1a72fcca58-76e2f8a26f5mr1583329b3a.5.1755133196697;
-        Wed, 13 Aug 2025 17:59:56 -0700 (PDT)
+        bh=+nTzWFSPtkgXprasSk5PD3IWmtoaI6AUAN+qR6gSFNQ=;
+        b=qza7SXMtj95nctDJCciY0dstUuqAdZqGAxxXUw+2967dzBhW4avutORLDQGEfvIafb
+         QmcPjm6EnSCxQHseDLO13GM1HczPcYn0bFtjj8Q9AGEdBpDcVT3tCwQ76h+XPOLlf4sj
+         ncY23sYqSJ9/wy7GdObpeiaKAXYsmVK0Bup13UlLFVAru3ZM8xI/xH8hNcmi675O4vVz
+         VNh1WlRv+11FR6A1xMakfAYu2T/j+3W9T8uETKt+GiCZnti9vHEEoJMg2nIMF/e7O01V
+         7o37/GrEPdfObikvoCQVpi+xqCdSWtGUIdfYzAbC3+w9OokvMfVkoFvc/7b7yE7dHKeE
+         tkZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVLi4BOf6FIC3g1Xme007tvOm1Kn5WGlmsiY6FBZaFyDF188lvHo0sFr3khnL70F8j4AwUbzG0rlIV91uHN1w==@vger.kernel.org, AJvYcCVeGYHfW0tlHMl9yqF4LK3DhJ0mPBVF01C4TPBpdC9vCgu43YVzqUsLpy1T3KakLzOFCYUOkWFSwOTDZuuL@vger.kernel.org, AJvYcCWgnEOCGUWv1bg2nJCN6gtdQw+PrIPSxwCwVzVF1XRfppRYfPxAgB4bmAzXH6tbj+jjmuhjgnlCdszN5Q==@vger.kernel.org, AJvYcCXTwn8xsJ4UtNje6EFm2om0P3On9Jj5uoh8i9Ju6M2qrV3gPXShPG946uO7A5QcJhPzt4oloyF+kXpU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxt85/41avrlUJypol7NgahydQeOSO0Z/mFK1gLxFQYVh+hzmqs
+	GjyFG+Y62LckKW0tEg6jrC54CcSAe/uvh3v2xpvpg9XZsqtrxM73a6dk
+X-Gm-Gg: ASbGncuHa+XQlchifBrCP79qSCwghRg1ptCRNumXMetO0wPSPGpwcu8K3PAhv+IOq1Z
+	I/KxogpWQK3vbH+8X0UK7oM54vkh0ewtydWaKLZU/A5kDgu+ZKM9rrzrLlPxjZlrURk+kXMfSBU
+	XgGE6W3MyzzepqTz25kYn3XjfIJIs35t+0x2P5CAqf3sxOykmm7f8wXLeNvMkAZQjeQ3sEd8YT+
+	SE9zOb1lVfM+1VB7VSy+desmQ1HyGnuYfgu192rVYtBf+Xd9yq+obsIcf6zQ4hUBd1N/GDf6H/9
+	+gjiL3CC8sSqcGo0RSWuLRcXYUzxE1gJbZmiloPZCu0gWFWFrys7MF1Xoicn4+qrFxvu/R95ySZ
+	vPGVXINLhK0ipUQUCPryAh9nmkTEQxuSl0uwq8BiA41Y3E3Mj0pbEFR0LorjMiox2X9BMyvIZPo
+	EEumhMNfzUiS0RYTWfu3dn3A==
+X-Google-Smtp-Source: AGHT+IGUTNv2vtfatYKgSGSfSkdaeiXz/5WLqor3OcUH2i0GMcqZHUMfDNbcr30LN5n4tC75z8GA1g==
+X-Received: by 2002:a05:6a00:3999:b0:76b:c68e:1001 with SMTP id d2e1a72fcca58-76e32221c1bmr1143994b3a.5.1755133205632;
+        Wed, 13 Aug 2025 18:00:05 -0700 (PDT)
 Received: from harrison-Surface-Pro-12in-1st-Ed-with-Snapdragon.lan ([101.178.35.31])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76be9143983sm28875783b3a.1.2025.08.13.17.59.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76be9143983sm28875783b3a.1.2025.08.13.17.59.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 17:59:56 -0700 (PDT)
+        Wed, 13 Aug 2025 18:00:05 -0700 (PDT)
 From: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
 To: marcus@nazgul.ch,
 	kirill@korins.ky,
@@ -94,9 +94,9 @@ To: marcus@nazgul.ch,
 	linux-kernel@vger.kernel.org,
 	linux-scsi@vger.kernel.org
 Cc: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
-Subject: [PATCH 1/3] dt-bindings: describe x1e80100 ufs
-Date: Thu, 14 Aug 2025 10:59:02 +1000
-Message-ID: <20250814005904.39173-2-harrison.vanderbyl@gmail.com>
+Subject: [PATCH 2/3] ufs: ufs-qcom: describe x1e80100 quirks
+Date: Thu, 14 Aug 2025 10:59:03 +1000
+Message-ID: <20250814005904.39173-3-harrison.vanderbyl@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
 References: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
@@ -108,53 +108,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Describe dt-bindings entries for x1e80100 ufs device
+Describe describe driver quirks for x1e80100 ufs device
 Signed-off-by: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
 ---
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml      | 2 ++
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml             | 2 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 3 +++
+ drivers/ufs/host/ufs-qcom.c             | 1 +
  2 files changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-index a58370a6a5d3..a5f115655235 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-@@ -45,6 +45,7 @@ properties:
-           - qcom,sm8550-qmp-ufs-phy
-           - qcom,sm8650-qmp-ufs-phy
-           - qcom,sm8750-qmp-ufs-phy
-+          - qcom,x1e80100-qmp-ufs-phy
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index 9c69c77d10c8..b88cafac4da7 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -2168,6 +2168,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+ 	}, {
+ 		.compatible = "qcom,sm8750-qmp-ufs-phy",
+ 		.data = &sm8750_ufsphy_cfg,
++	}, {
++		.compatible = "qcom,x1e80100-qmp-ufs-phy",
++		.data = &sm8550_ufsphy_cfg,
+ 	},
  
-   reg:
-     maxItems: 1
-@@ -113,6 +114,7 @@ allOf:
-               - qcom,sm8550-qmp-ufs-phy
-               - qcom,sm8650-qmp-ufs-phy
-               - qcom,sm8750-qmp-ufs-phy
-+              - qcom,x1e80100-qmp-ufs-phy
-     then:
-       properties:
-         clocks:
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index 6c6043d9809e..f820470d4cca 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -44,6 +44,7 @@ properties:
-           - qcom,sm8550-ufshc
-           - qcom,sm8650-ufshc
-           - qcom,sm8750-ufshc
-+          - qcom,x1e80100-ufshc
-       - const: qcom,ufshc
-       - const: jedec,ufs-2.0
- 
-@@ -160,6 +161,7 @@ allOf:
-               - qcom,sm8550-ufshc
-               - qcom,sm8650-ufshc
-               - qcom,sm8750-ufshc
-+              - qcom,x1e80100-ufshc
-     then:
-       properties:
-         clocks:
+ 	{ },
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 76fc70503a62..2e143ccd1a03 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -2282,6 +2282,7 @@ static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,ufshc" },
+ 	{ .compatible = "qcom,sm8550-ufshc", .data = &ufs_qcom_sm8550_drvdata },
+ 	{ .compatible = "qcom,sm8650-ufshc", .data = &ufs_qcom_sm8550_drvdata },
++	{ .compatible = "qcom,x1e80100-ufshc", .data = &ufs_qcom_sm8550_drvdata },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
 -- 
 2.48.1
 
