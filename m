@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-69135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C70D6B25E54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:06:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1845B25E63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:09:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FDB43B6DDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:06:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8BE817B3C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:07:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 492162E7639;
-	Thu, 14 Aug 2025 08:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 037AB2E2664;
+	Thu, 14 Aug 2025 08:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V5/XWItu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j3DR2zks"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AFD2D12E7;
-	Thu, 14 Aug 2025 08:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C815927A12B;
+	Thu, 14 Aug 2025 08:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755158756; cv=none; b=l/iN5dPjMes5CSEM/TBxkjvNeH4Zqr3etFshXAgJWqGHFhRKioHlUBveswjaHxknSnXfnkhpMrsDhmFajwjTeLjGpmrRsQvDXGSfB4YfLvPZaSw3+sK4Hll8kVmbNIvYy3sT2WUdDCewtjisxJI9I+5CroeiBb075GrRIOaDdYc=
+	t=1755158830; cv=none; b=YzNbYf6NKGAfk6+GCbZRWeT/TyZltLpKEXp4JofYpq05P+OQ6alPafhbfp0RpQgQukVUfbrfOLVhQO/p9VoqTnU6ObLjtqgXuMoy+KYQw8/KZJRaiZQ9TUki2DEV5hI07Ge47zW+78uexJaLZ6GXuZ0q6UKyO0xQFK7ZcFkCbGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755158756; c=relaxed/simple;
-	bh=HUjRoUBiPA6qKjrIqUqj+tWWPwrwSnjORUlp6OeXZaE=;
+	s=arc-20240116; t=1755158830; c=relaxed/simple;
+	bh=Il0WWMV2+0zJaBAEupvI9iKf2fQYXz9ojo2+2AmZbuI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iPr992x7Gp9VpQoDCF+wEg+899DHgvOppOOLxUTRwK2OcRSlT6RslGK/EOFw8cGRBmXX7Gvm0DYguYeyhN6L36wfGe19cEBS1HQy80KkMIk7+XubUy+8fXT/bIjNqzzHwCxBATck7tPP8pF7nX8Io+dCuE2YjoSYDCO7Rn2qrIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V5/XWItu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA8DC4CEF4;
-	Thu, 14 Aug 2025 08:05:54 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zw0kvy+4z/aw6RnBYBgxmPbLW8uADaqbYlF844za6bAVRYPiRHP6jErwb+mO8/QLRwvJ3WxseDmrfr+h5kyZrNY/fvOaaOicCGUf91J7W5JaWGoLAMfxGrU2yaApRNw6unbv5Amv5lHQdIAgsnA7sN0Q/QIojKwMtnLg3bZciH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j3DR2zks; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0717C4CEEF;
+	Thu, 14 Aug 2025 08:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755158755;
-	bh=HUjRoUBiPA6qKjrIqUqj+tWWPwrwSnjORUlp6OeXZaE=;
+	s=k20201202; t=1755158830;
+	bh=Il0WWMV2+0zJaBAEupvI9iKf2fQYXz9ojo2+2AmZbuI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V5/XWItusZsyqPyNHbtQySAAEa88+ND8yVFrvjobJDf7KWOF+a4XTNQZykaPKTQ45
-	 dTQCjk9f7QGHcTJXyWBcO2D2AscS7DK4YWE2q8MxtfiWHKhxa9kkSWymw4D1Jc9bT5
-	 XoRURi3jFZDfmwLWdgv8fYfNyiYJ5wxxOIxEnKHMFobWJGP6Rm//potJokUboqP9s8
-	 5cafsbJ5tm5K/zuDz5TkTo74gTe9ZG8vJsniKpjTB74pWq4RPr9V/unVE419nSMqCf
-	 T3X3BdFaSKeZOVkfhU30BdvFdxKs+RfoHmnwQg1x2JE0msRQgeOqRQdoZEGzLk+EDo
-	 5yzo7BRy3iFbQ==
-Date: Thu, 14 Aug 2025 10:05:52 +0200
+	b=j3DR2zks9xtxCntatW5lSYPxgP3Qlp0t4bOziW4V9M3k4O5IbOD4/cOsjXnnf/1Hu
+	 ZWz/bhDjVzNMEWunoYwi+FVofjpp2keY69uAcuEdHWlE0+Pz9i0pm47Zj0uI3je6yM
+	 l90Ej5BLJBzwwYftvZKa4CCTKvJiD7JcANEC1/Qk80nRnGQ6JPmhB7koyVvKJiHGq2
+	 o+O+X2ddQxyb2LWf/yOsOeE1pXA+Oo3eCjTQBXUMTHxniHHNq8a1UogQPJto/s1N/K
+	 sJdH9eB5f7+Iji1SPryPQSBZmZ2o6u4LyaIGC5r5moD+rswYjP/t8TPXEQxo2kBmGf
+	 ihYhJcqjZHifQ==
+Date: Thu, 14 Aug 2025 10:07:07 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Taniya Das <taniya.das@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -51,11 +51,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
 	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/7] dt-bindings: clock: qcom-rpmhcc: Add support for
- Glymur SoCs
-Message-ID: <20250814-positive-defiant-hyrax-f62bad@kuoka>
+Subject: Re: [PATCH v4 2/7] dt-bindings: clock: qcom: Document the Glymur SoC
+ TCSR Clock Controller
+Message-ID: <20250814-wakeful-pronghorn-of-symmetry-a1ca28@kuoka>
 References: <20250813-glymur-clock-controller-v4-v4-0-a408b390b22c@oss.qualcomm.com>
- <20250813-glymur-clock-controller-v4-v4-1-a408b390b22c@oss.qualcomm.com>
+ <20250813-glymur-clock-controller-v4-v4-2-a408b390b22c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,16 +64,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250813-glymur-clock-controller-v4-v4-1-a408b390b22c@oss.qualcomm.com>
+In-Reply-To: <20250813-glymur-clock-controller-v4-v4-2-a408b390b22c@oss.qualcomm.com>
 
-On Wed, Aug 13, 2025 at 01:25:17PM +0530, Taniya Das wrote:
-> Add bindings and update documentation compatible for RPMh clock
-> controller on Glymur SoC.
+On Wed, Aug 13, 2025 at 01:25:18PM +0530, Taniya Das wrote:
+> The Glymur SoC TCSR block provides CLKREF clocks for EDP, PCIe, and USB. Add
+> this to the TCSR clock controller binding together with identifiers for
+> the clocks.
 > 
 > Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml           |  3 +++
+>  include/dt-bindings/clock/qcom,glymur-tcsr.h       | 24 ++++++++++++++++++++++
+>  2 files changed, 27 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
