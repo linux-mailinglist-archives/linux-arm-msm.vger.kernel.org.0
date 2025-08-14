@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0307B25F18
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:39:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 727AFB25F42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 10:43:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12A2D724B5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:39:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFFF0627993
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 08:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A6712E8E1A;
-	Thu, 14 Aug 2025 08:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B84322E8899;
+	Thu, 14 Aug 2025 08:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mfr3RrNp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mLWki/Cj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2DF1A317D;
-	Thu, 14 Aug 2025 08:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEF82E7F33;
+	Thu, 14 Aug 2025 08:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755160741; cv=none; b=r/oe25iMbW4G8wBa9ps19aZcIPDMmrdkMY/dt5IetMuo1cUWMQH5dYcfTi+je+mEwyseFJ1kpzn90hz/rpvZl6p2GXjSQj7b5z/cgM8G2V0XMKtJ+rb0TmSGxifFvqkuao2py5hla/QpMbJ3LnKYwI2+0dlylBUoqMdEAOfOGSQ=
+	t=1755160921; cv=none; b=cVHqsioJTDsRRiFINP/agtd9Hle72Jns8i6YhFENxa8R6Zyppn9TqNpgqp681g9HkKAWIchb57g9SfPzAsGOjxbt8jMvkmC5Rt/BH0k4JCC855xkOrplVBfgBcv9UtNhTITVGggy9Eb4bUy9yHe0iOXuJA38XlFFgIROggMVgvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755160741; c=relaxed/simple;
-	bh=kQaDaY3pQLr2E9PAy8sKF2YRobCVPIAPQgcNNQ8dVKs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mim7+aFmoIEnZYQyW3eNOXBxDwzTsM/VD7V1ILVwk4UUpSaSEw8zVmf0/pmvNOrsSZTJvVQmFBnV0LtVEbg03IBeQGGgN0REZ6t9kvI3HFQ+H5WTlgj8HK1bHQG5D6cAy2f9wIUamUKbIthbO/EyUegndMH7EDr3HXwxXUk32ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mfr3RrNp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CA9C4CEEF;
-	Thu, 14 Aug 2025 08:38:57 +0000 (UTC)
+	s=arc-20240116; t=1755160921; c=relaxed/simple;
+	bh=hSfqsaj/54/AUhgiEYXHKF6d+IkSFoFTImigQ6SYPEI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=OTYAOVUVNYqdXhxqfR05E0my30kFdfSkEt6UCgycBwcAJArVhukdyJ9I55v5eXM9fGfoPWOKsrP4HVPNy9fGdb+57flaDMpWd6g4oHBDHKg5qSGqxRlpA2vbI8UlYuGaEQlE6UIbitn+TCTHTDjifjGBR6JVnaR5lP3FJFJetho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mLWki/Cj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C05C4CEF4;
+	Thu, 14 Aug 2025 08:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755160740;
-	bh=kQaDaY3pQLr2E9PAy8sKF2YRobCVPIAPQgcNNQ8dVKs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Mfr3RrNp+m89cj4pjYeaVoHpoEzISu8jczWMeXsjC26Mizjskz8i2nRhG3JNa6fW1
-	 s7g9C5L2Tr3lBX714t6hsiKqj4KPMsr6hF2QFntu/SS6MIPibrHGhu8IqBTR12TdgS
-	 m1GtqvkoSdFNnBurhzbUAvnupdXiNWUgCFkkipYAo8EmAR6LyQgUjoffyoL2caZJcl
-	 S/T5KvWCFnTVB8YwLWMlGAVLOamNesiNlDxMOUEbDcMuMxrgL4jOUyyuKVSPievjyZ
-	 vQ0UIRWkE3yH0UWcM6EXYA3W7t8WqPAKZV6Qip2rsWrgeexNY4FqKMo+sUKYZtOzEK
-	 vJFuPlmdnOXDg==
-Message-ID: <7a986acc-ad7a-4b89-bc84-1184391eb9ad@kernel.org>
-Date: Thu, 14 Aug 2025 10:38:55 +0200
+	s=k20201202; t=1755160921;
+	bh=hSfqsaj/54/AUhgiEYXHKF6d+IkSFoFTImigQ6SYPEI=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=mLWki/Cjb9CWSuHl/zoUrRCF7uhRMggYA7Mn4nWbbRfRhYC3HBiO5YZDHry7rDS/X
+	 MYmVZw+u1R8VmTTcngE/rvuAWo9TC0Q7u0iuXlECYsmpc39Fh0m0WYigjKHz/pbOmT
+	 /vfedaWESel4ukqZ7f9xqL7PixHeAzrH0NZfOZHdfon2gd3OHis/edJhsGga/7oYuW
+	 PQq1DBlRLT62BjQUscMWY3WeW3sD1in+sMUE+ezoMTkdtafsT7J0P0tU7s5w739Y7B
+	 f096S60HleIg97SydCbIV05evpFdkOzrOzn6xQmInWyaQzgJ5fSqG3exKYykr+Cnri
+	 ZSUX5p7PqnnJA==
+Message-ID: <e6e06ab1-6744-4730-a2a7-be8c66bf74a3@kernel.org>
+Date: Thu, 14 Aug 2025 10:41:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] Initial support for Qualcomm Hamoa IOT EVK board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Yijie Yang <yijie.yang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Yingying Tang <quic_yintang@quicinc.com>,
- Shuai Zhang <quic_shuaz@quicinc.com>, Yongxing Mou <quic_yongmou@quicinc.com>
-References: <20250814-hamoa_initial-v5-0-817a9c6e8d47@oss.qualcomm.com>
- <5reeryefhw7burzf2lymhg5wivaq2n4gq5hszvfp57dergvpyx@qehaf334gdrn>
+Subject: Re: [PATCH v2] arm64: dts: qcom: Add initial audio support for
+ Hamoa-IOT-EVK
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: leqi@qti.qualcomm.com, Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
+ <172f1a38-d7a8-4799-ad44-f3eea69f297a@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,25 +104,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <5reeryefhw7burzf2lymhg5wivaq2n4gq5hszvfp57dergvpyx@qehaf334gdrn>
+In-Reply-To: <172f1a38-d7a8-4799-ad44-f3eea69f297a@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/08/2025 10:24, Dmitry Baryshkov wrote:
+On 28/07/2025 13:08, Krzysztof Kozlowski wrote:
+> On 28/07/2025 09:16, leqi via B4 Relay wrote:
+>> From: leqi <leqi@qti.qualcomm.com>
+>>
+>> This patch adds initial audio codec support for the Hamoa-IOT-EVK board,
+>> including WCD9385 configuration, micbias voltage settings, GPIO reset,
+>> and power supply bindings. It enables basic audio functionality for
+>> further development. Basic test is good in Hamoa-IOT-EVK board.
+>>
+>> Signed-off-by: leqi <leqi@qti.qualcomm.com>
 >> ---
->> Changes in v5:
->> - Update base commit.
->> - Drop an already merged patch:
->> https://lore.kernel.org/all/20250804-hamoa_initial-v4-2-19edbb28677b@oss.qualcomm.com/
->> - Link to v4: https://lore.kernel.org/r/20250804-hamoa_initial-v4-0-19edbb28677b@oss.qualcomm.com
+>> Changes in v2:
+>> - Updated author email address to leqi@qti.qualcomm.com.
+>> - Clarified that audio is validated with this change.
+>> - Link to v1: https://lore.kernel.org/all/20250723-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v1-1-816991701952@quicinc.com/
+>> ---
+>>  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 232 +++++++++++++++++++++++++++++
+>>  1 file changed, 232 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+>> index 843f39c9d59286a9303a545411b2518d7649a059..91618e22e86c46c698b3639f60bc19314705b391 100644
+>> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+>> @@ -124,6 +124,94 @@ pmic_glink_ss2_con_sbu_in: endpoint {
 > 
-> Please keep full changelog rather than trimming previous iterations.
 > 
-> Also, is there a reason why you didn't pick up audio and display chunks
-> as it was requested on the corresponding reviews?
+> This was not merged, was it? Same comment as other patch, when you have
+> entire code ready send entire board. Not chunk by chunk.
+> 
+> You are not following properly release early, release often.
 
-
-Thanks for noticing it, I totally forgot we requested that.
+Why this is still not included in initial submission which happens now?
+Either you work Linux style (release early) or, if you decide to wait
+till everything is ready, you submit board as one patch, not everything
+as 100 different patches.
 
 Best regards,
 Krzysztof
