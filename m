@@ -1,178 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-69251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6401B26934
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 16:27:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6CE9B26995
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 16:38:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FAB66030C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 14:17:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 627FF6014AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 14:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB69B189BB0;
-	Thu, 14 Aug 2025 14:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94EC21AAE28;
+	Thu, 14 Aug 2025 14:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvihKLFO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EqgU/EDu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDA414A4F0;
-	Thu, 14 Aug 2025 14:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3933E15B0EC;
+	Thu, 14 Aug 2025 14:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755181006; cv=none; b=g0uaraKc6KnIODwKykB4u2fbggrw6yUTgk5F5mpeCiah++2mahefvT1Xcxv4kJEkv2tpZH0JASH5bfpCrq4dgwnWmkNmqcBZW+PFKd5UFgRToAYPydep+DD0xQh89eynqStIWLrhnf2/uMA0PiHkXShHdDV9plPnWHUPuhEC6Ac=
+	t=1755181118; cv=none; b=GuJ60s1sw2PuD2Hm2Oy1NK/2lwYRnyLIr5JPHAOBdKVKFni/s03wMw3l9KeQwvFhpPJI8HY4EWdzK/OdvrVbeeLFBntPnnQLCgmEJuWe/KlJjyXNYVHIzWmwPLzilxwUNv2owq0fW8X9hnggJJFxIZNNI8EH/ROjsEKtmVWSsxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755181006; c=relaxed/simple;
-	bh=S7GgsxcKNtoORFbwkhFg/o2U/CGUU4Ner6zZ/evpaAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hkuZKA5yPnUkqLi4/oAtgH7CyN6WcFhdAxITkUYjTAz+sFsVbjWYixs8kjgMFJk86J40TlFtZZW5XSVW5jFPxXtz/6nGqkcimfLyUbWHjOrsPvyccoctunoY7K2SCIFo8f+9EVQ0PnySEmelb0kZTDyOjTe/8EMjSyYwVsy/SdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvihKLFO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C30C4CEEF;
-	Thu, 14 Aug 2025 14:16:44 +0000 (UTC)
+	s=arc-20240116; t=1755181118; c=relaxed/simple;
+	bh=aIOvB7Z2yTByNAFttZWfPG8POEc6396jSKH09BJ+/Lw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kxK8yANVQDT4+6zKzNWO9ULNnCSB10yROVDfE0eGUDsaC5McpGAXdBYmzSybesQb8g6KEcUCTcl1Dkzo4Eu1qjLYZeyMjSHDkTKOXVG3Ov5WwU1RurfL52iwkC3ha1qPXUHPx92JX66qPE/l0whPWXvD1oOof3GzK7wq5D4+X6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EqgU/EDu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140DFC4CEEF;
+	Thu, 14 Aug 2025 14:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755181005;
-	bh=S7GgsxcKNtoORFbwkhFg/o2U/CGUU4Ner6zZ/evpaAo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SvihKLFO0reZ3355bGC3y/5Gq4H1ugK95PWcRDdlSxGJbhRdcR0O+V4/7Bh5WRptU
-	 GV7EcxnYeZTVcDYJnqTPYlEy7bkxB10kCMBzJ4Zr0VRwrCygXo0CN1FnUlRkavnM08
-	 jxldecqZWVvF95995uDgTIgI/IFXGl4RxGLnhyAFbFmyFWCa5BZQ+vBqOqD2vd4kTh
-	 oCmFaeOUwBZzBSu54nhoPeBBT1J/tNUezQYn7X4sZUJngN9SplYGnBd4rILKQUfvT5
-	 XTqU3y8pB4J+Tp7ze7yAftyrB5USXx4d2dZfaEmTs/CxVmFautbuxyfjjV5A9CTakd
-	 spnRZK5r318EQ==
-Date: Thu, 14 Aug 2025 09:16:43 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Document SC7280 PCIe0 phy
-Message-ID: <yncizuu6bhr3xvuzkb5xri4gh6mdjg4r4d4nkufgxxpquetyir@kiagpup6wqgx>
-References: <20250812-sc7280-v2-0-814e36121af0@oss.qualcomm.com>
- <20250812-sc7280-v2-1-814e36121af0@oss.qualcomm.com>
+	s=k20201202; t=1755181116;
+	bh=aIOvB7Z2yTByNAFttZWfPG8POEc6396jSKH09BJ+/Lw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=EqgU/EDu3oDCYRt1Si13BRghMkcwK5LqN9GkAcGcfcrhFTazE34zUUq8Od+e5oGUJ
+	 GNx5ulPcFgtO5ZyiSpwIBr8FUNyAthpqEJ1HFf9GnjWHY+qIpiLzwl5jpRBrlolPn2
+	 z6xjKGXo4jawDOcpqGnCDN73BGfqRqAyieck88qD94UdpBJX7zr50+UVyAUEIFPEy1
+	 8iZ5/OdecI+vpH1tXXE5PIrAiCENDSW7wdju78QYNBO7tccEMhyLT5/PeO3ORXivtj
+	 sVMKdqgvEftfF5s9YxpUhwR00ND4s4PmT0wxP/dvrTnBxT6CdvlYHRM7ommRoJA5zP
+	 uiUsOyuYlg5Jw==
+From: Mark Brown <broonie@kernel.org>
+To: linux-kernel@vger.kernel.org, 
+ Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, 
+ Andrea della Porta <andrea.porta@suse.com>, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Andrzej Hajda <andrzej.hajda@intel.com>, Andy Shevchenko <andy@kernel.org>, 
+ Andy Yan <andy.yan@rock-chips.com>, Avi Fishman <avifishman70@gmail.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Benjamin Fair <benjaminfair@google.com>, 
+ Bjorn Andersson <andersson@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, 
+ David Airlie <airlied@gmail.com>, David Lechner <dlechner@baylibre.com>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Drew Fustini <fustini@kernel.org>, dri-devel@lists.freedesktop.org, 
+ Fabio Estevam <festevam@gmail.com>, 
+ Fabrice Gasnier <fabrice.gasnier@foss.st.com>, Fu Wei <wefu@redhat.com>, 
+ Guo Ren <guoren@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, imx@lists.linux.dev, 
+ Iwona Winiarska <iwona.winiarska@intel.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Jassi Brar <jassisinghbrar@gmail.com>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Jerome Brunet <jbrunet@baylibre.com>, Jonas Karlman <jonas@kwiboo.se>, 
+ Jonathan Cameron <jic23@kernel.org>, Kevin Hilman <khilman@baylibre.com>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Lee Jones <lee@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, linux-actions@lists.infradead.org, 
+ linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
+ linux-input@vger.kernel.org, linux-media@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+ linux-pwm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-rockchip@lists.infradead.org, linux-rtc@vger.kernel.org, 
+ linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-spi@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-sunxi@lists.linux.dev, Liu Ying <victor.liu@nxp.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, Nancy Yuen <yuenn@google.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Nicolin Chen <nicoleotsuka@gmail.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, openbmc@lists.ozlabs.org, 
+ Patrick Venture <venture@google.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+ Samuel Holland <samuel.holland@sifive.com>, 
+ Samuel Holland <samuel@sholland.org>, Sandy Huang <hjc@rock-chips.com>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+ Shengjiu Wang <shengjiu.wang@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Stephen Boyd <sboyd@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
+ Tali Perry <tali.perry1@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Tomer Maimon <tmaimon77@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Vasily Khoruzhick <anarsoul@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
+ Vladimir Zapolskiy <vz@mleia.com>, Xiubo Li <Xiubo.Lee@gmail.com>, 
+ Yangtao Li <tiny.windzz@gmail.com>, Zhang Rui <rui.zhang@intel.com>
+In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+Subject: Re: (subset) [PATCH 00/21] treewide: remove unneeded 'fast_io'
+ parameter in regmap_config
+Message-Id: <175518109481.47921.1666131365484481268.b4-ty@kernel.org>
+Date: Thu, 14 Aug 2025 15:18:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250812-sc7280-v2-1-814e36121af0@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-cff91
 
-On Tue, Aug 12, 2025 at 07:26:44PM +0530, Krishna Chaitanya Chundru wrote:
-> SC7280 PCIe0 PHY is functionally compatible with the SM8250 Gen3 x1 PCIe
-> PHY. To reflect this compatibility, update the binding schema to include
-      ^--- I think here would be a good place to break for a new
-           paragraph, to give separation between problem description and
-	   solution description.
-
-> qcom,sc7280-qmp-gen3x1-pcie-phy using enum within a oneOf block, while
-> retaining qcom,sm8250-qmp-gen3x1-pcie-phy as a const.
+On Wed, 13 Aug 2025 18:14:46 +0200, Wolfram Sang wrote:
+> While working on a driver using regmap with MMIO, I wondered if I need
+> to set 'fast_io' in the config. Turned out I don't need to, so I added
+> documentation for it with commit ffc72771ff6e ("regmap: Annotate that
+> MMIO implies fast IO").
 > 
-
-Isn't this the case for &pcie1 as well? If so, can you please fix both?
-
-
-Also, before we do that, the fact that they are "functionally
-compatible", can you confirm that these two platforms really has the
-same PHY settings?
-
-Regards,
-Bjorn
-
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   | 69 ++++++++++++----------
->  1 file changed, 37 insertions(+), 32 deletions(-)
+> This series fixes the existing users in the tree which needlessly set
+> the flag. They have been found using this coccinelle script:
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> index a1ae8c7988c891a11f6872e58d25e9d04abb41ce..1e08e26892f7b769b75bb905377d30a301e6631c 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> @@ -15,38 +15,43 @@ description:
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,qcs615-qmp-gen3x1-pcie-phy
-> -      - qcom,qcs8300-qmp-gen4x2-pcie-phy
-> -      - qcom,sa8775p-qmp-gen4x2-pcie-phy
-> -      - qcom,sa8775p-qmp-gen4x4-pcie-phy
-> -      - qcom,sar2130p-qmp-gen3x2-pcie-phy
-> -      - qcom,sc8180x-qmp-pcie-phy
-> -      - qcom,sc8280xp-qmp-gen3x1-pcie-phy
-> -      - qcom,sc8280xp-qmp-gen3x2-pcie-phy
-> -      - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-> -      - qcom,sdm845-qhp-pcie-phy
-> -      - qcom,sdm845-qmp-pcie-phy
-> -      - qcom,sdx55-qmp-pcie-phy
-> -      - qcom,sdx65-qmp-gen4x2-pcie-phy
-> -      - qcom,sm8150-qmp-gen3x1-pcie-phy
-> -      - qcom,sm8150-qmp-gen3x2-pcie-phy
-> -      - qcom,sm8250-qmp-gen3x1-pcie-phy
-> -      - qcom,sm8250-qmp-gen3x2-pcie-phy
-> -      - qcom,sm8250-qmp-modem-pcie-phy
-> -      - qcom,sm8350-qmp-gen3x1-pcie-phy
-> -      - qcom,sm8350-qmp-gen3x2-pcie-phy
-> -      - qcom,sm8450-qmp-gen3x1-pcie-phy
-> -      - qcom,sm8450-qmp-gen4x2-pcie-phy
-> -      - qcom,sm8550-qmp-gen3x2-pcie-phy
-> -      - qcom,sm8550-qmp-gen4x2-pcie-phy
-> -      - qcom,sm8650-qmp-gen3x2-pcie-phy
-> -      - qcom,sm8650-qmp-gen4x2-pcie-phy
-> -      - qcom,x1e80100-qmp-gen3x2-pcie-phy
-> -      - qcom,x1e80100-qmp-gen4x2-pcie-phy
-> -      - qcom,x1e80100-qmp-gen4x4-pcie-phy
-> -      - qcom,x1e80100-qmp-gen4x8-pcie-phy
-> -      - qcom,x1p42100-qmp-gen4x4-pcie-phy
-> +    oneOf:
-> +      - items:
-> +          - const: qcom,sc7280-qmp-gen3x1-pcie-phy
-> +          - const: qcom,sm8250-qmp-gen3x1-pcie-phy
-> +      - items:
-> +          - enum:
-> +              - qcom,qcs615-qmp-gen3x1-pcie-phy
-> +              - qcom,qcs8300-qmp-gen4x2-pcie-phy
-> +              - qcom,sa8775p-qmp-gen4x2-pcie-phy
-> +              - qcom,sa8775p-qmp-gen4x4-pcie-phy
-> +              - qcom,sar2130p-qmp-gen3x2-pcie-phy
-> +              - qcom,sc8180x-qmp-pcie-phy
-> +              - qcom,sc8280xp-qmp-gen3x1-pcie-phy
-> +              - qcom,sc8280xp-qmp-gen3x2-pcie-phy
-> +              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-> +              - qcom,sdm845-qhp-pcie-phy
-> +              - qcom,sdm845-qmp-pcie-phy
-> +              - qcom,sdx55-qmp-pcie-phy
-> +              - qcom,sdx65-qmp-gen4x2-pcie-phy
-> +              - qcom,sm8150-qmp-gen3x1-pcie-phy
-> +              - qcom,sm8150-qmp-gen3x2-pcie-phy
-> +              - qcom,sm8250-qmp-gen3x1-pcie-phy
-> +              - qcom,sm8250-qmp-gen3x2-pcie-phy
-> +              - qcom,sm8250-qmp-modem-pcie-phy
-> +              - qcom,sm8350-qmp-gen3x1-pcie-phy
-> +              - qcom,sm8350-qmp-gen3x2-pcie-phy
-> +              - qcom,sm8450-qmp-gen3x1-pcie-phy
-> +              - qcom,sm8450-qmp-gen4x2-pcie-phy
-> +              - qcom,sm8550-qmp-gen3x2-pcie-phy
-> +              - qcom,sm8550-qmp-gen4x2-pcie-phy
-> +              - qcom,sm8650-qmp-gen3x2-pcie-phy
-> +              - qcom,sm8650-qmp-gen4x2-pcie-phy
-> +              - qcom,x1e80100-qmp-gen3x2-pcie-phy
-> +              - qcom,x1e80100-qmp-gen4x2-pcie-phy
-> +              - qcom,x1e80100-qmp-gen4x4-pcie-phy
-> +              - qcom,x1e80100-qmp-gen4x8-pcie-phy
-> +              - qcom,x1p42100-qmp-gen4x4-pcie-phy
->  
->    reg:
->      minItems: 1
-> 
-> -- 
-> 2.34.1
-> 
+> [...]
+
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[21/21] ASoC: remove unneeded 'fast_io' parameter in regmap_config
+        commit: d578faf7096affc036fd16333f1bfbe4991a22f7
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
