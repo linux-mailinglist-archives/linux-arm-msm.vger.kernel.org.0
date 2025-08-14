@@ -1,177 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-69131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DB70B25DC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:42:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 376FDB25DD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:44:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 502958829F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:38:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDE241B68EF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:43:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E9A426FA6F;
-	Thu, 14 Aug 2025 07:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79450283128;
+	Thu, 14 Aug 2025 07:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Ffdl5HCC"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Q4ehJ9mj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF0D26CE0E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 07:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1F28506C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 07:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755157064; cv=none; b=kdj9b/X8hpzMA26yX+zBXuOxxKPVJyAlH3LMZWBdKvNw04XVKgdlmKz6HA4qT2UIp7XRr+/lqTGULbuVu9gF7Qx8wXE36XR215suzEsKNAirHDI0NeDT6+PkNMOzcbnfIzydf1sBSv5sEhF22eqt93YjqzqcHZTISAbbYm7d4ao=
+	t=1755157410; cv=none; b=Rv2/eM9ZDyY2eg2e0/pfj9SWsCEJHZY4kF+w72LiGP20/YN2GHDlhGY2agL1HFPowqzNy9TxBFVYvrlvAHyXpOHjl1vJUMAtaY2bxg+vQtepulndIviAhrXx6RSr8Hf1ISUyrS99GbWweS+uen2y+IKUrSkpfK/qGjjp74iFSjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755157064; c=relaxed/simple;
-	bh=i5bV8DJtt0kW/7rs56nYtMMFUHI8Xh3Xhpcajvy4BqQ=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ryfazzt1FVXFSOIJhRfh6dNT/zOSCWD66APGn5Pkj50kIefxq9JQ4YoWCOcVrk6ZSBZcr+eme7E9qJ0Jh8eO9qg8xa5rkI+7k3JaWZITi907OtvZtqpEhDMlN2oCR0FX747rOY7/zi7dGtVftQ/lTeM6GGgGOJnLni0a8+Wo4Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Ffdl5HCC; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-55ce5095c8fso518408e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 00:37:41 -0700 (PDT)
+	s=arc-20240116; t=1755157410; c=relaxed/simple;
+	bh=qAgWfAMIF/sZ4uaQqkFCjMJESgODY6hQ+grRgSP7pFc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Sn3fCQuwT7oDQERIx01fNf9Wp7kXc1mTfUHj6xhV/+9RGOjCKle01Cihekm6JWvhnVzZ0OaH6+hXCMeTiPX0jZ9y/RjomWc4AQWUC8j6TxvBUDyoyWRkyZoiOxHV9RMf4Iv07y9Bh+5Cx4XJOM8Ur/5DdWAMYjO4YIZAjHFez4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Q4ehJ9mj; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-afca3e71009so259461466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 00:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1755157060; x=1755761860; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E6lyA0E3BsgF3c0Firp9DhkX0QGDczU/GAUF9m624y8=;
-        b=Ffdl5HCCGlAiRUNmG1lYFJKGkgMtToqwAeEYQf5+4P/qxIQiURoMJ9Xtdbefw7Dc5f
-         1W85T8Myuj2S2CDVmdltB5SAXfKh2kXcA/dJYsLTuGPX8oqhNhVejPNDs3HIjN0BZb4p
-         uiXe4VlZzueA7tukLnZDF6MYmxwneDSOquseRNWYdGufEJR0P37xMCrdIm8VEelePI95
-         aQxtrxpfKs1m1rM5LFc/eL7AY2Zxw3B+kydWS1bbAwXdsxxWUgd72DTOtW5+fzee9+fy
-         rtyO/IP7Li9+iU9VVyzrfRzNORUxIBmILWE3XvUqRMIAuzqRwcLre35Dn6IZAhm/fPfh
-         F2Bg==
+        d=fairphone.com; s=fair; t=1755157407; x=1755762207; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jPuQF6+pTC/R1aoe0VWkF/cqD5w1tUDK9xrST9p9p6Q=;
+        b=Q4ehJ9mjO3FF/ltRg87CRvPvVz51dQlcEIYaXCJBjUxujImPPltJaXVpzzCb47QX8K
+         fpK9o1X1wXGKgkyMQiGwf2+664dPZPtMYw3z02KkkATbBFTPyl1VQ0csoacxe4VyWBC+
+         MgfSnVIPeVf4++FJ9fRHyeMwjlh/3WUCU1EY6y/O86bG5hIHk4cXhXQtv1B2qOuRjCba
+         j1HHKBIWbK8EYmIOt29iYnsMNDAO4AhmmnfIk0HDwmdrt3WV1tM8YwTDyIQHnat0hMNI
+         Y797fiVPrqEBLPxEzO/WLGWYwJ0h+LZXXGy6vrz5p3FDaLHBj8eyt+AWWIWqSOvdF3Ai
+         FApg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755157060; x=1755761860;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=E6lyA0E3BsgF3c0Firp9DhkX0QGDczU/GAUF9m624y8=;
-        b=H+T1mRRjh5ecvONa3dJhb6umeKVsWn0eSHGsyfnUoXtsEvrSVYd0yGdpC0mKHAYZlG
-         9VzyaWAfqX3PjSEEGRFKGKc1xe+wr6kWcVUWCQyWk81FTFM8G/cirV5hwaHDG02OOcFt
-         sF3Q7uPmZVfkgPgFvgbzQj+V97fH781J50+Ob9rVL0MpPVbrsfYDDtQ/udfcrYqEOoCp
-         PaX23ayN1L3fjz3yAvK0CVtlT4VKwftq96LpMJx7wAJXYL9xpGRsjkdWy6I0RVe8ODzd
-         TpHfJ/EVAZKAdH1znbwKl8ldu926inmRalp+x+5fbLbig47aHuhtleRA55ntvl2qLuvD
-         MzFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWssLrJylh/4DYIk+ogjPdkFtwyiG4SqgSbahYZRr+qEVzq8dyo22cmRvKgVtCqqsQ2ezL9vDGoBVwzCVI7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTaEkT1AlAuvzdwWYPwc0cLmIghGcuuW1miZ/UX/I+b07dSoFD
-	39L+U6lLZyI8dcR9MYbvFjRDy6CS1/LBNDFV+WE7RRrXoeOCFLmH6WPinIsCO71d6pCfE5OYuxN
-	KwA+dDFI4ZXOgz52MxtpUlt0D7IvuTsL/EhtLOuxc6w==
-X-Gm-Gg: ASbGnctrSER83uVFbgBUV7HpMht/MHyFvgwsQC5rmcdRKeNfIsrJ9UJFQMfWN0OiYJO
-	eQnVizlWJ6XQ2ojl1Dxv7l1kkf96pYqwTXp3NxQwctXwaM8d7gytc8fs+KfATgaRo9wuaNKdLcX
-	B5mVQ13LdbWnI8b432g0B9FgjVrMF9MOMNg7UI3Cs4goQMIsUJUKKCrl3u/7N89GbBEl5fw6qAg
-	2KBUignKKKeeeGdl24gRmBYxgmj4WqnDDS8Lfw=
-X-Google-Smtp-Source: AGHT+IH95og7bwOhUuHKkvwv0kTue2EveWatnb0pXZcfIY30oh+DnenMVeGiemPUTLNRulqOQX9vjsDh8YkJvs9r6SA=
-X-Received: by 2002:a05:6512:3d29:b0:55b:8f02:c9d0 with SMTP id
- 2adb3069b0e04-55ce4fe3984mr762477e87.0.1755157060157; Thu, 14 Aug 2025
- 00:37:40 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 14 Aug 2025 03:37:39 -0400
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 14 Aug 2025 03:37:39 -0400
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <CAHp75VeSA=AYDKOV5XQ5nnz7EZRmnhbbVyJrcBUcMO2LrRMTmQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1755157407; x=1755762207;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jPuQF6+pTC/R1aoe0VWkF/cqD5w1tUDK9xrST9p9p6Q=;
+        b=XyIw89gODVDi2MtVIHoGTzsg5W9IPnkMXB5bupukU1Wp3fewt5Eo5hsbu4VQOKOcpe
+         wExxUpFTGOUtm8FWpK3wnl7/j13fNDlHReWHrNyl6dNW3XWDvxsgWAawEs7OfPcp5/hE
+         J+quW7YXvNSSMXsW4fI6vb67Tt1T0nW+UAAFc8P1NTxbV565ehYeZ636Ubu97IgyznwN
+         sPyz9Xr+Y36B2xVUc11I5iyI+EvzLXSK36amDJ6jEMPX+0VdisutIuCzm7y3E/VTNI68
+         Jmf7aVSDpQPq0cbfPbqOadiU9s3pcc9bgVi2irUinw6OpII17XSgF8lr9oNuMdVbdGTa
+         8Urw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbaxyUZrnO8JXmj12eDa5d/1zRoDlXy+CBpJVPgG040+35hoJlBOXHM2dUfbBRa+AAy5tVe/RBfsIHTeKC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6gNglwPzEypstD4vdsdwy9Y0u7R5e64Qr9/h0LEDeWawZqGAW
+	xEBpR7fBdPN78YNfedPVVFRdNvuRzJvnKyJ7BfwFu/b2ZLg+OAcg/0RiiicvhXk3GWY=
+X-Gm-Gg: ASbGncusK5BtpriuzLiPtcUUFxp2e5x/qIHnSxwPcmSPiIrrJ8VBRzQBoQH2NcNtqmp
+	am+LLUDAsMjwRP76sXyrpFKyLp68EceE3GN03EUAYY/DNvw8Mo57YR4dhleUPP06aKC0YWTDyZ+
+	eHAjyOeJqPHHe5r5Elynsb2XFsQzaC6nPvMG4JWAlCMZMt4mxHrfBxbF9LZZot1QnI0Oup3oSOP
+	XVys+X4ucLY4f0QkEUFponZd034+5SEjUa2W1Dxt7Bea3Kh6yWoFwSQK25zYukDsi3Ch/ucCYL9
+	LLblBmheQITMK9PXyKXnkzYqtLmnXsERWZhCZyUPfRC17PUiQwQ1kYWrg/L5Gk7z29NmXB7/3JQ
+	73MIx0kpEek0CstHjY9vNpbSpfgFHz7FB3+cZ5izWGQGGt7m0xEk7WqM24LfoOwsM5L7A/LpNfA
+	vlFYNMnA5B0z0Y+g==
+X-Google-Smtp-Source: AGHT+IGCzaOzIDJ94jFmyMeyUg84rKzPilT3aLYjT6q7n+bcrWWTqiKm+8lDogVs/9Xr3+ze0xv6lg==
+X-Received: by 2002:a17:907:781:b0:af9:8d61:b78e with SMTP id a640c23a62f3a-afcbd9334a5mr149784766b.30.1755157406894;
+        Thu, 14 Aug 2025 00:43:26 -0700 (PDT)
+Received: from [172.16.220.71] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8f26cc6sm23651682a12.23.2025.08.14.00.43.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Aug 2025 00:43:26 -0700 (PDT)
+Message-ID: <d87eedaf-e239-4809-b4cf-61308d5b3a2e@fairphone.com>
+Date: Thu, 14 Aug 2025 09:43:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250812-pinctrl-gpio-pinfuncs-v4-0-bb3906c55e64@linaro.org>
- <20250812-pinctrl-gpio-pinfuncs-v4-3-bb3906c55e64@linaro.org> <CAHp75VeSA=AYDKOV5XQ5nnz7EZRmnhbbVyJrcBUcMO2LrRMTmQ@mail.gmail.com>
-Date: Thu, 14 Aug 2025 03:37:39 -0400
-X-Gm-Features: Ac12FXy2K4h4wcbTuyQHNLoBpmiM4n8vonnKvWP5_H1uDnS85jqeBZjb-G5DXZs
-Message-ID: <CAMRc=MfzSq+7EY8cV+J_AePve6r+yV5QEHqG=Z2N8Afmy+Bc2Q@mail.gmail.com>
-Subject: Re: [PATCH v4 03/15] pinctrl: airoha: replace struct function_desc
- with struct pinfunction
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
-	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] Input: aw86927 - add driver for Awinic AW86927
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss
+ <luca.weiss@fairphone.com>, linux-input@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250811-aw86927-v2-0-64be8f3da560@fairphone.com>
+ <20250811-aw86927-v2-2-64be8f3da560@fairphone.com>
+ <vuv26omdn4a5jniv6znepcxel65buzymu6te2ys2dgtkttk6sg@edqm6xpddudn>
+Content-Language: en-US
+From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+In-Reply-To: <vuv26omdn4a5jniv6znepcxel65buzymu6te2ys2dgtkttk6sg@edqm6xpddudn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 13 Aug 2025 18:57:00 +0200, Andy Shevchenko
-<andy.shevchenko@gmail.com> said:
-> On Tue, Aug 12, 2025 at 10:27=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
-pl> wrote:
->>
->> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> struct function_desc is a wrapper around struct pinfunction with an
->> additional void *data pointer. This driver doesn't use the data pointer.
->> We're also working towards reducing the usage of struct function_desc in
->> pinctrl drivers - they should only be created by pinmux core and
->> accessed by drivers using pinmux_generic_get_function(). Replace the
->> struct function_desc objects in this driver with smaller struct
->> pinfunction instances.
->
-> ...
->
->>  #define PINCTRL_FUNC_DESC(id)                                          =
-\
->>         {                                                               =
-\
->>                 .desc =3D {                                             =
-  \
->> -                       .func =3D {                                     =
-  \
->> -                               .name =3D #id,                          =
-  \
->> -                               .groups =3D id##_groups,                =
-  \
->> -                               .ngroups =3D ARRAY_SIZE(id##_groups),   =
-  \
->> -                       }                                               =
-\
->> +                       .name =3D #id,                                  =
-  \
->> +                       .groups =3D id##_groups,                        =
-  \
->> +                       .ngroups =3D ARRAY_SIZE(id##_groups),           =
-  \
->
-> Can this use PINCTRL_PINFUNCITON() ?
->
+Hello Dmitry!
 
-Yes, it can. I'll update v5.
+On 8/11/25 18:35, Dmitry Torokhov wrote:
+> Hi Griffin,
+> 
+> On Mon, Aug 11, 2025 at 01:12:02PM +0200, Griffin Kroah-Hartman wrote:
+(..)
+>> +struct aw86927_sram_waveform_header {
+>> +	uint8_t version;
+>> +	struct {
+>> +		__be16 start_address;
+>> +		__be16 end_address;
+>> +	} __packed waveform_address[1];
+> 
+> Why does this need to be an array? 
 
-Bart
+Great question, during development this was used to include multiple 
+wave-forms, but it was decided that the feature was unnecessary as of 
+now. I will remove the array for simplicity.
 
->>                 },                                                      =
-\
->>                 .groups =3D id##_func_group,                            =
-  \
->>                 .group_size =3D ARRAY_SIZE(id##_func_group),            =
-  \
->
->>  };
->
-> --
-> With Best Regards,
-> Andy Shevchenko
->
+>> +static int aw86927_haptics_play(struct input_dev *dev, void *data, struct ff_effect *effect)
+>> +{
+>> +	struct aw86927_data *haptics = input_get_drvdata(dev);
+>> +	int level;
+>> +
+>> +	level = effect->u.rumble.strong_magnitude;
+>> +	if (!level)
+>> +		level = effect->u.rumble.weak_magnitude;
+>> +
+>> +	/* If already running, don't restart playback */
+> 
+> Why not if effect parameters are changing? Also what if someone is
+> issuing stop for already stopped effect?
+
+It it's current state, the driver only has one level of vibration, 
+therefore adjusting the effect does not matter as it is either vibrating 
+or off.
+For your second question I don't think I understand what you are asking. 
+If someone gives magnitude 0 to a vibration that has ceased playback, 
+the vibration has already stopped, so we don't need to stop it again.
+
+>> +
+>> +	haptics->regmap = devm_regmap_init_i2c(client, &aw86927_regmap_config);
+>> +	if (IS_ERR(haptics->regmap))
+>> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->regmap),
+>> +					"Failed to allocate register map\n");
+>> +
+>> +	haptics->input_dev = devm_input_allocate_device(haptics->dev);
+>> +	if (!haptics->input_dev)
+>> +		return -ENOMEM;
+>> +
+>> +	haptics->reset_gpio = devm_gpiod_get(haptics->dev, "reset", GPIOD_OUT_HIGH);
+>> +	if (IS_ERR(haptics->reset_gpio))
+>> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->reset_gpio),
+>> +				     "Failed to get reset gpio\n");
+> 
+> Is it mandatory to wire the reset pin? I see the chip supports software
+> reset so maybe this can be optional?
+
+In the datasheet, it is never explicitly mentioned that the pin is 
+optional, and in the downstream driver it is mandatory.
+If the reset pin is not found the probe will fail.
+
+If somebody has a board with that use-case they can modify this driver 
+easily.
+
+>> +
+>> +	/* Hardware reset */
+>> +	aw86927_hw_reset(haptics);
+>> +
+>> +	/* Software reset */
+>> +	err = regmap_write(haptics->regmap, AW86927_RSTCFG, AW86927_RSTCFG_SOFTRST);
+>> +	if (err)
+>> +		return dev_err_probe(haptics->dev, PTR_ERR(haptics->regmap),
+>> +					"Failed Software reset\n");
+> 
+> Do you need to issue software reset together with hardware reset? Is
+> one or the other not enough?
+
+The datasheet does not mention whether one is enough, the downstream 
+driver does it with both so I have assumed that this would be best 
+practice with this chip.
+
+>> +	err = devm_request_threaded_irq(haptics->dev, client->irq, NULL,
+>> +					aw86927_irq, IRQF_ONESHOT, NULL, haptics);
+> 
+> Error handling? Also it looks like here it is safe to register the
+> interrupt handler early since it does not actually do anything, but
+> better to move it after the bulk of initialization in case it will get
+> expanded.
+
+I will fix the error handling :). If someone were to implement FIFO mode 
+then this would be the correct placement of the initialization, so I 
+think for now it would make sense to keep it here.
+
+> 
+> Thanks.
+> 
+
+Thank you for your comments!
 
