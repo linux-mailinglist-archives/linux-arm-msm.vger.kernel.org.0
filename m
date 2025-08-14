@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36FA0B25C72
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:00:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A62FB25C7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:03:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C560AB61056
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 06:58:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59F08B61205
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 06:58:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0091325E469;
-	Thu, 14 Aug 2025 06:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D0C25C81C;
+	Thu, 14 Aug 2025 06:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWEU/Veb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ERAdkFp4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FCF2505CB;
-	Thu, 14 Aug 2025 06:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47652505CB;
+	Thu, 14 Aug 2025 06:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755154753; cv=none; b=SOfWeLe0gCUkJupxXchzJv1ninUxqfsRrqAudf9fT2dA3xw25SpcP5Zkyll1cv5JPUIbKtF0MF+0cn12BFd4sjB9U60ddmlCYYjKCh/8en7CFc5BmWq88KNERcR2T1De6xatzuETkEjj90gjYqnqA4aIayqjUremCisA34jrAxk=
+	t=1755154768; cv=none; b=FgJPGcqMbZxatEsnXwTl8eBvrPXinoXh1B3V4x7h4Lx0sTBAmB9RbT/FqSQKPu94tdC/DZ6Dzl0S2STRAQJZP/+9rxngjVyKmtLu/8e35QjHvHf6RMHo18QmXG8N1nmTVi159i9c9bM5LYe9QyingtN69Yhlo17kRlUsUuWJexQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755154753; c=relaxed/simple;
-	bh=/y8w2S2gQylcdktfsTWUUbQnJ/Bmtkf58d1TAbyJLfc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M4HUXSaqPDlmrybO6zdKKfHRkV1voXKngeT8gh9b0SxmDTFpkJ/TMK/9sxuwcC6qzbZHnLkQqkhLXcRKt0qNgu38e0ueU5INW6SgsEOUJgwSXCfMoweF8qXpNxkaC3+GeRt9IBnvg/g1dG4btlBwrm/CGsmCkdHhncKfzCAe/qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWEU/Veb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D908C4CEEF;
-	Thu, 14 Aug 2025 06:59:09 +0000 (UTC)
+	s=arc-20240116; t=1755154768; c=relaxed/simple;
+	bh=CtmqplZwY66VaRI3jcehqVyC7vyWcB4HKqdwUObY6qk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=iA9p/jh8ywrwrN1apXG2IA1AtZw9EnmAmG11zavQ5Q2Zef1X8qF5MStYrNbICHgccFZnuR20qm8vTN6tq5CHmX0vEpKAzZEdyy0mRo0RkQJ8JxVGbK83+TVdoUQt1PAy/On5/b0ZYtGbcXdMbm4f+R1ek1IdeTQOJllyp5lGIkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ERAdkFp4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE84C4CEEF;
+	Thu, 14 Aug 2025 06:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755154753;
-	bh=/y8w2S2gQylcdktfsTWUUbQnJ/Bmtkf58d1TAbyJLfc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MWEU/VebAf2+EW+zguXlsy0qViH1iwuLh7aLY8ua1oj1989u9OcLI//ZxvOf64Kbh
-	 wltq3V5s3li+QH5QY5CyV93YJ9o1iAzYLgXvCCoQcA/sVhSpzmFYFrT/CXRjR+BWZ5
-	 amymTP3Z0pY1MoSXo3OqMcxKhdbc7a6mCrPAe+ABsAKHkiPInGwTiVxoMpLQb+Y8Z/
-	 4DactE4aIWbKttOjm4VrHags66mRo8Mt1c5kPPDF6T0twz9V464wSjqZPy16XNgJgg
-	 9oaf/d1j0H73ZyzUtPuCLCy5zMLzH1uZSYsbMp4OZi41c0pLsOpjNfHyJ5EmN4ZDfC
-	 qvufC9BBGFbdg==
-Message-ID: <57ce520f-a562-471f-b6b4-44f0766a7556@kernel.org>
-Date: Thu, 14 Aug 2025 08:59:07 +0200
+	s=k20201202; t=1755154768;
+	bh=CtmqplZwY66VaRI3jcehqVyC7vyWcB4HKqdwUObY6qk=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=ERAdkFp4+b09ZVe/VqAVH5IEu/83yRDmVGoVN+WAja6HHm3TV8yaC/MamtvTxdWZx
+	 hQf0Rh9cSXsydAKvMYmZgok77TiHrn+hKofWDuiv7PsUDvj8t0XszRgULbsShhrW+a
+	 FT8DRX46k6f8a5/pDGqSGQbKGEcOV3TbpIzOjT0nYE+ZVK//5X31FDGwn7T+X3HgOH
+	 AyA7Ut5/ApAemQ77Yb1/d06/b9VSEWZ7FQrn68am7HdID5gF9MqetSOwM5XYFj1jnt
+	 XuChR59P4onxP5YzWrdGvhHfj+CE3scaxDqfEogICMd8EBPwjE2IctwcZuzlUzXdWt
+	 tB+CKI0uos5eQ==
+Message-ID: <6a22ef70-02ed-4436-8c6d-822d04f2c930@kernel.org>
+Date: Thu, 14 Aug 2025 08:59:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] dts: describe x1e80100 ufs
-To: Bjorn Andersson <andersson@kernel.org>,
- Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
-Cc: marcus@nazgul.ch, kirill@korins.ky, vkoul@kernel.org, kishon@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, mani@kernel.org,
+Subject: Re: [PATCH 2/3] ufs: ufs-qcom: describe x1e80100 quirks
+To: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>, marcus@nazgul.ch,
+ kirill@korins.ky, vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, mani@kernel.org,
  alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- agross@kernel.org, linux-arm-msm@vger.kernel.org,
+ andersson@kernel.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
 References: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
- <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
- <tlkv63ccpnti367am47ymhaw3agjnyuonqstgtfaazhhptvgsp@q4wzuzdph323>
+ <20250814005904.39173-3-harrison.vanderbyl@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,24 +105,48 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <tlkv63ccpnti367am47ymhaw3agjnyuonqstgtfaazhhptvgsp@q4wzuzdph323>
+In-Reply-To: <20250814005904.39173-3-harrison.vanderbyl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/08/2025 04:42, Bjorn Andersson wrote:
-> On Thu, Aug 14, 2025 at 10:59:04AM +1000, Harrison Vanderbyl wrote:
+On 14/08/2025 02:59, Harrison Vanderbyl wrote:
+> Describe describe driver quirks for x1e80100 ufs device
+> Signed-off-by: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 3 +++
+>  drivers/ufs/host/ufs-qcom.c             | 1 +
+>  2 files changed, 4 insertions(+)
 > 
-> Welcome to LKML, Harrison. Some small things to improve.
-> 
-> Please extend the subject prefix to match other changes in the files of
-> each patch, e.g. this one would be "arm64: dts: qcom: x1e80100: ".
-> 
-> "git log --oneline -- file" is your friend here.
-> 
->> Describe device tree entry for x1e80100 ufs device
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 9c69c77d10c8..b88cafac4da7 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -2168,6 +2168,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+>  	}, {
+>  		.compatible = "qcom,sm8750-qmp-ufs-phy",
+>  		.data = &sm8750_ufsphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,x1e80100-qmp-ufs-phy",
+> +		.data = &sm8550_ufsphy_cfg,
 
-This is duplicating earlier patches:
-https://lore.kernel.org/all/szudb2teaacchrp4kn4swkqkoplgi5lbw7vbqtu5vhds4qat62@2tciswvelbmu/
+So it is fully compatible? If so then don't duplicate entries and
+express compatibility with fallback.
+
+>  	},
+>  
+>  	{ },
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 76fc70503a62..2e143ccd1a03 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -2282,6 +2282,7 @@ static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
+>  	{ .compatible = "qcom,ufshc" },
+>  	{ .compatible = "qcom,sm8550-ufshc", .data = &ufs_qcom_sm8550_drvdata },
+>  	{ .compatible = "qcom,sm8650-ufshc", .data = &ufs_qcom_sm8550_drvdata },
+> +	{ .compatible = "qcom,x1e80100-ufshc", .data = &ufs_qcom_sm8550_drvdata },
+
+Same problem here.
+
 
 Best regards,
 Krzysztof
