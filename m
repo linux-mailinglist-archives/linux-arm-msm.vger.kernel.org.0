@@ -1,203 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-69101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A9D0B25A87
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 06:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B677EB25AC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 07:20:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA6491C20874
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 04:36:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F23E51B6594A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 05:20:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EC78207DE2;
-	Thu, 14 Aug 2025 04:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303571F4CB2;
+	Thu, 14 Aug 2025 05:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=thingy.jp header.i=@thingy.jp header.b="kfBrl5m3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cp7JjuGC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDB9202990
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 04:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3301D63CD;
+	Thu, 14 Aug 2025 05:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755146152; cv=none; b=j2zjpDKMoznGQ6tu94X6wY9sv1nkV7GySJMPX6pXDr1j9xbnApnjZQiBy3HroJ5tTglkm1vLgfUWUobu4adct6hp/IccH+PAYSEUtPZTZb+zq0ZowPWXBmIY4lneNucT1q6F9SxJIB91OZFAmuNNDk7jgwZVVidhc/wpxodUwWY=
+	t=1755148807; cv=none; b=St6lKtNCfX5RHYYVCzXec4sGQSLr80rvo6YnpHksYG7oc15JbEVC4NZNGpf244w7DFvcujjwVujXjZVo2PlLdvAb5EeKOrMCCCCSZUvpbm7yRbUO5tAZZj0FjjAjXyz1pL+nX8odp/SPK3Zq+hqArFTDJbOE1klZIeGFZFeouH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755146152; c=relaxed/simple;
-	bh=QGb/WSxQrkoalS0PQR6chjMqXIC8l1e9Dtd3KAUUo7U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BQcPfmvrLxtWka4jxabHX6tpq1TTFLpYdumO9Nl+fS18ChKU2Lkdw6nSlI34Z6JYONCxosLfdqwPYaFoVWd4fpz9r0IRzVYX+APNIa8M+/3pqUm5tOJgAu97ARvlD9v7+O3krxMa7mMMtH2ZwNHRRE+8HpnT0IHY+PTl0qBEkis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thingy.jp; spf=pass smtp.mailfrom=0x0f.com; dkim=pass (1024-bit key) header.d=thingy.jp header.i=@thingy.jp header.b=kfBrl5m3; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thingy.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=0x0f.com
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-323266d2d9eso486826a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Aug 2025 21:35:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thingy.jp; s=google; t=1755146148; x=1755750948; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W68wJmIpwZKYrhZj9rQMZlkUfiQu51PmIXBdt9PMw2k=;
-        b=kfBrl5m3X3pUKzeASIa5uThvSEb/zB82C2JruDgTOivhhSjhUjMBmcPL8IhJVxAjVG
-         6qON9Ajt9fHHBWQKEfYsoV1u4jSeEE0qNkZh6VuTz41gtP/7s1I8dBc/NuAwLu/lt9KT
-         CKKBnN/q50LzlMJEeWPS0cO85J+8t6tbmlZGQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755146148; x=1755750948;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W68wJmIpwZKYrhZj9rQMZlkUfiQu51PmIXBdt9PMw2k=;
-        b=k7+tXhcioolqmqI1B3aXy1uB8cYWCUyOe601gX9ab+/88G215u7R2KyQrXVo5ZD6St
-         bywfQDUMkq40Vb+UqUiBG/ht0h807kbDFQOVEyuaBg8/io2z4j7IKZcf0Wpt+l7b0NUc
-         nhOwvtuT/CAVFnbd5CySVyElOGhiVjA/ba8lozQEVInI+p88j+g0BNxqUAoAthKvYq/1
-         j+2e3UEeBBDTqCFqkeSQW0pg08qwylJ5lNZ0IAdg8G+NjVF4nzJUVHtRB3p/v46juBeZ
-         GZGZfcylpwQ4EYDV6uXpAiLkayC6SucJjJdM5QEJb9NVV3m/+HRetwqTfcNpNiS4CK3X
-         E6rw==
-X-Forwarded-Encrypted: i=1; AJvYcCWNfjndNGsEOPgsbUyLICKfLVlFOXeV7NOZAKXC6D6HMatkE9wxtDsRCl+dpETOFX4XwaHSmNJld/Z4ZfiX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy745FRoLH43mcpLRaXjTva4hr3Jct93qOAsthyNmMkhomAlf68
-	x6z3+pk/Nn3mMqLqgfCwMHOBnrrnU3mSt5NPpIXVxq8NhoIgOTr4RhklxgbDyphNJQTuztk0oqA
-	C32bqcxbjaUrvTnE/+vMW5TW+KQ7Kts0MRpC70rkrIg==
-X-Gm-Gg: ASbGncuBgP8ZNl2Zj4Yo3+eJKFHIFb9Xk/yd1Y5BZVLKITHlsyjvjMOSKdWVFa/FDdv
-	T3jSdjFw9xPnQvsBh1I4lFuFSxYemzaY9wrR7X34a1YfJ6wL66aIwvK1bxFnLBLDN/GjBpO8ziU
-	cMXMyg9wTkYLMjFNoubtX+3SkGvV/IcvChEjxhJ0CLQBQdVC42rxkldV55XAH9P+Q6Zf41WjPTc
-	fR0/8FWVJG7
-X-Google-Smtp-Source: AGHT+IFjwIWeQGe9GR6r4b2M90JJvm8sY4wwHgdbP9dAwNnEibxW+RtNYUEdWU1EXNpbiBYlhjSbLxcOxiikHu61EP4=
-X-Received: by 2002:a17:90b:58e7:b0:31f:6682:bd28 with SMTP id
- 98e67ed59e1d1-32327a52880mr2616043a91.16.1755146147789; Wed, 13 Aug 2025
- 21:35:47 -0700 (PDT)
+	s=arc-20240116; t=1755148807; c=relaxed/simple;
+	bh=955GqPAx8+URVP5fY56hA3MhwoymFtwtrSWj9sBohN4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tBpWP4XWdjiypf0oYuQV2nhJSQdbt9mcqpSUM6Bq5cBcbUiHSV71iyUFppcvyR270YLLU0X+IIz9rIn6yJMGEXLmNPIdusl3t5onj9ieEo3drCT/OJwkttt+DPQVcfESAu9pVB0ME7sU5KY8OJWKIKk8nnibFwCesqmv1QYj0uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cp7JjuGC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DNM9In012828;
+	Thu, 14 Aug 2025 05:20:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uszgH5P/IYDYRsCNm3CMGbNPevj32rAgSJ0vjKqpt8I=; b=cp7JjuGC9m4cg9Bk
+	hJavT0pHqiOmnT/oAsWfz/z43HzZ4xD00lWiY0Kkptq3LUptXdQVcVAsZMmWC51J
+	GzCDpRdb6MB2YKyyX41Lb9EwASkzJkUfVUzH7m9rQnu7g3ZmoCNycvpscKZANhcz
+	viMNPljp+b32keX0N2RKcjtrG/66W37Wl1SENhSGDaPpobKeOxoFLJG4D+Q/Iut0
+	p4as+onvt+kaN59QdG7N6ZhdcZp66UDJHRhYXzB8jsWJgTxGvMBDKdMlVTM4U168
+	6hOZqUw71TVYAnJd0gdLlGcXZUPdFrIgmoSceXTQ4vZ4qB1tTnd29VqMzxHuthxW
+	kzAruw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhxcgqb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Aug 2025 05:20:00 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57E5Jxru014048
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Aug 2025 05:19:59 GMT
+Received: from [10.216.12.89] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 13 Aug
+ 2025 22:19:55 -0700
+Message-ID: <eaafc695-642c-f2db-3745-d17375365621@quicinc.com>
+Date: Thu, 14 Aug 2025 10:49:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com> <20250811-clk-for-stephen-round-rate-v1-84-b3bf97b038dc@redhat.com>
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-84-b3bf97b038dc@redhat.com>
-From: Daniel Palmer <daniel@thingy.jp>
-Date: Thu, 14 Aug 2025 13:35:36 +0900
-X-Gm-Features: Ac12FXxr3rvVXpJVntmlzZatJLppeB52b6KjThcDVumW6l6FaIvxvyr3Ex-UBYM
-Message-ID: <CAFr9PXn=jJPKzMcTa-TJSNuNQknauEttNZg=jV3sBwkTYqxLcw@mail.gmail.com>
-Subject: Re: [PATCH 084/114] clk: mstar: msc313-cpupll: convert from
- round_rate() to determine_rate()
-To: bmasney@redhat.com
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
-	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
-	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
-	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek <michal.simek@amd.com>, 
-	Maxime Ripard <mripard@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
-	Gregory Clement <gregory.clement@bootlin.com>, 
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
-	Andrea della Porta <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, 
-	Viresh Kumar <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Alex Helms <alexander.helms.jy@renesas.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
-	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH RFC v2 1/3] arm64: dts: qcom: sm8750: Add Iris VPU v3.5
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Prakash Gupta <quic_guptap@quicinc.com>
+References: <20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org>
+ <20250806-b4-sm8750-iris-dts-v2-1-2ce197525eed@linaro.org>
+ <e414163e-e171-466f-965d-afb9203d32fa@oss.qualcomm.com>
+ <2ok6o4e5pz4ichhchycqkns2afzce5y6ppjr2av4yz3wc3iatk@m3cdck7csavt>
+ <956e5828-303a-44ce-d41e-0f7b977581a8@quicinc.com>
+ <2vtxgzwsr6sztu35zeebuho3ie4bbifb75v5usxfzcys2ufx4f@fnig7kqij3us>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <2vtxgzwsr6sztu35zeebuho3ie4bbifb75v5usxfzcys2ufx4f@fnig7kqij3us>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX9yZJTlTvqGDe
+ Ab/2j9CK9A7CdW9MGycVkIjGtX7B3VCZ/TeqbfB1B5lg8KWFwHmaOL/Ofadw8H+5U0NYp7B+s5a
+ K9gZJYQR8/IIwMBosR8rgqJAsCUUDsJf7QMaC0TM1SeTJFs2Rqn1r4qewRKrQtLZfatRWagijZU
+ 49vZqe8EFzM4bpSgrYaZ39c1TBieM2WolWexLsAgrKzY9yaKc+YQ6lKgX85uTQ4lEn32XT036a0
+ +Tn9gQQhabosJJYWT128xAmv+JUqWeu2S56YQNtiG4EjfjRKmnjJGTvJ3Fu/EkMy81aW+ast18d
+ BoI/ZVJL+n9wYj+vUZnTp2SErA8yzA2v9boiBdFyVz5PTZ+c9kVUydv1aUeEtaDtUKtKhyAYzW4
+ g6RZOXJz
+X-Proofpoint-GUID: nl1WqAgO1vGZ5pv-OxhJA5Q_i_MV_r-b
+X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689d7200 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=IRH4XuX63il44M5YX5MA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: nl1WqAgO1vGZ5pv-OxhJA5Q_i_MV_r-b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
 
-Hi Brian,
 
-On Tue, 12 Aug 2025 at 00:18, Brian Masney via B4 Relay
-<devnull+bmasney.redhat.com@kernel.org> wrote:
->
-> From: Brian Masney <bmasney@redhat.com>
->
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> ---
->  drivers/clk/mstar/clk-msc313-cpupll.c | 18 ++++++++++--------
->  1 file changed, 10 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/clk/mstar/clk-msc313-cpupll.c b/drivers/clk/mstar/clk-msc313-cpupll.c
-> index a93e2dba09d3523199263494efd2bf6987bb4156..3e643be02fe2a79c043c1b79a5e95c869b757ba1 100644
-> --- a/drivers/clk/mstar/clk-msc313-cpupll.c
-> +++ b/drivers/clk/mstar/clk-msc313-cpupll.c
-> @@ -140,20 +140,22 @@ static unsigned long msc313_cpupll_recalc_rate(struct clk_hw *hw, unsigned long
->                                              parent_rate);
->  }
->
-> -static long msc313_cpupll_round_rate(struct clk_hw *hw, unsigned long rate,
-> -                                    unsigned long *parent_rate)
-> +static int msc313_cpupll_determine_rate(struct clk_hw *hw,
-> +                                       struct clk_rate_request *req)
->  {
-> -       u32 reg = msc313_cpupll_regforfrequecy(rate, *parent_rate);
-> -       long rounded = msc313_cpupll_frequencyforreg(reg, *parent_rate);
-> +       u32 reg = msc313_cpupll_regforfrequecy(req->rate, req->best_parent_rate);
-> +       long rounded = msc313_cpupll_frequencyforreg(reg, req->best_parent_rate);
->
->         /*
->          * This is my poor attempt at making sure the resulting
->          * rate doesn't overshoot the requested rate.
->          */
-> -       for (; rounded >= rate && reg > 0; reg--)
-> -               rounded = msc313_cpupll_frequencyforreg(reg, *parent_rate);
-> +       for (; rounded >= req->rate && reg > 0; reg--)
-> +               rounded = msc313_cpupll_frequencyforreg(reg, req->best_parent_rate);
->
-> -       return rounded;
-> +       req->rate = rounded;
-> +
-> +       return 0;
->  }
->
->  static int msc313_cpupll_set_rate(struct clk_hw *hw, unsigned long rate, unsigned long parent_rate)
-> @@ -168,7 +170,7 @@ static int msc313_cpupll_set_rate(struct clk_hw *hw, unsigned long rate, unsigne
->
->  static const struct clk_ops msc313_cpupll_ops = {
->         .recalc_rate    = msc313_cpupll_recalc_rate,
-> -       .round_rate     = msc313_cpupll_round_rate,
-> +       .determine_rate = msc313_cpupll_determine_rate,
->         .set_rate       = msc313_cpupll_set_rate,
->  };
->
->
-> --
-> 2.50.1
->
->
 
-Only visually inspected but seems correct.
+On 8/14/2025 12:11 AM, Dmitry Baryshkov wrote:
+> On Tue, Aug 12, 2025 at 09:01:36PM +0530, Vikash Garodia wrote:
+>>
+>> On 8/12/2025 8:09 PM, Dmitry Baryshkov wrote:
+>>> On Tue, Aug 12, 2025 at 04:21:12PM +0200, Konrad Dybcio wrote:
+>>>> On 8/6/25 2:38 PM, Krzysztof Kozlowski wrote:
+>>>>> Add Iris video codec to SM8750 SoC, which comes with significantly
+>>>>> different powering up sequence than previous SM8650, thus different
+>>>>> clocks and resets.  For consistency keep existing clock and clock-names
+>>>>> naming, so the list shares common part.
+>>>>>
+>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>
+>>>>> ---
+>>>>
+>>>> [...]
+>>>>
+>>>>> +			iris_opp_table: opp-table {
+>>>>> +				compatible = "operating-points-v2";
+>>>>> +
+>>>>> +				opp-240000000 {
+>>>>> +					opp-hz = /bits/ 64 <240000000>;
+>>>>> +					required-opps = <&rpmhpd_opp_low_svs_d1>,
+>>>>> +							<&rpmhpd_opp_low_svs_d1>;
+>>>>> +				};
+>>>>> +
+>>>>> +				opp-338000000 {
+>>>>> +					opp-hz = /bits/ 64 <338000000>;
+>>>>> +					required-opps = <&rpmhpd_opp_low_svs>,
+>>>>> +							<&rpmhpd_opp_low_svs>;
+>>>>> +				};
+>>>>> +
+>>>>> +				opp-420000000 {
+>>>>> +					opp-hz = /bits/ 64 <420000000>;
+>>>>> +					required-opps = <&rpmhpd_opp_svs>,
+>>>>> +							<&rpmhpd_opp_svs>;
+>>>>> +				};
+>>>>> +
+>>>>> +				opp-444000000 {
+>>>>> +					opp-hz = /bits/ 64 <444000000>;
+>>>>> +					required-opps = <&rpmhpd_opp_svs_l1>,
+>>>>> +							<&rpmhpd_opp_svs_l1>;
+>>>>> +				};
+>>>>> +
+>>>>> +				opp-533333334 {
+>>>>> +					opp-hz = /bits/ 64 <533333334>;
+>>>>> +					required-opps = <&rpmhpd_opp_nom>,
+>>>>> +							<&rpmhpd_opp_nom>;
+>>>>> +				};
+>>>>
+>>>> There's an additional OPP: 570 MHz @ NOM_L1
+>>>>
+>>>> +Dmitry, Vikash, please make sure you're OK with the iommu entries
+>>>
+>>> We still don't have a way to describe it other way at this point.
+>>
+>> I could validate the extended "iommu-map-masks" proposal. Given that we have a
+> 
+> Was it posted? If not, let's get it ASAP.
 
-Reviewed-by: Daniel Palmer <daniel@thingy.jp>
+iommu-range (+Prakash) is a WIP, which is needed alognwith iommu-map-mask.
 
-Thanks,
+> 
+>> new binding for SM8750 [1] , does it make sense to add iommus min/max as [1,5] ?
+> 
+> Why [1, 5]? It should be [1, 2] or just [1, 1] + your proposal.
 
-Daniel
+[1,2] should be good for the iris device and remaining SIDs can be covered with
+device allocated dynamically via iommu-map-mask proposal
+
+> 
+>> such that later if new property is introduced "iommu-map-mask", it does not
+>> break ABI.
+>>
+>> iommus = <&apps_smmu 0x1940 0>;
+>> iommu-map-masks = <0 &apps_smmu 0x1947 1 0>;
+>>
+>> [1] https://lore.kernel.org/all/20250804-sm8750-iris-v2-1-6d78407f8078@linaro.org/
+>>
+>> Regards,
+>> Vikash
+>>>
+>>>>
+>>>> the other properties look OK
+>>>>
+>>>> Konrad
+>>>
+> 
 
