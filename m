@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53117B26407
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 13:18:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B834B26406
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 13:18:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BAD31C807ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:18:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98A9C179733
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:18:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACC45264A65;
-	Thu, 14 Aug 2025 11:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A3ED264A65;
+	Thu, 14 Aug 2025 11:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QYR2jDwo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XBt56d8M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8CB318132;
-	Thu, 14 Aug 2025 11:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0C5318137;
+	Thu, 14 Aug 2025 11:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755170273; cv=none; b=EldJUixLklCuJGjm/9rUwVHY+z39pQUWfakV4WBt/iCJ3yGIPgMrYMxsncsnBpzyfZz6rbgtio+SGTd8PtXClzRztqYvjnED1Ako46WurNr6bK9H0E8JCUQN7MVsrj7roqqOTMigg/thzGX2S8La5hSeXqkuXAc9qB0d8106lXA=
+	t=1755170333; cv=none; b=VSd5REu6GgI0/S/KqPrsv6EHRnECH+xtOHgCdCMyeFKtKnrO6gv124tkp9ewg+cWc3+U24dngK1uYubku8kXg4wv6fmNstfPv8WNAoXtB9d96FrCkovcg9DGLa+xLF1G8+rc3z0IOeNs0+WI/yvHKHGl+2ZE9r5xxDdiOqxigb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755170273; c=relaxed/simple;
-	bh=CrmSNiQjI6dLmQAHmFV7J3nTb/HRWk5sPuK2vdlJw7o=;
+	s=arc-20240116; t=1755170333; c=relaxed/simple;
+	bh=l6W3GNNa2WAwUtViy1k/tQbt3+KiN3frOKCKets69Mc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j89YO8iGqjDIe7/yMW0AwZCQaisNeJfoMs14eFTZtbSVj2UeIhNqXVfyS24Z1eL0uO6SyH13sItgxY69SglWTigQsQhfsu/qJLsnY2OM6IkB1zHf/on0T0zLfcwRWZA5p5VzBm5nIuJvTmdlOIfy5pMsI5rcMBSGquCTpB2tdgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QYR2jDwo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045A8C4CEED;
-	Thu, 14 Aug 2025 11:17:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qDyeec/14ddqwbiJL0AeCHl+zvKuFAoTQgYhnf7CEIKDOhQ7xWaXJCUv6SW+3X8jSlPxIZnOaikuGr+Axuk/praM9dpYkGb5/GNTjQGXTiZG0PgF/Q2EaDEhT99S1KdgZg+BKq2Tlt/J1ZtQcxyodtlrPSBFw9FT+V30749f5Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XBt56d8M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EA6C4CEED;
+	Thu, 14 Aug 2025 11:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755170273;
-	bh=CrmSNiQjI6dLmQAHmFV7J3nTb/HRWk5sPuK2vdlJw7o=;
+	s=k20201202; t=1755170332;
+	bh=l6W3GNNa2WAwUtViy1k/tQbt3+KiN3frOKCKets69Mc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QYR2jDwoJGCJzTXoQSn3vKvMkKG+BsRM0hiMI+5PhEvY4lHSJkloYlQwZp7mDN+di
-	 eNpAmyoLBKw7Cws0NUzD1X+lGN6lgYCSXduaU41VEW0Ps7CKu9snB7gHmFr151Ji4i
-	 b2mPTkLn1oqmEEja6gjDxyOF4t4wR+m7fzPUDeyInnPxq0c3UBY43Woa7UksOKiVQx
-	 r2FtIWHHGafGkqfg6SvIY7E32eUatZRNUeTy/655Z4/qCMUIePaB803eLapWK9SHhW
-	 NCwOGjozaCKcO+iWuCNqfYc/7nzR4oS/an9eSxL9OYnZiFse8N40TNb49kHAjgqLEc
-	 LEbsFwmO4kWLA==
-Message-ID: <71ad3354-15ab-48b4-9e13-ea497d4fdd79@kernel.org>
-Date: Thu, 14 Aug 2025 13:17:49 +0200
+	b=XBt56d8M0YRw8L1B1n8ASjHtP46fn9GZZfiXo5KehZHLG1X9gPus7AGNO9zSqR+Le
+	 M7+zPUkvyA1a49/WL+NgjlFGZbT94twVQrEv7etZlXVwhdRuVVWed25+B9Rjo9copS
+	 L6l7ZuBno/yqvx2GTSxpCUvIwaJtgzTgkSVMHIrGvJHXlyvIyjT4vHpQ003jDQ+QY0
+	 Xvp7yJo2Yi9HsTbIfgFqBL9nEnS8Vje76fQhhhoST3+3r2Zp/FtIBhUrsn3Kpg1szz
+	 SOg8aJlAvKFaGIcw34liyd/SS/PMWje/5xlKYr2+qLCfoG8uiibB6t+CL0fsf6OZUX
+	 yTVSxWf+935QQ==
+Message-ID: <433e1189-e2b6-4299-9fa7-13e7994ec89c@kernel.org>
+Date: Thu, 14 Aug 2025 13:18:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add initial audio support for
- Hamoa-IOT-EVK
-To: Quill Qi <leqi@qti.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20250728-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v2-1-58aa30b60c7b@qti.qualcomm.com>
- <172f1a38-d7a8-4799-ad44-f3eea69f297a@kernel.org>
- <e6e06ab1-6744-4730-a2a7-be8c66bf74a3@kernel.org>
- <MN6PR02MB1062943D66036348728930990E335A@MN6PR02MB10629.namprd02.prod.outlook.com>
+Subject: Re: [PATCH 3/3] dts: describe x1e80100 ufs
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
+Cc: marcus@nazgul.ch, kirill@korins.ky, vkoul@kernel.org, kishon@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, mani@kernel.org,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ agross@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20250814005904.39173-1-harrison.vanderbyl@gmail.com>
+ <20250814005904.39173-4-harrison.vanderbyl@gmail.com>
+ <tlkv63ccpnti367am47ymhaw3agjnyuonqstgtfaazhhptvgsp@q4wzuzdph323>
+ <57ce520f-a562-471f-b6b4-44f0766a7556@kernel.org>
+ <aa0ed59a-4eb6-4f7f-b430-4976ee9724d8@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,61 +110,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <MN6PR02MB1062943D66036348728930990E335A@MN6PR02MB10629.namprd02.prod.outlook.com>
+In-Reply-To: <aa0ed59a-4eb6-4f7f-b430-4976ee9724d8@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/08/2025 11:48, Quill Qi wrote:
-> From: Krzysztof Kozlowski <krzk@kernel.org>
-> Sent: Thursday, August 14, 2025 4:41 PM
-> To: Quill Qi <leqi@qti.qualcomm.com>; Konrad Dybcio <konradybcio@kernel.org>; Bjorn Andersson <andersson@kernel.org>; Rob Herring <robh@kernel.org>; Krzysztof Kozlowski <krzk+dt@kernel.org>; Conor Dooley <conor+dt@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org <linux-arm-msm@vger.kernel.org>; devicetree@vger.kernel.org <devicetree@vger.kernel.org>; linux-kernel@vger.kernel.org <linux-kernel@vger.kernel.org>
-> Subject: Re: [PATCH v2] arm64: dts: qcom: Add initial audio support for Hamoa-IOT-EVK
-> 
-> 
->> On 28/07/2025 13:08, Krzysztof Kozlowski wrote:
->>> On 28/07/2025 09:16, leqi via B4 Relay wrote:
->>>> From: leqi <leqi@qti.qualcomm.com>
->>>>
->>>> This patch adds initial audio codec support for the Hamoa-IOT-EVK board,
->>>> including WCD9385 configuration, micbias voltage settings, GPIO reset,
->>>> and power supply bindings. It enables basic audio functionality for
->>>> further development. Basic test is good in Hamoa-IOT-EVK board.
->>>>
->>>> Signed-off-by: leqi <leqi@qti.qualcomm.com>
->>>> ---
->>>> Changes in v2:
->>>> - Updated author email address to leqi@qti.qualcomm.com.
->>>> - Clarified that audio is validated with this change.
->>>> - Link to v1: https://lore.kernel.org/all/20250723-initial_audio_support_for_qualcomm_hamoa_iot_evk_board-v1-1-816991701952@quicinc.com/
->>>> ---
->>>> arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 232 +++++++++++++++++++++++++++++
->>>> 1 file changed, 232 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
->>>> index 843f39c9d59286a9303a545411b2518d7649a059..91618e22e86c46c698b3639f60bc19314705b391 100644
->>>> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
->>>> @@ -124,6 +124,94 @@ pmic_glink_ss2_con_sbu_in: endpoint {
+On 14/08/2025 11:46, Konrad Dybcio wrote:
+> On 8/14/25 8:59 AM, Krzysztof Kozlowski wrote:
+>> On 14/08/2025 04:42, Bjorn Andersson wrote:
+>>> On Thu, Aug 14, 2025 at 10:59:04AM +1000, Harrison Vanderbyl wrote:
 >>>
+>>> Welcome to LKML, Harrison. Some small things to improve.
 >>>
->>> This was not merged, was it? Same comment as other patch, when you have
->>> entire code ready send entire board. Not chunk by chunk.
+>>> Please extend the subject prefix to match other changes in the files of
+>>> each patch, e.g. this one would be "arm64: dts: qcom: x1e80100: ".
 >>>
->>> You are not following properly release early, release often.
+>>> "git log --oneline -- file" is your friend here.
+>>>
+>>>> Describe device tree entry for x1e80100 ufs device
 >>
->> Why this is still not included in initial submission which happens now?
->> Either you work Linux style (release early) or, if you decide to wait
->> till everything is ready, you submit board as one patch, not everything
->> as 100 different patches.
+>> This is duplicating earlier patches:
+>> https://lore.kernel.org/all/szudb2teaacchrp4kn4swkqkoplgi5lbw7vbqtu5vhds4qat62@2tciswvelbmu/
 > 
-> Hi Krzysztof, this audio change initial test is good with sound output and record fine. But with further test in Ubuntu gui only
-> 2 speakers have sound output. I am still seeing why this issue is happening. I thought to solve the issues before replying
-> and merging this, thanks.
+> (that submitter clearly expressed lack of interest in proceeding)
+> 
 
-Does not look like problem with kernel, though. If arecord and aplay, as
-you imply in your first sentence, work then the code is fine and should
-be squashed here.
+Sure, would be good though to reflect that - provide summary of previous
+discussions, changelogs or at least give links.
 
 Best regards,
 Krzysztof
