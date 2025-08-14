@@ -1,140 +1,288 @@
-Return-Path: <linux-arm-msm+bounces-69184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0477CB260FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:32:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9844B26113
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 11:35:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 242B04E5198
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:32:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93C1B16A193
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Aug 2025 09:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D9C2E92C9;
-	Thu, 14 Aug 2025 09:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84C9B2F744D;
+	Thu, 14 Aug 2025 09:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PXNjPbtC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jVE2F0nw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191A2EAB91
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2A92F533F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755163762; cv=none; b=EEfSoevSt9bGRdMoUOCGw8Ke12y/ZFmsKNRLj8wqQ23aetkeU6b/3SomtbUjYUcdwdJau6M4q/uDa7sGyd2zs718M7wMvdF2M399J4HVTeKAEfMMnWtRoNjvhv2kLgWaBHV9t9OSrbm/X3YnxocZrifx3Pxa3rluknIogstxJyk=
+	t=1755163800; cv=none; b=K7LPyGA+Ed+qHgdawInkHOLz38osIRUtMeHvDW4ZPmD+2ZAtpso2vDyieueiHDyFERyiB91hbatOPgNCAvvlvSq+wLEOnNhHNlanO9mgJmvdvbsGDuhH4p2DlNmztjD7M86xR5nKZPoz/Ij+oEWMGUn1z/kVzQgDd2gc5l+Kvyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755163762; c=relaxed/simple;
-	bh=hmfMkqS6ana0u+EpKErIDoMyw51bTZi24YBu1Ydi3bE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DeoDtKxJbdkhrkxCRelyDJhZodl6qpb9s3/LCzVwVpC/4TgHkKn0sUs879pgX0uaCYA54Tv0mneRfH7lfRQf1bSRGiDVEnVR16bYKKo3UTSrYm1Mgn+PT1QBaYrnOGycHg9WoX1uXbHWOUiYUDAZ9kzPPVPBIQ0ti3Hwi2pX1ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PXNjPbtC; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1755163800; c=relaxed/simple;
+	bh=yeIaJiujhlQe3+71eyu5K2YEOVXQy7VAvnxPoMF0NQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PzKJuXH8NoTm77yBtLVDBqK1eIfkko8fUrMRH1eFxC24d9V0ctXrOByWzQJWValAT2aGnFRa0wdEVGefz/WBI6E4ABrv/OQ33/DvXz2VPDmO793EUJDCXQ9Pk8NiKic8m0hPpY2jW1tyTLdnxSNU3W8mX0++6Z8Ypm5BAIzRAZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jVE2F0nw; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57E8uqKW012985
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:21 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57E9JFA3028399
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fk8nJ1U4NK4Cq47g1680MH6eNs+TxYDcB6S39IrWtnQ=; b=PXNjPbtC0+ZaKsqf
-	iqfflzYteWLXdyvnk16p25vqLncF302dXFfw0euC8CdGmGKWclLanuyT+Hsg+r8e
-	mT2e0paHcOAh0zG7yVKnKiy3W5pQqHDbGiFZtC/eJD0a44vS7FIKppP8JoQQ8RIq
-	JWHGLYP7LqaMdgBIpO3YC4+e1IZ+ybSqO0jHbyrX+kT/BYnywIaXNlf7Hj36UkHk
-	PdyaU5VYaPo1DbIek+etbkkWuhFNrpL2fiUwy2VTPgIM9W3gaAGsmBbhdfZX6Z4u
-	fOH1Uy+xn58uaTtKZV+CFUVDjQiUcXAGPenp2XnHViJUEABKxFFRrMH2cuY/fxPY
-	v2oGog==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffq6u0ky-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=FL3/ptxAPGZeetpJTOOhZsvI
+	cBBm9/7MW4kBRnciYeI=; b=jVE2F0nwPKvxXlR1eGcue/VMfBEG2mSvHVwMi+/c
+	QNf5QUQCJA/j8xmp6px+lmRQ9hC2La/INsHv08L04JljgzkkA4MtIKcSgT4xAJ8O
+	Noatli7ZMmsain78kJR2Grx+VjTpljd4L5eFQZwIbTCtSvJElfx8pKYzSSTeg1xh
+	iRou/TvAFxu41iabA37HFJoh7BZG6emm8Dsnbq07RSxRuuJs2iS7Z7bRO9TQ5PG6
+	K7PtMStRvGZUNjyypACVSYZs9yx26KQFtLm1cCDsLNU+Eg9oVkBtQ6D0+dWfLrlO
+	WTerNG2Qcu3ZOQvSYyZrclzVkUmrGtRCONVNZe08rdYaYA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48g9q9x7d6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b10991e9c3so1711391cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:29:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 09:29:58 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b109c382aaso21825671cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 02:29:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755163759; x=1755768559;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fk8nJ1U4NK4Cq47g1680MH6eNs+TxYDcB6S39IrWtnQ=;
-        b=PDfS3FwPpT+DLFNQSY8icp2pb9zn2G0XrWLT8UqHo0339HND3UlppgkTQRE5ZfSa7R
-         JMrE2Fo6VwOtJSPvfNOl0/AXFBGbnbUtAiTqnOC3572ZJjHksvfwiLfSQL7UOVi6EvMR
-         qasdgCWIRVC+8wHAAYXgks2Ruq7zsaqfgJuDf/iDby8V88USui45GTTHCWe12b0Iv6Wh
-         A66ede8jtmDo8hvQpr7vuB5iTZOlSplG8XJwWG5CYm7jd3m6hgaM17dO2V+bQML9l7md
-         pxJaUJSCuWOafIAec+DY9MbDAIuBawShDk7tifYbPgs8a04sW+PhChbghot8GjGDGzZK
-         z7Ng==
-X-Forwarded-Encrypted: i=1; AJvYcCVcHMF1MwWtIgH8FI/1qCYKlySTAA5O9sXxu9ghDqs6K6m8UtTqTCybY2gOspmFcL1oC5J3oUgtIKPj7yXM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoijvB0lENyfjhkH+D4RJrDg212mUVBTM2YOiJgsrIqzpEg+Wd
-	t+PwSy6/hxR9e3xghHjtFgQ0T3h9pzF3LNou/zWuI3aRxTfLTb81WfN+JR8Zc31FlpBI9EMyoLN
-	gTMOCG5oBy4hG1AX37rdfPkjULg3X5NJBo8YB40Ur7kC8nKxrSmclLBQtUP4aV0ETS6tUHsZ9oj
-	2L
-X-Gm-Gg: ASbGncu4bLsopgY/IIVAfDgnAJcZeYgKbpZTSRlYBcETt0pWC9zyEWprw+uMDJRV/7m
-	sCOBvzUPh4hiXwWWOwkjWNFx8wN4swOUMAlTeKcKh68xtSSRauj0hjivqcfcwY+nSuxuwAWIeBj
-	fhzXOWQtQkfdz5kn8rnHezmVtVZqLOT0E/2uCt0R6f3itbx1U+gTusvyXBhvcaY2oYrf25aQ+Po
-	ivVDO/LRXBYMu64tNYznvFUJvKT8cdZQ4rDlKaI6w+L/T8E+YbD5fMg+ZeiKbfwRkAZrVh3TLK6
-	HASI5XAwqzT0DJ2m/mlKzGmg/vNDecmIC1W7QigWhK0Tr8IboZroO7NcGy4+2pdEbF7911NSo0J
-	QMXmN2W7fATPOPzpTDw==
-X-Received: by 2002:ac8:7f44:0:b0:4ae:f8d8:b0fb with SMTP id d75a77b69052e-4b10aa20816mr14365031cf.5.1755163759403;
-        Thu, 14 Aug 2025 02:29:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoUkspxZxE88fQ6qSXjIdAljwmvy0iwKdluYs2HX9M4nASHP+BgW5vGIwCkTyXEfvxEYXJoQ==
-X-Received: by 2002:ac8:7f44:0:b0:4ae:f8d8:b0fb with SMTP id d75a77b69052e-4b10aa20816mr14364911cf.5.1755163758949;
-        Thu, 14 Aug 2025 02:29:18 -0700 (PDT)
-Received: from [192.168.43.16] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0a3cecsm2549508666b.53.2025.08.14.02.29.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Aug 2025 02:29:18 -0700 (PDT)
-Message-ID: <e67ec1b9-6e70-4270-8f19-1a29713a124c@oss.qualcomm.com>
-Date: Thu, 14 Aug 2025 11:29:16 +0200
+        d=1e100.net; s=20230601; t=1755163797; x=1755768597;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FL3/ptxAPGZeetpJTOOhZsvIcBBm9/7MW4kBRnciYeI=;
+        b=Q+YOCDV4aaJYv6QiQTs8g1+DkZ50qtwatLlI4S2VOXxI/8K1hmgdTpE2o0NjF531GI
+         So5exC7v9lVMzMHLDRMELSdY6zTJ1/YwilHABRrOmmcay1y+4FXP6HPPGHHeEhwYaQHB
+         FwfxclopuK0LqqygPQhPYxHvQvidw0hzl1pNF+cLAzh7j1PT/q/MNkIDIrNiSnQ3O2R2
+         /IYN8sWJQPoQE9UUBOi9bAI9fDFOgul2vnvvE8KwKx+2x0720BWtUnvzy7VwXkBs/C1P
+         S274YyFgiuhSCXsFve+tRDBCANaf8BMw05CEQhfL3sIo0HC0lmEkmQW5UVlq4hlsS5j/
+         CVZg==
+X-Forwarded-Encrypted: i=1; AJvYcCWF+vGbAy/rXStJI0yDWGLQ0EXt9boENm+g6lU2uc9I60qKIPA7OFkrzgO/PfyxHZ99pjjTawv47J/PAxYg@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywd9wJBYAqP2GIGYGMl5Oci83pseD1f6RKJvaSLjyJ+Wa+v36VB
+	QFej9GQowD8hwVUblSgGJpABbXsmZWP/bO0XgizVc35IWKh8ChFWBhZStWvLflOIx6oIJ+8MUaJ
+	KayNRYvCuDVeJAm4T4jxWlK/PaI2tQ5VQlFFuFX46C9X+hNbGHu36dVHN7YJi1Z9J3y6s
+X-Gm-Gg: ASbGncsKezPmXasLLp3SLHbOt1EPpnz6IhwpO54dcUIIYUrFyQrevE0tA7z/+g50E6w
+	xwvhAdQfLVqBgS5j+bAHa2zHS5yUpP2Z/bdivavlV+IAAUzw0OS0w9F2iPJtLAEVww7bAQcz5sN
+	5Sg39MiwiQRWzY/tQFclWhjyiHMShO8tdXJOASFeHussqL7czXj6NnGpAP4HUgxWhul9BJx/gAy
+	eOBcry98yESLXTIVyqce2+n1sDRH2/47roRfOxO80Me7J5GPED5iV4P31fkuFftcxqE587ON4fZ
+	QNX9Vi1yjoL3/ewO3MgHVPvkDACWBSeyBIz0RIEBjwV1gBBnXgeA2bOng6G1SPMNC/Bfs2MKGRX
+	9AhGp2fxWoz+SEPIIy8HKvzvsgp53WbFMjjCAM0mkm+ctYScMhwDp
+X-Received: by 2002:a05:622a:1803:b0:4b0:8633:f961 with SMTP id d75a77b69052e-4b10a7f1cf6mr38704081cf.0.1755163796509;
+        Thu, 14 Aug 2025 02:29:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9T5HYQtpktRO2l+LtxEy3BFQJdwJVqtkYfElbmhIzFfLJiWTx4n+elHd4coAchUyGuL9mJQ==
+X-Received: by 2002:a05:622a:1803:b0:4b0:8633:f961 with SMTP id d75a77b69052e-4b10a7f1cf6mr38703771cf.0.1755163796002;
+        Thu, 14 Aug 2025 02:29:56 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b8898bbc4sm5686391e87.15.2025.08.14.02.29.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 02:29:55 -0700 (PDT)
+Date: Thu, 14 Aug 2025 12:29:53 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v2 33/38] drm/msm: initialize DRM MST encoders for DP
+ controllers
+Message-ID: <ev76u4tzwvzb2gyp65a3ybng4uqyoxphprv5s35e5skkzcuv3d@m2br6djtzkdc>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-33-a54d8902a23d@quicinc.com>
+ <hxqeilu5fcgsykghxwbhp4r3exu3o45n5lftzeupjxam7r7ux7@wdrfc6lor4gl>
+ <01ccebf2-1a2c-4996-8b56-1fb951a6d8c6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/21] soc: remove unneeded 'fast_io' parameter in
- regmap_config
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        linux-kernel@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
- <20250813161517.4746-19-wsa+renesas@sang-engineering.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250813161517.4746-19-wsa+renesas@sang-engineering.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NSBTYWx0ZWRfX9XkIrCHPhzrh
- FxgRdAFce2VWmjb+O2VUwh+VjZAB7S9sxweKTfIlIeDkZCifT8aSTV+ZmN9OpEWOPKd6KXIrVcL
- DazGAisorM+8J8/qkLeyqSsaibWEK2IjajzINOn1RTCPEbmluu5KvgDPhJAo0KYNKMXJ3SVTGov
- 6vgYRjjmgND1cr1kt2vKpn5zI4o+ki0PHq9TaYXFqnh5bWWJYFimvXoSwc7Yu//jrZL1s8oOItm
- BZYPmK+04IzfztLV7JRqau1mxkwoZDtwMfYZqcXc1JcMkJ8J3nukNj5h8QzJiXzeVNDGx2r9E+D
- MQ/JRXqSDZqHFQxRmRWIFX0UleJcjoOr0FTbDF9iPRyl+w142QcjYgMCa8jDL+WEFBRQssgN/J8
- 7tIwdIuR
-X-Authority-Analysis: v=2.4 cv=TLZFS0la c=1 sm=1 tr=0 ts=689dac71 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=LDBv8-xUAAAA:8 a=EUspDBNiAAAA:8
- a=XH_MJYJbSeHrvvoHTBwA:9 a=QEXdDO2ut3YA:10 a=xtd0hNyKXt8A:10
- a=kacYvNCVWA4VmyqE58fU:22 a=DZeXCJrVpAJBw65Qk4Ds:22
-X-Proofpoint-GUID: UZHVj27MdrDay4_Q2uC4O7pIG_GjVYlI
-X-Proofpoint-ORIG-GUID: UZHVj27MdrDay4_Q2uC4O7pIG_GjVYlI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <01ccebf2-1a2c-4996-8b56-1fb951a6d8c6@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=CNMqXQrD c=1 sm=1 tr=0 ts=689dac96 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=XsrrDBSZIwLvDsITJuUA:9 a=CjuIK1q_8ugA:10
+ a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: fBcsfwJIDluqnNfCXSuQ1xJed1hLO2pw
+X-Proofpoint-ORIG-GUID: fBcsfwJIDluqnNfCXSuQ1xJed1hLO2pw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDE2NCBTYWx0ZWRfX+l4m+wMmgrNR
+ 8JsDQKTb2/2hc0Wuyjjaibzlf7y9x3gaKfktH9mEQCFvr3nJMRPKh7f3/mKIHN4lZ7ZZ+Y+zpee
+ M4YvUI+Ligf2crXSI7D1A1R5nEVEre/E9HEOwWNyvoiaujWstd0DI3fVNTccR1eXJXbcQtByNYj
+ MCs/WDHepYPmJj4ERjqFYZnnGHCbUAsr6hDmYIk6ibtL/OWTpd28c+r0JzUAk06Zl6Aj21NTsQD
+ x1qkNxcsMOoUaXXZKuzv/Xgk3QPsaP4SppZV39trzLtauM2qkXT3Gj4EpSurM8izlDP6OYqfTiS
+ yWkUaXHpMCOmNo9SAiKL9pXa9IbyqcCh9rj0jNnB/ADeusZdU4ZxRycwbxYhf7Sg5/iuMz20Zph
+ xKbXtxvV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-13_02,2025-08-11_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 adultscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508110075
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508120164
 
-On 8/13/25 6:15 PM, Wolfram Sang wrote:
-> When using MMIO with regmap, fast_io is implied. No need to set it
-> again.
+On Thu, Aug 14, 2025 at 05:11:13PM +0800, Yongxing Mou wrote:
 > 
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> ---
+> 
+> On 2025/6/9 22:17, Dmitry Baryshkov wrote:
+> > On Mon, Jun 09, 2025 at 08:21:52PM +0800, Yongxing Mou wrote:
+> > > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > 
+> > > Initiliaze a DPMST encoder for each  MST capable DP controller
+> > > and the number of encoders it supports depends on the number
+> > > of streams it supports.
+> > > 
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  2 ++
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 23 ++++++++++++++++++++++-
+> > >   drivers/gpu/drm/msm/dp/dp_display.c         | 14 ++++++++++++++
+> > 
+> > Please don't mix DP and DPU changes in a single patch.
+> > 
+> Got it, thanks, will separate it.
+> > >   drivers/gpu/drm/msm/msm_drv.h               | 13 +++++++++++++
+> > >   4 files changed, 51 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > index ca1ca2e51d7ead0eb34b27f3168e6bb06a71a11a..2eb4c39b111c1d8622e09e78ffafef017e28bbf6 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > @@ -28,6 +28,7 @@
+> > >    * @h_tile_instance:    Controller instance used per tile. Number of elements is
+> > >    *                      based on num_of_h_tiles
+> > >    * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
+> > > + * @stream_id		stream id for which the interface needs to be acquired
+> > >    * @vsync_source:	Source of the TE signal for DSI CMD devices
+> > >    */
+> > >   struct msm_display_info {
+> > > @@ -35,6 +36,7 @@ struct msm_display_info {
+> > >   	uint32_t num_of_h_tiles;
+> > >   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+> > >   	bool is_cmd_mode;
+> > > +	int stream_id;
+> > >   	enum dpu_vsync_source vsync_source;
+> > >   };
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > index 1fd82b6747e9058ce11dc2620729921492d5ebdd..45fedf7e74e9c6dfed4bde57eb675e3dd1762fc7 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > @@ -652,7 +652,8 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+> > >   	struct msm_display_info info;
+> > >   	bool yuv_supported;
+> > >   	int rc;
+> > > -	int i;
+> > > +	int i, stream_id;
+> > > +	int stream_cnt;
+> > >   	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
+> > >   		if (!priv->dp[i])
+> > > @@ -675,6 +676,26 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+> > >   			DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+> > >   			return rc;
+> > >   		}
+> > > +
+> > > +		stream_cnt = msm_dp_get_mst_max_stream(priv->dp[i]);
+> > > +
+> > > +		if (stream_cnt > 1) {
+> > > +			for (stream_id = 0; stream_id < stream_cnt; stream_id++) {
+> > > +				info.stream_id = stream_id;
+> > > +				encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DPMST, &info);
+> > > +				if (IS_ERR(encoder)) {
+> > > +					DPU_ERROR("encoder init failed for dp mst display\n");
+> > > +					return PTR_ERR(encoder);
+> > > +				}
+> > > +
+> > > +				rc = msm_dp_mst_bridge_init(priv->dp[i], encoder);
+> > > +				if (rc) {
+> > > +					DPU_ERROR("dp mst bridge %d init failed, %d\n",
+> > > +						  stream_id, rc);
+> > > +					continue;
+> > > +				}
+> > > +			}
+> > > +		}
+> > >   	}
+> > >   	return 0;
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > index 9dbcf4553cad70c9e3722160a87403fc815765d7..ab1ad0cb6427eb4f86ee8ac6c76788b1a78892a8 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > @@ -1417,6 +1417,20 @@ static int msm_dp_display_get_connector_type(struct platform_device *pdev,
+> > >   	return connector_type;
+> > >   }
+> > > +int msm_dp_get_mst_max_stream(struct msm_dp *dp_display)
+> > > +{
+> > > +	struct msm_dp_display_private *dp_priv;
+> > > +
+> > > +	dp_priv = container_of(dp_display, struct msm_dp_display_private, msm_dp_display);
+> > > +
+> > > +	return dp_priv->max_stream;
+> > > +}
+> > > +
+> > > +int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
+> > > +{
+> > > +	return msm_dp_mst_drm_bridge_init(dp_display, encoder);
+> > 
+> > What's the point in this oneliner?
+> > 
+> Emm, here we consider declaring the msm_dp_mst_drm_bridge_init() in
+> msm_drv.h and drop the one-line wrapper.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Just do it, please.
 
-Konrad
+> 
+> 
+> > > +}
+> > > +
+> > >   static int msm_dp_display_probe(struct platform_device *pdev)
+> > >   {
+> > >   	int rc = 0;
+> > > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> > > index a65077855201746c37ee742364b61116565f3794..dd403107b640ee5ef333d2773b52e38e3869155f 100644
+> > > --- a/drivers/gpu/drm/msm/msm_drv.h
+> > > +++ b/drivers/gpu/drm/msm/msm_drv.h
+> > > @@ -372,6 +372,9 @@ bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
+> > >   			       const struct drm_display_mode *mode);
+> > >   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+> > > +int msm_dp_get_mst_max_stream(struct msm_dp *dp_display);
+> > > +int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
+> > > +
+> > >   #else
+> > >   static inline int __init msm_dp_register(void)
+> > >   {
+> > > @@ -388,6 +391,16 @@ static inline int msm_dp_modeset_init(struct msm_dp *dp_display,
+> > >   	return -EINVAL;
+> > >   }
+> > > +static inline int msm_dp_get_mst_max_stream(struct msm_dp *dp_display)
+> > > +{
+> > > +	return -EINVAL;
+> > > +}
+> > > +
+> > > +static inline int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
+> > > +{
+> > > +	return -EINVAL;
+> > > +}
+> > > +
+> > >   static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display)
+> > >   {
+> > >   }
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> 
+
+-- 
+With best wishes
+Dmitry
 
