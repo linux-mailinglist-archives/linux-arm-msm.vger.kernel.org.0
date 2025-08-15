@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-69394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E057B28487
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 19:00:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B5AFB28490
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 19:01:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D8DC1BC685E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 16:57:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7300C585849
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 16:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E4D8257848;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D81B257840;
 	Fri, 15 Aug 2025 16:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j+B9X3KL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B4Eyik9U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAB92E5D34;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA8F2E5D1A;
 	Fri, 15 Aug 2025 16:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755277014; cv=none; b=erau4OIk2ZCYlrUYGmrsDjPOmd2R3HicVMdrl26yAWiF+pTjjSuUt+692TO/ItHmADGVx8qr/146+v1wV2yuNQz3hHvYoyumFYiT7xsiD4rjVg+APzA+elKtO0w4mXV5MndLKN0I4SsQYRd29kllyI+JicgcacCgAkZiosW77S8=
+	t=1755277014; cv=none; b=c94+u8ohNJ20trCOnQ10Ulvyj5H4mecHIC2kaNdT/fhCpws6C8UiM2NSQasJvS3MeZFR6V88Mu8hrtQ0VRvEuTiZQIoNg9Q5yqjhdOs4m2IeRPWnz6/cng+pofZ8Av/RD/9+1+UGaK3MsxM3zBvCPfh8gDPEAed2M9BTzztAheA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755277014; c=relaxed/simple;
-	bh=HElbIKK8aSTKmO/ZwAiZrBwwRzKY55uzVhucMeSfW5A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GZxzB1rh/HPITwgC7HmiMSedGrUk5EIWQFIsrhVqEypDGxJiLS8g5qjV0wV2abuyCSmn2AB/o+/omlZdpL/DEWlIIVsIBB426K+OxLWs21EEBJ5WNwK30QSEVMufREsWHdsKWwuQqCJ2r6AZCeRbWUa+LUieU/psmOxPGik1vww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j+B9X3KL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EEC77C4CEEB;
-	Fri, 15 Aug 2025 16:56:53 +0000 (UTC)
+	bh=rBXgpysoY+gnq8IhpusCOZ76mZReBd5LL35VLZtWing=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Lw5gALKqZY5lNAzl8fjVGkXGZ2YKrPdw7ugU6fGo/N9WjKxhCxAlrHGNlCnTcSLyuLRpUEqfnyY1WcXsLGJmtMzlnmfhwWfXG7NnIfT3e0X67TsOzQZzcQ5lxvSnFqIJ+U5tHl+1aUnZv3CVe7fJDrZ7SEPYlXPzJf9zARjPwTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B4Eyik9U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 07E51C4CEF5;
+	Fri, 15 Aug 2025 16:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1755277014;
-	bh=HElbIKK8aSTKmO/ZwAiZrBwwRzKY55uzVhucMeSfW5A=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=j+B9X3KLCApZbmu3GnwfABlxXZ4q7PDZ7LTJ3IgerNVN9fH1ADSCrmZbI09I91hN/
-	 6k7TGro/fKTran92mfvkFfUMBLaRjItmuObEk9m5dRZa/voixGyx4srpR9EIb4+3aG
-	 WisQqtV7zWtDBUFJEbV6SwsDf9FzVwWX+kKHcDXuBVJJjjLbm+z+85fbk9oaorI6nu
-	 5v2/a7+WNaa8oPDW0+sDYI4EFSx5xIlfyNHl5GdyQ44OGuvMmMJ4d/CJBqPHwqvcGq
-	 h8Jbn+g5UfhNzQBmKYdXJdgJApCl6nbn2XkD5/DnkdR5tzLo5s9GKPLRquVQzaSJF4
-	 BxPUxTWYHbaFw==
+	bh=rBXgpysoY+gnq8IhpusCOZ76mZReBd5LL35VLZtWing=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=B4Eyik9UkkAlEbX0OnSHoqBYoyssGw0JdsEly7d9L5VfGVtxVEeZgyThRKz9PfpnC
+	 GN7eCEp9mXISA8fHwBWoVv7mhzBkprZrShfTn9sEabwijxlwUHxDP2WEUgosBELL9b
+	 UsCbpvpZ8qNnlfRa9M+pAsLIDwXDoCXjvdneHLo9Eaz9hVxYhVd5D5o26YHF2mL/Hh
+	 kCZOpXy2jfOieF1JtrUclUlEHfHg5sgG9C3zB8UHA1djgS7oog98swpjI1k5j8yXpj
+	 08CmBhtGdDNPD9DhIXvmdF19qnIxzc5LMceiBD+EOY6ZphHnnvqPsJFYhTZ8WL6GMW
+	 rbE7s6z8cmjTA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E689ECA0EE6;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3360CA0ED1;
 	Fri, 15 Aug 2025 16:56:53 +0000 (UTC)
 From: Nickolay Goppen via B4 Relay <devnull+setotau.yandex.ru@kernel.org>
-Subject: [PATCH 0/2] Add LPASS/CDSP vote clocks/GDSCs for SDM660
-Date: Fri, 15 Aug 2025 19:56:50 +0300
-Message-Id: <20250815-gcc-sdm660-vote-clocks-and-gdscs-v1-0-c5a8af040093@yandex.ru>
+Date: Fri, 15 Aug 2025 19:56:51 +0300
+Subject: [PATCH 1/2] dt-bindings: clock: gcc-sdm660: Add LPASS/CDSP vote
+ clocks/GDSCs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,10 +56,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANJmn2gC/x3NwQqDMAyA4VeRnBeouoruVcYOXRJr2GxHM2Qgv
- vuKx+/y/zuYFBWDW7NDkU1Nc6poLw3QElIUVK6GznXeja3HSITG6zA43PJXkN6ZXoYhMUY2Mrz
- 208w9PWkMHmrmU2TW37m4P47jD6fJg3RyAAAA
-X-Change-ID: 20250815-gcc-sdm660-vote-clocks-and-gdscs-439fd3cbc8a5
+Message-Id: <20250815-gcc-sdm660-vote-clocks-and-gdscs-v1-1-c5a8af040093@yandex.ru>
+References: <20250815-gcc-sdm660-vote-clocks-and-gdscs-v1-0-c5a8af040093@yandex.ru>
+In-Reply-To: <20250815-gcc-sdm660-vote-clocks-and-gdscs-v1-0-c5a8af040093@yandex.ru>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -69,11 +69,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  Nickolay Goppen <setotau@yandex.ru>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755277013; l=748;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755277013; l=1259;
  i=setotau@yandex.ru; s=20250815; h=from:subject:message-id;
- bh=HElbIKK8aSTKmO/ZwAiZrBwwRzKY55uzVhucMeSfW5A=;
- b=1Y/v7jrQ+XTqQsZpbZdJh6yqm0HdBSkFxvGa3BEhEupM7VwzpKN4g5DA0elflLl/B5zP9XrZ+
- h8T7wWJRQssCLhVuMftAyCUKvFxQhxGwrHialySwjjUc14rK6yXvYN8
+ bh=AoBDT6b0uXhJ4amBaHImHoToM08z45e1CvJ1xPwygak=;
+ b=4W9WG60wNXi8SMokbFHuJMZ+BxikzBsYa8aObjWofHxKtTW/yhkFLY68bceJcXpnKMzenDqFs
+ tJepivwLnSdAtDREvFd+YVm+pEbp2iXm/aKSwM670nkQURMxcsu04mi
 X-Developer-Key: i=setotau@yandex.ru; a=ed25519;
  pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 X-Endpoint-Received: by B4 Relay for setotau@yandex.ru/20250815 with
@@ -81,26 +81,42 @@ X-Endpoint-Received: by B4 Relay for setotau@yandex.ru/20250815 with
 X-Original-From: Nickolay Goppen <setotau@yandex.ru>
 Reply-To: setotau@yandex.ru
 
-This patch series adds LPASS/CDSP vote clocks/GDSCs to gcc-sdm660 driver.
-These clocks are needed for properly functioning of SMMUs related to the
-audio/compute DSPs.
+From: Nickolay Goppen <setotau@yandex.ru>
 
+Add defines for the missing clocks, which are required to power up the
+related remote processors.
+
+Co-developed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Nickolay Goppen <setotau@yandex.ru>
 ---
-Nickolay Goppen (2):
-      dt-bindings: clock: gcc-sdm660: Add LPASS/CDSP vote clocks/GDSCs
-      clk: qcom: gcc-sdm660: Add missing LPASS/CDSP vote clocks
+ include/dt-bindings/clock/qcom,gcc-sdm660.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- drivers/clk/qcom/gcc-sdm660.c               | 72 +++++++++++++++++++++++++++++
- include/dt-bindings/clock/qcom,gcc-sdm660.h |  6 +++
- 2 files changed, 78 insertions(+)
----
-base-commit: 1357b2649c026b51353c84ddd32bc963e8999603
-change-id: 20250815-gcc-sdm660-vote-clocks-and-gdscs-439fd3cbc8a5
+diff --git a/include/dt-bindings/clock/qcom,gcc-sdm660.h b/include/dt-bindings/clock/qcom,gcc-sdm660.h
+index 74c22f67da213b8e54109785a564d3be756fd6c6..f19018b742f5ce7f96fad99c126934347cececae 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sdm660.h
++++ b/include/dt-bindings/clock/qcom,gcc-sdm660.h
+@@ -138,10 +138,16 @@
+ #define GCC_UFS_UNIPRO_CORE_HW_CTL_CLK		128
+ #define GCC_RX0_USB2_CLKREF_CLK			129
+ #define GCC_RX1_USB2_CLKREF_CLK			130
++#define GCC_HLOS1_VOTE_LPASS_ADSP_SMMU_CLK	131
++#define GCC_HLOS1_VOTE_TURING_ADSP_SMMU_CLK	132
++#define GCC_HLOS2_VOTE_TURING_ADSP_SMMU_CLK	133
+ 
+ #define PCIE_0_GDSC	0
+ #define UFS_GDSC	1
+ #define USB_30_GDSC	2
++#define HLOS1_VOTE_TURING_ADSP_GDSC 3
++#define HLOS2_VOTE_TURING_ADSP_GDSC 4
++#define HLOS1_VOTE_LPASS_ADSP_GDSC 5
+ 
+ #define GCC_QUSB2PHY_PRIM_BCR		0
+ #define GCC_QUSB2PHY_SEC_BCR		1
 
-Best regards,
 -- 
-Nickolay Goppen <setotau@yandex.ru>
+2.50.1
 
 
 
