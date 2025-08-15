@@ -1,171 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-69416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88AA4B28833
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 00:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA961B28837
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 00:15:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCDA91CC4301
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 22:12:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBF9B1CC7633
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 22:15:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32FFA248891;
-	Fri, 15 Aug 2025 22:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F5D583CD1;
+	Fri, 15 Aug 2025 22:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kW83flYO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZYORBlw2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF5628399
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A051A9B58
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755295915; cv=none; b=FapGhARLH6rhAtNuIYyk5mm/q1KeyzA7EXPxJzPbg4Sz5f5jkH0KVWwQXmiyD8XnAJgN105ylFpByiMTXWCf2bPlzhEUY+b+X/7gZSg6mSph+Sr0tBRn7fVk9CvLEoqmq92Lz+tZOiO7KzbZ165596Q2uWZKsvfMHoiD4HZTx5U=
+	t=1755296130; cv=none; b=Js+hNay8sgEeZEftWUAzyr45XfLPQEVI6zH0OA0cMuC9FHIowunmW2dC5xuGK/A+x+rEL+JrFgbRv1TPWYb/N2oWbEBqqroBzW7zefLbCDMUDpXGy0w2v5ot2pmvqGWOdu+Fvk3YFFilXq5bDGYoj++MPPjs+8mf5mk/6q7ZXKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755295915; c=relaxed/simple;
-	bh=f+UKnnSodDZgqonVwt9+xswBGG14TU8cblfKES3nCm8=;
+	s=arc-20240116; t=1755296130; c=relaxed/simple;
+	bh=nUr5qFrjfTS8YbLDUJC+wXeA3Df2CTjn/ZgcuYA7T3c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bw3pgclcfmEgLHeIqbho/L+sooFps5kDDGfXsJCSj9od2jh817OlXA+mpX3rOm+3kplua7Vpda//85fSobc4tvvp45OlmbieyAbTXRAnTfbzhjXc2HFH1b9C3WjDJDTgcFYslD+jfSdbub+Hd/fqQ65c3nkVZJIByJSbkjqjLas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kW83flYO; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=HytZyCxRb7KotI/TQlfrjNY7hkETw8CR54v9yE5JG5QEMvKyVkQzaB0m1pVCYhcvq651pDUiBlVPmdsqQRh6jjoc4Job/Jpd2kW8MVnWes2Ix936Bn5PfZxyWFqAwoxfhcpeLpAhf+yS/fxvausPITx7ioKdrCxoTqRMBEVrhWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZYORBlw2; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57FEIrb2027635
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:11:52 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57FEJHRt032108
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:15:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/5zM8IHcV3H7gOoelJ/+z7CJ
-	/41CkydC6cvDm/kl5Xg=; b=kW83flYO9wLl1Grkz7IRoSfW7jFiDVuHUaG8briE
-	O79Z/pyF2XrLqjis7GA/l/wOiSas7jkcYF79tem2ZXVDi6y+D7Q+a4whV7WfvTqQ
-	txVAoVEKoVgkMUBVNMbPCQ/7raC9ICkeq4nYI9Z7VO5dbv3BLvksC1ZX12y4nkZj
-	3cdNswY098BE69vYOtsNgcI/7kWxoE2W3IqWBT5Xu/4gyzFL/3xs8feZ1fgfpPIa
-	H1yWdFP3afcnfZtE9qQ/hSOfwAGs+eMayZw8Bd2Db8JFIwnbu6yscn2IrMfLm/py
-	+heQ/omcnxSGSPJCzQn3Pb/tqEMt86aDTM4Epg/sP/P8Jw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffhk04kj-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vLwoZ01402e5OUdx+YObu7+diNTS+/oRxZLwC4jp6ok=; b=ZYORBlw2Y0wJA99p
+	ZFQw/o9vfPMrDngZv/ZJrpowjeNtqjCvXoPnz8dwFhXQMh0hnRNlXrMyZ7OxaWQU
+	2GrkL9yVwR22+jBq1SA2HN9k3vcRN8Zg9hY4rWLL4sO/VFkEjHZ0J6IjbOBKYhUZ
+	2BIGXaeqjD7iN7mbiwO0wrvNv/6SBiXzY8GJ18sMTQbLE34ub381+H0PWg1/1ZKD
+	Bd/ciQtTPW4pNNf+09k3IZ6mIb5jjk6Aro/Yv0ShHBGdpLSZGpCC9pHFKZ6UzQz/
+	zURKTzyASfE5/CQ+uIqc7BzDHtNVJX5GGmcdh4QZYCxu1ykctE+D6vSycS+7MENN
+	Z7trfw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48g9qa3c8q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:11:52 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b109bccebaso60697761cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 15:11:52 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 22:15:27 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70a94f3bbdbso48823016d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 15:15:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755295912; x=1755900712;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/5zM8IHcV3H7gOoelJ/+z7CJ/41CkydC6cvDm/kl5Xg=;
-        b=KfRxMrGSxvezuFTV3MHtfuhPOlPVJswtTEF00RAEZZ8yR/bdBW9QMGpc00o7sDyrG8
-         IawXZQnHvV6hwbLMt107cBiFk9bP/z/5+kqfyk4FIz/xemBSQRGhM46xXKPqOYqnP4V3
-         zBnBj0nnu5bAsIqRSIfxRlxeCm6SA1oqXH0qEOsKtt11jIew8Mz2QZq0az5u6CTdwQjm
-         P7aAe/t0Facy3IWH63owH88XYK+T0IBrRiy1tvFgLkpv+my/VzT2y6EkxljTCg8ION4t
-         VH1ZH9kuu8raxIly7XYRvk81P6GtgE8DD5lGBOtzRbiD2wf1k7S4UwYEbGXb5HJ7p84K
-         U7bw==
-X-Forwarded-Encrypted: i=1; AJvYcCX4IbDHWo9S+cPyZBd/EuZCETGZd5rnLUFOBeeiD/YSYkNsVuNMCxcheI4m20QtMTQyfIvYU25WbxF/2IBS@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB1xkpvk5Z+Qdxab6IeI14t0IDywsljTJTqRRE55AvvdOFFIPr
-	vh/Bqkbf185VhMCTXMPef4sYSvoCOExYWUCqYZNI9/LNRVLTSsEPSgRvTnpwKC+FiH+ip4+ZsOf
-	KrHm/5rMGQbUunZ+qoxozfylphijbaU8CAw1W1n9BMSo7fSw579vt7EMzzYvnVcTYsuSe
-X-Gm-Gg: ASbGncsJz/tJKltVll7bVHiQRnspwGoXRwi1txUXI9sRxtUqvh9fE9dpUGeNr5CxP8A
-	/PQL0aFgSNAJ+/A5GCk/BrbZlI3BuzoQ9C/aCZR5As7EBMy1njFeZ/f6J9NGqGIyO3e3F7oxwLW
-	m2LT9nkmLU+l4+mV4ZVf6kq0wscsap0UvOEtr67ibYZ8KR6kM3u//8Cj9Aud4E6Gw2KrRNHsyXc
-	dZQyXHrG/J7nFp8hmNZKE/PUIwbml0QhHIHLrTD7ydXiATCHpr7z9eydm62BmU+Di5UmzRBELbm
-	lRNTE54eVeYGCRj7DRNDB59Z/epN5c7ByMNpDFRIn6nqiEQQaiJtjTsPznWqIlgVc4oiQPvYF0u
-	e3mtqCBdD1XAcvH1L0VuM/8q6MqW0X1v5ioHx5OuTt0M/s65Gdrsd
-X-Received: by 2002:ac8:594d:0:b0:4b0:7989:13db with SMTP id d75a77b69052e-4b11e2ca210mr52381751cf.58.1755295911620;
-        Fri, 15 Aug 2025 15:11:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrQWvY1JLzgvTKFhi3lkvOceh7xXj0igfHgQCFQG8XwNnsUGy125Fd59SjzF+Z00CJp0H2qw==
-X-Received: by 2002:ac8:594d:0:b0:4b0:7989:13db with SMTP id d75a77b69052e-4b11e2ca210mr52381311cf.58.1755295911092;
-        Fri, 15 Aug 2025 15:11:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755296126; x=1755900926;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLwoZ01402e5OUdx+YObu7+diNTS+/oRxZLwC4jp6ok=;
+        b=u/ICbyqewQhBPFJgQZRfLc/1KGh1rmU6wkAqFu32bASlM6xwvvJ3rCn7jOglkhLBub
+         y23TUy6xAStW7aLkhaS+cAuJknzmA8kszSCQUPS7NbkctuHAp4m8eoY7HnegrfiJAkqB
+         sKKVRUcKbG1mkjAJqTsJtS+iFVrgqWkCraPWF2h9ywwnqZhxm3zCHymQaQxO2DdbQi1+
+         hQmWBvVnXM4txPvrKTGvUF0vr3JtqsK+BYx+UPlwflgQBAzoXRulOoKX5Py0ccn13+r5
+         QpoXSt//81GGk1hbFL0P+3cNUi8qxshLsS3gnZPuw7hIn7CWiXK3L7vmTXxOjzBu7b+7
+         gFWw==
+X-Forwarded-Encrypted: i=1; AJvYcCXg19rv70IWgF4Kc6+c0bLu4M1lzzprNwW0lXHgHXHWFluzTdlS1usgfb1E1AKSoHvHXeQM1aW85n08Oi6l@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpoBZlNqoEnSwu2P0NndjodNaFGFOpB3uI7UiVPov6soeKGgQy
+	sp/KR16LSUe6NUNlJbxCaUJzxEie8WVHx7igYHD42bFQqRsDub8epLKTWlojkJGW3sGyQWldMhu
+	ZCLAsncqv+vvYio22Van6zCTGm2gT6lVf40BfaaIRILF1bGYwNZU1y9T36Wp2x8HqLORT
+X-Gm-Gg: ASbGncsjDIICT2K7YFU5jjJS070Mk1ZNRpMhm2uwuv8JNMO5AJxNEQd1t45MWwEoVlT
+	QWL9JuuZwRVE4RafJN6VL7KycLDlWIXiSfbQn/g2LHIb68VrZckfyB7j6GB+YHdCaghZNQgeHjT
+	SzJcfHNimEGpkm7hIXI8+WbVkRPKUCSdl9P4DD5gVYkemKl0WCAe3XJW3VfqenILZtadzWoOi5O
+	XcTeodvjDyvaY7/6lZQuNnhnjllZRK+g94pr04HldCo3lZ7WFpdIo7xHSTqlhaiLX6R9MVDO2qQ
+	3qin5qNRKF/BEl/+LSiv8/FqLuqVkhVFC9FNwHhAHpVSMNiK7y9HKmo/9A6EUmetKYbDyUNqbu/
+	+GGcyVodSZOZ25Zmdoc2HWOh6KfjJTnLDZGQhEQgGk+CaKVrGx8Ix
+X-Received: by 2002:a05:6214:1c47:b0:709:b94b:a6ad with SMTP id 6a1803df08f44-70bb060c40bmr6445266d6.29.1755296126532;
+        Fri, 15 Aug 2025 15:15:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHetHJNt5dVNj424oIDhrEYTzfBXQUTAzwS+BLLxQUPTiMlfCIGu7YxB8m6v/QsySngCnMZ7A==
+X-Received: by 2002:a05:6214:1c47:b0:709:b94b:a6ad with SMTP id 6a1803df08f44-70bb060c40bmr6444836d6.29.1755296125981;
+        Fri, 15 Aug 2025 15:15:25 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef3cc6a3sm519733e87.102.2025.08.15.15.11.49
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a41d5a0sm5871491fa.2.2025.08.15.15.15.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Aug 2025 15:11:50 -0700 (PDT)
-Date: Sat, 16 Aug 2025 01:11:48 +0300
+        Fri, 15 Aug 2025 15:15:25 -0700 (PDT)
+Date: Sat, 16 Aug 2025 01:15:21 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        johan@kernel.org, linux-arm-msm@vger.kernel.org,
-        Christopher Obbard <christopher.obbard@linaro.org>,
-        Rui Miguel Silva <rui.silva@linaro.org>
-Subject: Re: [PATCH v7] drm/dp: clamp PWM bit count to advertised MIN and MAX
- capabilities
-Message-ID: <b3h3anmvna2p37gkio7xh7dgl4h7cz7weimu33mwhfk5rtytb2@wvhoskaiwhm4>
-References: <20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm: adreno: a6xx: enable GMU bandwidth voting
+ for x1e80100 GPU
+Message-ID: <ihpfgzrl4xizlhpm2w53oesmdhc63cwbjwq43ano7avbrd6emb@qjdgnzxsoo35>
+References: <20250725-topic-x1e80100-gpu-bwvote-v2-1-58d2fbb6a127@linaro.org>
+ <e7ddfe18-d2c7-4201-a271-81be7c814011@oss.qualcomm.com>
+ <33442cc4-a205-46a8-a2b8-5c85c236c8d4@oss.qualcomm.com>
+ <b4f283ce-5be1-4d2f-82e2-e9c3be22a37f@oss.qualcomm.com>
+ <269506b6-f51b-45cc-b7cc-7ad0e5ceea47@linaro.org>
+ <1727374d-0461-4442-ab35-9acb8ef7f666@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NCBTYWx0ZWRfX5tvqDYWgZqew
- Hg5ar6o4bAKX+MEpEepUwBizCtRMAm3if9SORxtpeXMG7gArpMSbZS9+w+V5aivNM0OHScztNfS
- K7vcg05EXJqevORFxYC5ACfHkrMEoAg17EYB2R8uwW6mUitfBI3spOxPLzOhTLq7DbVxkWSo2nU
- OqXPR+QZXmUAMbaDp5dWIQdqAwvV3EnWBKmNYMz6CK+f9mVkq7NEPTHmql5OvKgWJBudgzQN+qa
- PpveO4SgNQ1Vtc+8Bebg6Z6M3sIiWPJh+Xt+xmDk++XPd8ZDG2etfayR7ZDE/Bbqk8E0N3kiOaO
- oLD9lpiyb39PCjpap4T3Jde9xouBvg269pwG5F1mlkEIc1qxvvZxr9d0ReS+3rqRxWnspgm4afc
- XX4V+nLB
-X-Proofpoint-GUID: zKOevBo4e1YO3ML9tpXjvS8--GeVzPQb
-X-Authority-Analysis: v=2.4 cv=TJFFS0la c=1 sm=1 tr=0 ts=689fb0a8 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=YrjviDGP2Rj_hCM7jl4A:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: zKOevBo4e1YO3ML9tpXjvS8--GeVzPQb
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1727374d-0461-4442-ab35-9acb8ef7f666@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=CNMqXQrD c=1 sm=1 tr=0 ts=689fb180 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=2EPmbxBH5dp_UOPDRz4A:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: HUVbEWPPtpCe5UNxfbhvkHIfx22y50mW
+X-Proofpoint-ORIG-GUID: HUVbEWPPtpCe5UNxfbhvkHIfx22y50mW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDE2NCBTYWx0ZWRfX88rmgq3vzUiP
+ BGlDE1tbbD6m/NsReYdaZ5FPjVcFGKc5EjZC20y0uNHQ58NI7SsHeTiTXTTUON8dvT/NcINeRqa
+ cFckh/dt9OV9CHuB8+VZ1ZOtESGoVfnWaHnRtyu+HjGNOyGXBC2HtfcFGhzcZU3i6YpjDEnJDsF
+ 9VHbuQ1xHx69l7TGuxoiC+lUsbweFR3Z08qmWPU3uwadgCID0JbnLtfes1t8Rhjk6msrFMjgfjU
+ 0EcdHuj2Mzgf+pS5ruvrN83HNHo50FQwj3JoEgxpi1uKAicM+G6xHwRVUfSW1ZXiEKtBCKttQGH
+ iPQDaRZrwMpI5TTIcpP7AYhUKWpIexOvrux9przNbNR3fDNWRUsTR5k2KfWkVnD0VBcK+BS9wC0
+ hbtIOzFK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-15_08,2025-08-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110074
+ spamscore=0 adultscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508120164
 
-On Thu, Aug 14, 2025 at 04:16:09PM +0200, Neil Armstrong wrote:
-> From: Christopher Obbard <christopher.obbard@linaro.org>
+On Thu, Aug 14, 2025 at 10:08:26PM +0530, Akhil P Oommen wrote:
+> On 8/14/2025 7:56 PM, Neil Armstrong wrote:
+> > Hi,
+> > 
+> > On 14/08/2025 13:22, Konrad Dybcio wrote:
+> >> On 8/14/25 1:21 PM, Konrad Dybcio wrote:
+> >>> On 7/31/25 12:19 PM, Konrad Dybcio wrote:
+> >>>> On 7/25/25 10:35 AM, Neil Armstrong wrote:
+> >>>>> The Adreno GPU Management Unit (GMU) can also scale DDR Bandwidth
+> >>>>> along
+> >>>>> the Frequency and Power Domain level, but by default we leave the
+> >>>>> OPP core scale the interconnect ddr path.
+> >>>>>
+> >>>>> Declare the Bus Control Modules (BCMs) and the corresponding
+> >>>>> parameters
+> >>>>> in the GPU info struct to allow the GMU to vote for the bandwidth.
+> >>>>>
+> >>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> >>>>> ---
+> >>>>> Changes in v2:
+> >>>>> - Used proper ACV perfmode bit/freq
+> >>>>> - Link to v1: https://lore.kernel.org/r/20250721-topic-x1e80100-
+> >>>>> gpu-bwvote-v1-1-946619b0f73a@linaro.org
+> >>>>> ---
+> >>>>>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 11 +++++++++++
+> >>>>>   1 file changed, 11 insertions(+)
+> >>>>>
+> >>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/
+> >>>>> gpu/drm/msm/adreno/a6xx_catalog.c
+> >>>>> index
+> >>>>> 00e1afd46b81546eec03e22cda9e9a604f6f3b60..892f98b1f2ae582268adebd758437ff60456cdd5 100644
+> >>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> >>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> >>>>> @@ -1440,6 +1440,17 @@ static const struct adreno_info a7xx_gpus[] = {
+> >>>>>               .pwrup_reglist = &a7xx_pwrup_reglist,
+> >>>>>               .gmu_chipid = 0x7050001,
+> >>>>>               .gmu_cgc_mode = 0x00020202,
+> >>>>> +            .bcms = (const struct a6xx_bcm[]) {
+> >>>>> +                { .name = "SH0", .buswidth = 16 },
+> >>>>> +                { .name = "MC0", .buswidth = 4 },
+> >>>>> +                {
+> >>>>> +                    .name = "ACV",
+> >>>>> +                    .fixed = true,
+> >>>>> +                    .perfmode = BIT(3),
+> >>>>> +                    .perfmode_bw = 16500000,
+> >>>>
+> >>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >>>
+> >>> Actually no, BIT(3) is for the CPU (OS), GPU should use BIT(2)
 > 
-> According to the eDP specification (VESA Embedded DisplayPort Standard
-> v1.4b, Section 3.3.10.2), if the value of DP_EDP_PWMGEN_BIT_COUNT is
-> less than DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN, the sink is required to use
-> the MIN value as the effective PWM bit count.
+> You are right that BIT(2) is GPU specific, but that support was
+> commercialized from A7XX_GEN3. Anyway, the Win KMD uses BIT(2), so lets
+> use that in Linux too.
 > 
-> This commit updates the logic to clamp the reported
-> DP_EDP_PWMGEN_BIT_COUNT to the range defined by _CAP_MIN and _CAP_MAX.
-> 
-> As part of this change, the behavior is modified such that reading both
-> _CAP_MIN and _CAP_MAX registers is now required to succeed, otherwise
-> bl->max value could end up being not set although
-> drm_edp_backlight_probe_max() returned success.
-> 
-> This ensures correct handling of eDP panels that report a zero PWM
-> bit count but still provide valid non-zero MIN and MAX capability
-> values. Without this clamping, brightness values may be interpreted
-> incorrectly, leading to a dim or non-functional backlight.
-> 
-> For example, the Samsung ATNA40YK20 OLED panel used in the Lenovo
-> ThinkPad T14s Gen6 (Snapdragon) reports a PWM bit count of 0, but
-> supports AUX backlight control and declares a valid 11-bit range.
-> Clamping ensures brightness scaling works as intended on such panels.
-> 
-> Co-developed-by: Rui Miguel Silva <rui.silva@linaro.org>
-> Signed-off-by: Rui Miguel Silva <rui.silva@linaro.org>
-> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v7:
-> - Take in account invalid bit_count
-> - Write bit_count back if clamped within BIT_COUNT_CAP_MIN & BIT_COUNT_CAP_MAX 
-> - Link to v6: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org 
+> I know some docs show BIT(2) support, but lets not bring in untested
+> configurations.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+I'd say, I can't parse the comment. Should we use BIT(2) or BIT(3) here?
 
+> -Akhil.
+> 
+> >>
+> >> This is *very* platform-dependent, goes without saying..
+> >>
+> >> I see BIT(2) is also valid for X1P4
+> > 
+> > 
+> > I'm confused, Akhil can you confirm ?
+> > 
+> > Neil>
+> >>
+> >> Konrad
+> > 
+> 
 
 -- 
 With best wishes
