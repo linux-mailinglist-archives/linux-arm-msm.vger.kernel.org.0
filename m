@@ -1,131 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-69311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD2D7B278AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 07:53:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49015B2792D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 08:30:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 038D6A00672
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 05:52:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C5B25E56D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 06:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6619D1FF7B3;
-	Fri, 15 Aug 2025 05:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C9BE13D503;
+	Fri, 15 Aug 2025 06:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ji7Uiblo"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=true.cz header.i=@true.cz header.b="fskaRwgF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp-out.xnet.cz (smtp-out.xnet.cz [178.217.244.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724721C5499;
-	Fri, 15 Aug 2025 05:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB999A92E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 06:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.217.244.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755237131; cv=none; b=sDqjBi90ks0UsTRfFJKVkzdyeweR13Jk99bPCa53mY3K3087nMIt5PU4Vp7xr2fcIMaVB8f1tAenw0J+BODakDy23eJQhTQUCI3jOPZ6Zi0+fDNFFxvD9qMNJepvzDTJwC3XIMhQywdPU/8uIdywMlZ5J+a5cHuv3SE9KuBJJIM=
+	t=1755239437; cv=none; b=oP0gURyRv/t3wn/dZ/PJf85q3kold15vCoSXpy3yG/Yzw2/KxA+mPGSjcjNPreV7XnrcSeQpxZCMeyEndH9SdBk8sovWl/UkhmRHndxzWliaj2AAzrHT4aKObOHNyqCt/oYDx557A/NNuo3a1r4RTtdJ7UBnzZPb+6eXyUHgO+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755237131; c=relaxed/simple;
-	bh=0vH1jDcgJGA2Wn7lpJdojReOpMDMj8xScxd5knXRY9g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CjUWlXT8eEBd99sq+CbGGQaf9uG+pSGwDQ6okBDEfd7FbiWhE/lP/u5yU/msGiqWZ+afrCdDuGlOmsk28WbV+h5WklD7dMC8YEYsj9adU0QUJMpYxTl6EtHInI+GyZdB8FTVrg7oB03WvEprsiuSi28Ffq6V2sJdUiKuiMKtI6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ji7Uiblo; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755237129; x=1786773129;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=0vH1jDcgJGA2Wn7lpJdojReOpMDMj8xScxd5knXRY9g=;
-  b=Ji7UiblozActEAkL70BbJGEbUkWCmtpJrArnuh6KLX9nW2fbEnOV+wVX
-   96cBP0Sdc6HVO0tNqe8PMIb2P4gcPmVi2knLV3IIPPHN2JO0pYunTvACP
-   WLkHayimyojogFqFe6DszUWC48mfb9338qEp5MTXgPinWTkWMCj7FyuhB
-   U8a24I1STdMKy94QIhZBghvqNrhJQRc03Ti6X+BafL5m0683WGuXjB9pJ
-   oa46AsLizcIIVRH1zMyRO6XuT/vBdcnv6uv+uDqQ8HwnnYo5zdiRFb4Gy
-   TbmhO0zdXktsPNMXzO951R+IHnJdeGgQ75wcUh6eXWZD3QyxyzG12O8+/
-   w==;
-X-CSE-ConnectionGUID: YNjJIK5ZTpKChDUbmzbtig==
-X-CSE-MsgGUID: u3n/Q2EkTlW31reNfDGY4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="57488198"
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="57488198"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 22:52:08 -0700
-X-CSE-ConnectionGUID: QsCBNTNzS2uKIJOGMmnTTA==
-X-CSE-MsgGUID: wssFlJjGSga9ENc1rcVaxg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="197937723"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 22:52:02 -0700
-Message-ID: <7b8d8bfa-ca6b-4a07-8a4d-a30d8993c7c7@linux.intel.com>
-Date: Fri, 15 Aug 2025 13:49:55 +0800
+	s=arc-20240116; t=1755239437; c=relaxed/simple;
+	bh=HN5R66AZfCK7MHGh+aNG1oEqt+2nw0NCyBz9iyCmV6k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fn3oc3bG0izJDCIMjMGxTMhYZDTZM0LJM7jtNFVGIrJdxhItwFmPBRQVlf/IeCzwSc07ENAK1sXz5uJfEHiMiq61GtRd3d++T9R7DlCSBgeVpEr6BPa90Ua/X3VGCLnFJFF/hGFYjFrqU/PKRibksgi77/GOytG/cqTIVUgPqk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=true.cz; spf=pass smtp.mailfrom=true.cz; dkim=fail (0-bit key) header.d=true.cz header.i=@true.cz header.b=fskaRwgF reason="key not found in DNS"; arc=none smtp.client-ip=178.217.244.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=true.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=true.cz
+Received: from meh.true.cz (meh.true.cz [108.61.167.218])
+	(Authenticated sender: petr@true.cz)
+	by smtp-out.xnet.cz (Postfix) with ESMTPSA id 5EE47344B;
+	Fri, 15 Aug 2025 08:22:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=true.cz; s=xnet;
+	t=1755238963; bh=HN5R66AZfCK7MHGh+aNG1oEqt+2nw0NCyBz9iyCmV6k=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
+	b=fskaRwgFE61kJ9LSnqVqor9BeOn1MJzgxtsJrhF/BPOhroxq+3+PZYUuywcVjOzCp
+	 hjCjP4FWXIBlzR6ifi/oB+PvipbRVKUm5YB5lKTb93j8oI3y9Q86LTD93AO1fA560q
+	 HuKrZP2NCVOMZqRjyL/3IDU1HFWRtFOiTg0g0AIc=
+Received: 
+	by meh.true.cz (OpenSMTPD) with ESMTP id b76db20f;
+	Fri, 15 Aug 2025 08:22:28 +0200 (CEST)
+Date: Fri, 15 Aug 2025 06:22:41 +0000
+From: Petr =?utf-8?Q?=C5=A0tetiar?= <ynezz@true.cz>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Duke Xin =?utf-8?B?KOi+m+WuieaWhyk=?= <duke_xinanwen@163.com>
+Cc: Chris Webb <chris@arachsys.com>,
+	Manivannan Sadhasivam <mani@kernel.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: add support for Quectel
+ RM520N-GL 0x5201 variant
+Message-ID: <aJ7SMWSWw5l8rS4I@meh.true.cz>
+Reply-To: Petr =?utf-8?Q?=C5=A0tetiar?= <ynezz@true.cz>
+References: <20250512112631.2477075-1-ynezz@true.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] iommu: Introduce iommu_dev_reset_prepare() and
- iommu_dev_reset_done()
-To: Nicolin Chen <nicolinc@nvidia.com>, robin.murphy@arm.com,
- joro@8bytes.org, bhelgaas@google.com, jgg@nvidia.com
-Cc: will@kernel.org, robin.clark@oss.qualcomm.com, yong.wu@mediatek.com,
- matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
- thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
- rafael@kernel.org, lenb@kernel.org, kevin.tian@intel.com,
- yi.l.liu@intel.com, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-tegra@vger.kernel.org, linux-acpi@vger.kernel.org,
- linux-pci@vger.kernel.org, patches@lists.linux.dev, pjaroszynski@nvidia.com,
- vsethi@nvidia.com, helgaas@kernel.org, etzhao1900@gmail.com
-References: <cover.1754952762.git.nicolinc@nvidia.com>
- <5ba556fc54777853c499186f494f3411d7a4a5a9.1754952762.git.nicolinc@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <5ba556fc54777853c499186f494f3411d7a4a5a9.1754952762.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250512112631.2477075-1-ynezz@true.cz>
 
-On 8/12/25 06:59, Nicolin Chen wrote:
-> PCIe permits a device to ignore ATS invalidation TLPs, while processing a
-> reset. This creates a problem visible to the OS where an ATS invalidation
-> command will time out: e.g. an SVA domain will have no coordination with a
-> reset event and can racily issue ATS invalidations to a resetting device.
-> 
-> The OS should do something to mitigate this as we do not want production
-> systems to be reporting critical ATS failures, especially in a hypervisor
-> environment. Broadly, OS could arrange to ignore the timeouts, block page
-> table mutations to prevent invalidations, or disable and block ATS.
-> 
-> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
-> block ATS before initiating a Function Level Reset. It also mentions that
-> other reset methods could have the same vulnerability as well.
-> 
-> Provide a callback from the PCI subsystem that will enclose the reset and
-> have the iommu core temporarily change all the attached domain to BLOCKED.
-> After attaching a BLOCKED domain, IOMMU drivers should fence any incoming
+Hi, gentle ping :-) Thanks! Cheers, Petr
 
-Nit, my understanding is that it's not the "IOMMU drivers" but the
-"IOMMU hardware" that fences any further incoming translation requests,
-right?
+Petr Štetiar <ynezz@true.cz> [2025-05-12 11:26:31]:
 
-> ATS queries, synchronously stop issuing new ATS invalidations, and wait
-> for all ATS invalidations to complete. This can avoid any ATS invaliation
-> timeouts.
+> From: Chris Webb <chris@arachsys.com>
 > 
-> However, if there is a domain attachment/replacement happening during an
-> ongoing reset, ATS routines may be re-activated between the two function
-> calls. So, introduce a new pending_reset flag in group_device to defer an
-> attachment during a reset, allowing iommu core to cache target domains in
-> the SW level while bypassing the driver. The iommu_dev_reset_done() will
-> re-attach these soft-attached domains, once the device reset is finished.
+> I have a router board with a Quectel RM520N-GL 5G module that speaks
+> either USB or PCIe. When switched to PCIe mode, the modem present itself
+> on PCI bus with following IDs:
 > 
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+>   0003:01:00.0 Unassigned class [ff00]: Qualcomm Technologies, Inc Device [17cb:0308]
+>     Subsystem: Qualcomm Technologies, Inc Device [17cb:5201]
+> 
+> and is currently being wrongly detected by the kernel as:
+> 
+>   mhi-pci-generic 0000:01:00.0: MHI PCI device found: qcom-sdx65m
+> 
+> which results into wrong modem configuration and thus missing wwanX
+> netdev. So lets fix it by adding a new device entry for this 0x5201 variant.
+> 
+> Link: https://lore.kernel.org/mhi/ZqllDCWfiKravZAo@arachsys.com/T/#u
+> Fixes: 1cad976a1be9 ("bus: mhi: host: pci_generic: Add support for Quectel RM520N-GL modem")
+> Signed-off-by: Chris Webb <chris@arachsys.com>
+> Signed-off-by: Petr Štetiar <ynezz@true.cz>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 03aa88795209..0db9543a7edc 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -818,6 +818,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> +	/* RM520N-GL variant with Qualcomm vendor and subvendor ID */
+> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_QCOM, 0x5201),
+> +		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
+>  	/* Telit FN990 */
+>  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
+>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
 
-The code looks good to me:
-
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+-- 
+ynezz
 
