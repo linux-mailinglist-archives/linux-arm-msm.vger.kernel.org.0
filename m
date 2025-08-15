@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-69350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECFDBB27D15
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 11:28:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29372B27D24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 11:31:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F33F7164408
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 09:25:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE2DD3B05F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 09:26:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC0EA2C158C;
-	Fri, 15 Aug 2025 09:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FCDB2DAFCE;
+	Fri, 15 Aug 2025 09:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RuS4jZ2k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBfGXCgO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449572BE7AC;
-	Fri, 15 Aug 2025 09:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13B2D9790;
+	Fri, 15 Aug 2025 09:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755249900; cv=none; b=qxRdrxCylSDeY6E6RTv17iMRwxIq+LISsEHi0at35OFVbfQnkKPNYwXr6ojvfaexQy/VGh3xqfwgSZsPo9rbhNN//DBlX242tn0D2nPYuuJYs87D90dQLyn7qOE4FIZ6ucwq64Q2XwZkYcYPmCeBmHqkGHnEhGweMe1r9dQBDbk=
+	t=1755249992; cv=none; b=GiwjmzFnCk0bBvIvDKKJ76aGqWcNJ3FmJqxBq3vVtgUFAcfYCw4+PR59PGhJ+bRdt2nW2ejfcugg7Kk56BtllVG3vFjClnobYHXfaCJM6ybSpL3SP/bGFpxz8e16E/KNORxCC/mlZ6sJgD4XtmneqbDhvs1rh6blALlmLGUdO3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755249900; c=relaxed/simple;
-	bh=5ZqmMV9CCC6/bZI3rO9zYxuPxQkdI54URe8G0jkHA6w=;
+	s=arc-20240116; t=1755249992; c=relaxed/simple;
+	bh=hfyXKa7VqlCzw0dsZGP8/PsmTOCbKgzez9WpVykwbe0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sKKS+HaHv4XetmeBm+gXAOYA2fBUgLCZhepVgFASRXrudkJIh6ZLFPtzTUhPbkEz7YMxTX5CFUd3Dprc4sZW+mpduEgCxGf1XZ3oIqUaS68eHZSGQ4cSz3RU+K3Cql+67W62AZtkUA8nc/q1F6rLRPc9641i4dWLMxd7d8ELezU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RuS4jZ2k; arc=none smtp.client-ip=209.85.215.170
+	 To:Cc:Content-Type; b=BkQ90NTEFKJKfRBhv+qYSryhuCi3ypx/a5/BuuM90qDS49gcp2jg2bHkfrRbQfiD/TgrpJh2N9K3i6ajdXbuHdEKpiu6G6JjfdySGjVmA4u2lUcqOQ5vQCJOCPcFbkL67cxIx9PtVYEvd1ciyOA73Rw+rPFcpgh9V8ws4cutubY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBfGXCgO; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b471aaa085aso862534a12.0;
-        Fri, 15 Aug 2025 02:24:58 -0700 (PDT)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2445806e03cso19545665ad.1;
+        Fri, 15 Aug 2025 02:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755249898; x=1755854698; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755249990; x=1755854790; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sUSAZNhHUWclOgiLa/zpd5x9MShtdm5IEGFME8YQ2lA=;
-        b=RuS4jZ2kn6TRdDDFSlvfVpXC8HwzVeFqBylXyDmhX7K458+j++FWgSQTcNlsh9N5v4
-         yw5WYLG6yqKG842tWACEJE5NDi+sPZIgmm9tcS8xiBBXN+tF+6kUjGCJmrvh/lqqcl2c
-         MXCHMlnbaJwGGcL58uFjNoVaRN15EILffD35kqnk8co68IIRmGyrXr9ar4xi8AFjwyf1
-         Cg11mEAj1wkG6p9pArgVaAaUSLYTA70FWPrB8T7SgrKHu5c4GwFCXd1LOw3VyS0PwS8m
-         9j+5WY5fDGKzncJnMTv0wfLxqD+xyeRdbk4aAXsiFhTBQbVA8RwPIUXTldLJHPgFbObY
-         VHzw==
+        bh=Uo7uf3WJ6z+yWzRmAPAiNGEx7EWhy5TbeTpgbpYSOgk=;
+        b=KBfGXCgO14RMkaWX+78CvgENILksJViDbnXzuXMO3h37m1XUlFHD6jKITzHKY0FeKR
+         FXI3mtpMiLUYqHMMBe5Agk4hmV4Rs54WjogAdPU7AijxsHeoi13hoYhW+yPpQ194EM7a
+         ZotV6S04Cdb9lfeZYzFSlBgq9rWbg9cnzQRyz3sBAdfdg5fV9aaCnbesH4axx99cZdRf
+         JYom5Be6b36zl57oMdEHpwoqr7C5T5RZJ2QWidReyuNPPE7Zq+myCXqi/99Wsvltq7xp
+         d0BwFmUWAen+SfdVojHJ4L1O025rdTlOOroyQ8q1rDC9CUNAk/+ukDbAP86Px5txhXjS
+         7r9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755249898; x=1755854698;
+        d=1e100.net; s=20230601; t=1755249990; x=1755854790;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sUSAZNhHUWclOgiLa/zpd5x9MShtdm5IEGFME8YQ2lA=;
-        b=WJhznp9a5FEgwEpstNySA42jkGglLapHqsDPcUsz9AaIhFNapBkM1gBX/Od+i3ff59
-         D3ekBaqfDdRWWv6JUq+h0y7OcQRmjFGbJaK0K0yah4PORNwvtLRjVSnroD8oNV94HcBW
-         Y0/R8INVMQu86yO2Geu924j0r6HzVO5XuUjd0JdQF5oFzlHnYNe4YRiylRztqYzoZejh
-         /QbmbU7SUzM+g7s44EYaIloJRjP/1t5Y+W2eNXbn7t+R5uh2SWljuZYjS+8sultqtC1B
-         6haHw6ZdFRuP8MfarNWmdJJYgNFwb0ovPrVSez+UfeYXxk3iow4u57Ri7hEM0+DC5smV
-         yDdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUzb+hLGCD3oOzLEeVmorczXdoiTJ2Z5MC7OwledDsdyj3vzIplv0pjBB0FSNEKoW0s9BZh4+Jl34Yi@vger.kernel.org, AJvYcCXRB56px6NIxA049vg7aV1dR4VoQWo3EMzovPfH4MuekKWcm+ldVkrvr4xB+9L20c77eGEC58ZqJZU/rGJD@vger.kernel.org, AJvYcCXnkw2fP/rdJ8EMfmN8A+dCkj3std0iky2XfCEc+NYeZOhFZs8vE+79kD79JGZqJeIUxxJhO62SoRawWMHC0A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWeAg23W3GMYAM2WrmSaPPW2mowYqBAXvnL+m6M3t44HqTSSy9
-	RzJPfQx2Zv4YN2s72h8tFsCOvMG+SX3c2TTc2NaImLZ8wFCz/oWI5c1NQCiXGLewkBgAld3Ym0w
-	1UNK5r9akHBxoByt6cYiM0ZKSrGDSA2h6IZ0=
-X-Gm-Gg: ASbGnct9jBfpyR6bWG4ERThCNWcJr3xjyEtPlOKGauKRyW3f/KO2yoHuXw4p0pXhYsr
-	Z7LWSOwaocIBPe/EZHeNWSpHVl9P/YZEjS7wi/S2DRu89nYgUidHercyfvyJTHN6j/V8ZbTGHuM
-	jD1mxnX3TEOsg/euWxf+wmSoZ+TD4wNQ2zM6AAdz7XKZxQ3ywkOnz1GQsUzCHWMryRZMpogLe0M
-	TESR4Q=
-X-Google-Smtp-Source: AGHT+IEtIRl1Vmpdfezvm3nW6eekbTQL/dTTqJFffwLW5S5TL7I5ybUYEQz+8BAYTsvLPauEJlFEY2im3hYLZOTmd4Q=
-X-Received: by 2002:a17:90b:4a4c:b0:31c:39c2:b027 with SMTP id
- 98e67ed59e1d1-323402f3979mr2271688a91.7.1755249898151; Fri, 15 Aug 2025
- 02:24:58 -0700 (PDT)
+        bh=Uo7uf3WJ6z+yWzRmAPAiNGEx7EWhy5TbeTpgbpYSOgk=;
+        b=CnSLgbNA4SswWSOy92xu0/o68DFcFPGUmPNSU8WFDCFxquFAP+Twd5TcCBBQnMuonJ
+         /GukfwCJWSHxY2QnTfinX0RGAM+LblXBbf0qu161WrLLwkaVHMMNvtsEAjSwvVYT2f3A
+         K0P5ilima+1bjqFhUiVIZhsrW8fau40pBMC4sA6bEkHC+cAOdZDgHOVnMCycJgXochju
+         TU/m4Mk5jYsgebljJ/Q2xsC9xgvzYHmt+WghlSrQXEcjKsAsnoJlWG0D1JEvgswgz2aX
+         38QB0mXzIZcfryKH2wD4QAki82fftRSnMKVTRu8d7loZFmF9fyA+lafIEUt0BMjytAg/
+         Asow==
+X-Forwarded-Encrypted: i=1; AJvYcCW/mNT4irCCVzQDuQwQOI+vaE4K7iXrLtW/L6AcC6r+XHkacDDizgMcidUwtuZmHklZC8n1pF+BKr/B@vger.kernel.org, AJvYcCW4JJHnT0nCAmeMd6IiB5Xe/0Qnfp5HIgBlQ+etEIFIseC1okDQywxyPBC0DFrJotMGbXvnPuSUuODaiTiWdQ==@vger.kernel.org, AJvYcCX8iiOjMEOHyH3gWLWaFyoWjn12xP8hUEIoaWBQq+JQ3B2wBosBkFw0sHFZlgeX9W7gOj1hRNFMFFzBJPLY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSUOJX1qlfZDZ03hE/Jzl9SDATGHo+Ts4OFKU/ndqrqoz8nm/U
+	BBgCDc1C6rtW7Io13p/cqrJlWlro8oRb6jeq43GQi487au5oihuKDzyXnGaLfW/URudotJX/yel
+	wHLCEtISWaSnkUvLtAKjZVQ/sPso6fQ==
+X-Gm-Gg: ASbGncvH4sOSxTxX1/dZx/P77W6GM2DFCbrpk28OWe4F4HVvAyIwfW8U4Kd8FhL0UOL
+	v/cSh/dIH1i9m/6bs69Yma9C7lXJRP1xnqfHU2mlJwlp7RhtS9urSfPmXPEv55JlTLg6axy5GLT
+	bGbbOm6042BQtefki2QJ+a+WeWmtevfkT8oxI92o+o/rpiuKicES7fvlu/VjZZt+RM8tAyUQvH7
+	Sop3V4=
+X-Google-Smtp-Source: AGHT+IEJs0DhVKkrYh27R/JACZ6LJCcxDtk4IGIzVD8IWl0nJ02HH+2s5qsqeAyyLggmI8EGAqi731EEjfq3cr44tco=
+X-Received: by 2002:a17:903:2381:b0:240:3f36:fa78 with SMTP id
+ d9443c01a7336-2446d7a5a7cmr18869945ad.21.1755249990018; Fri, 15 Aug 2025
+ 02:26:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250814-x1e80100-add-edp-hpd-v1-0-a52804db53f6@linaro.org> <20250814-x1e80100-add-edp-hpd-v1-5-a52804db53f6@linaro.org>
-In-Reply-To: <20250814-x1e80100-add-edp-hpd-v1-5-a52804db53f6@linaro.org>
+References: <20250814-x1e80100-add-edp-hpd-v1-0-a52804db53f6@linaro.org> <20250814-x1e80100-add-edp-hpd-v1-1-a52804db53f6@linaro.org>
+In-Reply-To: <20250814-x1e80100-add-edp-hpd-v1-1-a52804db53f6@linaro.org>
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Fri, 15 Aug 2025 11:24:47 +0200
-X-Gm-Features: Ac12FXxXs1WIPSo3O5Qi1vZHZmRPsh7Ak--HK5Z6ELk4txLVxHj367p-QxOdBkA
-Message-ID: <CAMcHhXr2ayhVAS8gwxj2+ixq2GhSPBPdxB3swOUisstHGxufYQ@mail.gmail.com>
-Subject: Re: [PATCH 5/9] arm64: dts: qcom: x1e80100-dell-xps13-9345: Add
- missing pinctrl for eDP HPD
+Date: Fri, 15 Aug 2025 11:26:19 +0200
+X-Gm-Features: Ac12FXzyj1y7ogC1MOBpDITJybutBYnpxJuu6wGW3-_8QXjEWbVdNPWvMl09xCI
+Message-ID: <CAMcHhXpsY9PQ6v3Jizt6ZnQkKtzd30T2XbC8mo571nMeG-0WpA@mail.gmail.com>
+Subject: Re: [PATCH 1/9] arm64: dts: qcom: x1-asus-zenbook-a14: Add missing
+ pinctrl for eDP HPD
 To: Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Abel Vesa <abel.vesa@linaro.org>, Xilin Wu <wuxilin123@gmail.com>, 
@@ -109,21 +109,21 @@ On Thu, 14 Aug 2025 at 15:30, Stephan Gerhold
 > Fix this by adding the missing pinctrl for gpio119 (func1/edp0_hot and
 > bias-disable according to the ACPI DSDT).
 >
-> Fixes: f5b788d0e8cd ("arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345")
+> Fixes: 6516961352a1 ("arm64: dts: qcom: Add support for X1-based Asus Zenbook A14")
 > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>    # 3K OLED
+Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>    # FHD OLED
 Reviewed-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 9 +++++++++
+>  arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi | 9 +++++++++
 >  1 file changed, 9 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-> index 6b27067f0be66b5c41fa681ff3b4f535100bdf59..6cb98197eb9c0d6e171741aa83e7f4ff77e911c9 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-> @@ -900,6 +900,9 @@ &mdss_dp1_out {
+> diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> index 16d045cf64c08c02c420787e000f4f45cfc2c6ff..613c675aac296f931293a1ba3d8506c6663bad21 100644
+> --- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+> @@ -1001,6 +1001,9 @@ &mdss_dp1_out {
 >  &mdss_dp3 {
 >         /delete-property/ #sound-dai-cells;
 >
@@ -133,7 +133,7 @@ Reviewed-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 >         status = "okay";
 >
 >         aux-bus {
-> @@ -1080,6 +1083,12 @@ edp_bl_en: edp-bl-en-state {
+> @@ -1236,6 +1239,12 @@ cam_indicator_en: cam-indicator-en-state {
 >                 bias-disable;
 >         };
 >
