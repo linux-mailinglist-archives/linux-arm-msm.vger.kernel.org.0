@@ -1,183 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-69304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7E33B276BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 05:26:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11FD4B2770A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 05:44:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 215734E51CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 03:26:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5BC005E30B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 03:44:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B53B29D260;
-	Fri, 15 Aug 2025 03:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA00C1E7C34;
+	Fri, 15 Aug 2025 03:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NJmjePcs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/HRbjD7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5EE274B59;
-	Fri, 15 Aug 2025 03:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4C4274B59
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 03:44:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755228393; cv=none; b=a0bGeka3cyUYnhaU8jGOpsIw4TseSXjjB/zVt+h9J1x0DnYT1oaCItnyli6Pl8vZGjAJLp1eAq/0s+b0yrZvSHfToGlLLaSTqQo7qUeQKCX44tEbur5d7OSdaTzxdaqVq1dY7voIMF/rMgwqglQgaRnaKyPtw7kaP8/+1lHZb8I=
+	t=1755229454; cv=none; b=nc/M4aLqY6H1sQq4RF574weOqxIGcZo+4FaBfmUKGPoKnAbV+wEHY3XLLDG+MqUy/hYRV4A+ml4swEadZPjYBP994tMV4Jrz479VQaKoEjrnwaikEHGOZzqf9GXm5jwJ0wFIuA0YLpy9lyX8iYOUuw/G11aEA3sjf8YvlF7eeXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755228393; c=relaxed/simple;
-	bh=5CtCyWuTgP/8clYLR9mQb2RLKdITFXhoF9CEAmqsi5s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qmrpcg8AKT4RYSae+DCpQnFOpoXdMUT37+RPWWHZ397RtnUtW11WR0YftqZxR/7KvyaSDFAsnteovtpAS5fQT2P3kPnMGjUnXT40QS+tLYxdoqrf1ys2bfre8VPNTdnmPRzAT8zmlW5+thOTmpTCwTH/hWz9fu3LPFMcLWhzInM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NJmjePcs; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755228392; x=1786764392;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5CtCyWuTgP/8clYLR9mQb2RLKdITFXhoF9CEAmqsi5s=;
-  b=NJmjePcs/mhbFZRKmWBh7g8+FoLPJtrS8FkYtyA9wd+DX4QWC48yV1FD
-   tUV6acLkiP+cYNesgvHtdvxRJCYv8NQ7wYK5eMBlnnRUj4qI+XBeV2krt
-   TKYryQs4u48H9Cx9oeciMSzo4I5uU3JqVoC0vn+nFfuG2HvK8hch1mUlQ
-   GVtufrFaS8lZTlyIvnF92gkhLUD8829hMhERH+/mZuqpcSRQ8W/ODbTVb
-   8izH0y5eJcvkE/WecjqIcwzLBfHbWQYWrp4fFctLNSPKeGjOQniZ7Cva3
-   sySt/a1F/y/Th77bRg0ycdf6iLS2sDVu2NuIuvTbZY8IEvtobCrAzZ8ku
-   g==;
-X-CSE-ConnectionGUID: /LwyjmUcSbOSsp7cyaA1gA==
-X-CSE-MsgGUID: aZU7XggRS2C8vz+UUBUnSA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="57465781"
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="57465781"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 20:26:31 -0700
-X-CSE-ConnectionGUID: NPGfBA5+Th+3cPDrRLUODQ==
-X-CSE-MsgGUID: oGTsP8FHQlCdwpSczOAxDA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="197916558"
-Received: from lkp-server02.sh.intel.com (HELO 4ea60e6ab079) ([10.239.97.151])
-  by orviesa002.jf.intel.com with ESMTP; 14 Aug 2025 20:26:25 -0700
-Received: from kbuild by 4ea60e6ab079 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uml4v-000BVU-2v;
-	Fri, 15 Aug 2025 03:26:10 +0000
-Date: Fri, 15 Aug 2025 11:25:55 +0800
-From: kernel test robot <lkp@intel.com>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>
-Subject: Re: [PATCH net-next v11 08/16] net: phy: Introduce generic SFP
- handling for PHY drivers
-Message-ID: <202508151058.jqJsn9VB-lkp@intel.com>
-References: <20250814135832.174911-9-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1755229454; c=relaxed/simple;
+	bh=CbV50UlUgsDMAydMhI9fr0dDw1OdFhDvioJbc7w73qE=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=FkgsAi78/LzVxAfcb8cpM7/Uvre6Z8t6TEPJ6pRMm2eEHOVd78ANwjIwhnRYhQjnqt84FF/fk2c17q1mNRITolPOBHZ4D/vxwpqHsKLCLo6q8cLVKLUfmnU4ni2J+N+TmTRBu/5nnSVEf6Z+ARgQoc3/i7bpVBDydDJGBLWCwjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/HRbjD7; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7e8706764d2so208457885a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Aug 2025 20:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755229452; x=1755834252; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CbV50UlUgsDMAydMhI9fr0dDw1OdFhDvioJbc7w73qE=;
+        b=f/HRbjD7oWlVIa7ABhAV4dtxKDaoEAI7+FuPvAW1x4JAIXKo8k6I2jXzI0wiri4Piu
+         V4Yyu4J+ZBWQLOIYZTUOxhOBS1rk8sxvkbYUss4hE0fSadFG9ECWqKiXsJD+XEnl/T54
+         G6L2fBSLUSWu/Nd5Gx+N4seUynwOp2bOqIHnaXk4ajJK4/6Yz438MY01PXnBD044VaVv
+         YM17OVdmMaPkIH/EysvGQocrPhbaNYVG48V8YITJukGeTBPObpC7McZv1TYclw57fRxg
+         3g61hn/SzGtTQWnB3IxYfqDFRzFqDaJTMM4WlDRor3yl+yXdsBgav4eVNw4cnSXPRwvU
+         timA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755229452; x=1755834252;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CbV50UlUgsDMAydMhI9fr0dDw1OdFhDvioJbc7w73qE=;
+        b=vCWpPMFpaAgmTXGlB7sQU3B+bK2wNe8XP5MCQWCBX5XtFfFP3n0tg17onyzhtNt684
+         a3PwheeRWjhIckIViXv3stRB7WsCPIb7lSGNRCsbYgTjjT7dUO4lUZH6xN8laf3kw+h9
+         5IqX+h7qvqOxu7y2fLQFRRlN2oftokw8UhzNjX3v8DfkyXxLsEnyqoTxAPJ7Tfk3o8zy
+         xUKYq5oJfk1IZuslywFguBj+hc2H3msPxVRmmxyBSMbLDytlTDbQmbi3d/e5+OCz9DM7
+         EbK1QAa8ajnkOdHuUb5w4KoyP1YRdVPLT0zNBkNspw1iYqhHJkCNN5d+CQY0VHSooXn0
+         FpLA==
+X-Gm-Message-State: AOJu0YxgRXZpfGJwlcVXWrgU0JxaVDbirq/img2C87NC5TVUA6PtEXh6
+	ZsXi26h0fSe81bgpInetpvVx4Ded4xkwZIOBOuGKHACMSrZNbE+0xFZfmTkwqEMrxpI=
+X-Gm-Gg: ASbGncub/I4CwtOD8FRNmiW80qnSSyCpXQvJUxaUeVax6NlOlne4bviPofWs4gMmW3o
+	JsJLcwwzr3uFoQK7t/1bV06A9pqVLFmuej5Klc+1jaEgLvGXh9N1vVVCKAm4z39Qu3zhTr65iH3
+	mhfwlO/mnabnWd0iCIPBVmGvfu3n0Tqm7plrvbCLth+fuclgnFijfYQm35dzIkMYCEiF7xoKpSj
+	IQ3/1nGiYlJ0wM+gU9damT17K8CFmpYt/TP26JXXzNsOLNNz5D09IqytlUxdArhzfHIWdUyVbtT
+	E8lYaxonjh3K1WQSnqQ+CWoGN0NSBOy41kbE/TdHEzrz+4tvauvfM4Dz0Oo3SrejyTi81FwJNou
+	/7qnaHCep4PjIUH06hzZ5Z3PULwIzr/xJNSHDY12ioLaY3fcZhHJEx8HG6aGPK9jL
+X-Google-Smtp-Source: AGHT+IGIGnDL5nu1a/uGIVA0/0RYDDU2j1ihE4igtwRQmfr93oe7iQrgSnBxskK5UThAEoo6WS7kew==
+X-Received: by 2002:a05:620a:4001:b0:7e8:5aaf:700 with SMTP id af79cd13be357-7e87e023fe4mr63156185a.21.1755229452174;
+        Thu, 14 Aug 2025 20:44:12 -0700 (PDT)
+Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1c9b91sm35794685a.66.2025.08.14.20.44.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Aug 2025 20:44:11 -0700 (PDT)
+Message-ID: <2c238b60-39b3-4dbb-84f6-747769bd67a3@gmail.com>
+Date: Thu, 14 Aug 2025 22:44:10 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250814135832.174911-9-maxime.chevallier@bootlin.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+From: Eric Salem <ericsalem@gmail.com>
+Subject: Converting logging dev_* functions to drm_*
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Maxime,
+Hi all,
 
-kernel test robot noticed the following build warnings:
+The TODO list[1] for the DRM subsystem has a task for converting the dev_*
+functions to their drm_* equivalents. It mentions contacting the relevant
+maintainers before starting to ensure your changes will be merged.
 
-[auto build test WARNING on net-next/main]
+I want to update the drivers under drivers/gpu/drm/msm/adreno. There are
+seven files that need updating:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Maxime-Chevallier/dt-bindings-net-Introduce-the-ethernet-connector-description/20250814-221559
-base:   net-next/main
-patch link:    https://lore.kernel.org/r/20250814135832.174911-9-maxime.chevallier%40bootlin.com
-patch subject: [PATCH net-next v11 08/16] net: phy: Introduce generic SFP handling for PHY drivers
-config: i386-randconfig-013-20250815 (https://download.01.org/0day-ci/archive/20250815/202508151058.jqJsn9VB-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250815/202508151058.jqJsn9VB-lkp@intel.com/reproduce)
+a2xx_gpu.c
+a5xx_gpu.c
+a6xx_gmu.c
+a6xx_gpu.c
+a6xx_preempt.c
+adreno_device.c
+adreno_gpu.c
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202508151058.jqJsn9VB-lkp@intel.com/
+Is there any opposition to this?
 
-All warnings (new ones prefixed by >>):
+Thanks,
 
->> drivers/net/phy/phy_device.c:1625:47: warning: variable 'iface' is uninitialized when used here [-Wuninitialized]
-    1625 |                 return port->ops->configure_mii(port, true, iface);
-         |                                                             ^~~~~
-   drivers/net/phy/phy_device.c:1597:2: note: variable 'iface' is declared here
-    1597 |         phy_interface_t iface;
-         |         ^
-   1 warning generated.
+Eric
 
-
-vim +/iface +1625 drivers/net/phy/phy_device.c
-
-  1589	
-  1590	static int phy_sfp_module_insert(void *upstream, const struct sfp_eeprom_id *id)
-  1591	{
-  1592		struct phy_device *phydev = upstream;
-  1593		struct phy_port *port;
-  1594	
-  1595		__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
-  1596		DECLARE_PHY_INTERFACE_MASK(interfaces);
-  1597		phy_interface_t iface;
-  1598	
-  1599		linkmode_zero(sfp_support);
-  1600	
-  1601		port = phy_get_sfp_port(phydev);
-  1602		if (!port)
-  1603			return -EINVAL;
-  1604	
-  1605		sfp_parse_support(phydev->sfp_bus, id, sfp_support, interfaces);
-  1606	
-  1607		if (phydev->n_ports == 1)
-  1608			phydev->port = sfp_parse_port(phydev->sfp_bus, id, sfp_support);
-  1609	
-  1610		linkmode_and(sfp_support, port->supported, sfp_support);
-  1611		linkmode_and(interfaces, interfaces, port->interfaces);
-  1612	
-  1613		if (linkmode_empty(sfp_support)) {
-  1614			dev_err(&phydev->mdio.dev, "incompatible SFP module inserted, no common linkmode\n");
-  1615			return -EINVAL;
-  1616		}
-  1617	
-  1618		/* Check that this interface is supported */
-  1619		if (!test_bit(iface, port->interfaces)) {
-  1620			dev_err(&phydev->mdio.dev, "PHY %s does not support the SFP module's requested MII interfaces\n", phydev_name(phydev));
-  1621			return -EINVAL;
-  1622		}
-  1623	
-  1624		if (port->ops && port->ops->configure_mii)
-> 1625			return port->ops->configure_mii(port, true, iface);
-  1626	
-  1627		return 0;
-  1628	}
-  1629	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+[1] https://www.kernel.org/doc/html/latest/gpu/todo.html#convert-logging-to-drm-functions-with-drm-device-parameter
 
