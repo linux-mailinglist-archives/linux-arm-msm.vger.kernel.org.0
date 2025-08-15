@@ -1,197 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-69314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1935AB2794A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 08:39:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B056B279D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 09:16:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2031626BF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 06:37:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33177601645
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 07:12:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B56ED2BE028;
-	Fri, 15 Aug 2025 06:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BEB72BEC39;
+	Fri, 15 Aug 2025 07:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyR+u99D"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PmvH2tbs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7F5319845;
-	Fri, 15 Aug 2025 06:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323602BE030;
+	Fri, 15 Aug 2025 07:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755239832; cv=none; b=EM4356WN0LVsZHjJyEcYayIJyrim7sZmH8rp+CSSatEesj5RPfN7XvEsALcuPUjQL2+MJbUEpoVZLNWdW9+ZEE8ifIxYp6C4dUEqxppe/cSW761LJ0MPhdGRlag+zvehppvDKkq67qL7hfLnKTO7vrg6H86nA/s83VTVVrSDxFw=
+	t=1755241671; cv=none; b=czoW0HbPXqbWfy3QFOsehNSRijWL+DJNg/WJmhKZEADZ0jIhPdAUd5l6dhf6LQ6cbH1DTbtnZo9t8bEc8K5wd7KJ+0SFsTlwNUt7o+QBgdIaMhSbG1PXvrqmNrGNbFwTsVjAoZoCcfqC4DWR89j/Vh5YLL77ohIxSzLd3wxZEoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755239832; c=relaxed/simple;
-	bh=tra7rydiILTcSEb0lcmhsy/l1DqMq2O1S4BfXAk8GfM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uUhredvG6xugl9YgWRl8eiwvDv1ilFeSuIljyBRHaAmv8BfqoHz2uuunt4B1XlMi4S0bep31+YFImyMbvOA+RFrItGbSyoCeDPOYgqb21MXk8874hLOBqP+kbcv0VvbAmWy3Q1eTGqzFlQp4WAs/5coy9GSTV7hia0jS5X+taMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyR+u99D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4556EC4CEEB;
-	Fri, 15 Aug 2025 06:37:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755239831;
-	bh=tra7rydiILTcSEb0lcmhsy/l1DqMq2O1S4BfXAk8GfM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PyR+u99DIpsbAwmgoZioxJE5kxVgtixCUFqDQeoUevZ+0SY34EUDxER/2uGlmpYME
-	 d/uiGR30L5dwI6u4qSdrygdM+QnmgzkXd1WsXRmMd6fR7QZutUaDXWakFaNaHcRZTr
-	 1WqVoAM3riy0pw4j9FJe+s2qoxGLVveQWjjLUFJK5h+OcCcNudfla0K5yk9VZr+J6d
-	 D3IGS9+Dt4kHCaBH4iiIa2zPx1fL/t621lYhikG7kUUiqSSSKyhjhLth5M0f+jmcKT
-	 wGBHkMC6pF2Z/TykJ7moSVSAMPECGi18WMAg6SXu6vFqGymkWAdUQqO33j7zARzLOX
-	 snc2NOEsRwOUg==
-Message-ID: <5ee0656b-136b-480f-9555-26ccdbff3eda@kernel.org>
-Date: Fri, 15 Aug 2025 07:37:06 +0100
+	s=arc-20240116; t=1755241671; c=relaxed/simple;
+	bh=8z9gNAQPOCOGg9llxKiaSqdbeOZ5p/PpyiAKn1+7bKE=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=qQtsaDd6Y3PK90wR7uEEVfKqixRyqbFwkb6iZxfSgD+yywlggMinJZdLhgKxHk8RIXo3KyXfMnSBwHHExoQXB2cYbiw0/cJV/0B02LkgFFhzUCd3ErUMITBx+H8B1dot1rIXeUlitpCj9EV4A+koRK2okymysuvo1+iDzt90Ofw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PmvH2tbs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57F6Un2p002766;
+	Fri, 15 Aug 2025 07:07:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ctRs0FyFpKqQcnKOjLGhIX
+	I4tGrV+8gL6x9+MxqQcsE=; b=PmvH2tbsGOM7PlC1I9Dzz5a+q6IXH3+9sFbuDV
+	Z2lNb0qcLBiGExaxHxletcuTuLQFN6Yax2TNfO9CEdZWIbD7tIyhVayWq9t2+euW
+	nlxUD/nLOBxuf7iGvKjYvXQcCSyQKT+PtA/73c/2cZsWGBhzetC8J/AvZjkK/Njv
+	UgSRtDg0wGgLIaLrWUgQNoVa1FrstsCGNjrfAzayBE6d9KN8Q9nIdxin/FU/i0z0
+	/svwaX9sgVzwD+m6ieeuPY5J+SbON46HM6Z2gZmJWcnArMOeuJnrE7C+vvepkey0
+	yElG5FM+GQwgRv7h9bWlUP23lARbGlQZfQor/yz6JyQd34YQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dxdva8qy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Aug 2025 07:07:45 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57F77iBn019025
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Aug 2025 07:07:44 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Fri, 15 Aug 2025 00:07:39 -0700
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Subject: [PATCH v2 0/3] Add CCI and imx577 sensor support for lemans evk
+Date: Fri, 15 Aug 2025 15:07:16 +0800
+Message-ID: <20250815-rb8_camera-v2-0-6806242913ed@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
- for WSA883x speakers
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, quic_pkumpatl@quicinc.com,
- kernel@oss.qualcomm.com, Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-References: <20250806181818.2817356-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250806181818.2817356-3-mohammad.rafi.shaik@oss.qualcomm.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <20250806181818.2817356-3-mohammad.rafi.shaik@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKXcnmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDC0NT3aIki/jkxNzUokRdC3NzU0PzZBNTYwsLJaCGgqLUtMwKsGHRsbW
+ 1AM4/yk5cAAAA
+X-Change-ID: 20250815-rb8_camera-877517c45388
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss
+	<rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <vladimir.zapolskiy@linaro.org>, <todor.too@gmail.com>
+CC: <linux-i2c@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Wenmeng Liu
+	<quic_wenmliu@quicinc.com>, <linux-media@vger.kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755241658; l=1945;
+ i=quic_wenmliu@quicinc.com; s=20250211; h=from:subject:message-id;
+ bh=8z9gNAQPOCOGg9llxKiaSqdbeOZ5p/PpyiAKn1+7bKE=;
+ b=ngy/keYU0mK3ZaDBu5ybrBo4zExrhy3knC8caCEFci/VjyfUctuDAj67Izarfaxi2j/WeFUJF
+ W6+LdfXhoIWBT47/xR/m7j5AxAng3/Dl+0HsoCM1vedOlyywxiKEtwA
+X-Developer-Key: i=quic_wenmliu@quicinc.com; a=ed25519;
+ pk=PTegr3w0f1C9dOSL6CUdJR5+u+X/4vsW7VMfwIMeMXQ=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=IuYecK/g c=1 sm=1 tr=0 ts=689edcc1 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=qaHc40WDI1yFc38059wA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: aMwhDN7Ok_76CxBf6vd0Y7YYd3v1vH_n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAyNSBTYWx0ZWRfX07A0OW/I0XaH
+ wHSDLiK9pPoZ1BbDqTnXwwn10pDqZJ5v56q7g+gEEb3OO3V5RSR5I0Fci0ibmyLGJ/lgOLR1AAz
+ //nwCMvsIMzYjiCrSe4xQpUMM7HpYxhFPMXmiAEp7Hj6VbKFLDok3IFD64erFc5niRKattI181p
+ sd88BAePLJ9CXkSbCVi4M8oS1sl7HzoUwy8eZ1VfBsFXSlyA+RN0aHq/Stz+KM0E1au4+oepq9s
+ FqZirEUcHyau0a1bZQJe73BZWz2RlTpsym2Rd6otMh4rLkpZJ8WdTkSNSaq2J5GIYU+G1/cE6aE
+ JvincRIbSlfZNQg2g1sBIB5T9JHe4ePnm1GsQsIsyxPEU1qUYN2cLN3I9ugZj6IZyE97e2HxAkw
+ YqBQoIzI
+X-Proofpoint-GUID: aMwhDN7Ok_76CxBf6vd0Y7YYd3v1vH_n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-15_02,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
+ clxscore=1011 phishscore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090025
 
+This series adds cci definition and imx577 sensor enablement
+via cci1 on lemans evk.
 
-On 8/6/25 7:18 PM, Mohammad Rafi Shaik wrote:
-> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> 
-> On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
-> WSA8830/WSA8835 speaker amplifiers share a common reset (shutdown) GPIO.
-> 
-> To handle such scenario, use the reset controller framework and its
-> "reset-gpio" driver to handle such case. This allows proper handling
-> of all WSA883x speaker amplifiers on QCS6490-RB3Gen2 board.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> ---
->  sound/soc/codecs/wsa883x.c | 57 +++++++++++++++++++++++++++++++++-----
->  1 file changed, 50 insertions(+), 7 deletions(-)
-> 
-> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-> index 188363b03b93..ec7a55d88576 100644
-> --- a/sound/soc/codecs/wsa883x.c
-> +++ b/sound/soc/codecs/wsa883x.c
-> @@ -14,6 +14,7 @@
->  #include <linux/printk.h>
->  #include <linux/regmap.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/reset.h>
->  #include <linux/slab.h>
->  #include <linux/soundwire/sdw.h>
->  #include <linux/soundwire/sdw_registers.h>
-> @@ -468,6 +469,7 @@ struct wsa883x_priv {
->  	struct sdw_stream_runtime *sruntime;
->  	struct sdw_port_config port_config[WSA883X_MAX_SWR_PORTS];
->  	struct gpio_desc *sd_n;
-> +	struct reset_control *sd_reset;
->  	bool port_prepared[WSA883X_MAX_SWR_PORTS];
->  	bool port_enable[WSA883X_MAX_SWR_PORTS];
->  	int active_ports;
-> @@ -1546,6 +1548,46 @@ static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
->  	.info	= wsa883x_hwmon_info,
->  };
->  
-> +static void wsa883x_reset_assert(void *data)
-> +{
-> +	struct wsa883x_priv *wsa883x = data;
-> +
-> +	if (wsa883x->sd_reset)
-> +		reset_control_assert(wsa883x->sd_reset);
-> +	else
-> +		gpiod_direction_output(wsa883x->sd_n, 1);
-> +}
-> +
-> +static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
-> +{
-> +	if (wsa883x->sd_reset)
-> +		reset_control_deassert(wsa883x->sd_reset);
-> +	else
-> +		gpiod_direction_output(wsa883x->sd_n, 0);
-> +}
-> +
-> +static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *wsa883x)
-> +{
-> +	wsa883x->sd_reset = devm_reset_control_get_optional_shared_deasserted(dev, NULL);
-why deasserted ? we are already doing wsa883x_reset_deassert(wsa883x)
-just after calling this.
+An example media-ctl pipeline for the imx577 is:
 
-> +	if (IS_ERR(wsa883x->sd_reset))
-> +		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_reset),
-> +				     "Failed to get reset\n");
-> +	/*
-> +	 * if sd_reset: NULL, so use the backwards compatible way for powerdown-gpios,
-> +	 * which does not handle sharing GPIO properly.
-> +	 */
-> +	if (!wsa883x->sd_reset) {
-> +		wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
-> +							GPIOD_FLAGS_BIT_NONEXCLUSIVE |
-> +							GPIOD_OUT_HIGH);
-> +		if (IS_ERR(wsa883x->sd_n))
-> +			return dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
-> +					     "Shutdown Control GPIO not found\n");
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int wsa883x_probe(struct sdw_slave *pdev,
->  			 const struct sdw_device_id *id)
->  {
-> @@ -1566,11 +1608,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
->  	if (ret)
->  		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
->  
-> -	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
-> -						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
-> -	if (IS_ERR(wsa883x->sd_n)) {
-> -		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
-> -				    "Shutdown Control GPIO not found\n");
-> +	ret = wsa883x_get_reset(dev, wsa883x);
-> +	if (ret) {
-> +		dev_dbg(dev, "Failed to get reset powerdown GPIO: %d\n", ret);
-this is redundant we already have failure messages from wsa883x_get_reset().
+media-ctl -d /dev/media0 --reset
+media-ctl -d /dev/media0 -V '"imx577 0-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+media-ctl -d /dev/media0 -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
+media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -d /dev/media0 -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
 
+yavta -B capture-mplane  -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0 --capture=5
 
---srini
->  		goto err;
->  	}
->  
-> @@ -1595,11 +1635,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
->  	pdev->prop.simple_clk_stop_capable = true;
->  	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
->  	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
-> -	gpiod_direction_output(wsa883x->sd_n, 0);
-> +
-> +	wsa883x_reset_deassert(wsa883x);
-> +	ret = devm_add_action_or_reset(dev, wsa883x_reset_assert, wsa883x);
-> +	if (ret)
-> +		return ret;
->  
->  	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
->  	if (IS_ERR(wsa883x->regmap)) {
-> -		gpiod_direction_output(wsa883x->sd_n, 1);
->  		ret = dev_err_probe(dev, PTR_ERR(wsa883x->regmap),
->  				    "regmap_init failed\n");
->  		goto err;
+Changes in V2:
+- Remove the patch that adds PHY supply documentation in the sa8775p CAMSS 
+  bindings. This change should be submitted together with the sa8775p bindings patch.
+- Fix the string ordering in the DTS file.
+- Remove the source clock from the CCI node.
+- Move the sensor enable configuration from lemans-evk.dts to lemans-evk-camera.dtso.
+- Remove the definitions for CCI and regulators that are not enabled.
+- Link to v1:
+  https://lore.kernel.org/all/20250514-rb8_camera-v1-0-bf4a39e304e9@quicinc.com/
+
+Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+---
+Wenmeng Liu (3):
+      dt-bindings: i2c: qcom-cci: Document sa8775p compatible
+      arm64: dts: qcom: sa8775p: Add CCI definitions
+      arm64: dts: qcom: lemans-evk-camera: Add DT overlay
+
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   4 +
+ arch/arm64/boot/dts/qcom/lemans-evk-camera.dtso    | 105 ++++++++
+ arch/arm64/boot/dts/qcom/lemans.dtsi               | 268 +++++++++++++++++++++
+ 4 files changed, 379 insertions(+)
+---
+base-commit: f0d48d68b1e7323d253068c5d4f7b470c5e927de
+change-id: 20250815-rb8_camera-877517c45388
+
+Best regards,
+-- 
+Wenmeng Liu <quic_wenmliu@quicinc.com>
 
 
