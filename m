@@ -1,133 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-69327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 567B4B27B15
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 10:33:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5368CB27BA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 10:51:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EDF53580675
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 08:31:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AB783A9F05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 08:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0637331986A;
-	Fri, 15 Aug 2025 08:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABBC024E00F;
+	Fri, 15 Aug 2025 08:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="NWzdE3iX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VVsM8c/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360EA18B12
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 08:31:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7DD248F4F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 08:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755246695; cv=none; b=kWjOj0Dacb4+c1DaW4ouN9JQ2956e5o5GyYvljd8NvW5wxe6LnM7HeW3bAEg7XvbOwKRArk92cmmofaEf2OaE+MRteW0/O8no5PAWsDgXYksjVYAbloLYZ55xMOsGKtvRNtj05JcYoqJD8e35TSBEXTIOe57Um9wDBBZGiJXaug=
+	t=1755247893; cv=none; b=RelFd7ue/ptX3d2Haovp1MVEOmCOinT5F4Ips5NgXxigk/Qw06W9wGfCMHBtWtRaPYof9E1B96uqEQqvhm4ym+wr5mIqQyygxRhw7LG9z/YKx4U2NGHdo/JjS8a+0nmhWmyi1fMlY0dGPVs4cCkjPQGA2T7iydrQfS9CHEJ6lhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755246695; c=relaxed/simple;
-	bh=F7TgtDIVeJHmJbdmhVsLQz8ZXqh8PmvpMqqRRdkM3Hc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YBDulH5of78351CrZHgWqvhOJk7Fbn2t8tP7GebwyPwMxqDj+N2C63q4ati4VXmy8r1oEP9MH3NTJPajNwbOCZWm9Nni33eAxO3uYgd18ytrw5w8zSTU7EpDnEkDtkh3j/UO+hRuunFlhfLCK9+dZQX3MKJuJbO7UZ0Hi/+6K8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=NWzdE3iX; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=hr2q
-	1UFu4n5c+NUsYTOIsmm+4qw3eig0S8Zk3qsF2Qo=; b=NWzdE3iXg9eNG8b5vB41
-	E/wcyWSlko7QcPzDFSSQ2kUn2lUfw7i1xfOmpe501mGG6ylioIqQTvM4nMNUspFh
-	9AplZT9ZCBTfvs1AU1Ww6FZmeD/sxciigvdwVHb0PyzCnZLQetnvV5pwEVer74HO
-	rC+c9UgIqJ+FYCTWon4Auyw1kiFHQ0pB23QWj2cbK66FBChyHLuzZLA1pe+a7yae
-	K59Iy4YY26YWdJEGHJfQxZR6kZ0N01UaepbWBTJkYq9Fr2ySglOchyi3kekGB0aF
-	teC7y+iWkyhlaRvxdnGhJXpk/L+6FSdwgPZsumv5wPhIxtV+ZLLr+cH25E4dhtNF
-	EA==
-Received: (qmail 1330456 invoked from network); 15 Aug 2025 10:31:22 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 15 Aug 2025 10:31:22 +0200
-X-UD-Smtp-Session: l3s3148p1@TOH1NmM8Rs9tKLK5
-Date: Fri, 15 Aug 2025 10:31:20 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/7] i2c: qcom-cci: Add msm8953 compatible
-Message-ID: <aJ7wWDejA0KDarIE@shikoro>
-References: <20250810-msm8953-cci-v1-0-e83f104cabfc@lucaweiss.eu>
- <20250810-msm8953-cci-v1-2-e83f104cabfc@lucaweiss.eu>
- <aJnefpETGJm_cuRY@shikoro>
- <f956eccec6b8ae2737b1e758b8357051@lucaweiss.eu>
+	s=arc-20240116; t=1755247893; c=relaxed/simple;
+	bh=UF5qyNpTXdoXNJ7pnDXzfEVK9jteDAQF6rVcXALvFwY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gvBEiq3a4GeW3Kv/D5qsfgU6QyvUDnElIiINPJ2Z6ZuU4RNjPcFGPDENYOG6GxMjDIFYO5m/880efvMplAdXEJ2nZ+xF0uyJSOE4ZQMNWA2JOpYb+PGiyzclsgHC1i0M3Lt/1P1UAeoihQC8iBGwp+OdOnU55COf3sxqQ1Eu0HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VVsM8c/2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57F85Wn1020736
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 08:51:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	viA0ftgPjs8CYNz5BU9g3zq8XF4gr1cHoqz5uG+TLmk=; b=VVsM8c/2HJspZpHO
+	88q0sMUufJIP/OZqja2CN8vMlHuCxsOdYbW9mMkkd8VefDLfmoolFz+n6u8TlqQl
+	VvxnrOK3eJP1CtPqTTCfg9Ckq3/4mbgj6b3Q7wqWBq7C6wf1+Z67yavWodqNxClk
+	qPdlvRmvFEvX8RmO0IrN7mYqxZOOdDPv11GgXTQ1SJ8uBoWV/Z0m+AX1Et7YdLDM
+	vEKoAj7hjqe1wtjFa8nnFxjc4BNtTBYaSFTCl7OIZQX6ZYezBifgIx1sMUwUFCL3
+	QdYVLhRB8zfiuG73916yBy7gDgbUdZIL6Mu3UreaOy7do9KGBCr+D4qfAg9oZx8s
+	nc/Yfw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dw9t2sdj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 08:51:31 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2445806b18aso18937735ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 01:51:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755247890; x=1755852690;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=viA0ftgPjs8CYNz5BU9g3zq8XF4gr1cHoqz5uG+TLmk=;
+        b=Sv/z7Dx4VFc4CFHIQYmR317WITOEwr8rhvZfQyNmpOHN+GZv4z7DZMu64kRX1nXIFs
+         FJcnbgjvhubMLXSm1dc4Rk97PdsJJaP6KevEHR3yXOFFcmZ9wE6sqnS2t32etJkUzpsA
+         UR6fZV5NBB4jkVEtMm7atHb3WvP0w79gTRQjYS4qVkCWl3/PAe4fqGprnGRvAGAH06TL
+         5lQkKxZ5hmdDUoo6olCMsHf+vryNQo3iviO91q1K3JkTB6vRRt3ObDnKD2gNmOiliF9D
+         Dj6kWGPOgowvAi+rrrOxChNUJGMtJDrqnPT6DbvWc9XmZCMd4PYUO82Tnwcdutq8ztVz
+         DnJA==
+X-Gm-Message-State: AOJu0YzLJl4fUF1vRp57MW9uf0dbOS3IFsQAa3JlPviceqyEnqSFWzOw
+	MSejgc0gCYg7NkMz8304VfXDBDTcp1NrcaTbgmNGNKWE6X7oKYIItq69OptEP43KUd2vq3ouYQa
+	R0MmA+JVUsf351d9nHRAttWTUo/dPz1bBkkDiqBjCxeIbYwsw+G30AX3s5yDad9qqE2Ix
+X-Gm-Gg: ASbGnctR7Hrnv7vx0n7TBVlw5OY0bYzgrQ3vttStlz8KFgx6oEgwWoZ4TZ0CE5p+Ovm
+	h5cYQ4BGbo3sAXBR2e+ZrrIZ1Z1g3n7+O0bIYEEMyFR5j2WW0M5v2D1xJEEOo/r81WZGqxQnmXm
+	oAS6P+EXKlSpZp9PtGQprn0UyLhW80W36m3I7JvcKAvdMU0UTayaSmTcV6CfcO4yGpF7A6nq+Fu
+	sY+uglS+qwB0pcNcA554YefZQ0FG/+Kc3PMUAjAwl96ZZYKYaklmPfGVULRZqthqEid6dVELa+E
+	JztJ4g4Eph2mzcqMcR8+LwnUFWVmd3kS6Jgrx3rj98m5A+vcP2y1GgVdbPoICLljw5htEbVBwXY
+	2fDiUImIIgOOMXjSfe6iWdgM4zdy6
+X-Received: by 2002:a17:902:cece:b0:234:b41e:37a4 with SMTP id d9443c01a7336-2446d5af49bmr20126885ad.6.1755247890326;
+        Fri, 15 Aug 2025 01:51:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRZ3xoE0Z01Gar2LyZr8un5sb4pG+FITKlhbiCZfOjE53dG11yImWKgWB0zMbX+CcHUtPEvw==
+X-Received: by 2002:a17:902:cece:b0:234:b41e:37a4 with SMTP id d9443c01a7336-2446d5af49bmr20126405ad.6.1755247889823;
+        Fri, 15 Aug 2025 01:51:29 -0700 (PDT)
+Received: from [10.133.33.31] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446d55035fsm9240305ad.132.2025.08.15.01.51.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Aug 2025 01:51:29 -0700 (PDT)
+Message-ID: <c931bbc5-f246-4d34-9280-0c1a551a1e7e@oss.qualcomm.com>
+Date: Fri, 15 Aug 2025 16:51:20 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TQXPwgYOVAqGLFm1"
-Content-Disposition: inline
-In-Reply-To: <f956eccec6b8ae2737b1e758b8357051@lucaweiss.eu>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 0/5] pci: qcom: Add QCS8300 PCIe support
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+References: <20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com>
+Content-Language: en-US
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+In-Reply-To: <20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=J+Wq7BnS c=1 sm=1 tr=0 ts=689ef513 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8 a=IHEL40AIkIxnPEiLsFYA:9 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: Uk0ax1rnAwAPj6wNYaJlqkr7P4idvk_E
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAxNSBTYWx0ZWRfX8zIheeiFt7Z7
+ C6h1lxORgNQ6GMraUhB888cBl2bSeqPEMF+0QOCB5dKwXDgOmt/hTc5Q9Diuit0EhGVrgeZPAp2
+ 0deYX+N7L3hcZDeuM1QnBTNm6QcZ2RTsymcf7ouvo6ltsRT28oZAn4jCS96UF3PwLE67EIP+FCW
+ SyhvGU3/oF6FtzJ7acDGhKYZj821anBXBhXQGD2XuQ/PW1vKLoRaJeVdzlBnz6st5cInb7aYWDm
+ 3aNRkaNT71IXqqH3PdNaV16h2RRwes8Tc0JqBkL1JbHGfS7hNByeqHzyr0YqfKypVNnQFUkPajP
+ wOHonxJwygv0JVDLU+5j3DYl3GLutfmAfSN/sw/MMQQ5EY5TKEsvB+w7DxI1g9uC0nFTTeVwcT0
+ g4217gfc
+X-Proofpoint-GUID: Uk0ax1rnAwAPj6wNYaJlqkr7P4idvk_E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-15_03,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 clxscore=1015 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508090015
 
 
---TQXPwgYOVAqGLFm1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 8/11/2025 3:11 PM, Ziyue Zhang wrote:
+> This series depend on the sa8775p gcc_aux_clock and link_down reset change
+> https://lore.kernel.org/all/20250725102231.3608298-2-ziyue.zhang@oss.qualcomm.com/
+>
+> This series adds document, phy, configs support for PCIe in QCS8300.
+> It also adds 'link_down' reset for sa8775p.
+>
+> Have follwing changes:
+> 	- Add dedicated schema for the PCIe controllers found on QCS8300.
+> 	- Add compatible for qcs8300 platform.
+> 	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+> 	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> ---
+> Changes in v10:
+> - Update PHY max_items (Johan)
+> - Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
+>
+> Changes in v9:
+> - Fix DTB error (Vinod)
+> - Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
+>
+> Changes in v8:
+> - rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
+> - Add Fixes tag to phy change (Johan)
+> - Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
+>
+> Changes in v7:
+> - rebase qcs8300-ride.dtsi change to solve conflicts.
+> - Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
+>
+> Changes in v6:
+> - move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
+> - Update QCS8300 and sa8775p phy dt, remove aux clock.
+> - Fixed compile error found by kernel test robot
+> - Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
+>
+> Changes in v5:
+> - Add QCOM PCIe controller version in commit msg (Mani)
+> - Modify platform dts change subject (Dmitry)
+> - Fixed compile error found by kernel test robot
+> - Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
+>
+> Changes in v4:
+> - Add received tag
+> - Fixed compile error found by kernel test robot
+> - Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
+>
+> Changes in v3:
+> - Add received tag(Rob & Dmitry)
+> - Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
+> - remove pcieprot0 node(Konrad & Mani)
+> - Fix format comments(Konrad)
+> - Update base-commit to tag: next-20241213(Bjorn)
+> - Corrected of_device_id.data from 1.9.0 to 1.34.0.
+> - Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
+>
+> Changes in v2:
+> - Fix some format comments and match the style in x1e80100(Konrad)
+> - Add global interrupt for PCIe0 and PCIe1(Konrad)
+> - split the soc dtsi and the platform dts into two changes(Konrad)
+> - Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
+>
+> Ziyue Zhang (5):
+>    dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+>      for qcs8300
+>    arm64: dts: qcom: qcs8300: enable pcie0
+>    arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
+>    arm64: dts: qcom: qcs8300: enable pcie1
+>    arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
+>
+>   .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  17 +-
+>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  80 +++++
+>   arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 296 +++++++++++++++++-
+>   3 files changed, 376 insertions(+), 17 deletions(-)
+>
+>
+> base-commit: e2622a23e8405644c7188af39d4c1bd2b405bb27
+Hi Maintainers,
 
-Hi Luca,
+It seems the patches get reviewed tag for a long time, can you give this
 
-> I'm also not sure what these parameters depend on, if it's CCI HW version,
-> or
-> something else. So naming it after the SoC should be a safer bet. Also the
-> msm8974-cci was only named 'v1.5' because it's an inbetween mix of the v1
-> and
-> v2 that were already upstream so arguably that one shouldn't have been
-> called
-> v1.5 in the first place either.
->=20
-> Let me know what you think. Maybe also someone from Qualcomm/Linaro can j=
-ump
-> in and share their thoughts, if someone knows more what these params depe=
-nd
-> on.
+series further comment or help me to merge them ?
 
-Thanks for the heads up. I agree that it needs someone from Qualcomm for
-definite answers. But if nobody chimes in, your patch is good as is from
-my side.
+Thanks very much.
 
-Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+The phy binding's dependency is merged, the patch do not need to rebase.
 
-Thanks,
-
-   Wolfram
+dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+commit: aac1256a41cfbbaca12d6c0a5753d1e3b8d2d8bf
 
 
---TQXPwgYOVAqGLFm1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmie8FUACgkQFA3kzBSg
-KbbvTQ/9ElCikIoyrJsjc7KJ2KX/PRWCsQmCcW6yAyFK/XmNcw4I7XspRIHrTJ6K
-h80bO5zcB0ki4bTyFxIKcDgVF6txxg2/x4nXm9bQW+sbb+RtuHo28EeodxakO44a
-YqbACbIZ+KQj0dGWp8PB0iaSeTJnxdhhgmx03UU3nMDs/C09EXSQS8xyjgRlcWI6
-nrWSfxhKBxkYpii91HNrv4QPZx+slvJKN0vGIWcjMopXvEfn42fkQ52K94aRH4Dz
-u0HE90AGKjOITswJunyt4grA8hPzXiGZC+fgenrC/a5kJUarrjGJb72BX27dKOa1
-CNAucY/bPhlaWWI4ZEh2e0M1FRVLXWfZPBgX3MX98aGZEdWJO0DGK/2d332d3NYS
-KFp1g1SR23x0Z2lLbFBmtpCMusMVSYslirF/4nESLCiQV804Y7jUd0koMbI7rQuf
-54mHAGpZTouQHBx1ITYquBu9VFfxWneLU78hN+Ja29eGe2tRiOzmPWkXso+h/E0i
-JB5KZ87W0L6tvbCCHbvz3pO95zeS4E5q82XHYITqTJSrjgmNWuFQyRtnc3XW3Pj5
-qQ1i74WTPu3CJRhHBgOZJeE1bDc/dcWS0ZlDhJxL4h3dI62432o1kPYaCLqEMTjx
-J11Wj3/4i54MbuCRi9cTqStmWUYJM8f5NiEQYfbDEhKfqWTnOGs=
-=9FHa
------END PGP SIGNATURE-----
-
---TQXPwgYOVAqGLFm1--
+BRs
+Ziyue
 
