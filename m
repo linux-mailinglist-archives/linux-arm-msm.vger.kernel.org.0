@@ -1,206 +1,468 @@
-Return-Path: <linux-arm-msm+bounces-69388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BD3B282DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 17:23:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7640B28308
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 17:36:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98EB117BC33
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 15:21:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE445AE870F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 15:36:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9948319844;
-	Fri, 15 Aug 2025 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806C1303CB9;
+	Fri, 15 Aug 2025 15:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oV4s99cy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9YjMcxb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ACC2C15B4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 15:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E39A303CA7;
+	Fri, 15 Aug 2025 15:36:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755271282; cv=none; b=hw/rLzcoJZJUhQBNFvkraG8Dp43E0ZH/1nB968chmtwJyXDBPqO/zcCtdIoVR3j8mYw1/USVIy/e7/cjiQME0nkxGlWiakccS2OqGfA7wzPEGcV94TUsHci9ZM8ceLHNXWWWnlP3dZC8wzQib3p7xu8SVJqTKjm9Yq9UlLL+aLc=
+	t=1755272204; cv=none; b=gE47tYGwwE4Yw2VxtY9lOKHQa8H8MlZ6AWcLf2TIbeNgQ5EhmlnnojYE5vJ2xyQnB6+1BeQnep58b5LnYRJy3MoMnnK/sP6O7CEtEO1Sg/3DucvKGnVM9kAOt1+da6/+H7sZCcgIzmITnWvADIKXKqnkR18x2zumYszQHKFLdVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755271282; c=relaxed/simple;
-	bh=MhXp/fPIZL0duqn4iDlN2g/3TmsxA0F6/Y+4Fg3Oogs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Gr5m63KICMmsbyjed5577hbIfM41lOvXeCYs1fcVarsgV3qXgH10JPzfkSe4+xjN6dtgJUbAnSiLaf6+m7aI3zovg4aZcyzQBJAK1E+j50uNn5g8ysckIeB6qy3AjCc4Oh8YGdYJNIxKoro8WCNgUIdfqCFX1hapl0TfOaCUrjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oV4s99cy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57FEKopK021585
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 15:21:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=g+Idl0Z9XcKWlohwID/DKU
-	sWWH1aq7wh7EFh9rQ7yq0=; b=oV4s99cyHZFy+UzRK2yKPGbi2pdeRcgpF6KfRJ
-	IbYlJ6+pIbCL3T8GF/cSh6BFuZ6SRYJy+L4+bfty0wY9fACy+us2zJkxp3qPtnyy
-	coL80LQVG1/4nl9BAR1dUe3Vjj+dP7Fj69labWb7WU/DeNJA02L3GfvKfO/qcXLC
-	mbRKDw4JFxDAcdNAGtSjJBg1WtjOt/nHQQFzxXAZULCxYPpXoQx9CRaUbLkBUQQA
-	Z+jQ+rQKU6I5a0ieKaheN+UiQzIhhPag8vEmrvSiYBc3WVtz/9UI51gPEZvDxO14
-	IrmaSWJEjCWqq8S76izbtKdNKI2d+fpjsItz5oAqXaX1AjJQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48eqhxhks5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 15:21:19 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70a928da763so41538696d6.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Aug 2025 08:21:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755271279; x=1755876079;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g+Idl0Z9XcKWlohwID/DKUsWWH1aq7wh7EFh9rQ7yq0=;
-        b=n+XtKA+Wa55cZHMrn6sZLBpds4Ja6QZ5TO69CGRze6QWjWWqOhOHJB5kel9R+QouGX
-         clxZ1pDtyErdvI5Qw+wl/nzodm+rHH5bNftULm1XLGXJgm+wZ9bLAuWTYNvMMsMxQ/N3
-         BX3xUPxwYqiuf5mZx92Wd+3H0GAli57M5mNNnD04sCpxtP1G4dwJZH4QdVGiTjatTFWM
-         aya3UZlkuPH/QOTclQTQgsLqZ4+1Hi3Ichr/4eizg1nqyLufQmwQG0OixbPd4yeiqSlk
-         /XfT55ipdfKCX5P9bT43qYTZqk317m4ew6ofsY9i6evXQN7simbzzvsid1WoGpMFZkZ+
-         TAsg==
-X-Gm-Message-State: AOJu0YzOpVyhKez2/1almd0KD8DaN+eGgGT6j6jqT5GT+4JpKGf9rhIp
-	hewKAipa1hmC6tetKslyBM+E2d+UBgHrXEer29zF7f06BWhF/1GoWFAZ970QU3EC4JiQHf7Bnqr
-	6HYOpZh85xj5SeY0GE4rS5aIcVlXQhPEdQQ7y2MYiWCdCCglq1q1iRflFexijsfxKcP9T
-X-Gm-Gg: ASbGncvO9ZWSbz9qBsc/9jLk8k6zOdSryBe9eOlb6+y0lKwcE1ggMa5LVR9Yn7YMnzv
-	g3XhWMvQyQ5x24MA0CovcbnBB2L4tjjBbbf0/BOSH4/kzQQi953Kgzye1wN9F0xM2WI5oCyORfz
-	jyupxAR1fdk+Xvtlws00w13DScUfptIkJZoyvhOOKCuHlsvQqr9yJVHxw2OmMDbEoDLzIn3AZZ2
-	3RlWQUH6FeRm2znzl0R3RGVptEtuIhpKkLHs9i9GVLLdHdAwAzgKEhpo/mIZKAtKMyAM/GWdtHA
-	CQBwReFKjmjjszMXWMY/BhvRcswvQgA7ITxqKaR4rkeCnlaAEIFmi78gbbTbp7QX5QVIAqYgh1k
-	fYFg4zYQdXs14IpcE1UMQN5tztRlbIOpxZIOvtHk+8J3mUgI1GHYP
-X-Received: by 2002:ad4:5fce:0:b0:709:31f8:fd96 with SMTP id 6a1803df08f44-70ba7b17e4cmr26400576d6.20.1755271278909;
-        Fri, 15 Aug 2025 08:21:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaBrfvvSpMdjiKGCL6kd8iXm7swFbZQ5AFnvhsfAn56VpGfW3GepZvAUU+AsC5CJ0jSSN4rQ==
-X-Received: by 2002:ad4:5fce:0:b0:709:31f8:fd96 with SMTP id 6a1803df08f44-70ba7b17e4cmr26400036d6.20.1755271278298;
-        Fri, 15 Aug 2025 08:21:18 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a43b992sm3921361fa.25.2025.08.15.08.21.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Aug 2025 08:21:17 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 15 Aug 2025 18:21:15 +0300
-Subject: [PATCH v2] drm/msm/dpu: add support for 4:2:2 planar YCbCr plane
- formats
+	s=arc-20240116; t=1755272204; c=relaxed/simple;
+	bh=67KcHBHjlpa1J1h+XHDKPaiYr4cBCa4wqSJaMUyHjTw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iD+/xyxeU7NzgqNy9swPHGxzoNSUW8sketLUrUbd1xddiJPjHTfMz3C+7yMO9W9Nwm8SbzzvNtnB3bnloOEVQ4FqaTlMfw0OMhUw+BjrSoyvx1Bu/IOHsXZaCvPLahddFQStWL0/5aSDw9N2ouSRJlK0bBptAhNuctBTGHbo5SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9YjMcxb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FD4C4CEEB;
+	Fri, 15 Aug 2025 15:36:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755272204;
+	bh=67KcHBHjlpa1J1h+XHDKPaiYr4cBCa4wqSJaMUyHjTw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=b9YjMcxbU+3u52qQ8LzOspepLb2mjXu2Bb6iyBX2SVvJYOXKG4wQhYfGGgeVU4hwF
+	 tYIC0D5ntUNXctBIWS0ZdFsGTniPU4cqQVqdidFv8bYtdTpQqqehTq4EPF+1I94oEv
+	 2ZN7Uzc+jh+VeOC5BmxuR5oe8q06NW11aC0jMCTrBVlAVy4uTWaKZt06IC18z7ryUY
+	 AWRnIc6rwZ5ZEzs9Sq8F2ADMpeDhhypACqPBE2VSFk6vKjqOXFij16vDg8+A/zByed
+	 27aNxkXFgNBPF4s0S4UZ18KzieWzEcYo5x03WswXVfSkmmt2sB6kvGNchKY+m2Oett
+	 /tfUzgIUKn1fA==
+Message-ID: <df884334-c850-4ae9-b5e8-63cb834ae259@kernel.org>
+Date: Fri, 15 Aug 2025 16:36:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] ASoC: codecs: add new pm4125 audio codec driver
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ christophe.jaillet@wanadoo.fr
+References: <20250814-pm4125_audio_codec_v1-v3-0-31a6ea0b368b@linaro.org>
+ <20250814-pm4125_audio_codec_v1-v3-2-31a6ea0b368b@linaro.org>
+Content-Language: en-US
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <20250814-pm4125_audio_codec_v1-v3-2-31a6ea0b368b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250815-fd-dpu-yv16-yv24-v2-1-eb08531814c3@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAGpQn2gC/32NTQrCMBCFr1Jm7UgziVFceQ/pIuanHZCmJBosJ
- Xc39gBuHnwP3vc2yD6xz3DtNki+cOY4N6BDB3Yy8+iRXWOgnlRPRBgcuuWNaxG6BSnUjyBO5II
- 5BwlttiQf+LMr70PjifMrpnV/KOLX/pEVgQKVMRcprbNaiduTZ5PiMaYRhlrrFwgwHmSxAAAA
-X-Change-ID: 20240222-fd-dpu-yv16-yv24-6bf152dfa7f3
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2078;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=Wv5uC4RQRHmvAs68qHKZxljKlLnfQU03RWVOByU+dqE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBon1BtPrZfCPEi08HCWelXcb92WnzvWD7NeIXIC
- DAY2rNGwtaJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaJ9QbQAKCRCLPIo+Aiko
- 1WX0B/9tQ9mYZTbCeyyqT9wRFTYQjxrMwO1bTF8D9mi08bKz8+l+VN8NN4oggS9Ta5LHF/+Bz3o
- iaUvJvIaipbxZYV9wldCEbl/vPMtA0G3gHI1/dKxsOZBQiXoikBfrdLeSnKBQYzWkdfrQA39oNx
- JeWw2YNPHY8LU0GmYUwUITlVsauVBMn/IKchzhrph3h8a6DCLO6FNe6+9sHomN0QCqdbypAh8TQ
- JR/etZTpEAxAnG515wq9a/cVcXiW+7kQJfZraeQVo5yR0S5aGhF1woyfqmKtJgH0EM37nUaTJcW
- 5zQh1099swC3C/70Ej0BIqxszU9lC4h8K8fn/scZ+bRF2SWc
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDA1NyBTYWx0ZWRfX9fFVAorBX/Ml
- mgzLHKJuAVVhXCaVyLj6y+DRijEOn94iMHnmR435GJJseq93VH8viyb8mClkxOFT/nciInxwmny
- mxlTuAKDkRqodGZgyZdjSpvViIYITZqvWOsdmENJoOj36rrIWVgi8/5lQnHGE/oSXaGsaNkYZLR
- +Bxba9ivrR6AWZ+8MigtmC+SerFlmNTyiD73k9Nh8ULFqQXb4uXvh07tlNlCYdLS6usbzGzux5b
- MJdV4F8dSJn+qm+lRau0wWP5zhOICP236GnjXTYM+WxZ+vEzFAVHttyTdAg+TuLQeFZBS055oy8
- hXbqCaOL9J9IEJv/+UC6wlb5ov/WfVC+7vA9Xtru9YAroCeyVrP9e4qEb6MiOwe+RSS1nG7tTJT
- cyn0OlOz
-X-Proofpoint-GUID: jdvvyrrFC5nOj6seQTbSQGjnrh-4i4yZ
-X-Authority-Analysis: v=2.4 cv=aYNhnQot c=1 sm=1 tr=0 ts=689f506f cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=ZlibHMbJTRG0YE4QOoMA:9 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: jdvvyrrFC5nOj6seQTbSQGjnrh-4i4yZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-15_05,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508100057
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The DPU driver provides support for 4:2:0 planar YCbCr plane formats.
-Extend it to also support 4:2:2 planar formats.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-Changes in v2:
-- Dropped 4:4:4 formats, they require higher clocks.
-- Link to v1: https://lore.kernel.org/r/20240222-fd-dpu-yv16-yv24-v1-1-4aa833cdc641@linaro.org
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 ++
- drivers/gpu/drm/msm/disp/mdp_format.c          | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+On 8/14/25 1:14 AM, Alexey Klimov wrote:
+> The audio codec is found in Qualcomm PM2250/PM4125 PMICs and is used on
+> platforms like Qualcomm QCM2290. It has soundwire interface and
+> corresponding RX and TX slave devices.
+> 
+> It has only two input channels: HPH left and right. The line output (LO)
+> is linked to HPHL so the hardware has some limitations regarding concurrent
+> playback via HPH and LO for instance.
+> 
+> The codec driver also uses WCD MBCH framework. The MBHC functionality is
+> implemented in a minimalistic way to enable IRQs and avoid different
+> issues with IRQs.
+> 
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index e824cd64fd3fdf2ab0db92794a0aaa57c109decb..b1ec781ffd23065edba76ab9fdf8b377c8dce6ac 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -183,6 +183,8 @@ static const uint32_t plane_formats_yuv[] = {
- 	DRM_FORMAT_YVYU,
- 	DRM_FORMAT_YUV420,
- 	DRM_FORMAT_YVU420,
-+	DRM_FORMAT_YUV422,
-+	DRM_FORMAT_YVU422,
+I manged to test this one, found 2 issues.
+
+1. incorrect mic bias handling, results in recording stop working.
+2. memory corruption leading to kernel crash.
+
+More details below..
+
+> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> ---
+>  sound/soc/codecs/Kconfig      |   18 +
+>  sound/soc/codecs/Makefile     |    8 +
+>  sound/soc/codecs/pm4125-sdw.c |  547 +++++++++++++
+>  sound/soc/codecs/pm4125.c     | 1793 +++++++++++++++++++++++++++++++++++++++++
+>  sound/soc/codecs/pm4125.h     |  313 +++++++
+>  5 files changed, 2679 insertions(+)
+> 
+> diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+> index 099b4ce4f910d53f6c0e366dee4348084aab76bd..063051168266d094f073f759a54b63f9cb5c70df 100644
+> --- a/sound/soc/codecs/Kconfig
+> +++ b/sound/soc/codecs/Kconfig
+> @@ -193,6 +193,7 @@ config SND_SOC_ALL_CODECS
+>  	imply SND_SOC_PCM512x_SPI
+>  	imply SND_SOC_PCM6240
+>  	imply SND_SOC_PEB2466
+> +	imply SND_SOC_PM4125_SDW
+>  	imply SND_SOC_RK3308
+>  	imply SND_SOC_RK3328
+>  	imply SND_SOC_RK817
+> @@ -1559,6 +1560,23 @@ config SND_SOC_PEB2466
+>  	  To compile this driver as a module, choose M here: the module
+>  	  will be called snd-soc-peb2466.
+>  
+> +config SND_SOC_PM4125
+> +	depends on SND_SOC_PM4125_SDW
+> +	tristate
+> +	depends on SOUNDWIRE || !SOUNDWIRE
+> +
+> +config SND_SOC_PM4125_SDW
+> +	tristate "PM4125 audio codec - SDW"
+> +	select SND_SOC_PM4125
+> +	select SND_SOC_WCD_MBHC
+> +	select REGMAP_IRQ
+> +	depends on SOUNDWIRE
+> +	select REGMAP_SOUNDWIRE
+> +	help
+> +	  The PMIC PM4125 has an in-built audio codec IC used with SoCs
+> +	  like QCM2290, and it is connected via soundwire and SPMI.
+> +	  To compile this codec driver say Y or m.
+> +
+>  config SND_SOC_RK3308
+>  	tristate "Rockchip RK3308 audio CODEC"
+>  	depends on ARM64 || COMPILE_TEST
+> diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+> index 3f97afaaaed877cb1a7b46bc37cf4ad09bb98a5c..ff771ff8a1e93db1af8550d419c1339356a895dd 100644
+> --- a/sound/soc/codecs/Makefile
+> +++ b/sound/soc/codecs/Makefile
+> @@ -224,6 +224,8 @@ snd-soc-pcm512x-i2c-y := pcm512x-i2c.o
+>  snd-soc-pcm512x-spi-y := pcm512x-spi.o
+>  snd-soc-pcm6240-y := pcm6240.o
+>  snd-soc-peb2466-y := peb2466.o
+> +snd-soc-pm4125-y := pm4125.o
+> +snd-soc-pm4125-sdw-y := pm4125-sdw.o
+>  snd-soc-rk3308-y := rk3308_codec.o
+>  snd-soc-rk3328-y := rk3328_codec.o
+>  snd-soc-rk817-y := rk817_codec.o
+> @@ -646,6 +648,12 @@ obj-$(CONFIG_SND_SOC_PCM512x_I2C)	+= snd-soc-pcm512x-i2c.o
+>  obj-$(CONFIG_SND_SOC_PCM512x_SPI)	+= snd-soc-pcm512x-spi.o
+>  obj-$(CONFIG_SND_SOC_PCM6240)	+= snd-soc-pcm6240.o
+>  obj-$(CONFIG_SND_SOC_PEB2466)	+= snd-soc-peb2466.o
+> +obj-$(CONFIG_SND_SOC_PM4125_SDW) += snd-soc-pm4125-sdw.o
+> +obj-$(CONFIG_SND_SOC_PM4125)   += snd-soc-pm4125.o
+> +ifdef CONFIG_SND_SOC_PM4125_SDW
+> +# avoid link failure by forcing sdw code built-in when needed
+> +obj-$(CONFIG_SND_SOC_PM4125) += snd-soc-pm4125-sdw.o
+> +endif
+>  obj-$(CONFIG_SND_SOC_RK3308)	+= snd-soc-rk3308.o
+>  obj-$(CONFIG_SND_SOC_RK3328)	+= snd-soc-rk3328.o
+>  obj-$(CONFIG_SND_SOC_RK817)	+= snd-soc-rk817.o
+> diff --git a/sound/soc/codecs/pm4125-sdw.c b/sound/soc/codecs/pm4125-sdw.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..776f5998f3e9a9ae5834a8e179c22ed43405c3c0
+> --- /dev/null
+> +++ b/sound/soc/codecs/pm4125-sdw.c
+> @@ -0,0 +1,547 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> +// Copyright, 2025 Linaro Ltd
+
+
+> +
+> +static struct pm4125_sdw_ch_info pm4125_sdw_rx_ch_info[] = {
+> +	WCD_SDW_CH(PM4125_HPH_L, PM4125_HPH_PORT, BIT(0)),
+> +	WCD_SDW_CH(PM4125_HPH_R, PM4125_HPH_PORT, BIT(1)),
+> +	WCD_SDW_CH(PM4125_COMP_L, PM4125_COMP_PORT, BIT(0)),
+> +	WCD_SDW_CH(PM4125_COMP_R, PM4125_COMP_PORT, BIT(1)),
+Issue 1: we are adding only 4 channels here however the mixer Switches
+that lookup this table is more than 4.
+> +};
+> +
+> +static struct pm4125_sdw_ch_info pm4125_sdw_tx_ch_info[] = {
+> +	WCD_SDW_CH(PM4125_ADC1, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(0)),
+> +	WCD_SDW_CH(PM4125_ADC2, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(1)),
+
+Same issue here,
+> +};
+> +
+
+
+> diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..fc320152b9254e4412cbf593cdc456ee159d071f
+> --- /dev/null
+> +++ b/sound/soc/codecs/pm4125.c
+> @@ -0,0 +1,1793 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> +// Copyright (c) 2025, Linaro Ltd
+> +
+
+> +static int pm4125_rx_clk_enable(struct snd_soc_component *component)
+> +{
+> +	struct pm4125_priv *pm4125 = snd_soc_component_get_drvdata(component);
+> +
+> +	if (atomic_read(&pm4125->rx_clk_cnt))
+> +		return 0;
+> +
+> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL,
+> +				      PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
+> +				      PM4125_DIG_SWR_RX_CLK_ENABLE);
+> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL,
+> +				      PM4125_DIG_SWR_ANA_RX_DIV2_CLK_EN_MASK,
+> +				      PM4125_DIG_SWR_RX_CLK_ENABLE);
+> +	usleep_range(5000, 5100);
+> +
+> +	pm4125_global_mbias_enable(component);
+
+Please remove handing of mbias calls directly this is racing, Please
+handle it via dapm widgets directly. If not we will endup with switching
+off micbias off while recording is in progress or recording will
+continue assuming that micbias is on, but some path can switch it off.
+
+
+> +
+> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
+> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK,
+> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_68);
+> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
+> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_EN_MASK,
+> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_ENABLE);
+> +	snd_soc_component_update_bits(component, PM4125_ANA_NCP_VCTRL, 0x07, 0x06);
+> +	snd_soc_component_write_field(component, PM4125_ANA_NCP_EN,
+> +				      PM4125_ANA_NCP_ENABLE_MASK,
+> +				      PM4125_ANA_NCP_ENABLE);
+> +	usleep_range(500, 510);
+> +
+> +	atomic_inc(&pm4125->rx_clk_cnt);
+> +
+> +	return 0;
+> +}
+> +
+> +static int pm4125_rx_clk_disable(struct snd_soc_component *component)
+> +{
+> +	struct pm4125_priv *pm4125 = snd_soc_component_get_drvdata(component);
+> +
+> +	if (!atomic_read(&pm4125->rx_clk_cnt)) {
+> +		dev_err(component->dev, "clk already disabled\n");
+> +		return 0;
+> +	}
+> +
+> +	atomic_dec(&pm4125->rx_clk_cnt);
+> +
+> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
+> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_EN_MASK,
+> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_DISABLE);
+> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
+> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK,
+> +				      0x00);
+> +	snd_soc_component_write_field(component, PM4125_ANA_NCP_EN,
+> +				      PM4125_ANA_NCP_ENABLE_MASK,
+> +				      PM4125_ANA_NCP_DISABLE);
+> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL,
+> +				      PM4125_DIG_SWR_ANA_RX_DIV2_CLK_EN_MASK,
+> +				      PM4125_DIG_SWR_RX_CLK_DISABLE);
+> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL,
+> +				      PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
+> +				      PM4125_DIG_SWR_RX_CLK_DISABLE);
+> +	pm4125_global_mbias_disable(component);
+> +
+> +	return 0;
+> +}
+> +
+> +
+
+%s/^\n\n/\r/
+
+> +static int pm4125_codec_enable_rxclk(struct snd_soc_dapm_widget *w, struct snd_kcontrol *kcontrol,
+> +				     int event)
+> +{
+> +	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+> +
+> +	switch (event) {
+> +	case SND_SOC_DAPM_PRE_PMU:
+> 
+> +static const struct snd_kcontrol_new pm4125_snd_controls[] = {
+> +	SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
+
+    SOC_SINGLE_EXT("HPHL_COMP Switch", PM4125_COMP_L, 0, 1, 0, ?
+
+> +		       pm4125_get_compander, pm4125_set_compander),
+> +	SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
+
+       SOC_SINGLE_EXT("HPHR_COMP Switch", PM4125_COMP_R, 1, 1, 0,?
+
+> +		       pm4125_get_compander, pm4125_set_compander),
+
+This is same issue in one of the WCD codec, which am going to send fixes
+along with my original wcd fixes series.
+
+
+> +
+> +	SOC_SINGLE_TLV("HPHL Volume", PM4125_ANA_HPHPA_L_GAIN, 0, 20, 1,
+> +		       line_gain),
+> +	SOC_SINGLE_TLV("HPHR Volume", PM4125_ANA_HPHPA_R_GAIN, 0, 20, 1,
+> +		       line_gain),
+> +	SOC_SINGLE_TLV("ADC1 Volume", PM4125_ANA_TX_AMIC1, 0, 8, 0,
+> +		       analog_gain),
+> +	SOC_SINGLE_TLV("ADC2 Volume", PM4125_ANA_TX_AMIC2, 0, 8, 0,
+> +		       analog_gain),
+> +
+> +	SOC_SINGLE_EXT("HPHL Switch", PM4125_HPH_L, 0, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+> +	SOC_SINGLE_EXT("HPHR Switch", PM4125_HPH_R, 0, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+
+<---
+> +	SOC_SINGLE_EXT("LO Switch", PM4125_LO, 0, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),--->
+
+> +
+> +	SOC_SINGLE_EXT("ADC1 Switch", PM4125_ADC1, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+> +	SOC_SINGLE_EXT("ADC2 Switch", PM4125_ADC2, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+<-----------------
+> +	SOC_SINGLE_EXT("DMIC0 Switch", PM4125_DMIC0, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+> +	SOC_SINGLE_EXT("DMIC1 Switch", PM4125_DMIC1, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+> +	SOC_SINGLE_EXT("MBHC Switch", PM4125_MBHC, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+> +	SOC_SINGLE_EXT("DMIC2 Switch", PM4125_DMIC2, 1, 1, 0,
+> +		       pm4125_get_swr_port, pm4125_set_swr_port),
+-------------->
+Please delete these entires as there are no entires for any of this
+channels in pm4125_sdw_rx_ch_info or pm4125_sdw_tx_ch_info.
+
+Side effect of this out of boundary array access is memory corruption as
+we will set port_config values based on port index which could be
+negative in this cases resulting in writing to othe members of
+pm4125_sdw_priv struct.
+
+
+> +};
+> +
+> +static const struct snd_kcontrol_new adc1_switch[] = {
+> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+> +};
+> +
+> +static const struct snd_kcontrol_new adc2_switch[] = {
+> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+> +};
+> +
+> +static const struct snd_kcontrol_new dmic1_switch[] = {
+> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+> +};
+> +
+> +static const struct snd_kcontrol_new dmic2_switch[] = {
+> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+> +};
+> +
+> +static const struct snd_kcontrol_new ear_rdac_switch[] = {
+> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+> +};
+> +
+
+during my test i had to do below code changes to get things working.
+Please feel free to wrap it into your next version.
+
+----------------------->cut<----------------------------------
+diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
+index fc320152b925..12d4be1f7149 100644
+--- a/sound/soc/codecs/pm4125.c
++++ b/sound/soc/codecs/pm4125.c
+@@ -264,8 +264,6 @@ static int pm4125_rx_clk_enable(struct
+snd_soc_component *component)
+                                      PM4125_DIG_SWR_RX_CLK_ENABLE);
+        usleep_range(5000, 5100);
+
+-       pm4125_global_mbias_enable(component);
+-
+        snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
+                                      PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK,
+                                      PM4125_ANA_HPHPA_FSM_DIV_RATIO_68);
+@@ -309,8 +307,6 @@ static int pm4125_rx_clk_disable(struct
+snd_soc_component *component)
+        snd_soc_component_write_field(component,
+PM4125_DIG_SWR_CDC_RX_CLK_CTL,
+                                      PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
+                                      PM4125_DIG_SWR_RX_CLK_DISABLE);
+-       pm4125_global_mbias_disable(component);
+-
+        return 0;
+ }
+
+@@ -670,7 +666,6 @@ static int pm4125_codec_enable_adc(struct
+snd_soc_dapm_widget *w,
+                        !(snd_soc_component_read(component,
+PM4125_ANA_TX_AMIC2) & 0x10)) {
+                        set_bit(AMIC2_BCS_ENABLE, &pm4125->status_mask);
+                }
+-               pm4125_global_mbias_enable(component);
+                if (w->shift)
+                        snd_soc_component_write_field(component,
+PM4125_DIG_SWR_CDC_TX_ANA_MODE_0_1,
+
+PM4125_DIG_SWR_TX_ANA_TXD1_MODE_MASK,
+@@ -692,7 +687,6 @@ static int pm4125_codec_enable_adc(struct
+snd_soc_dapm_widget *w,
+                        snd_soc_component_write_field(component,
+PM4125_DIG_SWR_CDC_TX_ANA_MODE_0_1,
+
+PM4125_DIG_SWR_TX_ANA_TXD0_MODE_MASK,
+                                                      0x00);
+-               pm4125_global_mbias_disable(component);
+                break;
+        };
+
+@@ -1042,9 +1036,9 @@ static void pm4125_mbhc_deinit(struct
+snd_soc_component *component)
+ }
+
+ static const struct snd_kcontrol_new pm4125_snd_controls[] = {
+-       SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
++       SOC_SINGLE_EXT("HPHL_COMP Switch", PM4125_COMP_L, 0, 1, 0,
+                       pm4125_get_compander, pm4125_set_compander),
+-       SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
++       SOC_SINGLE_EXT("HPHR_COMP Switch", PM4125_COMP_R, 1, 1, 0,
+                       pm4125_get_compander, pm4125_set_compander),
+
+        SOC_SINGLE_TLV("HPHL Volume", PM4125_ANA_HPHPA_L_GAIN, 0, 20, 1,
+@@ -1060,21 +1054,11 @@ static const struct snd_kcontrol_new
+pm4125_snd_controls[] = {
+                       pm4125_get_swr_port, pm4125_set_swr_port),
+        SOC_SINGLE_EXT("HPHR Switch", PM4125_HPH_R, 0, 1, 0,
+                       pm4125_get_swr_port, pm4125_set_swr_port),
+-       SOC_SINGLE_EXT("LO Switch", PM4125_LO, 0, 1, 0,
+-                      pm4125_get_swr_port, pm4125_set_swr_port),
+
+        SOC_SINGLE_EXT("ADC1 Switch", PM4125_ADC1, 1, 1, 0,
+                       pm4125_get_swr_port, pm4125_set_swr_port),
+        SOC_SINGLE_EXT("ADC2 Switch", PM4125_ADC2, 1, 1, 0,
+                       pm4125_get_swr_port, pm4125_set_swr_port),
+-       SOC_SINGLE_EXT("DMIC0 Switch", PM4125_DMIC0, 1, 1, 0,
+-                      pm4125_get_swr_port, pm4125_set_swr_port),
+-       SOC_SINGLE_EXT("DMIC1 Switch", PM4125_DMIC1, 1, 1, 0,
+-                      pm4125_get_swr_port, pm4125_set_swr_port),
+-       SOC_SINGLE_EXT("MBHC Switch", PM4125_MBHC, 1, 1, 0,
+-                      pm4125_get_swr_port, pm4125_set_swr_port),
+-       SOC_SINGLE_EXT("DMIC2 Switch", PM4125_DMIC2, 1, 1, 0,
+-                      pm4125_get_swr_port, pm4125_set_swr_port),
  };
- 
- static const u32 rotation_v2_formats[] = {
-diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
-index 426782d50cb49d57a0db0cff3a4bb50c5a0b3d1a..481c04cb085827175003d9944258420d56021704 100644
---- a/drivers/gpu/drm/msm/disp/mdp_format.c
-+++ b/drivers/gpu/drm/msm/disp/mdp_format.c
-@@ -511,6 +511,18 @@ static const struct msm_format mdp_formats[] = {
- 		C1_B_Cb, C2_R_Cr, C0_G_Y,
- 		false, CHROMA_420, 1, MSM_FORMAT_FLAG_YUV,
- 		MDP_FETCH_LINEAR, 3),
-+
-+	PLANAR_YUV_FMT(YUV422,
-+		0, BPC8, BPC8, BPC8,
-+		C2_R_Cr, C1_B_Cb, C0_G_Y,
-+		false, CHROMA_H2V1, 1, MSM_FORMAT_FLAG_YUV,
-+		MDP_FETCH_LINEAR, 3),
-+
-+	PLANAR_YUV_FMT(YVU422,
-+		0, BPC8, BPC8, BPC8,
-+		C1_B_Cb, C2_R_Cr, C0_G_Y,
-+		false, CHROMA_H2V1, 1, MSM_FORMAT_FLAG_YUV,
-+		MDP_FETCH_LINEAR, 3),
- };
- 
- /*
 
----
-base-commit: c8b9adc58cd171fb13e3554ef91db95c066ffc19
-change-id: 20240222-fd-dpu-yv16-yv24-6bf152dfa7f3
+ static const struct snd_kcontrol_new adc1_switch[] = {
 
-Best regards,
--- 
-With best wishes
-Dmitry
+------------------------------------>cut<--------------------
 
 
