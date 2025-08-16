@@ -1,133 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-69420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20D6EB288BD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 01:28:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8C82B28B5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 09:26:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 115DB17B1F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Aug 2025 23:28:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9116017499B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 07:26:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3932D372F;
-	Fri, 15 Aug 2025 23:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 041B62264AA;
+	Sat, 16 Aug 2025 07:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORlsdhRQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OgJ+JYaN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445C926B747;
-	Fri, 15 Aug 2025 23:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADCA317700;
+	Sat, 16 Aug 2025 07:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755300520; cv=none; b=jwCBMn4um+TRwjXS23Ip/8RrqK3knHIet3HcdRL+HSNuUhtoWIvITqKfJFYD/r5CxJB3l3RH/7xEELuc4pcBtoe62YTVVT8pzpCjnqyHyWYCfEoGMlhFPacc9fIylZAOelrEXVPGZIFfPuzk7dAPe+Xe8wtj6qNn1q1Mlf8/a8E=
+	t=1755329171; cv=none; b=DXmkuuSpWpda/iZvvNybTj7vG0zeAwwxCdgBCPVr52lgmIpFVyP747gQzYeCBbntH/GVjO+KWuPUlzPJeuIfBkdwgd3hDMTdjNv10tkSgb+zF0b9OCJx3nK8meplfjEmE6YHyyrIFDWRNXHd93vpju9UsBivVv8CJ9TCLUtid+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755300520; c=relaxed/simple;
-	bh=UvoYpGdpZ518sX1C9ntrRKU5XcSUp21l1zLHFegmRU0=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=QgMnsVefoqHrui7yryZ9gVV+SsJOsALGXITrJnEiS9RxQW6dba6coeYvyE4vgu6HlIG8XfIuXVKEL/EezGnvSlfp5hpxgTRUjd3iUbFm7+OxpCj9hV6riJA9av/zjILUzxkd7YmSMXcb8LEgRC2Sqblcu4lb4C1aDNU21DfNjBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ORlsdhRQ; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-244582738b5so21324275ad.3;
-        Fri, 15 Aug 2025 16:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755300516; x=1755905316; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vJTHdLNFpJHwfmgbDDHn1yEdiFV4xKdd+LYG/JjzbEo=;
-        b=ORlsdhRQtkpqUdgnXT1PmdSXSyR1EDT5yUCshZpiBYcR2U8O3b/KHNqXh8IF8m6gLb
-         shWbaT2k5WIQKIdQWcaqGi7WLYB8uxd9kzwJCXtZMhb5RzVcri6H0SHU5mpN77KwqwtJ
-         ym3huelUXDyOCUmBumrvm5xY9w+w4yGX7gNVahlngTW93lUKuk+/bxM2t8tP7yjuxsVq
-         oOoxWh7wSWHL9GcUhwKPA2dDYddFrJqt5paHCFS2fCPPSs0y5ls/0qSQtBUQqa69uRxX
-         klwJH4UVCMxPp8wKl+EuyulFzNn6OgqslUTszc5zSMdWgRDJ4v9E2rrQpsD9nUSKTu69
-         0qBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755300516; x=1755905316;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vJTHdLNFpJHwfmgbDDHn1yEdiFV4xKdd+LYG/JjzbEo=;
-        b=dHl8BUfv9CS66na14GaNAxFcvGYVt0a7NJDEgZKnY2i6nitKgtMCLISiutoU/zRK4m
-         T0g2Bk4ND5EbqSjBLGJbd1qqLWzZS+2ypXfttMA54gnrQeRXGKEYy7MIDrftehgi7Zv8
-         R5Q5j4YY6pkMoOpoOLePY3L79nnHiX47eUkTL628Au3IGttC98VeRtVtGnIDRfeHfPD6
-         QhygEwcV5OYCsOGozyw+uLz2ub1sRAMUwq9oE4BJ0Ke606TrHDZubqEs8uAHjuNhceFd
-         KbpNu9TnJTdjRZh4KDI4rowknJ71jVeMSR1XWrZ57YdXaRX2jpwqHectE+wCCuvjPHjf
-         rfww==
-X-Forwarded-Encrypted: i=1; AJvYcCVtI++qQm4Pe1y/nDgVOFRNvjnc1Juz4QO98CYMzUNfhxZh49mcjUQEA9b7M8E2fl0HyoC2O7Pr4R9q@vger.kernel.org, AJvYcCX49eKExEN845wUJIROyCcHicNnNpb0cmNxnRXrl+bNI1dPr3Y5u1knT9NQlXDXwoB9jp7iPANZ7AnF5ZygjQ==@vger.kernel.org, AJvYcCXZY5NMvWhhJ77BNV+cORtz9F8eGRgAwRkydWW5qpzTrncwtD/Rm804gfoJIh9Rm4tBN/4XhPpc+GF7t36N@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2rIgwgga5QCfizelmZmFPPuTt0xT33V/MpcFlXoL9QCoKqCMR
-	oDzJMbdq6N+ebBdMLZl991fqKAoOcEbvzaavnzxZH+ueJ8FQe4GFxY4p
-X-Gm-Gg: ASbGncsyXtFIdKr/XnvHUvfFqlofHEkmVBuKb/5RB9h7zRh1nLHYB/u7z+NH0wgEfHN
-	HJa95884iEksgyjkoSFG9/kF1uke8ok0CdcBIAn+aZUo4QwTSahd9EpZHo8Ib44NIv+Qc+OgRFh
-	ZfQEQuQ1Dtp8dolFBUogbKAw8AVom4FX9pymPGF/P6E4+ppzwwylVB0aFO3KvKNYxMWusW9V2E7
-	Xh1I+ee9MJeWJpCMesMRVB0WI2S96ec7D7A5FTKwDSQ+Ptlo9oIMMb4IPqJ8BpK7FX7hl+KD7Zz
-	eAwkFQqXWrhD7RS1o0uMr9sn8oh/gUD5lKt00Hfg4FkgVXy3blkucmnyAaG2KbTbERZfXa7rQPD
-	36NscRKainRTx5U02ViNzFfe1ZjVagkRt1QBFzHGH8hX1iq/hzh16UbOoj79d1CjecT4=
-X-Google-Smtp-Source: AGHT+IFzx9EtbLSYVs1fz25p0drTFKOY0IALI0Ty8HFwEEwX9LRI2JXlSWi6o2ZeRHrSFKMPMeeoLg==
-X-Received: by 2002:a17:902:cccb:b0:235:7c6:ebdb with SMTP id d9443c01a7336-2446d6dc1bemr48990105ad.10.1755300516361;
-        Fri, 15 Aug 2025 16:28:36 -0700 (PDT)
-Received: from ehlo.thunderbird.net (201-0-28-218.dsl.telesp.net.br. [201.0.28.218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446cb0101esm22696205ad.46.2025.08.15.16.28.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Aug 2025 16:28:35 -0700 (PDT)
-Date: Fri, 15 Aug 2025 20:28:32 -0300
-From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v1_2/2=5D_arm64=3A_dts=3A_qcom=3A_add_?=
- =?US-ASCII?Q?initial_support_for_Samsung_Galaxy_S20_FE?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <xmxo5uogkexiwq5zh2eza53pnl5jrqidd7an7bftjtq4wpaup5@mlekuufdbg5v>
-References: <20250815151426.32023-1-ghatto404@gmail.com> <20250815151426.32023-3-ghatto404@gmail.com> <xmxo5uogkexiwq5zh2eza53pnl5jrqidd7an7bftjtq4wpaup5@mlekuufdbg5v>
-Message-ID: <31CA09B3-E451-4EC1-8273-A1F09735D1FB@gmail.com>
+	s=arc-20240116; t=1755329171; c=relaxed/simple;
+	bh=4XAz9bon46+H1VJjJGsLMcoXdCqYbz6Q3iS4hHKWTw8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CzI9sbJGGzTlItsNdMriTCL0EBwOq7YVGGRv5G1+bzhOicNxrZQb0ffVQqZPxicEKaJqhDpgVTqzyR3x2iO9RWjmlPhoY9su4EXMQdmme+kV/rukJsD4XKCIM79NDsBchO+VGOGJLHh69yaDAg1CwSrUme1MdxC+TVwTYa+EdDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OgJ+JYaN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57G6CpDG010298;
+	Sat, 16 Aug 2025 07:25:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=FujwLWBHrI1ua+hJ0VoVJf
+	0F1VieTR0FwJJt+VOP6l8=; b=OgJ+JYaNAmSsm+z4+RlHC/brPaEgXCs9Kq3ldH
+	KBIxLepTd7YBJAGVE00MqMeTEiBblpwzNFw0ZiWRKgmQC+1PO3aoAo07sWHh7NR6
+	e3KuR2OtKOROv4mUkOZakyj7D20K1FvmpYpuuEznokbvff57foTReIYDb+QmX3R4
+	SfpjkRNAD0w8N6zDrmJRLJuQGCpGjDkZhaeUD1A1xyLKSrKITxXwL3C5IBVjDqrg
+	4WIHnlv8wuM2QA2GnHyQLlQdZYpmEv74bn9Pqiep7QvrHsnr+kfHRVDzcIBCEU+i
+	P9lMG8ii07GrXyKvoLLkxC8dq+DP0lD1aV7Kp2i94TfGMQuw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jjc7r82j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Aug 2025 07:25:50 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57G7PnsB029208
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Aug 2025 07:25:49 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Sat, 16 Aug 2025 00:25:48 -0700
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v11 0/2] coresight: Add label sysfs node support
+Date: Sat, 16 Aug 2025 00:25:27 -0700
+Message-ID: <20250816072529.3716968-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzMyBTYWx0ZWRfX6BqxJfVmQvTi
+ aQZ7bN30ex9GhR0/e2TMtx9m+ZZXVJKCN+WSBAw8MKA61vCsjY1v5Y0o7UFItYFNuQG0fwIGPGA
+ Z5cg/7KWFQjQJ6eEhiMpDsGLt8UBQ2LR/YNEiB0Ugk/BJ9rzbEFmHZwR3IsplnE2ymsmj2Wv+U6
+ uXpZT9QYKH3qtc9qzEZmUQ6il5E3YBnFGCJKmzLhRvKv6eJ2bvSLxUU0F7pak+7XnXN3vFUQ+v1
+ 8b+ASf/xrrmsqW3QZ1Av3HaoLJrsyGDprEHUiWKDddjOze3BTw8iVMxllu6dDhd6FRm4BeCqEt5
+ vKFlO/B1Hru01hUkoe0TLz1ELinJUl3C8NAGueJwJbydZ436dYDEdo6T/uwCFQ7CnxmuT/GLp5P
+ VJXv4l8E
+X-Authority-Analysis: v=2.4 cv=c4mrQQ9l c=1 sm=1 tr=0 ts=68a0327e cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=3H110R4YSZwA:10 a=2OwXVqhp2XgA:10 a=D19gQVrFAAAA:8 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=C_w9g3tfadNPII6ijWgA:9 a=W4TVW4IDbPiebHqcZpNg:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: p0ayFbln2rBf2s9RBK1_SopPKg-3kKWq
+X-Proofpoint-ORIG-GUID: p0ayFbln2rBf2s9RBK1_SopPKg-3kKWq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-16_03,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508160033
 
+Change since V10:
+1. Update kernel version to 6.18
+V10 link: https://lkml.org/lkml/2025/8/6/520
 
+Change since V9:
+1. Replace scnprintf with sysfs_emit.
+2. Update date in ABI files.
+V9 link: https://lkml.org/lkml/2025/7/17/832
 
-On August 15, 2025 19:03:20 GMT-03:00, Dmitry Baryshkov <dmitry=2Ebaryshko=
-v@oss=2Equalcomm=2Ecom> wrote:
->On Fri, Aug 15, 2025 at 03:14:26PM +0000, Eric Gon=C3=A7alves wrote:
->> Add new device support for the Samsung Galaxy S20 FE 4G/5G
->>  (SM-G980/SM-G981B) phone
->>=20
->> What works:
->> - SimpleFB
->> - Pstore/ramoops
->
->While the patch is correct, are there any obstacles in enabling more
->devices on the phone? I'd say, buttons, remoteprocs, PCI and USB
->peripherals should be low hanging fruits=2E If you can read pmic_array
->from debugfs/qcom_socinfo, then you should be able to identify PMICs and
->add corresponding regulators too=2E
->
->> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->>  =2E=2E=2E/boot/dts/qcom/sm8250-samsung-r8q=2Edts      | 47 +++++++++++=
-++++++++
->>  2 files changed, 48 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-samsung-r8q=2Edts
->
-Hello Dmitry,
+Change since V8:
+1. Add label in all documentations of coresight components.
+2. Add control of the visibility of the label sysfs attribute.
+V8 link: https://lkml.org/lkml/2025/7/3/985
 
-Recently my device's battery stopped responding and I was not able to work=
- on the DT any further, so I decided to upstream what I already have so far=
-=2E Thanks for the feedback, I'll include more features on future patches=
-=2E
+Change since V7:
+1. Update the conflict when apply to coresight next.
+2. Update the Date and version in ABI file.
+V7 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20250226121926.2687497-3-quic_jinlmao@quicinc.com/
 
-Best regards,
-Eric
+Change since V6:
+1. Update the date and version in ABI file.
+
+Change since V5:
+1. Update the kernel version of ABI files.
+2. Add link of different patch versions.
+V5 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20241210122253.31926-1-quic_jinlmao@quicinc.com/
+
+Change since V4:
+1. Add label in DT and add label sysfs node for each coresight device.
+V4 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240703122340.26864-1-quic_jinlmao@quicinc.com/
+
+Change since V3:
+1. Change device-name to arm,cs-dev-name.
+2. Add arm,cs-dev-name to only CTI and sources' dt-binding.
+V3 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240131082628.6288-1-quic_jinlmao@quicinc.com/
+
+Change since V2:
+1. Fix the error in coresight core.
+drivers/hwtracing/coresight/coresight-core.c:1775:7: error: assigning to 'char *' from 'const char *' discards qualifiers
+
+2. Fix the warning when run dtbinding check.
+Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml: device-name: missing type definition
+V2 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240115164252.26510-1-quic_jinlmao@quicinc.com/
+
+Change since V1:
+1. Change coresight-name to device name.
+2. Add the device-name in coresight dt bindings.
+V1 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20230208110716.18321-1-quic_jinlmao@quicinc.com/#25231737
+
+Mao Jinlong (2):
+  dt-bindings: arm: Add label in the coresight components
+  coresight: Add label sysfs node support
+
+ .../testing/sysfs-bus-coresight-devices-cti   |  6 ++
+ .../sysfs-bus-coresight-devices-dummy-source  |  6 ++
+ .../testing/sysfs-bus-coresight-devices-etb10 |  6 ++
+ .../testing/sysfs-bus-coresight-devices-etm3x |  6 ++
+ .../testing/sysfs-bus-coresight-devices-etm4x |  6 ++
+ .../sysfs-bus-coresight-devices-funnel        |  6 ++
+ .../testing/sysfs-bus-coresight-devices-stm   |  6 ++
+ .../testing/sysfs-bus-coresight-devices-tmc   |  6 ++
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++
+ .../testing/sysfs-bus-coresight-devices-trbe  |  6 ++
+ .../bindings/arm/arm,coresight-cti.yaml       |  4 ++
+ .../arm/arm,coresight-dummy-sink.yaml         |  4 ++
+ .../arm/arm,coresight-dummy-source.yaml       |  4 ++
+ .../arm/arm,coresight-dynamic-funnel.yaml     |  4 ++
+ .../arm/arm,coresight-dynamic-replicator.yaml |  4 ++
+ .../bindings/arm/arm,coresight-etb10.yaml     |  4 ++
+ .../bindings/arm/arm,coresight-etm.yaml       |  4 ++
+ .../arm/arm,coresight-static-funnel.yaml      |  4 ++
+ .../arm/arm,coresight-static-replicator.yaml  |  4 ++
+ .../bindings/arm/arm,coresight-tmc.yaml       |  4 ++
+ .../bindings/arm/arm,coresight-tpiu.yaml      |  4 ++
+ .../bindings/arm/qcom,coresight-ctcu.yaml     |  4 ++
+ .../arm/qcom,coresight-remote-etm.yaml        |  4 ++
+ .../bindings/arm/qcom,coresight-tpda.yaml     |  4 ++
+ .../bindings/arm/qcom,coresight-tpdm.yaml     |  4 ++
+ drivers/hwtracing/coresight/coresight-sysfs.c | 71 ++++++++++++++++++-
+ 26 files changed, 189 insertions(+), 2 deletions(-)
+
+-- 
+2.34.1
+
 
