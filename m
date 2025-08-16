@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B449B28BDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 10:29:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22235B28BE4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 10:33:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C15981C26162
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 08:29:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93D21A26331
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Aug 2025 08:33:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74D3D2367D5;
-	Sat, 16 Aug 2025 08:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1AAE1F1518;
+	Sat, 16 Aug 2025 08:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i7r19cKb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EduzWTlT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FAB22DA06;
-	Sat, 16 Aug 2025 08:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912BC171C9;
+	Sat, 16 Aug 2025 08:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755332945; cv=none; b=VerSMVNugq6LqPUdsJGfKB3uiOnkNHPqER0JGGpp0hbohSOpbybvb9bCkVVd2gTJdfiu2yOhyUIjEYGT4ZwYLe9omiUBNuVtf4FAHQWY4ZBZcVG18ZhkPWIJfcjgj42iVXkP41Y2hu9mZGce5lWs6F7ASlppebXtwl855UreI3Y=
+	t=1755333219; cv=none; b=TSAba25zsKer1MqQaYxmE5mbypP5MvbLNtpKsdrYRMX2C3VWWFN6jiS0pbv0zhnPUTr4XTFxZWgL8feoAdU0sfAlx0L5ROT0sRPs+1HTI2ulZU0hoizLY1DngCN6DkmAJbAC561YF/Y/1ih7vE+1QBxpGEiHQzvyGjVeWkAsLqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755332945; c=relaxed/simple;
-	bh=A8xxdPa5/JUVr8ScJmZ4Y9ktbdrnVbk09I0nvPpS8f4=;
+	s=arc-20240116; t=1755333219; c=relaxed/simple;
+	bh=NoF/gia3BzIk7K9+zQybrkg4qnMCSC4IHUB+TORz8TQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tzIeH4ulhXira9rIbA1sWG718+j2ROdmqzs27kU7mvjxGsdS6j9ecFodkujZTmDboLWdRVA2TJ7rfku/Aotqmy6u+LA6sW2Gj6jE9BxyVPSDrEn2JOdQwht9L9WmgouJ+h923RDE8M2COkZtICiIXKQZVDjEeXh+fZFeUxxuyeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i7r19cKb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432E2C4CEEF;
-	Sat, 16 Aug 2025 08:29:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=SNeGFD52HTNU7pPBbOB26FV1MYkEQC4nNVjkgWfo+/qRAVRBYvQm1EyMJtBBXoJGLQMbEM5+YBjXryIcqbHao4DZjU8fvu0VzQeN1Vuxnq1rgryMfsord2UTDkM8gZaHK9RGvTvKBbYdF5Cgt/mnqXFHxkSjIWJHWe2QdqV6veQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EduzWTlT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102EFC4CEEF;
+	Sat, 16 Aug 2025 08:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755332944;
-	bh=A8xxdPa5/JUVr8ScJmZ4Y9ktbdrnVbk09I0nvPpS8f4=;
+	s=k20201202; t=1755333219;
+	bh=NoF/gia3BzIk7K9+zQybrkg4qnMCSC4IHUB+TORz8TQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i7r19cKbR/od3lzZpjnRNNMZVwbbaD18fZiSQGGMZW6ZBMORU40IgbxmGTG66c99x
-	 5N18PZtX57SqB648uhJml7wZv86QLuvQGDOR9iV78aQ5yx4f2tpGUVgBpiw/OKqS+y
-	 YD6rt/YRsChlAAzXUMKu7BO9kOs1qtlAn2Q5M1Bgg3ogLC1t2S+DwUiJI4VBppeMtb
-	 Twb8oGOmPRkE6+cePeeY1hsEhRuljwXP7N38HAUkPSx7hUb5XuCUTtHYmPt7/rw01f
-	 TAk3Wlmf6Y9AIR+qrCoQCO2cCj8SCSlcRLreVC7iE8F5cT+6G0fqcE8L4ndnN6qOCp
-	 RBXKR6eE4w5hw==
-Message-ID: <fb1a7290-721e-4bde-aab3-d1edd0630862@kernel.org>
-Date: Sat, 16 Aug 2025 10:28:58 +0200
+	b=EduzWTlTyrKzPY6aHEtGQISHbS/b+1yjJdU3OsXnjqnYQXCm599FXAPNI9VYyEz0z
+	 FYgc6ov3Uegdq9x5dWmsRlKoCdk8eX39OuLVM0sNTvt6pAG+V4FW1zGfYEafLfeagY
+	 wIbG9pXc7p1auGgoSq2dzEAK3E5W+PLQerPqOZxVcoP77qGLLWp524Y+X0ea9xF7rg
+	 wB4slB8i3HnVHhRuRr6tQc1KcyLU0Eg1hIoybRAM7HaMEgZB/ZL559hYMwMa0KSpas
+	 Tk2MT0rTZgnzifvtnGbkQW80gVL/rMARzv5sOzLQkloWUjzA7TPEPcG3U7XTl1/MLh
+	 wxEqOOh8GRd2Q==
+Message-ID: <e82ca132-f312-45b5-bec0-9d83cd3771d4@kernel.org>
+Date: Sat, 16 Aug 2025 10:33:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
- for WSA883x speakers
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, kernel@oss.qualcomm.com,
- Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-References: <20250815172353.2430981-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250815172353.2430981-3-mohammad.rafi.shaik@oss.qualcomm.com>
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add Coresight Interconnect
+ TNOC
+To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250815-itnoc-v1-0-62c8e4f7ad32@oss.qualcomm.com>
+ <20250815-itnoc-v1-1-62c8e4f7ad32@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,23 +108,138 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250815172353.2430981-3-mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <20250815-itnoc-v1-1-62c8e4f7ad32@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/08/2025 19:23, Mohammad Rafi Shaik wrote:
-> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+On 15/08/2025 15:18, Yuanfang Zhang wrote:
+> Add device tree binding for Qualcomm Coresight Interconnect Trace
+> Netwrok On Chip (ITNOC). This TNOC acts as a CoreSight
+> graph link that forwards trace data from a subsystem to the
+> Aggregator TNOC, without aggregation or ATID functionality.
 > 
-> On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
-> WSA8830/WSA8835 speaker amplifiers share a common reset (shutdown) GPIO.
+> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+> ---
+>  .../bindings/arm/qcom,coresight-itnoc.yaml         | 108 +++++++++++++++++++++
+>  1 file changed, 108 insertions(+)
 > 
-> To handle such scenario, use the reset controller framework and its
-> "reset-gpio" driver to handle such case. This allows proper handling
-> of all WSA883x speaker amplifiers on QCS6490-RB3Gen2 board.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-itnoc.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-itnoc.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..fd224e07ce68918b453210763aacda585d5a5ca2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-itnoc.yaml
+> @@ -0,0 +1,108 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-itnoc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Interconnect Trace Network On Chip - ITNOC
+> +
+> +maintainers:
+> +  - Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+> +
+> +description: |
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Do not need '|' unless you need to preserve formatting.
+
+> +  The Interconnect TNOC is a CoreSight graph link that forwards trace data
+> +  from a subsystem to the Aggregator TNOC. Compared to Aggregator TNOC, it
+> +  does not have aggregation and ATID functionality.
+> +
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,coresight-itnoc
+> +  required:
+> +    - compatible
+
+Why all this? Drop
+
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^tnoc(@[0-9a-f]+)?$"
+
+Why are you requiring a non-generic name?
+
+> +
+> +  compatible:
+> +    items:
+
+No need for items
+
+> +      - const: qcom,coresight-itnoc
+> +
+> +  reg:
+> +    maxItems: 1
+> +    description: Base address and size of the ITNOC registers.
+
+Drop, redundant
+
+> +
+> +  clock-names:
+> +    items:
+> +      - const: apb
+
+Drop clock-names, obvious. Also, odd order - names are never before
+actual property.
+
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      '#address-cells':
+> +        const: 1
+> +      '#size-cells':
+> +        const: 0
+> +
+> +    patternProperties:
+> +      '^port(@[0-9a-f]{1,2})?$':
+
+Why do you have here 255 ports?
+
+> +        description: Input connections from CoreSight Trace Bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +    additionalProperties: false
+
+This goes after $ref
+
+> +
+> +  out-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      port:
+> +        description: out connections to aggregator TNOC
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +    additionalProperties: false
+
+This goes after ref
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+
+And here different order... Be consistent. See also DTS coding style.
+
+> +  - in-ports
+> +  - out-ports
+> +
+> +additionalProperties: false
+> +
+
+
 
 Best regards,
 Krzysztof
