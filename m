@@ -1,230 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-69587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E63D6B2A9DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 16:24:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44762B2A979
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 16:20:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B3786880E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:16:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6D96B621D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:15:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E110B3218B1;
-	Mon, 18 Aug 2025 14:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48D5B271A6D;
+	Mon, 18 Aug 2025 14:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="pCxCwk2Y";
-	dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b="ECoj1Lue"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D/UeaWEp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F050321455;
-	Mon, 18 Aug 2025 14:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.152.168
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525997; cv=fail; b=HGGranP15qb3IaCgefh9/mvxm251C1quEFsOIlDXmOLSzWgl5FjkiM4c73I7/6G31mbqJXuW5CyhaGvq3fRWE0AIjhW1Gcf18o1TCcOgYZew3mYqS3Fud64AsEJirOfD1mSWvvHH2PMpX2IcTT/1nkl9r/pLrxJcIsNmVzsfIEI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525997; c=relaxed/simple;
-	bh=7AXZ0lqeYEkO5a2So8eGpS41RUEE1BMjDryvVMqxOfc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sCvArqHsKGUmruOgfIYh9RDHlaOgDu7QbyKnO9UohrCJTdGL0fBvCfGtrVBIBhkmcmDiPclbnCGrkuZUg/fwa+uVhNQiesD9YpAR5vl0FGtw2EXeGEP8WqhNd+pCta7TRK97L1bEtExO3Pci6Rq9aHKtDQKjY/t2wHX7/w+m6bk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=pCxCwk2Y; dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b=ECoj1Lue; arc=fail smtp.client-ip=67.231.152.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
-Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
-	by mx0b-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 57HMI8Y14063630;
-	Mon, 18 Aug 2025 09:05:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=PODMain02222019; bh=XTmdlRXKzNgBNR6uf7
-	t9Fr6UadagR1wDnlEvMPNXJLI=; b=pCxCwk2YvOC0NkC8O3GKPBBkCkyvML8ryn
-	3h+vI3F7dZxt6mkvNY/Asnu19RXJ3XYjnHjCJBJgyPVd3sV2VrJ3J3xmvHWFWZYi
-	S6NJC+oYIsMBt8Nb4yuK/nmsUlWAdKFUJN9q20s9k0RAjd7LoIvDTbiNNh05AsDI
-	4XQJl4Q3scxVSkVrrdgtzD3WUd+Kb10O5wN+tsMg88QTxVSxxCxRY8wekUzF2pva
-	GCkQ5lJNXjL43exxT2L2ycOdAH3gpBFVYotRrKTxJ4L1lgiCV0OF2qOP6ZudnOZB
-	R0KzSRExaVKjHkdK6FGqCrSy0vDk0CRO6SNQtCklteheAk0xZz2A==
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12on2112.outbound.protection.outlook.com [40.107.243.112])
-	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 48jpdf26x1-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 18 Aug 2025 09:05:30 -0500 (CDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ovz/tMB7GHqfqrrSSeq5/I+IpzzoQ1R3h8qYw/p6+UOTW1Yb9uHUrFigJYBZS12JYVUPtZuhNTWTtwCfWSu5exU1wGzivXrhWndCZDy3M1WwYmX/eg9A8heexZa6mp8bCRKilcGn0eXkchaZ7D1S/GpWKun4IutCc2uPeIzAa0qa7YfsZCfxvySoF3TCnHyQUf4/wyqw1AfzZAxikluu9eWAQxUkr/GkuPKolhkPBIccp7kfHikY7ByJWrgrvRETwbA0tY7HMHkHUhuK+OGde98oBj+WGZuARXAqQ3yXCLsI8rrBI5bExCIRO/o6mkujT8fSC487K890AsYYwnlK4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XTmdlRXKzNgBNR6uf7t9Fr6UadagR1wDnlEvMPNXJLI=;
- b=rKApiMamOyADVCRORfcHZdi3m5Mx9dFaVTgls4hnyn5Hz5H35IiRtLduocScXMJJ+H1mOTFAeTPDZ9GVnB3nSlJPxitocLADVIbs7Qt+qu2J2pw41jLsbehsFAikyvdFrTzTJCeOh/UM1IIzCLgsMVC4cpoxQEpgKYg/lf7V+83VuJ2OJiXMAJJfyWmhx+tmCw9hGTxnmHiv3weqzS67WLg/aViX9Ftm1KmTr+2qjG4NiCHKTPgjX4WgO1Ae6Ha3n8EGwojcc3Ds0q4/6OCSnuNpJmoAmtstr0ujGPpMJj+F/ENHd/DlJxQrbqz7SpNbe2NYgLeOfHlFtTp19QW+2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 84.19.233.75) smtp.rcpttodomain=alsa-project.org
- smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
- action=oreject header.from=opensource.cirrus.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XTmdlRXKzNgBNR6uf7t9Fr6UadagR1wDnlEvMPNXJLI=;
- b=ECoj1Lue6BE5ZtgTSu2FsKL/CoV92uaql37IlwS2gvBmosXZdr/fIxDY7Hh3BTPB2+eCJ6n0zAmEYGlh2U/nm0gXC7y1Y3/tdqtCg9R7AQa7I+KWfChUC+bDzNb3kluU3o9pO/q/RNGr5cMpDCDg4uOEUoadJrr9FxMp8DG+OvQ=
-Received: from BN9P222CA0018.NAMP222.PROD.OUTLOOK.COM (2603:10b6:408:10c::23)
- by DS0PR19MB7672.namprd19.prod.outlook.com (2603:10b6:8:f5::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9031.24; Mon, 18 Aug 2025 14:05:27 +0000
-Received: from BN1PEPF00006000.namprd05.prod.outlook.com
- (2603:10b6:408:10c:cafe::1a) by BN9P222CA0018.outlook.office365.com
- (2603:10b6:408:10c::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9031.18 via Frontend Transport; Mon,
- 18 Aug 2025 14:05:27 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 84.19.233.75)
- smtp.mailfrom=opensource.cirrus.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=oreject header.from=opensource.cirrus.com;
-Received-SPF: Fail (protection.outlook.com: domain of opensource.cirrus.com
- does not designate 84.19.233.75 as permitted sender)
- receiver=protection.outlook.com; client-ip=84.19.233.75;
- helo=edirelay1.ad.cirrus.com;
-Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
- BN1PEPF00006000.mail.protection.outlook.com (10.167.243.232) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.8
- via Frontend Transport; Mon, 18 Aug 2025 14:05:25 +0000
-Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 774FC406541;
-	Mon, 18 Aug 2025 14:05:24 +0000 (UTC)
-Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 540E8820249;
-	Mon, 18 Aug 2025 14:05:24 +0000 (UTC)
-Date: Mon, 18 Aug 2025 15:05:13 +0100
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
-To: Takashi Iwai <tiwai@suse.de>
-Cc: Vinod Koul <vkoul@kernel.org>, Joris Verhaegen <verhaegen@google.com>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Cezary Rojewski <cezary.rojewski@intel.com>,
-        Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Daniel Baluta <daniel.baluta@nxp.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>, kernel-team@android.com,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org,
-        sound-open-firmware@alsa-project.org,
-        linux-arm-kernel@lists.infradead.org,
-        Miller Liang <millerliang@google.com>
-Subject: Re: [PATCH v4 2/3] ALSA: compress_offload: Add
- SNDRV_COMPRESS_TSTAMP64 ioctl
-Message-ID: <aKMzGRzeRqkOwTNS@opensource.cirrus.com>
-References: <20250801092720.1845282-1-verhaegen@google.com>
- <20250801092720.1845282-3-verhaegen@google.com>
- <aJGM2zXS6hOLDFm1@vaman>
- <87h5ym1f75.wl-tiwai@suse.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE10321455
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 14:07:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755526024; cv=none; b=oHl3ZiTZ8UOXwS1+cLYHR0kt1dA4Uj3Ft2uFsnahM3ebXMZHFeIGeSp7GlIa+KOtAnwfrQRPA2aty28c/lpPcTfF56x8ZOkyaZS33C4gqa8LAjhZSRCNiu2u/KlLIrcK7VFdye1KwEnTVA0FDgwHxTRBcWlykKPcASV9UkFV+oA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755526024; c=relaxed/simple;
+	bh=iDJR1tfwk7UFUubIp+MA5lVvSTge8acmqtK4SGQWHBY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PiMuH+hzyeb9LaQA/4s4c1xBHdF4XyqLLlshBsjBCFk8CG5ut6QW8izpB2jjkC6E5tVIu9/bTZUIfIQEqodr6vMB0OPliGrYvXtlSfJ0qlYcaKJC8W4SP5De4fUqLsq58L0LKMMLfeBwCUSiHzL8v6mvfMG0ZR4hAwQ4p5rgTGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D/UeaWEp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57I7eKYv010649
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 14:07:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	chLwK+SsPQhHTytM+7iGONL6X0o4wGCEiPMrGgw75ts=; b=D/UeaWEpAUWr/gmE
+	WZwGHoUPLUcKr79Zd51wp7wQI0dwsdSBaOAHu78btslcr/KrdR/bGGhyK46HZqo+
+	d7CcZ88NvoPaijN+ZaCV8SJ4Zoj3k42YheITNwu2EepURGBWsBIFaUTcebUiIHLb
+	veAudXcNEk8HxCuQxsDLGlmR4tPaVw/UrcHpJ59RwxUDMnybMAmOYjfuT2tRS3YF
+	+Z7W4DKOF2aMyJ98APKMORCikS8re5V3SDR/IIxj1CzopHIGKJgRGXIXnNxACm9e
+	Crv+BISMW5jApN6gq6ZqrIOVlOMeklP7vUddhJ/ES0OIpOdFZGY5XWuNmliBTg3v
+	RSDmFg==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jhjyd01q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 14:07:01 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-76e1fc66de5so4516723b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 07:07:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755526020; x=1756130820;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=chLwK+SsPQhHTytM+7iGONL6X0o4wGCEiPMrGgw75ts=;
+        b=xJlt9dsyUSl2+UdMmHVATetiRtDY/1nRciAjbTX/OKZbArjuKvCmp+EGxOyLOdb320
+         zmrkCb/VFnnVjy9Gp/Bh8WrIuWF1JM4CtKh8Q8Wp6udPlNLfpaIr8fWMeB8v6hC7SzZF
+         g5qLnT1WZtUC0IAJqD0K0e+aRlnOu10UVBEhTz/TeTtbbnXd67IMNI0mQgfUR31dZMF1
+         08owg36S0yyczW2muuDoudxkhtWz5wAckzqk3sNx3yanAtFyYEyckuK28EYFvBmXmSNf
+         YLglOBldBhWZeE22sBffVlqOkrvc2Dz0HPhNYt96sGVL15NXd8VL7qX6KVfbQ0NzhI/p
+         MQpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXq9Nx0qIVRQCf31RQDcZc2HYY0BUGSisOTvSL82k1TvroA9hqNX8WfQrwNx2emCom4J0xpMuPXR5sbWvdk@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiqbY7Hz1QS/IFzvj3rUv3OZQLqk15HMVihSV5AVPz7It9U38X
+	xsHC37V1VPkSxlAH8a2lFl4c3WT1+WBbmmUPgXysgh8S9vjBN5EkE5OH0svAsEverIXl6+KMkC8
+	V5zqXJxGmKhJlTx8gZhfP/+e+KR38fiOgLWhDUFNB1vhIO/UZb54ZJBoNwluql1vG4CIh
+X-Gm-Gg: ASbGncv79IMioA1oUfsXKMaqj2Ax9BfHMlvCzSlKa2j8oHFZZl4OD9EzUweBpA+xqLx
+	RrrV2dyP9bUFiTwKPNMOBoXEWrWK6qRjYYJNCwd2f3YQCNVoQZzEnUmw3BErIcns/0K0Fg8fJF1
+	C2Z9tAJtebee41bW0glJzpcCr0591rvKCni1Jjf1j7wBkWgZYt2TnyJmwYHSYY6Q2X4cOOqA38d
+	/HQPJC+XsM2HjuKqgtulIEUOlwaAleqQSBhG4dFL7f+/1iFSj3pQEonTujBH3QZx7bfRPuq2PZD
+	EpuNEDUt7FxJL9u9ekTLZTNXMUDziBp8f4HtnLnxl+CeSiIa57/DOWwb/U5YDn6a
+X-Received: by 2002:a05:6a00:14cc:b0:736:4e14:8ec5 with SMTP id d2e1a72fcca58-76e438f0ec5mr15651411b3a.11.1755526019874;
+        Mon, 18 Aug 2025 07:06:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaW5O7M2POFlUVEtIHKn+I++/iHZWm/6mA4hEC46cPlJZweEv7D5U88CqdrtLREpBxLoXmhw==
+X-Received: by 2002:a05:6a00:14cc:b0:736:4e14:8ec5 with SMTP id d2e1a72fcca58-76e438f0ec5mr15651177b3a.11.1755526017550;
+        Mon, 18 Aug 2025 07:06:57 -0700 (PDT)
+Received: from [192.168.1.4] ([106.222.229.157])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e45588c05sm7492056b3a.82.2025.08.18.07.06.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Aug 2025 07:06:57 -0700 (PDT)
+Message-ID: <9f94c6d7-7b39-455c-83d1-81c694672775@oss.qualcomm.com>
+Date: Mon, 18 Aug 2025 19:36:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87h5ym1f75.wl-tiwai@suse.de>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00006000:EE_|DS0PR19MB7672:EE_
-X-MS-Office365-Filtering-Correlation-Id: cfc95920-789c-4600-78f3-08ddde6047b2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|36860700013|376014|61400799027|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Hpwh0oshuvXD25/YJWAIO+shVDZxyQzXgOVK/uXi52uDWtiTyKu7a1H4lOb4?=
- =?us-ascii?Q?3Pslwaq3bcr6+9Y9vGQM9MD6heEir8ws9LxSeYq1qlWF7y4T5eC4/qeoBZtZ?=
- =?us-ascii?Q?nY7RSykJEgW/strWNIoS8J1ivnH0CTpSJMEF1c84IfC91ZaA4qgyp7LLcXSx?=
- =?us-ascii?Q?UNQzT/r/2WKLii5Bi+V4VqpO3aJ0GOzIQWPcQRCZyhtW7N0m0mOF4Wl13WjZ?=
- =?us-ascii?Q?TrCJ/04a+Wr8kygQl8t3VsmHbcDVr/6DWLtigWga/+cx+vQ6iZgx/iIRcRjk?=
- =?us-ascii?Q?7pXnXOk/EIHcc68Oz+maQra6ocW2DFWVynCLVXpZshxFwKJwtKuPFs++AypJ?=
- =?us-ascii?Q?/HVkLUpD3J7HzzegllARR3JE9GwdIm7FubiWGRIyn56M1FmsR1xLAe1APmcG?=
- =?us-ascii?Q?Y/pLE1nmio9ku1YUUH+s3VWQQlrMcCnXuojv01Dm1RDilkNjKLaviSW0pY/T?=
- =?us-ascii?Q?zLW0nA/S/tuwwIS2sBPjBsGFNChmEjOKuEIdgM7pYhdx5i4BSCZvQa+04tYS?=
- =?us-ascii?Q?ekF9Fv0epvDfRXYJi8+wNxAPGoXBsn04Kxi+wm7KMMeXGghrvq7WJfY3lsBW?=
- =?us-ascii?Q?Iof7GJXVa4TlE3y5ouCUjzf4Tx6Jbzw/Oz9C/2MvJE8gfgM/Z/i9q/2ot9i6?=
- =?us-ascii?Q?fq1pjN8So1PbVnykBTr8hpd1r0dZD5n2uu8O3V3alJGbMYkQ7MKIxwJ4ieBM?=
- =?us-ascii?Q?3O2p9+fpLayTOOxzJmF/YaedmHmNqd2E/PrZmC89Qrmmx7uPORNPNyk7kt79?=
- =?us-ascii?Q?5N7AVw+89MJdNwVa76BHkI8x432R4viHzB2SL7iWlTH5z0Jf3AABnPyFLLFW?=
- =?us-ascii?Q?b6TftG9eQ2HduZvMIy3cch8zHiCNZTTIcXCMOCB8J9s60BRG7A0IeY6Sgr0r?=
- =?us-ascii?Q?CPA4cfkqZEs6XN7ijbaFm+DsJDjSF7gEWLhvCbYR9oJJtwXNDsQivYH+Gt6c?=
- =?us-ascii?Q?6DrW5g6HERVvpkYDbXW51Ad/aK/wg07msTu5Vrj3SQaVAEfsq0WwU8yRYd0I?=
- =?us-ascii?Q?CIvT+ucMG8K55oVgSlvnROkMmzMM8T598sM8Hm8BTXw23IpsOsB5aenkHzSC?=
- =?us-ascii?Q?6QYlmVuy2+j+mkSfVV198QYPxHay1CUSRkxO8l2oPGoszHQ2q+ZvjernO6yG?=
- =?us-ascii?Q?CFxLcB7B3YnWDLWD5a7jEAu997AaObw+kGXgNNExrqDU2Wh9a3LRPYe4Cd9H?=
- =?us-ascii?Q?tUxkUhj1nLDlcdjqSTrO+JK21dfETAA9/pHypcqn6LFXVLCEqDIFbL9W4Vws?=
- =?us-ascii?Q?l8daWNovsct1oyclV4BfBqy7x60YDDJFzMUB0fR6oUMCIMJxWStqReA1qkAe?=
- =?us-ascii?Q?j7cdqm7irjeiawqT1x3DbpDc90G4O3I1W9ciAe+jn5rAmns68KbtQ5PPre6K?=
- =?us-ascii?Q?emMd8iskzJOUMICMTv3qnTBfHflcBZhtKE0tSkiO7MmuZIq6QLYcwFEXM/Eq?=
- =?us-ascii?Q?ncsg5FL6N6WTtzWWAGdSyDc0eM1zXffw96+tWJWA9ZYsqGQ4+tIIarDMOuvI?=
- =?us-ascii?Q?nNutPCrOJDeco0btEgq3TbHMBQ4EmMnZDzCJ?=
-X-Forefront-Antispam-Report:
-	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(36860700013)(376014)(61400799027)(82310400026);DIR:OUT;SFP:1102;
-X-OriginatorOrg: opensource.cirrus.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2025 14:05:25.5383
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: cfc95920-789c-4600-78f3-08ddde6047b2
-X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN1PEPF00006000.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR19MB7672
-X-Proofpoint-ORIG-GUID: E2muHiCgN9mB1FDfVm5_hqZ8CS7BLBNL
-X-Authority-Analysis: v=2.4 cv=ZJbXmW7b c=1 sm=1 tr=0 ts=68a3332a cx=c_pps
- a=+PpozFyv/4R/82JvxB1TJw==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10
- a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10 a=dpYL2l9-0U5vaeJkK0AA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: E2muHiCgN9mB1FDfVm5_hqZ8CS7BLBNL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE4MDEzNSBTYWx0ZWRfX/HARxNU8mOwl
- RCD/zByHwBGJVvXwteNMCtremm894dwRyTLetGVhl0nbYuAkNB+6tHrhILfCBXD0jn+++4lnZTY
- 80l6RTJp9KVf9B24n90dWtZXNyRiLMMvnLjhvOmKbwSJh+/edOcXDmWGyu/ZkRqrp/X+ppYGHjp
- UezD9SkOGxUCm2E7uxmN3C96IVb2tT1C7kYDqBrO7unazb9qg1ENoXpVrRiMhE5GEly/xzKah+b
- zJnNfttA8k9b0pDehg2jdu2efdbx+X47+CqICvamEj1NhcKbFs0rvD8NNueVnfyvyqcxJZHLB+3
- jqG4N7NdTkTmT/nDq+fXpIQdue1VxbJKCXjxDFEjvybFDZTN8K4rV77V51A82w=
-X-Proofpoint-Spam-Reason: safe
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: skip re-emitting IBs for unusable VMs
+To: rob.clark@oss.qualcomm.com, Antonino Maniscalco <antomani103@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250813-unusable_fix_b4-v1-1-3218d166b8a8@gmail.com>
+ <272d2a39-19ce-4ac5-b3c6-3e3d6d9985c5@oss.qualcomm.com>
+ <CACSVV00Yo=cZxUztB5Jf7153bsnnuATrh3L1utw4SrOQmYERug@mail.gmail.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CACSVV00Yo=cZxUztB5Jf7153bsnnuATrh3L1utw4SrOQmYERug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 1un3279t_rnk_etQ6DyNVett1kFfVpJZ
+X-Authority-Analysis: v=2.4 cv=ZJHXmW7b c=1 sm=1 tr=0 ts=68a33385 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=9Q8gPALlkHEzzDxkdHlyxw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=1QxSUWC4Tu4TNCmoOX8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: 1un3279t_rnk_etQ6DyNVett1kFfVpJZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyOCBTYWx0ZWRfX0R8l4P8FWeL/
+ GM/CQ7zXcvoTgbZJC2tFWP8NOB9bt0gVrYl+ukTewqrXAUjF4oxfAAvyw0mifpVJE93sle4WqTB
+ dKQMUFL3/5Wee2y2jjF+qJyZhEAusTsX1hHcP8fFCCRtEX8WrloexIWRALBukfW8MRC2l8iUPKW
+ Ja3wUPbZUuVrdCBfzd0b3kUmATY18uH+jRPyGvNmFUuN1Rtt8F4R7qEhBztvBm4EZbrIa9LoOFI
+ WBEWnHYiEB+2pgwH7y3VCXgNC8A55yp4Fp8H5aFbZ4O0nLaDPCRdej98Wl3rb5Ylg5zBoXOkaSr
+ PWEZA+XyHtPJN0NqK939Q38C5lh5dU7d2pENyuW7xBMRjW7qbYk7el8+dgbuSlykcX0TikdtLpV
+ 526m9ojv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 spamscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160028
 
-On Tue, Aug 05, 2025 at 07:59:42AM +0200, Takashi Iwai wrote:
-> On Tue, 05 Aug 2025 06:47:59 +0200,
-> Vinod Koul wrote:
-> > On 01-08-25, 10:27, Joris Verhaegen wrote:
-> > >  	ret = snd_compr_update_tstamp(stream, &tstamp64);
-> > >  	if (ret == 0) {
-> > > -		snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
-> > > -		ret = copy_to_user((struct snd_compr_tstamp __user *)arg,
-> > > -				   &tstamp32, sizeof(tstamp32)) ?
-> > > +		if (is_32bit) {
-> > > +			snd_compr_tstamp32_from_64(&tstamp32, &tstamp64);
-> > > +			copy_from = &tstamp32;
-> > > +			copy_size = sizeof(tstamp32);
-> > > +		}
-> > 
-> > Most of the applications and people would be 32bit right now and we
-> > expect this to progressively change, but then this imposes a penalty as
-> > default path is 64 bit, since we expect this ioctl to be called very
-> > frequently, should we do this optimization for 64bit here?
+On 8/18/2025 6:48 PM, Rob Clark wrote:
+> On Mon, Aug 18, 2025 at 5:10 AM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
+>>
+>> On 8/13/2025 6:34 PM, Antonino Maniscalco wrote:
+>>> When a VM is marked as an usuable we disallow new submissions from it,
+>>> however submissions that where already scheduled on the ring would still
+>>> be re-sent.
+>>>
+>>> Since this can lead to further hangs, avoid emitting the actual IBs.
+>>>
+>>> Fixes: 6a4d287a1ae6 ("drm/msm: Mark VM as unusable on GPU hangs")
+>>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+>>> ---
+>>>  drivers/gpu/drm/msm/msm_gpu.c | 9 ++++++++-
+>>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>>> index c317b25a8162edba0d594f61427eac4440871b73..e6cd85c810bd2314c8bba53644a622464713b7f2 100644
+>>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>>> @@ -553,8 +553,15 @@ static void recover_worker(struct kthread_work *work)
+>>>                       unsigned long flags;
+>>>
+>>>                       spin_lock_irqsave(&ring->submit_lock, flags);
+>>> -                     list_for_each_entry(submit, &ring->submits, node)
+>>> +                     list_for_each_entry(submit, &ring->submits, node) {
+>>> +                             /*
+>>> +                              * If the submit uses an unusable vm make sure
+>>> +                              * we don't actually run it
+>>> +                              */
+>>> +                             if (to_msm_vm(submit->vm)->unusable)
+>>> +                                     submit->nr_cmds = 0;
+>>
+>> Just curious, why not just retire this submit here?
 > 
-> Through a quick glance over the patch, I don't think you'll hit the
-> significant performance loss.  It's merely a few bytes of extra copies
-> before copy_to_user(), after all.  But, of course, it'd be more
-> convincing if anyone can test and give the actual numbers.
+> Because then you'd end up with submits retiring out of order (ie.
+> fences on the same timeline signaling out of order)
+
+Yeah, that makes sense.
+
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+
+-Akhil
+
 > 
+> BR,
+> -R
+> 
+>> -Akhil
+>>
+>>>                               gpu->funcs->submit(gpu, submit);
+>>> +                     }
+>>>                       spin_unlock_irqrestore(&ring->submit_lock, flags);
+>>>               }
+>>>       }
+>>>
+>>> ---
+>>> base-commit: 8290d37ad2b087bbcfe65fa5bcaf260e184b250a
+>>> change-id: 20250813-unusable_fix_b4-10bde6f3b756
+>>>
+>>> Best regards,
+>>
 
-I am inclined to agree the impact should be very minimal and the
-only alternative is a more complex implementation. I would vote
-for leaving this as is.
-
-Thanks,
-Charles
 
