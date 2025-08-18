@@ -1,372 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-69618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB946B2B42D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 00:41:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13C63B2B4FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 01:45:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E4D37AB92D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 22:40:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C1F1626D8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 23:43:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DD0F265632;
-	Mon, 18 Aug 2025 22:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E28A427F4CE;
+	Mon, 18 Aug 2025 23:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jiiOGsUi"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="F8P+w2gU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2084.outbound.protection.outlook.com [40.107.243.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE1C223DD1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 22:41:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755556890; cv=none; b=ootLX/jC7dYGp/tzc0OYEuHHqUhyyCBzIbP4+l7itmvjgXA0+oI5L5ihW6oUkJHMuxp9Pa7yPnPyFJxVwEsWBkhgIPla/9xO5fAshUuU565PQQ+QdCSlzojLJOdslkkshjQhV+nGzSnfGxbxlhINSsMrwdTnuHJKXxbaaeBarYM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755556890; c=relaxed/simple;
-	bh=rBFZr1nKLCM/xAt0ecebyX8Bifk6mm8EEy36e94vBUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yp4lDHEXdW46muWW/TxooHRlcA/YaSJLI+JFNHYv89txzoUNNjwP6LmECtbXWwMmV5YXyzX1XG8xjy0XGOuoaEfTtIMbOIaSw3wdD1d5SCTAMoJKz0AQe2cgrVghSSZsBWjt5/E+3puM7BfFEidwxOkpA//bSLyeCT2ISWQTe2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jiiOGsUi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IEbGoq029100
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 22:41:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7P/JHJKLT9w4c6lzg9KOPNMGpcYpg8DaqFdOyPWwpPQ=; b=jiiOGsUiBDs9aTUT
-	g2mohKSTkC5RAgLbJVO7EVvibN7c5DwGL1P50hFvyyzxbBSzqAYgPd5/9svYa/R2
-	eyI7hpOXw1iHFDxHBgKwTUUlozTd3hNeCFvUHzjGFFitawJC/vTF8ZZC0XzBFmPc
-	OJmEE05Iwo40VLx/xiG8h0QGAOEKffKs5sRPfncmVa5f0ZUVaRQfEbY3Y0dfj4vA
-	z7msHh99bcGu+OqhC1KL2vQcFqMbEcn0bS7vWbap9Tcw27z45Xl3guszDmknuQ7t
-	QRM4FLI82HN30gxIBcIr8ac6y03AZBdklw7pCyn966e5y9A0Y1lGB2yyfT4feaQl
-	gGOrPQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jj2uefty-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 22:41:27 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-76e2e614e73so4481351b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 15:41:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755556886; x=1756161686;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7P/JHJKLT9w4c6lzg9KOPNMGpcYpg8DaqFdOyPWwpPQ=;
-        b=R9EHiAFjBzfSE+EEn9XhtdUDoppF1WOf/qStGhOrHSR21U9aCpS3b2pEXWxLRGLHCo
-         2mE//qVDZOnun9qBqmVwpuAGT5Xf5A0YYvyg4NkWZej++AJilQTwOWeN++5zTn6PZO1o
-         X0GSA9ltMWiOXZD8pxvYXZpUF8QvGyBWbfup/EJOW1gg1zX7K7kJTY6Fy6BuHdQ3YPeQ
-         YznCGVJToP5bnxmSU2zjm9mv7ScluW7DX4YOMtdVe6ytR8WuqVh7LWleC3a2xvG+6vlW
-         l0aKSp1smOpD/emdaJEBwp0s+IrhAq6A6XJ5FQWw9DcCJ7aZ4rUh5OzQfYSLprgs/1wm
-         b0Zg==
-X-Gm-Message-State: AOJu0Yz2EwRMQlwdHOFXc7cdF2qyvgbSpxDE4qkw+VlDMyYmuT34AZjU
-	IxyG/is4CazPRu17XHX1TaH0nA/ARw3rzxopxFEOBr/n79BFSHsj5U3r964yXppcNcUsIcx8fg7
-	XQpYRTCUnZqHjPVXVMtqPsFv/auuoO03mTyj6yX51zsf8qvREJ8M+p6cxQ6p/+EOrIiQbkjxRBd
-	26
-X-Gm-Gg: ASbGncuQp0V+MeV+zELhym1TcCTS17ugekmtba9ZhQBlw5lXQeYsEKuCgwM2NW5INkN
-	TMM9Al/4kclICpGbSfRRnTjzfd0/qyDuqpCq1vAQGF3n6yiv8zoXEAuSrhLnomIqtU3cEpgKI/R
-	MaS6XQe6F+iZzBiTjoYETgxWNeNpvPYA7RpDv5MMcOgVc9YHD/sWosmAkdmsf0WRCaaVC1NI8vZ
-	wKcwOZIcJANM7aQUQrGX4j6m5H8bH2ccBGSqEIBir1AAiCXmZdO3LCyqJ64bdFizgWN7wCJMYhY
-	Kgt3TwmVisSTjlEoMpfdlIwUCuLhR7GYSBytCfWI9MlqUxnStnDnisqh8VFaxj4Omcxh24NdUOo
-	M9M/WROIuK/+24R3NoGYhgg==
-X-Received: by 2002:a05:6a20:9183:b0:240:fe4:10f9 with SMTP id adf61e73a8af0-2430d315743mr385151637.6.1755556885715;
-        Mon, 18 Aug 2025 15:41:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhv1KT0N/Yb9OEQp3gwas5QRRgVZWFG8QHg4nd7jQThmfu3uXvpF4Li5SELrsXFL/a80H9lw==
-X-Received: by 2002:a05:6a20:9183:b0:240:fe4:10f9 with SMTP id adf61e73a8af0-2430d315743mr385121637.6.1755556885200;
-        Mon, 18 Aug 2025 15:41:25 -0700 (PDT)
-Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b475095ef3bsm1262674a12.46.2025.08.18.15.41.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 15:41:24 -0700 (PDT)
-Message-ID: <f39c4cc4-d5b1-4c7e-9843-f54e4846feac@oss.qualcomm.com>
-Date: Mon, 18 Aug 2025 15:41:21 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C26C278E7C;
+	Mon, 18 Aug 2025 23:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.84
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755560568; cv=fail; b=CooDSkAlnbg/a/kxA8EpEIgIBXjHV/piIiMcIZ6TAYeGeKdRKwry+RvEb/yfLuB+ctc0/YgAd5k2Zi17avyPpxH0jfYyha6DxikXp9k3nl394g0HqY1fwxEkAb+ttwcWlaYuz8nHz3VPvM6ea63kIFr4db1KV8teztS/BfLGhKk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755560568; c=relaxed/simple;
+	bh=C27v+rdtf35BbDOJx8XQ6EeIaNjH+WwCBl7c1GL6CbI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qYMegrbtJSpeh+9RgZ8R8iqJrwIbP6tXvZCh82OfgXQZAwXeyRNrtEJ8DdifLiHz+EZXMtUwbc1/GwMXeXXjN3lioWFyjxmZyIHS3fLMHW83DN4rO2D8KxnLsFGCNsIXqPB11ep5fbysbcXfOSIact6KUpiCPLIhiC9UPK/LHT8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=F8P+w2gU; arc=fail smtp.client-ip=40.107.243.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mVvdfSRqFMVOMosKPIDBHUBK8AZw1ovCP1ke23E6qLqniYXYjEpB8UMu6l81qXHW+L+qRM6TBeO4l9vbfxtuu4MTv3dsrkeqSK61fQOGJs8ifSL+9YMvjB8olfAszDsJaLL2m0sCUrnp1bQyiojvni96GPXg5M+Uuehv4W8kq7rBPyICyW0yQ0H4MgJtv8PHRoFejJhOKEJPqwOTYp82+keXKrCYRapiVVQJ/zceqfAge5Oo0kBgn0hb+f8lMFZyjNyPfDWjZAf3ZaSEkegjvlSO4Xrn8yZZ7GYknpKx4KreIuvolO3RJZIYy+TASVuAxmh4ensY1Lg07sEhcqd2Bg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5je7JVJvPAueLhLaeeTVFXe1YUqzaamlGOAHEFv38Nw=;
+ b=lIurzqqKUyk4pnhoziJumdb7NPMXqVQyO6BUuIdgJFYPOgSQ+KxtxXSuAzeGmjYUeRB777ZKonbeI4uq4Sxx/VL61qDImLbgS58pgKP0p4bLI6HUuJ0dsZQ5MMfvDY2xtvsqY/W6p75ckvu+K13dV9nBM3X9LUttJRKuM+DPJz7C4tJFfHLXbznPz2vEsZF3XoSOk9SUNXuPMvheJcvm4s8Qw/6gukXwAnHqhDmt/Fm8uBfvnM1jUNVUp4YH5LB0vcu9jqz+VhIQbtcNwFwutDCrkrL8mCUyvFHUXMxxYzhJNhv2LGjNHO6fkOfBtKiBaonqqi+5kFrK6v2cjfmodg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5je7JVJvPAueLhLaeeTVFXe1YUqzaamlGOAHEFv38Nw=;
+ b=F8P+w2gUF68hU0B6RVPwLqsFQLYpQ8SQUyCORzdZ9fWhi1SxFohM1n2AY1feD6q121aXZl7R/K8UAhmwnKfcBs3sXAQ6fcmehD0VEnUksTXJuR10s1UGx0Gwb/5zi/hs7rzGWqiCbLGrd9QG/qAGX8rjS8IHrbETBmH9SwOT+QUtCA4czoa7NWSlbS1D5cm9o8wpyrgzDH2/ja6aMX8g891aiCOg3G0T6XFfSeSojgvKRcu2rer+PAzLtAHqyRopS4CL2Dm7/v1DSk4BV2xO04ZB0rlaz/Mz2vOFPIiRWGLGnGjcGbxc88UhjgGG8kMi7XuD86LyAfgiH4abKYx4kA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DM4PR12MB6085.namprd12.prod.outlook.com (2603:10b6:8:b3::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Mon, 18 Aug
+ 2025 23:42:43 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.9031.023; Mon, 18 Aug 2025
+ 23:42:43 +0000
+Date: Mon, 18 Aug 2025 20:42:41 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: robin.murphy@arm.com, joro@8bytes.org, bhelgaas@google.com,
+	will@kernel.org, robin.clark@oss.qualcomm.com, yong.wu@mediatek.com,
+	matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	rafael@kernel.org, lenb@kernel.org, kevin.tian@intel.com,
+	yi.l.liu@intel.com, baolu.lu@linux.intel.com,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
+	patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
+	helgaas@kernel.org, etzhao1900@gmail.com
+Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
+ helper
+Message-ID: <20250818234241.GF802098@nvidia.com>
+References: <cover.1754952762.git.nicolinc@nvidia.com>
+ <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
+ <20250818143949.GO802098@nvidia.com>
+ <aKNhIr08fK+xIYcg@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aKNhIr08fK+xIYcg@Asurada-Nvidia>
+X-ClientProxiedBy: SA0PR11CA0170.namprd11.prod.outlook.com
+ (2603:10b6:806:1bb::25) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 12/13] drm/msm/dpu: support plane splitting in
- quad-pipe case
-To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250801-v6-16-rc2-quad-pipe-upstream-v14-0-b626236f4c31@linaro.org>
- <20250801-v6-16-rc2-quad-pipe-upstream-v14-12-b626236f4c31@linaro.org>
-Content-Language: en-US
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-In-Reply-To: <20250801-v6-16-rc2-quad-pipe-upstream-v14-12-b626236f4c31@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=MJ9gmNZl c=1 sm=1 tr=0 ts=68a3ac17 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=sWKEhP36mHoA:10 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=0jnu4QEfhkydoQV895IA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: sRDG88fd4OGylsit132StxGpiM1HZXzf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzMSBTYWx0ZWRfX/BpXLo5k4bpF
- Bh2clo9ZJ94+tHrol9/dnbWjuSFJapuTRT1Z7KBHT9mxK6OCt3OWJD5YQ/pCP/XRs5yckcGzAyN
- scMRlJTR6I5A3efM9TGWREuqTRO0Al5CPYxPKFytVAzi5UGuLVzh2Vxch3vR8qzqnir92/ML2k8
- d9+SLYv/XMknozY6ZAZ+vIEE5H50iWmYOJXQM5zjAVXGPevcHbm4FLwOWYGLAfH1qb5Dbyvvb8z
- XKAiOvwVbuB3dSu2YCRq/AZMHd2vzxUdGSW1tedjvMaL30REBnNMmd68e724dFn+sVHywfU4Ujl
- T+Y4ldCoesk+xWFtQBuSLYx/5SoetNUlq+0186w2VmC3h2p/ZRtRXIWIeO3mEiY9Cc9Z1uQRfd0
- ZKoETP7Q
-X-Proofpoint-GUID: sRDG88fd4OGylsit132StxGpiM1HZXzf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-18_06,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
- spamscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160031
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM4PR12MB6085:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7423265a-7a59-4c6f-a6ad-08dddeb0ed71
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?WBF6ZWstJIcwMt4kZ0k11PVnDHXilKye5y3igKggikGxuIASqHvhwA6nbnWv?=
+ =?us-ascii?Q?v0BpW/V+JdqoTWR2wQSUh6VkRVtWTGD/mh6A4ucmk2QclG05L0+trsykciEy?=
+ =?us-ascii?Q?rNMAH39VJ8+kHnJ6ac4iwx0765gi221B3BCeZQroWx5Jc8mmjXOQjKT9TvTw?=
+ =?us-ascii?Q?+jXdWz4elztwBzFAjSFY2hCbB8PHQoHk/Uz+7i2ws95XUlpjUslqkf6KzZvN?=
+ =?us-ascii?Q?L5X3s9vuSPNlrxv5fpiBBbi5+BfAfeZ2v/EvSmBW3B9nyv3CBHaB+7qqiWgY?=
+ =?us-ascii?Q?9s8DFEWkFooECXpL5MvEiaWGg20+R2FSQ1eidEO+zTBjov7p3W9sn1JDh1lg?=
+ =?us-ascii?Q?Rbd+ER0sm+oeXCv/6E4dsslQUzZVmuNUpcYOi7uXf0DP4U19l/qAJlWPw2XV?=
+ =?us-ascii?Q?N8SUuSqQzUdGZxjwkwhB/OiJq8C/7uWYgog5j0SjMJT91jwyWRzMYJf7y2CD?=
+ =?us-ascii?Q?U92mXE5nQIzSP5uZkMtYuu5vxr540phoWEdQWRuIYQKZPTFXcCYOEJkIVllc?=
+ =?us-ascii?Q?91Q093KkwdExcGvdPgqques7KPbOXrdZaM1H2hHkN/N8CahQ6nzKCdSl1Sx9?=
+ =?us-ascii?Q?Hlwo7qzu/dfK27efB+5oJEs6VBX+XoG6LqKkucZ3T4CMwIzJmLgFrcslDZBt?=
+ =?us-ascii?Q?BddIXHa5ZNh2e5TqVQO0tlsTNptw83/oSPwS/7kxNJuNHEOZO47goZd4Guy3?=
+ =?us-ascii?Q?N7BXYMV4aPgGCc/3h6MB+nqzvkJAsYn7vpUNLuae3ca43LdJlGHfO1kRN+yd?=
+ =?us-ascii?Q?fv42H3dtVI97zKXSUyxJ8gc2MtWztM0aT8GE0IbOeAQB1YuGQdb4Tv03FXrc?=
+ =?us-ascii?Q?BuwzsAdJGJ14udcdvoN9wWDFDYWYtdymqAZTr0u05oZq4e05rwJ1RcMz1zn1?=
+ =?us-ascii?Q?i3lDK/hNO+dCYFsdxqcVd2thMJABmY2amwyy8jxMWRaQ2g9XHpatVMzf6Wnp?=
+ =?us-ascii?Q?D0Nyy3or15Tp1nkGmTu6zq9WPBGSufpUKfjc7+6yiefW3RLW4IvuxtpBoFBr?=
+ =?us-ascii?Q?e6CiwQ9bjHl4plJHbbQglwKusgzqhTi+ts1sREHr2NfS16qkrLnqxmU7p2Yi?=
+ =?us-ascii?Q?lplmaHYTQ7z2zH4e3U+/aOHwkoNXhYgpbU86xpPNXwMHtmPn7uL1ubnrQ18k?=
+ =?us-ascii?Q?b5SSWe+m/UdjVDwUG/BDMqINZ76nIpL7MTiuOgP101e1cp+ir951iiLdJ2Uk?=
+ =?us-ascii?Q?bFLMekqY6bAhQj6VnYShIz89bHopv5kfxi7Y9rYwL/i8HOWAjGk+Eob4g1/c?=
+ =?us-ascii?Q?mOAzny/UmfOIA1tmYZfno6bafZldECgIvcX2h2G65aVELt7UNZpm635bHkx2?=
+ =?us-ascii?Q?sfqIlcuu1j7T5yJqSagiRG09j5xZ3UnIDKORm+z9HRyns/wKrPvY0JbICbNx?=
+ =?us-ascii?Q?+36/ughmj4Jr0f7JOD6LfF8AupYnS+fPVtCbroNhg1ahswdriTzrWhk917gI?=
+ =?us-ascii?Q?8vrPFFpGZTY=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?AezlHu2bkpQnm3PkFYUwCt4EtuzMFL9vd6epv7asPoo9ZnEay1PdnZnR6j1W?=
+ =?us-ascii?Q?ii9Md4fSq9W3UC2cUarivZb1xp1rUsADO/rw0i6EGmO8HB+FAeWKyuX7XZQV?=
+ =?us-ascii?Q?tVVzkHemqXvYTuZJmCIkN11uVod5/8U6bgPT+rbBAXKYetIsciDbsRFyCCW8?=
+ =?us-ascii?Q?amRpdzFqN8Alp6UT1C1xgCrpYYeAp+UaunB2HLGKXgFrVb5qzTJttBHYTUqm?=
+ =?us-ascii?Q?EGd5ECBwZeRTFIhItsrRhIHUMs72XBF6FdPlztE9HxSMVEuB500nIE/IE0it?=
+ =?us-ascii?Q?iDsccMwKwNebQHi+PaEVAX27gm9zR2Asd1ZoXm40hTRh0kf8Bgf9IogtQz5n?=
+ =?us-ascii?Q?bCSiScR6Zg4KyHjYEJXrdOrH/0SpPW+59KS/9y4JN/OK79qdmnyfNtViZYZj?=
+ =?us-ascii?Q?TJgBQZk3AXA+HIVAKu+NAjkTDA5CkR3bkgSQb5YMFb8u2ukytcyTLwQdocGy?=
+ =?us-ascii?Q?b7UpxySjKjw5JXasymiL/RWTR/+/aEMvDE6tHjB4DzFsV/6RVvgEOGIwsPT7?=
+ =?us-ascii?Q?IwH5xEF5aLzl6jOn7PviE2GbUo3Z3CsEpP/XnGHrXzRkGe2jXuBXnI0WkfTb?=
+ =?us-ascii?Q?3VdSOyBseAKqL2LdpiaGScHJGoP5CnVudvRqr95DOcLAECdTKZ4zhfDbpDW5?=
+ =?us-ascii?Q?/BLHZ6v1TFgSI2j5FKrZA6y4HO8YRDCevdo09149pTXNpdpzfli/ulCQaQbq?=
+ =?us-ascii?Q?hLz5K9dUcrWJKmpEGi2vbh7vIj8b3Rd+Wz4RLR2x7lr3sSwsFN4DpyzWUDpt?=
+ =?us-ascii?Q?Ys8zsq7YnY0NlUSAqJRfeZvvH9EqLog0tvBahWYhEGzc6ZqLphaH1EAKa4Dx?=
+ =?us-ascii?Q?L6fvuK6RWUplaq7X8EvFBHZ4z8apZNQ2YwlVzVskwua4ulF3X5sZ7cs3Fs7i?=
+ =?us-ascii?Q?kmYKXqm+p63OAT61m9032b+g4ryEz6Y72erc3Q8rR/0MoxV9AFY0TkW3uCtg?=
+ =?us-ascii?Q?9knEoTTNlCIVzaueMgIKCzeOcN6b+xcc52umtGSzpaeUp6UkZ+RtlUF55gyo?=
+ =?us-ascii?Q?pPPXdVo0cPietFE1KiNAlYsRgwl+ieVXV6F5bEgZF67wlTSrqLlM/hWu3lRK?=
+ =?us-ascii?Q?12+y34TId7sDBzb8zMheqdwpisi0YakpeyxCwgkYqBQRpSrznIRxH8kV/0DW?=
+ =?us-ascii?Q?4aO0F4EQ0Vc5kEnmcp4dAN1HMZCGUO4/thsTjvzW0bIzR+jp+RpQ6qwTfkd1?=
+ =?us-ascii?Q?a6+6VcXIA48zj/w0KldaarYPrgPzYUUMwAAzTex2JVkRV31uvbK0ML0fwYGq?=
+ =?us-ascii?Q?b+bdPV9wCIZV8Nvkb97uh/c5O/AHGfNhPAWRCLc55xKmlZIAeibDiH0w2ZqH?=
+ =?us-ascii?Q?6zZmOcq7gn2D6SHZ8spfGw5wKhsrGGyWVlQDblYfrs1/FhoYAZOB9dKKj0HL?=
+ =?us-ascii?Q?Ou+0vP2uQNEDC1b/AOpedR8gi/6KHXvM2QnjtqqMju+sYB2hG2ikJttUP5N0?=
+ =?us-ascii?Q?rDudXklf7QXcynbQtskuU6u00RP7rqwnqKXgfhfpfbRKICFpKASRknDuM2Vr?=
+ =?us-ascii?Q?s+tp590FA7bYI42gdf/HaJwFkKkD4o78mTSlhQcNvVOIi5BskK3txD0/Swia?=
+ =?us-ascii?Q?QgyjS+EyNBUNXXKs5bOw7imUCrxfR/RhYAf/gdIB?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7423265a-7a59-4c6f-a6ad-08dddeb0ed71
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2025 23:42:43.7291
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Z33DAptqq0QHaCYNyOt+tgd2RqOYXNcprSdmI/hNIGUKuIRNteQtz0pvPiKCun/m
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6085
 
-
-
-On 8/1/2025 8:07 AM, Jun Nie wrote:
-> The content of every half of screen is sent out via one interface in
-> dual-DSI case. The content for every interface is blended by a LM
-> pair in quad-pipe case, thus a LM pair should not blend any content
-> that cross the half of screen in this case. Clip plane into pipes per
-> left and right half screen ROI if topology is quad pipe case.
+On Mon, Aug 18, 2025 at 10:22:52AM -0700, Nicolin Chen wrote:
+> > Because this is a very common pattern in drivers.
+> > 
+> > Once that is done we can see what calls to iommu_get_domain_for_dev()
+> > are even left,
 > 
-> The clipped rectangle on every half of screen is futher handled by two
-> pipes if its width exceeds a limit for a single pipe.
+> ... I found that in SMMUv3 driver, iommu_get_domain_for_dev() is
+> used to get the RID domain for an SVA domain:
+>     arm_smmu_set_pasid()
+>     arm_smmu_blocking_set_dev_pasid()
 > 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  11 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |   2 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 137 +++++++++++++++++++++---------
->   3 files changed, 110 insertions(+), 40 deletions(-)
+> These two are already given an "old" (SVA) domain pointer, FWIW.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index c7dc5b47ae18ebd78de30d2a0605caa7dd547850..1c7a5e545745320018c3e9a2d163cbfd3dceaf7b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1592,6 +1592,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
->   	return 0;
->   }
->   
-> +/**
-> + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
-> + * @state: Pointer to drm crtc state object
-> + */
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state)
-> +{
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
-> +
-> +	return cstate->num_mixers;
-> +}
-> +
->   #ifdef CONFIG_DEBUG_FS
->   static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
->   {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 94392b9b924546f96e738ae20920cf9afd568e6b..6eaba5696e8e6bd1246a9895c4c8714ca6589b10 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -267,4 +267,6 @@ static inline enum dpu_crtc_client_type dpu_crtc_get_client_type(
->   
->   void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
->   
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state);
-> +
->   #endif /* _DPU_CRTC_H_ */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 9671af9620037b5c341e404bb3b2fc21696ce79e..1cd3d04b1d1b10cf803090c080e54611d943c053 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -824,8 +824,12 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
->   	struct dpu_sw_pipe_cfg *pipe_cfg;
->   	struct dpu_sw_pipe_cfg *r_pipe_cfg;
-> +	struct dpu_sw_pipe_cfg init_pipe_cfg;
->   	struct drm_rect fb_rect = { 0 };
-> +	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
->   	uint32_t max_linewidth;
-> +	u32 num_lm;
-> +	int stage_id, num_stages;
->   
->   	min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
->   	max_scale = MAX_DOWNSCALE_RATIO << 16;
-> @@ -848,13 +852,10 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
->   		return -EINVAL;
->   	}
->   
-> -	/* move the assignment here, to ease handling to another pairs later */
-> -	pipe_cfg = &pstate->pipe_cfg[0];
-> -	r_pipe_cfg = &pstate->pipe_cfg[1];
-> -	/* state->src is 16.16, src_rect is not */
-> -	drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
-> +	num_lm = dpu_crtc_get_num_lm(crtc_state);
->   
-> -	pipe_cfg->dst_rect = new_plane_state->dst;
-> +	/* state->src is 16.16, src_rect is not */
-> +	drm_rect_fp_to_int(&init_pipe_cfg.src_rect, &new_plane_state->src);
->   
->   	fb_rect.x2 = new_plane_state->fb->width;
->   	fb_rect.y2 = new_plane_state->fb->height;
-> @@ -879,35 +880,94 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
->   
->   	max_linewidth = pdpu->catalog->caps->max_linewidth;
->   
-> -	drm_rect_rotate(&pipe_cfg->src_rect,
-> +	drm_rect_rotate(&init_pipe_cfg.src_rect,
->   			new_plane_state->fb->width, new_plane_state->fb->height,
->   			new_plane_state->rotation);
->   
-> -	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
-> -	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
-> -		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> -			return -E2BIG;
-> +	/*
-> +	 * We have 1 mixer pair cfg for 1:1:1 and 2:2:1 topology, 2 mixer pair
-> +	 * configs for left and right half screen in case of 4:4:2 topology.
-> +	 * But we may have 2 rect to split wide plane that exceeds limit with 1
-> +	 * config for 2:2:1. So need to handle both wide plane splitting, and
-> +	 * two halves of screen splitting for quad-pipe case. Check dest
-> +	 * rectangle left/right clipping first, then check wide rectangle
-> +	 * splitting in every half next.
-> +	 */
-> +	num_stages = (num_lm + 1) / 2;
-> +	/* iterate mixer configs for this plane, to separate left/right with the id */
-> +	for (stage_id = 0; stage_id < num_stages; stage_id++) {
-> +		struct drm_rect mixer_rect = {
-> +			.x1 = stage_id * mode->hdisplay / num_stages,
-> +			.y1 = 0,
-> +			.x2 = (stage_id + 1) * mode->hdisplay / num_stages,
-> +			.y2 = mode->vdisplay
-> +			};
-> +		int cfg_idx = stage_id * PIPES_PER_STAGE;
-> +
-> +		pipe_cfg = &pstate->pipe_cfg[cfg_idx];
-> +		r_pipe_cfg = &pstate->pipe_cfg[cfg_idx + 1];
-> +
-> +		drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
-> +		pipe_cfg->dst_rect = new_plane_state->dst;
-> +
-> +		DPU_DEBUG_PLANE(pdpu, "checking src " DRM_RECT_FMT
-> +				" vs clip window " DRM_RECT_FMT "\n",
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect),
-> +				DRM_RECT_ARG(&mixer_rect));
-> +
-> +		/*
-> +		 * If this plane does not fall into mixer rect, check next
-> +		 * mixer rect.
-> +		 */
-> +		if (!drm_rect_clip_scaled(&pipe_cfg->src_rect,
-> +					  &pipe_cfg->dst_rect,
-> +					  &mixer_rect)) {
-> +			memset(pipe_cfg, 0, 2 * sizeof(struct dpu_sw_pipe_cfg));
-> +
-> +			continue;
->   		}
->   
-> -		*r_pipe_cfg = *pipe_cfg;
-> -		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-> -		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-> -		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-> -		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-> -	} else {
-> -		memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
-> -	}
-> +		pipe_cfg->dst_rect.x1 -= mixer_rect.x1;
-> +		pipe_cfg->dst_rect.x2 -= mixer_rect.x1;
-> +
-> +		DPU_DEBUG_PLANE(pdpu, "Got clip src:" DRM_RECT_FMT " dst: " DRM_RECT_FMT "\n",
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect), DRM_RECT_ARG(&pipe_cfg->dst_rect));
-> +
-> +		/* Split wide rect into 2 rect */
-> +		if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
-> +		     _dpu_plane_calc_clk(mode, pipe_cfg) > max_mdp_clk_rate) {
-> +
-> +			if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-> +				DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-> +						DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> +				return -E2BIG;
-> +			}
-> +
-> +			memcpy(r_pipe_cfg, pipe_cfg, sizeof(struct dpu_sw_pipe_cfg));
-> +			pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-> +			pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-> +			r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-> +			r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-> +			DPU_DEBUG_PLANE(pdpu, "Split wide plane into:"
-> +					DRM_RECT_FMT " and " DRM_RECT_FMT "\n",
-> +					DRM_RECT_ARG(&pipe_cfg->src_rect),
-> +					DRM_RECT_ARG(&r_pipe_cfg->src_rect));
-> +		} else {
-> +			memset(r_pipe_cfg, 0, sizeof(struct dpu_sw_pipe_cfg));
-> +		}
->   
-> -	drm_rect_rotate_inv(&pipe_cfg->src_rect,
-> -			    new_plane_state->fb->width, new_plane_state->fb->height,
-> -			    new_plane_state->rotation);
-> -	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0)
-> -		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
-> -				    new_plane_state->fb->width, new_plane_state->fb->height,
-> +		drm_rect_rotate_inv(&pipe_cfg->src_rect,
-> +				    new_plane_state->fb->width,
-> +				    new_plane_state->fb->height,
->   				    new_plane_state->rotation);
->   
-> +		if (drm_rect_width(&r_pipe_cfg->src_rect) != 0)
-> +			drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
-> +					    new_plane_state->fb->width,
-> +					    new_plane_state->fb->height,
-> +					    new_plane_state->rotation);
-> +	}
-> +
->   	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
->   
->   	return 0;
-> @@ -984,20 +1044,17 @@ static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
->   		drm_atomic_get_new_plane_state(state, plane);
->   	struct dpu_plane *pdpu = to_dpu_plane(plane);
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
-> -	struct dpu_sw_pipe *pipe = &pstate->pipe[0];
-> -	struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
-> -	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
-> -	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->pipe_cfg[1];
-> -	int ret = 0;
-> -
-> -	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
-> -					  &crtc_state->adjusted_mode,
-> -					  new_plane_state);
-> -	if (ret)
-> -		return ret;
-> +	struct dpu_sw_pipe *pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg;
-> +	int ret = 0, i;
->   
-> -	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
-> -		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg,
-> +	for (i = 0; i < PIPES_PER_PLANE; i++) {
-> +		pipe = &pstate->pipe[i];
-> +		pipe_cfg = &pstate->pipe_cfg[i];
-> +		if (!pipe->sspp)
-> +			continue;
-> +		DPU_DEBUG_PLANE(pdpu, "pipe %d is in use, validate it\n", i);
-> +		ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
->   						  &crtc_state->adjusted_mode,
->   						  new_plane_state);
->   		if (ret)
-> 
+> So, we may change to passing in the old domain as you suggested,
+> yet we still have to fix the iommu_get_domain_for_dev() in order
+> to reflect the RID domain correctly for the driver that calls it
+> (or even potentially) in some group->mutex locked context where
+> the RID domain might not be naturally passed in.
 
+It could probably be avoided by keeping track of more information in
+the master, but also it is not so bad to use a _locked version here.
+
+> > arguably we should be trying to eliminate this badly
+> > locked thing...
+> 
+> Any suggestion?
+
+Bit by bit.. I counted 58 by grep
+
+Changing attach will get rid of alot of them
+
+Then there is stuff like this:
+
+        domain = iommu_get_domain_for_dev(emu->card->dev);
+        if (!domain || domain->type == IOMMU_DOMAIN_IDENTITY)
+                return;
+
+Which should be more like 
+   if (iommu_get_translation_mode(dev) == IDENTITY)
+
+With sensible internal locking
+
+So that is another bunch. Not sure what will be left after.
+
+Not saying to do all that here, just prefer we move toward that direction.
+
+Jason
 
