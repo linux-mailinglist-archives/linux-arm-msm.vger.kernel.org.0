@@ -1,102 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-69605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59AB3B2AD59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 17:53:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B63B2AE18
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 18:28:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F00118A08AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 15:51:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EDB3616AD19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 16:26:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06B1933472E;
-	Mon, 18 Aug 2025 15:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7E73376BA;
+	Mon, 18 Aug 2025 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VSiNvhzk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoUjYCOK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C854231E119;
-	Mon, 18 Aug 2025 15:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CDC2036FA;
+	Mon, 18 Aug 2025 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755532264; cv=none; b=MPPCM1x0SWtu+pFAI5167MjzRnE15FHP+ReH71wAwrytY3+sEg5V/5NutT3BA8LnkjeqKEF00rjvoR9nAxI5nk8KdRhhyNIHXDazT1KejYla8b1jDLP3lqtmo4hGSsRiOqV9XAS4cr4NwA1CUTyRMjrLhUge3xAUt4PyBDHCH0o=
+	t=1755534378; cv=none; b=UnMKxsF3aYcXOdDQGNUMnL6fVvPluRWKDRWTNQfRL9i76DF7uNaWF8j2/kStuMMGTtI+I+Iz4lu12N+xkAdQFszKcc2xpzj8aoC5YIHLBbVWlSlFgVF2Wa2qFYw04fOvEdhu5ERbc1fIV+jOU74LoZmfw8S6mWRpTMXc5K9Hd44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755532264; c=relaxed/simple;
-	bh=r0yvrAIAXkXKJt14/95ZaNgQUPwCBY8YO4aKifN9lhk=;
+	s=arc-20240116; t=1755534378; c=relaxed/simple;
+	bh=ZwkwKLm+9X4AKLx18Kn7SY8j79i1RmrxvQJj90SGHG8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kiiUa56yhW+90p6NG7KZjKxENmYT+eisXD6sd7L4zN/wOZP1lyAkuJYmASLUhgctow7hhmB8kYR89ZwZR8UwhVlwLCyF/+sTSYBV60U31Uql0yrrBAjXKJr+LeRllH132FM02gzi8yxPgr6gSXM+eGhcfa5tyhMwWFGjJiI/WxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VSiNvhzk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744F0C4CEEB;
-	Mon, 18 Aug 2025 15:51:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=T7yUWHl8nmsIKtVMPyuXYEBmSiILoazOBSGqgVB/yc/KPV0NE3B3K5G0bkuOkusT4MT6kjPgaWx0qcfG6U7O8stBqezFhocJsqNHAntafjwAauygy3CkoHVcGKRLwc93oZR9bQuQVk+vV8Oq7EOmXSiPu2Kv73sH9X1CPch5Znk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoUjYCOK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABEAC4CEEB;
+	Mon, 18 Aug 2025 16:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755532264;
-	bh=r0yvrAIAXkXKJt14/95ZaNgQUPwCBY8YO4aKifN9lhk=;
+	s=k20201202; t=1755534377;
+	bh=ZwkwKLm+9X4AKLx18Kn7SY8j79i1RmrxvQJj90SGHG8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VSiNvhzkqt0xqOWA/qUE5I8bsWGAB7vxvG5ef9otr2GZUiRn+2WLLbjzC2StcldWv
-	 Lcy7Efri0ZTxF6NJWBnMtOTu/3zhBb80CdR6KX5lAZ19uLEGY7+RAvcEIfgDTLuEUl
-	 jsvwGFmxZGaECOwxZ5e9hGg4bhtciWK3lhQTCekNc0ZxQmLVu1Z1Rdhyybj7c4WI26
-	 OXZQROnhEKBmelrPhM75MvFfh+J7pdRd9skmis55oRvI3LeTQB9gE48uyzm2EV+ZOl
-	 d2WtuOWtGbBlw/jqijHHbt/gxHRGaqEPS5vlMzmCxoL6OW2BAl97eHlF8Fr0sMCzfL
-	 8Yu1OD3u3Bgiw==
-Date: Mon, 18 Aug 2025 10:51:03 -0500
-From: Rob Herring <robh@kernel.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] dt-bindings: eeprom: at24: Add compatible for
- Belling BL24S64
-Message-ID: <20250818155103.GA1272375-robh@kernel.org>
-References: <20250810-msm8953-cci-v1-0-e83f104cabfc@lucaweiss.eu>
- <20250810-msm8953-cci-v1-3-e83f104cabfc@lucaweiss.eu>
+	b=eoUjYCOKlvn63f5fLt/oPtGXuXlIB3qI/s1uwCSlxibX/y6DChK9BSYT2KFxHOK7N
+	 JQOAB4wpvBP/cqfQYWaU21NSkbhmZ3ycZki5Tb1XbTQ9HmjmawmOuDNfztGe1oXhM5
+	 oMYRvwG57tl16BcpLJQcmLiZHDEI2JocqPQD7qwss1jWsdLqa0gY5nHLU/xhUggeE9
+	 WuGTnngOEQwYXlr04Z/QHYpd2TLqCfCDHHqWGm5ndGcik0ACZ7FJMzx1W+3lL2gAGJ
+	 lBQUaLiKJZxOdGS/YG5gCmbnCX2ajyk8GkBpyx98eTuZaLtW1sbK7uLMABL9dO+ySC
+	 9wh+aU1KevT5Q==
+Date: Mon, 18 Aug 2025 21:56:11 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add more Foxconn T99W696
+ modem
+Message-ID: <2cnllzjs4w4s5hqelhdpyfsnxlnb4amtueyijqndavkypumr5l@46q4k4lut6a2>
+References: <20250729085726.106807-1-slark_xiao@163.com>
+ <ma7am34lifhb3avqyiodtbsfmlmi6s5tsw7kqf2rp2eyiq3uqw@ty57xdfbe5ao>
+ <7eb35c0c.93ee.198bcc85d6c.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250810-msm8953-cci-v1-3-e83f104cabfc@lucaweiss.eu>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7eb35c0c.93ee.198bcc85d6c.Coremail.slark_xiao@163.com>
 
-On Sun, Aug 10, 2025 at 05:37:54PM +0200, Luca Weiss wrote:
-> Add the compatible for an 64Kb EEPROM from Belling.
+On Mon, Aug 18, 2025 at 06:45:04PM GMT, Slark Xiao wrote:
+> 
+> 
+> At 2025-08-18 16:14:28, "Manivannan Sadhasivam" <mani@kernel.org> wrote:
+> >On Tue, Jul 29, 2025 at 04:57:26PM GMT, Slark Xiao wrote:
+> >> There are more platforms need support Foxconn T99W696 modem.
+> >> This requirement comes from Lenovo side since they want 1 platform
+> >> to correspond to 1 modem SKU.
+> >> 
+> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >> ---
+> >>  drivers/bus/mhi/host/pci_generic.c | 18 ++++++++++++++++++
+> >>  1 file changed, 18 insertions(+)
+> >> 
+> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> >> index 4edb5bb476ba..1fc43f1b86be 100644
+> >> --- a/drivers/bus/mhi/host/pci_generic.c
+> >> +++ b/drivers/bus/mhi/host/pci_generic.c
+> >> @@ -932,6 +932,24 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+> >>  	/* Foxconn T99W696.00, Foxconn SKU */
+> >>  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
+> >>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.05, Lenovo T14 */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe150),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.06, Lenovo T15 */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe151),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.07, Lenovo T16 */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe152),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.08, Lenovo P14s */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe153),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.09, Lenovo P16s */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe154),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >> +	/* Foxconn T99W696.10, Lenovo P1 */
+> >> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe155),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >
+> >Since all T99W696 derivatives are using the same config, can't you use below?
+> >
+> >	PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, PCI_ANY_ID),
+> >		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+> >
+> >I'm presumed that all 0x0308 based modems are T99W696 derivatives.
+> >
+> >- Mani
+> >
+> Hi Mani,
+> Yeah, this is really helpful.
+> So shall I update the previous T99W696 IDs with this new match case?
+> 
 
-It is generally not required to add a compatible here assuming 
-"atmel,24c64" is enough to identify the specific device (i.e. read the 
-device's ID registers). If it is not sufficient, then some details here 
-about why would be useful.
+Yes please.
 
-> 
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
->  Documentation/devicetree/bindings/eeprom/at24.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/eeprom/at24.yaml b/Documentation/devicetree/bindings/eeprom/at24.yaml
-> index 0ac68646c077790c67c424d0f9157d6ec9b9e331..1e88861674ac8525335edec1b214675c8efa3ffe 100644
-> --- a/Documentation/devicetree/bindings/eeprom/at24.yaml
-> +++ b/Documentation/devicetree/bindings/eeprom/at24.yaml
-> @@ -131,6 +131,7 @@ properties:
->            - const: atmel,24c32
->        - items:
->            - enum:
-> +              - belling,bl24s64
->                - onnn,n24s64b
->                - puya,p24c64f
->            - const: atmel,24c64
-> 
-> -- 
-> 2.50.1
-> 
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
