@@ -1,151 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-69517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CC22B29E47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 11:46:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 486CDB29E6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 11:52:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C81377A894F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 09:44:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF24E189C9B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 09:52:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C09E720766E;
-	Mon, 18 Aug 2025 09:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCAE630FF10;
+	Mon, 18 Aug 2025 09:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F1LHUpnQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IHDrVGCp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CCD19D08F;
-	Mon, 18 Aug 2025 09:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59C530F817
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 09:51:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755510339; cv=none; b=g8KWGGi27q1+LSozZ0CtHDEGQT3mwV95YXSTl/d7sK5gmddWfBJfKMRFsg83ilHpZZOTWX8aCEi7ts9FiRW0PoN9yYfYowe57TrpGOCmobLEjNBEeM3MDls+WvgsiupJ6izfdmJhN4eqccfzML4lSYYPd5q/PJsmLrzFa81gXj4=
+	t=1755510689; cv=none; b=A3Gq5TtLPRAL6oHVRKYHkHc4ut8lEU7rIvdIzq6cCtnIDytEJlBJjUle6FWhX2jvMBakNZxbR7X8gHQ6b9JAUIJR6g+TuKX9C4owNgtFPSvPkyiIgntE8KUvtu1oSW04THBu+KLUN7OHCZjGw3dkF6GXPw/QcdfAgcmUiEPSDNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755510339; c=relaxed/simple;
-	bh=5kAT0OWo7P4LGhMfJP3ArGBSGYUcaY2kpGd3mYOE1jg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=egyQXpQNM5+OuS9Tt5kHldgSSnZ+9RtxOlIPkaYZ6175zO5S+6e4VT7hGaa7Cjlftf2pAIPGLn4/j0tugd+mga8+hfGDwJqBJHxwRa+NOJQlmhrV29JbZv8NkSSGwfYvn9PtnJ27xnNS9Mw2/86a2ZS69ffg7BTRA3ZNFUYSY9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F1LHUpnQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57I8PMqI007011;
-	Mon, 18 Aug 2025 09:45:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EjdKFhdo/XRz24AO4XqnqKp90raRq20cSpgOgOQtG0E=; b=F1LHUpnQZdfKSEzF
-	9F0V+CFNbOgakJQkLdVJn7J7ScVSCW3shDfa1m06OsVrmy7RiKVLcgs4nfq4XwIb
-	QDRNOW8rN6SI+tRD2/qSf+eZCKsAmwqdTOG9AJyMCxNT0FvonRLlQgl6vOzszGc2
-	jIKw+GwfCdq2O6yPdLA4Chze13zE/0J43I6n/MIl2p7BHwtF/Zm7fwaBVj2IZRuK
-	mYC0X4bjGuCMqSiTuXamqexaWHZB8qYq8rkK7S1p4D0i+Z+iJ0sJSeqB+mL98/sp
-	kyW5XNwBEjIqQSfTC/uOhjzk+XkziYc39tiEIiclCyK0kIPoEOY3Zm/1gg5XUNGm
-	wCENIw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jjrfv4nn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Aug 2025 09:45:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57I9jKBV016097
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Aug 2025 09:45:20 GMT
-Received: from [10.206.107.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 18 Aug
- 2025 02:45:16 -0700
-Message-ID: <8b9d5f6e-ee95-e4d1-3fac-fdcb277a7af3@quicinc.com>
-Date: Mon, 18 Aug 2025 15:15:13 +0530
+	s=arc-20240116; t=1755510689; c=relaxed/simple;
+	bh=QBBhmYV+UQ2hXTTLPXbJol0ycEg/rF+5oel04wpKfk4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aUBy8hkeaiuNusXydPkRr6ZoH7/2hHBpUnubceCDD/2dkLAR0L270axxIGHK/bBwMqkdZp9wqa9W6gUF9D0N2vzWdZg2HFkvKfSXeyWmnGz7Y/unPKMu3nOqqE3ffQMN0ZkXANGpRpHpYucYH7fx1XLUz2H9cJOSn0k9Ohkwfm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IHDrVGCp; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b05a59fso29409255e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 02:51:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755510685; x=1756115485; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=irOcbMOZce8tdkmOmvyjdJd5jG31cnXbJF+FtwR0pdw=;
+        b=IHDrVGCp/FquoRUHRTf0XOvSxr4KJQROWnVCmET1qDWwS1PJJKmDnSB2leaCXJov1W
+         dLb5He/TfbWLypOf1zVHX4xFMDVAZ3cHxZhPkrbPAjvJN465isZY6Dr6sbJojmvmsopo
+         JYKCTSvAWzSsD6vs4/d1oaLkX2NnKHODGD1NT3Lr3HDNMO64EIir2lqdeEUF8PNvegsN
+         sqFns7x3fpzCBKK8CbnjfHdxL0XaCUgqp9K8haj9r1Y1mzwZPha3OjVazD8s5DnIq0UC
+         fCkEmhG+r4H0PxqY5TVila62dKnbfQuXC3LY2mFVQzBZI0kSLLIenWzpafsYZDtMwAEJ
+         Q1eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755510685; x=1756115485;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=irOcbMOZce8tdkmOmvyjdJd5jG31cnXbJF+FtwR0pdw=;
+        b=JCmGgyp51EmS7yQgd1ULjy66LlTUAZ2qeOsn63rhihwV3JkvLjlfaPfdRJJO60SARx
+         sPCnvBTOKmY/wOumzTiUMEbwAaDOKkEquvh5X/MCY5Fy3WVTHRpoTpOOOGF/KqqY7kil
+         zz6d08Es3pFpmDjKoRQpGrfgG7gKiASBsKy3LhDvu0On9TZ+eUujQ+FPdKr0mLrxgmSg
+         AgJconZOhI+TjikWzpO8YapcmKk5divs21TFQnwj1RAJCKNMyFPG4QC/HedNy37SsNkz
+         WaKnmfvdRYzmfRaokugJKmbnaQoPl/6KNNwvQ85EdNWIRiBkOpDvyuXo6fy0XEn4djoz
+         0aNw==
+X-Forwarded-Encrypted: i=1; AJvYcCWZF77hBlTcCVkN96YtBNkuFvNTKnBtFpuy1arYGhDCyC6LpkfPwrol8Ju78Fl9Ph7BHp2hzRWFDOLluBkm@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxf9Pt17ZgLJd1bqNrtMlU3AqTt0zeTodcBBnrWwa6WnjM9PvHn
+	jtfbdqs4OZsDd4O4AGmE0lQ3HCKtntGNtxqZ1twTEt9+K3IdDDrz00gd4u4ct3TIbUM=
+X-Gm-Gg: ASbGncu0nEvCe9uVxrYytKzGNA8xaKCeZqG6YKQBbgdcZk/+QsgjgmAeGALOgN7ghuV
+	0RGFsjCQR9E1TihjjBHmeWCqeKyl7+6xXp/77ufkOte0G49EbLzfhcLs9yNk7FpAJTGAJ5Qadgf
+	c317t/+ZWTyXMo74uS0U/NuEhOBT6cA/vXEsbkLdZ4A8ZJxp7UwI/ZHAmAs+q3fljN7O95YIMEZ
+	kViCXSvOHyrU1UrpWSjtdpf87OZGTo1Jw3xZWUindCdCv3tb7H0hHivuRWQzke3HHRBzlQTrqnq
+	9uK7s8LxWvb4tFZaoBp+8fjZmwrJEmwFxqMyXPLc3SduvlbzB7cfIUCqwoqE+ZFg4DXA50bmq9g
+	ijcCpsElZOPwUqNmiIHbaQeZjWP2yifoHrKIJlw==
+X-Google-Smtp-Source: AGHT+IHU8L5zc37ViCmI7CAJbkfEFWeKIJ6N/OF/IPmJs52MJ5SlIlIojdXPEOIrX5ObGymSXBjkOQ==
+X-Received: by 2002:a05:6000:188c:b0:3b8:ffd1:80d2 with SMTP id ffacd0b85a97d-3bc684d7c2fmr6672591f8f.24.1755510685037;
+        Mon, 18 Aug 2025 02:51:25 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:7049:5418:d1a7:cc44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bc4afe7a63sm10157016f8f.15.2025.08.18.02.51.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Aug 2025 02:51:24 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Mon, 18 Aug 2025 11:50:41 +0200
+Subject: [PATCH] media: iris: Fix firmware reference leak and unmap memory
+ after load
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 04/24] media: iris: Fix port streaming handling
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Mauro
- Carvalho Chehab" <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Vedang Nagar
-	<quic_vnagar@quicinc.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Renjiang Han <quic_renjiang@quicinc.com>,
-        Wangao Wang <quic_wangaow@quicinc.com>
-References: <20250813-iris-video-encoder-v2-0-c725ff673078@quicinc.com>
- <20250813-iris-video-encoder-v2-4-c725ff673078@quicinc.com>
- <40673a17-a19c-4722-ae5b-272082af917b@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <40673a17-a19c-4722-ae5b-272082af917b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6950qAdc8-on-qkZ6cwyGARp5d121ptF
-X-Authority-Analysis: v=2.4 cv=YrsPR5YX c=1 sm=1 tr=0 ts=68a2f631 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
- a=m1fW5MQtX9GvYy8ZqkAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzOSBTYWx0ZWRfX+9z6UZh4+ODA
- /jE5/9xUCSPK+Kjgjv3m3SeCe3hZotJlIkQ1tHBmZXFGmRPHVLYlVHvKUBMAJVuc+OsR4dSP2M2
- 6jjaevX1hrXKWVY3TTnQ0WrRAibB6Ao3+3omcBU+JM8m2d5ziquv2bs3jmrxAe3XbxKt4hiKQGm
- KrnplDuiBOvt7vr8equCuypx2iU6R8ujwShE8tSYQ2GwWgbPEzu5XhQjAYiQkCNj0PuCuq1uRaU
- lIp9Y8d4tO3gNJSEY2ncmOQIrHVindUGVex+ePf7LjUNLyyjux6X2Sfjzsm55VwiNCW3JuTQTaT
- 3hEeczFPT8SNtQeDBo6SPRQrTSoagqBDRUxdY3dWAOdrR6GgR0hbQQSwjPhKt2HjCQbPugTlDYb
- +0/K+x0J
-X-Proofpoint-ORIG-GUID: 6950qAdc8-on-qkZ6cwyGARp5d121ptF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-18_04,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 phishscore=0
- adultscore=0 bulkscore=0 clxscore=1015 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508160039
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250818-iris-firmware-leak-v1-1-1e3f9b8d31ce@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHD3omgC/x3M3QpAQBCG4VvRHJuyWMmtyMHiw+S32ULJvdscP
+ gfv+5CHCjxV0UOKU7zsW4CJI+omt41g6YMpTVKblMayqHgeRNfLKXiBm7ktujxrewOUlkJ4KAa
+ 5/2ndvO8HphHEP2QAAAA=
+X-Change-ID: 20250815-iris-firmware-leak-b6c43bd1ee85
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Stefan Schmidt <stefan.schmidt@linaro.org>, 
+ Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
 
+When we succeed loading the firmware, we don't want to hold on to the
+firmware pointer anymore, since it won't be freed anywhere else. The same
+applies for the mapped memory. Unmapping the memory is particularly
+important since the memory will be protected after the Iris firmware is
+started, so we need to make sure there will be no accidental access to this
+region (even if just a speculative one from the CPU).
 
+Almost the same firmware loading code also exists in venus/firmware.c,
+there it is implemented correctly.
 
-On 8/16/2025 4:10 PM, Bryan O'Donoghue wrote:
-> On 13/08/2025 10:37, Dikshita Agarwal wrote:
->> +    if (!ret)
-> 
-> I think you should have a consistent error pattern
-> 
-> if (ret)
->     goto error;
-> 
-Its done to avoid duplication of code, otherwise it would look like
+Fix this by dropping the early "return ret" and move the call of
+qcom_scm_pas_auth_and_reset() out of iris_load_fw_to_memory(). We should
+unmap the memory before bringing the firmware out of reset.
 
-if (inst->state == IRIS_INST_STREAMING)
-	ret = iris_queue_internal_deferred_buffers(inst, BUF_DPB);
-	if (ret)
-		goto error;
-	
-	ret = iris_queue_deferred_buffers(inst, buf_type);
-	if (ret)
-		goto error;
+Cc: stable@vger.kernel.org
+Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+ drivers/media/platform/qcom/iris/iris_firmware.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-and more duplication when encoder is added.
+diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+index f1b5cd56db3225d0a97e07d3a63c24814deeba78..9ab499fad946446a87036720f49c9c8d311f3060 100644
+--- a/drivers/media/platform/qcom/iris/iris_firmware.c
++++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+@@ -60,16 +60,7 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+ 
+ 	ret = qcom_mdt_load(dev, firmware, fw_name,
+ 			    pas_id, mem_virt, mem_phys, res_size, NULL);
+-	if (ret)
+-		goto err_mem_unmap;
+-
+-	ret = qcom_scm_pas_auth_and_reset(pas_id);
+-	if (ret)
+-		goto err_mem_unmap;
+-
+-	return ret;
+ 
+-err_mem_unmap:
+ 	memunmap(mem_virt);
+ err_release_fw:
+ 	release_firmware(firmware);
+@@ -94,6 +85,12 @@ int iris_fw_load(struct iris_core *core)
+ 		return -ENOMEM;
+ 	}
+ 
++	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
++	if (ret)  {
++		dev_err(core->dev, "auth and reset failed: %d\n", ret);
++		return ret;
++	}
++
+ 	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
+ 					     cp_config->cp_size,
+ 					     cp_config->cp_nonpixel_start,
 
-Thanks,
-Dikshita
-> Once amended
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> ---
-> bod
+---
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+change-id: 20250815-iris-firmware-leak-b6c43bd1ee85
+
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
+
 
