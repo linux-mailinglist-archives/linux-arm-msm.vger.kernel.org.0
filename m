@@ -1,262 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-69472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 614DDB29882
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 06:42:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A36DB298F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 07:36:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF9B6175BBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 04:41:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3B661896A50
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 05:37:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E81A26A0AF;
-	Mon, 18 Aug 2025 04:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8D572376EB;
+	Mon, 18 Aug 2025 05:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gfpVkfDo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdvPCVkh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972ED2690E7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A86F204F99;
+	Mon, 18 Aug 2025 05:36:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755492004; cv=none; b=RpxrXOGTq4txfgWvgVP6w3kvwVuASZvBD+I6rtJsG+D7gDH06WUZ0n7aN5cwHDt10xT3XNHof+Pzwb0Mw7K2Ac86zfaORItNdpK5QLCpC9illss5AUG0mEyArzovVMbJzPbGflINXg2Eb5lYVo7eLkaAzxdc8jOYQXNs8oQPIiI=
+	t=1755495404; cv=none; b=asPdBkVOnCBw6J8mdbi4DDaeRc6Pz9MnVWCpo8jrUCu1fSM2+/bRXQRaT36wI8mQ7lmc30hewG2IshB+91e10SrgCKAnEn/Xtl/38O8JTdW8t4hwUGfoGrc1n/CwQzldJBvsS9pTlAQmC9kiHHS6XoKUYEfQn6dl32uAceis9sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755492004; c=relaxed/simple;
-	bh=D2wxpNOkh8P+/dDr4zmc5hSzvPPH2FY1N+a5W4cf6Xc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RHC9BOrnmSnscCzpylq+5kIjdcyej/oXCF0v/qPr+Z/M/0wWcNzs4I7v2UhNFm6vFRvK7D3dN3KyYE6CU0ofE4bsmFwFG9VybuIAW/CC+q2PDPBXfKM8/G7Bxz1Mz0YhVe/r/a6b0yAHFSXHBl+TNJK3dCpViBkdYuCfTDiEeeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gfpVkfDo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57HKivSE021053
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:40:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oXlqit4Iv+Zcn3eir7kWBslf37Rzezf8/0Jec137fcU=; b=gfpVkfDoR4Rl0c63
-	8pmToNOCKlWrxj31SCg1qEupjmiNjay504LfkRfN63ZeCrt/2R7o6wcmJlwDAOtm
-	YyJUshfeMGHBbZe0RzHcWvuoUTAjYD8ORDkkh8NAA47vZ+W0f0GZZTvuEcfJ/abP
-	TSXWdw2lz0MY+XPXAfRXmMqGxab1KoCt8rJl29dyrbOv1P2qe/egzraVN7vLMCu4
-	Eg0T0kDqCzE2lwYeptD0Ew31CMe1y4V6s2mdIyYcgp8guyDAGDYKTX84Y5utbbH5
-	xAqj/OtXbozmiJKJmfuAr2PlmhCUQFOk1rOszqJST2BD8z8YbEoKQiaQsbanexfM
-	ZkpVuw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jfpf3g2s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:40:01 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2445827ab71so31125995ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Aug 2025 21:40:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755492001; x=1756096801;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oXlqit4Iv+Zcn3eir7kWBslf37Rzezf8/0Jec137fcU=;
-        b=MeZnPSeXe1Vyj83hWEghRk+Jx+rkc0RxuLKrhTi/NJCdVM1NF/Wl4NssLy9RaXjPyC
-         zkn9k96bnST5+6n2IVeRiL327F/gv9lywmZ/Z/HOV0r0Zw7PFlmkDNA45k9zCUoaxJen
-         mRH7XqddHgXG/T146O2Jqm90ClnwjENt+LCWGC+R5TO197dSAqBq567zy/wpDvy8hS0Q
-         E0H2lrD7fKHujGY9Uks8Z0FB+qbmfxZkWyhk8E3gl2DPlRPrUTmsA5XELe4E2mPYI4Xk
-         MhrSZ+P3wT8pjVCJCBhBwS/9HFduSuGOmuC0f/FYfvJYCLj1wUMDS7U/xQgVr2vIooIy
-         nazQ==
-X-Gm-Message-State: AOJu0Yy+rW+e1DaRzU7MGyBbS5WwWhkFKMYN0iH8scHanjPO7dw3uO7x
-	/qqrkuezSpby9djrbTYvPhhPG5OGU84h383MrhH6BYa8bnqZ74nW8XJhhP0tzbYFMg/DGoHiAiF
-	ZbM95ZxBtJMKv8y2yfp80YjhDKwdC5xJklOOiox33QZI95ALAEVODP85qu2geDVlUknML
-X-Gm-Gg: ASbGncs9wNkWzRWHMnwgE33U7oOM8xBvHInLGPlTghe7Tk0tYdybbT+7CnqOdKNRL2F
-	/6wm7kMV2WYrGEr+faoBm2FfQryvockaYrG0bvcBlJM9VbD9TFy+4zfSqqPDM/Ga6smGO14Kfeg
-	Ck3mm2/Cms3ikEcexkB//YPu7w9jhxRiDOGYlUiMKzWYA4gUDBbGPWo/H56uR8jXTyXXhJNguOi
-	l7prwauAl13MBeCaUuG4TlTWrmfrrm3TPABjJAP9pwU8IxYll9yF6q3IujZtpTdGyQ37mO3GD66
-	bQoLfzqQKdRkmeybEkqdTUMPLL2GFZE0hzCLOa2j6HYbY4dfpxvPK/H5QG+Bq4S80/VI+4pBm2c
-	lNHx6VM+UHVEQ4w9CwkxdxyRyS562ybEGldWsQKa+tnjjfJdNhd0h48sy
-X-Received: by 2002:a17:903:2291:b0:240:5549:708e with SMTP id d9443c01a7336-2447905d6c5mr121604515ad.46.1755492000805;
-        Sun, 17 Aug 2025 21:40:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzflTxBS20Vsh71p4pvKOUel+e+ym2bRtBtzbsonsZUta31BcIBS4BWNuzb+egO0KEMHe7Aw==
-X-Received: by 2002:a17:903:2291:b0:240:5549:708e with SMTP id d9443c01a7336-2447905d6c5mr121604285ad.46.1755492000368;
-        Sun, 17 Aug 2025 21:40:00 -0700 (PDT)
-Received: from sziotdisp01-gv.qualcomm.com.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446ca9cffdsm67505765ad.5.2025.08.17.21.39.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Aug 2025 21:40:00 -0700 (PDT)
-From: Fange Zhang <fange.zhang@oss.qualcomm.com>
-Date: Mon, 18 Aug 2025 12:39:21 +0800
-Subject: [PATCH v6 2/2] arm64: dts: qcom: Add display support for QCS615
- RIDE board
+	s=arc-20240116; t=1755495404; c=relaxed/simple;
+	bh=zJX+MKpmqSRVyQ/hTAHrNBZdXqmZkb5k7P9uju/pf3U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PjU61TQQA1Grbb/LC+F+/PuSRYrTCM2eHKuitnHv7dI2ORHxPCTIrfquFXpf/vpiuwGZyZTAO4aiQ2yd/ca+xZkNaBE+Olit2fYC5a9Ks4M9WkVR6tqKGCErv9dz6iC6qMANO5SfYabEXdiepQSdXbCXWN29qL5RJ3XZI6Qv5yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdvPCVkh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA439C4CEEB;
+	Mon, 18 Aug 2025 05:36:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755495404;
+	bh=zJX+MKpmqSRVyQ/hTAHrNBZdXqmZkb5k7P9uju/pf3U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WdvPCVkhug6shHPIWtGoKqFiv40DzNoKITsa36zVw5pqLUKFAlrnOHh7nGZGsuwd6
+	 8rB0cdkuBSQVh7atduGYKC0024ogZ2yzVz4LTsdPpv+sX9cXVuFjKj0ivMASbwLyOi
+	 jMXTsRCScTEO7Mh4zjdjRur3wwfQ6aNoph110E/RytAM5IZh99ZxyZ1WDtybzdjU19
+	 XjxGE4uB99QsFEfRWQxETZOR/6JmcITfheRGh3SvFM6TJ0fmKBSmNMwAjkvL+85bRr
+	 MjSevYMNzQaYbQ/SLd5qLQHSwz8FClKzJuo9+EJrJZ6PYcngGDhmrjN0bcSD0UFkPs
+	 lV0s8xeZ3u4zw==
+Date: Mon, 18 Aug 2025 11:06:36 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Palash Kambar <quic_pkambar@quicinc.com>
+Cc: James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_nitirawa@quicinc.com
+Subject: Re: [PATCH v5] ufs: ufs-qcom: Align programming sequence of Shared
+ ICE for  UFS controller v5
+Message-ID: <xnwjpiczu3xzzntu45gxkmigwilt7i75iydk6vdp5xpeujh6i5@3ak7arychdxy>
+References: <20250818040905.1753905-1-quic_pkambar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250818-add-display-support-for-qcs615-platform-v6-2-62aad5138a78@oss.qualcomm.com>
-References: <20250818-add-display-support-for-qcs615-platform-v6-0-62aad5138a78@oss.qualcomm.com>
-In-Reply-To: <20250818-add-display-support-for-qcs615-platform-v6-0-62aad5138a78@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Li Liu <quic_lliu6@quicinc.com>,
-        Fange Zhang <fange.zhang@oss.qualcomm.com>,
-        dmitry.baryshkov@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        xiangxu.yin@oss.qualcomm.com
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755491988; l=2780;
- i=fange.zhang@oss.qualcomm.com; s=20250714; h=from:subject:message-id;
- bh=Uhf3pCMvh2O5TroEbSoOdeJOJk/Am8Y7U0jj7j2dFhM=;
- b=GuhRimwzw/dI5bIhQZRw/gvFbHbSz9WhzsZicnCG5AjH16nX1PZdF4+DNSStskrwBL/U2ORiW
- nTNwy3l4HuTCmuhDCZi/0tZC2MXAhUcwd6l6cO4U4MlM71nhxmvJz/d
-X-Developer-Key: i=fange.zhang@oss.qualcomm.com; a=ed25519;
- pk=tn190A7bjF3/EyH7AYy/eNzPoS9lwXGznYamlMv6TE0=
-X-Proofpoint-ORIG-GUID: Blxf7A8llGPfwCJEoY21IqX9JRMpoCsP
-X-Proofpoint-GUID: Blxf7A8llGPfwCJEoY21IqX9JRMpoCsP
-X-Authority-Analysis: v=2.4 cv=X9tSKHTe c=1 sm=1 tr=0 ts=68a2aea1 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=cjmIRqugeGUkMfCPaF0A:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAwNSBTYWx0ZWRfX4220eE/qH12k
- OwbGedHG0EVxe4nm9l3gt6h2nG/1ST50isCXBO2TEAKFaZHvCVjZ1e8l3Tk7Espn1aRUaxRch0r
- x0F+R1bbb7yYNCfEcZW6yFTO8QkWFSZ0fyPBqHV5rGmQ6DtqXMuZXY0RIJ9RTxMIBdlrRPN1rHR
- 2IbtREtRmU5vPDeeDuoXsLoSvZBlifejiuN28MXOBX/P2ixO1dyGmjkf5t1iKHyt3frUJCabypy
- mgQpa1hl7xEp+GKOawtKvXQtQtYw3cXK6tsIwrmy5nD9ORX6NOCVLR7RM2RmW/3i9usk1pI3ShK
- DCAvOQn8MY3EIhwhYW1MS6MwdHC8klqkyvngNL1oTwGGLwjpeVVG9CWjJN5s/lo4FuSlmTsXg74
- /lxs7gNB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-18_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 phishscore=0 spamscore=0
- suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160005
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250818040905.1753905-1-quic_pkambar@quicinc.com>
 
-From: Li Liu <quic_lliu6@quicinc.com>
+On Mon, Aug 18, 2025 at 09:39:05AM GMT, Palash Kambar wrote:
+> Disabling the AES core in Shared ICE is not supported during power
+> collapse for UFS Host Controller v5.0, which may lead to data errors
+> after Hibern8 exit. To comply with hardware programming guidelines
+> and avoid this issue, issue a sync reset to ICE upon power collapse
+> exit.
+> 
+> Hence follow below steps to reset the ICE upon exiting power collapse
+> and align with Hw programming guide.
+> 
+> a. Assert the ICE sync reset by setting both SYNC_RST_SEL and
+>    SYNC_RST_SW bits in UFS_MEM_ICE_CFG
+> b. Deassert the reset by clearing SYNC_RST_SW in  UFS_MEM_ICE_CFG
+> 
+> Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+> 
+> ---
+> changes from V1:
+> 1) Incorporated feedback from Konrad and Manivannan by adding a delay
+>    between ICE reset assertion and deassertion.
+> 2) Removed magic numbers and replaced them with meaningful constants.
+> 
+> changes from V2:
+> 1) Addressed Manivannan's comment and moved change to ufs_qcom_resume.
+> 
+> changes from V3:
+> 1) Addressed Manivannan's comments and added bit field values and
+>    updated patch description.
+> 
+> change from V4:
+> 1) Addressed Konrad's comment and fixed reset bit to zero.
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
+>  drivers/ufs/host/ufs-qcom.h |  2 +-
+>  2 files changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 444a09265ded..242f8d479d4a 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -38,6 +38,9 @@
+>  #define DEEMPHASIS_3_5_dB	0x04
+>  #define NO_DEEMPHASIS		0x0
+>  
+> +#define UFS_ICE_SYNC_RST_SEL	BIT(3)
+> +#define UFS_ICE_SYNC_RST_SW	BIT(4)
+> +
+>  enum {
+>  	TSTBUS_UAWM,
+>  	TSTBUS_UARM,
+> @@ -751,11 +754,29 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	int err;
+> +	u32 reg_val;
+>  
+>  	err = ufs_qcom_enable_lane_clks(host);
+>  	if (err)
+>  		return err;
+>  
+> +	if ((!ufs_qcom_is_link_active(hba)) &&
+> +	    host->hw_ver.major == 5 &&
+> +	    host->hw_ver.minor == 0 &&
+> +	    host->hw_ver.step == 0) {
+> +		ufshcd_writel(hba, UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW, UFS_MEM_ICE_CFG);
+> +		reg_val = ufshcd_readl(hba, UFS_MEM_ICE_CFG);
+> +		reg_val &= ~(UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW);
 
-Add display MDSS and DSI configuration for QCS615 RIDE board.
-QCS615 has a DP port, and DP support will be added in a later patch.
+I guess you could use:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
-Signed-off-by: Fange Zhang <fange.zhang@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 90 ++++++++++++++++++++++++++++++++
- 1 file changed, 90 insertions(+)
+		FIELD_MODIFY(UFS_ICE_SYNC_RST_SEL, &reg_val, 0);
+		FIELD_MODIFY(UFS_ICE_SYNC_RST_SW, &reg_val, 0);
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 59582d3dc4c49828ef4a0d22a1cbaba715c7ce8c..39c757b66f47579d9bc7cc5c4d703f7af4434df4 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -39,6 +39,18 @@ xo_board_clk: xo-board-clk {
- 		};
- 	};
- 
-+	dp-dsi0-connector {
-+		compatible = "dp-connector";
-+		label = "DSI0";
-+		type = "mini";
-+
-+		port {
-+			dp_dsi0_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge_out>;
-+			};
-+		};
-+	};
-+
- 	vreg_conn_1p8: regulator-conn-1p8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_conn_1p8";
-@@ -294,6 +306,84 @@ &gcc {
- 		 <&sleep_clk>;
- };
- 
-+&i2c2 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	io_expander: gpio@3e {
-+		compatible = "semtech,sx1509q";
-+		reg = <0x3e>;
-+		interrupts-extended = <&tlmm 58 IRQ_TYPE_EDGE_FALLING>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		semtech,probe-reset;
-+	};
-+
-+	i2c-mux@77 {
-+		compatible = "nxp,pca9542";
-+		reg = <0x77>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		i2c@0 {
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 0 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
-+				wakeup-source;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dsi2dp_bridge_in: endpoint {
-+							remote-endpoint = <&mdss_dsi0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						dsi2dp_bridge_out: endpoint {
-+							remote-endpoint = <&dp_dsi0_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l11a>;
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&dsi2dp_bridge_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l5a>;
-+	status = "okay";
-+};
-+
- &pcie {
- 	perst-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+This looks more cleaner.
+
+With that,
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+- Mani
+
+> +		/*
+> +		 * HW documentation doesn't recommend any delay between the
+> +		 * reset set and clear. But we are enforcing an arbitrary delay
+> +		 * to give flops enough time to settle in.
+> +		 */
+> +		usleep_range(50, 100);
+> +		ufshcd_writel(hba, reg_val, UFS_MEM_ICE_CFG);
+> +		ufshcd_readl(hba, UFS_MEM_ICE_CFG);
+> +	}
+> +
+>  	return ufs_qcom_ice_resume(host);
+>  }
+>  
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index 6840b7526cf5..81e2c2049849 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -60,7 +60,7 @@ enum {
+>  	UFS_AH8_CFG				= 0xFC,
+>  
+>  	UFS_RD_REG_MCQ				= 0xD00,
+> -
+> +	UFS_MEM_ICE_CFG				= 0x2600,
+>  	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
+>  	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
+>  
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
