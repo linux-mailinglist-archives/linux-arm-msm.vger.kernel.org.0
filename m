@@ -1,227 +1,373 @@
-Return-Path: <linux-arm-msm+bounces-69592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0A4FB2AB4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 16:45:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84DC0B2AB87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 16:50:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 205F41BA4D8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:31:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A8677267E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:33:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A4F6340D95;
-	Mon, 18 Aug 2025 14:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nFrskJ7l"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2BCB2C2340;
+	Mon, 18 Aug 2025 14:28:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F3933A035
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 14:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 206971C5F23;
+	Mon, 18 Aug 2025 14:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526909; cv=none; b=QtpaRSC78m4Q3JuxCC8YWDU1GcwupINdHyXo+2sNFGdLwutMyogUjn0QQz2+OpKQj4oDhraJ0ZbK7dMqaKhgWZwCkerN0cpYYxKIDtlsOpGkDz0VwSqMIG6/1rSxB+ZEVV1oEMDUqAeMoeNHO1zDO8RNrEmHfj0JhChgkkh2RR4=
+	t=1755527285; cv=none; b=ufPjf8Rv7poXpse1UHbnXTTg1kOd2SzllBf7Qyqgoa0vXb8WDj6TWQqzk3+VU6SYnY6ucYbkV6b+anSKEHR209bcyUDNwwROPPk0zaToyaKPWw+hmSMLJ8DhEEeZd2NLA81qA17n2CY8PYprJfK+xKPUn/Kj3P4U3+z5SNwePao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526909; c=relaxed/simple;
-	bh=BBC/SN2tgiFfIsTJ+RWHDHrb8tIq6PdDhwdUXUNjggU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cAlzqGuRE+8UKbi+Ia7aodQh+F/5+OUur35e3x/etdqZaz0XRAEzeZNVz/09TbrV1d9Fwy3oFeMzgzQZYzDtfL5zDAYcc20/eXBGuoEBV3EfCVtOYsZF/RveVWJciExwqsdiKvOKQJJ6t5GUdrGxnC9NCipTbTmUCRQJ7nC+mtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nFrskJ7l; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-afcb72b3a1bso76595266b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 07:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755526904; x=1756131704; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FEM7/yLAdR0gVn4vxmtqYC2j4AXwiDEZgdOKy+Vv8No=;
-        b=nFrskJ7lVFvZ/DT5W7FkfN/AIyLCjgxddI+pQgGi/dC6ysVPCiqK3c5Sj0KhBI0Hsp
-         5obbmRPCvSjOQJ5Ald+U8DQpRUd2Gi5+1gqzA0eEkCxVOM1RHS7XksDASLHP5ehm51mY
-         c5u0tnLPVnhwdggsrndBv8mq+hePUfb0RtF6rcQpj//RRiGfot/9ia5aaTrikfGW5pLE
-         uiKMQahop6wK5/Lic/01SfIn4DGrm1PZR8iqC4G4/c/CAMz13HT4y7Rxd0Qln42HYc/D
-         ZGuPo/qNLIzfTBJfl78gfXL+bTfhy60EdrRS3sZ3EMBCj6dK3CtRd4hCeRjAhPj2n9UL
-         0/fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755526904; x=1756131704;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FEM7/yLAdR0gVn4vxmtqYC2j4AXwiDEZgdOKy+Vv8No=;
-        b=M+nbgXGg7HDEy6Dq70xZ++AaxVO4csj9sIiFRChePQ7m2QJjeDB8W403/uKe532AZl
-         ZmssKV5kHmU0+gO4TPKDzTjadUbUS489czer2Fm1g/+YKNPTf/6NVsofC+5j4ylvF+J/
-         RGHzyJH+izOXxtdxrWneR4RNEeOBI290Ho06QzoGdPMsk66xQ4Cj8NcTkTdfyw60RALh
-         AHFc/GZZSkzSSoxulUDJ68iXq5pyGPVVfriACcDQXV9Sq4PtfOjq43sozaOelnjnuOme
-         gyiuPsPLwV9KurA75B08GrRNw0cvDShm4bwosSl0JW928vQVIZLa+kVfA2vdRmeeKKEb
-         DJQw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+x1PDkyywwhq78LUPakfLAos224srVSFDg7qd+64IH52tjuB5bUsDOvL8WUH80swUEZARS3wRcCXAZxTy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyk229fDUNG6bM2TU8K4DEdXnluzdmRFQMhUKl8pqHDxot1HqpK
-	BmjSZx0Cm4booGrOh2fohI75O+kShzlss3P3LVyOJjbVj6IFn+4TBJ1ZUu+QH9Oe3Vk=
-X-Gm-Gg: ASbGncvy/xH2YafRI46hyNSdYAWbaEJEW5hazIRqtsMACqsC4F11Or/jMLqfxcLOGgS
-	BnQ1HqfmiBfm5i76pA1xn4R3b632TXwYrAZJ+4UlxZEFBrovc0hA75nBvujKyg/0Xmm8Muhd2uH
-	bJtNd2hHXTJW3Z0O5tzWKnq54EfAzwB57DjG8r3AIx6lpYQaAlhYJvh82Vd3+puh/9lGl4LQ6Gt
-	V0h/OniHQfzT8PlnHTO36NYBE8PWGPJGyRyLciLCEM777YYPLvxE5nB2xneE5P1U3CZBhGOY19W
-	CI7F6VkFSCQS9ePFtNAO4w0VMbXzISR1kdmYZhIHqZOEVQTAdHcENB6kmKLd1Cjl6gyNIg3sQyZ
-	UKeg5psYcW7zlDnxV+W+f7iQXWCgMHh+vYgt5tR0/dINb
-X-Google-Smtp-Source: AGHT+IEtfwHiR+XAMlo5vr9s8sihVw3NoWwDohiUKZohVSYlNNrg/QYbPb3rZp7CEC9otrmopx0qbQ==
-X-Received: by 2002:a17:907:6d06:b0:af9:3758:a85a with SMTP id a640c23a62f3a-afcdbec64d1mr529367366b.5.1755526903928;
-        Mon, 18 Aug 2025 07:21:43 -0700 (PDT)
-Received: from kuoka.. ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afcdce73e2esm837537366b.39.2025.08.18.07.21.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Aug 2025 07:21:43 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1755527285; c=relaxed/simple;
+	bh=hLdXajffGhLshNFYupHsO/P0JKQFIMGfoetkUAhVTxs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gHDHP//gL/VAzJoZmaPSKkEkDElb4gxkRsltcgKLSduO8VdwSNDksqBmTmwVpiObAMv3bLq+dk0/2Pl8Bt/4VGpcjah9vhdeqLm6MbMqLfw0APptuHlDIdUPjv5bwvnKn75JA/4qwbvTkJa3/iqRfoYHoUEJU6XjNHv51LQE6DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E940A1596;
+	Mon, 18 Aug 2025 07:27:53 -0700 (PDT)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B499A3F63F;
+	Mon, 18 Aug 2025 07:28:01 -0700 (PDT)
+Date: Mon, 18 Aug 2025 15:27:59 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: PCI: Correct example indentation
-Date: Mon, 18 Aug 2025 16:21:39 +0200
-Message-ID: <20250818142138.129327-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.48.1
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] coresight-tnoc: add platform driver to support
+ Interconnect TNOC
+Message-ID: <20250818142759.GA8071@e132581.arm.com>
+References: <20250815-itnoc-v1-0-62c8e4f7ad32@oss.qualcomm.com>
+ <20250815-itnoc-v1-2-62c8e4f7ad32@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5299; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=BBC/SN2tgiFfIsTJ+RWHDHrb8tIq6PdDhwdUXUNjggU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoozbyzFA4VT4xhvO6BqBHnVAKh8r0Z9h+iH/0x
- gojCib/ZkSJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaKM28gAKCRDBN2bmhouD
- 14ETEACSPncNUXTEglIktU9uqeatZH8RnHvdlDUwFWcuMAhCUrRz5U6n1/4x6YmKc4l41O4TNLu
- zzbmcXSUWZNOTbIGRDRYRix4ty7ZGv5YV7mLrRF+TRa6MN1VLbifTO0u7TA2oy6adpWTwKcZOzP
- GOJulwGkApHzONM4skSr64yIon8AvUEzmk45fsdT/MC99hzwAEfNOpJS6jShJoT4V4z1Wy5y0Q9
- D+RmLw5CKPYA3iE5V7FPQE0zNTcGyVUh3d7yu1VzWhrnFEW6LplJtY3X9WBuT1yFqBHoAFoYWxO
- 0HYMONO3Jbf64r65XYO2rULZYUdyhvuGNwn2Lkn2rZPFy1WKuDKxmXdMkbKubVnNWfdfeygXfKG
- j3v8TsjnQ5uOk1EiqiuQrpsD+G144Uhd/TDU3zqX1SzQ9CQdiBtmdmdYLyA0Y8f+qpFoan7MEFw
- Y16Nm9/9QOdLmQf1iTkt14YGc0HPkTLBk+qpOOYK7virTE2WUe6V15reLFV7e5MShp7R4VaZZ/4
- eInn8TXB9dkdmIIT53wGxtf399h+1yPG65rsD5rr0LZJPyQfNUvrya603hPOBSgQ/VsfIFLlHLR
- aaYjG24LZ939Srmc/5ig7ohYl1OzatU+X9k2OgUXZjr5GoGJPmKyHkqWMwBrs+ercJLStqmIGzg OXt8qctGwamFf0g==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250815-itnoc-v1-2-62c8e4f7ad32@oss.qualcomm.com>
 
-DTS example in the bindings should be indented with 2- or 4-spaces, so
-correct a mixture of different styles to keep consistent 4-spaces.
+On Fri, Aug 15, 2025 at 06:18:13AM -0700, Yuanfang Zhang wrote:
+> This patch adds platform driver support for the CoreSight Interconnect
+> TNOC, Interconnect TNOC is a CoreSight link that forwards trace data
+> from a subsystem to the Aggregator TNOC. Compared to Aggregator TNOC,
+> it does not have aggregation and ATID functionality.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pci/amd,versal2-mdb-host.yaml    |  2 +-
- .../bindings/pci/qcom,pcie-sa8255p.yaml       | 74 +++++++++----------
- 2 files changed, 38 insertions(+), 38 deletions(-)
+Such kind of driver is not complex, it would be fine to had sent driver
+in one go for support both AMBA and platform devices.
 
-diff --git a/Documentation/devicetree/bindings/pci/amd,versal2-mdb-host.yaml b/Documentation/devicetree/bindings/pci/amd,versal2-mdb-host.yaml
-index 421e1116ae7e..406c15e1dee1 100644
---- a/Documentation/devicetree/bindings/pci/amd,versal2-mdb-host.yaml
-+++ b/Documentation/devicetree/bindings/pci/amd,versal2-mdb-host.yaml
-@@ -138,6 +138,6 @@ examples:
-                 #address-cells = <0>;
-                 #interrupt-cells = <1>;
-                 interrupt-controller;
--           };
-+            };
-         };
-     };
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
-index ef705a02fcd9..bdddd4f499d1 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
-@@ -77,46 +77,46 @@ examples:
-         #size-cells = <2>;
- 
-         pci@1c00000 {
--           compatible = "qcom,pcie-sa8255p";
--           reg = <0x4 0x00000000 0 0x10000000>;
--           device_type = "pci";
--           #address-cells = <3>;
--           #size-cells = <2>;
--           ranges = <0x02000000 0x0 0x40100000 0x0 0x40100000 0x0 0x1ff00000>,
--                    <0x43000000 0x4 0x10100000 0x4 0x10100000 0x0 0x40000000>;
--           bus-range = <0x00 0xff>;
--           dma-coherent;
--           linux,pci-domain = <0>;
--           power-domains = <&scmi5_pd 0>;
--           iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
--                       <0x100 &pcie_smmu 0x0001 0x1>;
--           interrupt-parent = <&intc>;
--           interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
--           interrupt-names = "msi0", "msi1", "msi2", "msi3",
--                                  "msi4", "msi5", "msi6", "msi7";
-+            compatible = "qcom,pcie-sa8255p";
-+            reg = <0x4 0x00000000 0 0x10000000>;
-+            device_type = "pci";
-+            #address-cells = <3>;
-+            #size-cells = <2>;
-+            ranges = <0x02000000 0x0 0x40100000 0x0 0x40100000 0x0 0x1ff00000>,
-+                     <0x43000000 0x4 0x10100000 0x4 0x10100000 0x0 0x40000000>;
-+            bus-range = <0x00 0xff>;
-+            dma-coherent;
-+            linux,pci-domain = <0>;
-+            power-domains = <&scmi5_pd 0>;
-+            iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
-+                        <0x100 &pcie_smmu 0x0001 0x1>;
-+            interrupt-parent = <&intc>;
-+            interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-+            interrupt-names = "msi0", "msi1", "msi2", "msi3",
-+                                   "msi4", "msi5", "msi6", "msi7";
- 
--           #interrupt-cells = <1>;
--           interrupt-map-mask = <0 0 0 0x7>;
--           interrupt-map = <0 0 0 1 &intc GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
--                           <0 0 0 2 &intc GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
--                           <0 0 0 3 &intc GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
--                           <0 0 0 4 &intc GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
-+            #interrupt-cells = <1>;
-+            interrupt-map-mask = <0 0 0 0x7>;
-+            interrupt-map = <0 0 0 1 &intc GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 2 &intc GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 3 &intc GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 4 &intc GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
- 
--           pcie@0 {
--                   device_type = "pci";
--                   reg = <0x0 0x0 0x0 0x0 0x0>;
--                   bus-range = <0x01 0xff>;
-+            pcie@0 {
-+                device_type = "pci";
-+                reg = <0x0 0x0 0x0 0x0 0x0>;
-+                bus-range = <0x01 0xff>;
- 
--                   #address-cells = <3>;
--                   #size-cells = <2>;
--                   ranges;
-+                #address-cells = <3>;
-+                #size-cells = <2>;
-+                ranges;
-             };
-         };
-     };
--- 
-2.48.1
+> Key changes:
+> - Add platform driver `coresight-itnoc` with device tree match support.
+> - Refactor probe logic into a common `_tnoc_probe()` function.
+> - Conditionally initialize ATID only for AMBA-based TNOC blocks.
 
+An AMBA or platform device is only about device probing; it is not
+necessarily bound to a device feature.
+
+So I am suspicious of the conclusion that an AMBA-based TNOC always
+supports ATID, while a platform device never supports it.
+
+Otherwise, you might need to consider using a DT property to indicate
+whether ATID is present or not.
+
+> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+> ---
+>  drivers/hwtracing/coresight/coresight-tnoc.c | 153 +++++++++++++++++++--------
+>  1 file changed, 106 insertions(+), 47 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+> index d542df46ea39314605290311f683010337bfd4bd..aa6f48d838c00d71eff22c18e34e00b93755fd82 100644
+> --- a/drivers/hwtracing/coresight/coresight-tnoc.c
+> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+> @@ -34,6 +34,7 @@
+>   * @base:      memory mapped base address for this component.
+>   * @dev:       device node for trace_noc_drvdata.
+>   * @csdev:     component vitals needed by the framework.
+> + * @pclk:	APB clock if present, otherwise NULL
+>   * @spinlock:  serialize enable/disable operation.
+>   * @atid:      id for the trace packet.
+>   */
+> @@ -41,6 +42,7 @@ struct trace_noc_drvdata {
+>  	void __iomem		*base;
+>  	struct device		*dev;
+>  	struct coresight_device	*csdev;
+> +	struct clk		*pclk;
+>  	spinlock_t		spinlock;
+>  	u32			atid;
+>  };
+> @@ -51,25 +53,27 @@ static void trace_noc_enable_hw(struct trace_noc_drvdata *drvdata)
+>  {
+>  	u32 val;
+>  
+> -	/* Set ATID */
+> -	writel_relaxed(drvdata->atid, drvdata->base + TRACE_NOC_XLD);
+> -
+> -	/* Set the data word count between 'SYNC' packets */
+> -	writel_relaxed(TRACE_NOC_SYNC_INTERVAL, drvdata->base + TRACE_NOC_SYNCR);
+> -
+> -	/* Set the Control register:
+> -	 * - Set the FLAG packets to 'FLAG' packets
+> -	 * - Set the FREQ packets to 'FREQ_TS' packets
+> -	 * - Enable generation of output ATB traffic
+> -	 */
+> -
+> -	val = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
+> -
+> -	val &= ~TRACE_NOC_CTRL_FLAGTYPE;
+> -	val |= TRACE_NOC_CTRL_FREQTYPE;
+> -	val |= TRACE_NOC_CTRL_PORTEN;
+> -
+> -	writel(val, drvdata->base + TRACE_NOC_CTRL);
+> +	if (drvdata->atid) {
+> +		/* Set ATID */
+> +		writel_relaxed(drvdata->atid, drvdata->base + TRACE_NOC_XLD);
+> +
+> +		/* Set the data word count between 'SYNC' packets */
+> +		writel_relaxed(TRACE_NOC_SYNC_INTERVAL, drvdata->base + TRACE_NOC_SYNCR);
+> +		/* Set the Control register:
+> +		 * - Set the FLAG packets to 'FLAG' packets
+> +		 * - Set the FREQ packets to 'FREQ_TS' packets
+> +		 * - Enable generation of output ATB traffic
+> +		 */
+> +
+> +		val = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
+> +
+> +		val &= ~TRACE_NOC_CTRL_FLAGTYPE;
+> +		val |= TRACE_NOC_CTRL_FREQTYPE;
+> +		val |= TRACE_NOC_CTRL_PORTEN;
+> +		writel(val, drvdata->base + TRACE_NOC_CTRL);
+> +	} else {
+> +		writel(0x1, drvdata->base + TRACE_NOC_CTRL);
+> +	}
+
+Change "atid" type from u32 to int, then you could set it as
+"-EOPNOTSUPP" for non-AMBA device. Here:
+
+    /* No valid ATID, simply enable the unit */
+    if (drvdata->atid == -EOPNOTSUPP) {
+        writel(TRACE_NOC_CTRL_PORTEN, drvdata->base + TRACE_NOC_CTRL);
+        return;
+    }
+
+>  }
+>  
+>  static int trace_noc_enable(struct coresight_device *csdev, struct coresight_connection *inport,
+> @@ -120,19 +124,6 @@ static const struct coresight_ops trace_noc_cs_ops = {
+>  	.link_ops	= &trace_noc_link_ops,
+>  };
+>  
+> -static int trace_noc_init_default_data(struct trace_noc_drvdata *drvdata)
+> -{
+> -	int atid;
+> -
+
+Don't need to remove this function. Just check AMBA device case:
+
+    /* ATID is not supported for interconnect TNOC */
+    if (!dev_is_amba(drvdata->dev)) {
+        drvdata->atid = -EOPNOTSUPP;
+        return 0;
+    }
+
+> -	atid = coresight_trace_id_get_system_id();
+> -	if (atid < 0)
+> -		return atid;
+> -
+> -	drvdata->atid = atid;
+> -
+> -	return 0;
+> -}
+> -
+>  static ssize_t traceid_show(struct device *dev,
+>  			    struct device_attribute *attr, char *buf)
+>  {
+> @@ -158,13 +149,12 @@ static const struct attribute_group *coresight_tnoc_groups[] = {
+>  	NULL,
+>  };
+>  
+> -static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
+> +static int _tnoc_probe(struct device *dev, struct resource *res, bool has_id)
+
+As a result, no need the parameter "has_id".
+
+>  {
+> -	struct device *dev = &adev->dev;
+>  	struct coresight_platform_data *pdata;
+>  	struct trace_noc_drvdata *drvdata;
+>  	struct coresight_desc desc = { 0 };
+> -	int ret;
+> +	int ret, atid = 0;
+>  
+>  	desc.name = coresight_alloc_device_name(&trace_noc_devs, dev);
+>  	if (!desc.name)
+> @@ -173,42 +163,61 @@ static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
+>  	pdata = coresight_get_platform_data(dev);
+>  	if (IS_ERR(pdata))
+>  		return PTR_ERR(pdata);
+> -	adev->dev.platform_data = pdata;
+> +	dev->platform_data = pdata;
+>  
+>  	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>  	if (!drvdata)
+>  		return -ENOMEM;
+>  
+> -	drvdata->dev = &adev->dev;
+> +	drvdata->dev = dev;
+>  	dev_set_drvdata(dev, drvdata);
+>  
+> -	drvdata->base = devm_ioremap_resource(dev, &adev->res);
+> +	ret = coresight_get_enable_clocks(dev, &drvdata->pclk, NULL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	drvdata->base = devm_ioremap_resource(dev, res);
+>  	if (IS_ERR(drvdata->base))
+>  		return PTR_ERR(drvdata->base);
+>  
+>  	spin_lock_init(&drvdata->spinlock);
+>  
+> -	ret = trace_noc_init_default_data(drvdata);
+> -	if (ret)
+> -		return ret;
+> +	if (has_id) {
+> +		atid = coresight_trace_id_get_system_id();
+> +		if (atid < 0)
+> +			return atid;
+> +	}
+> +
+> +	drvdata->atid = atid;
+
+Drop this change and simply keep the code for invoking
+trace_noc_init_default_data().
+
+>  	desc.ops = &trace_noc_cs_ops;
+>  	desc.type = CORESIGHT_DEV_TYPE_LINK;
+>  	desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
+> -	desc.pdata = adev->dev.platform_data;
+> -	desc.dev = &adev->dev;
+> +	desc.pdata = pdata;
+> +	desc.dev = dev;
+>  	desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
+> -	desc.groups = coresight_tnoc_groups;
+> +	if (has_id)
+> +		desc.groups = coresight_tnoc_groups;
+
+No need to change for groups.
+
+Just return "-EOPNOTSUPP" in traceid_show() if drvdata->atid is negative.
+Or, you could use the .is_visible() callback to decide if the "trace_id"
+node appears or not.
+
+>  	drvdata->csdev = coresight_register(&desc);
+> -	if (IS_ERR(drvdata->csdev)) {
+> +	if (IS_ERR(drvdata->csdev) && has_id) {
+>  		coresight_trace_id_put_system_id(drvdata->atid);
+>  		return PTR_ERR(drvdata->csdev);
+>  	}
+> -	pm_runtime_put(&adev->dev);
+>  
+>  	return 0;
+>  }
+>  
+> +static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
+> +{
+> +	int ret;
+> +
+> +	ret = _tnoc_probe(&adev->dev, &adev->res, true);
+> +	if (!ret)
+> +		pm_runtime_put(&adev->dev);
+> +
+> +	return ret;
+> +}
+> +
+>  static void trace_noc_remove(struct amba_device *adev)
+>  {
+>  	struct trace_noc_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+> @@ -236,7 +245,57 @@ static struct amba_driver trace_noc_driver = {
+>  	.id_table	= trace_noc_ids,
+>  };
+>  
+> -module_amba_driver(trace_noc_driver);
+> +static int itnoc_probe(struct platform_device *pdev)
+> +{
+> +	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	int ret;
+> +
+> +	pm_runtime_get_noresume(&pdev->dev);
+> +	pm_runtime_set_active(&pdev->dev);
+> +	pm_runtime_enable(&pdev->dev);
+> +
+> +	ret = _tnoc_probe(&pdev->dev, res, false);
+> +	pm_runtime_put(&pdev->dev);
+> +	if (ret)
+> +		pm_runtime_disable(&pdev->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static void itnoc_remove(struct platform_device *pdev)
+> +{
+> +	struct trace_noc_drvdata *drvdata = platform_get_drvdata(pdev);
+> +
+> +	coresight_unregister(drvdata->csdev);
+> +	pm_runtime_disable(&pdev->dev);
+> +}
+> +
+> +static const struct of_device_id itnoc_of_match[] = {
+> +	{ .compatible = "qcom,coresight-itnoc" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, itnoc_of_match);
+> +
+> +static struct platform_driver itnoc_driver = {
+> +	.probe = itnoc_probe,
+> +	.remove = itnoc_remove,
+> +	.driver = {
+> +		.name = "coresight-itnoc",
+> +		.of_match_table = itnoc_of_match,
+
+You might need to set:
+
+    .suppress_bind_attrs = true,
+
+Thanks,
+Leo
+
+> +	},
+> +};
+> +
+> +static int __init tnoc_init(void)
+> +{
+> +	return coresight_init_driver("tnoc", &trace_noc_driver, &itnoc_driver, THIS_MODULE);
+> +}
+> +
+> +static void __exit tnoc_exit(void)
+> +{
+> +	coresight_remove_driver(&trace_noc_driver, &itnoc_driver);
+> +}
+> +module_init(tnoc_init);
+> +module_exit(tnoc_exit);
+>  
+>  MODULE_LICENSE("GPL");
+>  MODULE_DESCRIPTION("Trace NOC driver");
+> 
+> -- 
+> 2.34.1
+> 
+> _______________________________________________
+> CoreSight mailing list -- coresight@lists.linaro.org
+> To unsubscribe send an email to coresight-leave@lists.linaro.org
 
