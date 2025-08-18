@@ -1,87 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-69542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25E92B2A12F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:12:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8153AB2A16F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:23:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A06E176F10
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 12:03:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77543562CA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 12:13:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9350030DEA5;
-	Mon, 18 Aug 2025 12:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC58A319875;
+	Mon, 18 Aug 2025 12:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fp18PK8o"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="PSxNhDdZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410D2765E9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 12:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FAB326D6E;
+	Mon, 18 Aug 2025 12:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755518578; cv=none; b=KMyqbmDJJFQtJOkaDRa1JBLiHxeTJC/XHQNGdIE8pOQKiJLkUwc6v7WPi1nR9awwx3Nv8+Kw5wy6b+dEpeJGwB7+UozmWADQ2oxR1Gr957QbNRdLIeFiWcuiBJiNImW1Te764gETI9EaOkwuE4zQz79GkEeQ/o/isaXly8fVhzM=
+	t=1755519186; cv=none; b=JiyrAsExyrHbpUoGEX2n9u0cVkI2gkfLpiujhFjmNB4SQPlfv6eMtbVSejM9Yjhrl1/BuT63HhIsm364oWv+RMNm1q4/wyAeJDSyMvsPGVvDbyiCsfnBAuBFS24ICarvgG1D6UMon+FwSoQVpXyF36vgXJLBN8UC0MpkPswS5uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755518578; c=relaxed/simple;
-	bh=v8TQVD2vn2z73mguUbqfgNSQQeQbImAiZzcexQv4K1M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jECofQWWcyCYbcHe2WC2HVhMX6LMcw8+VW0s56cP/IvjNHsFGNgkBm9DIC1kp+8Ar2B9UTAR5HCkbPTHjI6AZO1gUhXkzdqOwQdXwqzqCIfzsEcyZCGFRhr4O/UPweYjYqNcNUUxV3QdOEknPxHQPuPCsLiFLtIffZcHEzqA1ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fp18PK8o; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57I7qnZA026772
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 12:02:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1755519186; c=relaxed/simple;
+	bh=rp49452Teg70crejMOwAEBmVAEoVcBUXfqqRBjXnNik=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IdffwLuxs6ScLEMmM2resXli/VXxfegMPknQey0b6rljCxKVEtas9Rd9UP/kLWThtodD3Ed7qRke2AuCt7HyewWX3UviPbHB6T08GkSXKerBe0h3ja1/07xHacsLRtKXZeNeF6lTmiCEOr4mstCJ8HpDZY/BcZ3pK8qXV7/vKJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=PSxNhDdZ; arc=none smtp.client-ip=185.132.182.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0369458.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IAJpjQ011221;
+	Mon, 18 Aug 2025 14:12:15 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CCju6bcx4FiaoDBIgpe/cizWDUazCG2B44X0S5ArA7E=; b=Fp18PK8oqdg7eB0Q
-	YrzI0r4a7Pjfp5CLiiFL7B2Vm7cSybNXwlFXwRl5UstuBRBxUKbxOb5Mf/+oOmxA
-	QNW+6A9BFI5YMvedye3lKFtQhtHo17tI/MvhQ5dtOpx5ZnBePGbb/VBicr8rEMt/
-	EX4QItoDp5zFOdKCHXWLZwA7r1je4hHSsUOnnK4nXVQNyrAgshxPVjNUu29uYb5j
-	pheu8bg4maEUT8gDego6+8ToSjhH0y1DuV0e86K6RFwNXAzSSS2K8knT2LIcDs2R
-	rpyIEgYi1sjlncPg9yFOd+23TsZCxQ3WdP1lBXMf4BUA4Hzw/4FmGq/3U4AKqNJc
-	evtmzw==
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jj2ucn3w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 12:02:55 +0000 (GMT)
-Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-74381ff776fso4745364a34.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 05:02:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755518575; x=1756123375;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CCju6bcx4FiaoDBIgpe/cizWDUazCG2B44X0S5ArA7E=;
-        b=RuaM0km3qnmHmQBeNokvNxij6ORgktw/P2MAmoo7mHYqZZS2xIhXKzSXmIEgFMyiQo
-         PdxPQsGdnhE+7emWNlP4Blgp6JY5yg/1+g+dsPXQUgEsharl2zfRyIHaJ2HddgqVpTjn
-         L0C6Nh++29P3Crmv+Y4YRLpLIX3x5X4x55WlwAXk5CHyYR6UPEPpxTCvCgmJ8LY+6GNa
-         u9MUS76K15f7ByDwQ8fm6tFvDSpTUIMOV+t926HUNUdBJ+bwtate68AMJdWb70gvqeNX
-         qMs4dCusSV7UksMGs1vZxMjy+62X8odFUzATslTEAingZc4YfKvbPL45883y6mKYGqDc
-         Ag3A==
-X-Forwarded-Encrypted: i=1; AJvYcCWWyB3Dmod/LUY58+HzltWcwpNocM2t5j6/QmF0kdhZMazMlkHR8SA+CBoWEp2PdUEXlVlkCYa8dxkiWSDy@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFB6kxD3KW+KvOfdKF64baLUkqeBSo5TmulonfF/jHVApmbyS5
-	VD1Fhfk/jZvdxXMn4no+LURub3SI6r/+E52+EN+dXsIB3HhX76Up7xoTksC2nYchK34EkcPfhfs
-	sl+7jAMWivD57HRee+GMft3dfOVvxyLe2/YrMyKpJ9QBnHIolK42qemYm5Bv96whd2Nz4
-X-Gm-Gg: ASbGncuF8DdqZGJ86PcjfPdcjxLFPYRo0Y85ZGNsC/lKcZA8jKSuwKaShH5zpQ7GjFq
-	viT4usGv+6YJ8igQb7LCFEnC8ur7umaHPpAkEXzbGIZA59Yrk58R9qiHbwgz8EQGcodKvecPSln
-	Fgd6wbgPweSsG1k3gkmaLoPHWWDHrT+jVHR1QcHQD8bRwMZu7VVUPkPR2kXTOMWF6l3rWElMyzx
-	C7kkCHYILzbMvD8YqdeRFNMl32KSGLaDSiAZAT1drUOqcocKAVQpAafJCfEEpWFdII5l2RthptT
-	JF9HqWQ8A9HEy19H9huNdsaw2dNG/muTuYwBVZc7XxYWD8zyxP320ZVAfwzfWDYkTEw=
-X-Received: by 2002:a05:6830:f89:b0:743:2cc:d52d with SMTP id 46e09a7af769-7439248fff3mr7185073a34.27.1755518574771;
-        Mon, 18 Aug 2025 05:02:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0S9aYXMwUyd6iZ9WqnqRGP0929twrrupyMw9RBL7nXISanLRiCa0LYDt7gDwmTn4IW7nOhg==
-X-Received: by 2002:a05:6830:f89:b0:743:2cc:d52d with SMTP id 46e09a7af769-7439248fff3mr7185018a34.27.1755518574235;
-        Mon, 18 Aug 2025 05:02:54 -0700 (PDT)
-Received: from [192.168.68.118] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3bb676ca37fsm12454389f8f.41.2025.08.18.05.02.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 05:02:53 -0700 (PDT)
-Message-ID: <ade7d6ed-b4fe-49f9-967b-340ac75a0ecc@oss.qualcomm.com>
-Date: Mon, 18 Aug 2025 13:02:52 +0100
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	vF8oVy6/ZMtowVhAnxsrKfpp6JXqFRBEiZTXs8imWKc=; b=PSxNhDdZaYr8EoNw
+	8aZMzG+HAc5zZ/G6iGzm7FWO+i9981Jvk6JfEpE+hG0VOKlKZPoIa46QiLFU4DYx
+	sUznRsmqgIiHeCSbPJoiisAuzQzZ6hgkO4CmmJIHG7kce+fJ4nFBIscnYKnoIKbX
+	3aYq4auNUAVqWfPNpND0uGOiy/LN0NcMei0rDbyUEd+d+AzIAj5hnYsC2UnS0xR7
+	owFelE/4Cju4Q5ND97wzWltji6xPXOGJ9DX+MuHSSWyyGgT9iyzcWsaxj1P2gIhN
+	ZoZAmieb/bp+Dh/tSZAo0g1gI8TJ7Cp2gxhDUWfG1cXNsAamFT96b+DTHpo8oG9Y
+	4YsXyw==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 48k3j4capj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Aug 2025 14:12:15 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id DD37C40046;
+	Mon, 18 Aug 2025 14:10:01 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id CD98B6D4186;
+	Mon, 18 Aug 2025 14:08:47 +0200 (CEST)
+Received: from [10.48.87.121] (10.48.87.121) by SHFDAG1NODE1.st.com
+ (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 18 Aug
+ 2025 14:08:43 +0200
+Message-ID: <20437dbf-9d45-4a51-815f-ad1d1d15346e@foss.st.com>
+Date: Mon, 18 Aug 2025 14:08:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,86 +67,193 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] ASoC: qcom: audioreach: add documentation for i2s
- interface type
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org, lgirdwood@gmail.com,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20250818112810.1207033-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250818112810.1207033-3-srinivas.kandagatla@oss.qualcomm.com>
- <9f050ccd-0fc1-4fb2-94f5-36ed1f2f4f01@linaro.org>
+Subject: Re: [PATCH 058/114] clk: stm32: stm32-core: convert from round_rate()
+ to determine_rate()
+To: <bmasney@redhat.com>, Michael Turquette <mturquette@baylibre.com>,
+        "Stephen Boyd" <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+        "Cristian Marussi" <cristian.marussi@arm.com>,
+        Chen Wang
+	<unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Nicolas
+ Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Keguang Zhang
+	<keguang.zhang@gmail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        "Takao Orito" <orito.takao@socionext.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        "Sascha Hauer" <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team
+	<kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jacky Huang
+	<ychuang3@nuvoton.com>,
+        Shan-Chun Hung <schung@nuvoton.com>,
+        "Vladimir
+ Zapolskiy" <vz@mleia.com>,
+        Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Samuel Holland
+	<samuel.holland@sifive.com>,
+        Yixun Lan <dlan@gentoo.org>,
+        Steen Hegelund
+	<Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        <UNGLinuxDriver@microchip.com>, Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang
+	<baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue
+	<alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@amd.com>,
+        "Maxime
+ Ripard" <mripard@kernel.org>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?=
+	<afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>, Sven Peter
+	<sven@kernel.org>,
+        Janne Grunau <j@jannau.net>, Alyssa Rosenzweig
+	<alyssa@rosenzweig.io>,
+        Neal Gompa <neal@gompa.dev>,
+        Eugeniy Paltsev
+	<Eugeniy.Paltsev@synopsys.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden
+	<sbranden@broadcom.com>,
+        Broadcom internal kernel review list
+	<bcm-kernel-feedback-list@broadcom.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        Daniel Palmer <daniel@thingy.jp>,
+        Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth
+	<sebastian.hesselbarth@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Heiko Stuebner
+	<heiko@sntech.de>,
+        Andrea della Porta <andrea.porta@suse.com>,
+        "Krzysztof
+ Kozlowski" <krzk@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        "Ulf
+ Hansson" <ulf.hansson@linaro.org>,
+        Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Alex Helms <alexander.helms.jy@renesas.com>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        "Lorenzo
+ Pieralisi" <lpieralisi@kernel.org>,
+        Nobuhiro Iwamatsu
+	<nobuhiro1.iwamatsu@toshiba.co.jp>
+CC: <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <arm-scmi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <sophgo@lists.linux.dev>, <linux-mips@vger.kernel.org>,
+        <imx@lists.linux.dev>, <linux-riscv@lists.infradead.org>,
+        <spacemit@lists.linux.dev>, <linux-stm32@st-md-mailman.stormreply.com>,
+        <patches@opensource.cirrus.com>, <linux-actions@lists.infradead.org>,
+        <asahi@lists.linux.dev>, <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <soc@lists.linux.dev>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <20250811-clk-for-stephen-round-rate-v1-58-b3bf97b038dc@redhat.com>
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <9f050ccd-0fc1-4fb2-94f5-36ed1f2f4f01@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Gabriel FERNANDEZ <gabriel.fernandez@foss.st.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-58-b3bf97b038dc@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=MJ9gmNZl c=1 sm=1 tr=0 ts=68a3166f cx=c_pps
- a=z9lCQkyTxNhZyzAvolXo/A==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=OPwlfTSxJuAJHfmk8b0A:9 a=QEXdDO2ut3YA:10 a=EyFUmsFV_t8cxB2kMr4A:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Nm1h_pf09Hp8anPebQE8bbeahGQhE7SV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzMSBTYWx0ZWRfXy8pkjlhmMUL6
- XGM72JT0L+zfVl5UqrqbtjZ3SOKJg4R31qtS0tW2vygcBkcTa3XyL6u7kHKdv4762WM5jmEuhp/
- SCfua2Kv5Od+lyge+fhZ35airPZr/O+WC0LwXrJG6IZWnzTimw6bd6Oh37r4d1KOEEQGl22WDAl
- qVbKioqPBzpVSnK/cqZRrlz4HqBQHuLvl9GHl5juEgFC2Jbc/0m+l8XboThFKSHjJEhr2e/cmgP
- ob8jiCUy+Lhxp7UJ6dwajlANBefQG71KhiEnrRo/rCICNxAKfegQTtG11+uQ3Ng2poixfUboU0H
- Vens2Bl7/QCkyxxmFFrnn1hP5IJhm4Dn2SAZJLxTJzS6s8lLUinaRFu7RQZ7yk7TvUsLryZP5tS
- i13E5naT
-X-Proofpoint-GUID: Nm1h_pf09Hp8anPebQE8bbeahGQhE7SV
+X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
- spamscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160031
-
-thanks Krzysztof,
-On 8/18/25 12:56 PM, Krzysztof Kozlowski wrote:
-> On 18/08/2025 13:28, srinivas.kandagatla@oss.qualcomm.com wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
->>
->> Add documentation of possible values for I2S interface types,
->> currently this is only documented for DMA module.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
->> ---
->>  include/uapi/sound/snd_ar_tokens.h | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/include/uapi/sound/snd_ar_tokens.h b/include/uapi/sound/snd_ar_tokens.h
->> index bc0b1bede00c..3aa5f4928a2b 100644
->> --- a/include/uapi/sound/snd_ar_tokens.h
->> +++ b/include/uapi/sound/snd_ar_tokens.h
->> @@ -118,6 +118,12 @@ enum ar_event_types {
->>   *						LPAIF_WSA = 2,
->>   *						LPAIF_VA = 3,
->>   *						LPAIF_AXI = 4
->> + * Possible values for MI2S
->> + *						I2S_INTF_TYPE_PRIMARY = 0,
->> + *						I2S_INTF_TYPE_SECOINDARY = 1,
-> 
-> Typo: SECONDARY
-> 
->> + *						I2S_INTF_TYPE_TERTINARY = 2,
-> 
-> And TERTIARY?
-> 
-> Although, they come from audioreach.h so, well, eh...
 
 
-True, I was doing vi autofill.. we should fix the audioreach.h as well,
-let me do that in v2.
+On 8/11/25 17:18, Brian Masney via B4 Relay wrote:
+> From: Brian Masney <bmasney@redhat.com>
+>
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
 
-thanks,
--srini
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Best regards,
-> Krzysztof
-
+> ---
+>   drivers/clk/stm32/clk-stm32-core.c | 28 ++++++++++++++++++----------
+>   1 file changed, 18 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/clk/stm32/clk-stm32-core.c b/drivers/clk/stm32/clk-stm32-core.c
+> index 933e3cde0795386c3e5e6902aa0989cf3dffc01e..72825b9c36a4d3b8ba3f7615b9026c09ffaf88d1 100644
+> --- a/drivers/clk/stm32/clk-stm32-core.c
+> +++ b/drivers/clk/stm32/clk-stm32-core.c
+> @@ -351,14 +351,14 @@ static int clk_stm32_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+>   	return ret;
+>   }
+>   
+> -static long clk_stm32_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+> -					 unsigned long *prate)
+> +static int clk_stm32_divider_determine_rate(struct clk_hw *hw,
+> +					    struct clk_rate_request *req)
+>   {
+>   	struct clk_stm32_div *div = to_clk_stm32_divider(hw);
+>   	const struct stm32_div_cfg *divider;
+>   
+>   	if (div->div_id == NO_STM32_DIV)
+> -		return rate;
+> +		return 0;
+>   
+>   	divider = &div->clock_data->dividers[div->div_id];
+>   
+> @@ -369,14 +369,22 @@ static long clk_stm32_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+>   		val =  readl(div->base + divider->offset) >> divider->shift;
+>   		val &= clk_div_mask(divider->width);
+>   
+> -		return divider_ro_round_rate(hw, rate, prate, divider->table,
+> -				divider->width, divider->flags,
+> -				val);
+> +		req->rate = divider_ro_round_rate(hw, req->rate,
+> +						  &req->best_parent_rate,
+> +						  divider->table,
+> +						  divider->width,
+> +						  divider->flags, val);
+> +
+> +		return 0;
+>   	}
+>   
+> -	return divider_round_rate_parent(hw, clk_hw_get_parent(hw),
+> -					 rate, prate, divider->table,
+> -					 divider->width, divider->flags);
+> +	req->rate = divider_round_rate_parent(hw, clk_hw_get_parent(hw),
+> +					      req->rate,
+> +					      &req->best_parent_rate,
+> +					      divider->table,
+> +					      divider->width, divider->flags);
+> +
+> +	return 0;
+>   }
+>   
+>   static unsigned long clk_stm32_divider_recalc_rate(struct clk_hw *hw,
+> @@ -392,7 +400,7 @@ static unsigned long clk_stm32_divider_recalc_rate(struct clk_hw *hw,
+>   
+>   const struct clk_ops clk_stm32_divider_ops = {
+>   	.recalc_rate	= clk_stm32_divider_recalc_rate,
+> -	.round_rate	= clk_stm32_divider_round_rate,
+> +	.determine_rate = clk_stm32_divider_determine_rate,
+>   	.set_rate	= clk_stm32_divider_set_rate,
+>   };
+>   
+>
 
