@@ -1,115 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-69525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EF6BB29F5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 12:45:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00F03B29FEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 13:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 628AC1741D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 10:45:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2077418A0E88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 11:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA852C237E;
-	Mon, 18 Aug 2025 10:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 528171A0711;
+	Mon, 18 Aug 2025 11:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="O4KWLn1q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qj5+Ol+U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4411E42A9D;
-	Mon, 18 Aug 2025 10:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E79617A31C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 11:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755513929; cv=none; b=XQG6XC1t5Ygikf87WRX9lSZdcG8e9xQ+sx5pqk91R5vjfwFwhzAf6H38IVSvMDCE1/b/9cwFOesp5MQLDrxCAeJvhO7mAXeMqFsJ+vawCrBY3N3bRni0Kiv4AOui5OC2r0M5lRIJIT4fk5VjE84XRVgnn7Qr8aCY5dbzpNCI+U4=
+	t=1755514907; cv=none; b=OeIkfU7feVRFtrJ8Q0cdnkymDbj8jGUkK/lm2iVVjNp5v7P+/VNaApDiqPu+JQ+Saqzg/nS6uQqjUgKuW9SxTfOlllzp1Je1wy2gTjlyaOIGdxZP//hlbLaY2YKFhJQBDm3U5ip1QYuljUaTSLMQaSnHG3wDVAuQ3UHyID//QCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755513929; c=relaxed/simple;
-	bh=efdPBkydLmY/ZTpYB/17A2kvC8/rYbvJhIhTjYgpWP0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=H4wt4Bit68pOIA3regik6cZFVFQvqDcYlGnST0TDxYHCzdhX6AR30z8uCBMKh+jd+z1SZqc7p7b3cTACCgqlo3j8xSc42166UYoze+JdOGEMTol0p11UqnZaPxCA7ZHmPfCr+a4HiAqiYsrpzw9l4uQ/Z1Atwu4BVhRMrXGBY7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=O4KWLn1q reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=UI+QSrPvaZI5PI+QLMVEJP6Ykyn+CzzfTwDZnBxma4A=; b=O
-	4KWLn1qT0biDwSVdI5UZciBdfxzV7EHQQyzOnkmjvRGd9Cxnk9qshqYOox9WjZul
-	fhP94tRNEuNvby+0pMVJ45PPKG94OMofkNdq/vIsVXVqVtHnLQYilmePhjF7bVYu
-	2V2wOc7grCcIBvOxpDWu8SNhGyi9PVBr59l67hpxw8=
-Received: from slark_xiao$163.com ( [2409:895b:3271:c6a5:2c24:eb9d:11c0:c02]
- ) by ajax-webmail-wmsvr-40-125 (Coremail) ; Mon, 18 Aug 2025 18:45:04 +0800
- (CST)
-Date: Mon, 18 Aug 2025 18:45:04 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Manivannan Sadhasivam" <mani@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH] bus: mhi: host: pci_generic: Add more Foxconn
- T99W696 modem
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20250519(9504565a)
- Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <ma7am34lifhb3avqyiodtbsfmlmi6s5tsw7kqf2rp2eyiq3uqw@ty57xdfbe5ao>
-References: <20250729085726.106807-1-slark_xiao@163.com>
- <ma7am34lifhb3avqyiodtbsfmlmi6s5tsw7kqf2rp2eyiq3uqw@ty57xdfbe5ao>
-X-NTES-SC: AL_Qu2eB/mavEEr4iSQYOkfmk8Sg+84W8K3v/0v1YVQOpF8jAzp/REKU3RSOlru2u60KgermgmGUxd/7/VKUI5HWqgQQO6O2ohwTEeaI/b504ZpfA==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1755514907; c=relaxed/simple;
+	bh=9TYaT7DVhh4RqpRijSCAWXM0qbM6HEJ9pElNlwj1hzc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iR746wVw3SRDGLosiuUCYreX6NO9AIqtaiH65Kxn+/0RtVsdjLA4llKIaIfuLobVB6TTXwhIdeL8ml2WEMR25fsLEpcXJlNI1Q8wD7Zetgbgr8LN6YPHE8mON8qXbKWS+6CdBN7EXblVNPiv1qxzFmbPrf1egQ8VUK1XTlI9/ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qj5+Ol+U; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45a1b00f23eso21237015e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:01:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755514904; x=1756119704; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ntD9YtOAPnvdnrNXErbVg7euDwQgc63GGgL/mdtMZt8=;
+        b=qj5+Ol+UOphHbjBEI+W6Ame+zM5ilKmkO+tR1eRCQcR17JdDFiRLG/EAalWvPkquKm
+         ZrQ8Pvs3uNkKPfjCRn47FYIelUdVnoNVdkNZU6YQa35Ran90BKvnRXxMT/fYypXaat5w
+         l7eezaXcEGUFOt6JcRABbVHX0LW3EFdbjxCj75LIF+OrE6GLA2fRlzfzsQfOhv/4csOt
+         XeUe/ImDc+atJrzezK/723DBlAUB+EQOjNJLZcxXmxF2v16iT8jR7pSBM4vvpxh03Yj+
+         J2oMQjWC6ztgtWAtl+Q7WbLFWi3D5LTlaxAw4snOcZcEeBMEa2XdnlhWX3E0TzmVh6tL
+         2y8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755514904; x=1756119704;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ntD9YtOAPnvdnrNXErbVg7euDwQgc63GGgL/mdtMZt8=;
+        b=NM+Uts23vkrHGUY+VLSvh5BuW6hHAa9McS3pZ/wNHYMDwKsJY225wrPDFa/PPRht5A
+         g4QU5DxHpJoZsdm5s+KRU7kMVpNfFKm7ZXHS++c7V+aQf3n1eD4b6NicqBg9jnfpTyTf
+         GHOGyZ5LnSzmCykWhGN2+5KOBpI/Mj1YiiuzcAd0EifEUeVhMIcNakkQd2Yv7fPhEmhT
+         UqTx0Ih7UKj8yvy8e7XFj0N+qBh4A/sIiwrpsCaqq98OVE4oJcKyEaMOp4v69JK4kLXU
+         2ZvuBxiQBgPpbk+OSZ6OM681GlAiKVfsGJ7LFMLI+lzhFi9/l14z9C9NVNZy1K/A1CNd
+         Uvhw==
+X-Forwarded-Encrypted: i=1; AJvYcCWCB7rhYTBiDA+uZsYxUXLNoDlOCiAzjVflmPoPMgWHbtq+6EWdNQyl3VX5XBWtUUZzbPq+bxfhJ1EO/c6E@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz19l+wJXIr6SLNJNqQyik3q07JRwBYfBg1mLOWj+n73J/cOCew
+	7s9bnyFHY6IWh7vElyO5c7lCIE24jAbCT7EZCBbX4y8wDTSpdeBCf/s+JWc0zCQ72Ws=
+X-Gm-Gg: ASbGnctfNGvCRqtGqw2JBVcRx++LRoPMaXhA6rVV+ElUnXB6hC/dqMoatbyhSYniXc2
+	haD1Uc7VhY9GK8DufgvN+rgepV9eloBskIBWSd1QCRkFOfdG6fbeLTiAIRbLinO7mlms15eVWwp
+	ybRF0LXlMDZx7z880ecdC6aT/71ahfAboN9imQPgy7FiGbzwmn93L0n8OTed/Iv6j2UXMKmVjSJ
+	N8nTQzMGhEoy2kJrL2YuIMUjAaNY6kgchGyfpEG9WBR70/quJJWWxT3lv19sw9iBMoG2/rSdnbA
+	aLlZF+L0+nC+EcXOfvAlqUfklIvrEUbP2qNKIyLh65kfNZHZyFQhLq9/kfIocgVbaVJfdI1dVzI
+	Iaw4BbgeIg8WbQYIRF9nO0/T7tfwUrf3+o50oa/pZPNSvFpDLqpE69VV1IYhO2523FTg5f9XfoQ
+	==
+X-Google-Smtp-Source: AGHT+IH/1MJvqzbVWRStZFWheU1Jn9W/zKSEPXOg/a1tWJXWqxadFZwQAV4W2k4siiejGTbxIOR40g==
+X-Received: by 2002:a05:600c:3b09:b0:459:dbb5:399d with SMTP id 5b1f17b1804b1-45a2183d324mr86473385e9.19.1755514903882;
+        Mon, 18 Aug 2025 04:01:43 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1ce9758asm165995675e9.15.2025.08.18.04.01.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Aug 2025 04:01:43 -0700 (PDT)
+Message-ID: <61f9767f-ee4e-4f93-b84e-59ccd422c98f@linaro.org>
+Date: Mon, 18 Aug 2025 12:01:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <7eb35c0c.93ee.198bcc85d6c.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:fSgvCgA3vw0xBKNoWlgcAA--.3974W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbibgWtZGii+3DYwQACs4
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: iris: Fix firmware reference leak and unmap memory
+ after load
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250818-iris-firmware-leak-v1-1-1e3f9b8d31ce@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250818-iris-firmware-leak-v1-1-1e3f9b8d31ce@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-CgpBdCAyMDI1LTA4LTE4IDE2OjE0OjI4LCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBr
-ZXJuZWwub3JnPiB3cm90ZToKPk9uIFR1ZSwgSnVsIDI5LCAyMDI1IGF0IDA0OjU3OjI2UE0gR01U
-LCBTbGFyayBYaWFvIHdyb3RlOgo+PiBUaGVyZSBhcmUgbW9yZSBwbGF0Zm9ybXMgbmVlZCBzdXBw
-b3J0IEZveGNvbm4gVDk5VzY5NiBtb2RlbS4KPj4gVGhpcyByZXF1aXJlbWVudCBjb21lcyBmcm9t
-IExlbm92byBzaWRlIHNpbmNlIHRoZXkgd2FudCAxIHBsYXRmb3JtCj4+IHRvIGNvcnJlc3BvbmQg
-dG8gMSBtb2RlbSBTS1UuCj4+IAo+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxzbGFya194
-aWFvQDE2My5jb20+Cj4+IC0tLQo+PiAgZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMu
-YyB8IDE4ICsrKysrKysrKysrKysrKysrKwo+PiAgMSBmaWxlIGNoYW5nZWQsIDE4IGluc2VydGlv
-bnMoKykKPj4gCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJp
-Yy5jIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+PiBpbmRleCA0ZWRiNWJi
-NDc2YmEuLjFmYzQzZjFiODZiZSAxMDA2NDQKPj4gLS0tIGEvZHJpdmVycy9idXMvbWhpL2hvc3Qv
-cGNpX2dlbmVyaWMuYwo+PiArKysgYi9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5j
-Cj4+IEBAIC05MzIsNiArOTMyLDI0IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgcGNpX2RldmljZV9p
-ZCBtaGlfcGNpX2lkX3RhYmxlW10gPSB7Cj4+ICAJLyogRm94Y29ubiBUOTlXNjk2LjAwLCBGb3hj
-b25uIFNLVSAqLwo+PiAgCXsgUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAz
-MDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTQ2KSwKPj4gIAkJLmRyaXZlcl9kYXRhID0g
-KGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5dzY5Nl9pbmZvIH0sCj4+ICsJLyogRm94
-Y29ubiBUOTlXNjk2LjA1LCBMZW5vdm8gVDE0ICovCj4+ICsJeyBQQ0lfREVWSUNFX1NVQihQQ0lf
-VkVORE9SX0lEX1FDT00sIDB4MDMwOCwgUENJX1ZFTkRPUl9JRF9GT1hDT05OLCAweGUxNTApLAo+
-PiArCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfZm94Y29ubl90OTl3Njk2
-X2luZm8gfSwKPj4gKwkvKiBGb3hjb25uIFQ5OVc2OTYuMDYsIExlbm92byBUMTUgKi8KPj4gKwl7
-IFBDSV9ERVZJQ0VfU1VCKFBDSV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4LCBQQ0lfVkVORE9SX0lE
-X0ZPWENPTk4sIDB4ZTE1MSksCj4+ICsJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkg
-Jm1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyB9LAo+PiArCS8qIEZveGNvbm4gVDk5VzY5Ni4wNywg
-TGVub3ZvIFQxNiAqLwo+PiArCXsgUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAw
-eDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTUyKSwKPj4gKwkJLmRyaXZlcl9kYXRh
-ID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5dzY5Nl9pbmZvIH0sCj4+ICsJLyog
-Rm94Y29ubiBUOTlXNjk2LjA4LCBMZW5vdm8gUDE0cyAqLwo+PiArCXsgUENJX0RFVklDRV9TVUIo
-UENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTUz
-KSwKPj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5
-dzY5Nl9pbmZvIH0sCj4+ICsJLyogRm94Y29ubiBUOTlXNjk2LjA5LCBMZW5vdm8gUDE2cyAqLwo+
-PiArCXsgUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgsIFBDSV9WRU5E
-T1JfSURfRk9YQ09OTiwgMHhlMTU0KSwKPj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9u
-Z190KSAmbWhpX2ZveGNvbm5fdDk5dzY5Nl9pbmZvIH0sCj4+ICsJLyogRm94Y29ubiBUOTlXNjk2
-LjEwLCBMZW5vdm8gUDEgKi8KPj4gKwl7IFBDSV9ERVZJQ0VfU1VCKFBDSV9WRU5ET1JfSURfUUNP
-TSwgMHgwMzA4LCBQQ0lfVkVORE9SX0lEX0ZPWENPTk4sIDB4ZTE1NSksCj4+ICsJCS5kcml2ZXJf
-ZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyB9LAo+Cj5T
-aW5jZSBhbGwgVDk5VzY5NiBkZXJpdmF0aXZlcyBhcmUgdXNpbmcgdGhlIHNhbWUgY29uZmlnLCBj
-YW4ndCB5b3UgdXNlIGJlbG93Pwo+Cj4JUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09N
-LCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgUENJX0FOWV9JRCksCj4JCS5kcml2ZXJf
-ZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyB9LAo+Cj5J
-J20gcHJlc3VtZWQgdGhhdCBhbGwgMHgwMzA4IGJhc2VkIG1vZGVtcyBhcmUgVDk5VzY5NiBkZXJp
-dmF0aXZlcy4KPgo+LSBNYW5pCj4KSGkgTWFuaSwKWWVhaCwgdGhpcyBpcyByZWFsbHkgaGVscGZ1
-bC4KU28gc2hhbGwgSSB1cGRhdGUgdGhlIHByZXZpb3VzIFQ5OVc2OTYgSURzIHdpdGggdGhpcyBu
-ZXcgbWF0Y2ggY2FzZT8KClRoYW5rcwo+LS0gCj7grq7grqPgrr/grrXgrqPgr43grqPgrqngr40g
-4K6a4K6k4K6+4K6a4K6/4K614K6u4K+NCg==
+On 18/08/2025 10:50, Stephan Gerhold wrote:
+> +	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
+
+You're not using the latched pas_id declared @ the top of this function.
+
+With that fixed.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
