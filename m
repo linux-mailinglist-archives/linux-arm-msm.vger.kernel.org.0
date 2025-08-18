@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-69540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15054B2A0F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:01:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 103F0B2A0F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 14:01:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05E6D173CA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 11:57:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE36C5E40A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 12:00:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8E7A31AF2A;
-	Mon, 18 Aug 2025 11:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0871F322778;
+	Mon, 18 Aug 2025 11:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ruHDkvsM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O06XW56E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65532765EC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 11:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F55320CCD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 11:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755518230; cv=none; b=iqb7aeF3CUYx5yr2ynG+hMRAxDdImuZMvElYsKQRh+djXmv95LrU3yeuLis2CmqDNJp3ihzFSO/LD9bRlimweJqKV520OaY+RnKmIxhk4GQXCY7CMSxIs9urSteHp9FkvDhYRHYTQ5LicNhDXiSnA0/NgUfVw3ie81Q/6334Oc0=
+	t=1755518293; cv=none; b=eDHtKBgtp9NmDinx/3RTOK9NuBpxa0rZqUExQs+72uRTpJCOTRWhL7zj55pV9dFoSvOHmEKPzA/XDjqhOkHMB0JHXQSaciJp1NygX+1z70ldzFF6m2KpkH4YnJrR0M96wBsZdtIG9Brbg7E7U09enHGrPxKjdx/T1Ps7qi9bWDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755518230; c=relaxed/simple;
-	bh=d7klSJgcVJxKzgWS5Ztl/bfKJb1MY3zmqkRFuasnQno=;
+	s=arc-20240116; t=1755518293; c=relaxed/simple;
+	bh=eVnxYFgsrwlFejdfvYALEB3jokW78kjV7uhC2rL7Kgw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pVy/+Fr/Q2Kscoub6HnDE3d+gS9u0bjROulae0aHnAt746+HDC7OIkNRDQChk7V6eIAqUbsbEjPEmVWrpYjbTjvdPiAVOrU6dsMiw+DxfYyhUiWhCY42jBAJOaQO4ImUT6QEOiRMWRMCYLHTqvTN6Qvk9m9alu2W8mi5dQNMVUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ruHDkvsM; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=a6XYDwPkz7Xd0vBxPNWDw69b4xv4H6VHv1mwURvbHSt8m1mt64x0tEgINuCX6DZAPtjdh/l5RLsSN3ao4YXprvegiKQVMeesxfBZK1ApbvTSzACKTSAUrKsODY5/8GTcyKVAhaE6Swe0ZOJbYhGVaxSUAt2nsBHki3s5BsavJLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O06XW56E; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb79fb221so52913866b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:57:08 -0700 (PDT)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6188b668b52so487551a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 04:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755518227; x=1756123027; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1755518290; x=1756123090; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=39WZqPqR/1R6iPJORmBOWelC6kAqE67ZSJBuraK6tpY=;
-        b=ruHDkvsMx1wp9cpq5MeaKCyOWdF15RcWvdgon34j1fTaKtQ8CNDoi6ByEXem/TJ8Ae
-         Irr8sDQ7UGQimJg8cxiR3zBVF2o3KktvWor41LAj9bI5pAWe9gbPBRKMrtd7mu3H/DPD
-         ard/g8vrABiVXms2oLdYSs2Tm/R5B3v8/ueCSk58aGaezka6uBnmRxzFuOa6fChg05rv
-         qdPqKf1tRFyP5V/2YBH8MqL0G9M1xbXxmKZz3LEucqrP4k99xlA8GRy2dr9e9pj6wf/v
-         dVTz3x7Qgg7ZjDXY/yhOE2dNC2Fzg2et26mH+F0sGYGT0Fucais1BJJD/88fxcIxq6+m
-         34Nw==
+        bh=qpp+rNHm8hVKoYycc52XEufdtZA0T7sp3KTBpgEYztM=;
+        b=O06XW56EWIsNdhGpgJ6r34e8gWdcj9wONfFe+yGC4OtGlevq1dOb9yeNafisBRViBH
+         BsyApaIz3UX0ovecWFa6pswuhHNe/R/tBXYlgnTsJGUm10hGiXZNmfBjbRnTPBcK4CA4
+         OJuD8iY/bXjVxgBRXxcQkeoPtx0Qja02QIJi/UQYUm1LuP+ngWgXzeIdzkJmkiOQ5m3K
+         ERjQOI4ljEsI3J1xBmcvue1UK7Eg+PC9Aj72lcHmXdODQso5YJVERnCK/DaKnHXqmRxi
+         4q+EpgMaj5VmE8QI2JWzTChl8BgxxzTKvgWulX/UzOVLiBOWuq/qhvpKjkC6Eo8+3V5C
+         1hOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755518227; x=1756123027;
+        d=1e100.net; s=20230601; t=1755518290; x=1756123090;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=39WZqPqR/1R6iPJORmBOWelC6kAqE67ZSJBuraK6tpY=;
-        b=qEU40yX8PUOC5P2Zp/f4xaADzZAIjN5HjOTPmRB4xqT1vACvQCX3pbfI66AH8fORnn
-         ST0x7ETVmEC/Z9uaXtBW9xmVOD+SfPiLITRhVCk6BmsABzKfryUBij7UnCHrgYxTQIo5
-         s9NiuMZoanL6tl9brRp3oL4X54K8xl5WlD7Ykqrx56HJ5xbQvH852QI2MWmNLGkMZix/
-         18W7dtTq6vgisB6wcttHZqR8usfOJK/6aO0spo69XiET/bLVLvBdB8ziedpBORwYxo6L
-         6tyJ1qY7wqE8vhNrubRVSS92KPffXlptkKaJAU6qfsJpZakqMUMMPe9P6UBWU6kqomfW
-         RKRw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKVT0WyZ5+XVOnjytK/SrWuz7JL393HMog6mF4EhVXBZ8zr76qfVELZaXnFvdwVBf2B6dsbW5UYUTNpj3x@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBtdoi/xJ9LJKxaX3zH7ZHHrLpPK4ave+f/rfu7HYoUDqm/0ve
-	LAlXpLwseVrkZVhEsMOguqP3t2/lzTGNPUvh4qudl9xhcbEsVtzZqqjLeAbQFcytCoU=
-X-Gm-Gg: ASbGnctGYWFYHZKFdMOIeUATu2leifq0QBdHjH1D7AGcOQKLPu6rJGMtn2eY5UZ5Tsq
-	ljExLDKQ2a+0FJTNwzns6slvZuY08trHM1OPd06smqxyHo2ECnytELkygVuwgqHZdfjgyvXYED8
-	W7/HGw5Dj5qZiLLZ1accY8EsBxBOEBrOcD3wTTNPnYsM2+HP0d/rq22LBPbrZz/Nf2giVOVuAgm
-	bm/7mRsR3yK9RlJSlafrKfr3oxNre+/YyIRAnS/XwohHLftMhkQ/5OGeSTQdqQDCeA880i7eARb
-	tpI36VsEf6VGfvFL4mlWhQ7FPDLh26Y7BkNkDktiLJR5X428xo0dzb3fB75PAEmTfQH2HAmNfQm
-	K26vpGVIx7vBMQ04bRwwa8g+UxzYXOzhKhZn54Uvecu4=
-X-Google-Smtp-Source: AGHT+IEejkix8VzrIrmaKComZ4B/jQEUWjX/m34wQQizpIs2LiByMrfk2zkRxNKTBAfYmPx+IOePjw==
-X-Received: by 2002:a17:907:94c7:b0:adb:2f16:7ba1 with SMTP id a640c23a62f3a-afcdc20e1b7mr535947666b.6.1755518227273;
-        Mon, 18 Aug 2025 04:57:07 -0700 (PDT)
+        bh=qpp+rNHm8hVKoYycc52XEufdtZA0T7sp3KTBpgEYztM=;
+        b=g1dqs1fAD007z26awTggZrvWQfy3TpKs2cmEyCkegIjFpTgy+MwF2I0EfjoZYcx8aA
+         rDMncGBC0ejm7do18RsIOG1UzLD0GNdqqTGVxA3TShL+kWxWWAenha3LfPh8I//ng6zg
+         hlFBxMbXwHfTTw2QOqNj6GSEacL6FLtZJ8DKm5/KZrjBYJmxsPSjvnUIpPl4vMrM/roP
+         v4uRdpcR9gSSb9gTtWRl+hTwsNte9RXZYMGpUZhVS1tYCeAMXKgwiT9ph3zU2vQ2yfb9
+         R2ohlLRRMnaDntirnK1Ka6WYAUzBtTcRj4PAZR8xzTfMQqcu35X7rSR+zTyFCeB6Y5ix
+         0MPA==
+X-Forwarded-Encrypted: i=1; AJvYcCW1sH6+nVRItXhNvobklU3oY1ymM7a+54zacnG0tqOIZRA1dJljB7Dn5lLdJ1DHB/LQJTWGtOkTVPAhV51i@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSo1UK1/o15e5GaR28hacMX9zaSaebam0yMzkKHpcJviOH5MPV
+	AHFWxQYtWmjcqc0XT21xeJE45i++nzqvu0ePayD1lWVbT/tdtsXaoRRSWyj+7+qjcOM=
+X-Gm-Gg: ASbGnctdbVrmOiSbAbUV1NrKwNVHKCcIj7SCcIKbJXoFJOWIunM+HGz03wwREL6/jmU
+	HM5NrI1LAfYqlOMdbIQh1EIwz7OGIkaZexBGjGOsWlQJBiMmJL8abWGlJGVllF5DhthkzBU0xd5
+	B/d0J+UBfO1g/3hQkw7cGD5waW31mgKVhUaXStx82bmCOk8EFy+HkuVqfg3oHTCOvTnMSO2UGHy
+	3YW+AkdPlh6RpxIhvGn0V8KsfNYW98R3tk0CY737RauKQgVXayKsQc4FV8iz8+1DBa9Cc5ZmvuU
+	KulZo3YzXgWzZazXLOKuTewXWYUnhh/3+avy2RZ3Ar8pZshkVKX1xfvzsozRRAnYNZqfL7tbMcD
+	LsEYwc9JMoDVyeHpHtQzjNEGz54OyAZFzEfc9Mw08myE=
+X-Google-Smtp-Source: AGHT+IEc8CQAA5PwmSJg5Km8EHNJwZRZwwLTTZxkAh4wWLcDQj82PjoTVlrCSP+rRP4A+/cguAZPKQ==
+X-Received: by 2002:a17:907:7b8c:b0:afc:d540:add4 with SMTP id a640c23a62f3a-afcdc29e348mr445639466b.8.1755518289866;
+        Mon, 18 Aug 2025 04:58:09 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afcdce72cfesm776899566b.46.2025.08.18.04.57.05
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afcdcfccd75sm789843466b.61.2025.08.18.04.58.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 04:57:06 -0700 (PDT)
-Message-ID: <36997dea-19a8-4242-aadd-ad52e0a63cce@linaro.org>
-Date: Mon, 18 Aug 2025 13:57:05 +0200
+        Mon, 18 Aug 2025 04:58:09 -0700 (PDT)
+Message-ID: <8405b263-08a9-4b8f-ad20-73c8f5865b39@linaro.org>
+Date: Mon, 18 Aug 2025 13:58:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,14 +83,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] ASoC: qcom: audioreach: add support for static
- calibration
+Subject: Re: [PATCH 4/4] ASoC: qcom: audioreach: add support for SMECNS module
 To: srinivas.kandagatla@oss.qualcomm.com, broonie@kernel.org
 Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org, lgirdwood@gmail.com,
  linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20250818112810.1207033-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250818112810.1207033-4-srinivas.kandagatla@oss.qualcomm.com>
+ <20250818112810.1207033-5-srinivas.kandagatla@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -137,29 +136,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
  vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
  2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <20250818112810.1207033-4-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250818112810.1207033-5-srinivas.kandagatla@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18/08/2025 13:28, srinivas.kandagatla@oss.qualcomm.com wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> 
-> This change adds support for static calibration data via ASoC topology
-> file. This static calibration data could include binary blob of data
-> that is required by specific module and is not part of topology tokens.
-> 
-> Reason for adding this support is to allow loading module specific data
-> that can not be part of the tplg tokens, example, Echo and Noise cancelling
-> module needs a blob of calibration data to function correctly.
-> 
-> This support is also one of the building block for adding speaker
-> protection support.
-> 
-> Tested this with Single Mic ECNS(Echo and Noise Cancellation).
-> 
+>  		rc = audioreach_i2s_set_media_format(graph, module, cfg);
+> diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
+> index 617bda051cf8..2ae6420f4b6a 100644
+> --- a/sound/soc/qcom/qdsp6/audioreach.h
+> +++ b/sound/soc/qcom/qdsp6/audioreach.h
+> @@ -30,6 +30,7 @@ struct q6apm_graph;
+>  #define MODULE_ID_MP3_DECODE		0x0700103B
+>  #define MODULE_ID_GAPLESS		0x0700104D
+>  #define MODULE_ID_DISPLAY_PORT_SINK	0x07001069
+> +#define MODULE_ID_SMECNS_V2		0x07001031
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Can we keep these sorted by hex?
 
 Best regards,
 Krzysztof
