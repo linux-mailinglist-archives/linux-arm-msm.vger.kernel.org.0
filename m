@@ -1,200 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-69614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E92F4B2B090
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 20:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 59D2AB2B0CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 20:49:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4204C1B629A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 18:36:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1FB0B189B43E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 18:49:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 188D32253A0;
-	Mon, 18 Aug 2025 18:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF12727056F;
+	Mon, 18 Aug 2025 18:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PjbJ4SF5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MlnC1+aY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989962522B6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 18:35:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B9E26B74F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 18:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755542158; cv=none; b=Et4W033XgSuy8slwLhlFzHf/w+ylHRASc8cMEb7xnKVOYJfETmpzFpmA4FCDF3rxA0udG9HigFRJW6SwxlxH0qD3Z494DOUfD+5vXn/8B2fDhHEGUn/u3zTrpaJi48p3YhYcP2MGngeS9j4gpLx91iP0NvmbT3+1BN333g02X6k=
+	t=1755542927; cv=none; b=R2sNdcWUkRWUZ4HtcP24AfykFMk6bNxtvBkDSxmo9dJk+bU9OdepzS2ze+rjqnaNTrh/pH1myx+H/GDsBf/ju6AJ9bw6YyNAH4KwJBWWCkQ9gZ4V8UHqhzYwRtvHhR0I9S6nsvGJwfw0v5hpskXj6HzeskWURCv93IxLeP0gOTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755542158; c=relaxed/simple;
-	bh=Rr8NoDrHGFkfU2Y7NB9dvXe3YofOu3AGh+O7rT1zNOc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SDkSAOyswSHNbAGfg3JJwye4++r+zgXihbNk4SZVtvqU2bEfif39qLqZRRN2dnOlWUMa6dlvuDPm/vpWk58citwV3AvMuuVGf04s3AL1x/G3CWX7siPaCTWFjsVv5olqRGXYYKU6x4LfVedXUltjV55f17SrCTep3g56rw2Wh+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PjbJ4SF5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IFBc88030849
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 18:35:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rTw5fI/EzQLooVwdnSKD6j5ks0u5Tik6uLBbFQaZ44I=; b=PjbJ4SF5jsGRuPM8
-	lRiJxw1u113tX7wBLGTbQoy+3C6mIwKOJavCnyjt0KQfMN5t6oFVnQPOBVFoUtJQ
-	EneaDEiUuLXqtzK5PTacSnK7X/Jr8zazde5n/R9zdJHoO0J3TXn/aWyG32UWilXy
-	OEerE0aj750vPxvduioVB33IJ6wu32Xv0hGd25L/AAxffaXz9svr2Xyw7fYZ0mCI
-	gZTWWjAwdv+B2UWYuVDb3HZcpSJkDNx/hvt7bjszyLHe2+Htog2zTVX1DJKuuthT
-	Rl89WKPzZ9Ol2YfnDRgKI535EjA+i7w8peleWdhzNZHYS5+dWqKo66v+HOi3mb6f
-	1Zs8Pw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jjrfwvbj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 18:35:55 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2445812598bso120568295ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 11:35:55 -0700 (PDT)
+	s=arc-20240116; t=1755542927; c=relaxed/simple;
+	bh=pcQbWfmvaZOJq8LTxdPwJOEnZsClRjrrGSQ0kCojTns=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TVCU+kRiGfx6VWYhGR4P/gzdbuuG1Z4Zru2RgE6abVJivZYp7eQwZ83ngyph6unfYO1roIvOKYjultCh5bnR+QiJ86btCIhW66611BBryQjEhEg2v7DHZl1RAJrBmYJFsiN8d7zAdv5S4HLJi3GGjIbEEFwhHrb24UB2ErA7Y3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MlnC1+aY; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2445811e19dso35147465ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Aug 2025 11:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755542925; x=1756147725; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=O1Na1G1GEfTB1Z7+rFe2hu/qJ/LK+DYFvyX3BQfjabc=;
+        b=MlnC1+aYgOOVwX4ZXA69ASrvJUqkiv2z12HDXxkeh7MM5kigbVd8MDB9k9e4NqGtl3
+         uhr0adj/YkifVUwKGpqlqfwHbXE5jY/g/SWZLX2zhilnbaA1fJkWWt8v8MDii2+xcz6r
+         yedLe3+5Uk1xw8ohhwsNJrquSN55RnPmLcGkG6CK6UnKwVh0Q8zt1CmqUx+EJBtuKg/c
+         EwR79AzbjlUrsUg8FWAvvz/lRjxA9FN4cOWVb4vD6DiAHkz7Z/k1FyXKjYEcHvyabcDX
+         mfS3wkM9gpTmsEo5sVxMinoivMirR4FbZ6HeFHo16aWb7lUS3vMcgE1PD0hoMjGLAfXY
+         dJcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755542155; x=1756146955;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rTw5fI/EzQLooVwdnSKD6j5ks0u5Tik6uLBbFQaZ44I=;
-        b=B6M/nt3gqem+/XhW84GUVDggOizfZuLmRzZK8J2QFKAqs5jqq56bD4hXfVtXb+oS98
-         tdXJa+BWw2TxSWHcVGpUlAyEN0lboRiZvi9U/sUrFDUlUXyvkNafNqzhDi3mKYR9MDN1
-         e0BxD2PwvcNI2UmyX7j51jHm3t2/20FaFiqABxfU7RtPCYAOzbabdTNwYhf7KQEdGdL/
-         uMlZvVEedC4ibb0E+K/EnZhtLDWPOilcX7tKJzhufgcy6xcstnd7bVPFFGwYJtMmp2xN
-         /J9EOFGmw7A4E1RVwnGGsyDORJ8xc567d5BkhF3SFSfobNU8s0Vzz9uFLmmLbaXyvMNS
-         E0vA==
-X-Forwarded-Encrypted: i=1; AJvYcCVOrvjQbhspVl5IN/w+qo8X1i5Wf6SjYtA3K6EHvnn1QH2HcV6o7DrJfO/jtL7D7OOBKG2lFC+oQTJQVOd2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzg4OBzQFLOxWPpJ1leKbg7tLLMmboTtjyz5JYDfvVxiExn2jMV
-	hD/lKVW8faRFyiChz/ab16yasDwXcTdQ5v7IkvFzFN4D+3KaK82Fcur4yzvAoMp6QDnmOJVSqdu
-	2jVAI3lWIK7uCcaCkPGhoVHufViAfCBU6uUsxlhbzxy0k596F0/SwQrOxrSxBIh41eNoH
-X-Gm-Gg: ASbGnctRy0MRxMOoTFCcXd9o+ReyZJMVrZIAAtH1Yd9ll4mHGeSfwd9/t3wD8bRNou8
-	/f9bmwMDJxw1wjtn90d4CemWKozac208yJAtYtMWq7jNthVcm8AdDowlk8zM7cWP2lfQrT/OxlY
-	GK3sEQMzC17FV+uR4C2CwN3tCRaIfMOvcwxz5EOgbVrX/T1B2ONaB940j2o9MoBpapE1Swp9l/p
-	q60N7j4rZh6hDYq41jDLeEySGGbXhzoyqFqdUvc1wLgQEml5z3rjj8uFlrG+6IeubjnXeGsOab/
-	osrinE4EFEZdhGqEauEaNTCZn1VGa8Sx8NZzZUNOdS/cXwbaMDMGaMQzsHGswuEM+n26vMuyJhb
-	yvZfjejwS5jjT0dhP/8ykHw==
-X-Received: by 2002:a17:902:e883:b0:234:b743:c7a4 with SMTP id d9443c01a7336-2449d05e2e0mr6013275ad.38.1755542154889;
-        Mon, 18 Aug 2025 11:35:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxDSynULb4PcFzZsBZRbHZngTsBrC0gfJFLCUyi3LdHcS+4FTyZjXC2laEfmopJd/tkxjqtA==
-X-Received: by 2002:a17:902:e883:b0:234:b743:c7a4 with SMTP id d9443c01a7336-2449d05e2e0mr6012665ad.38.1755542154422;
-        Mon, 18 Aug 2025 11:35:54 -0700 (PDT)
-Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446ca9d9a7sm87175925ad.23.2025.08.18.11.35.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 11:35:54 -0700 (PDT)
-Message-ID: <eddfb43e-2d8c-4e6a-83a7-00c88b3ccf7d@oss.qualcomm.com>
-Date: Mon, 18 Aug 2025 11:35:47 -0700
+        d=1e100.net; s=20230601; t=1755542925; x=1756147725;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O1Na1G1GEfTB1Z7+rFe2hu/qJ/LK+DYFvyX3BQfjabc=;
+        b=D4JUFn/1Vm8PvsLPnYxpcm0LNqx9j1aP/dTqmHdawczEQPudImldbs7m3St94iTHKt
+         w1Ak36a2RDbUTunvZvcfGMFS+F/UOO6B1GetSdoJyCCjYv5gL63F391iQmWK4eBJiKd2
+         FSFxkAvBJavFURY7r2/+3NfVZR8nr8NAM/0tkLDAK05xzjGSNIfKkvOiWbcfcMHfV6xX
+         CfBsFEzWSpsrdXqbFF6EL7nTTcYkVf35VDY4gyjJKyUzRiNx5kpoHOSQugAgqhFM/Sn7
+         T1ZpREde+l30KktfXkEHjWhDPge3VRfq4p6L5KvsadfBQ6scIoRKeE0vu8Vd5HR7FqPb
+         JPWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXuZ40iSRrjMcLzh6q/BGnI+572+Mjyo6YI+JYsV8KlQ/HQsZUy/SkFJywzsi0VgxPOoBEwR1sIn+85ZusA@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBdCeYJQ0tWoJpKQSF9S3wndKDZDr1x/doerY0iHl7Da2hpDVn
+	uF+0Wkls7VTxxQaShnK4Mb2n044gq6GiURkYpi/7RGTMdyGKl1O4FIbFcLGZl8eWEk01veBWp2i
+	AjyY7QSu+Yur4i6WVP4ruvezdvU2y8wM9NjRw+/vLkg==
+X-Gm-Gg: ASbGnct/+KraJBoFgr18D4Yq8l5vhfOf8yDvmchFddo6t0mYeP34KexitrNrbVgDwTg
+	4S/U8zHgINKo5ueFvFGxiIk7Bow0Bhe4jLDbDMEkIiREGlGEReYEY8PmSRTLEJXQk78DHNVZg5T
+	8tMCFVdEN230vCwQOxfI0fmTDt8dY8FJcVkEIgF71+LeDUHIOJGHTGuqsieHdmkO4OjUFv98Aau
+	rtDSXfKYgZH2bFbpaGGS+5thSkKkqFN2nw1dQF72XzOiBMJNGQ=
+X-Google-Smtp-Source: AGHT+IHmOMJz7nCYS/tZ+DC/rzqutFB5PsuRPGV79kAw2iKn1BK0MGU5HrYZKUaPZJ8Wp385fx6Fyv1c//DR81jG32o=
+X-Received: by 2002:a17:902:f78a:b0:240:84b:a11a with SMTP id
+ d9443c01a7336-2449cf43f7fmr5618825ad.17.1755542925263; Mon, 18 Aug 2025
+ 11:48:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] drm/msm/dpu: use drmm_writeback_connector_init()
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        "Kandpal, Suraj" <suraj.kandpal@intel.com>,
-        Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
-        Rodrigo Siqueira <siqueira@igalia.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
-        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
-References: <20250816-wb-drop-encoder-v2-0-f951de04f4f9@oss.qualcomm.com>
- <20250816-wb-drop-encoder-v2-4-f951de04f4f9@oss.qualcomm.com>
-Content-Language: en-US
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-In-Reply-To: <20250816-wb-drop-encoder-v2-4-f951de04f4f9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: XjWYoMMZIzOonAzy5rtUpTmgxw6NJ6bj
-X-Authority-Analysis: v=2.4 cv=YrsPR5YX c=1 sm=1 tr=0 ts=68a3728b cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=hy87YkSEx0gxqBhA-1kA:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzOSBTYWx0ZWRfX1ilL+OyoKaLz
- FirN4yP/RTMQkUt58CIwMZO2ipNxogU4GdFL/h70foEi/r7JVRa6E8d78Pe5uDlRDLcEJhHZVdH
- wziKpekHzlffx4gKemwC1jwXMXoqBaSLp5LZQ84WEBBuNxPSX/RDm80wLfsfGafUcnG/tvftBLD
- 2AzErUNQ8Uj5vHTxHo4k1NW35yt2l+cuHMQIBgAbLCcpItIkUKHyzHEQcZ+0INpleHKcHD+/w3G
- YFLQ/xK0D3ZFLtvS3/sc7FReogS6tdvVgK2Fh83rKDNgDDDvRzJswbvbQZiIpOLQpVOgxGyd/JS
- VXRoo63LmzNkMNGdmSGzFW0AefpZMFBGJ7x6n58RzXWu//4RyxVafi2ie5hQ9EiglgMFSmuJCmB
- a7ukt1EQ
-X-Proofpoint-ORIG-GUID: XjWYoMMZIzOonAzy5rtUpTmgxw6NJ6bj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 phishscore=0
- adultscore=0 bulkscore=0 clxscore=1015 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508160039
+References: <20250818124458.334548733@linuxfoundation.org>
+In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 19 Aug 2025 00:18:33 +0530
+X-Gm-Features: Ac12FXy3q6ijpYJlZM9lDBDRg0-eeJWhMQBu6-QX-xroiq3SJXWRlW-B4Umf5T8
+Message-ID: <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, 
+	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, srinivas.kandagatla@oss.qualcomm.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 18 Aug 2025 at 18:45, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.15.11 release.
+> There are 515 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 20 Aug 2025 12:43:43 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
+Boot regression occurs on the Qualcomm DragonBoard 410c (arm64) with
+stable-rc 6.15.11-rc1. The kernel crashes during early boot with a
+NULL pointer dereference in the Qualcomm SCM/TZMEM subsystem.
 
-On 8/16/2025 8:19 AM, Dmitry Baryshkov wrote:
-> Use drmm_plain_encoder_alloc() to allocate simple encoder and
-> drmm_writeback_connector_init() in order to initialize writeback
-> connector instance.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+The crash originates in qcom_scm_shm_bridge_enable()
+(drivers/firmware/qcom/qcom_scm.c:1618) and is invoked by
+qcom_tzmem_enable() (drivers/firmware/qcom/qcom_tzmem.c:97 and :474).
+This happens while probing SCM during platform initialization, preventing
+the board from reaching userspace due to kernel panic.
 
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Regression Analysis:
+- New regression? yes
+- Reproducibility? yes
 
-Thanks,
+Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+Unable to handle kernel NULL pointer dereference
+qcom_scm_shm_bridge_enable
 
-Jessica Zhang
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 10 +++-------
->   1 file changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> index 8ff496082902b1ee713e806140f39b4730ed256a..cd73468e369a93c50303db2a7d4499bcb17be5d1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> @@ -80,7 +80,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
->   static const struct drm_connector_funcs dpu_wb_conn_funcs = {
->   	.reset = drm_atomic_helper_connector_reset,
->   	.fill_modes = drm_helper_probe_single_connector_modes,
-> -	.destroy = drm_connector_cleanup,
->   	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
->   	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
->   };
-> @@ -131,12 +130,9 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
->   
->   	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
->   
-> -	/* DPU initializes the encoder and sets it up completely for writeback
-> -	 * cases and hence should use the new API drm_writeback_connector_init_with_encoder
-> -	 * to initialize the writeback connector
-> -	 */
-> -	rc = drm_writeback_connector_init_with_encoder(dev, &dpu_wb_conn->base, enc,
-> -			&dpu_wb_conn_funcs, format_list, num_formats);
-> +	rc = drmm_writeback_connector_init(dev, &dpu_wb_conn->base,
-> +					   &dpu_wb_conn_funcs, enc,
-> +					   format_list, num_formats);
->   
->   	if (!rc)
->   		dpu_wb_conn->wb_enc = enc;
-> 
+## Test log oom03
+[    1.191790] scmi_core: SCMI protocol bus registered
+[    1.194074] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+[    1.198306] Mem abort info:
+[    1.207295]   ESR = 0x0000000096000004
+[    1.209796]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    1.213635]   SET = 0, FnV = 0
+[    1.219095]   EA = 0, S1PTW = 0
+[    1.221945]   FSC = 0x04: level 0 translation fault
+[    1.225004] Data abort info:
+[    1.229874]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    1.232977]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    1.238286]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    1.243409] [0000000000000000] user address but active_mm is swapper
+[    1.248798] Internal error: Oops: 0000000096000004 [#1]  SMP
+[    1.255110] Modules linked in:
+[    1.260744] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted
+6.15.11-rc1 #1 PREEMPT
+[    1.263622] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+[    1.271517] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    1.278199] pc : qcom_scm_shm_bridge_enable
+(drivers/firmware/qcom/qcom_scm.c:1618)
+[    1.284878] lr : qcom_tzmem_enable
+(drivers/firmware/qcom/qcom_tzmem.c:97
+drivers/firmware/qcom/qcom_tzmem.c:474)
+[    1.290085] sp : ffff80008002b720
+[    1.294508] x29: ffff80008002b7b0 x28: 0000000000000000 x27: 0000000000000000
+[    1.297819] x26: 0000000000000000 x25: 0000000000000000 x24: ffff00003faf6128
+[    1.304937] x23: ffff00003fac6c68 x22: 0000000000000000 x21: ffff0000036ba410
+[    1.312055] x20: ffff0000036ba400 x19: ffff8000831a4000 x18: 0000000000000352
+[    1.319173] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000002
+[    1.326292] x14: ffffffffffffffff x13: 0000000000000000 x12: 0000000000000002
+[    1.333410] x11: 0000000000000000 x10: 0000000000000019 x9 : ffff8000813e6d74
+[    1.340527] x8 : 0000000000000000 x7 : 7f7f7f7f7f7f7f7f x6 : fefefeff35302f37
+[    1.347645] x5 : 8080808000000000 x4 : 0000000000000020 x3 : 0000000000000010
+[    1.354763] x2 : 000000000000001c x1 : 000000000000000c x0 : 0000000000000000
+[    1.361882] Call trace:
+[    1.368986] qcom_scm_shm_bridge_enable
+(drivers/firmware/qcom/qcom_scm.c:1618) (P)
+[    1.371251] qcom_tzmem_enable
+(drivers/firmware/qcom/qcom_tzmem.c:97
+drivers/firmware/qcom/qcom_tzmem.c:474)
+[    1.376455] qcom_scm_probe (drivers/firmware/qcom/qcom_scm.c:2256)
+[    1.380534] platform_probe (drivers/base/platform.c:1405)
+[    1.384180] really_probe (drivers/base/dd.c:581)
+[    1.387998] __driver_probe_device (drivers/base/dd.c:?)
+[    1.391647] driver_probe_device (drivers/base/dd.c:829)
+[    1.395987] __driver_attach (drivers/base/dd.c:1216)
+[    1.399978] bus_for_each_dev (drivers/base/bus.c:369)
+[    1.403798] driver_attach (drivers/base/dd.c:1233)
+[    1.407965] bus_add_driver (drivers/base/bus.c:679)
+[    1.411523] driver_register (drivers/base/driver.c:250)
+[    1.415083] __platform_driver_register (drivers/base/platform.c:867)
+[    1.418905] qcom_scm_init (drivers/firmware/qcom/qcom_scm.c:2362)
+[    1.423763] do_one_initcall (init/main.c:1257)
+[    1.427409] do_initcall_level (init/main.c:1318)
+[    1.430969] do_initcalls (init/main.c:1332)
+[    1.435134] do_basic_setup (init/main.c:1355)
+[    1.438434] kernel_init_freeable (init/main.c:1571)
+[    1.442254] kernel_init (init/main.c:1459)
+[    1.446593] ret_from_fork (arch/arm64/kernel/entry.S:865)
+[ 1.449810] Code: a905ffff a904ffff a903ffff f9001bff (f9400100)
+All code
+========
+   0: a905ffff stp xzr, xzr, [sp, #88]
+   4: a904ffff stp xzr, xzr, [sp, #72]
+   8: a903ffff stp xzr, xzr, [sp, #56]
+   c: f9001bff str xzr, [sp, #48]
+  10:* f9400100 ldr x0, [x8] <-- trapping instruction
 
+Code starting with the faulting instruction
+===========================================
+   0: f9400100 ldr x0, [x8]
+[    1.453637] ---[ end trace 0000000000000000 ]---
+[    1.459661] Kernel panic - not syncing: Attempted to kill init!
+exitcode=0x0000000b
+[    1.464318] SMP: stopping secondary CPUs
+[    1.471696] ---[ end Kernel panic - not syncing: Attempted to kill
+init! exitcode=0x0000000b ]---
+
+Please refer full test log information in the below links.
+
+## Source
+* Kernel version: 6.15.11-rc1
+* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* Git describe: v6.15.9-993-g1cf711608500
+* Git commit: 1cf71160850064e9e506eda37e0386948bedd6b4
+* Architectures: arm64 Dragonboard 410c
+* Toolchains: gcc-13, clang-20
+* Kconfigs: defconfig+lkft
+
+## Test
+* Boot log: https://qa-reports.linaro.org/api/testruns/29589408/log_file/
+* Boot lava log: https://lkft.validation.linaro.org/scheduler/job/8407660#L2708
+* Boot details:
+https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.9-993-g1cf711608500/log-parser-boot/panic-multiline-kernel-panic-not-syncing-attempted-to-kill-init-exitcode/
+* Boot plan: https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/31SjnwYvj7Mmcay6Qa54CFbNfP9
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/31SjkxSlW3Ssjf1eGdFHJPPU4Yw/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/31SjkxSlW3Ssjf1eGdFHJPPU4Yw/config
+
+--
+Linaro LKFT
+https://lkft.linaro.org
 
