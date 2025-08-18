@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-69575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACD2FB2A4B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 15:24:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3D7B2A4C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 15:25:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 382276263DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 13:17:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DA943B7751
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Aug 2025 13:18:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAA69322520;
-	Mon, 18 Aug 2025 13:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8B7D322751;
+	Mon, 18 Aug 2025 13:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Nun2K7cO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LsRwQiAi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8659232A3D0;
-	Mon, 18 Aug 2025 13:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBD432254E;
+	Mon, 18 Aug 2025 13:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522930; cv=none; b=qTstDKc1dU+235eA/a7mBUB0t89WYJvXzsY2IwIfdrvIGiDPRdP39lM+TOYxb7xSNKlLSduef9d4CV+buAhCyjqEhPfRuRf1xtwL5L7PG/bxAkrLWmtO+4Nnexihh8JXEhfdCwZjVjW4ILw0RWVml7wBFnl+NVwVyC0kktztwi0=
+	t=1755522934; cv=none; b=IqqI88V7QNnTjJ5qu4rKPPFwaJI/pCV+jYQhg0NDbhmao/yyH+rFPiD83KjF03baqXkD+LuRZTfo3ruadiyR/hHnQvMFMb/bvgzUepZkGiIR00XUa5swV1xBRwWQdXkMZCOcGbkwITUoqQYDkmieqQdJbGgKAkoFXtqYxGA1bfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522930; c=relaxed/simple;
-	bh=yrQWzDV3xoPDSfEn03PQnVrIEcmVbGlNhAxKLdFIS54=;
+	s=arc-20240116; t=1755522934; c=relaxed/simple;
+	bh=GiNaQ/QSnq3x1AnnJUk+RFm9Gh0f3DcsV8VK5hUyJ60=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=efuITQo7jN/bD9PsxbPqVbpi9ZKUFIfC57ZiBh0frOkvT5199g8DUoJwzHe0DzC7sKnSjTAcX3YPiqZbSdntp3JH2R7Ipn4ipvpsg4DOuR72fQZLkf4LWE5kcPzeGg97Hamr139bkfylhBfrFw1sxYDiU1A/uaKi7ptZKv4rPr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Nun2K7cO; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=W1x0owAtDKp43h0wNzQenCe4Iw1FGtRNkVMAMun6lnh+EwwpkqzW2+75pOe/8f6YNF63O5j6mqIifX2bcFgGuTRCAeR9yLkgU2ekh8JzQab8Ob57Jqc8evxNaXuKGztf6o6v9qt2G0yYPHJJIGoJSUaVd4EDzSDVbRNx6JntPy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LsRwQiAi; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57I9HSRX030354;
-	Mon, 18 Aug 2025 13:15:16 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57I8OlHr012131;
+	Mon, 18 Aug 2025 13:15:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6FHyxBBE82YNX/Q2IGUrEicX5waTTaLpTnOWnTkJ45E=; b=Nun2K7cO2XOJba7u
-	mgeKwxfGavG7uSNMHOCcrM2Of8SwQOcAIlc3al6YJs1s7v4CpDD8NhYPCRvvJ6Ac
-	AnxlWfdx3FokWFtTsLskHTtAp1LduwztbphUSrLKB1S1eHQY3vlFpCQCqYf2tPIi
-	E/inqSJJ5ia+vMV4u85AqiF3gQ0BPmDdGp01xfVhr9WrU3cv7UVA+kKuUebEY8rh
-	hQqnTcCnao1idy8HFZ8ZWCEVOCgsf+ZW1j6hhdqjOyLg5jibnG92fp97ubPwY3eC
-	wSYe1+AqTJXQh2EkpkSxqxC35q5hJ7kREr0Cy9pXO/dK6q9jPAnvzBGvA0PVHIAS
-	4W6Zjg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jhagvsm7-1
+	+FYusXXHUAcy+Rd9CukLs9Yfx3JFO6W1otEVPr4WW7Y=; b=LsRwQiAizkElHMgx
+	O5wb2EGKbTVkhT4U4bZAS6Q9TGC6YiID2bcRqUCXkQg108LE92rlKQcS1Q2XdF0a
+	XnAxmLNpR/FAwA+Ruz7FQvscA/LbX7x3VDX/RlRZwjPotGWwrSTvsZe2v56K/Oej
+	w91B1sOKuO+0m/IwbPVuK6oMYNcJaZrdaCqwer6R2wc0UyO02sQgEzODJKsXG4j2
+	9zclR4G0GL1svRS/WhvNJyO61uR/cOFkbL73fRlmOLH3vpGCc7NNUEXly13N9Eow
+	3uHG3eiZhbF81vAoaJgcVHJgeb6VZDZJo1lUPkDdfz7WPLJXtebOD8ISoXuEb2IS
+	jK1hcQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jjc7vte6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Aug 2025 13:15:16 +0000 (GMT)
+	Mon, 18 Aug 2025 13:15:21 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57IDFFQf006596
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57IDFKV4007651
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Aug 2025 13:15:15 GMT
+	Mon, 18 Aug 2025 13:15:20 GMT
 Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Mon, 18 Aug 2025 06:15:10 -0700
+ 15.2.1748.10; Mon, 18 Aug 2025 06:15:15 -0700
 From: Luo Jie <quic_luoj@quicinc.com>
-Date: Mon, 18 Aug 2025 21:14:28 +0800
-Subject: [PATCH net-next v8 04/14] net: ethernet: qualcomm: Initialize PPE
- buffer management for IPQ9574
+Date: Mon, 18 Aug 2025 21:14:29 +0800
+Subject: [PATCH net-next v8 05/14] net: ethernet: qualcomm: Initialize PPE
+ queue management for IPQ9574
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250818-qcom_ipq_ppe-v8-4-1d4ff641fce9@quicinc.com>
+Message-ID: <20250818-qcom_ipq_ppe-v8-5-1d4ff641fce9@quicinc.com>
 References: <20250818-qcom_ipq_ppe-v8-0-1d4ff641fce9@quicinc.com>
 In-Reply-To: <20250818-qcom_ipq_ppe-v8-0-1d4ff641fce9@quicinc.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>,
@@ -98,375 +98,363 @@ CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
         Luo Jie
 	<quic_luoj@quicinc.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755522889; l=11672;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755522889; l=12547;
  i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
- bh=yrQWzDV3xoPDSfEn03PQnVrIEcmVbGlNhAxKLdFIS54=;
- b=5fWMErIvA9fG64k0QxpzC44sujQfeGBMD5JEfoeXhhukDCQKTc33C9Xl/UJmMC2RhFyRx0hhI
- Ql0hh9QF22WDSaJC9COYrdkabBkAz2WLHWpoRM39tE8OnMZ53yzMypv
+ bh=GiNaQ/QSnq3x1AnnJUk+RFm9Gh0f3DcsV8VK5hUyJ60=;
+ b=+3sg7xQIJebZL8jQAdVjObH/Aw7g/NgjxNO2T3ScR6R7Ny4z0nmEodlMCw0jHMYbe0vGQ3JpE
+ xdJYiCe+RdEA0M13K4by/Ue+chyjOjMxNiYX+4IwP8hqfQZVDaXUdYi
 X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
  pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=D9xHKuRj c=1 sm=1 tr=0 ts=68a32764 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAzMyBTYWx0ZWRfX8Et1Mn+fUTml
+ fsH6SWd5Tirmz7K9IGX4OvC3jKnrsDgLes5WKVf2D2wBzsI9Fqq0jkWVQXn56CbHeqUEOtNKbJy
+ BsbkfdavgxdwMK1xzVxGkEdVWe8aCMvXSkjBMZqoIaKIlYXnROxt8VYuJO2lYAcGGl1NYSg7jM1
+ IZVI5fIt96BFjRlR06aFEsMf4SmbOufkwWIjx+1xP3QrlSo5kazP+9vvIxxXfOe+VX0wjeiHvGD
+ o81pnRoNpBqfpKaDcpGV0YUUC5xXqubf25GXfNHV5Qxlb29jFNsgcqFVswI0kP2to/ceDEqshLT
+ dyaOK2MxdbOPn65Maw/YBxlKZWeC41WB4RzHqEvKVy0M+nWDEZU21FyiqtORLkQ/oyPEJpFz3gs
+ 7+CJDGMM
+X-Authority-Analysis: v=2.4 cv=c4mrQQ9l c=1 sm=1 tr=0 ts=68a32769 cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=hdbwrHnlPZYA2T6C3_4A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Ym-HQ5NteAiCKHz5BN42ls7C73QsrdKp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyNCBTYWx0ZWRfXxu2bqnssFcMv
- +8xzyq8g/n/57oZzqYgldJpMr0IHpi59pW624+wmvPrw3bHVwffvsx30B2txmXpjHT9kC8tvLmA
- tZ/x8bLNCt1NFzrWFuxQRkSaxp8sLwq7h67HEHDdAZZPcIbBpvUJ2MK633ObmeoN069SsLgCFpc
- tWkXZouknmYURLhEhUDW6JAKkSCIDAlR+YCSuDLuB/VzOjQrUGebcZgEW6dN8z9wnpa4/LiXXU9
- 6hB4w5e5v16PYtog8xmNpJzJBMmZ1P5dqkM3Sp9V3NlRGCV4icczMfoAJkPUdflc2YYStoIce63
- 8sqS4Pu62qh8F9QvvezMnz8N/Tbt+MecE0UDCweV24XeQoIBGCRihSLlIi680/hBCGHrOnFYxxi
- CjaciQpT
-X-Proofpoint-GUID: Ym-HQ5NteAiCKHz5BN42ls7C73QsrdKp
+ a=wXS57atiiGPxPzAmdy8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: j-xrdYF499SfUB3EyWV0xeA5t-n9oVhV
+X-Proofpoint-ORIG-GUID: j-xrdYF499SfUB3EyWV0xeA5t-n9oVhV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160024
+ clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508160033
 
-The BM (Buffer Management) config controls the pause frame generated
-on the PPE port. There are maximum 15 BM ports and 4 groups supported,
-all BM ports are assigned to group 0 by default. The number of hardware
-buffers configured for the port influence the threshold of the flow
-control for that port.
+QM (queue management) configurations decide the length of PPE queues
+and the queue depth for these queues which are used to drop packets
+in events of congestion.
+
+There are two types of PPE queues - unicast queues (0-255) and multicast
+queues (256-299). These queue types are used to forward different types
+of traffic, and are configured with different lengths.
 
 Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 ---
- drivers/net/ethernet/qualcomm/ppe/Makefile     |   2 +-
- drivers/net/ethernet/qualcomm/ppe/ppe.c        |   5 +
- drivers/net/ethernet/qualcomm/ppe/ppe_config.c | 199 +++++++++++++++++++++++++
- drivers/net/ethernet/qualcomm/ppe/ppe_config.h |  12 ++
- drivers/net/ethernet/qualcomm/ppe/ppe_regs.h   |  59 ++++++++
- 5 files changed, 276 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qualcomm/ppe/ppe_config.c | 184 ++++++++++++++++++++++++-
+ drivers/net/ethernet/qualcomm/ppe/ppe_regs.h   |  85 ++++++++++++
+ 2 files changed, 268 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/ppe/Makefile b/drivers/net/ethernet/qualcomm/ppe/Makefile
-index 63d50d3b4f2e..410a7bb54cfe 100644
---- a/drivers/net/ethernet/qualcomm/ppe/Makefile
-+++ b/drivers/net/ethernet/qualcomm/ppe/Makefile
-@@ -4,4 +4,4 @@
- #
- 
- obj-$(CONFIG_QCOM_PPE) += qcom-ppe.o
--qcom-ppe-objs := ppe.o
-+qcom-ppe-objs := ppe.o ppe_config.o
-diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe.c b/drivers/net/ethernet/qualcomm/ppe/ppe.c
-index 3aacb8eddbae..6afeda082689 100644
---- a/drivers/net/ethernet/qualcomm/ppe/ppe.c
-+++ b/drivers/net/ethernet/qualcomm/ppe/ppe.c
-@@ -15,6 +15,7 @@
- #include <linux/reset.h>
- 
- #include "ppe.h"
-+#include "ppe_config.h"
- 
- #define PPE_PORT_MAX		8
- #define PPE_CLK_RATE		353000000
-@@ -199,6 +200,10 @@ static int qcom_ppe_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "PPE clock config failed\n");
- 
-+	ret = ppe_hw_config(ppe_dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "PPE HW config failed\n");
-+
- 	platform_set_drvdata(pdev, ppe_dev);
- 
- 	return 0;
 diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
-new file mode 100644
-index 000000000000..45b031d4dd46
---- /dev/null
+index 45b031d4dd46..53887069b432 100644
+--- a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
 +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
-@@ -0,0 +1,199 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+/* PPE HW initialization configs such as BM(buffer management),
-+ * QM(queue management) and scheduler configs.
-+ */
-+
-+#include <linux/bitfield.h>
-+#include <linux/bits.h>
-+#include <linux/device.h>
-+#include <linux/regmap.h>
-+
-+#include "ppe.h"
-+#include "ppe_config.h"
-+#include "ppe_regs.h"
-+
+@@ -43,6 +43,29 @@ struct ppe_bm_port_config {
+ 	bool dynamic;
+ };
+ 
 +/**
-+ * struct ppe_bm_port_config - PPE BM port configuration.
-+ * @port_id_start: The fist BM port ID to configure.
-+ * @port_id_end: The last BM port ID to configure.
-+ * @pre_alloc: BM port dedicated buffer number.
-+ * @in_fly_buf: Buffer number for receiving the packet after pause frame sent.
-+ * @ceil: Ceil to generate the back pressure.
++ * struct ppe_qm_queue_config - PPE queue config.
++ * @queue_start: PPE start of queue ID.
++ * @queue_end: PPE end of queue ID.
++ * @prealloc_buf: Queue dedicated buffer number.
++ * @ceil: Ceil to start drop packet from queue.
 + * @weight: Weight value.
-+ * @resume_offset: Resume offset from the threshold value.
-+ * @resume_ceil: Ceil to resume from the back pressure state.
-+ * @dynamic: Dynamic threshold used or not.
++ * @resume_offset: Resume offset from the threshold.
++ * @dynamic: Threshold value is decided dynamically or statically.
 + *
-+ * The is for configuring the threshold that impacts the port
-+ * flow control.
++ * Queue configuration decides the threshold to drop packet from PPE
++ * hardware queue.
 + */
-+struct ppe_bm_port_config {
-+	unsigned int port_id_start;
-+	unsigned int port_id_end;
-+	unsigned int pre_alloc;
-+	unsigned int in_fly_buf;
++struct ppe_qm_queue_config {
++	unsigned int queue_start;
++	unsigned int queue_end;
++	unsigned int prealloc_buf;
 +	unsigned int ceil;
 +	unsigned int weight;
 +	unsigned int resume_offset;
-+	unsigned int resume_ceil;
 +	bool dynamic;
 +};
 +
-+/* There are total 2048 buffers available in PPE, out of which some
-+ * buffers are reserved for some specific purposes per PPE port. The
-+ * rest of the pool of 1550 buffers are assigned to the general 'group0'
-+ * which is shared among all ports of the PPE.
+ /* There are total 2048 buffers available in PPE, out of which some
+  * buffers are reserved for some specific purposes per PPE port. The
+  * rest of the pool of 1550 buffers are assigned to the general 'group0'
+@@ -106,6 +129,40 @@ static const struct ppe_bm_port_config ipq9574_ppe_bm_port_config[] = {
+ 	},
+ };
+ 
++/* QM fetches the packet from PPE buffer management for transmitting the
++ * packet out. The QM group configuration limits the total number of buffers
++ * enqueued by all PPE hardware queues.
++ * There are total 2048 buffers available, out of which some buffers are
++ * dedicated to hardware exception handlers. The remaining buffers are
++ * assigned to the general 'group0', which is the group assigned to all
++ * queues by default.
 + */
-+static const int ipq9574_ppe_bm_group_config = 1550;
++static const int ipq9574_ppe_qm_group_config = 2000;
 +
-+/* The buffer configurations per PPE port. There are 15 BM ports and
-+ * 4 BM groups supported by PPE. BM port (0-7) is for EDMA port 0,
-+ * BM port (8-13) is for PPE physical port 1-6 and BM port 14 is for
-+ * EIP port.
-+ */
-+static const struct ppe_bm_port_config ipq9574_ppe_bm_port_config[] = {
++/* Default QM settings for unicast and multicast queues for IPQ9754. */
++static const struct ppe_qm_queue_config ipq9574_ppe_qm_queue_config[] = {
 +	{
-+		/* Buffer configuration for the BM port ID 0 of EDMA. */
-+		.port_id_start	= 0,
-+		.port_id_end	= 0,
-+		.pre_alloc	= 0,
-+		.in_fly_buf	= 100,
-+		.ceil		= 1146,
++		/* QM settings for unicast queues 0 to 255. */
++		.queue_start	= 0,
++		.queue_end	= 255,
++		.prealloc_buf	= 0,
++		.ceil		= 1200,
 +		.weight		= 7,
-+		.resume_offset	= 8,
-+		.resume_ceil	= 0,
++		.resume_offset	= 36,
 +		.dynamic	= true,
 +	},
 +	{
-+		/* Buffer configuration for the BM port ID 1-7 of EDMA. */
-+		.port_id_start	= 1,
-+		.port_id_end	= 7,
-+		.pre_alloc	= 0,
-+		.in_fly_buf	= 100,
++		/* QM settings for multicast queues 256 to 299. */
++		.queue_start	= 256,
++		.queue_end	= 299,
++		.prealloc_buf	= 0,
 +		.ceil		= 250,
-+		.weight		= 4,
++		.weight		= 0,
 +		.resume_offset	= 36,
-+		.resume_ceil	= 0,
-+		.dynamic	= true,
-+	},
-+	{
-+		/* Buffer configuration for the BM port ID 8-13 of PPE ports. */
-+		.port_id_start	= 8,
-+		.port_id_end	= 13,
-+		.pre_alloc	= 0,
-+		.in_fly_buf	= 128,
-+		.ceil		= 250,
-+		.weight		= 4,
-+		.resume_offset	= 36,
-+		.resume_ceil	= 0,
-+		.dynamic	= true,
-+	},
-+	{
-+		/* Buffer configuration for the BM port ID 14 of EIP. */
-+		.port_id_start	= 14,
-+		.port_id_end	= 14,
-+		.pre_alloc	= 0,
-+		.in_fly_buf	= 40,
-+		.ceil		= 250,
-+		.weight		= 4,
-+		.resume_offset	= 36,
-+		.resume_ceil	= 0,
-+		.dynamic	= true,
++		.dynamic	= false,
 +	},
 +};
 +
-+static int ppe_config_bm_threshold(struct ppe_device *ppe_dev, int bm_port_id,
-+				   const struct ppe_bm_port_config port_cfg)
+ static int ppe_config_bm_threshold(struct ppe_device *ppe_dev, int bm_port_id,
+ 				   const struct ppe_bm_port_config port_cfg)
+ {
+@@ -193,7 +250,132 @@ static int ppe_config_bm(struct ppe_device *ppe_dev)
+ 	return ret;
+ }
+ 
++/* Configure PPE hardware queue depth, which is decided by the threshold
++ * of queue.
++ */
++static int ppe_config_qm(struct ppe_device *ppe_dev)
 +{
-+	u32 reg, val, bm_fc_val[2];
-+	int ret;
++	const struct ppe_qm_queue_config *queue_cfg;
++	int ret, i, queue_id, queue_cfg_count;
++	u32 reg, multicast_queue_cfg[5];
++	u32 unicast_queue_cfg[4];
++	u32 group_cfg[3];
 +
-+	reg = PPE_BM_PORT_FC_CFG_TBL_ADDR + PPE_BM_PORT_FC_CFG_TBL_INC * bm_port_id;
++	/* Assign the buffer number to the group 0 by default. */
++	reg = PPE_AC_GRP_CFG_TBL_ADDR;
 +	ret = regmap_bulk_read(ppe_dev->regmap, reg,
-+			       bm_fc_val, ARRAY_SIZE(bm_fc_val));
++			       group_cfg, ARRAY_SIZE(group_cfg));
 +	if (ret)
-+		return ret;
++		goto qm_config_fail;
 +
-+	/* Configure BM flow control related threshold. */
-+	PPE_BM_PORT_FC_SET_WEIGHT(bm_fc_val, port_cfg.weight);
-+	PPE_BM_PORT_FC_SET_RESUME_OFFSET(bm_fc_val, port_cfg.resume_offset);
-+	PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(bm_fc_val, port_cfg.resume_ceil);
-+	PPE_BM_PORT_FC_SET_DYNAMIC(bm_fc_val, port_cfg.dynamic);
-+	PPE_BM_PORT_FC_SET_REACT_LIMIT(bm_fc_val, port_cfg.in_fly_buf);
-+	PPE_BM_PORT_FC_SET_PRE_ALLOC(bm_fc_val, port_cfg.pre_alloc);
-+
-+	/* Configure low/high bits of the ceiling for the BM port. */
-+	val = FIELD_GET(GENMASK(2, 0), port_cfg.ceil);
-+	PPE_BM_PORT_FC_SET_CEILING_LOW(bm_fc_val, val);
-+	val = FIELD_GET(GENMASK(10, 3), port_cfg.ceil);
-+	PPE_BM_PORT_FC_SET_CEILING_HIGH(bm_fc_val, val);
++	PPE_AC_GRP_SET_BUF_LIMIT(group_cfg, ipq9574_ppe_qm_group_config);
 +
 +	ret = regmap_bulk_write(ppe_dev->regmap, reg,
-+				bm_fc_val, ARRAY_SIZE(bm_fc_val));
++				group_cfg, ARRAY_SIZE(group_cfg));
 +	if (ret)
-+		return ret;
++		goto qm_config_fail;
 +
-+	/* Assign the default group ID 0 to the BM port. */
-+	val = FIELD_PREP(PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID, 0);
-+	reg = PPE_BM_PORT_GROUP_ID_ADDR + PPE_BM_PORT_GROUP_ID_INC * bm_port_id;
-+	ret = regmap_update_bits(ppe_dev->regmap, reg,
-+				 PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID,
-+				 val);
-+	if (ret)
-+		return ret;
++	queue_cfg = ipq9574_ppe_qm_queue_config;
++	queue_cfg_count = ARRAY_SIZE(ipq9574_ppe_qm_queue_config);
++	for (i = 0; i < queue_cfg_count; i++) {
++		queue_id = queue_cfg[i].queue_start;
 +
-+	/* Enable BM port flow control. */
-+	reg = PPE_BM_PORT_FC_MODE_ADDR + PPE_BM_PORT_FC_MODE_INC * bm_port_id;
++		/* Configure threshold for dropping packets separately for
++		 * unicast and multicast PPE queues.
++		 */
++		while (queue_id <= queue_cfg[i].queue_end) {
++			if (queue_id < PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES) {
++				reg = PPE_AC_UNICAST_QUEUE_CFG_TBL_ADDR +
++				      PPE_AC_UNICAST_QUEUE_CFG_TBL_INC * queue_id;
 +
-+	return regmap_set_bits(ppe_dev->regmap, reg, PPE_BM_PORT_FC_MODE_EN);
-+}
++				ret = regmap_bulk_read(ppe_dev->regmap, reg,
++						       unicast_queue_cfg,
++						       ARRAY_SIZE(unicast_queue_cfg));
++				if (ret)
++					goto qm_config_fail;
 +
-+/* Configure the buffer threshold for the port flow control function. */
-+static int ppe_config_bm(struct ppe_device *ppe_dev)
-+{
-+	const struct ppe_bm_port_config *port_cfg;
-+	unsigned int i, bm_port_id, port_cfg_cnt;
-+	u32 reg, val;
-+	int ret;
++				PPE_AC_UNICAST_QUEUE_SET_EN(unicast_queue_cfg, true);
++				PPE_AC_UNICAST_QUEUE_SET_GRP_ID(unicast_queue_cfg, 0);
++				PPE_AC_UNICAST_QUEUE_SET_PRE_LIMIT(unicast_queue_cfg,
++								   queue_cfg[i].prealloc_buf);
++				PPE_AC_UNICAST_QUEUE_SET_DYNAMIC(unicast_queue_cfg,
++								 queue_cfg[i].dynamic);
++				PPE_AC_UNICAST_QUEUE_SET_WEIGHT(unicast_queue_cfg,
++								queue_cfg[i].weight);
++				PPE_AC_UNICAST_QUEUE_SET_THRESHOLD(unicast_queue_cfg,
++								   queue_cfg[i].ceil);
++				PPE_AC_UNICAST_QUEUE_SET_GRN_RESUME(unicast_queue_cfg,
++								    queue_cfg[i].resume_offset);
 +
-+	/* Configure the allocated buffer number only for group 0.
-+	 * The buffer number of group 1-3 is already cleared to 0
-+	 * after PPE reset during the probe of PPE driver.
-+	 */
-+	reg = PPE_BM_SHARED_GROUP_CFG_ADDR;
-+	val = FIELD_PREP(PPE_BM_SHARED_GROUP_CFG_SHARED_LIMIT,
-+			 ipq9574_ppe_bm_group_config);
-+	ret = regmap_update_bits(ppe_dev->regmap, reg,
-+				 PPE_BM_SHARED_GROUP_CFG_SHARED_LIMIT,
-+				 val);
-+	if (ret)
-+		goto bm_config_fail;
++				ret = regmap_bulk_write(ppe_dev->regmap, reg,
++							unicast_queue_cfg,
++							ARRAY_SIZE(unicast_queue_cfg));
++				if (ret)
++					goto qm_config_fail;
++			} else {
++				reg = PPE_AC_MULTICAST_QUEUE_CFG_TBL_ADDR +
++				      PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC * queue_id;
 +
-+	/* Configure buffer thresholds for the BM ports. */
-+	port_cfg = ipq9574_ppe_bm_port_config;
-+	port_cfg_cnt = ARRAY_SIZE(ipq9574_ppe_bm_port_config);
-+	for (i = 0; i < port_cfg_cnt; i++) {
-+		for (bm_port_id = port_cfg[i].port_id_start;
-+		     bm_port_id <= port_cfg[i].port_id_end; bm_port_id++) {
-+			ret = ppe_config_bm_threshold(ppe_dev, bm_port_id,
-+						      port_cfg[i]);
++				ret = regmap_bulk_read(ppe_dev->regmap, reg,
++						       multicast_queue_cfg,
++						       ARRAY_SIZE(multicast_queue_cfg));
++				if (ret)
++					goto qm_config_fail;
++
++				PPE_AC_MULTICAST_QUEUE_SET_EN(multicast_queue_cfg, true);
++				PPE_AC_MULTICAST_QUEUE_SET_GRN_GRP_ID(multicast_queue_cfg, 0);
++				PPE_AC_MULTICAST_QUEUE_SET_GRN_PRE_LIMIT(multicast_queue_cfg,
++									 queue_cfg[i].prealloc_buf);
++				PPE_AC_MULTICAST_QUEUE_SET_GRN_THRESHOLD(multicast_queue_cfg,
++									 queue_cfg[i].ceil);
++				PPE_AC_MULTICAST_QUEUE_SET_GRN_RESUME(multicast_queue_cfg,
++								      queue_cfg[i].resume_offset);
++
++				ret = regmap_bulk_write(ppe_dev->regmap, reg,
++							multicast_queue_cfg,
++							ARRAY_SIZE(multicast_queue_cfg));
++				if (ret)
++					goto qm_config_fail;
++			}
++
++			/* Enable enqueue. */
++			reg = PPE_ENQ_OPR_TBL_ADDR + PPE_ENQ_OPR_TBL_INC * queue_id;
++			ret = regmap_clear_bits(ppe_dev->regmap, reg,
++						PPE_ENQ_OPR_TBL_ENQ_DISABLE);
 +			if (ret)
-+				goto bm_config_fail;
++				goto qm_config_fail;
++
++			/* Enable dequeue. */
++			reg = PPE_DEQ_OPR_TBL_ADDR + PPE_DEQ_OPR_TBL_INC * queue_id;
++			ret = regmap_clear_bits(ppe_dev->regmap, reg,
++						PPE_DEQ_OPR_TBL_DEQ_DISABLE);
++			if (ret)
++				goto qm_config_fail;
++
++			queue_id++;
 +		}
 +	}
 +
++	/* Enable queue counter for all PPE hardware queues. */
++	ret = regmap_set_bits(ppe_dev->regmap, PPE_EG_BRIDGE_CONFIG_ADDR,
++			      PPE_EG_BRIDGE_CONFIG_QUEUE_CNT_EN);
++	if (ret)
++		goto qm_config_fail;
++
 +	return 0;
 +
-+bm_config_fail:
-+	dev_err(ppe_dev->dev, "PPE BM config error %d\n", ret);
++qm_config_fail:
++	dev_err(ppe_dev->dev, "PPE QM config error %d\n", ret);
 +	return ret;
 +}
 +
-+int ppe_hw_config(struct ppe_device *ppe_dev)
-+{
-+	return ppe_config_bm(ppe_dev);
-+}
-diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.h b/drivers/net/ethernet/qualcomm/ppe/ppe_config.h
-new file mode 100644
-index 000000000000..8e032910bfe7
---- /dev/null
-+++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-only
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
+ int ppe_hw_config(struct ppe_device *ppe_dev)
+ {
+-	return ppe_config_bm(ppe_dev);
++	int ret;
 +
-+#ifndef __PPE_CONFIG_H__
-+#define __PPE_CONFIG_H__
++	ret = ppe_config_bm(ppe_dev);
++	if (ret)
++		return ret;
 +
-+#include "ppe.h"
-+
-+int ppe_hw_config(struct ppe_device *ppe_dev);
-+#endif
++	return ppe_config_qm(ppe_dev);
+ }
 diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h b/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
-new file mode 100644
-index 000000000000..b89d717fdae8
---- /dev/null
+index b89d717fdae8..ca256fe2a321 100644
+--- a/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
 +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
-@@ -0,0 +1,59 @@
-+/* SPDX-License-Identifier: GPL-2.0-only
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
+@@ -9,6 +9,16 @@
+ 
+ #include <linux/bitfield.h>
+ 
++/* PPE queue counters enable/disable control. */
++#define PPE_EG_BRIDGE_CONFIG_ADDR		0x20044
++#define PPE_EG_BRIDGE_CONFIG_QUEUE_CNT_EN	BIT(2)
 +
-+/* PPE hardware register and table declarations. */
-+#ifndef __PPE_REGS_H__
-+#define __PPE_REGS_H__
++/* Table addresses for per-queue dequeue setting. */
++#define PPE_DEQ_OPR_TBL_ADDR			0x430000
++#define PPE_DEQ_OPR_TBL_ENTRIES			300
++#define PPE_DEQ_OPR_TBL_INC			0x10
++#define PPE_DEQ_OPR_TBL_DEQ_DISABLE		BIT(0)
 +
-+#include <linux/bitfield.h>
+ /* There are 15 BM ports and 4 BM groups supported by PPE.
+  * BM port (0-7) is for EDMA port 0, BM port (8-13) is for
+  * PPE physical port 1-6 and BM port 14 is for EIP port.
+@@ -56,4 +66,79 @@
+ 	FIELD_MODIFY(PPE_BM_PORT_FC_W1_DYNAMIC, (tbl_cfg) + 0x1, value)
+ #define PPE_BM_PORT_FC_SET_PRE_ALLOC(tbl_cfg, value)	\
+ 	FIELD_MODIFY(PPE_BM_PORT_FC_W1_PRE_ALLOC, (tbl_cfg) + 0x1, value)
 +
-+/* There are 15 BM ports and 4 BM groups supported by PPE.
-+ * BM port (0-7) is for EDMA port 0, BM port (8-13) is for
-+ * PPE physical port 1-6 and BM port 14 is for EIP port.
-+ */
-+#define PPE_BM_PORT_FC_MODE_ADDR		0x600100
-+#define PPE_BM_PORT_FC_MODE_ENTRIES		15
-+#define PPE_BM_PORT_FC_MODE_INC			0x4
-+#define PPE_BM_PORT_FC_MODE_EN			BIT(0)
++/* PPE unicast queue (0-255) configurations. */
++#define PPE_AC_UNICAST_QUEUE_CFG_TBL_ADDR	0x848000
++#define PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES	256
++#define PPE_AC_UNICAST_QUEUE_CFG_TBL_INC	0x10
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_EN		BIT(0)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_WRED_EN	BIT(1)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_FC_EN	BIT(2)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_CLR_AWARE	BIT(3)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_GRP_ID	GENMASK(5, 4)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_PRE_LIMIT	GENMASK(16, 6)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_DYNAMIC	BIT(17)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_WEIGHT	GENMASK(20, 18)
++#define PPE_AC_UNICAST_QUEUE_CFG_W0_THRESHOLD	GENMASK(31, 21)
++#define PPE_AC_UNICAST_QUEUE_CFG_W3_GRN_RESUME	GENMASK(23, 13)
 +
-+#define PPE_BM_PORT_GROUP_ID_ADDR		0x600180
-+#define PPE_BM_PORT_GROUP_ID_ENTRIES		15
-+#define PPE_BM_PORT_GROUP_ID_INC		0x4
-+#define PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID	GENMASK(1, 0)
++#define PPE_AC_UNICAST_QUEUE_SET_EN(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_EN, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_GRP_ID(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_GRP_ID, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_PRE_LIMIT(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_PRE_LIMIT, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_DYNAMIC(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_DYNAMIC, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_WEIGHT(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_WEIGHT, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_THRESHOLD(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W0_THRESHOLD, tbl_cfg, value)
++#define PPE_AC_UNICAST_QUEUE_SET_GRN_RESUME(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_UNICAST_QUEUE_CFG_W3_GRN_RESUME, (tbl_cfg) + 0x3, value)
 +
-+#define PPE_BM_SHARED_GROUP_CFG_ADDR		0x600290
-+#define PPE_BM_SHARED_GROUP_CFG_ENTRIES		4
-+#define PPE_BM_SHARED_GROUP_CFG_INC		0x4
-+#define PPE_BM_SHARED_GROUP_CFG_SHARED_LIMIT	GENMASK(10, 0)
++/* PPE multicast queue (256-299) configurations. */
++#define PPE_AC_MULTICAST_QUEUE_CFG_TBL_ADDR	0x84a000
++#define PPE_AC_MULTICAST_QUEUE_CFG_TBL_ENTRIES	44
++#define PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC	0x10
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_EN	BIT(0)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_FC_EN	BIT(1)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_CLR_AWARE	BIT(2)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_GRP_ID	GENMASK(4, 3)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_PRE_LIMIT	GENMASK(15, 5)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W0_THRESHOLD	GENMASK(26, 16)
++#define PPE_AC_MULTICAST_QUEUE_CFG_W2_RESUME	GENMASK(17, 7)
 +
-+#define PPE_BM_PORT_FC_CFG_TBL_ADDR		0x601000
-+#define PPE_BM_PORT_FC_CFG_TBL_ENTRIES		15
-+#define PPE_BM_PORT_FC_CFG_TBL_INC		0x10
-+#define PPE_BM_PORT_FC_W0_REACT_LIMIT		GENMASK(8, 0)
-+#define PPE_BM_PORT_FC_W0_RESUME_THRESHOLD	GENMASK(17, 9)
-+#define PPE_BM_PORT_FC_W0_RESUME_OFFSET		GENMASK(28, 18)
-+#define PPE_BM_PORT_FC_W0_CEILING_LOW		GENMASK(31, 29)
-+#define PPE_BM_PORT_FC_W1_CEILING_HIGH		GENMASK(7, 0)
-+#define PPE_BM_PORT_FC_W1_WEIGHT		GENMASK(10, 8)
-+#define PPE_BM_PORT_FC_W1_DYNAMIC		BIT(11)
-+#define PPE_BM_PORT_FC_W1_PRE_ALLOC		GENMASK(22, 12)
++#define PPE_AC_MULTICAST_QUEUE_SET_EN(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_MULTICAST_QUEUE_CFG_W0_EN, tbl_cfg, value)
++#define PPE_AC_MULTICAST_QUEUE_SET_GRN_GRP_ID(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_MULTICAST_QUEUE_CFG_W0_GRP_ID, tbl_cfg, value)
++#define PPE_AC_MULTICAST_QUEUE_SET_GRN_PRE_LIMIT(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_MULTICAST_QUEUE_CFG_W0_PRE_LIMIT, tbl_cfg, value)
++#define PPE_AC_MULTICAST_QUEUE_SET_GRN_THRESHOLD(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_MULTICAST_QUEUE_CFG_W0_THRESHOLD, tbl_cfg, value)
++#define PPE_AC_MULTICAST_QUEUE_SET_GRN_RESUME(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_MULTICAST_QUEUE_CFG_W2_RESUME, (tbl_cfg) + 0x2, value)
 +
-+#define PPE_BM_PORT_FC_SET_REACT_LIMIT(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W0_REACT_LIMIT, tbl_cfg, value)
-+#define PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W0_RESUME_THRESHOLD, tbl_cfg, value)
-+#define PPE_BM_PORT_FC_SET_RESUME_OFFSET(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W0_RESUME_OFFSET, tbl_cfg, value)
-+#define PPE_BM_PORT_FC_SET_CEILING_LOW(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W0_CEILING_LOW, tbl_cfg, value)
-+#define PPE_BM_PORT_FC_SET_CEILING_HIGH(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W1_CEILING_HIGH, (tbl_cfg) + 0x1, value)
-+#define PPE_BM_PORT_FC_SET_WEIGHT(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W1_WEIGHT, (tbl_cfg) + 0x1, value)
-+#define PPE_BM_PORT_FC_SET_DYNAMIC(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W1_DYNAMIC, (tbl_cfg) + 0x1, value)
-+#define PPE_BM_PORT_FC_SET_PRE_ALLOC(tbl_cfg, value)	\
-+	FIELD_MODIFY(PPE_BM_PORT_FC_W1_PRE_ALLOC, (tbl_cfg) + 0x1, value)
-+#endif
++/* PPE admission control group (0-3) configurations */
++#define PPE_AC_GRP_CFG_TBL_ADDR			0x84c000
++#define PPE_AC_GRP_CFG_TBL_ENTRIES		0x4
++#define PPE_AC_GRP_CFG_TBL_INC			0x10
++#define PPE_AC_GRP_W0_AC_EN			BIT(0)
++#define PPE_AC_GRP_W0_AC_FC_EN			BIT(1)
++#define PPE_AC_GRP_W0_CLR_AWARE			BIT(2)
++#define PPE_AC_GRP_W0_THRESHOLD_LOW		GENMASK(31, 25)
++#define PPE_AC_GRP_W1_THRESHOLD_HIGH		GENMASK(3, 0)
++#define PPE_AC_GRP_W1_BUF_LIMIT			GENMASK(14, 4)
++#define PPE_AC_GRP_W2_RESUME_GRN		GENMASK(15, 5)
++#define PPE_AC_GRP_W2_PRE_ALLOC			GENMASK(26, 16)
++
++#define PPE_AC_GRP_SET_BUF_LIMIT(tbl_cfg, value)	\
++	FIELD_MODIFY(PPE_AC_GRP_W1_BUF_LIMIT, (tbl_cfg) + 0x1, value)
++
++/* Table addresses for per-queue enqueue setting. */
++#define PPE_ENQ_OPR_TBL_ADDR			0x85c000
++#define PPE_ENQ_OPR_TBL_ENTRIES			300
++#define PPE_ENQ_OPR_TBL_INC			0x10
++#define PPE_ENQ_OPR_TBL_ENQ_DISABLE		BIT(0)
+ #endif
 
 -- 
 2.34.1
