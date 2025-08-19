@@ -1,241 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-69675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84E9DB2BA67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:18:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42F14B2BA71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:19:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2E941BA7A1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 07:19:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 797561BC0105
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 07:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4371284885;
-	Tue, 19 Aug 2025 07:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50A202FE06C;
+	Tue, 19 Aug 2025 07:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tarb7+2Z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fDw5Lhfh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876A915D5B6;
-	Tue, 19 Aug 2025 07:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D502C2365;
+	Tue, 19 Aug 2025 07:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755587797; cv=none; b=aKryvk2DFkPBD2+8ezfwFktylgaPftaziG6RG4iKl+YebiLBIS97YEl2+Ydy27pxiHYK53bODRO1ZK/k0ZcgUvWcOnx61rMvr+S/SJG80/v9pGXHyU+2SbgAxyvGrKVWyKv+xkU21E9P4CyUJwy9HR56MznMa5xd7LX+j3oVAJ0=
+	t=1755587831; cv=none; b=DetkU2aGxXyPOazqOFvdYSwV3dCt0PR02H5EaiUQKdNyM7PziimB58+gYLF3jD1jKh4LxqgpjSfpV5MXxjbiQHTuKA1y17UpKar6NsxAZ8vlsGOVy+A9+0OtDHi/+fbq6GaR7SnlYf+ALqUg+P1N/kqNvxIM42A3hnGazp4XVEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755587797; c=relaxed/simple;
-	bh=pW8jphqOqOIO98h4scz9n5wwVgDgp3LxF3Uan0tsmHI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hcCEDUnSIImf9b1azszjEUtA14Wy82qY8AQEDKlwXPGfmqu+5YRNKCIZeBNjVPJHS6THslpfs+vhO1PBK40M1dOkZcU0lle2CB2Jjj31E1FHa/h2IHJCU5BzSDRHOJQ1Ayt/7dSboSAMHaTM3cGPEcDDv927WhHFHwjjM6ouDSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tarb7+2Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB8DC4CEF1;
-	Tue, 19 Aug 2025 07:16:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755587797;
-	bh=pW8jphqOqOIO98h4scz9n5wwVgDgp3LxF3Uan0tsmHI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Tarb7+2ZcKMq2nd3MktE3vAAPxYiRWsPoE0IQGyuWKjhGVxagNdH0mMxRpHFZwiWC
-	 XfWA1FlLSBw9v/Xzcs/xsj7jy0ORqdy1daRliMpB73/+ej/JNZvYvBZCBNYxurbM4G
-	 660jn6po0TsOeEPXNmFKC/Y7JyYfpqBEiLFiFTwNC9QUPqtMZ5kkh/xviXuEh7Qoe2
-	 TK+4M9QJyKxcyZqakcw1LEV+sEvsJpCoIer9PiEL0jSBmpvveSolBcKsw4IVf1NtEP
-	 VSz7px3hJcc6ndkUAzGksQzTzvJcn2r4eEFgxLp+V4+F8GfsXAKn21XvQksC9fPoWD
-	 1O6ZuT/rkOA0w==
-Message-ID: <dcad137d-8ac9-4a0b-9b64-de799536fd32@kernel.org>
-Date: Tue, 19 Aug 2025 09:16:30 +0200
+	s=arc-20240116; t=1755587831; c=relaxed/simple;
+	bh=wsh5BfVW7w3EPHW18YpfGU7tztTcXdNG4hss7f09DIE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bxn6wSGMrGBBRrsisjTteOptXgd46gMqyiOUx5sjE2H42g/EYNDDuq4Xm7Yg7QTIHQBcIZct5x0C99xU2JU1H5DcD1QJ5mJUxGnveU4HdilRwoMaAHvB9Z5oAerx38tOpZHPnTLc+V3CwhMtxoYCOsyO7CXvE4NWr9s3VJiMRyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fDw5Lhfh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ILgfNk026592;
+	Tue, 19 Aug 2025 07:17:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=H5QDIlgZhVEw3Dtlp9D9mUIdHrXDnQNN+e7
+	HzAzOPIo=; b=fDw5LhfhG/eyF1H0OpzmdupSL3omUxs1xVgCx8PxH0nlyvqHXjF
+	ei+IuiMTnuG06kTmUHMrmZ3li+bORg9bsgXqclOZf/vebMMPlNX8PisXPhvMjlW0
+	3K71HIbcrYYxKwcbULItbMQINutvZ4YXKFiyZ62iZQxUx/Iss9NLn28AcUKDHXIV
+	aoZJtH0XTXdL4NBeWlL0RCQ03ZoeOyKRXH233cHjekAES3XHkUNJQZ1etpy4C8i5
+	1DH+OYdXqorMCb0oYVhX7MA/BIrMCbLryZVSImGEnju5YFHSW6BAiKiCPNHcDOfO
+	AsYy+63UifvD7PgRUwyFzoBdxuwMs469UrA==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48mca5h91w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Aug 2025 07:17:00 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57J7GvTO031751;
+	Tue, 19 Aug 2025 07:16:57 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 48jk2m3ekr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Aug 2025 07:16:57 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57J7GvBK031742;
+	Tue, 19 Aug 2025 07:16:57 GMT
+Received: from ziyuzhan-gv.ap.qualcomm.com (ziyuzhan-gv.qualcomm.com [10.64.66.102])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 57J7Guix031722
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Aug 2025 07:16:57 +0000
+Received: by ziyuzhan-gv.ap.qualcomm.com (Postfix, from userid 4438065)
+	id 1F01A51C; Tue, 19 Aug 2025 15:16:55 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Subject: [PATCH v5 0/3] Add Equalization Settings for 8.0 GT/s and 32.0 GT/s and Add PCIe Lane Equalization Preset Properties for 8.0 GT/s and 16.0 GT/s
+Date: Tue, 19 Aug 2025 15:16:45 +0800
+Message-ID: <20250819071649.1531437-1-ziyue.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/8] serial: qcom-geni: Enable PM runtime for serial
- driver
-To: Praveen Talari <quic_ptalari@quicinc.com>,
- Alexey Klimov <alexey.klimov@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- dmitry.baryshkov@oss.qualcomm.com
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
- quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
- quic_cchiluve@quicinc.com, quic_shazhuss@quicinc.com,
- Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, devicetree@vger.kernel.org,
- bryan.odonoghue@linaro.org, neil.armstrong@linaro.org, srini@kernel.org
-References: <20250721174532.14022-1-quic_ptalari@quicinc.com>
- <20250721174532.14022-8-quic_ptalari@quicinc.com>
- <DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org>
- <577d05d4-789b-4556-a2d2-d0ad15b2c213@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <577d05d4-789b-4556-a2d2-d0ad15b2c213@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=FdU3xI+6 c=1 sm=1 tr=0 ts=68a424ec cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=86bffDG3X0gLe1KFPuUA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: WxFVZs_Fwo5aKPzD9KG2jo39w06X4rUM
+X-Proofpoint-GUID: WxFVZs_Fwo5aKPzD9KG2jo39w06X4rUM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE4MDIwMiBTYWx0ZWRfXywtO31nzvZLw
+ quQPjX1jSty5pk8m79kfew6M6JJsOQYML4yiWBVyIdLeqndZBgLmy88udXzMboeWE6Kt6Tw8nKd
+ RNa9ulvnQxkf9P/h4mgxXI9vjokUjVuKOBmkmws9MTVNAdXAsZitRXzYokqGjFJt1280LbeyCsL
+ jOQTRWSQpHm5VRetcSAprpWpySsaglMGhC8UcUnL/oJZZZ4lio47gD/4T+Je5WJXYlabvBhSZyA
+ xXsQWGEEyzvJBr3mIigLU58+lMBW7RPNiva8WgYhMLuUDQoDmued7DkrE3ezxSj1x+v7gjOqFxR
+ zAc+sr5HGB6UforULat9Ysj0diA8RQ3QF0hmwbTmGsrSJrUwV+4S4pKQ7atLtbNluJUD/3qVaux
+ QWetWxzd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 phishscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508180202
 
-On 19/08/2025 08:50, Praveen Talari wrote:
-> Hi Alexey.
-> 
-> Thank you for your patience,
-> 
-> On 8/12/2025 3:35 PM, Alexey Klimov wrote:
->> (c/c Neil and Srini)
->>
->> On Mon Jul 21, 2025 at 6:45 PM BST, Praveen Talari wrote:
->>> The GENI serial driver currently handles power resource management
->>> through calls to the statically defined geni_serial_resources_on() and
->>> geni_serial_resources_off() functions. This approach reduces modularity
->>> and limits support for platforms with diverse power management
->>> mechanisms, including resource managed by firmware.
->>>
->>> Improve modularity and enable better integration with platform-specific
->>> power management, introduce support for runtime PM. Use
->>> pm_runtime_resume_and_get() and pm_runtime_put_sync() within the
->>> qcom_geni_serial_pm() callback to control resource power state
->>> transitions based on UART power state changes.
->>>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
->>
->>
->> This breaks at least RB1 (QRB2210), maybe others.
->> Currently broken on -master and on linux-next.
->>
->> Upon login prompt random parts of kernel seems to be off/failed and
->> debugging led to udev being stuck:
->>
->> [   85.369834] INFO: task kworker/u16:0:12 blocked for more than 42 seconds.
->> [   85.376699]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
->> [   85.382660] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->> [   85.390547] task:kworker/u16:0   state:D stack:0     pid:12    tgid:12    ppid:2      task_flags:0x4208060 flags:0x00000010
->> [   85.401748] Workqueue: async async_run_entry_fn
->> [   85.406349] Call trace:
->> [   85.408828]  __switch_to+0xe8/0x1a0 (T)
->> [   85.412724]  __schedule+0x290/0x7c0
->> [   85.416275]  schedule+0x34/0x118
->> [   85.419554]  rpm_resume+0x14c/0x66c
->> [   85.423111]  rpm_resume+0x2a4/0x66c
->> [   85.426647]  rpm_resume+0x2a4/0x66c
->> [   85.430188]  rpm_resume+0x2a4/0x66c
->> [   85.433722]  __pm_runtime_resume+0x50/0x9c
->> [   85.437869]  __driver_probe_device+0x58/0x120
->> [   85.442287]  driver_probe_device+0x3c/0x154
->> [   85.446523]  __driver_attach_async_helper+0x4c/0xc0
->> [   85.451446]  async_run_entry_fn+0x34/0xe0
->> [   85.455504]  process_one_work+0x148/0x290
->> [   85.459565]  worker_thread+0x2c4/0x3e0
->> [   85.463368]  kthread+0x118/0x1c0
->> [   85.466651]  ret_from_fork+0x10/0x20
->> [   85.470337] INFO: task irq/92-4a8c000.:71 blocked for more than 42 seconds.
->> [   85.477351]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
->> [   85.483323] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->> [   85.491195] task:irq/92-4a8c000. state:D stack:0     pid:71    tgid:71    ppid:2      task_flags:0x208040 flags:0x00000010
->> [   85.502290] Call trace:
->> [   85.504786]  __switch_to+0xe8/0x1a0 (T)
->> [   85.508687]  __schedule+0x290/0x7c0
->> [   85.512231]  schedule+0x34/0x118
->> [   85.515504]  __synchronize_irq+0x60/0xa0
->> [   85.519483]  disable_irq+0x3c/0x4c
->> [   85.522929]  msm_pinmux_set_mux+0x3a8/0x44c
->> [   85.527167]  pinmux_enable_setting+0x1c4/0x28c
->> [   85.531665]  pinctrl_commit_state+0xa0/0x260
->> [   85.535989]  pinctrl_pm_select_default_state+0x4c/0xa0
->> [   85.541182]  geni_se_resources_on+0xd0/0x15c
->> [   85.545522]  geni_serial_resource_state+0x8c/0xbc
->> [   85.550282]  qcom_geni_serial_runtime_resume+0x24/0x3c
->> [   85.555470]  pm_generic_runtime_resume+0x2c/0x44
->> [   85.560139]  __rpm_callback+0x48/0x1e0
->> [   85.563949]  rpm_callback+0x74/0x80
->> [   85.567494]  rpm_resume+0x39c/0x66c
->> [   85.571040]  __pm_runtime_resume+0x50/0x9c
->> [   85.575193]  handle_threaded_wake_irq+0x30/0x80
->> [   85.579771]  irq_thread_fn+0x2c/0xb0
->> [   85.583443]  irq_thread+0x16c/0x278
->> [   85.587003]  kthread+0x118/0x1c0
->> [   85.590283]  ret_from_fork+0x10/0x20
->> [   85.593943] INFO: task (udev-worker):228 blocked for more than 42 seconds.
->> [   85.600873]       Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
->> [   85.606846] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->> [   85.614717] task:(udev-worker)   state:D stack:0     pid:228   tgid:228   ppid:222    task_flags:0x400140 flags:0x00000818
->> [   85.625823] Call trace:
->> [   85.628316]  __switch_to+0xe8/0x1a0 (T)
->> [   85.632217]  __schedule+0x290/0x7c0
->> [   85.635765]  schedule+0x34/0x118
->> [   85.639044]  async_synchronize_cookie_domain.part.0+0x50/0xa4
->> [   85.644854]  async_synchronize_full+0x78/0xa0
->> [   85.649270]  do_init_module+0x190/0x23c
->> [   85.653154]  load_module+0x1708/0x1ca0
->> [   85.656952]  init_module_from_file+0x74/0xa0
->> [   85.661273]  __arm64_sys_finit_module+0x130/0x2f8
->> [   85.666023]  invoke_syscall+0x48/0x104
->> [   85.669842]  el0_svc_common.constprop.0+0xc0/0xe0
->> [   85.674604]  do_el0_svc+0x1c/0x28
->> [   85.677973]  el0_svc+0x2c/0x84
->> [   85.681078]  el0t_64_sync_handler+0xa0/0xe4
->> [   85.685316]  el0t_64_sync+0x198/0x19c
->> [   85.689032] INFO: task (udev-worker):229 blocked for more than 42 seconds.
->>
->>
->> Usually wifi, all remoteprocs and anything that depends on lpass/pinctrl fail to probe.
-> 
-> May i know what is testcase which you are running on target?
+This series adds add equalization settings for 8.0 GT/s and 32.0 GT/s,
+and add PCIe lane equalization preset properties for 8.0 GT/s and
+16.0 GT/s for sa8775p ride platform, which fix AER errors.
 
-Boot the board?
+While equalization settings for 16 GT/s have already been set, this
+update adds the required equalization settings for PCIe operating at
+8.0 GT/s and 32.0 GT/s, including the configuration of shadow registers,
+ensuring optimal performance and stability.
 
-> what is target?
+The DT change for sa8775p add PCIe lane equalization preset properties
+for 8 GT/s and 16 GT/s data rates used in lane equalization procedure.
 
-It is written in original report. Did you even read it?
+Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
 
-> Which usecase is this issue occurring in?
+Changes in v5:
+- Add support for 32.0 GT/s
+- Add warning print for speed higher than 32.0 GT/s (Mani)
+- Link to v4: https://lore.kernel.org/all/20250714082110.3890821-1-ziyue.zhang@oss.qualcomm.com/
 
-Boot?
+Changes in v4:
+- Bail out early if the link speed > 16 GT/s and use pci->max_link_speed directly (Mani)
+- Fix the build warning. (Bjorn)
+- Link to v3: https://lore.kernel.org/all/8ccd3731-8dbc-4972-a79a-ba78e90ec4a8@quicinc.com/
 
-Best regards,
-Krzysztof
+Changes in v3:
+- Delte TODO tag and warn print in pcie-qcom-common.c. (Bjorn)
+- Refined the commit message for better readability. (Bjorn)
+- Link to v2: https://lore.kernel.org/all/20250611100319.464803-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v2:
+- Update code in pcie-qcom-common.c make it easier to read. (Neil)
+- Fix the compile error.
+- Link to v1: https://lore.kernel.org/all/20250604091946.1890602-1-quic_ziyuzhan@quicinc.com
+
+Ziyue Zhang (3):
+  PCI: qcom: Add equalization settings for 8.0 GT/s and 32.0 GT/s
+  PCI: qcom: fix macro typo for CURSOR
+  arm64: dts: qcom: lemans: Add PCIe lane equalization preset properties
+
+ arch/arm64/boot/dts/qcom/lemans.dtsi          |  7 +++
+ drivers/pci/controller/dwc/pcie-designware.h  |  5 +-
+ drivers/pci/controller/dwc/pcie-qcom-common.c | 58 +++++++++++--------
+ drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
+ 6 files changed, 50 insertions(+), 34 deletions(-)
+
+
+base-commit: 3ac864c2d9bb8608ee236e89bf561811613abfce
+-- 
+2.43.0
+
 
