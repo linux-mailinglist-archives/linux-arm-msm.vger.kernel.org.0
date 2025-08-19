@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-69741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0DE8B2C087
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 13:33:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 245B4B2C08B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 13:34:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE19718862D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:30:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 288F4725110
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:30:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CB2E326D40;
-	Tue, 19 Aug 2025 11:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 045AA32BF51;
+	Tue, 19 Aug 2025 11:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvSX9ylx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epIcSTwe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F7A3451DC;
-	Tue, 19 Aug 2025 11:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6A832A3E4;
+	Tue, 19 Aug 2025 11:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755602991; cv=none; b=UmoXiIG3jh258zfsJ4xZ1JequYgpv15c3XckCbh53OTToBQ4W+GZm2IALjaGYkqlO7xlz0MO3up3g8vajfsnb+0+YVd6g2jqFgwD1cNgPBCm6vHL0a9OQvhUXB24l3qCWQdAZK/g10iA7yGxABBu9hlKqsemcdklRbABpyngE6U=
+	t=1755603039; cv=none; b=rlnOpy1Dsa6e9U595HuxXqtHPFsF4kDeVO72GoJR51/GxeCEJrW7R7+pNeoI5iZFRwzS/G7uVMMM9GJURGeRHQqsRvuSoWlr/QZFVqx7jTpkAWukdyvk5cs0eqMPk3sjhKsxo7Rwj9xLh54Pm+g4Q4jP2pkYT+wMJNUU5mcXBbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755602991; c=relaxed/simple;
-	bh=iOQAUUkWtpHeg6m1A9TasiAatQSSFNAcczoKJ1xLehU=;
+	s=arc-20240116; t=1755603039; c=relaxed/simple;
+	bh=j7/9/8MvQE7gNxxV/8cXnjyYBT55tXdw0tWY30qH1p8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GUuGuADhMMW+RWOIMCwcQRm6LNqbawH3P9130bXdGgE3Cc2aJrv9S0IMML/34LG7rR/LIHeAyZ7GfHkGky/3xq03Qvam5QmbTsr4mwGo3F3Y+cyP6omQ0QOTbGTZ1eO2eD9CXmbNjXCL01qRZmKlKTw/Ikuz6mdxkvhxI5mn6t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvSX9ylx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA25C4CEF1;
-	Tue, 19 Aug 2025 11:29:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=XTI8gaGzgFIWe8ure8K8OIcq4793eh3Z5kRkvkwh2lZl0AvXf0k8U7mXapJs9dQweC+lAy6LfoRNcIcK8JI8idmDeS7lJ1msfNQUnrPqU63NJ+XeyHn3Tq0zBJ0Wes0pyw8g8nW3ChSjYLQecijhpO/N0XxKP20shntiHCWeWEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epIcSTwe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030C4C116C6;
+	Tue, 19 Aug 2025 11:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755602990;
-	bh=iOQAUUkWtpHeg6m1A9TasiAatQSSFNAcczoKJ1xLehU=;
+	s=k20201202; t=1755603039;
+	bh=j7/9/8MvQE7gNxxV/8cXnjyYBT55tXdw0tWY30qH1p8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XvSX9ylxFTwKV9+AUTISf07LpWEBXw3u6MefsEVU+bOXCfrywnbpuWhipqssIJq9q
-	 2B2KQk50UucttqCKL1uwHyJHlGGAoLD8sP5OumgShzWIlM1ZrkHHCa0TXlwT20V6U+
-	 yaDC+3xCLSylPlg0GJbmBqiVyO8xfyaPFlgfX30mDz3RI0jHWxyVxsIcGWvBHw5aOu
-	 dnur2EcQU2EJxpAoFOa+Xgjd1ZOI/E6cBBn5k20Ppci/lhrBLHFS+AEA9N0ep/o+YT
-	 y7TSJcQoL0fCJK3bp6ynqT8jGRg1lORgs317gyq4ptzeg/H4IGXUjIcH+Bi0SxY91o
-	 CxWwf/XFPyiYw==
-Message-ID: <620427ef-ade4-43c8-b041-34b0365fb4c1@kernel.org>
-Date: Tue, 19 Aug 2025 13:29:45 +0200
+	b=epIcSTweFBESTgqUvw7gkKxlJgG1ssfTzu3hG9e5Da3ozR2d2T5xN6sX4GTDyAS38
+	 bV7j+e8HmiNfrAxD76d/CbGOY9tes8rWOCeMth0xyvPZOWzjSkxhs4tawNJ15aKVHp
+	 61rYc+9SN9tWcKhAYLJTZsG8A50Z0z6etsMLtw6/hOdlsLSIoTfdGKTSwHx6e2Iw2h
+	 79sn5BBi0xpctlRSH0x4IZ8b9js0fdHFMXwPajb9h+gIYpm42giwFD1QbqQ8UxlXlk
+	 li+mlVEa+2/k/65wi+mlDikVkDER822BjQQK546aGj0Rw1B8QWRn/uSgqNDof0xzT1
+	 Lv7jqNq6SqAzA==
+Message-ID: <aba6bf1d-5974-4003-9ae2-62033ddf87c5@kernel.org>
+Date: Tue, 19 Aug 2025 13:30:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add OSM L3 compatible
- for QCS615 SoC
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Mike Tipton <mike.tipton@oss.qualcomm.com>,
- Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>
-References: <20250819-talos-l3-icc-v3-0-04529e85dac7@oss.qualcomm.com>
- <20250819-talos-l3-icc-v3-1-04529e85dac7@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/3] coresight-tnoc: Add support for Interconnect TNOC
+To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250819-itnoc-v2-0-2d0e6be44e2f@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,19 +106,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250819-talos-l3-icc-v3-1-04529e85dac7@oss.qualcomm.com>
+In-Reply-To: <20250819-itnoc-v2-0-2d0e6be44e2f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/08/2025 13:24, Raviteja Laggyshetty wrote:
-> Add Operation State Manager (OSM) L3 interconnect provider binding for
-> QCS615 SoC. As the OSM hardware in QCS615 and SM8150 are same,
-> added a family-level compatible for SM8150 SoC.
+On 19/08/2025 12:27, Yuanfang Zhang wrote:
+> This patch series adds support for the Qualcomm CoreSight Interconnect TNOC
+> (Trace Network On Chip) block, which acts as a CoreSight graph link forwarding
+> trace data from subsystems to the Aggregator TNOC. Unlike the Aggregator TNOC,
+> this block does not support aggregation or ATID assignment.
 > 
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
 > ---
+> Changes in v2:
+> - Refactor the dt-binding file.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Everything is rafactor. What changed specifically?
+
+Or you just ignored prevous feedback and did other changes?
+
+
 
 Best regards,
 Krzysztof
