@@ -1,149 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-69797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A35CB2CC1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 20:33:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE37DB2CC27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 20:36:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F06113B219B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 18:32:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D77FD7B29C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 18:34:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59DE230F7F7;
-	Tue, 19 Aug 2025 18:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687C630DD37;
+	Tue, 19 Aug 2025 18:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lb/nuauV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b6VzpCZf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB841E5205;
-	Tue, 19 Aug 2025 18:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7759C30C345
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 18:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755628318; cv=none; b=ERUoNn+fmmXnx90iqxOfm3YTiUGSKTCPEsJS+P77rSBJ63xw9JqKRHcEjqu0U08uvpwWkymjmBXSPVqRUb3ry5hrEqVC1Akara0PuFfs/fGtuFO0c3F5yThb6Ncy/W2fFl/jd4Ta6yC2SQoadUmjyepF2XkjEWElkLOF+y/5rik=
+	t=1755628564; cv=none; b=tt9PSh4xhmNwbPhsYGxr0VvSN0NeNl3263GKIzB1aDekyooREYWTPeOsjtYjK+ZeIyGfm87pdQ2Lj1cD2k7At8ccjSExqjf0qlJqSDD8OIIb3+KD0/312ZFvvOXR2SpxPVaNv3o2Sd58rRLHjjc5UZUID07rk1y/vky6K4lqGZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755628318; c=relaxed/simple;
-	bh=ELVk40zB/S/lTRU9qhJakzcG7jLCkklBrhAYe+KgKyc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZTLOYpBu7RdkBHqnVj0YndDydi9VdsbbblrY2WJm/lgYaoQ9itH8BbN+RDrlYj/A2zB2Ncjz967qz3UHGR98Zv+1G89zAceYkMcLS8cPNh+sKZz7D8IRvsHaBkFOvCPiNtxfhDroxWj83WsZjxXX2N8SDtyk8jn0kDI4QOy5G4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lb/nuauV; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-afcb7a16441so877193166b.2;
-        Tue, 19 Aug 2025 11:31:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755628315; x=1756233115; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nduGwRgCS4jl5SzExLMSPPD9EivCrI3lCOm2UzUncAk=;
-        b=Lb/nuauVa3mB1hQcUs3mokVUSOFxD4IG2+OShAQfjuzSpboc8/kx5vrsJSTANt0/vt
-         AkkeVaU7RjsI7DS3wqaUVaDQOJWuK+8bbGkvTlMeEk7w/Ya15bOEEhQA3fqc1JS2yXKp
-         txbYifraNLsYW7CWo4884+fC3NW+b7RKjpDLOQoiRSQLxHsM6T4AFti8abk8XKit2O/H
-         ksldjTMmFrYK1sQGPpDzAq6yQQ+bRhootlHuhczvO62y9N94Q4maxHiJDYg4bQmGjRPH
-         7b6AV3CmvsXle2GDGIOOHWZGAaiKeqtfUN6FLF0JawGgm2Ao3xJk5/wJtscKKoC6I7PF
-         rTZA==
+	s=arc-20240116; t=1755628564; c=relaxed/simple;
+	bh=sTgf/CNCkxGhEaAwMV5unINPuICI+staVH3F5LIk2ig=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CbcU5SaZsbyd4eDhXrj15BT9XQCaSmjYxu0TNIagxJCwlzRgLjndSxONHZzSEwjZAaEr+S+NygPtOAiiJq74vC2uW/oucPYdoyLFIwykxxHK0uh7gtkQSiGnie/xsFArlMuyChA8k8ctjK40p5YPq6AOW0CocAH8DDzg0bWeAFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b6VzpCZf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JFKt46005503
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 18:36:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=o240rpXb1npe1ccsIe0LIiBv
+	/L8C+NSjEqGnuz2YrN8=; b=b6VzpCZf/0uYO01WP/f9h+p02aXCBYd+sRRaZtT3
+	C7YQEOhHbR0zykWWrlqAOKk0UZ4UbaP0XQIUDgxf1D5g8MCP7QK0qtrgxldGqMFc
+	VT5Ywg8FHXTLEvcsUh4+jUYU5+B1rETKver+48vO3KuLqZbEmcJDS5ftHSC4GgPZ
+	bKCIhEOGiIcoYt7E2iEJ58RUkMgrdNGaIDNQXkYTIJxoKQrOsKSelhz3dAvxLESm
+	gBW/3n2e5NfC+95lKeMb+yQ+Me+E3909Mb5cOMnPCttWMOOVizhYdmCCZF/B2dv/
+	4SQ4SJ/lvBrO1wSsfMj9Pz6tKssgpOPPIj2ejj63nnPk0Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48muu0gmc3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 18:36:00 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-70a88daeb18so124577526d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 11:36:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755628315; x=1756233115;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nduGwRgCS4jl5SzExLMSPPD9EivCrI3lCOm2UzUncAk=;
-        b=vIpR3EF42eTfQV9uQ+dQuYp1KV4DazAqLsXKs2FvTg20MGHjnvjCRgsQ8T/YPKlM94
-         U61xKCjemH6Koj70krrxNrEfTIAxLoIdKdjFXSBfAhE8oWqBxKUmNY1y8KrczBOTH+5A
-         F4nWJqqwHAzlIH88Nwe6ybXci2txHAC6QihvAt0U2EripB/gLu2EzPTuD0Rs2V74lk27
-         R3d7vJKLM24jFPu0E0P4cQr8glHRcx2CRzzTZaF/52G518RiYUWKE8BO7L4q0R5Eu+El
-         9ryyrxd26udI4xjM1Yh6cUDV1L+Nl2+abAndL1FH414ak2aPwkvkXg1/FNagQDnqS7uK
-         AVJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUJGH9cbSwhPlxfznXJRuaRls/CJUgl7kYKWP4oFDGEAzkREeW06jR4Hoe0L/47AJjiKP/K8j5ForlUFh6nPQNS@vger.kernel.org, AJvYcCUy9b7pfZ/i+yuXse9SyY3J3rQchJMfXpARg37hSgdUxOGjb5FDXscImkXo+APB6QxFSFLcM1RhBPOeRX6jNHOq0/M=@vger.kernel.org, AJvYcCVJPG3PkzN5lv+299FoToobKy9WVmG9akr59YFi1lFPNRAByl6BgbxcRoCLhENMpC8FlhgtcC8R0jT0H6PE@vger.kernel.org, AJvYcCVneJrEjjglzE0ACDuBHfuhFxW+oK56Y4poVroPixkAYrkz9TxtzFHhximDa4m0FI4asi5aosAiWGrzHoEC@vger.kernel.org, AJvYcCX2YqUK8SHti24h1kl3lKkfzde38/37guEIv1V+T3byknebvzh9DOxi6vO9xr0HdzCnZluFfevK+/L7PQ==@vger.kernel.org, AJvYcCXK2L+MCTmoNsbJQfEq9zCS0eDX2lyc+aOqRdZeh4E2Kg27q8+SmqDu2GkoyUTwti+XSHxjv9s4DlVhxw==@vger.kernel.org, AJvYcCXUtG2v49MkuDuoCgeNGsZkwgxOLfipKfuX4vfk5W3YOWrJ2F+xIsdN0zZe5ZdEDKIwDTNCc7YSMJgEPw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyCGJ6euZfLCWv/rf2g/u0Kn1TGdvoGKwfEBOyJz8bQwpU1JvE
-	dONG3CmqeyojsRtJenM0gqZNkFoXpjUncknm/PWbScoKkHgd2c8YCzrb75nL5Mq2YHWTBdEEELO
-	Cqp5da0pq1wWbkib2cQZeQ+tXYs7Yy4Q=
-X-Gm-Gg: ASbGnctkfFLF5sQujSAdskvhoeXrB47+Gvf2ENbfPbgoi1ulaUQewBtUoJlL1+RgPDv
-	5/ntQhQjPG+5shuTvqeFRd578gJvoNwp2V8TCvi9fPfUu1A2zTPeOLMMlFBOxmXPcXmGwSJxLTz
-	qa0Pyck+DyX6saE/CQkeGuSvO3Ly3JXGw4uA2PMlLBSjWVRUCMybQF6p4GWH+9AvxmksE4hdMyK
-	oqSsnY=
-X-Google-Smtp-Source: AGHT+IF9qpemszLCjKdTIPsWz0t4GcsgIaQduXYK/rUO4127Ry+Cx5d3EXzVvEU87daLwDxw0y5nugBK0Rk2QA9qZjg=
-X-Received: by 2002:a17:906:dc8d:b0:af9:1be8:c2aa with SMTP id
- a640c23a62f3a-afddd1e42e4mr344769166b.45.1755628314808; Tue, 19 Aug 2025
- 11:31:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755628559; x=1756233359;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o240rpXb1npe1ccsIe0LIiBv/L8C+NSjEqGnuz2YrN8=;
+        b=UbhCIRA0UPWqiZKzbLLvCx+KwkZtnCS35/13CVe4I1NWkvBN4ZBxcfdD8NWWX2nkkD
+         R8r5Fql7ujBFa7SC3x0s5Sz/GFDXPwSYQVo5aN5SWFfXP2IvKC5m2chA9jbGBp7pHLhY
+         XRltc886jfSPRsD6iP62x5ez7NclK5p6ZrwzQicESH88gm84gKfXpRJhP5k9Q9ZADQFn
+         jDQlJl6dOmzeocKTLNALPwSO2MJBq6Vw7fG+TJO27cgNBCKLox2HTDxYbyzFGv394oQn
+         QEMjGsXIl3Pg95AyGDngIuNHTFZcrLYbLbN7MmDVKcqqXd3H/a9drtrseAJCnlebbVLV
+         rtlA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJIUm2XrZYH6pBIc1CjpFHPogaTO24aWjbLQ4XzYPjvxkXvr5ZFIFFteobALFPTI1HijRlvn1ma7avgedw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWJRN2CBLEa+ffcltcziurG8C5dL8Jy2YutNYfZNdD2yvZIZte
+	2eQcrsD4zUnJuPxGPQVSS75x/G5hibvST8aqjXoDrdGqQbk53g0ZFas+MzEK13DKiUWgkA8Yz+4
+	4fMGCYmVOm0MdkK3+7SuPFfxk13GJ6cE2zhPZxFtmAbInF2LYMH94UHemmntbYxbHpWls
+X-Gm-Gg: ASbGncsIp2eqj0JtG95h1yluangvz/eJRWAy6Gmw9F9tau37MnEyUwg67mrF7Af25Bz
+	oDoGJHc7+eWBVIgFvWL0jof0s1YPRbVjISXxDQuOrDXx6dwTDOiQHpAj4A2mr4EcUmbyS0aGf1W
+	4xh0Fnvo5vHxgR2aut+oXmev3SBwt0wgHyxyUEcE/4JhWUBeYTg5dCyC76qaNtT73z4GoDuuD3f
+	jrYfJxAba8Rkd1ZT/qcqSiDJye/lJAqjKD8H4q4CEx1ve+19IwoiJ5sKLVHVmyhTIoDn7WfcoUC
+	/FjQHE6vrdHSQiHqC7mthKr5449+bfaXQQ8Ufi5INy87vd5NYAQfTAPhmwHVSBLgKMoZdYu/vW1
+	srxtkCAMFx/Kwkiv6Lwn1WcfViB0ytLn0W4i2Fl2L+QyoAa+pY7dY
+X-Received: by 2002:ad4:5cad:0:b0:709:e1d5:2470 with SMTP id 6a1803df08f44-70d76fd26bamr413946d6.20.1755628559307;
+        Tue, 19 Aug 2025 11:35:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGmlAw5ivpCYe8dKVhVWxeKp6uuPutspQzTTRywH6aArEi8XXmLCe1KM8UMGq0ZEI0zbNZ8Q==
+X-Received: by 2002:ad4:5cad:0:b0:709:e1d5:2470 with SMTP id 6a1803df08f44-70d76fd26bamr413576d6.20.1755628558770;
+        Tue, 19 Aug 2025 11:35:58 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef3516bcsm2227934e87.24.2025.08.19.11.35.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Aug 2025 11:35:57 -0700 (PDT)
+Date: Tue, 19 Aug 2025 21:35:55 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Mike Tipton <mike.tipton@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: interconnect: document the RPMh
+ Network-On-Chip interconnect in Glymur SoC
+Message-ID: <phbil4fflttlcp7s4nxyceyb2a277eablveozggloufowwzplu@c4a2mrtnfunf>
+References: <20250814-glymur-icc-v2-0-596cca6b6015@oss.qualcomm.com>
+ <20250814-glymur-icc-v2-1-596cca6b6015@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org> <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com>
-In-Reply-To: <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Tue, 19 Aug 2025 21:31:17 +0300
-X-Gm-Features: Ac12FXzsYRtjNObv84CHy6T-R0DRBoqbq7I0xmmsDobIVB43mAqIdnnlLv2k1FE
-Message-ID: <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
-Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
- function category
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
-	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Chen-Yu Tsai <wenst@chromium.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250814-glymur-icc-v2-1-596cca6b6015@oss.qualcomm.com>
+X-Proofpoint-GUID: JjqOwlxT9d9Fg143b081Xq7xC2E9Jdgl
+X-Authority-Analysis: v=2.4 cv=YtYPR5YX c=1 sm=1 tr=0 ts=68a4c410 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=pDoijQcVg5aKu1OD8A4A:9
+ a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE0MyBTYWx0ZWRfX9CA5jqKdYXYt
+ n7fWE2AyE8DnLK2cxFfzdmNFY6PBbqiw0/pdwjN1wk6vMu1L9eD8Zwu+wEn2XybMDKdwwFgCasN
+ VDr3vZpOl99YVI3z6RB0ZcZz+zYrxwy3ft9S/qTK2CR2TK2oAfqHVPKq8m3SGwvcRs814v7b0Uq
+ +/lyGPTh7oZUBmuWP4Uamod//kN2KlME7HYt+hL9Xt9e5fdU4+1fbB2ukga14X5UPUSKh7zgb0a
+ 6l+yzOK3WEFKeDExlM/PtYD2JxqcmK7UiJrRiRlv0kAMmplISAgOsVH/IPGQN+siMgvIOS4oytp
+ sL6WvD8i6nm9Z+VpZk/fFLPnl88y2szRsGfA4tdEOvvkJvtE0iiWE+94GFYNwNOG23QAEVAk11G
+ uF55Uecd
+X-Proofpoint-ORIG-GUID: JjqOwlxT9d9Fg143b081Xq7xC2E9Jdgl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_02,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508190143
 
-On Tue, Aug 19, 2025 at 4:02=E2=80=AFPM Linus Walleij <linus.walleij@linaro=
-.org> wrote:
-> On Fri, Aug 15, 2025 at 11:09=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
-pl> wrote:
+On Thu, Aug 14, 2025 at 02:54:19PM +0000, Raviteja Laggyshetty wrote:
+> Document the RPMh Network-On-Chip Interconnect in Glymur platform.
+> 
+> Co-developed-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> ---
+>  .../bindings/interconnect/qcom,glymur-rpmh.yaml    | 172 +++++++++++++++++
+>  .../dt-bindings/interconnect/qcom,glymur-rpmh.h    | 205 +++++++++++++++++++++
+>  2 files changed, 377 insertions(+)
 
-...
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,glymur-gcc.h>
 
-> >       devres: provide devm_kmemdup_const()
-> >       pinctrl: ingenic: use struct pinfunction instead of struct functi=
-on_desc
-> >       pinctrl: airoha: replace struct function_desc with struct pinfunc=
-tion
-> >       pinctrl: mediatek: mt7988: use PINCTRL_PIN_FUNCTION()
-> >       pinctrl: mediatek: moore: replace struct function_desc with struc=
-t pinfunction
-> >       pinctrl: imx: don't access the pin function radix tree directly
-> >       pinctrl: keembay: release allocated memory in detach path
-> >       pinctrl: keembay: use a dedicated structure for the pinfunction d=
-escription
-> >       pinctrl: constify pinmux_generic_get_function()
-> >       pinctrl: make struct pinfunction a pointer in struct function_des=
-c
-> >       pinctrl: qcom: use generic pin function helpers
-> >       pinctrl: allow to mark pin functions as requestable GPIOs
->
-> I applied these 12 patches as a starter so they can
-> stabilize in linux-next.
+Please drop this header and use ephemeral clocks in the devices below.
+We don't need to point out particular GCC clocks, using
+<&gcc_foo_bar_baz> is more than enough.
 
-Hmm... I'm still sure that we don't need to have a separate flags
-field, but since I am on vacation and will be able to look at this
-closer next week, I can't look closer to it.
+> +    clk_virt: interconnect-0 {
+> +      compatible = "qcom,glymur-clk-virt";
+> +      #interconnect-cells = <2>;
+> +      qcom,bcm-voters = <&apps_bcm_voter>;
+> +    };
+> +
+> +    aggre1_noc: interconnect@16e0000 {
+> +      compatible = "qcom,glymur-aggre1-noc";
+> +      reg = <0x016e0000 0x14400>;
+> +      #interconnect-cells = <2>;
+> +      qcom,bcm-voters = <&apps_bcm_voter>;
+> +    };
+> +
+> +    aggre4_noc: interconnect@1740000 {
+> +      compatible = "qcom,glymur-aggre4-noc";
+> +      reg = <0x01740000 0x14400>;
+> +      #interconnect-cells = <2>;
+> +      qcom,bcm-voters = <&apps_bcm_voter>;
+> +      clocks = <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> +               <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>,
+> +               <&gcc GCC_AGGRE_USB4_0_AXI_CLK>,
+> +               <&gcc GCC_AGGRE_USB4_1_AXI_CLK>;
+> +    };
 
-
---=20
-With Best Regards,
-Andy Shevchenko
+-- 
+With best wishes
+Dmitry
 
