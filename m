@@ -1,230 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-69791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3249CB2CA5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:18:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D79DB2CA7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:24:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CD2304E0281
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:17:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 709B25A6658
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:22:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CB4920469E;
-	Tue, 19 Aug 2025 17:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 649DC30277E;
+	Tue, 19 Aug 2025 17:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YDpVHwao"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="K1xux7em"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2086.outbound.protection.outlook.com [40.107.236.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B69B2C235C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 17:17:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755623876; cv=none; b=gAdc30sGQnRtIP7GA+7AKqu90ccPvUalA2rWmm9kgziaYT+roxBu7ZvPZEli5d1kH/sWfj0m1+sn1y5TyotrNRXx2zmZtq5eSB2SYFmBSdvYp33sFSDqO1XAEVmO0M1uInKkoUyrwjHxbIC42eJWb90tD83WvOKcE0stbPxmTUo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755623876; c=relaxed/simple;
-	bh=nvWzzpqNpT6eJfaRE4PBD9zQF//aAwvkd8/k/iioYeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QfbWwjsBQ4I+oEfv63CNWkdnWLOdVAh6G/S+TuWgmbmRvl+Z6BH2auvIWp5dH+vWoUZhkjaGGz7rxa22Ow945fyzhqKe3917Po5vGDm+tdiEtyhe+W42xmUT9qilsXxGDsiV7ITZis1H42haQbNGUYpsxWMfwh4ipy5nPj4ju4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YDpVHwao; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JFKtqo005494
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 17:17:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=jcJugMEmP+bjapXf/nEWeVTp
-	niYytQQ7IyAUbp7KDGw=; b=YDpVHwaoiNDYc1EstbKRajG+5Bss+xcUqnjV8xew
-	SHQq9vWf0M/krUsz0Oo02Wb4CR9CUL1wVSp3tFWLgLHDX8bpXVtDsQ/cKXYQxEfK
-	ctDGkTLXNxOfhz3ggJEFFO8rXi27DGzstYB2dgbzC4XGnRTwtDkOy4NHFIxSmlLS
-	CofzYV6sCtFJsOR/ZkP+xTKOz63pQjsEGo3bv2N2zDzBMBIilL8JJ4+Mf+uQWueK
-	LWP2GAB1EJ7QnWaYl3AHuzqBqdtKHtRE19G73O68BmwHF/SRQPez54S9msIUEUsr
-	NcnuZsLbN3Q86pLKMGUcRPobdK+HYTbZ+2WX8TVzDnAT7A==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48muu0gcem-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 17:17:53 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b471758845dso4679901a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 10:17:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755623872; x=1756228672;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jcJugMEmP+bjapXf/nEWeVTpniYytQQ7IyAUbp7KDGw=;
-        b=xOyxQH1wmuk2ly6P5PpUE5KUPFgR9DjgFLECiQE25jIRaszcDVGpRT7g4Q79jD/qCz
-         5oyH7QjFikybrwlsMJ7xHzfD8HDyPbFl0h3xnpGlig2/8VhTLRozcX55EouyZElzskO8
-         OoxmSYspVDwCluqaRRjQJhnqn5CIqCn+BG/NRAa9nRXMD8jufC99BtB/fzwdbVOieTtg
-         AFhlo/Vjij/6Q73tT4w6ouOBBk/9jcQclv/J2B5F/JPZSe/FhHjyam9qRFFX8LL11MvZ
-         9tXwL83yhhlcviMXMnHmN+UhybP7/H2mXODLEXVFutvIl8g9QKhsQYr/hp8VE9wDgi0X
-         W4lg==
-X-Forwarded-Encrypted: i=1; AJvYcCVWHYyjjuZ2fV12ygzZMPU417h9b2HZPhIEjORPDLOh1t6QXeUP9W5Com5VisYtGYV1BkKgwIL9iHwDjaYF@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcpJQ9neQjDjzbnazsR3IOuIITg/BNLxP3StgpDIPY2nP5nAg/
-	ImI0KwivaLmSJs9RrGLYAW3C7q4NDzXZk4tz24LnOAO/fv3C3KXt1ELv2oTQ1IL3vpzymnCIunR
-	NyAH9UVHyzmIOc4kXrotcAunyNKVb7LSG2lvJ9IulAT2THobuYxMPqAoUDB3q46ek7dKw
-X-Gm-Gg: ASbGncvNB98m5yBpKsbbZtT+BPwnr9Ka5LUyKY0X/GLeLZftPrGrsnwQRpQiF2jO5AK
-	ZJkj79cf8DnO9Iij/cF0uO8pBX2kyoD5f9JuuVcR8JrsatHqjPyU6R9fYt3lcjB4sdqdRrX6KPE
-	acPcUXU7fUuPyi211UZMhw+4Xrs9kphW8Gz3ral+m4u/dNBhT9hjkZqRu4J/1TWfzn6h0OHs4Sd
-	/uuCWj5Kv7YjAvOsp+zG9ODLXRfX7CYZVL8rkLTMS+/iLMHuLdIRUHujZx8E19JkbsEK0O3Sble
-	+uWuvJdps1Denp0rtXPfcCCUe/m5l40Tc2BPuMieSDo1rWqIdWAmUapOQ2bOXBY91wNeJy1WaA=
-	=
-X-Received: by 2002:a05:6a20:7d86:b0:243:78a:82b9 with SMTP id adf61e73a8af0-2431b980068mr162626637.51.1755623872488;
-        Tue, 19 Aug 2025 10:17:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFN9cn2Ql/5avNFjiCvAWCZGwnNNwM92fq94h29uNQopaI93fMSoUy7tmgOUYUQhdeGK5VXtQ==
-X-Received: by 2002:a05:6a20:7d86:b0:243:78a:82b9 with SMTP id adf61e73a8af0-2431b980068mr162576637.51.1755623872003;
-        Tue, 19 Aug 2025 10:17:52 -0700 (PDT)
-Received: from hu-pkondeti-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b47640b2d37sm198078a12.46.2025.08.19.10.17.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 10:17:51 -0700 (PDT)
-Date: Tue, 19 Aug 2025 22:47:45 +0530
-From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] firmware: qcom_scm: Introduce PAS context
- initialization helper
-Message-ID: <3b74157a-3f2a-4533-acf6-7cab8154709c@quicinc.com>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1031F8733;
+	Tue, 19 Aug 2025 17:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.86
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755624161; cv=fail; b=osdfAecj53W7cf6Z+/XJNbFCShKgn2jhvUJ+f9l7W7Tz4iUJbL/2xt2KfdfYLXOXxBnB6JJZMdTzEkbHvrVC9i5gEU4OMf8Td1jsTBiHauZB3Mnv2pKSEKfXH8871wi5RyrtZceaCJSN19wvL/2HixTO3AvMtsDCh0hfhn4Fx94=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755624161; c=relaxed/simple;
+	bh=gYWaPTS4YdSg0wP8oMIFzHhyVqz0GtylpFIaOeR3h88=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=twDbJmJJegB1ChWV2K01JFnc8pFjyCp3LmVpCB3GRuxJnNbQD8of+mU+Q1oHL0onBlzuCLShlKX02YH29719/F32MTOy60pS614lPeA8uwCZCcnPsucmcGMkahCbwpluBki0bEAdRJ0PetfbTsxomhAMTM7x+JhhIAwLg2KfEZI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=K1xux7em; arc=fail smtp.client-ip=40.107.236.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Eu6949MSJmIEEDkP9qwY64DEf13t6MFD/mhXDJ2j51Z7KfSqClgy2QokedllU5jNXYyMILxQzqMoL3emN2atj5qE+E/xsBRved52fxJisfVPPW4WH+jnrvhgxQBkWNPsPR6DH1JU7h0tbcC5R9pSdCCXeYOFgJdL46cPfeixRbeP4tt6VhoYS5XAuz6mImMLNgC5EQxIYzno0SfrxCagFXyH+XcTDtwHlz+66UYSgX6BJvHOCD/WcLKK0WdsKHj9fxVDzeegtxjaDvLwVHGxjWEnZs27AHqU+QzyjkvrZjTdzQ3J2Oso5XeOlO7uvnHpSR/sM4Z1fnF2zOOGcThs5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ys1gH2e5j8xiZRvGCwTNRL2yYA1Sfu6NnXvCiYNcMQ4=;
+ b=JyUASeB7okbhaJquVZB4+3ngCTrx4U8Fafm9xYhD7twGyt0vfxjQr/ZjthngJztLWDZBkGHVcjU3lVvCVRoJxkqnFGX1yiudhWJVpdTJFgT4M9HgrzcGjqVUj711zuNDcSb/grQ1/HIijgTWc9xGrZVUm1K9bQo9ts3U076OoLm+eVB8OKM59vbHDbr2ID64wkePQlBgiI12kTN1hgS2biBR+ICH3hGl5uSaI28vnMTciR8xPio8F3q59ULFAwN98tjfmygdAR1Yh9BsfqYdWswCVk41iqWzvX0V6iAgN+yI2b/tkfCu1aYW/CyIHT/j6YK8hFoaL6KaQa+0w1cNAA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ys1gH2e5j8xiZRvGCwTNRL2yYA1Sfu6NnXvCiYNcMQ4=;
+ b=K1xux7emZOHeeE+GMUaqhIWbe2GvN2szzxVYGeNJRINCQbW6nAZjM9f1UWlcxl7RsFLhn16FzJigmRNquwp5xB6+BsdAnOx10ZhsZhpM8o0AsAZmjKij9oEgbNLbHxQJyPDaatCorXO8V6ufw2Br/4w1Ix4CQ5YeIXto++L804cfaiaQMuU3iJyoKynq3/RL1VlNy8bfAGxpQMjJ7NPH8cjiQIfDOwbc+c+VeelMyYTgdP1zmTzyoudJmIMKD8ZFp8S//9qzsnYFGTX7LS273L1wdZHVJB+N3EgBnsa7A4kugZlCC2o7NJHQne037ITFXD1CDqaZok2YRGRFNmwZ4Q==
+Received: from BN0PR03CA0033.namprd03.prod.outlook.com (2603:10b6:408:e7::8)
+ by SA5PPF530AE3851.namprd12.prod.outlook.com (2603:10b6:80f:fc04::8c9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Tue, 19 Aug
+ 2025 17:22:35 +0000
+Received: from BN1PEPF00004689.namprd05.prod.outlook.com
+ (2603:10b6:408:e7:cafe::75) by BN0PR03CA0033.outlook.office365.com
+ (2603:10b6:408:e7::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9031.20 via Frontend Transport; Tue,
+ 19 Aug 2025 17:22:34 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BN1PEPF00004689.mail.protection.outlook.com (10.167.243.134) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9052.8 via Frontend Transport; Tue, 19 Aug 2025 17:22:34 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 19 Aug
+ 2025 10:22:23 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 19 Aug 2025 10:22:23 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 19 Aug 2025 10:22:21 -0700
+Date: Tue, 19 Aug 2025 10:22:20 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <robin.murphy@arm.com>, <joro@8bytes.org>, <bhelgaas@google.com>,
+	<will@kernel.org>, <robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
+	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>, <etzhao1900@gmail.com>
+Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
+ helper
+Message-ID: <aKSyzI9Xz3J0nhfk@Asurada-Nvidia>
+References: <cover.1754952762.git.nicolinc@nvidia.com>
+ <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
+ <20250818143949.GO802098@nvidia.com>
+ <aKNhIr08fK+xIYcg@Asurada-Nvidia>
+ <20250818234241.GF802098@nvidia.com>
+ <aKQG9/skig6F8LdQ@Asurada-Nvidia>
+ <20250819125249.GG802098@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
-X-Proofpoint-GUID: 7526qxnzik9FLqXgqR3P1ptR3yZ3icHT
-X-Authority-Analysis: v=2.4 cv=YtYPR5YX c=1 sm=1 tr=0 ts=68a4b1c1 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=1sDHh0GgXtZW7FQMFNoA:9
- a=CjuIK1q_8ugA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE0MyBTYWx0ZWRfXzVjJ5j7GwhCb
- p+Qu5wUNdRIF63yC7I969ePoNtVOhA4yJUjig0NDaL+/eLQGxJxBrsgIQfWoI+6x1KL5jIRQ025
- FPOoIKvdCQTw1PFoyKsf87xV5Bo4CBrXKHHdjALmtJk45w1jpLK98tafKHLdhl5CJKkSAHAZEyA
- ra59mUTy0QvRPLecG9zkSTOkIa/oeC7EanwIDXI8m884OdhlwmT0WeZ2bHworF+EULGx/LmplSE
- o6cI7BKqQFg1CyW/X1OM9GaPspxrFPZdEV9fndMN5HXhJwaD4ELv7weBIQ2nAHrjappqb+y6Ft1
- U5DEnBnZuclOnd9AArGA7KzZSiH/WILaiHFg9+lXII6s2O3O86hCxb4qu7RS/i/wBCpoJSbmmzn
- 6XVSziE1
-X-Proofpoint-ORIG-GUID: 7526qxnzik9FLqXgqR3P1ptR3yZ3icHT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-19_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 clxscore=1011
- suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508190143
+In-Reply-To: <20250819125249.GG802098@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004689:EE_|SA5PPF530AE3851:EE_
+X-MS-Office365-Filtering-Correlation-Id: 585e9789-a4a4-47ac-9913-08dddf44fcdd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|36860700013|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?JSV2/NcBFWPYEo3I8e3g0fijZi57fj+q4pWrCPKY+6Sc60z3T4oZyX1K+v4t?=
+ =?us-ascii?Q?T10oDq9RsMlVIx1iJlCMK+VGlTQIdaa0Pmn7IVHPspk2Oc3PQ1KpOXOEUbs9?=
+ =?us-ascii?Q?Jutlqp44pHbjnTMAcOaII38J80ax9pzt2E+saO+wmnheimml7comXRN4To67?=
+ =?us-ascii?Q?tBzhwgpfPgV5T9FBMJxMpXVHMzEpnrKpWsP5kJwYXd3gYb+8YBFeXfesK/zV?=
+ =?us-ascii?Q?ENMLgcwGFkXJa9jGhmbRcpc8Wnmefys71rqF3xWN4SjV7EQ+zCVh0oBhakHv?=
+ =?us-ascii?Q?0ogaL/tF52RcUnKhZbZmOGgws3qx9BNA0qkUAjNfw4PdamznVnWZkFOnqsd5?=
+ =?us-ascii?Q?YqCWASFHd4PdX9j1pCJwo2TuXohFWxO+Y91swJPoLNlxrPvD4LiKMubsvHqN?=
+ =?us-ascii?Q?X4JP3xTUbiJy2Uz+ZDn8yp2jJ2o11SCt0GLw20EJVy6bO2zVdTJzRlHduDoA?=
+ =?us-ascii?Q?pPimEX/KLk3gNmGDeB/Ry6Ftz03brssXuunW+AoKr1ArThh6z9Uc1foDTCYx?=
+ =?us-ascii?Q?f7ffwrPLATaE2oi6uXNTy55bfepAzG/L+JwLpRtpAWD5yxMMQUg1TWro981a?=
+ =?us-ascii?Q?m0jGwjYd0IW1jz2YuL5i3YgshoOn6uqp8GS2neGPwnX10+c5Dl/72Lf2yYyP?=
+ =?us-ascii?Q?eSse8pS35fUqLfl1uuXlQ7bNBtKerpip8+5YILhx8cQFWer8emXZnAPhWlgr?=
+ =?us-ascii?Q?G3JfyUoUGQWN0C6mOlBfBOVAlPKkFP9ykgA3YaNt+yt5JPNcajY13EUNIKop?=
+ =?us-ascii?Q?aXrqDhjrAzaMbhV4oAeo+OB9Ym1B60JgLsNNlx+K7loSNafVRzJnh8HVJH3L?=
+ =?us-ascii?Q?Ma4a42FyoeMrN0dMFKoE0FHeymT5D4JgrtBJo4UkZCYcwJylY+uKqDiFzN5P?=
+ =?us-ascii?Q?Th6ets1H/5YfGX6zqbWYPvs6NBvHLAhGHuW34yVlXyKRqkyuLl/pQjLSiedY?=
+ =?us-ascii?Q?lxno4WB6h4aIX7jCYU6WTaqW7CxxrxE8baFETZGrZ6MPkoHoRcW4FLpPUnKR?=
+ =?us-ascii?Q?zzxIJQ0Gh5rIeld+a1ZepZtB7IavC/tAqYVU7OKaI8qjfPBOnCzDM18DZX/q?=
+ =?us-ascii?Q?91elMigZZ3+EIIyfYTZ/o/s8E+xlzo8ONvyEuU+4TEfjWKH4BvC5FHmB0ycs?=
+ =?us-ascii?Q?i2KTZR/3jEBIf0RWZt20WO+ot9QXwAkaXJOgR6ANLDRJmDPRUnGMA2vH+lZ6?=
+ =?us-ascii?Q?LFU6DC1jOSzf2nfJcmZ8X7w+TZKrUg4ZZElbA5rz+9hEL6kEJmDriFFilqO6?=
+ =?us-ascii?Q?XMYDnFfxorwUlOKc0Mu8J9EUb5ozx3FI64mL1quzix85olBvxWrEKngJ7cfu?=
+ =?us-ascii?Q?YHlYAS0nvbeDa8W9DHyMWbJ1MGJmrDiKh0knr/FSvtc0v2h9oc8OjpkUDNXO?=
+ =?us-ascii?Q?boPRn99oOW0jRMgcMvBjUcivYRS5OtY2wR42ytBYoaAy2Y5bN4aIQFVQhWA8?=
+ =?us-ascii?Q?N4up/mJsZDJk/TdTIS0pE5FHNiWT4iCjZAz/CyNo+UzUg0U14KrURpdtgyjg?=
+ =?us-ascii?Q?pkH/wRSSnv9GU9uduuUPJOx0ceRZ2X56yVGB?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2025 17:22:34.7852
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 585e9789-a4a4-47ac-9913-08dddf44fcdd
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN1PEPF00004689.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF530AE3851
 
-On Tue, Aug 19, 2025 at 10:24:36PM +0530, Mukesh Ojha wrote:
-> Currently, remoteproc and non-remoteproc subsystems use different
-> variants of the MDT loader helper API, primarily due to the handling of
-> the metadata context. Remoteproc subsystems retain this context until
-> authentication and reset, while non-remoteproc subsystems (e.g., video,
-> graphics) do not require it.
+On Tue, Aug 19, 2025 at 09:52:49AM -0300, Jason Gunthorpe wrote:
+> On Mon, Aug 18, 2025 at 10:09:11PM -0700, Nicolin Chen wrote:
+> > Yes, I've thought about that. The concern is that some other place
+> > someday may want to use iommu_get_domain_for_dev() in similar cases
+> > but would find that it doesn't work. So it would have to duplicate
+> > the domain pointer in its "master" structure.
+> > 
+> > Overall, having a _locked version feels cleaner to me.
 > 
-> Unify the metadata loading process for both remoteproc and
-> non-remoteproc subsystems by introducing a dedicated PAS context
-> initialization function.
+> We probably need the locked version, but it just shouldn't be called very
+> much..
+
+OK. Let's have one patch upgrading the attach_dev to pass in the
+old domain pointer (aligning with the SVA version of attach_dev),
+and another patch adding the _locked version that then will have
+very limited callers.
+
+> > > With sensible internal locking
+> > 
+> > Hmm, I feel this iommu_get_translation_mode() is somewhat the same
+> > as the current iommu_get_domain_for_dev(). It would just return the
+> > group->domain->type v.s. group->domain, right?
+> > 
+> > This doesn't have any UAF concern though.
 > 
-> By introducing qcom_scm_pas_ctx_init(), we can standardize the API usage
-> across subsystems and reduce the number of parameters passed to MDT
-> loader functions, improving code clarity and maintainability.
+> Yes, no UAF concern is the point
+
+I see.
+
+> > > So that is another bunch. Not sure what will be left after.
+> > 
+> > I recall that some of the drivers manages their own domains, e.g.
+> >     drivers/gpu/drm/tegra/drm.c
+> > 
+> > So, they would want more out of the domain pointer than just type.
 > 
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> ---
->  drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
->  include/linux/firmware/qcom/qcom_scm.h | 11 +++++++++++
->  2 files changed, 37 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 96d5cf40a74c..33187d4f4aef 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -558,6 +558,32 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
->  		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
->  }
->  
-> +void *qcom_scm_pas_ctx_init(struct device *dev, u32 peripheral, phys_addr_t mem_phys,
-> +			    size_t mem_size, bool save_mdt_ctx)
+> This looks like it wants an 'is currently attached' operation
 
-Since we export this for other drivers/module, consider adding kerneldoc
-comments.
+That's certainly one of the wide use cases. And I think we could
+have an IOMMU_DOMAIN_NONE to fit that into the type helper.
 
-> +{
-> +	struct qcom_scm_pas_ctx *ctx;
-> +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return NULL;
-> +
-> +	ctx->dev = dev;
-> +	ctx->peripheral = peripheral;
-> +	ctx->mem_phys = mem_phys;
-> +	ctx->mem_size = mem_size;
-> +	ctx->save_mdt_ctx = save_mdt_ctx;
-> +	ctx->metadata = NULL;
+Yet, I also see some other cases that cannot be helped with the
+type function. Just listing a few:
 
-This seems unnecessary.
+1) domain matching (and type)
+drivers/gpu/drm/tegra/drm.c:965:        if (domain && domain->type != IOMMU_DOMAIN_IDENTITY &&
+drivers/gpu/drm/tegra/drm.c:966:            domain != tegra->domain)
+drivers/gpu/drm/tegra/drm.c-967-                return 0;
 
-> +
-> +	if (save_mdt_ctx) {
-> +		ctx->metadata = devm_kzalloc(dev, sizeof(*ctx->metadata), GFP_KERNEL);
-> +		if (!ctx->metadata)
-> +			return NULL;
+2) page size
+drivers/gpu/drm/arm/malidp_planes.c:307:	mmu_dom = iommu_get_domain_for_dev(mp->base.dev->dev);
+drivers/gpu/drm/arm/malidp_planes.c-308-	if (mmu_dom)
+drivers/gpu/drm/arm/malidp_planes.c-309-		return mmu_dom->pgsize_bitmap;
 
-Do we really need to pass this burden to the caller to pass save_mdt_ctx
-as true/false? What happens if we always keep metadata in qcom_scm_pas_ctx struct
-and let clients use it if needed.
+3) iommu_iova_to_phys
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c:2597:	dom = iommu_get_domain_for_dev(adev->dev);
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2598-
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2599-	while (size) {
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2600-		phys_addr_t addr = *pos & PAGE_MASK;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2601-		loff_t off = *pos & ~PAGE_MASK;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2602-		size_t bytes = PAGE_SIZE - off;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2603-		unsigned long pfn;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2604-		struct page *p;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2605-		void *ptr;
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2606-
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2607-		bytes = min(bytes, size);
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c-2608-
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c:2609:		addr = dom ? iommu_iova_to_phys(dom, addr) : addr;
 
-> +	}
-> +
-> +	return ctx;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_scm_pas_ctx_init);
+4) map/unmap
+drivers/net/ipa/ipa_mem.c:465:  domain = iommu_get_domain_for_dev(dev);
+drivers/net/ipa/ipa_mem.c-466-  if (!domain) {
+drivers/net/ipa/ipa_mem.c-467-          dev_err(dev, "no IOMMU domain found for IMEM\n");
+drivers/net/ipa/ipa_mem.c-468-          return -EINVAL;
+drivers/net/ipa/ipa_mem.c-469-  }
+drivers/net/ipa/ipa_mem.c-470-
+drivers/net/ipa/ipa_mem.c-471-  /* Align the address down and the size up to page boundaries */
+drivers/net/ipa/ipa_mem.c-472-  phys = addr & PAGE_MASK;
+drivers/net/ipa/ipa_mem.c-473-  size = PAGE_ALIGN(size + addr - phys);
+drivers/net/ipa/ipa_mem.c-474-  iova = phys;    /* We just want a direct mapping */
+drivers/net/ipa/ipa_mem.c-475-
+drivers/net/ipa/ipa_mem.c-476-  ret = iommu_map(domain, iova, phys, size, IOMMU_READ | IOMMU_WRITE,
+...
+drivers/net/ipa/ipa_mem.c:495:  domain = iommu_get_domain_for_dev(dev);
+drivers/net/ipa/ipa_mem.c-496-  if (domain) {
+drivers/net/ipa/ipa_mem.c-497-          size_t size;
+drivers/net/ipa/ipa_mem.c-498-
+drivers/net/ipa/ipa_mem.c-499-          size = iommu_unmap(domain, ipa->imem_iova, ipa->imem_size);
 
-Is there an equivalant ctx_destroy() function? It would be confusing for
-drivers to call this in their probe and not doing anything upon error or
-in their bus::remove callbacks. I don't know if we really want to
-convert the whole function under devres or just provide a destroy
-callback.
 
-> +
->  /**
->   * qcom_scm_pas_init_image() - Initialize peripheral authentication service
->   *			       state machine for a given peripheral, using the
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index a55ca771286b..b7eb206561a9 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -72,6 +72,17 @@ struct qcom_scm_pas_metadata {
->  	ssize_t size;
->  };
->  
-> +struct qcom_scm_pas_ctx {
-> +	struct device *dev;
-> +	u32 peripheral;
-> +	phys_addr_t mem_phys;
-> +	size_t mem_size;
-> +	struct qcom_scm_pas_metadata *metadata;
-> +	bool save_mdt_ctx;
+We could probably invent something for case 1-3. But for case 4,
+it feels that iommu_get_domain_for_dev() is the only helper..
 
-As mentioned above, can we just include qcom_scm_pas_metadata struct all
-the time?
-
-Thanks,
-Pavan
+Thanks
+Nicolin
 
