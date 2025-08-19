@@ -1,174 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-69794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83A19B2CABC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:37:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A72CCB2CB63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:50:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EEB31BA5579
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:36:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC725167FB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E075E30C348;
-	Tue, 19 Aug 2025 17:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDs+vgN4"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB1D430DD02;
+	Tue, 19 Aug 2025 17:49:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20AB30BF6A;
-	Tue, 19 Aug 2025 17:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 737C02206B8;
+	Tue, 19 Aug 2025 17:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755624932; cv=none; b=pQ8ix6g2A6++M5ekedhvLAPl3fYDTlbIvzdqZdkGDR4gv0qfHYxWcdxXEmMjtVyMP2rJns0p//+8xE+c4CyMgqx6pJpMcbwnHUYJZKQwr/QQBFgI3MHcxeRRm/Feq7pms8eQXOiq7eLtD1O+DdWoEsJkPKZ/MTuLZ9rR7t4Bc/U=
+	t=1755625757; cv=none; b=TWHBLcq0Gx3x8clSJkLLPfNmgS5SG1v/cwwScY4/JJeAS5u9WreIdTfcAXkgKa5NuDubaY65bbq2f4zjD+IyfKLqLeQb2U2wnmfcwTYg8arXHQ4lAXfzFiIQQv1lws1ktlc0TaUHdHon1b94GVnm0R7KRDw3jvN5zavjoDPwFWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755624932; c=relaxed/simple;
-	bh=NbJZ1PvyWaHWtXxZjX7+dIVe0weMcIVtJxAnEiw0eQs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izKfH75lG9YqV07SpC10ZIBb7PT+ukfETbKeacM+aUe0kepH2GWSSvJUm3fY+RKPrmxhGW0C7MAinqxQoKi/berRgDaLnBvU3bMve4+c6EgyNYbXqAsL3E3iQm+FO25G9OV+u+T8XQIgyP1DePZ+j1na2fmN1MF5R2vcNTmYFhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDs+vgN4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9141C19422;
-	Tue, 19 Aug 2025 17:35:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755624932;
-	bh=NbJZ1PvyWaHWtXxZjX7+dIVe0weMcIVtJxAnEiw0eQs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDs+vgN4izGEjgQOiuDeqdNaz2bBUAmFln7Tbw+xBg2qDicXWHOJbiXu3dgkTbYAk
-	 EKkJfLIAOPp37ocJb+TMccctAojEmd6DutTYkiY1K22Lij/MtEQlewNUxpHxj7Vq0z
-	 4uQepQeApIZ14GNThUn71aLsjNBBwyuAdhFGkL/qNjtSRzi/ItNC8g7AHYOvE3jB4q
-	 iB3LGdkHI7BRkrjS+OZrT0Ly1zbpDGWOYks0S7GrvY/z4bE6BkmwD/qVw2fSTHpxst
-	 XD85JBnRHerVgkJ46eIpEeBmY5NQFjFVuyss2LCb163kScM8xMjStVNyxpxFQGfTYr
-	 u/KQOEufMzVOw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] ASoC: codecs: tx-macro: correct tx_macro_component_drv name
-Date: Tue, 19 Aug 2025 13:35:19 -0400
-Message-ID: <20250819173521.1079913-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250819173521.1079913-1-sashal@kernel.org>
-References: <20250819173521.1079913-1-sashal@kernel.org>
+	s=arc-20240116; t=1755625757; c=relaxed/simple;
+	bh=yfhPbDJoc+6CdAo/HUDbAHjm5EOHsprDS0bgOVBPTUo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u1ggeva+JSjhmo79XKXV92uGsDx2Tdb8tuc4mz+mpH+ImeqLDAPjyuBirabjGLv44dFqqLANceqyhF4DxjP72whhJ+U9T2aEbizeuZrAWMJAbT6xkzIpg4oyVAazkCowyJKO8xToNxIFDhibYKPFUXzL/oWUVdYGz1k3gngk5Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8E877152B;
+	Tue, 19 Aug 2025 10:49:06 -0700 (PDT)
+Received: from [10.1.196.50] (e121345-lin.cambridge.arm.com [10.1.196.50])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 475103F738;
+	Tue, 19 Aug 2025 10:49:10 -0700 (PDT)
+Message-ID: <cdb7b1e7-6e51-4c0e-bffb-b0d4b654a623@arm.com>
+Date: Tue, 19 Aug 2025 18:49:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.16.1
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/19] perf: Garbage-collect event_init checks
+To: kernel test robot <oliver.sang@intel.com>
+Cc: oe-lkp@lists.linux.dev, lkp@intel.com,
+ linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ linux-s390@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ dmaengine@vger.kernel.org, linux-fpga@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+ iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, peterz@infradead.org, mingo@redhat.com,
+ will@kernel.org, mark.rutland@arm.com, acme@kernel.org, namhyung@kernel.org,
+ alexander.shishkin@linux.intel.com, jolsa@kernel.org, irogers@google.com,
+ adrian.hunter@intel.com, kan.liang@linux.intel.com,
+ linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ imx@lists.linux.dev, linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+ linux-mips@vger.kernel.org, linux-sh@vger.kernel.org,
+ sparclinux@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-riscv@lists.infradead.org
+References: <202508190403.33c83ece-lkp@intel.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <202508190403.33c83ece-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+On 19/08/2025 3:44 am, kernel test robot wrote:
+> 
+> 
+> Hello,
+> 
+> kernel test robot noticed "BUG:unable_to_handle_page_fault_for_address" on:
+> 
+> commit: 1ba20479196e5af3ebbedf9321de6b26f2a0cdd3 ("[PATCH 19/19] perf: Garbage-collect event_init checks")
+> url: https://github.com/intel-lab-lkp/linux/commits/Robin-Murphy/perf-arm-cmn-Fix-event-validation/20250814-010626
+> base: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git 91325f31afc1026de28665cf1a7b6e157fa4d39d
+> patch link: https://lore.kernel.org/all/ace3532a8a438a96338bf349a27636d8294c7111.1755096883.git.robin.murphy@arm.com/
+> patch subject: [PATCH 19/19] perf: Garbage-collect event_init checks
 
-[ Upstream commit 43e0da37d5cfb23eec6aeee9422f84d86621ce2b ]
+OK, after looking a bit more deeply at x86 and PowerPC, I think it
+probably is nicest to solve this commonly too. Below is what I've cooked
+up for a v2 (I'll save reposting the whole series this soon...)
 
-We already have a component driver named "RX-MACRO", which is
-lpass-rx-macro.c. The tx macro component driver's name should
-be "TX-MACRO" accordingly. Fix it.
+Thanks,
+Robin.
 
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20250806140030.691477-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+----->8-----
+Subject: [PATCH 18.5/19] perf: Add common uncore-CPU check
+
+Many uncore drivers depend on event->cpu being valid in order to look
+up various data in their event_init call. Since we've now factored out
+common PMU identification, we can factor out this check in the correct
+order too. While it might technically be possible to hoist the general
+task/cgroup check up here now, that would be horribly messy, so for
+clarity let's keep these as distinct (albeit related) concerns.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202508190403.33c83ece-lkp@intel.com
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 ---
+  kernel/events/core.c | 12 +++++++++++-
+  1 file changed, 11 insertions(+), 1 deletion(-)
 
-LLM Generated explanations, may be completely bogus:
-
-## Backport Status: **YES**
-
-## Extensive Explanation:
-
-This commit should be backported to stable kernel trees for the
-following reasons:
-
-### 1. **Clear Bug Fix with User-Visible Impact**
-The commit fixes a copy-paste error where the TX macro codec driver
-incorrectly identified itself as "RX-MACRO" instead of "TX-MACRO". This
-bug has been present since the driver was initially introduced in commit
-c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx
-macro"). The incorrect component name causes:
-- **Debugfs confusion**: The component appears under
-  `/sys/kernel/debug/asoc/` with the wrong name "RX-MACRO", making it
-  indistinguishable from the actual RX macro driver
-- **Potential userspace issues**: Any userspace tools or scripts that
-  rely on component names for identification would be confused
-- **Developer confusion**: When debugging audio issues, having two
-  different components with the same name makes troubleshooting
-  difficult
-
-### 2. **Minimal and Contained Change**
-The fix is a simple one-line change that only modifies a string constant
-from "RX-MACRO" to "TX-MACRO" in the component driver structure. This is
-about as minimal as a fix can get:
-```c
-- .name = "RX-MACRO",
-+ .name = "TX-MACRO",
-```
-
-### 3. **No Risk of Regression**
-- The change only affects the component's identification string
-- It doesn't modify any functional behavior, audio paths, or driver
-  logic
-- The correct name "TX-MACRO" is consistent with the driver's actual
-  purpose (TX = transmit path)
-- Other similar macro drivers (WSA-MACRO, VA-MACRO) already use their
-  correct respective names
-
-### 4. **Long-Standing Issue**
-This bug has existed since the driver was first merged, meaning all
-kernel versions with this driver have the incorrect name. Backporting
-ensures consistency across all maintained kernel versions.
-
-### 5. **Follows Stable Tree Rules**
-- **Important bug fix**: Yes - fixes component identification issue
-- **Minimal risk**: Yes - single string change with no functional impact
-- **Not a new feature**: Correct - purely a bug fix
-- **No architectural changes**: Correct - only changes a name string
-- **Clear and obvious fix**: Yes - the TX macro driver should be named
-  "TX-MACRO", not "RX-MACRO"
-
-### 6. **No Compatibility Concerns**
-While changing a component name could theoretically break userspace that
-depends on the incorrect name, this is unlikely because:
-- Having two components with identical names ("RX-MACRO") is already
-  broken behavior
-- Any userspace relying on this would already be confused between the
-  two components
-- The fix brings the driver in line with its intended design
-
-The commit message clearly indicates this is a straightforward naming
-correction, and the code change confirms it's a minimal, safe fix
-suitable for stable backporting.
-
- sound/soc/codecs/lpass-tx-macro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index 27bae58f4072..fe000ff522d2 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -2230,7 +2230,7 @@ static int tx_macro_register_mclk_output(struct tx_macro *tx)
- }
- 
- static const struct snd_soc_component_driver tx_macro_component_drv = {
--	.name = "RX-MACRO",
-+	.name = "TX-MACRO",
- 	.probe = tx_macro_component_probe,
- 	.controls = tx_macro_snd_controls,
- 	.num_controls = ARRAY_SIZE(tx_macro_snd_controls),
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 5f7eb526d87c..ddf045ad4d83 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -12562,6 +12562,11 @@ static bool is_raw_pmu(const struct pmu *pmu)
+  	       pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
+  }
+  
++static bool is_uncore_pmu(const struct pmu *pmu)
++{
++	return pmu->task_ctx_nr == perf_invalid_context;
++}
++
+  static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
+  {
+  	struct perf_event_context *ctx = NULL;
+@@ -12571,11 +12576,16 @@ static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
+  	 * Before touching anything, we can safely skip:
+  	 * - any event for a specific PMU which is not this one
+  	 * - any common event if this PMU doesn't support them
++	 * - non-CPU-bound uncore events (so drivers can assume event->cpu is
++	 *   valid; we'll check the actual task/cgroup attach state later)
+  	 */
+  	if (event->attr.type != pmu->type &&
+  	    (event->attr.type >= PERF_TYPE_MAX || !is_raw_pmu(pmu)))
+  		return -ENOENT;
+  
++	if (is_uncore_pmu(pmu) && event->cpu < 0)
++		return -EINVAL;
++
+  	if (!try_module_get(pmu->module))
+  		return -ENODEV;
+  
+@@ -12990,7 +13000,7 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+  	 * events (they don't make sense as the cgroup will be different
+  	 * on other CPUs in the uncore mask).
+  	 */
+-	if (pmu->task_ctx_nr == perf_invalid_context && (task || cgroup_fd != -1))
++	if (is_uncore_pmu(pmu) && (task || cgroup_fd != -1))
+  		return ERR_PTR(-EINVAL);
+  
+  	if (event->attr.aux_output &&
 -- 
-2.50.1
-
 
