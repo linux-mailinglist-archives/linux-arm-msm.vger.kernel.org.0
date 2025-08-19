@@ -1,98 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-69838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19358B2CFCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 01:21:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37970B2CFEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 01:29:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 580B9189BA3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 23:18:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 20C3A520065
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 23:29:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9462425BEF1;
-	Tue, 19 Aug 2025 23:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C24A24C669;
+	Tue, 19 Aug 2025 23:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhwcZ5QE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kr3KqPQ2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E41D223DD1;
-	Tue, 19 Aug 2025 23:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5212441A0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 23:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755645462; cv=none; b=MnlQF8SoUJF5bHF8w9N6xwqRTn0cONjIEloGGTMSYNMOIgCdBTeFO0A8/UFu8FXG/noBw/sR+uanYAAoyleM7StvZuSQlVsgC9H//wvvqff4/1RiiA2ChPG1GRSendJo1hpPhicuBbl9yvsvCYXZwukRQH2gQJ/641k/o9UHmmg=
+	t=1755646154; cv=none; b=QpL863xsb1egdgp8qognGoObHgw1YmYQxzOcKlNDcz0WU+Jg1A89zf5QytYD7zI0xoHo4zjaFXvWKN7zISdbd3GXR4myk+KaiUWyELZjEJbgTjyg2IHPax9AlwYEgayeoBtRKAWOA3SadUdBv7ORqKNU5hmA5VVVoH4I+8K3HKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755645462; c=relaxed/simple;
-	bh=1kQJXxi8uPSvC/wNAX8jDhENGrCc0tvny2BV5cFDOFc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ATor40AqziJhKRTLOSAlNvLCSYvX1U8obupRbmLOYpcDNpwZ06aQerxsmzxXhumqVkTvajn8BtoX6KXAXGmwpk7ftRPYy4jPLCDLkZBhUeZNhpJ0krPPE2Aa23hs7KI5Q9xsjj3WxOpaq+k+LtmGZ38udosKJJrr+Mm/Afvzqrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhwcZ5QE; arc=none smtp.client-ip=209.85.166.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3e582bc3720so22050775ab.3;
-        Tue, 19 Aug 2025 16:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755645459; x=1756250259; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zfg+/0iA7MeX1A93jxyLkNbqcGb7Dk0Q5+FiLHCKrdg=;
-        b=MhwcZ5QEtVp0bjzu5JBj118hgmKJlDFlBoDKSS/KHyyaU6DKz0c5XiGMmyUHfSHvVA
-         ifYlaQPlbELb1oIGhKRZywWpGAiIQqG+Z0z41GlD/pI+iyo2Vn1c0S1DfsTRH2xLEAU7
-         HMquMChE5hzZzAAl5kxGX9yg/9aUVngOSiAHM+dlt9hlXS4MpSQlTcaWNeiSZx4U9eJe
-         D8lvM630x+8yktrDLTh4GAVA+liVSLzRNNQb+ysTBrPt4SuryUNWYilHbufmbLr81nK+
-         r426Q6oeA9mK6lO07MoaCjjeL9CbkcQdz9cIs4F1pbBGGrD35dWr8+Ypobqb8j7qxmZ/
-         s0Ng==
+	s=arc-20240116; t=1755646154; c=relaxed/simple;
+	bh=nlyN0emqFC5mah3+AEX+HhzrrRHCuhU8yafMr2P/Azk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TcXkKAIcGTZtElaH330AJWmDN4eyFu2T5y+3idFdgUF9zSr4ioAYb0OXn3VEw9XeH9hHTkbig+W7wlViqDbDdpmTZkiLbttOPqY3vG3yTzzKGCIwjYJttIUyIkbyxCxUL2MjViIkFOQceP9L7Gu5P1Kae+yEJzuib7hOGv9o2qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kr3KqPQ2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JL0v9E027413
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 23:29:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=uXtfjUzzByf11+oWG4pmF8mNkBkkbpFfD4T
+	0474ANBY=; b=kr3KqPQ2BQHM8y9CIGwXmvqiMqQObMhTD79qY4GbG9+5kLjJsmf
+	xpUor5AIH/xYM78EW+1aJjagj8CJ9GvfJSKYTbVsdkZtjppE8Lz1jpRdidJ4AG0y
+	NKvJj8FnI+AFb8wND1dbasNCdM5r3QyEXE6DK7qifZ9tXmOc1ndriLLHaAyzAd3L
+	DEng6MW4Dg+5AHMCom5acBZFX8tDZdzSRd49gOYZlsI90ztEGjUHSrCj+TInoZgU
+	LAdSdkgQZkyv2A2R8jC2jNDyDyq67HsdYVau2D3TyFMcGwI1wnKEkuM2SdilTEW1
+	+nkQdaekBLqhadKUGlgi8yGQ0FVu3HZsghA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n0th08fs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 23:29:11 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-244581187c6so67362745ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 16:29:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755645459; x=1756250259;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zfg+/0iA7MeX1A93jxyLkNbqcGb7Dk0Q5+FiLHCKrdg=;
-        b=V4PgDuFNioOfTqEZIlz6r76V5sz8iW+E5wRSrnwpv9x2ds5rGOXpOwvoifS+9WscOL
-         zM4Z/gyhytd45SSjC1kVa1b4xdGg/7Jh1nmWjkCQ+d0hOb8SXpLF/q9T1EXHvhXMhyGJ
-         5GzBFopaDr0qa2FMdvJ08fy5pvamzYRmFLV/fDYqE07pJ+Jf0nNGNgByswT3Pm84tbEO
-         plkzKdsJolxKWPutoq7AyYDsi/CBu8r/X9B9liD2rNVAXnIfdVZqDXGCL/Uacp7oHuoQ
-         FKqHA1hu9xoxXacc7aC73rFDU+cBGjGl3eCxSj7ZQb0fLWvcd1shsqlm/Mmi7QglbZrO
-         tgxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWUagHmSeX/q9AKXcyrTaDloTc4P/9pkhFsRxXn2M/SVwHxG25FyA/R49ulSYz/teNw1zirtO6OMU6+fQmR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPhcmko4ol7j9ukrzfl+W9YRWuFDD9MIYEJmKa71KzkqiSOeqD
-	LIE1jxBG8h2gL+eh1Vy4smTGeea0YHqlIr7+DdIdn2GtDJqNoXckHs1BbT/B8Q==
-X-Gm-Gg: ASbGnctMR9HhzAjN93nmg5ipHSXqBObJvwSvJoQ5LwA/5jmv149REQKna2VYn1AvWdt
-	FDQGLQBuYrr3XuKkM7anDpteUAddtYCriawZ1VOs2UZpSn8i/MOe9l0LPYdEa84302pPssJ80kv
-	936s+u1O2gH7RR/raSk36ekTnhLPrLOpEvOYWSeNqPSkSpJb4hNAGsdK6B/tGQAd4hdlL+rZZyC
-	6DrTuAv7A2YcC7kySEXt1mmjR6OnG/HRNJ/MbHUDojGd4hywdRxvjnzP8k39PKOYVFBEOEkWPQG
-	Oh5b906TxvLWrSqtfeJdK18+7dyJ3f7k1tJdImOIx2Z6y9xUpZ9ZdZNbuXDLUXi4TMpi70G4O52
-	S1k509IIMnarlrBahs0ZcXz8dspNyziGwUakWgt+UDklm1b5kkdFXooKVSaE4dHu6cQ==
-X-Google-Smtp-Source: AGHT+IE26v7IsIWqO9h9jisXac4SVVQQIabrAjtx7a4C9+BQ7EZWbdBQ3yfPd/77Ao+xdaYOz2tglg==
-X-Received: by 2002:a05:6e02:1705:b0:3e6:7bb6:74f with SMTP id e9e14a558f8ab-3e67ca88024mr17929785ab.20.1755645459281;
-        Tue, 19 Aug 2025 16:17:39 -0700 (PDT)
-Received: from localhost.localdomain (pppoe-209-91-167-254.vianet.ca. [209.91.167.254])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e57e67da67sm48388365ab.31.2025.08.19.16.17.37
+        d=1e100.net; s=20230601; t=1755646150; x=1756250950;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uXtfjUzzByf11+oWG4pmF8mNkBkkbpFfD4T0474ANBY=;
+        b=MvDkL24LwoJzDK0vMJYEhkZNUmilMQGQHq+wi+ZGCLQyV6kSchmN689qDbjpbqV+BH
+         taSC5hLcH/VzIkvlSzdI2j98pECc7/EJv7LOvtMUeYJQqpj5dl4/mOLIToBVwPXiUKnk
+         tB9kiCxTFKIy4I6vHAmblvgV59UTcpg3jERJT+18iPHK7qrChCtBWBdfENmlHTnTmPfA
+         HUv9XxxtqSVWbthaFNGbZMjWPxWcJybjenYtwhqJTx8LfNjh+aqlgbupepw0cyCN4cf8
+         DLjr2+n93ER0tLtuGcfU3mQ872Mjb9q61Raw/oYdCmFfh8hFHJVWf6UsrXQIJ52LYTQL
+         I3Xw==
+X-Gm-Message-State: AOJu0Yz00SZ59UOukvb5MiPIt80zqJK/KmTnrTQU/apMUesP3cuaOUIx
+	M8INFqKrhdtaV9HXSx9G1huX5ivs6EL07U+YGs3ob+5PMHLpc6v2JOZFrp37O6uTuoETKD6JJ/f
+	zQSUvt90fNY/5SRCBULTut2qXByRDFeaZd0tPSk8wZG5aRwylwTr7cFDL/ZmXiPDumVCr
+X-Gm-Gg: ASbGncvhAs30Uqa68/4NRt4jAOX8V0ZfiExQFZ6wqQNsEUwxyeSsx7B0ox55s/CByXG
+	C1t5pBew2yWH1JkQ78YJuMeaIlV5v9qm337PI+MJyNVNE24qyWmXNvzPUfXYHDRmuS1jqiQmJWt
+	/xU5ZMVigrz35phYFSxhptpMl/aC1BI4zqAz9bI7dbc2uPX6g+ij5F9M8/Zkmr+J4SXLPQmQ9VL
+	UdPW6vrjuG+uwsl/7KFTmSAcx01YjnEq7g6q2hlMZxnGNpFDdgjAdktnWPGTx1Sz2k+MsSJ/Vh4
+	7IxWg+TUjTrlgrMeOJnLPCk1hVF3+VmEjq1yQeadCM6xPFhZp04=
+X-Received: by 2002:a17:903:181:b0:242:89fd:48cc with SMTP id d9443c01a7336-245ef25b64fmr7800925ad.50.1755646150141;
+        Tue, 19 Aug 2025 16:29:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqUzvFcXROWico6d5Pqt2w0AvN4+pGykRNe2nE6KgbOBguGbbEYaRHz4y5taRq3of+8i1TGQ==
+X-Received: by 2002:a17:903:181:b0:242:89fd:48cc with SMTP id d9443c01a7336-245ef25b64fmr7800625ad.50.1755646149739;
+        Tue, 19 Aug 2025 16:29:09 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed51a97csm8052695ad.132.2025.08.19.16.29.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 16:17:38 -0700 (PDT)
-From: Trevor Woerner <twoerner@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	Russell King <linux@armlinux.org.uk>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	linux-arm-kernel@lists.infradead.org (moderated list:ARM PORT),
-	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-Subject: [PATCH] ARM: defconfig: cleanup orphaned CONFIGs
-Date: Tue, 19 Aug 2025 19:16:30 -0400
-Message-ID: <20250819231652.15938-1-twoerner@gmail.com>
-X-Mailer: git-send-email 2.44.0.501.g19981daefd7c
+        Tue, 19 Aug 2025 16:29:09 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        linux-kernel@vger.kernel.org (open list),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
+Subject: [PATCH 0/3] drm/msm: A few GEM/VM_BIND fixes
+Date: Tue, 19 Aug 2025 16:29:00 -0700
+Message-ID: <20250819232905.207547-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,50 +100,40 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE5NiBTYWx0ZWRfX2NiLGaYjeJhO
+ TkUMSJvoFcYL8z2aZD2apZN2aNKUk/JxtOBkB6JOypud4TfFVvDnHjHMUEGupbAhRUS4UoFzXWb
+ vIx2hjFyHK2apPry0FfgFbCYH0AcOkyfWAYzP+X8mc6TREP9/3W//Y7mVr082LaScMinbF52imY
+ L/+jBb2NI0x6EN+BprF3/85cBhrCXDL0lP6n38tjmFiBFrAMcgakw+zrwfQHXDlxYXxILE0ykjG
+ iWYMiDFN9S52Sxn6xZimLf9iBbdy5StFdf5WRV7OhVGc+XRMjK4vLosEomLYXrCWslp9uYOmUiX
+ gEA5CYDghF+E37QRIdT5Jp2OC9ANLevl1G8Q/XK0ThyYq0yvct0+uYdUh6lXAwIzuxKy2EcFIfT
+ RYLAZueC+VOXeEryMN4UlzyGbwg/bA==
+X-Authority-Analysis: v=2.4 cv=dI7/WOZb c=1 sm=1 tr=0 ts=68a508c7 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10
+ a=7-57VTQsmsoFMMg7Vz0A:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: EwV9uSaR88j-xY12yjRylx5NvdjrjwcY
+X-Proofpoint-GUID: EwV9uSaR88j-xY12yjRylx5NvdjrjwcY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_04,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 phishscore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508190196
 
-Drop CONFIG_ARCH_MSM8X60 and CONFIG_ARCH_MSM8960 which were removed in
-commit 99497df59427 ("ARM: qcom: merge remaining subplatforms into sensible
-Kconfig entry").
+Fixes for a few issues found in vkd3d-proton testing.
 
-Drop CONFIG_ARCH_MSM8916 and CONFIG_ARCH_MSM8974 which were removed in
-commit 85148df36835 ("ARM: qcom: drop most of 32-bit ARCH_QCOM subtypes").
+Rob Clark (3):
+  drm/msm: Fix obj leak in VM_BIND error path
+  drm/msm: Fix missing VM_BIND offset/range validation
+  drm/msm: Fix 32b size truncation
 
-Signed-off-by: Trevor Woerner <twoerner@gmail.com>
----
- arch/arm/configs/multi_v7_defconfig | 4 ----
- arch/arm/configs/qcom_defconfig     | 3 ---
- 2 files changed, 7 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c     | 17 ++++++++---------
+ drivers/gpu/drm/msm/msm_gem.h     |  6 +++---
+ drivers/gpu/drm/msm/msm_gem_vma.c | 31 +++++++++++++++++++++++++------
+ 3 files changed, 36 insertions(+), 18 deletions(-)
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index f2822eeefb95..151f50b3b2d6 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -87,10 +87,6 @@ CONFIG_SOC_AM33XX=y
- CONFIG_SOC_AM43XX=y
- CONFIG_SOC_DRA7XX=y
- CONFIG_ARCH_QCOM=y
--CONFIG_ARCH_MSM8X60=y
--CONFIG_ARCH_MSM8916=y
--CONFIG_ARCH_MSM8960=y
--CONFIG_ARCH_MSM8974=y
- CONFIG_ARCH_ROCKCHIP=y
- CONFIG_ARCH_RENESAS=y
- CONFIG_ARCH_INTEL_SOCFPGA=y
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index ec52ccece0ca..aa23a13274f9 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -10,9 +10,6 @@ CONFIG_EXPERT=y
- CONFIG_KALLSYMS_ALL=y
- CONFIG_PROFILING=y
- CONFIG_ARCH_QCOM=y
--CONFIG_ARCH_MSM8X60=y
--CONFIG_ARCH_MSM8960=y
--CONFIG_ARCH_MSM8974=y
- CONFIG_ARCH_MDM9615=y
- CONFIG_SMP=y
- CONFIG_ARM_PSCI=y
 -- 
-2.44.0.501.g19981daefd7c
+2.50.1
 
 
