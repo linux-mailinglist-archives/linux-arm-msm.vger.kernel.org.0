@@ -1,192 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-69704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08BB7B2BDE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:48:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8CCDB2BDFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:50:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11637686007
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:48:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F6F5565E65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:50:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20AF31A046;
-	Tue, 19 Aug 2025 09:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E68EA31E0ED;
+	Tue, 19 Aug 2025 09:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mzf+KhSB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xUGfaqai"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD82238C0F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 09:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5A731E0E6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 09:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755596883; cv=none; b=jWxaVadzMfnqWpqvlSV1QxjU6vmvetAl8fVCu/Miyj+lrrO6lVPe7XfDHuOijEqSaCXvrGwvballZvHAPqTp9taN4HyEznGd7jvZFOd0hICkFeR+bA7G5qaUccseYUoSjHokt9Y+gq/vOI2EHI8iOtzKP+fEbCJeMCcTDyuVRiU=
+	t=1755596994; cv=none; b=ZQl4jaMB7kJda7JUc94qX91dZePUdAOdG6DbvfqDfC885+OQKAMhAx66dVta297YnvkZVdR4avAYEMMxC4psyfDuvBSKyLZm8UbALU5vkWujYhk7N2vGCNzHvGEN/JmeQ4gm3KSU1hpaPeSzfb/tyZuLV6d3LmHNSpJ5/76Pr2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755596883; c=relaxed/simple;
-	bh=uZvw0QlVxkN0efin+XFZpqCnIHi42Poi4/cExNi1u3U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pWpObBUdH0udBfp14soNCoolOTNpyLBAZoIqub7MOo/TZOSCed2YeHrtcsb8Vfs1eYfA6lY499M9SYtAjmhApjl4PNBZbu/as+oy4+BdhfMwMVUBvb+sOk8nYsoAPtyZhY2XAez619vTZrEnGGg1IMnd1ERbXQQj/kTdIXecFZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mzf+KhSB; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1755596994; c=relaxed/simple;
+	bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EmYbCaEqw5JXwIkPZKJwRaPcgmGoNOrj/oYtxYO0qzcKGkNTFWHh0C8AGXYPcFM8DGO1uQbdmN7lBd81+WOTsHj5Kz/g1YxfNMLoKGOH6hA+dBu4OAtnW+1AvfplgIXxJ0rXKT+GfMGOp5a9cANyC0lG4sg7yMhiqt+wNiC5AfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xUGfaqai; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b9e41101d4so2675436f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 02:48:01 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-55ce510b4ceso5792330e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 02:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755596880; x=1756201680; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :reply-to:content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jv13I0/TXUmz+bhbfk6XvmSO5m56jpoJAdOTbAp2Skg=;
-        b=mzf+KhSBvZ19eR3wYEYEYTx3zUK5ocfscrqIZfyu3JvAs2/gyyYiOksPGRXiyLmafQ
-         OUGLDOTc0RX3WLwoDZCX/b4fp45zflyFaUbocYAeiQNaDq3h/YdDxXArVnEvMYLrUNHU
-         SGSJnZxWsKZkBGGgWUxYHAIj3vf/Edse8RbpNSMTPw5nLYtHNCgu6s/pHMF4ZC3DAfaX
-         Y1EOoR9HZE52FDBTJjIT0pNGd0BfUVn6Qda38X1XRohTi549aX0U04JeUwLDyEGCpdpk
-         gM8hcL1EwHEn3bkVfXD/trkHRDxpgIKfp5zsjXxe3LFS1Y/WZjj09RKPo05NFxBcPCNI
-         ZJqg==
+        d=linaro.org; s=google; t=1755596990; x=1756201790; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
+        b=xUGfaqailfILgnn9twlZVvknsFLdaaDvd0vqvVv3J2OlV1wmvU4DB0M/sM11KDa2xe
+         i8YagmU7rgfupxhwmH+NBPI4s9Vy/uFYXiXNocNTdb+er7NFgOK8bIpnx0DGn9jhhYV+
+         iqoLOLHkNqu/hMI2X+KiHL/6IJ7eTiJR3DmkRidipAG7dnS3oyjcpyF6/rW3du8ZMFKR
+         dhCSQYm1/LFv+CMJiBBA6OFpM3NfciPZPNmd8f0/u0Qs2dh+1GajWVxUMdsl3UQAcjeN
+         G2699YMNi3HziBPSD/pLEVDhCNo0nEaddDRxLpkI2T5pa4zsATVAXEzgm7aNhn1uAL4h
+         yJiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755596880; x=1756201680;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :reply-to:content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jv13I0/TXUmz+bhbfk6XvmSO5m56jpoJAdOTbAp2Skg=;
-        b=Dw+M/NBwojmSWc9b3QAFMeUaXb0qFl71qad9yxwBh0JRfgLGSVq0B2wGlc5dVsEZLz
-         igLUA/45K4TA5J6MjNJF1Wb25hSqPt7KIVKNMbb8YnvV2L93SVKabunwwTJvBQ8mpW5T
-         CBEhE5K9uLKE0uDCZdSn/MlHl/7v55SgKOI6Mx05yKnHORQglu02prs46KriJv8vE+HB
-         rml2lMpI7mWBK2+5ELNUjkqNFV0TVKFT0CrKMEYAlvnKLlSkOWnhlBAeBK62kRNp5Lu2
-         LDFmu4ejxek7jw6ENRasOORr8f+0GJ8mOKQeEP2/9bqnSTc5DAns5khKCTLVAP4wWdjt
-         mL7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUMUbJcofbRLZoTKGv3NZBYLxalmupCHMtXDyrnVuqsNnqpAm9dVr9rZDSTR2LmCkLJJq2ee1/5ligWlKlD@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxxn0rtRzGl7HzIk+bRfjUrAU9eNIJ/LlyetU2ejt8y4oHL4ReK
-	8+/CqcoyIYLNitxBMwwnQUHI6JvDgzohhkoIYy+ovhNEFfpaY+0tAu06QqPCmA9Vo9s5eP7acOm
-	qmZh2RkY=
-X-Gm-Gg: ASbGncvG1wCyGJ1KQjE6+nwY8wNVBCY9yeSGuUTU4qFedAmEw/6OJVnLTktJKJW8kcm
-	Bo7e0bXcOZVkPKx0zgc8Ef/kdacZYBeMaEqlTwjSdOENIXznbY7Nl6hhGkIPNdL93iejhsuD5aY
-	RnYceIOajM0Dynbv92g+CMs2eoWpXkl2l/Qsj6GTWcb4Ehy4CfTaXDhvnLiVmxAC1EXCLKZ3oHP
-	h+B8gyaeav8OOMCghFot392cQHkF7+Fn6CrCkRNFAVkufp6b+tzZbdv7teG3ANsvwodwja0CHdO
-	yQ+cMa/Q0f4kciQ94FahUMrAp9r5/P08xjBRuJvKh0gOSc7qYIf2PNi4flzCGU3hFbDpcV5H76L
-	Ga+X8Op5khFWzrzCCZuw7uF5t1FdAjoGTWSra+l2OUPUO6zL8CNsyGL/k5ERvT0ggQLKtrI3s
-X-Google-Smtp-Source: AGHT+IHOxn+x6X9d76/zE+6NfMmOpr/k+JuYhSKm6pN0fgDwmmrAI973XoBrmCuTM1ZZXSiLVplWkQ==
-X-Received: by 2002:a05:6000:40db:b0:3b5:e714:9c1e with SMTP id ffacd0b85a97d-3c0ea1e299cmr1507911f8f.12.1755596880006;
-        Tue, 19 Aug 2025 02:48:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:e7a:79e6:53ed:ce35? ([2a01:e0a:3d9:2080:e7a:79e6:53ed:ce35])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c748a9esm206392985e9.19.2025.08.19.02.47.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 02:47:59 -0700 (PDT)
-Message-ID: <91cb0acb-73c4-4d3a-9aa8-1056f367d82e@linaro.org>
-Date: Tue, 19 Aug 2025 11:47:58 +0200
+        d=1e100.net; s=20230601; t=1755596990; x=1756201790;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
+        b=wpec8su7bHqvZ18fzsNs2tkS7iiYIAx2wiuIohatxz2/I+QGs+1mVcc/Ia+Yygy7Rf
+         dmAI864jk2vkLML9zyFrcizc+mX0v34KwlEzFjN0yIsQxo7StsXgO36oahg0UrsGqRXU
+         TRn1rOkAvtzRQUMaOmdsGCPQsWrCoV/LQROtE/dQJwniBrc1xRCW+qRXus7Od2koW0Ny
+         ueDA0Da7YhajlQy6Fe1KPndXe3mVmrMKep3cXDl4GR3t30inMuNl/z2UWJ/qRluvQ/y4
+         yt9VA5S044ySv+M6Z2pqyvsmEl8/8iJTQbNRyAg7+iBrUMbUx1x1YjadkVHZ9GDFiIPt
+         C5Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCWnCFaBuKWIJS1vy3gMlQl0bWV9IvhN0IdaycTu+KNHCJFMcJdhlXn/0WcvOyb4BEX+5nETOQ0Hx/g8s6cK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdpDyb9govvamud+QBpRO/6Lqd6KWFg37vhAmDpcwKuTZvbv7L
+	EJcxXSDLW5UHLQFL+Ra61tFp3/d102SiedU6edhUgnsH7t2c5GQSA+PvEKcFwIITvNI/WnYOwD2
+	bKX8T4UvRuWhLq7BhakblLZljPWoasiPdjRbMVOF32Q==
+X-Gm-Gg: ASbGncurtfiD2Quq12VM8cQTmfgvwXeBz0uERu0zugkqkeMf9Qa6h7eFhaJzaLmmRSv
+	X9NnjRV0lkpBabVMlljVfWI+OKjrHdHb9Q7/TuFauI7tgLw6WoOXoxS7FTnbuoR2OCk1KTgWEQ6
+	TrJKBTo7WNg7UQjuVjtG8693i/kXLwbtwADqRb1Vh3EpSd+E3A1gsf0syBvV6UF3/9lxVBzTWIv
+	7rUCCdPZsOn
+X-Google-Smtp-Source: AGHT+IEt8RlqWWvwC2uqrmb7EU75OBtpQ0q0kJ1zr3PFW1jsKW7QqgA/pBKXOLyxKfth/q0XXJuPhRlLhC58Y7ZaIjE=
+X-Received: by 2002:a05:6512:ac9:b0:553:51a2:4405 with SMTP id
+ 2adb3069b0e04-55e00850835mr590681e87.45.1755596989499; Tue, 19 Aug 2025
+ 02:49:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL
- command
-To: Venkat Jayaraman <venkat.jayaraman@intel.com>, linux-usb@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, heikki.krogerus@linux.intel.com,
- pse.type-c.linux@intel.com, linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20250814163028.18058-1-venkat.jayaraman@intel.com>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250814163028.18058-1-venkat.jayaraman@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com> <20250811-clk-for-stephen-round-rate-v1-109-b3bf97b038dc@redhat.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-109-b3bf97b038dc@redhat.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 19 Aug 2025 11:49:38 +0200
+X-Gm-Features: Ac12FXyEOw7KCbkbFT2OqCP4TngpQPKLbvy9M6n90z-zmlM7tVP9PQNq8vVGJnI
+Message-ID: <CACRpkdaW=f7xm+rsD8XUUx-qhuh8sk1mCU-erve-_9S4uUpHbA@mail.gmail.com>
+Subject: Re: [PATCH 109/114] clk: versatile: vexpress-osc: convert from
+ round_rate() to determine_rate()
+To: bmasney@redhat.com
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
+	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
+	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek <michal.simek@amd.com>, 
+	Maxime Ripard <mripard@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Daniel Palmer <daniel@thingy.jp>, 
+	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Gregory Clement <gregory.clement@bootlin.com>, 
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Andrea della Porta <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, 
+	Viresh Kumar <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Luca Ceresoli <luca.ceresoli@bootlin.com>, Alex Helms <alexander.helms.jy@renesas.com>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
+	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Aug 11, 2025 at 5:21=E2=80=AFPM Brian Masney via B4 Relay
+<devnull+bmasney.redhat.com@kernel.org> wrote:
 
-On 14/08/2025 18:30, Venkat Jayaraman wrote:
-> Add support for UCSI READ_POWER_LEVEL command as per
-> UCSI specification v2.1 and above to debugfs.
-> 
-> Following power related fields will be exposed as files in debugfs:-
-> peak_current (Peak current),
-> avg_current (Average current) and
-> vbus_voltage (VBUS voltage)
-> 
-> These files will be updated either when a READ_POWER_LEVEL
-> command is sent from OS or when a device is connected.
-> 
-> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> Signed-off-by: Venkat Jayaraman <venkat.jayaraman@intel.com>
-> ---
-> Changelog v3:
-> - Rebased to kernel 6.17-rc1
-> 
-> Changelog v2:
-> - Removed extra space in declaration
-> - Made the call to debugfs_create_file single line for clarity
-> 
->   drivers/usb/typec/ucsi/debugfs.c | 31 +++++++++++++++++++++++++++++++
->   drivers/usb/typec/ucsi/ucsi.c    | 16 ++++++++++++++++
->   drivers/usb/typec/ucsi/ucsi.h    | 13 +++++++++++++
->   3 files changed, 60 insertions(+)
-> 
+> From: Brian Masney <bmasney@redhat.com>
+>
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 
-This commit causes the following warning:
-[    8.646179] ------------[ cut here ]------------
-[    8.650986] Access to unsupported field at offset 0x59 (need version 0210)
-[    8.651044] WARNING: drivers/usb/typec/ucsi/ucsi.c:1296 at ucsi_handle_connector_change+0x380/0x414 [typec_ucsi], CPU#0: kworker/0:0/9
-<snip>
-[    8.832491] Hardware name: Qualcomm Technologies, Inc. SM8550 HDK (DT)
-[    8.839228] Workqueue: events ucsi_handle_connector_change [typec_ucsi]
-[    8.846084] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-[    8.853277] pc : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
-[    8.860031] lr : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
-<snip>
-[    8.944023] Call trace:
-[    8.946570]  ucsi_handle_connector_change+0x380/0x414 [typec_ucsi] (P)
-[    8.953328]  process_one_work+0x148/0x28c
-[    8.957502]  worker_thread+0x2c8/0x3d0
-[    8.961401]  kthread+0x12c/0x204
-[    8.964759]  ret_from_fork+0x10/0x20
-[    8.968474] ---[ end trace 0000000000000000 ]---
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-on:
-8550-hdk:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253312#L1418
-8550-qrd:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253306#L1560
-8650-hdk:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253308#L1494
-8650-qrd:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253309#L1594
-x1-crd:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253311#L2226
-x1-qcp:
-https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253310#L2160
-
-I guess the version should be checked.
-
-Neil
+Yours,
+Linus Walleij
 
